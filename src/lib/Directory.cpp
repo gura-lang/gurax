@@ -19,7 +19,7 @@ String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) c
 	RefPtr<Directory> pDirectory(LockDirectoryParent());
 	for ( ; pDirectory; pDirectory.reset(pDirectory->LockDirectoryParent())) {
 		// a "boundary container" directory may have an empty name
-		if (*pDirectory->GetName() != '\0' || pDirectory->IsRootContainer()) {
+		if (*pDirectory->GetName() != '\0' || pDirectory->IsRoot()) {
 			String str(pDirectory->GetName());
 			size_t len = str.size();
 			if (len == 0 || !PathName::IsSep(str[len - 1])) {
@@ -38,7 +38,7 @@ String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) c
 			char ch = PathName::IsSep(*p)? GetSep() : *p;
 			pathName += ch;
 		}
-	} else if (addSepFlag && IsContainer() && !_name.empty()) {
+	} else if (addSepFlag && IsLikeContainer() && !_name.empty()) {
 		size_t len = pathName.size();
 		if (len > 0 && !PathName::IsSep(pathName[len - 1])) {
 			pathName += GetSep();
@@ -208,11 +208,11 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 			_directoryDeque.pop_front();
 		}
 		if (!pDirectoryChild) return nullptr;
-		if (pDirectoryChild->IsContainer() &&
+		if (pDirectoryChild->IsLikeContainer() &&
 			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
 			_directoryDeque.push_back(pDirectoryChild->Reference());
 		}
-		if ((pDirectoryChild->IsContainer() && _dirFlag) || (!pDirectoryChild->IsContainer() && _fileFlag)) {
+		if ((pDirectoryChild->IsLikeContainer() && _dirFlag) || (!pDirectoryChild->IsLikeContainer() && _fileFlag)) {
 			bool matchFlag = false;
 			for (const String& pattern : _patterns) {
 				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern.c_str())) {
@@ -308,12 +308,12 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 		if (!pDirectoryChild) return nullptr;
 		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(_patternSegs[_depth].c_str())) {
 			if (_depth + 1 < _patternSegs.size()) {
-				if (pDirectoryChild->IsContainer()) {
+				if (pDirectoryChild->IsLikeContainer()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
 					_depthDeque.push_back(static_cast<UInt>(_depth + 1));
 				}
-			} else if ((pDirectoryChild->IsContainer() && _dirFlag) ||
-					   (!pDirectoryChild->IsContainer() && _fileFlag)) {
+			} else if ((pDirectoryChild->IsLikeContainer() && _dirFlag) ||
+					   (!pDirectoryChild->IsLikeContainer() && _fileFlag)) {
 				if (_statFlag) {
 					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {

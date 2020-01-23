@@ -20,7 +20,7 @@ Gurax_TesterEntry(Directory)
 {
 	char sep = '/';
 	bool caseFlag = false;
-	RefPtr<Directory_CustomContainer> pDirectory(new Directory_CustomContainer("foo", Directory::Type::RootContainer, sep, caseFlag));
+	RefPtr<Directory_CustomContainer> pDirectory(new Directory_CustomContainer("foo", Directory::Type::Root, sep, caseFlag));
 	pDirectory->AddChildInTree("dir1", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	pDirectory->AddChildInTree("dir1/dir1-1", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	pDirectory->AddChildInTree("dir1/dir1-2", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));

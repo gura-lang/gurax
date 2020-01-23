@@ -46,7 +46,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	pathNameAccum += prefix;
 	RefPtr<Directory> pDirectory;
 	if (!pathNameAccum.empty()) {
-		pDirectory.reset(new DirectoryEx(pathNameAccum, Directory::Type::RootContainer, nullptr));
+		pDirectory.reset(new DirectoryEx(pathNameAccum, Directory::Type::Root, nullptr));
 	}
 	for (auto pField = fields.begin(); pField != fields.end(); pField++) {
 		const String& field = *pField;

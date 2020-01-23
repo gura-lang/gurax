@@ -16,7 +16,20 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Directory);
 public:
-	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
+	enum class Type { None, Item, Container, Boundary, Root, };
+	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
+	public:
+		SymbolAssoc_Type() {
+			Assoc(Gurax_Symbol(item),		Type::Item);
+			Assoc(Gurax_Symbol(container),	Type::Container);
+			Assoc(Gurax_Symbol(boundary),	Type::Boundary);
+			Assoc(Gurax_Symbol(root),		Type::Root);
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Type());
+		}
+	};
 protected:
 	String _name;
 	Type _type;
@@ -45,12 +58,14 @@ public:
 	const char* GetName() const { return _name.c_str(); }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
+	Type GetType() const { return _type; }
 	bool IsItem() const { return _type == Type::Item; }
-	bool IsContainer() const {
-		return _type == Type::Container || _type == Type::BoundaryContainer || _type == Type::RootContainer;
+	bool IsContainer() const { return _type == Type::Container; }
+	bool IsBoundary() const { return _type == Type::Boundary; }
+	bool IsRoot() const { return _type == Type::Root; }
+	bool IsLikeContainer() const {
+		return _type == Type::Container || _type == Type::Boundary || _type == Type::Root;
 	}
-	bool IsBoundaryContainer() const { return _type == Type::BoundaryContainer; }
-	bool IsRootContainer() const { return _type == Type::RootContainer; }
 	bool DoesMatch(const char* name) const {
 		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(name);
 	}
@@ -66,6 +81,13 @@ protected:
 	virtual Directory* DoNextChild() = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
 	virtual Value* DoCreateStatValue();
+public:
+	static Type SymbolToType(const Symbol* pSymbol) {
+		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* TypeToSymbol(Type type) {
+		return SymbolAssoc_Type::GetInstance().ToSymbol(type);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Directory& pathMgr) const { return this == &pathMgr; }

@@ -56,7 +56,7 @@ Gurax_ImplementConstructor(Directory)
 // Directory#parent
 Gurax_DeclareProperty_R(Directory, parent)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Directory, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The parent directory.");
@@ -68,6 +68,25 @@ Gurax_ImplementPropertyGetter(Directory, parent)
 	RefPtr<Directory> pDirectoryParent(valueThis.GetDirectory().LockDirectoryParent());
 	if (!pDirectoryParent) return Value::nil();
 	return new Value_Directory(pDirectoryParent.release());
+}
+
+// Directory#type
+Gurax_DeclareProperty_R(Directory, type)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A symbol that represents the directory type:\n"
+		"- `` `item` .. file or data entry\n"
+		"- `` `container` .. directory or folder\n"
+		"- `` `boundary` .. boundary container\n"
+		"- `` `root` .. root container\n");
+}
+
+Gurax_ImplementPropertyGetter(Directory, type)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(Directory::TypeToSymbol(valueThis.GetDirectory().GetType()));
 }
 
 //------------------------------------------------------------------------------
@@ -83,6 +102,7 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Directory));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Directory, parent));
+	Assign(Gurax_CreateProperty(Directory, type));
 }
 
 Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const
