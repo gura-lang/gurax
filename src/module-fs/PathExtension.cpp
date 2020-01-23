@@ -15,24 +15,57 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-#if 0
-	do {
-		String pathNameAccum;
-		for (const char* p = *pPathName; *p; p++) {
-			
+	String pathName;
+	for (const char* p = *pPathName; ; p++) {
+		if (*p) pathName += *p;
+		if (*p == '\0' || PathName::IsSep(*p)) {
+			OAL::FileType fileType = OAL::GetFileType(pathName.c_str());
+			if (fileType != OAL::FileType::None) {
+				// nothing to do
+			} else if (typeWouldBe == Directory::Type::None || (*p != '\0' && *(p + 1) != '\0')) {
+				Error::Issue(ErrorType::PathError, "specified path is not found");
+				return nullptr;
+			}
+			if (*p == '\0' || fileType != OAL::FileType::Directory) {
+				if (fileType != OAL::FileType::None && typeWouldBe != Directory::Type::None) {
+					// this means overwriting of an existing file
+					//Error::Issue(ErrorType::PathError, "specified path already exists");
+					//return nullptr;
+				}
+				*pPathName = p;
+				break;
+			}
 		}
-	} while (0);
-#endif
-	Directory::Type type = typeWouldBe;
-	String pathName = PathName(*pPathName).MakeAbsName();
-	RefPtr<StatEx> pStatEx(StatEx::Create(pathName.c_str()));
-	if (pStatEx) {
-		type = pStatEx->IsDir()? Directory::Type::Container : Directory::Type::Item;
-	} else if (type == Directory::Type::None) {
-		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
-		return nullptr;
 	}
-	return new DirectoryEx(pathName, type, pStatEx.release());
+	String driveLetter;
+	String prefix;
+	StringList fields;
+	PathName(pathName).SplitIntoFields(&driveLetter, &prefix, fields);
+	String pathNameAccum;
+	pathNameAccum += driveLetter;
+	pathNameAccum += prefix;
+	RefPtr<Directory> pDirectory;
+	if (!pathNameAccum.empty()) {
+		pDirectory.reset(new DirectoryEx(pathNameAccum, Directory::Type::RootContainer, nullptr));
+	}
+	for (auto pField = fields.begin(); pField != fields.end(); pField++) {
+		const String& field = *pField;
+		if (field.empty()) break;
+		Directory::Type type = typeWouldBe;
+		if (type == Directory::Type::None) {
+			type = (pField + 1 == fields.end())? Directory::Type::Item : Directory::Type::Container;
+		}
+		if (pField != fields.begin()) pathNameAccum += PathName::SepPlatform;
+		pathNameAccum += field;
+		RefPtr<StatEx> pStatEx(StatEx::Create(PathName(pathNameAccum).MakeAbsName().c_str()));
+		if (pStatEx) {
+			type = pStatEx->IsDir()? Directory::Type::Container : Directory::Type::Item;
+		}
+		RefPtr<Directory> pDirectoryNew(new DirectoryEx(field, type, pStatEx.release()));
+		if (pDirectory) pDirectoryNew->SetDirectoryParent(*pDirectory);
+		pDirectory.reset(pDirectoryNew.release());
+	}
+	return pDirectory.release();
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)

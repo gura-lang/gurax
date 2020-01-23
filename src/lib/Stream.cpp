@@ -36,7 +36,8 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 			openFlags |= OpenFlag::Append;
 		}
 	}
-	RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::Type::Item));
+	Directory::Type typeWouldBe = (openFlags & OpenFlag::Write)? Directory::Type::Item : Directory::Type::None;
+	RefPtr<Directory> pDirectory(Directory::Open(pathName, typeWouldBe));
 	if (!pDirectory) return nullptr;
 	return pDirectory->OpenStream(openFlags);
 }
