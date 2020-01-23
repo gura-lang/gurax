@@ -15,6 +15,7 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+	if (!**pPathName) return new DirectoryEx("", Directory::Type::Container, nullptr);
 	String pathName;
 	for (const char* p = *pPathName; ; p++) {
 		if (*p) pathName += *p;
@@ -23,7 +24,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 			if (fileType != OAL::FileType::None) {
 				// nothing to do
 			} else if (typeWouldBe == Directory::Type::None || (*p != '\0' && *(p + 1) != '\0')) {
-				Error::Issue(ErrorType::PathError, "specified path is not found");
+				Error::Issue(ErrorType::PathError, "specified path is not found: %s", pathName.c_str());
 				return nullptr;
 			}
 			if (*p == '\0' || fileType != OAL::FileType::Directory) {
@@ -65,12 +66,25 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		if (pDirectory) pDirectoryNew->SetDirectoryParent(*pDirectory);
 		pDirectory.reset(pDirectoryNew.release());
 	}
-	return pDirectory.release();
+	return pDirectory? pDirectory.release() : new DirectoryEx("", Directory::Type::Container, nullptr);
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
-	return (!pDirectoryParent && OAL::DoesExist(*pPathName))? Existence::Exist : Existence::None;
+	if (!**pPathName) return Existence::Exist;
+	String pathName;
+	for (const char* p = *pPathName; ; p++) {
+		if (*p) pathName += *p;
+		if (*p == '\0' || PathName::IsSep(*p)) {
+			OAL::FileType fileType = OAL::GetFileType(pathName.c_str());
+			if (fileType == OAL::FileType::None) return Existence::None;
+			if (*p == '\0' || fileType != OAL::FileType::Directory) {
+				*pPathName = p;
+				break;
+			}
+		}
+	}
+	return Existence::Exist;
 }
 
 //------------------------------------------------------------------------------

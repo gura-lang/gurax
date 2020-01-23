@@ -53,13 +53,28 @@ Gurax_ImplementConstructor(Directory)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Directory#name
+Gurax_DeclareProperty_R(Directory, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The name of the directory.");
+}
+
+Gurax_ImplementPropertyGetter(Directory, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetDirectory().GetName());
+}
+
 // Directory#parent
 Gurax_DeclareProperty_R(Directory, parent)
 {
 	Declare(VTYPE_Directory, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The parent directory.");
+		"The parent of the directory.");
 }
 
 Gurax_ImplementPropertyGetter(Directory, parent)
@@ -101,6 +116,7 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Directory));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Directory, name));
 	Assign(Gurax_CreateProperty(Directory, parent));
 	Assign(Gurax_CreateProperty(Directory, type));
 }
