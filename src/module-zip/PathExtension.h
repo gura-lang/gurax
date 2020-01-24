@@ -72,7 +72,6 @@ public:
 		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
 	};
 protected:
-	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoCreateStatValue() override;
 };
@@ -88,7 +87,6 @@ public:
 		Directory_CustomContainer(Directory::Type::Container,
 								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStatEx(pStatEx) {}
 protected:
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoCreateStatValue() override;
 };
 

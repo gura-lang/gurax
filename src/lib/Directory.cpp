@@ -57,6 +57,11 @@ int Directory::CountDepth() const
 	return cnt;
 }
 
+Directory* Directory::SearchInTree(const char** pPathName, Type typeWouldBe)
+{
+	return nullptr;
+}
+
 Value* Directory::DoCreateStatValue()
 {
 	Error::Issue(ErrorType::PropertyError, "no status value available");
@@ -167,15 +172,15 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 	return true;
 }
 
-Directory* Directory_CustomContainer::DoNextChild()
+void Directory_CustomContainer::DoRewindChild()
 {
-	if (_idx >= _pDirectoryOwner->size()) return nullptr;
-	return (*_pDirectoryOwner)[_idx++]->Reference();
+	_idxChild = 0;
 }
 
-Stream* Directory_CustomContainer::DoOpenStream(Stream::OpenFlags openFlags)
+Directory* Directory_CustomContainer::DoNextChild()
 {
-	return nullptr;
+	if (_idxChild >= _pDirectoryOwner->size()) return nullptr;
+	return (*_pDirectoryOwner)[_idxChild++]->Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -189,7 +194,7 @@ Iterator_DirectoryWalk::Iterator_DirectoryWalk(
 	_fileFlag(fileFlag), _dirFlag(dirFlag)
 {
 	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
-	//_directoryDeque.push_back(pDirectory);
+	_pDirectoryCur->RewindChild();
 }
 
 Value* Iterator_DirectoryWalk::DoNextValue()

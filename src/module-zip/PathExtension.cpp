@@ -10,24 +10,24 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return false;
+	return pDirectoryParent && !pDirectoryParent->IsContainer() &&
+		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".zip") ||
+		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
+		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-#if 0
-	Directory::Type type = typeWouldBe;
-	String pathName = PathName(*pPathName).MakeAbsName();
-	RefPtr<StatEx> pStat(StatEx::Create(pathName.c_str()));
-	if (pStat) {
-		type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
-	} else if (type == Directory::Type::None) {
-		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
-		return nullptr;
-	}
-	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
-#endif
-	return nullptr;
+	if (!pDirectoryParent) return nullptr;
+	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
+	if (!pStream) return nullptr;
+	pStream.reset(pStream->CreateBwdSeekable());
+	if (!pStream) return nullptr;
+	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
+	if (!pDirectory) return nullptr;
+	pDirectory->SetDirectoryParent(*pDirectoryParent);
+
+	return pDirectory.release();
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
@@ -111,11 +111,6 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 //-----------------------------------------------------------------------------
 // Directory_ZIPFile
 //-----------------------------------------------------------------------------
-Directory* Directory_ZIPFile::DoNextChild()
-{
-	return nullptr;
-}
-
 Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 {
 	return nullptr;
@@ -129,11 +124,6 @@ Value* Directory_ZIPFile::DoCreateStatValue()
 //-----------------------------------------------------------------------------
 // Directory_ZIPFolder
 //-----------------------------------------------------------------------------
-Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
-{
-	return nullptr;
-}
-
 Value* Directory_ZIPFolder::DoCreateStatValue()
 {
 	return new Value_StatEx(_pStatEx.Reference());

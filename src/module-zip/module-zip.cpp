@@ -26,7 +26,7 @@ Gurax_ImplementFunction(Directory)
 	RefPtr<Stream> pStream(args.PickStream().CreateBwdSeekable());
 	if (!pStream) return nullptr;
 	// Function body
-	RefPtr<Directory> pDirectory(CreateDirectory(*pStream, nullptr, nullptr, Directory::Type::None));
+	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
 	if (!pDirectory) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
 }

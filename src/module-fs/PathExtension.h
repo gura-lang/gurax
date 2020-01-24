@@ -51,6 +51,7 @@ public:
 	}
 	virtual Directory* LockDirectoryParent() const override { return _pDirectoryParent.Reference(); }
 protected:
+	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoCreateStatValue() override;

@@ -52,6 +52,7 @@ public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
 	void SetName(String name) { _name = name; }
+	void RewindChild() { return DoRewindChild(); }
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* CreateStatValue() { return DoCreateStatValue(); }
@@ -74,12 +75,14 @@ public:
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
+	Directory* SearchInTree(const char** pPathName, Type typeWouldBe);
 	virtual bool IsCustomContainer() const { return false; }
 	virtual void SetDirectoryParent(Directory& directoryParent) = 0;
 	virtual Directory* LockDirectoryParent() const = 0;
 protected:
-	virtual Directory* DoNextChild() = 0;
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
+	virtual void DoRewindChild() {}
+	virtual Directory* DoNextChild() { return nullptr; }
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) { return nullptr; }
 	virtual Value* DoCreateStatValue();
 public:
 	static Type SymbolToType(const Symbol* pSymbol) {
@@ -146,13 +149,13 @@ public:
 class GURAX_DLLDECLARE Directory_CustomContainer : public Directory {
 public:
 	RefPtr<DirectoryOwner> _pDirectoryOwner;
-	size_t _idx;
+	size_t _idxChild;
 	RefPtr<WeakPtr> _pwDirectoryParent;
 public:
 	Directory_CustomContainer(Type type, char sep, bool caseFlag) :
-		Directory(type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
+		Directory(type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idxChild(0) {}
 	Directory_CustomContainer(String name, Type type, char sep, bool caseFlag) :
-		Directory(name, type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
+		Directory(name, type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idxChild(0) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
 	const DirectoryOwner& GetDirectoryOwner() const { return *_pDirectoryOwner; }
@@ -166,8 +169,8 @@ public:
 		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
 	};
 protected:
+	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 };
 
 //------------------------------------------------------------------------------

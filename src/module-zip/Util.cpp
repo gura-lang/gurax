@@ -84,15 +84,13 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
-Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
-						   const char** pPathName, Directory::Type typeWouldBe)
+Directory* CreateTopDirectory(Stream& streamSrc)
 {
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(streamSrc)) return nullptr;
 	RefPtr<Directory_CustomContainer> pDirectory(
 		new Directory_CustomContainer("", Directory::Type::Boundary,
 									  PathName::SepPlatform, PathName::CaseFlagPlatform));
-	pDirectory->SetDirectoryParent(*pDirectoryParent);
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		if (String::EndsWithPathSep(pathName)) {

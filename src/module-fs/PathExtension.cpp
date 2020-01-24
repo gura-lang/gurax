@@ -145,6 +145,12 @@ DirectoryEx::~DirectoryEx()
 	::FindClose(_hFind);
 }
 
+void DirectoryEx::DoRewindChild()
+{
+	::FindClose(_hFind);
+	_hFind = INVALID_HANDLE_VALUE;
+}
+
 Directory* DirectoryEx::DoNextChild()
 {
 	return nullptr;
@@ -161,6 +167,14 @@ DirectoryEx::DirectoryEx(String name, Type type, StatEx* pStatEx) :
 DirectoryEx::~DirectoryEx()
 {
 	if (_pDir) closedir(_pDir);
+}
+
+void DirectoryEx::DoRewindChild()
+{
+	if (_pDir) {
+		closedir(_pDir);
+		_pDir = nullptr;
+	}
 }
 
 Directory* DirectoryEx::DoNextChild()
