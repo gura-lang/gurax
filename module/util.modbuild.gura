@@ -19,6 +19,26 @@ Options:
 '''.Render(sys.cerr)
 
 //------------------------------------------------------------------------------
+// CheckUpdate (not used yet)
+//------------------------------------------------------------------------------
+CheckUpdate(compiler:String, incDirs[]:String, pathNameObj:String, pathNameSrc:String) = {
+	buff = B''
+	os.Redirect(nil, buff) {
+		os.Exec(compiler, '-I' + incDirs, "-MM", pathNameSrc)
+	}
+	statObj = fs.Stat(pathNameObj)
+	buff.Reader().ReadLines {|line|
+		if (m = line.Match(r'^[\w\.]+:\s*(.*)') || line.Match(r'^\s+(.*)')) {
+			m[1].Sub(r'\\$', '').Strip().SplitReg(r'\s+') {|pathName|
+				stat = fs.Stat(pathName)
+				(statObj.mtime < stat.mtime) && return(true)
+			}
+		}
+	}
+	false
+}
+
+//------------------------------------------------------------------------------
 // Builder
 //------------------------------------------------------------------------------
 Builder = class {

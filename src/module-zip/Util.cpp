@@ -90,7 +90,7 @@ Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(streamSrc)) return nullptr;
 	RefPtr<Directory_CustomContainer> pDirectory(
-		new Directory_CustomContainer("", Directory::Type::BoundaryContainer,
+		new Directory_CustomContainer("", Directory::Type::Boundary,
 									  PathName::SepPlatform, PathName::CaseFlagPlatform));
 	pDirectory->SetDirectoryParent(*pDirectoryParent);
 	for (StatEx* pStatEx : statExOwner) {
@@ -120,11 +120,7 @@ Stream* CreateStream(Stream& streamSrc, const StatEx& statEx)
 		LocalFileHeader hdr;
 		if (!hdr.Read(streamSrc)) return nullptr;
 	} while (0);
-	//const char* name = hdr.GetFileName();
 	UInt16 compressionMethod = hdr.GetCompressionMethod();
-	//size_t bytesUncompressed = hdr.GetUncompressedSize();
-	//size_t bytesCompressed = hdr.GetCompressedSize();
-	//UInt32 crc32Expected = hdr.GetCrc32();
 	RefPtr<Stream_Reader> pStream;
 	if (compressionMethod == CompressionMethod::Store) {
 		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
