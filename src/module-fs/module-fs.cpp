@@ -260,8 +260,7 @@ Gurax_ImplementFunction(Exists)
 	const char* pathName = args.PickString();
 	// Function body
 	OAL::FileType fileType = OAL::GetFileType(pathName);
-	if (fileType == OAL::FileType::None) return Value::nil();
-	return new Value_Symbol(OAL::FileTypeToSymbol(fileType));
+	return new Value_Bool(fileType != OAL::FileType::None);
 }
 
 // fs.GetCurDir()
