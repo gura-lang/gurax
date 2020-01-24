@@ -57,9 +57,26 @@ int Directory::CountDepth() const
 	return cnt;
 }
 
-Directory* Directory::SearchInTree(const char** pPathName, Type typeWouldBe)
+Directory* Directory::SearchInTree(const char** pPathName)
 {
-	return nullptr;
+	Directory* pDirectory = this;
+	String field;
+	for (const char* p = *pPathName; ; p++) {
+		if (*p) field += *p;
+		if (*p != '\0' && !PathName::IsSep(*p)) continue;
+		pDirectory->RewindChild();
+		Directory* pDirectoryChild = nullptr;
+		while ((pDirectoryChild = pDirectory->NextChild())) {
+			if (pDirectoryChild->DoesMatch(field.c_str())) break;
+		}
+		if (!pDirectoryChild) {
+			Error::Issue(ErrorType::PathError, "specified path is not found");
+			return nullptr;
+		}
+		if (*p == '\0' || *(p + 1) == '\0') break;
+		pDirectory = pDirectoryChild;
+	}
+	return pDirectory;
 }
 
 Value* Directory::DoCreateStatValue()

@@ -75,7 +75,7 @@ public:
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
-	Directory* SearchInTree(const char** pPathName, Type typeWouldBe);
+	Directory* SearchInTree(const char** pPathName);
 	virtual bool IsCustomContainer() const { return false; }
 	virtual void SetDirectoryParent(Directory& directoryParent) = 0;
 	virtual Directory* LockDirectoryParent() const = 0;
