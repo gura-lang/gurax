@@ -61,19 +61,24 @@ Directory* Directory::SearchInTree(const char** pPathName)
 {
 	Directory* pDirectory = this;
 	String field;
-	for (const char* p = *pPathName; ; p++) {
-		if (*p) field += *p;
-		if (*p != '\0' && !PathName::IsSep(*p)) continue;
-		pDirectory->RewindChild();
+	for (const char*& p = *pPathName; ; ) {
+		if (*p == '\0') {
+			// nothing to do
+		} else if (PathName::IsSep(*p)) {
+			p++;
+		} else {
+			field += *p++;
+			continue;
+		}
+		if (field.empty()) return nullptr;
 		Directory* pDirectoryChild = nullptr;
+		pDirectory->RewindChild();
 		while ((pDirectoryChild = pDirectory->NextChild())) {
 			if (pDirectoryChild->DoesMatch(field.c_str())) break;
 		}
-		if (!pDirectoryChild) {
-			Error::Issue(ErrorType::PathError, "specified path is not found");
-			return nullptr;
-		}
-		if (*p == '\0' || *(p + 1) == '\0') break;
+		if (!pDirectoryChild) return nullptr;
+		if (*p == '\0' || !pDirectoryChild->IsContainer()) break;
+		field.clear();
 		pDirectory = pDirectoryChild;
 	}
 	return pDirectory;

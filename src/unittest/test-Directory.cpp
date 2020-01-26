@@ -3,6 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
+#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
+
 namespace Gurax {
 
 void PrintDirectory(const Directory& directory, int indentLevel)
@@ -32,6 +34,24 @@ Gurax_TesterEntry(Directory)
 	pDirectory->AddChildInTree("dir6/", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	pDirectory->AddChildInTree("dir4", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	PrintDirectory(*pDirectory, 0);
+	do {
+		const char* pathNames[] = {
+			"dir1",
+			"dir1/",
+			"dirx",
+			"dir1/dir1-1",
+			"dir1/dir1-1/",
+			"dir1/dir1-x",
+			"dir5/dir5-1/dir5-1-1/dir5-1-1-1",
+			"dir5/dir5-1/dir5-1-1/dir5-1-1-1/",
+		};
+		for (int i = 0; i < ArraySizeOf(pathNames); i++) {
+			const char* pathName = pathNames[i];
+			const char* p = pathName;
+			Directory* pDirectoryFound = pDirectory->SearchInTree(&p);
+			::printf("\"%s\": %s, \"%s\"\n", pathName, pDirectoryFound? "found" : "not found", p);
+		}
+	} while (0);
 }
 
 }
