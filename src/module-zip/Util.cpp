@@ -96,7 +96,7 @@ Directory* CreateTopDirectory(Stream& streamSrc)
 		if (String::EndsWithPathSep(pathName)) {
 			pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStatEx->Reference()));
 		} else {
-			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStatEx->Reference()));
+			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(streamSrc.Reference(), pStatEx->Reference()));
 		}
 	}
 	return pDirectory.release();

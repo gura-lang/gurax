@@ -58,12 +58,14 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
 private:
+	RefPtr<Stream> _pStreamSrc;
 	RefPtr<StatEx> _pStatEx;
 	RefPtr<WeakPtr> _pwDirectoryParent;
 public:
-	Directory_ZIPFile(StatEx* pStatEx) :
+	Directory_ZIPFile(Stream* pStreamSrc, StatEx* pStatEx) :
 		Directory(Directory::Type::Item,
-				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStatEx(pStatEx) {}
+				  PathName::SepPlatform, PathName::CaseFlagPlatform),
+		_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
 public:
 	virtual void SetDirectoryParent(Directory& directoryParent) override {
 		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());

@@ -26,8 +26,12 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
 	if (!pDirectory) return nullptr;
 	pDirectory->SetDirectoryParent(*pDirectoryParent);
-
-	return pDirectory.release();
+	Directory* pDirectoryFound = pDirectory->SearchInTree(pPathName);
+	if (!pDirectoryFound) {
+		Error::Issue(ErrorType::PathError, "specified path is not found");
+		return nullptr;
+	}
+	return pDirectoryFound->Reference();
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
@@ -114,7 +118,7 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 //-----------------------------------------------------------------------------
 Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 {
-	return nullptr;
+	return CreateStream(*_pStreamSrc, *_pStatEx);
 }
 
 Value* Directory_ZIPFile::DoCreateStatValue()
