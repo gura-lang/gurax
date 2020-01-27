@@ -17,25 +17,24 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 {
 	if (!**pPathName) return new DirectoryEx("", Directory::Type::Container, nullptr);
 	String pathName;
-	for (const char* p = *pPathName; ; p++) {
-		if (*p) pathName += *p;
-		if (*p != '\0' && !PathName::IsSep(*p)) continue;
-		OAL::FileType fileType = OAL::GetFileType(pathName.c_str());
-		if (fileType != OAL::FileType::None) {
+	for (const char*& p = *pPathName; ; ) {
+		char ch = *p;
+		if (ch == '\0') {
 			// nothing to do
-		} else if (typeWouldBe == Directory::Type::None || (*p != '\0' && *(p + 1) != '\0')) {
+		} else if (PathName::IsSep(ch)) {
+			p++;
+		} else {
+			pathName += ch;
+			p++;
+			continue;
+		}
+		OAL::FileType fileType = pathName.empty()? OAL::FileType::Directory : OAL::GetFileType(pathName.c_str());
+		if (fileType == OAL::FileType::None && typeWouldBe == Directory::Type::None) {
 			Error::Issue(ErrorType::PathError, "specified path is not found: %s", pathName.c_str());
 			return nullptr;
 		}
-		if (*p == '\0' || fileType != OAL::FileType::Directory) {
-			if (fileType != OAL::FileType::None && typeWouldBe != Directory::Type::None) {
-				// this means overwriting of an existing file
-				//Error::Issue(ErrorType::PathError, "specified path already exists");
-				//return nullptr;
-			}
-			*pPathName = p;
-			break;
-		}
+		if (ch == '\0' || fileType != OAL::FileType::Directory) break;
+		pathName += ch;
 	}
 	String driveLetter;
 	String prefix;
