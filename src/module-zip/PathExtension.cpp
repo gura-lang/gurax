@@ -26,7 +26,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
 	if (!pDirectory) return nullptr;
 	pDirectory->SetDirectoryParent(*pDirectoryParent);
-	Directory* pDirectoryFound = pDirectory->SearchInTree(pPathName);
+	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
 	if (!pDirectoryFound) {
 		Error::Issue(ErrorType::PathError, "specified path is not found");
 		return nullptr;

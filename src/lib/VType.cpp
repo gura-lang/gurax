@@ -81,7 +81,9 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 {
 	auto IssueError = [](const VType& vtype, const Value& value) {
-		if (value.IsNil()) {
+		if (Error::IsIssued()) {
+			// nothing to do
+		} else if (value.IsNil()) {
 			Error::Issue(ErrorType::ValueError, "can't accept nil value");
 		} else {
 			Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",

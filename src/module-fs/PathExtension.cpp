@@ -17,15 +17,10 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 {
 	if (!**pPathName) return new DirectoryEx("", Directory::Type::Container, nullptr);
 	String pathName;
-	for (const char*& p = *pPathName; ; ) {
+	for (const char*& p = *pPathName; ; p++) {
 		char ch = *p;
-		if (ch == '\0') {
-			// nothing to do
-		} else if (PathName::IsSep(ch)) {
-			p++;
-		} else {
+		if (!(ch == '\0' || PathName::IsSep(ch))) {
 			pathName += ch;
-			p++;
 			continue;
 		}
 		OAL::FileType fileType = pathName.empty()? OAL::FileType::Directory : OAL::GetFileType(pathName.c_str());

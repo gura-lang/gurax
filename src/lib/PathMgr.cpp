@@ -29,6 +29,7 @@ Directory* PathMgr::OpenDirectory(const char* pathName, Directory::Type typeWoul
 	const PathMgrList& pathMgrList = Basement::Inst.GetPathMgrList();
 	Directory* pDirectory = nullptr;
 	while (*pathName) {
+		if (pDirectory && PathName::IsSep(*pathName)) pathName++;
 		PathMgr* pPathMgr = pathMgrList.FindResponsible(pDirectory, pathName);
 		if (!pPathMgr) return nullptr;
 		pDirectory = pPathMgr->OpenDirectory(pDirectory, &pathName, typeWouldBe);
