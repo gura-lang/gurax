@@ -8,6 +8,8 @@
 
 namespace Gurax {
 
+class Directory_CustomContainer;
+
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
@@ -29,6 +31,48 @@ public:
 			static SymbolAssoc* pSymbolAssoc = nullptr;
 			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Type());
 		}
+	};
+public:
+	class Factory;
+	class GURAX_DLLDECLARE FactoryList : public std::vector<Factory*> {
+	public:
+		Factory* FindByName(const char* name) const;
+		iterator FindIteratorByName(const char* name);
+	};
+	class GURAX_DLLDECLARE FactoryOwner : public FactoryList, public Referable {
+	public:
+		Gurax_DeclareReferable(FactoryOwner);
+	protected:
+		~FactoryOwner() { Clear(); }
+	public:
+		void Clear();
+	};
+	class GURAX_DLLDECLARE Factory : public Referable {
+	public:
+		Gurax_DeclareReferable(Factory);
+	protected:
+		String _name;
+		RefPtr<FactoryOwner> _pFactoryOwner;
+		bool _caseFlag;
+	public:
+		Factory(FactoryOwner* pFactoryOwner, bool caseFlag) :
+			_pFactoryOwner(pFactoryOwner), _caseFlag(caseFlag) {}
+		Factory(String name, FactoryOwner* pFactoryOwner, bool caseFlag) :
+			_name(name), _pFactoryOwner(pFactoryOwner), _caseFlag(caseFlag) {}
+	protected:
+		virtual ~Factory() = default;
+	public:
+		void SetName(String name) { _name = name; }
+		void SetFactoryOwner(FactoryOwner* pFactoryOwner) { _pFactoryOwner.reset(pFactoryOwner); }
+		FactoryOwner& GetFactoryOwner() { return *_pFactoryOwner; }
+		const FactoryOwner& GetFactoryOwner() const { return *_pFactoryOwner; }
+		bool GetCaseFlag() const { return _caseFlag; }
+		bool AddChildInTree(const char* pathName, RefPtr<Factory> pFactoryChild);
+		bool DoesMatch(const char* name) {
+			return PathName(_name).SetCaseFlag(_caseFlag).DoesMatch(name);
+		}
+	public:
+		virtual Directory* GenerateDirectory() { return nullptr; }
 	};
 protected:
 	String _name;
@@ -78,8 +122,11 @@ public:
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
+	Directory* SearchByName(const char* name);
 	Directory* SearchInTree(const char** pPathName);
-	//virtual bool IsCustomContainer() const { return false; }
+public:
+	virtual Directory_CustomContainer* CreateEmptyCustomContainer(String name) { return nullptr; }
+	virtual bool IsCustomContainer() const { return false; }
 protected:
 	virtual void DoRewindChild() {}
 	virtual Directory* DoNextChild() { return nullptr; }

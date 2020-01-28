@@ -57,9 +57,19 @@ int Directory::CountDepth() const
 	return cnt;
 }
 
+Directory* Directory::SearchByName(const char* name)
+{
+	RewindChild();
+	for (;;) {
+		RefPtr<Directory> pDirectory(NextChild());
+		if (pDirectory->DoesMatch(name)) return pDirectory.release();
+	}
+	return nullptr;
+}
+
 Directory* Directory::SearchInTree(const char** pPathName)
 {
-	Directory* pDirectory = this;
+	RefPtr<Directory> pDirectory;
 	String field;
 	for (const char*& p = *pPathName; ; ) {
 		if (*p == '\0') {
@@ -71,17 +81,13 @@ Directory* Directory::SearchInTree(const char** pPathName)
 			continue;
 		}
 		if (field.empty()) return nullptr;
-		Directory* pDirectoryChild = nullptr;
-		pDirectory->RewindChild();
-		while ((pDirectoryChild = pDirectory->NextChild())) {
-			if (pDirectoryChild->DoesMatch(field.c_str())) break;
-		}
+		RefPtr<Directory> pDirectoryChild(SearchByName(field.c_str()));
 		if (!pDirectoryChild) return nullptr;
 		if (*p == '\0' || !pDirectoryChild->IsContainer()) break;
 		field.clear();
-		pDirectory = pDirectoryChild;
+		pDirectory.reset(pDirectoryChild.release());
 	}
-	return pDirectory;
+	return pDirectory.release();
 }
 
 Value* Directory::DoCreateStatValue()
@@ -93,6 +99,75 @@ Value* Directory::DoCreateStatValue()
 String Directory::ToString(const StringStyle& ss) const
 {
 	return GetName();
+}
+
+//------------------------------------------------------------------------------
+// Directory::FactoryList
+//------------------------------------------------------------------------------
+Directory::Factory* Directory::FactoryList::FindByName(const char* name) const
+{
+	for (Factory* pFactory : *this) {
+		if (pFactory->DoesMatch(name)) return pFactory;
+	}
+	return nullptr;
+}
+
+Directory::FactoryList::iterator Directory::FactoryList::FindIteratorByName(const char* name)
+{
+	for (auto ppFactory = begin(); ppFactory != end(); ppFactory++) {
+		Factory* pFactory = *ppFactory;
+		if (pFactory->DoesMatch(name)) return ppFactory;
+	}
+	return end();
+}
+
+//------------------------------------------------------------------------------
+// Directory::FactoryOwner
+//------------------------------------------------------------------------------
+void Directory::FactoryOwner::Clear()
+{
+	for (Factory* pFactory : *this) Factory::Delete(pFactory);
+	clear();
+}
+
+//------------------------------------------------------------------------------
+// Directory::Factory
+//------------------------------------------------------------------------------
+bool Directory::Factory::AddChildInTree(const char* pathName, RefPtr<Factory> pFactoryChild)
+{
+	String driveLetter;
+	String prefix;
+	StringList fields;
+	PathName(pathName).SplitIntoFields(&driveLetter, &prefix, fields);
+	Factory* pFactoryParent = this;
+	auto pField = fields.begin();
+	if (pField == fields.end()) {
+		Error::Issue(ErrorType::PathError, "invalid path name");
+		return false;
+	}
+	for ( ; pField + 1 != fields.end() && !(pField + 1)->empty(); pField++) {
+		const String& field = *pField;
+		Factory* pFactory = pFactoryParent->GetFactoryOwner().FindByName(field.c_str());
+		if (!pFactory) {
+			Factory* pFactoryNew = new Factory(field, new FactoryOwner(), pFactoryChild->GetCaseFlag());
+			pFactoryParent->GetFactoryOwner().push_back(pFactoryNew);
+			pFactoryParent = pFactoryNew;
+		} else {
+			pFactoryParent = pFactory;
+		}
+	}
+	const String& field = *pField;
+	pFactoryChild->SetName(field);
+	FactoryOwner& factoryOwner = pFactoryParent->GetFactoryOwner();
+	auto ppFactoryFound = factoryOwner.FindIteratorByName(field.c_str());
+	if (ppFactoryFound == factoryOwner.end()) {
+		factoryOwner.push_back(pFactoryChild.release());
+	} else {
+		pFactoryChild->SetFactoryOwner((*ppFactoryFound)->GetFactoryOwner().Reference());
+		Factory::Delete(*ppFactoryFound);
+		*ppFactoryFound = pFactoryChild.release();
+	}
+	return true;
 }
 
 //------------------------------------------------------------------------------
