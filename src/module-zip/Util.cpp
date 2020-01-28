@@ -88,18 +88,21 @@ Directory* CreateTopDirectory(Stream& streamSrc)
 {
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(streamSrc)) return nullptr;
-	RefPtr<Directory_CustomContainer> pDirectory(
-		new Directory_CustomContainer("", Directory::Type::Boundary,
-									  PathName::SepPlatform, PathName::CaseFlagPlatform));
+	//RefPtr<Directory_CustomContainer> pDirectory(
+		//new Directory_CustomContainer("", Directory::Type::Boundary,
+		//							  PathName::SepPlatform, PathName::CaseFlagPlatform));
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
+#if 0
 		if (String::EndsWithPathSep(pathName)) {
 			pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStatEx->Reference()));
 		} else {
 			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(streamSrc.Reference(), pStatEx->Reference()));
 		}
+#endif
 	}
-	return pDirectory.release();
+	//return pDirectory.release();
+	return nullptr;
 }
 
 Stream* CreateStream(Stream& streamSrc, const StatEx& statEx)

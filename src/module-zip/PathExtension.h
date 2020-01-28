@@ -53,6 +53,7 @@ public:
 	bool ReadCentralDirectory(Stream& streamSrc);
 };
 
+#if 0
 //-----------------------------------------------------------------------------
 // Directory_ZIPFile
 //-----------------------------------------------------------------------------
@@ -91,6 +92,7 @@ public:
 protected:
 	virtual Value* DoCreateStatValue() override;
 };
+#endif
 
 //-----------------------------------------------------------------------------
 // Stream_Reader

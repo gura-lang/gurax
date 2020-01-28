@@ -25,7 +25,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	if (!pStream) return nullptr;
 	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
 	if (!pDirectory) return nullptr;
-	pDirectory->SetDirectoryParent(*pDirectoryParent);
+	pDirectory->SetDirectoryParent(Directory::Reference(pDirectoryParent));
 	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
 	if (!pDirectoryFound) {
 		Error::Issue(ErrorType::PathError, "specified path is not found");
@@ -113,6 +113,7 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 	return true;
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Directory_ZIPFile
 //-----------------------------------------------------------------------------
@@ -133,6 +134,7 @@ Value* Directory_ZIPFolder::DoCreateStatValue()
 {
 	return new Value_StatEx(_pStatEx.Reference());
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Stream_Reader
