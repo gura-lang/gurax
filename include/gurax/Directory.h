@@ -35,6 +35,7 @@ protected:
 	Type _type;
 	char _sep;
 	bool _caseFlag;
+	RefPtr<Directory> _pDirectoryParent;
 public:
 	// Constructor
 	Directory(Type type, char sep, bool caseFlag) : _type(type), _sep(sep), _caseFlag(caseFlag) {}
@@ -67,6 +68,8 @@ public:
 	bool IsLikeContainer() const {
 		return _type == Type::Container || _type == Type::Boundary || _type == Type::Root;
 	}
+	void SetDirectoryParent(Directory* pDirectoryParent) { _pDirectoryParent.reset(pDirectoryParent); }
+	const Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
 	bool DoesMatch(const char* name) const {
 		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(name);
 	}
@@ -76,9 +79,7 @@ public:
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
 	Directory* SearchInTree(const char** pPathName);
-	virtual bool IsCustomContainer() const { return false; }
-	virtual void SetDirectoryParent(Directory& directoryParent) = 0;
-	virtual Directory* LockDirectoryParent() const = 0;
+	//virtual bool IsCustomContainer() const { return false; }
 protected:
 	virtual void DoRewindChild() {}
 	virtual Directory* DoNextChild() { return nullptr; }
@@ -143,6 +144,7 @@ public:
 	void Clear();
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // Directory_CustomContainer
 //------------------------------------------------------------------------------
@@ -162,16 +164,11 @@ public:
 	void SetDirectoryOwner(DirectoryOwner* pDirectoryOwner) { _pDirectoryOwner.reset(pDirectoryOwner); }
 	bool AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild);
 	virtual bool IsCustomContainer() const override { return true; }
-	virtual void SetDirectoryParent(Directory& directoryParent) override {
-		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
-	}
-	virtual Directory* LockDirectoryParent() const override {
-		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
-	};
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
 };
+#endif
 
 //------------------------------------------------------------------------------
 // Iterator_DirectoryWalk

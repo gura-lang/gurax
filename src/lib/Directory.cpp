@@ -16,8 +16,8 @@ Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) const
 {
 	String pathName(_name);
-	RefPtr<Directory> pDirectory(LockDirectoryParent());
-	for ( ; pDirectory; pDirectory.reset(pDirectory->LockDirectoryParent())) {
+	const Directory* pDirectory = GetDirectoryParent();
+	for ( ; pDirectory; pDirectory = pDirectory->GetDirectoryParent()) {
 		// a "boundary container" directory may have an empty name
 		if (*pDirectory->GetName() != '\0' || pDirectory->IsRoot()) {
 			String str(pDirectory->GetName());
@@ -50,8 +50,8 @@ String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) c
 int Directory::CountDepth() const
 {
 	int cnt = 0;
-	RefPtr<Directory> pDirectory(LockDirectoryParent());
-	for ( ; pDirectory; pDirectory.reset(pDirectory->LockDirectoryParent())) {
+	const Directory* pDirectory = GetDirectoryParent();
+	for ( ; pDirectory; pDirectory = pDirectory->GetDirectoryParent()) {
 		cnt++;
 	}
 	return cnt;
@@ -144,6 +144,7 @@ void DirectoryDequeOwner::Clear()
 	clear();
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // Directory_CustomContainer
 //------------------------------------------------------------------------------
@@ -204,6 +205,7 @@ Directory* Directory_CustomContainer::DoNextChild()
 	if (_idxChild >= _pDirectoryOwner->size()) return nullptr;
 	return (*_pDirectoryOwner)[_idxChild++]->Reference();
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Iterator_DirectoryWalk

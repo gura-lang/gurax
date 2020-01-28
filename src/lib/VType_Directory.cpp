@@ -80,9 +80,9 @@ Gurax_DeclareProperty_R(Directory, parent)
 Gurax_ImplementPropertyGetter(Directory, parent)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Directory> pDirectoryParent(valueThis.GetDirectory().LockDirectoryParent());
+	const Directory* pDirectoryParent = valueThis.GetDirectory().GetDirectoryParent();
 	if (!pDirectoryParent) return Value::nil();
-	return new Value_Directory(pDirectoryParent.release());
+	return new Value_Directory(pDirectoryParent->Reference());
 }
 
 // Directory#type

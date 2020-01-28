@@ -7,19 +7,19 @@
 
 namespace Gurax {
 
-void PrintDirectory(const Directory& directory, int indentLevel)
+void PrintDirectory(Directory& directory, int indentLevel)
 {
 	::printf("%*s%s\n", indentLevel * 2, "", directory.GetName());
-	if (directory.IsCustomContainer()) {
-		for (const Directory* pDirectoryChild :
-				 dynamic_cast<const Directory_CustomContainer&>(directory).GetDirectoryOwner()) {
-			PrintDirectory(*pDirectoryChild, indentLevel + 1);
-		}
+	directory.RewindChild();
+	Directory* pDirectoryChild;
+	while ((pDirectoryChild = directory.NextChild())) {
+		PrintDirectory(*pDirectoryChild, indentLevel + 1);
 	}
 }
 
 Gurax_TesterEntry(Directory)
 {
+#if 0
 	char sep = '/';
 	bool caseFlag = false;
 	RefPtr<Directory_CustomContainer> pDirectory(new Directory_CustomContainer("foo", Directory::Type::Root, sep, caseFlag));
@@ -52,6 +52,7 @@ Gurax_TesterEntry(Directory)
 			::printf("\"%s\": %s, \"%s\"\n", pathName, pDirectoryFound? "found" : "not found", p);
 		}
 	} while (0);
+#endif
 }
 
 }

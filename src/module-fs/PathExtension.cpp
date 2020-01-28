@@ -56,7 +56,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 			type = pStatEx->IsDir()? Directory::Type::Container : Directory::Type::Item;
 		}
 		RefPtr<Directory> pDirectoryNew(new DirectoryEx(field, type, pStatEx.release()));
-		if (pDirectory) pDirectoryNew->SetDirectoryParent(*pDirectory);
+		if (pDirectory) pDirectoryNew->SetDirectoryParent(pDirectory.Reference());
 		pDirectory.reset(pDirectoryNew.release());
 	}
 	return pDirectory? pDirectory.release() : new DirectoryEx("", Directory::Type::Container, nullptr);
@@ -190,7 +190,7 @@ Directory* DirectoryEx::DoNextChild()
 	}
 	Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
 	RefPtr<Directory> pDirectory(new DirectoryEx(OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr));
-	pDirectory->SetDirectoryParent(*this);
+	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
 }
 

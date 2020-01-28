@@ -40,16 +40,10 @@ protected:
 #else
 	DIR* _pDir;
 #endif
-	RefPtr<Directory> _pDirectoryParent;
 public:
 	DirectoryEx(String name, Type type, StatEx* pStatEx);
 protected:
 	~DirectoryEx();
-public:
-	virtual void SetDirectoryParent(Directory& directoryParent) override {
-		_pDirectoryParent.reset(directoryParent.Reference());
-	}
-	virtual Directory* LockDirectoryParent() const override { return _pDirectoryParent.Reference(); }
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
