@@ -15,7 +15,7 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-	if (!**pPathName) return new DirectoryEx(Directory::Type::Folder, "", nullptr);
+	if (**pPathName == '\0') return new DirectoryEx(Directory::Type::Folder, "", nullptr);
 	String pathName;
 	for (const char*& p = *pPathName; ; p++) {
 		char ch = *p;

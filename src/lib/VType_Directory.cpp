@@ -125,7 +125,7 @@ Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) con
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);
-		RefPtr<Directory> pDirectory(Directory::Open(pathName));
+		RefPtr<Directory> pDirectory(Directory::Open((*pathName == '\0')? "." : pathName));
 		if (!pDirectory) return nullptr;
 		return new Value_Directory(pDirectory.release());
 	}
