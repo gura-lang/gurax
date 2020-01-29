@@ -53,6 +53,39 @@ public:
 	bool ReadCentralDirectory(Stream& streamSrc);
 };
 
+//-----------------------------------------------------------------------------
+// DirectoryEx
+//-----------------------------------------------------------------------------
+class DirectoryEx : public Directory {
+public:
+	class FactoryEx : public Factory {
+	public:
+		Gurax_DeclareReferable(FactoryEx);
+	private:
+		Type _type;
+		RefPtr<Stream> _pStreamSrc;
+		RefPtr<StatEx> _pStatEx;	// may be nullptr
+	public:
+		FactoryEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
+			Factory(new FactoryOwner(), PathName::CaseFlagPlatform),
+			_type(type), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
+		virtual Directory* GenerateDirectory() { return new DirectoryEx(Reference()); }
+		Type GetType() const { return _type; }
+		Stream& GetStreamSrc() { return *_pStreamSrc; }
+		StatEx& GetStatEx() { return *_pStatEx; }
+	};
+private:
+	RefPtr<FactoryEx> _pFactoryEx;
+public:
+	DirectoryEx(FactoryEx* pFactoryEx) :
+		Directory(pFactoryEx->GetType(), PathName::SepPlatform, PathName::CaseFlagPlatform),
+		_pFactoryEx(pFactoryEx) {}
+	static Directory* CreateTop(Stream& streamSrc);
+	Stream& GetStreamSrc() { return _pFactoryEx->GetStreamSrc(); }
+	StatEx& GetStatEx() { return _pFactoryEx->GetStatEx(); }
+	bool ReadCentralDirectory();
+};
+
 #if 0
 //-----------------------------------------------------------------------------
 // Directory_ZIPFile

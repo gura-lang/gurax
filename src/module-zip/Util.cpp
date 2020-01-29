@@ -84,59 +84,6 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
-class DirectoryItem : public Directory {
-private:
-	RefPtr<Stream> _pStreamSrc;
-	RefPtr<StatEx> _pStatEx;
-public:
-	DirectoryItem(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
-		Directory(type, PathName::SepPlatform, PathName::CaseFlagPlatform),
-		_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-};
-
-class DirectoryTop : public Directory {
-public:
-	class FactoryEx : public Factory {
-	private:
-		Type _type;
-		RefPtr<Stream> _pStreamSrc;
-		RefPtr<StatEx> _pStatEx;
-	public:
-		FactoryEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
-			Factory(new FactoryOwner(), PathName::CaseFlagPlatform),
-			_type(type), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-		virtual Directory* GenerateDirectory() {
-			return new DirectoryItem(_type, _pStreamSrc->Reference(), _pStatEx->Reference());
-		}
-	};
-private:
-	RefPtr<Stream> _pStreamSrc;
-	RefPtr<Factory> _pFactoryTop;
-public:
-	DirectoryTop(Stream* pStreamSrc) :
-		Directory(Directory::Type::Boundary, PathName::SepPlatform, PathName::CaseFlagPlatform),
-		_pStreamSrc(pStreamSrc), _pFactoryTop(new Factory(new FactoryOwner(), PathName::CaseFlagPlatform)) {}
-	bool ReadCentralDirectory();
-};
-
-bool DirectoryTop::ReadCentralDirectory()
-{
-	StatExOwner statExOwner;
-	if (!statExOwner.ReadCentralDirectory(*_pStreamSrc)) return false;
-	for (StatEx* pStatEx : statExOwner) {
-		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
-		Type type = String::EndsWithPathSep(pathName)? Type::Container : Type::Item;
-		_pFactoryTop->AddChildInTree(pathName, new FactoryEx(type, _pStreamSrc->Reference(), pStatEx->Reference()));
-	}
-	return true;
-}
-
-Directory* CreateTopDirectory(Stream& streamSrc)
-{
-	RefPtr<DirectoryTop> pDirectory(new DirectoryTop(streamSrc.Reference()));
-	return pDirectory->ReadCentralDirectory()? pDirectory.release() : nullptr;
-}
-
 Stream* CreateStream(Stream& streamSrc, const StatEx& statEx)
 {
 	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();

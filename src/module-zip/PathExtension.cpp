@@ -23,7 +23,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	if (!pStream) return nullptr;
 	pStream.reset(pStream->CreateBwdSeekable());
 	if (!pStream) return nullptr;
-	RefPtr<Directory> pDirectory(CreateTopDirectory(*pStream));
+	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
 	if (!pDirectory) return nullptr;
 	pDirectory->SetDirectoryParent(Directory::Reference(pDirectoryParent));
 	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
@@ -109,6 +109,28 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
 			return false;
 		}
+	}
+	return true;
+}
+
+//-----------------------------------------------------------------------------
+// DirectoryEx
+//-----------------------------------------------------------------------------
+Directory* DirectoryEx::CreateTop(Stream& streamSrc)
+{
+	RefPtr<DirectoryEx> pDirectoryEx(
+		new DirectoryEx(new FactoryEx(Type::Boundary, streamSrc.Reference(), nullptr)));
+	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
+}
+
+bool DirectoryEx::ReadCentralDirectory()
+{
+	StatExOwner statExOwner;
+	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
+	for (StatEx* pStatEx : statExOwner) {
+		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
+		Type type = String::EndsWithPathSep(pathName)? Type::Container : Type::Item;
+		_pFactoryEx->AddChildInTree(pathName, new FactoryEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 	}
 	return true;
 }
