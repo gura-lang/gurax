@@ -76,6 +76,7 @@ public:
 	};
 public:
 	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
+public:
 	static Directory* CreateTop(Stream& streamSrc);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }

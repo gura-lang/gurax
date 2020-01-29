@@ -132,7 +132,7 @@ bool DirectoryEx::ReadCentralDirectory()
 		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
 		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 	}
-	GetCoreEx().Print(*Stream::COut);
+	//GetCoreEx().Print(*Stream::COut);
 	return true;
 }
 
