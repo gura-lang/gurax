@@ -58,74 +58,30 @@ public:
 //-----------------------------------------------------------------------------
 class DirectoryEx : public Directory {
 public:
-	class FactoryEx : public Factory {
+	class CoreEx : public Core {
 	public:
-		Gurax_DeclareReferable(FactoryEx);
+		Gurax_DeclareReferable(CoreEx);
 	private:
-		Type _type;
 		RefPtr<Stream> _pStreamSrc;
 		RefPtr<StatEx> _pStatEx;	// may be nullptr
 	public:
-		FactoryEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
-			Factory(new FactoryOwner(), PathName::CaseFlagPlatform),
-			_type(type), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-		virtual Directory* GenerateDirectory() { return new DirectoryEx(Reference()); }
+		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
+			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()),
+			_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
 		Type GetType() const { return _type; }
 		Stream& GetStreamSrc() { return *_pStreamSrc; }
-		StatEx& GetStatEx() { return *_pStatEx; }
+		StatEx* GetStatEx() { return _pStatEx.get(); }
+	public:
+		virtual Directory* GenerateDirectory() { return new DirectoryEx(Reference()); }
 	};
-private:
-	RefPtr<FactoryEx> _pFactoryEx;
 public:
-	DirectoryEx(FactoryEx* pFactoryEx) :
-		Directory(pFactoryEx->GetType(), PathName::SepPlatform, PathName::CaseFlagPlatform),
-		_pFactoryEx(pFactoryEx) {}
+	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
 	static Directory* CreateTop(Stream& streamSrc);
-	Stream& GetStreamSrc() { return _pFactoryEx->GetStreamSrc(); }
-	StatEx& GetStatEx() { return _pFactoryEx->GetStatEx(); }
+	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
+	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
+	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
 	bool ReadCentralDirectory();
 };
-
-#if 0
-//-----------------------------------------------------------------------------
-// Directory_ZIPFile
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
-private:
-	RefPtr<Stream> _pStreamSrc;
-	RefPtr<StatEx> _pStatEx;
-	RefPtr<WeakPtr> _pwDirectoryParent;
-public:
-	Directory_ZIPFile(Stream* pStreamSrc, StatEx* pStatEx) :
-		Directory(Directory::Type::Item,
-				  PathName::SepPlatform, PathName::CaseFlagPlatform),
-		_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-public:
-	virtual void SetDirectoryParent(Directory& directoryParent) override {
-		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
-	}
-	virtual Directory* LockDirectoryParent() const override {
-		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
-	};
-protected:
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoCreateStatValue() override;
-};
-
-//-----------------------------------------------------------------------------
-// Directory_ZIPFolder
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_ZIPFolder : public Directory_CustomContainer {
-private:
-	RefPtr<StatEx> _pStatEx;
-public:
-	Directory_ZIPFolder(StatEx* pStatEx) :
-		Directory_CustomContainer(Directory::Type::Container,
-								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStatEx(pStatEx) {}
-protected:
-	virtual Value* DoCreateStatValue() override;
-};
-#endif
 
 //-----------------------------------------------------------------------------
 // Stream_Reader

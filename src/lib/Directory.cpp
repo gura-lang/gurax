@@ -179,7 +179,11 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 
 void Directory::Core::Print(Stream& stream, int indentLevel) const
 {
-	stream.Printf("");
+	stream.Printf("%*s%s%s\n", indentLevel * 2, "", GetName(),
+				  (_type == Type::Folder)? "/" : (_type == Type::Boundary)? "%" : "");
+	for (const Core* pCore : GetCoreOwner()) {
+		pCore->Print(stream, indentLevel + 1);
+	}
 }
 
 //------------------------------------------------------------------------------

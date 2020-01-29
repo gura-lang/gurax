@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return pDirectoryParent && !pDirectoryParent->IsContainer() &&
+	return pDirectoryParent && !pDirectoryParent->IsFolder() &&
 		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".zip") ||
 		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
 		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
@@ -119,7 +119,7 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 {
 	RefPtr<DirectoryEx> pDirectoryEx(
-		new DirectoryEx(new FactoryEx(Type::Boundary, streamSrc.Reference(), nullptr)));
+		new DirectoryEx(new CoreEx(Type::Boundary, streamSrc.Reference(), nullptr)));
 	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
 }
 
@@ -129,9 +129,10 @@ bool DirectoryEx::ReadCentralDirectory()
 	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
-		Type type = String::EndsWithPathSep(pathName)? Type::Container : Type::Item;
-		_pFactoryEx->AddChildInTree(pathName, new FactoryEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
+		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
+		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 	}
+	GetCoreEx().Print(*Stream::COut);
 	return true;
 }
 
