@@ -136,6 +136,31 @@ bool DirectoryEx::ReadCentralDirectory()
 	return true;
 }
 
+void DirectoryEx::DoRewindChild()
+{
+	_idxChild = 0;
+}
+
+Directory* DirectoryEx::DoNextChild()
+{
+	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
+	if (_idxChild >= coreOwner.size()) return nullptr;
+	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
+	pDirectory->SetDirectoryParent(Reference());
+	return pDirectory.release();
+}
+
+Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
+{
+	return nullptr;
+}
+
+Value* DirectoryEx::DoCreateStatValue()
+{
+	StatEx* pStatEx = GetCoreEx().GetStatEx();
+	return pStatEx? new Value_Stat(pStatEx->Reference()) : nullptr;
+}
+
 //-----------------------------------------------------------------------------
 // Stream_Reader
 //-----------------------------------------------------------------------------

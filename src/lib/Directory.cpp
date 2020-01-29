@@ -86,11 +86,10 @@ Directory* Directory::SearchInTree(const char** pPathName)
 			continue;
 		}
 		if (field.empty()) return nullptr;
-		RefPtr<Directory> pDirectoryChild(SearchByName(field.c_str()));
-		if (!pDirectoryChild) return nullptr;
-		if (*p == '\0' || !pDirectoryChild->IsFolder()) break;
+		pDirectory.reset(SearchByName(field.c_str()));
+		if (!pDirectory) return nullptr;
+		if (*p == '\0' || !pDirectory->IsFolder()) break;
 		field.clear();
-		pDirectory.reset(pDirectoryChild.release());
 	}
 	return pDirectory.release();
 }

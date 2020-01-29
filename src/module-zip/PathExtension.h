@@ -74,14 +74,21 @@ public:
 	public:
 		virtual Directory* GenerateDirectory() { return new DirectoryEx(Reference()); }
 	};
+private:
+	size_t _idxChild;
 public:
-	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
+	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx), _idxChild(0) {}
 public:
 	static Directory* CreateTop(Stream& streamSrc);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
 	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
 	bool ReadCentralDirectory();
+protected:
+	virtual void DoRewindChild();
+	virtual Directory* DoNextChild();
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags);
+	virtual Value* DoCreateStatValue();
 };
 
 //-----------------------------------------------------------------------------
