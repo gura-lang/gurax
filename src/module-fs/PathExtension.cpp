@@ -15,7 +15,7 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-	if (!**pPathName) return new DirectoryEx("", Directory::Type::Container, nullptr);
+	if (!**pPathName) return new DirectoryEx(Directory::Type::Folder, "", nullptr);
 	String pathName;
 	for (const char*& p = *pPathName; ; p++) {
 		char ch = *p;
@@ -40,26 +40,26 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	pathNameAccum += prefix;
 	RefPtr<Directory> pDirectory;
 	if (!pathNameAccum.empty()) {
-		pDirectory.reset(new DirectoryEx(pathNameAccum, Directory::Type::Root, nullptr));
+		pDirectory.reset(new DirectoryEx(Directory::Type::Folder, pathNameAccum, nullptr));
 	}
 	for (auto pField = fields.begin(); pField != fields.end(); pField++) {
 		const String& field = *pField;
 		if (field.empty()) break;
 		Directory::Type type = typeWouldBe;
 		if (type == Directory::Type::None) {
-			type = (pField + 1 == fields.end())? Directory::Type::Item : Directory::Type::Container;
+			type = (pField + 1 == fields.end())? Directory::Type::Item : Directory::Type::Folder;
 		}
 		if (pField != fields.begin()) pathNameAccum += PathName::SepPlatform;
 		pathNameAccum += field;
 		RefPtr<StatEx> pStatEx(StatEx::Create(PathName(pathNameAccum).MakeAbsName().c_str()));
 		if (pStatEx) {
-			type = pStatEx->IsDir()? Directory::Type::Container : Directory::Type::Item;
+			type = pStatEx->IsDir()? Directory::Type::Folder : Directory::Type::Item;
 		}
-		RefPtr<Directory> pDirectoryNew(new DirectoryEx(field, type, pStatEx.release()));
+		RefPtr<Directory> pDirectoryNew(new DirectoryEx(type, field, pStatEx.release()));
 		if (pDirectory) pDirectoryNew->SetDirectoryParent(pDirectory.Reference());
 		pDirectory.reset(pDirectoryNew.release());
 	}
-	return pDirectory? pDirectory.release() : new DirectoryEx("", Directory::Type::Container, nullptr);
+	return pDirectory? pDirectory.release() : new DirectoryEx(Directory::Type::Folder, "", nullptr);
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
@@ -127,8 +127,8 @@ StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 
-DirectoryEx::DirectoryEx(String name, Type type, StatEx* pStatEx) :
-	Directory(name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+DirectoryEx::DirectoryEx(Type type, String name, StatEx* pStatEx) :
+	Directory(type, name, PathName::SepPlatform, PathName::CaseFlagPlatform),
 	_pStatEx(pStatEx), _hFind(INVALID_HANDLE_VALUE)
 {
 }
@@ -151,8 +151,8 @@ Directory* DirectoryEx::DoNextChild()
 
 #else
 
-DirectoryEx::DirectoryEx(String name, Type type, StatEx* pStatEx) :
-	Directory(name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+DirectoryEx::DirectoryEx(Type type, String name, StatEx* pStatEx) :
+	Directory(type, name, PathName::SepPlatform, PathName::CaseFlagPlatform),
 	_pStatEx(pStatEx), _pDir(nullptr)
 {
 }
@@ -188,8 +188,8 @@ Directory* DirectoryEx::DoNextChild()
 		}
 		if (::strcmp(pEnt->d_name, ".") != 0 && ::strcmp(pEnt->d_name, "..") != 0) break;
 	}
-	Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
-	RefPtr<Directory> pDirectory(new DirectoryEx(OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr));
+	Type type = (pEnt->d_type == DT_DIR)? Type::Folder : Type::Item;
+	RefPtr<Directory> pDirectory(new DirectoryEx(type, OAL::FromNativeString(pEnt->d_name).c_str(), nullptr));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
 }

@@ -8,6 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
+void Directory::Bootup()
+{
+	Directory::CoreOwner::Empty.reset(new CoreOwner());
+}
+
 Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 {
 	return PathMgr::OpenDirectory(pathName, typeWouldBe);
@@ -15,11 +20,11 @@ Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 
 String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) const
 {
-	String pathName(_name);
+	String pathName(GetName());
 	const Directory* pDirectory = GetDirectoryParent();
 	for ( ; pDirectory; pDirectory = pDirectory->GetDirectoryParent()) {
 		// a "boundary container" directory may have an empty name
-		if (*pDirectory->GetName() != '\0' || pDirectory->IsRoot()) {
+		if (*pDirectory->GetName() != '\0') {
 			String str(pDirectory->GetName());
 			size_t len = str.size();
 			if (len == 0 || !PathName::IsSep(str[len - 1])) {
@@ -38,7 +43,7 @@ String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) c
 			char ch = PathName::IsSep(*p)? GetSep() : *p;
 			pathName += ch;
 		}
-	} else if (addSepFlag && IsLikeContainer() && !_name.empty()) {
+	} else if (addSepFlag && IsLikeFolder() && *GetName() != '\0') {
 		size_t len = pathName.size();
 		if (len > 0 && !PathName::IsSep(pathName[len - 1])) {
 			pathName += GetSep();
@@ -83,7 +88,7 @@ Directory* Directory::SearchInTree(const char** pPathName)
 		if (field.empty()) return nullptr;
 		RefPtr<Directory> pDirectoryChild(SearchByName(field.c_str()));
 		if (!pDirectoryChild) return nullptr;
-		if (*p == '\0' || !pDirectoryChild->IsContainer()) break;
+		if (*p == '\0' || !pDirectoryChild->IsFolder()) break;
 		field.clear();
 		pDirectory.reset(pDirectoryChild.release());
 	}
@@ -124,6 +129,8 @@ Directory::CoreList::iterator Directory::CoreList::FindIteratorByName(const char
 //------------------------------------------------------------------------------
 // Directory::CoreOwner
 //------------------------------------------------------------------------------
+RefPtr<Directory::CoreOwner> Directory::CoreOwner::Empty;
+
 void Directory::CoreOwner::Clear()
 {
 	for (Core* pCore : *this) Core::Delete(pCore);
@@ -149,7 +156,7 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 		const String& field = *pField;
 		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
 		if (!pCore) {
-			Core* pCoreNew = new Core(Type::Container, field, GetSep(), GetCaseFlag(), new CoreOwner());
+			Core* pCoreNew = new Core(Type::Folder, field, GetSep(), GetCaseFlag(), new CoreOwner());
 			pCoreParent->GetCoreOwner().push_back(pCoreNew);
 			pCoreParent = pCoreNew;
 		} else {
@@ -224,69 +231,6 @@ void DirectoryDequeOwner::Clear()
 	clear();
 }
 
-#if 0
-//------------------------------------------------------------------------------
-// Directory_CustomContainer
-//------------------------------------------------------------------------------
-bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild)
-{
-	String driveLetter;
-	String prefix;
-	StringList fields;
-	PathName(pathName).SplitIntoFields(&driveLetter, &prefix, fields);
-	Directory_CustomContainer* pDirectoryParent = this;
-	auto pField = fields.begin();
-	if (pField == fields.end()) {
-		Error::Issue(ErrorType::PathError, "invalid path name");
-		return false;
-	}
-	for ( ; pField + 1 != fields.end() && !(pField + 1)->empty(); pField++) {
-		const String& field = *pField;
-		DirectoryOwner& directoryOwner = pDirectoryParent->GetDirectoryOwner();
-		Directory* pDirectory = directoryOwner.FindByName(field.c_str());
-		if (!pDirectory) {
-			auto pDirectoryNew = new Directory_CustomContainer(
-				field, Type::Container, pDirectoryParent->GetSep(), pDirectoryParent->IsCaseSensitive());
-			pDirectoryNew->SetDirectoryParent(*pDirectoryParent);
-			directoryOwner.push_back(pDirectoryNew);
-			pDirectoryParent = pDirectoryNew;
-		} else if (!pDirectory->IsCustomContainer()) {
-			Error::Issue(ErrorType::PathError, "invalid path name");
-			return false;
-		} else {
-			pDirectoryParent = dynamic_cast<Directory_CustomContainer*>(pDirectory);
-		}
-	}
-	const String& field = *pField;
-	DirectoryOwner& directoryOwner = pDirectoryParent->GetDirectoryOwner();
-	pDirectoryChild->SetDirectoryParent(*pDirectoryParent);
-	pDirectoryChild->SetName(field);
-	auto ppDirectoryFound = directoryOwner.FindIteratorByName(field.c_str());
-	if (ppDirectoryFound == directoryOwner.end()) {
-		directoryOwner.push_back(pDirectoryChild.release());
-	} else {
-		if (pDirectoryChild->IsCustomContainer() && (*ppDirectoryFound)->IsCustomContainer()) {
-			dynamic_cast<Directory_CustomContainer&>(*pDirectoryChild).SetDirectoryOwner(
-				dynamic_cast<Directory_CustomContainer*>(*ppDirectoryFound)->GetDirectoryOwner().Reference());
-		}
-		Directory::Delete(*ppDirectoryFound);
-		*ppDirectoryFound = pDirectoryChild.release();
-	}
-	return true;
-}
-
-void Directory_CustomContainer::DoRewindChild()
-{
-	_idxChild = 0;
-}
-
-Directory* Directory_CustomContainer::DoNextChild()
-{
-	if (_idxChild >= _pDirectoryOwner->size()) return nullptr;
-	return (*_pDirectoryOwner)[_idxChild++]->Reference();
-}
-#endif
-
 //-----------------------------------------------------------------------------
 // Iterator_DirectoryWalk
 //-----------------------------------------------------------------------------
@@ -317,11 +261,11 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 			_directoryDeque.pop_front();
 		}
 		if (!pDirectoryChild) return nullptr;
-		if (pDirectoryChild->IsLikeContainer() &&
+		if (pDirectoryChild->IsLikeFolder() &&
 			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
 			_directoryDeque.push_back(pDirectoryChild->Reference());
 		}
-		if ((pDirectoryChild->IsLikeContainer() && _dirFlag) || (!pDirectoryChild->IsLikeContainer() && _fileFlag)) {
+		if ((pDirectoryChild->IsLikeFolder() && _dirFlag) || (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
 			bool matchFlag = false;
 			for (const String& pattern : _patterns) {
 				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern.c_str())) {
@@ -417,12 +361,12 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 		if (!pDirectoryChild) return nullptr;
 		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(_patternSegs[_depth].c_str())) {
 			if (_depth + 1 < _patternSegs.size()) {
-				if (pDirectoryChild->IsLikeContainer()) {
+				if (pDirectoryChild->IsLikeFolder()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
 					_depthDeque.push_back(static_cast<UInt>(_depth + 1));
 				}
-			} else if ((pDirectoryChild->IsLikeContainer() && _dirFlag) ||
-					   (!pDirectoryChild->IsLikeContainer() && _fileFlag)) {
+			} else if ((pDirectoryChild->IsLikeFolder() && _dirFlag) ||
+					   (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
 				if (_statFlag) {
 					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {

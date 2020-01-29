@@ -115,7 +115,7 @@ Gurax_ImplementFunction(Dir)
 	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
 	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
 	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
-	bool caseFlag = pDirectory->IsCaseSensitive();
+	bool caseFlag = pDirectory->GetCaseFlag();
 	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
 	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
 	// Function body
@@ -542,7 +542,7 @@ Gurax_ImplementFunction(Walk)
 	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
 	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
 	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
-	bool caseFlag = pDirectory->IsCaseSensitive();
+	bool caseFlag = pDirectory->GetCaseFlag();
 	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
 	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
 	// Function body

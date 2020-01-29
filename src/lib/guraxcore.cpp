@@ -14,6 +14,7 @@ bool Initialize(int& argc, char** argv)
 	Codec::Bootup();
 	DeclCallable::Bootup();
 	DeclArg::Bootup();
+	Directory::Bootup();
 	Error::Bootup();
 	Expr::Bootup();
 	Function::Bootup();

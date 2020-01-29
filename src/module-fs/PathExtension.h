@@ -41,7 +41,7 @@ protected:
 	DIR* _pDir;
 #endif
 public:
-	DirectoryEx(String name, Type type, StatEx* pStatEx);
+	DirectoryEx(Type type, String name, StatEx* pStatEx);
 protected:
 	~DirectoryEx();
 protected:

@@ -8,24 +8,29 @@
 
 namespace Gurax {
 
-class Directory_CustomContainer;
-
 //------------------------------------------------------------------------------
 // Directory
+//
+// +-----------+ parent       +-----------+
+// | Directory |--------------* Directory |
+// +-----------+        child +-----*-----+
+//                                  |
+//                          +-----------------+ 1   +-----------------+
+//                          | Directory::Core *-----| Directory::Core |
+//                          +-----------------+   n +-----------------+
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Directory : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Directory);
 public:
-	enum class Type { None, Item, Container, Boundary, Root, };
+	enum class Type { None, Item, Folder, Boundary, };
 	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
 	public:
 		SymbolAssoc_Type() {
 			Assoc(Gurax_Symbol(item),		Type::Item);
-			Assoc(Gurax_Symbol(container),	Type::Container);
+			Assoc(Gurax_Symbol(container),	Type::Folder);
 			Assoc(Gurax_Symbol(boundary),	Type::Boundary);
-			Assoc(Gurax_Symbol(root),		Type::Root);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
@@ -42,6 +47,8 @@ public:
 	class GURAX_DLLDECLARE CoreOwner : public CoreList, public Referable {
 	public:
 		Gurax_DeclareReferable(CoreOwner);
+	public:
+		static RefPtr<CoreOwner> Empty;
 	protected:
 		~CoreOwner() { Clear(); }
 	public:
@@ -64,6 +71,7 @@ public:
 	protected:
 		virtual ~Core() = default;
 	public:
+		Type GetType() const { return _type; }
 		void SetName(String name) { _name = name; }
 		const char* GetName() const { return _name.c_str(); }
 		void SetCoreOwner(CoreOwner* pCoreOwner) { _pCoreOwner.reset(pCoreOwner); }
@@ -80,16 +88,17 @@ public:
 		virtual Directory* GenerateDirectory() { return nullptr; }
 	};
 protected:
-	String _name;
-	Type _type;
-	char _sep;
-	bool _caseFlag;
+	RefPtr<Core> _pCore;
 	RefPtr<Directory> _pDirectoryParent;
 public:
+	static void Bootup();
+public:
 	// Constructor
-	Directory(Type type, char sep, bool caseFlag) : _type(type), _sep(sep), _caseFlag(caseFlag) {}
-	Directory(String name, Type type, char sep, bool caseFlag) :
-		_name(name), _type(type), _sep(sep), _caseFlag(caseFlag) {}
+	Directory(Core* pCore) : _pCore(pCore) {}
+	Directory(Type type, char sep, bool caseFlag) :
+		Directory(new Core(type, sep, caseFlag, CoreOwner::Empty->Reference())) {}
+	Directory(Type type, String name, char sep, bool caseFlag) :
+		Directory(new Core(type, name, sep, caseFlag, CoreOwner::Empty->Reference())) {}
 	// Copy constructor/operator
 	Directory(const Directory& src) = delete;
 	Directory& operator=(const Directory& src) = delete;
@@ -101,37 +110,33 @@ protected:
 public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
-	void SetName(String name) { _name = name; }
+	void SetName(String name) { _pCore->SetName(name); }
 	void RewindChild() { return DoRewindChild(); }
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* CreateStatValue() { return DoCreateStatValue(); }
-	const char* GetName() const { return _name.c_str(); }
-	char GetSep() const { return _sep; }
-	bool IsCaseSensitive() const { return _caseFlag; }
-	Type GetType() const { return _type; }
-	bool IsItem() const { return _type == Type::Item; }
-	bool IsContainer() const { return _type == Type::Container; }
-	bool IsBoundary() const { return _type == Type::Boundary; }
-	bool IsRoot() const { return _type == Type::Root; }
-	bool IsLikeContainer() const {
-		return _type == Type::Container || _type == Type::Boundary || _type == Type::Root;
+	const char* GetName() const { return _pCore->GetName(); }
+	char GetSep() const { return _pCore->GetSep(); }
+	bool GetCaseFlag() const { return _pCore->GetCaseFlag(); }
+	Type GetType() const { return _pCore->GetType(); }
+	bool IsItem() const { return GetType() == Type::Item; }
+	bool IsFolder() const { return GetType() == Type::Folder; }
+	bool IsBoundary() const { return GetType() == Type::Boundary; }
+	bool IsLikeFolder() const {
+		return GetType() == Type::Folder || GetType() == Type::Boundary;
 	}
 	void SetDirectoryParent(Directory* pDirectoryParent) { _pDirectoryParent.reset(pDirectoryParent); }
 	const Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
 	bool DoesMatch(const char* name) const {
-		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(name);
+		return PathName(GetName()).SetCaseFlag(GetCaseFlag()).DoesMatchPattern(name);
 	}
 	bool DoesMatchPattern(const char* pattern) const {
-		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern);
+		return PathName(GetName()).SetCaseFlag(GetCaseFlag()).DoesMatchPattern(pattern);
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
 	Directory* SearchByName(const char* name);
 	Directory* SearchInTree(const char** pPathName);
-public:
-	virtual Directory_CustomContainer* CreateEmptyCustomContainer(String name) { return nullptr; }
-	virtual bool IsCustomContainer() const { return false; }
 protected:
 	virtual void DoRewindChild() {}
 	virtual Directory* DoNextChild() { return nullptr; }
@@ -195,32 +200,6 @@ public:
 	~DirectoryDequeOwner() { Clear(); }
 	void Clear();
 };
-
-#if 0
-//------------------------------------------------------------------------------
-// Directory_CustomContainer
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_CustomContainer : public Directory {
-public:
-	RefPtr<DirectoryOwner> _pDirectoryOwner;
-	size_t _idxChild;
-	RefPtr<WeakPtr> _pwDirectoryParent;
-public:
-	Directory_CustomContainer(Type type, char sep, bool caseFlag) :
-		Directory(type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idxChild(0) {}
-	Directory_CustomContainer(String name, Type type, char sep, bool caseFlag) :
-		Directory(name, type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idxChild(0) {}
-public:
-	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
-	const DirectoryOwner& GetDirectoryOwner() const { return *_pDirectoryOwner; }
-	void SetDirectoryOwner(DirectoryOwner* pDirectoryOwner) { _pDirectoryOwner.reset(pDirectoryOwner); }
-	bool AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild);
-	virtual bool IsCustomContainer() const override { return true; }
-protected:
-	virtual void DoRewindChild() override;
-	virtual Directory* DoNextChild() override;
-};
-#endif
 
 //------------------------------------------------------------------------------
 // Iterator_DirectoryWalk
