@@ -102,44 +102,44 @@ String Directory::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Directory::FactoryList
+// Directory::CoreList
 //------------------------------------------------------------------------------
-Directory::Factory* Directory::FactoryList::FindByName(const char* name) const
+Directory::Core* Directory::CoreList::FindByName(const char* name) const
 {
-	for (Factory* pFactory : *this) {
-		if (pFactory->DoesMatch(name)) return pFactory;
+	for (Core* pCore : *this) {
+		if (pCore->DoesMatch(name)) return pCore;
 	}
 	return nullptr;
 }
 
-Directory::FactoryList::iterator Directory::FactoryList::FindIteratorByName(const char* name)
+Directory::CoreList::iterator Directory::CoreList::FindIteratorByName(const char* name)
 {
-	for (auto ppFactory = begin(); ppFactory != end(); ppFactory++) {
-		Factory* pFactory = *ppFactory;
-		if (pFactory->DoesMatch(name)) return ppFactory;
+	for (auto ppCore = begin(); ppCore != end(); ppCore++) {
+		Core* pCore = *ppCore;
+		if (pCore->DoesMatch(name)) return ppCore;
 	}
 	return end();
 }
 
 //------------------------------------------------------------------------------
-// Directory::FactoryOwner
+// Directory::CoreOwner
 //------------------------------------------------------------------------------
-void Directory::FactoryOwner::Clear()
+void Directory::CoreOwner::Clear()
 {
-	for (Factory* pFactory : *this) Factory::Delete(pFactory);
+	for (Core* pCore : *this) Core::Delete(pCore);
 	clear();
 }
 
 //------------------------------------------------------------------------------
-// Directory::Factory
+// Directory::Core
 //------------------------------------------------------------------------------
-bool Directory::Factory::AddChildInTree(const char* pathName, RefPtr<Factory> pFactoryChild)
+bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChild)
 {
 	String driveLetter;
 	String prefix;
 	StringList fields;
 	PathName(pathName).SplitIntoFields(&driveLetter, &prefix, fields);
-	Factory* pFactoryParent = this;
+	Core* pCoreParent = this;
 	auto pField = fields.begin();
 	if (pField == fields.end()) {
 		Error::Issue(ErrorType::PathError, "invalid path name");
@@ -147,27 +147,32 @@ bool Directory::Factory::AddChildInTree(const char* pathName, RefPtr<Factory> pF
 	}
 	for ( ; pField + 1 != fields.end() && !(pField + 1)->empty(); pField++) {
 		const String& field = *pField;
-		Factory* pFactory = pFactoryParent->GetFactoryOwner().FindByName(field.c_str());
-		if (!pFactory) {
-			Factory* pFactoryNew = new Factory(field, new FactoryOwner(), pFactoryChild->GetCaseFlag());
-			pFactoryParent->GetFactoryOwner().push_back(pFactoryNew);
-			pFactoryParent = pFactoryNew;
+		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
+		if (!pCore) {
+			Core* pCoreNew = new Core(Type::Container, field, GetSep(), GetCaseFlag(), new CoreOwner());
+			pCoreParent->GetCoreOwner().push_back(pCoreNew);
+			pCoreParent = pCoreNew;
 		} else {
-			pFactoryParent = pFactory;
+			pCoreParent = pCore;
 		}
 	}
 	const String& field = *pField;
-	pFactoryChild->SetName(field);
-	FactoryOwner& factoryOwner = pFactoryParent->GetFactoryOwner();
-	auto ppFactoryFound = factoryOwner.FindIteratorByName(field.c_str());
-	if (ppFactoryFound == factoryOwner.end()) {
-		factoryOwner.push_back(pFactoryChild.release());
+	pCoreChild->SetName(field);
+	CoreOwner& factoryOwner = pCoreParent->GetCoreOwner();
+	auto ppCoreFound = factoryOwner.FindIteratorByName(field.c_str());
+	if (ppCoreFound == factoryOwner.end()) {
+		factoryOwner.push_back(pCoreChild.release());
 	} else {
-		pFactoryChild->SetFactoryOwner((*ppFactoryFound)->GetFactoryOwner().Reference());
-		Factory::Delete(*ppFactoryFound);
-		*ppFactoryFound = pFactoryChild.release();
+		pCoreChild->SetCoreOwner((*ppCoreFound)->GetCoreOwner().Reference());
+		Core::Delete(*ppCoreFound);
+		*ppCoreFound = pCoreChild.release();
 	}
 	return true;
+}
+
+void Directory::Core::Print(Stream& stream, int indentLevel) const
+{
+	stream.Printf("");
 }
 
 //------------------------------------------------------------------------------

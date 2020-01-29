@@ -135,29 +135,6 @@ bool DirectoryEx::ReadCentralDirectory()
 	return true;
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-// Directory_ZIPFile
-//-----------------------------------------------------------------------------
-Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
-{
-	return CreateStream(*_pStreamSrc, *_pStatEx);
-}
-
-Value* Directory_ZIPFile::DoCreateStatValue()
-{
-	return new Value_StatEx(_pStatEx.Reference());
-}
-
-//-----------------------------------------------------------------------------
-// Directory_ZIPFolder
-//-----------------------------------------------------------------------------
-Value* Directory_ZIPFolder::DoCreateStatValue()
-{
-	return new Value_StatEx(_pStatEx.Reference());
-}
-#endif
-
 //-----------------------------------------------------------------------------
 // Stream_Reader
 //-----------------------------------------------------------------------------

@@ -33,44 +33,49 @@ public:
 		}
 	};
 public:
-	class Factory;
-	class GURAX_DLLDECLARE FactoryList : public std::vector<Factory*> {
+	class Core;
+	class GURAX_DLLDECLARE CoreList : public std::vector<Core*> {
 	public:
-		Factory* FindByName(const char* name) const;
+		Core* FindByName(const char* name) const;
 		iterator FindIteratorByName(const char* name);
 	};
-	class GURAX_DLLDECLARE FactoryOwner : public FactoryList, public Referable {
+	class GURAX_DLLDECLARE CoreOwner : public CoreList, public Referable {
 	public:
-		Gurax_DeclareReferable(FactoryOwner);
+		Gurax_DeclareReferable(CoreOwner);
 	protected:
-		~FactoryOwner() { Clear(); }
+		~CoreOwner() { Clear(); }
 	public:
 		void Clear();
 	};
-	class GURAX_DLLDECLARE Factory : public Referable {
+	class GURAX_DLLDECLARE Core : public Referable {
 	public:
-		Gurax_DeclareReferable(Factory);
+		Gurax_DeclareReferable(Core);
 	protected:
+		Type _type;
 		String _name;
-		RefPtr<FactoryOwner> _pFactoryOwner;
+		char _sep;
 		bool _caseFlag;
+		RefPtr<CoreOwner> _pCoreOwner;
 	public:
-		Factory(FactoryOwner* pFactoryOwner, bool caseFlag) :
-			_pFactoryOwner(pFactoryOwner), _caseFlag(caseFlag) {}
-		Factory(String name, FactoryOwner* pFactoryOwner, bool caseFlag) :
-			_name(name), _pFactoryOwner(pFactoryOwner), _caseFlag(caseFlag) {}
+		Core(Type type, char sep, bool caseFlag, CoreOwner* pCoreOwner) :
+			_type(type), _sep(sep), _caseFlag(caseFlag), _pCoreOwner(pCoreOwner) {}
+		Core(Type type, String name, char sep, bool caseFlag, CoreOwner* pCoreOwner) :
+			_type(type), _name(name), _sep(sep), _caseFlag(caseFlag), _pCoreOwner(pCoreOwner) {}
 	protected:
-		virtual ~Factory() = default;
+		virtual ~Core() = default;
 	public:
 		void SetName(String name) { _name = name; }
-		void SetFactoryOwner(FactoryOwner* pFactoryOwner) { _pFactoryOwner.reset(pFactoryOwner); }
-		FactoryOwner& GetFactoryOwner() { return *_pFactoryOwner; }
-		const FactoryOwner& GetFactoryOwner() const { return *_pFactoryOwner; }
+		const char* GetName() const { return _name.c_str(); }
+		void SetCoreOwner(CoreOwner* pCoreOwner) { _pCoreOwner.reset(pCoreOwner); }
+		CoreOwner& GetCoreOwner() { return *_pCoreOwner; }
+		const CoreOwner& GetCoreOwner() const { return *_pCoreOwner; }
+		char GetSep() const { return _sep; }
 		bool GetCaseFlag() const { return _caseFlag; }
-		bool AddChildInTree(const char* pathName, RefPtr<Factory> pFactoryChild);
+		bool AddChildInTree(const char* pathName, RefPtr<Core> pCoreChild);
 		bool DoesMatch(const char* name) {
-			return PathName(_name).SetCaseFlag(_caseFlag).DoesMatch(name);
+			return PathName(_name).SetCaseFlag(GetCaseFlag()).DoesMatch(name);
 		}
+		void Print(Stream& stream, int indentLevel = 0) const;
 	public:
 		virtual Directory* GenerateDirectory() { return nullptr; }
 	};
