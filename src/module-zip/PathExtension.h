@@ -33,6 +33,8 @@ public:
 public:
 	CentralFileHeader& GetCentralFileHeader() { return *_pCentralFileHeader; }
 	const CentralFileHeader& GetCentralFileHeader() const { return *_pCentralFileHeader; }
+public:
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //-----------------------------------------------------------------------------

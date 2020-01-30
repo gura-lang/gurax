@@ -72,6 +72,36 @@ Gurax_ImplementPropertyGetter(Stat, fileName)
 	return new Value_String(PathName(stat.GetPathName()).ExtractFileName());
 }
 
+// Stat#headName
+Gurax_DeclareProperty_R(Stat, headName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The head name of the item.");
+}
+
+Gurax_ImplementPropertyGetter(Stat, headName)
+{
+	Stat& stat = GetValueThis(valueTarget).GetStat();
+	return new Value_String(PathName(stat.GetPathName()).ExtractHeadName());
+}
+
+// Stat#bottomName
+Gurax_DeclareProperty_R(Stat, bottomName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The bottom name of the item.");
+}
+
+Gurax_ImplementPropertyGetter(Stat, bottomName)
+{
+	Stat& stat = GetValueThis(valueTarget).GetStat();
+	return new Value_String(PathName(stat.GetPathName()).ExtractBottomName());
+}
+
 // Stat#size
 Gurax_DeclareProperty_R(Stat, size)
 {
@@ -282,6 +312,8 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Stat, pathName));
 	Assign(Gurax_CreateProperty(Stat, dirName));
 	Assign(Gurax_CreateProperty(Stat, fileName));
+	Assign(Gurax_CreateProperty(Stat, headName));
+	Assign(Gurax_CreateProperty(Stat, bottomName));
 	Assign(Gurax_CreateProperty(Stat, size));
 	Assign(Gurax_CreateProperty(Stat, atime));
 	Assign(Gurax_CreateProperty(Stat, mtime));

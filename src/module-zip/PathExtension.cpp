@@ -18,6 +18,7 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+	const char* pathName = *pPathName;
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
@@ -28,7 +29,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	pDirectory->SetDirectoryParent(Directory::Reference(pDirectoryParent));
 	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
 	if (!pDirectoryFound) {
-		Error::Issue(ErrorType::PathError, "specified path is not found");
+		Error::Issue(ErrorType::PathError, "specified path is not found: %s", pathName);
 		return nullptr;
 	}
 	return pDirectoryFound->Reference();
@@ -50,6 +51,16 @@ StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
 		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
 	_pCentralFileHeader(pCentralFileHeader)
 {
+}
+
+String StatEx::ToString(const StringStyle& ss) const
+{
+	String str = Stat::ToString(ss);
+	str += ":zip";
+	str += ":";
+	const Symbol* pSymbol = CompressionMethodToSymbol(_pCentralFileHeader->GetCompressionMethod());
+	str += pSymbol->GetName();
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -161,7 +172,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 Value* DirectoryEx::DoCreateStatValue()
 {
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
-	return pStatEx? new Value_Stat(pStatEx->Reference()) : nullptr;
+	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
 }
 
 //-----------------------------------------------------------------------------

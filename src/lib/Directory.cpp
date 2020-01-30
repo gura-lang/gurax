@@ -64,17 +64,18 @@ int Directory::CountDepth() const
 
 Directory* Directory::SearchByName(const char* name)
 {
+	RefPtr<Directory> pDirectory;
 	RewindChild();
 	for (;;) {
-		RefPtr<Directory> pDirectory(NextChild());
-		if (pDirectory->DoesMatch(name)) return pDirectory.release();
+		pDirectory.reset(NextChild());
+		if (!pDirectory || pDirectory->DoesMatch(name)) break;
 	}
-	return nullptr;
+	return pDirectory.release();
 }
 
 Directory* Directory::SearchInTree(const char** pPathName)
 {
-	RefPtr<Directory> pDirectory;
+	RefPtr<Directory> pDirectory(Reference());
 	String field;
 	for (const char*& p = *pPathName; ; ) {
 		if (*p == '\0') {
@@ -86,7 +87,7 @@ Directory* Directory::SearchInTree(const char** pPathName)
 			continue;
 		}
 		if (field.empty()) return nullptr;
-		pDirectory.reset(SearchByName(field.c_str()));
+		pDirectory.reset(pDirectory->SearchByName(field.c_str()));
 		if (!pDirectory) return nullptr;
 		if (*p == '\0' || !pDirectory->IsFolder()) break;
 		field.clear();
