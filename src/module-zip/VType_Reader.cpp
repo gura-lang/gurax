@@ -83,9 +83,8 @@ Gurax_ImplementMethod(Reader, Entry)
 		Error::Issue(ErrorType::PathError, "the specified entry is a folder");
 		return Value::nil();
 	}
-	RefPtr<Stream> pStream(CreateStream(reader.GetStreamSrc(), *pStatEx));
-	if (!pStream) return nullptr;
-	return new Value_Stream(pStream.release());
+	RefPtr<Stream> pStream(Stream_Reader::Create(reader.GetStreamSrc(), *pStatEx));
+	return pStream? new Value_Stream(pStream.release()) : nullptr;
 }
 
 // zip.Reader#Entries():[all] {block?}

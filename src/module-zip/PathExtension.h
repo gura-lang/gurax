@@ -72,7 +72,7 @@ public:
 		Stream& GetStreamSrc() { return *_pStreamSrc; }
 		StatEx* GetStatEx() { return _pStatEx.get(); }
 	public:
-		virtual Directory* GenerateDirectory() { return new DirectoryEx(Reference()); }
+		virtual Directory* GenerateDirectory() override { return new DirectoryEx(Reference()); }
 	};
 private:
 	size_t _idxChild;
@@ -85,10 +85,10 @@ public:
 	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
 	bool ReadCentralDirectory();
 protected:
-	virtual void DoRewindChild();
-	virtual Directory* DoNextChild();
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags);
-	virtual Value* DoCreateStatValue();
+	virtual void DoRewindChild() override;
+	virtual Directory* DoNextChild() override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
+	virtual Value* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------
@@ -108,6 +108,8 @@ public:
 	Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx);
 public:
 	size_t CheckCRC32(const void* buff, size_t bytesRead);
+public:
+	static Stream* Create(Stream& streamSrc, const StatEx& statEx);
 public:
 	virtual bool Initialize() = 0;
 	virtual const char* GetName() const override { return _name.c_str(); }

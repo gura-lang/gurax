@@ -27,7 +27,7 @@ Value* Iterator_Entry::DoNextValue()
 	while (_idx < statExOwner.size()) {
 		StatEx* pStatEx = statExOwner[_idx++];
 		if (_skipDirFlag && pStatEx->IsDir()) continue;
-		RefPtr<Stream> pStream(CreateStream(_pReader->GetStreamSrc(), *pStatEx));
+		RefPtr<Stream> pStream(Stream_Reader::Create(_pReader->GetStreamSrc(), *pStatEx));
 		if (!pStream) return nullptr;
 		return new Value_Stream(pStream.release());
 	}

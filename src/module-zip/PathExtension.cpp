@@ -131,6 +131,7 @@ bool DirectoryEx::ReadCentralDirectory()
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
 		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
+		//pStatEx->GetCentralFileHeader().Print(*Stream::COut);
 	}
 	//GetCoreEx().Print(*Stream::COut);
 	return true;
@@ -152,7 +153,9 @@ Directory* DirectoryEx::DoNextChild()
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
-	return nullptr;
+	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
+	StatEx* pStatEx = GetCoreEx().GetStatEx();
+	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
 }
 
 Value* DirectoryEx::DoCreateStatValue()
@@ -172,6 +175,67 @@ Stream_Reader::Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx) :
 	_crc32Expected(pStatEx->GetCentralFileHeader().GetCrc32()),
 	_seekedFlag(false)
 {
+}
+
+Stream* Stream_Reader::Create(Stream& streamSrc, const StatEx& statEx)
+{
+	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
+	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
+	streamSrc.Seek(offset, Stream::SeekMode::Set);
+	if (Error::IsIssued()) return nullptr;
+	do {
+		UInt32 signature;
+		if (!ReadStream(streamSrc, &signature)) return nullptr;
+		if (signature != LocalFileHeader::Signature) {
+			Error::Issue(ErrorType::FormatError, "invalid ZIP format");
+			return nullptr;
+		}
+		LocalFileHeader hdr;
+		if (!hdr.Read(streamSrc)) return nullptr;
+	} while (0);
+	UInt16 compressionMethod = hdr.GetCompressionMethod();
+	RefPtr<Stream_Reader> pStream;
+	if (compressionMethod == CompressionMethod::Store) {
+		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
+	} else if (compressionMethod == CompressionMethod::Shrink) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Factor1) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Factor2) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Factor3) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Factor4) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Implode) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Factor1) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::Deflate) {
+		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), statEx.Reference()));
+	} else if (compressionMethod == CompressionMethod::Deflate64) {
+		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), statEx.Reference()));
+	} else if (compressionMethod == CompressionMethod::PKWARE) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::BZIP2) {
+		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), statEx.Reference()));
+	} else if (compressionMethod == CompressionMethod::LZMA) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::TERSA) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::LZ77) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::WavPack) {
+		// unsupported
+	} else if (compressionMethod == CompressionMethod::PPMd) {
+		// unsupported
+	}
+	if (!pStream) {
+		Error::Issue(ErrorType::FormatError, "unsupported compression method %d", compressionMethod);
+		return nullptr;
+	}
+	if (!pStream->Initialize()) return nullptr;
+	return pStream.release();
 }
 
 size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)

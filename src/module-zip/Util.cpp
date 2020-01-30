@@ -84,67 +84,6 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
-Stream* CreateStream(Stream& streamSrc, const StatEx& statEx)
-{
-	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
-	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
-	streamSrc.Seek(offset, Stream::SeekMode::Set);
-	if (Error::IsIssued()) return nullptr;
-	do {
-		UInt32 signature;
-		if (!ReadStream(streamSrc, &signature)) return nullptr;
-		if (signature != LocalFileHeader::Signature) {
-			Error::Issue(ErrorType::FormatError, "invalid ZIP format");
-			return nullptr;
-		}
-		LocalFileHeader hdr;
-		if (!hdr.Read(streamSrc)) return nullptr;
-	} while (0);
-	UInt16 compressionMethod = hdr.GetCompressionMethod();
-	RefPtr<Stream_Reader> pStream;
-	if (compressionMethod == CompressionMethod::Store) {
-		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Shrink) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor2) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor3) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor4) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Implode) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Deflate) {
-		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Deflate64) {
-		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::PKWARE) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::BZIP2) {
-		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::LZMA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::TERSA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::LZ77) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::WavPack) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::PPMd) {
-		// unsupported
-	}
-	if (!pStream) {
-		Error::Issue(ErrorType::FormatError, "unsupported compression method %d", compressionMethod);
-		return nullptr;
-	}
-	if (!pStream->Initialize()) return nullptr;
-	return pStream.release();
-}
-
 bool SkipStream(Stream& stream, size_t bytes)
 {
 	return stream.Seek(static_cast<long>(bytes), Stream::SeekMode::Cur);

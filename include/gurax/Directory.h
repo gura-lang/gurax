@@ -85,7 +85,7 @@ public:
 		}
 		void Print(Stream& stream, int indentLevel = 0) const;
 	public:
-		virtual Directory* GenerateDirectory() { return nullptr; }
+		virtual Directory* GenerateDirectory() { return new Directory(Reference()); }
 	};
 protected:
 	RefPtr<Core> _pCore;
