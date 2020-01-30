@@ -137,6 +137,14 @@ public:
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
+	static void IssueIfFirst(const ErrorType& errorType, const char* const format, const Args&... args) {
+		if (_errorIssuedFlag || _pErrorOwnerGlobal->GetSuppressFlag()) return;
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->ClearSuppressFlag();
+		_errorIssuedFlag = true;
+	}
+	template<typename... Args>
 	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
 						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;

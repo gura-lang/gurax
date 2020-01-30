@@ -46,8 +46,51 @@ Gurax_ImplementConstructor(Directory)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Directory> pDirectory(Directory::Open(pathName));
-	if (!pDirectory) return Value::nil();
+	if (!pDirectory) {
+		Error::IssueIfFirst(ErrorType::PathError, "failed to open the path: %s", pathName);
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
+}
+
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// Directory#Open(pathName:String, mode?:String, codec?:Codec) {block?}
+Gurax_DeclareMethod(Directory, Open)
+{
+	Declare(VTYPE_Directory, Flag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Stream` instance that reads a content stored under the target Directory.\n");
+}
+
+Gurax_ImplementMethod(Directory, Open)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	Stream::OpenFlags openFlags = args.IsValid()?
+		Stream::ModeToOpenFlags(args.PickString()) : Stream::OpenFlag::None;
+	const Codec* pCodec = args.IsValid()? &Value_Codec::GetCodec(args.PickValue()) : nullptr;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const char* p = pathName;
+	RefPtr<Directory> pDirectory(valueThis.GetDirectory().SearchInTree(&p));
+	if (!pDirectory || *p != '\0') {
+		Error::IssueIfFirst(ErrorType::PathError, "specified path is not found: %s", pathName);
+		return Value::nil();
+	}
+	RefPtr<Stream> pStream(pDirectory->OpenStream(openFlags));
+	if (!pStream) return Value::nil();
+	if (pCodec) pStream->SetCodec(pCodec->Reference());
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -115,6 +158,8 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Directory));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Directory, Open));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Directory, name));
 	Assign(Gurax_CreateProperty(Directory, parent));
@@ -140,7 +185,7 @@ VType& Value_Directory::vtype = VTYPE_Directory;
 String Value_Directory::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
-	str += "<directory:";
+	str += "<Directory:";
 	str += GetDirectory().ToString(ss);
 	str += ">";
 	return str;
