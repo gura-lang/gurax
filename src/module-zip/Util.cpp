@@ -43,7 +43,7 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 	return new DateTime(year, month, day, secPacked, usecPacked);
 }
 
-UInt32 SeekCentralDirectory(Stream& streamSrc)
+UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRecord)
 {
 	size_t bytesZIPFile = streamSrc.GetSize();
 	if (bytesZIPFile == -1) {
@@ -80,18 +80,21 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	}
 	EndOfCentralDirectoryRecord record;
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
+	if (pRecord) *pRecord = record;
 	return Gurax_UnpackUInt32(record.GetFields().
 							  OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
 bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)
 {
-	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
+	EndOfCentralDirectoryRecord rec;
+	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc, &rec);
 	if (Error::IsIssued()) return false;
+	rec.Print(streamCon);
 	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return false;
 	UInt32 signature;
 	while (ReadStream(streamSrc, &signature)) {
-		streamCon.Printf("%08x %08x\n", streamSrc.GetOffset(), signature);
+		streamCon.Printf("\n");
 		if (signature == LocalFileHeader::Signature) {
 			LocalFileHeader hdr;
 			if (!hdr.Read(streamSrc)) return false;
@@ -102,7 +105,7 @@ bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)
 		} else if (signature == CentralFileHeader::Signature) {
 			CentralFileHeader hdr;
 			if (!hdr.Read(streamSrc)) return false;
-			::printf("check\n");
+			hdr.Print(streamCon);
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(streamSrc)) return false;
