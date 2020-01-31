@@ -35,7 +35,7 @@ public:
 	UInt16 GetCompressionMethod() { return _compressionMethod; }
 	StatExOwner& GetStatExOwner() { return _statExOwner; }
 	bool Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod);
-	bool AddParentFolders(const char* fileName);
+	bool AddParentFolders(const char* fileName, const DateTime& dateTime);
 	bool Finish();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

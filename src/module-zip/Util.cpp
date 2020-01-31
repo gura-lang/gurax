@@ -120,7 +120,7 @@ bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)
 			if (!record.Read(streamSrc)) return false;
 			break;
 		} else {
-			streamCon.Printf("unknown signature %08x", signature);
+			streamCon.Printf("unknown signature %08x\n", signature);
 			return false;
 		}
 	}

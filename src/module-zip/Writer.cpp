@@ -10,12 +10,12 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod)
 {
-	if (!AddParentFolders(fileName)) return false;
+	RefPtr<Stat> pStat(streamSrc.CreateStat());
+	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
+	if (!AddParentFolders(fileName, *pDateTime)) return false;
 	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
 	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
-	RefPtr<Stat> pStat(streamSrc.CreateStat());
-	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
 	UInt16 lastModFileTime = GetDosTime(*pDateTime);
 	UInt16 lastModFileDate = GetDosDate(*pDateTime);
 	UInt16 internalFileAttributes = 0;
@@ -125,8 +125,18 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	return true;
 }
 
-bool Writer::AddParentFolders(const char* fileName)
+bool Writer::AddParentFolders(const char* fileName, const DateTime& dateTime)
 {
+	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
+	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
+	UInt16 compressionMethod = CompressionMethod::Store;
+	UInt32 compressedSize = 0;
+	UInt32 uncompressedSize = 0;
+	UInt16 lastModFileTime = GetDosTime(dateTime);
+	UInt16 lastModFileDate = GetDosDate(dateTime);
+	UInt16 internalFileAttributes = 0;
+	UInt32 externalFileAttributes = (1 << 5);
+	UInt32 relativeOffsetOfLocalHeader = static_cast<UInt32>(_pStreamDst->GetOffset());
 	String fileNameAccum;
 	for (const char* p = fileName; *p; ) {
 		if (*p == '\0') {
@@ -138,7 +148,45 @@ bool Writer::AddParentFolders(const char* fileName)
 			continue;
 		}
 		if (*p == '\0') break;
-		::printf("%s\n", fileNameAccum.c_str());
+		if (_statExOwner.FindByName(fileNameAccum.c_str())) return true;
+		std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
+		do {
+			CentralFileHeader::Fields& fields = pCentralFileHeader->GetFields();
+			Gurax_PackUInt16(fields.VersionMadeBy,					version);
+			Gurax_PackUInt16(fields.VersionNeededToExtract,			version);
+			Gurax_PackUInt16(fields.GeneralPurposeBitFlag,			generalPurposeBitFlag);
+			Gurax_PackUInt16(fields.CompressionMethod,				compressionMethod);
+			Gurax_PackUInt16(fields.LastModFileTime,				lastModFileTime);
+			Gurax_PackUInt16(fields.LastModFileDate,				lastModFileDate);
+			Gurax_PackUInt32(fields.Crc32,							0x00000000);
+			Gurax_PackUInt32(fields.CompressedSize,					compressedSize);
+			Gurax_PackUInt32(fields.UncompressedSize,				uncompressedSize);
+			Gurax_PackUInt16(fields.FileNameLength,					0x0000);
+			Gurax_PackUInt16(fields.ExtraFieldLength,				0x0000);
+			Gurax_PackUInt16(fields.FileCommentLength,				0x0000);
+			Gurax_PackUInt16(fields.DiskNumberStart,				0x0000);
+			Gurax_PackUInt16(fields.InternalFileAttributes,			internalFileAttributes);
+			Gurax_PackUInt32(fields.ExternalFileAttributes,			externalFileAttributes);
+			Gurax_PackUInt32(fields.RelativeOffsetOfLocalHeader,	relativeOffsetOfLocalHeader);
+			pCentralFileHeader->SetFileName(fileNameAccum.c_str());
+			if (!pCentralFileHeader->WriteAsLocalFileHeader(*_pStreamDst)) return false;
+		} while (0);
+		UInt32 crc32num = 0x00000000;
+		do {
+			DataDescriptor desc;
+			DataDescriptor::Fields &fields = desc.GetFields();
+			Gurax_PackUInt32(fields.Crc32,				crc32num);
+			Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
+			Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
+			if (!desc.Write(*_pStreamDst)) return false;
+		} while (0);
+		do {
+			CentralFileHeader::Fields &fields = pCentralFileHeader->GetFields();
+			Gurax_PackUInt32(fields.Crc32,				crc32num);
+			Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
+			Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
+		} while (0);
+		_statExOwner.push_back(new StatEx(pCentralFileHeader.release()));
 	}
 	return true;
 }
