@@ -108,8 +108,6 @@ public:
 protected:
 	virtual ~Directory() = default;
 public:
-	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
-public:
 	void SetName(String name) { _pCore->SetName(name); }
 	void RewindChild() { return DoRewindChild(); }
 	Directory* NextChild() { return DoNextChild(); }

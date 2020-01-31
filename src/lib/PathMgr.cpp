@@ -27,15 +27,15 @@ PathMgr* PathMgr::FindResponsible(const char* pathName)
 Directory* PathMgr::OpenDirectory(const char* pathName, Directory::Type typeWouldBe)
 {
 	const PathMgrList& pathMgrList = Basement::Inst.GetPathMgrList();
-	Directory* pDirectory = nullptr;
+	RefPtr<Directory> pDirectory;
 	while (*pathName) {
 		if (pDirectory && PathName::IsSep(*pathName)) pathName++;
-		PathMgr* pPathMgr = pathMgrList.FindResponsible(pDirectory, pathName);
+		PathMgr* pPathMgr = pathMgrList.FindResponsible(pDirectory.get(), pathName);
 		if (!pPathMgr) return nullptr;
-		pDirectory = pPathMgr->OpenDirectory(pDirectory, &pathName, typeWouldBe);
+		pDirectory.reset(pPathMgr->OpenDirectory(pDirectory.release(), &pathName, typeWouldBe));
 		if (!pDirectory) return nullptr;
 	}
-	return pDirectory;
+	return pDirectory.release();
 }
 
 PathMgr::Existence PathMgr::CheckExistence(const char* pathName)

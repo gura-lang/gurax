@@ -45,7 +45,7 @@ Gurax_ImplementConstructor(Directory)
 	const char* pathName = args.PickString();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Directory> pDirectory(Directory::Open(pathName));
+	RefPtr<Directory> pDirectory(PathMgr::OpenDirectory(pathName));
 	if (!pDirectory) {
 		Error::IssueIfFirst(ErrorType::PathError, "failed to open the path: %s", pathName);
 		return Value::nil();
@@ -170,7 +170,7 @@ Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) con
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);
-		RefPtr<Directory> pDirectory(Directory::Open((*pathName == '\0')? "." : pathName));
+		RefPtr<Directory> pDirectory(PathMgr::OpenDirectory((*pathName == '\0')? "." : pathName));
 		if (!pDirectory) return nullptr;
 		return new Value_Directory(pDirectory.release());
 	}

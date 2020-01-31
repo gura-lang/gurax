@@ -13,11 +13,6 @@ void Directory::Bootup()
 	Directory::CoreOwner::Empty.reset(new CoreOwner());
 }
 
-Directory* Directory::Open(const char* pathName, Type typeWouldBe)
-{
-	return PathMgr::OpenDirectory(pathName, typeWouldBe);
-}
-
 String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) const
 {
 	String pathName(GetName());
@@ -341,7 +336,7 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 			field += ch;
 		}
 	}
-	_pDirectoryCur.reset(Directory::Open(pathName.c_str()));
+	_pDirectoryCur.reset(PathMgr::OpenDirectory(pathName.c_str()));
 	return !!_pDirectoryCur;
 }
 
