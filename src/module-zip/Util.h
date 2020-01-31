@@ -16,6 +16,7 @@ UInt16 GetDosDate(const DateTime& dt);
 DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime);
 
 UInt32 SeekCentralDirectory(Stream& streamSrc);
+bool InspectDescriptor(Stream& streamCon, Stream& streamSrc);
 
 bool SkipStream(Stream& stream, size_t bytes);
 bool ReadStream(Stream& stream, void* buff, size_t bytes, size_t offset = 0);

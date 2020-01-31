@@ -81,7 +81,47 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	EndOfCentralDirectoryRecord record;
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	return Gurax_UnpackUInt32(record.GetFields().
-			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
+							  OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
+}
+
+bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)
+{
+	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
+	if (Error::IsIssued()) return false;
+	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return false;
+	UInt32 signature;
+	while (ReadStream(streamSrc, &signature)) {
+		streamCon.Printf("%08x %08x\n", streamSrc.GetOffset(), signature);
+		if (signature == LocalFileHeader::Signature) {
+			LocalFileHeader hdr;
+			if (!hdr.Read(streamSrc)) return false;
+			if (!hdr.SkipFileData(streamSrc)) return false;
+		} else if (signature == ArchiveExtraDataRecord::Signature) {
+			ArchiveExtraDataRecord record;
+			if (!record.Read(streamSrc)) return false;
+		} else if (signature == CentralFileHeader::Signature) {
+			CentralFileHeader hdr;
+			if (!hdr.Read(streamSrc)) return false;
+			::printf("check\n");
+		} else if (signature == DigitalSignature::Signature) {
+			DigitalSignature signature;
+			if (!signature.Read(streamSrc)) return false;
+		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
+			Zip64EndOfCentralDirectory dir;
+			if (!dir.Read(streamSrc)) return false;
+		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
+			Zip64EndOfCentralDirectoryLocator loc;
+			if (!loc.Read(streamSrc)) return false;
+		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
+			EndOfCentralDirectoryRecord record;
+			if (!record.Read(streamSrc)) return false;
+			break;
+		} else {
+			streamCon.Printf("unknown signature %08x", signature);
+			return false;
+		}
+	}
+	return true;
 }
 
 bool SkipStream(Stream& stream, size_t bytes)
