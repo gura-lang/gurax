@@ -170,13 +170,13 @@ bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 	return true;
 }
 
-bool WriteStream(Stream& stream, void* buff, size_t bytes)
+bool WriteStream(Stream& stream, const void* buff, size_t bytes)
 {
 	stream.Write(buff, bytes);
 	return !Error::IsIssued();
 }
 
-bool WriteStream(Stream& stream, Binary& binary)
+bool WriteStream(Stream& stream, const Binary& binary)
 {
 	stream.Write(binary.data(), binary.size());
 	return !Error::IsIssued();

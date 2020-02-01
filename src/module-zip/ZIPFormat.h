@@ -108,7 +108,7 @@ public:
 		Gurax_PackedUInt16_LE(LastModFileTime);
 		Gurax_PackedUInt16_LE(LastModFileDate);
 		Gurax_PackedUInt32_LE(Crc32);				// zero if Data Descriptor exists
-		Gurax_PackedUInt32_LE(CompressedSize);	// zero if Data Descriptor exists
+		Gurax_PackedUInt32_LE(CompressedSize);		// zero if Data Descriptor exists
 		Gurax_PackedUInt32_LE(UncompressedSize);	// zero if Data Descriptor exists
 		Gurax_PackedUInt16_LE(FileNameLength);
 		Gurax_PackedUInt16_LE(ExtraFieldLength);
@@ -132,9 +132,7 @@ public:
 		return true;
 	}
 	bool SkipOver(Stream& stream);
-	bool Write(Stream& stream) {
-		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
-		Gurax_PackUInt16(_fields.FileNameLength, _extraField.size());
+	bool Write(Stream& stream) const {
 		if (!WriteStream(stream, &_fields, 30)) return false;
 		if (!WriteStream(stream, _fileName)) return false;
 		if (!WriteStream(stream, _extraField)) return false;
@@ -143,7 +141,9 @@ public:
 	bool SkipFileData(Stream& stream) {
 		return SkipStream(stream, Gurax_UnpackUInt32(_fields.CompressedSize));
 	}
-	void SetFileName(const char* fileName) { _fileName = fileName; }
+	void SetFileName(const char* fileName) {
+		_fileName = Binary(true, reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
+	}
 	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
@@ -292,17 +292,14 @@ public:
 						Gurax_UnpackUInt16(_fields.FileCommentLength))) return false;
 		return true;
 	}
-	bool Write(Stream& stream) {
-		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
-		Gurax_PackUInt16(_fields.ExtraFieldLength, _extraField.size());
-		Gurax_PackUInt16(_fields.FileCommentLength, _fileComment.size());
+	bool Write(Stream& stream) const {
 		if (!WriteStream(stream, &_fields, 46)) return false;
 		if (!WriteStream(stream, _fileName)) return false;
 		if (!WriteStream(stream, _extraField)) return false;
 		if (!WriteStream(stream, _fileComment)) return false;
 		return true;
 	}
-	bool WriteAsLocalFileHeader(Stream& stream) {
+	bool WriteAsLocalFileHeader(Stream& stream) const {
 		LocalFileHeader hdr;
 		LocalFileHeader::Fields& fields = hdr.GetFields();
 		Gurax_PackUInt16(fields.VersionNeededToExtract, Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
@@ -322,7 +319,9 @@ public:
 		if (!WriteStream(stream, _extraField)) return false;
 		return true;
 	}
-	void SetFileName(const char* fileName) { _fileName = fileName; }
+	void SetFileName(const char* fileName) {
+		_fileName = Binary(true, reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
+	}
 	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
 	const char* GetFileComment() const { return reinterpret_cast<const char*>(_fileComment.c_str()); }
 	bool IsEncrypted() const {

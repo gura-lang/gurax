@@ -264,6 +264,7 @@ bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 		Error::Issue(ErrorType::IOError, "seek error");
 		return false;
 	}
+	_offset = offset;
 	return true;
 }
 

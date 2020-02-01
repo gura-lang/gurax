@@ -68,12 +68,14 @@ public:
 	virtual Stat* DoCreateStat() override;
 	virtual Value* DoCreateStatValue() override;
 	virtual bool DoClose() override { return ::fclose(_fp) == 0; }
-	virtual int DoGetChar() override { return ::fgetc(_fp); }
-	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
+	virtual int DoGetChar() override { _offset++; return ::fgetc(_fp); }
+	virtual bool DoPutChar(char ch) override { _offset++; ::fputc(ch, _fp); return true; }
 	virtual size_t DoRead(void* buff, size_t len) override {
+		_offset += len;
 		return ::fread(buff, 1, len, _fp);
 	}
 	virtual size_t DoWrite(const void* buff, size_t len) override {
+		_offset += len;
 		return ::fwrite(buff, 1, len, _fp);
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }

@@ -33,7 +33,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 		Gurax_PackUInt32(fields.Crc32,							0x00000000);
 		Gurax_PackUInt32(fields.CompressedSize,					0);
 		Gurax_PackUInt32(fields.UncompressedSize,				0);
-		Gurax_PackUInt16(fields.FileNameLength,					0x0000);
+		Gurax_PackUInt16(fields.FileNameLength,					::strlen(fileName));
 		Gurax_PackUInt16(fields.ExtraFieldLength,				0x0000);
 		Gurax_PackUInt16(fields.FileCommentLength,				0x0000);
 		Gurax_PackUInt16(fields.DiskNumberStart,				0x0000);
@@ -161,7 +161,7 @@ bool Writer::AddParentFolders(const char* fileName, const DateTime& dateTime)
 			Gurax_PackUInt32(fields.Crc32,							0x00000000);
 			Gurax_PackUInt32(fields.CompressedSize,					compressedSize);
 			Gurax_PackUInt32(fields.UncompressedSize,				uncompressedSize);
-			Gurax_PackUInt16(fields.FileNameLength,					0x0000);
+			Gurax_PackUInt16(fields.FileNameLength,					static_cast<UInt16>(fileNameAccum.size()));
 			Gurax_PackUInt16(fields.ExtraFieldLength,				0x0000);
 			Gurax_PackUInt16(fields.FileCommentLength,				0x0000);
 			Gurax_PackUInt16(fields.DiskNumberStart,				0x0000);
@@ -197,7 +197,7 @@ bool Writer::Finish()
 	size_t offset = _pStreamDst->GetOffset();
 	for (StatEx* pStatEx : _statExOwner) {
 		if (!pStatEx->GetCentralFileHeader().Write(*_pStreamDst)) return false;
-		//pHdr->Print();
+		//pStatEx->GetCentralFileHeader().Print(Basement::Inst.GetStreamCOut());
 	}
 	UInt32 offsetOfCentralDirectory = static_cast<UInt32>(offset);
 	UInt32 sizeOfTheCentralDirectory = static_cast<UInt32>(_pStreamDst->GetOffset() - offset);

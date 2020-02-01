@@ -23,8 +23,8 @@ bool SkipStream(Stream& stream, size_t bytes);
 bool ReadStream(Stream& stream, void* buff, size_t bytes, size_t offset = 0);
 bool ReadStream(Stream& stream, UInt32* pSignature);
 bool ReadStream(Stream& stream, Binary& binary, size_t bytes);
-bool WriteStream(Stream& stream, void* buff, size_t bytes);
-bool WriteStream(Stream& stream, Binary& binary);
+bool WriteStream(Stream& stream, const void* buff, size_t bytes);
+bool WriteStream(Stream& stream, const Binary& binary);
 
 Gurax_EndModuleScope(zip)
 
