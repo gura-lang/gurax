@@ -18,7 +18,7 @@ class Accumulator : public Stream {
 protected:
 	Binary _digest;
 public:
-	Accumulator() : Stream(Flag::Writable), _digest(true) {}
+	Accumulator() : Stream(Flag::Writable), _digest(.0, .0, true) {}
 public:
 	virtual const char* GetName() const override { return "accumulator"; };
 	virtual const char* GetIdentifier() const override { return "accumulator"; }

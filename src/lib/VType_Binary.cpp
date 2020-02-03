@@ -42,7 +42,7 @@ Gurax_DeclareConstructor(Binary)
 Gurax_ImplementConstructor(Binary)
 {
 	// Function body
-	RefPtr<BinaryReferable> pBinary(new BinaryReferable(true));
+	RefPtr<BinaryReferable> pBinary(new BinaryReferable(.0, .0, true));
 	return argument.ReturnValue(processor, new Value_Binary(pBinary.release()));
 }
 

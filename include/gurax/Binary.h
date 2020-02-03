@@ -41,6 +41,7 @@ private:
 	bool _writableFlag;
 public:
 	// Constructor
+#if 0
 	Binary(bool writableFlag = true) : _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const char* src) :
 		basic_string(reinterpret_cast<const UInt8*>(src)), _writableFlag(writableFlag) {}
@@ -52,6 +53,19 @@ public:
 		Binary(writableFlag, src.data(), src.size()) {}
 	Binary(bool writableFlag, const Binary& src) : basic_string(src), _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, size_t len, UInt8 c) : basic_string(len, c), _writableFlag(writableFlag) {}
+#endif
+	Binary(float a, float b, bool writableFlag) : _writableFlag(writableFlag) {}
+	Binary(float a, float b, bool writableFlag, const char* src) :
+		basic_string(reinterpret_cast<const UInt8*>(src)), _writableFlag(writableFlag) {}
+	Binary(float a, float b, bool writableFlag, const UInt8* src, size_t len) :
+		basic_string(src, len), _writableFlag(writableFlag) {}
+	Binary(float a, float b, bool writableFlag, const char* src, size_t len) :
+		basic_string(reinterpret_cast<const UInt8*>(src), len), _writableFlag(writableFlag) {}
+	Binary(float a, float b, bool writableFlag, const String& src) :
+		Binary(.0, .0, writableFlag, src.data(), src.size()) {}
+	Binary(float a, float b, bool writableFlag, const Binary& src) : basic_string(src), _writableFlag(writableFlag) {}
+	Binary(float a, float b, bool writableFlag, size_t len, UInt8 c) : basic_string(len, c), _writableFlag(writableFlag) {}
+
 	// Copy constructor/operator
 	Binary(const Binary& src) : basic_string(src), _writableFlag(src._writableFlag) {}
 	Binary& operator=(const Binary& src) noexcept;
@@ -106,7 +120,7 @@ private:
 	Binary _binary;
 public:
 	// Constructor
-	BinaryReferable(bool writableFlag) : _binary(writableFlag) {}
+	BinaryReferable(float a, float b, bool writableFlag) : _binary(.0, .0, writableFlag) {}
 	explicit BinaryReferable(Binary binary) : _binary(std::move(binary)) {}
 	// Copy constructor/operator
 	BinaryReferable(const BinaryReferable& src) = delete;

@@ -189,7 +189,7 @@ Iterator* Stream::ReadLines(bool includeEOLFlag)
 
 Binary Stream::Read(size_t len)
 {
-	Binary buff(true, len, '\0');
+	Binary buff(.0, .0, true, len, '\0');
 	size_t lenRead = Read(&buff[0], len);
 	buff.resize(lenRead);
 	return buff;
@@ -209,7 +209,7 @@ Stream& Stream::ReadAll(Binary& buff)
 
 Binary Stream::ReadAll()
 {
-	Binary buff;
+	Binary buff(.0, .0, true);
 	ReadAll(buff);
 	return buff;
 }
@@ -245,7 +245,7 @@ Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 Stream* Stream::CreateBwdSeekable()
 {
 	if (IsBwdSeekable()) return Reference();
-	RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
+	RefPtr<BinaryReferable> pBuff(new BinaryReferable(.0, .0, true));
 	ReadAll(pBuff->GetBinary());
 	if (Error::IsIssued()) return nullptr;
 	return new Stream_Binary(Stream::Flag::Readable, pBuff.release());

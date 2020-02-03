@@ -840,10 +840,10 @@ void Tokenizer::FeedChar(char ch)
 			int lineNo = GetLineNo();
 			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(Binary(false, _segment)), _source));
+												  new BinaryReferable(Binary(.0, .0, false, _segment)), _source));
 			} else if (_stringInfo.type == StringType::BinaryWritable) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(Binary(true, _segment)), _source));
+												  new BinaryReferable(Binary(.0, .0, true, _segment)), _source));
 			} else if (_stringInfo.type == StringType::Template) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
 												  _segment, "", _source));
@@ -1058,10 +1058,10 @@ void Tokenizer::FeedChar(char ch)
 			int lineNo = GetLineNo();
 			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(Binary(false, _segment)), _source));
+												  new BinaryReferable(Binary(.0, .0, false, _segment)), _source));
 			} else if (_stringInfo.type == StringType::BinaryWritable) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(Binary(true, _segment)), _source));
+												  new BinaryReferable(Binary(.0, .0, true, _segment)), _source));
 			} else if (_stringInfo.type == StringType::Template) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
 												  _segment, "", _source));

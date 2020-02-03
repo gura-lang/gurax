@@ -36,7 +36,7 @@ private:
 	String _fileName;
 	String _comment;
 public:
-	GZHeader() : _extra(true) {
+	GZHeader() : _extra(.0, .0, true) {
 		::memset(&_fields, 0x00, Fields::Size);
 		_fields.Identification1		= 0x1f;
 		_fields.Identification2		= 0x8b;
