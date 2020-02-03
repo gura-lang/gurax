@@ -75,6 +75,14 @@ StatEx* StatExList::FindByName(const char* fileName) const
 	return nullptr;
 }
 
+bool StatExList::Write(Stream& streamDst) const
+{
+	for (StatEx* pStatEx : *this) {
+		if (!pStatEx->GetCentralFileHeader().Write(streamDst)) return false;
+	}
+	return true;
+}
+
 //------------------------------------------------------------------------------
 // StatExOwner
 //------------------------------------------------------------------------------

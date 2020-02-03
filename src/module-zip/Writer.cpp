@@ -121,7 +121,11 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 		Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 		Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
 	} while (0);
-	_statExOwner.push_back(new StatEx(pCentralFileHeader.release()));
+	if (pCentralFileHeader->IsFolder()) {
+		_statExOwner_Folder.push_back(new StatEx(pCentralFileHeader.release()));
+	} else {
+		_statExOwner_File.push_back(new StatEx(pCentralFileHeader.release()));
+	}
 	return true;
 }
 
@@ -148,7 +152,7 @@ bool Writer::AddParentFolders(const char* fileName, const DateTime& dateTime)
 			continue;
 		}
 		if (*p == '\0') break;
-		if (_statExOwner.FindByName(fileNameAccum.c_str())) continue;
+		if (_statExOwner_Folder.FindByName(fileNameAccum.c_str())) continue;
 		std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
 		do {
 			CentralFileHeader::Fields& fields = pCentralFileHeader->GetFields();
@@ -186,7 +190,7 @@ bool Writer::AddParentFolders(const char* fileName, const DateTime& dateTime)
 			Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 			Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
 		} while (0);
-		_statExOwner.push_back(new StatEx(pCentralFileHeader.release()));
+		_statExOwner_Folder.push_back(new StatEx(pCentralFileHeader.release()));
 	}
 	return true;
 }
@@ -195,13 +199,11 @@ bool Writer::Finish()
 {
 	if (!_pStreamDst) return true;
 	size_t offset = _pStreamDst->GetOffset();
-	for (StatEx* pStatEx : _statExOwner) {
-		if (!pStatEx->GetCentralFileHeader().Write(*_pStreamDst)) return false;
-		//pStatEx->GetCentralFileHeader().Print(Basement::Inst.GetStreamCOut());
-	}
+	if (!_statExOwner_Folder.Write(*_pStreamDst)) return false;
+	if (!_statExOwner_File.Write(*_pStreamDst)) return false;
 	UInt32 offsetOfCentralDirectory = static_cast<UInt32>(offset);
 	UInt32 sizeOfTheCentralDirectory = static_cast<UInt32>(_pStreamDst->GetOffset() - offset);
-	UInt16 nCentralFileHeaders = static_cast<UInt16>(_statExOwner.size());
+	UInt16 nCentralFileHeaders = static_cast<UInt16>(_statExOwner_Folder.size() + _statExOwner_File.size());
 	do {
 		EndOfCentralDirectoryRecord rec;
 		EndOfCentralDirectoryRecord::Fields &fields = rec.GetFields();

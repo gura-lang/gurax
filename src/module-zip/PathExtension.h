@@ -43,6 +43,7 @@ public:
 class GURAX_DLLDECLARE StatExList : public std::vector<StatEx*> {
 public:
 	StatEx* FindByName(const char* fileName) const;
+	bool Write(Stream& streamDst) const;
 };
 
 //-----------------------------------------------------------------------------
