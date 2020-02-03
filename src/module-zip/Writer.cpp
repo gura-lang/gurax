@@ -109,14 +109,14 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	UInt32 uncompressedSize = static_cast<UInt32>(streamSrc.GetOffset() - offsetSrc);
 	do {
 		DataDescriptor desc;
-		DataDescriptor::Fields &fields = desc.GetFields();
+		DataDescriptor::Fields& fields = desc.GetFields();
 		Gurax_PackUInt32(fields.Crc32,				crc32num);
 		Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 		Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
 		if (!desc.Write(*_pStreamDst)) return false;
 	} while (0);
 	do {
-		CentralFileHeader::Fields &fields = pCentralFileHeader->GetFields();
+		CentralFileHeader::Fields& fields = pCentralFileHeader->GetFields();
 		Gurax_PackUInt32(fields.Crc32,				crc32num);
 		Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 		Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);

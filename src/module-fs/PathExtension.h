@@ -71,12 +71,14 @@ public:
 	virtual int DoGetChar() override { _offset++; return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { _offset++; ::fputc(ch, _fp); return true; }
 	virtual size_t DoRead(void* buff, size_t len) override {
-		_offset += len;
-		return ::fread(buff, 1, len, _fp);
+		size_t lenRead = ::fread(buff, 1, len, _fp);
+		_offset += lenRead;
+		return lenRead;
 	}
 	virtual size_t DoWrite(const void* buff, size_t len) override {
-		_offset += len;
-		return ::fwrite(buff, 1, len, _fp);
+		size_t lenWritten = ::fwrite(buff, 1, len, _fp);
+		_offset += lenWritten;
+		return lenWritten;
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
