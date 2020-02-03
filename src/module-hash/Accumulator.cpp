@@ -56,7 +56,7 @@ void Accumulator_CRC32::Finish()
 	digest[1] = static_cast<UInt8>(result >> 16);
 	digest[2] = static_cast<UInt8>(result >> 8);
 	digest[3] = static_cast<UInt8>(result >> 0);
-	_digest = Binary(.0, .0, true, digest, sizeof(digest));
+	_digest = Binary(digest, sizeof(digest));
 }
 
 Value* Accumulator_CRC32::GetValue()
@@ -95,7 +95,7 @@ void Accumulator_MD5::Finish()
 {
 	md5_byte_t digest[16];
 	::md5_finish(&_state, digest);
-	_digest = Binary(.0, .0, true, reinterpret_cast<UInt8*>(digest), sizeof(digest));
+	_digest = Binary(reinterpret_cast<UInt8*>(digest), sizeof(digest));
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void Accumulator_SHA1::Finish()
 {
 	uint8 digest[20];
 	::sha1_finish(&_ctx, digest);
-	_digest = Binary(.0, .0, true, reinterpret_cast<UInt8*>(digest), sizeof(digest));
+	_digest = Binary(reinterpret_cast<UInt8*>(digest), sizeof(digest));
 }
 
 Gurax_EndModuleScope(hash)

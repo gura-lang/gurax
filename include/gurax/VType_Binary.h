@@ -34,7 +34,7 @@ public:
 public:
 	// Constructor
 	explicit Value_Binary(VType& vtype = VTYPE_Binary) :
-		Value_Binary(new BinaryReferable(.0, .0, true), vtype) {}
+		Value_Binary(new BinaryReferable(), vtype) {}
 	explicit Value_Binary(BinaryReferable* pBinary, VType& vtype = VTYPE_Binary) :
 		Value_Object(vtype), _pBinary(pBinary) {}
 	explicit Value_Binary(Binary binary, VType& vtype = VTYPE_Binary) :
@@ -69,7 +69,9 @@ public:
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override {
-		return new Value_Binary(new BinaryReferable(Binary(.0, .0, true, GetBinary())));
+		Binary buff = GetBinary();
+		buff.SetWritableFlag(true);
+		return new Value_Binary(new BinaryReferable(buff));
 	}
 	virtual size_t DoCalcHash() const override {
 		return GetBinary().CalcHash();

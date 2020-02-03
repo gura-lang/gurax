@@ -120,7 +120,7 @@ private:
 	Binary _fileName;
 	Binary _extraField;
 public:
-	LocalFileHeader() : _fileName(.0, .0, true), _extraField(.0, .0, true) {
+	LocalFileHeader() {
 		Gurax_PackUInt32(_fields.Signature, Signature);
 	}
 	Fields& GetFields() { return _fields; }
@@ -144,7 +144,7 @@ public:
 		return SkipStream(stream, Gurax_UnpackUInt32(_fields.CompressedSize));
 	}
 	void SetFileName(const char* fileName) {
-		_fileName = Binary(.0, .0, true, reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
+		_fileName = Binary(reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
 	}
 	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
 	bool IsEncrypted() const {
@@ -227,7 +227,7 @@ private:
 	Fields _fields;
 	Binary _extraField;
 public:
-	ArchiveExtraDataRecord() : _extraField(.0, .0, true) { Gurax_PackUInt32(_fields.Signature, Signature); }
+	ArchiveExtraDataRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
 	bool Read(Stream& stream) {
@@ -278,7 +278,7 @@ private:
 	Binary _extraField;
 	Binary _fileComment;
 public:
-	CentralFileHeader() : _fileName(.0, .0, true), _extraField(.0, .0, true), _fileComment(.0, .0, true) {
+	CentralFileHeader() {
 		Gurax_PackUInt32(_fields.Signature, Signature);
 	}
 	CentralFileHeader(const CentralFileHeader& hdr) :
@@ -324,7 +324,7 @@ public:
 		return true;
 	}
 	void SetFileName(const char* fileName) {
-		_fileName = Binary(.0, .0, true, reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
+		_fileName = Binary(reinterpret_cast<const UInt8*>(fileName), ::strlen(fileName));
 	}
 	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
 	const char* GetFileComment() const { return reinterpret_cast<const char*>(_fileComment.c_str()); }
@@ -404,7 +404,7 @@ private:
 	Fields _fields;
 	Binary _data;
 public:
-	DigitalSignature() : _data(.0, .0, true) { Gurax_PackUInt32(_fields.Signature, Signature); }
+	DigitalSignature() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	const Fields& GetFields() const { return _fields; }
 	bool Read(Stream& stream) {
 		if (!ReadStream(stream, &_fields, 8 - 4, 4)) return false;
@@ -502,7 +502,7 @@ private:
 	Fields _fields;
 	Binary _zipFileComment;
 public:
-	EndOfCentralDirectoryRecord() : _zipFileComment(.0, .0, true) { Gurax_PackUInt32(_fields.Signature, Signature); }
+	EndOfCentralDirectoryRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
 	bool Read(Stream& stream) {

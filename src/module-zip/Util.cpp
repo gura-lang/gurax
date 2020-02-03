@@ -157,7 +157,7 @@ bool ReadStream(Stream& stream, UInt32* pSignature)
 bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 {
 	if (bytes == 0) {
-		binary = Binary(.0, .0, true);
+		binary = Binary();
 		return true;
 	}
 	char* buff = new char[bytes];
@@ -165,7 +165,7 @@ bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 		delete[] buff;
 		return false;
 	}
-	binary = Binary(.0, .0, true, buff, bytes);
+	binary = Binary(buff, bytes);
 	delete[] buff;
 	return true;
 }

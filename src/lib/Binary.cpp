@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Binary
 //------------------------------------------------------------------------------
-const Binary Binary::Empty(.0, .0, false, "");
+const Binary Binary::Empty;
 
 Binary& Binary::operator=(const Binary& src) noexcept
 {
@@ -30,7 +30,7 @@ void Binary::Bootup()
 
 Binary Binary::Repeat(const Binary& binary, bool writableFlag, size_t n)
 {
-	Binary binaryRtn(.0, .0, writableFlag);
+	Binary binaryRtn;
 	binaryRtn.SetWritableFlag(writableFlag);
 	binaryRtn.reserve(binary.size() * n);
 	for (size_t i = 0; i < n; i++) binaryRtn += binary;
