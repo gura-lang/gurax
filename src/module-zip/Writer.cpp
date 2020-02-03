@@ -10,8 +10,11 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod)
 {
+	//compressionMethod = CompressionMethod::Store;
+	const size_t bytesThreshold = 256;
 	RefPtr<Stat> pStat(streamSrc.CreateStat());
 	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
+	if (pStat && (pStat->GetSize() < bytesThreshold)) compressionMethod = CompressionMethod::Store;
 	if (!AddParentFolders(fileName, *pDateTime)) return false;
 	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
@@ -47,7 +50,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	size_t offsetDst = _pStreamDst->GetOffset();
 	size_t offsetSrc = streamSrc.GetOffset();
 	if (compressionMethod == CompressionMethod::Store) {
-		pStreamContent.reset(Stream::Reference(_pStreamDst.get()));
+		pStreamContent.reset(_pStreamDst->Reference());
 	} else if (compressionMethod == CompressionMethod::Shrink) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::Factor1) {
@@ -63,19 +66,19 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	} else if (compressionMethod == CompressionMethod::Factor1) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::Deflate) {
-		RefPtr<ZLib::Stream_Writer> pStreamWriter(new ZLib::Stream_Writer(_pStreamDst->Reference()));
-		if (!pStreamWriter->Initialize(Z_DEFAULT_COMPRESSION,
-									   -MAX_WBITS, memLevel, Z_DEFAULT_STRATEGY)) return false;
-		pStreamContent.reset(pStreamWriter.release());
+		RefPtr<ZLib::Stream_Writer> pStream(new ZLib::Stream_Writer(_pStreamDst->Reference()));
+		if (!pStream->Initialize(Z_DEFAULT_COMPRESSION,
+								 -MAX_WBITS, memLevel, Z_DEFAULT_STRATEGY)) return false;
+		pStreamContent.reset(pStream.release());
 	} else if (compressionMethod == CompressionMethod::Deflate64) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::PKWARE) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::BZIP2) {
-		RefPtr<BZLib::Stream_Writer> pStreamWriter(new BZLib::Stream_Writer(_pStreamDst->Reference()));
+		RefPtr<BZLib::Stream_Writer> pStream(new BZLib::Stream_Writer(_pStreamDst->Reference()));
 		int blockSize100k = 9, verbosity = 0, workFactor = 0;
-		if (!pStreamWriter->Initialize(blockSize100k, verbosity, workFactor)) return false;
-		pStreamContent.reset(pStreamWriter.release());
+		if (!pStream->Initialize(blockSize100k, verbosity, workFactor)) return false;
+		pStreamContent.reset(pStream.release());
 	} else if (compressionMethod == CompressionMethod::LZMA) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::TERSA) {
@@ -102,7 +105,8 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 		pStreamContent->Write(buff, bytesRead);
 		if (Error::IsIssued()) break;
 	}
-	pStreamContent->Flush();
+	pStreamContent.reset(nullptr);	// don't use Stream::Close() as pStreamContent may hold
+									// a reference to _pStreamDst
 	if (Error::IsIssued()) return false;
 	UInt32 crc32num = crc32.GetResult();
 	UInt32 compressedSize = static_cast<UInt32>(_pStreamDst->GetOffset() - offsetDst);

@@ -110,6 +110,7 @@ Gurax_ImplementMethod(Writer, Close)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Writer& writer = valueThis.GetWriter();
+	// Function body
 	writer.Finish();
 	return Value::nil();
 }
