@@ -148,7 +148,7 @@ bool Writer::AddParentFolders(const char* fileName, const DateTime& dateTime)
 			continue;
 		}
 		if (*p == '\0') break;
-		if (_statExOwner.FindByName(fileNameAccum.c_str())) return true;
+		if (_statExOwner.FindByName(fileNameAccum.c_str())) continue;
 		std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
 		do {
 			CentralFileHeader::Fields& fields = pCentralFileHeader->GetFields();
