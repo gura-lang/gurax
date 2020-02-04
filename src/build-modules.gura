@@ -23,6 +23,7 @@ moduleInfos = @(ModuleInfo) {
 	{'path',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'re',				`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'sys',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'zip',				`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 }
 
 //------------------------------------------------------------------------------

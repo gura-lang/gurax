@@ -1,0 +1,45 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(zip)
+
+PrintStat(st:Stat):map = Printf('%-32s %8d %8d %s\n', st.pathName, st.size, st.compressedSize, st.compressionMethod)
+
+TestCase('zip.Reader()') {
+	zip.Reader('test-zip/small.zip') {|reader|
+		Println('Reader#Entries()')
+		PrintStat(reader.Entries():*stat)
+		Println('Reader#Entries():all')
+		PrintStat((reader.Entries():all):*stat)
+		Tester(`reader.Entry('foo/dir1/file1-1'))
+		Tester(`reader.Entry('foo/dir1'))
+		Tester(`reader.Entry('foo/dir1/'))
+	}
+}
+
+TestCase('zip.Writer()') {
+	r = Random(0)
+	buffZip = Binary()
+	zip.Writer(buffZip) {|writer|
+		r.IntM(3000, 30) {|n, i|
+			bytes = 1000 + n
+			(buff = Binary()).p.Put(`uint8, r.IntM(256, bytes))
+			writer.Add(Format('entry%02d.bin', i), buff)
+		}
+		writer.Close()
+	}
+	zip.Reader(buffZip) {|reader|
+		PrintStat(reader.Entries()::stat)
+	}
+}
+
+TestCase('zip.Directory()') {
+	path.Walk(zip.Directory('test-zip/small.zip')):stat {|st|
+		Println(st.pathName)
+	}
+}
+
+TestCase('Path manager extension') {
+	path.Walk('test-zip/small.zip/'):stat {|st|
+		Println(st.pathName)
+	}
+}

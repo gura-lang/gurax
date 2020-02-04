@@ -1,0 +1,78 @@
+======== zip.Reader() ========
+Reader#Entries()
+foo/dir1/file1-1                       19       19 `store
+foo/dir1/file1-2                       19       19 `store
+foo/dir2/file2-1                       19       19 `store
+foo/dir2/file2-2                       19       19 `store
+foo/dir3/file3-1                       19       19 `store
+foo/dir4/file4-1                       19       19 `store
+Reader#Entries():all
+foo/                                    0        0 `store
+foo/dir1/                               0        0 `store
+foo/dir1/file1-1                       19       19 `store
+foo/dir1/file1-2                       19       19 `store
+foo/dir2/                               0        0 `store
+foo/dir2/file2-1                       19       19 `store
+foo/dir2/file2-2                       19       19 `store
+foo/dir3/                               0        0 `store
+foo/dir3/file3-1                       19       19 `store
+foo/dir4/                               0        0 `store
+foo/dir4/file4-1                       19       19 `store
+reader.Entry('foo/dir1/file1-1') .. <Stream:foo/dir1/file1-1:r:encoding=dumb:delcr>
+reader.Entry('foo/dir1') .. can't find an entry with the specified name
+reader.Entry('foo/dir1/') .. the specified entry is a folder
+======== zip.Writer() ========
+entry00.bin                          2778     2783 `deflate
+entry01.bin                          3373     3378 `deflate
+entry02.bin                          3296     3301 `deflate
+entry03.bin                          3091     3096 `deflate
+entry04.bin                          3123     3128 `deflate
+entry05.bin                          3152     3157 `deflate
+entry06.bin                          3894     3899 `deflate
+entry07.bin                          3997     4002 `deflate
+entry08.bin                          1364     1369 `deflate
+entry09.bin                          1039     1044 `deflate
+entry10.bin                          2001     2006 `deflate
+entry11.bin                          1935     1940 `deflate
+entry12.bin                          1115     1120 `deflate
+entry13.bin                          3154     3159 `deflate
+entry14.bin                          2223     2228 `deflate
+entry15.bin                          1925     1930 `deflate
+entry16.bin                          1762     1767 `deflate
+entry17.bin                          1817     1822 `deflate
+entry18.bin                          1411     1416 `deflate
+entry19.bin                          1493     1498 `deflate
+entry20.bin                          2936     2941 `deflate
+entry21.bin                          1545     1550 `deflate
+entry22.bin                          3605     3610 `deflate
+entry23.bin                          2329     2334 `deflate
+entry24.bin                          1417     1422 `deflate
+entry25.bin                          1513     1518 `deflate
+entry26.bin                          1340     1345 `deflate
+entry27.bin                          3951     3956 `deflate
+entry28.bin                          2459     2464 `deflate
+entry29.bin                          2391     2396 `deflate
+======== zip.Directory() ========
+foo/
+foo/dir1/
+foo/dir2/
+foo/dir3/
+foo/dir4/
+foo/dir1/file1-1
+foo/dir1/file1-2
+foo/dir2/file2-1
+foo/dir2/file2-2
+foo/dir3/file3-1
+foo/dir4/file4-1
+======== Path manager extension ========
+foo/
+foo/dir1/
+foo/dir2/
+foo/dir3/
+foo/dir4/
+foo/dir1/file1-1
+foo/dir1/file1-2
+foo/dir2/file2-1
+foo/dir2/file2-2
+foo/dir3/file3-1
+foo/dir4/file4-1

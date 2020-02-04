@@ -74,11 +74,12 @@ Gurax_ImplementHybridMethod(Random, Float)
 	return new Value_Number(random.GenFloat<Double>());
 }
 
-// Random##FloatM(cnt?:Number)
+// Random##FloatM(cnt?:Number) {block?}
 Gurax_DeclareHybridMethod(Random, FloatM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates a real number in the range of `[0, 1)`");
@@ -123,12 +124,13 @@ Gurax_ImplementHybridMethod(Random, Int)
 	return new Value_Number(random.GenInt<Int>(range));
 }
 
-// Random##IntM(range:Number, cnt?:Number)
+// Random##IntM(range:Number, cnt?:Number) {block?}
 Gurax_DeclareHybridMethod(Random, IntM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates an integer number within the range of `[0, range)`");
@@ -176,13 +178,14 @@ Gurax_ImplementHybridMethod(Random, Normal)
 	return new Value_Number(random.GenNormal<Double>(mean, stddev));
 }
 
-// Random##NormalM(mean?:Number, stddev?:Number, cnt?:Number)
+// Random##NormalM(mean?:Number, stddev?:Number, cnt?:Number) {block?}
 Gurax_DeclareHybridMethod(Random, NormalM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
