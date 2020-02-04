@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_IMAGE_H
 #define GURAX_IMAGE_H
+#include "Referable.h"
 
 namespace Gurax {
 

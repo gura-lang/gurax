@@ -2,6 +2,7 @@
 // Basement.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/VType_Image.h>
 
 namespace Gurax {
 
@@ -74,6 +75,7 @@ void Basement::PrepareVType()
 	VTYPE_Function.Prepare(frame);
 	VTYPE_Help.Prepare(frame);
 	VTYPE_Iterator.Prepare(frame);
+	VTYPE_Image.Prepare(frame);
 	VTYPE_KeyValuePair.Prepare(frame);
 	VTYPE_VType.Prepare(frame);
 	VTYPE_List.Prepare(frame);
