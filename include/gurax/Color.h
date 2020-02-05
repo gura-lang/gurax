@@ -34,14 +34,14 @@ public:
 public:
 	// Constructor
 	Color() : _r(0), _g(0), _b(0), _a(0) {}
-	// Copy constructor/operator
-	Color(const Color& src) : _r(src._r), _g(src._g), _b(src._b), _a(src._a) {}
 	Color(UInt8 r, UInt8 g, UInt8 b) : _r(r), _g(g), _b(b), _a(0) {}
 	Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _r(r), _g(g), _b(b), _a(a) {}
-	Color& operator=(const Color& src) = delete;
+	// Copy constructor/operator
+	Color(const Color& src) : _r(src._r), _g(src._g), _b(src._b), _a(src._a) {}
+	Color& operator=(const Color& src) { _r = src._r, _g = src._g, _b = src._b, _a = src._a; }
 	// Move constructor/operator
-	Color(Color&& src) = delete;
-	Color& operator=(Color&& src) noexcept = delete;
+	Color(Color&& src) : _r(src._r), _g(src._g), _b(src._b), _a(src._a) {}
+	Color& operator=(Color&& src) noexcept { _r = src._r, _g = src._g, _b = src._b, _a = src._a; }
 	// Destructor
 	~Color() = default;
 public:

@@ -14,9 +14,16 @@ public:
 public:
 	PixelBGR(UInt8* p) : _p(p) {}
 public:
+	void InjectBGR(const UInt8* p) {
+		*(_p + 2) = *(p + 2); *(_p + 1) = *(p + 1); *(_p + 0) = *(p + 0);
+	}
+	void InjectBGRA(const UInt8* p) {
+		*(_p + 2) = *(p + 2); *(_p + 1) = *(p + 1); *(_p + 0) = *(p + 0);
+	}
 	void SetColor(const Color &color) {
 		*(_p + 2) = color.GetR(); *(_p + 1) = color.GetG(); *(_p + 0) = color.GetB();
 	}
+	Color GetColor() const { return Color(*(_p + 2), *(_p + 1), *(_p + 0), 0xff); }
 	void SetR(UInt8 r) { *(_p + 2) = r; }
 	void SetG(UInt8 g) { *(_p + 1) = g; }
 	void SetB(UInt8 b) { *(_p + 0) = b; }
@@ -35,10 +42,17 @@ public:
 public:
 	PixelBGRA(UInt8* p) : _p(p) {}
 public:
+	void InjectBGR(const UInt8* p) {
+		*(_p + 2) = *(p + 2); *(_p + 1) = *(p + 1); *(_p + 0) = *(p + 0); *(_p + 3) = 0xff;
+	}
+	void InjectBGRA(const UInt8* p) {
+		*(_p + 2) = *(p + 2); *(_p + 1) = *(p + 1); *(_p + 0) = *(p + 0); *(_p + 3) = *(p + 3);
+	}
 	void SetColor(const Color &color) {
 		*(_p + 2) = color.GetR(); *(_p + 1) = color.GetG(); *(_p + 0) = color.GetB();
 		*(_p + 3) = color.GetA();
 	}
+	Color GetColor() const { return Color(*(_p + 2), *(_p + 1), *(_p + 0), *(_p + 3)); }
 	void SetR(UInt8 r) { *(_p + 2) = r; }
 	void SetG(UInt8 g) { *(_p + 1) = g; }
 	void SetB(UInt8 b) { *(_p + 0) = b; }
