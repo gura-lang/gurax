@@ -15,6 +15,10 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Image);
 public:
+	
+protected:
+	RefPtr<Memory> _pMemory;
+public:
 	// Constructor
 	Image() {}
 	// Copy constructor/operator
