@@ -71,7 +71,8 @@ void Image::PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
 	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
 	for (size_t i = 0; i < height; i++) {
 		pixelDst.InjectN(pixelSrc, width);
-		pixelDst.FwdLine(_metrics), pixelSrc.FwdLine(_metrics);
+		pixelDst.FwdLine(_metrics);
+		pixelSrc.FwdLine(_metrics);
 	}
 }
 
@@ -102,7 +103,8 @@ void Image::ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, c
 	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
 	for (size_t i = 0; i < height; i++) {
 		pixelDst.InjectN(pixelSrc, width);
-		pixelDst.FwdLine(_metrics), pixelSrc.FwdLine(_metrics);
+		pixelDst.FwdLine(_metrics);
+		pixelSrc.FwdLine(_metrics);
 	}
 #endif
 }
