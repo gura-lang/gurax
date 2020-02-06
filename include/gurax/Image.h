@@ -15,16 +15,30 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Image);
 public:
-	enum class Format { None, BGR, BGRA };
+	struct Format {
+		size_t bytesPerPixel;
+		static const Format BGR;
+		static const Format BGRA;
+		Format(size_t bytesPerPixel) : bytesPerPixel(bytesPerPixel) {}
+		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
+	};
 	enum ScanDir {
 		None, LeftTopHorz, LeftTopVert, RightTopHorz, RightTopVert,
 		LeftBottomHorz, LeftBottomVert, RightBottomHorz, RightBottomVert,
+	};
+	struct Metrics {
+		const Format& format;
+		size_t width;
+		size_t height;
+		size_t bytesPerLine;
+		Metrics(const Format& format, size_t width, size_t height) :
+			format(format), width(width), height(height), bytesPerLine(format.WidthToBytes(width)) {}
 	};
 	class PixelBGR {
 	protected:
 		UInt8* _p;
 	public:
-		static const size_t bytesPerPixel = 3;
+		static const Format& format;
 	public:
 		// Constructor
 		PixelBGR(UInt8* p) : _p(p) {}
@@ -37,8 +51,10 @@ public:
 	public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
-		void Forward() { _p += bytesPerPixel; }
-		void Forward(size_t n) { _p += bytesPerPixel * n; }
+		void FwdPixel() { _p += format.bytesPerPixel; }
+		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
+		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
+		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
 		}
@@ -74,7 +90,7 @@ public:
 	protected:
 		UInt8* _p;
 	public:
-		static const size_t bytesPerPixel = 4;
+		static const Format& format;
 	public:
 		// Constructor
 		PixelBGRA(UInt8* p) : _p(p) {}
@@ -87,8 +103,10 @@ public:
 	public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
-		void Forward() { _p += bytesPerPixel; }
-		void Forward(size_t n) { _p += bytesPerPixel * n; }
+		void FwdPixel() { _p += format.bytesPerPixel; }
+		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
+		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
+		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
 		}
@@ -124,12 +142,11 @@ public:
 protected:
 	RefPtr<Memory> _pMemory;
 	RefPtr<Palette> _pPalette;	// may be nullptr
-	Format _format;
-	size_t _width, _height;
+	Metrics _metrics;
 public:
 	// Constructor
-	Image(Format format, Memory* pMemory, size_t width, size_t height) :
-		_pMemory(pMemory), _format(format), _width(width), _height(height) {}
+	Image(const Format& format, Memory* pMemory, size_t width, size_t height) :
+		_pMemory(pMemory), _metrics(format, width, height) {}
 	// Copy constructor/operator
 	Image(const Image& src) = delete;
 	Image& operator=(const Image& src) = delete;
@@ -139,9 +156,24 @@ public:
 protected:
 	~Image() = default;
 public:
+	const Format& GetFormat() const { return _metrics.format; }
+	bool IsFormat(const Format& format) const { return &_metrics.format == &format; }
+	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
+	size_t GetWidth() const { return _metrics.width; }
+	size_t GetHeight() const { return _metrics.height; }
+	size_t GetBytesPerPixel() const { return _metrics.format.bytesPerPixel; }
+	size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 	UInt8* GetPointer() { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
+	UInt8* GetPointer(size_t x, size_t y) {
+		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+	}
 	template<typename T_Pixel> void FillTmpl(const Color& color);
 	void Fill(const Color& color);
+	template<typename T_PixelDst, typename T_PixelSrc>
+	void CopyTmpl(size_t xDst, size_t yDst, const Image& imageSrc,
+				  size_t xSrc, size_t ySrc, size_t width, size_t height);
+	void Copy(size_t xDst, size_t yDst, const Image& imageSrc,
+			  size_t xSrc, size_t ySrc, size_t width, size_t height);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }

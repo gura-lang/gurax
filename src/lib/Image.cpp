@@ -6,28 +6,57 @@
 
 namespace Gurax {
 
+
 //------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
 template<typename T_Pixel> void Image::FillTmpl(const Color& color)
 {
-	if (_width == 0 || _height == 0) return;
-	size_t bytesPerLine = T_Pixel::bytesPerPixel * _width;
-	T_Pixel pixel(GetPointer());
-	pixel.SetColorN(color, _width);
+	if (IsAreaZero()) return;
+	T_Pixel(GetPointer()).SetColorN(color, GetWidth());
 	const UInt8* pSrc = GetPointer();
-	UInt8* pDst = GetPointer() + bytesPerLine;
-	for (size_t i = 1; i < _height; i++, pDst += bytesPerLine, pSrc += bytesPerLine) {
-		::memcpy(pDst, pSrc, bytesPerLine);
+	UInt8* pDst = GetPointer() + GetBytesPerLine();
+	for (size_t i = 1; i < GetHeight(); i++, pDst += GetBytesPerLine(), pSrc += GetBytesPerLine()) {
+		::memcpy(pDst, pSrc, GetBytesPerLine());
 	}
 }
 
 void Image::Fill(const Color& color)
 {
-	switch (_format) {
-	case Format::BGR: FillTmpl<PixelBGR>(color); break;
-	case Format::BGRA: FillTmpl<PixelBGRA>(color); break;
-	default: break;
+	if (IsFormat(Format::BGR)) {
+		FillTmpl<PixelBGR>(color);
+	} else if (IsFormat(Format::BGRA)) {
+		FillTmpl<PixelBGRA>(color);
+	}
+}
+
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::CopyTmpl(size_t xDst, size_t yDst, const Image& imageSrc,
+					 size_t xSrc, size_t ySrc, size_t width, size_t height)
+{
+	T_PixelDst pixelDst(GetPointer(xDst, yDst));
+	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
+	for (size_t i = 0; i < height; i++) {
+		pixelDst.InjectN(pixelSrc, width);
+		pixelDst.FwdLine(_metrics), pixelSrc.FwdLine(_metrics);
+	}
+}
+
+void Image::Copy(size_t xDst, size_t yDst, const Image& imageSrc,
+				 size_t xSrc, size_t ySrc, size_t width, size_t height)
+{
+	if (IsFormat(Format::BGR)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			CopyTmpl<PixelBGR, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			CopyTmpl<PixelBGR, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+		}
+	} else if (IsFormat(Format::BGRA)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			CopyTmpl<PixelBGRA, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			CopyTmpl<PixelBGRA, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+		}
 	}
 }
 
@@ -37,11 +66,19 @@ String Image::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Image::Format
+//------------------------------------------------------------------------------
+const Image::Format Image::Format::BGR(3);
+const Image::Format Image::Format::BGRA(4);
+
+//------------------------------------------------------------------------------
 // Image::PixelBGR
 //------------------------------------------------------------------------------
+const Image::Format& Image::PixelBGR::format = Format::BGR;
+
 template<> void Image::PixelBGR::InjectN<Image::PixelBGR>(const PixelBGR& pixel, size_t n)
 {
-	::memcpy(GetPointer(), pixel.GetPointer(), bytesPerPixel * n);
+	::memcpy(GetPointer(), pixel.GetPointer(), format.bytesPerPixel * n);
 }
 
 template<> void Image::PixelBGR::InjectN<Image::PixelBGRA>(const PixelBGRA& pixel, size_t n)
@@ -56,6 +93,8 @@ template<> void Image::PixelBGR::InjectN<Image::PixelBGRA>(const PixelBGRA& pixe
 //------------------------------------------------------------------------------
 // Image::PixelBGRA
 //------------------------------------------------------------------------------
+const Image::Format& Image::PixelBGRA::format = Format::BGRA;
+
 template<> void Image::PixelBGRA::InjectN<Image::PixelBGR>(const PixelBGR& pixel, size_t n)
 {
 	UInt8* pDst = GetPointer();
@@ -67,7 +106,7 @@ template<> void Image::PixelBGRA::InjectN<Image::PixelBGR>(const PixelBGR& pixel
 
 template<> void Image::PixelBGRA::InjectN<Image::PixelBGRA>(const PixelBGRA& pixel, size_t n)
 {
-	::memcpy(GetPointer(), pixel.GetPointer(), bytesPerPixel * n);
+	::memcpy(GetPointer(), pixel.GetPointer(), format.bytesPerPixel * n);
 }
 
 //------------------------------------------------------------------------------
