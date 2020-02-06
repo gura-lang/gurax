@@ -93,6 +93,38 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 	}
 }
 
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
+						 size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
+{
+#if 0
+	T_PixelDst pixelDst(GetPointer(xDst, yDst));
+	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
+	for (size_t i = 0; i < height; i++) {
+		pixelDst.InjectN(pixelSrc, width);
+		pixelDst.FwdLine(_metrics), pixelSrc.FwdLine(_metrics);
+	}
+#endif
+}
+
+void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
+						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
+{
+	if (IsFormat(Format::BGR)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			ResizePasteT<PixelBGR, PixelBGR>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			ResizePasteT<PixelBGR, PixelBGRA>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
+		}
+	} else if (IsFormat(Format::BGRA)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			ResizePasteT<PixelBGRA, PixelBGR>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			ResizePasteT<PixelBGRA, PixelBGRA>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
+		}
+	}
+}
+
 Image* Image::Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const
 {
 	RefPtr<Image> pImage(new Image(format));

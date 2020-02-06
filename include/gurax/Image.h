@@ -193,7 +193,7 @@ public:
 	template<typename T_PixelDst, typename T_PixelSrc>
 	void ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					  size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc);
-	void ResizePaste(size_t xDst, size_t yDst, const Image& imageSrc,
+	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					 size_t xSrc, size_t ySrc, size_t width, size_t height);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
 	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
