@@ -6,33 +6,66 @@
 
 namespace Gurax {
 
-
 //------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
-template<typename T_Pixel> void Image::FillTmpl(const Color& color)
+bool Image::Allocate(size_t width, size_t height)
+{
+	size_t bytes = WidthToBytes(width) * height;
+	_metrics.width = width, _metrics.height = height;
+	_pMemory.reset(new MemoryHeap(bytes));
+	return !!_pMemory;
+}
+
+template<typename T_Pixel>
+void Image::FillT(const Color& color)
 {
 	if (IsAreaZero()) return;
-	T_Pixel(GetPointer()).SetColorN(color, GetWidth());
-	const UInt8* pSrc = GetPointer();
-	UInt8* pDst = GetPointer() + GetBytesPerLine();
-	for (size_t i = 1; i < GetHeight(); i++, pDst += GetBytesPerLine(), pSrc += GetBytesPerLine()) {
-		::memcpy(pDst, pSrc, GetBytesPerLine());
+	T_Pixel pixel(GetPointer());
+	pixel.SetColorN(color, GetWidth());
+	const UInt8* pSrc = pixel.GetPointer();
+	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
+	size_t bytesToCopy = GetBytesPerLine();
+	for (size_t i = 1; i < GetHeight(); i++, pDst += GetBytesPerLine()) {
+		::memcpy(pDst, pSrc, bytesToCopy);
 	}
 }
 
 void Image::Fill(const Color& color)
 {
 	if (IsFormat(Format::BGR)) {
-		FillTmpl<PixelBGR>(color);
+		FillT<PixelBGR>(color);
 	} else if (IsFormat(Format::BGRA)) {
-		FillTmpl<PixelBGRA>(color);
+		FillT<PixelBGRA>(color);
+	}
+}
+
+template<typename T_Pixel>
+void Image::FillRectT(size_t x, size_t y, size_t width, size_t height, const Color& color)
+{
+	if (IsAreaZero()) return;
+	T_Pixel pixel(GetPointer(x, y));
+	pixel.SetColorN(color, width);
+	const UInt8* pSrc = pixel.GetPointer();
+	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
+	size_t bytesToCopy = WidthToBytes(width);
+	for (size_t i = 1; i < height; i++, pDst += GetBytesPerLine()) {
+		::memcpy(pDst, pSrc, bytesToCopy);
+	}
+}
+
+void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
+{
+	if (IsFormat(Format::BGR)) {
+		FillRectT<PixelBGR>(x, y, width, height, color);
+	} else if (IsFormat(Format::BGRA)) {
+		FillRectT<PixelBGRA>(x, y, width, height, color);
 	}
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
-void Image::CopyTmpl(size_t xDst, size_t yDst, const Image& imageSrc,
-					 size_t xSrc, size_t ySrc, size_t width, size_t height)
+void Image::PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
+				  size_t xSrc, size_t ySrc, size_t width, size_t height)
 {
 	T_PixelDst pixelDst(GetPointer(xDst, yDst));
 	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
@@ -42,22 +75,30 @@ void Image::CopyTmpl(size_t xDst, size_t yDst, const Image& imageSrc,
 	}
 }
 
-void Image::Copy(size_t xDst, size_t yDst, const Image& imageSrc,
+void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 				 size_t xSrc, size_t ySrc, size_t width, size_t height)
 {
 	if (IsFormat(Format::BGR)) {
 		if (imageSrc.IsFormat(Format::BGR)) {
-			CopyTmpl<PixelBGR, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+			PasteT<PixelBGR, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
 		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			CopyTmpl<PixelBGR, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+			PasteT<PixelBGR, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
 		}
 	} else if (IsFormat(Format::BGRA)) {
 		if (imageSrc.IsFormat(Format::BGR)) {
-			CopyTmpl<PixelBGRA, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+			PasteT<PixelBGRA, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
 		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			CopyTmpl<PixelBGRA, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
+			PasteT<PixelBGRA, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
 		}
 	}
+}
+
+Image* Image::Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(width, height)) return nullptr;
+	pImage->Paste(0, 0, *this, x, y, width, height);
+	return pImage.release();
 }
 
 String Image::ToString(const StringStyle& ss) const

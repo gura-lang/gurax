@@ -21,6 +21,7 @@ public:
 		static const Format BGRA;
 		Format(size_t bytesPerPixel) : bytesPerPixel(bytesPerPixel) {}
 		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
+		bool IsIdentical(const Format& format) const { return this == &format; }
 	};
 	enum ScanDir {
 		None, LeftTopHorz, LeftTopVert, RightTopHorz, RightTopVert,
@@ -55,6 +56,10 @@ public:
 		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
 		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
 		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
+		void BwdPixel() { _p -= format.bytesPerPixel; }
+		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
+		void BwdLine(const Metrics& metrics) { _p -= metrics.bytesPerLine; }
+		void BwdLine(const Metrics& metrics, size_t n) { _p -= metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
 		}
@@ -107,6 +112,10 @@ public:
 		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
 		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
 		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
+		void BwdPixel() { _p -= format.bytesPerPixel; }
+		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
+		void BwdLine(const Metrics& metrics) { _p -= metrics.bytesPerLine; }
+		void BwdLine(const Metrics& metrics, size_t n) { _p -= metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
 		}
@@ -147,6 +156,7 @@ public:
 	// Constructor
 	Image(const Format& format, Memory* pMemory, size_t width, size_t height) :
 		_pMemory(pMemory), _metrics(format, width, height) {}
+	Image(const Format& format) : _metrics(format, 0, 0) {}
 	// Copy constructor/operator
 	Image(const Image& src) = delete;
 	Image& operator=(const Image& src) = delete;
@@ -156,24 +166,39 @@ public:
 protected:
 	~Image() = default;
 public:
+	bool Allocate(size_t width, size_t height);
 	const Format& GetFormat() const { return _metrics.format; }
-	bool IsFormat(const Format& format) const { return &_metrics.format == &format; }
+	bool IsFormat(const Format& format) const { return _metrics.format.IsIdentical(format); }
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
 	size_t GetWidth() const { return _metrics.width; }
 	size_t GetHeight() const { return _metrics.height; }
 	size_t GetBytesPerPixel() const { return _metrics.format.bytesPerPixel; }
 	size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
+	size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
 	UInt8* GetPointer() { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
 	UInt8* GetPointer(size_t x, size_t y) {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
-	template<typename T_Pixel> void FillTmpl(const Color& color);
+	template<typename T_Pixel>
+	void FillT(const Color& color);
 	void Fill(const Color& color);
+	template<typename T_Pixel>
+	void FillRectT(size_t x, size_t y, size_t width, size_t height, const Color& color);
+	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	template<typename T_PixelDst, typename T_PixelSrc>
-	void CopyTmpl(size_t xDst, size_t yDst, const Image& imageSrc,
-				  size_t xSrc, size_t ySrc, size_t width, size_t height);
-	void Copy(size_t xDst, size_t yDst, const Image& imageSrc,
-			  size_t xSrc, size_t ySrc, size_t width, size_t height);
+	void PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
+				size_t xSrc, size_t ySrc, size_t width, size_t height);
+	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
+			   size_t xSrc, size_t ySrc, size_t width, size_t height);
+	template<typename T_PixelDst, typename T_PixelSrc>
+	void ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
+					  size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc);
+	void ResizePaste(size_t xDst, size_t yDst, const Image& imageSrc,
+					 size_t xSrc, size_t ySrc, size_t width, size_t height);
+	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
+	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
+		return Crop(GetFormat(), x, y, width, height);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }
