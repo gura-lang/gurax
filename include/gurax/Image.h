@@ -23,6 +23,12 @@ public:
 		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
 		bool IsIdentical(const Format& format) const { return this == &format; }
 	};
+	struct Rectangle {
+		size_t x;
+		size_t y;
+		size_t width;
+		size_t height;
+	};
 	enum ScanDir {
 		None, LeftTopHorz, LeftTopVert, RightTopHorz, RightTopVert,
 		LeftBottomHorz, LeftBottomVert, RightBottomHorz, RightBottomVert,
@@ -36,6 +42,7 @@ public:
 		Metrics(const Format& format, size_t width, size_t height) :
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
+		Rectangle Adjust(int x, int y, int width, int height) const;
 	};
 	struct Accumulator {
 	public:
@@ -194,6 +201,8 @@ public:
 	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
 		return Crop(GetFormat(), x, y, width, height);
 	}
+	Image* Resize(const Format& format, size_t width, size_t height) const;
+	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }

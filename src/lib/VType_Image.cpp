@@ -26,6 +26,40 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color)
+Gurax_DeclareMethod(Image, FillRect)
+{
+	Declare(VTYPE_Nil, Flag::Reduce);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, FillRect)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Argument
+	ArgPicker args(argument);
+	int x = args.PickNumber<int>();
+	int y = args.PickNumber<int>();
+	int width = args.PickNumber<int>();
+	int height = args.PickNumber<int>();
+	const Color& color = Value_Color::GetColor(args.PickValue());
+	// Function body
+	size_t xAdj, yAdj, widthAdj, heightAdj;
+	valueThis.GetImage().FillRect(xAdj, yAdj, widthAdj, heightAdj, color);
+	return valueThis.Reference();
+}
+
+//------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
 VType_Image VTYPE_Image("Image");
@@ -36,6 +70,8 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Image, FillRect));
 }
 
 //------------------------------------------------------------------------------

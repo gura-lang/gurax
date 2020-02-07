@@ -12,6 +12,23 @@ namespace Gurax {
 const Image::Format Image::Format::BGR(3);
 const Image::Format Image::Format::BGRA(4);
 
+//------------------------------------------------------------------------------
+// Image::Metrics
+//------------------------------------------------------------------------------
+Image::Rectangle Image::Metrics::Adjust(int x, int y, int width, int height) const
+{
+	Rectangle rect;
+	if (x < 0) {
+		width += x;
+		x = 0;
+	}
+	if (y < 0) {
+		height += y;
+		y = 0;
+	}
+	
+	return rect;
+}
 
 //------------------------------------------------------------------------------
 // Image::Accumulator
@@ -181,7 +198,7 @@ void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Colo
 }
 
 void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
-				 size_t xSrc, size_t ySrc, size_t width, size_t height)
+				  size_t xSrc, size_t ySrc, size_t width, size_t height)
 {
 	if (IsFormat(Format::BGR)) {
 		if (imageSrc.IsFormat(Format::BGR)) {
@@ -237,6 +254,14 @@ Image* Image::Crop(const Format& format, size_t x, size_t y, size_t width, size_
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(width, height)) return nullptr;
 	pImage->Paste(0, 0, *this, x, y, width, height);
+	return pImage.release();
+}
+
+Image* Image::Resize(const Format& format, size_t width, size_t height) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(width, height)) return nullptr;
+	pImage->ResizePaste(0, 0, width, height, *this, 0, 0, GetWidth(), GetHeight());
 	return pImage.release();
 }
 
