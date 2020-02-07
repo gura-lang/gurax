@@ -13,24 +13,34 @@ const Image::Format Image::Format::BGR(3);
 const Image::Format Image::Format::BGRA(4);
 
 //------------------------------------------------------------------------------
+// Image::Pixel
+//------------------------------------------------------------------------------
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+							   const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
+{
+	
+}
+
+//------------------------------------------------------------------------------
 // Image::PixelBGR
 //------------------------------------------------------------------------------
-template<> void Image::PixelBGR::Paste<Image::PixelBGR>(const PixelBGR& pixel, size_t width, size_t height)
+template<> void Image::PixelBGR::Paste<Image::PixelBGR>(const PixelBGR& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
-	const UInt8* pLineSrc = pixel.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	size_t bytesToCopy = WidthToBytes(width);
 	for (size_t y = 0; y < height; y++) {
 		::memcpy(pLineDst, pLineSrc, bytesToCopy);
 		pLineDst += GetBytesPerLine();
-		pLineSrc += pixel.GetBytesPerLine();
+		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
 }
 
-template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixel, size_t width, size_t height)
+template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
-	const UInt8* pLineSrc = pixel.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	for (size_t y = 0; y < height; y++) {
 		UInt8* pDst = pLineDst;
 		const UInt8* pSrc = pLineSrc;
@@ -38,29 +48,29 @@ template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixel,
 			*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, pSrc++;
 		}
 		pLineDst += GetBytesPerLine();
-		pLineSrc += pixel.GetBytesPerLine();
+		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
 }
 
 //------------------------------------------------------------------------------
 // Image::PixelBGRA
 //------------------------------------------------------------------------------
-template<> void Image::PixelBGRA::Paste<Image::PixelBGRA>(const PixelBGRA& pixel, size_t width, size_t height)
+template<> void Image::PixelBGRA::Paste<Image::PixelBGRA>(const PixelBGRA& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
-	const UInt8* pLineSrc = pixel.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	size_t bytesToCopy = WidthToBytes(width);
 	for (size_t y = 0; y < height; y++) {
 		::memcpy(pLineDst, pLineSrc, bytesToCopy);
 		pLineDst += GetBytesPerLine();
-		pLineSrc += pixel.GetBytesPerLine();
+		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
 }
 
-template<> void Image::PixelBGRA::Paste<Image::PixelBGR>(const PixelBGR& pixel, size_t width, size_t height)
+template<> void Image::PixelBGRA::Paste<Image::PixelBGR>(const PixelBGR& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
-	const UInt8* pLineSrc = pixel.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	for (size_t y = 0; y < height; y++) {
 		UInt8* pDst = pLineDst;
 		const UInt8* pSrc = pLineSrc;
@@ -68,7 +78,7 @@ template<> void Image::PixelBGRA::Paste<Image::PixelBGR>(const PixelBGR& pixel, 
 			*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = 0xff;
 		}
 		pLineDst += GetBytesPerLine();
-		pLineSrc += pixel.GetBytesPerLine();
+		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
 }
 

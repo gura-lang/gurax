@@ -67,7 +67,7 @@ public:
 	public:
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc) {}
+								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	};
 	class PixelBGR : public Pixel {
 	public:
