@@ -7,136 +7,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Image
-//------------------------------------------------------------------------------
-bool Image::Allocate(size_t width, size_t height)
-{
-	size_t bytes = WidthToBytes(width) * height;
-	_metrics.width = width, _metrics.height = height;
-	_pMemory.reset(new MemoryHeap(bytes));
-	return !!_pMemory;
-}
-
-template<typename T_Pixel>
-void Image::FillT(const Color& color)
-{
-	if (IsAreaZero()) return;
-	T_Pixel pixel(GetMetrics(), GetPointer());
-	pixel.SetColorN(color, GetWidth());
-	const UInt8* pSrc = pixel.GetPointer();
-	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
-	size_t bytesToCopy = GetBytesPerLine();
-	for (size_t i = 1; i < GetHeight(); i++, pDst += GetBytesPerLine()) {
-		::memcpy(pDst, pSrc, bytesToCopy);
-	}
-}
-
-void Image::Fill(const Color& color)
-{
-	if (IsFormat(Format::BGR)) {
-		FillT<PixelBGR>(color);
-	} else if (IsFormat(Format::BGRA)) {
-		FillT<PixelBGRA>(color);
-	}
-}
-
-template<typename T_Pixel>
-void Image::FillRectT(size_t x, size_t y, size_t width, size_t height, const Color& color)
-{
-	if (IsAreaZero()) return;
-	T_Pixel pixel(GetMetrics(), GetPointer(x, y));
-	pixel.SetColorN(color, width);
-	const UInt8* pSrc = pixel.GetPointer();
-	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
-	size_t bytesToCopy = WidthToBytes(width);
-	for (size_t i = 1; i < height; i++, pDst += GetBytesPerLine()) {
-		::memcpy(pDst, pSrc, bytesToCopy);
-	}
-}
-
-void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
-{
-	if (IsFormat(Format::BGR)) {
-		FillRectT<PixelBGR>(x, y, width, height, color);
-	} else if (IsFormat(Format::BGRA)) {
-		FillRectT<PixelBGRA>(x, y, width, height, color);
-	}
-}
-
-template<typename T_PixelDst, typename T_PixelSrc>
-void Image::PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
-				  size_t xSrc, size_t ySrc, size_t width, size_t height)
-{
-	T_PixelDst pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-	T_PixelSrc pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
-
-}
-
-void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
-				 size_t xSrc, size_t ySrc, size_t width, size_t height)
-{
-	if (IsFormat(Format::BGR)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PasteT<PixelBGR, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PasteT<PixelBGR, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
-		}
-	} else if (IsFormat(Format::BGRA)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PasteT<PixelBGRA, PixelBGR>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PasteT<PixelBGRA, PixelBGRA>(xDst, yDst, imageSrc, xSrc, ySrc, width, height);
-		}
-	}
-}
-
-template<typename T_PixelDst, typename T_PixelSrc>
-void Image::ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
-						 size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
-{
-#if 0
-	T_PixelDst pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-	T_PixelSrc pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
-	for (size_t i = 0; i < height; i++) {
-		pixelDst.InjectN(pixelSrc, width);
-		pixelDst.FwdLine();
-		pixelSrc.FwdLine();
-	}
-#endif
-}
-
-void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
-						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
-{
-	if (IsFormat(Format::BGR)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			ResizePasteT<PixelBGR, PixelBGR>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			ResizePasteT<PixelBGR, PixelBGRA>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
-		}
-	} else if (IsFormat(Format::BGRA)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			ResizePasteT<PixelBGRA, PixelBGR>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			ResizePasteT<PixelBGRA, PixelBGRA>(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
-		}
-	}
-}
-
-Image* Image::Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const
-{
-	RefPtr<Image> pImage(new Image(format));
-	if (!pImage->Allocate(width, height)) return nullptr;
-	pImage->Paste(0, 0, *this, x, y, width, height);
-	return pImage.release();
-}
-
-String Image::ToString(const StringStyle& ss) const
-{
-	return "";
-}
-
-//------------------------------------------------------------------------------
 // Image::Format
 //------------------------------------------------------------------------------
 const Image::Format Image::Format::BGR(3);
@@ -200,6 +70,114 @@ template<> void Image::PixelBGRA::Paste<Image::PixelBGR>(const PixelBGR& pixel, 
 		pLineDst += GetBytesPerLine();
 		pLineSrc += pixel.GetBytesPerLine();
 	}
+}
+
+//------------------------------------------------------------------------------
+// Image
+//------------------------------------------------------------------------------
+bool Image::Allocate(size_t width, size_t height)
+{
+	size_t bytes = WidthToBytes(width) * height;
+	_metrics.width = width, _metrics.height = height;
+	_pMemory.reset(new MemoryHeap(bytes));
+	return !!_pMemory;
+}
+
+void Image::Fill(const Color& color)
+{
+	if (IsAreaZero()) return;
+	if (IsFormat(Format::BGR)) {
+		PixelBGR(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+	} else if (IsFormat(Format::BGRA)) {
+		PixelBGRA(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+	}
+	const UInt8* pLineSrc = GetPointer();
+	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
+	size_t bytesToCopy = GetBytesPerLine();
+	for (size_t i = 1; i < GetHeight(); i++, pLineDst += GetBytesPerLine()) {
+		::memcpy(pLineDst, pLineSrc, bytesToCopy);
+	}
+}
+
+void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
+{
+	if (width == 0 || height == 0) return;
+	if (IsFormat(Format::BGR)) {
+		PixelBGR(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+	} else if (IsFormat(Format::BGRA)) {
+		PixelBGRA(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+	}
+	const UInt8* pLineSrc = GetPointer();
+	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
+	size_t bytesToCopy = WidthToBytes(width);
+	for (size_t i = 1; i < height; i++, pLineDst += GetBytesPerLine()) {
+		::memcpy(pLineDst, pLineSrc, bytesToCopy);
+	}
+}
+
+void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
+				 size_t xSrc, size_t ySrc, size_t width, size_t height)
+{
+	if (IsFormat(Format::BGR)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			pixelDst.Paste(pixelSrc, width, height);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			pixelDst.Paste(pixelSrc, width, height);
+		}
+	} else if (IsFormat(Format::BGRA)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			pixelDst.Paste(pixelSrc, width, height);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			pixelDst.Paste(pixelSrc, width, height);
+		}
+	}
+}
+
+void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
+						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
+{
+	if (IsFormat(Format::BGR)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+		}
+	} else if (IsFormat(Format::BGRA)) {
+		if (imageSrc.IsFormat(Format::BGR)) {
+			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+		} else if (imageSrc.IsFormat(Format::BGRA)) {
+			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+		}
+	}
+}
+
+Image* Image::Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(width, height)) return nullptr;
+	pImage->Paste(0, 0, *this, x, y, width, height);
+	return pImage.release();
+}
+
+String Image::ToString(const StringStyle& ss) const
+{
+	return "";
 }
 
 //------------------------------------------------------------------------------

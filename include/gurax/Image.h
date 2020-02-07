@@ -37,19 +37,19 @@ public:
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
 	};
-	class PixelBGR {
+	class Pixel {
 	protected:
 		const Metrics& _metrics;
 		UInt8* _p;
 	public:
 		// Constructor
-		PixelBGR(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
+		Pixel(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
 		// Copy constructor/operator
-		PixelBGR(const PixelBGR& src) : _metrics(src._metrics), _p(src._p) {}
-		PixelBGR& operator=(const PixelBGR& src) = delete;
+		Pixel(const Pixel& src) : _metrics(src._metrics), _p(src._p) {}
+		Pixel& operator=(const Pixel& src) = delete;
 		// Move constructor/operator
-		PixelBGR(const PixelBGR&& src) : _metrics(src._metrics), _p(src._p) {}
-		PixelBGR& operator=(const PixelBGR&& src) noexcept = delete;
+		Pixel(const Pixel&& src) : _metrics(src._metrics), _p(src._p) {}
+		Pixel& operator=(const Pixel&& src) noexcept = delete;
 	public:
 		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
 		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
@@ -64,10 +64,21 @@ public:
 		void BwdPixel(size_t n) { _p -= _metrics.bytesPerPixel * n; }
 		void BwdLine() { _p -= _metrics.bytesPerLine; }
 		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
+	public:
+		template<typename T_PixelDst, typename T_PixelSrc>
+		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc) {}
+	};
+	class PixelBGR : public Pixel {
+	public:
+		using Pixel::Pixel;
+	public:
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
 		}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixel, size_t width, size_t height) {}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
+		template<typename T_Pixel> void ResizePaste(const T_Pixel& pixelSrc, size_t wdDst, size_t htDst,
+													size_t wdSrc, size_t htSrc) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 		}
@@ -95,37 +106,16 @@ public:
 		static UInt8 GetB(const UInt8* p) { return *(p + 0); }
 		static UInt8 GetA(const UInt8* p) { return 0xff; }
 	};
-	class PixelBGRA {
-	protected:
-		const Metrics& _metrics;
-		UInt8* _p;
+	class PixelBGRA : public Pixel {
 	public:
-		// Constructor
-		PixelBGRA(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
-		// Copy constructor/operator
-		PixelBGRA(const PixelBGRA& src) : _metrics(src._metrics), _p(src._p) {}
-		PixelBGRA& operator=(const PixelBGRA& src) = delete;
-		// Move constructor/operator
-		PixelBGRA(const PixelBGRA&& src) : _metrics(src._metrics), _p(src._p) {}
-		PixelBGRA& operator=(const PixelBGRA&& src) noexcept = delete;
+		using Pixel::Pixel;
 	public:
-		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
-		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
-		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
-		UInt8* GetPointer() { return _p; }
-		const UInt8* GetPointer() const { return _p; }
-		void FwdPixel() { _p += _metrics.bytesPerPixel; }
-		void FwdPixel(size_t n) { _p += _metrics.bytesPerPixel * n; }
-		void FwdLine() { _p += _metrics.bytesPerLine; }
-		void FwdLine(size_t n) { _p += _metrics.bytesPerLine * n; }
-		void BwdPixel() { _p -= _metrics.bytesPerPixel; }
-		void BwdPixel(size_t n) { _p -= _metrics.bytesPerPixel * n; }
-		void BwdLine() { _p -= _metrics.bytesPerLine; }
-		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
 		}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixel, size_t width, size_t height) {}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
+		template<typename T_Pixel> void ResizePaste(const T_Pixel& pixelSrc, size_t wdDst, size_t htDst,
+													size_t wdSrc, size_t htSrc) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 			*(_p + 3) = color.GetA();
@@ -186,20 +176,10 @@ public:
 	UInt8* GetPointer(size_t x, size_t y) {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
-	template<typename T_Pixel>
-	void FillT(const Color& color);
 	void Fill(const Color& color);
-	template<typename T_Pixel>
-	void FillRectT(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
-	template<typename T_PixelDst, typename T_PixelSrc>
-	void PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
-				size_t xSrc, size_t ySrc, size_t width, size_t height);
 	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 			   size_t xSrc, size_t ySrc, size_t width, size_t height);
-	template<typename T_PixelDst, typename T_PixelSrc>
-	void ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
-					  size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc);
 	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					 size_t xSrc, size_t ySrc, size_t width, size_t height);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
