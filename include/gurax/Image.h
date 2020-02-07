@@ -31,16 +31,16 @@ public:
 		const Format& format;
 		size_t width;
 		size_t height;
+		size_t bytesPerPixel;
 		size_t bytesPerLine;
 		Metrics(const Format& format, size_t width, size_t height) :
-			format(format), width(width), height(height), bytesPerLine(format.WidthToBytes(width)) {}
+			format(format), width(width), height(height),
+			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
 	};
 	class PixelBGR {
 	protected:
 		const Metrics& _metrics;
 		UInt8* _p;
-	public:
-		static const Format& format;
 	public:
 		// Constructor
 		PixelBGR(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
@@ -52,16 +52,16 @@ public:
 		PixelBGR& operator=(const PixelBGR&& src) noexcept = delete;
 	public:
 		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
-		size_t GetBytesPerPixel() const { return format.bytesPerPixel; }
+		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
-		void FwdPixel() { _p += format.bytesPerPixel; }
-		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
+		void FwdPixel() { _p += _metrics.bytesPerPixel; }
+		void FwdPixel(size_t n) { _p += _metrics.bytesPerPixel * n; }
 		void FwdLine() { _p += _metrics.bytesPerLine; }
 		void FwdLine(size_t n) { _p += _metrics.bytesPerLine * n; }
-		void BwdPixel() { _p -= format.bytesPerPixel; }
-		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
+		void BwdPixel() { _p -= _metrics.bytesPerPixel; }
+		void BwdPixel(size_t n) { _p -= _metrics.bytesPerPixel * n; }
 		void BwdLine() { _p -= _metrics.bytesPerLine; }
 		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
@@ -100,8 +100,6 @@ public:
 		const Metrics& _metrics;
 		UInt8* _p;
 	public:
-		static const Format& format;
-	public:
 		// Constructor
 		PixelBGRA(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
 		// Copy constructor/operator
@@ -112,16 +110,16 @@ public:
 		PixelBGRA& operator=(const PixelBGRA&& src) noexcept = delete;
 	public:
 		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
-		size_t GetBytesPerPixel() const { return format.bytesPerPixel; }
+		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
-		void FwdPixel() { _p += format.bytesPerPixel; }
-		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
+		void FwdPixel() { _p += _metrics.bytesPerPixel; }
+		void FwdPixel(size_t n) { _p += _metrics.bytesPerPixel * n; }
 		void FwdLine() { _p += _metrics.bytesPerLine; }
 		void FwdLine(size_t n) { _p += _metrics.bytesPerLine * n; }
-		void BwdPixel() { _p -= format.bytesPerPixel; }
-		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
+		void BwdPixel() { _p -= _metrics.bytesPerPixel; }
+		void BwdPixel(size_t n) { _p -= _metrics.bytesPerPixel * n; }
 		void BwdLine() { _p -= _metrics.bytesPerLine; }
 		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
@@ -181,7 +179,7 @@ public:
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
 	size_t GetWidth() const { return _metrics.width; }
 	size_t GetHeight() const { return _metrics.height; }
-	size_t GetBytesPerPixel() const { return _metrics.format.bytesPerPixel; }
+	size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 	size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 	size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
 	UInt8* GetPointer() { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }

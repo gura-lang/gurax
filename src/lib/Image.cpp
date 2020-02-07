@@ -145,8 +145,6 @@ const Image::Format Image::Format::BGRA(4);
 //------------------------------------------------------------------------------
 // Image::PixelBGR
 //------------------------------------------------------------------------------
-const Image::Format& Image::PixelBGR::format = Format::BGR;
-
 template<> void Image::PixelBGR::Paste<Image::PixelBGR>(const PixelBGR& pixel, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
@@ -177,8 +175,6 @@ template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixel,
 //------------------------------------------------------------------------------
 // Image::PixelBGRA
 //------------------------------------------------------------------------------
-const Image::Format& Image::PixelBGRA::format = Format::BGRA;
-
 template<> void Image::PixelBGRA::Paste<Image::PixelBGRA>(const PixelBGRA& pixel, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
