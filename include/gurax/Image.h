@@ -89,8 +89,6 @@ public:
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
 		}
 		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
-		template<typename T_Pixel> void ResizePaste(const T_Pixel& pixelSrc, size_t wdDst, size_t htDst,
-													size_t wdSrc, size_t htSrc) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 		}
@@ -126,8 +124,6 @@ public:
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
 		}
 		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
-		template<typename T_Pixel> void ResizePaste(const T_Pixel& pixelSrc, size_t wdDst, size_t htDst,
-													size_t wdSrc, size_t htSrc) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 			*(_p + 3) = color.GetA();
