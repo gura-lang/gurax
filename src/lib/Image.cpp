@@ -21,7 +21,7 @@ template<typename T_Pixel>
 void Image::FillT(const Color& color)
 {
 	if (IsAreaZero()) return;
-	T_Pixel pixel(GetPointer());
+	T_Pixel pixel(GetMetrics(), GetPointer());
 	pixel.SetColorN(color, GetWidth());
 	const UInt8* pSrc = pixel.GetPointer();
 	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
@@ -44,7 +44,7 @@ template<typename T_Pixel>
 void Image::FillRectT(size_t x, size_t y, size_t width, size_t height, const Color& color)
 {
 	if (IsAreaZero()) return;
-	T_Pixel pixel(GetPointer(x, y));
+	T_Pixel pixel(GetMetrics(), GetPointer(x, y));
 	pixel.SetColorN(color, width);
 	const UInt8* pSrc = pixel.GetPointer();
 	UInt8* pDst = pixel.GetPointer() + GetBytesPerLine();
@@ -67,8 +67,8 @@ template<typename T_PixelDst, typename T_PixelSrc>
 void Image::PasteT(size_t xDst, size_t yDst, const Image& imageSrc,
 				  size_t xSrc, size_t ySrc, size_t width, size_t height)
 {
-	T_PixelDst pixelDst(GetPointer(xDst, yDst));
-	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
+	T_PixelDst pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+	T_PixelSrc pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 	for (size_t i = 0; i < height; i++) {
 		pixelDst.InjectN(pixelSrc, width);
 		pixelDst.FwdLine(_metrics);
@@ -99,8 +99,8 @@ void Image::ResizePasteT(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, c
 						 size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
 {
 #if 0
-	T_PixelDst pixelDst(GetPointer(xDst, yDst));
-	T_PixelSrc pixelSrc(GetPointer(xSrc, ySrc));
+	T_PixelDst pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+	T_PixelSrc pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 	for (size_t i = 0; i < height; i++) {
 		pixelDst.InjectN(pixelSrc, width);
 		pixelDst.FwdLine(_metrics);

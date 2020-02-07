@@ -37,18 +37,19 @@ public:
 	};
 	class PixelBGR {
 	protected:
+		const Metrics& _metrics;
 		UInt8* _p;
 	public:
 		static const Format& format;
 	public:
 		// Constructor
-		PixelBGR(UInt8* p) : _p(p) {}
+		PixelBGR(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
 		// Copy constructor/operator
-		PixelBGR(const PixelBGR& src) : _p(src._p) {}
-		PixelBGR& operator=(const PixelBGR& src) { _p = src._p; return *this; }
+		PixelBGR(const PixelBGR& src) : _metrics(src._metrics), _p(src._p) {}
+		PixelBGR& operator=(const PixelBGR& src) = delete;
 		// Move constructor/operator
-		PixelBGR(const PixelBGR&& src) : _p(src._p) {}
-		PixelBGR& operator=(const PixelBGR&& src) noexcept { _p = src._p; return *this; }
+		PixelBGR(const PixelBGR&& src) : _metrics(src._metrics), _p(src._p) {}
+		PixelBGR& operator=(const PixelBGR&& src) noexcept = delete;
 	public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
@@ -93,18 +94,19 @@ public:
 	};
 	class PixelBGRA {
 	protected:
+		const Metrics& _metrics;
 		UInt8* _p;
 	public:
 		static const Format& format;
 	public:
 		// Constructor
-		PixelBGRA(UInt8* p) : _p(p) {}
+		PixelBGRA(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
 		// Copy constructor/operator
-		PixelBGRA(const PixelBGRA& src) : _p(src._p) {}
-		PixelBGRA& operator=(const PixelBGRA& src) { _p = src._p; return *this; }
+		PixelBGRA(const PixelBGRA& src) : _metrics(src._metrics), _p(src._p) {}
+		PixelBGRA& operator=(const PixelBGRA& src) = delete;
 		// Move constructor/operator
-		PixelBGRA(const PixelBGRA&& src) : _p(src._p) {}
-		PixelBGRA& operator=(const PixelBGRA&& src) noexcept { _p = src._p; return *this; }
+		PixelBGRA(const PixelBGRA&& src) : _metrics(src._metrics), _p(src._p) {}
+		PixelBGRA& operator=(const PixelBGRA&& src) noexcept = delete;
 	public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
@@ -169,6 +171,7 @@ public:
 	bool Allocate(size_t width, size_t height);
 	const Format& GetFormat() const { return _metrics.format; }
 	bool IsFormat(const Format& format) const { return _metrics.format.IsIdentical(format); }
+	const Metrics& GetMetrics() const { return _metrics; }
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
 	size_t GetWidth() const { return _metrics.width; }
 	size_t GetHeight() const { return _metrics.height; }
