@@ -19,7 +19,17 @@ template<typename T_PixelDst, typename T_PixelSrc>
 void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 							   const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
 {
-	
+	UInt8* pLineDst = pixelDst.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
+		UInt8* pDst = pLineDst;
+		const UInt8* pSrc = pLineSrc;
+		for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
+			*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, pSrc++;
+		}
+		pLineDst += pixelDst.GetBytesPerLine();
+		pLineSrc += pixelSrc.GetBytesPerLine();
+	}
 }
 
 //------------------------------------------------------------------------------
