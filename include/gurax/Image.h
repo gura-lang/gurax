@@ -51,20 +51,23 @@ public:
 		PixelBGR(const PixelBGR&& src) : _metrics(src._metrics), _p(src._p) {}
 		PixelBGR& operator=(const PixelBGR&& src) noexcept = delete;
 	public:
+		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+		size_t GetBytesPerPixel() const { return format.bytesPerPixel; }
+		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
 		void FwdPixel() { _p += format.bytesPerPixel; }
 		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
-		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
-		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
+		void FwdLine() { _p += _metrics.bytesPerLine; }
+		void FwdLine(size_t n) { _p += _metrics.bytesPerLine * n; }
 		void BwdPixel() { _p -= format.bytesPerPixel; }
 		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
-		void BwdLine(const Metrics& metrics) { _p -= metrics.bytesPerLine; }
-		void BwdLine(const Metrics& metrics, size_t n) { _p -= metrics.bytesPerLine * n; }
+		void BwdLine() { _p -= _metrics.bytesPerLine; }
+		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
 		}
-		template<typename T_Pixel> void InjectN(const T_Pixel& pixel, size_t n) {}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixel, size_t width, size_t height) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 		}
@@ -108,20 +111,23 @@ public:
 		PixelBGRA(const PixelBGRA&& src) : _metrics(src._metrics), _p(src._p) {}
 		PixelBGRA& operator=(const PixelBGRA&& src) noexcept = delete;
 	public:
+		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+		size_t GetBytesPerPixel() const { return format.bytesPerPixel; }
+		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
 		void FwdPixel() { _p += format.bytesPerPixel; }
 		void FwdPixel(size_t n) { _p += format.bytesPerPixel * n; }
-		void FwdLine(const Metrics& metrics) { _p += metrics.bytesPerLine; }
-		void FwdLine(const Metrics& metrics, size_t n) { _p += metrics.bytesPerLine * n; }
+		void FwdLine() { _p += _metrics.bytesPerLine; }
+		void FwdLine(size_t n) { _p += _metrics.bytesPerLine * n; }
 		void BwdPixel() { _p -= format.bytesPerPixel; }
 		void BwdPixel(size_t n) { _p -= format.bytesPerPixel * n; }
-		void BwdLine(const Metrics& metrics) { _p -= metrics.bytesPerLine; }
-		void BwdLine(const Metrics& metrics, size_t n) { _p -= metrics.bytesPerLine * n; }
+		void BwdLine() { _p -= _metrics.bytesPerLine; }
+		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
 			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
 		}
-		template<typename T_Pixel> void InjectN(const T_Pixel& pixel, size_t n) {}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixel, size_t width, size_t height) {}
 		void SetColor(const Color &color) {
 			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
 			*(_p + 3) = color.GetA();
