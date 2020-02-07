@@ -37,6 +37,17 @@ public:
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
 	};
+	struct Accumulator {
+	public:
+		UInt32 r;
+		UInt32 g;
+		UInt32 b;
+		UInt32 a;
+		size_t n;
+	public:
+		template<typename T_Pixel> void Store(const UInt8* pSrc) {}
+		template<typename T_Pixel> void Extract(UInt8* pDst) {}
+	};
 	class Pixel {
 	protected:
 		const Metrics& _metrics;
@@ -65,6 +76,7 @@ public:
 		void BwdLine() { _p -= _metrics.bytesPerLine; }
 		void BwdLine(size_t n) { _p -= _metrics.bytesPerLine * n; }
 	public:
+		void Paste(const Pixel& pixelSrc, size_t width, size_t height);
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);

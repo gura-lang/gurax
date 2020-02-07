@@ -35,6 +35,7 @@ public:
 	char* GetPointer(size_t offset) { return _buff + offset; }
 	const char* GetPointer() const { return _buff; }
 	const char* GetPointer(size_t offset) const { return _buff + offset; }
+	void FillZero() { ::memset(_buff, 0x00, _bytes); }
 	String MakeId() const;
 	virtual Memory* Clone() const = 0;
 };
