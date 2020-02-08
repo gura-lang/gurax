@@ -9,47 +9,49 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Image::Format
 //------------------------------------------------------------------------------
-const Image::Format Image::Format::BGR(3);
-const Image::Format Image::Format::BGRA(4);
+const Image::Format Image::Format::RGB(3);
+const Image::Format Image::Format::RGBA(4);
 
 //------------------------------------------------------------------------------
 // Image::Metrics
 //------------------------------------------------------------------------------
-Image::Rectangle Image::Metrics::Adjust(int x, int y, int width, int height) const
+bool Image::Metrics::AdjustCoord(Rect* pRect, int x, int y, int width, int height) const
 {
-	Rectangle rect;
 	if (x < 0) {
 		width += x;
 		x = 0;
 	}
+	if (width <= 0 || x >= static_cast<int>(this->width)) return false;
 	if (y < 0) {
 		height += y;
 		y = 0;
 	}
-	
-	return rect;
+	if (height <= 0 || y >= static_cast<int>(this->height)) return false;
+	if (x + width > static_cast<int>(this->width)) width = static_cast<int>(this->width) - x;
+	if (y + height > static_cast<int>(this->height)) height = static_cast<int>(this->height) - y;
+	return true;
 }
 
 //------------------------------------------------------------------------------
 // Image::Accumulator
 //------------------------------------------------------------------------------
-template<> inline void Image::Accumulator::Store<Image::PixelBGR>(const UInt8* pSrc)
+template<> inline void Image::Accumulator::Store<Image::PixelRGB>(const UInt8* pSrc)
 {
 	b += *(pSrc + 0), g += *(pSrc + 1), r += *(pSrc + 2), n++;
 }
 
-template<> inline void Image::Accumulator::Store<Image::PixelBGRA>(const UInt8* pSrc)
+template<> inline void Image::Accumulator::Store<Image::PixelRGBA>(const UInt8* pSrc)
 {
 	b += *(pSrc + 0), g += *(pSrc + 1), r += *(pSrc + 2), a += *(pSrc + 3), n++;
 }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelBGR>(UInt8* pDst)
+template<> inline void Image::Accumulator::Extract<Image::PixelRGB>(UInt8* pDst)
 {
 	*(pDst + 0) = static_cast<UInt8>(b / n), *(pDst + 1) = static_cast<UInt8>(g / n);
 	*(pDst + 2) = static_cast<UInt8>(r / n);
 }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelBGRA>(UInt8* pDst)
+template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(UInt8* pDst)
 {
 	*(pDst + 0) = static_cast<UInt8>(b / n), *(pDst + 1) = static_cast<UInt8>(g / n);
 	*(pDst + 2) = static_cast<UInt8>(r / n), *(pDst + 3) = static_cast<UInt8>(a / n);
@@ -109,14 +111,14 @@ void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 }
 
 //------------------------------------------------------------------------------
-// Image::PixelBGR
+// Image::PixelRGB
 //------------------------------------------------------------------------------
-template<> void Image::PixelBGR::Paste<Image::PixelBGR>(const PixelBGR& pixelSrc, size_t width, size_t height)
+template<> void Image::PixelRGB::Paste<Image::PixelRGB>(const PixelRGB& pixelSrc, size_t width, size_t height)
 {
 	Pixel::Paste(pixelSrc, width, height);
 }
 
-template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixelSrc, size_t width, size_t height)
+template<> void Image::PixelRGB::Paste<Image::PixelRGBA>(const PixelRGBA& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
@@ -132,14 +134,14 @@ template<> void Image::PixelBGR::Paste<Image::PixelBGRA>(const PixelBGRA& pixelS
 }
 
 //------------------------------------------------------------------------------
-// Image::PixelBGRA
+// Image::PixelRGBA
 //------------------------------------------------------------------------------
-template<> void Image::PixelBGRA::Paste<Image::PixelBGRA>(const PixelBGRA& pixelSrc, size_t width, size_t height)
+template<> void Image::PixelRGBA::Paste<Image::PixelRGBA>(const PixelRGBA& pixelSrc, size_t width, size_t height)
 {
 	Pixel::Paste(pixelSrc, width, height);
 }
 
-template<> void Image::PixelBGRA::Paste<Image::PixelBGR>(const PixelBGR& pixelSrc, size_t width, size_t height)
+template<> void Image::PixelRGBA::Paste<Image::PixelRGB>(const PixelRGB& pixelSrc, size_t width, size_t height)
 {
 	UInt8* pLineDst = GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
@@ -168,10 +170,10 @@ bool Image::Allocate(size_t width, size_t height)
 void Image::Fill(const Color& color)
 {
 	if (IsAreaZero()) return;
-	if (IsFormat(Format::BGR)) {
-		PixelBGR(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
-	} else if (IsFormat(Format::BGRA)) {
-		PixelBGRA(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+	if (IsFormat(Format::RGB)) {
+		PixelRGB(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+	} else if (IsFormat(Format::RGBA)) {
+		PixelRGBA(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
 	}
 	const UInt8* pLineSrc = GetPointer();
 	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
@@ -184,10 +186,10 @@ void Image::Fill(const Color& color)
 void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
 {
 	if (width == 0 || height == 0) return;
-	if (IsFormat(Format::BGR)) {
-		PixelBGR(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
-	} else if (IsFormat(Format::BGRA)) {
-		PixelBGRA(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+	if (IsFormat(Format::RGB)) {
+		PixelRGB(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+	} else if (IsFormat(Format::RGBA)) {
+		PixelRGBA(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
 	}
 	const UInt8* pLineSrc = GetPointer();
 	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
@@ -200,24 +202,24 @@ void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Colo
 void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 				  size_t xSrc, size_t ySrc, size_t width, size_t height)
 {
-	if (IsFormat(Format::BGR)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+	if (IsFormat(Format::RGB)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			pixelDst.Paste(pixelSrc, width, height);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			pixelDst.Paste(pixelSrc, width, height);
 		}
-	} else if (IsFormat(Format::BGRA)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+	} else if (IsFormat(Format::RGBA)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			pixelDst.Paste(pixelSrc, width, height);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			pixelDst.Paste(pixelSrc, width, height);
 		}
 	}
@@ -226,24 +228,24 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
 {
-	if (IsFormat(Format::BGR)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+	if (IsFormat(Format::RGB)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PixelBGR pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
-	} else if (IsFormat(Format::BGRA)) {
-		if (imageSrc.IsFormat(Format::BGR)) {
-			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGR pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+	} else if (IsFormat(Format::RGBA)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
-		} else if (imageSrc.IsFormat(Format::BGRA)) {
-			PixelBGRA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelBGRA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
+			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	}
@@ -267,7 +269,10 @@ Image* Image::Resize(const Format& format, size_t width, size_t height) const
 
 String Image::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str;
+	str += "Image";
+	str.Printf("%zux%zu", GetWidth(), GetHeight());
+	return str;
 }
 
 //------------------------------------------------------------------------------

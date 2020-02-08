@@ -17,13 +17,13 @@ public:
 public:
 	struct Format {
 		size_t bytesPerPixel;
-		static const Format BGR;
-		static const Format BGRA;
+		static const Format RGB;
+		static const Format RGBA;
 		Format(size_t bytesPerPixel) : bytesPerPixel(bytesPerPixel) {}
 		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
 		bool IsIdentical(const Format& format) const { return this == &format; }
 	};
-	struct Rectangle {
+	struct Rect {
 		size_t x;
 		size_t y;
 		size_t width;
@@ -42,7 +42,7 @@ public:
 		Metrics(const Format& format, size_t width, size_t height) :
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
-		Rectangle Adjust(int x, int y, int width, int height) const;
+		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 	};
 	struct Accumulator {
 	public:
@@ -88,76 +88,79 @@ public:
 		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	};
-	class PixelBGR : public Pixel {
+	class PixelRGB : public Pixel {
 	public:
 		using Pixel::Pixel;
 	public:
-		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
-			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR();
-		}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
-		void SetColor(const Color &color) {
-			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
-		}
-		void SetColorN(const Color &color, size_t n) {
-			UInt8* pDst = _p;
-			for (size_t i = 0; i < n; i++) {
-				*pDst++ = color.GetB(), *pDst++ = color.GetG(), *pDst++ = color.GetR();
-			}
-		}
-		Color GetColor() const { return Color(*(_p + 2), *(_p + 1), *(_p + 0), 0xff); }
-		void SetR(UInt8 r) { *(_p + 2) = r; }
-		void SetG(UInt8 g) { *(_p + 1) = g; }
-		void SetB(UInt8 b) { *(_p + 0) = b; }
-		void SetA(UInt8 a) {}
+		static const size_t bytesPerPixel = 3;
+	public:
 		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
 		static void SetA(UInt8* p, UInt8 a) {}
-		UInt8 GetR() const { return *(_p + 2); }
-		UInt8 GetG() const { return *(_p + 1); }
-		UInt8 GetB() const { return *(_p + 0); }
-		UInt8 GetA() const { return 0xff; }
 		static UInt8 GetR(const UInt8* p) { return *(p + 2); }
 		static UInt8 GetG(const UInt8* p) { return *(p + 1); }
 		static UInt8 GetB(const UInt8* p) { return *(p + 0); }
 		static UInt8 GetA(const UInt8* p) { return 0xff; }
+	public:
+		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
+			SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB());
+		}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
+		void SetColor(const Color &color) { SetColor(_p, color); }
+		static void SetColor(UInt8* p, const Color &color) {
+			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB());
+		}
+		void SetColorN(const Color &color, size_t n) {
+			UInt8* p = _p;
+			for (size_t i = 0; i < n; i++, p += bytesPerPixel) SetColor(p, color);
+		}
+		Color GetColor() const { return Color(GetR(), GetG(), GetB(), GetA()); }
+		void SetR(UInt8 r) { SetR(_p, r); }
+		void SetG(UInt8 g) { SetG(_p, g); }
+		void SetB(UInt8 b) { SetB(_p, b); }
+		void SetA(UInt8 a) { SetA(_p, a); }
+		UInt8 GetR() const { return GetR(_p); }
+		UInt8 GetG() const { return GetG(_p); }
+		UInt8 GetB() const { return GetB(_p); }
+		UInt8 GetA() const { return GetA(_p); }
 	};
-	class PixelBGRA : public Pixel {
+	class PixelRGBA : public Pixel {
 	public:
 		using Pixel::Pixel;
 	public:
-		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
-			*(_p + 0) = pixel.GetB(), *(_p + 1) = pixel.GetG(), *(_p + 2) = pixel.GetR(), *(_p + 3) = pixel.GetA();
-		}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
-		void SetColor(const Color &color) {
-			*(_p + 0) = color.GetB(), *(_p + 1) = color.GetG(), *(_p + 2) = color.GetR();
-			*(_p + 3) = color.GetA();
-		}
-		void SetColorN(const Color &color, size_t n) {
-			UInt8* pDst = _p;
-			for (size_t i = 0; i < n; i++) {
-				*pDst++ = color.GetB(), *pDst++ = color.GetG(), *pDst++ = color.GetR(), *pDst++ = color.GetA();
-			}
-		}
-		Color GetColor() const { return Color(*(_p + 2), *(_p + 1), *(_p + 0), *(_p + 3)); }
-		void SetR(UInt8 r) { *(_p + 2) = r; }
-		void SetG(UInt8 g) { *(_p + 1) = g; }
-		void SetB(UInt8 b) { *(_p + 0) = b; }
-		void SetA(UInt8 a) { *(_p + 3) = a; }
+		static const size_t bytesPerPixel = 4;
+	public:
 		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
 		static void SetA(UInt8* p, UInt8 a) { *(p + 3) = a; }
-		UInt8 GetR() const { return *(_p + 2); }
-		UInt8 GetG() const { return *(_p + 1); }
-		UInt8 GetB() const { return *(_p + 0); }
-		UInt8 GetA() const { return *(_p + 3); }
 		static UInt8 GetR(const UInt8* p) { return *(p + 2); }
 		static UInt8 GetG(const UInt8* p) { return *(p + 1); }
 		static UInt8 GetB(const UInt8* p) { return *(p + 0); }
 		static UInt8 GetA(const UInt8* p) { return *(p + 3); }
+	public:
+		template<typename T_Pixel> void Inject(const T_Pixel& pixel) {
+			SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB()), SetA(pixel.GetA());
+		}
+		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
+		void SetColor(const Color &color) { SetColor(_p, color); }
+		static void SetColor(UInt8* p, const Color &color) {
+			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB()), SetA(p, color.GetA());
+		}
+		void SetColorN(const Color &color, size_t n) {
+			UInt8* p = _p;
+			for (size_t i = 0; i < n; i++, p += bytesPerPixel) SetColor(p, color);
+		}
+		Color GetColor() const { return Color(GetR(), GetG(), GetB(), GetA()); }
+		void SetR(UInt8 r) { SetR(_p, r); }
+		void SetG(UInt8 g) { SetG(_p, g); }
+		void SetB(UInt8 b) { SetB(_p, b); }
+		void SetA(UInt8 a) { SetA(_p, a); }
+		UInt8 GetR() const { return GetR(_p); }
+		UInt8 GetG() const { return GetG(_p); }
+		UInt8 GetB() const { return GetB(_p); }
+		UInt8 GetA() const { return GetA(_p); }
 	};
 protected:
 	RefPtr<Memory> _pMemory;
@@ -187,6 +190,9 @@ public:
 	size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 	size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 	size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
+		return _metrics.AdjustCoord(pRect, x, y, width, height);
+	}
 	UInt8* GetPointer() { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
 	UInt8* GetPointer(size_t x, size_t y) {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();

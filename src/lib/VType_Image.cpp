@@ -46,6 +46,7 @@ Gurax_ImplementMethod(Image, FillRect)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
 	// Argument
 	ArgPicker args(argument);
 	int x = args.PickNumber<int>();
@@ -54,8 +55,10 @@ Gurax_ImplementMethod(Image, FillRect)
 	int height = args.PickNumber<int>();
 	const Color& color = Value_Color::GetColor(args.PickValue());
 	// Function body
-	size_t xAdj, yAdj, widthAdj, heightAdj;
-	valueThis.GetImage().FillRect(xAdj, yAdj, widthAdj, heightAdj, color);
+	Image::Rect rect;
+	if (image.AdjustCoord(&rect, x, y, width, height)) {
+		image.FillRect(rect.x, rect.y, rect.width, rect.height, color);
+	}
 	return valueThis.Reference();
 }
 
