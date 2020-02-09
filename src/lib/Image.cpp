@@ -93,14 +93,14 @@ void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 				wdAccum -= wdSrc;
 				xDst++;
 			}
-			pSrc += pixelSrc.GetBytesPerPixel();
+			pSrc += T_PixelSrc::bytesPerPixel;
 		}
 		htAccum += htDst;
 		if (htAccum >= htSrc) {
 			UInt8* pDst = pLineDst;
 			for (size_t xDst = 0; xDst < wdDst; xDst++) {
 				accumulators[xDst].Extract<T_PixelDst>(pDst);
-				pDst += pixelDst.GetBytesPerPixel();
+				pDst += T_PixelDst::bytesPerPixel;
 			}
 			htAccum -= htSrc;
 			pLineDst += pixelDst.GetBytesPerLine();
@@ -149,7 +149,7 @@ template<> void Image::PixelRGBA::Paste<Image::PixelRGB>(const PixelRGB& pixelSr
 		UInt8* pDst = pLineDst;
 		const UInt8* pSrc = pLineSrc;
 		for (size_t x = 0; x < width; x++) {
-			*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = 0xff;
+			*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = _metrics.alphaDefault;
 		}
 		pLineDst += GetBytesPerLine();
 		pLineSrc += pixelSrc.GetBytesPerLine();

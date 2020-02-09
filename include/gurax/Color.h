@@ -11,8 +11,16 @@ namespace Gurax {
 // Color
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Color {
+public:
+	struct Elem {
+		UInt8 b, g, r, a;
+		Elem(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : b(b), g(g), r(r), a(a) {}
+	};
 private:
-	UInt8 _r, _g, _b, _a;
+	union {
+		UInt32 _packed;
+		Elem _elem;
+	};
 public:
 	static const Color zero;
 	static const Color black;
@@ -33,28 +41,31 @@ public:
 	static const Color white;
 public:
 	// Constructor
-	Color() : _r(0), _g(0), _b(0), _a(0) {}
-	Color(UInt8 r, UInt8 g, UInt8 b) : _r(r), _g(g), _b(b), _a(0) {}
-	Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _r(r), _g(g), _b(b), _a(a) {}
+	Color() : _packed(0) {}
+	explicit Color(UInt32 packed) : _packed(packed) {}
+	Color(UInt8 r, UInt8 g, UInt8 b) : _elem(r, g, b, 0xff) {}
+	Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}
 	// Copy constructor/operator
-	Color(const Color& src) : _r(src._r), _g(src._g), _b(src._b), _a(src._a) {}
-	Color& operator=(const Color& src) { _r = src._r, _g = src._g, _b = src._b, _a = src._a; }
+	Color(const Color& src) : _packed(src._packed) {}
+	Color& operator=(const Color& src) { _packed = src._packed; }
 	// Move constructor/operator
-	Color(Color&& src) : _r(src._r), _g(src._g), _b(src._b), _a(src._a) {}
-	Color& operator=(Color&& src) noexcept { _r = src._r, _g = src._g, _b = src._b, _a = src._a; }
+	Color(Color&& src) : _packed(src._packed) {}
+	Color& operator=(Color&& src) noexcept { _packed = src._packed; }
 	// Destructor
 	~Color() = default;
 public:
 	static void Bootup();
 public:
-	UInt8 GetR() const { return _r; }
-	UInt8 GetG() const { return _g; }
-	UInt8 GetB() const { return _b; }
-	UInt8 GetA() const { return _a; }
-	void SetR(UInt8 r) { _r = r; }
-	void SetG(UInt8 g) { _g = g; }
-	void SetB(UInt8 b) { _b = b; }
-	void SetA(UInt8 a) { _a = a; }
+	UInt32 GetPacked() const { return _packed; }
+	void SetPacked(UInt32 packed) { _packed = packed; }
+	UInt8 GetR() const { return _elem.r; }
+	UInt8 GetG() const { return _elem.g; }
+	UInt8 GetB() const { return _elem.b; }
+	UInt8 GetA() const { return _elem.a; }
+	void SetR(UInt8 r) { _elem.r = r; }
+	void SetG(UInt8 g) { _elem.g = g; }
+	void SetB(UInt8 b) { _elem.b = b; }
+	void SetA(UInt8 a) { _elem.a = a; }
 	UInt32 GetARGB() const {
 		return
 			(static_cast<UInt32>(GetA()) << 24) + (static_cast<UInt32>(GetR()) << 16) +
