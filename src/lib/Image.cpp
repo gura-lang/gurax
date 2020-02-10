@@ -119,6 +119,13 @@ Image::Scanner::Scanner(Image& image, size_t x, size_t y, size_t width, size_t h
 	}
 }
 
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	do {
+	} while (scannerDst.Next(scannerSrc));
+}
+
 //------------------------------------------------------------------------------
 // Image::Pixel
 //------------------------------------------------------------------------------

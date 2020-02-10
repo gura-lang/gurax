@@ -108,6 +108,9 @@ public:
 		size_t GetLineIndex() const { return _iLine; }
 		size_t GetPixelNum() const { return _nPixels; }
 		size_t GetLineNum() const { return _nLines; }
+	public:
+		template<typename T_PixelDst, typename T_PixelSrc>
+		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
 	};
 	class PixelRGB;
 	class PixelRGBA;
@@ -134,9 +137,9 @@ public:
 	public:
 		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
-		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
