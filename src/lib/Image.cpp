@@ -157,6 +157,68 @@ template<> void Image::PixelRGBA::Paste<Image::PixelRGB>(const PixelRGB& pixelSr
 }
 
 //------------------------------------------------------------------------------
+// Image::ScannerBase
+//------------------------------------------------------------------------------
+Image::ScannerBase::ScannerBase(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir) :
+	_metrics(image.GetMetrics())
+{
+	int bytesPerPixel = static_cast<int>(_metrics.bytesPerPixel);
+	int bytesPerLine = static_cast<int>(_metrics.bytesPerLine);
+	switch (scanDir) {
+	case ScanDir::LeftTopHorz:
+		_p = image.GetPointer(x, y);
+		_nPixels = width, _nLines = height;
+		_pitchPixel = bytesPerPixel;
+		_pitchLine = bytesPerLine - bytesPerPixel * width;
+		break;
+	case ScanDir::LeftTopVert:
+		_p = image.GetPointer(x, y);
+		_nPixels = height, _nLines = width;
+		_pitchPixel = bytesPerLine;
+		_pitchLine = bytesPerPixel - bytesPerLine * height;
+		break;
+	case ScanDir::RightTopHorz:
+		_p = image.GetPointer(x + width - 1, y);
+		_nPixels = width, _nLines = height;
+		_pitchPixel = -bytesPerPixel;
+		_pitchLine = bytesPerLine + bytesPerPixel * width;
+		break;
+	case ScanDir::RightTopVert:
+		_p = image.GetPointer(x + width - 1, y);
+		_nPixels = height, _nLines = width;
+		_pitchPixel = bytesPerLine;
+		_pitchLine = -bytesPerPixel - bytesPerLine * height;
+		break;
+	case ScanDir::LeftBottomHorz:
+		_p = image.GetPointer(x, y + height - 1);
+		_nPixels = width, _nLines = height;
+		_pitchPixel = bytesPerPixel;
+		_pitchLine = -bytesPerLine - bytesPerPixel * width;
+		break;
+	case ScanDir::LeftBottomVert:
+		_p = image.GetPointer(x, y + height - 1);
+		_nPixels = height, _nLines = width;
+		_pitchPixel = -bytesPerLine;
+		_pitchLine = bytesPerPixel + bytesPerLine * height;
+		break;
+	case ScanDir::RightBottomHorz:
+		_p = image.GetPointer(x + width - 1, y + height - 1);
+		_nPixels = width, _nLines = height;
+		_pitchPixel = -bytesPerPixel;
+		_pitchLine = -bytesPerLine + bytesPerPixel * width;
+		break;
+	case ScanDir::RightBottomVert:
+		_p = image.GetPointer(x + width - 1, y + height - 1);
+		_nPixels = height, _nLines = width;
+		_pitchPixel = -bytesPerLine;
+		_pitchLine = -bytesPerPixel + bytesPerLine * height;
+		break;
+	default:
+		break;
+	}
+}
+
+//------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
 bool Image::Allocate(size_t width, size_t height)
