@@ -79,6 +79,38 @@ public:
 		template<typename T_Pixel> void Store(const UInt8* pSrc) {}
 		template<typename T_Pixel> void Extract(UInt8* pDst) {}
 	};
+	class Scanner {
+	protected:
+		const Metrics& _metrics;
+		UInt8* _p;
+		size_t _iPixel, _iLine;
+		size_t _nPixels, _nLines;
+		int _pitchPixel;
+		int _pitchLine;
+	public:
+		UInt8* GetPointer() { return _p; }
+		const UInt8* GetPointer() const { return _p; }
+	public:
+		Scanner(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
+		bool NextPixel(Scanner& scannerSlave) {
+			_iPixel++, _p += _pitchPixel, scannerSlave._p += scannerSlave._pitchPixel;
+			return _iPixel < _nPixels;
+		}
+		bool NextLine() { _iPixel = 0, _iLine++, _p += _pitchLine; return _iLine < _nLines; }
+		bool NextLine(Scanner& scannerSlave) {
+			_iPixel = 0, _iLine++, _p += _pitchLine, scannerSlave._p += scannerSlave._pitchLine;
+			return _iLine < _nLines;
+		}
+		bool Next() { return NextPixel() || NextLine(); }
+		bool Next(Scanner& scannerSlave) { return NextPixel(scannerSlave) || NextLine(scannerSlave); }
+		size_t GetPixelIndex() const { return _iPixel; }
+		size_t GetLineIndex() const { return _iLine; }
+		size_t GetPixelNum() const { return _nPixels; }
+		size_t GetLineNum() const { return _nLines; }
+	};
+	class PixelRGB;
+	class PixelRGBA;
 	class Pixel {
 	protected:
 		const Metrics& _metrics;
@@ -100,7 +132,11 @@ public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
 	public:
-		void Paste(const Pixel& pixelSrc, size_t width, size_t height);
+		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
@@ -149,7 +185,6 @@ public:
 		template<typename T_Pixel> void SetPixel(const T_Pixel& pixel) {
 			SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB());
 		}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
 		void SetColorN(const Color &color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
@@ -187,58 +222,9 @@ public:
 		Color GetColor() const { return GetColor(_p); }
 	public:
 		template<typename T_Pixel> void SetPixel(const T_Pixel& pixel) {}
-		template<typename T_Pixel> void Paste(const T_Pixel& pixelSrc, size_t width, size_t height) {}
 		void SetColorN(const Color &color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
-	};
-	class ScannerBase {
-	protected:
-		const Metrics& _metrics;
-		UInt8* _p;
-		size_t _iPixel, _iLine;
-		size_t _nPixels, _nLines;
-		int _pitchPixel;
-		int _pitchLine;
-	public:
-		UInt8* GetPointer() { return _p; }
-		const UInt8* GetPointer() const { return _p; }
-	public:
-		ScannerBase(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
-		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
-		bool NextPixel(ScannerBase& scannerSlave) {
-			_iPixel++, _p += _pitchPixel, scannerSlave._p += scannerSlave._pitchPixel;
-			return _iPixel < _nPixels;
-		}
-		bool NextLine() { _iPixel = 0, _iLine++, _p += _pitchLine; return _iLine < _nLines; }
-		bool NextLine(ScannerBase& scannerSlave) {
-			_iPixel = 0, _iLine++, _p += _pitchLine, scannerSlave._p += scannerSlave._pitchLine;
-			return _iLine < _nLines;
-		}
-		bool Next() { return NextPixel() || NextLine(); }
-		bool Next(ScannerBase& scannerSlave) { return NextPixel(scannerSlave) || NextLine(scannerSlave); }
-		size_t GetPixelIndex() const { return _iPixel; }
-		size_t GetLineIndex() const { return _iLine; }
-		size_t GetPixelNum() const { return _nPixels; }
-		size_t GetLineNum() const { return _nLines; }
-	};
-	template<typename T_Pixel>
-	class Scanner : public ScannerBase {
-	public:
-		using ScannerBase::ScannerBase;
-	public:
-		void SetR(UInt8 r) { T_Pixel::SetR(_p, r); }
-		void SetG(UInt8 g) { T_Pixel::SetG(_p, g); }
-		void SetB(UInt8 b) { T_Pixel::SetB(_p, b); }
-		void SetA(UInt8 a) { T_Pixel::SetA(_p, a); }
-		void SetPacked(UInt32 packed) { T_Pixel::SetPacked(_p, packed); }
-		void SetColor(const Color &color) { T_Pixel::SetColor(_p, color); }
-		UInt8 GetR() const { return T_Pixel::GetR(_p); }
-		UInt8 GetG() const { return T_Pixel::GetG(_p); }
-		UInt8 GetB() const { return T_Pixel::GetB(_p); }
-		UInt8 GetA() const { return T_Pixel::GetA(_p); }
-		UInt32 GetPacked() const { return T_Pixel::GetPacked(_p); }
-		Color GetColor() const { return T_Pixel::GetColor(_p); }
 	};
 protected:
 	RefPtr<Memory> _pMemory;
