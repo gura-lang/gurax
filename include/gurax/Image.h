@@ -92,6 +92,7 @@ public:
 		const UInt8* GetPointer() const { return _p; }
 	public:
 		Scanner(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		const Metrics& GetMetrics() const { return _metrics; }
 		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
 		bool NextPixel(Scanner& scannerSlave) {
 			_iPixel++, _p += _pitchPixel, scannerSlave._p += scannerSlave._pitchPixel;
@@ -109,6 +110,8 @@ public:
 		size_t GetPixelNum() const { return _nPixels; }
 		size_t GetLineNum() const { return _nLines; }
 	public:
+		template<typename T_PixelDst, typename T_PixelSrc>
+		static void SetPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
 	};
@@ -153,6 +156,9 @@ public:
 		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
+		static void SetRGB(UInt8* p, UInt8 r, UInt8 g, UInt8 b) {
+			SetR(p, r), SetG(p, g), SetB(p, b);
+		}
 		static void SetPacked(UInt8* p, UInt32 packed) {
 			SetB(p, static_cast<UInt8>(packed));
 			SetG(p, static_cast<UInt8>(packed >> 8));
@@ -202,6 +208,9 @@ public:
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
 		static void SetA(UInt8* p, UInt8 a) { *(p + 3) = a; }
+		static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+			SetR(p, r), SetG(p, g), SetB(p, b), SetA(p, a);
+		}
 		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
 		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
 		static UInt8 GetR(const UInt8* p) { return *(p + 2); }

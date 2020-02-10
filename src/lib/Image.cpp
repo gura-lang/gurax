@@ -119,10 +119,38 @@ Image::Scanner::Scanner(Image& image, size_t x, size_t y, size_t width, size_t h
 	}
 }
 
+template<>
+void Image::Scanner::SetPixel<Image::PixelRGB, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	::memcpy(scannerDst.GetPointer(), scannerSrc.GetPointer(), PixelRGB::bytesPerPixel);
+}
+
+template<>
+void Image::Scanner::SetPixel<Image::PixelRGB, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	const UInt8* p = scannerSrc.GetPointer();
+	PixelRGB::SetRGB(scannerDst.GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
+}
+
+template<>
+void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	const UInt8* p = scannerSrc.GetPointer();
+	PixelRGBA::SetRGBA(scannerDst.GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
+					   scannerDst.GetMetrics().alphaDefault);
+}
+
+template<>
+void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	::memcpy(scannerDst.GetPointer(), scannerSrc.GetPointer(), PixelRGBA::bytesPerPixel);
+}
+
 template<typename T_PixelDst, typename T_PixelSrc>
 void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	do {
+		SetPixel<T_PixelDst, T_PixelSrc>(scannerDst, scannerSrc);
 	} while (scannerDst.Next(scannerSrc));
 }
 
