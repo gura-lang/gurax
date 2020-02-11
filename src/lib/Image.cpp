@@ -162,7 +162,7 @@ void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scanne
 template<>
 void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
 {
-	::memcpy(scannerDst.GetPointer(), scannerSrc.GetPointer(), PixelRGBA::bytesPerPixel);
+	PixelRGBA::SetPacked(scannerDst.GetPointer(), PixelRGBA::GetPacked(scannerSrc.GetPointer()));
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
@@ -200,6 +200,7 @@ void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t 
 
 void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height)
 {
+#if 0
 	UInt8* pLineDst = pixelDst.GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	for (size_t y = 0; y < height; y++) {
@@ -211,6 +212,7 @@ void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t w
 		pLineDst += pixelDst.GetBytesPerLine();
 		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
+#endif
 }
 
 void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height)
