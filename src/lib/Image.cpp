@@ -60,63 +60,82 @@ template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(UInt8* pDst
 //------------------------------------------------------------------------------
 // Image::Scanner
 //------------------------------------------------------------------------------
-Image::Scanner::Scanner(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir) :
-	_metrics(image.GetMetrics())
+Image::Scanner Image::Scanner::Create(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir)
 {
-	int bytesPerPixel = static_cast<int>(_metrics.bytesPerPixel);
-	int bytesPerLine = static_cast<int>(_metrics.bytesPerLine);
-	switch (scanDir) {
-	case ScanDir::LeftTopHorz:
-		_p = image.GetPointer(x, y);
-		_nPixels = width, _nLines = height;
-		_pitchPixel = bytesPerPixel;
-		_pitchLine = bytesPerLine - bytesPerPixel * width;
-		break;
-	case ScanDir::LeftTopVert:
-		_p = image.GetPointer(x, y);
-		_nPixels = height, _nLines = width;
-		_pitchPixel = bytesPerLine;
-		_pitchLine = bytesPerPixel - bytesPerLine * height;
-		break;
-	case ScanDir::RightTopHorz:
-		_p = image.GetPointer(x + width - 1, y);
-		_nPixels = width, _nLines = height;
-		_pitchPixel = -bytesPerPixel;
-		_pitchLine = bytesPerLine + bytesPerPixel * width;
-		break;
-	case ScanDir::RightTopVert:
-		_p = image.GetPointer(x + width - 1, y);
-		_nPixels = height, _nLines = width;
-		_pitchPixel = bytesPerLine;
-		_pitchLine = -bytesPerPixel - bytesPerLine * height;
-		break;
-	case ScanDir::LeftBottomHorz:
-		_p = image.GetPointer(x, y + height - 1);
-		_nPixels = width, _nLines = height;
-		_pitchPixel = bytesPerPixel;
-		_pitchLine = -bytesPerLine - bytesPerPixel * width;
-		break;
-	case ScanDir::LeftBottomVert:
-		_p = image.GetPointer(x, y + height - 1);
-		_nPixels = height, _nLines = width;
-		_pitchPixel = -bytesPerLine;
-		_pitchLine = bytesPerPixel + bytesPerLine * height;
-		break;
-	case ScanDir::RightBottomHorz:
-		_p = image.GetPointer(x + width - 1, y + height - 1);
-		_nPixels = width, _nLines = height;
-		_pitchPixel = -bytesPerPixel;
-		_pitchLine = -bytesPerLine + bytesPerPixel * width;
-		break;
-	case ScanDir::RightBottomVert:
-		_p = image.GetPointer(x + width - 1, y + height - 1);
-		_nPixels = height, _nLines = width;
-		_pitchPixel = -bytesPerLine;
-		_pitchLine = -bytesPerPixel + bytesPerLine * height;
-		break;
-	default:
-		break;
-	}
+	return
+		(scanDir == ScanDir::LeftTopHorz)? LeftTopHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftTopVert)? LeftTopVert(image, x, y, width, height) :
+		(scanDir == ScanDir::RightTopHorz)? RightTopHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::RightTopVert)? RightTopVert(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftBottomHorz)? LeftBottomHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftBottomVert)? LeftBottomVert(image, x, y, width, height) :
+		(scanDir == ScanDir::RightBottomHorz)? RightBottomHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::RightBottomVert)? RightBottomVert(image, x, y, width, height) :
+		Scanner(image.GetMetrics(), nullptr, 0, 0, 0, 0);
+}
+
+Image::Scanner Image::Scanner::LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x, y), width, height,
+				   bytesPerPixel, bytesPerLine - bytesPerPixel * width);
+}
+
+Image::Scanner Image::Scanner::LeftTopVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x, y), height, width,
+				   bytesPerLine, bytesPerPixel - bytesPerLine * height);
+}
+
+Image::Scanner Image::Scanner::RightTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y), width, height,
+				   -bytesPerPixel, bytesPerLine + bytesPerPixel * width);
+}
+
+Image::Scanner Image::Scanner::RightTopVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y), height, width,
+				   bytesPerLine, -bytesPerPixel - bytesPerLine * height);
+}
+
+Image::Scanner Image::Scanner::LeftBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x, y + height - 1), width, height,
+				   bytesPerPixel, -bytesPerLine - bytesPerPixel * width);
+}
+
+Image::Scanner Image::Scanner::LeftBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x, y + height - 1), height, width,
+				   -bytesPerLine, bytesPerPixel + bytesPerLine * height);
+}
+
+Image::Scanner Image::Scanner::RightBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y + height - 1), width, height,
+				   -bytesPerPixel, -bytesPerLine + bytesPerPixel * width);
+}
+
+Image::Scanner Image::Scanner::RightBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+{
+	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
+	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
+	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y + height - 1), height, width,
+				   -bytesPerLine, -bytesPerPixel + bytesPerLine * height);
 }
 
 template<>

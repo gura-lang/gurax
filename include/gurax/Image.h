@@ -91,7 +91,20 @@ public:
 		UInt8* GetPointer() { return _p; }
 		const UInt8* GetPointer() const { return _p; }
 	public:
-		Scanner(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		Scanner(const Metrics& metrics, UInt8* p, size_t nPixels, size_t nLines, int pitchPixel, int pitchLine) :
+			_metrics(metrics), _p(p), _iPixel(0), _iLine(0),
+			_nPixels(nPixels), _nLines(nLines), _pitchPixel(pitchPixel), _pitchLine(pitchLine) {}
+	public:
+		static Scanner Create(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		static Scanner LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftTopVert(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopVert(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height);
+	public:
 		const Metrics& GetMetrics() const { return _metrics; }
 		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
 		bool NextPixel(Scanner& scannerSlave) {
