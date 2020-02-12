@@ -60,18 +60,28 @@ template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(UInt8* pDst
 //------------------------------------------------------------------------------
 // Image::Scanner
 //------------------------------------------------------------------------------
-Image::Scanner Image::Scanner::Create(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir)
+Image::Scanner Image::Scanner::CreateByDir(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir)
 {
 	return
-		(scanDir == ScanDir::LeftTopHorz)? LeftTopHorz(image, x, y, width, height) :
-		(scanDir == ScanDir::LeftTopVert)? LeftTopVert(image, x, y, width, height) :
-		(scanDir == ScanDir::RightTopHorz)? RightTopHorz(image, x, y, width, height) :
-		(scanDir == ScanDir::RightTopVert)? RightTopVert(image, x, y, width, height) :
-		(scanDir == ScanDir::LeftBottomHorz)? LeftBottomHorz(image, x, y, width, height) :
-		(scanDir == ScanDir::LeftBottomVert)? LeftBottomVert(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftTopHorz)?     LeftTopHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftTopVert)?     LeftTopVert(image, x, y, width, height) :
+		(scanDir == ScanDir::RightTopHorz)?    RightTopHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::RightTopVert)?    RightTopVert(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftBottomHorz)?  LeftBottomHorz(image, x, y, width, height) :
+		(scanDir == ScanDir::LeftBottomVert)?  LeftBottomVert(image, x, y, width, height) :
 		(scanDir == ScanDir::RightBottomHorz)? RightBottomHorz(image, x, y, width, height) :
 		(scanDir == ScanDir::RightBottomVert)? RightBottomVert(image, x, y, width, height) :
 		Scanner(image.GetMetrics(), nullptr, 0, 0, 0, 0);
+}
+
+Image::Scanner Image::Scanner::CreateByFlip(Image& image, size_t x, size_t y, size_t width, size_t height,
+											bool horzFlag, bool vertFlag)
+{
+	return
+		(horzFlag && vertFlag)?  RightBottomHorz(image, x, y, width, height) :
+		(horzFlag && !vertFlag)? RightTopHorz(image, x, y, width, height) :
+		(!horzFlag && vertFlag)? LeftBottomHorz(image, x, y, width, height) :
+		LeftTopHorz(image, x, y, width, height);
 }
 
 Image::Scanner Image::Scanner::LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
@@ -346,6 +356,12 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 	}
 }
 
+void Image::FlipPaste(size_t xDst, size_t yDst, const Image& imageSrc,
+					  size_t xSrc, size_t ySrc, size_t width, size_t height, bool horzFlag, bool vertFlag)
+{
+
+}
+
 void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
 {
@@ -385,6 +401,14 @@ Image* Image::Resize(const Format& format, size_t width, size_t height) const
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(width, height)) return nullptr;
 	pImage->ResizePaste(0, 0, width, height, *this, 0, 0, GetWidth(), GetHeight());
+	return pImage.release();
+}
+
+Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
+	pImage->FlipPaste(0, 0, *this, 0, 0, GetWidth(), GetHeight(), horzFlag, vertFlag);
 	return pImage.release();
 }
 

@@ -95,7 +95,9 @@ public:
 			_metrics(metrics), _p(p), _iPixel(0), _iLine(0),
 			_nPixels(nPixels), _nLines(nLines), _pitchPixel(pitchPixel), _pitchLine(pitchLine) {}
 	public:
-		static Scanner Create(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		static Scanner CreateByDir(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		static Scanner CreateByFlip(Image& image, size_t x, size_t y, size_t width, size_t height,
+									bool horzFlag, bool vertFlag);
 		static Scanner LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner LeftTopVert(Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner RightTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
@@ -294,12 +296,16 @@ public:
 			   size_t xSrc, size_t ySrc, size_t width, size_t height);
 	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					 size_t xSrc, size_t ySrc, size_t width, size_t height);
+	void FlipPaste(size_t xDst, size_t yDst, const Image& imageSrc,
+				   size_t xSrc, size_t ySrc, size_t width, size_t height, bool horzFlag, bool vertFlag);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
 	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
 		return Crop(GetFormat(), x, y, width, height);
 	}
 	Image* Resize(const Format& format, size_t width, size_t height) const;
 	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
+	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
+	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }
