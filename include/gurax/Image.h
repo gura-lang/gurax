@@ -67,6 +67,7 @@ public:
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)),
 			alphaDefault(alphaDefault) {}
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
+		bool CheckCoord(int x, int y) const;
 	};
 	struct Accumulator {
 	public:
@@ -288,6 +289,12 @@ public:
 	UInt8* GetPointer(size_t x, size_t y) const {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
+	template<typename T_Pixel> T_Pixel GetPixel() const {
+		return T_Pixel(GetMetrics(), GetPointer());
+	}
+	template<typename T_Pixel> T_Pixel GetPixel(size_t x, size_t y) const {
+		return T_Pixel(GetMetrics(), GetPointer(x, y));
+	}
 	void Fill(const Color& color);
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
@@ -304,6 +311,15 @@ public:
 	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
 	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
 	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
+	Color GetPixelColor(size_t x, size_t y) const {
+		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
+			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;
+	}
+	void SetPixelColor(size_t x, size_t y, const Color& color) const {
+		if (IsFormat(Format::RGB)) { GetPixel<PixelRGB>(x, y).SetColor(color); }
+		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
+	}
+	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }

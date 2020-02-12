@@ -32,6 +32,13 @@ bool Image::Metrics::AdjustCoord(Rect* pRect, int x, int y, int width, int heigh
 	return true;
 }
 
+bool Image::Metrics::CheckCoord(int x, int y) const
+{
+	if (0 <= x && x < static_cast<int>(width) && 0 <= y && y < static_cast<int>(height)) return true;
+	Error::Issue(ErrorType::RangeError, "out of image size");
+	return false;
+}		
+
 //------------------------------------------------------------------------------
 // Image::Accumulator
 //------------------------------------------------------------------------------
@@ -333,22 +340,22 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 {
 	if (IsFormat(Format::RGB)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		}
 	}
@@ -379,22 +386,22 @@ void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, co
 {
 	if (IsFormat(Format::RGB)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			PixelRGB pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGB pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			PixelRGBA pixelDst(GetMetrics(), GetPointer(xDst, yDst));
-			PixelRGBA pixelSrc(GetMetrics(), GetPointer(xSrc, ySrc));
+			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	}

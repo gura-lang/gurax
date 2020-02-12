@@ -119,6 +119,61 @@ Gurax_ImplementMethod(Image, Flip)
 	return pImage? new Value_Image(pImage.release()) : Value::nil();
 }
 
+// Image#GetPixel(x:Number, y:Number):map {block?}
+Gurax_DeclareMethod(Image, GetPixel)
+{
+	Declare(VTYPE_Image, Flag::Map);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, GetPixel)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int x = args.PickNumber<int>();
+	int y = args.PickNumber<int>();
+	// Function body
+	if (!image.CheckCoord(x, y)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
+}
+
+// Image#SetPixel(x:Number, y:Number, color:Color):map
+Gurax_DeclareMethod(Image, SetPixel)
+{
+	Declare(VTYPE_Image, Flag::Reduce);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, SetPixel)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int x = args.PickNumber<int>();
+	int y = args.PickNumber<int>();
+	const Color& color = Value_Color::GetColor(args.PickValue());
+	// Function body
+	if (!image.CheckCoord(x, y)) return Value::nil();
+	image.SetPixelColor(x, y, color);
+	return valueThis.Reference();
+}
+
 //------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
@@ -134,6 +189,8 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));
 	Assign(Gurax_CreateMethod(Image, Flip));
+	Assign(Gurax_CreateMethod(Image, GetPixel));
+	Assign(Gurax_CreateMethod(Image, SetPixel));
 }
 
 //------------------------------------------------------------------------------
