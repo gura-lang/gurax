@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 // Image#Fill(color:Color)
 Gurax_DeclareMethod(Image, Fill)
 {
-	Declare(VTYPE_Nil, Flag::Reduce);
+	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -54,7 +54,7 @@ Gurax_ImplementMethod(Image, Fill)
 // Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color)
 Gurax_DeclareMethod(Image, FillRect)
 {
-	Declare(VTYPE_Nil, Flag::Reduce);
+	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -85,6 +85,40 @@ Gurax_ImplementMethod(Image, FillRect)
 	return valueThis.Reference();
 }
 
+// Image#Flip(orient:Symbol)
+Gurax_DeclareMethod(Image, Flip)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("orient", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, Flip)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	bool horzFlag = false, vertFlag = false;
+	const Symbol* pSymbol = args.PickSymbol();
+	if (pSymbol->IsIdentical(Gurax_Symbol(horz))) {
+		horzFlag = true;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(vert))) {
+		vertFlag = true;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(both))) {
+		horzFlag = vertFlag = true;
+	} else {
+		Error::Issue(ErrorType::ValueError, "orient must be one of `horz, `vert and `both");
+		return Value::nil();
+	}
+	// Function body
+	RefPtr<Image> pImage(image.Flip(horzFlag, vertFlag));
+	return pImage? new Value_Image(pImage.release()) : Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
@@ -99,6 +133,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));
+	Assign(Gurax_CreateMethod(Image, Flip));
 }
 
 //------------------------------------------------------------------------------
