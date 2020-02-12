@@ -28,6 +28,29 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Image#Fill(color:Color)
+Gurax_DeclareMethod(Image, Fill)
+{
+	Declare(VTYPE_Nil, Flag::Reduce);
+	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, Fill)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	const Color& color = Value_Color::GetColor(args.PickValue());
+	// Function body
+	image.Fill(color);
+	return valueThis.Reference();
+}
+
 // Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color)
 Gurax_DeclareMethod(Image, FillRect)
 {
@@ -74,6 +97,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));
 }
 

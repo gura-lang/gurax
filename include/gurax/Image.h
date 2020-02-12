@@ -88,24 +88,23 @@ public:
 		int _pitchPixel;
 		int _pitchLine;
 	public:
-		UInt8* GetPointer() { return _p; }
-		const UInt8* GetPointer() const { return _p; }
+		UInt8* GetPointer() const { return _p; }
 	public:
 		Scanner(const Metrics& metrics, UInt8* p, size_t nPixels, size_t nLines, int pitchPixel, int pitchLine) :
 			_metrics(metrics), _p(p), _iPixel(0), _iLine(0),
 			_nPixels(nPixels), _nLines(nLines), _pitchPixel(pitchPixel), _pitchLine(pitchLine) {}
 	public:
-		static Scanner CreateByDir(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
-		static Scanner CreateByFlip(Image& image, size_t x, size_t y, size_t width, size_t height,
+		static Scanner CreateByDir(const Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
+		static Scanner CreateByFlip(const Image& image, size_t x, size_t y, size_t width, size_t height,
 									bool horzFlag, bool vertFlag);
-		static Scanner LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner LeftTopVert(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightTopVert(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner LeftBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner LeftBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner LeftBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
 		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
@@ -150,8 +149,7 @@ public:
 		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
-		UInt8* GetPointer() { return _p; }
-		const UInt8* GetPointer() const { return _p; }
+		UInt8* GetPointer() const { return _p; }
 	public:
 		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
@@ -286,8 +284,8 @@ public:
 	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
 		return _metrics.AdjustCoord(pRect, x, y, width, height);
 	}
-	UInt8* GetPointer() { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
-	UInt8* GetPointer(size_t x, size_t y) {
+	UInt8* GetPointer() const { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
+	UInt8* GetPointer(size_t x, size_t y) const {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
 	void Fill(const Color& color);

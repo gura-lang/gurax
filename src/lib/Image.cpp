@@ -60,7 +60,7 @@ template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(UInt8* pDst
 //------------------------------------------------------------------------------
 // Image::Scanner
 //------------------------------------------------------------------------------
-Image::Scanner Image::Scanner::CreateByDir(Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir)
+Image::Scanner Image::Scanner::CreateByDir(const Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir)
 {
 	return
 		(scanDir == ScanDir::LeftTopHorz)?     LeftTopHorz(image, x, y, width, height) :
@@ -74,7 +74,7 @@ Image::Scanner Image::Scanner::CreateByDir(Image& image, size_t x, size_t y, siz
 		Scanner(image.GetMetrics(), nullptr, 0, 0, 0, 0);
 }
 
-Image::Scanner Image::Scanner::CreateByFlip(Image& image, size_t x, size_t y, size_t width, size_t height,
+Image::Scanner Image::Scanner::CreateByFlip(const Image& image, size_t x, size_t y, size_t width, size_t height,
 											bool horzFlag, bool vertFlag)
 {
 	return
@@ -84,7 +84,7 @@ Image::Scanner Image::Scanner::CreateByFlip(Image& image, size_t x, size_t y, si
 		LeftTopHorz(image, x, y, width, height);
 }
 
-Image::Scanner Image::Scanner::LeftTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::LeftTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -92,7 +92,7 @@ Image::Scanner Image::Scanner::LeftTopHorz(Image& image, size_t x, size_t y, siz
 				   bytesPerPixel, bytesPerLine - bytesPerPixel * width);
 }
 
-Image::Scanner Image::Scanner::LeftTopVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::LeftTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -100,7 +100,7 @@ Image::Scanner Image::Scanner::LeftTopVert(Image& image, size_t x, size_t y, siz
 				   bytesPerLine, bytesPerPixel - bytesPerLine * height);
 }
 
-Image::Scanner Image::Scanner::RightTopHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::RightTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -108,7 +108,7 @@ Image::Scanner Image::Scanner::RightTopHorz(Image& image, size_t x, size_t y, si
 				   -bytesPerPixel, bytesPerLine + bytesPerPixel * width);
 }
 
-Image::Scanner Image::Scanner::RightTopVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::RightTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -116,7 +116,7 @@ Image::Scanner Image::Scanner::RightTopVert(Image& image, size_t x, size_t y, si
 				   bytesPerLine, -bytesPerPixel - bytesPerLine * height);
 }
 
-Image::Scanner Image::Scanner::LeftBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::LeftBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -124,7 +124,7 @@ Image::Scanner Image::Scanner::LeftBottomHorz(Image& image, size_t x, size_t y, 
 				   bytesPerPixel, -bytesPerLine - bytesPerPixel * width);
 }
 
-Image::Scanner Image::Scanner::LeftBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::LeftBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -132,7 +132,7 @@ Image::Scanner Image::Scanner::LeftBottomVert(Image& image, size_t x, size_t y, 
 				   -bytesPerLine, bytesPerPixel + bytesPerLine * height);
 }
 
-Image::Scanner Image::Scanner::RightBottomHorz(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::RightBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -140,7 +140,7 @@ Image::Scanner Image::Scanner::RightBottomHorz(Image& image, size_t x, size_t y,
 				   -bytesPerPixel, -bytesPerLine + bytesPerPixel * width);
 }
 
-Image::Scanner Image::Scanner::RightBottomVert(Image& image, size_t x, size_t y, size_t width, size_t height)
+Image::Scanner Image::Scanner::RightBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height)
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
@@ -210,7 +210,6 @@ void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t 
 
 void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height)
 {
-#if 0
 	UInt8* pLineDst = pixelDst.GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	for (size_t y = 0; y < height; y++) {
@@ -222,7 +221,6 @@ void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t w
 		pLineDst += pixelDst.GetBytesPerLine();
 		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
-#endif
 }
 
 void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height)
@@ -359,7 +357,21 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 void Image::FlipPaste(size_t xDst, size_t yDst, const Image& imageSrc,
 					  size_t xSrc, size_t ySrc, size_t width, size_t height, bool horzFlag, bool vertFlag)
 {
-
+	Scanner scannerDst(Scanner::LeftTopHorz(*this, xDst, yDst, width, height));
+	Scanner scannerSrc(Scanner::CreateByFlip(imageSrc, xSrc, ySrc, width, height, horzFlag, vertFlag));
+	if (IsFormat(Format::RGB)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			Scanner::Paste<PixelRGB, PixelRGB>(scannerDst, scannerSrc);
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			Scanner::Paste<PixelRGB, PixelRGBA>(scannerDst, scannerSrc);
+		}
+	} else if (IsFormat(Format::RGBA)) {
+		if (imageSrc.IsFormat(Format::RGB)) {
+			Scanner::Paste<PixelRGBA, PixelRGB>(scannerDst, scannerSrc);
+		} else if (imageSrc.IsFormat(Format::RGBA)) {
+			Scanner::Paste<PixelRGBA, PixelRGBA>(scannerDst, scannerSrc);
+		}
+	}
 }
 
 void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
