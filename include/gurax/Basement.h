@@ -5,10 +5,11 @@
 #define GURAX_BASEMENT_H
 #include "CommandLine.h"
 #include "Frame.h"
-#include "Value.h"
-#include "SuffixMgr.h"
-#include "PathMgr.h"
 #include "Function.h"
+#include "ImageMgr.h"
+#include "PathMgr.h"
+#include "SuffixMgr.h"
+#include "Value.h"
 
 namespace Gurax {
 
@@ -24,6 +25,7 @@ private:
 	RefPtr<Stream> _pStreamCErr;
 	RefPtr<SuffixMgrMap> _pSuffixMgrMap;
 	PathMgrOwner _pathMgrOwner;
+	ImageMgrOwner _imageMgrOwner;
 	String _ps1;
 	String _ps2;
 	String _formatForNumber;
@@ -71,8 +73,11 @@ public:
 		return GetSuffixMgrMap().Lookup(target, pSymbolSuffix);
 	}
 public:
-	const PathMgrList& GetPathMgrList() { return _pathMgrOwner; }
-	void AssignPathMgr(PathMgr* pPathMgr) { _pathMgrOwner.push_back(pPathMgr); }
+	PathMgrOwner& GetPathMgrOwner() { return _pathMgrOwner; }
+	const PathMgrList& GetPathMgrList() const { return _pathMgrOwner; }
+public:
+	ImageMgrOwner& GetImageMgrOwner() { return _imageMgrOwner; }
+	const ImageMgrList& GetImageMgrList() const { return _imageMgrOwner; }
 public:
 	const char* GetPS1() const { return _ps1.c_str(); }
 	const char* GetPS2() const { return _ps2.c_str(); }

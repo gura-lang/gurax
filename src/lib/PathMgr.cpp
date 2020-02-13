@@ -10,7 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void PathMgr::Assign(PathMgr* pPathMgr)
 {
-	Basement::Inst.AssignPathMgr(pPathMgr);
+	PathMgrOwner& pathMgrOwner = Basement::Inst.GetPathMgrOwner();
+	pathMgrOwner.push_back(pPathMgr);
 }
 
 PathMgr* PathMgr::FindResponsible(const char* pathName)
