@@ -3,9 +3,12 @@
 //==============================================================================
 #ifndef GURAX_IMAGEMGR_H
 #define GURAX_IMAGEMGR_H
-#include "Image.h"
+#include "Referable.h"
 
 namespace Gurax {
+
+class Image;
+class Stream;
 
 //------------------------------------------------------------------------------
 // ImageMgr
