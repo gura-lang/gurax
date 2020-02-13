@@ -59,6 +59,7 @@ add_library(guraxcore SHARED
 	Functions.cpp
 	Help.cpp
 	Image.cpp
+	ImageMgr.cpp
 	Index.cpp
 	Iterator.cpp
 	Iterators.cpp

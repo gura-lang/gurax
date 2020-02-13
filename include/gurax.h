@@ -32,6 +32,7 @@
 #include "gurax/Functions.h"
 #include "gurax/Help.h"
 //#include "gurax/Image.h"
+#include "gurax/ImageMgr.h"
 #include "gurax/Index.h"
 #include "gurax/Iterator.h"
 #include "gurax/Iterators.h"

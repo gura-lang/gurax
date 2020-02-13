@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_IMAGE_H
 #define GURAX_IMAGE_H
-#include "Referable.h"
+#include "Memory.h"
 
 namespace Gurax {
 
@@ -15,6 +15,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Image);
 public:
+#if 0
 	struct BitmapFileHeader {
 		Gurax_PackedUInt16_LE(bfType);
 		Gurax_PackedUInt32_LE(bfSize);
@@ -37,6 +38,7 @@ public:
 		Gurax_PackedUInt32_LE(biClrImportant);
 		static const size_t bytes = 40;
 	};
+#endif
 	struct Format {
 		size_t bytesPerPixel;
 		static const Format RGB;
@@ -254,7 +256,7 @@ public:
 	};
 protected:
 	RefPtr<Memory> _pMemory;
-	RefPtr<Palette> _pPalette;	// may be nullptr
+	//RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
 public:
 	// Constructor
