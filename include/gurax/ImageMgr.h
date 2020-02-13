@@ -34,7 +34,7 @@ public:
 	const char* GetTypeName() const { return _typeName.c_str(); }
 public:
 	virtual bool IsResponsible(Stream& stream) const = 0;
-	virtual Image* Read(Stream& stream) const = 0;
+	virtual bool Read(Stream& stream, Image& image) const = 0;
 	virtual bool Write(Stream& stream, const Image& image) const = 0;
 public:
 	static void Assign(ImageMgr* pImageMgr);
