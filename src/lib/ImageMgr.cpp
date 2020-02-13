@@ -14,21 +14,11 @@ void ImageMgr::Assign(ImageMgr* pImageMgr)
 	imageMgrOwner.push_back(pImageMgr);
 }
 
-const ImageMgr* ImageMgr::FindResponsible(Stream& stream)
+const ImageMgr* ImageMgr::Find(Stream& stream, const char* imgTypeName)
 {
 	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
-	const ImageMgr* pImageMgr = imageMgrList.FindResponsible(stream);
-	if (!pImageMgr) {
-		Error::Issue(ErrorType::FormatError, "unsupported image format");
-		return nullptr;
-	}
-	return pImageMgr;
-}
-
-const ImageMgr* ImageMgr::FindByTypeName(const char* typeName)
-{
-	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
-	const ImageMgr* pImageMgr = imageMgrList.FindByTypeName(typeName);
+	const ImageMgr* pImageMgr = imgTypeName?
+		imageMgrList.FindByImgTypeName(imgTypeName) : imageMgrList.FindResponsible(stream);
 	if (!pImageMgr) {
 		Error::Issue(ErrorType::FormatError, "unsupported image format");
 		return nullptr;
@@ -47,10 +37,10 @@ const ImageMgr* ImageMgrList::FindResponsible(Stream& stream) const
 	return nullptr;
 }
 
-const ImageMgr* ImageMgrList::FindByTypeName(const char* typeName) const
+const ImageMgr* ImageMgrList::FindByImgTypeName(const char* imgTypeName) const
 {
 	for (const ImageMgr* pImageMgr : *this) {
-		if (::strcmp(pImageMgr->GetTypeName(), typeName) == 0) return pImageMgr;
+		if (::strcasecmp(pImageMgr->GetImgTypeName(), imgTypeName) == 0) return pImageMgr;
 	}
 	return nullptr;
 }

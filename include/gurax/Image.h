@@ -18,9 +18,11 @@ public:
 public:
 	struct Format {
 		size_t bytesPerPixel;
+		static const Format None;
 		static const Format RGB;
 		static const Format RGBA;
 		Format(size_t bytesPerPixel) : bytesPerPixel(bytesPerPixel) {}
+		bool IsValid() const { return bytesPerPixel != 0; }
 		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
 		bool IsIdentical(const Format& format) const { return this == &format; }
 	};
@@ -274,6 +276,8 @@ public:
 	template<typename T_Pixel> T_Pixel GetPixel(size_t x, size_t y) const {
 		return T_Pixel(GetMetrics(), GetPointer(x, y));
 	}
+	bool Read(Stream& stream, const char* imgTypeName = nullptr);
+	bool Write(Stream& stream, const char* imgTypeName) const;
 	void Fill(const Color& color);
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
@@ -299,6 +303,7 @@ public:
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
+	static const Format& SymbolToFormat(const Symbol* pSymbol);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }

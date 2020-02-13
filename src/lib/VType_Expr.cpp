@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Expr(stream:Stream):map
+// Expr(stream:Stream):map {block?}
 Gurax_DeclareConstructor(Expr)
 {
 	Declare(VTYPE_Expr, Flag::Map);
@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Expr)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an `Expr` instance by pasring the given stream.");
+		"Creates an `Expr` instance by parsing the scripts from the given stream.");
 }
 
 Gurax_ImplementConstructor(Expr)

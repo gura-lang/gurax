@@ -18,10 +18,10 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(ImageMgr);
 protected:
-	String _typeName;
+	String _imgTypeName;
 public:
 	// Constructor
-	ImageMgr(String typeName) : _typeName(typeName) {}
+	ImageMgr(String imgTypeName) : _imgTypeName(imgTypeName) {}
 	// Copy constructor/operator
 	ImageMgr(const ImageMgr& src) = delete;
 	ImageMgr& operator=(const ImageMgr& src) = delete;
@@ -31,15 +31,14 @@ public:
 protected:
 	virtual ~ImageMgr() = default;
 public:
-	const char* GetTypeName() const { return _typeName.c_str(); }
+	const char* GetImgTypeName() const { return _imgTypeName.c_str(); }
 public:
 	virtual bool IsResponsible(Stream& stream) const = 0;
 	virtual bool Read(Stream& stream, Image& image) const = 0;
 	virtual bool Write(Stream& stream, const Image& image) const = 0;
 public:
 	static void Assign(ImageMgr* pImageMgr);
-	static const ImageMgr* FindResponsible(Stream& stream);
-	static const ImageMgr* FindByTypeName(const char* typeName);
+	static const ImageMgr* Find(Stream& stream, const char* imgTypeName);
 };
 
 //------------------------------------------------------------------------------
@@ -48,7 +47,7 @@ public:
 class GURAX_DLLDECLARE ImageMgrList : public std::vector<ImageMgr*> {
 public:
 	const ImageMgr* FindResponsible(Stream& stream) const;
-	const ImageMgr* FindByTypeName(const char* typeName) const;
+	const ImageMgr* FindByImgTypeName(const char* imgTypeName) const;
 };
 
 //------------------------------------------------------------------------------

@@ -9,6 +9,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Image::Format
 //------------------------------------------------------------------------------
+const Image::Format Image::Format::None(3);
 const Image::Format Image::Format::RGB(3);
 const Image::Format Image::Format::RGBA(4);
 
@@ -303,6 +304,18 @@ bool Image::Allocate(size_t width, size_t height)
 	return !!_pMemory;
 }
 
+bool Image::Read(Stream& stream, const char* imgTypeName)
+{
+	const ImageMgr* pImageMgr = ImageMgr::Find(stream, imgTypeName);
+	return pImageMgr && pImageMgr->Read(stream, *this);
+}
+
+bool Image::Write(Stream& stream, const char* imgTypeName) const
+{
+	const ImageMgr* pImageMgr = ImageMgr::Find(stream, imgTypeName);
+	return pImageMgr && pImageMgr->Write(stream, *this);
+}
+
 void Image::Fill(const Color& color)
 {
 	if (IsAreaZero()) return;
@@ -429,6 +442,14 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
 	pImage->FlipPaste(0, 0, *this, 0, 0, GetWidth(), GetHeight(), horzFlag, vertFlag);
 	return pImage.release();
+}
+
+const Image::Format& Image::SymbolToFormat(const Symbol* pSymbol)
+{
+	return
+		pSymbol->IsIdentical(Gurax_Symbol(rgb))? Format::RGB :
+		pSymbol->IsIdentical(Gurax_Symbol(rgba))? Format::RGBA :
+		Format::None;
 }
 
 String Image::ToString(const StringStyle& ss) const

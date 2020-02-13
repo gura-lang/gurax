@@ -26,6 +26,38 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Image(stream:Stream, format?:Symbol):map {block?}
+Gurax_DeclareConstructor(Image)
+{
+	Declare(VTYPE_Expr, Flag::Map);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Image` instance by reading an image data from the given stream.");
+}
+
+Gurax_ImplementConstructor(Image)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.Pick<Value_Stream>().GetStream();
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
+	if (!format.IsValid()) {
+		Error::Issue(ErrorType::ValueError, "format takes `rgb or `rgba");
+		return Value::nil();
+	}
+	// Function body
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Read(stream)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Image#Fill(color:Color)
