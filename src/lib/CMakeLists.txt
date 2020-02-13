@@ -1,3 +1,6 @@
+set(GURAX_RELDIR ../module-bmp)
+include(module-bmp/build)
+
 set(GURAX_RELDIR ../module-codecs)
 include(module-codecs/build)
 
