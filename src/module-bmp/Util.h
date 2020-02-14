@@ -6,6 +6,9 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(bmp)
+
+void IssueError_InvalidFormat();
+
 Gurax_EndModuleScope(bmp)
 
 #endif

@@ -65,16 +65,17 @@ public:
 	protected:
 		const Metrics& _metrics;
 		UInt8* _p;
-		size_t _iPixel, _iLine;
-		size_t _nPixels, _nLines;
-		int _pitchPixel;
-		int _pitchLine;
+		UInt8* _pRow;
+		size_t _iCol, _iRow;
+		size_t _nCols, _nRows;
+		int _pitchCol;
+		int _pitchRow;
 	public:
 		UInt8* GetPointer() const { return _p; }
 	public:
-		Scanner(const Metrics& metrics, UInt8* p, size_t nPixels, size_t nLines, int pitchPixel, int pitchLine) :
-			_metrics(metrics), _p(p), _iPixel(0), _iLine(0),
-			_nPixels(nPixels), _nLines(nLines), _pitchPixel(pitchPixel), _pitchLine(pitchLine) {}
+		Scanner(const Metrics& metrics, UInt8* p, size_t nCols, size_t nRows, int pitchCol, int pitchRow) :
+			_metrics(metrics), _p(p), _pRow(p), _iCol(0), _iRow(0),
+			_nCols(nCols), _nRows(nRows), _pitchCol(pitchCol), _pitchRow(pitchRow) {}
 	public:
 		static Scanner CreateByDir(const Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
 		static Scanner CreateByFlip(const Image& image, size_t x, size_t y, size_t width, size_t height,
@@ -89,22 +90,33 @@ public:
 		static Scanner RightBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
-		bool NextPixel() { _iPixel++, _p += _pitchPixel; return _iPixel < _nPixels; }
-		bool NextPixel(Scanner& scannerSlave) {
-			_iPixel++, _p += _pitchPixel, scannerSlave._p += scannerSlave._pitchPixel;
-			return _iPixel < _nPixels;
+		bool NextCol() {
+			_iCol++;
+			_p += _pitchCol;
+			return _iCol < _nCols;
 		}
-		bool NextLine() { _iPixel = 0, _iLine++, _p += _pitchLine; return _iLine < _nLines; }
-		bool NextLine(Scanner& scannerSlave) {
-			_iPixel = 0, _iLine++, _p += _pitchLine, scannerSlave._p += scannerSlave._pitchLine;
-			return _iLine < _nLines;
+		bool NextCol(Scanner& scannerSlave) {
+			_iCol++;
+			_p += _pitchCol, scannerSlave._p += scannerSlave._pitchCol;
+			return _iCol < _nCols;
 		}
-		bool Next() { return NextPixel() || NextLine(); }
-		bool Next(Scanner& scannerSlave) { return NextPixel(scannerSlave) || NextLine(scannerSlave); }
-		size_t GetPixelIndex() const { return _iPixel; }
-		size_t GetLineIndex() const { return _iLine; }
-		size_t GetPixelNum() const { return _nPixels; }
-		size_t GetLineNum() const { return _nLines; }
+		bool NextRow() {
+			_iCol = 0, _iRow++;
+			_pRow += _pitchRow, _p = _pRow;
+			return _iRow < _nRows;
+		}
+		bool NextRow(Scanner& scannerSlave) {
+			_iCol = 0, _iRow++;
+			_pRow += _pitchRow, _p = _pRow;
+			scannerSlave._pRow += scannerSlave._pitchRow, scannerSlave._p = scannerSlave._pRow;
+			return _iRow < _nRows;
+		}
+		bool Next() { return NextCol() || NextRow(); }
+		bool Next(Scanner& scannerSlave) { return NextCol(scannerSlave) || NextRow(scannerSlave); }
+		size_t GetColIndex() const { return _iCol; }
+		size_t GetRowIndex() const { return _iRow; }
+		size_t GetColNum() const { return _nCols; }
+		size_t GetRowNum() const { return _nRows; }
 	public:
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PutPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
