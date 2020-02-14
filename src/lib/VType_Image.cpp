@@ -37,7 +37,9 @@ Gurax_DeclareConstructor(Image)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an `Image` instance by reading an image data from the given stream.");
+		"Creates an `Image` instance by reading an image data from the given stream.\n"
+		"The argument `format` specifies the image format: `` `rgb`` or `` `rgba`,\n"
+		"where `` `rgba` is used if omitted.");
 }
 
 Gurax_ImplementConstructor(Image)
@@ -223,6 +225,15 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, SetPixel));
+}
+
+Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	if (!pValueCasted) return nullptr;
+	RefPtr<Image> pImage(new Image(Image::Format::RGBA));
+	if (!pImage->Read(pValueCasted->GetStream())) return nullptr;
+	return new Value_Image(pImage.release());
 }
 
 //------------------------------------------------------------------------------
