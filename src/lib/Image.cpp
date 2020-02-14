@@ -312,8 +312,11 @@ bool Image::Read(Stream& stream, const char* imgTypeName)
 	if (imgTypeName) {
 		pImageMgr = imageMgrList.FindByImgTypeName(imgTypeName);
 	} else {
-		pStream.reset(stream.CreateBwdSeekable());
-		pImageMgr = imageMgrList.FindResponsible(*pStream);
+		pImageMgr = imageMgrList.FindByFileName(stream.GetIdentifier());
+		if (!pImageMgr) {
+			pStream.reset(stream.CreateBwdSeekable());
+			pImageMgr = imageMgrList.FindResponsible(*pStream);
+		}
 	}
 	if (!pImageMgr) {
 		Error::Issue(ErrorType::FormatError, "unsupported image format");
@@ -333,7 +336,7 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 	}
 	if (!pImageMgr) {
 		Error::Issue(ErrorType::FormatError, "unsupported image format");
-		return nullptr;
+		return false;
 	}
 	return pImageMgr->Write(stream, *this);
 }
