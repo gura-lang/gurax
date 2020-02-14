@@ -301,6 +301,13 @@ bool Stream::Seek(long offsetRel, SeekMode seekMode)
 	return true;
 }
 
+bool Stream::SetOffset(size_t offset)
+{
+	if (!DoSeek(offset, _offset)) return false;
+	_offset = offset;
+	return true;
+}
+
 bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
 {
 	if (!CheckReadable() || !streamDst.CheckWritable()) return false;

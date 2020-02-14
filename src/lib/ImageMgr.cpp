@@ -32,7 +32,10 @@ const ImageMgr* ImageMgr::Find(Stream& stream, const char* imgTypeName)
 const ImageMgr* ImageMgrList::FindResponsible(Stream& stream) const
 {
 	for (const ImageMgr* pImageMgr : *this) {
-		if (pImageMgr->IsResponsible(stream)) return pImageMgr;
+		size_t offset = stream.GetOffset();
+		bool flag = pImageMgr->IsResponsible(stream);
+		stream.SetOffset(offset);
+		if (flag) return pImageMgr;
 	}
 	return nullptr;
 }

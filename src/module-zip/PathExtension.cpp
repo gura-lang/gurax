@@ -96,7 +96,7 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 {
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
 	if (Error::IsIssued()) return false;
-	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return false;
+	if (!streamSrc.SetOffset(offsetCentralDirectory)) return false;
 	UInt32 signature;
 	while (ReadStream(streamSrc, &signature)) {
 		//::printf("%08x\n", signature);
@@ -199,8 +199,8 @@ Stream_Reader::Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx) :
 Stream* Stream_Reader::Create(Stream& streamSrc, const StatEx& statEx)
 {
 	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
-	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
-	streamSrc.Seek(offset, Stream::SeekMode::Set);
+	size_t offset = hdr.GetRelativeOffsetOfLocalHeader();
+	streamSrc.SetOffset(offset);
 	if (Error::IsIssued()) return nullptr;
 	do {
 		UInt32 signature;
@@ -297,7 +297,7 @@ size_t Stream_Reader_Store::DoRead(void* buff, size_t bytes)
 
 bool Stream_Reader_Store::DoSeek(size_t offset, size_t offsetPrev)
 {
-	return _pStreamSrc->Seek(_offsetTop + offset, SeekMode::Set);
+	return _pStreamSrc->SetOffset(_offsetTop + offset);
 }
 
 //-----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ size_t Stream_Reader_Deflate::DoRead(void* buff, size_t bytes)
 bool Stream_Reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
 {
 	_seekedFlag = true;
-	return _pStreamReader->Seek(offset, SeekMode::Set);
+	return _pStreamReader->SetOffset(offset);
 }
 
 //-----------------------------------------------------------------------------
@@ -352,7 +352,7 @@ size_t Stream_Reader_BZIP2::DoRead(void* buff, size_t bytes)
 bool Stream_Reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
 {
 	_seekedFlag = true;
-	return _pStreamReader->Seek(offset, SeekMode::Set);
+	return _pStreamReader->SetOffset(offset);
 }
 
 //-----------------------------------------------------------------------------

@@ -306,8 +306,20 @@ bool Image::Allocate(size_t width, size_t height)
 
 bool Image::Read(Stream& stream, const char* imgTypeName)
 {
-	const ImageMgr* pImageMgr = ImageMgr::Find(stream, imgTypeName);
-	return pImageMgr && pImageMgr->Read(stream, *this);
+	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
+	const ImageMgr* pImageMgr;
+	RefPtr<Stream> pStream(stream.Reference());
+	if (imgTypeName) {
+		pImageMgr = imageMgrList.FindByImgTypeName(imgTypeName);
+	} else {
+		pStream.reset(stream.CreateBwdSeekable());
+		pImageMgr = imageMgrList.FindResponsible(*pStream);
+	}
+	if (!pImageMgr) {
+		Error::Issue(ErrorType::FormatError, "unsupported image format");
+		return false;
+	}
+	return pImageMgr->Read(stream, *this);
 }
 
 bool Image::Write(Stream& stream, const char* imgTypeName) const

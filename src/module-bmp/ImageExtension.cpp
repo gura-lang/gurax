@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(bmp)
 //------------------------------------------------------------------------------
 bool ImageMgrEx::IsResponsible(Stream& stream) const
 {
+	::printf("IsResponsible()\n");
 	return false;
 }
 

@@ -47,10 +47,10 @@ public:
 	Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}
 	// Copy constructor/operator
 	Color(const Color& src) : _packed(src._packed) {}
-	Color& operator=(const Color& src) { _packed = src._packed; }
+	Color& operator=(const Color& src) { _packed = src._packed; return *this; }
 	// Move constructor/operator
 	Color(Color&& src) : _packed(src._packed) {}
-	Color& operator=(Color&& src) noexcept { _packed = src._packed; }
+	Color& operator=(Color&& src) noexcept { _packed = src._packed; return *this; }
 	// Destructor
 	~Color() = default;
 public:

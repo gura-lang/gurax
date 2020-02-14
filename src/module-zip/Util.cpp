@@ -58,8 +58,8 @@ UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRec
 	if (bytesZIPFile <= EndOfCentralDirectoryRecord::MaxSize) {
 		bytesBuff = bytesZIPFile;
 	} else {
-		long offsetStart = static_cast<long>(bytesZIPFile - EndOfCentralDirectoryRecord::MaxSize);
-		if (!streamSrc.Seek(offsetStart, Stream::SeekMode::Set)) {
+		size_t offsetStart = bytesZIPFile - EndOfCentralDirectoryRecord::MaxSize;
+		if (!streamSrc.SetOffset(offsetStart)) {
 			return 0;
 		}
 		bytesBuff = EndOfCentralDirectoryRecord::MaxSize;
@@ -91,7 +91,7 @@ bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc, &rec);
 	if (Error::IsIssued()) return false;
 	rec.Print(streamCon);
-	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return false;
+	if (!streamSrc.SetOffset(offsetCentralDirectory)) return false;
 	UInt32 signature;
 	while (ReadStream(streamSrc, &signature)) {
 		streamCon.Printf("\n");

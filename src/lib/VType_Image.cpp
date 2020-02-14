@@ -62,7 +62,7 @@ Gurax_ImplementConstructor(Image)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Image#Fill(color:Color)
+// Image#Fill(color:Color):reduce
 Gurax_DeclareMethod(Image, Fill)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -85,7 +85,7 @@ Gurax_ImplementMethod(Image, Fill)
 	return valueThis.Reference();
 }
 
-// Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color)
+// Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color):reduce
 Gurax_DeclareMethod(Image, FillRect)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -119,14 +119,19 @@ Gurax_ImplementMethod(Image, FillRect)
 	return valueThis.Reference();
 }
 
-// Image#Flip(orient:Symbol)
+// Image#Flip(orient:Symbol) {block?}
 Gurax_DeclareMethod(Image, Flip)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("orient", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Flips the image in the orientation specified by `` `orient`` that takes one of the following symbols:\n"
+		"\n"
+		"- `` `horz`` .. left-to-right\n"
+		"- `` `vert`` .. upside-down\n"
+		"- `` `both`` .. turns by 180 degrees\n");
 }
 
 Gurax_ImplementMethod(Image, Flip)
@@ -150,7 +155,8 @@ Gurax_ImplementMethod(Image, Flip)
 	}
 	// Function body
 	RefPtr<Image> pImage(image.Flip(horzFlag, vertFlag));
-	return pImage? new Value_Image(pImage.release()) : Value::nil();
+	if (!pImage) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
 // Image#GetPixel(x:Number, y:Number):map {block?}
@@ -179,7 +185,7 @@ Gurax_ImplementMethod(Image, GetPixel)
 	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
 }
 
-// Image#PutPixel(x:Number, y:Number, color:Color):map
+// Image#PutPixel(x:Number, y:Number, color:Color):map:reduce
 Gurax_DeclareMethod(Image, PutPixel)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -218,7 +224,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Image));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));
