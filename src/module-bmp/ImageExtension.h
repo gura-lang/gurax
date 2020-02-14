@@ -45,6 +45,7 @@ public:
 	ImageMgrEx() : ImageMgr("bmp") {}
 public:
 	virtual bool IsResponsible(Stream& stream) const override;
+	virtual bool IsResponsibleExtName(const char* extName) const override;
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
 };

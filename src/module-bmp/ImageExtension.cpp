@@ -14,6 +14,11 @@ bool ImageMgrEx::IsResponsible(Stream& stream) const
 	return false;
 }
 
+bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
+{
+	return ::strcasecmp(extName, ".bmp") == 0;
+}
+
 bool ImageMgrEx::Read(Stream& stream, Image& image) const
 {
 	return false;

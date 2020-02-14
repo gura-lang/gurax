@@ -14,18 +14,6 @@ void ImageMgr::Assign(ImageMgr* pImageMgr)
 	imageMgrOwner.push_back(pImageMgr);
 }
 
-const ImageMgr* ImageMgr::Find(Stream& stream, const char* imgTypeName)
-{
-	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
-	const ImageMgr* pImageMgr = imgTypeName?
-		imageMgrList.FindByImgTypeName(imgTypeName) : imageMgrList.FindResponsible(stream);
-	if (!pImageMgr) {
-		Error::Issue(ErrorType::FormatError, "unsupported image format");
-		return nullptr;
-	}
-	return pImageMgr;
-}
-
 //------------------------------------------------------------------------------
 // ImageMgrList
 //------------------------------------------------------------------------------
@@ -44,6 +32,16 @@ const ImageMgr* ImageMgrList::FindByImgTypeName(const char* imgTypeName) const
 {
 	for (const ImageMgr* pImageMgr : *this) {
 		if (::strcasecmp(pImageMgr->GetImgTypeName(), imgTypeName) == 0) return pImageMgr;
+	}
+	return nullptr;
+}
+
+const ImageMgr* ImageMgrList::FindByFileName(const char* fileName) const
+{
+	String extName = PathName(fileName).ExtractExtName();
+	if (extName.empty()) return nullptr;
+	for (const ImageMgr* pImageMgr : *this) {
+		if (pImageMgr->IsResponsibleExtName(extName.c_str())) return pImageMgr;
 	}
 	return nullptr;
 }

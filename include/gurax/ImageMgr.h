@@ -34,11 +34,11 @@ public:
 	const char* GetImgTypeName() const { return _imgTypeName.c_str(); }
 public:
 	virtual bool IsResponsible(Stream& stream) const = 0;
+	virtual bool IsResponsibleExtName(const char* extName) const = 0;
 	virtual bool Read(Stream& stream, Image& image) const = 0;
 	virtual bool Write(Stream& stream, const Image& image) const = 0;
 public:
 	static void Assign(ImageMgr* pImageMgr);
-	static const ImageMgr* Find(Stream& stream, const char* imgTypeName);
 };
 
 //------------------------------------------------------------------------------
@@ -48,6 +48,7 @@ class GURAX_DLLDECLARE ImageMgrList : public std::vector<ImageMgr*> {
 public:
 	const ImageMgr* FindResponsible(Stream& stream) const;
 	const ImageMgr* FindByImgTypeName(const char* imgTypeName) const;
+	const ImageMgr* FindByFileName(const char* fileName) const;
 };
 
 //------------------------------------------------------------------------------

@@ -324,8 +324,18 @@ bool Image::Read(Stream& stream, const char* imgTypeName)
 
 bool Image::Write(Stream& stream, const char* imgTypeName) const
 {
-	const ImageMgr* pImageMgr = ImageMgr::Find(stream, imgTypeName);
-	return pImageMgr && pImageMgr->Write(stream, *this);
+	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
+	const ImageMgr* pImageMgr;
+	if (imgTypeName) {
+		pImageMgr = imageMgrList.FindByImgTypeName(imgTypeName);
+	} else {
+		pImageMgr = imageMgrList.FindByFileName(stream.GetIdentifier());
+	}
+	if (!pImageMgr) {
+		Error::Issue(ErrorType::FormatError, "unsupported image format");
+		return nullptr;
+	}
+	return pImageMgr->Write(stream, *this);
 }
 
 void Image::Fill(const Color& color)
