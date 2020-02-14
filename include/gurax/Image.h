@@ -107,7 +107,7 @@ public:
 		size_t GetLineNum() const { return _nLines; }
 	public:
 		template<typename T_PixelDst, typename T_PixelSrc>
-		static void SetPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
+		static void PutPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
 	};
@@ -186,7 +186,7 @@ public:
 		}
 		Color GetColor() const { return Color(GetR(), GetG(), GetB(), _metrics.alphaDefault); }
 	public:
-		template<typename T_Pixel> void SetPixel(const T_Pixel& pixel) {
+		template<typename T_Pixel> void PutPixel(const T_Pixel& pixel) {
 			SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB());
 		}
 		void SetColorN(const Color &color, size_t n) {
@@ -228,7 +228,7 @@ public:
 		UInt32 GetPacked() const { return GetPacked(_p); }
 		Color GetColor() const { return GetColor(_p); }
 	public:
-		template<typename T_Pixel> void SetPixel(const T_Pixel& pixel) {}
+		template<typename T_Pixel> void PutPixel(const T_Pixel& pixel) {}
 		void SetColorN(const Color &color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
@@ -298,7 +298,7 @@ public:
 		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;
 	}
-	void SetPixelColor(size_t x, size_t y, const Color& color) const {
+	void PutPixelColor(size_t x, size_t y, const Color& color) const {
 		if (IsFormat(Format::RGB)) { GetPixel<PixelRGB>(x, y).SetColor(color); }
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
@@ -312,12 +312,12 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-template<> inline void Image::PixelRGBA::SetPixel<Image::PixelRGB>(const PixelRGB& pixel)
+template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGB>(const PixelRGB& pixel)
 {
 	SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB()); SetA(pixel.GetA());
 }
 
-template<> inline void Image::PixelRGBA::SetPixel<Image::PixelRGBA>(const PixelRGBA& pixel)
+template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGBA>(const PixelRGBA& pixel)
 {
 	SetPacked(pixel.GetPacked());
 }

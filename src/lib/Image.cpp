@@ -157,20 +157,20 @@ Image::Scanner Image::Scanner::RightBottomVert(const Image& image, size_t x, siz
 }
 
 template<>
-void Image::Scanner::SetPixel<Image::PixelRGB, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	::memcpy(scannerDst.GetPointer(), scannerSrc.GetPointer(), PixelRGB::bytesPerPixel);
 }
 
 template<>
-void Image::Scanner::SetPixel<Image::PixelRGB, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	const UInt8* p = scannerSrc.GetPointer();
 	PixelRGB::SetRGB(scannerDst.GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
 }
 
 template<>
-void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	const UInt8* p = scannerSrc.GetPointer();
 	PixelRGBA::SetRGBA(scannerDst.GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
@@ -178,7 +178,7 @@ void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scanne
 }
 
 template<>
-void Image::Scanner::SetPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	PixelRGBA::SetPacked(scannerDst.GetPointer(), PixelRGBA::GetPacked(scannerSrc.GetPointer()));
 }
@@ -187,7 +187,7 @@ template<typename T_PixelDst, typename T_PixelSrc>
 void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	do {
-		SetPixel<T_PixelDst, T_PixelSrc>(scannerDst, scannerSrc);
+		PutPixel<T_PixelDst, T_PixelSrc>(scannerDst, scannerSrc);
 	} while (scannerDst.Next(scannerSrc));
 }
 

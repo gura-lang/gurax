@@ -179,8 +179,8 @@ Gurax_ImplementMethod(Image, GetPixel)
 	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
 }
 
-// Image#SetPixel(x:Number, y:Number, color:Color):map
-Gurax_DeclareMethod(Image, SetPixel)
+// Image#PutPixel(x:Number, y:Number, color:Color):map
+Gurax_DeclareMethod(Image, PutPixel)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -192,7 +192,7 @@ Gurax_DeclareMethod(Image, SetPixel)
 		"");
 }
 
-Gurax_ImplementMethod(Image, SetPixel)
+Gurax_ImplementMethod(Image, PutPixel)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -204,7 +204,7 @@ Gurax_ImplementMethod(Image, SetPixel)
 	const Color& color = Value_Color::GetColor(args.PickValue());
 	// Function body
 	if (!image.CheckCoord(x, y)) return Value::nil();
-	image.SetPixelColor(x, y, color);
+	image.PutPixelColor(x, y, color);
 	return valueThis.Reference();
 }
 
@@ -224,7 +224,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, FillRect));
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
-	Assign(Gurax_CreateMethod(Image, SetPixel));
+	Assign(Gurax_CreateMethod(Image, PutPixel));
 }
 
 Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
