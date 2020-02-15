@@ -47,6 +47,7 @@ public:
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)),
 			alphaDefault(alphaDefault) {}
+		bool IsFormat(const Format& format) const { return this->format.IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 		bool CheckCoord(int x, int y) const;
 	};
@@ -76,6 +77,8 @@ public:
 		Scanner(const Metrics& metrics, UInt8* p, size_t nCols, size_t nRows, int pitchCol, int pitchRow) :
 			_metrics(metrics), _p(p), _pRow(p), _iCol(0), _iRow(0),
 			_nCols(nCols), _nRows(nRows), _pitchCol(pitchCol), _pitchRow(pitchRow) {}
+	public:
+		bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
 	public:
 		static Scanner CreateByDir(const Image& image, size_t x, size_t y, size_t width, size_t height, ScanDir scanDir);
 		static Scanner CreateByFlip(const Image& image, size_t x, size_t y, size_t width, size_t height,
@@ -121,6 +124,7 @@ public:
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PutPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
+		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
 	};
 	class PixelRGB;
@@ -151,8 +155,8 @@ public:
 		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
 		template<typename T_PixelDst, typename T_PixelSrc>
-		static void ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
+		static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+								 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	};
 	class PixelRGB : public Pixel {
 	public:
@@ -250,6 +254,8 @@ protected:
 	//RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
 public:
+	static void Bootup();
+public:
 	// Constructor
 	Image(const Format& format, Memory* pMemory, size_t width, size_t height, UInt8 alphaDefault) :
 		_pMemory(pMemory), _metrics(format, width, height, alphaDefault) {}
@@ -265,7 +271,7 @@ protected:
 public:
 	bool Allocate(size_t width, size_t height);
 	const Format& GetFormat() const { return _metrics.format; }
-	bool IsFormat(const Format& format) const { return _metrics.format.IsIdentical(format); }
+	bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
 	const Metrics& GetMetrics() const { return _metrics; }
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
 	size_t GetWidth() const { return _metrics.width; }
@@ -296,14 +302,14 @@ public:
 			   size_t xSrc, size_t ySrc, size_t width, size_t height);
 	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					 size_t xSrc, size_t ySrc, size_t width, size_t height);
-	void FlipPaste(size_t xDst, size_t yDst, const Image& imageSrc,
-				   size_t xSrc, size_t ySrc, size_t width, size_t height, bool horzFlag, bool vertFlag);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
 	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
 		return Crop(GetFormat(), x, y, width, height);
 	}
 	Image* Resize(const Format& format, size_t width, size_t height) const;
 	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
+	Image* Rotate(const Format& format, double angle, const Color& colorBg) const;
+	Image* Rotate(double angle, const Color& colorBg) { return Rotate(GetFormat(), angle, colorBg); }
 	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
 	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
 	Color GetPixelColor(size_t x, size_t y) const {

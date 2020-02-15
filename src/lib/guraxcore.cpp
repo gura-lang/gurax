@@ -2,6 +2,7 @@
 // guraxcore.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/Image.h>
 
 namespace Gurax {
 
@@ -18,6 +19,7 @@ bool Initialize(int& argc, char** argv)
 	Error::Bootup();
 	Expr::Bootup();
 	Function::Bootup();
+	Image::Bootup();
 	Random::Bootup();
 	Stream::Bootup();
 	//Template::Bootup();

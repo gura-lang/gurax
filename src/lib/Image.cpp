@@ -184,11 +184,28 @@ void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scann
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
-void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PasteT(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	do {
 		PutPixel<T_PixelDst, T_PixelSrc>(scannerDst, scannerSrc);
 	} while (scannerDst.Next(scannerSrc));
+}
+
+void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
+{
+	if (scannerDst.IsFormat(Format::RGB)) {
+		if (scannerSrc.IsFormat(Format::RGB)) {
+			Scanner::PasteT<PixelRGB, PixelRGB>(scannerDst, scannerSrc);
+		} else if (scannerSrc.IsFormat(Format::RGBA)) {
+			Scanner::PasteT<PixelRGB, PixelRGBA>(scannerDst, scannerSrc);
+		}
+	} else if (scannerDst.IsFormat(Format::RGBA)) {
+		if (scannerSrc.IsFormat(Format::RGB)) {
+			Scanner::PasteT<PixelRGBA, PixelRGB>(scannerDst, scannerSrc);
+		} else if (scannerSrc.IsFormat(Format::RGBA)) {
+			Scanner::PasteT<PixelRGBA, PixelRGBA>(scannerDst, scannerSrc);
+		}
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -248,8 +265,8 @@ void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t w
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
-void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-							   const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
+void Image::Pixel::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
 	pMemory->FillZero();
@@ -296,6 +313,10 @@ void Image::Pixel::ResizePaste(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 //------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
+void Image::Bootup()
+{
+}
+
 bool Image::Allocate(size_t width, size_t height)
 {
 	size_t bytes = WidthToBytes(width) * height;
@@ -339,6 +360,74 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 		return false;
 	}
 	return pImageMgr->Write(stream, *this);
+}
+
+Image* Image::Rotate(const Format& format, double angle, const Color& colorBg) const
+{
+#if 0
+	int angleInt = static_cast<int>(angle);
+	if (static_cast<double>(angleInt) != angle) {
+		// nothing to do
+	} else if (angleInt == 180) {
+		return Flip(sig, true, true);
+	} else if ((angleInt + 270) % 360 == 0) {
+		return Rotate90(sig, true);
+	} else if ((angleInt + 90) % 360 == 0) {
+		return Rotate90(sig, false);
+	}
+	double rad = DegToRad(angle);
+	int cos1024 = static_cast<int>(::cos(rad) * 1024);
+	int sin1024 = -static_cast<int>(::sin(rad) * 1024);
+	int width, height;
+	int xCenter = static_cast<int>(_width / 2);
+	int yCenter = static_cast<int>(_height / 2);
+	int xCenterNew, yCenterNew;
+	do {
+		int left = -xCenter;
+		int right = left + static_cast<int>(_width);
+		int bottom = -yCenter;
+		int top = bottom + static_cast<int>(_height);
+		int xs[4], ys[4];
+		RotateCoord(xs[0], ys[0], left, top, cos1024, sin1024);
+		RotateCoord(xs[1], ys[1], left, bottom, cos1024, sin1024);
+		RotateCoord(xs[2], ys[2], right, top, cos1024, sin1024);
+		RotateCoord(xs[3], ys[3], right, bottom, cos1024, sin1024);
+		int xMin = *std::min_element(xs, xs + 4);
+		int xMax = *std::max_element(xs, xs + 4);
+		int yMin = *std::min_element(ys, ys + 4);
+		int yMax = *std::max_element(ys, ys + 4);
+		width = xMax - xMin;
+		height = yMax - yMin;
+		xCenterNew = width / 2;
+		yCenterNew = height / 2;
+	} while (0);
+	AutoPtr<Image> pImage(CreateDerivation(sig, width, height));
+	if (sig.IsSignalled()) return nullptr;
+	UChar *pLineDst = pImage->GetPointer(0);
+	size_t bytesPerLineDst = pImage->GetBytesPerLine();
+	size_t bytesPerPixel = GetBytesPerPixel();
+	UChar buffBlank[8];
+	PutPixel(buffBlank, color);
+	for (int y = 0; y < height; y++) {
+		UChar *pPixelDst = pLineDst;
+		for (int x = 0; x < width; x++) {
+			int xm, ym;
+			RotateCoord(xm, ym, x - xCenterNew, y - yCenterNew, cos1024, sin1024);
+			xm += xCenter, ym += yCenter;
+			if (xm >= 0 && xm < static_cast<int>(_width) &&
+								ym >= 0 && ym < static_cast<int>(_height)) {
+				UChar *pPixelSrc = GetPointer(xm, ym);
+				StorePixel(pPixelDst, pPixelSrc, _format == FORMAT_RGBA);
+			} else {
+				StorePixel(pPixelDst, buffBlank, _format == FORMAT_RGBA);
+			}
+			pPixelDst += bytesPerPixel;
+		}
+		pLineDst += bytesPerLineDst;
+	}
+	return pImage.release();
+#endif
+	return nullptr;
 }
 
 void Image::Fill(const Color& color)
@@ -399,26 +488,6 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 	}
 }
 
-void Image::FlipPaste(size_t xDst, size_t yDst, const Image& imageSrc,
-					  size_t xSrc, size_t ySrc, size_t width, size_t height, bool horzFlag, bool vertFlag)
-{
-	Scanner scannerDst(Scanner::LeftTopHorz(*this, xDst, yDst, width, height));
-	Scanner scannerSrc(Scanner::CreateByFlip(imageSrc, xSrc, ySrc, width, height, horzFlag, vertFlag));
-	if (IsFormat(Format::RGB)) {
-		if (imageSrc.IsFormat(Format::RGB)) {
-			Scanner::Paste<PixelRGB, PixelRGB>(scannerDst, scannerSrc);
-		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			Scanner::Paste<PixelRGB, PixelRGBA>(scannerDst, scannerSrc);
-		}
-	} else if (IsFormat(Format::RGBA)) {
-		if (imageSrc.IsFormat(Format::RGB)) {
-			Scanner::Paste<PixelRGBA, PixelRGB>(scannerDst, scannerSrc);
-		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			Scanner::Paste<PixelRGBA, PixelRGBA>(scannerDst, scannerSrc);
-		}
-	}
-}
-
 void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
 {
@@ -426,21 +495,21 @@ void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, co
 		if (imageSrc.IsFormat(Format::RGB)) {
 			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
-			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
 			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
-			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
 			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
-			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
 			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
-			Pixel::ResizePaste(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	}
 }
@@ -465,7 +534,9 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 {
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
-	pImage->FlipPaste(0, 0, *this, 0, 0, GetWidth(), GetHeight(), horzFlag, vertFlag);
+	Scanner scannerDst(Scanner::LeftTopHorz(*pImage, 0, 0, GetWidth(), GetHeight()));
+	Scanner scannerSrc(Scanner::CreateByFlip(*this, 0, 0, GetWidth(), GetHeight(), horzFlag, vertFlag));
+	Scanner::Paste(scannerDst, scannerSrc);
 	return pImage.release();
 }
 
