@@ -362,47 +362,70 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 	return pImageMgr->Write(stream, *this);
 }
 
-Image* Image::Rotate(const Format& format, double angle, const Color& colorBg) const
+Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg) const
 {
-#if 0
-	int angleInt = static_cast<int>(angle);
-	if (static_cast<double>(angleInt) != angle) {
-		// nothing to do
-	} else if (angleInt == 180) {
-		return Flip(sig, true, true);
-	} else if ((angleInt + 270) % 360 == 0) {
-		return Rotate90(sig, true);
-	} else if ((angleInt + 90) % 360 == 0) {
-		return Rotate90(sig, false);
+	int angleInt = static_cast<int>(angleDeg) % 360;
+	if (angleInt == 180) return Flip(format, true, true);
+	RefPtr<Image> pImage(new Image(format));
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
+	if (angleInt == -90) {
+		size_t wdDst = htSrc, htDst = wdSrc;
+		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+		Scanner scannerDst(Scanner::LeftBottomVert(*pImage, 0, 0, wdDst, htDst));
+		Scanner scannerSrc(Scanner::LeftTopHorz(*this, 0, 0, wdSrc, htSrc));
+		Scanner::Paste(scannerDst, scannerSrc);
+		return pImage.release();
+	} else if (angleInt == 90) {
+		size_t wdDst = htSrc, htDst = wdSrc;
+		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+		Scanner scannerDst(Scanner::RightTopVert(*pImage, 0, 0, wdDst, htDst));
+		Scanner scannerSrc(Scanner::LeftTopHorz(*this, 0, 0, wdSrc, htSrc));
+		Scanner::Paste(scannerDst, scannerSrc);
+		return pImage.release();
 	}
-	double rad = DegToRad(angle);
-	int cos1024 = static_cast<int>(::cos(rad) * 1024);
-	int sin1024 = -static_cast<int>(::sin(rad) * 1024);
-	int width, height;
-	int xCenter = static_cast<int>(_width / 2);
-	int yCenter = static_cast<int>(_height / 2);
-	int xCenterNew, yCenterNew;
+	double angleRad = Math::DegToRad(angleDeg);
+	int cos1024 = static_cast<int>(::cos(angleRad) * 1024);
+	int sin1024 = -static_cast<int>(::sin(angleRad) * 1024);
+	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
+		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
+	};
+	int xCenterSrc = static_cast<int>(wdSrc / 2);
+	int yCenterSrc = static_cast<int>(htSrc / 2);
+	int xCenterDst, yCenterDst;
+	size_t wdDst, htDst;
 	do {
-		int left = -xCenter;
-		int right = left + static_cast<int>(_width);
-		int bottom = -yCenter;
-		int top = bottom + static_cast<int>(_height);
+		int left = -xCenterSrc;
+		int right = left + static_cast<int>(wdSrc);
+		int bottom = -yCenterSrc;
+		int top = bottom + static_cast<int>(htSrc);
 		int xs[4], ys[4];
-		RotateCoord(xs[0], ys[0], left, top, cos1024, sin1024);
-		RotateCoord(xs[1], ys[1], left, bottom, cos1024, sin1024);
-		RotateCoord(xs[2], ys[2], right, top, cos1024, sin1024);
-		RotateCoord(xs[3], ys[3], right, bottom, cos1024, sin1024);
+		RotateCoord(xs[0], ys[0], left, top);
+		RotateCoord(xs[1], ys[1], left, bottom);
+		RotateCoord(xs[2], ys[2], right, top);
+		RotateCoord(xs[3], ys[3], right, bottom);
 		int xMin = *std::min_element(xs, xs + 4);
 		int xMax = *std::max_element(xs, xs + 4);
 		int yMin = *std::min_element(ys, ys + 4);
 		int yMax = *std::max_element(ys, ys + 4);
-		width = xMax - xMin;
-		height = yMax - yMin;
-		xCenterNew = width / 2;
-		yCenterNew = height / 2;
+		wdDst = xMax - xMin;
+		htDst = yMax - yMin;
+		xCenterDst = wdDst / 2;
+		yCenterDst = htDst / 2;
 	} while (0);
-	AutoPtr<Image> pImage(CreateDerivation(sig, width, height));
-	if (sig.IsSignalled()) return nullptr;
+	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+	Scanner scannerDst(Scanner::LeftTopHorz(*pImage, 0, 0, wdDst, htDst));
+	UInt8* pLineDst = pImage->GetPointer();
+	for (size_t yDst = 0; yDst < htDst; yDst++) {
+		UInt8* pDst = pLineDst;
+		for (size_t xDst = 0; xDst < wdDst; xDst++) {
+			int xSrc, ySrc;
+			RotateCoord(xSrc, ySrc, xDst - xCenterDst, yDst - yCenterDst);
+			xSrc += xCenterSrc, ySrc = yCenterSrc;
+			//*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, pSrc++;
+		}
+		pLineDst += pImage->GetBytesPerLine();
+	}
+#if 0
 	UChar *pLineDst = pImage->GetPointer(0);
 	size_t bytesPerLineDst = pImage->GetBytesPerLine();
 	size_t bytesPerPixel = GetBytesPerPixel();

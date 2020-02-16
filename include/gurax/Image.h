@@ -308,8 +308,8 @@ public:
 	}
 	Image* Resize(const Format& format, size_t width, size_t height) const;
 	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
-	Image* Rotate(const Format& format, double angle, const Color& colorBg) const;
-	Image* Rotate(double angle, const Color& colorBg) { return Rotate(GetFormat(), angle, colorBg); }
+	Image* Rotate(const Format& format, double angleDeg, const Color& colorBg) const;
+	Image* Rotate(double angleDeg, const Color& colorBg) { return Rotate(GetFormat(), angleDeg, colorBg); }
 	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
 	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
 	Color GetPixelColor(size_t x, size_t y) const {

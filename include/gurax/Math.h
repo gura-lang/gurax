@@ -14,6 +14,9 @@ class Math {
 public:
 	static const Double E;
 	static const Double PI;
+public:
+	static double RadToDeg(double n) { return 180 * n / PI; }
+	static double DegToRad(double n) { return PI * n / 180; }
 };
 
 }
