@@ -413,7 +413,6 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 		yCenterDst = htDst / 2;
 	} while (0);
 	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-	Scanner scannerDst(Scanner::LeftTopHorz(*pImage, 0, 0, wdDst, htDst));
 	UInt8* pLineDst = pImage->GetPointer();
 	for (size_t yDst = 0; yDst < htDst; yDst++) {
 		UInt8* pDst = pLineDst;
@@ -421,7 +420,13 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 			int xSrc, ySrc;
 			RotateCoord(xSrc, ySrc, xDst - xCenterDst, yDst - yCenterDst);
 			xSrc += xCenterSrc, ySrc = yCenterSrc;
-			//*pDst++ = *pSrc++, *pDst++ = *pSrc++, *pDst++ = *pSrc++, pSrc++;
+			if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
+				UInt8* pSrc = GetPointer(xSrc, ySrc);
+				
+			} else {
+				
+			}
+			pDst += pImage->GetBytesPerPixel();
 		}
 		pLineDst += pImage->GetBytesPerLine();
 	}

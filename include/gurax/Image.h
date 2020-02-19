@@ -202,8 +202,8 @@ public:
 		}
 		Color GetColor() const { return Color(GetR(), GetG(), GetB(), _metrics.alphaDefault); }
 	public:
-		template<typename T_Pixel> void PutPixel(const T_Pixel& pixel) {
-			SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB());
+		template<typename T_Pixel> void PutPixel(const UInt8* p) {
+			SetR(T_Pixel::GetR(p)), SetG(T_Pixel::GetG(p)), SetB(T_Pixel::GetB(p));
 		}
 		void SetColorN(const Color &color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
@@ -244,7 +244,7 @@ public:
 		UInt32 GetPacked() const { return GetPacked(_p); }
 		Color GetColor() const { return GetColor(_p); }
 	public:
-		template<typename T_Pixel> void PutPixel(const T_Pixel& pixel) {}
+		template<typename T_Pixel> void PutPixel(const UInt8* p) {}
 		void SetColorN(const Color &color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
@@ -330,14 +330,14 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGB>(const PixelRGB& pixel)
+template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGB>(const UInt8* p)
 {
-	SetR(pixel.GetR()), SetG(pixel.GetG()), SetB(pixel.GetB()); SetA(pixel.GetA());
+	SetR(PixelRGB::GetR(p)), SetG(PixelRGB::GetG(p)), SetB(PixelRGB::GetB(p)); SetA(GetAlphaDefault());
 }
 
-template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGBA>(const PixelRGBA& pixel)
+template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGBA>(const UInt8* p)
 {
-	SetPacked(pixel.GetPacked());
+	SetPacked(PixelRGBA::GetPacked(p));
 }
 
 //------------------------------------------------------------------------------
