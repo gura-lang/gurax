@@ -121,8 +121,7 @@ public:
 		size_t GetColNum() const { return _nCols; }
 		size_t GetRowNum() const { return _nRows; }
 	public:
-		template<typename T_PixelDst, typename T_PixelSrc>
-		static void PutPixel(Scanner& scannerDst, Scanner& scannerSrc) {}
+		template<typename T_PixelDst, typename T_PixelSrc> void PutPixel(const UInt8* p) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);

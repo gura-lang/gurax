@@ -157,37 +157,35 @@ Image::Scanner Image::Scanner::RightBottomVert(const Image& image, size_t x, siz
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* p)
 {
-	::memcpy(scannerDst.GetPointer(), scannerSrc.GetPointer(), PixelRGB::bytesPerPixel);
+	::memcpy(GetPointer(), p, PixelRGB::bytesPerPixel);
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* p)
 {
-	const UInt8* p = scannerSrc.GetPointer();
-	PixelRGB::SetRGB(scannerDst.GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
+	PixelRGB::SetRGB(GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* p)
 {
-	const UInt8* p = scannerSrc.GetPointer();
-	PixelRGBA::SetRGBA(scannerDst.GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
-					   scannerDst.GetMetrics().alphaDefault);
+	PixelRGBA::SetRGBA(GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
+					   GetMetrics().alphaDefault);
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(Scanner& scannerDst, Scanner& scannerSrc)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(const UInt8* p)
 {
-	PixelRGBA::SetPacked(scannerDst.GetPointer(), PixelRGBA::GetPacked(scannerSrc.GetPointer()));
+	PixelRGBA::SetPacked(GetPointer(), PixelRGBA::GetPacked(p));
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
 void Image::Scanner::PasteT(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	do {
-		PutPixel<T_PixelDst, T_PixelSrc>(scannerDst, scannerSrc);
+		scannerDst.PutPixel<T_PixelDst, T_PixelSrc>(scannerSrc.GetPointer());
 	} while (scannerDst.Next(scannerSrc));
 }
 
