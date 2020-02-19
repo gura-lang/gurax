@@ -91,6 +91,36 @@ public:
 		static Scanner LeftBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner RightBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner RightBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner CreateByDir(const Image& image, ScanDir scanDir) {
+			return CreateByDir(image, 0, 0, image.GetWidth(), image.GetHeight(), scanDir);
+		}
+		static Scanner CreateByFlip(const Image& image, bool horzFlag, bool vertFlag) {
+			return CreateByFlip(image, 0, 0, image.GetWidth(), image.GetHeight(), horzFlag, vertFlag);
+		}
+		static Scanner LeftTopHorz(const Image& image) {
+			return LeftTopHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner LeftTopVert(const Image& image) {
+			return LeftTopVert(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightTopHorz(const Image& image) {
+			return RightTopHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightTopVert(const Image& image) {
+			return RightTopVert(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner LeftBottomHorz(const Image& image) {
+			return LeftBottomHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner LeftBottomVert(const Image& image) {
+			return LeftBottomVert(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightBottomHorz(const Image& image) {
+			return RightBottomHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightBottomVert(const Image& image) {
+			return RightBottomVert(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
 		bool NextCol() {

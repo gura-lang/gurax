@@ -369,15 +369,15 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 	if (angleInt == -90) {
 		size_t wdDst = htSrc, htDst = wdSrc;
 		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-		Scanner scannerDst(Scanner::LeftBottomVert(*pImage, 0, 0, wdDst, htDst));
-		Scanner scannerSrc(Scanner::LeftTopHorz(*this, 0, 0, wdSrc, htSrc));
+		Scanner scannerDst(Scanner::LeftBottomVert(*pImage));
+		Scanner scannerSrc(Scanner::LeftTopHorz(*this));
 		Scanner::Paste(scannerDst, scannerSrc);
 		return pImage.release();
 	} else if (angleInt == 90) {
 		size_t wdDst = htSrc, htDst = wdSrc;
 		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-		Scanner scannerDst(Scanner::RightTopVert(*pImage, 0, 0, wdDst, htDst));
-		Scanner scannerSrc(Scanner::LeftTopHorz(*this, 0, 0, wdSrc, htSrc));
+		Scanner scannerDst(Scanner::RightTopVert(*pImage));
+		Scanner scannerSrc(Scanner::LeftTopHorz(*this));
 		Scanner::Paste(scannerDst, scannerSrc);
 		return pImage.release();
 	}
@@ -411,48 +411,20 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 		yCenterDst = htDst / 2;
 	} while (0);
 	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-	UInt8* pLineDst = pImage->GetPointer();
-	for (size_t yDst = 0; yDst < htDst; yDst++) {
-		UInt8* pDst = pLineDst;
-		for (size_t xDst = 0; xDst < wdDst; xDst++) {
-			int xSrc, ySrc;
-			RotateCoord(xSrc, ySrc, xDst - xCenterDst, yDst - yCenterDst);
-			xSrc += xCenterSrc, ySrc = yCenterSrc;
-			if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
-				UInt8* pSrc = GetPointer(xSrc, ySrc);
-				
-			} else {
-				
-			}
-			pDst += pImage->GetBytesPerPixel();
+	auto scanner(Scanner::LeftTopHorz(*pImage));
+	do {
+		int xDst = static_cast<int>(scanner.GetColIndex());
+		int yDst = static_cast<int>(scanner.GetRowIndex());
+		int xSrc, ySrc;
+		RotateCoord(xSrc, ySrc, xDst - xCenterDst, yDst - yCenterDst);
+		xSrc += xCenterSrc, ySrc = yCenterSrc;
+		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
+			UInt8* pSrc = GetPointer(xSrc, ySrc);
+			scanner.PutPixel<PixelRGBA, PixelRGBA>(pSrc);
+		} else {
+			PixelRGBA::SetColor(scanner.GetPointer(), colorBg);
 		}
-		pLineDst += pImage->GetBytesPerLine();
-	}
-#if 0
-	UChar *pLineDst = pImage->GetPointer(0);
-	size_t bytesPerLineDst = pImage->GetBytesPerLine();
-	size_t bytesPerPixel = GetBytesPerPixel();
-	UChar buffBlank[8];
-	PutPixel(buffBlank, color);
-	for (int y = 0; y < height; y++) {
-		UChar *pPixelDst = pLineDst;
-		for (int x = 0; x < width; x++) {
-			int xm, ym;
-			RotateCoord(xm, ym, x - xCenterNew, y - yCenterNew, cos1024, sin1024);
-			xm += xCenter, ym += yCenter;
-			if (xm >= 0 && xm < static_cast<int>(_width) &&
-								ym >= 0 && ym < static_cast<int>(_height)) {
-				UChar *pPixelSrc = GetPointer(xm, ym);
-				StorePixel(pPixelDst, pPixelSrc, _format == FORMAT_RGBA);
-			} else {
-				StorePixel(pPixelDst, buffBlank, _format == FORMAT_RGBA);
-			}
-			pPixelDst += bytesPerPixel;
-		}
-		pLineDst += bytesPerLineDst;
-	}
-	return pImage.release();
-#endif
+	} while (scanner.Next());
 	return nullptr;
 }
 
@@ -560,8 +532,8 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 {
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
-	Scanner scannerDst(Scanner::LeftTopHorz(*pImage, 0, 0, GetWidth(), GetHeight()));
-	Scanner scannerSrc(Scanner::CreateByFlip(*this, 0, 0, GetWidth(), GetHeight(), horzFlag, vertFlag));
+	Scanner scannerDst(Scanner::LeftTopHorz(*pImage));
+	Scanner scannerSrc(Scanner::CreateByFlip(*this, horzFlag, vertFlag));
 	Scanner::Paste(scannerDst, scannerSrc);
 	return pImage.release();
 }
