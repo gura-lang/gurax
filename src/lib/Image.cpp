@@ -360,37 +360,52 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 	return pImageMgr->Write(stream, *this);
 }
 
+Image* Image::Rotate90(const Format& format) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
+	size_t wdDst = htSrc, htDst = wdSrc;
+	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+	Scanner scannerDst(Scanner::RightTopVert(*pImage));
+	Scanner scannerSrc(Scanner::LeftTopHorz(*this));
+	Scanner::Paste(scannerDst, scannerSrc);
+	return pImage.release();
+}
+
+Image* Image::Rotate270(const Format& format) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
+	size_t wdDst = htSrc, htDst = wdSrc;
+	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+	Scanner scannerDst(Scanner::LeftBottomVert(*pImage));
+	Scanner scannerSrc(Scanner::LeftTopHorz(*this));
+	Scanner::Paste(scannerDst, scannerSrc);
+	return pImage.release();
+}
+
 Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg) const
 {
 	int angleInt = static_cast<int>(angleDeg) % 360;
-	if (angleInt == 180) return Flip(format, true, true);
-	RefPtr<Image> pImage(new Image(format));
-	size_t wdSrc = GetWidth(), htSrc = GetHeight();
-	if (angleInt == -90) {
-		size_t wdDst = htSrc, htDst = wdSrc;
-		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-		Scanner scannerDst(Scanner::LeftBottomVert(*pImage));
-		Scanner scannerSrc(Scanner::LeftTopHorz(*this));
-		Scanner::Paste(scannerDst, scannerSrc);
-		return pImage.release();
-	} else if (angleInt == 90) {
-		size_t wdDst = htSrc, htDst = wdSrc;
-		if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-		Scanner scannerDst(Scanner::RightTopVert(*pImage));
-		Scanner scannerSrc(Scanner::LeftTopHorz(*this));
-		Scanner::Paste(scannerDst, scannerSrc);
-		return pImage.release();
+	if (angleInt == 180 || angleInt == -180) {
+		return Rotate180(format);
+	} else if (angleInt == -90 || angleInt == 270) {
+		return Rotate90(format);
+	} else if (angleInt == 90 || angleInt == -270) {
+		return Rotate270(format);
 	}
+	RefPtr<Image> pImage(new Image(format));
 	double angleRad = Math::DegToRad(angleDeg);
 	int cos1024 = static_cast<int>(::cos(angleRad) * 1024);
 	int sin1024 = -static_cast<int>(::sin(angleRad) * 1024);
-	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
-		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
-	};
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
 	int xCenterSrc = static_cast<int>(wdSrc / 2);
 	int yCenterSrc = static_cast<int>(htSrc / 2);
 	int xCenterDst, yCenterDst;
 	size_t wdDst, htDst;
+	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
+		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
+	};
 	do {
 		int left = -xCenterSrc;
 		int right = left + static_cast<int>(wdSrc);
@@ -407,20 +422,18 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 		int yMax = *std::max_element(ys, ys + 4);
 		wdDst = xMax - xMin;
 		htDst = yMax - yMin;
-		xCenterDst = wdDst / 2;
-		yCenterDst = htDst / 2;
 	} while (0);
 	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
 	auto scanner(Scanner::LeftTopHorz(*pImage));
+	xCenterDst = wdDst / 2;
+	yCenterDst = htDst / 2;
 	do {
-		int xDst = static_cast<int>(scanner.GetColIndex());
-		int yDst = static_cast<int>(scanner.GetRowIndex());
-		int xSrc, ySrc;
-		RotateCoord(xSrc, ySrc, xDst - xCenterDst, yDst - yCenterDst);
-		xSrc += xCenterSrc, ySrc = yCenterSrc;
+		int xDst = static_cast<int>(scanner.GetColIndex()) - xCenterDst;
+		int yDst = static_cast<int>(scanner.GetRowIndex()) - yCenterDst;
+		int xSrc = ((xDst * cos1024 - yDst * sin1024) >> 10) + xCenterSrc;
+		int ySrc = ((xDst * sin1024 + yDst * cos1024) >> 10) + yCenterSrc;
 		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
-			UInt8* pSrc = GetPointer(xSrc, ySrc);
-			scanner.PutPixel<PixelRGBA, PixelRGBA>(pSrc);
+			scanner.PutPixel<PixelRGBA, PixelRGBA>(GetPointer(xSrc, ySrc));
 		} else {
 			PixelRGBA::SetColor(scanner.GetPointer(), colorBg);
 		}

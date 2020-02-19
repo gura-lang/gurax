@@ -155,6 +155,8 @@ public:
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
+		template<typename T_PixelDst, typename T_PixelSrc>
+		void RotatePaste(const Image& image, const Color& colorBg);
 	};
 	class PixelRGB;
 	class PixelRGBA;
@@ -177,6 +179,9 @@ public:
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
 		UInt8* GetPointer() const { return _p; }
+		UInt8* GetPointer(size_t x, size_t y) const {
+			return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+		}
 	public:
 		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
@@ -341,6 +346,9 @@ public:
 	Image* Rotate(double angleDeg, const Color& colorBg) { return Rotate(GetFormat(), angleDeg, colorBg); }
 	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
 	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
+	Image* Rotate90(const Format& format) const;
+	Image* Rotate180(const Format& format) const { return Flip(format, true, true); }
+	Image* Rotate270(const Format& format) const;
 	Color GetPixelColor(size_t x, size_t y) const {
 		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;
