@@ -35,6 +35,9 @@ public:
 	static Palette* Basic();
 	static Palette* WebSafe();
 	static Palette* Win256();
+	static constexpr UInt32 Entry(UInt8 r, UInt8 g, UInt8 b) {
+		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
+	}
 	static constexpr UInt32 Entry(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
 		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
 			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
