@@ -214,12 +214,12 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
-// Image#Rotate(angle:Number, background?:Color):map {block?}
+// Image#Rotate(angle:Number, colorBg?:Color):map {block?}
 Gurax_DeclareMethod(Image, Rotate)
 {
 	Declare(VTYPE_Image, Flag::Map);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("background", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("colorBg", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -229,7 +229,7 @@ Gurax_DeclareMethod(Image, Rotate)
 		"where a positive number means counterclockwise direction and negative clockwise direction.\n"
 		"The created instance has a size that exactly fits the rotated image.\n"
 		"\n"
-		"The argument `background` specifies the color of pixels to fill\n"
+		"The argument `colorBg` specifies the color of pixels to fill\n"
 		"the empty area that appears after rotation.\n"
 		"If omitted, the color that has all elements set to zero is used for filling.\n");
 }
@@ -242,9 +242,9 @@ Gurax_ImplementMethod(Image, Rotate)
 	// Argument
 	ArgPicker args(argument);
 	Double angle = args.PickNumber<Double>();
-	const Color& background = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::zero;
+	const Color& colorBg = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::zero;
 	// Function body
-	RefPtr<Image> pImage(image.Rotate(angle, background));
+	RefPtr<Image> pImage(image.Rotate(angle, colorBg));
 	if (!pImage) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
