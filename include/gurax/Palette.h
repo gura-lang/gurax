@@ -16,13 +16,13 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Palette);
 protected:
-	std::unique_ptr<UInt32[]> _entryTbl;
+	std::unique_ptr<UInt32[]> _packedTbl;
 public:
 	static void Bootup();
 public:
 	// Constructor
 	Palette(size_t n);
-	Palette(const UInt32* entryTbl, size_t n);
+	Palette(const UInt32* packedTbl, size_t n);
 	// Copy constructor/operator
 	Palette(const Palette& src) = delete;
 	Palette& operator=(const Palette& src) = delete;
@@ -35,10 +35,10 @@ public:
 	static Palette* Basic();
 	static Palette* WebSafe();
 	static Palette* Win256();
-	static constexpr UInt32 Entry(UInt8 r, UInt8 g, UInt8 b) {
+	static constexpr UInt32 Pack(UInt8 r, UInt8 g, UInt8 b) {
 		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
 	}
-	static constexpr UInt32 Entry(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+	static constexpr UInt32 Pack(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
 		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
 			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
 	}

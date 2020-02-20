@@ -37,8 +37,7 @@ Gurax_DeclareClassMethod(Palette, Basic)
 Gurax_ImplementClassMethod(Palette, Basic)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette(0));
-	return new Value_Palette(pPalette.release());
+	return new Value_Palette(Palette::Basic());
 }
 
 // Palette.WebSafe()
@@ -50,8 +49,7 @@ Gurax_DeclareClassMethod(Palette, WebSafe)
 Gurax_ImplementClassMethod(Palette, WebSafe)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette(0));
-	return new Value_Palette(pPalette.release());
+	return new Value_Palette(Palette::WebSafe());
 }
 
 // Palette.Win256()
@@ -63,8 +61,7 @@ Gurax_DeclareClassMethod(Palette, Win256)
 Gurax_ImplementClassMethod(Palette, Win256)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette(0));
-	return new Value_Palette(pPalette.release());
+	return new Value_Palette(Palette::Win256());
 }
 
 //------------------------------------------------------------------------------
