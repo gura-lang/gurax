@@ -5,6 +5,7 @@
 #define GURAX_IMAGE_H
 #include "Color.h"
 #include "Memory.h"
+#include "Palette.h"
 
 namespace Gurax {
 
@@ -285,7 +286,7 @@ public:
 	};
 protected:
 	RefPtr<Memory> _pMemory;
-	//RefPtr<Palette> _pPalette;	// may be nullptr
+	RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
 public:
 	static void Bootup();

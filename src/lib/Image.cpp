@@ -9,7 +9,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Image::Format
 //------------------------------------------------------------------------------
-const Image::Format Image::Format::None(3);
+const Image::Format Image::Format::None(0);
 const Image::Format Image::Format::RGB(3);
 const Image::Format Image::Format::RGBA(4);
 
@@ -398,14 +398,13 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 	double angleRad = Math::DegToRad(angleDeg);
 	int cos1024 = static_cast<int>(::cos(angleRad) * 1024);
 	int sin1024 = -static_cast<int>(::sin(angleRad) * 1024);
-	size_t wdSrc = GetWidth(), htSrc = GetHeight();
-	int xCenterSrc = static_cast<int>(wdSrc / 2);
-	int yCenterSrc = static_cast<int>(htSrc / 2);
-	int xCenterDst, yCenterDst;
-	size_t wdDst, htDst;
 	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
 		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
 	};
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
+	int xCenterSrc = static_cast<int>(wdSrc / 2);
+	int yCenterSrc = static_cast<int>(htSrc / 2);
+	size_t wdDst, htDst;
 	do {
 		int left = -xCenterSrc;
 		int right = left + static_cast<int>(wdSrc);
@@ -425,8 +424,8 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 	} while (0);
 	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
 	auto scanner(Scanner::LeftTopHorz(*pImage));
-	xCenterDst = wdDst / 2;
-	yCenterDst = htDst / 2;
+	int xCenterDst = wdDst / 2;
+	int yCenterDst = htDst / 2;
 	do {
 		int xDst = static_cast<int>(scanner.GetColIndex()) - xCenterDst;
 		int yDst = static_cast<int>(scanner.GetRowIndex()) - yCenterDst;
@@ -438,7 +437,7 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 			PixelRGBA::SetColor(scanner.GetPointer(), colorBg);
 		}
 	} while (scanner.Next());
-	return nullptr;
+	return pImage.release();
 }
 
 void Image::Fill(const Color& color)
