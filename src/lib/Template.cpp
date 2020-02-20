@@ -2,7 +2,6 @@
 // Template
 //=============================================================================
 #include "stdafx.h"
-#include "../../include/gurax/VType_Template.h"
 
 namespace Gurax {
 

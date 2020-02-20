@@ -2,7 +2,6 @@
 // guraxcore.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/Image.h>
 
 namespace Gurax {
 
