@@ -214,6 +214,41 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
+// Image#Rotate(angle:Number, background?:Color):map {block?}
+Gurax_DeclareMethod(Image, Rotate)
+{
+	Declare(VTYPE_Image, Flag::Map);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("background", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an image that rotates the original image.\n"
+		"\n"
+		"The argument `angle` specifies the rotation angle in degree unit,\n"
+		"where a positive number means counterclockwise direction and negative clockwise direction.\n"
+		"The created instance has a size that exactly fits the rotated image.\n"
+		"\n"
+		"The argument `background` specifies the color of pixels to fill\n"
+		"the empty area that appears after rotation.\n"
+		"If omitted, the color that has all elements set to zero is used for filling.\n");
+}
+
+Gurax_ImplementMethod(Image, Rotate)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	Double angle = args.PickNumber<Double>();
+	const Color& background = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::zero;
+	// Function body
+	RefPtr<Image> pImage(image.Rotate(angle, background));
+	if (!pImage) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
 //------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
@@ -231,6 +266,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
+	Assign(Gurax_CreateMethod(Image, Rotate));
 }
 
 Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
