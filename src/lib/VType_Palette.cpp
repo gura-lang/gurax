@@ -2,6 +2,7 @@
 // VType_Palette.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/VType_Palette.h>
 
 namespace Gurax {
 
@@ -36,7 +37,7 @@ Gurax_DeclareClassMethod(Palette, Basic)
 Gurax_ImplementClassMethod(Palette, Basic)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette());
+	RefPtr<Palette> pPalette(new Palette(0));
 	return new Value_Palette(pPalette.release());
 }
 
@@ -49,7 +50,7 @@ Gurax_DeclareClassMethod(Palette, WebSafe)
 Gurax_ImplementClassMethod(Palette, WebSafe)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette());
+	RefPtr<Palette> pPalette(new Palette(0));
 	return new Value_Palette(pPalette.release());
 }
 
@@ -62,7 +63,7 @@ Gurax_DeclareClassMethod(Palette, Win256)
 Gurax_ImplementClassMethod(Palette, Win256)
 {
 	// Function body
-	RefPtr<Palette> pPalette(new Palette());
+	RefPtr<Palette> pPalette(new Palette(0));
 	return new Value_Palette(pPalette.release());
 }
 

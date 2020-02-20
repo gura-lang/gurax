@@ -2,6 +2,8 @@
 // guraxcore.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/VType_Image.h>
+#include <gurax/VType_Palette.h>
 
 namespace Gurax {
 
@@ -19,6 +21,7 @@ bool Initialize(int& argc, char** argv)
 	Expr::Bootup();
 	Function::Bootup();
 	Image::Bootup();
+	Palette::Bootup();
 	Random::Bootup();
 	Stream::Bootup();
 	//Template::Bootup();

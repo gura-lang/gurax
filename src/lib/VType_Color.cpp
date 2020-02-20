@@ -63,7 +63,7 @@ Gurax_ImplementConstructor(Color)
 // Color.Named(name:String, a?:Number)
 Gurax_DeclareClassMethod(Color, Named)
 {
-	Declare(VTYPE_Palette, Flag::None);
+	Declare(VTYPE_Color, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

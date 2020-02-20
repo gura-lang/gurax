@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Color {
 public:
 	struct Elem {
 		UInt8 b, g, r, a;
+		Elem() : b(0), g(0), r(0), a(0) {}
+		Elem(const Elem& elem) : b(elem.b), g(elem.g), r(elem.r), a(elem.a) {}
 		Elem(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : b(b), g(g), r(r), a(a) {}
 	};
 private:
@@ -42,6 +44,7 @@ public:
 public:
 	// Constructor
 	Color() : _packed(0) {}
+	explicit Color(Elem elem) : _elem(elem) {}
 	explicit Color(UInt32 packed) : _packed(packed) {}
 	Color(UInt8 r, UInt8 g, UInt8 b) : _elem(r, g, b, 0xff) {}
 	Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}

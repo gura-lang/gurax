@@ -2,6 +2,8 @@
 // Basement.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/VType_Image.h>
+#include <gurax/VType_Palette.h>
 
 namespace Gurax {
 

@@ -3,6 +3,8 @@
 //==============================================================================
 #ifndef GURAX_PALETTE_H
 #define GURAX_PALETTE_H
+#include "Referable.h"
+#include "Color.h"
 
 namespace Gurax {
 
@@ -13,9 +15,14 @@ class GURAX_DLLDECLARE Palette : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Palette);
+protected:
+	std::unique_ptr<UInt32[]> _entryTbl;
+public:
+	static void Bootup();
 public:
 	// Constructor
-	Palette() {}
+	Palette(size_t n);
+	Palette(const UInt32* entryTbl, size_t n);
 	// Copy constructor/operator
 	Palette(const Palette& src) = delete;
 	Palette& operator=(const Palette& src) = delete;
@@ -24,6 +31,14 @@ public:
 	Palette& operator=(Palette&& src) noexcept = delete;
 protected:
 	~Palette() = default;
+public:
+	static Palette* Basic();
+	static Palette* WebSafe();
+	static Palette* Win256();
+	static constexpr UInt32 Entry(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
+			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Palette& palette) const { return this == &palette; }
