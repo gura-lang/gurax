@@ -156,8 +156,6 @@ public:
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
-		template<typename T_PixelDst, typename T_PixelSrc>
-		void RotatePaste(const Image& image, const Color& colorBg);
 	};
 	class PixelRGB;
 	class PixelRGBA;
@@ -343,13 +341,15 @@ public:
 	}
 	Image* Resize(const Format& format, size_t width, size_t height) const;
 	Image* Resize(size_t width, size_t height) const { return Resize(GetFormat(), width, height); }
+	template<typename T_PixelDst, typename T_PixelSrc>
+	Image* RotateT(const Format& format, double angleDeg, const Color& colorBg) const;
 	Image* Rotate(const Format& format, double angleDeg, const Color& colorBg) const;
 	Image* Rotate(double angleDeg, const Color& colorBg) { return Rotate(GetFormat(), angleDeg, colorBg); }
-	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
-	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
 	Image* Rotate90(const Format& format) const;
 	Image* Rotate180(const Format& format) const { return Flip(format, true, true); }
 	Image* Rotate270(const Format& format) const;
+	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
+	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
 	Color GetPixelColor(size_t x, size_t y) const {
 		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;
@@ -359,6 +359,7 @@ public:
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
+	static void CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024);
 	static const Format& SymbolToFormat(const Symbol* pSymbol);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -360,6 +360,62 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 	return pImageMgr->Write(stream, *this);
 }
 
+template<typename T_PixelDst, typename T_PixelSrc>
+Image* Image::RotateT(const Format& format, double angleDeg, const Color& colorBg) const
+{
+	double angleRad = Math::DegToRad(angleDeg);
+	int cos1024 = static_cast<int>(::cos(angleRad) * 1024);
+	int sin1024 = -static_cast<int>(::sin(angleRad) * 1024);
+	size_t wdSrc = GetWidth(), htSrc = GetHeight();
+	size_t wdDst, htDst;
+	CalcRotatesSize(&wdDst, &htDst, wdSrc, htSrc, cos1024, sin1024);
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
+	auto scanner(Scanner::LeftTopHorz(*pImage));
+	int xCenterSrc = static_cast<int>(wdSrc / 2);
+	int yCenterSrc = static_cast<int>(htSrc / 2);
+	int xCenterDst = static_cast<int>(wdDst / 2);
+	int yCenterDst = static_cast<int>(htDst / 2);
+	do {
+		int xDst = static_cast<int>(scanner.GetColIndex()) - xCenterDst;
+		int yDst = static_cast<int>(scanner.GetRowIndex()) - yCenterDst;
+		int xSrc = ((xDst * cos1024 - yDst * sin1024) >> 10) + xCenterSrc;
+		int ySrc = ((xDst * sin1024 + yDst * cos1024) >> 10) + yCenterSrc;
+		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
+			scanner.PutPixel<T_PixelDst, T_PixelSrc>(GetPointer(xSrc, ySrc));
+		} else {
+			T_PixelDst::SetColor(scanner.GetPointer(), colorBg);
+		}
+	} while (scanner.Next());
+	return pImage.release();
+}
+
+Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg) const
+{
+	int angleInt = static_cast<int>(angleDeg) % 360;
+	if (angleInt == 180 || angleInt == -180) {
+		return Rotate180(format);
+	} else if (angleInt == -90 || angleInt == 270) {
+		return Rotate90(format);
+	} else if (angleInt == 90 || angleInt == -270) {
+		return Rotate270(format);
+	}
+	if (format.IsIdentical(Format::RGB)) {
+		if (IsFormat(Format::RGB)) {
+			return RotateT<PixelRGB, PixelRGB>(format, angleDeg, colorBg);
+		} else if (IsFormat(Format::RGBA)) {
+			return RotateT<PixelRGB, PixelRGBA>(format, angleDeg, colorBg);
+		}
+	} else if (format.IsIdentical(Format::RGBA)) {
+		if (IsFormat(Format::RGB)) {
+			return RotateT<PixelRGBA, PixelRGB>(format, angleDeg, colorBg);
+		} else if (IsFormat(Format::RGBA)) {
+			return RotateT<PixelRGBA, PixelRGBA>(format, angleDeg, colorBg);
+		}
+	}
+	return nullptr;
+}
+
 Image* Image::Rotate90(const Format& format) const
 {
 	RefPtr<Image> pImage(new Image(format));
@@ -381,62 +437,6 @@ Image* Image::Rotate270(const Format& format) const
 	Scanner scannerDst(Scanner::LeftBottomVert(*pImage));
 	Scanner scannerSrc(Scanner::LeftTopHorz(*this));
 	Scanner::Paste(scannerDst, scannerSrc);
-	return pImage.release();
-}
-
-Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg) const
-{
-	int angleInt = static_cast<int>(angleDeg) % 360;
-	if (angleInt == 180 || angleInt == -180) {
-		return Rotate180(format);
-	} else if (angleInt == -90 || angleInt == 270) {
-		return Rotate90(format);
-	} else if (angleInt == 90 || angleInt == -270) {
-		return Rotate270(format);
-	}
-	RefPtr<Image> pImage(new Image(format));
-	double angleRad = Math::DegToRad(angleDeg);
-	int cos1024 = static_cast<int>(::cos(angleRad) * 1024);
-	int sin1024 = -static_cast<int>(::sin(angleRad) * 1024);
-	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
-		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
-	};
-	size_t wdSrc = GetWidth(), htSrc = GetHeight();
-	int xCenterSrc = static_cast<int>(wdSrc / 2);
-	int yCenterSrc = static_cast<int>(htSrc / 2);
-	size_t wdDst, htDst;
-	do {
-		int left = -xCenterSrc;
-		int right = left + static_cast<int>(wdSrc);
-		int bottom = -yCenterSrc;
-		int top = bottom + static_cast<int>(htSrc);
-		int xs[4], ys[4];
-		RotateCoord(xs[0], ys[0], left, top);
-		RotateCoord(xs[1], ys[1], left, bottom);
-		RotateCoord(xs[2], ys[2], right, top);
-		RotateCoord(xs[3], ys[3], right, bottom);
-		int xMin = *std::min_element(xs, xs + 4);
-		int xMax = *std::max_element(xs, xs + 4);
-		int yMin = *std::min_element(ys, ys + 4);
-		int yMax = *std::max_element(ys, ys + 4);
-		wdDst = xMax - xMin;
-		htDst = yMax - yMin;
-	} while (0);
-	if (!pImage->Allocate(wdDst, htDst)) return nullptr;
-	auto scanner(Scanner::LeftTopHorz(*pImage));
-	int xCenterDst = wdDst / 2;
-	int yCenterDst = htDst / 2;
-	do {
-		int xDst = static_cast<int>(scanner.GetColIndex()) - xCenterDst;
-		int yDst = static_cast<int>(scanner.GetRowIndex()) - yCenterDst;
-		int xSrc = ((xDst * cos1024 - yDst * sin1024) >> 10) + xCenterSrc;
-		int ySrc = ((xDst * sin1024 + yDst * cos1024) >> 10) + yCenterSrc;
-		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc <= htSrc) {
-			scanner.PutPixel<PixelRGBA, PixelRGBA>(GetPointer(xSrc, ySrc));
-		} else {
-			PixelRGBA::SetColor(scanner.GetPointer(), colorBg);
-		}
-	} while (scanner.Next());
 	return pImage.release();
 }
 
@@ -548,6 +548,30 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 	Scanner scannerSrc(Scanner::CreateByFlip(*this, horzFlag, vertFlag));
 	Scanner::Paste(scannerDst, scannerSrc);
 	return pImage.release();
+}
+
+void Image::CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024)
+{
+	int xCenterSrc = static_cast<int>(wdSrc / 2);
+	int yCenterSrc = static_cast<int>(htSrc / 2);
+	auto RotateCoord = [&](int& xm, int& ym, int x, int y) {
+		xm = (x * cos1024 - y * sin1024) >> 10, ym = (x * sin1024 + y * cos1024) >> 10;
+	};
+	int left = -xCenterSrc;
+	int right = left + static_cast<int>(wdSrc);
+	int bottom = -yCenterSrc;
+	int top = bottom + static_cast<int>(htSrc);
+	int xs[4], ys[4];
+	RotateCoord(xs[0], ys[0], left, top);
+	RotateCoord(xs[1], ys[1], left, bottom);
+	RotateCoord(xs[2], ys[2], right, top);
+	RotateCoord(xs[3], ys[3], right, bottom);
+	int xMin = *std::min_element(xs, xs + 4);
+	int xMax = *std::max_element(xs, xs + 4);
+	int yMin = *std::min_element(ys, ys + 4);
+	int yMax = *std::max_element(ys, ys + 4);
+	*pWdDst = xMax - xMin;
+	*pHtDst = yMax - yMin;
 }
 
 const Image::Format& Image::SymbolToFormat(const Symbol* pSymbol)
