@@ -50,10 +50,10 @@ public:
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
 public:
-	int CalcDIBBitCount() const;
-	size_t CalcDIBImageSize(int biBitCount, bool maskFlag) const;
-	Palette* ReadDIBPalette(Stream& stream, int biBitCount);
-	bool WriteDIBPalette(Stream& stream, int biBitCount);
+	static int CalcDIBBitCount();
+	static size_t CalcDIBImageSize(int biBitCount, bool maskFlag);
+	static Palette* ReadDIBPalette(Stream& stream, int biBitCount);
+	static bool WriteDIBPalette(Stream& stream, int biBitCount);
 };
 
 Gurax_EndModuleScope(bmp)

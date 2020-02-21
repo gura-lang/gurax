@@ -38,19 +38,24 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 	Int32 biWidth = Gurax_UnpackInt32(bih.biWidth);
 	Int32 biHeight = Gurax_UnpackInt32(bih.biHeight);
 	UInt16 biBitCount = Gurax_UnpackUInt16(bih.biBitCount);
-	::printf("check %d %d %d\n", biWidth, biHeight, biBitCount);
 	if (!image.Allocate(biWidth, biHeight)) {
 		Error::Issue(ErrorType::MemoryError, "failed to allocate memory");
 		return false;
 	}
+	if (biBitCount == 1 || biBitCount == 4 || biBitCount == 8) {
+		RefPtr<Palette> pPalette(ReadDIBPalette(stream, biBitCount));
+		if (!pPalette) return false;
+		image.SetPalette(pPalette.release());
+	} else if (biBitCount == 24 || biBitCount == 32) {
+		// nothing to do
+	} else {
+		IssueError_InvalidFormat();
+		return false;
+	}
+	if (bfOffBits > 0 && !stream.SetOffset(bfOffBits)) return false;
+
 	return false;
 #if 0
-
-	if (!pImage->ReadDIBPalette(env, stream, biBitCount)) return false;
-	if (bfOffBits != 0) {
-		stream.Seek(sig, bfOffBits, Stream::SeekSet);
-		if (sig.IsSignalled()) return false;
-	}
 	return pImage->ReadDIB(sig, stream, biWidth, biHeight, biBitCount, false);
 #endif
 }
@@ -60,7 +65,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	return false;
 }
 
-int ImageMgrEx::CalcDIBBitCount() const
+int ImageMgrEx::CalcDIBBitCount()
 {
 #if 0
 	if (GetPalette() == nullptr) return static_cast<int>(GetBitsPerPixel());
@@ -76,7 +81,7 @@ int ImageMgrEx::CalcDIBBitCount() const
 	return 0;
 }
 
-size_t ImageMgrEx::CalcDIBImageSize(int biBitCount, bool maskFlag) const
+size_t ImageMgrEx::CalcDIBImageSize(int biBitCount, bool maskFlag)
 {
 #if 0
 	size_t bytesPerLine = 0;

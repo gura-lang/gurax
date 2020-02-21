@@ -303,6 +303,9 @@ protected:
 	~Image() = default;
 public:
 	bool Allocate(size_t width, size_t height);
+	void SetPalette(Palette* pPalette) { _pPalette.reset(pPalette); }
+	Palette* GetPalette() { return _pPalette.get(); }
+	const Palette* GetPalette() const { return _pPalette.get(); }
 	const Format& GetFormat() const { return _metrics.format; }
 	bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
 	const Metrics& GetMetrics() const { return _metrics; }
