@@ -24,6 +24,7 @@ const ErrorType ErrorType::InvalidOperation		("InvalidOperation",	"invalid opera
 const ErrorType ErrorType::IOError				("IOError",				"I/O error");
 const ErrorType ErrorType::IteratorError		("IteratorError",		"iterator error");
 const ErrorType ErrorType::KeyError				("KeyError",			"key error");
+const ErrorType ErrorType::MemoryError			("MemoryError",			"memory error");
 const ErrorType ErrorType::PathError			("PathError",			"path error");
 const ErrorType ErrorType::PropertyError		("PropertyError",		"property error");
 const ErrorType ErrorType::RangeError			("RangeError",			"range error");

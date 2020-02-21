@@ -6,6 +6,8 @@
 #include <gurax.h>
 #include "ImageExtension.h"
 #include "Util.h"
+#include <gurax/Image.h>
+#include <gurax/Palette.h>
 
 Gurax_BeginModuleHeader(bmp)
 Gurax_EndModuleHeader(bmp)

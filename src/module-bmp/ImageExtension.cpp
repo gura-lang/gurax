@@ -39,12 +39,10 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 	Int32 biHeight = Gurax_UnpackInt32(bih.biHeight);
 	UInt16 biBitCount = Gurax_UnpackUInt16(bih.biBitCount);
 	::printf("check %d %d %d\n", biWidth, biHeight, biBitCount);
-#if 0
-	if (image.Allocate(biWidth, biHeight)) {
+	if (!image.Allocate(biWidth, biHeight)) {
 		Error::Issue(ErrorType::MemoryError, "failed to allocate memory");
 		return false;
 	}
-#endif
 	return false;
 #if 0
 
@@ -62,9 +60,9 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	return false;
 }
 
-#if 0
-int Image::CalcDIBBitCount() const
+int ImageMgrEx::CalcDIBBitCount() const
 {
+#if 0
 	if (GetPalette() == nullptr) return static_cast<int>(GetBitsPerPixel());
 	size_t nEntries = GetPalette()->CountEntries();
 	size_t nBits = 1;
@@ -74,10 +72,13 @@ int Image::CalcDIBBitCount() const
 		(nBits == 5 || nBits == 6 || nBits == 7)? 8 :
 		(nBits > 8)? 8 : nBits;
 	return static_cast<int>(nBits);
+#endif
+	return 0;
 }
 
-size_t Image::CalcDIBImageSize(int biBitCount, bool maskFlag) const
+size_t ImageMgrEx::CalcDIBImageSize(int biBitCount, bool maskFlag) const
 {
+#if 0
 	size_t bytesPerLine = 0;
 	if (biBitCount == 1) {
 		bytesPerLine = (_width + 7) / 8;
@@ -96,31 +97,28 @@ size_t Image::CalcDIBImageSize(int biBitCount, bool maskFlag) const
 		bytes += ((bytesPerLine + 3) / 4 * 4) * _height;
 	}
 	return bytes;
+#endif
+	return 0;
 }
 
-bool Image::ReadDIBPalette(Environment &env, Stream &stream, int biBitCount)
+Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
 {
-	Signal &sig = env.GetSignal();
-	if (biBitCount == 24 || biBitCount == 32) return true;
-	if (!(biBitCount == 1 || biBitCount == 4 || biBitCount == 8)) {
-		sig.SetError(ERR_FormatError, "unsupported pixel depth %d", biBitCount);
-		return false;
-	}
 	size_t nEntries = 1 << biBitCount;
-	CreateEmptyPalette(env, nEntries);
+	RefPtr<Palette> pPalette(new Palette(nEntries));
 	for (size_t idx = 0; idx < nEntries; idx++) {
-		UChar buff[4];
-		if (stream.Read(sig, buff, 4) < 4) {
-			sig.SetError(ERR_FormatError, "failed to read DIB palette");
-			return false;
+		UInt32 packed;
+		if (stream.Read(&packed, 4) < 4) {
+			Error::Issue(ErrorType::FormatError, "failed to read DIB palette");
+			return nullptr;
 		}
-		_pPalette->SetEntry(idx, buff[2], buff[1], buff[0]);
+		pPalette->SetPacked(idx, packed);
 	}
-	return true;
+	return pPalette.release();
 }
 
-bool Image::WriteDIBPalette(Environment &env, Stream &stream, int biBitCount)
+bool ImageMgrEx::WriteDIBPalette(Stream& stream, int biBitCount)
 {
+#if 0
 	Signal &sig = env.GetSignal();
 	if (biBitCount == 24 || biBitCount == 32) return true;
 	if (!(biBitCount == 1 || biBitCount == 4 || biBitCount == 8)) {
@@ -156,8 +154,8 @@ bool Image::WriteDIBPalette(Environment &env, Stream &stream, int biBitCount)
 		stream.Write(sig, buff, 4);
 		if (sig.IsSignalled()) return false;
 	}
+#endif
 	return true;
 }
-#endif
 
 Gurax_EndModuleScope(bmp)

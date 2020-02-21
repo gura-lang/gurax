@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_BMP_IMAGEEXTENSION_H
 #define GURAX_MODULE_BMP_IMAGEEXTENSION_H
 #include <gurax.h>
+#include <gurax/Palette.h>
 
 Gurax_BeginModuleScope(bmp)
 
@@ -48,6 +49,11 @@ public:
 	virtual bool IsResponsibleExtName(const char* extName) const override;
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
+public:
+	int CalcDIBBitCount() const;
+	size_t CalcDIBImageSize(int biBitCount, bool maskFlag) const;
+	Palette* ReadDIBPalette(Stream& stream, int biBitCount);
+	bool WriteDIBPalette(Stream& stream, int biBitCount);
 };
 
 Gurax_EndModuleScope(bmp)
