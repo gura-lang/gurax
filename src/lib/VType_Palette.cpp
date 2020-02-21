@@ -79,12 +79,12 @@ Gurax_DeclareMethod(Palette, Each)
 
 Gurax_ImplementMethod(Palette, Each)
 {
-#if 0
-	Object_palette *pThis = Object_palette::GetObjectThis(arg);
-	Iterator *pIterator = new Palette::IteratorEach(Palette::Reference(pThis->GetPalette()));
-	return ReturnIterator(env, arg, pIterator);
-#endif
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Palette& palette = valueThis.GetPalette();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Palette::Iterator_Each(palette.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Palette#GetNearest(Color:color):map:[index]
@@ -206,6 +206,22 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Palette, Each));
 	Assign(Gurax_CreateMethod(Palette, GetNearest));
 	Assign(Gurax_CreateMethod(Palette, Shrink));
+}
+
+//------------------------------------------------------------------------------
+// VType_Palette::Iterator_Each
+//------------------------------------------------------------------------------
+Value* VType_Palette::Iterator_Each::DoNextValue()
+{
+	if (_idx >= _pPalette->GetSize()) return nullptr;
+	RefPtr<Value> pValue(new Value_Color(_pPalette->GetColor(_idx)));
+	_idx++;
+	return pValue.release();
+}
+
+String VType_Palette::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return "Palette.Each";
 }
 
 //------------------------------------------------------------------------------

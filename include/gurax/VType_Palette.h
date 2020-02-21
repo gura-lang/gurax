@@ -13,6 +13,22 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Palette : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+	private:
+		RefPtr<Palette> _pPalette;
+		size_t _idx;
+	public:
+		Iterator_Each(Palette* pPalette) : _pPalette(pPalette), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenDetermined;
+		}
+		virtual size_t GetLength() const override { return _pPalette->GetSize(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
