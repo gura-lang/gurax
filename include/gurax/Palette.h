@@ -15,8 +15,11 @@ class GURAX_DLLDECLARE Palette : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Palette);
+public:
+	enum class ShrinkMode { None, Align, Minimum };
 protected:
 	std::unique_ptr<UInt32[]> _packedTbl;
+	size_t _n;
 public:
 	static void Bootup();
 public:
@@ -32,16 +35,35 @@ public:
 protected:
 	~Palette() = default;
 public:
+	static Palette* Mono();
 	static Palette* Basic();
 	static Palette* WebSafe();
 	static Palette* Win256();
-	static constexpr UInt32 Pack(UInt8 r, UInt8 g, UInt8 b) {
+	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) {
 		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
 	}
-	static constexpr UInt32 Pack(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
 		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
 			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
 	}
+public:
+	size_t GetSize() const { return _n; }
+	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
+	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }
+	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { _packedTbl[idx] = PackRGB(r, g, b); }
+	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { _packedTbl[idx] = PackRGBA(r, g, b, a); }
+	UInt32 GetPacked(size_t idx) const { return _packedTbl[idx]; }
+	Color GetColor(size_t idx) const { return Color(_packedTbl[idx]); }
+public:
+	size_t LookupNearest(UInt8 r, UInt8 g, UInt8 b) const;
+	size_t LookupNearest(const Color& color) const {
+		return LookupNearest(color.GetR(), color.GetG(), color.GetB());
+	}
+	bool UpdateByImage(const Image& image, ShrinkMode shrinkMode);
+	bool UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode);
+	void Shrink(size_t nEntries, bool alignFlag);
+	size_t NextBlankIndex() const;
+	//size_t NextBlankIndex(ColorSet &colorSet) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Palette& palette) const { return this == &palette; }

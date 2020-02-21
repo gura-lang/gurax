@@ -96,6 +96,21 @@ public:
 			 static_cast<UInt32>(b) * 114) / 1000);
 	}
 public:
+	int CalcDistSqu(UInt8 r, UInt8 g, UInt8 b) const { return CalcDistSqu(GetR(), GetG(), GetB(), r, g, b); }
+	int CalcDistSqu(const Color& color) const { return CalcDistSqu(GetR(), GetG(), GetB()); }
+	int CalcDistSqu(UInt32 packed) const { return CalcDistSqu(Color(packed)); }
+	static int CalcDistSqu(UInt8 r1, UInt8 g1, UInt8 b1, UInt8 r2, UInt8 g2, UInt8 b2) {
+		int distR = static_cast<int>(r1) - static_cast<int>(r2);
+		int distG = static_cast<int>(g1) - static_cast<int>(g2);
+		int distB = static_cast<int>(b1) - static_cast<int>(b2);
+		return distR * distR + distG * distG + distB * distB;
+	}
+	static int CalcDistSqu(const Color& color1, const Color& color2) { return color1.CalcDistSqu(color2); }
+	static int CalcDistSqu(UInt32 packed1, UInt32 packed2) { return Color(packed1).CalcDistSqu(packed2); }
+public:
+	String MakeHTML() const { return MakeHTML(GetR(), GetG(), GetB()); }
+	static String MakeHTML(UInt8 r, UInt8 g, UInt8 b) { return String().Printf("#%02x%02x%02x", r, g, b); }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Color& color) const { return this == &color; }
 	bool IsEqualTo(const Color& color) const { return IsIdentical(color); }
