@@ -53,11 +53,7 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 		return false;
 	}
 	if (bfOffBits > 0 && !stream.SetOffset(bfOffBits)) return false;
-
-	return false;
-#if 0
-	return pImage->ReadDIB(sig, stream, biWidth, biHeight, biBitCount, false);
-#endif
+	return ReadDIB(stream, image, biWidth, biHeight, biBitCount, false);
 }
 
 bool ImageMgrEx::Write(Stream& stream, const Image& image) const
@@ -139,14 +135,15 @@ bool ImageMgrEx::WriteDIBPalette(Stream& stream, const Palette& palette, int biB
 
 bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight, int biBitCount, bool maskFlag)
 {
-#if 0
 	bool vertRevFlag = true;
 	if (biHeight < 0) {
 		biHeight = -biHeight;
 		vertRevFlag = false;
 	}
-	if (!AllocBuffer(sig, biWidth, biHeight, 0xff)) return false;
+	if (!image.Allocate(biWidth, biHeight)) return false;
+	image.GetMemory()->Fill(0xff);
 	if (biBitCount == 1) {
+#if 0
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsRest = 0;
@@ -175,7 +172,9 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			iPixel++;
 		}
 		if (sig.IsSignalled()) return false;
+#endif
 	} else if (biBitCount == 4) {
+#if 0
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		UChar ch;
@@ -199,7 +198,9 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 		}
 		if (sig.IsSignalled()) return false;
+#endif
 	} else if (biBitCount == 8) {
+#if 0
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
 		UChar ch;
 		std::unique_ptr<Scanner> pScanner(CreateScanner(
@@ -215,7 +216,9 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			if (stream.Read(sig, &ch, 1) < 1) break;
 		}
 		if (sig.IsSignalled()) return false;
+#endif
 	} else if (biBitCount == 24) {
+#if 0
 		size_t bytesAlign = (3 * biWidth + 3) / 4 * 4 - 3 * biWidth;
 		UChar buff[3];
 		std::unique_ptr<Scanner> pScanner(CreateScanner(
@@ -230,7 +233,9 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 		}
 		if (sig.IsSignalled()) return false;
+#endif
 	} else if (biBitCount == 32) {
+#if 0
 		UChar buff[4];
 		std::unique_ptr<Scanner> pScanner(CreateScanner(
 				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
@@ -246,11 +251,12 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 		}
 		if (sig.IsSignalled()) return false;
+#endif
 	} else {
-		sig.SetError(ERR_FormatError, "invalid DIB format");
-		return false;
+		// nothing to do
 	}
 	if (maskFlag) {
+#if 0
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesPerLineAligned = (bytesPerLine + 3) / 4 * 4;
 		size_t bytesAlign = bytesPerLineAligned - bytesPerLine;
@@ -287,17 +293,17 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			stream.Seek(sig, bytes, Stream::SeekCur);
 		}
 		if (sig.IsSignalled()) return false;
-	}
 #endif
+	}
 	return true;
 }
 
 bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bool maskFlag)
 {
-#if 0
-	int biWidth = static_cast<int>(GetWidth());
+	//int biWidth = static_cast<int>(image.GetWidth());
 	//int biHeight = static_cast<int>(GetHeight());
 	if (biBitCount == 1) {
+#if 0
 		if (_pPalette.IsNull()) return false;
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
@@ -327,7 +333,9 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 				if (!pScanner->NextLine()) break;
 			}
 		}
+#endif
 	} else if (biBitCount == 4) {
+#if 0
 		if (_pPalette.IsNull()) return false;
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
@@ -357,7 +365,9 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 				if (!pScanner->NextLine()) break;
 			}
 		}
+#endif
 	} else if (biBitCount == 8) {
+#if 0
 		if (_pPalette.IsNull()) return false;
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
 		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
@@ -372,7 +382,9 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 				if (!pScanner->NextLine()) break;
 			}
 		}
+#endif
 	} else if (biBitCount == 24) {
+#if 0
 		size_t bytesAlign = ((3 * biWidth) + 3) / 4 * 4 - 3 * biWidth;
 		UChar buff[3];
 		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
@@ -388,7 +400,9 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 				if (!pScanner->NextLine()) break;
 			}
 		}
+#endif
 	} else if (biBitCount == 32) {
+#if 0
 		UChar buff[4];
 		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
 		for (;;) {
@@ -400,11 +414,12 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 			if (sig.IsSignalled()) return false;
 			if (!pScanner->Next()) break;
 		}
+#endif
 	} else {
-		sig.SetError(ERR_FormatError, "not supported bit depth");
-		return false;
+		// nothing to do
 	}
 	if (maskFlag) {
+#if 0
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesPerLineAligned = (bytesPerLine + 3) / 4 * 4;
 		size_t bytesAlign = bytesPerLineAligned - bytesPerLine;
@@ -445,8 +460,8 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 			delete[] buff;
 			if (sig.IsSignalled()) return false;
 		}
-	}
 #endif
+	}
 	return true;
 }
 

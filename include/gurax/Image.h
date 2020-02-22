@@ -283,7 +283,7 @@ public:
 		}
 	};
 protected:
-	RefPtr<Memory> _pMemory;
+	RefPtr<Memory> _pMemory;	// may be nullptr
 	RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
 public:
@@ -303,6 +303,9 @@ protected:
 	~Image() = default;
 public:
 	bool Allocate(size_t width, size_t height);
+	void SetMemory(Memory* pMemory) { _pMemory.reset(pMemory); }
+	Memory* GetMemory() { return _pMemory.get(); }
+	const Memory* GetMemory() const { return _pMemory.get(); }
 	void SetPalette(Palette* pPalette) { _pPalette.reset(pPalette); }
 	Palette* GetPalette() { return _pPalette.get(); }
 	const Palette* GetPalette() const { return _pPalette.get(); }

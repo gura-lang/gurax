@@ -267,7 +267,7 @@ void Image::Pixel::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst
 								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
-	pMemory->FillZero();
+	pMemory->Fill(0x00);
 	Accumulator* accumulators = reinterpret_cast<Accumulator*>(pMemory->GetPointer());
 	UInt8* pLineDst = pixelDst.GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
@@ -294,7 +294,7 @@ void Image::Pixel::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst
 			}
 			htAccum -= htSrc;
 			pLineDst += pixelDst.GetBytesPerLine();
-			pMemory->FillZero();
+			pMemory->Fill(0x00);
 		}
 		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
