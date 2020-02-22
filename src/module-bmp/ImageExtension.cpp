@@ -59,7 +59,6 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 {
 #if 0
-	Signal &sig = env.GetSignal();
 	if (!pImage->CheckValid(sig)) return false;
 	int biWidth = static_cast<int>(pImage->GetWidth());
 	int biHeight = static_cast<int>(pImage->GetHeight());
@@ -70,9 +69,9 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		UInt32 bfOffBits = Image::BitmapFileHeader::Size + Image::BitmapInfoHeader::Size;
 		bfOffBits += static_cast<UInt32>(Image::CalcDIBPaletteSize(biBitCount));
 		UInt32 bfSize = static_cast<UInt32>(pImage->GetBufferSize() + bfOffBits);
-		Gura_PackUInt16(bfh.bfType,			0x4d42);
-		Gura_PackUInt32(bfh.bfSize,			bfSize);
-		Gura_PackUInt32(bfh.bfOffBits,		bfOffBits);
+		Gurax_PackUInt16(bfh.bfType,			0x4d42);
+		Gurax_PackUInt32(bfh.bfSize,			bfSize);
+		Gurax_PackUInt32(bfh.bfOffBits,			bfOffBits);
 		if (stream.Write(sig, &bfh, Image::BitmapFileHeader::Size) < Image::BitmapFileHeader::Size) {
 			sig.SetError(ERR_IOError, "failed to write bitmap data");
 			return false;
@@ -81,17 +80,17 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	do {
 		Image::BitmapInfoHeader bih;
 		::memset(&bih, 0x00, Image::BitmapInfoHeader::Size);
-		Gura_PackUInt32(bih.biSize,			Image::BitmapInfoHeader::Size);
-		Gura_PackUInt32(bih.biWidth,			biWidth);
-		Gura_PackUInt32(bih.biHeight,		biHeight);
-		Gura_PackUInt16(bih.biPlanes,		1);
-		Gura_PackUInt16(bih.biBitCount,		biBitCount);
-		Gura_PackUInt32(bih.biCompression,	0);
-		Gura_PackUInt32(bih.biSizeImage,		0);
-		Gura_PackUInt32(bih.biXPelsPerMeter,	3780);
-		Gura_PackUInt32(bih.biYPelsPerMeter,	3780);
-		Gura_PackUInt32(bih.biClrUsed,		0);
-		Gura_PackUInt32(bih.biClrImportant,	0);
+		Gurax_PackUInt32(bih.biSize,			Image::BitmapInfoHeader::Size);
+		Gurax_PackUInt32(bih.biWidth,			biWidth);
+		Gurax_PackUInt32(bih.biHeight,			biHeight);
+		Gurax_PackUInt16(bih.biPlanes,			1);
+		Gurax_PackUInt16(bih.biBitCount,		biBitCount);
+		Gurax_PackUInt32(bih.biCompression,		0);
+		Gurax_PackUInt32(bih.biSizeImage,		0);
+		Gurax_PackUInt32(bih.biXPelsPerMeter,	3780);
+		Gurax_PackUInt32(bih.biYPelsPerMeter,	3780);
+		Gurax_PackUInt32(bih.biClrUsed,			0);
+		Gurax_PackUInt32(bih.biClrImportant,	0);
 		if (stream.Write(sig, &bih, Image::BitmapInfoHeader::Size) < Image::BitmapInfoHeader::Size) {
 			sig.SetError(ERR_IOError, "failed to write bitmap data");
 			return false;

@@ -306,9 +306,11 @@ public:
 	void SetMemory(Memory* pMemory) { _pMemory.reset(pMemory); }
 	Memory* GetMemory() { return _pMemory.get(); }
 	const Memory* GetMemory() const { return _pMemory.get(); }
+	bool HasMemory() const { return !!_pMemory; }
 	void SetPalette(Palette* pPalette) { _pPalette.reset(pPalette); }
 	Palette* GetPalette() { return _pPalette.get(); }
 	const Palette* GetPalette() const { return _pPalette.get(); }
+	bool HasPalette() const { return !!_pPalette; }
 	const Format& GetFormat() const { return _metrics.format; }
 	bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
 	const Metrics& GetMetrics() const { return _metrics; }
