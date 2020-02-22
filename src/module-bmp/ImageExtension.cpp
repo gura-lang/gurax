@@ -65,11 +65,9 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	return false;
 }
 
-int ImageMgrEx::CalcDIBBitCount()
+int ImageMgrEx::CalcDIBBitCount(const Palette& palette)
 {
-#if 0
-	if (GetPalette() == nullptr) return static_cast<int>(GetBitsPerPixel());
-	size_t nEntries = GetPalette()->CountEntries();
+	size_t nEntries = palette.GetSize();
 	size_t nBits = 1;
 	for ( ; nEntries > static_cast<size_t>(1 << nBits); nBits++) ;
 	nBits =
@@ -77,33 +75,28 @@ int ImageMgrEx::CalcDIBBitCount()
 		(nBits == 5 || nBits == 6 || nBits == 7)? 8 :
 		(nBits > 8)? 8 : nBits;
 	return static_cast<int>(nBits);
-#endif
-	return 0;
 }
 
-size_t ImageMgrEx::CalcDIBImageSize(int biBitCount, bool maskFlag)
+size_t ImageMgrEx::CalcDIBImageSize(size_t width, size_t height, int biBitCount, bool maskFlag)
 {
-#if 0
 	size_t bytesPerLine = 0;
 	if (biBitCount == 1) {
-		bytesPerLine = (_width + 7) / 8;
+		bytesPerLine = (width + 7) / 8;
 	} else if (biBitCount == 4) {
-		bytesPerLine = (_width + 1) / 2;
+		bytesPerLine = (width + 1) / 2;
 	} else if (biBitCount == 8) {
-		bytesPerLine = _width;
+		bytesPerLine = width;
 	} else if (biBitCount == 24) {
-		bytesPerLine = _width * 3;
+		bytesPerLine = width * 3;
 	} else if (biBitCount == 32) {
-		bytesPerLine = _width * 4;
+		bytesPerLine = width * 4;
 	}
-	size_t bytes = ((bytesPerLine + 3) / 4 * 4) * _height;
+	size_t bytes = ((bytesPerLine + 3) / 4 * 4) * height;
 	if (maskFlag) {
-		size_t bytesPerLine = (_width + 7) / 8;
-		bytes += ((bytesPerLine + 3) / 4 * 4) * _height;
+		size_t bytesPerLine = (width + 7) / 8;
+		bytes += ((bytesPerLine + 3) / 4 * 4) * height;
 	}
 	return bytes;
-#endif
-	return 0;
 }
 
 Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
@@ -121,43 +114,337 @@ Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
 	return pPalette.release();
 }
 
-bool ImageMgrEx::WriteDIBPalette(Stream& stream, int biBitCount)
+bool ImageMgrEx::WriteDIBPalette(Stream& stream, const Palette& palette, int biBitCount)
+{
+	size_t nEntries = 1 << biBitCount;
+	size_t idxMax = std::min(nEntries, palette.GetSize());
+	size_t idx = 0;
+	for ( ; idx < idxMax; idx++) {
+		UInt32 packed = palette.GetPacked(idx);
+		if (stream.Write(&packed, 4) < 4) {
+			Error::Issue(ErrorType::FormatError, "failed to write DIB palette");
+			return false;
+		}
+	}
+	UInt32 packed = 0;
+	for (; idx < nEntries; idx++) {
+		if (stream.Write(&packed, 4) < 4) {
+			Error::Issue(ErrorType::FormatError, "failed to write DIB palette");
+			return false;
+		}
+
+	}
+	return true;
+}
+
+bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight, int biBitCount, bool maskFlag)
 {
 #if 0
-	Signal &sig = env.GetSignal();
-	if (biBitCount == 24 || biBitCount == 32) return true;
-	if (!(biBitCount == 1 || biBitCount == 4 || biBitCount == 8)) {
-		sig.SetError(ERR_FormatError, "unsupported pixel depth %d", biBitCount);
+	bool vertRevFlag = true;
+	if (biHeight < 0) {
+		biHeight = -biHeight;
+		vertRevFlag = false;
+	}
+	if (!AllocBuffer(sig, biWidth, biHeight, 0xff)) return false;
+	if (biBitCount == 1) {
+		size_t bytesPerLine = (biWidth + 7) / 8;
+		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
+		int bitsRest = 0;
+		UChar ch;
+		int iLine = 0, iPixel = 0;
+		int bytesPitch = static_cast<int>(GetBytesPerLine());
+		if (vertRevFlag) bytesPitch = -bytesPitch;
+		UChar *pLine = GetPointer(vertRevFlag? biHeight - 1 : 0);
+		UChar *pPixel = pLine;
+		for (;;) {
+			if (iPixel >= biWidth) {
+				if (++iLine >= biHeight) break;
+				iPixel = 0, pLine += bytesPitch, pPixel = pLine;
+				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
+				if (sig.IsSignalled()) return false;
+				bitsRest = 0;
+			}
+			if (bitsRest == 0) {
+				if (stream.Read(sig, &ch, 1) < 1) break;
+				bitsRest = 8;
+			}
+			UChar idx = ch >> 7;
+			ch <<= 1, bitsRest--;
+			StorePixelRGB(pPixel, _pPalette->GetEntry(idx));
+			pPixel += GetBytesPerPixel();
+			iPixel++;
+		}
+		if (sig.IsSignalled()) return false;
+	} else if (biBitCount == 4) {
+		size_t bytesPerLine = (biWidth + 1) / 2;
+		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
+		UChar ch;
+		std::unique_ptr<Scanner> pScanner(CreateScanner(
+				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
+		if (stream.Read(sig, &ch, 1) < 1) return false;
+		int bitsRest = 8;
+		for (;;) {
+			UChar idx = ch >> 4;
+			ch <<= 4, bitsRest -= 4;
+			StorePixelRGB(pScanner->GetPointer(), _pPalette->GetEntry(idx));
+			if (!pScanner->NextPixel()) {
+				if (!pScanner->NextLine()) break;
+				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
+				if (sig.IsSignalled()) return false;
+				bitsRest = 0;
+			}
+			if (bitsRest == 0) {
+				if (stream.Read(sig, &ch, 1) < 1) break;
+				bitsRest = 8;
+			}
+		}
+		if (sig.IsSignalled()) return false;
+	} else if (biBitCount == 8) {
+		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
+		UChar ch;
+		std::unique_ptr<Scanner> pScanner(CreateScanner(
+				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
+		if (stream.Read(sig, &ch, 1) < 1) return false;
+		for (;;) {
+			StorePixelRGB(pScanner->GetPointer(), _pPalette->GetEntry(ch));
+			if (!pScanner->NextPixel()) {
+				if (!pScanner->NextLine()) break;
+				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
+				if (sig.IsSignalled()) return false;
+			}
+			if (stream.Read(sig, &ch, 1) < 1) break;
+		}
+		if (sig.IsSignalled()) return false;
+	} else if (biBitCount == 24) {
+		size_t bytesAlign = (3 * biWidth + 3) / 4 * 4 - 3 * biWidth;
+		UChar buff[3];
+		std::unique_ptr<Scanner> pScanner(CreateScanner(
+				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
+		for (;;) {
+			if (stream.Read(sig, buff, 3) < 3) break;
+			StorePixel(pScanner->GetPointer(), buff[2], buff[1], buff[0]);
+			if (!pScanner->NextPixel()) {
+				if (!pScanner->NextLine()) break;
+				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
+				if (sig.IsSignalled()) return false;
+			}
+		}
+		if (sig.IsSignalled()) return false;
+	} else if (biBitCount == 32) {
+		UChar buff[4];
+		std::unique_ptr<Scanner> pScanner(CreateScanner(
+				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
+		if (_format == FORMAT_RGBA) {
+			while (stream.Read(sig, buff, 4) == 4) {
+				StorePixel(pScanner->GetPointer(), buff[2], buff[1], buff[0], buff[3]);
+				if (!pScanner->Next()) break;
+			}
+		} else {
+			while (stream.Read(sig, buff, 4) == 4) {
+				StorePixel(pScanner->GetPointer(), buff[2], buff[1], buff[0]);
+				if (!pScanner->Next()) break;
+			}
+		}
+		if (sig.IsSignalled()) return false;
+	} else {
+		sig.SetError(ERR_FormatError, "invalid DIB format");
 		return false;
 	}
-	size_t nEntries = 1 << biBitCount;
-	if (_pPalette.IsNull()) {
-		_pPalette.reset(new Palette());
-		if (biBitCount == 1) {
-			_pPalette->Prepare(sig, Gura_Symbol(mono));
-		} else if (biBitCount == 4) {
-			_pPalette->Prepare(sig, Gura_Symbol(basic));
-		} else { // biBitCount == 8
-			_pPalette->Prepare(sig, Gura_Symbol(win256));
+	if (maskFlag) {
+		size_t bytesPerLine = (biWidth + 7) / 8;
+		size_t bytesPerLineAligned = (bytesPerLine + 3) / 4 * 4;
+		size_t bytesAlign = bytesPerLineAligned - bytesPerLine;
+		if (GetFormat() == FORMAT_RGBA) {
+			// read AND bitmap
+			int bitsRest = 0;
+			UChar ch;
+			int iLine = 0, iPixel = 0;
+			int bytesPitch = static_cast<int>(GetBytesPerLine());
+			if (vertRevFlag) bytesPitch = -bytesPitch;
+			UChar *pLine = GetPointer(vertRevFlag? biHeight - 1 : 0);
+			UChar *pPixel = pLine;
+			for (;;) {
+				if (iPixel >= biWidth) {
+					if (++iLine >= biHeight) break;
+					iPixel = 0, pLine += bytesPitch, pPixel = pLine;
+					stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
+					if (sig.IsSignalled()) return false;
+					bitsRest = 0;
+				}
+				if (bitsRest == 0) {
+					if (stream.Read(sig, &ch, 1) < 1) break;
+					bitsRest = 8;
+				}
+				UChar idx = ch >> 7;
+				ch <<= 1, bitsRest--;
+				pPixel[OffsetA] = idx? 0 : 255;
+				pPixel += GetBytesPerPixel();
+				iPixel++;
+			}
+		} else {
+			// just skip AND bitmap
+			long bytes = static_cast<long>((bytesPerLine + 3) / 4 * 4 * GetHeight());
+			stream.Seek(sig, bytes, Stream::SeekCur);
 		}
 		if (sig.IsSignalled()) return false;
 	}
-	size_t idx = 0;
-	size_t idxMax = ChooseMin(nEntries, _pPalette->CountEntries());
-	UChar buff[4];
-	for ( ; idx < idxMax; idx++) {
-		const UChar *pEntry = _pPalette->GetEntry(idx);
-		buff[0] = GetPixelB(pEntry);
-		buff[1] = GetPixelG(pEntry);
-		buff[2] = GetPixelR(pEntry);
-		buff[3] = 0x00;
-		stream.Write(sig, buff, 4);
-		if (sig.IsSignalled()) return false;
+#endif
+	return true;
+}
+
+bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bool maskFlag)
+{
+#if 0
+	int biWidth = static_cast<int>(GetWidth());
+	//int biHeight = static_cast<int>(GetHeight());
+	if (biBitCount == 1) {
+		if (_pPalette.IsNull()) return false;
+		size_t bytesPerLine = (biWidth + 7) / 8;
+		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
+		int bitsAccum = 0;
+		UChar chAccum = 0x00;
+		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		for (;;) {
+			UChar ch = static_cast<UChar>(
+							_pPalette->LookupNearest(pScanner->GetPointer()));
+			chAccum |= ch << ((8 - 1) - bitsAccum);
+			bitsAccum += 1;
+			if (bitsAccum >= 8) {
+				stream.Write(sig, &chAccum, 1);
+				if (sig.IsSignalled()) return false;
+				chAccum = 0x00;
+				bitsAccum = 0;
+			}
+			if (!pScanner->NextPixel()) {
+				if (bitsAccum > 0) {
+					stream.Write(sig, &chAccum, 1);
+					if (sig.IsSignalled()) return false;
+					chAccum = 0x00;
+					bitsAccum = 0;
+				}
+				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				if (sig.IsSignalled()) return false;
+				if (!pScanner->NextLine()) break;
+			}
+		}
+	} else if (biBitCount == 4) {
+		if (_pPalette.IsNull()) return false;
+		size_t bytesPerLine = (biWidth + 1) / 2;
+		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
+		int bitsAccum = 0;
+		UChar chAccum = 0x00;
+		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		for (;;) {
+			UChar ch = static_cast<UChar>(
+							_pPalette->LookupNearest(pScanner->GetPointer()));
+			chAccum |= ch << ((8 - 4) - bitsAccum);
+			bitsAccum += 4;
+			if (bitsAccum >= 8) {
+				stream.Write(sig, &chAccum, 1);
+				if (sig.IsSignalled()) return false;
+				chAccum = 0x00;
+				bitsAccum = 0;
+			}
+			if (!pScanner->NextPixel()) {
+				if (bitsAccum > 0) {
+					stream.Write(sig, &chAccum, 1);
+					if (sig.IsSignalled()) return false;
+					chAccum = 0x00;
+					bitsAccum = 0;
+				}
+				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				if (sig.IsSignalled()) return false;
+				if (!pScanner->NextLine()) break;
+			}
+		}
+	} else if (biBitCount == 8) {
+		if (_pPalette.IsNull()) return false;
+		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
+		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		for (;;) {
+			UChar ch = static_cast<UChar>(
+							_pPalette->LookupNearest(pScanner->GetPointer()));
+			stream.Write(sig, &ch, 1);
+			if (sig.IsSignalled()) return false;
+			if (!pScanner->NextPixel()) {
+				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				if (sig.IsSignalled()) return false;
+				if (!pScanner->NextLine()) break;
+			}
+		}
+	} else if (biBitCount == 24) {
+		size_t bytesAlign = ((3 * biWidth) + 3) / 4 * 4 - 3 * biWidth;
+		UChar buff[3];
+		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		for (;;) {
+			buff[0] = pScanner->GetB();
+			buff[1] = pScanner->GetG();
+			buff[2] = pScanner->GetR();
+			stream.Write(sig, buff, 3);
+			if (sig.IsSignalled()) return false;
+			if (!pScanner->NextPixel()) {
+				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				if (sig.IsSignalled()) return false;
+				if (!pScanner->NextLine()) break;
+			}
+		}
+	} else if (biBitCount == 32) {
+		UChar buff[4];
+		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		for (;;) {
+			buff[0] = pScanner->GetB();
+			buff[1] = pScanner->GetG();
+			buff[2] = pScanner->GetR();
+			buff[3] = pScanner->GetA();
+			stream.Write(sig, buff, 4);
+			if (sig.IsSignalled()) return false;
+			if (!pScanner->Next()) break;
+		}
+	} else {
+		sig.SetError(ERR_FormatError, "not supported bit depth");
+		return false;
 	}
-	::memset(buff, 0x00, 4);
-	for (; idx < nEntries; idx++) {
-		stream.Write(sig, buff, 4);
-		if (sig.IsSignalled()) return false;
+	if (maskFlag) {
+		size_t bytesPerLine = (biWidth + 7) / 8;
+		size_t bytesPerLineAligned = (bytesPerLine + 3) / 4 * 4;
+		size_t bytesAlign = bytesPerLineAligned - bytesPerLine;
+		if (GetFormat() == FORMAT_RGBA) {
+			// write AND bitmap
+			int bitsAccum = 0;
+			UChar chAccum = 0x00;
+			std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+			for (;;) {
+				UChar ch = (pScanner->GetA() < 128)? 1 : 0;
+				chAccum |= ch << ((8 - 1) - bitsAccum);
+				bitsAccum += 1;
+				if (bitsAccum >= 8) {
+					stream.Write(sig, &chAccum, 1);
+					if (sig.IsSignalled()) return false;
+					chAccum = 0x00;
+					bitsAccum = 0;
+				}
+				if (!pScanner->NextPixel()) {
+					if (bitsAccum > 0) {
+						stream.Write(sig, &chAccum, 1);
+						if (sig.IsSignalled()) return false;
+						chAccum = 0x00;
+						bitsAccum = 0;
+					}
+					stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+					if (sig.IsSignalled()) return false;
+					if (!pScanner->NextLine()) break;
+				}
+			}
+		} else {
+			char *buff = new char [bytesPerLineAligned];
+			::memset(buff, 0x00, bytesPerLineAligned);
+			for (size_t y = 0; y < GetHeight(); y++) {
+				stream.Write(sig, buff, bytesPerLineAligned);
+				if (sig.IsSignalled()) break;
+			}
+			delete[] buff;
+			if (sig.IsSignalled()) return false;
+		}
 	}
 #endif
 	return true;
