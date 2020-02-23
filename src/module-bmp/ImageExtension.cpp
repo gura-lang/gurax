@@ -183,37 +183,35 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 	}
 	if (!image.Allocate(biWidth, biHeight)) return false;
 	image.GetMemory()->Fill(0xff);
+	const Palette* pPalette = image.GetPalette();
 	if (biBitCount == 1) {
-#if 0
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsRest = 0;
-		UChar ch;
+		UInt8 ch;
 		int iLine = 0, iPixel = 0;
-		int bytesPitch = static_cast<int>(GetBytesPerLine());
+		int bytesPitch = static_cast<int>(image.GetBytesPerLine());
 		if (vertRevFlag) bytesPitch = -bytesPitch;
-		UChar *pLine = GetPointer(vertRevFlag? biHeight - 1 : 0);
-		UChar *pPixel = pLine;
+		UInt8* pLine = image.GetPointer(0, vertRevFlag? biHeight - 1 : 0);
+		UInt8* pPixel = pLine;
 		for (;;) {
 			if (iPixel >= biWidth) {
 				if (++iLine >= biHeight) break;
 				iPixel = 0, pLine += bytesPitch, pPixel = pLine;
-				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
-				if (sig.IsSignalled()) return false;
+				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) return false;
 				bitsRest = 0;
 			}
 			if (bitsRest == 0) {
-				if (stream.Read(sig, &ch, 1) < 1) break;
+				if (stream.Read(&ch, 1) < 1) break;
 				bitsRest = 8;
 			}
-			UChar idx = ch >> 7;
+			UInt8 idx = ch >> 7;
 			ch <<= 1, bitsRest--;
-			StorePixelRGB(pPixel, _pPalette->GetEntry(idx));
-			pPixel += GetBytesPerPixel();
+			Image::PixelRGB::SetPacked(pPixel, pPalette->GetPacked(idx));
+			pPixel += image.GetBytesPerPixel();
 			iPixel++;
 		}
-		if (sig.IsSignalled()) return false;
-#endif
+		if (Error::IsIssued()) return false;
 	} else if (biBitCount == 4) {
 #if 0
 		size_t bytesPerLine = (biWidth + 1) / 2;
