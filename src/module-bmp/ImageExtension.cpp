@@ -198,11 +198,17 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			if (iPixel >= biWidth) {
 				if (++iLine >= biHeight) break;
 				iPixel = 0, pLine += bytesPitch, pPixel = pLine;
-				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) return false;
+				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) {
+					IssueError_InvalidFormat();
+					return false;
+				}
 				bitsRest = 0;
 			}
 			if (bitsRest == 0) {
-				if (stream.Read(&ch, 1) < 1) break;
+				if (stream.Read(&ch, 1) < 1) {
+					IssueError_InvalidFormat();
+					return false;
+				}
 				bitsRest = 8;
 			}
 			UInt8 idx = ch >> 7;
@@ -212,12 +218,12 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			pPixel += image.GetBytesPerPixel();
 			iPixel++;
 		}
-		if (Error::IsIssued()) return false;
 	} else if (biBitCount == 4) {
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		UInt8 ch;
-		Image::Scanner scanner(vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
+		Image::Scanner scanner(
+			vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
 		if (stream.Read(&ch, 1) < 1) {
 			IssueError_InvalidFormat();
 			return false;
@@ -241,25 +247,30 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 				bitsRest = 8;
 			}
 		}
-		if (Error::IsIssued()) return false;
 	} else if (biBitCount == 8) {
-#if 0
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
-		UChar ch;
-		std::unique_ptr<Scanner> pScanner(CreateScanner(
-				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
-		if (stream.Read(sig, &ch, 1) < 1) return false;
-		for (;;) {
-			StorePixelRGB(pScanner->GetPointer(), _pPalette->GetEntry(ch));
-			if (!pScanner->NextPixel()) {
-				if (!pScanner->NextLine()) break;
-				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
-				if (sig.IsSignalled()) return false;
-			}
-			if (stream.Read(sig, &ch, 1) < 1) break;
+		UInt8 ch;
+		Image::Scanner scanner(
+			vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
+		if (stream.Read(&ch, 1) < 1) {
+			IssueError_InvalidFormat();
+			return false;
 		}
-		if (sig.IsSignalled()) return false;
-#endif
+		for (;;) {
+			const Color& color = pPalette->GetColor(ch);
+			Image::SetRGB(scanner.GetPointer(), color);
+			if (!scanner.NextCol()) {
+				if (!scanner.NextRow()) break;
+				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) {
+					IssueError_InvalidFormat();
+					return false;
+				}
+			}
+			if (stream.Read(&ch, 1) < 1) {
+				IssueError_InvalidFormat();
+				return false;
+			}
+		}
 	} else if (biBitCount == 24) {
 #if 0
 		size_t bytesAlign = (3 * biWidth + 3) / 4 * 4 - 3 * biWidth;
