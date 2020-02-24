@@ -196,10 +196,13 @@ public:
 		using Pixel::Pixel;
 	public:
 		static const size_t bytesPerPixel = 3;
+		static const size_t offsetR = 2;
+		static const size_t offsetG = 1;
+		static const size_t offsetB = 0;
 	public:
-		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
-		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
-		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
+		static void SetR(UInt8* p, UInt8 r) { *(p + offsetR) = r; }
+		static void SetG(UInt8* p, UInt8 g) { *(p + offsetG) = g; }
+		static void SetB(UInt8* p, UInt8 b) { *(p + offsetB) = b; }
 		static void SetPacked(UInt8* p, UInt32 packed) {
 			SetB(p, static_cast<UInt8>(packed));
 			SetG(p, static_cast<UInt8>(packed >> 8));
@@ -208,9 +211,9 @@ public:
 		static void SetColor(UInt8* p, const Color &color) {
 			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB());
 		}
-		static UInt8 GetR(const UInt8* p) { return *(p + 2); }
-		static UInt8 GetG(const UInt8* p) { return *(p + 1); }
-		static UInt8 GetB(const UInt8* p) { return *(p + 0); }
+		static UInt8 GetR(const UInt8* p) { return *(p + offsetR); }
+		static UInt8 GetG(const UInt8* p) { return *(p + offsetG); }
+		static UInt8 GetB(const UInt8* p) { return *(p + offsetB); }
 	public:
 		void SetR(UInt8 r) { SetR(_p, r); }
 		void SetG(UInt8 g) { SetG(_p, g); }
@@ -244,17 +247,21 @@ public:
 		using Pixel::Pixel;
 	public:
 		static const size_t bytesPerPixel = 4;
+		static const size_t offsetR = 2;
+		static const size_t offsetG = 1;
+		static const size_t offsetB = 0;
+		static const size_t offsetA = 3;
 	public:
-		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
-		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
-		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
-		static void SetA(UInt8* p, UInt8 a) { *(p + 3) = a; }
+		static void SetR(UInt8* p, UInt8 r) { *(p + offsetR) = r; }
+		static void SetG(UInt8* p, UInt8 g) { *(p + offsetG) = g; }
+		static void SetB(UInt8* p, UInt8 b) { *(p + offsetB) = b; }
+		static void SetA(UInt8* p, UInt8 a) { *(p + offsetA) = a; }
 		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
 		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
-		static UInt8 GetR(const UInt8* p) { return *(p + 2); }
-		static UInt8 GetG(const UInt8* p) { return *(p + 1); }
-		static UInt8 GetB(const UInt8* p) { return *(p + 0); }
-		static UInt8 GetA(const UInt8* p) { return *(p + 3); }
+		static UInt8 GetR(const UInt8* p) { return *(p + offsetR); }
+		static UInt8 GetG(const UInt8* p) { return *(p + offsetG); }
+		static UInt8 GetB(const UInt8* p) { return *(p + offsetB); }
+		static UInt8 GetA(const UInt8* p) { return *(p + offsetA); }
 		static UInt32 GetPacked(const UInt8* p) { return *reinterpret_cast<const UInt32*>(p); } 
 		static Color GetColor(const UInt8* p) { return Color(GetPacked(p)); }
 	public:
