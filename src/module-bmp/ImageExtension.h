@@ -50,8 +50,9 @@ public:
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
 public:
-	static int CalcDIBBitCount(const Palette& palette);
-	static size_t CalcDIBImageSize(size_t width, size_t height, int biBitCount, bool maskFlag);
+	static int CalcDIBBitCount(const Image& image);
+	static UInt32 CalcDIBPaletteSize(int biBitCount) { return (biBitCount <= 8)? (1 << biBitCount) * 4 : 0; }
+	static UInt32 CalcDIBImageSize(size_t width, size_t height, int biBitCount, bool maskFlag);
 	static Palette* ReadDIBPalette(Stream& stream, int biBitCount);
 	static bool WriteDIBPalette(Stream& stream, const Palette& palette, int biBitCount);
 	static bool ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight, int biBitCount, bool maskFlag);

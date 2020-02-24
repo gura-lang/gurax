@@ -58,29 +58,28 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 
 bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 {
-#if 0
-	if (!pImage->CheckValid(sig)) return false;
-	int biWidth = static_cast<int>(pImage->GetWidth());
-	int biHeight = static_cast<int>(pImage->GetHeight());
-	int biBitCount = pImage->CalcDIBBitCount();
+	bool maskFlag = false;
+	int biWidth = static_cast<int>(image.GetWidth());
+	int biHeight = static_cast<int>(image.GetHeight());
+	int biBitCount = CalcDIBBitCount(image);
 	do {
-		Image::BitmapFileHeader bfh;
-		::memset(&bfh, 0x00, Image::BitmapFileHeader::Size);
-		UInt32 bfOffBits = Image::BitmapFileHeader::Size + Image::BitmapInfoHeader::Size;
-		bfOffBits += static_cast<UInt32>(Image::CalcDIBPaletteSize(biBitCount));
-		UInt32 bfSize = static_cast<UInt32>(pImage->GetBufferSize() + bfOffBits);
+		BitmapFileHeader bfh;
+		::memset(&bfh, 0x00, BitmapFileHeader::bytes);
+		UInt32 bfOffBits = BitmapFileHeader::bytes + BitmapInfoHeader::bytes;
+		bfOffBits += CalcDIBPaletteSize(biBitCount);
+		UInt32 bfSize = CalcDIBImageSize(biWidth, biHeight, biBitCount, maskFlag) + bfOffBits;
 		Gurax_PackUInt16(bfh.bfType,			0x4d42);
 		Gurax_PackUInt32(bfh.bfSize,			bfSize);
 		Gurax_PackUInt32(bfh.bfOffBits,			bfOffBits);
-		if (stream.Write(sig, &bfh, Image::BitmapFileHeader::Size) < Image::BitmapFileHeader::Size) {
-			sig.SetError(ERR_IOError, "failed to write bitmap data");
+		if (stream.Write(&bfh, BitmapFileHeader::bytes) < BitmapFileHeader::bytes) {
+			Error::Issue(ErrorType::StreamError, "failed to write bitmap data");
 			return false;
 		}
 	} while (0);
 	do {
-		Image::BitmapInfoHeader bih;
-		::memset(&bih, 0x00, Image::BitmapInfoHeader::Size);
-		Gurax_PackUInt32(bih.biSize,			Image::BitmapInfoHeader::Size);
+		BitmapInfoHeader bih;
+		::memset(&bih, 0x00, BitmapInfoHeader::bytes);
+		Gurax_PackUInt32(bih.biSize,			BitmapInfoHeader::bytes);
 		Gurax_PackUInt32(bih.biWidth,			biWidth);
 		Gurax_PackUInt32(bih.biHeight,			biHeight);
 		Gurax_PackUInt16(bih.biPlanes,			1);
@@ -91,20 +90,21 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		Gurax_PackUInt32(bih.biYPelsPerMeter,	3780);
 		Gurax_PackUInt32(bih.biClrUsed,			0);
 		Gurax_PackUInt32(bih.biClrImportant,	0);
-		if (stream.Write(sig, &bih, Image::BitmapInfoHeader::Size) < Image::BitmapInfoHeader::Size) {
-			sig.SetError(ERR_IOError, "failed to write bitmap data");
+		if (stream.Write(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
+			Error::Issue(ErrorType::StreamError, "failed to write bitmap data");
 			return false;
 		}
 	} while (0);
-	if (!pImage->WriteDIBPalette(env, stream, biBitCount)) return false;
-	return pImage->WriteDIB(sig, stream, biBitCount, false);
-#endif
-	return false;
+	const Palette* pPalette = image.GetPalette();
+	if (pPalette && !WriteDIBPalette(stream, *pPalette, biBitCount)) return false;
+	return WriteDIB(stream, image, biBitCount, false);
 }
 
-int ImageMgrEx::CalcDIBBitCount(const Palette& palette)
+int ImageMgrEx::CalcDIBBitCount(const Image& image)
 {
-	size_t nEntries = palette.GetSize();
+	const Palette* pPalette = image.GetPalette();
+	if (!pPalette) return image.IsFormat(Image::Format::RGB)? 24 : 32;
+	size_t nEntries = pPalette->GetSize();
 	size_t nBits = 1;
 	for ( ; nEntries > static_cast<size_t>(1 << nBits); nBits++) ;
 	nBits =
@@ -114,7 +114,7 @@ int ImageMgrEx::CalcDIBBitCount(const Palette& palette)
 	return static_cast<int>(nBits);
 }
 
-size_t ImageMgrEx::CalcDIBImageSize(size_t width, size_t height, int biBitCount, bool maskFlag)
+UInt32 ImageMgrEx::CalcDIBImageSize(size_t width, size_t height, int biBitCount, bool maskFlag)
 {
 	size_t bytesPerLine = 0;
 	if (biBitCount == 1) {
@@ -133,7 +133,7 @@ size_t ImageMgrEx::CalcDIBImageSize(size_t width, size_t height, int biBitCount,
 		size_t bytesPerLine = (width + 7) / 8;
 		bytes += ((bytesPerLine + 3) / 4 * 4) * height;
 	}
-	return bytes;
+	return static_cast<UInt32>(bytes);
 }
 
 Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
