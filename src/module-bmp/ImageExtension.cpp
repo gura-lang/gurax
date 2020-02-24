@@ -95,9 +95,18 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 			return false;
 		}
 	} while (0);
-	const Palette* pPalette = image.GetPalette();
+	RefPtr<Palette> pPalette(Palette::Reference(image.GetPalette()));
+	if (pPalette && pPalette->GetSize() == (1 << biBitCount)) {
+		// nothing to do
+	} else if (biBitCount == 2) {
+		pPalette.reset(Palette::Mono()->Reference());
+	} else if (biBitCount == 4) {
+		pPalette.reset(Palette::Basic()->Reference());
+	} else if (biBitCount == 8) {
+		pPalette.reset(Palette::Win256()->Reference());
+	}
 	if (pPalette && !WriteDIBPalette(stream, *pPalette, biBitCount)) return false;
-	return WriteDIB(stream, image, biBitCount, false);
+	return WriteDIB(stream, image, pPalette.get(), biBitCount, false);
 }
 
 int ImageMgrEx::CalcDIBBitCount(const Image& image)
@@ -356,45 +365,48 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 	return true;
 }
 
-bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bool maskFlag)
+bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPalette, int biBitCount, bool maskFlag)
 {
-	//int biWidth = static_cast<int>(image.GetWidth());
-	//int biHeight = static_cast<int>(GetHeight());
+	int biWidth = static_cast<int>(image.GetWidth());
+	int biHeight = static_cast<int>(image.GetHeight());
 	if (biBitCount == 1) {
-#if 0
-		if (_pPalette.IsNull()) return false;
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsAccum = 0;
 		UInt8 chAccum = 0x00;
-		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
+			const UInt8* p = scanner.GetPointer();
 			UInt8 ch = static_cast<UInt8>(
-							_pPalette->LookupNearest(pScanner->GetPointer()));
+				pPalette->LookupNearest(Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p)));
 			chAccum |= ch << ((8 - 1) - bitsAccum);
 			bitsAccum += 1;
 			if (bitsAccum >= 8) {
-				stream.Write(sig, &chAccum, 1);
-				if (sig.IsSignalled()) return false;
+				if (stream.Write(&chAccum, 1) < 1) {
+					
+					return false;
+				}
 				chAccum = 0x00;
 				bitsAccum = 0;
 			}
-			if (!pScanner->NextPixel()) {
+			if (!scanner.NextCol()) {
 				if (bitsAccum > 0) {
-					stream.Write(sig, &chAccum, 1);
-					if (sig.IsSignalled()) return false;
+					if (stream.Write(&chAccum, 1) < 1) {
+
+						return false;
+					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
-				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
-				if (sig.IsSignalled()) return false;
-				if (!pScanner->NextLine()) break;
+				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+
+					return false;
+				}
+				if (!scanner.NextRow()) break;
 			}
 		}
-#endif
 	} else if (biBitCount == 4) {
 #if 0
-		if (_pPalette.IsNull()) return false;
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsAccum = 0;
@@ -402,7 +414,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
 		for (;;) {
 			UInt8 ch = static_cast<UInt8>(
-							_pPalette->LookupNearest(pScanner->GetPointer()));
+							palette.LookupNearest(pScanner->GetPointer()));
 			chAccum |= ch << ((8 - 4) - bitsAccum);
 			bitsAccum += 4;
 			if (bitsAccum >= 8) {
@@ -426,12 +438,11 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, int biBitCount, bo
 #endif
 	} else if (biBitCount == 8) {
 #if 0
-		if (_pPalette.IsNull()) return false;
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
 		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
 		for (;;) {
 			UInt8 ch = static_cast<UInt8>(
-							_pPalette->LookupNearest(pScanner->GetPointer()));
+							palette.LookupNearest(pScanner->GetPointer()));
 			stream.Write(sig, &ch, 1);
 			if (sig.IsSignalled()) return false;
 			if (!pScanner->NextPixel()) {

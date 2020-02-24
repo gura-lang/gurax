@@ -56,7 +56,7 @@ public:
 	static Palette* ReadDIBPalette(Stream& stream, int biBitCount);
 	static bool WriteDIBPalette(Stream& stream, const Palette& palette, int biBitCount);
 	static bool ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight, int biBitCount, bool maskFlag);
-	static bool WriteDIB(Stream& stream, const Image& image, int biBitCount, bool maskFlag);
+	static bool WriteDIB(Stream& stream, const Image& image, const Palette* pPalette, int biBitCount, bool maskFlag);
 };
 
 Gurax_EndModuleScope(bmp)
