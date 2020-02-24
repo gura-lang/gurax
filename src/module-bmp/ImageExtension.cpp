@@ -207,37 +207,41 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 			UInt8 idx = ch >> 7;
 			ch <<= 1, bitsRest--;
-			Image::PixelRGB::SetPacked(pPixel, pPalette->GetPacked(idx));
+			const Color& color = pPalette->GetColor(idx);
+			Image::SetRGB(pPixel, color);
 			pPixel += image.GetBytesPerPixel();
 			iPixel++;
 		}
 		if (Error::IsIssued()) return false;
 	} else if (biBitCount == 4) {
-#if 0
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
-		UChar ch;
-		std::unique_ptr<Scanner> pScanner(CreateScanner(
-				vertRevFlag? SCAN_LeftBottomHorz : SCAN_LeftTopHorz));
-		if (stream.Read(sig, &ch, 1) < 1) return false;
+		UInt8 ch;
+		Image::Scanner scanner(vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
+		if (stream.Read(&ch, 1) < 1) {
+			IssueError_InvalidFormat();
+			return false;
+		}
 		int bitsRest = 8;
 		for (;;) {
-			UChar idx = ch >> 4;
+			UInt8 idx = ch >> 4;
 			ch <<= 4, bitsRest -= 4;
-			StorePixelRGB(pScanner->GetPointer(), _pPalette->GetEntry(idx));
-			if (!pScanner->NextPixel()) {
-				if (!pScanner->NextLine()) break;
-				stream.Seek(sig, static_cast<long>(bytesAlign), Stream::SeekCur);
-				if (sig.IsSignalled()) return false;
+			const Color& color = pPalette->GetColor(idx);
+			Image::SetRGB(scanner.GetPointer(), color);
+			if (!scanner.NextCol()) {
+				if (!scanner.NextRow()) break;
+				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) return false;
 				bitsRest = 0;
 			}
 			if (bitsRest == 0) {
-				if (stream.Read(sig, &ch, 1) < 1) break;
+				if (stream.Read(&ch, 1) < 1) {
+					IssueError_InvalidFormat();
+					return false;
+				}
 				bitsRest = 8;
 			}
 		}
-		if (sig.IsSignalled()) return false;
-#endif
+		if (Error::IsIssued()) return false;
 	} else if (biBitCount == 8) {
 #if 0
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;

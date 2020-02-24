@@ -165,14 +165,14 @@ void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* p)
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* p)
 {
-	PixelRGB::SetRGB(GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
+	SetRGB(GetPointer(), PixelRGBA::GetR(p), PixelRGBA::GetG(p), PixelRGBA::GetB(p));
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* p)
 {
-	PixelRGBA::SetRGBA(GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
-					   GetMetrics().alphaDefault);
+	SetRGBA(GetPointer(), PixelRGB::GetR(p), PixelRGB::GetG(p), PixelRGB::GetB(p),
+			GetMetrics().alphaDefault);
 }
 
 template<>

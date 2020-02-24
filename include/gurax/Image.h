@@ -200,9 +200,6 @@ public:
 		static void SetR(UInt8* p, UInt8 r) { *(p + 2) = r; }
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
-		static void SetRGB(UInt8* p, UInt8 r, UInt8 g, UInt8 b) {
-			SetR(p, r), SetG(p, g), SetB(p, b);
-		}
 		static void SetPacked(UInt8* p, UInt32 packed) {
 			SetB(p, static_cast<UInt8>(packed));
 			SetG(p, static_cast<UInt8>(packed >> 8));
@@ -252,9 +249,6 @@ public:
 		static void SetG(UInt8* p, UInt8 g) { *(p + 1) = g; }
 		static void SetB(UInt8* p, UInt8 b) { *(p + 0) = b; }
 		static void SetA(UInt8* p, UInt8 a) { *(p + 3) = a; }
-		static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
-			SetR(p, r), SetG(p, g), SetB(p, b), SetA(p, a);
-		}
 		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
 		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
 		static UInt8 GetR(const UInt8* p) { return *(p + 2); }
@@ -367,6 +361,18 @@ public:
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
+	static void SetRGB(UInt8* p, UInt8 r, UInt8 g, UInt8 b) {
+		PixelRGB::SetR(p, r); PixelRGB::SetG(p, g); PixelRGB::SetB(p, b);
+	}
+	static void SetRGB(UInt8* p, const Color& color) {
+		SetRGB(p, color.GetR(), color.GetG(), color.GetB());
+	}
+	static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+		PixelRGBA::SetR(p, r); PixelRGBA::SetG(p, g); PixelRGBA::SetB(p, b); PixelRGBA::SetA(p, a);
+	}
+	static void SetRGBA(UInt8* p, const Color& color) {
+		SetRGBA(p, color.GetR(), color.GetG(), color.GetB(), color.GetA());
+	}
 	static void CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024);
 	static const Format& SymbolToFormat(const Symbol* pSymbol);
 public:
