@@ -444,21 +444,24 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 		}
 	} else if (biBitCount == 8) {
-#if 0
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
-		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
+			const UInt8* p = scanner.GetPointer();
 			UInt8 ch = static_cast<UInt8>(
-							palette.LookupNearest(pScanner->GetPointer()));
-			stream.Write(&ch, 1);
-			if (sig.IsSignalled()) return false;
-			if (!pScanner->NextPixel()) {
-				stream.Write("\x00\x00\x00\x00", bytesAlign);
-				if (sig.IsSignalled()) return false;
-				if (!pScanner->NextLine()) break;
+				pPalette->LookupNearest(Image::GetR(p), Image::GetG(p), Image::GetB(p)));
+			if (stream.Write(&ch, 1) < 1) {
+				IssueError_FailToWrite();
+				return false;
+			}
+			if (!scanner.NextCol()) {
+				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+					IssueError_FailToWrite();
+					return false;
+				}
+				if (!scanner.NextRow()) break;
 			}
 		}
-#endif
 	} else if (biBitCount == 24) {
 #if 0
 		size_t bytesAlign = ((3 * biWidth) + 3) / 4 * 4 - 3 * biWidth;
