@@ -48,6 +48,7 @@ public:
 			format(format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)),
 			alphaDefault(alphaDefault) {}
+		void Update() { bytesPerLine = format.WidthToBytes(width); }
 		bool IsFormat(const Format& format) const { return this->format.IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 		bool CheckCoord(int x, int y) const;
@@ -336,6 +337,7 @@ public:
 	UInt8* GetPointer(size_t x, size_t y) const {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
+	size_t GetBytes() const { return _pMemory->GetSize(); }
 	template<typename T_Pixel> T_Pixel GetPixel() const {
 		return T_Pixel(GetMetrics(), GetPointer());
 	}

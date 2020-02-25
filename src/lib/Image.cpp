@@ -319,6 +319,7 @@ bool Image::Allocate(size_t width, size_t height)
 {
 	size_t bytes = WidthToBytes(width) * height;
 	_metrics.width = width, _metrics.height = height;
+	_metrics.Update();
 	_pMemory.reset(new MemoryHeap(bytes));
 	return !!_pMemory;
 }

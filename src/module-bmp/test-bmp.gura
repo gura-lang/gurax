@@ -9,4 +9,5 @@ TestCase('Basic test') {
 	img = Image('cat.bmp')
 	Println(img)
 	Printf('%dx%d\n', img.width, img.height)
+	img.Write('t.bmp', 'bmp')
 }

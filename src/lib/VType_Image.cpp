@@ -214,6 +214,38 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
+// Image#Read(stream:Stream:r, imgType?:String):map:reduce
+Gurax_DeclareMethod(Image, Read)
+{
+	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads image data from a stream.\n"
+		"\n"
+		"The format of the image data is determined\n"
+		"by the byte sequence of the stream data and its file name.\n"
+		"\n"
+		"You can also explicitly specify the image data format by the argument `imgType`.\n"
+		"\n"
+		"This method returns the reference to the target instance itself.\n");
+}
+
+Gurax_ImplementMethod(Image, Read)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	const char* imgType = args.IsValid()? args.PickString() : nullptr;
+	// Function body
+	if (!image.Read(stream, imgType)) return Value::nil();
+	return valueThis.Reference();
+}
+
 // Image#Rotate(angle:Number, colorBg?:Color):map {block?}
 Gurax_DeclareMethod(Image, Rotate)
 {
@@ -247,6 +279,37 @@ Gurax_ImplementMethod(Image, Rotate)
 	RefPtr<Image> pImage(image.Rotate(angle, colorBg));
 	if (!pImage) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
+// Image#Write(stream:Stream:w, imgType?:String):map:reduce
+Gurax_DeclareMethod(Image, Write)
+{
+	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Writes image data to a stream.\n"
+		"\n"
+		"The format of the image data is determined by the stream's file name.\n"
+		"\n"
+		"You can also explicitly specify the image data format by the argument `imgType`.\n"
+		"\n"
+		"This method returns the reference to the target instance itself.\n");
+}
+
+Gurax_ImplementMethod(Image, Write)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	const char* imgType = args.IsValid()? args.PickString() : nullptr;
+	// Function body
+	if (!image.Write(stream, imgType)) return Value::nil();
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -299,7 +362,9 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
+	Assign(Gurax_CreateMethod(Image, Read));
 	Assign(Gurax_CreateMethod(Image, Rotate));
+	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Image, width));
 	Assign(Gurax_CreateProperty(Image, height));
