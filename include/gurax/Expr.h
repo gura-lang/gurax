@@ -177,6 +177,7 @@ public:
 	virtual bool IsSuffixed(SuffixMgr::Target target) const { return false; }
 	virtual bool IsShortCircuitOperator() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
+	virtual const Symbol* GetPureSymbol() const { return nullptr; }
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
@@ -551,6 +552,7 @@ public:
 	virtual bool IsPureSymbol(const Symbol* pSymbol) const override {
 		return !HasAttr() && _pSymbol->IsIdentical(pSymbol);
 	}
+	virtual const Symbol* GetPureSymbol() const override { return HasAttr()? nullptr : _pSymbol; }
 	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForClass(Composer& composer, bool publicFlag) override;

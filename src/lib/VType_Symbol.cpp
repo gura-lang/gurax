@@ -53,13 +53,8 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Expr)) {
-		const Expr& expr = dynamic_cast<const Value_Expr&>(value).GetExpr();
-		if (expr.IsType<Expr_Identifier>()) {
-			const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
-			if (!exprEx.HasAttr()) {
-				return new Value_Symbol(exprEx.GetSymbol());
-			}
-		}
+		const Symbol* pSymbol = dynamic_cast<const Value_Expr&>(value).GetExpr().GetPureSymbol();
+		if (pSymbol) return new Value_Symbol(pSymbol);
 	}
 	return nullptr;
 }
