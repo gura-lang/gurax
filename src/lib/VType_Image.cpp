@@ -249,6 +249,39 @@ Gurax_ImplementMethod(Image, Rotate)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of properties
+//-----------------------------------------------------------------------------
+// Image#width
+Gurax_DeclareProperty_R(Image, width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The image's width.");
+}
+
+Gurax_ImplementPropertyGetter(Image, width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetWidth());
+}
+
+// Image#height
+Gurax_DeclareProperty_R(Image, height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The image's height.");
+}
+
+Gurax_ImplementPropertyGetter(Image, height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetHeight());
+}
+
 //------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
@@ -267,6 +300,9 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Rotate));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Image, width));
+	Assign(Gurax_CreateProperty(Image, height));
 }
 
 Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const

@@ -3,8 +3,10 @@
 // test-bmp.gura
 //==============================================================================
 import(util.tester) {*}
-import(bmp)
+//import(bmp)
 
 TestCase('Basic test') {
-	Println(bmp.Test('hello', 4))
+	img = Image('cat.bmp')
+	Println(img)
+	Printf('%dx%d\n', img.width, img.height)
 }
