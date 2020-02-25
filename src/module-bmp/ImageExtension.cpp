@@ -10,7 +10,9 @@ Gurax_BeginModuleScope(bmp)
 //------------------------------------------------------------------------------
 bool ImageMgrEx::IsResponsible(Stream& stream) const
 {
-	return false;
+	BitmapFileHeader bfh;
+	return stream.Read(&bfh, BitmapFileHeader::bytes) == BitmapFileHeader::bytes &&
+		Gurax_UnpackUInt16(bfh.bfType) != 0x4d42;
 }
 
 bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
@@ -223,7 +225,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			UInt8 idx = ch >> 7;
 			ch <<= 1, bitsRest--;
 			const Color& color = pPalette->GetColor(idx);
-			Image::SetRGB(pPixel, color);
+			Image::SetColorRGB(pPixel, color);
 			pPixel += image.GetBytesPerPixel();
 			iPixel++;
 		}
@@ -242,7 +244,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			UInt8 idx = ch >> 4;
 			ch <<= 4, bitsRest -= 4;
 			const Color& color = pPalette->GetColor(idx);
-			Image::SetRGB(scanner.GetPointer(), color);
+			Image::SetColorRGB(scanner.GetPointer(), color);
 			if (!scanner.NextCol()) {
 				if (!scanner.NextRow()) break;
 				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) return false;
@@ -267,7 +269,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 		}
 		for (;;) {
 			const Color& color = pPalette->GetColor(ch);
-			Image::SetRGB(scanner.GetPointer(), color);
+			Image::SetColorRGB(scanner.GetPointer(), color);
 			if (!scanner.NextCol()) {
 				if (!scanner.NextRow()) break;
 				if (!stream.Seek(static_cast<long>(bytesAlign), Stream::SeekMode::Cur)) {
@@ -349,7 +351,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 				}
 				UInt8 idx = ch >> 7;
 				ch <<= 1, bitsRest--;
-				pPixel[Image::PixelRGBA::offsetA] = idx? 0 : 255;
+				pPixel[Image::offsetA] = idx? 0 : 255;
 				pPixel += image.GetBytesPerPixel();
 				iPixel++;
 			}
@@ -378,12 +380,12 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 		for (;;) {
 			const UInt8* p = scanner.GetPointer();
 			UInt8 ch = static_cast<UInt8>(
-				pPalette->LookupNearest(Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p)));
+				pPalette->LookupNearest(Image::GetR(p), Image::GetG(p), Image::GetB(p)));
 			chAccum |= ch << ((8 - 1) - bitsAccum);
 			bitsAccum += 1;
 			if (bitsAccum >= 8) {
 				if (stream.Write(&chAccum, 1) < 1) {
-					
+					IssueError_FailToWrite();
 					return false;
 				}
 				chAccum = 0x00;
@@ -392,14 +394,14 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			if (!scanner.NextCol()) {
 				if (bitsAccum > 0) {
 					if (stream.Write(&chAccum, 1) < 1) {
-
+						IssueError_FailToWrite();
 						return false;
 					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
 				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
-
+					IssueError_FailToWrite();
 					return false;
 				}
 				if (!scanner.NextRow()) break;
@@ -411,7 +413,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsAccum = 0;
 		UInt8 chAccum = 0x00;
-		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
 			UInt8 ch = static_cast<UInt8>(
 							palette.LookupNearest(pScanner->GetPointer()));

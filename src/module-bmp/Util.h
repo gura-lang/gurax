@@ -8,6 +8,7 @@
 Gurax_BeginModuleScope(bmp)
 
 void IssueError_InvalidFormat();
+void IssueError_FailToWrite();
 
 Gurax_EndModuleScope(bmp)
 
