@@ -183,7 +183,10 @@ const char* PathName::SeekExtName() const
 	if (p == _pathName) return pTerminator;
 	p--;
 	for ( ; ; p--) {
-		if (*p == '.') return *(p + 1)? p : pTerminator;
+		if (*p == '.') {
+			return (p == _pathName || IsSepEx(*(p - 1)) || *(p - 1) == '.')?
+				pTerminator : p;
+		}
 		if (p == _pathName || IsSepEx(*p)) break;
 	}
 	return pTerminator;

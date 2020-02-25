@@ -36,6 +36,8 @@ path.BaseName('C:/hoge/boke.txt/') .. 'C:/hoge/boke.txt/'
 path.BaseName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/boke'
 path.BaseName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/boke'
 path.BaseName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/.boke'
+path.BaseName('t') .. 't'
+path.BaseName('t.txt') .. 't'
 path.ExtName('') .. ''
 path.ExtName('hoge') .. ''
 path.ExtName('hoge.txt') .. '.txt'
@@ -72,6 +74,8 @@ path.ExtName('C:/hoge/boke.txt/') .. ''
 path.ExtName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. '.txt'
 path.ExtName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '.txt'
 path.ExtName('C:/hoge/aaaa/bbbb/ccc/.boke') .. ''
+path.ExtName('t') .. ''
+path.ExtName('t.txt') .. '.txt'
 path.SplitExt('') .. ['', '']
 path.SplitExt('hoge') .. ['hoge', '']
 path.SplitExt('hoge.txt') .. ['hoge', '.txt']
@@ -108,6 +112,8 @@ path.SplitExt('C:/hoge/boke.txt/') .. ['C:/hoge/boke.txt/', '']
 path.SplitExt('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/boke', '.txt']
 path.SplitExt('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/boke', '.txt']
 path.SplitExt('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/.boke', '']
+path.SplitExt('t') .. ['t', '']
+path.SplitExt('t.txt') .. ['t', '.txt']
 ======== path.Dir() ========
 ======== path.DirName(), path.FileName() and path.Split() ========
 path.DirName('') .. ''
@@ -146,6 +152,8 @@ path.DirName('C:/hoge/boke.txt/') .. 'C:/hoge/boke.txt/'
 path.DirName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/'
 path.DirName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/'
 path.DirName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.DirName('t') .. ''
+path.DirName('t.txt') .. ''
 path.FileName('') .. ''
 path.FileName('hoge') .. 'hoge'
 path.FileName('hoge.txt') .. 'hoge.txt'
@@ -182,6 +190,8 @@ path.FileName('C:/hoge/boke.txt/') .. ''
 path.FileName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
 path.FileName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
 path.FileName('C:/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.FileName('t') .. 't'
+path.FileName('t.txt') .. 't.txt'
 path.Split('') .. ['', '']
 path.Split('hoge') .. ['', 'hoge']
 path.Split('hoge.txt') .. ['', 'hoge.txt']
@@ -218,6 +228,8 @@ path.Split('C:/hoge/boke.txt/') .. ['C:/hoge/boke.txt/', '']
 path.Split('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/', 'boke.txt']
 path.Split('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
 path.Split('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
+path.Split('t') .. ['', 't']
+path.Split('t.txt') .. ['', 't.txt']
 ======== path.Exists() ========
 ======== path.Glob() ========
 ======== path.HeadName() and path.BottomName() and path.SplitBottom() ========
@@ -257,6 +269,8 @@ path.HeadName('C:/hoge/boke.txt/') .. 'C:/hoge/'
 path.HeadName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/'
 path.HeadName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/'
 path.HeadName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.HeadName('t') .. ''
+path.HeadName('t.txt') .. ''
 path.BottomName('') .. ''
 path.BottomName('hoge') .. 'hoge'
 path.BottomName('hoge.txt') .. 'hoge.txt'
@@ -293,6 +307,8 @@ path.BottomName('C:/hoge/boke.txt/') .. 'boke.txt'
 path.BottomName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
 path.BottomName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
 path.BottomName('C:/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.BottomName('t') .. 't'
+path.BottomName('t.txt') .. 't.txt'
 path.SplitBottom('') .. ['', '']
 path.SplitBottom('hoge') .. ['', 'hoge']
 path.SplitBottom('hoge.txt') .. ['', 'hoge.txt']
@@ -329,6 +345,8 @@ path.SplitBottom('C:/hoge/boke.txt/') .. ['C:/hoge/', 'boke.txt']
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/', 'boke.txt']
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
+path.SplitBottom('t') .. ['', 't']
+path.SplitBottom('t.txt') .. ['', 't.txt']
 ======== path.Join() ========
 ======== path.Match() ========
 path.Match('aaaa', 'aaaa') .. true

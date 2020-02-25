@@ -38,6 +38,8 @@ pathNames = [
 	'C:/hoge/aaaa/bbbb/ccc/boke.txt'
 	'C:/hoge/aaaa/bbbb/ccc.tt/boke.txt'
 	'C:/hoge/aaaa/bbbb/ccc/.boke'
+	't'
+	't.txt'
 ]
 
 TestCase('path.AbsName()') {
