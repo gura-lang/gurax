@@ -408,36 +408,41 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 		}
 	} else if (biBitCount == 4) {
-#if 0
 		size_t bytesPerLine = (biWidth + 1) / 2;
 		size_t bytesAlign = (bytesPerLine + 3) / 4 * 4 - bytesPerLine;
 		int bitsAccum = 0;
 		UInt8 chAccum = 0x00;
 		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
+			const UInt8* p = scanner.GetPointer();
 			UInt8 ch = static_cast<UInt8>(
-							palette.LookupNearest(pScanner->GetPointer()));
+				pPalette->LookupNearest(Image::GetR(p), Image::GetG(p), Image::GetB(p)));
 			chAccum |= ch << ((8 - 4) - bitsAccum);
 			bitsAccum += 4;
 			if (bitsAccum >= 8) {
-				stream.Write(sig, &chAccum, 1);
-				if (sig.IsSignalled()) return false;
+				if (stream.Write(&chAccum, 1) < 1) {
+					IssueError_FailToWrite();
+					return false;
+				}
 				chAccum = 0x00;
 				bitsAccum = 0;
 			}
-			if (!pScanner->NextPixel()) {
+			if (!scanner.NextCol()) {
 				if (bitsAccum > 0) {
-					stream.Write(sig, &chAccum, 1);
-					if (sig.IsSignalled()) return false;
+					if (stream.Write(&chAccum, 1) < 1) {
+						IssueError_FailToWrite();
+						return false;
+					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
-				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
-				if (sig.IsSignalled()) return false;
-				if (!pScanner->NextLine()) break;
+				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+					IssueError_FailToWrite();
+					return false;
+				}
+				if (!scanner.NextRow()) break;
 			}
 		}
-#endif
 	} else if (biBitCount == 8) {
 #if 0
 		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
@@ -445,10 +450,10 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 		for (;;) {
 			UInt8 ch = static_cast<UInt8>(
 							palette.LookupNearest(pScanner->GetPointer()));
-			stream.Write(sig, &ch, 1);
+			stream.Write(&ch, 1);
 			if (sig.IsSignalled()) return false;
 			if (!pScanner->NextPixel()) {
-				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				stream.Write("\x00\x00\x00\x00", bytesAlign);
 				if (sig.IsSignalled()) return false;
 				if (!pScanner->NextLine()) break;
 			}
@@ -463,10 +468,10 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			buff[0] = pScanner->GetB();
 			buff[1] = pScanner->GetG();
 			buff[2] = pScanner->GetR();
-			stream.Write(sig, buff, 3);
+			stream.Write(buff, 3);
 			if (sig.IsSignalled()) return false;
 			if (!pScanner->NextPixel()) {
-				stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+				stream.Write("\x00\x00\x00\x00", bytesAlign);
 				if (sig.IsSignalled()) return false;
 				if (!pScanner->NextLine()) break;
 			}
@@ -481,7 +486,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			buff[1] = pScanner->GetG();
 			buff[2] = pScanner->GetR();
 			buff[3] = pScanner->GetA();
-			stream.Write(sig, buff, 4);
+			stream.Write(buff, 4);
 			if (sig.IsSignalled()) return false;
 			if (!pScanner->Next()) break;
 		}
@@ -504,19 +509,19 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 				chAccum |= ch << ((8 - 1) - bitsAccum);
 				bitsAccum += 1;
 				if (bitsAccum >= 8) {
-					stream.Write(sig, &chAccum, 1);
+					stream.Write(&chAccum, 1);
 					if (sig.IsSignalled()) return false;
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
 				if (!pScanner->NextPixel()) {
 					if (bitsAccum > 0) {
-						stream.Write(sig, &chAccum, 1);
+						stream.Write(&chAccum, 1);
 						if (sig.IsSignalled()) return false;
 						chAccum = 0x00;
 						bitsAccum = 0;
 					}
-					stream.Write(sig, "\x00\x00\x00\x00", bytesAlign);
+					stream.Write("\x00\x00\x00\x00", bytesAlign);
 					if (sig.IsSignalled()) return false;
 					if (!pScanner->NextLine()) break;
 				}
@@ -525,7 +530,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			char *buff = new char [bytesPerLineAligned];
 			::memset(buff, 0x00, bytesPerLineAligned);
 			for (size_t y = 0; y < GetHeight(); y++) {
-				stream.Write(sig, buff, bytesPerLineAligned);
+				stream.Write(buff, bytesPerLineAligned);
 				if (sig.IsSignalled()) break;
 			}
 			delete[] buff;
