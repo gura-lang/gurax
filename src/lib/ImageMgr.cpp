@@ -39,6 +39,7 @@ const ImageMgr* ImageMgrList::FindByImgTypeName(const char* imgTypeName) const
 const ImageMgr* ImageMgrList::FindByFileName(const char* fileName) const
 {
 	String extName = PathName(fileName).ExtractExtName();
+	::printf("%s %s\n", fileName, extName.c_str());
 	if (extName.empty()) return nullptr;
 	for (const ImageMgr* pImageMgr : *this) {
 		if (pImageMgr->IsResponsibleExtName(extName.c_str())) return pImageMgr;
