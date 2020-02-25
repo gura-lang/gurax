@@ -463,83 +463,93 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 		}
 	} else if (biBitCount == 24) {
-#if 0
 		size_t bytesAlign = ((3 * biWidth) + 3) / 4 * 4 - 3 * biWidth;
 		UInt8 buff[3];
-		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
-			buff[0] = pScanner->GetB();
-			buff[1] = pScanner->GetG();
-			buff[2] = pScanner->GetR();
-			stream.Write(buff, 3);
-			if (sig.IsSignalled()) return false;
-			if (!pScanner->NextPixel()) {
-				stream.Write("\x00\x00\x00\x00", bytesAlign);
-				if (sig.IsSignalled()) return false;
-				if (!pScanner->NextLine()) break;
+			const UInt8* p = scanner.GetPointer();
+			buff[0] = Image::GetB(p);
+			buff[1] = Image::GetG(p);
+			buff[2] = Image::GetR(p);
+			if (stream.Write(buff, 3) < 3) {
+				IssueError_FailToWrite();
+				return false;
+			}
+			if (!scanner.NextCol()) {
+				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+					IssueError_FailToWrite();
+					return false;
+				}
+				if (!scanner.NextRow()) break;
 			}
 		}
-#endif
 	} else if (biBitCount == 32) {
-#if 0
 		UInt8 buff[4];
-		std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+		buff[3] = 0xff;
+		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
-			buff[0] = pScanner->GetB();
-			buff[1] = pScanner->GetG();
-			buff[2] = pScanner->GetR();
-			buff[3] = pScanner->GetA();
-			stream.Write(buff, 4);
-			if (sig.IsSignalled()) return false;
-			if (!pScanner->Next()) break;
+			const UInt8* p = scanner.GetPointer();
+			buff[0] = Image::GetB(p);
+			buff[1] = Image::GetG(p);
+			buff[2] = Image::GetR(p);
+			if (image.IsFormat(Image::Format::RGBA)) buff[3] = Image::GetA(p);
+			if (stream.Write(buff, 4) < 4) {
+				IssueError_FailToWrite();
+				return false;
+			}
+			if (!scanner.Next()) break;
 		}
-#endif
 	} else {
 		// nothing to do
 	}
 	if (maskFlag) {
-#if 0
 		size_t bytesPerLine = (biWidth + 7) / 8;
 		size_t bytesPerLineAligned = (bytesPerLine + 3) / 4 * 4;
 		size_t bytesAlign = bytesPerLineAligned - bytesPerLine;
-		if (GetFormat() == FORMAT_RGBA) {
+		if (image.IsFormat(Image::Format::RGBA)) {
 			// write AND bitmap
 			int bitsAccum = 0;
 			UInt8 chAccum = 0x00;
-			std::unique_ptr<Scanner> pScanner(CreateScanner(SCAN_LeftBottomHorz));
+			Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 			for (;;) {
-				UInt8 ch = (pScanner->GetA() < 128)? 1 : 0;
+				const UInt8* p = scanner.GetPointer();
+				UInt8 ch = (Image::GetA(p) < 128)? 1 : 0;
 				chAccum |= ch << ((8 - 1) - bitsAccum);
 				bitsAccum += 1;
 				if (bitsAccum >= 8) {
-					stream.Write(&chAccum, 1);
-					if (sig.IsSignalled()) return false;
+					if (stream.Write(&chAccum, 1) < 1) {
+						IssueError_FailToWrite();
+						return false;
+					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
-				if (!pScanner->NextPixel()) {
+				if (!scanner.NextCol()) {
 					if (bitsAccum > 0) {
-						stream.Write(&chAccum, 1);
-						if (sig.IsSignalled()) return false;
+						if (stream.Write(&chAccum, 1) < 1) {
+							IssueError_FailToWrite();
+							return false;
+						}
 						chAccum = 0x00;
 						bitsAccum = 0;
 					}
-					stream.Write("\x00\x00\x00\x00", bytesAlign);
-					if (sig.IsSignalled()) return false;
-					if (!pScanner->NextLine()) break;
+					if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+						IssueError_FailToWrite();
+						return false;
+					}
+					if (!scanner.NextRow()) break;
 				}
 			}
 		} else {
-			char *buff = new char [bytesPerLineAligned];
-			::memset(buff, 0x00, bytesPerLineAligned);
-			for (size_t y = 0; y < GetHeight(); y++) {
-				stream.Write(buff, bytesPerLineAligned);
-				if (sig.IsSignalled()) break;
+			std::unique_ptr<UInt8[]> buff(new UInt8 [bytesPerLineAligned]);
+			::memset(buff.get(), 0x00, bytesPerLineAligned);
+			for (size_t y = 0; y < biHeight; y++) {
+				if (stream.Write(buff.get(), bytesPerLineAligned) < bytesPerLineAligned) {
+					IssueError_FailToWrite();
+					return false;
+				}
 			}
-			delete[] buff;
-			if (sig.IsSignalled()) return false;
 		}
-#endif
 	}
 	return true;
 }
