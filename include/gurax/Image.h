@@ -379,6 +379,7 @@ public:
 public:
 	static void CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024);
 	static const Format& SymbolToFormat(const Symbol* pSymbol);
+	static const Symbol* FormatToSymbol(const Format& format);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Image& image) const { return this == &image; }

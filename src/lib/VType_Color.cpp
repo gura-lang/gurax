@@ -183,23 +183,23 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Color));
 	// Assignment of class value
-	Assign("zero", new Value_Color(Color::zero));
-	Assign("black", new Value_Color(Color::black));
-	Assign("maroon", new Value_Color(Color::maroon));
-	Assign("green", new Value_Color(Color::green));
-	Assign("olive", new Value_Color(Color::olive));
-	Assign("navy", new Value_Color(Color::navy));
-	Assign("purple", new Value_Color(Color::purple));
-	Assign("teal", new Value_Color(Color::teal));
-	Assign("gray", new Value_Color(Color::gray));
-	Assign("silver", new Value_Color(Color::silver));
-	Assign("red", new Value_Color(Color::red));
-	Assign("lime", new Value_Color(Color::lime));
-	Assign("yellow", new Value_Color(Color::yellow));
-	Assign("blue", new Value_Color(Color::blue));
-	Assign("fuchsia", new Value_Color(Color::fuchsia));
-	Assign("aqua", new Value_Color(Color::aqua));
-	Assign("white", new Value_Color(Color::white));
+	Assign("zero",		new Value_Color(Color::zero));
+	Assign("black",		new Value_Color(Color::black));
+	Assign("maroon",	new Value_Color(Color::maroon));
+	Assign("green",		new Value_Color(Color::green));
+	Assign("olive",		new Value_Color(Color::olive));
+	Assign("navy",		new Value_Color(Color::navy));
+	Assign("purple",	new Value_Color(Color::purple));
+	Assign("teal",		new Value_Color(Color::teal));
+	Assign("gray",		new Value_Color(Color::gray));
+	Assign("silver",	new Value_Color(Color::silver));
+	Assign("red",		new Value_Color(Color::red));
+	Assign("lime",		new Value_Color(Color::lime));
+	Assign("yellow",	new Value_Color(Color::yellow));
+	Assign("blue",		new Value_Color(Color::blue));
+	Assign("fuchsia",	new Value_Color(Color::fuchsia));
+	Assign("aqua",		new Value_Color(Color::aqua));
+	Assign("white",		new Value_Color(Color::white));
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Color, Named));
 	// Assignment of property

@@ -60,6 +60,45 @@ Gurax_ImplementConstructor(Image)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// Image.Blank(width:Number, height:Number, color?:Color, format?:Symbol) {block?}
+Gurax_DeclareClassMethod(Image, Blank)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Image` instance filled with the specified color.\n"
+		"If the argument `color` is omitted, it will be filled with black.\n");
+}
+
+Gurax_ImplementClassMethod(Image, Blank)
+{
+	// Arguments
+	ArgPicker args(argument);
+	size_t width = args.PickNumberPos<size_t>();
+	size_t height = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	const Color& color = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::black;
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
+	if (!format.IsValid()) {
+		Error::Issue(ErrorType::ValueError, "format takes `rgb or `rgba");
+		return Value::nil();
+	}
+	// Function body
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(width, height)) return Value::nil();
+	pImage->Fill(color);
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Image#Fill(color:Color):reduce
@@ -356,6 +395,8 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Image));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Image, Blank));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));

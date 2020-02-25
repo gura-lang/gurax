@@ -64,12 +64,13 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	int biWidth = static_cast<int>(image.GetWidth());
 	int biHeight = static_cast<int>(image.GetHeight());
 	int biBitCount = CalcDIBBitCount(image);
+	UInt32 biSizeImage = CalcDIBImageSize(biWidth, biHeight, biBitCount, maskFlag);
 	do {
 		BitmapFileHeader bfh;
 		::memset(&bfh, 0x00, BitmapFileHeader::bytes);
 		UInt32 bfOffBits = BitmapFileHeader::bytes + BitmapInfoHeader::bytes;
 		bfOffBits += CalcDIBPaletteSize(biBitCount);
-		UInt32 bfSize = CalcDIBImageSize(biWidth, biHeight, biBitCount, maskFlag) + bfOffBits;
+		UInt32 bfSize = biSizeImage + bfOffBits;
 		Gurax_PackUInt16(bfh.bfType,			0x4d42);
 		Gurax_PackUInt32(bfh.bfSize,			bfSize);
 		Gurax_PackUInt32(bfh.bfOffBits,			bfOffBits);
@@ -87,9 +88,9 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		Gurax_PackUInt16(bih.biPlanes,			1);
 		Gurax_PackUInt16(bih.biBitCount,		biBitCount);
 		Gurax_PackUInt32(bih.biCompression,		0);
-		Gurax_PackUInt32(bih.biSizeImage,		0);
-		Gurax_PackUInt32(bih.biXPelsPerMeter,	3780);
-		Gurax_PackUInt32(bih.biYPelsPerMeter,	3780);
+		Gurax_PackUInt32(bih.biSizeImage,		biSizeImage);
+		Gurax_PackUInt32(bih.biXPelsPerMeter,	13780);
+		Gurax_PackUInt32(bih.biYPelsPerMeter,	13780);
 		Gurax_PackUInt32(bih.biClrUsed,			0);
 		Gurax_PackUInt32(bih.biClrImportant,	0);
 		if (stream.Write(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
@@ -114,7 +115,8 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 int ImageMgrEx::CalcDIBBitCount(const Image& image)
 {
 	const Palette* pPalette = image.GetPalette();
-	if (!pPalette) return image.IsFormat(Image::Format::RGB)? 24 : 32;
+	//if (!pPalette) return image.IsFormat(Image::Format::RGB)? 24 : 32;
+	if (!pPalette) return 24;
 	size_t nEntries = pPalette->GetSize();
 	size_t nBits = 1;
 	for ( ; nEntries > static_cast<size_t>(1 << nBits); nBits++) ;
@@ -485,14 +487,13 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 		}
 	} else if (biBitCount == 32) {
 		UInt8 buff[4];
-		buff[3] = 0xff;
+		buff[3] = 0x00;
 		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
 			const UInt8* p = scanner.GetPointer();
 			buff[0] = Image::GetB(p);
 			buff[1] = Image::GetG(p);
 			buff[2] = Image::GetR(p);
-			if (image.IsFormat(Image::Format::RGBA)) buff[3] = Image::GetA(p);
 			if (stream.Write(buff, 4) < 4) {
 				IssueError_FailToWrite();
 				return false;

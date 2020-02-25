@@ -583,12 +583,16 @@ const Image::Format& Image::SymbolToFormat(const Symbol* pSymbol)
 		Format::None;
 }
 
+const Symbol* Image::FormatToSymbol(const Format& format)
+{
+	return format.IsIdentical(Format::RGB)? Gurax_Symbol(rgb) :
+		format.IsIdentical(Format::RGBA)? Gurax_Symbol(rgba) : Symbol::Empty;
+}
+
 String Image::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Image:%s:%zux%zu",
-			   IsFormat(Format::RGB)? Gurax_Symbol(rgb)->GetName() :
-			   IsFormat(Format::RGBA)? Gurax_Symbol(rgba)->GetName() : "none", GetWidth(), GetHeight());
+	str.Printf("Image:%s:%zux%zu", FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
 	return str;
 }
 
