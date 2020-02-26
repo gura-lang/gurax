@@ -9,5 +9,8 @@ TestCase('Basic test') {
 	img = Image('cat.bmp')
 	//Println(img)
 	//Printf('%dx%d\n', img.width, img.height)
-	img.Rotate(-60, `red).Write('t.bmp')
+	//img.Rotate(-60, `red).Write('t.bmp')
+	img.FillRect(20, 20, 100, 100, `red)
+	//img.Flip(`both).Write('t.bmp')
+	img.Write('t.bmp')
 }

@@ -30,6 +30,7 @@ bool Image::Metrics::AdjustCoord(Rect* pRect, int x, int y, int width, int heigh
 	if (height <= 0 || y >= static_cast<int>(this->height)) return false;
 	if (x + width > static_cast<int>(this->width)) width = static_cast<int>(this->width) - x;
 	if (y + height > static_cast<int>(this->height)) height = static_cast<int>(this->height) - y;
+	pRect->x = x, pRect->y = y, pRect->width = width, pRect->height = height;
 	return true;
 }
 
