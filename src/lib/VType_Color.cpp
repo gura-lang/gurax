@@ -27,52 +27,96 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Color(r?:Number, g?:Number, b?:Number, a?:Number) {block?}
+// Color(name:String, alpha?:Number) {block?}
 Gurax_DeclareConstructor(Color)
 {
-	Declare(VTYPE_DateTime, Flag::Map);
-	DeclareArg("r", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("g", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("a", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Color, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
-		Gurax_Symbol(ja),
-		u8"`Color` インスタンスを生成する。");
-	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Color` instance.");
+		"");
 }
 
 Gurax_ImplementConstructor(Color)
 {
 	// Arguments
 	ArgPicker args(argument);
-	UInt8 r = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 0;
-	UInt8 g = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 0;
-	UInt8 b = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 0;
-	UInt8 a = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 0;
+	const char* name = args.PickString();
+	bool validFlag_alpha = false;
+	UInt8 alpha = (validFlag_alpha = args.IsValid())? args.PickNumberRanged<UInt8>(0, 255) : 255;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return argument.ReturnValue(processor, new Value_Color(Color(r, g, b, a)));
+	const Color* pColor = Color::Lookup(name);
+	if (!pColor) {
+		Error::Issue(ErrorType::KeyError, "unknown color name");
+		return Value::nil();
+	}
+	Color color(*pColor);
+	if (validFlag_alpha) color.SetA(alpha);
+	return argument.ReturnValue(processor, new Value_Color(color));
 }
 
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Color.Named(name:String, a?:Number)
-Gurax_DeclareClassMethod(Color, Named)
+// Color.RGB(r:Number, g:Number, b:Number) {block?}
+Gurax_DeclareClassMethod(Color, RGB)
 {
-	Declare(VTYPE_Color, Flag::None);
+	Declare(VTYPE_Color, Flag::Map);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(ja),
+		u8"色要素 R, G, B から `Color` インスタンスを生成する。");
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Creates a `Color` instance from color elements R, G and B.");
 }
 
-Gurax_ImplementClassMethod(Color, Named)
+Gurax_ImplementClassMethod(Color, RGB)
 {
+	// Arguments
+	ArgPicker args(argument);
+	UInt8 r = args.PickNumberRanged<UInt8>(0, 255);
+	UInt8 g = args.PickNumberRanged<UInt8>(0, 255);
+	UInt8 b = args.PickNumberRanged<UInt8>(0, 255);
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return Value::nil();
+	return argument.ReturnValue(processor, new Value_Color(Color(r, g, b)));
+}
+
+// Color.RGBA(r:Number, g:Number, b:Number, a:Number) {block?}
+Gurax_DeclareClassMethod(Color, RGBA)
+{
+	Declare(VTYPE_Color, Flag::Map);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(ja),
+		u8"色要素 R, G, B, A から `Color` インスタンスを生成する。");
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Color` instance from color elements R, G, B and A.");
+}
+
+Gurax_ImplementClassMethod(Color, RGBA)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt8 r = args.PickNumberRanged<UInt8>(0, 255);
+	UInt8 g = args.PickNumberRanged<UInt8>(0, 255);
+	UInt8 b = args.PickNumberRanged<UInt8>(0, 255);
+	UInt8 a = args.PickNumberRanged<UInt8>(0, 255);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	return argument.ReturnValue(processor, new Value_Color(Color(r, g, b, a)));
 }
 
 //-----------------------------------------------------------------------------
@@ -201,12 +245,36 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	Assign("aqua",		new Value_Color(Color::aqua));
 	Assign("white",		new Value_Color(Color::white));
 	// Assignment of class method
-	Assign(Gurax_CreateClassMethod(Color, Named));
+	Assign(Gurax_CreateClassMethod(Color, RGB));
+	Assign(Gurax_CreateClassMethod(Color, RGBA));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Color, r));
 	Assign(Gurax_CreateProperty(Color, g));
 	Assign(Gurax_CreateProperty(Color, b));
 	Assign(Gurax_CreateProperty(Color, a));
+}
+
+Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_String)) {
+		const char* name = Value_String::GetString(value);
+		const Color* pColor = Color::Lookup(name);
+		if (!pColor) {
+			Error::Issue(ErrorType::KeyError, "unknown color name");
+			return nullptr;
+		}
+		return new Value_Color(*pColor);
+	} else if (value.IsType(VTYPE_Expr)) {
+		const Symbol* pSymbol = Value_Expr::GetExpr(value).GetPureSymbol();
+		if (!pSymbol) return nullptr;
+		const Color* pColor = Color::Lookup(pSymbol);
+		if (!pColor) {
+			Error::Issue(ErrorType::KeyError, "unknown color symbol");
+			return nullptr;
+		}
+		return new Value_Color(*pColor);
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------

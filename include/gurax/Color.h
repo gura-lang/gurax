@@ -61,8 +61,8 @@ protected:
 public:
 	// Constructor
 	Color() : _packed(0) {}
-	explicit Color(Elem elem) : _elem(elem) {}
-	explicit Color(UInt32 packed) : _packed(packed) {}
+	explicit constexpr Color(Elem elem) : _elem(elem) {}
+	explicit constexpr Color(UInt32 packed) : _packed(packed) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b) : _elem(r, g, b, 0xff) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}
 	// Copy constructor/operator
@@ -113,8 +113,8 @@ public:
 			 static_cast<UInt32>(b) * 114) / 1000);
 	}
 public:
-	const Color* Lookup(const char* name) { return _stringMap.Lookup(name); }
-	const Color* Lookup(const Symbol* pSymbol) { return _symbolMap.Lookup(pSymbol); }
+	static const Color* Lookup(const char* name) { return _stringMap.Lookup(name); }
+	static const Color* Lookup(const Symbol* pSymbol) { return _symbolMap.Lookup(pSymbol); }
 public:
 	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) {
 		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
