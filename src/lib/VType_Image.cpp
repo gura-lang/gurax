@@ -253,6 +253,46 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
+// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image, xSrc:Number, ySrc:Number, width:Number, height:Number):reduce
+Gurax_DeclareMethod(Image, Paste)
+{
+	Declare(VTYPE_Image, Flag::Reduce);
+	DeclareArg("xDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSrc", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, Paste)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int xDst = args.PickNumber<int>();
+	int yDst = args.PickNumber<int>();
+	const Image& imageSrc = Value_Image::GetImage(args.PickValue());
+	int xSrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int width = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
+	int height = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
+	// Function body
+	Image::Rect rect;
+	if (image.AdjustCoord(&rect, xDst, yDst, width, height)) {
+		if (xDst < 0) xSrc -= xDst;
+		if (yDst < 0) ySrc -= yDst;
+		image.Paste(rect.x, rect.y, imageSrc, xSrc, ySrc, rect.width, rect.height);
+	}
+	return valueThis.Reference();
+}
+
 // Image#Read(stream:Stream:r, imgType?:String):map:reduce
 Gurax_DeclareMethod(Image, Read)
 {
@@ -403,6 +443,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
+	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
 	Assign(Gurax_CreateMethod(Image, Rotate));
 	Assign(Gurax_CreateMethod(Image, Write));

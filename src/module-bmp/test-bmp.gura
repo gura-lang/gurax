@@ -6,11 +6,15 @@ import(util.tester) {*}
 //import(bmp)
 
 TestCase('Basic test') {
-	img = Image('cat.bmp')
+	img = Image.Blank(300, 300, `white)
+	img.Paste(-20, -10, Image('cat.bmp'))
+	img.Paste(270, -10, Image('cat.bmp'))
+	img.Paste(-20, 240, Image('cat.bmp'))
+	img.Paste(270, 240, Image('cat.bmp'))
 	//Println(img)
 	//Printf('%dx%d\n', img.width, img.height)
 	//img.Rotate(-60, `red).Write('t.bmp')
-	img.FillRect(20, 20, 30, 30, `red)
+	//img.FillRect(20, 20, 30, 30, `red)
 	//img.Flip(`both).Write('t.bmp')
 	img.Write('t.bmp')
 }
