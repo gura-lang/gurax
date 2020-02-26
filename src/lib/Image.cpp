@@ -397,9 +397,9 @@ Image* Image::Rotate(const Format& format, double angleDeg, const Color& colorBg
 	if (angleInt == 180 || angleInt == -180) {
 		return Rotate180(format);
 	} else if (angleInt == -90 || angleInt == 270) {
-		return Rotate90(format);
-	} else if (angleInt == 90 || angleInt == -270) {
 		return Rotate270(format);
+	} else if (angleInt == 90 || angleInt == -270) {
+		return Rotate90(format);
 	}
 	if (format.IsIdentical(Format::RGB)) {
 		if (IsFormat(Format::RGB)) {
