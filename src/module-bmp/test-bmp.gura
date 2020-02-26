@@ -11,6 +11,7 @@ TestCase('Basic test') {
 	img.Paste(270, -10, Image('cat.bmp'))
 	img.Paste(-20, 240, Image('cat.bmp'))
 	img.Paste(270, 240, Image('cat.bmp'))
+	img.Paste(150 - 25, 150 - 25, Image('cat.bmp'), 20, 20, 200, 200)
 	//Println(img)
 	//Printf('%dx%d\n', img.width, img.height)
 	//img.Rotate(-60, `red).Write('t.bmp')
