@@ -10,7 +10,7 @@ TestCase('Basic test') {
 	//Println(img)
 	//Printf('%dx%d\n', img.width, img.height)
 	//img.Rotate(-60, `red).Write('t.bmp')
-	img.FillRect(20, 20, 100, 100, `red)
+	img.FillRect(20, 20, 30, 30, `red)
 	//img.Flip(`both).Write('t.bmp')
 	img.Write('t.bmp')
 }

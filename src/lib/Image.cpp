@@ -445,13 +445,13 @@ Image* Image::Rotate270(const Format& format) const
 void Image::Fill(const Color& color)
 {
 	if (IsAreaZero()) return;
+	UInt8* pLineSrc = GetPointer();
 	if (IsFormat(Format::RGB)) {
-		PixelRGB(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+		PixelRGB(GetMetrics(), pLineSrc).SetColorN(color, GetWidth());
 	} else if (IsFormat(Format::RGBA)) {
-		PixelRGBA(GetMetrics(), GetPointer()).SetColorN(color, GetWidth());
+		PixelRGBA(GetMetrics(), pLineSrc).SetColorN(color, GetWidth());
 	}
-	const UInt8* pLineSrc = GetPointer();
-	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
+	UInt8* pLineDst = pLineSrc + GetBytesPerLine();
 	size_t bytesToCopy = GetBytesPerLine();
 	for (size_t i = 1; i < GetHeight(); i++, pLineDst += GetBytesPerLine()) {
 		::memcpy(pLineDst, pLineSrc, bytesToCopy);
@@ -461,13 +461,13 @@ void Image::Fill(const Color& color)
 void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
 {
 	if (width == 0 || height == 0) return;
+	UInt8* pLineSrc = GetPointer(x, y);
 	if (IsFormat(Format::RGB)) {
-		PixelRGB(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+		PixelRGB(GetMetrics(), pLineSrc).SetColorN(color, width);
 	} else if (IsFormat(Format::RGBA)) {
-		PixelRGBA(GetMetrics(), GetPointer(x, y)).SetColorN(color, width);
+		PixelRGBA(GetMetrics(), pLineSrc).SetColorN(color, width);
 	}
-	const UInt8* pLineSrc = GetPointer();
-	UInt8* pLineDst = GetPointer() + GetBytesPerLine();
+	UInt8* pLineDst = pLineSrc + GetBytesPerLine();
 	size_t bytesToCopy = WidthToBytes(width);
 	for (size_t i = 1; i < height; i++, pLineDst += GetBytesPerLine()) {
 		::memcpy(pLineDst, pLineSrc, bytesToCopy);
