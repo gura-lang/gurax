@@ -1,0 +1,52 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Tester(`Color.__prop__(`r))
+	Tester(`Color.__prop__(`g))
+	Tester(`Color.__prop__(`b))
+	Tester(`Color.__prop__(`a))
+}
+
+TestCase('Constructor') {
+	Tester(`Color(`black))
+	Tester(`Color(`maroon))
+	Tester(`Color(`green))
+	Tester(`Color(`olive))
+	Tester(`Color(`navy))
+	Tester(`Color(`purple))
+	Tester(`Color(`teal))
+	Tester(`Color(`gray))
+	Tester(`Color(`silver))
+	Tester(`Color(`red))
+	Tester(`Color(`lime))
+	Tester(`Color(`yellow))
+	Tester(`Color(`blue))
+	Tester(`Color(`fuchsia))
+	Tester(`Color(`aqua))
+	Tester(`Color(`white))
+	Tester(`Color(`x))
+}
+
+TestCase('Color.RGB()') {
+	Tester(`Color.RGB(0, 0, 0))
+	Tester(`Color.RGB(255, 255, 255))
+}
+
+TestCase('Color.RGBA()') {
+	Tester(`Color.RGBA(0, 0, 0, 0))
+	Tester(`Color.RGBA(255, 255, 255, 255))
+}
+
+TestCase('Property access') {
+	c = Color.RGBA(0, 0, 0, 0)
+	Tester(`c)
+	Tester(`{c.r = 128, c})
+	Tester(`{c.g = 128, c})
+	Tester(`{c.b = 128, c})
+	Tester(`{c.a = 128, c})
+	Tester(`c.r)
+	Tester(`c.g)
+	Tester(`c.b)
+	Tester(`c.a)
+}
