@@ -39,13 +39,6 @@ public:
 	static Palette* Basic();
 	static Palette* WebSafe();
 	static Palette* Win256();
-	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) {
-		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
-	}
-	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
-		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
-			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
-	}
 public:
 	size_t GetSize() const { return _n; }
 	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
@@ -64,6 +57,9 @@ public:
 	void Shrink(size_t nEntries, bool alignFlag);
 	size_t NextBlankIndex() const;
 	//size_t NextBlankIndex(ColorSet &colorSet) const;
+public:
+	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }
+	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color::PackRGBA(r, g, b, a); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Palette& palette) const { return this == &palette; }

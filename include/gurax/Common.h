@@ -108,6 +108,11 @@ gurax_pushbackBuff[gurax_pushbackLevel++] = (val)
 #define Gurax_PushbackCancelEx() \
 gurax_pushbackLevel--
 
+//------------------------------------------------------------------------------
+// Utility macros
+//------------------------------------------------------------------------------
+#define Gurax_ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
+
 namespace Gurax {
 
 class Symbol;
