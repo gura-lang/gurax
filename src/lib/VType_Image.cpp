@@ -362,6 +362,43 @@ Gurax_ImplementMethod(Image, Rotate)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
+// Image#Scan(x:Number, y:Number, width:Number, height:Numbrer, scanDir?:Symbol) {block?}
+Gurax_DeclareMethod(Image, Scan)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("scanDir", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that returns each pixel data in the image.\n");
+}
+
+Gurax_ImplementMethod(Image, Scan)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int x = args.IsValid()? args.PickNumber<int>() : 0;
+	int y = args.IsValid()? args.PickNumber<int>() : 0;
+	int width = args.IsValid()? args.PickNumber<int>() : static_cast<int>(image.GetWidth()) - x;
+	int height = args.IsValid()? args.PickNumber<int>() : static_cast<int>(image.GetHeight()) - y;
+	Image::ScanDir scanDir = args.IsValid()? Image::SymbolToScanDir(args.PickSymbol()) : Image::ScanDir::LeftTopHorz;
+	if (scanDir == Image::ScanDir::None) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for scanDir");
+		return Value::nil();
+	}
+	// Function body
+	if (!image.CheckCoord(x, y) || !image.CheckArea(width, height)) return Value::nil();
+	Image::Scanner scanner(Image::Scanner::CreateByDir(image, x, y, width, height, scanDir));
+	RefPtr<Iterator> pIterator(new VType_Image::Iterator_Scan(image.Reference(), scanner));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Image#Write(stream:Stream:w, imgType?:String):map:reduce
 Gurax_DeclareMethod(Image, Write)
 {
@@ -448,6 +485,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
 	Assign(Gurax_CreateMethod(Image, Rotate));
+	Assign(Gurax_CreateMethod(Image, Scan));
 	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Image, width));

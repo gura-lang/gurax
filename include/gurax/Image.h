@@ -63,6 +63,16 @@ public:
 		None, LeftTopHorz, LeftTopVert, RightTopHorz, RightTopVert,
 		LeftBottomHorz, LeftBottomVert, RightBottomHorz, RightBottomVert,
 	};
+	class SymbolAssoc_ScanDir : public SymbolAssoc<ScanDir, ScanDir::None> {
+	public:
+		SymbolAssoc_ScanDir() {
+			Assoc(Gurax_Symbol(left_top_horz),			ScanDir::LeftTopHorz);
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ScanDir());
+		}
+	};
 	struct Metrics {
 		const Format& format;
 		size_t width;
@@ -78,6 +88,7 @@ public:
 		bool IsFormat(const Format& format) const { return this->format.IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 		bool CheckCoord(int x, int y) const;
+		bool CheckArea(int width, int height) const;
 	};
 	struct Accumulator {
 	public:
@@ -402,8 +413,15 @@ public:
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
+	bool CheckArea(int width, int height) const { return GetMetrics().CheckArea(width, height); }
 public:
 	static void CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024);
+	static ScanDir SymbolToScanDir(const Symbol* pSymbol) {
+		return SymbolAssoc_ScanDir::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* ScanDirToSymbol(ScanDir scanDir) {
+		return SymbolAssoc_ScanDir::GetInstance().ToSymbol(scanDir);
+	}
 	static const Format& SymbolToFormat(const Symbol* pSymbol);
 	static const Symbol* FormatToSymbol(const Format& format);
 public:

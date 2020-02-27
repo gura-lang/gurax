@@ -30,6 +30,7 @@ const ErrorType ErrorType::PropertyError		("PropertyError",		"property error");
 const ErrorType ErrorType::RangeError			("RangeError",			"range error");
 const ErrorType ErrorType::StreamError			("StreamError",			"stream error");
 const ErrorType ErrorType::SuffixError			("SuffixError",			"suffix error");
+const ErrorType ErrorType::SymbolError			("SymbolError",			"symbol error");
 const ErrorType ErrorType::SyntaxError			("SyntaxError",			"syntax error");
 const ErrorType ErrorType::TypeError			("TypeError",			"type error");
 const ErrorType ErrorType::UnimplementedError	("UnimplementedError",	"unimplemented error");

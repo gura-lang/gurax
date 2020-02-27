@@ -183,6 +183,7 @@ ImplementErrorTypeProperty(PropertyError)
 ImplementErrorTypeProperty(RangeError)
 ImplementErrorTypeProperty(StreamError)
 ImplementErrorTypeProperty(SuffixError)
+ImplementErrorTypeProperty(SymbolError)
 ImplementErrorTypeProperty(SyntaxError)
 ImplementErrorTypeProperty(TypeError)
 ImplementErrorTypeProperty(UnimplementedError)
@@ -228,6 +229,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Error, PathError));
 	Assign(Gurax_CreateClassProperty(Error, PropertyError));
 	Assign(Gurax_CreateClassProperty(Error, StreamError));
+	Assign(Gurax_CreateClassProperty(Error, SymbolError));
 	Assign(Gurax_CreateClassProperty(Error, SyntaxError));
 	Assign(Gurax_CreateClassProperty(Error, TypeError));
 	Assign(Gurax_CreateClassProperty(Error, ValueError));

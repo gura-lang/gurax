@@ -41,6 +41,7 @@ public:
 	static const ErrorType RangeError;
 	static const ErrorType StreamError;
 	static const ErrorType SuffixError;
+	static const ErrorType SymbolError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType UnimplementedError;
