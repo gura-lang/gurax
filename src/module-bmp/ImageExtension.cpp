@@ -115,7 +115,6 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 int ImageMgrEx::CalcDIBBitCount(const Image& image)
 {
 	const Palette* pPalette = image.GetPalette();
-	//if (!pPalette) return image.IsFormat(Image::Format::RGB)? 24 : 32;
 	if (!pPalette) return 24;
 	size_t nEntries = pPalette->GetSize();
 	size_t nBits = 1;
