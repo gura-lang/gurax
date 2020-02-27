@@ -17,6 +17,32 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Image);
 public:
+	static const size_t offsetR = 2;
+	static const size_t offsetG = 1;
+	static const size_t offsetB = 0;
+	static const size_t offsetA = 3;
+public:
+	static void SetR(UInt8* p, UInt8 r) { *(p + offsetR) = r; }
+	static void SetG(UInt8* p, UInt8 g) { *(p + offsetG) = g; }
+	static void SetB(UInt8* p, UInt8 b) { *(p + offsetB) = b; }
+	static void SetA(UInt8* p, UInt8 a) { *(p + offsetA) = a; }
+	static UInt8 GetR(const UInt8* p) { return *(p + offsetR); }
+	static UInt8 GetG(const UInt8* p) { return *(p + offsetG); }
+	static UInt8 GetB(const UInt8* p) { return *(p + offsetB); }
+	static UInt8 GetA(const UInt8* p) { return *(p + offsetA); }
+	static void SetRGB(UInt8* p, UInt8 r, UInt8 g, UInt8 b) {
+		SetR(p, r); SetG(p, g); SetB(p, b);
+	}
+	static void SetColorRGB(UInt8* p, const Color& color) {
+		SetRGB(p, color.GetR(), color.GetG(), color.GetB());
+	}
+	static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+		SetR(p, r); SetG(p, g); SetB(p, b); SetA(p, a);
+	}
+	static void SetColorRGBA(UInt8* p, const Color& color) {
+		SetRGBA(p, color.GetR(), color.GetG(), color.GetB(), color.GetA());
+	}
+public:
 	struct Format {
 		size_t bytesPerPixel;
 		static const Format None;
@@ -64,6 +90,117 @@ public:
 		template<typename T_Pixel> void Store(const UInt8* pSrc) {}
 		template<typename T_Pixel> void Extract(UInt8* pDst) {}
 	};
+	class PixelRGB;
+	class PixelRGBA;
+	class Pixel {
+	protected:
+		const Metrics& _metrics;
+		UInt8* _p;
+	public:
+		// Constructor
+		Pixel(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
+		// Copy constructor/operator
+		Pixel(const Pixel& src) : _metrics(src._metrics), _p(src._p) {}
+		Pixel& operator=(const Pixel& src) = delete;
+		// Move constructor/operator
+		Pixel(const Pixel&& src) : _metrics(src._metrics), _p(src._p) {}
+		Pixel& operator=(const Pixel&& src) noexcept = delete;
+	public:
+		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
+		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
+		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
+		UInt8* GetPointer() const { return _p; }
+		UInt8* GetPointer(size_t x, size_t y) const {
+			return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+		}
+	public:
+		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
+		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
+		template<typename T_PixelDst, typename T_PixelSrc>
+		static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+								 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
+	};
+	class PixelRGB : public Pixel {
+	public:
+		using Pixel::Pixel;
+	public:
+		static const size_t bytesPerPixel = 3;
+	public:
+		static void SetPacked(UInt8* p, UInt32 packed) {
+			Image::SetB(p, static_cast<UInt8>(packed));
+			Image::SetG(p, static_cast<UInt8>(packed >> 8));
+			Image::SetR(p, static_cast<UInt8>(packed >> 16));
+		}
+		static void SetColor(UInt8* p, const Color &color) {
+			Image::SetR(p, color.GetR()), Image::SetG(p, color.GetG()), Image::SetB(p, color.GetB());
+		}
+		static UInt32 GetPacked(UInt8* p, UInt8 alphaDefault) {
+			return (static_cast<UInt32>(Image::GetR(p)) << 16) + (static_cast<UInt32>(Image::GetG(p)) << 8) +
+				static_cast<UInt32>(Image::GetB(p)) + (static_cast<UInt32>(alphaDefault) << 24);
+		}
+		static Color GetColor(UInt8* p, UInt8 alphaDefault) {
+			return Color(Image::GetR(p), Image::GetG(p), Image::GetB(p), alphaDefault);
+		}
+	public:
+		void SetR(UInt8 r) { Image::SetR(_p, r); }
+		void SetG(UInt8 g) { Image::SetG(_p, g); }
+		void SetB(UInt8 b) { Image::SetB(_p, b); }
+		void SetA(UInt8 a) {}
+		void SetPacked(UInt32 packed) {
+			SetB(static_cast<UInt8>(packed));
+			SetG(static_cast<UInt8>(packed >> 8));
+			SetR(static_cast<UInt8>(packed >> 16));
+		}
+		void SetColor(const Color &color) { SetColor(_p, color); }
+		UInt8 GetR() const { return Image::GetR(_p); }
+		UInt8 GetG() const { return Image::GetG(_p); }
+		UInt8 GetB() const { return Image::GetB(_p); }
+		UInt8 GetA() const { return _metrics.alphaDefault; }
+		UInt32 GetPacked() const { return GetPacked(_p, _metrics.alphaDefault); }
+		Color GetColor() const { return GetColor(_p, _metrics.alphaDefault); }
+	public:
+		void PutPixel(const UInt8* p) {
+			SetR(Image::GetR(p)), SetG(Image::GetG(p)), SetB(Image::GetB(p));
+		}
+		void SetColorN(const Color &color, size_t n) {
+			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
+		}
+	};
+	class PixelRGBA : public Pixel {
+	public:
+		using Pixel::Pixel;
+	public:
+		static const size_t bytesPerPixel = 4;
+	public:
+		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
+		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
+		static UInt32 GetPacked(const UInt8* p) { return *reinterpret_cast<const UInt32*>(p); } 
+		static UInt32 GetPacked(const UInt8* p, UInt8 alphaDefault) { return GetPacked(p); }
+		static Color GetColor(const UInt8* p) { return Color(GetPacked(p)); }
+		static Color GetColor(const UInt8* p, UInt8 alphaDefault) { return Color(GetPacked(p)); }
+	public:
+		void SetR(UInt8 r) { Image::SetR(_p, r); }
+		void SetG(UInt8 g) { Image::SetG(_p, g); }
+		void SetB(UInt8 b) { Image::SetB(_p, b); }
+		void SetA(UInt8 a) { Image::SetA(_p, a); }
+		void SetPacked(UInt32 packed) { SetPacked(_p, packed); }
+		void SetColor(const Color &color) { SetColor(_p, color); }
+		UInt8 GetR() const { return Image::GetR(_p); }
+		UInt8 GetG() const { return Image::GetG(_p); }
+		UInt8 GetB() const { return Image::GetB(_p); }
+		UInt8 GetA() const { return Image::GetA(_p); }
+		UInt32 GetPacked() const { return GetPacked(_p); }
+		Color GetColor() const { return Color(GetPacked()); }
+	public:
+		template<typename T_Pixel> void PutPixel(const UInt8* p) {}
+		void SetColorN(const Color &color, size_t n) {
+			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
+		}
+	};
 	class Scanner {
 	protected:
 		const Metrics& _metrics;
@@ -76,9 +213,22 @@ public:
 	public:
 		UInt8* GetPointer() const { return _p; }
 	public:
+		// Constructor
 		Scanner(const Metrics& metrics, UInt8* p, size_t nCols, size_t nRows, int pitchCol, int pitchRow) :
 			_metrics(metrics), _p(p), _pRow(p), _iCol(0), _iRow(0),
 			_nCols(nCols), _nRows(nRows), _pitchCol(pitchCol), _pitchRow(pitchRow) {}
+		// Copy constructor/operator
+		Scanner(const Scanner& src) :
+			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _iCol(src._iCol), _iRow(src._iRow),
+			_nCols(src._nCols), _nRows(src._nRows), _pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
+		Scanner& operator=(const Scanner& src) = delete;
+		// Move constructor/operator
+		Scanner(Scanner&& src) :
+			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _iCol(src._iCol), _iRow(src._iRow),
+			_nCols(src._nCols), _nRows(src._nRows), _pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
+		Scanner& operator=(Scanner&& src) noexcept = delete;
+	public:
+		~Scanner() = default;
 	public:
 		bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
 	public:
@@ -152,142 +302,18 @@ public:
 		size_t GetRowIndex() const { return _iRow; }
 		size_t GetColNum() const { return _nCols; }
 		size_t GetRowNum() const { return _nRows; }
+		bool IsEmpty() const { return _nCols == 0 || _nRows == 0; }
+		size_t GetLength() const { return _nCols * _nRows; }
 	public:
 		template<typename T_PixelDst, typename T_PixelSrc> void PutPixel(const UInt8* p) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
-	};
-public:
-	static const size_t offsetR = 2;
-	static const size_t offsetG = 1;
-	static const size_t offsetB = 0;
-	static const size_t offsetA = 3;
-public:
-	static void SetR(UInt8* p, UInt8 r) { *(p + offsetR) = r; }
-	static void SetG(UInt8* p, UInt8 g) { *(p + offsetG) = g; }
-	static void SetB(UInt8* p, UInt8 b) { *(p + offsetB) = b; }
-	static void SetA(UInt8* p, UInt8 a) { *(p + offsetA) = a; }
-	static UInt8 GetR(const UInt8* p) { return *(p + offsetR); }
-	static UInt8 GetG(const UInt8* p) { return *(p + offsetG); }
-	static UInt8 GetB(const UInt8* p) { return *(p + offsetB); }
-	static UInt8 GetA(const UInt8* p) { return *(p + offsetA); }
-	static void SetRGB(UInt8* p, UInt8 r, UInt8 g, UInt8 b) {
-		SetR(p, r); SetG(p, g); SetB(p, b);
-	}
-	static void SetColorRGB(UInt8* p, const Color& color) {
-		SetRGB(p, color.GetR(), color.GetG(), color.GetB());
-	}
-	static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
-		SetR(p, r); SetG(p, g); SetB(p, b); SetA(p, a);
-	}
-	static void SetColorRGBA(UInt8* p, const Color& color) {
-		SetRGBA(p, color.GetR(), color.GetG(), color.GetB(), color.GetA());
-	}
-public:
-	class PixelRGB;
-	class PixelRGBA;
-	class Pixel {
-	protected:
-		const Metrics& _metrics;
-		UInt8* _p;
-	public:
-		// Constructor
-		Pixel(const Metrics& metrics, UInt8* p) : _metrics(metrics), _p(p) {}
-		// Copy constructor/operator
-		Pixel(const Pixel& src) : _metrics(src._metrics), _p(src._p) {}
-		Pixel& operator=(const Pixel& src) = delete;
-		// Move constructor/operator
-		Pixel(const Pixel&& src) : _metrics(src._metrics), _p(src._p) {}
-		Pixel& operator=(const Pixel&& src) noexcept = delete;
-	public:
-		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
-		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
-		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
-		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
-		UInt8* GetPointer() const { return _p; }
-		UInt8* GetPointer(size_t x, size_t y) const {
-			return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+		template<typename T_Pixel> Color GetColorT() const {
+			return T_Pixel::GetColor(_p, _metrics.alphaDefault);
 		}
-	public:
-		static void PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height);
-		static void Paste(PixelRGB& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
-		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
-		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
-		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
-		template<typename T_PixelDst, typename T_PixelSrc>
-		static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-								 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
-	};
-	class PixelRGB : public Pixel {
-	public:
-		using Pixel::Pixel;
-	public:
-		static const size_t bytesPerPixel = 3;
-	public:
-		static void SetPacked(UInt8* p, UInt32 packed) {
-			Image::SetB(p, static_cast<UInt8>(packed));
-			Image::SetG(p, static_cast<UInt8>(packed >> 8));
-			Image::SetR(p, static_cast<UInt8>(packed >> 16));
-		}
-		static void SetColor(UInt8* p, const Color &color) {
-			Image::SetR(p, color.GetR()), Image::SetG(p, color.GetG()), Image::SetB(p, color.GetB());
-		}
-	public:
-		void SetR(UInt8 r) { Image::SetR(_p, r); }
-		void SetG(UInt8 g) { Image::SetG(_p, g); }
-		void SetB(UInt8 b) { Image::SetB(_p, b); }
-		void SetA(UInt8 a) {}
-		void SetPacked(UInt32 packed) {
-			SetB(static_cast<UInt8>(packed));
-			SetG(static_cast<UInt8>(packed >> 8));
-			SetR(static_cast<UInt8>(packed >> 16));
-		}
-		void SetColor(const Color &color) { SetColor(_p, color); }
-		UInt8 GetR() const { return Image::GetR(_p); }
-		UInt8 GetG() const { return Image::GetG(_p); }
-		UInt8 GetB() const { return Image::GetB(_p); }
-		UInt8 GetA() const { return _metrics.alphaDefault; }
-		UInt32 GetPacked() const {
-			return (static_cast<UInt32>(GetR()) << 16) + (static_cast<UInt32>(GetG()) << 8) +
-				static_cast<UInt32>(GetB()) + (static_cast<UInt32>(_metrics.alphaDefault) << 24);
-		}
-		Color GetColor() const { return Color(GetR(), GetG(), GetB(), _metrics.alphaDefault); }
-	public:
-		void PutPixel(const UInt8* p) {
-			SetR(Image::GetR(p)), SetG(Image::GetG(p)), SetB(Image::GetB(p));
-		}
-		void SetColorN(const Color &color, size_t n) {
-			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
-		}
-	};
-	class PixelRGBA : public Pixel {
-	public:
-		using Pixel::Pixel;
-	public:
-		static const size_t bytesPerPixel = 4;
-	public:
-		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
-		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
-		static UInt32 GetPacked(const UInt8* p) { return *reinterpret_cast<const UInt32*>(p); } 
-		static Color GetColor(const UInt8* p) { return Color(GetPacked(p)); }
-	public:
-		void SetR(UInt8 r) { Image::SetR(_p, r); }
-		void SetG(UInt8 g) { Image::SetG(_p, g); }
-		void SetB(UInt8 b) { Image::SetB(_p, b); }
-		void SetA(UInt8 a) { Image::SetA(_p, a); }
-		void SetPacked(UInt32 packed) { SetPacked(_p, packed); }
-		void SetColor(const Color &color) { SetColor(_p, color); }
-		UInt8 GetR() const { return Image::GetR(_p); }
-		UInt8 GetG() const { return Image::GetG(_p); }
-		UInt8 GetB() const { return Image::GetB(_p); }
-		UInt8 GetA() const { return Image::GetA(_p); }
-		UInt32 GetPacked() const { return GetPacked(_p); }
-		Color GetColor() const { return GetColor(_p); }
-	public:
-		template<typename T_Pixel> void PutPixel(const UInt8* p) {}
-		void SetColorN(const Color &color, size_t n) {
-			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
+		Color GetColor() const {
+			return IsFormat(Format::RGBA)? GetColorT<PixelRGBA>() : GetColorT<PixelRGB>();
 		}
 	};
 protected:

@@ -464,6 +464,22 @@ Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 }
 
 //------------------------------------------------------------------------------
+// VType_Image::Iterator_Scan
+//------------------------------------------------------------------------------
+Value* VType_Image::Iterator_Scan::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	Color color(_scanner.GetColor());
+	_doneFlag = !_scanner.Next();
+	return new Value_Color(color);
+}
+
+String VType_Image::Iterator_Scan::ToString(const StringStyle& ss) const
+{
+	return "Image.Scan";
+}
+
+//------------------------------------------------------------------------------
 // Value_Image
 //------------------------------------------------------------------------------
 VType& Value_Image::vtype = VTYPE_Image;

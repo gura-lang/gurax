@@ -13,6 +13,26 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Image : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Scan : public Iterator {
+	private:
+		RefPtr<Image> _pImage;
+		Image::Scanner _scanner;
+		bool _doneFlag;
+	public:
+		Iterator_Scan(Image* pImage, const Image::Scanner& scanner) :
+			_pImage(pImage), _scanner(scanner), _doneFlag(scanner.IsEmpty()) {}
+	public:
+		const Image::Scanner& GetScanner() const { return _scanner; }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenDetermined;
+		}
+		virtual size_t GetLength() const override { return _scanner.GetLength(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
