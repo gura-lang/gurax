@@ -814,7 +814,7 @@ void Color::Bootup()
 String Color::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Color:#%02x%02x%02x,a:%02x", GetR(), GetG(), GetB(), GetA());
+	str.Printf("Color:#%02x%02x%02x,%02x", GetR(), GetG(), GetB(), GetA());
 	return str;
 }
 

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <gurax/VType_Image.h>
 #include <gurax/VType_Palette.h>
+#include <gurax/VType_Pixel.h>
 
 namespace Gurax {
 
@@ -85,6 +86,7 @@ void Basement::PrepareVType()
 	VTYPE_Number.Prepare(frame);
 	VTYPE_PathMgr.Prepare(frame);
 	VTYPE_Palette.Prepare(frame);
+	VTYPE_Pixel.Prepare(frame);
 	VTYPE_Pointer.Prepare(frame);
 	VTYPE_PropHandler.Prepare(frame);
 	VTYPE_PUnit.Prepare(frame);

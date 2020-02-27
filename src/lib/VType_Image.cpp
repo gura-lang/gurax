@@ -3,6 +3,7 @@
 //==============================================================================
 #include "stdafx.h"
 #include <gurax/VType_Image.h>
+#include <gurax/VType_Pixel.h>
 
 namespace Gurax {
 
@@ -507,9 +508,9 @@ Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 Value* VType_Image::Iterator_Scan::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	Color color(_scanner.GetColor());
+	RefPtr<Pixel> pPixel(new Pixel(_scanner.GetColor(), _scanner.GetColIndex(), _scanner.GetRowIndex()));
 	_doneFlag = !_scanner.Next();
-	return new Value_Color(color);
+	return new Value_Pixel(pPixel.release());
 }
 
 String VType_Image::Iterator_Scan::ToString(const StringStyle& ss) const
