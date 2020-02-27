@@ -60,18 +60,21 @@ public:
 		size_t height;
 	};
 	enum class ScanDir {
-		None, LeftTopHorz, LeftTopVert, RightTopHorz, RightTopVert,
-		LeftBottomHorz, LeftBottomVert, RightBottomHorz, RightBottomVert,
+		None,
+		LeftTopHorz, LeftTopVert,
+		LeftBottomHorz, LeftBottomVert,
+		RightTopHorz, RightTopVert,
+		RightBottomHorz, RightBottomVert,
 	};
 	class SymbolAssoc_ScanDir : public SymbolAssoc<ScanDir, ScanDir::None> {
 	public:
 		SymbolAssoc_ScanDir() {
 			Assoc(Gurax_Symbol(left_top_horz),		ScanDir::LeftTopHorz);
 			Assoc(Gurax_Symbol(left_top_vert),		ScanDir::LeftTopVert);
-			Assoc(Gurax_Symbol(right_top_horz),		ScanDir::RightTopHorz);
-			Assoc(Gurax_Symbol(right_top_vert),		ScanDir::RightTopVert);
 			Assoc(Gurax_Symbol(left_bottom_horz),	ScanDir::LeftBottomHorz);
 			Assoc(Gurax_Symbol(left_bottom_vert),	ScanDir::LeftBottomVert);
+			Assoc(Gurax_Symbol(right_top_horz),		ScanDir::RightTopHorz);
+			Assoc(Gurax_Symbol(right_top_vert),		ScanDir::RightTopVert);
 			Assoc(Gurax_Symbol(right_bottom_horz),	ScanDir::RightBottomHorz);
 			Assoc(Gurax_Symbol(right_bottom_vert),	ScanDir::RightBottomVert);
 		}
@@ -258,10 +261,10 @@ public:
 									bool horzFlag, bool vertFlag);
 		static Scanner LeftTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner LeftTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
-		static Scanner RightTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner LeftBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner LeftBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
+		static Scanner RightTopVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner RightBottomHorz(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner RightBottomVert(const Image& image, size_t x, size_t y, size_t width, size_t height);
 		static Scanner CreateByDir(const Image& image, ScanDir scanDir) {
@@ -276,17 +279,17 @@ public:
 		static Scanner LeftTopVert(const Image& image) {
 			return LeftTopVert(image, 0, 0, image.GetWidth(), image.GetHeight());
 		}
-		static Scanner RightTopHorz(const Image& image) {
-			return RightTopHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
-		}
-		static Scanner RightTopVert(const Image& image) {
-			return RightTopVert(image, 0, 0, image.GetWidth(), image.GetHeight());
-		}
 		static Scanner LeftBottomHorz(const Image& image) {
 			return LeftBottomHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
 		}
 		static Scanner LeftBottomVert(const Image& image) {
 			return LeftBottomVert(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightTopHorz(const Image& image) {
+			return RightTopHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
+		}
+		static Scanner RightTopVert(const Image& image) {
+			return RightTopVert(image, 0, 0, image.GetWidth(), image.GetHeight());
 		}
 		static Scanner RightBottomHorz(const Image& image) {
 			return RightBottomHorz(image, 0, 0, image.GetWidth(), image.GetHeight());
