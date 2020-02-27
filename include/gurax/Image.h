@@ -224,6 +224,7 @@ public:
 		const Metrics& _metrics;
 		UInt8* _p;
 		UInt8* _pRow;
+		size_t _x, _y;
 		size_t _iCol, _iRow;
 		size_t _nCols, _nRows;
 		int _pitchCol;
@@ -232,18 +233,20 @@ public:
 		UInt8* GetPointer() const { return _p; }
 	public:
 		// Constructor
-		Scanner(const Metrics& metrics, UInt8* p, size_t nCols, size_t nRows, int pitchCol, int pitchRow) :
-			_metrics(metrics), _p(p), _pRow(p), _iCol(0), _iRow(0),
+		Scanner(const Metrics& metrics, UInt8* p, size_t x, size_t y, size_t nCols, size_t nRows, int pitchCol, int pitchRow) :
+			_metrics(metrics), _p(p), _pRow(p), _x(x), _y(y), _iCol(0), _iRow(0),
 			_nCols(nCols), _nRows(nRows), _pitchCol(pitchCol), _pitchRow(pitchRow) {}
 		// Copy constructor/operator
 		Scanner(const Scanner& src) :
-			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _iCol(src._iCol), _iRow(src._iRow),
-			_nCols(src._nCols), _nRows(src._nRows), _pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
+			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _x(src._x), _y(src._y),
+			_iCol(src._iCol), _iRow(src._iRow), _nCols(src._nCols), _nRows(src._nRows),
+			_pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
 		Scanner& operator=(const Scanner& src) = delete;
 		// Move constructor/operator
 		Scanner(Scanner&& src) :
-			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _iCol(src._iCol), _iRow(src._iRow),
-			_nCols(src._nCols), _nRows(src._nRows), _pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
+			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _x(src._x), _y(src._y),
+			_iCol(src._iCol), _iRow(src._iRow), _nCols(src._nCols), _nRows(src._nRows),
+			_pitchCol(src._pitchCol), _pitchRow(src._pitchRow) {}
 		Scanner& operator=(Scanner&& src) noexcept = delete;
 	public:
 		~Scanner() = default;
@@ -320,6 +323,8 @@ public:
 		size_t GetRowIndex() const { return _iRow; }
 		size_t GetColNum() const { return _nCols; }
 		size_t GetRowNum() const { return _nRows; }
+		size_t GetX() const { return _x + ((_pitchCol >= 0)? _iCol : (_nCols > 0)? _nCols - _iCol - 1 : 0); }
+		size_t GetY() const { return _y + ((_pitchRow >= 0)? _iRow : (_nRows > 0)? _nRows - _iRow - 1 : 0); }
 		bool IsEmpty() const { return _nCols == 0 || _nRows == 0; }
 		size_t GetLength() const { return _nCols * _nRows; }
 	public:

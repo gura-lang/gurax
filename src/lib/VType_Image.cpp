@@ -508,7 +508,7 @@ Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 Value* VType_Image::Iterator_Scan::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	RefPtr<Pixel> pPixel(new Pixel(_scanner.GetColor(), _scanner.GetColIndex(), _scanner.GetRowIndex()));
+	RefPtr<Pixel> pPixel(new Pixel(_scanner.GetColor(), _scanner.GetX(), _scanner.GetY()));
 	_doneFlag = !_scanner.Next();
 	return new Value_Pixel(pPixel.release());
 }
