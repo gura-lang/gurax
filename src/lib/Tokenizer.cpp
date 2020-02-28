@@ -17,6 +17,14 @@ Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, StringReferable* pPathNameSrc) 
 	_source.reserve(1024 * 64);
 }
 
+void Tokenizer::RecoverError()
+{
+	_pTokenStack->Initialize();
+	_stat = Stat::BOF;
+	_lineHeadFlag = true;
+	_cntCol = 0;
+}
+
 void Tokenizer::FeedChar(char ch)
 {
 	if (ch == '\r') return;

@@ -105,6 +105,7 @@ void RunREPL()
 		if (!pParser->FeedString(strLine.c_str())) {
 			Error::Print(*Stream::CErr);
 			Error::Clear();
+			pParser->RecoverError();
 			continue;
 		}
 		Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();

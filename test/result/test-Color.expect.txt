@@ -4,35 +4,35 @@ Color.__prop__(`g) .. <PropHandler:g:Number:R:W>
 Color.__prop__(`b) .. <PropHandler:b:Number:R:W>
 Color.__prop__(`a) .. <PropHandler:a:Number:R:W>
 ======== Constructor ========
-Color(`black) .. Color:#000000,a:ff
-Color(`maroon) .. Color:#800000,a:ff
-Color(`green) .. Color:#008000,a:ff
-Color(`olive) .. Color:#808000,a:ff
-Color(`navy) .. Color:#000080,a:ff
-Color(`purple) .. Color:#800080,a:ff
-Color(`teal) .. Color:#008080,a:ff
-Color(`gray) .. Color:#808080,a:ff
-Color(`silver) .. Color:#c0c0c0,a:ff
-Color(`red) .. Color:#ff0000,a:ff
-Color(`lime) .. Color:#00ff00,a:ff
-Color(`yellow) .. Color:#ffff00,a:ff
-Color(`blue) .. Color:#0000ff,a:ff
-Color(`fuchsia) .. Color:#ff00ff,a:ff
-Color(`aqua) .. Color:#00ffff,a:ff
-Color(`white) .. Color:#ffffff,a:ff
+Color(`black) .. Color:#000000,ff
+Color(`maroon) .. Color:#800000,ff
+Color(`green) .. Color:#008000,ff
+Color(`olive) .. Color:#808000,ff
+Color(`navy) .. Color:#000080,ff
+Color(`purple) .. Color:#800080,ff
+Color(`teal) .. Color:#008080,ff
+Color(`gray) .. Color:#808080,ff
+Color(`silver) .. Color:#c0c0c0,ff
+Color(`red) .. Color:#ff0000,ff
+Color(`lime) .. Color:#00ff00,ff
+Color(`yellow) .. Color:#ffff00,ff
+Color(`blue) .. Color:#0000ff,ff
+Color(`fuchsia) .. Color:#ff00ff,ff
+Color(`aqua) .. Color:#00ffff,ff
+Color(`white) .. Color:#ffffff,ff
 Color(`x) .. unknown color name
 ======== Color.RGB() ========
-Color.RGB(0, 0, 0) .. Color:#000000,a:ff
-Color.RGB(255, 255, 255) .. Color:#ffffff,a:ff
+Color.RGB(0, 0, 0) .. Color:#000000,ff
+Color.RGB(255, 255, 255) .. Color:#ffffff,ff
 ======== Color.RGBA() ========
-Color.RGBA(0, 0, 0, 0) .. Color:#000000,a:00
-Color.RGBA(255, 255, 255, 255) .. Color:#ffffff,a:ff
+Color.RGBA(0, 0, 0, 0) .. Color:#000000,00
+Color.RGBA(255, 255, 255, 255) .. Color:#ffffff,ff
 ======== Property access ========
-c .. Color:#000000,a:00
-{c.r = 128, c} .. Color:#800000,a:00
-{c.g = 128, c} .. Color:#808000,a:00
-{c.b = 128, c} .. Color:#808080,a:00
-{c.a = 128, c} .. Color:#808080,a:80
+c .. Color:#000000,00
+{c.r = 128, c} .. Color:#800000,00
+{c.g = 128, c} .. Color:#808000,00
+{c.b = 128, c} .. Color:#808080,00
+{c.a = 128, c} .. Color:#808080,80
 c.r .. 128
 c.g .. 128
 c.b .. 128

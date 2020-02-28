@@ -35,6 +35,7 @@ protected:
 	// Destructor
 	virtual ~Parser() = default;
 public:
+	void RecoverError() { _pTokenizer->RecoverError(); }
 	Expr_Collector& GetExprRoot() { return *_pExprRoot; }
 	const Expr_Collector& GetExprRoot() const { return *_pExprRoot; }
 	static Expr_Collector* ParseStream(Stream& stream);

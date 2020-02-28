@@ -93,13 +93,6 @@ private:
 	StringInfo _stringInfo;
 	String _strIndent;
 	MagicCommentParser _magicCommentParser;
-	//CharConverter _charConverter;
-	//ExprOwner *_pExprOwner;
-	//const Expr *_pExprParent;
-	//const TokenType *_pTokenTypePrev;
-	//int _lineNoOfTokenPrev;
-	//bool _interactiveFlag;
-	//bool _enablePreparatorFlag;
 public:
 	// Constructor
 	Tokenizer() = delete;
@@ -114,7 +107,7 @@ protected:
 	// Destructor
 	~Tokenizer() = default;
 public:
-	void InitStack();
+	void RecoverError();
 	void FeedChar(char ch);
 	void SetCntLine(int cntLine) { _cntLine = cntLine; }
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }

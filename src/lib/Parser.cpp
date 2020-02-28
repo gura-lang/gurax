@@ -89,7 +89,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				RefPtr<Expr> pExpr(pTokenPrev->GetExpr()->Reference());
 #if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
-					tokenStack.Initialize();
+
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
@@ -97,7 +97,6 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			} else {
 				// something's wrong
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);
-				tokenStack.Initialize();
 			}
 			break;
 		} else if (prec == Token::Precedence::LT || prec == Token::Precedence::EQ) {
@@ -139,17 +138,12 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				rslt = false;
 				break;
 			}
-			if (!rslt) {
-				tokenStack.Initialize();
-				break;
-			}
+			if (!rslt) break;
 		} else if (pToken->IsCloseToken()) {
 			IssueError(ErrorType::SyntaxError, pToken, "unmatched closing character");
-			tokenStack.Initialize();
 			break;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);
-			tokenStack.Initialize();
 			break;
 		}
 	}
