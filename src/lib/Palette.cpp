@@ -584,10 +584,11 @@ size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 {
 	size_t idxMin = 0;
 	Color color(r, g, b);
-	size_t distMin = color.CalcDistSqu(GetColor(idxMin));
+	int distMin = color.CalcDistSqu(GetColor(idxMin));
+	//::printf("%d %d %d  %d %d %d  %d\n", r, g, b, GetColor(idxMin).GetR(), GetColor(idxMin).GetG(), GetColor(idxMin).GetB(), distMin);
 	if (distMin == 0) return idxMin;
 	for (size_t idx = 1; idx < _n; idx++) {
-		size_t dist = color.CalcDistSqu(GetColor(idx));
+		int dist = color.CalcDistSqu(GetColor(idx));
 		if (distMin > dist) {
 			if (dist == 0) return idx;
 			idxMin = idx, distMin = dist;

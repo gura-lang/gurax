@@ -125,7 +125,7 @@ public:
 	}
 public:
 	int CalcDistSqu(UInt8 r, UInt8 g, UInt8 b) const { return CalcDistSqu(GetR(), GetG(), GetB(), r, g, b); }
-	int CalcDistSqu(const Color& color) const { return CalcDistSqu(GetR(), GetG(), GetB()); }
+	int CalcDistSqu(const Color& color) const { return CalcDistSqu(color.GetR(), color.GetG(), color.GetB()); }
 	int CalcDistSqu(UInt32 packed) const { return CalcDistSqu(Color(packed)); }
 	static int CalcDistSqu(UInt8 r1, UInt8 g1, UInt8 b1, UInt8 r2, UInt8 g2, UInt8 b2) {
 		int distR = static_cast<int>(r1) - static_cast<int>(r2);

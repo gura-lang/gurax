@@ -32,6 +32,9 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareClassMethod(Palette, Basic)
 {
 	Declare(VTYPE_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a `palette` instance that contains 16 basic colors.");
 }
 
 Gurax_ImplementClassMethod(Palette, Basic)
@@ -40,10 +43,29 @@ Gurax_ImplementClassMethod(Palette, Basic)
 	return new Value_Palette(Palette::Basic());
 }
 
+// Palette.Mono()
+Gurax_DeclareClassMethod(Palette, Mono)
+{
+	Declare(VTYPE_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a `palette` instance that contains two colors: black and white.\n");
+}
+
+Gurax_ImplementClassMethod(Palette, Mono)
+{
+	// Function body
+	return new Value_Palette(Palette::Mono());
+}
+
 // Palette.WebSafe()
 Gurax_DeclareClassMethod(Palette, WebSafe)
 {
 	Declare(VTYPE_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a `palette` instance that contains 215 colors that are assured to be safe in Web content.\n"
+		"It actually has 256 entries including 41 dummys for padding.\n");
 }
 
 Gurax_ImplementClassMethod(Palette, WebSafe)
@@ -56,6 +78,9 @@ Gurax_ImplementClassMethod(Palette, WebSafe)
 Gurax_DeclareClassMethod(Palette, Win256)
 {
 	Declare(VTYPE_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a `palette` instance that contains 256 colors defined in Windows.\n");
 }
 
 Gurax_ImplementClassMethod(Palette, Win256)
@@ -218,6 +243,7 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Palette, Basic));
+	Assign(Gurax_CreateClassMethod(Palette, Mono));
 	Assign(Gurax_CreateClassMethod(Palette, WebSafe));
 	Assign(Gurax_CreateClassMethod(Palette, Win256));
 	// Assignment of method
