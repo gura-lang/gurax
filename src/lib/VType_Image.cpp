@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <gurax/VType_Image.h>
 #include <gurax/VType_Pixel.h>
+#include <gurax/VType_Palette.h>
 
 namespace Gurax {
 
@@ -464,6 +465,29 @@ Gurax_ImplementPropertyGetter(Image, height)
 	return new Value_Number(valueThis.GetImage().GetHeight());
 }
 
+// Image#palette:nil
+Gurax_DeclareProperty_RW(Image, palette)
+{
+	Declare(VTYPE_Palette, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Set or get the image's palette. If the image doesn't own a palette, this returns `nil`.\n"
+		"When you want to remove the palette, set `nil` value to this.\n");
+}
+
+Gurax_ImplementPropertyGetter(Image, palette)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	Palette* pPalette = valueThis.GetImage().GetPalette();
+	return pPalette? new Value_Palette(pPalette->Reference()) : Value::nil();
+}
+
+Gurax_ImplementPropertySetter(Image, palette)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetImage().SetPalette(value.IsValid()? Value_Palette::GetPalette(value).Reference() : nullptr);
+}
+
 //------------------------------------------------------------------------------
 // VType_Image
 //------------------------------------------------------------------------------
@@ -491,6 +515,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Image, width));
 	Assign(Gurax_CreateProperty(Image, height));
+	Assign(Gurax_CreateProperty(Image, palette));
 }
 
 Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const

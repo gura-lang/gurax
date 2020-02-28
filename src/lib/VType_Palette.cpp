@@ -188,6 +188,24 @@ Gurax_ImplementMethod(palette, updateby)
 #endif
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Palette#len
+Gurax_DeclareProperty_R(Palette, len)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The number of elements in the palette.");
+}
+
+Gurax_ImplementPropertyGetter(Palette, len)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetPalette().GetSize());
+}
+
+//------------------------------------------------------------------------------
 // VType_Palette
 //------------------------------------------------------------------------------
 VType_Palette VTYPE_Palette("Palette");
@@ -206,6 +224,8 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Palette, Each));
 	Assign(Gurax_CreateMethod(Palette, GetNearest));
 	Assign(Gurax_CreateMethod(Palette, Shrink));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Palette, len));
 }
 
 //------------------------------------------------------------------------------
