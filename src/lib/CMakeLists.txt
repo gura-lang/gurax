@@ -37,6 +37,7 @@ add_library(guraxcore SHARED
 	ArgPicker.cpp
 	ArgSlot.cpp
 	Argument.cpp
+	Array.cpp
 	Attribute.cpp
 	Basement.cpp
 	Binary.cpp
@@ -115,6 +116,7 @@ add_library(guraxcore SHARED
 	VType_ArgMapper_Multiple.cpp
 	VType_ArgSlot.cpp
 	VType_Argument.cpp
+	VType_Array.cpp
 	VType_Attribute.cpp
 	VType_Binary.cpp
 	VType_Bool.cpp

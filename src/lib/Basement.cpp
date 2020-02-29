@@ -2,6 +2,7 @@
 // Basement.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/VType_Array.h>
 #include <gurax/VType_Image.h>
 #include <gurax/VType_Palette.h>
 #include <gurax/VType_Pixel.h>
@@ -60,6 +61,7 @@ void Basement::PrepareVType()
 	VTYPE_ArgMapper_Multiple.Prepare(frame);
 	VTYPE_ArgSlot.Prepare(frame);
 	VTYPE_Argument.Prepare(frame);
+	VTYPE_Array.Prepare(frame);
 	VTYPE_Attribute.Prepare(frame);
 	VTYPE_Binary.Prepare(frame);
 	VTYPE_Bool.Prepare(frame);
