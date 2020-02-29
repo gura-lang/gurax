@@ -28,10 +28,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array() {block?}
+// Array(elemType:Symbol) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -41,9 +42,14 @@ Gurax_DeclareConstructor(Array)
 Gurax_ImplementConstructor(Array)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Array::ElemType elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType == Array::ElemType::None) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
+		return Value::nil();
+	}
 	// Function body
-	RefPtr<Array> pArray(new Array());
+	RefPtr<Array> pArray(new Array(elemType, nullptr));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 

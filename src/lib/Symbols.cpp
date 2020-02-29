@@ -84,6 +84,7 @@ Gurax_RealizeSymbol(block);
 Gurax_RealizeSymbol(blockparam);
 Gurax_RealizeSymbol(blue);
 Gurax_RealizeSymbol(body);
+Gurax_RealizeSymbolAlias(bool_, "bool");
 Gurax_RealizeSymbol(boolean);
 Gurax_RealizeSymbol(both);
 Gurax_RealizeSymbol(bottom);

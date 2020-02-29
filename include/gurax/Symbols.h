@@ -86,6 +86,7 @@ Gurax_DeclareSymbol(block);
 Gurax_DeclareSymbol(blockparam);
 Gurax_DeclareSymbol(blue);
 Gurax_DeclareSymbol(body);
+Gurax_DeclareSymbol(bool_);
 Gurax_DeclareSymbol(boolean);
 Gurax_DeclareSymbol(both);
 Gurax_DeclareSymbol(bottom);
