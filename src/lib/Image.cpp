@@ -41,10 +41,10 @@ bool Image::Metrics::CheckCoord(int x, int y) const
 	return false;
 }		
 
-bool Image::Metrics::CheckArea(int width, int height) const
+bool Image::Metrics::CheckArea(int x, int y, int width, int height) const
 {
-	if (0 <= width && width <= static_cast<int>(this->width) &&
-		0 <= height && height <= static_cast<int>(this->height)) return true;
+	if (0 <= x && 0 <= width && x + width <= static_cast<int>(this->width) &&
+		0 <= y && 0 <= height && y + height <= static_cast<int>(this->height)) return true;
 	Error::Issue(ErrorType::RangeError, "out of image size");
 	return false;
 }		

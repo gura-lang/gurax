@@ -98,7 +98,7 @@ public:
 		bool IsFormat(const Format& format) const { return this->format.IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 		bool CheckCoord(int x, int y) const;
-		bool CheckArea(int width, int height) const;
+		bool CheckArea(int x, int y, int width, int height) const;
 	};
 	struct Accumulator {
 	public:
@@ -356,7 +356,7 @@ public:
 	// Constructor
 	Image(const Format& format, Memory* pMemory, size_t width, size_t height, UInt8 alphaDefault) :
 		_pMemory(pMemory), _metrics(format, width, height, alphaDefault) {}
-	Image(const Format& format) : _metrics(format, 0, 0, 0xff) {}
+	Image(const Format& format, UInt8 alphaDefault = 0xff) : _metrics(format, 0, 0, alphaDefault) {}
 	// Copy constructor/operator
 	Image(const Image& src) = delete;
 	Image& operator=(const Image& src) = delete;
@@ -432,7 +432,7 @@ public:
 		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
-	bool CheckArea(int width, int height) const { return GetMetrics().CheckArea(width, height); }
+	bool CheckArea(int x, int y, int width, int height) const { return GetMetrics().CheckArea(x, y, width, height); }
 public:
 	static void CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024);
 	static ScanDir SymbolToScanDir(const Symbol* pSymbol) {

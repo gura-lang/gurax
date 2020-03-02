@@ -255,7 +255,7 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
-// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image, xSrc:Number, ySrc:Number, width:Number, height:Number):reduce
+// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image, xSrc?:Number, ySrc?:Number, width?:Number, height?:Number):reduce
 Gurax_DeclareMethod(Image, Paste)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -268,7 +268,10 @@ Gurax_DeclareMethod(Image, Paste)
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Copies the image data of `imageSrc` into the target image at the specified position `[xDst, yDst]`.\n"
+		"\n"
+		"The optional argument `[xSrc, ySrc]` specifies the left-top position from where the image is copied.\n"
+		"The optional argument `[width, height]` specifies the image area to be copied.\n");
 }
 
 Gurax_ImplementMethod(Image, Paste)
@@ -326,6 +329,91 @@ Gurax_ImplementMethod(Image, Read)
 	const char* imgType = args.IsValid()? args.PickString() : nullptr;
 	// Function body
 	if (!image.Read(stream, imgType)) return Value::nil();
+	return valueThis.Reference();
+}
+
+// Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number, wdSrc?:Number, htSrc?:Number)
+Gurax_DeclareMethod(Image, Resize)
+{
+	Declare(VTYPE_Image, Flag::Reduce);
+	DeclareArg("wdDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("htDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, Resize)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& imageSrc = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int wdDst = args.PickNumber<int>();
+	int htDst = args.PickNumber<int>();
+	int xSrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int wdSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
+	int htSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
+	// Function body
+	if (wdDst <= 0 || htDst <= 0) {
+		Error::Issue(ErrorType::RangeError, "invalid value for wdDst and htDst.");
+		return Value::nil();
+	}
+	if (!imageSrc.CheckArea(xSrc, ySrc, wdSrc, htSrc)) return Value::nil();
+	RefPtr<Image> pImage(new Image(imageSrc.GetFormat(), imageSrc.GetAlphaDefault()));
+	if (!pImage->Allocate(wdDst, htDst)) {
+		Error::Issue(ErrorType::MemoryError, "memory allocation error.");
+		return Value::nil();
+	}
+	pImage->ResizePaste(0, 0, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
+	return new Value_Image(pImage.release());
+}
+
+// Image#ResizePaste(xDst:Number, yDst:Number, wdDst:Number, htDst:Number,
+//                   imageSrc:Image, xSrc?:Number, ySrc?:Number, wdSrc?:Number, htSrc?:Number):reduce
+Gurax_DeclareMethod(Image, ResizePaste)
+{
+	Declare(VTYPE_Image, Flag::Reduce);
+	DeclareArg("xDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("wdDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("htDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSrc", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, ResizePaste)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	int xDst = args.PickNumber<int>();
+	int yDst = args.PickNumber<int>();
+	int wdDst = args.PickNumber<int>();
+	int htDst = args.PickNumber<int>();
+	const Image& imageSrc = Value_Image::GetImage(args.PickValue());
+	int xSrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
+	int wdSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
+	int htSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
+	// Function body
+	if (!image.CheckArea(xDst, yDst, wdDst, htDst) ||
+		!imageSrc.CheckArea(xSrc, ySrc, wdSrc, htSrc)) return Value::nil();
+	image.ResizePaste(xDst, yDst, wdDst, htDst, imageSrc, xSrc, ySrc, wdSrc, htSrc);
 	return valueThis.Reference();
 }
 
@@ -395,7 +483,7 @@ Gurax_ImplementMethod(Image, Scan)
 		return Value::nil();
 	}
 	// Function body
-	if (!image.CheckCoord(x, y) || !image.CheckArea(width, height)) return Value::nil();
+	if (!image.CheckArea(x, y, width, height)) return Value::nil();
 	Image::Scanner scanner(Image::Scanner::CreateByDir(image, x, y, width, height, scanDir));
 	RefPtr<Iterator> pIterator(new VType_Image::Iterator_Scan(image.Reference(), scanner));
 	return argument.ReturnIterator(processor, pIterator.release());
@@ -509,6 +597,8 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
+	Assign(Gurax_CreateMethod(Image, Resize));
+	Assign(Gurax_CreateMethod(Image, ResizePaste));
 	Assign(Gurax_CreateMethod(Image, Rotate));
 	Assign(Gurax_CreateMethod(Image, Scan));
 	Assign(Gurax_CreateMethod(Image, Write));
