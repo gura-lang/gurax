@@ -1,4 +1,5 @@
 #!/usr/bin/env gurax
+import(re)
 import(argopt)
 
 //------------------------------------------------------------------------------
@@ -335,8 +336,19 @@ main() = {
 	dotClassName = path.FileName(argv[0])
 	fields = dotClassName.Split('.'):list
 	if (fields.len == 1) {
-		ubarModuleName = nil
-		dotModuleName = nil
+		pathNames = path.Glob('module-*.h'):list
+		if (pathNames.IsEmpty()) {
+			ubarModuleName = nil
+			dotModuleName = nil
+		} elsif (pathNames.len == 1) {
+			m = pathNames[0].Match(r'module-(.+)\.h$')
+			ubarModuleName = m[1]
+			dotModuleName = ubarModuleName.Replace('_', '.')
+			dotClassName = dotModuleName + '.' + dotClassName
+		} else {
+			sys.cerr.Println('multiple module header files have been found: ', pathNames.Join(', '))
+			sys.Exit(1)
+		}
 	} else {
 		fieldsSub = fields.Head(fields.len - 1):list
 		ubarModuleName = fieldsSub.Join('_')
