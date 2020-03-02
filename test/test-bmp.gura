@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Read image') {
+	['w3c_home.bmp', 'w3c_home_2.bmp', 'w3c_home_256.bmp', 'w3c_home_gray.bmp'].Each {|fileName|
+		img = Image(path.Join('test-bmp', fileName))
+		Println(fileName)
+		Tester(`img.palette)
+	}
+}

@@ -58,6 +58,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 	int biWidth = static_cast<int>(image.GetWidth());
 	int biHeight = static_cast<int>(image.GetHeight());
 	int biBitCount = CalcDIBBitCount(image);
+	UInt32 biClrUsed = (biBitCount == 1 || biBitCount == 4 || biBitCount == 8)? (1 << biBitCount) : 0;
 	UInt32 biSizeImage = CalcDIBImageSize(biWidth, biHeight, biBitCount, maskFlag);
 	do {
 		BitmapFileHeader bfh;
@@ -74,6 +75,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		}
 	} while (0);
 	do {
+	
 		BitmapInfoHeader bih;
 		::memset(&bih, 0x00, BitmapInfoHeader::bytes);
 		Gurax_PackUInt32(bih.biSize,			BitmapInfoHeader::bytes);
@@ -85,7 +87,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		Gurax_PackUInt32(bih.biSizeImage,		biSizeImage);
 		Gurax_PackUInt32(bih.biXPelsPerMeter,	13780);
 		Gurax_PackUInt32(bih.biYPelsPerMeter,	13780);
-		Gurax_PackUInt32(bih.biClrUsed,			0);
+		Gurax_PackUInt32(bih.biClrUsed,			biClrUsed);
 		Gurax_PackUInt32(bih.biClrImportant,	0);
 		if (stream.Write(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
 			Error::Issue(ErrorType::StreamError, "failed to write bitmap data");
