@@ -22,16 +22,10 @@ bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
 
 bool ImageMgrEx::Read(Stream& stream, Image& image) const
 {
-	BitmapFileHeader bfh;
-	BitmapInfoHeader bih;
-	if (stream.Read(&bfh, BitmapFileHeader::bytes) < BitmapFileHeader::bytes) {
-		IssueError_InvalidFormat();
-		return false;
-	}
-	if (stream.Read(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
-		IssueError_InvalidFormat();
-		return false;
-	}
+	RefPtr<Info> pInfo(new Info());
+	if (!pInfo->Read(stream)) return false;
+	const BitmapFileHeader& bfh = pInfo->GetBitmapFileHeader();
+	const BitmapInfoHeader& bih = pInfo->GetBitmapInfoHeader();;
 	if (Gurax_UnpackUInt16(bfh.bfType) != 0x4d42) {
 		IssueError_InvalidFormat();
 		return false;
