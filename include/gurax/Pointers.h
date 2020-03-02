@@ -17,6 +17,7 @@ protected:
 public:
 	Pointer_Binary(size_t offset, Value_Binary* pValue);
 	Pointer_Binary(const Pointer_Binary& src);
+public:
 	Value_Binary& GetValue() { return *_pValue; }
 	const Value_Binary& GetValue() const { return *_pValue; }
 	Binary& GetBinary() { return _pValue->GetBinary(); }
