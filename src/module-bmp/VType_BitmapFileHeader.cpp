@@ -27,19 +27,52 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// bmp.BitmapFileHeader#propSkeleton
-Gurax_DeclareProperty_R(BitmapFileHeader, propSkeleton)
+// bmp.BitmapFileHeader#bfType
+Gurax_DeclareProperty_R(BitmapFileHeader, bfType)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"The value of bfType.");
 }
 
-Gurax_ImplementPropertyGetter(BitmapFileHeader, propSkeleton)
+Gurax_ImplementPropertyGetter(BitmapFileHeader, bfType)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	return new Value_Number(Gurax_UnpackUInt16(bfh.bfType));
+}
+
+// bmp.BitmapFileHeader#bfSize
+Gurax_DeclareProperty_R(BitmapFileHeader, bfSize)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The value of bfSize.");
+}
+
+Gurax_ImplementPropertyGetter(BitmapFileHeader, bfSize)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	return new Value_Number(Gurax_UnpackUInt32(bfh.bfSize));
+}
+
+// bmp.BitmapFileHeader#bfOffBits
+Gurax_DeclareProperty_R(BitmapFileHeader, bfOffBits)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The value of bfOffBits.");
+}
+
+Gurax_ImplementPropertyGetter(BitmapFileHeader, bfOffBits)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	return new Value_Number(Gurax_UnpackUInt32(bfh.bfOffBits));
 }
 
 //------------------------------------------------------------------------------
@@ -54,7 +87,9 @@ void VType_BitmapFileHeader::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(BitmapFileHeader, propSkeleton));
+	Assign(Gurax_CreateProperty(BitmapFileHeader, bfType));
+	Assign(Gurax_CreateProperty(BitmapFileHeader, bfSize));
+	Assign(Gurax_CreateProperty(BitmapFileHeader, bfOffBits));
 }
 
 //------------------------------------------------------------------------------
