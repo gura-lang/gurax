@@ -23,17 +23,16 @@ bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
 bool ImageMgrEx::Read(Stream& stream, Image& image) const
 {
 	BitmapFileHeader bfh;
+	BitmapInfoHeader bih;
 	if (stream.Read(&bfh, BitmapFileHeader::bytes) < BitmapFileHeader::bytes) {
 		IssueError_InvalidFormat();
 		return false;
 	}
-	if (Gurax_UnpackUInt16(bfh.bfType) != 0x4d42) {
+	if (stream.Read(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
 		IssueError_InvalidFormat();
 		return false;
 	}
-	UInt32 bfOffBits = Gurax_UnpackUInt32(bfh.bfOffBits);
-	BitmapInfoHeader bih;
-	if (stream.Read(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
+	if (Gurax_UnpackUInt16(bfh.bfType) != 0x4d42) {
 		IssueError_InvalidFormat();
 		return false;
 	}
@@ -54,6 +53,7 @@ bool ImageMgrEx::Read(Stream& stream, Image& image) const
 		IssueError_InvalidFormat();
 		return false;
 	}
+	UInt32 bfOffBits = Gurax_UnpackUInt32(bfh.bfOffBits);
 	if (bfOffBits > 0 && !stream.SetOffset(bfOffBits)) return false;
 	return ReadDIB(stream, image, biWidth, biHeight, biBitCount, false);
 }

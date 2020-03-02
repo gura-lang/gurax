@@ -78,7 +78,7 @@ ${end}
 //------------------------------------------------------------------------------
 String ${className}::ToString(const StringStyle& ss) const
 {
-	return "${className}";
+	return "${dotClassName}";
 }
 
 ${if (ubarModuleName)}
@@ -233,7 +233,7 @@ Gurax_DeclareConstructor(${className})
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `${className}` instance.");
+		"Creates a `${dotClassName}` instance.");
 }
 
 Gurax_ImplementConstructor(${className})

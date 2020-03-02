@@ -32,6 +32,7 @@ protected:
 public:
 	const BitmapFileHeader& GetBitmapFileHeader() const { return _bfh; }
 	const BitmapInfoHeader& GetBitmapInfoHeader() const { return _bih; }
+	bool Read(Stream& stream);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Info& other) const { return this == &other; }
