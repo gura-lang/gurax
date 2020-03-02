@@ -28,11 +28,22 @@ PathMgr* PathMgr::FindResponsible(const char* pathName)
 Directory* PathMgr::OpenDirectory(const char* pathName, Directory::Type typeWouldBe)
 {
 	const PathMgrList& pathMgrList = Basement::Inst.GetPathMgrList();
+	if (!*pathName) {
+		PathMgr* pPathMgr = pathMgrList.FindResponsible(nullptr, pathName);
+		if (!pPathMgr) {
+			Error::Issue(ErrorType::PathError, "invalid path name");
+			return nullptr;
+		}
+		return pPathMgr->OpenDirectory(nullptr, &pathName, typeWouldBe);
+	}
 	RefPtr<Directory> pDirectory;
 	while (*pathName) {
 		if (pDirectory && PathName::IsSep(*pathName)) pathName++;
 		PathMgr* pPathMgr = pathMgrList.FindResponsible(pDirectory.get(), pathName);
-		if (!pPathMgr) return nullptr;
+		if (!pPathMgr) {
+			Error::Issue(ErrorType::PathError, "invalid path name");
+			return nullptr;
+		}
 		pDirectory.reset(pPathMgr->OpenDirectory(pDirectory.release(), &pathName, typeWouldBe));
 		if (!pDirectory) return nullptr;
 	}
