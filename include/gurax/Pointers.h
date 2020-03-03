@@ -18,8 +18,8 @@ public:
 	Pointer_Binary(size_t offset, Value_Binary* pValue);
 	Pointer_Binary(const Pointer_Binary& src);
 public:
-	Value_Binary& GetValue() { return *_pValue; }
-	const Value_Binary& GetValue() const { return *_pValue; }
+	//Value_Binary& GetValue() { return *_pValue; }
+	//const Value_Binary& GetValue() const { return *_pValue; }
 	Binary& GetBinary() { return _pValue->GetBinary(); }
 	const Binary& GetBinary() const { return _pValue->GetBinary(); }
 public:
@@ -30,7 +30,7 @@ public:
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Binary(*this); }
-	virtual const Value& GetTarget() const override { return *_pValue; }
+	virtual const void* GetPointerToTarget() const override { return _pValue.get(); }
 	virtual const UInt8* GetPointerC() const override;
 	virtual UInt8* GetWritablePointerC() const override;
 	virtual size_t GetSizeEntire() const override;

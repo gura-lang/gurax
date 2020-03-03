@@ -594,7 +594,7 @@ Gurax_ImplementOpBinary(Sub, Pointer, Pointer)
 {
 	const Pointer& pointerL = Value_Pointer::GetPointer(valueL);
 	const Pointer& pointerR = Value_Pointer::GetPointer(valueR);
-	if (!pointerL.GetTarget().IsIdentical(&pointerR.GetTarget())) {
+	if (!pointerL.IsTargetIdentical(pointerR)) {
 		Error::Issue(ErrorType::ValueError,
 					 "pointers must have the same target when the offset difference is calculated");
 		return Value::nil();

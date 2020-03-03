@@ -62,9 +62,12 @@ public:
 	bool PutValues(ElemType elemType, bool bigEndianFlag, const ValueList& valList);
 	bool PutValues(ElemType elemType, bool bigEndianFlag, Iterator& iterator);
 	bool CheckWritable() const;
+	bool IsTargetIdentical(const Pointer& pointer) const {
+		return GetPointerToTarget() == pointer.GetPointerToTarget();
+	}
 public:
 	virtual Pointer* Clone() const = 0;
-	virtual const Value& GetTarget() const = 0;
+	virtual const void* GetPointerToTarget() const = 0;
 	virtual const UInt8* GetPointerC() const = 0;
 	virtual UInt8* GetWritablePointerC() const = 0;
 	virtual size_t GetSizeEntire() const = 0;
