@@ -62,7 +62,6 @@ public:
 	Binary& GetBuff() { return _pBuff->GetBinary(); }
 	BinaryReferable& GetBuffReferable() { return *_pBuff; }
 public:
-	virtual bool IsDumb() const override { return false; }
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return "binary"; }
 	virtual size_t DoGetBytes() override;
@@ -74,6 +73,31 @@ public:
 	virtual bool DoFlush() override { return true; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
+
+#if 0
+//------------------------------------------------------------------------------
+// Stream_Pointer
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Stream_Pointer : public Stream {
+private:
+	RefPtr<Pointer> _pPointer;
+public:
+	Stream_Pointer(Flags flags, Pointer* pPointer);
+public:
+	Pointer& GetPointer() { return *_pPointer; }
+public:
+	virtual const char* GetName() const override { return "pointer"; };
+	virtual const char* GetIdentifier() const override { return "pointer"; }
+	virtual size_t DoGetBytes() override { return GetPointer().GetBytesEntire(); }
+	virtual bool DoClose() override { return true; }
+	virtual int DoGetChar() override;
+	virtual bool DoPutChar(char ch) override;
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual size_t DoWrite(const void* buff, size_t len) override;
+	virtual bool DoFlush() override { return true; }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
+};
+#endif
 
 }
 
