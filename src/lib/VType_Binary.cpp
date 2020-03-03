@@ -106,7 +106,7 @@ Gurax_ImplementMethod(Binary, Pointer)
 	size_t offset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Value> pValue(new Value_Pointer(new Pointer_Binary(offset, valueThis.Reference())));
+	RefPtr<Value> pValue(new Value_Pointer(new Pointer_Binary(offset, valueThis.GetBinaryReferable().Reference())));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -185,7 +185,7 @@ Gurax_DeclareProperty_R(Binary, p)
 Gurax_ImplementPropertyGetter(Binary, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Pointer(new Pointer_Binary(0, valueThis.Reference()));
+	return new Value_Pointer(new Pointer_Binary(0, valueThis.GetBinaryReferable().Reference()));
 }
 
 // Binary#writable

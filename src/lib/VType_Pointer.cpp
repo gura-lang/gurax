@@ -641,7 +641,8 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
-		return new Value_Pointer(new Pointer_Binary(0, dynamic_cast<Value_Binary*>(value.Reference())));
+		return new Value_Pointer(
+			new Pointer_Binary(0, dynamic_cast<const Value_Binary&>(value).GetBinaryReferable().Reference()));
 	}
 	return nullptr;
 }

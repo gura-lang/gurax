@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Pointer_Binary
 //------------------------------------------------------------------------------
-Pointer_Binary::Pointer_Binary(size_t offset, Value_Binary* pValue) : Pointer(offset), _pValue(pValue)
+Pointer_Binary::Pointer_Binary(size_t offset, BinaryReferable* pBinary) : Pointer(offset), _pBinary(pBinary)
 {
 }
 
-Pointer_Binary::Pointer_Binary(const Pointer_Binary& src) : Pointer_Binary(src._offset, src._pValue->Reference())
+Pointer_Binary::Pointer_Binary(const Pointer_Binary& src) : Pointer_Binary(src._offset, src._pBinary->Reference())
 {
 }
 

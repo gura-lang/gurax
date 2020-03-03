@@ -13,15 +13,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Pointer_Binary : public Pointer {
 protected:
-	RefPtr<Value_Binary> _pValue;
+	RefPtr<BinaryReferable> _pBinary;
 public:
-	Pointer_Binary(size_t offset, Value_Binary* pValue);
+	Pointer_Binary(size_t offset, BinaryReferable* pBinary);
 	Pointer_Binary(const Pointer_Binary& src);
 public:
-	//Value_Binary& GetValue() { return *_pValue; }
-	//const Value_Binary& GetValue() const { return *_pValue; }
-	Binary& GetBinary() { return _pValue->GetBinary(); }
-	const Binary& GetBinary() const { return _pValue->GetBinary(); }
+	Binary& GetBinary() { return _pBinary->GetBinary(); }
+	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 public:
 	// Virtual functions of Packer
 	virtual bool StorePrepare(size_t bytes) override;
@@ -30,7 +28,7 @@ public:
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Binary(*this); }
-	virtual const void* GetPointerToTarget() const override { return _pValue.get(); }
+	virtual const void* GetPointerToTarget() const override { return _pBinary.get(); }
 	virtual const UInt8* GetPointerC() const override;
 	virtual UInt8* GetWritablePointerC() const override;
 	virtual size_t GetSizeEntire() const override;
