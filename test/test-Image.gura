@@ -3,10 +3,36 @@ import(util.tester) {*}
 
 TestCase('Property') {
 	Tester(`Image.__prop__(`bytes))
+	Tester(`Image.__prop__(`bytesPerLine))
+	Tester(`Image.__prop__(`bytesPerPixel))
+	Tester(`Image.__prop__(`format))
 	Tester(`Image.__prop__(`height))
 	Tester(`Image.__prop__(`p))
 	Tester(`Image.__prop__(`palette))
 	Tester(`Image.__prop__(`width))
+}
+
+TestCase('Property Test') {
+	Tester(`Image.Blank(48, 32)) {|img|
+		Tester(`img.format)
+		Tester(`img.width)
+		Tester(`img.height)
+		Tester(`img.bytes)
+		Tester(`img.bytesPerLine)
+		Tester(`img.bytesPerPixel)
+		Tester(`img.palette)
+		Tester(`img.p)
+	}
+	Tester(`Image.Blank(48, 32, format = `rgb)) {|img|
+		Tester(`img.format)
+		Tester(`img.width)
+		Tester(`img.height)
+		Tester(`img.bytes)
+		Tester(`img.bytesPerLine)
+		Tester(`img.bytesPerPixel)
+		Tester(`img.palette)
+		Tester(`img.p)
+	}
 }
 
 TestCase('Image#Fill()') {

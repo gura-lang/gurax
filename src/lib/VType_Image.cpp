@@ -529,13 +529,58 @@ Gurax_DeclareProperty_R(Image, bytes)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The binary's size in bytes.");
+		"The image's size in bytes.");
 }
 
 Gurax_ImplementPropertyGetter(Image, bytes)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetImage().GetBytes());
+}
+
+// Image#bytesPerLine
+Gurax_DeclareProperty_R(Image, bytesPerLine)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The size per line in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(Image, bytesPerLine)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetBytesPerLine());
+}
+
+// Image#bytesPerPixel
+Gurax_DeclareProperty_R(Image, bytesPerPixel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The size per pixel in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(Image, bytesPerPixel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetBytesPerPixel());
+}
+
+// Image#format
+Gurax_DeclareProperty_R(Image, format)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A symbol that represents the image's format: `` `rgb`` or `` `rgba``.");
+}
+
+Gurax_ImplementPropertyGetter(Image, format)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(Image::FormatToSymbol(valueThis.GetImage().GetFormat()));
 }
 
 // Image#height
@@ -637,6 +682,9 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Image, bytes));
+	Assign(Gurax_CreateProperty(Image, bytesPerLine));
+	Assign(Gurax_CreateProperty(Image, bytesPerPixel));
+	Assign(Gurax_CreateProperty(Image, format));
 	Assign(Gurax_CreateProperty(Image, height));
 	Assign(Gurax_CreateProperty(Image, p));
 	Assign(Gurax_CreateProperty(Image, palette));
