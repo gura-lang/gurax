@@ -9,7 +9,7 @@ b'abcdefg' .. b'abcdefg'
 B'abcdefg' .. B'abcdefg'
 Binary() .. B''
 ======== Binary#p ========
-buff.p .. <Pointer:offset=0>
+buff.p .. <Pointer:0/16>
 while (num = p.uint8):list {Format('%02x', num)} .. ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f']
 while (num = p.uint16):list {Format('%04x', num)} .. ['0100', '0302', '0504', '0706', '0908', '0b0a', '0d0c', '0f0e']
 while (num = p.uint32):list {Format('%08x', num)} .. ['03020100', '07060504', '0b0a0908', '0f0e0d0c']
@@ -22,8 +22,8 @@ b'abcdefg'.writable .. false
 B'abcdefg'.writable .. true
 Binary().writable .. true
 ======== Binary#Pointer() ========
-buff.Pointer() .. <Pointer:offset=0>
-buff.Pointer(6) .. <Pointer:offset=6>
+buff.Pointer() .. <Pointer:0/16>
+buff.Pointer(6) .. <Pointer:6/16>
 while (num = p.uint8):list {Format('%02x', num)} .. ['06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f']
 while (num = p.uint16):list {Format('%04x', num)} .. ['0706', '0908', '0b0a', '0d0c', '0f0e']
 while (num = p.uint32):list {Format('%08x', num)} .. ['09080706', '0d0c0b0a']
