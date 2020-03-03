@@ -277,7 +277,7 @@ void Image::Pixel::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
 	pMemory->Fill(0x00);
-	Accumulator* accumulators = reinterpret_cast<Accumulator*>(pMemory->GetPointer());
+	Accumulator* accumulators = pMemory->GetPointer<Accumulator>();
 	UInt8* pLineDst = pixelDst.GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	size_t htAccum = 0;

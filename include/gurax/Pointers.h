@@ -35,6 +35,33 @@ public:
 	virtual bool IsWritable() const override;
 };
 
+//------------------------------------------------------------------------------
+// Pointer_Memory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Pointer_Memory : public Pointer {
+protected:
+	RefPtr<Memory> _pMemory;
+public:
+	Pointer_Memory(size_t offset, Memory* pMemory);
+	Pointer_Memory(const Pointer_Memory& src);
+public:
+	Memory& GetMemory() { return *_pMemory; }
+	const Memory& GetMemory() const { return *_pMemory; }
+public:
+	// Virtual functions of Packer
+	virtual bool StorePrepare(size_t bytes) override;
+	virtual void StoreBuffer(const void* buff, size_t bytes) override;
+	virtual const UInt8* ExtractPrepare(size_t bytes) override;
+public:
+	// Virtual functions of Pointer
+	virtual Pointer* Clone() const override { return new Pointer_Memory(*this); }
+	virtual const void* GetPointerToTarget() const override { return _pMemory.get(); }
+	virtual const UInt8* GetPointerC() const override;
+	virtual UInt8* GetWritablePointerC() const override;
+	virtual size_t GetSizeEntire() const override;
+	virtual bool IsWritable() const override;
+};
+
 }
 
 #endif

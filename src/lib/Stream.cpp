@@ -199,7 +199,7 @@ Stream& Stream::ReadAll(Binary& buff)
 {
 	const int bytesWork = 65536;
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
-	UInt8* buffWork = reinterpret_cast<UInt8*>(pMemory->GetPointer());
+	UInt8* buffWork = pMemory->GetPointer<UInt8>();
 	size_t bytesRead;
 	while ((bytesRead = Read(buffWork, bytesWork)) > 0) {
 		buff.append(buffWork, bytesRead);
@@ -312,7 +312,7 @@ bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
 {
 	if (!CheckReadable() || !streamDst.CheckWritable()) return false;
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
+	char* buff = pMemory->GetPointer<char>();
 	for (;;) {
 		size_t bytesRead = Read(buff, bytesUnit);
 		if (bytesRead == 0) break;

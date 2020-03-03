@@ -31,10 +31,8 @@ protected:
 	virtual ~Memory() = default;
 public:
 	size_t GetSize() const { return _bytes; }
-	char* GetPointer() { return _buff; }
-	char* GetPointer(size_t offset) { return _buff + offset; }
-	const char* GetPointer() const { return _buff; }
-	const char* GetPointer(size_t offset) const { return _buff + offset; }
+	template<typename T> T* GetPointer() const { return reinterpret_cast<T*>(_buff); }
+	template<typename T> T* GetPointer(size_t offset) const { return reinterpret_cast<T*>(_buff + offset); }
 	void Fill(UInt8 data) { ::memset(_buff, data, _bytes); }
 	String MakeId() const;
 	virtual Memory* Clone() const = 0;

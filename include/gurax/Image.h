@@ -389,7 +389,7 @@ public:
 	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
 		return _metrics.AdjustCoord(pRect, x, y, width, height);
 	}
-	UInt8* GetPointer() const { return reinterpret_cast<UInt8*>(_pMemory->GetPointer()); }
+	UInt8* GetPointer() const { return _pMemory->GetPointer<UInt8>(); }
 	UInt8* GetPointer(size_t x, size_t y) const {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
