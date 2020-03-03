@@ -108,7 +108,7 @@ bool Pointer::CheckWritable() const
 String Pointer::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Pointer:offset=%d", GetOffset());
+	str.Printf("Pointer:%d/%d", GetOffset(), GetSizeEntire());
 	return str;
 }
 

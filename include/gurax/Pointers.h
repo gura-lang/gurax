@@ -15,7 +15,7 @@ class GURAX_DLLDECLARE Pointer_Binary : public Pointer {
 protected:
 	RefPtr<BinaryReferable> _pBinary;
 public:
-	Pointer_Binary(size_t offset, BinaryReferable* pBinary);
+	Pointer_Binary(BinaryReferable* pBinary, size_t offset = 0);
 	Pointer_Binary(const Pointer_Binary& src);
 public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
@@ -42,7 +42,7 @@ class GURAX_DLLDECLARE Pointer_Memory : public Pointer {
 protected:
 	RefPtr<Memory> _pMemory;
 public:
-	Pointer_Memory(size_t offset, Memory* pMemory);
+	Pointer_Memory(Memory* pMemory, size_t offset = 0);
 	Pointer_Memory(const Pointer_Memory& src);
 public:
 	Memory& GetMemory() { return *_pMemory; }

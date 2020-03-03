@@ -88,6 +88,43 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Pointer#Dump(stream?:Stream:w):void:[upper]
+Gurax_DeclareMethod(Pointer, Dump)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(upper));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints a hexadecimal dump of the `Pointer` to the standard output.\n"
+		"If the argument `stream` is specified, the result would be output to the stream.\n"
+		"\n"
+		"In default, hexadecimal digit are printed with lower-case characters.\n"
+		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
+		"\n"
+		"Example:\n"
+		"    >>> b'A quick brown fox jumps over the lazy dog.'.p.Dump():upper\n"
+		"    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo\n"
+		"    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the\n"
+		"    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.\n");
+}
+
+Gurax_ImplementMethod(Pointer, Dump)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Pointer& pointer = valueThis.GetPointer();
+	// Argument
+	ArgPicker args(argument);
+	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
+	bool upperFlag = argument.IsSet(Gurax_Symbol(upper));
+	// Function body
+	StringStyle ss;
+	if (upperFlag) ss.UpperCase();
+	stream.Dump(pointer.GetPointerC(), pointer.GetSizeAvailable(), ss);
+	return Value::nil();
+}
+
 // Pointer#Pack(format:String, args*):reduce:[stay]
 Gurax_DeclareMethod(Pointer, Pack)
 {
@@ -614,6 +651,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pointer));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Pointer, Dump));
 	Assign(Gurax_CreateMethod(Pointer, Pack));
 	Assign(Gurax_CreateMethod(Pointer, Put));
 	Assign(Gurax_CreateMethod(Pointer, Unpack));
@@ -642,7 +680,7 @@ Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
 		return new Value_Pointer(
-			new Pointer_Binary(0, dynamic_cast<const Value_Binary&>(value).GetBinaryReferable().Reference()));
+			new Pointer_Binary(dynamic_cast<const Value_Binary&>(value).GetBinaryReferable().Reference()));
 	}
 	return nullptr;
 }

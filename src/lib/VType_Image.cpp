@@ -523,21 +523,6 @@ Gurax_ImplementMethod(Image, Write)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
-// Image#width
-Gurax_DeclareProperty_R(Image, width)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The image's width.");
-}
-
-Gurax_ImplementPropertyGetter(Image, width)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetImage().GetWidth());
-}
-
 // Image#height
 Gurax_DeclareProperty_R(Image, height)
 {
@@ -551,6 +536,24 @@ Gurax_ImplementPropertyGetter(Image, height)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetImage().GetHeight());
+}
+
+// Image#p
+Gurax_DeclareProperty_R(Image, p)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A `Pointer` instance that points at the first address of the image buffer.");
+}
+
+Gurax_ImplementPropertyGetter(Image, p)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	Memory* pMemory = valueThis.GetImage().GetMemory();
+	if (!pMemory) return Value::nil();
+	RefPtr<Pointer> pPointer(new Pointer_Memory(pMemory->Reference()));
+	return new Value_Pointer(pPointer.release());
 }
 
 // Image#palette:nil
@@ -574,6 +577,21 @@ Gurax_ImplementPropertySetter(Image, palette)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.GetImage().SetPalette(value.IsValid()? Value_Palette::GetPalette(value).Reference() : nullptr);
+}
+
+// Image#width
+Gurax_DeclareProperty_R(Image, width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The image's width.");
+}
+
+Gurax_ImplementPropertyGetter(Image, width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetWidth());
 }
 
 //------------------------------------------------------------------------------
@@ -603,9 +621,10 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Scan));
 	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Image, width));
 	Assign(Gurax_CreateProperty(Image, height));
+	Assign(Gurax_CreateProperty(Image, p));
 	Assign(Gurax_CreateProperty(Image, palette));
+	Assign(Gurax_CreateProperty(Image, width));
 }
 
 Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const

@@ -57,7 +57,7 @@ Gurax_DeclareMethod(Binary, Dump)
 	DeclareAttrOpt(Gurax_Symbol(upper));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Prints a hexadecimal dump from the content of the `Binary` to the standard output.\n"
+		"Prints a hexadecimal dump of the `Binary` to the standard output.\n"
 		"If the argument `stream` is specified, the result would be output to the stream.\n"
 		"\n"
 		"In default, hexadecimal digit are printed with lower-case characters.\n"
@@ -106,7 +106,7 @@ Gurax_ImplementMethod(Binary, Pointer)
 	size_t offset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Value> pValue(new Value_Pointer(new Pointer_Binary(offset, valueThis.GetBinaryReferable().Reference())));
+	RefPtr<Value> pValue(new Value_Pointer(new Pointer_Binary(valueThis.GetBinaryReferable().Reference(), offset)));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -185,7 +185,7 @@ Gurax_DeclareProperty_R(Binary, p)
 Gurax_ImplementPropertyGetter(Binary, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Pointer(new Pointer_Binary(0, valueThis.GetBinaryReferable().Reference()));
+	return new Value_Pointer(new Pointer_Binary(valueThis.GetBinaryReferable().Reference()));
 }
 
 // Binary#writable
