@@ -114,7 +114,7 @@ Gurax_DeclareProperty_R(Stat, size)
 Gurax_ImplementPropertyGetter(Stat, size)
 {
 	Stat& stat = GetValueThis(valueTarget).GetStat();
-	return new Value_Number(stat.GetSize());
+	return new Value_Number(stat.GetBytes());
 }
 
 // Stat#atime

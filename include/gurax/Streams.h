@@ -65,7 +65,7 @@ public:
 	virtual bool IsDumb() const override { return false; }
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return "binary"; }
-	virtual size_t DoGetSize() override;
+	virtual size_t DoGetBytes() override;
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override;
 	virtual bool DoPutChar(char ch) override;

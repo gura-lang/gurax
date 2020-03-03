@@ -120,7 +120,7 @@ public:
 	virtual size_t DoWrite(const void* buff, size_t len) override { return 0; }
 	virtual bool DoFlush() override { return false; }
 	virtual bool DoClose() override { return true; }
-	virtual size_t DoGetSize() override { return _bytesUncompressed; }
+	virtual size_t DoGetBytes() override { return _bytesUncompressed; }
 	virtual Value* DoCreateStatValue() override;
 };
 

@@ -393,7 +393,7 @@ public:
 	UInt8* GetPointer(size_t x, size_t y) const {
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
-	size_t GetBytes() const { return _pMemory->GetSize(); }
+	size_t GetBytes() const { return _pMemory->GetBytes(); }
 	template<typename T_Pixel> T_Pixel GetPixel() const {
 		return T_Pixel(GetMetrics(), GetPointer());
 	}

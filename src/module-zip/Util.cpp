@@ -45,7 +45,7 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 
 UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRecord)
 {
-	size_t bytesZIPFile = streamSrc.GetSize();
+	size_t bytesZIPFile = streamSrc.GetBytes();
 	if (bytesZIPFile == -1) {
 		Error::Issue(ErrorType::IOError, "can't seek end of file");
 		return 0;

@@ -14,7 +14,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	const size_t bytesThreshold = 256;
 	RefPtr<Stat> pStat(streamSrc.CreateStat());
 	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
-	if (pStat && (pStat->GetSize() < bytesThreshold)) compressionMethod = CompressionMethod::Store;
+	if (pStat && (pStat->GetBytes() < bytesThreshold)) compressionMethod = CompressionMethod::Store;
 	if (!AddParentFolders(fileName, *pDateTime)) return false;
 	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
@@ -98,7 +98,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	RefPtr<Memory> pMemory(new MemoryHeap(32768));
 	void* buff = pMemory->GetPointer();
 	for (;;) {
-		size_t bytesRead = streamSrc.Read(buff, pMemory->GetSize());
+		size_t bytesRead = streamSrc.Read(buff, pMemory->GetBytes());
 		if (Error::IsIssued()) break;
 		if (bytesRead == 0) break;
 		crc32.Update(buff, bytesRead);

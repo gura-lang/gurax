@@ -106,7 +106,7 @@ public:
 	Stream* CreateBwdSeekable();
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 public:
-	size_t GetSize() { return DoGetSize(); }
+	size_t GetBytes() { return DoGetBytes(); }
 	Stat* CreateStat() { return DoCreateStat(); }
 	Value* CreateStatValue() { return DoCreateStatValue(); }
 	bool Close() { return DoClose(); }
@@ -123,7 +123,7 @@ public:
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
-	virtual size_t DoGetSize() { return 0; }
+	virtual size_t DoGetBytes() { return 0; }
 	virtual Stat* DoCreateStat() { return nullptr; }
 	virtual Value* DoCreateStatValue() { return nullptr; }
 	virtual bool DoClose() = 0;

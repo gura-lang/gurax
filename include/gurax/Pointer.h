@@ -53,8 +53,8 @@ protected:
 public:
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
-	size_t GetSizeAvailable() const {
-		size_t bytesEntire = GetSizeEntire();
+	size_t GetBytesAvailable() const {
+		size_t bytesEntire = GetBytesEntire();
 		return (_offset < bytesEntire)? bytesEntire - _offset : 0;
 	}
 	bool Advance(int distance);
@@ -70,7 +70,7 @@ public:
 	virtual const void* GetPointerToTarget() const = 0;
 	virtual const UInt8* GetPointerC() const = 0;
 	virtual UInt8* GetWritablePointerC() const = 0;
-	virtual size_t GetSizeEntire() const = 0;
+	virtual size_t GetBytesEntire() const = 0;
 	virtual bool IsWritable() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

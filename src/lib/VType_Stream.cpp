@@ -371,7 +371,7 @@ Gurax_ImplementMethod(Stream, Write)
 	size_t bytes = (validFlag_bytes = args.IsValid())? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	size_t bytesAvail = ptr.GetSizeAvailable();
+	size_t bytesAvail = ptr.GetBytesAvailable();
 	if (!validFlag_bytes) {
 		if (stream.Write(ptr.GetPointerC(), bytesAvail) < bytesAvail) return Value::nil();
 	} else if (bytes <= bytesAvail) {
@@ -449,7 +449,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Pointer)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Pointer& ptr = Value_Pointer::GetPointer(valueR);
-	size_t bytesAvail = ptr.GetSizeAvailable();
+	size_t bytesAvail = ptr.GetBytesAvailable();
 	if (stream.Write(ptr.GetPointerC(), bytesAvail) < bytesAvail) return Value::nil();
 	return valueL.Reference();
 }

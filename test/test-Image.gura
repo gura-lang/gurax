@@ -1,0 +1,57 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Tester(`Image.__prop__(`bytes))
+	Tester(`Image.__prop__(`height))
+	Tester(`Image.__prop__(`p))
+	Tester(`Image.__prop__(`palette))
+	Tester(`Image.__prop__(`width))
+}
+
+TestCase('Image#Fill()') {
+}
+
+TestCase('Image#FillRect()') {
+}
+
+TestCase('Image#Flip()') {
+}
+
+TestCase('Image#GetPixel()') {
+}
+
+TestCase('Image#PutPixel()') {
+}
+
+TestCase('Image#Paste()') {
+}
+
+TestCase('Image#Read()') {
+}
+
+TestCase('Image#Resize()') {
+}
+
+TestCase('Image#ResizePaste()') {
+}
+
+TestCase('Image#Rotate()') {
+}
+
+TestCase('Image#Scan()') {
+	img = Image.Blank(5, 3)
+	f(pixel:Pixel):map = Format('%d-%d', pixel.x, pixel.y)
+	Tester(`f(img.Scan()).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_top_horz)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_top_vert)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_bottom_horz)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_bottom_vert)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_top_horz)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_top_vert)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_bottom_horz)).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_bottom_vert)).Join(' '))
+}
+
+TestCase('Image#Write()') {
+}

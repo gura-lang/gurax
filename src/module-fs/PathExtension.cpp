@@ -234,7 +234,7 @@ Value* DirectoryEx::DoCreateStatValue()
 //------------------------------------------------------------------------------
 // StreamEx
 //------------------------------------------------------------------------------
-size_t StreamEx::DoGetSize()
+size_t StreamEx::DoGetBytes()
 {
 	struct stat sb;
 	if (::fstat(fileno(_fp), &sb) < 0) return 0;

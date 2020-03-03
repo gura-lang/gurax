@@ -58,7 +58,7 @@ public:
 	const DateTime& GetDateTimeM() const { return *_pDateTimeM; }
 	const DateTime& GetDateTimeA() const { return *_pDateTimeA; }
 	const char* GetPathName() const { return _pathName.c_str(); }
-	size_t GetSize() const { return _bytes; }
+	size_t GetBytes() const { return _bytes; }
 	bool IsDir() const { return (_flags & Flag::Dir) != 0; }
 	bool IsChr() const { return (_flags & Flag::Chr) != 0; }
 	bool IsBlk() const { return (_flags & Flag::Blk) != 0; }

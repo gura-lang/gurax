@@ -162,7 +162,7 @@ Gurax_DeclareProperty_R(Binary, bytes)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The size of the binary in bytes.");
+		"The binary's size in bytes.");
 }
 
 Gurax_ImplementPropertyGetter(Binary, bytes)

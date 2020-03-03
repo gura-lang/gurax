@@ -64,7 +64,7 @@ public:
 public:
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
-	virtual size_t DoGetSize() override;
+	virtual size_t DoGetBytes() override;
 	virtual Stat* DoCreateStat() override;
 	virtual Value* DoCreateStatValue() override;
 	virtual bool DoClose() override { return ::fclose(_fp) == 0; }

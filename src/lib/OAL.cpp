@@ -681,7 +681,7 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 		if (memSrc.get() == MAP_FAILED) {
 			RefPtr<Memory> pMemory(new MemoryHeap(65536));
 			for (;;) {
-				int bytesRead = ::read(fdSrc.get(), pMemory->GetPointer<char>(), pMemory->GetSize());
+				int bytesRead = ::read(fdSrc.get(), pMemory->GetPointer<char>(), pMemory->GetBytes());
 				if (bytesRead == 0) break;
 				if (::write(fdDst.get(), pMemory->GetPointer<char>(), bytesRead) < bytesRead) return false;
 			}
@@ -840,7 +840,7 @@ int OAL::ExecProgram(
 #if 0
 		if (pStreamCIn && !pStreamCIn->GetBlocking()) {
 			char* buff = pMemory->GetPointer<char>();
-			size_t bytesRead = pStreamCIn->Read(sig, buff, pMemory->GetSize());
+			size_t bytesRead = pStreamCIn->Read(sig, buff, pMemory->GetBytes());
 			if (sig.IsSignalled()) goto done;
 			if (bytesRead == 0) {
 				::close(fdsCIn[1]);
@@ -861,14 +861,14 @@ int OAL::ExecProgram(
 		if (FD_ISSET(fdsCOut[0], &fdsRead)) {
 			idleFlag = false;
 			char* buff = pMemory->GetPointer<char>();
-			size_t bytesRead = ::read(fdsCOut[0], buff, pMemory->GetSize());
+			size_t bytesRead = ::read(fdsCOut[0], buff, pMemory->GetBytes());
 			pStreamCOut->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
 		if (FD_ISSET(fdsCErr[0], &fdsRead)) {
 			idleFlag = false;
 			char* buff = pMemory->GetPointer<char>();
-			size_t bytesRead = ::read(fdsCErr[0], buff, pMemory->GetSize());
+			size_t bytesRead = ::read(fdsCErr[0], buff, pMemory->GetBytes());
 			pStreamCErr->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}

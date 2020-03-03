@@ -121,7 +121,7 @@ Gurax_ImplementMethod(Pointer, Dump)
 	// Function body
 	StringStyle ss;
 	if (upperFlag) ss.UpperCase();
-	stream.Dump(pointer.GetPointerC(), pointer.GetSizeAvailable(), ss);
+	stream.Dump(pointer.GetPointerC(), pointer.GetBytesAvailable(), ss);
 	return Value::nil();
 }
 
@@ -355,7 +355,7 @@ Gurax_DeclareProperty_R(Pointer, bytesAvail)
 Gurax_ImplementPropertyGetter(Pointer, bytesAvail)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetPointer().GetSizeAvailable());
+	return new Value_Number(valueThis.GetPointer().GetBytesAvailable());
 }
 
 // Pointer#bytesEntire
@@ -370,7 +370,7 @@ Gurax_DeclareProperty_R(Pointer, bytesEntire)
 Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetPointer().GetSizeEntire());
+	return new Value_Number(valueThis.GetPointer().GetBytesEntire());
 }
 
 // Pointer#offset

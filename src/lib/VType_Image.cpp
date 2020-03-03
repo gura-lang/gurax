@@ -523,6 +523,21 @@ Gurax_ImplementMethod(Image, Write)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
+// Image#bytes
+Gurax_DeclareProperty_R(Image, bytes)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The binary's size in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(Image, bytes)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetBytes());
+}
+
 // Image#height
 Gurax_DeclareProperty_R(Image, height)
 {
@@ -621,6 +636,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Scan));
 	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Image, bytes));
 	Assign(Gurax_CreateProperty(Image, height));
 	Assign(Gurax_CreateProperty(Image, p));
 	Assign(Gurax_CreateProperty(Image, palette));

@@ -30,7 +30,7 @@ protected:
 	// Destructor
 	virtual ~Memory() = default;
 public:
-	size_t GetSize() const { return _bytes; }
+	size_t GetBytes() const { return _bytes; }
 	template<typename T> T* GetPointer() const { return reinterpret_cast<T*>(_buff); }
 	template<typename T> T* GetPointer(size_t offset) const { return reinterpret_cast<T*>(_buff + offset); }
 	void Fill(UInt8 data) { ::memset(_buff, data, _bytes); }

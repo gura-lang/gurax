@@ -289,7 +289,7 @@ bool Stream::Seek(long offsetRel, SeekMode seekMode)
 	if (seekMode == SeekMode::Set) {
 		offset = static_cast<size_t>(offsetRel);
 	} else {
-		offset = (seekMode == SeekMode::Cur)? _offset : DoGetSize();
+		offset = (seekMode == SeekMode::Cur)? _offset : DoGetBytes();
 		if (offsetRel < 0 && offset < static_cast<size_t>(-offsetRel)) {
 			Error::Issue(ErrorType::RangeError, "seeking point is out of range");
 			return false;

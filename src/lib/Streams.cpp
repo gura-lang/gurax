@@ -24,7 +24,7 @@ Stream_Binary::Stream_Binary(Flags flags) : Stream_Binary(flags, new BinaryRefer
 	buffTgt.reserve(1024);
 }
 
-size_t Stream_Binary::DoGetSize()
+size_t Stream_Binary::DoGetBytes()
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	return buffTgt.size();

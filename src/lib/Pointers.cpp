@@ -60,7 +60,7 @@ UInt8* Pointer_Binary::GetWritablePointerC() const
 	return nullptr;
 }
 
-size_t Pointer_Binary::GetSizeEntire() const
+size_t Pointer_Binary::GetBytesEntire() const
 {
 	return GetBinary().size();
 }
@@ -84,7 +84,7 @@ Pointer_Memory::Pointer_Memory(const Pointer_Memory& src) :
 
 bool Pointer_Memory::StorePrepare(size_t bytes)
 {
-	return _offset + bytes <= GetMemory().GetSize();
+	return _offset + bytes <= GetMemory().GetBytes();
 }
 
 void Pointer_Memory::StoreBuffer(const void* buff, size_t bytes)
@@ -96,7 +96,7 @@ void Pointer_Memory::StoreBuffer(const void* buff, size_t bytes)
 
 const UInt8* Pointer_Memory::ExtractPrepare(size_t bytes)
 {
-	if (_offset + bytes > GetMemory().GetSize()) return nullptr;
+	if (_offset + bytes > GetMemory().GetBytes()) return nullptr;
 	const UInt8* p = GetMemory().GetPointer<UInt8>(_offset);
 	_offset += bytes;
 	return p;
@@ -112,9 +112,9 @@ UInt8* Pointer_Memory::GetWritablePointerC() const
 	return GetMemory().GetPointer<UInt8>(_offset);
 }
 
-size_t Pointer_Memory::GetSizeEntire() const
+size_t Pointer_Memory::GetBytesEntire() const
 {
-	return GetMemory().GetSize();
+	return GetMemory().GetBytes();
 }
 
 bool Pointer_Memory::IsWritable() const

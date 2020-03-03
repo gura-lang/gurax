@@ -31,7 +31,7 @@ public:
 	virtual const void* GetPointerToTarget() const override { return _pBinary.get(); }
 	virtual const UInt8* GetPointerC() const override;
 	virtual UInt8* GetWritablePointerC() const override;
-	virtual size_t GetSizeEntire() const override;
+	virtual size_t GetBytesEntire() const override;
 	virtual bool IsWritable() const override;
 };
 
@@ -58,7 +58,7 @@ public:
 	virtual const void* GetPointerToTarget() const override { return _pMemory.get(); }
 	virtual const UInt8* GetPointerC() const override;
 	virtual UInt8* GetWritablePointerC() const override;
-	virtual size_t GetSizeEntire() const override;
+	virtual size_t GetBytesEntire() const override;
 	virtual bool IsWritable() const override;
 };
 
