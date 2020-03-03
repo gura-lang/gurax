@@ -141,9 +141,6 @@ public:
 		static void Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
-		template<typename T_PixelDst, typename T_PixelSrc>
-		static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-								 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	};
 	class PixelRGB : public Pixel {
 	public:
@@ -406,6 +403,9 @@ public:
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 			   size_t xSrc, size_t ySrc, size_t width, size_t height);
+	template<typename T_PixelDst, typename T_PixelSrc>
+	static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+							 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 					 size_t xSrc, size_t ySrc, size_t width, size_t height);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
@@ -423,6 +423,8 @@ public:
 	Image* Rotate270(const Format& format) const;
 	Image* Flip(const Format& format, bool horzFlag, bool vertFlag) const;
 	Image* Flip(bool horzFlag, bool vertFlag) const { return Flip(GetFormat(), horzFlag, vertFlag); }
+	Image* GrayScale(const Format& format) const;
+	Image* GrayScale() const { return GrayScale(GetFormat()); }
 	Color GetPixelColor(size_t x, size_t y) const {
 		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;

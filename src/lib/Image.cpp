@@ -271,44 +271,6 @@ void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t w
 	}
 }
 
-template<typename T_PixelDst, typename T_PixelSrc>
-void Image::Pixel::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-								const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
-{
-	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
-	pMemory->Fill(0x00);
-	Accumulator* accumulators = pMemory->GetPointer<Accumulator>();
-	UInt8* pLineDst = pixelDst.GetPointer();
-	const UInt8* pLineSrc = pixelSrc.GetPointer();
-	size_t htAccum = 0;
-	for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
-		const UInt8* pSrc = pLineSrc;
-		size_t wdAccum = 0;
-		size_t xDst = 0;
-		for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
-			accumulators[xDst].Store<T_PixelSrc>(pSrc);
-			wdAccum += wdDst;
-			if (wdAccum >= wdSrc) {
-				wdAccum -= wdSrc;
-				xDst++;
-			}
-			pSrc += T_PixelSrc::bytesPerPixel;
-		}
-		htAccum += htDst;
-		if (htAccum >= htSrc) {
-			UInt8* pDst = pLineDst;
-			for (size_t xDst = 0; xDst < wdDst; xDst++) {
-				accumulators[xDst].Extract<T_PixelDst>(pDst);
-				pDst += T_PixelDst::bytesPerPixel;
-			}
-			htAccum -= htSrc;
-			pLineDst += pixelDst.GetBytesPerLine();
-			pMemory->Fill(0x00);
-		}
-		pLineSrc += pixelSrc.GetBytesPerLine();
-	}
-}
-
 //------------------------------------------------------------------------------
 // Image::PixelRGB
 //------------------------------------------------------------------------------
@@ -508,6 +470,44 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 	}
 }
 
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
+						 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
+{
+	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
+	pMemory->Fill(0x00);
+	Accumulator* accumulators = pMemory->GetPointer<Accumulator>();
+	UInt8* pLineDst = pixelDst.GetPointer();
+	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	size_t htAccum = 0;
+	for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
+		const UInt8* pSrc = pLineSrc;
+		size_t wdAccum = 0;
+		size_t xDst = 0;
+		for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
+			accumulators[xDst].Store<T_PixelSrc>(pSrc);
+			wdAccum += wdDst;
+			if (wdAccum >= wdSrc) {
+				wdAccum -= wdSrc;
+				xDst++;
+			}
+			pSrc += T_PixelSrc::bytesPerPixel;
+		}
+		htAccum += htDst;
+		if (htAccum >= htSrc) {
+			UInt8* pDst = pLineDst;
+			for (size_t xDst = 0; xDst < wdDst; xDst++) {
+				accumulators[xDst].Extract<T_PixelDst>(pDst);
+				pDst += T_PixelDst::bytesPerPixel;
+			}
+			htAccum -= htSrc;
+			pLineDst += pixelDst.GetBytesPerLine();
+			pMemory->Fill(0x00);
+		}
+		pLineSrc += pixelSrc.GetBytesPerLine();
+	}
+}
+
 void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
 						size_t xSrc, size_t ySrc, size_t wdSrc, size_t htSrc)
 {
@@ -515,21 +515,21 @@ void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, co
 		if (imageSrc.IsFormat(Format::RGB)) {
 			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
-			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
 			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
-			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
 			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
-			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
 			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
 			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
-			Pixel::ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
+			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	}
 }
@@ -557,6 +557,13 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 	Scanner scannerDst(Scanner::LeftTopHorz(*pImage));
 	Scanner scannerSrc(Scanner::CreateByFlip(*this, horzFlag, vertFlag));
 	Scanner::Paste(scannerDst, scannerSrc);
+	return pImage.release();
+}
+
+Image* Image::GrayScale(const Format& format) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
 	return pImage.release();
 }
 

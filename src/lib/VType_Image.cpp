@@ -226,6 +226,26 @@ Gurax_ImplementMethod(Image, GetPixel)
 	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
 }
 
+// Image#GrayScale() {block?}
+Gurax_DeclareMethod(Image, GrayScale)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Translates to a gray-scale image.\n");
+}
+
+Gurax_ImplementMethod(Image, GrayScale)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Function body
+	RefPtr<Image> pImage(image.GrayScale());
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
 // Image#PutPixel(x:Number, y:Number, color:Color):map:reduce
 Gurax_DeclareMethod(Image, PutPixel)
 {
@@ -255,7 +275,8 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
-// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image, xSrc?:Number, ySrc?:Number, width?:Number, height?:Number):reduce
+// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image,
+//             xSrc?:Number, ySrc?:Number, width?:Number, height?:Number):reduce
 Gurax_DeclareMethod(Image, Paste)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -672,6 +693,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, FillRect));
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
+	Assign(Gurax_CreateMethod(Image, GrayScale));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
