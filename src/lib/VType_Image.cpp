@@ -52,7 +52,7 @@ Gurax_ImplementConstructor(Image)
 	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
 	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "format takes `rgb or `rgba");
+		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
 		return Value::nil();
 	}
 	// Function body
@@ -90,7 +90,7 @@ Gurax_ImplementClassMethod(Image, Blank)
 	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
 	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "format takes `rgb or `rgba");
+		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
 		return Value::nil();
 	}
 	// Function body
@@ -226,10 +226,11 @@ Gurax_ImplementMethod(Image, GetPixel)
 	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
 }
 
-// Image#GrayScale() {block?}
+// Image#GrayScale(format?:Symbol) {block?}
 Gurax_DeclareMethod(Image, GrayScale)
 {
 	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -241,8 +242,16 @@ Gurax_ImplementMethod(Image, GrayScale)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : image.GetFormat();
+	if (!format.IsValid()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
+		return Value::nil();
+	}
 	// Function body
-	RefPtr<Image> pImage(image.GrayScale());
+	RefPtr<Image> pImage(image.GrayScale(format));
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
@@ -353,7 +362,8 @@ Gurax_ImplementMethod(Image, Read)
 	return valueThis.Reference();
 }
 
-// Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number, wdSrc?:Number, htSrc?:Number)
+// Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number,
+//              wdSrc?:Number, htSrc?:Number, format?:Symbol)
 Gurax_DeclareMethod(Image, Resize)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -363,6 +373,7 @@ Gurax_DeclareMethod(Image, Resize)
 	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -381,13 +392,19 @@ Gurax_ImplementMethod(Image, Resize)
 	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
 	int wdSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
 	int htSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
+	const Symbol* pSymbol = args.PickSymbol();
+	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : imageSrc.GetFormat();
+	if (!format.IsValid()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
+		return Value::nil();
+	}
 	// Function body
 	if (wdDst <= 0 || htDst <= 0) {
 		Error::Issue(ErrorType::RangeError, "invalid value for wdDst and htDst.");
 		return Value::nil();
 	}
 	if (!imageSrc.CheckArea(xSrc, ySrc, wdSrc, htSrc)) return Value::nil();
-	RefPtr<Image> pImage(new Image(imageSrc.GetFormat(), imageSrc.GetAlphaDefault()));
+	RefPtr<Image> pImage(new Image(format, imageSrc.GetAlphaDefault()));
 	if (!pImage->Allocate(wdDst, htDst)) {
 		Error::Issue(ErrorType::MemoryError, "memory allocation error.");
 		return Value::nil();
