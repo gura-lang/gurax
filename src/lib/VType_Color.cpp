@@ -122,6 +122,27 @@ Gurax_ImplementClassMethod(Color, RGBA)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
+// Color#GrayScale() {block?}
+Gurax_DeclareMethod(Color, GrayScale)
+{
+	Declare(VTYPE_Color, Flag::Map);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts the color to gray-scaled one.\n");
+}
+
+Gurax_ImplementMethod(Color, GrayScale)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return argument.ReturnValue(processor, new Value_Color(valueThis.GetColor().GrayScale()));
+}
+
+//-----------------------------------------------------------------------------
+// Implementation of properties
+//-----------------------------------------------------------------------------
 // Color#r
 Gurax_DeclareProperty_RW(Color, r)
 {
@@ -247,6 +268,8 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Color, RGB));
 	Assign(Gurax_CreateClassMethod(Color, RGBA));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Color, GrayScale));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Color, r));
 	Assign(Gurax_CreateProperty(Color, g));

@@ -26,6 +26,9 @@ TestCase('Constructor') {
 	Tester(`Color(`aqua))
 	Tester(`Color(`white))
 	Tester(`Color(`x))
+	Tester(`Color(`red, 0))
+	Tester(`Color(`red, 128))
+	Tester(`Color(`red, 255))
 }
 
 TestCase('Color.RGB()') {
@@ -49,4 +52,26 @@ TestCase('Property access') {
 	Tester(`c.g)
 	Tester(`c.b)
 	Tester(`c.a)
+}
+
+TestCase('Color#GrayScale()') {
+	Tester(`Color(`black).GrayScale())
+	Tester(`Color(`maroon).GrayScale())
+	Tester(`Color(`green).GrayScale())
+	Tester(`Color(`olive).GrayScale())
+	Tester(`Color(`navy).GrayScale())
+	Tester(`Color(`purple).GrayScale())
+	Tester(`Color(`teal).GrayScale())
+	Tester(`Color(`gray).GrayScale())
+	Tester(`Color(`silver).GrayScale())
+	Tester(`Color(`red).GrayScale())
+	Tester(`Color(`lime).GrayScale())
+	Tester(`Color(`yellow).GrayScale())
+	Tester(`Color(`blue).GrayScale())
+	Tester(`Color(`fuchsia).GrayScale())
+	Tester(`Color(`aqua).GrayScale())
+	Tester(`Color(`white).GrayScale())
+	Tester(`Color(`red, 0).GrayScale())
+	Tester(`Color(`red, 128).GrayScale())
+	Tester(`Color(`red, 255).GrayScale())
 }

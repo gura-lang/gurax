@@ -174,14 +174,14 @@ void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* p)
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* p)
 {
-	SetRGB(GetPointer(), Image::GetR(p), Image::GetG(p), Image::GetB(p));
+	PixelRGB::SetRGB(GetPointer(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p));
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* p)
 {
-	SetRGBA(GetPointer(), Image::GetR(p), Image::GetG(p), Image::GetB(p),
-			GetMetrics().alphaDefault);
+	PixelRGBA::SetRGBA(GetPointer(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p),
+					   GetMetrics().alphaDefault);
 }
 
 template<>
@@ -558,6 +558,19 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 	Scanner scannerSrc(Scanner::CreateByFlip(*this, horzFlag, vertFlag));
 	Scanner::Paste(scannerDst, scannerSrc);
 	return pImage.release();
+}
+
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc)
+{
+	UInt8* pDst = pixelDst.GetPointer();
+	const UInt8* pSrc = pixelSrc.GetPointer();
+	size_t nPixels = pixelDst.GetMetrics().CountPixels();
+	for (size_t iPixel; iPixel < nPixels; iPixel++) {
+		
+		pDst += T_PixelDst::bytesPerPixel;
+		pSrc += T_PixelSrc::bytesPerPixel;
+	}		
 }
 
 Image* Image::GrayScale(const Format& format) const

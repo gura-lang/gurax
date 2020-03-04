@@ -106,7 +106,14 @@ public:
 			(static_cast<UInt32>(GetB()) << 16) + (static_cast<UInt32>(GetG()) << 8) +
 			(static_cast<UInt32>(GetR()) << 0);
 	}
-	UInt8 GetGray() const { return CalcGray(GetR(), GetG(), GetB()); }
+	Color GrayScale() const { return GrayScale(*this); }
+	static Color GrayScale(const Color& color) {
+		return GrayScale(color.GetR(), color.GetG(), color.GetB(), color.GetA());
+	}
+	static Color GrayScale(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
+		UInt8 gray = CalcGray(r, g, b);
+		return Color(gray, gray, gray, a);
+	}
 	static UInt8 CalcGray(UInt8 r, UInt8 g, UInt8 b) {
 		return static_cast<UInt8>(
 			(static_cast<UInt32>(r) * 299 + static_cast<UInt32>(g) * 587 +
