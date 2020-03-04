@@ -1,0 +1,49 @@
+======== Property ========
+Image.__prop__(`bytes) .. <PropHandler:bytes:Number:R>
+Image.__prop__(`bytesPerLine) .. <PropHandler:bytesPerLine:Number:R>
+Image.__prop__(`bytesPerPixel) .. <PropHandler:bytesPerPixel:Number:R>
+Image.__prop__(`format) .. <PropHandler:format:Symbol:R>
+Image.__prop__(`height) .. <PropHandler:height:Number:R>
+Image.__prop__(`p) .. <PropHandler:p:Pointer:R>
+Image.__prop__(`palette) .. <PropHandler:palette:Palette:nil:R:W>
+Image.__prop__(`width) .. <PropHandler:width:Number:R>
+======== Property Test ========
+Image.Blank(48, 32) .. Image:rgba:48x32
+img.format .. `rgba
+img.width .. 48
+img.height .. 32
+img.bytes .. 6144
+img.bytesPerLine .. 192
+img.bytesPerPixel .. 4
+img.palette .. <Nil>
+img.p .. <Pointer:0/6144>
+Image.Blank(48, 32, format = `rgb) .. Image:rgb:48x32
+img.format .. `rgb
+img.width .. 48
+img.height .. 32
+img.bytes .. 4608
+img.bytesPerLine .. 144
+img.bytesPerPixel .. 3
+img.palette .. <Nil>
+img.p .. <Pointer:0/4608>
+======== Image#Fill() ========
+======== Image#FillRect() ========
+======== Image#Flip() ========
+======== Image#GetPixel() ========
+======== Image#PutPixel() ========
+======== Image#Paste() ========
+======== Image#Read() ========
+======== Image#Resize() ========
+======== Image#ResizePaste() ========
+======== Image#Rotate() ========
+======== Image#Scan() ========
+f(img.Scan()).Join(' ') .. 0-0 1-0 2-0 3-0 4-0 0-1 1-1 2-1 3-1 4-1 0-2 1-2 2-2 3-2 4-2
+f(img.Scan(scanDir = `left_top_horz)).Join(' ') .. 0-0 1-0 2-0 3-0 4-0 0-1 1-1 2-1 3-1 4-1 0-2 1-2 2-2 3-2 4-2
+f(img.Scan(scanDir = `left_top_vert)).Join(' ') .. 0-0 0-1 0-2 1-0 1-1 1-2 2-0 2-1 2-2 3-0 3-1 3-2 4-0 4-1 4-2
+f(img.Scan(scanDir = `left_bottom_horz)).Join(' ') .. 0-2 1-2 2-2 3-2 4-2 0-1 1-1 2-1 3-1 4-1 0-0 1-0 2-0 3-0 4-0
+f(img.Scan(scanDir = `left_bottom_vert)).Join(' ') .. 0-2 0-1 0-0 1-2 1-1 1-0 2-2 2-1 2-0 3-2 3-1 3-0 4-2 4-1 4-0
+f(img.Scan(scanDir = `right_top_horz)).Join(' ') .. 4-0 3-0 2-0 1-0 0-0 4-1 3-1 2-1 1-1 0-1 4-2 3-2 2-2 1-2 0-2
+f(img.Scan(scanDir = `right_top_vert)).Join(' ') .. 4-0 4-1 4-2 3-0 3-1 3-2 2-0 2-1 2-2 1-0 1-1 1-2 0-0 0-1 0-2
+f(img.Scan(scanDir = `right_bottom_horz)).Join(' ') .. 4-2 3-2 2-2 1-2 0-2 4-1 3-1 2-1 1-1 0-1 4-0 3-0 2-0 1-0 0-0
+f(img.Scan(scanDir = `right_bottom_vert)).Join(' ') .. 4-2 4-1 4-0 3-2 3-1 3-0 2-2 2-1 2-0 1-2 1-1 1-0 0-2 0-1 0-0
+======== Image#Write() ========

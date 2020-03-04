@@ -449,22 +449,22 @@ void Image::Paste(size_t xDst, size_t yDst, const Image& imageSrc,
 {
 	if (IsFormat(Format::RGB)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGB>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGB>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGBA>(xSrc, ySrc));
 			Pixel::Paste(pixelDst, pixelSrc, width, height);
 		}
 	}
@@ -513,22 +513,22 @@ void Image::ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, co
 {
 	if (IsFormat(Format::RGB)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGB>(xSrc, ySrc));
 			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			auto pixelDst(GetPixel<PixelRGB>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGB>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGBA>(xSrc, ySrc));
 			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	} else if (IsFormat(Format::RGBA)) {
 		if (imageSrc.IsFormat(Format::RGB)) {
-			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGB>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGB>(xSrc, ySrc));
 			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		} else if (imageSrc.IsFormat(Format::RGBA)) {
-			auto pixelDst(GetPixel<PixelRGBA>(xDst, yDst));
-			auto pixelSrc(imageSrc.GetPixel<PixelRGBA>(xSrc, ySrc));
+			auto pixelDst(MakePixel<PixelRGBA>(xDst, yDst));
+			auto pixelSrc(imageSrc.MakePixel<PixelRGBA>(xSrc, ySrc));
 			ResizePasteT(pixelDst, wdDst, htDst, pixelSrc, wdSrc, htSrc);
 		}
 	}
@@ -566,8 +566,9 @@ void Image::GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc)
 	UInt8* pDst = pixelDst.GetPointer();
 	const UInt8* pSrc = pixelSrc.GetPointer();
 	size_t nPixels = pixelDst.GetMetrics().CountPixels();
-	for (size_t iPixel; iPixel < nPixels; iPixel++) {
-		
+	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
+		UInt8 gray = Color::CalcGray(Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc));
+		T_PixelDst::SetRGBA(pDst, gray, gray, gray, T_PixelSrc::GetA(pSrc));
 		pDst += T_PixelDst::bytesPerPixel;
 		pSrc += T_PixelSrc::bytesPerPixel;
 	}		
@@ -577,6 +578,27 @@ Image* Image::GrayScale(const Format& format) const
 {
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
+	if (format.IsIdentical(Format::RGB)) {
+		if (IsFormat(Format::RGB)) {
+			auto pixelDst(pImage->MakePixel<PixelRGB>());
+			auto pixelSrc(MakePixel<PixelRGB>());
+			GrayScaleT(pixelDst, pixelSrc);
+		} else if (IsFormat(Format::RGBA)) {
+			auto pixelDst(pImage->MakePixel<PixelRGB>());
+			auto pixelSrc(MakePixel<PixelRGBA>());
+			GrayScaleT(pixelDst, pixelSrc);
+		}
+	} else if (format.IsIdentical(Format::RGBA)) {
+		if (IsFormat(Format::RGB)) {
+			auto pixelDst(pImage->MakePixel<PixelRGBA>());
+			auto pixelSrc(MakePixel<PixelRGB>());
+			GrayScaleT(pixelDst, pixelSrc);
+		} else if (IsFormat(Format::RGBA)) {
+			auto pixelDst(pImage->MakePixel<PixelRGBA>());
+			auto pixelSrc(MakePixel<PixelRGBA>());
+			GrayScaleT(pixelDst, pixelSrc);
+		}
+	}
 	return pImage.release();
 }
 

@@ -107,6 +107,7 @@ public:
 		Pixel(const Pixel&& src) : _metrics(src._metrics), _p(src._p) {}
 		Pixel& operator=(const Pixel&& src) noexcept = delete;
 	public:
+		const Metrics& GetMetrics() const { return _metrics; }
 		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
 		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
@@ -150,6 +151,7 @@ public:
 	public:
 		static void SetA(UInt8* p, UInt8 a) {}
 		static UInt8 GetA(const UInt8* p) { return 0xff; }
+		static UInt8 GetA(const UInt8* p, UInt8 alphaDefault) { return alphaDefault; }
 		static void SetRGBA(UInt8* p, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
 			SetR(p, r); SetG(p, g); SetB(p, b);
 		}
@@ -202,6 +204,7 @@ public:
 		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
 	public:
 		static UInt8 GetA(const UInt8* p) { return *(p + offsetA); }
+		static UInt8 GetA(const UInt8* p, UInt8 alphaDefault) { return GetA(p); }
 		static UInt32 GetPacked(const UInt8* p) { return *reinterpret_cast<const UInt32*>(p); } 
 		static UInt32 GetPacked(const UInt8* p, UInt8 alphaDefault) { return GetPacked(p); }
 		static Color GetColor(const UInt8* p) { return Color(GetPacked(p)); }
@@ -393,10 +396,10 @@ public:
 		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
 	size_t GetBytes() const { return _pMemory->GetBytes(); }
-	template<typename T_Pixel> T_Pixel GetPixel() const {
+	template<typename T_Pixel> T_Pixel MakePixel() const {
 		return T_Pixel(GetMetrics(), GetPointer());
 	}
-	template<typename T_Pixel> T_Pixel GetPixel(size_t x, size_t y) const {
+	template<typename T_Pixel> T_Pixel MakePixel(size_t x, size_t y) const {
 		return T_Pixel(GetMetrics(), GetPointer(x, y));
 	}
 	bool Read(Stream& stream, const char* imgTypeName = nullptr);
@@ -430,12 +433,12 @@ public:
 	Image* GrayScale(const Format& format) const;
 	Image* GrayScale() const { return GrayScale(GetFormat()); }
 	Color GetPixelColor(size_t x, size_t y) const {
-		return IsFormat(Format::RGB)? GetPixel<PixelRGB>(x, y).GetColor() :
-			IsFormat(Format::RGBA)? GetPixel<PixelRGBA>(x, y).GetColor() : Color::zero;
+		return IsFormat(Format::RGB)? MakePixel<PixelRGB>(x, y).GetColor() :
+			IsFormat(Format::RGBA)? MakePixel<PixelRGBA>(x, y).GetColor() : Color::zero;
 	}
 	void PutPixelColor(size_t x, size_t y, const Color& color) const {
-		if (IsFormat(Format::RGB)) { GetPixel<PixelRGB>(x, y).SetColor(color); }
-		else if (IsFormat(Format::RGBA)) { GetPixel<PixelRGBA>(x, y).SetColor(color); }
+		if (IsFormat(Format::RGB)) { MakePixel<PixelRGB>(x, y).SetColor(color); }
+		else if (IsFormat(Format::RGBA)) { MakePixel<PixelRGBA>(x, y).SetColor(color); }
 	}
 	bool CheckCoord(int x, int y) const { return GetMetrics().CheckCoord(x, y); }
 	bool CheckArea(int x, int y, int width, int height) const { return GetMetrics().CheckArea(x, y, width, height); }
