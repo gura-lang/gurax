@@ -23,7 +23,7 @@ TestCase('Property Test') {
 		Tester(`img.palette)
 		Tester(`img.p)
 	}
-	Tester(`Image.Blank(48, 32, format = `rgb)) {|img|
+	Tester(`Image.Blank(48, 32):rgb) {|img|
 		Tester(`img.format)
 		Tester(`img.width)
 		Tester(`img.height)

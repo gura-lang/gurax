@@ -17,7 +17,7 @@ img.bytesPerLine .. 192
 img.bytesPerPixel .. 4
 img.palette .. <Nil>
 img.p .. <Pointer:0/6144>
-Image.Blank(48, 32, format = `rgb) .. Image:rgb:48x32
+Image.Blank(48, 32):rgb .. Image:rgb:48x32
 img.format .. `rgb
 img.width .. 48
 img.height .. 32
