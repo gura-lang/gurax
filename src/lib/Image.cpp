@@ -647,6 +647,22 @@ Image* Image::MapColorLevel(const Format& format, const UInt8* mapR, const UInt8
 	return pImage.release();
 }
 
+Image* Image::MapAlphaLevel(const UInt8* mapA) const
+{
+	if (!IsFormat(Format::RGBA)) return nullptr;
+	RefPtr<Image> pImage(new Image(GetFormat()));
+	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
+	UInt8* pDst = GetPointer();
+	const UInt8* pSrc = pImage->GetPointer();
+	size_t nPixels = GetMetrics().CountPixels();
+	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
+		PixelRGBA::SetA(pDst, mapA[PixelRGBA::GetA(pSrc)]);
+		pDst += PixelRGBA::bytesPerPixel;
+		pSrc += PixelRGBA::bytesPerPixel;
+	}		
+	return pImage.release();
+}
+
 void Image::CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024)
 {
 	int xCenterSrc = static_cast<int>(wdSrc / 2);

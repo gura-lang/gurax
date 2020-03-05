@@ -263,6 +263,39 @@ Gurax_ImplementMethod(Image, GrayScale)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
+// Image#MapAlphaLevel(mapA:Pointer) {block?}
+Gurax_DeclareMethod(Image, MapAlphaLevel)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("mapA", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Translates each pixel's alpha element according to the mapping data pointed by the given pointer mapA\n"
+		"that contains at least 256 bytes of data.\n");
+}
+
+Gurax_ImplementMethod(Image, MapAlphaLevel)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	const Pointer& ptrA = args.Pick<Value_Pointer>().GetPointer();
+	if (ptrA.GetBytesAvailable() < 256) {
+		Error::Issue(ErrorType::RangeError, "mapA must contain data of at least 256 bytes");
+		return Value::nil();
+	}
+	// Function body
+	if (!image.IsFormat(Image::Format::RGBA)) {
+		Error::Issue(ErrorType::ValueError, "the image data must be of RGBA format.");
+		return Value::nil();
+	}
+	RefPtr<Image> pImage(image.MapAlphaLevel(ptrA.GetPointerC<UInt8>()));
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
 // Image#MapColorLevel(mapR:Pointer, mapG:Pointer, mapB:Pointer):[rgb,rgba] {block?}
 Gurax_DeclareMethod(Image, MapColorLevel)
 {
@@ -276,7 +309,7 @@ Gurax_DeclareMethod(Image, MapColorLevel)
 	AddHelp(
 		Gurax_Symbol(en),
 		"Translates each pixel's RGB elements according to the mapping data pointed by the given pointers:\n"
-		"`mapR`, `mapG` and `mapB`. They must contain at least 256 bytes of data.\n"
+		"`mapR`, `mapG` and `mapB`, which contain at least 256 bytes of data.\n"
 		"\n"
 		"The attributes `rgb` and `rgba` specify the format of the image:\n"
 		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
@@ -817,6 +850,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, GrayScale));
+	Assign(Gurax_CreateMethod(Image, MapAlphaLevel));
 	Assign(Gurax_CreateMethod(Image, MapColorLevel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Paste));
