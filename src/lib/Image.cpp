@@ -652,11 +652,12 @@ Image* Image::MapAlphaLevel(const UInt8* mapA) const
 	if (!IsFormat(Format::RGBA)) return nullptr;
 	RefPtr<Image> pImage(new Image(GetFormat()));
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
-	UInt8* pDst = GetPointer();
-	const UInt8* pSrc = pImage->GetPointer();
+	UInt8* pDst = pImage->GetPointer();
+	const UInt8* pSrc = GetPointer();
 	size_t nPixels = GetMetrics().CountPixels();
 	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
-		PixelRGBA::SetA(pDst, mapA[PixelRGBA::GetA(pSrc)]);
+		PixelRGBA::SetRGBA(pDst, PixelRGBA::GetR(pSrc), PixelRGBA::GetG(pSrc),
+						   PixelRGBA::GetB(pSrc), mapA[PixelRGBA::GetA(pSrc)]);
 		pDst += PixelRGBA::bytesPerPixel;
 		pSrc += PixelRGBA::bytesPerPixel;
 	}		

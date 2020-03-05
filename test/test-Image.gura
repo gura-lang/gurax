@@ -1,25 +1,6 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('Image#MapColorLevel()') {
-	img = Image.Blank(16, 16)
-	//img.MapColorLevel()
-	p = img.p
-	repeat (16 * 16) {|i| p.Put(`uint8, [i, i, i, 0xff])}
-	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
-	mapReverse = Binary(), mapReverse.p.Put(`uint8, 255..0)
-	Println('original')
-	img.p.Dump()
-	Println('linear, linear, linear')
-	img.MapColorLevel(mapLinear, mapLinear, mapLinear).p.Dump()
-	Println('reverse, linear, linear')
-	img.MapColorLevel(mapReverse, mapLinear, mapLinear).p.Dump()
-	Println('linear, reverse, linear')
-	img.MapColorLevel(mapLinear, mapReverse, mapLinear).p.Dump()
-	Println('linear, linear, reverse')
-	img.MapColorLevel(mapLinear, mapLinear, mapReverse).p.Dump()
-}
-sys.Exit()
 TestCase('Property') {
 	Tester(`Image.__prop__(`bytes))
 	Tester(`Image.__prop__(`bytesPerLine))
@@ -64,6 +45,44 @@ TestCase('Image#Flip()') {
 }
 
 TestCase('Image#GetPixel()') {
+}
+
+TestCase('Image#MapAlphaLevel()') {
+	img = Image.Blank(16, 16)
+	p = img.p
+	repeat (16 * 16) {|i| p.Put(`uint8, [i % 16, (i % 16) + 0x10, (i % 16) + 0x20, i])}
+	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
+	mapReverse = Binary(), mapReverse.p.Put(`uint8, 255..0)
+	mapShort = Binary(), mapLinear.p.Put(`uint8, 0..254)
+	Println('original')
+	img.p.Dump()
+	Println('linear')
+	img.MapAlphaLevel(mapLinear).p.Dump()
+	Println('reverse')
+	img.MapAlphaLevel(mapReverse).p.Dump()
+	Tester(`img.MapAlphaLevel(mapShort))
+}
+
+TestCase('Image#MapColorLevel()') {
+	img = Image.Blank(16, 16)
+	p = img.p
+	repeat (16 * 16) {|i| p.Put(`uint8, [i, i, i, 0xff])}
+	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
+	mapReverse = Binary(), mapReverse.p.Put(`uint8, 255..0)
+	mapShort = Binary(), mapLinear.p.Put(`uint8, 0..254)
+	Println('original')
+	img.p.Dump()
+	Println('linear, linear, linear')
+	img.MapColorLevel(mapLinear, mapLinear, mapLinear).p.Dump()
+	Println('reverse, linear, linear')
+	img.MapColorLevel(mapReverse, mapLinear, mapLinear).p.Dump()
+	Println('linear, reverse, linear')
+	img.MapColorLevel(mapLinear, mapReverse, mapLinear).p.Dump()
+	Println('linear, linear, reverse')
+	img.MapColorLevel(mapLinear, mapLinear, mapReverse).p.Dump()
+	Tester(`img.MapColorLevel(mapShort, mapLinear, mapLinear))
+	Tester(`img.MapColorLevel(mapLinear, mapShort, mapLinear))
+	Tester(`img.MapColorLevel(mapLinear, mapLinear, mapShort))
 }
 
 TestCase('Image#PutPixel()') {
