@@ -2743,7 +2743,7 @@ void PUnit_BeginArgSlotNamed<nExprSrc, discardValueFlag>::Exec(Processor& proces
 				new Value_ArgSlot(new ArgSlot_Dict(pValueOfDict->Reference(), GetSymbol())));
 			processor.SetPUnitNext(_GetPUnitCont());
 		} else {
-			Error::Issue(ErrorType::ArgumentError, "can't find the specified argument: %s", GetSymbol()->GetName());
+			Error::Issue(ErrorType::ArgumentError, "invalid argument: %s", GetSymbol()->GetName());
 			processor.ErrorDone();
 			return;
 		}

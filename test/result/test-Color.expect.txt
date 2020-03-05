@@ -21,6 +21,9 @@ Color(`fuchsia) .. Color:#ff00ff,ff
 Color(`aqua) .. Color:#00ffff,ff
 Color(`white) .. Color:#ffffff,ff
 Color(`x) .. unknown color name
+Color(`red, 0) .. Color:#ff0000,00
+Color(`red, 128) .. Color:#ff0000,80
+Color(`red, 255) .. Color:#ff0000,ff
 ======== Color.RGB() ========
 Color.RGB(0, 0, 0) .. Color:#000000,ff
 Color.RGB(255, 255, 255) .. Color:#ffffff,ff
@@ -37,3 +40,23 @@ c.r .. 128
 c.g .. 128
 c.b .. 128
 c.a .. 128
+======== Color#GrayScale() ========
+Color(`black).GrayScale() .. Color:#000000,ff
+Color(`maroon).GrayScale() .. Color:#262626,ff
+Color(`green).GrayScale() .. Color:#4b4b4b,ff
+Color(`olive).GrayScale() .. Color:#717171,ff
+Color(`navy).GrayScale() .. Color:#0e0e0e,ff
+Color(`purple).GrayScale() .. Color:#343434,ff
+Color(`teal).GrayScale() .. Color:#595959,ff
+Color(`gray).GrayScale() .. Color:#808080,ff
+Color(`silver).GrayScale() .. Color:#c0c0c0,ff
+Color(`red).GrayScale() .. Color:#4c4c4c,ff
+Color(`lime).GrayScale() .. Color:#959595,ff
+Color(`yellow).GrayScale() .. Color:#e1e1e1,ff
+Color(`blue).GrayScale() .. Color:#1d1d1d,ff
+Color(`fuchsia).GrayScale() .. Color:#696969,ff
+Color(`aqua).GrayScale() .. Color:#b2b2b2,ff
+Color(`white).GrayScale() .. Color:#ffffff,ff
+Color(`red, 0).GrayScale() .. Color:#4c4c4c,00
+Color(`red, 128).GrayScale() .. Color:#4c4c4c,80
+Color(`red, 255).GrayScale() .. Color:#4c4c4c,ff

@@ -30,53 +30,61 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Image(stream:Stream, format?:Symbol):map {block?}
+// Image(stream:Stream:r, imgType?:String):map:[rgb,rgba] {block?}
 Gurax_DeclareConstructor(Image)
 {
 	Declare(VTYPE_Expr, Flag::Map);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an `Image` instance by reading an image data from the given stream.\n"
-		"The argument `format` specifies the image format: `` `rgb`` or `` `rgba`,\n"
-		"where `` `rgba` is used if omitted.");
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the 32-bit format is specified.\n");
 }
 
 Gurax_ImplementConstructor(Image)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.Pick<Value_Stream>().GetStream();
-	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
-	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
-	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
-		return Value::nil();
-	}
+	Stream& stream = args.PickStream();
+	const char* imgType = args.IsValid()? args.PickString() : nullptr;
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
 	RefPtr<Image> pImage(new Image(format));
-	if (!pImage->Read(stream)) return Value::nil();
+	if (!pImage->Read(stream, imgType)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Image.Blank(width:Number, height:Number, color?:Color, format?:Symbol) {block?}
+// Image.Blank(width:Number, height:Number, color?:Color):[rgb,rgba] {block?}
 Gurax_DeclareClassMethod(Image, Blank)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an `Image` instance filled with the specified color.\n"
-		"If the argument `color` is omitted, it will be filled with black.\n");
+		"If the argument `color` is omitted, it will be filled with black.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the 32-bit format is specified.\n");
 }
 
 Gurax_ImplementClassMethod(Image, Blank)
@@ -87,12 +95,8 @@ Gurax_ImplementClassMethod(Image, Blank)
 	size_t height = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	const Color& color = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::black;
-	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
-	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : Image::Format::RGBA;
-	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
-		return Value::nil();
-	}
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
 	RefPtr<Image> pImage(new Image(format));
 	if (!pImage->Allocate(width, height)) return Value::nil();
@@ -226,15 +230,21 @@ Gurax_ImplementMethod(Image, GetPixel)
 	return argument.ReturnValue(processor, new Value_Color(image.GetPixelColor(x, y)));
 }
 
-// Image#GrayScale(format?:Symbol) {block?}
+// Image#GrayScale():[rgb,rgba] {block?}
 Gurax_DeclareMethod(Image, GrayScale)
 {
 	Declare(VTYPE_Image, Flag::None);
-	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Translates to a gray-scale image.\n");
+		"Translates to a gray-scale image.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the created image inherits the target's format.\n");
 }
 
 Gurax_ImplementMethod(Image, GrayScale)
@@ -243,13 +253,10 @@ Gurax_ImplementMethod(Image, GrayScale)
 	auto& valueThis = GetValueThis(argument);
 	Image& image = valueThis.GetImage();
 	// Argument
-	ArgPicker args(argument);
-	const Symbol* pSymbol = args.PickSymbol();
-	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : image.GetFormat();
-	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
-		return Value::nil();
-	}
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+		image.GetFormat();
 	// Function body
 	RefPtr<Image> pImage(image.GrayScale(format));
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
@@ -363,7 +370,7 @@ Gurax_ImplementMethod(Image, Read)
 }
 
 // Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number,
-//              wdSrc?:Number, htSrc?:Number, format?:Symbol)
+//              wdSrc?:Number, htSrc?:Number):[rgb,rgba]
 Gurax_DeclareMethod(Image, Resize)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -373,10 +380,22 @@ Gurax_DeclareMethod(Image, Resize)
 	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Created a resized image from the target.\n"
+		"\n"
+		"The arguments `wdDst` and `htDst` specify the size of the resized image.\n"
+		"\n"
+		"The arguments `xSrc`, `ySrc`, `wdSrc` and `htSrc` specify the image area that is resized.\n"
+		"Part of or all of them can be omitted. If `xSrc` and `ySrc` are omitted, left-top position is specified.\n"
+		"If `wdSrc` and `htSrc` are omitted, the area up to right or bottom is speicied.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the created image inherits the target's format.\n");
 }
 
 Gurax_ImplementMethod(Image, Resize)
@@ -392,12 +411,10 @@ Gurax_ImplementMethod(Image, Resize)
 	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
 	int wdSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
 	int htSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
-	const Symbol* pSymbol = args.PickSymbol();
-	const Image::Format& format = pSymbol? Image::SymbolToFormat(pSymbol) : imageSrc.GetFormat();
-	if (!format.IsValid()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for format");
-		return Value::nil();
-	}
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+		imageSrc.GetFormat();
 	// Function body
 	if (wdDst <= 0 || htDst <= 0) {
 		Error::Issue(ErrorType::RangeError, "invalid value for wdDst and htDst.");
@@ -455,12 +472,14 @@ Gurax_ImplementMethod(Image, ResizePaste)
 	return valueThis.Reference();
 }
 
-// Image#Rotate(angle:Number, colorBg?:Color):map {block?}
+// Image#Rotate(angle:Number, colorBg?:Color):map:[rgb,rgba] {block?}
 Gurax_DeclareMethod(Image, Rotate)
 {
 	Declare(VTYPE_Image, Flag::Map);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colorBg", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -472,7 +491,12 @@ Gurax_DeclareMethod(Image, Rotate)
 		"\n"
 		"The argument `colorBg` specifies the color of pixels to fill\n"
 		"the empty area that appears after rotation.\n"
-		"If omitted, the color that has all elements set to zero is used for filling.\n");
+		"If omitted, the color that has all elements set to zero is used for filling.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the created image inherits the target's format.\n");
 }
 
 Gurax_ImplementMethod(Image, Rotate)
@@ -484,8 +508,12 @@ Gurax_ImplementMethod(Image, Rotate)
 	ArgPicker args(argument);
 	Double angle = args.PickNumber<Double>();
 	const Color& colorBg = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::zero;
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+		image.GetFormat();
 	// Function body
-	RefPtr<Image> pImage(image.Rotate(angle, colorBg));
+	RefPtr<Image> pImage(image.Rotate(format, angle, colorBg));
 	if (!pImage) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
