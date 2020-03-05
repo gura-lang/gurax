@@ -30,18 +30,19 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Image(stream:Stream:r, imgType?:String):map:[rgb,rgba] {block?}
+// Image(stream?:Stream:r, imgType?:String):map:[rgb,rgba] {block?}
 Gurax_DeclareConstructor(Image)
 {
 	Declare(VTYPE_Expr, Flag::Map);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an `Image` instance by reading an image data from the given stream.\n"
+		"Creates an `Image` instance. If the argument `stream` is specified, reads image data from the stream.\n"
+		"If omitted, an image with empty data is created.\n"
 		"\n"
 		"The attributes `rgb` and `rgba` specify the format of the image:\n"
 		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
@@ -53,13 +54,13 @@ Gurax_ImplementConstructor(Image)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
+	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	const char* imgType = args.IsValid()? args.PickString() : nullptr;
 	const Image::Format& format =
 		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
 	RefPtr<Image> pImage(new Image(format));
-	if (!pImage->Read(stream, imgType)) return Value::nil();
+	if (pStream && !pImage->Read(*pStream, imgType)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
@@ -589,6 +590,30 @@ Gurax_ImplementMethod(Image, Write)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
+// Image#alphaDefault
+Gurax_DeclareProperty_RW(Image, alphaDefault)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The alpha value that is used when the source image doesn't have alpha element\n"
+		"in operations like pasting.\n");
+}
+
+Gurax_ImplementPropertyGetter(Image, alphaDefault)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImage().GetMetrics().alphaDefault);
+}
+
+Gurax_ImplementPropertySetter(Image, alphaDefault)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	UInt8 alphaDefault = Value_Number::GetNumberRanged<UInt8>(value, 0, 255);
+	if (Error::IsIssued()) return;
+	valueThis.GetImage().GetMetrics().alphaDefault = alphaDefault;
+}
+
 // Image#bytes
 Gurax_DeclareProperty_R(Image, bytes)
 {
@@ -748,6 +773,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Scan));
 	Assign(Gurax_CreateMethod(Image, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Image, alphaDefault));
 	Assign(Gurax_CreateProperty(Image, bytes));
 	Assign(Gurax_CreateProperty(Image, bytesPerLine));
 	Assign(Gurax_CreateProperty(Image, bytesPerPixel));

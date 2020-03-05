@@ -565,10 +565,11 @@ void Image::GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc)
 {
 	UInt8* pDst = pixelDst.GetPointer();
 	const UInt8* pSrc = pixelSrc.GetPointer();
+	UInt8 alphaDefault = pixelDst.GetMetrics().alphaDefault;
 	size_t nPixels = pixelDst.GetMetrics().CountPixels();
 	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
 		UInt8 gray = Color::CalcGray(Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc));
-		T_PixelDst::SetRGBA(pDst, gray, gray, gray, T_PixelSrc::GetA(pSrc));
+		T_PixelDst::SetRGBA(pDst, gray, gray, gray, T_PixelSrc::GetA(pSrc, alphaDefault));
 		pDst += T_PixelDst::bytesPerPixel;
 		pSrc += T_PixelSrc::bytesPerPixel;
 	}		
@@ -597,6 +598,50 @@ Image* Image::GrayScale(const Format& format) const
 			auto pixelDst(pImage->MakePixel<PixelRGBA>());
 			auto pixelSrc(MakePixel<PixelRGBA>());
 			GrayScaleT(pixelDst, pixelSrc);
+		}
+	}
+	return pImage.release();
+}
+
+template<typename T_PixelDst, typename T_PixelSrc>
+void Image::MapColorLevelT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc,
+						   const UInt8* mapR, const UInt8* mapG, const UInt8* mapB)
+{
+	UInt8* pDst = pixelDst.GetPointer();
+	const UInt8* pSrc = pixelSrc.GetPointer();
+	UInt8 alphaDefault = pixelDst.GetMetrics().alphaDefault;
+	size_t nPixels = pixelDst.GetMetrics().CountPixels();
+	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
+		T_PixelDst::SetRGBA(pDst, mapR[Pixel::GetR(pSrc)], mapG[Pixel::GetG(pSrc)],
+							mapB[Pixel::GetB(pSrc)], T_PixelSrc::GetA(pSrc, alphaDefault));
+		pDst += T_PixelDst::bytesPerPixel;
+		pSrc += T_PixelSrc::bytesPerPixel;
+	}		
+}
+
+Image* Image::MapColorLevel(const Format& format, const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const
+{
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
+	if (format.IsIdentical(Format::RGB)) {
+		if (IsFormat(Format::RGB)) {
+			auto pixelDst(pImage->MakePixel<PixelRGB>());
+			auto pixelSrc(MakePixel<PixelRGB>());
+			MapColorLevelT(pixelDst, pixelSrc, mapR, mapG, mapB);
+		} else if (IsFormat(Format::RGBA)) {
+			auto pixelDst(pImage->MakePixel<PixelRGB>());
+			auto pixelSrc(MakePixel<PixelRGBA>());
+			MapColorLevelT(pixelDst, pixelSrc, mapR, mapG, mapB);
+		}
+	} else if (format.IsIdentical(Format::RGBA)) {
+		if (IsFormat(Format::RGB)) {
+			auto pixelDst(pImage->MakePixel<PixelRGBA>());
+			auto pixelSrc(MakePixel<PixelRGB>());
+			MapColorLevelT(pixelDst, pixelSrc, mapR, mapG, mapB);
+		} else if (IsFormat(Format::RGBA)) {
+			auto pixelDst(pImage->MakePixel<PixelRGBA>());
+			auto pixelSrc(MakePixel<PixelRGBA>());
+			MapColorLevelT(pixelDst, pixelSrc, mapR, mapG, mapB);
 		}
 	}
 	return pImage.release();

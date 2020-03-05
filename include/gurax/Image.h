@@ -379,6 +379,7 @@ public:
 	bool HasPalette() const { return !!_pPalette; }
 	const Format& GetFormat() const { return _metrics.format; }
 	bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
+	Metrics& GetMetrics() { return _metrics; }
 	const Metrics& GetMetrics() const { return _metrics; }
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
 	size_t GetWidth() const { return _metrics.width; }
@@ -432,6 +433,13 @@ public:
 	static void GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc);
 	Image* GrayScale(const Format& format) const;
 	Image* GrayScale() const { return GrayScale(GetFormat()); }
+	template<typename T_PixelDst, typename T_PixelSrc>
+	static void MapColorLevelT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc,
+							   const UInt8* mapR, const UInt8* mapG, const UInt8* mapB);
+	Image* MapColorLevel(const Format& format, const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const;
+	Image* MapColorLevel(const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const {
+		return MapColorLevel(GetFormat(), mapR, mapG, mapB);
+	}
 	Color GetPixelColor(size_t x, size_t y) const {
 		return IsFormat(Format::RGB)? MakePixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? MakePixel<PixelRGBA>(x, y).GetColor() : Color::zero;
