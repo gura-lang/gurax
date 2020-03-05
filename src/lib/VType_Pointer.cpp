@@ -121,7 +121,7 @@ Gurax_ImplementMethod(Pointer, Dump)
 	// Function body
 	StringStyle ss;
 	if (upperFlag) ss.UpperCase();
-	stream.Dump(pointer.GetPointerC(), pointer.GetBytesAvailable(), ss);
+	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ss);
 	return Value::nil();
 }
 

@@ -1,6 +1,25 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Image#MapColorLevel()') {
+	img = Image.Blank(16, 16)
+	//img.MapColorLevel()
+	p = img.p
+	repeat (16 * 16) {|i| p.Put(`uint8, [i, i, i, 0xff])}
+	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
+	mapReverse = Binary(), mapReverse.p.Put(`uint8, 255..0)
+	Println('original')
+	img.p.Dump()
+	Println('linear, linear, linear')
+	img.MapColorLevel(mapLinear, mapLinear, mapLinear).p.Dump()
+	Println('reverse, linear, linear')
+	img.MapColorLevel(mapReverse, mapLinear, mapLinear).p.Dump()
+	Println('linear, reverse, linear')
+	img.MapColorLevel(mapLinear, mapReverse, mapLinear).p.Dump()
+	Println('linear, linear, reverse')
+	img.MapColorLevel(mapLinear, mapLinear, mapReverse).p.Dump()
+}
+sys.Exit()
 TestCase('Property') {
 	Tester(`Image.__prop__(`bytes))
 	Tester(`Image.__prop__(`bytesPerLine))

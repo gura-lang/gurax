@@ -50,12 +50,12 @@ const UInt8* Pointer_Binary::ExtractPrepare(size_t bytes)
 	return nullptr;
 }
 
-const UInt8* Pointer_Binary::GetPointerC() const
+const void* Pointer_Binary::DoGetPointerC() const
 {
 	return GetBinary().data() + _offset;
 }
 
-UInt8* Pointer_Binary::GetWritablePointerC() const
+void* Pointer_Binary::DoGetWritablePointerC() const
 {
 	return nullptr;
 }
@@ -102,12 +102,12 @@ const UInt8* Pointer_Memory::ExtractPrepare(size_t bytes)
 	return p;
 }
 
-const UInt8* Pointer_Memory::GetPointerC() const
+const void* Pointer_Memory::DoGetPointerC() const
 {
 	return GetMemory().GetPointer<UInt8>(_offset);
 }
 
-UInt8* Pointer_Memory::GetWritablePointerC() const
+void* Pointer_Memory::DoGetWritablePointerC() const
 {
 	return GetMemory().GetPointer<UInt8>(_offset);
 }

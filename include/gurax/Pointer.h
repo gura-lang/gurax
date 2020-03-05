@@ -65,11 +65,17 @@ public:
 	bool IsTargetIdentical(const Pointer& pointer) const {
 		return GetPointerToTarget() == pointer.GetPointerToTarget();
 	}
+	template<typename T> const T* GetPointerC() const {
+		return reinterpret_cast<const T*>(DoGetPointerC());
+	}
+	template<typename T> T* GetWritablePointerC() const {
+		return reinterpret_cast<T*>(DoGetWritablePointerC());
+	}
 public:
 	virtual Pointer* Clone() const = 0;
 	virtual const void* GetPointerToTarget() const = 0;
-	virtual const UInt8* GetPointerC() const = 0;
-	virtual UInt8* GetWritablePointerC() const = 0;
+	virtual const void* DoGetPointerC() const = 0;
+	virtual void* DoGetWritablePointerC() const = 0;
 	virtual size_t GetBytesEntire() const = 0;
 	virtual bool IsWritable() const = 0;
 public:

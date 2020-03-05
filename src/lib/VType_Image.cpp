@@ -263,6 +263,59 @@ Gurax_ImplementMethod(Image, GrayScale)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
+// Image#MapColorLevel(mapR:Pointer, mapG:Pointer, mapB:Pointer):[rgb,rgba] {block?}
+Gurax_DeclareMethod(Image, MapColorLevel)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("mapR", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mapG", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mapB", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Translates each pixel's RGB elements according to the mapping data pointed by the given pointers:\n"
+		"`mapR`, `mapG` and `mapB`. They must contain at least 256 bytes of data.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the created image inherits the target's format.\n");
+}
+
+Gurax_ImplementMethod(Image, MapColorLevel)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	const Pointer& ptrR = args.Pick<Value_Pointer>().GetPointer();
+	const Pointer& ptrG = args.Pick<Value_Pointer>().GetPointer();
+	const Pointer& ptrB = args.Pick<Value_Pointer>().GetPointer();
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+		image.GetFormat();
+	if (ptrR.GetBytesAvailable() < 256) {
+		Error::Issue(ErrorType::RangeError, "mapR must contain data of at least 256 bytes");
+		return Value::nil();
+	}
+	if (ptrG.GetBytesAvailable() < 256) {
+		Error::Issue(ErrorType::RangeError, "mapG must contain data of at least 256 bytes");
+		return Value::nil();
+	}
+	if (ptrB.GetBytesAvailable() < 256) {
+		Error::Issue(ErrorType::RangeError, "mapB must contain data of at least 256 bytes");
+		return Value::nil();
+	}
+	// Function body
+	RefPtr<Image> pImage(image.MapColorLevel(format, ptrR.GetPointerC<UInt8>(),
+											 ptrG.GetPointerC<UInt8>(), ptrB.GetPointerC<UInt8>()));
+	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
+}
+
 // Image#PutPixel(x:Number, y:Number, color:Color):map:reduce
 Gurax_DeclareMethod(Image, PutPixel)
 {
@@ -285,7 +338,7 @@ Gurax_ImplementMethod(Image, PutPixel)
 	ArgPicker args(argument);
 	int x = args.PickNumber<int>();
 	int y = args.PickNumber<int>();
-	const Color& color = Value_Color::GetColor(args.PickValue());
+	const Color& color = args.Pick<Value_Color>().GetColor();
 	// Function body
 	if (!image.CheckCoord(x, y)) return Value::nil();
 	image.PutPixelColor(x, y, color);
@@ -764,6 +817,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, Flip));
 	Assign(Gurax_CreateMethod(Image, GetPixel));
 	Assign(Gurax_CreateMethod(Image, GrayScale));
+	Assign(Gurax_CreateMethod(Image, MapColorLevel));
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
