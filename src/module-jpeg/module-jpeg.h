@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_JPEG_H
 #define GURAX_MODULE_JPEG_H
 #include <gurax.h>
+#include <gurax/Image.h>
 #include "Util.h"
 #include "ImageExtension.h"
 #include "VType_Exif.h"
