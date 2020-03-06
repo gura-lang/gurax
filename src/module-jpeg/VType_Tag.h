@@ -1,0 +1,82 @@
+//==============================================================================
+// VType_Tag.h
+//==============================================================================
+#ifndef GURAX_MODULE_JPEG_VTYPE_TAG_H
+#define GURAX_MODULE_JPEG_VTYPE_TAG_H
+#include <gurax.h>
+#include "Tag.h"
+
+Gurax_BeginModuleScope(jpeg)
+
+//------------------------------------------------------------------------------
+// VType_Tag
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE VType_Tag : public VType {
+public:
+	using VType::VType;
+	virtual void DoPrepare(Frame& frameOuter) override;
+};
+
+extern VType_Tag VTYPE_Tag;
+
+//------------------------------------------------------------------------------
+// Value_Tag
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Value_Tag : public Value_Object {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Value_Tag);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Value_Tag");
+protected:
+	RefPtr<Tag> _pTag;
+public:
+	static VType& vtype;
+public:
+	// Constructor
+	Value_Tag() = delete;
+	explicit Value_Tag(Tag* pTag, VType& vtype = VTYPE_Tag) :
+		Value_Object(vtype), _pTag(pTag) {}
+	// Copy constructor/operator
+	Value_Tag(const Value_Tag& src) :
+		Value_Object(src), _pTag(src._pTag->Reference()) {}
+	Value_Tag& operator=(const Value_Tag& src) = delete;
+	// Move constructor/operator
+	Value_Tag(Value_Tag&& src) = delete;
+	Value_Tag& operator=(Value_Tag&& src) noexcept = delete;
+protected:
+	// Destructor
+	~Value_Tag() = default;
+public:
+	Tag& GetTag() { return *_pTag; }
+	const Tag& GetTag() const { return *_pTag; }
+public:
+	static Tag& GetTag(Value& value) {
+		return dynamic_cast<Value_Tag&>(value).GetTag();
+	}
+	static const Tag& GetTag(const Value& value) {
+		return dynamic_cast<const Value_Tag&>(value).GetTag();
+	}
+public:
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override {
+		return GetTag().CalcHash();
+	}
+	virtual bool IsEqualTo(const Value* pValue) const override {
+		return IsSameType(pValue) &&
+			GetTag().IsEqualTo(Value_Tag::GetTag(*pValue));
+	}
+	virtual bool IsLessThan(const Value* pValue) const override {
+		return IsSameType(pValue)?
+			GetTag().IsLessThan(Value_Tag::GetTag(*pValue)) :
+			GetVType().IsLessThan(pValue->GetVType());
+	}
+	virtual String ToStringDetail(const StringStyle& ss) const override {
+		return GetTag().ToString(ss);
+	}
+};
+
+Gurax_EndModuleScope(jpeg)
+
+#endif

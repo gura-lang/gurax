@@ -1,0 +1,19 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('jpeg')
+b.pathNamesSrc = [
+	'module-jpeg.cpp', 'Util.cpp',
+	'Exif.cpp', 'IFD.cpp', 'Tag.cpp'
+	'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Tag.cpp'
+]
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cxxflags = []
+b.ldflags = []
+b.libs = []
+b.Run()

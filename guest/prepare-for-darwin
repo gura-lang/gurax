@@ -4,7 +4,7 @@ prefix=/usr
 libdir_guest=$prefix/lib/gurax/guest
 make_option=-j3
 
-labels="onigmo"
+labels="onigmo libjpeg"
 
 #---------------------------------------------------------------------------
 # main
@@ -91,6 +91,30 @@ function build_onigmo() {
 	rm -f include/onigmo
 	ln -sf ../onigmo-$ver_onigmo/ include/onigmo
 	ln -sf ../onigmo-$ver_onigmo/.libs/libonigmo.a lib/libonigmo.a
+}
+
+#---------------------------------------------------------------------------
+# libjpeg
+#---------------------------------------------------------------------------
+function getinfo_libjpeg() {
+	ver_libjpeg=9d
+	packages="$packages jpegsrc.v$ver_libjpeg.tar.gz"
+}
+
+function clean_libjpeg() {
+	rm -rf jpegsrc.v$ver_libjpeg
+	rm -rf jpeg-$ver_libjpeg
+}
+
+function build_libjpeg() {
+	tar xfz jpegsrc.v$ver_libjpeg.tar.gz
+	pushd jpeg-$ver_libjpeg
+	./configure
+	make $make_option || failed="$failed onigmo"
+	popd
+	rm -f include/libjpeg
+	ln -sf ../jpeg-$ver_libjpeg/ include/libjpeg
+	ln -sf ../jpeg-$ver_libjpeg/.libs/libjpeg.a lib/libjpeg.a
 }
 
 main $*
