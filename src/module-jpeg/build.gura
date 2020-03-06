@@ -11,9 +11,9 @@ b.pathNamesSrc = [
 	'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Tag.cpp'
 ]
 b.pathNamesScript = []
-b.dirNamesInc = []
-b.dirNamesLib = []
+b.dirNamesInc = ['guest/include/libjpeg']
+b.dirNamesLib = ['guest/lib']
 b.cxxflags = []
 b.ldflags = []
-b.libs = []
+b.libs = ['jpeg']
 b.Run()
