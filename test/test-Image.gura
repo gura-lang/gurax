@@ -61,6 +61,7 @@ TestCase('Image#MapAlphaLevel()') {
 	Println('reverse')
 	img.MapAlphaLevel(mapReverse).p.Dump()
 	Tester(`img.MapAlphaLevel(mapShort))
+	Tester(`(Image.Blank(16, 16):rgb).MapAlphaLevel(mapLinear))
 }
 
 TestCase('Image#MapColorLevel()') {
