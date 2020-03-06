@@ -43,6 +43,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image, bool fastFlag)
 		::jpeg_destroy_decompress(&cinfo);
 		return false;
 	}
+	image.Fill(0xff);
 	if (fastFlag) {
 		// Setting equivalent to -fast option of djpeg. See line.251 in djpeg.c.
 		cinfo.two_pass_quantize = FALSE;
@@ -57,45 +58,74 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image, bool fastFlag)
 
 bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 {
-	return false;
+#if 0
+	ErrorMgr errMgr(sig);
+	jpeg_compress_struct cinfo;
+	cinfo.err = ::jpeg_std_error(&errMgr.pub);
+	errMgr.pub.error_exit = ErrorMgr::error_exit; // override error handler
+	if (::setjmp(errMgr.jmpenv)) {
+		::jpeg_destroy_compress(&cinfo);
+		return false;
+	}
+	::jpeg_create_compress(&cinfo);
+	DestinationMgr::Setup(&cinfo, &sig, &stream);
+	cinfo.image_width		= static_cast<JDIMENSION>(pImage->GetWidth());
+	cinfo.image_height		= static_cast<JDIMENSION>(pImage->GetHeight());
+	cinfo.input_components	= 3;
+	cinfo.in_color_space	= JCS_RGB;
+	::jpeg_set_defaults(&cinfo);
+	::jpeg_set_quality(&cinfo, quality, TRUE);
+	::jpeg_start_compress(&cinfo, TRUE);
+	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo,
+					JPOOL_IMAGE, cinfo.image_width * cinfo.input_components, 1);
+	while (cinfo.next_scanline < cinfo.image_height) {
+		const UChar *pPixelSrc = pImage->GetPointer(0, cinfo.next_scanline);
+		UChar *pPixelDst = scanlines[0];
+		for (UInt i = 0; i < cinfo.image_width; i++) {
+			*pPixelDst++ = *(pPixelSrc + Image::OffsetR);
+			*pPixelDst++ = *(pPixelSrc + Image::OffsetG);
+			*pPixelDst++ = *(pPixelSrc + Image::OffsetB);
+			pPixelSrc += pImage->GetBytesPerPixel();
+		}
+		::jpeg_write_scanlines(&cinfo, scanlines, 1);
+	}
+	::jpeg_finish_compress(&cinfo);
+	::jpeg_destroy_compress(&cinfo);
+#endif
+	return true;
 }
 
 bool ImageMgrEx::DoDecompress(Image& image, jpeg_decompress_struct& cinfo)
 {
-#if 0
 	::jpeg_start_decompress(&cinfo);
 	bool grayScaleFlag = (cinfo.output_components != 3);
-	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo,
-					JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);
+	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
+		(j_common_ptr)&cinfo, JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);
 	while (cinfo.output_scanline < cinfo.output_height) {
 		::jpeg_read_scanlines(&cinfo, scanlines, 1);
-		if (sig.IsSignalled()) {
+		if (Error::IsIssued()) {
 			::jpeg_finish_decompress(&cinfo);
 			::jpeg_destroy_decompress(&cinfo);
 			return false;
 		}
-		const UChar *srcp = scanlines[0];
-		UChar *dstp = pImage->GetPointer(0, cinfo.output_scanline - 1);
+		const UInt8* pSrc = scanlines[0];
+		UInt8* pDst = image.GetPointer(0, cinfo.output_scanline - 1);
 		if (grayScaleFlag) {
 			for (UInt i = 0; i < cinfo.output_width; i++) {
-				*(dstp + Image::OffsetR) = *srcp;
-				*(dstp + Image::OffsetG) = *srcp;
-				*(dstp + Image::OffsetB) = *srcp;
-				srcp++;
-				dstp += pImage->GetBytesPerPixel();
+				Image::Pixel::SetRGB(pDst, *pSrc, *pSrc, *pSrc);
+				pSrc++;
+				pDst += image.GetBytesPerPixel();
 			}
 		} else {
 			for (UInt i = 0; i < cinfo.output_width; i++) {
-				*(dstp + Image::OffsetR) = *srcp++;
-				*(dstp + Image::OffsetG) = *srcp++;
-				*(dstp + Image::OffsetB) = *srcp++;
-				dstp += pImage->GetBytesPerPixel();
+				Image::Pixel::SetRGB(pDst, *pSrc, *(pSrc + 1), *(pSrc + 2));
+				pSrc += 3;
+				pDst += image.GetBytesPerPixel();
 			}
 		}
 	}
 	::jpeg_finish_decompress(&cinfo);
 	::jpeg_destroy_decompress(&cinfo);
-#endif
 	return true;
 }
 

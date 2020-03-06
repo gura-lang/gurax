@@ -190,7 +190,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 		vertRevFlag = false;
 	}
 	if (!image.Allocate(biWidth, biHeight)) return false;
-	image.GetMemory()->Fill(0xff);
+	image.Fill(0xff);
 	const Palette* pPalette = image.GetPalette();
 	if (biBitCount == 1) {
 		size_t bytesPerLine = (biWidth + 7) / 8;
