@@ -70,16 +70,17 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 	::jpeg_set_defaults(&cinfo);
 	::jpeg_set_quality(&cinfo, quality, TRUE);
 	::jpeg_start_compress(&cinfo, TRUE);
-	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo,
-					JPOOL_IMAGE, cinfo.image_width * cinfo.input_components, 1);
+	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
+		(j_common_ptr)&cinfo, JPOOL_IMAGE, cinfo.image_width * cinfo.input_components, 1);
 	while (cinfo.next_scanline < cinfo.image_height) {
 		const UInt8* pSrc = image.GetPointer(0, cinfo.next_scanline);
 		UInt8* pDst = scanlines[0];
 		for (UInt i = 0; i < cinfo.image_width; i++) {
-			*pDst++ = Image::Pixel::GetR(pSrc);
-			*pDst++ = Image::Pixel::GetG(pSrc);
-			*pDst++ = Image::Pixel::GetB(pSrc);
+			*(pDst + 0) = Image::Pixel::GetR(pSrc);
+			*(pDst + 1) = Image::Pixel::GetG(pSrc);
+			*(pDst + 2) = Image::Pixel::GetB(pSrc);
 			pSrc += image.GetBytesPerPixel();
+			pDst += 3;
 		}
 		::jpeg_write_scanlines(&cinfo, scanlines, 1);
 	}

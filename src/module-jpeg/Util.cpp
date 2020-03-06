@@ -49,7 +49,7 @@ void SourceMgr::Setup(j_decompress_ptr cinfo, Stream& stream)
 	pSrcMgr->pub.skip_input_data	= skip_input_data;
 	pSrcMgr->pub.resync_to_restart	= jpeg_resync_to_restart; // use default method
 	pSrcMgr->pub.term_source		= term_source;
-	pSrcMgr->pub.bytes_in_buffer	= 0;	// forces fill_input_buffer on first read
+	pSrcMgr->pub.bytes_in_buffer	= 0;		// forces fill_input_buffer on first read
 	pSrcMgr->pub.next_input_byte	= nullptr;	// until buffer loaded
 	pSrcMgr->pStream = &stream;
 }
