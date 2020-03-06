@@ -7,7 +7,7 @@ import(util.modbuild) {Builder}
 b = Builder('jpeg')
 b.pathNamesSrc = [
 	'module-jpeg.cpp', 'Util.cpp',
-	'Exif.cpp', 'IFD.cpp', 'Tag.cpp'
+	'ImageExtension.cpp', 'Exif.cpp', 'IFD.cpp', 'Tag.cpp'
 	'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Tag.cpp'
 ]
 b.pathNamesScript = []

@@ -8,6 +8,20 @@ Gurax_BeginModuleScope(jpeg)
 //-----------------------------------------------------------------------------
 // ErrorMgr
 //-----------------------------------------------------------------------------
+bool ErrorMgr::Initialize(jpeg_compress_struct& cinfo)
+{
+	cinfo.err = ::jpeg_std_error(&pub);
+	pub.error_exit = error_exit; // override error handler
+	return ::setjmp(jmpenv) == 0;
+}
+
+bool ErrorMgr::Initialize(jpeg_decompress_struct& cinfo)
+{
+	cinfo.err = ::jpeg_std_error(&pub);
+	pub.error_exit = error_exit; // override error handler
+	return ::setjmp(jmpenv) == 0;
+}
+
 void ErrorMgr::error_exit(j_common_ptr cinfo)
 {
 	ErrorMgr* pErrMgr = reinterpret_cast<ErrorMgr*>(cinfo->err);
