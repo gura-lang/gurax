@@ -42,7 +42,6 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image, bool fastFlag)
 		return false;
 	}
 	::jpeg_create_decompress(&cinfo);
-	cinfo.src = nullptr;
 	SourceMgr::Setup(&cinfo, stream);
 	::jpeg_read_header(&cinfo, TRUE);
 	if (!image.Allocate(cinfo.image_width, cinfo.image_height)) {
@@ -102,7 +101,6 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 
 bool ImageMgrEx::DoDecompress(Image& image, jpeg_decompress_struct& cinfo)
 {
-	::jpeg_start_decompress(&cinfo);
 	bool grayScaleFlag = (cinfo.output_components != 3);
 	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
 		(j_common_ptr)&cinfo, JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);

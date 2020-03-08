@@ -5,12 +5,10 @@
 #define GURAX_MODULE_JPEG_UTIL_H
 #include <gurax.h>
 #define HAVE_BOOLEAN
-using boolean = bool;
-extern "C" {
+using boolean = int;
 #include <jpeglib.h>
 #include <jerror.h>
 #include <setjmp.h>
-}
 
 Gurax_BeginModuleScope(jpeg)
 
