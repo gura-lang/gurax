@@ -35,8 +35,14 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image, bool fastFlag)
 {
 	ErrorMgr errMgr;
 	jpeg_decompress_struct cinfo;
-	if (!errMgr.Initialize(cinfo)) return false;
+	cinfo.err = ::jpeg_std_error(&errMgr.pub);
+	errMgr.pub.error_exit = errMgr.error_exit;	// override error handler
+	if (::setjmp(errMgr.jmpenv) != 0) {
+		::jpeg_destroy_decompress(&cinfo);
+		return false;
+	}
 	::jpeg_create_decompress(&cinfo);
+	cinfo.src = nullptr;
 	SourceMgr::Setup(&cinfo, stream);
 	::jpeg_read_header(&cinfo, TRUE);
 	if (!image.Allocate(cinfo.image_width, cinfo.image_height)) {
@@ -60,7 +66,12 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 {
 	ErrorMgr errMgr;
 	jpeg_compress_struct cinfo;
-	if (!errMgr.Initialize(cinfo)) return false;
+	cinfo.err = ::jpeg_std_error(&errMgr.pub);
+	errMgr.pub.error_exit = errMgr.error_exit;	// override error handler
+	if (::setjmp(errMgr.jmpenv) != 0) {
+		::jpeg_destroy_compress(&cinfo);
+		return false;
+	}
 	::jpeg_create_compress(&cinfo);
 	DestinationMgr::Setup(&cinfo, stream);
 	cinfo.image_width		= static_cast<JDIMENSION>(image.GetWidth());

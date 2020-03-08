@@ -12,21 +12,29 @@ Gurax_BeginModule(jpeg)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"");
 }
 
 Gurax_ImplementFunction(Test)
 {
+#if 0
 	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	//ArgPicker args(argument);
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+	struct jpeg_decompress_struct cinfo;
+	FILE* fp = fopen("test.jpg", "rb");
+	cinfo.err = jpeg_std_error(&jerr.pub);
+	jerr.pub.error_exit = my_error_exit;
+	if (setjmp(jerr.setjmp_buffer)) {
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		return Value::nil();
+	}
+	jpeg_read_header(&cinfo, TRUE);
+#endif
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------

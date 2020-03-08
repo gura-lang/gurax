@@ -21,9 +21,6 @@ struct ErrorMgr {
 	jpeg_error_mgr pub;
 	jmp_buf jmpenv;
 public:
-	bool Initialize(jpeg_compress_struct& cinfo);
-	bool Initialize(jpeg_decompress_struct& cinfo);
-public:
 	static void error_exit(j_common_ptr cinfo);
 };
 

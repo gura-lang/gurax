@@ -8,20 +8,6 @@ Gurax_BeginModuleScope(jpeg)
 //-----------------------------------------------------------------------------
 // ErrorMgr
 //-----------------------------------------------------------------------------
-bool ErrorMgr::Initialize(jpeg_compress_struct& cinfo)
-{
-	cinfo.err = ::jpeg_std_error(&pub);
-	pub.error_exit = error_exit; // override error handler
-	return ::setjmp(jmpenv) == 0;
-}
-
-bool ErrorMgr::Initialize(jpeg_decompress_struct& cinfo)
-{
-	cinfo.err = ::jpeg_std_error(&pub);
-	pub.error_exit = error_exit; // override error handler
-	return ::setjmp(jmpenv) == 0;
-}
-
 void ErrorMgr::error_exit(j_common_ptr cinfo)
 {
 	ErrorMgr* pErrMgr = reinterpret_cast<ErrorMgr*>(cinfo->err);
@@ -36,14 +22,14 @@ void ErrorMgr::error_exit(j_common_ptr cinfo)
 //-----------------------------------------------------------------------------
 void SourceMgr::Setup(j_decompress_ptr cinfo, Stream& stream)
 {
-	SourceMgr* pSrcMgr = reinterpret_cast<SourceMgr*>(cinfo->src);
-	if (!pSrcMgr) {
+	if (!cinfo->src) {
 		cinfo->src = reinterpret_cast<jpeg_source_mgr*>((*cinfo->mem->alloc_small)(
 			reinterpret_cast<j_common_ptr>(cinfo), JPOOL_PERMANENT, sizeof(SourceMgr)));
-		pSrcMgr = reinterpret_cast<SourceMgr*>(cinfo->src);
+		SourceMgr* pSrcMgr = reinterpret_cast<SourceMgr*>(cinfo->src);
 		pSrcMgr->buff = reinterpret_cast<JOCTET *>((*cinfo->mem->alloc_small)(
 			reinterpret_cast<j_common_ptr>(cinfo), JPOOL_PERMANENT, BuffSize));
 	}
+	SourceMgr* pSrcMgr = reinterpret_cast<SourceMgr*>(cinfo->src);
 	pSrcMgr->pub.init_source		= init_source;
 	pSrcMgr->pub.fill_input_buffer	= fill_input_buffer;
 	pSrcMgr->pub.skip_input_data	= skip_input_data;
@@ -81,7 +67,7 @@ boolean SourceMgr::fill_input_buffer(j_decompress_ptr cinfo)
 
 void SourceMgr::skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
-	jpeg_source_mgr *src = cinfo->src;
+	jpeg_source_mgr* src = cinfo->src;
 	if (num_bytes > 0) {
 		while (num_bytes > static_cast<long>(src->bytes_in_buffer)) {
 			num_bytes -= static_cast<long>(src->bytes_in_buffer);
