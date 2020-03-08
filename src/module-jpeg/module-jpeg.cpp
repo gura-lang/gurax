@@ -34,7 +34,6 @@ Gurax_ImplementFunction(Test)
 	}
 	jpeg_read_header(&cinfo, TRUE);
 #endif
-	::printf("%d\n", sizeof(jpeg_decompress_struct));
 	return Value::nil();
 }
 
