@@ -49,7 +49,7 @@ struct UnitSize {
 	static const UInt8 SRATIONAL	= 8;
 };
 
-struct Tag2 {
+struct TagId {
 	static const UInt16 invalid						= 0xffff;
 	// 4.6.3 Exif-specific IFD
 	// Pointers
