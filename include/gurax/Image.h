@@ -95,6 +95,48 @@ public:
 	public:
 		Accumulator(size_t width);
 		void Clear() { _pMemory->Fill(0x00); }
+		void StoreRGB(size_t idx, const UInt8* pSrc) {
+			Elem& elem = *(_pElem + idx);
+			elem.r += *(pSrc + 0), elem.g += *(pSrc + 1), elem.b += *(pSrc + 2), elem.n++;
+		}
+		void StoreBGR(size_t idx, const UInt8* pSrc) {
+			Elem& elem = *(_pElem + idx);
+			elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2), elem.n++;
+		}
+		void StoreRGBA(size_t idx, const UInt8* pSrc) {
+			Elem& elem = *(_pElem + idx);
+			elem.r += *(pSrc + 0), elem.g += *(pSrc + 1), elem.b += *(pSrc + 2);
+			elem.a += *(pSrc + 3), elem.n++;
+		}
+		void StoreBGRA(size_t idx, const UInt8* pSrc) {
+			Elem& elem = *(_pElem + idx);
+			elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2);
+			elem.a += *(pSrc + 3), elem.n++;
+		}
+		void ExtractRGB(size_t idx, UInt8* pDst) {
+			const Elem& elem = *(_pElem + idx);
+			size_t n = (elem.n > 0)? elem.n : 1;
+			*(pDst + 0) = static_cast<UInt8>(elem.r / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+			*(pDst + 2) = static_cast<UInt8>(elem.b / n);
+		}
+		void ExtractBGR(size_t idx, UInt8* pDst) {
+			const Elem& elem = *(_pElem + idx);
+			size_t n = (elem.n > 0)? elem.n : 1;
+			*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+			*(pDst + 2) = static_cast<UInt8>(elem.r / n);
+		}
+		void ExtractRGBA(size_t idx, UInt8* pDst) {
+			const Elem& elem = *(_pElem + idx);
+			size_t n = (elem.n > 0)? elem.n : 1;
+			*(pDst + 0) = static_cast<UInt8>(elem.r / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+			*(pDst + 2) = static_cast<UInt8>(elem.b / n), *(pDst + 3) = static_cast<UInt8>(elem.a / n);
+		}
+		void ExtractBGRA(size_t idx, UInt8* pDst) {
+			const Elem& elem = *(_pElem + idx);
+			size_t n = (elem.n > 0)? elem.n : 1;
+			*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+			*(pDst + 2) = static_cast<UInt8>(elem.r / n), *(pDst + 3) = static_cast<UInt8>(elem.a / n);
+		}
 		template<typename T_Pixel> void Store(size_t idx, const UInt8* pSrc) {}
 		template<typename T_Pixel> void Extract(size_t idx, UInt8* pDst) {}
 	};

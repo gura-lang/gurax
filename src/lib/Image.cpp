@@ -58,34 +58,17 @@ Image::Accumulator::Accumulator(size_t width) :
 	Clear();
 }
 
-template<> inline void Image::Accumulator::Store<Image::PixelRGB>(size_t idx, const UInt8* pSrc)
-{
-	Elem& elem = *(_pElem + idx);
-	elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2), elem.n++;
-}
+template<> inline void Image::Accumulator::
+Store<Image::PixelRGB>(size_t idx, const UInt8* pSrc) { StoreBGR(idx, pSrc); }
 
-template<> inline void Image::Accumulator::Store<Image::PixelRGBA>(size_t idx, const UInt8* pSrc)
-{
-	Elem& elem = *(_pElem + idx);
-	elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2);
-	elem.a += *(pSrc + 3), elem.n++;
-}
+template<> inline void Image::Accumulator::
+Store<Image::PixelRGBA>(size_t idx, const UInt8* pSrc) { StoreBGRA(idx, pSrc); }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelRGB>(size_t idx, UInt8* pDst)
-{
-	const Elem& elem = *(_pElem + idx);
-	size_t n = (elem.n > 0)? elem.n : 1;
-	*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
-	*(pDst + 2) = static_cast<UInt8>(elem.r / n);
-}
+template<> inline void Image::Accumulator::
+Extract<Image::PixelRGB>(size_t idx, UInt8* pDst) { ExtractBGR(idx, pDst); }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(size_t idx, UInt8* pDst)
-{
-	const Elem& elem = *(_pElem + idx);
-	size_t n = (elem.n > 0)? elem.n : 1;
-	*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
-	*(pDst + 2) = static_cast<UInt8>(elem.r / n), *(pDst + 3) = static_cast<UInt8>(elem.a / n);
-}
+template<> inline void Image::Accumulator::
+Extract<Image::PixelRGBA>(size_t idx, UInt8* pDst) { ExtractBGRA(idx, pDst); }
 
 //------------------------------------------------------------------------------
 // Image::Scanner
