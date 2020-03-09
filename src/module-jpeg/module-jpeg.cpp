@@ -54,7 +54,7 @@ Gurax_ImplementFunction(Write)
 	Stream& stream = args.PickStream();
 	Image& image = args.PickImage();
 	// Function body
-	if (!ImageMgrEx::WriteStream(stream, iImage, false)) return Value::nil();
+	if (!ImageMgrEx::WriteStream(stream, image, false)) return Value::nil();
 	return Value::nil();
 }
 
