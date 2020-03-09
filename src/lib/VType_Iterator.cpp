@@ -382,7 +382,7 @@ Gurax_ImplementMethod(Iterator, CountIf)
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
-	const Function& criteria = args.Pick<Value_Function>().GetFunction();
+	const Function& criteria = args.PickFunction();
 	// Function body
 	size_t cnt = iteratorThis.CountIf(processor, criteria);
 	if (Error::IsIssued()) return Value::nil();

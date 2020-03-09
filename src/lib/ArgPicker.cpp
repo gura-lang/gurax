@@ -37,6 +37,11 @@ Value& ArgPicker::PickValue()
 	return *_pValuePicked;
 }
 
+Function& ArgPicker::PickFunction()
+{
+	return Pick<Value_Function>().GetFunction();
+}
+
 Stream& ArgPicker::PickStream()
 {
 	return Pick<Value_Stream>().GetStream();

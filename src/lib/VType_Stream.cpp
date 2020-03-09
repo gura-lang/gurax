@@ -366,7 +366,7 @@ Gurax_ImplementMethod(Stream, Write)
 	Stream& stream = valueThis.GetStream();
 	// Arguments
 	ArgPicker args(argument);
-	const Pointer& ptr = args.Pick<Value_Pointer>().GetPointer();
+	const Pointer& ptr = args.PickPointer();
 	bool validFlag_bytes = false;
 	size_t bytes = (validFlag_bytes = args.IsValid())? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();

@@ -421,7 +421,7 @@ Gurax_ImplementFunction(ReadLines)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.Pick<Value_Stream>().GetStream();
+	Stream& stream = args.PickStream();
 	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
 	// Function body
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));

@@ -50,7 +50,7 @@ Gurax_ImplementConstructor(Template)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream* pStreamSrc = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
+	Stream* pStreamSrc = args.IsValid()? &args.PickStream() : nullptr;
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
@@ -141,7 +141,7 @@ Gurax_ImplementMethod(Template, Read)
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamSrc = args.Pick<Value_Stream>().GetStream();
+	Stream& streamSrc = args.PickStream();
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
@@ -169,8 +169,7 @@ Gurax_ImplementMethod(Template, Render)
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamDst = args.IsValid()?
-		args.Pick<Value_Stream>().GetStream() : Basement::Inst.GetStreamCOut();
+	Stream& streamDst = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	// Function body
 	tmpl.Render(processor, streamDst);
 	return Value::nil();
@@ -357,7 +356,7 @@ Gurax_ImplementMethod(Template, embed)
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
 	ArgPicker args(argument);
-	Template& tmplEmbedded = args.Pick<Value_Template>().GetTemplate();
+	Template& tmplEmbedded = args.PickTemplate();
 	// Function body
 	tmplEmbedded.ClearLastChar();
 	if (!tmplEmbedded.Render(processor, tmpl.GetStreamDst())) return Value::nil();
@@ -557,7 +556,7 @@ Gurax_ImplementMethod(Template, init_extends)
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
 	ArgPicker args(argument);
-	const Template& tmplSuper = args.Pick<Value_Template>().GetTemplate();
+	const Template& tmplSuper = args.PickTemplate();
 	// Function body
 	tmpl.SetTemplateSuper(tmplSuper.Reference());
 	return Value::nil();

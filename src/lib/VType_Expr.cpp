@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(Expr)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.Pick<Value_Stream>().GetStream();
+	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(stream));
 	if (!pExprRoot) return Value::nil();

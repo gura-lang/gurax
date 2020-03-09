@@ -282,7 +282,7 @@ Gurax_ImplementMethod(Image, MapAlphaLevel)
 	Image& image = valueThis.GetImage();
 	// Argument
 	ArgPicker args(argument);
-	const Pointer& ptrA = args.Pick<Value_Pointer>().GetPointer();
+	const Pointer& ptrA = args.PickPointer();
 	if (ptrA.GetBytesAvailable() < 256) {
 		Error::Issue(ErrorType::RangeError, "mapA must contain data of at least 256 bytes");
 		return Value::nil();
@@ -324,9 +324,9 @@ Gurax_ImplementMethod(Image, MapColorLevel)
 	Image& image = valueThis.GetImage();
 	// Argument
 	ArgPicker args(argument);
-	const Pointer& ptrR = args.Pick<Value_Pointer>().GetPointer();
-	const Pointer& ptrG = args.Pick<Value_Pointer>().GetPointer();
-	const Pointer& ptrB = args.Pick<Value_Pointer>().GetPointer();
+	const Pointer& ptrR = args.PickPointer();
+	const Pointer& ptrG = args.PickPointer();
+	const Pointer& ptrB = args.PickPointer();
 	const Image::Format& format =
 		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
 		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
@@ -371,7 +371,7 @@ Gurax_ImplementMethod(Image, PutPixel)
 	ArgPicker args(argument);
 	int x = args.PickNumber<int>();
 	int y = args.PickNumber<int>();
-	const Color& color = args.Pick<Value_Color>().GetColor();
+	const Color& color = args.PickColor();
 	// Function body
 	if (!image.CheckCoord(x, y)) return Value::nil();
 	image.PutPixelColor(x, y, color);

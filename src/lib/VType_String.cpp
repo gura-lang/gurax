@@ -701,8 +701,7 @@ Gurax_ImplementMethod(String, Render)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamDst = args.IsValid()?
-		args.Pick<Value_Stream>().GetStream() : Basement::Inst.GetStreamCOut();
+	Stream& streamDst = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	// Function body
 	const char* str = valueThis.GetString();
 	streamDst.Print(str);

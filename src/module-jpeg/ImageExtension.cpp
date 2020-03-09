@@ -148,10 +148,11 @@ bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& image, jpeg_decompress_s
 	UInt8* pLineDst = image.GetPointer();
 	size_t bytesPerPixel = image.GetBytesPerPixel();
 	size_t bytesPerLineDst = image.GetBytesPerLine();
-	size_t accumsSize = widthDst * sizeof(Image::Accum);
-	AutoPtr<Memory> pMemory(new MemoryHeap(accumsSize));
-	Image::Accum *accums = reinterpret_cast<Image::Accum *>(pMemory->GetPointer());
-	::memset(accums, 0x00, accumsSize);
+	//size_t accumsSize = widthDst * sizeof(Image::Accum);
+	//AutoPtr<Memory> pMemory(new MemoryHeap(accumsSize));
+	//Image::Accum *accums = reinterpret_cast<Image::Accum *>(pMemory->GetPointer());
+	//::memset(accums, 0x00, accumsSize);
+	Image::Accumulator accumulator(widthDst);
 	size_t numerY = 0;
 	size_t yDst = 0;
 	for (;;) {
@@ -163,34 +164,32 @@ bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& image, jpeg_decompress_s
 				return false;
 			}
 			const UInt8 *pSrc = scanlines[0];
-			Image::Accum *pAccum = accums;
+			//Image::Accum *pAccum = accums;
 			size_t xDst = 0;
 			size_t numerX = 0;
 			if (grayScaleFlag) {
 				for (UInt xSrc = 0; xSrc < cinfo.output_width; xSrc++) {
-					pAccum->AddRGB(pSrc[0], pSrc[0], pSrc[0]);
+					//pAccum->AddRGB(pSrc[0], pSrc[0], pSrc[0]);
+					accumulator.StoreRGB(idx, pSrc[0], pSrc[0], pSrc[0]);
 					pSrc += 1;
 					numerX += widthDst;
 					for ( ; numerX >= cinfo.output_width && xDst < widthDst;
-						  numerX -= cinfo.output_width, xDst++) {
-						pAccum++;
-					}
+						  numerX -= cinfo.output_width, xDst++) ;
 				}
 			} else {
 				for (UInt xSrc = 0; xSrc < cinfo.output_width; xSrc++) {
-					pAccum->AddRGB(pSrc[0], pSrc[1], pSrc[2]);
+					//pAccum->AddRGB(pSrc[0], pSrc[1], pSrc[2]);
+					accumulator.StoreRGB(idx, pSrc);
 					pSrc += 3;
 					numerX += widthDst;
 					for ( ; numerX >= cinfo.output_width && xDst < widthDst;
-						  numerX -= cinfo.output_width, xDst++) {
-						pAccum++;
-					}
+						  numerX -= cinfo.output_width, xDst++) ;
 				}
 			}
 		}
 		numerY += heightDst;
 		if (numerY >= cinfo.output_height) {
-			if (accums[0].cnt == 0) accums[0].cnt = 0; // this must not happen
+			if (accums[0].cnt == 0) accums[0].cnt = 0; // illegal case
 			Image::Accum *pAccum = accums;
 			Image::Accum *pAccumPrev = accums;
 			for (size_t xDst = 0; xDst < widthDst; xDst++, pAccum++) {

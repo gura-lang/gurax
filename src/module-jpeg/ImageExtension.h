@@ -19,9 +19,10 @@ public:
 	virtual bool IsResponsibleExtName(const char* extName) const override;
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
-protected:
+public:
 	static bool ReadStream(Stream& stream, Image& image, bool fastFlag);
 	static bool WriteStream(Stream& stream, const Image& image, int quality);
+protected:
 	static bool DoDecompress(Image& image, jpeg_decompress_struct& cinfo);
 	static bool DoDecompressWithBilinearScaling(Image& iImage, jpeg_decompress_struct& cinfo);
 	static bool DoDecompressWithNearestNeighborScaling(Image& image, jpeg_decompress_struct& cinfo);

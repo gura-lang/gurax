@@ -4,6 +4,25 @@
 #ifndef GURAX_ARGPICKER_H
 #define GURAX_ARGPICKER_H
 #include "Argument.h"
+#include "VType_Codec.h"
+#include "VType_Color.h"
+#include "VType_Complex.h"
+#include "VType_Dict.h"
+#include "VType_Directory.h"
+#include "VType_Error.h"
+#include "VType_ErrorType.h"
+#include "VType_Frame.h"
+#include "VType_Help.h"
+#include "VType_Image.h"
+#include "VType_Palette.h"
+#include "VType_Pixel.h"
+#include "VType_Pointer.h"
+#include "VType_Random.h"
+#include "VType_Stat.h"
+#include "VType_Template.h"
+
+
+
 #include "VType_DateTime.h"
 #include "VType_Expr.h"
 #include "VType_List.h"
@@ -14,6 +33,7 @@
 
 namespace Gurax {
 
+class Function;
 class Iterator;
 class Stream;
 
@@ -61,22 +81,39 @@ public:
 	template<typename T_Num> T_Num PickNumberPos() {
 		return Pick<Value_Number>().GetNumberPos<T_Num>();
 	}
-	const Symbol* PickSymbol()		{ return Pick<Value_Symbol>().GetSymbol(); }
-	const char* PickString()		{ return Pick<Value_String>().GetString(); }
-	const String& PickStringSTL()	{ return Pick<Value_String>().GetStringSTL(); }
-	const ValueList& PickList()		{ return Pick<Value_List>().GetValueOwner(); }
-	const Expr& PickExpr()			{ return Pick<Value_Expr>().GetExpr(); }
-	DateTime& PickDateTime()		{ return Pick<Value_DateTime>().GetDateTime(); }
-	TimeDelta& PickTimeDelta()		{ return Pick<Value_TimeDelta>().GetTimeDelta(); }
-	Stream& PickStream();
-	Iterator& PickIterator();
 	template<typename T_Num>
 	NumList<T_Num> PickNumList() {
 		return Value_Number::GetNumList<T_Num>(Pick<Value_List>().GetValueOwner());
 	}
+	Codec& PickCodec()				{ return Pick<Value_Codec>().GetCodec(); }
+	Color& PickColor()				{ return Pick<Value_Color>().GetColor(); }
+	const Complex& PickComplex()	{ return Pick<Value_Complex>().GetComplex(); }
+	DateTime& PickDateTime()		{ return Pick<Value_DateTime>().GetDateTime(); }
+	Directory& PickDirectory()		{ return Pick<Value_Directory>().GetDirectory(); }
+	const Expr& PickExpr()			{ return Pick<Value_Expr>().GetExpr(); }
+	const Error& PickError()		{ return Pick<Value_Error>().GetError(); }
+	const ErrorType& PickErrorType(){ return Pick<Value_ErrorType>().GetErrorType(); }
+	Frame& PickFrame()				{ return Pick<Value_Frame>().GetFrame(); }
+	Function& PickFunction();
+	Help& PickHelp()				{ return Pick<Value_Help>().GetHelp(); }
+	Image& PickImage()				{ return Pick<Value_Image>().GetImage(); }
+	Iterator& PickIterator();
+	const ValueList& PickList()		{ return Pick<Value_List>().GetValueOwner(); }
 	StringList PickStringList() {
 		return Value_String::GetStringList(Pick<Value_List>().GetValueOwner());
 	}
+	Palette& PickPalette()			{ return Pick<Value_Palette>().GetPalette(); }
+	Pixel& PickPixel()				{ return Pick<Value_Pixel>().GetPixel(); }
+	Pointer& PickPointer()			{ return Pick<Value_Pointer>().GetPointer(); }
+	Random& PickRandom()			{ return Pick<Value_Random>().GetRandom(); }
+	Stat& PickStat()				{ return Pick<Value_Stat>().GetStat(); }
+	Stream& PickStream();
+	const char* PickString()		{ return Pick<Value_String>().GetString(); }
+	const String& PickStringSTL()	{ return Pick<Value_String>().GetStringSTL(); }
+	const Symbol* PickSymbol()		{ return Pick<Value_Symbol>().GetSymbol(); }
+	Template& PickTemplate()		{ return Pick<Value_Template>().GetTemplate(); }
+	TimeDelta& PickTimeDelta()		{ return Pick<Value_TimeDelta>().GetTimeDelta(); }
+	ValueDict& PickValueDict()		{ return Pick<Value_Dict>().GetValueDict(); }
 };
 
 }

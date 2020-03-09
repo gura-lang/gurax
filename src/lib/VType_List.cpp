@@ -297,7 +297,7 @@ Gurax_ImplementMethod(List, Shuffle)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
-	Random& random = args.IsValid()? args.Pick<Value_Random>().GetRandom() : Random::Global();
+	Random& random = args.IsValid()? args.PickRandom() : Random::Global();
 	// Function body
 	valueTypedOwner.GetValueOwnerToSort().Shuffle(random);
 	return argument.GetValueThis().Reference();
@@ -538,7 +538,7 @@ Gurax_ImplementMethod(List, CountIf)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
-	const Function& criteria = args.Pick<Value_Function>().GetFunction();
+	const Function& criteria = args.PickFunction();
 	// Function body
 	size_t cnt = valueTypedOwner.GetValueOwner().CountIf(processor, criteria);
 	if (Error::IsIssued()) return Value::nil();

@@ -95,23 +95,25 @@ public:
 	public:
 		Accumulator(size_t width);
 		void Clear() { _pMemory->Fill(0x00); }
-		void StoreRGB(size_t idx, const UInt8* pSrc) {
+		void StoreRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) {
 			Elem& elem = *(_pElem + idx);
-			elem.r += *(pSrc + 0), elem.g += *(pSrc + 1), elem.b += *(pSrc + 2), elem.n++;
+			elem.r += r, elem.g += g, elem.b += b, elem.n++;
+		}
+		void StoreRGB(size_t idx, const UInt8* pSrc) {
+			StoreRGB(idx, *(pSrc + 0), *(pSrc + 1), *(pSrc + 2));
 		}
 		void StoreBGR(size_t idx, const UInt8* pSrc) {
+			StoreRGB(idx, *(pSrc + 2), *(pSrc + 1), *(pSrc + 0));
+		}
+		void StoreRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
 			Elem& elem = *(_pElem + idx);
-			elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2), elem.n++;
+			elem.r += r, elem.g += g, elem.b += b, elem.a += a, elem.n++;
 		}
 		void StoreRGBA(size_t idx, const UInt8* pSrc) {
-			Elem& elem = *(_pElem + idx);
-			elem.r += *(pSrc + 0), elem.g += *(pSrc + 1), elem.b += *(pSrc + 2);
-			elem.a += *(pSrc + 3), elem.n++;
+			StoreRGBA(idx, *(pSrc + 0), *(pSrc + 1), *(pSrc + 2), *(pSrc + 3));
 		}
 		void StoreBGRA(size_t idx, const UInt8* pSrc) {
-			Elem& elem = *(_pElem + idx);
-			elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2);
-			elem.a += *(pSrc + 3), elem.n++;
+			StoreRGBA(idx, *(pSrc + 2), *(pSrc + 1), *(pSrc + 0), *(pSrc + 3));
 		}
 		void ExtractRGB(size_t idx, UInt8* pDst) {
 			const Elem& elem = *(_pElem + idx);
