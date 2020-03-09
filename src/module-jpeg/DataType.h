@@ -8,10 +8,30 @@
 Gurax_BeginModuleScope(jpeg)
 
 struct Marker {
+	static const UInt16 SOF0	= 0xffc0;
+	static const UInt16 SOF1	= 0xffc1;
+	static const UInt16 SOF2	= 0xffc2;
+	static const UInt16 SOF3	= 0xffc3;
+	static const UInt16 SOF4	= 0xffc4;
+	static const UInt16 SOF5	= 0xffc5;
+	static const UInt16 SOF6	= 0xffc6;
+	static const UInt16 SOF7	= 0xffc7;
+	static const UInt16 SOF8	= 0xffc8;
+	static const UInt16 SOF9	= 0xffc9;
+	static const UInt16 SOF10	= 0xffca;
+	static const UInt16 SOF11	= 0xffcb;
+	static const UInt16 SOF12	= 0xffcc;
+	static const UInt16 SOF13	= 0xffcd;
+	static const UInt16 SOF14	= 0xffce;
+	static const UInt16 SOF15	= 0xffcf;
 	static const UInt16 SOI		= 0xffd8;
-	static const UInt16 APP0	= 0xffe0;
-	static const UInt16 APP1	= 0xffe1;
-	static const UInt16 APP2	= 0xffe2;
+	static const UInt16 DHT		= 0xffd4;
+	static const UInt16 SOS		= 0xffda;
+	static const UInt16 DQT		= 0xffdb;
+	static const UInt16 DRI		= 0xffdd;
+	static const UInt16 APP0	= 0xffe0;	// JFIF
+	static const UInt16 APP1	= 0xffe1;	// Exif
+	static const UInt16 APP2	= 0xffe2;	// ICC Profile
 	static const UInt16 APP3	= 0xffe3;
 	static const UInt16 APP4	= 0xffe4;
 	static const UInt16 APP5	= 0xffe5;
@@ -23,8 +43,9 @@ struct Marker {
 	static const UInt16 APP11	= 0xffeb;
 	static const UInt16 APP12	= 0xffec;
 	static const UInt16 APP13	= 0xffed;
-	static const UInt16 APP14	= 0xffee;
+	static const UInt16 APP14	= 0xffee;	// Adobe
 	static const UInt16 APP15	= 0xffef;
+	static const UInt16 COM		= 0xfffe;
 };
 
 struct Type {
