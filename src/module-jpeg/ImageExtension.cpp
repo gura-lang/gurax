@@ -81,7 +81,8 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 	::jpeg_set_quality(&cinfo, quality, TRUE);
 	::jpeg_start_compress(&cinfo, TRUE);
 	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
-		(j_common_ptr)&cinfo, JPOOL_IMAGE, cinfo.image_width * cinfo.input_components, 1);
+		reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+		cinfo.image_width * cinfo.input_components, 1);
 	while (cinfo.next_scanline < cinfo.image_height) {
 		const UInt8* pSrc = image.GetPointer(0, cinfo.next_scanline);
 		UInt8* pDst = scanlines[0];
@@ -104,7 +105,8 @@ bool ImageMgrEx::DoDecompress(Image& image, jpeg_decompress_struct& cinfo)
 	::jpeg_start_decompress(&cinfo);
 	bool grayScaleFlag = (cinfo.output_components != 3);
 	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
-		(j_common_ptr)&cinfo, JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);
+		reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+		cinfo.output_width * cinfo.output_components, 1);
 	while (cinfo.output_scanline < cinfo.output_height) {
 		::jpeg_read_scanlines(&cinfo, scanlines, 1);
 		if (Error::IsIssued()) {
@@ -133,18 +135,19 @@ bool ImageMgrEx::DoDecompress(Image& image, jpeg_decompress_struct& cinfo)
 	return true;
 }
 
-bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& iImage, jpeg_decompress_struct& cinfo)
+bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& image, jpeg_decompress_struct& cinfo)
 {
 #if 0
 	::jpeg_start_decompress(&cinfo);
 	bool grayScaleFlag = (cinfo.output_components != 3);
-	size_t widthDst = pImage->GetWidth();
-	size_t heightDst = pImage->GetHeight();
-	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo,
-					JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);
-	UChar *pLineDst = pImage->GetPointer(0);
-	size_t bytesPerPixel = pImage->GetBytesPerPixel();
-	size_t bytesPerLineDst = pImage->GetBytesPerLine();
+	size_t widthDst = image.GetWidth();
+	size_t heightDst = image.GetHeight();
+	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
+		reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+		cinfo.output_width * cinfo.output_components, 1);
+	UInt8* pLineDst = image.GetPointer();
+	size_t bytesPerPixel = image.GetBytesPerPixel();
+	size_t bytesPerLineDst = image.GetBytesPerLine();
 	size_t accumsSize = widthDst * sizeof(Image::Accum);
 	AutoPtr<Memory> pMemory(new MemoryHeap(accumsSize));
 	Image::Accum *accums = reinterpret_cast<Image::Accum *>(pMemory->GetPointer());
@@ -159,7 +162,7 @@ bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& iImage, jpeg_decompress_
 				::jpeg_destroy_decompress(&cinfo);
 				return false;
 			}
-			const UChar *pSrc = scanlines[0];
+			const UInt8 *pSrc = scanlines[0];
 			Image::Accum *pAccum = accums;
 			size_t xDst = 0;
 			size_t numerX = 0;
@@ -216,7 +219,7 @@ bool ImageMgrEx::DoDecompressWithBilinearScaling(Image& iImage, jpeg_decompress_
 			for ( ; numerY >= cinfo.output_height && yDst < heightDst;
 				  numerY -= cinfo.output_height, yDst++) {
 				Image::Accum *pAccum = accums;
-				UChar *pDst = pLineDst;
+				UInt8 *pDst = pLineDst;
 				for (size_t xDst = 0; xDst < widthDst;
 					 xDst++, pAccum++, pDst += bytesPerPixel) {
 					pAccum->StoreRGB(pDst);
@@ -238,13 +241,14 @@ bool ImageMgrEx::DoDecompressWithNearestNeighborScaling(Image& image, jpeg_decom
 #if 0
 	::jpeg_start_decompress(&cinfo);
 	bool grayScaleFlag = (cinfo.output_components != 3);
-	size_t widthDst = pImage->GetWidth();
-	size_t heightDst = pImage->GetHeight();
-	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo,
-					JPOOL_IMAGE, cinfo.output_width * cinfo.output_components, 1);
-	UChar *pLineDst = pImage->GetPointer(0);
-	size_t bytesPerPixelDst = pImage->GetBytesPerPixel();
-	size_t bytesPerLineDst = pImage->GetBytesPerLine();
+	size_t widthDst = image.GetWidth();
+	size_t heightDst = image.GetHeight();
+	JSAMPARRAY scanlines = (*cinfo.mem->alloc_sarray)(
+		reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
+		cinfo.output_width * cinfo.output_components, 1);
+	UInt8 *pLineDst = image.GetPointer(0);
+	size_t bytesPerPixelDst = image.GetBytesPerPixel();
+	size_t bytesPerLineDst = image.GetBytesPerLine();
 	size_t yDst = 0;
 	size_t ySrc = 0, ySrcNext = 0;
 	AutoPtr<Memory> pMemory(new MemoryHeap(sizeof(UInt) * widthDst));
@@ -270,20 +274,20 @@ bool ImageMgrEx::DoDecompressWithNearestNeighborScaling(Image& image, jpeg_decom
 			continue;
 		}
 		ySrc++;
-		const UChar *pLineSrc = scanlines[0];
+		const UInt8 *pLineSrc = scanlines[0];
 		if (grayScaleFlag) {
-			UChar *pDst = pLineDst;
+			UInt8 *pDst = pLineDst;
 			for (UInt xDst = 0; xDst < widthDst; xDst++) {
-				const UChar *pSrc = pLineSrc + offsetDst[xDst];
+				const UInt8 *pSrc = pLineSrc + offsetDst[xDst];
 				*(pDst + Image::OffsetR) = *pSrc;
 				*(pDst + Image::OffsetG) = *pSrc;
 				*(pDst + Image::OffsetB) = *pSrc;
 				pDst += bytesPerPixelDst;
 			}
 		} else {
-			UChar *pDst = pLineDst;
+			UInt8 *pDst = pLineDst;
 			for (UInt xDst = 0; xDst < widthDst; xDst++) {
-				const UChar *pSrc = pLineSrc + offsetDst[xDst];
+				const UInt8 *pSrc = pLineSrc + offsetDst[xDst];
 				*(pDst + Image::OffsetR) = *(pSrc + 0);
 				*(pDst + Image::OffsetG) = *(pSrc + 1);
 				*(pDst + Image::OffsetB) = *(pSrc + 2);

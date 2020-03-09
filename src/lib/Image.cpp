@@ -52,26 +52,39 @@ bool Image::Metrics::CheckArea(int x, int y, int width, int height) const
 //------------------------------------------------------------------------------
 // Image::Accumulator
 //------------------------------------------------------------------------------
-template<> inline void Image::Accumulator::Store<Image::PixelRGB>(const UInt8* pSrc)
+Image::Accumulator::Accumulator(size_t width) :
+	_pMemory(new MemoryHeap(sizeof(Elem) * width)), _pElem(_pMemory->GetPointer<Elem>())
 {
-	b += *(pSrc + 0), g += *(pSrc + 1), r += *(pSrc + 2), n++;
+	Clear();
 }
 
-template<> inline void Image::Accumulator::Store<Image::PixelRGBA>(const UInt8* pSrc)
+template<> inline void Image::Accumulator::Store<Image::PixelRGB>(size_t idx, const UInt8* pSrc)
 {
-	b += *(pSrc + 0), g += *(pSrc + 1), r += *(pSrc + 2), a += *(pSrc + 3), n++;
+	Elem& elem = *(_pElem + idx);
+	elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2), elem.n++;
 }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelRGB>(UInt8* pDst)
+template<> inline void Image::Accumulator::Store<Image::PixelRGBA>(size_t idx, const UInt8* pSrc)
 {
-	*(pDst + 0) = static_cast<UInt8>(b / n), *(pDst + 1) = static_cast<UInt8>(g / n);
-	*(pDst + 2) = static_cast<UInt8>(r / n);
+	Elem& elem = *(_pElem + idx);
+	elem.b += *(pSrc + 0), elem.g += *(pSrc + 1), elem.r += *(pSrc + 2);
+	elem.a += *(pSrc + 3), elem.n++;
 }
 
-template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(UInt8* pDst)
+template<> inline void Image::Accumulator::Extract<Image::PixelRGB>(size_t idx, UInt8* pDst)
 {
-	*(pDst + 0) = static_cast<UInt8>(b / n), *(pDst + 1) = static_cast<UInt8>(g / n);
-	*(pDst + 2) = static_cast<UInt8>(r / n), *(pDst + 3) = static_cast<UInt8>(a / n);
+	const Elem& elem = *(_pElem + idx);
+	size_t n = (elem.n > 0)? elem.n : 1;
+	*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+	*(pDst + 2) = static_cast<UInt8>(elem.r / n);
+}
+
+template<> inline void Image::Accumulator::Extract<Image::PixelRGBA>(size_t idx, UInt8* pDst)
+{
+	const Elem& elem = *(_pElem + idx);
+	size_t n = (elem.n > 0)? elem.n : 1;
+	*(pDst + 0) = static_cast<UInt8>(elem.b / n), *(pDst + 1) = static_cast<UInt8>(elem.g / n);
+	*(pDst + 2) = static_cast<UInt8>(elem.r / n), *(pDst + 3) = static_cast<UInt8>(elem.a / n);
 }
 
 //------------------------------------------------------------------------------
@@ -474,9 +487,7 @@ template<typename T_PixelDst, typename T_PixelSrc>
 void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 						 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
 {
-	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Accumulator) * wdDst));
-	pMemory->Fill(0x00);
-	Accumulator* accumulators = pMemory->GetPointer<Accumulator>();
+	Accumulator accumulator(wdDst);
 	UInt8* pLineDst = pixelDst.GetPointer();
 	const UInt8* pLineSrc = pixelSrc.GetPointer();
 	size_t htAccum = 0;
@@ -485,7 +496,7 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 		size_t wdAccum = 0;
 		size_t xDst = 0;
 		for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
-			accumulators[xDst].Store<T_PixelSrc>(pSrc);
+			accumulator.Store<T_PixelSrc>(xDst, pSrc);
 			wdAccum += wdDst;
 			if (wdAccum >= wdSrc) {
 				wdAccum -= wdSrc;
@@ -497,12 +508,12 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 		if (htAccum >= htSrc) {
 			UInt8* pDst = pLineDst;
 			for (size_t xDst = 0; xDst < wdDst; xDst++) {
-				accumulators[xDst].Extract<T_PixelDst>(pDst);
+				accumulator.Extract<T_PixelDst>(xDst, pDst);
 				pDst += T_PixelDst::bytesPerPixel;
 			}
 			htAccum -= htSrc;
 			pLineDst += pixelDst.GetBytesPerLine();
-			pMemory->Fill(0x00);
+			accumulator.Clear();
 		}
 		pLineSrc += pixelSrc.GetBytesPerLine();
 	}

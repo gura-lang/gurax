@@ -80,16 +80,23 @@ public:
 		bool CheckArea(int x, int y, int width, int height) const;
 		size_t CountPixels() const { return width * height; }
 	};
-	struct Accumulator {
+	class Accumulator {
 	public:
-		UInt32 r;
-		UInt32 g;
-		UInt32 b;
-		UInt32 a;
-		size_t n;
+		struct Elem {
+			UInt32 r;
+			UInt32 g;
+			UInt32 b;
+			UInt32 a;
+			size_t n;
+		};
+	private:
+		RefPtr<Memory> _pMemory;
+		Elem* _pElem;
 	public:
-		template<typename T_Pixel> void Store(const UInt8* pSrc) {}
-		template<typename T_Pixel> void Extract(UInt8* pDst) {}
+		Accumulator(size_t width);
+		void Clear() { _pMemory->Fill(0x00); }
+		template<typename T_Pixel> void Store(size_t idx, const UInt8* pSrc) {}
+		template<typename T_Pixel> void Extract(size_t idx, UInt8* pDst) {}
 	};
 	class PixelRGB;
 	class PixelRGBA;
