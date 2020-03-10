@@ -38,9 +38,10 @@ bool Content::Read(Stream& stream)
 			IssueError_InvalidFormat();
 			return false;
 		}
+		_segmentOwner.push_back(new Segment(marker, pBuff.release()));
 	}
-	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-	stream.ReadToEnd(pBuff->GetBinary());
+	_pBuffImage.reset(new BinaryReferable());
+	stream.ReadToEnd(_pBuffImage->GetBinary());
 	return true;
 }
 
