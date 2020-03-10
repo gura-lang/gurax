@@ -25,36 +25,10 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// jpeg.Segment#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Segment, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Segment, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Segment#propSkeleton
-Gurax_DeclareProperty_R(Segment, propSkeleton)
+// jpeg.Segment#marker
+Gurax_DeclareProperty_R(Segment, marker)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +36,26 @@ Gurax_DeclareProperty_R(Segment, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Segment, propSkeleton)
+Gurax_ImplementPropertyGetter(Segment, marker)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetSegment().GetMarker());
+}
+
+// jpeg.Segment#parameter
+Gurax_DeclareProperty_R(Segment, parameter)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Segment, parameter)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Pointer> pPointer(new Pointer_Binary(valueThis.GetSegment().GetBinaryReferable().Reference()));
+	return new Value_Pointer(pPointer.release());
 }
 
 //------------------------------------------------------------------------------
@@ -79,10 +69,25 @@ void VType_Segment::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(Segment, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Segment, propSkeleton));
+	Assign(Gurax_CreateProperty(Segment, marker));
+	Assign(Gurax_CreateProperty(Segment, parameter));
+}
+
+//-----------------------------------------------------------------------------
+// VType_Segment::Iterator_Each
+//-----------------------------------------------------------------------------
+Value* VType_Segment::Iterator_Each::DoNextValue()
+{
+	if (_idx >= GetSegmentOwner().size()) return nullptr;
+	RefPtr<Segment> pSegment(GetSegmentOwner()[_idx]->Reference());
+	_idx++;
+	return new Value_Segment(pSegment.release());
+}
+	
+String VType_Segment::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return "Segment.Each";
 }
 
 //------------------------------------------------------------------------------

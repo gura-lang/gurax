@@ -13,6 +13,26 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Segment : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("Segment.Each");
+	private:
+		RefPtr<SegmentOwner> _pSegmentOwner;
+		size_t _idx;
+	public:
+		Iterator_Each(SegmentOwner* pSegmentOwner) : _pSegmentOwner(pSegmentOwner), _idx(0) {}
+	public:
+		SegmentOwner& GetSegmentOwner() { return *_pSegmentOwner; }
+		const SegmentOwner& GetSegmentOwner() const { return *_pSegmentOwner; }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetSegmentOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };

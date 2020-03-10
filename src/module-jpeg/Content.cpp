@@ -26,8 +26,10 @@ bool Content::Read(Stream& stream)
 			return false;
 		}
 		UInt16 marker = Gurax_UnpackUInt16(buffShort.num);
-		::printf("%04x\n", marker);
-		if (marker == Marker::SOS) break;
+		if (marker == Marker::SOS) {
+			GetSegmentOwner().push_back(new Segment(marker, new BinaryReferable()));
+			break;
+		}
 		if (stream.Read(&buffShort, sizeof(buffShort)) < sizeof(buffShort)) {
 			IssueError_InvalidFormat();
 			return false;
@@ -38,7 +40,7 @@ bool Content::Read(Stream& stream)
 			IssueError_InvalidFormat();
 			return false;
 		}
-		_segmentOwner.push_back(new Segment(marker, pBuff.release()));
+		GetSegmentOwner().push_back(new Segment(marker, pBuff.release()));
 	}
 	_pBuffImage.reset(new BinaryReferable());
 	stream.ReadToEnd(_pBuffImage->GetBinary());

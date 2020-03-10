@@ -32,6 +32,7 @@ public:
 	UInt16 GetMarker() const { return _marker; }
 	Binary& GetBinary() { return _pBuff->GetBinary(); }
 	const Binary& GetBinary() const { return _pBuff->GetBinary(); }
+	const BinaryReferable& GetBinaryReferable() const { return *_pBuff; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Segment& other) const { return this == &other; }
@@ -49,9 +50,13 @@ class GURAX_DLLDECLARE SegmentList : public std::vector<Segment*> {
 //------------------------------------------------------------------------------
 // SegmentOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SegmentOwner : public SegmentList {
+class GURAX_DLLDECLARE SegmentOwner : public SegmentList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(SegmentOwner);
+protected:
 	~SegmentOwner() { Clear(); }
+public:
 	void Clear();
 };
 

@@ -16,11 +16,11 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Content);
 protected:
-	SegmentOwner _segmentOwner;
+	RefPtr<SegmentOwner> _pSegmentOwner;
 	RefPtr<BinaryReferable> _pBuffImage;
 public:
 	// Constructor
-	Content() {}
+	Content() : _pSegmentOwner(new SegmentOwner()) {}
 	// Copy constructor/operator
 	Content(const Content& src) = delete;
 	Content& operator=(const Content& src) = delete;
@@ -30,8 +30,8 @@ public:
 protected:
 	~Content() = default;
 public:
-	SegmentOwner& GetSegmentOwner() { return _segmentOwner; }
-	const SegmentOwner& GetSegmentOwner() const { return _segmentOwner; }
+	SegmentOwner& GetSegmentOwner() { return *_pSegmentOwner; }
+	const SegmentOwner& GetSegmentOwner() const { return *_pSegmentOwner; }
 	const Binary* GetBuffImage() const { return _pBuffImage? &_pBuffImage->GetBinary() : nullptr; }
 public:
 	bool Read(Stream& stream);
