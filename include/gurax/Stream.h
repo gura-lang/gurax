@@ -100,6 +100,7 @@ public:
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
 	Binary Read(size_t len);
+	BinaryReferable* ReadAsReferable(size_t len);
 	Stream& ReadToEnd(Binary& buff);
 	Binary ReadToEnd();
 	static OpenFlags ModeToOpenFlags(const char* mode);

@@ -102,6 +102,7 @@ private:
 public:
 	// Constructor
 	BinaryReferable() {}
+	BinaryReferable(size_t len, UInt8 data) : _binary(len, data) {}
 	explicit BinaryReferable(Binary binary) : _binary(std::move(binary)) {}
 	// Copy constructor/operator
 	BinaryReferable(const BinaryReferable& src) = delete;

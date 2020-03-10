@@ -195,6 +195,15 @@ Binary Stream::Read(size_t len)
 	return buff;
 }
 
+BinaryReferable* Stream::ReadAsReferable(size_t len)
+{
+	RefPtr<BinaryReferable> pBuff(new BinaryReferable(len, '\0'));
+	Binary& buff = pBuff->GetBinary();
+	size_t lenRead = Read(&buff[0], len);
+	buff.resize(lenRead);
+	return pBuff.release();
+}
+
 Stream& Stream::ReadToEnd(Binary& buff)
 {
 	const int bytesWork = 65536;

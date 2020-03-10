@@ -32,10 +32,15 @@ bool Content::Read(Stream& stream)
 			IssueError_InvalidFormat();
 			return false;
 		}
-		UInt16 len = Gurax_UnpackUInt16(buffShort.num);
-		stream.Seek(len - 2, Stream::SeekMode::Cur);
+		UInt16 bytesToRead = Gurax_UnpackUInt16(buffShort.num) - 2;
+		RefPtr<BinaryReferable> pBuff(stream.ReadAsReferable(bytesToRead));
+		if (Error::IsIssued()) {
+			IssueError_InvalidFormat();
+			return false;
+		}
 	}
-	
+	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
+	stream.ReadToEnd(pBuff->GetBinary());
 	return true;
 }
 
