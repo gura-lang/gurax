@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_BMP_VTYPE_BITMAPFILEHEADER_H
 #define GURAX_MODULE_BMP_VTYPE_BITMAPFILEHEADER_H
 #include <gurax.h>
-#include "Info.h"
+#include "Content.h"
 
 Gurax_BeginModuleScope(bmp)
 
@@ -29,17 +29,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_BitmapFileHeader");
 protected:
-	RefPtr<Info> _pInfo;
+	RefPtr<Content> _pContent;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_BitmapFileHeader() = delete;
-	explicit Value_BitmapFileHeader(Info* pInfo, VType& vtype = VTYPE_BitmapFileHeader) :
-		Value_Object(vtype), _pInfo(pInfo) {}
+	explicit Value_BitmapFileHeader(Content* pContent, VType& vtype = VTYPE_BitmapFileHeader) :
+		Value_Object(vtype), _pContent(pContent) {}
 	// Copy constructor/operator
 	Value_BitmapFileHeader(const Value_BitmapFileHeader& src) :
-		Value_Object(src), _pInfo(src._pInfo->Reference()) {}
+		Value_Object(src), _pContent(src._pContent->Reference()) {}
 	Value_BitmapFileHeader& operator=(const Value_BitmapFileHeader& src) = delete;
 	// Move constructor/operator
 	Value_BitmapFileHeader(Value_BitmapFileHeader&& src) = delete;
@@ -48,32 +48,32 @@ protected:
 	// Destructor
 	~Value_BitmapFileHeader() = default;
 public:
-	Info& GetInfo() { return *_pInfo; }
-	const Info& GetInfo() const { return *_pInfo; }
+	Content& GetContent() { return *_pContent; }
+	const Content& GetContent() const { return *_pContent; }
 public:
-	static Info& GetInfo(Value& value) {
-		return dynamic_cast<Value_BitmapFileHeader&>(value).GetInfo();
+	static Content& GetContent(Value& value) {
+		return dynamic_cast<Value_BitmapFileHeader&>(value).GetContent();
 	}
-	static const Info& GetInfo(const Value& value) {
-		return dynamic_cast<const Value_BitmapFileHeader&>(value).GetInfo();
+	static const Content& GetContent(const Value& value) {
+		return dynamic_cast<const Value_BitmapFileHeader&>(value).GetContent();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetInfo().CalcHash();
+		return GetContent().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetInfo().IsEqualTo(Value_BitmapFileHeader::GetInfo(*pValue));
+			GetContent().IsEqualTo(Value_BitmapFileHeader::GetContent(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetInfo().IsLessThan(Value_BitmapFileHeader::GetInfo(*pValue)) :
+			GetContent().IsLessThan(Value_BitmapFileHeader::GetContent(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetInfo().ToString(ss);
+		return GetContent().ToString(ss);
 	}
 };
 

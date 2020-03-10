@@ -1,61 +1,61 @@
 //==============================================================================
-// VType_BitmapInfoHeader.h
+// VType_Content.h
 //==============================================================================
-#ifndef GURAX_MODULE_BMP_VTYPE_BITMAPINFOHEADER_H
-#define GURAX_MODULE_BMP_VTYPE_BITMAPINFOHEADER_H
+#ifndef GURAX_MODULE_BMP_VTYPE_CONTENT_H
+#define GURAX_MODULE_BMP_VTYPE_CONTENT_H
 #include <gurax.h>
 #include "Content.h"
 
 Gurax_BeginModuleScope(bmp)
 
 //------------------------------------------------------------------------------
-// VType_BitmapInfoHeader
+// VType_Content
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_BitmapInfoHeader : public VType {
+class GURAX_DLLDECLARE VType_Content : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_BitmapInfoHeader VTYPE_BitmapInfoHeader;
+extern VType_Content VTYPE_Content;
 
 //------------------------------------------------------------------------------
-// Value_BitmapInfoHeader
+// Value_Content
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_BitmapInfoHeader : public Value_Object {
+class GURAX_DLLDECLARE Value_Content : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_BitmapInfoHeader);
+	Gurax_DeclareReferable(Value_Content);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_BitmapInfoHeader");
+	Gurax_MemoryPoolAllocator("Value_Content");
 protected:
 	RefPtr<Content> _pContent;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_BitmapInfoHeader() = delete;
-	explicit Value_BitmapInfoHeader(Content* pContent, VType& vtype = VTYPE_BitmapInfoHeader) :
+	Value_Content() = delete;
+	explicit Value_Content(Content* pContent, VType& vtype = VTYPE_Content) :
 		Value_Object(vtype), _pContent(pContent) {}
 	// Copy constructor/operator
-	Value_BitmapInfoHeader(const Value_BitmapInfoHeader& src) :
+	Value_Content(const Value_Content& src) :
 		Value_Object(src), _pContent(src._pContent->Reference()) {}
-	Value_BitmapInfoHeader& operator=(const Value_BitmapInfoHeader& src) = delete;
+	Value_Content& operator=(const Value_Content& src) = delete;
 	// Move constructor/operator
-	Value_BitmapInfoHeader(Value_BitmapInfoHeader&& src) = delete;
-	Value_BitmapInfoHeader& operator=(Value_BitmapInfoHeader&& src) noexcept = delete;
+	Value_Content(Value_Content&& src) = delete;
+	Value_Content& operator=(Value_Content&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_BitmapInfoHeader() = default;
+	~Value_Content() = default;
 public:
 	Content& GetContent() { return *_pContent; }
 	const Content& GetContent() const { return *_pContent; }
 public:
 	static Content& GetContent(Value& value) {
-		return dynamic_cast<Value_BitmapInfoHeader&>(value).GetContent();
+		return dynamic_cast<Value_Content&>(value).GetContent();
 	}
 	static const Content& GetContent(const Value& value) {
-		return dynamic_cast<const Value_BitmapInfoHeader&>(value).GetContent();
+		return dynamic_cast<const Value_Content&>(value).GetContent();
 	}
 public:
 	// Virtual functions of Value
@@ -65,11 +65,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetContent().IsEqualTo(Value_BitmapInfoHeader::GetContent(*pValue));
+			GetContent().IsEqualTo(Value_Content::GetContent(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetContent().IsLessThan(Value_BitmapInfoHeader::GetContent(*pValue)) :
+			GetContent().IsLessThan(Value_Content::GetContent(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {

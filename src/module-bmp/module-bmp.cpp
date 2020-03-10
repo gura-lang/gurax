@@ -16,7 +16,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_Info);
+	Assign(VTYPE_Content);
 	Assign(VTYPE_BitmapFileHeader);
 	Assign(VTYPE_BitmapInfoHeader);
 	// Assignment of ImageMgr

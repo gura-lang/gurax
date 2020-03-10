@@ -61,7 +61,7 @@ Gurax_ImplementConstructor(Pattern)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pattern#Match(str:String, pos?:Number, posEnd?:Number):map {block?}
+// re.Pattern#Match(str:String, pos?:Number, posEnd?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Match)
 {
 	Declare(VTYPE_Match, Flag::Map);
@@ -97,7 +97,7 @@ Gurax_ImplementMethod(Pattern, Match)
 	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
-// Pattern#Sub(str:String, replace, cnt?:Number):map {block?}
+// re.Pattern#Sub(str:String, replace, cnt?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Sub)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -149,7 +149,7 @@ Gurax_ImplementMethod(Pattern, Sub)
 		pValueRtn.release();
 }
 
-// Pattern#Split(str:String, cntMax?:Number):map {block?}
+// re.Pattern#Split(str:String, cntMax?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Split)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -179,7 +179,7 @@ Gurax_ImplementMethod(Pattern, Split)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Pattern#Scan(str:String, pos?:Number, posEnd?:Number):map {block?}
+// re.Pattern#Scan(str:String, pos?:Number, posEnd?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Scan)
 {
 	Declare(VTYPE_String, Flag::Map);

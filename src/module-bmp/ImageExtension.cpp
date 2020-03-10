@@ -22,14 +22,10 @@ bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
 
 bool ImageMgrEx::Read(Stream& stream, Image& image) const
 {
-	RefPtr<Info> pInfo(new Info());
-	if (!pInfo->Read(stream)) return false;
-	const BitmapFileHeader& bfh = pInfo->GetBitmapFileHeader();
-	const BitmapInfoHeader& bih = pInfo->GetBitmapInfoHeader();;
-	if (Gurax_UnpackUInt16(bfh.bfType) != 0x4d42) {
-		IssueError_InvalidFormat();
-		return false;
-	}
+	RefPtr<Content> pContent(new Content());
+	if (!pContent->ReadHeader(stream)) return false;
+	const BitmapFileHeader& bfh = pContent->GetBitmapFileHeader();
+	const BitmapInfoHeader& bih = pContent->GetBitmapInfoHeader();;
 	Int32 biWidth = Gurax_UnpackInt32(bih.biWidth);
 	Int32 biHeight = Gurax_UnpackInt32(bih.biHeight);
 	UInt16 biBitCount = Gurax_UnpackUInt16(bih.biBitCount);
@@ -75,7 +71,6 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		}
 	} while (0);
 	do {
-	
 		BitmapInfoHeader bih;
 		::memset(&bih, 0x00, BitmapInfoHeader::bytes);
 		Gurax_PackUInt32(bih.biSize,			BitmapInfoHeader::bytes);
@@ -177,7 +172,6 @@ bool ImageMgrEx::WriteDIBPalette(Stream& stream, const Palette& palette, int biB
 			Error::Issue(ErrorType::FormatError, "failed to write DIB palette");
 			return false;
 		}
-
 	}
 	return true;
 }

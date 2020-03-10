@@ -39,7 +39,7 @@ Gurax_DeclareProperty_R(BitmapFileHeader, bfType)
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfType)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	const BitmapFileHeader& bfh = valueThis.GetContent().GetBitmapFileHeader();
 	return new Value_Number(Gurax_UnpackUInt16(bfh.bfType));
 }
 
@@ -55,7 +55,7 @@ Gurax_DeclareProperty_R(BitmapFileHeader, bfSize)
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfSize)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	const BitmapFileHeader& bfh = valueThis.GetContent().GetBitmapFileHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bfh.bfSize));
 }
 
@@ -71,7 +71,7 @@ Gurax_DeclareProperty_R(BitmapFileHeader, bfOffBits)
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfOffBits)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapFileHeader& bfh = valueThis.GetInfo().GetBitmapFileHeader();
+	const BitmapFileHeader& bfh = valueThis.GetContent().GetBitmapFileHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bfh.bfOffBits));
 }
 

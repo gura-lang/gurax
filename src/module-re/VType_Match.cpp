@@ -54,7 +54,7 @@ Gurax_ImplementConstructor(Match)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Match#Group(index):map {block?}
+// re.Match#Group(index):map {block?}
 Gurax_DeclareMethod(Match, Group)
 {
 	Declare(VTYPE_Group, Flag::Map);
@@ -76,7 +76,7 @@ Gurax_ImplementMethod(Match, Group)
 	return valueThis.GetValueOfGroup(valueIndex);
 }
 
-// Match#Groups() {block?}
+// re.Match#Groups() {block?}
 Gurax_DeclareMethod(Match, Groups)
 {
 	Declare(VTYPE_Iterator, Flag::None);

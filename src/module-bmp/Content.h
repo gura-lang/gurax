@@ -1,43 +1,49 @@
 //==============================================================================
-// Info.h
+// Content.h
 //==============================================================================
-#ifndef GURAX_MODULE_BMP_INFO_H
-#define GURAX_MODULE_BMP_INFO_H
+#ifndef GURAX_MODULE_BMP_CONTENT_H
+#define GURAX_MODULE_BMP_CONTENT_H
 #include <gurax.h>
 #include "ImageExtension.h"
 
 Gurax_BeginModuleScope(bmp)
 
 //------------------------------------------------------------------------------
-// Info
+// Content
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Info : public Referable {
+class GURAX_DLLDECLARE Content : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Info);
+	Gurax_DeclareReferable(Content);
 protected:
 	BitmapFileHeader _bfh;
 	BitmapInfoHeader _bih;
+	RefPtr<Memory> _pMemory;
 public:
 	// Constructor
-	Info() {}
+	Content() {}
 	// Copy constructor/operator
-	Info(const Info& src) = delete;
-	Info& operator=(const Info& src) = delete;
+	Content(const Content& src) = delete;
+	Content& operator=(const Content& src) = delete;
 	// Move constructor/operator
-	Info(Info&& src) = delete;
-	Info& operator=(Info&& src) noexcept = delete;
+	Content(Content&& src) = delete;
+	Content& operator=(Content&& src) noexcept = delete;
 protected:
-	~Info() = default;
+	~Content() = default;
 public:
 	const BitmapFileHeader& GetBitmapFileHeader() const { return _bfh; }
 	const BitmapInfoHeader& GetBitmapInfoHeader() const { return _bih; }
+	const Memory* GetMemory() const { return _pMemory.get(); }
+public:
 	bool Read(Stream& stream);
+	bool Write(Stream& stream) const;
+	bool ReadHeader(Stream& stream);
+	bool WriteHeader(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Info& other) const { return this == &other; }
-	bool IsEqualTo(const Info& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Info& other) const { return this < &other; }
+	bool IsIdentical(const Content& other) const { return this == &other; }
+	bool IsEqualTo(const Content& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Content& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

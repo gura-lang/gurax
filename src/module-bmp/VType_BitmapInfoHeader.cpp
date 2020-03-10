@@ -39,7 +39,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biSize)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSize)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biSize));
 }
 
@@ -55,7 +55,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biWidth)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biWidth)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biWidth));
 }
 
@@ -71,7 +71,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biHeight)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biHeight)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biHeight));
 }
 
@@ -87,7 +87,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biPlanes)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biPlanes)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt16(bih.biPlanes));
 }
 
@@ -103,7 +103,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biBitCount)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biBitCount)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt16(bih.biBitCount));
 }
 
@@ -119,7 +119,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biCompression)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biCompression)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biCompression));
 }
 
@@ -135,7 +135,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biSizeImage)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSizeImage)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biSizeImage));
 }
 
@@ -151,7 +151,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biXPelsPerMeter)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biXPelsPerMeter)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biXPelsPerMeter));
 }
 
@@ -167,7 +167,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biYPelsPerMeter)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biYPelsPerMeter)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biYPelsPerMeter));
 }
 
@@ -183,7 +183,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biClrUsed)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biClrUsed)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biClrUsed));
 }
 
@@ -199,7 +199,7 @@ Gurax_DeclareProperty_R(BitmapInfoHeader, biClrImportant)
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biClrImportant)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const BitmapInfoHeader& bih = valueThis.GetInfo().GetBitmapInfoHeader();
+	const BitmapInfoHeader& bih = valueThis.GetContent().GetBitmapInfoHeader();
 	return new Value_Number(Gurax_UnpackUInt32(bih.biClrImportant));
 }
 

@@ -6,8 +6,8 @@ import(util.modbuild) {Builder}
 
 b = Builder('bmp')
 b.pathNamesSrc = [
-	'module-bmp.cpp', 'ImageExtension.cpp', 'Util.cpp', 'Info.cpp',
-	'VType_Info.cpp', 'VType_BitmapFileHeader.cpp', 'VType_BitmapInfoHeader.cpp'
+	'module-bmp.cpp', 'ImageExtension.cpp', 'Util.cpp', 'Content.cpp',
+	'VType_Content.cpp', 'VType_BitmapFileHeader.cpp', 'VType_BitmapInfoHeader.cpp'
 ]
 b.pathNamesScript = []
 b.dirNamesInc = []
