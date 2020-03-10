@@ -100,8 +100,8 @@ public:
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
 	Binary Read(size_t len);
-	Stream& ReadAll(Binary& buff);
-	Binary ReadAll();
+	Stream& ReadToEnd(Binary& buff);
+	Binary ReadToEnd();
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	Stream* CreateBwdSeekable();
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);

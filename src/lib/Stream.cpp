@@ -195,7 +195,7 @@ Binary Stream::Read(size_t len)
 	return buff;
 }
 
-Stream& Stream::ReadAll(Binary& buff)
+Stream& Stream::ReadToEnd(Binary& buff)
 {
 	const int bytesWork = 65536;
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
@@ -207,10 +207,10 @@ Stream& Stream::ReadAll(Binary& buff)
 	return *this;
 }
 
-Binary Stream::ReadAll()
+Binary Stream::ReadToEnd()
 {
 	Binary buff;
-	ReadAll(buff);
+	ReadToEnd(buff);
 	return buff;
 }
 
@@ -246,7 +246,7 @@ Stream* Stream::CreateBwdSeekable()
 {
 	if (IsBwdSeekable()) return Reference();
 	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-	ReadAll(pBuff->GetBinary());
+	ReadToEnd(pBuff->GetBinary());
 	if (Error::IsIssued()) return nullptr;
 	return new Stream_Binary(Stream::Flag::Readable, pBuff.release());
 }

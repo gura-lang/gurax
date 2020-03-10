@@ -233,7 +233,7 @@ Gurax_ImplementMethod(Stream, Read)
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	} else {
-		Binary buff(stream.ReadAll());
+		Binary buff(stream.ReadToEnd());
 		if (buff.empty() || Error::IsIssued()) return Value::nil();
 		_pValue.reset(new Value_Binary(buff));
 	}

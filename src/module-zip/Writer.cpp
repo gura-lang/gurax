@@ -96,7 +96,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 	}
 	CRC32 crc32;
 	RefPtr<Memory> pMemory(new MemoryHeap(32768));
-	void* buff = pMemory->GetPointer();
+	void* buff = pMemory->GetPointer<void>();
 	for (;;) {
 		size_t bytesRead = streamSrc.Read(buff, pMemory->GetBytes());
 		if (Error::IsIssued()) break;

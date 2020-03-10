@@ -44,8 +44,8 @@ public:
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<char*>(_pMemory->GetPointer());
-		_buffIn = reinterpret_cast<char*>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = _pMemory->GetPointer<char>();
+		_buffIn = _pMemory->GetPointer<char>(_bytesBuff);
 		return true;
 	}
 	virtual const char* GetName() const override {
@@ -150,8 +150,8 @@ public:
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<char*>(_pMemory->GetPointer());
-		_buffIn = reinterpret_cast<char*>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = _pMemory->GetPointer<char>();
+		_buffIn = _pMemory->GetPointer<char>(_bytesBuff);
 		_bzstrm.next_out = _buffOut;
 		_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
 		return true;
