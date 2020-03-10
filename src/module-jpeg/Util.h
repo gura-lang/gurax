@@ -54,6 +54,11 @@ public:
 	static void term_destination(j_compress_ptr cinfo);
 };
 
+//-----------------------------------------------------------------------------
+// utility functions
+//-----------------------------------------------------------------------------
+void IssueError_InvalidFormat();
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

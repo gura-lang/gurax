@@ -130,4 +130,12 @@ void DestinationMgr::term_destination(j_compress_ptr cinfo)
 	}
 }
 
+//-----------------------------------------------------------------------------
+// utility functions
+//-----------------------------------------------------------------------------
+void IssueError_InvalidFormat()
+{
+	Error::Issue(ErrorType::FormatError, "invalid format of jpeg file");
+}
+
 Gurax_EndModuleScope(jpeg)

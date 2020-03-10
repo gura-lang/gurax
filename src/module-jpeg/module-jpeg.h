@@ -8,6 +8,7 @@
 #include "DataType.h"
 #include "Util.h"
 #include "ImageExtension.h"
+#include "VType_Content.h"
 #include "VType_Exif.h"
 #include "VType_IFD.h"
 #include "VType_Tag.h"

@@ -69,6 +69,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
+	Assign(VTYPE_Content);
 	Assign(VTYPE_Exif);
 	Assign(VTYPE_IFD);
 	Assign(VTYPE_Tag);
