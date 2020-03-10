@@ -7,8 +7,8 @@ import(util.modbuild) {Builder}
 b = Builder('jpeg')
 b.pathNamesSrc = [
 	'module-jpeg.cpp', 'Util.cpp', 'ImageExtension.cpp',
-	'Content.cpp', 'Exif.cpp', 'IFD.cpp', 'Tag.cpp'
-	'VType_Content.cpp', 'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Tag.cpp'
+	'Content.cpp', 'Exif.cpp', 'IFD.cpp', 'Segment.cpp', 'Tag.cpp'
+	'VType_Content.cpp', 'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Segment.cpp', 'VType_Tag.cpp'
 ]
 b.pathNamesScript = []
 b.dirNamesInc = ['guest/include/libjpeg']

@@ -11,6 +11,7 @@
 #include "VType_Content.h"
 #include "VType_Exif.h"
 #include "VType_IFD.h"
+#include "VType_Segment.h"
 #include "VType_Tag.h"
 
 Gurax_BeginModuleHeader(jpeg)
