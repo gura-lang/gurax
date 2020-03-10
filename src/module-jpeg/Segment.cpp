@@ -8,9 +8,26 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Segment
 //------------------------------------------------------------------------------
+Segment::Segment(UInt16 marker, BinaryReferable* pBuff) : _marker(marker), _pBuff(pBuff)
+{
+}
+
 String Segment::ToString(const StringStyle& ss) const
 {
 	return "jpeg.Segment";
+}
+
+//------------------------------------------------------------------------------
+// SegmentList
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// SegmentOwner
+//------------------------------------------------------------------------------
+void SegmentOwner::Clear()
+{
+	for (Segment* pSegment : *this) Segment::Delete(pSegment);
+	clear();
 }
 
 Gurax_EndModuleScope(jpeg)

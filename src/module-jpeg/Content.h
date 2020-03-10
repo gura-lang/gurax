@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_JPEG_CONTENT_H
 #define GURAX_MODULE_JPEG_CONTENT_H
 #include <gurax.h>
+#include "Segment.h"
 
 Gurax_BeginModuleScope(jpeg)
 
@@ -14,6 +15,9 @@ class GURAX_DLLDECLARE Content : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Content);
+protected:
+	SegmentOwner _segmentOwner;
+	RefPtr<BinaryReferable> _pBuffImage;
 public:
 	// Constructor
 	Content() {}
@@ -25,6 +29,10 @@ public:
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
 	~Content() = default;
+public:
+	SegmentOwner& GetSegmentOwner() { return _segmentOwner; }
+	const SegmentOwner& GetSegmentOwner() const { return _segmentOwner; }
+	const Binary* GetBuffImage() const { return _pBuffImage? &_pBuffImage->GetBinary() : nullptr; }
 public:
 	bool Read(Stream& stream);
 	bool Write(Stream& stream) const;

@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// jpeg.Segment() {block?}
-Gurax_DeclareConstructor(Segment)
-{
-	Declare(VTYPE_Segment, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `jpeg.Segment` instance.");
-}
-
-Gurax_ImplementConstructor(Segment)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Segment> pSegment(new Segment());
-	return argument.ReturnValue(processor, new Value_Segment(pSegment.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_Segment::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Segment));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Segment, MethodSkeleton));
 	// Assignment of property
