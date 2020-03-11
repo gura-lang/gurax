@@ -4,10 +4,15 @@
 #ifndef GURAX_MODULE_JPEG_DATATYPE_H
 #define GURAX_MODULE_JPEG_DATATYPE_H
 #include <gurax.h>
+#include "Symbol.h"
 
 Gurax_BeginModuleScope(jpeg)
 
+//------------------------------------------------------------------------------
+// Marker
+//------------------------------------------------------------------------------
 struct Marker {
+	static const UInt16 None	= 0x0000;
 	static const UInt16 SOF0	= 0xffc0;
 	static const UInt16 SOF1	= 0xffc1;
 	static const UInt16 SOF2	= 0xffc2;
@@ -48,8 +53,67 @@ struct Marker {
 	static const UInt16 COM		= 0xfffe;
 };
 
+class SymbolAssoc_Marker : public SymbolAssoc<UInt16, Marker::None> {
+public:
+	SymbolAssoc_Marker() {
+		Assoc(Gurax_Symbol(SOF0),	Marker::SOF0);
+		Assoc(Gurax_Symbol(SOF1),	Marker::SOF1);
+		Assoc(Gurax_Symbol(SOF2),	Marker::SOF2);
+		Assoc(Gurax_Symbol(SOF3),	Marker::SOF3);
+		Assoc(Gurax_Symbol(SOF4),	Marker::SOF4);
+		Assoc(Gurax_Symbol(SOF5),	Marker::SOF5);
+		Assoc(Gurax_Symbol(SOF6),	Marker::SOF6);
+		Assoc(Gurax_Symbol(SOF7),	Marker::SOF7);
+		Assoc(Gurax_Symbol(SOF8),	Marker::SOF8);
+		Assoc(Gurax_Symbol(SOF9),	Marker::SOF9);
+		Assoc(Gurax_Symbol(SOF10),	Marker::SOF10);
+		Assoc(Gurax_Symbol(SOF11),	Marker::SOF11);
+		Assoc(Gurax_Symbol(SOF12),	Marker::SOF12);
+		Assoc(Gurax_Symbol(SOF13),	Marker::SOF13);
+		Assoc(Gurax_Symbol(SOF14),	Marker::SOF14);
+		Assoc(Gurax_Symbol(SOF15),	Marker::SOF15);
+		Assoc(Gurax_Symbol(SOI),	Marker::SOI);
+		Assoc(Gurax_Symbol(DHT),	Marker::DHT);
+		Assoc(Gurax_Symbol(SOS),	Marker::SOS);
+		Assoc(Gurax_Symbol(DQT),	Marker::DQT);
+		Assoc(Gurax_Symbol(DRI),	Marker::DRI);
+		Assoc(Gurax_Symbol(APP0),	Marker::APP0);
+		Assoc(Gurax_Symbol(APP1),	Marker::APP1);
+		Assoc(Gurax_Symbol(APP2),	Marker::APP2);
+		Assoc(Gurax_Symbol(APP3),	Marker::APP3);
+		Assoc(Gurax_Symbol(APP4),	Marker::APP4);
+		Assoc(Gurax_Symbol(APP5),	Marker::APP5);
+		Assoc(Gurax_Symbol(APP6),	Marker::APP6);
+		Assoc(Gurax_Symbol(APP7),	Marker::APP7);
+		Assoc(Gurax_Symbol(APP8),	Marker::APP8);
+		Assoc(Gurax_Symbol(APP9),	Marker::APP9);
+		Assoc(Gurax_Symbol(APP10),	Marker::APP10);
+		Assoc(Gurax_Symbol(APP11),	Marker::APP11);
+		Assoc(Gurax_Symbol(APP12),	Marker::APP12);
+		Assoc(Gurax_Symbol(APP13),	Marker::APP13);
+		Assoc(Gurax_Symbol(APP14),	Marker::APP14);
+		Assoc(Gurax_Symbol(APP15),	Marker::APP15);
+		Assoc(Gurax_Symbol(COM),	Marker::COM);
+	}
+	static const SymbolAssoc& GetInstance() {
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Marker());
+	}
+};
 
+inline UInt16 SymbolToMarker(const Symbol* pSymbol)
+{
+	return SymbolAssoc_Marker::GetInstance().ToAssociated(pSymbol);
+}
 
+inline const Symbol* MarkerToSymbol(UInt16 marker)
+{
+	return SymbolAssoc_Marker::GetInstance().ToSymbol(marker);
+}
+
+//------------------------------------------------------------------------------
+// Type
+//------------------------------------------------------------------------------
 struct Type {
 	static const UInt8 BYTE			= 1;
 	static const UInt8 ASCII		= 2;
@@ -61,6 +125,9 @@ struct Type {
 	static const UInt8 SRATIONAL	= 10;
 };
 
+//------------------------------------------------------------------------------
+// UnitSize
+//------------------------------------------------------------------------------
 struct UnitSize {
 	static const UInt8 BYTE			= 1;
 	static const UInt8 ASCII		= 1;
@@ -72,6 +139,9 @@ struct UnitSize {
 	static const UInt8 SRATIONAL	= 8;
 };
 
+//------------------------------------------------------------------------------
+// TagId
+//------------------------------------------------------------------------------
 struct TagId {
 	static const UInt16 invalid						= 0xffff;
 	// 4.6.3 Exif-specific IFD
@@ -219,68 +289,113 @@ struct TagId {
 	static const UInt16 RelatedImageHeight			= 0x1002;
 };
 
+//------------------------------------------------------------------------------
+// TIFF_BE
+//------------------------------------------------------------------------------
 struct TIFF_BE {
 	Gurax_PackedUInt16_BE(Code);
 	Gurax_PackedUInt32_BE(Offset0thIFD);
 };
 
+//------------------------------------------------------------------------------
+// TIFF_LE
+//------------------------------------------------------------------------------
 struct TIFF_LE {
 	Gurax_PackedUInt16_LE(Code);
 	Gurax_PackedUInt32_LE(Offset0thIFD);
 };
 
+//------------------------------------------------------------------------------
+// IFDHeader_BE
+//------------------------------------------------------------------------------
 struct IFDHeader_BE {
 	Gurax_PackedUInt16_BE(TagCount);
 };
 
+//------------------------------------------------------------------------------
+// IFDHeader_LE
+//------------------------------------------------------------------------------
 struct IFDHeader_LE {
 	Gurax_PackedUInt16_LE(TagCount);
 };
 
+//------------------------------------------------------------------------------
+// RATIONAL_BE
+//------------------------------------------------------------------------------
 struct RATIONAL_BE {
 	Gurax_PackedUInt32_BE(numerator);
 	Gurax_PackedUInt32_BE(denominator);
 };
 
+//------------------------------------------------------------------------------
+// RATIONAL_LE
+//------------------------------------------------------------------------------
 struct RATIONAL_LE {
 	Gurax_PackedUInt32_LE(numerator);
 	Gurax_PackedUInt32_LE(denominator);
 };
 
+//------------------------------------------------------------------------------
+// SRATIONAL_BE
+//------------------------------------------------------------------------------
 struct SRATIONAL_BE {
 	Gurax_PackedUInt32_BE(numerator);
 	Gurax_PackedUInt32_BE(denominator);
 };
 
+//------------------------------------------------------------------------------
+// SRATIONAL_LE
+//------------------------------------------------------------------------------
 struct SRATIONAL_LE {
 	Gurax_PackedUInt32_LE(numerator);
 	Gurax_PackedUInt32_LE(denominator);
 };
 
+//------------------------------------------------------------------------------
+// SHORT_BE
+//------------------------------------------------------------------------------
 struct SHORT_BE {
 	Gurax_PackedUInt16_BE(num);
 };
 
+//------------------------------------------------------------------------------
+// SHORT_LE
+//------------------------------------------------------------------------------
 struct SHORT_LE {
 	Gurax_PackedUInt16_LE(num);
 };
 
+//------------------------------------------------------------------------------
+// LONG_BE
+//------------------------------------------------------------------------------
 struct LONG_BE {
 	Gurax_PackedUInt32_BE(num);
 };
 
+//------------------------------------------------------------------------------
+// LONG_LE
+//------------------------------------------------------------------------------
 struct LONG_LE {
 	Gurax_PackedUInt32_LE(num);
 };
 
+//------------------------------------------------------------------------------
+// SLONG_BE
+//------------------------------------------------------------------------------
 struct SLONG_BE {
 	Gurax_PackedUInt32_BE(num);
 };
 
+//------------------------------------------------------------------------------
+// SLONG_LE
+//------------------------------------------------------------------------------
 struct SLONG_LE {
 	Gurax_PackedUInt32_LE(num);
 };
 
+//------------------------------------------------------------------------------
+// ValueRaw_BE
+//------------------------------------------------------------------------------
 union ValueRaw_BE {
 	char BYTE[4];
 	char ASCII[4];
@@ -296,6 +411,9 @@ union ValueRaw_BE {
 	} SLONG;
 };
 
+//------------------------------------------------------------------------------
+// TagRaw_BE
+//------------------------------------------------------------------------------
 struct TagRaw_BE {
 	Gurax_PackedUInt16_BE(Id);
 	Gurax_PackedUInt16_BE(Type);
@@ -303,6 +421,9 @@ struct TagRaw_BE {
 	UChar ValueRaw;
 };
 
+//------------------------------------------------------------------------------
+// ValueRaw_LE
+//------------------------------------------------------------------------------
 union ValueRaw_LE {
 	char BYTE[4];
 	char ASCII[4];
@@ -318,6 +439,9 @@ union ValueRaw_LE {
 	} SLONG;
 };
 
+//------------------------------------------------------------------------------
+// TagRaw_LE
+//------------------------------------------------------------------------------
 struct TagRaw_LE {
 	Gurax_PackedUInt16_LE(Id);
 	Gurax_PackedUInt16_LE(Type);
@@ -325,6 +449,9 @@ struct TagRaw_LE {
 	UChar ValueRaw;
 };
 
+//------------------------------------------------------------------------------
+// TagInfo
+//------------------------------------------------------------------------------
 struct TagInfo {
 	UInt16 id;
 	const char* name;
@@ -332,6 +459,9 @@ struct TagInfo {
 	const char* nameForIFD;
 };
 
+//------------------------------------------------------------------------------
+// TypeInfo
+//------------------------------------------------------------------------------
 struct TypeInfo {
 	UInt16 type;
 	const char *name;
