@@ -23,6 +23,20 @@ void PropHandler::DeclareAttrOpt(const Symbol* pSymbol)
 
 bool PropHandler::CheckValidAttribute(const Attribute& attr) const
 {
+	const SymbolList& symbols = attr.GetSymbols();
+	if (symbols.empty()) return true;
+	if (!_pAttributeOpt) {
+		Error::Issue(ErrorType::PropertyError, "the property '%s' doesn't accept any attributes",
+					 GetSymbol()->GetName());
+		return false;
+	}
+	for (const Symbol* pSymbol : symbols) {
+		if (!_pAttributeOpt->symbolSet.IsSet(pSymbol)) {
+			Error::Issue(ErrorType::PropertyError, "the property '%s' doesn't accept attribute '%s'",
+						 GetSymbol()->GetName(), pSymbol->GetName());
+			return false;
+		}
+	}
 	return true;
 }
 
