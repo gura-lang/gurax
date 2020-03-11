@@ -5,6 +5,7 @@
 #define GURAX_MODULE_BMP_H
 #include <gurax.h>
 #include "ImageExtension.h"
+#include "DataType.h"
 #include "Util.h"
 #include "VType_Content.h"
 #include "VType_BitmapFileHeader.h"

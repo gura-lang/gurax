@@ -48,6 +48,8 @@ struct Marker {
 	static const UInt16 COM		= 0xfffe;
 };
 
+
+
 struct Type {
 	static const UInt8 BYTE			= 1;
 	static const UInt8 ASCII		= 2;

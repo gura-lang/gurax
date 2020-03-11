@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <gurax/Image.h>
 #include "DataType.h"
+#include "Symbol.h"
 #include "Util.h"
 #include "ImageExtension.h"
 #include "VType_Content.h"
