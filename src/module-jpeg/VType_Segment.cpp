@@ -31,8 +31,6 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareProperty_R(Segment, marker)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(string));
-	DeclareAttrOpt(Gurax_Symbol(symbol));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -41,12 +39,37 @@ Gurax_DeclareProperty_R(Segment, marker)
 Gurax_ImplementPropertyGetter(Segment, marker)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	if (attr.IsSet(Gurax_Symbol(symbol))) {
-		return new Value_Symbol(valueThis.GetSegment().GetMarkerSymbol());
-	} else if (attr.IsSet(Gurax_Symbol(symbol))) {
-		
-	}
 	return new Value_Number(valueThis.GetSegment().GetMarker());
+}
+
+// jpeg.Segment#markerName
+Gurax_DeclareProperty_R(Segment, markerName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Segment, markerName)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetSegment().GetMarkerSymbol()->GetName());
+}
+
+// jpeg.Segment#markerSymbol
+Gurax_DeclareProperty_R(Segment, markerSymbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Segment, markerSymbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetSegment().GetMarkerSymbol());
 }
 
 // jpeg.Segment#parameter
@@ -78,6 +101,8 @@ void VType_Segment::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Segment, marker));
+	Assign(Gurax_CreateProperty(Segment, markerName));
+	Assign(Gurax_CreateProperty(Segment, markerSymbol));
 	Assign(Gurax_CreateProperty(Segment, parameter));
 }
 

@@ -373,9 +373,9 @@ Gurax_ImplementMethod(Stream, Write)
 	// Function body
 	size_t bytesAvail = ptr.GetBytesAvailable();
 	if (!validFlag_bytes) {
-		if (stream.Write(ptr.GetPointerC<void>(), bytesAvail) < bytesAvail) return Value::nil();
+		if (!stream.Write2(ptr.GetPointerC<void>(), bytesAvail)) return Value::nil();
 	} else if (bytes <= bytesAvail) {
-		if (stream.Write(ptr.GetPointerC<void>(), bytes) < bytes) return Value::nil();
+		if (!stream.Write2(ptr.GetPointerC<void>(), bytes)) return Value::nil();
 	} else {
 		Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
 		return Value::nil();
@@ -440,7 +440,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Binary)
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Binary& binary = Value_Binary::GetBinary(valueR);
 	size_t bytes = binary.size();
-	if (stream.Write(binary.data(), bytes) < bytes) return Value::nil();
+	if (!stream.Write2(binary.data(), bytes)) return Value::nil();
 	return valueL.Reference();
 }
 
@@ -450,7 +450,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Pointer)
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Pointer& ptr = Value_Pointer::GetPointer(valueR);
 	size_t bytesAvail = ptr.GetBytesAvailable();
-	if (stream.Write(ptr.GetPointerC<void>(), bytesAvail) < bytesAvail) return Value::nil();
+	if (!stream.Write2(ptr.GetPointerC<void>(), bytesAvail)) return Value::nil();
 	return valueL.Reference();
 }
 

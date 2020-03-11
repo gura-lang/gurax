@@ -99,7 +99,7 @@ public:
 		return true;
 	}
 	bool Write(Stream& stream) {
-		if (stream.Write(&_fields, Fields::Size) < Fields::Size) {
+		if (!stream.Write2(&_fields, Fields::Size)) {
 			SetError_InvalidFormat();
 			return false;
 		}
@@ -108,21 +108,21 @@ public:
 				Gurax_PackedUInt16_LE(ExtraLength);
 			} fields;
 			Gurax_PackUInt16(fields.ExtraLength, static_cast<unsigned short>(_extra.size()));
-			if (stream.Write(&fields, 2) < 2) {
+			if (!stream.Write2(&fields, 2)) {
 				SetError_InvalidFormat();
 				return false;
 			}
 		}
 		if (_fields.GetFNAME()) {
 			size_t bytes = _fileName.size() + 1;
-			if (stream.Write(_fileName.c_str(), bytes) < bytes) {
+			if (!stream.Write2(_fileName.c_str(), bytes)) {
 				SetError_InvalidFormat();
 				return false;
 			}
 		}
 		if (_fields.GetFCOMMENT()) {
 			size_t bytes = _comment.size() + 1;
-			if (stream.Write(_comment.c_str(), bytes) < bytes) {
+			if (!stream.Write2(_comment.c_str(), bytes)) {
 				SetError_InvalidFormat();
 				return false;
 			}
@@ -133,7 +133,7 @@ public:
 				Gurax_PackedUInt16_LE(CRC16);
 			} fields;
 			Gurax_PackUInt16(fields.CRC16, crc16);
-			if (stream.Write(&fields, 2) < 2) {
+			if (!stream.Write2(&fields, 2)) {
 				SetError_InvalidFormat();
 				return false;
 			}
@@ -208,7 +208,7 @@ public:
 	virtual const char* GetIdentifier() const override {
 		return _pStreamSrc? _pStreamSrc->GetIdentifier() : nullptr;
 	}
-	virtual size_t DoWrite(const void* buff, size_t len) override { return 0; }
+	virtual bool DoWrite2(const void* buff, size_t len) override { return false; }
 	virtual size_t DoRead(void* buff, size_t bytes) override {
 		size_t bytesRead = 0;
 		char* buffp = reinterpret_cast<char*>(buff);
@@ -319,30 +319,30 @@ public:
 	virtual const char* GetIdentifier() const override {
 		return _pStreamDst? _pStreamDst->GetIdentifier() : nullptr;
 	}
-	virtual size_t DoWrite(const void* buff, size_t len) override {
-		if (!_pStreamDst) return 0;
+	virtual bool DoWrite2(const void* buff, size_t len) override {
+		if (!_pStreamDst) return false;
 		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void*>(buff));
 		_zstrm.avail_in = static_cast<uInt>(len);
 		while (_zstrm.avail_in > 0) {
 			if (_zstrm.avail_out == 0) {
-				_pStreamDst->Write(_buffOut, _bytesBuff);
-				if (Error::IsIssued()) return 0;
+				_pStreamDst->Write2(_buffOut, _bytesBuff);
+				if (Error::IsIssued()) return false;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
 			if (::deflate(&_zstrm, Z_NO_FLUSH) != Z_OK) {
 				Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
-				return 0;
+				return false;
 			}
 		}
-		return len;
+		return true;
 	}
 	virtual bool DoFlush() override { return true; }
 	virtual bool DoClose() override {
 		if (!_pStreamDst) return true;
 		for (;;) {
 			if (_zstrm.avail_out == 0) {
-				_pStreamDst->Write(_buffOut, _bytesBuff);
+				_pStreamDst->Write2(_buffOut, _bytesBuff);
 				if (Error::IsIssued()) return false;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
@@ -356,7 +356,7 @@ public:
 		}
 		size_t bytesOut = _bytesBuff - _zstrm.avail_out;
 		if (bytesOut > 0) {
-			_pStreamDst->Write(_buffOut, bytesOut);
+			_pStreamDst->Write2(_buffOut, bytesOut);
 		}
 		::deflateEnd(&_zstrm);
 		if (Error::IsIssued()) return false;

@@ -12,6 +12,14 @@ Segment::Segment(UInt16 marker, BinaryReferable* pBuff) : _marker(marker), _pBuf
 {
 }
 
+bool Segment::Write(Stream& stream) const
+{
+	SHORT_BE buffShort;
+	Gurax_PackUInt16(buffShort.num, _marker);
+	//if (stream.Write(&buffShort, sizeof(buffShort)) < sizeof(buff
+	return false;
+}
+
 String Segment::ToString(const StringStyle& ss) const
 {
 	return "jpeg.Segment";

@@ -117,7 +117,7 @@ public:
 	virtual bool Initialize() = 0;
 	virtual const char* GetName() const override { return _name.c_str(); }
 	virtual const char* GetIdentifier() const override { return _name.c_str(); }
-	virtual size_t DoWrite(const void* buff, size_t len) override { return 0; }
+	virtual bool DoWrite2(const void* buff, size_t len) override { return false; }
 	virtual bool DoFlush() override { return false; }
 	virtual bool DoClose() override { return true; }
 	virtual size_t DoGetBytes() override { return _bytesUncompressed; }

@@ -34,6 +34,7 @@ public:
 	Binary& GetBinary() { return _pBuff->GetBinary(); }
 	const Binary& GetBinary() const { return _pBuff->GetBinary(); }
 	const BinaryReferable& GetBinaryReferable() const { return *_pBuff; }
+	bool Write(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Segment& other) const { return this == &other; }

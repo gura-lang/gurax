@@ -112,7 +112,7 @@ public:
 	Value* CreateStatValue() { return DoCreateStatValue(); }
 	bool Close() { return DoClose(); }
 	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
-	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
+	bool Write2(const void* buff, size_t len) { return DoWrite2(buff, len); }
 	bool Flush() { return DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
 	bool SetOffset(size_t offset);
@@ -129,7 +129,7 @@ public:
 	virtual Value* DoCreateStatValue() { return nullptr; }
 	virtual bool DoClose() = 0;
 	virtual size_t DoRead(void* buff, size_t len) = 0;
-	virtual size_t DoWrite(const void* buff, size_t len) = 0;
+	virtual bool DoWrite2(const void* buff, size_t len) = 0;
 	virtual bool DoFlush() = 0;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev);
 protected:

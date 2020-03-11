@@ -102,7 +102,7 @@ bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMeth
 		if (Error::IsIssued()) break;
 		if (bytesRead == 0) break;
 		crc32.Update(buff, bytesRead);
-		pStreamContent->Write(buff, bytesRead);
+		pStreamContent->Write2(buff, bytesRead);
 		if (Error::IsIssued()) break;
 	}
 	pStreamContent.reset(nullptr);	// don't use Stream::Close() as pStreamContent may hold

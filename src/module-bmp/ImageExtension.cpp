@@ -65,7 +65,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		Gurax_PackUInt16(bfh.bfType,			0x4d42);
 		Gurax_PackUInt32(bfh.bfSize,			bfSize);
 		Gurax_PackUInt32(bfh.bfOffBits,			bfOffBits);
-		if (stream.Write(&bfh, BitmapFileHeader::bytes) < BitmapFileHeader::bytes) {
+		if (!stream.Write2(&bfh, BitmapFileHeader::bytes)) {
 			Error::Issue(ErrorType::StreamError, "failed to write bitmap data");
 			return false;
 		}
@@ -84,7 +84,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		Gurax_PackUInt32(bih.biYPelsPerMeter,	13780);
 		Gurax_PackUInt32(bih.biClrUsed,			biClrUsed);
 		Gurax_PackUInt32(bih.biClrImportant,	0);
-		if (stream.Write(&bih, BitmapInfoHeader::bytes) < BitmapInfoHeader::bytes) {
+		if (!stream.Write2(&bih, BitmapInfoHeader::bytes)) {
 			Error::Issue(ErrorType::StreamError, "failed to write bitmap data");
 			return false;
 		}
@@ -161,14 +161,14 @@ bool ImageMgrEx::WriteDIBPalette(Stream& stream, const Palette& palette, int biB
 	size_t idx = 0;
 	for ( ; idx < idxMax; idx++) {
 		UInt32 packed = palette.GetPacked(idx);
-		if (stream.Write(&packed, 4) < 4) {
+		if (!stream.Write2(&packed, 4)) {
 			Error::Issue(ErrorType::FormatError, "failed to write DIB palette");
 			return false;
 		}
 	}
 	UInt32 packed = 0;
 	for (; idx < nEntries; idx++) {
-		if (stream.Write(&packed, 4) < 4) {
+		if (!stream.Write2(&packed, 4)) {
 			Error::Issue(ErrorType::FormatError, "failed to write DIB palette");
 			return false;
 		}
@@ -375,7 +375,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			chAccum |= ch << ((8 - 1) - bitsAccum);
 			bitsAccum += 1;
 			if (bitsAccum >= 8) {
-				if (stream.Write(&chAccum, 1) < 1) {
+				if (!stream.Write2(&chAccum, 1)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -384,14 +384,14 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 			if (!scanner.NextCol()) {
 				if (bitsAccum > 0) {
-					if (stream.Write(&chAccum, 1) < 1) {
+					if (!stream.Write2(&chAccum, 1)) {
 						IssueError_FailToWrite();
 						return false;
 					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
-				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+				if (!stream.Write2("\x00\x00\x00\x00", bytesAlign)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -411,7 +411,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			chAccum |= ch << ((8 - 4) - bitsAccum);
 			bitsAccum += 4;
 			if (bitsAccum >= 8) {
-				if (stream.Write(&chAccum, 1) < 1) {
+				if (!stream.Write2(&chAccum, 1)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -420,14 +420,14 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 			if (!scanner.NextCol()) {
 				if (bitsAccum > 0) {
-					if (stream.Write(&chAccum, 1) < 1) {
+					if (!stream.Write2(&chAccum, 1)) {
 						IssueError_FailToWrite();
 						return false;
 					}
 					chAccum = 0x00;
 					bitsAccum = 0;
 				}
-				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+				if (!stream.Write2("\x00\x00\x00\x00", bytesAlign)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -441,12 +441,12 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			const UInt8* p = scanner.GetPointer();
 			UInt8 ch = static_cast<UInt8>(
 				pPalette->LookupNearest(Image::Pixel::GetR(p), Image::Pixel::GetG(p), Image::Pixel::GetB(p)));
-			if (stream.Write(&ch, 1) < 1) {
+			if (!stream.Write2(&ch, 1)) {
 				IssueError_FailToWrite();
 				return false;
 			}
 			if (!scanner.NextCol()) {
-				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+				if (!stream.Write2("\x00\x00\x00\x00", bytesAlign)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -462,12 +462,12 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			buff[0] = Image::Pixel::GetB(p);
 			buff[1] = Image::Pixel::GetG(p);
 			buff[2] = Image::Pixel::GetR(p);
-			if (stream.Write(buff, 3) < 3) {
+			if (!stream.Write2(buff, 3)) {
 				IssueError_FailToWrite();
 				return false;
 			}
 			if (!scanner.NextCol()) {
-				if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+				if (!stream.Write2("\x00\x00\x00\x00", bytesAlign)) {
 					IssueError_FailToWrite();
 					return false;
 				}
@@ -483,7 +483,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			buff[0] = Image::Pixel::GetB(p);
 			buff[1] = Image::Pixel::GetG(p);
 			buff[2] = Image::Pixel::GetR(p);
-			if (stream.Write(buff, 4) < 4) {
+			if (!stream.Write2(buff, 4)) {
 				IssueError_FailToWrite();
 				return false;
 			}
@@ -507,7 +507,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 				chAccum |= ch << ((8 - 1) - bitsAccum);
 				bitsAccum += 1;
 				if (bitsAccum >= 8) {
-					if (stream.Write(&chAccum, 1) < 1) {
+					if (!stream.Write2(&chAccum, 1)) {
 						IssueError_FailToWrite();
 						return false;
 					}
@@ -516,14 +516,14 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 				}
 				if (!scanner.NextCol()) {
 					if (bitsAccum > 0) {
-						if (stream.Write(&chAccum, 1) < 1) {
+						if (!stream.Write2(&chAccum, 1)) {
 							IssueError_FailToWrite();
 							return false;
 						}
 						chAccum = 0x00;
 						bitsAccum = 0;
 					}
-					if (stream.Write("\x00\x00\x00\x00", bytesAlign) < bytesAlign) {
+					if (!stream.Write2("\x00\x00\x00\x00", bytesAlign)) {
 						IssueError_FailToWrite();
 						return false;
 					}
@@ -534,7 +534,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			std::unique_ptr<UInt8[]> buff(new UInt8 [bytesPerLineAligned]);
 			::memset(buff.get(), 0x00, bytesPerLineAligned);
 			for (size_t y = 0; y < biHeight; y++) {
-				if (stream.Write(buff.get(), bytesPerLineAligned) < bytesPerLineAligned) {
+				if (!stream.Write2(buff.get(), bytesPerLineAligned)) {
 					IssueError_FailToWrite();
 					return false;
 				}

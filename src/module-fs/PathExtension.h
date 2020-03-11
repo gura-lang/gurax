@@ -75,10 +75,10 @@ public:
 		_offset += lenRead;
 		return lenRead;
 	}
-	virtual size_t DoWrite(const void* buff, size_t len) override {
+	virtual bool DoWrite2(const void* buff, size_t len) override {
 		size_t lenWritten = ::fwrite(buff, 1, len, _fp);
 		_offset += lenWritten;
-		return lenWritten;
+		return len == lenWritten;
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;

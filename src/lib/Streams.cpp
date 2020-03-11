@@ -62,7 +62,7 @@ size_t Stream_Binary::DoRead(void* buff, size_t len)
 	return lenRead;
 }
 
-size_t Stream_Binary::DoWrite(const void* buff, size_t len)
+bool Stream_Binary::DoWrite2(const void* buff, size_t len)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {
@@ -75,7 +75,7 @@ size_t Stream_Binary::DoWrite(const void* buff, size_t len)
 		buffTgt.append(reinterpret_cast<const UInt8*>(buff), len);
 		_offset = buffTgt.size();
 	}
-	return len;
+	return true;
 }
 
 bool Stream_Binary::DoSeek(size_t offset, size_t offsetPrev)
@@ -138,7 +138,7 @@ size_t Stream_Pointer::DoRead(void* buff, size_t len)
 	return lenRead;
 }
 
-size_t Stream_Pointer::DoWrite(const void* buff, size_t len)
+bool Stream_Pointer::DoWrite2(const void* buff, size_t len)
 {
 	Pointer& buffTgt = _pBuff->GetPointer();
 	if (_offset < buffTgt.size()) {
@@ -151,7 +151,7 @@ size_t Stream_Pointer::DoWrite(const void* buff, size_t len)
 		buffTgt.append(reinterpret_cast<const UInt8*>(buff), len);
 		_offset = buffTgt.size();
 	}
-	return len;
+	return true;
 }
 
 bool Stream_Pointer::DoSeek(size_t offset, size_t offsetPrev)

@@ -172,14 +172,12 @@ bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 
 bool WriteStream(Stream& stream, const void* buff, size_t bytes)
 {
-	stream.Write(buff, bytes);
-	return !Error::IsIssued();
+	return stream.Write2(buff, bytes);
 }
 
 bool WriteStream(Stream& stream, const Binary& binary)
 {
-	stream.Write(binary.data(), binary.size());
-	return !Error::IsIssued();
+	return stream.Write2(binary.data(), binary.size());
 }
 
 Gurax_EndModuleScope(zip)

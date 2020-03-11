@@ -325,7 +325,7 @@ bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
 	for (;;) {
 		size_t bytesRead = Read(buff, bytesUnit);
 		if (bytesRead == 0) break;
-		if (streamDst.Write(buff, bytesRead) < bytesRead) break;
+		if (!streamDst.Write2(buff, bytesRead)) break;
 	}
 	return !Error::IsIssued();
 }
@@ -344,7 +344,7 @@ int Stream::DoGetChar()
 
 bool Stream::DoPutChar(char ch)
 {
-	return DoWrite(&ch, sizeof(ch)) > 0;
+	return DoWrite2(&ch, sizeof(ch));
 }
 
 String Stream::ToString(const StringStyle& ss) const
