@@ -31,6 +31,8 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareProperty_R(Segment, marker)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(string));
+	DeclareAttrOpt(Gurax_Symbol(symbol));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -39,6 +41,11 @@ Gurax_DeclareProperty_R(Segment, marker)
 Gurax_ImplementPropertyGetter(Segment, marker)
 {
 	auto& valueThis = GetValueThis(valueTarget);
+	if (attr.IsSet(Gurax_Symbol(symbol))) {
+		return new Value_Symbol(valueThis.GetSegment().GetMarkerSymbol());
+	} else if (attr.IsSet(Gurax_Symbol(symbol))) {
+		
+	}
 	return new Value_Number(valueThis.GetSegment().GetMarker());
 }
 

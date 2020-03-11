@@ -219,11 +219,16 @@ public:
 	using Flags = DeclArg::Flags;
 	using Flag = DeclArg::Flag;
 	using SymbolAssoc_Flag = DeclArg::SymbolAssoc_Flag;
+	struct AttributeOpt {
+		SymbolList symbolList;
+		SymbolSet symbolSet;
+	};
 private:
 	SeqId _seqId;
 	const Symbol* _pSymbol;
 	const VType* _pVType;
 	Flags _flags;
+	std::unique_ptr<AttributeOpt> _pAttributeOpt;
 	RefPtr<HelpHolder> _pHelpHolder;
 public:
 	// Constructor
@@ -242,6 +247,11 @@ public:
 	void SetSeqId(SeqId seqId) { _seqId = seqId; }
 	SeqId GetSeqId() const { return _seqId; }
 	void Declare(const VType& vtype, Flags flags) { _pVType = &vtype, _flags |= flags; }
+	void DeclareAttrOpt(const Symbol* pSymbol);
+	bool IsSetOpt(const Symbol* pSymbol) const {
+		return _pAttributeOpt && _pAttributeOpt->symbolSet.IsSet(pSymbol);
+	}
+	bool CheckValidAttribute(const Attribute& attr) const;
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }

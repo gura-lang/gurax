@@ -102,6 +102,7 @@ Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, boo
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
 	if (pPropHandler) {
+		if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
 		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 			return nullptr;
@@ -125,6 +126,7 @@ bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const 
 		GetModule().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
 	}
+	if (!pPropHandler->CheckValidAttribute(attr)) return false;
 	if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;

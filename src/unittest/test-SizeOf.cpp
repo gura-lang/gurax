@@ -134,6 +134,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Terminate);
 	PrintSizeOf(PUnit_Bridge);
 	PrintSizeOf(Symbol);
+	PrintSizeOf(SymbolList);
+	PrintSizeOf(SymbolSet);
 	PrintSizeOf(TimeDelta);
 	PrintSizeOf(ValueOwner);
 	PrintSizeOf(ValueStack);

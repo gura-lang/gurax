@@ -184,6 +184,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
 		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
+	if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
 	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 		return nullptr;
@@ -202,6 +203,7 @@ bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const A
 		GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
 	}
+	if (!pPropHandler->CheckValidAttribute(attr)) return false;
 	if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;

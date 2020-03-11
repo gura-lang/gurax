@@ -109,6 +109,7 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFo
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (pPropHandler) {
+		if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
 		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 			return nullptr;
@@ -129,6 +130,7 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (pPropHandler) {
+		if (!pPropHandler->CheckValidAttribute(attr)) return false;
 		if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 			return false;

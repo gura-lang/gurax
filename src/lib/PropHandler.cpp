@@ -14,6 +14,18 @@ PropHandler::PropHandler(const Symbol* pSymbol, Flags flags) :
 {
 }
 
+void PropHandler::DeclareAttrOpt(const Symbol* pSymbol)
+{
+	if (!_pAttributeOpt) _pAttributeOpt.reset(new AttributeOpt());
+	_pAttributeOpt->symbolList.push_back(pSymbol);
+	_pAttributeOpt->symbolSet.insert(pSymbol);
+}
+
+bool PropHandler::CheckValidAttribute(const Attribute& attr) const
+{
+	return true;
+}
+
 bool PropHandler::SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 {
 	if (value.IsNil() && IsSet(Flag::Nil)) {
@@ -39,6 +51,18 @@ String PropHandler::ToString(const StringStyle& ss) const
 	if (IsSet(Flag::Public)) str += ":public";
 	if (IsSet(Flag::Readable)) str += ":R";
 	if (IsSet(Flag::Writable)) str += ":W";
+	if (_pAttributeOpt) {
+		const SymbolList& symbolList = _pAttributeOpt->symbolList;
+		if (symbolList.empty()) {
+			str += ":[";
+			for (auto ppSymbol = symbolList.begin(); ppSymbol != symbolList.end(); ppSymbol++) {
+				const Symbol* pSymbol = *ppSymbol;
+				if (ppSymbol != symbolList.begin()) str += ",";
+				str += pSymbol->GetName();
+			}
+			str += "]";
+		}
+	}
 	return str;
 }
 

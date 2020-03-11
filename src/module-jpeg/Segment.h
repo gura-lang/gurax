@@ -30,6 +30,7 @@ protected:
 	~Segment() = default;
 public:
 	UInt16 GetMarker() const { return _marker; }
+	const Symbol* GetMarkerSymbol() const { return MarkerToSymbol(_marker); }
 	Binary& GetBinary() { return _pBuff->GetBinary(); }
 	const Binary& GetBinary() const { return _pBuff->GetBinary(); }
 	const BinaryReferable& GetBinaryReferable() const { return *_pBuff; }
