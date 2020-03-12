@@ -40,7 +40,14 @@ bool Content::Read(Stream& stream)
 			IssueError_InvalidFormat();
 			return false;
 		}
-		GetSegmentOwner().push_back(new Segment(marker, pBuff.release()));
+		RefPtr<Segment> pSegment;
+		if (marker == Marker::APP1) {
+			pSegment.reset(new Exif(pBuff.release()));
+		} else {
+			pSegment.reset(new Segment(marker, pBuff.release()));
+		}
+		if (!pSegment->AnalyzeBinary()) return false;
+		GetSegmentOwner().push_back(pSegment.release());
 	}
 	_pBuffImage.reset(new BinaryReferable());
 	stream.ReadToEnd(_pBuffImage->GetBinary());

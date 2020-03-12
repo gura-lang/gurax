@@ -12,6 +12,11 @@ Segment::Segment(UInt16 marker, BinaryReferable* pBuff) : _marker(marker), _pBuf
 {
 }
 
+Value* Segment::CreateValue() const
+{
+	return new Value_Segment(Reference());
+}
+
 bool Segment::Write(Stream& stream) const
 {
 	SHORT_BE buffShort;

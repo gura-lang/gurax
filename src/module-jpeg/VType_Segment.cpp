@@ -114,7 +114,7 @@ Value* VType_Segment::Iterator_Each::DoNextValue()
 	if (_idx >= GetSegmentOwner().size()) return nullptr;
 	RefPtr<Segment> pSegment(GetSegmentOwner()[_idx]->Reference());
 	_idx++;
-	return new Value_Segment(pSegment.release());
+	return pSegment->CreateValue();
 }
 	
 String VType_Segment::Iterator_Each::ToString(const StringStyle& ss) const

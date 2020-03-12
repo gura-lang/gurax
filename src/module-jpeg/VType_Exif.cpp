@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// jpeg.Exif() {block?}
-Gurax_DeclareConstructor(Exif)
-{
-	Declare(VTYPE_Exif, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `jpeg.Exif` instance.");
-}
-
-Gurax_ImplementConstructor(Exif)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Exif> pExif(new Exif());
-	return argument.ReturnValue(processor, new Value_Exif(pExif.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_Exif::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Exif));
+	Declare(VTYPE_Segment, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Exif, MethodSkeleton));
 	// Assignment of property

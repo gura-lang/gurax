@@ -4,19 +4,20 @@
 #ifndef GURAX_MODULE_JPEG_EXIF_H
 #define GURAX_MODULE_JPEG_EXIF_H
 #include <gurax.h>
+#include "Segment.h"
 
 Gurax_BeginModuleScope(jpeg)
 
 //------------------------------------------------------------------------------
 // Exif
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Exif : public Referable {
+class GURAX_DLLDECLARE Exif : public Segment {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Exif);
 public:
 	// Constructor
-	Exif() {}
+	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff) {}
 	// Copy constructor/operator
 	Exif(const Exif& src) = delete;
 	Exif& operator=(const Exif& src) = delete;
@@ -25,6 +26,10 @@ public:
 	Exif& operator=(Exif&& src) noexcept = delete;
 protected:
 	~Exif() = default;
+public:
+	virtual Value* CreateValue() const override;
+	virtual bool AnalyzeBinary() override;
+	virtual bool Write(Stream& stream) const override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }

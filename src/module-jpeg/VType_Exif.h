@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_JPEG_VTYPE_EXIF_H
 #define GURAX_MODULE_JPEG_VTYPE_EXIF_H
 #include <gurax.h>
+#include "VType_Segment.h"
 #include "Exif.h"
 
 Gurax_BeginModuleScope(jpeg)
@@ -22,24 +23,20 @@ extern VType_Exif VTYPE_Exif;
 //------------------------------------------------------------------------------
 // Value_Exif
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Exif : public Value_Object {
+class GURAX_DLLDECLARE Value_Exif : public Value_Segment {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Exif);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Exif");
-protected:
-	RefPtr<Exif> _pExif;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Exif() = delete;
-	explicit Value_Exif(Exif* pExif, VType& vtype = VTYPE_Exif) :
-		Value_Object(vtype), _pExif(pExif) {}
+	explicit Value_Exif(Exif* pExif, VType& vtype = VTYPE_Exif) : Value_Segment(pExif, vtype) {}
 	// Copy constructor/operator
-	Value_Exif(const Value_Exif& src) :
-		Value_Object(src), _pExif(src._pExif->Reference()) {}
+	Value_Exif(const Value_Exif& src) = delete;
 	Value_Exif& operator=(const Value_Exif& src) = delete;
 	// Move constructor/operator
 	Value_Exif(Value_Exif&& src) = delete;
@@ -48,8 +45,8 @@ protected:
 	// Destructor
 	~Value_Exif() = default;
 public:
-	Exif& GetExif() { return *_pExif; }
-	const Exif& GetExif() const { return *_pExif; }
+	Exif& GetExif() { return dynamic_cast<Exif&>(GetSegment()); }
+	const Exif& GetExif() const { return dynamic_cast<const Exif&>(GetSegment()); }
 public:
 	static Exif& GetExif(Value& value) {
 		return dynamic_cast<Value_Exif&>(value).GetExif();
