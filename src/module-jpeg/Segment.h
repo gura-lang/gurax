@@ -31,9 +31,9 @@ protected:
 public:
 	UInt16 GetMarker() const { return _marker; }
 	const Symbol* GetMarkerSymbol() const { return MarkerToSymbol(_marker); }
-	Binary& GetBinary() { return _pBuff->GetBinary(); }
-	const Binary& GetBinary() const { return _pBuff->GetBinary(); }
-	const BinaryReferable& GetBinaryReferable() const { return *_pBuff; }
+	Binary* GetBinary() { return _pBuff? &_pBuff->GetBinary() : nullptr; }
+	const Binary* GetBinary() const { return _pBuff? &_pBuff->GetBinary() : nullptr; }
+	const BinaryReferable* GetBinaryReferable() const { return _pBuff.get(); }
 public:
 	virtual Value* CreateValue() const;
 	virtual bool AnalyzeBinary() { return true; }

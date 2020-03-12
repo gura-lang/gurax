@@ -21,8 +21,19 @@ bool Segment::Write(Stream& stream) const
 {
 	SHORT_BE buffShort;
 	Gurax_PackUInt16(buffShort.num, _marker);
-	//if (stream.Write(&buffShort, sizeof(buffShort)) < sizeof(buff
-	return false;
+	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
+	if (_pBuff) {
+		const Binary& buff = _pBuff->GetBinary();
+		size_t bytes = buff.size() + 2;
+		if (bytes > 0xffff) {
+			Error::Issue(ErrorType::FormatError, "too large segment");
+			return false;
+		}
+		Gurax_PackUInt16(buffShort.num, static_cast<UInt16>(bytes));
+		if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
+		if (!stream.Write(buff)) return false;
+	}
+	return true;
 }
 
 String Segment::ToString(const StringStyle& ss) const

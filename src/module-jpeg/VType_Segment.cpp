@@ -84,7 +84,9 @@ Gurax_DeclareProperty_R(Segment, parameter)
 Gurax_ImplementPropertyGetter(Segment, parameter)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Pointer> pPointer(new Pointer_Binary(valueThis.GetSegment().GetBinaryReferable().Reference()));
+	const BinaryReferable* pBuff = valueThis.GetSegment().GetBinaryReferable();
+	if (!pBuff) return Value::nil();
+	RefPtr<Pointer> pPointer(new Pointer_Binary(pBuff->Reference()));
 	return new Value_Pointer(pPointer.release());
 }
 

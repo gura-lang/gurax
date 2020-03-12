@@ -50,6 +50,31 @@ Gurax_ImplementConstructor(Content)
 }
 
 //-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// jpeg.Content#Write(stream:Stream:w):reduce
+Gurax_DeclareMethod(Content, Write)
+{
+	Declare(VTYPE_Content, Flag::Reduce);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Writes the content data to the specified stream.\n");
+}
+
+Gurax_ImplementMethod(Content, Write)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	if (!valueThis.GetContent().Write(stream)) return Value::nil();
+	return valueThis.Reference();
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // jpeg.Content#segments
@@ -80,6 +105,8 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Content));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Content, segments));
 }

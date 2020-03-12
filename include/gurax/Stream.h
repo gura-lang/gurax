@@ -6,6 +6,8 @@
 #include "Codec.h"
 #include "DateTime.h"
 #include "Formatter.h"
+#include "Binary.h"
+#include "Pointer.h"
 #include "StringPicker.h"
 
 namespace Gurax {
@@ -113,6 +115,8 @@ public:
 	bool Close() { return DoClose(); }
 	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
 	bool Write(const void* buff, size_t len) { return DoWrite(buff, len); }
+	bool Write(const Binary& buff) { return Write(buff.data(), buff.size()); }
+	bool Write(const Pointer& ptr) { return Write(ptr.GetPointerC<void>(), ptr.GetBytesAvailable()); }
 	bool Flush() { return DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
 	bool SetOffset(size_t offset);

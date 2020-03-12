@@ -20,7 +20,7 @@ bool Exif::AnalyzeBinary()
 
 bool Exif::Write(Stream& stream) const
 {
-	return false;
+	return Segment::Write(stream);
 }
 
 String Exif::ToString(const StringStyle& ss) const

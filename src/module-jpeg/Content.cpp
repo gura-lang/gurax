@@ -27,7 +27,7 @@ bool Content::Read(Stream& stream)
 		}
 		UInt16 marker = Gurax_UnpackUInt16(buffShort.num);
 		if (marker == Marker::SOS) {
-			GetSegmentOwner().push_back(new Segment(marker, new BinaryReferable()));
+			GetSegmentOwner().push_back(new Segment(marker, nullptr));
 			break;
 		}
 		if (stream.Read(&buffShort, sizeof(buffShort)) < sizeof(buffShort)) {
@@ -56,7 +56,13 @@ bool Content::Read(Stream& stream)
 
 bool Content::Write(Stream& stream) const
 {
-	return false;
+	SHORT_BE buffShort;
+	Gurax_PackUInt16(buffShort.num, Marker::SOI);
+	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
+	for (auto pSegment : GetSegmentOwner()) {
+		if (!pSegment->Write(stream)) return false;
+	}
+	return _pBuffImage? stream.Write(_pBuffImage->GetBinary()) : true;
 }
 	
 String Content::ToString(const StringStyle& ss) const
