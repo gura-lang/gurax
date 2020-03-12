@@ -115,28 +115,28 @@ inline const Symbol* MarkerToSymbol(UInt16 marker)
 // Type
 //------------------------------------------------------------------------------
 struct Type {
-	static const UInt8 BYTE			= 1;
-	static const UInt8 ASCII		= 2;
-	static const UInt8 SHORT		= 3;
-	static const UInt8 LONG			= 4;
-	static const UInt8 RATIONAL		= 5;
-	static const UInt8 UNDEFINED	= 7;
-	static const UInt8 SLONG		= 9;
-	static const UInt8 SRATIONAL	= 10;
+	static const UInt16 BYTE		= 1;
+	static const UInt16 ASCII		= 2;
+	static const UInt16 SHORT		= 3;
+	static const UInt16 LONG		= 4;
+	static const UInt16 RATIONAL	= 5;
+	static const UInt16 UNDEFINED	= 7;
+	static const UInt16 SLONG		= 9;
+	static const UInt16 SRATIONAL	= 10;
 };
 
 //------------------------------------------------------------------------------
 // UnitSize
 //------------------------------------------------------------------------------
 struct UnitSize {
-	static const UInt8 BYTE			= 1;
-	static const UInt8 ASCII		= 1;
-	static const UInt8 SHORT		= 2;
-	static const UInt8 LONG			= 4;
-	static const UInt8 RATIONAL		= 8;
-	static const UInt8 UNDEFINED	= 0;
-	static const UInt8 SLONG		= 4;
-	static const UInt8 SRATIONAL	= 8;
+	static const size_t BYTE		= 1;
+	static const size_t ASCII		= 1;
+	static const size_t SHORT		= 2;
+	static const size_t LONG		= 4;
+	static const size_t RATIONAL	= 8;
+	static const size_t UNDEFINED	= 0;
+	static const size_t SLONG		= 4;
+	static const size_t SRATIONAL	= 8;
 };
 
 //------------------------------------------------------------------------------
@@ -290,17 +290,25 @@ struct TagId {
 };
 
 //------------------------------------------------------------------------------
-// TIFF_BE
+// ExifHeader
 //------------------------------------------------------------------------------
-struct TIFF_BE {
+struct ExifHeader {
+	char ID[6];
+	char ByteOrder[2];
+};
+
+//------------------------------------------------------------------------------
+// TIFFHeader_BE
+//------------------------------------------------------------------------------
+struct TIFFHeader_BE {
 	Gurax_PackedUInt16_BE(Code);
 	Gurax_PackedUInt32_BE(Offset0thIFD);
 };
 
 //------------------------------------------------------------------------------
-// TIFF_LE
+// TIFFHeader_LE
 //------------------------------------------------------------------------------
-struct TIFF_LE {
+struct TIFFHeader_LE {
 	Gurax_PackedUInt16_LE(Code);
 	Gurax_PackedUInt32_LE(Offset0thIFD);
 };

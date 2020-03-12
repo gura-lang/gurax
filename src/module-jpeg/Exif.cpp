@@ -15,6 +15,20 @@ Value* Exif::CreateValue() const
 
 bool Exif::AnalyzeBinary()
 {
+	GetBinary()->Dump(Basement::Inst.GetStreamCOut());
+	const UInt8* p = GetBinary()->data();
+	size_t bytesAvail = GetBinary()->size();
+	do {
+		size_t bytes = sizeof(ExifHeader);
+		const ExifHeader& hdr = *reinterpret_cast<const ExifHeader*>(p);
+		p += bytes, bytesAvail -= bytes;
+	} while (0);
+	using TIFFHeaderT = TIFFHeader_LE;
+	do {
+		size_t bytes = sizeof(TIFFHeaderT);
+		const TIFFHeaderT& hdr = *reinterpret_cast<const TIFFHeaderT>(p);
+		p += bytes, bytesAvail -= bytes;
+	} while (0);
 	return true;
 }
 
