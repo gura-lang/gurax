@@ -42,7 +42,7 @@ const char *Accumulator_CRC32::GetName() const
 	return "CRC32";
 }
 
-bool Accumulator_CRC32::DoWrite2(const void* buff, size_t len)
+bool Accumulator_CRC32::DoWrite(const void* buff, size_t len)
 {
 	_crc32.Update(buff, len);
 	return true;
@@ -85,7 +85,7 @@ const char* Accumulator_MD5::GetName() const
 	return "MD5";
 }
 
-bool Accumulator_MD5::DoWrite2(const void* buff, size_t len)
+bool Accumulator_MD5::DoWrite(const void* buff, size_t len)
 {
 	::md5_append(&_state, reinterpret_cast<const md5_byte_t *>(buff), static_cast<int>(len));
 	return true;
@@ -118,7 +118,7 @@ const char* Accumulator_SHA1::GetName() const
 	return "SHA1";
 }
 
-bool Accumulator_SHA1::DoWrite2(const void* buff, size_t len)
+bool Accumulator_SHA1::DoWrite(const void* buff, size_t len)
 {
 	::sha1_update(&_ctx, reinterpret_cast<uint8*>(const_cast<void*>(buff)),
 				  static_cast<uint32>(len));

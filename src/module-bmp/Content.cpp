@@ -30,7 +30,7 @@ bool Content::Write(Stream& stream) const
 		return false;
 	}
 	const Memory* pMemory = GetMemory();
-	if (pMemory && !stream.Write2(pMemory->GetPointer<void>(), pMemory->GetBytes())) {
+	if (pMemory && !stream.Write(pMemory->GetPointer<void>(), pMemory->GetBytes())) {
 		IssueError_FailToWrite();
 		return false;
 	}
@@ -56,12 +56,12 @@ bool Content::ReadHeader(Stream& stream)
 
 bool Content::WriteHeader(Stream& stream) const
 {
-	if (!stream.Write2(&_bfh, BitmapFileHeader::bytes)) {
-		IssueError_InvalidFormat();
+	if (!stream.Write(&_bfh, BitmapFileHeader::bytes)) {
+		IssueError_FailToWrite();
 		return false;
 	}
-	if (!stream.Write2(&_bih, BitmapInfoHeader::bytes)) {
-		IssueError_InvalidFormat();
+	if (!stream.Write(&_bih, BitmapInfoHeader::bytes)) {
+		IssueError_FailToWrite();
 		return false;
 	}
 	return true;

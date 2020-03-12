@@ -21,7 +21,7 @@ public:
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return true; }
 	virtual size_t DoRead(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
-	virtual bool DoWrite2(const void* buff, size_t len) override { return true; }
+	virtual bool DoWrite(const void* buff, size_t len) override { return true; }
 	virtual bool DoFlush() override { return true; }
 };
 
@@ -43,7 +43,7 @@ public:
 	virtual size_t DoRead(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}
-	virtual bool DoWrite2(const void* buff, size_t len) override {
+	virtual bool DoWrite(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp) == len;
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
@@ -69,7 +69,7 @@ public:
 	virtual int DoGetChar() override;
 	virtual bool DoPutChar(char ch) override;
 	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoWrite2(const void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override;
 	virtual bool DoFlush() override { return true; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
@@ -93,7 +93,7 @@ public:
 	virtual int DoGetChar() override;
 	virtual bool DoPutChar(char ch) override;
 	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoWrite2(const void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override;
 	virtual bool DoFlush() override { return true; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };

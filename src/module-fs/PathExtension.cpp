@@ -257,6 +257,20 @@ Value* StreamEx::DoCreateStatValue()
 	return new Value_StatEx(pStatEx.release());
 }
 
+size_t StreamEx::DoRead(void* buff, size_t len)
+{
+	size_t lenRead = ::fread(buff, 1, len, _fp);
+	_offset += lenRead;
+	return lenRead;
+}
+
+bool StreamEx::DoWrite(const void* buff, size_t len)
+{
+	size_t lenWritten = ::fwrite(buff, 1, len, _fp);
+	_offset += lenWritten;
+	return len == lenWritten;
+}
+
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 {
 	if (!_fp) return true;

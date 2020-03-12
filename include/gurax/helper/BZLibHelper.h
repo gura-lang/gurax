@@ -55,7 +55,7 @@ public:
 		return _pStream? _pStream->GetIdentifier() : nullptr;
 	}
 	virtual bool DoClose() override { return true; }
-	virtual bool DoWrite2(const void* buff, size_t len) override { return false; }
+	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
 	virtual size_t DoRead(void* buff, size_t bytes) override {
 		size_t bytesRead = 0;
 		char* buffp = reinterpret_cast<char*>(buff);
@@ -162,13 +162,13 @@ public:
 	virtual const char* GetIdentifier() const override {
 		return _pStream? _pStream->GetIdentifier() : nullptr;
 	}
-	virtual bool DoWrite2(const void* buff, size_t len) override {
+	virtual bool DoWrite(const void* buff, size_t len) override {
 		if (!_pStream) return false;
 		_bzstrm.next_in = reinterpret_cast<char*>(const_cast<void*>(buff));
 		_bzstrm.avail_in = static_cast<unsigned int>(len);
 		while (_bzstrm.avail_in > 0) {
 			if (_bzstrm.avail_out == 0) {
-				_pStream->Write2(_buffOut, _bytesBuff);
+				_pStream->Write(_buffOut, _bytesBuff);
 				if (Error::IsIssued()) return false;
 				_bzstrm.next_out = _buffOut;
 				_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
@@ -186,7 +186,7 @@ public:
 		if (!_pStream) return true;
 		for (;;) {
 			if (_bzstrm.avail_out == 0) {
-				_pStream->Write2(_buffOut, _bytesBuff);
+				_pStream->Write(_buffOut, _bytesBuff);
 				if (Error::IsIssued()) return 0;
 				_bzstrm.next_out = _buffOut;
 				_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
@@ -200,7 +200,7 @@ public:
 		}
 		size_t bytesOut = _bytesBuff - _bzstrm.avail_out;
 		if (bytesOut > 0) {
-			_pStream->Write2(_buffOut, bytesOut);
+			_pStream->Write(_buffOut, bytesOut);
 		}
 		::BZ2_bzCompressEnd(&_bzstrm);
 		if (Error::IsIssued()) return false;

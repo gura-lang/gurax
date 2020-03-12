@@ -26,7 +26,7 @@ public:
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return true; }
 	virtual size_t DoRead(void* buff, size_t len) override { return 0; }
-	virtual bool DoWrite2(const void* buff, size_t len) override { return true; }
+	virtual bool DoWrite(const void* buff, size_t len) override { return true; }
 	virtual bool DoFlush() override { return true; }
 public:
 	const Binary& GetDigest();
@@ -47,7 +47,7 @@ public:
 	Accumulator_CRC32();
 public:
 	virtual const char *GetName() const;
-	virtual bool DoWrite2(const void* buff, size_t len);
+	virtual bool DoWrite(const void* buff, size_t len);
 public:
 	virtual void Initialize();
 	virtual void Finish();
@@ -64,7 +64,7 @@ public:
 	Accumulator_MD5();
 public:
 	virtual const char *GetName() const;
-	virtual bool DoWrite2(const void* buff, size_t len);
+	virtual bool DoWrite(const void* buff, size_t len);
 public:
 	virtual void Initialize();
 	virtual void Finish();
@@ -80,7 +80,7 @@ public:
 	Accumulator_SHA1();
 public:
 	virtual const char *GetName() const;
-	virtual bool DoWrite2(const void* buff, size_t len);
+	virtual bool DoWrite(const void* buff, size_t len);
 public:
 	virtual void Initialize();
 	virtual void Finish();

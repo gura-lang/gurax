@@ -70,16 +70,8 @@ public:
 	virtual bool DoClose() override { return ::fclose(_fp) == 0; }
 	virtual int DoGetChar() override { _offset++; return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { _offset++; ::fputc(ch, _fp); return true; }
-	virtual size_t DoRead(void* buff, size_t len) override {
-		size_t lenRead = ::fread(buff, 1, len, _fp);
-		_offset += lenRead;
-		return lenRead;
-	}
-	virtual bool DoWrite2(const void* buff, size_t len) override {
-		size_t lenWritten = ::fwrite(buff, 1, len, _fp);
-		_offset += lenWritten;
-		return len == lenWritten;
-	}
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override;
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };

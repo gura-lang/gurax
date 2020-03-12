@@ -111,7 +111,7 @@ void DestinationMgr::init_destination(j_compress_ptr cinfo)
 boolean DestinationMgr::empty_output_buffer(j_compress_ptr cinfo)
 {
 	DestinationMgr& dstMgr = *reinterpret_cast<DestinationMgr*>(cinfo->dest);
-	if (!dstMgr.pStream->Write2(dstMgr.buffer, BuffSize)) {
+	if (!dstMgr.pStream->Write(dstMgr.buffer, BuffSize)) {
 		ERREXIT(cinfo, JERR_FILE_WRITE);
 	}
 	dstMgr.pub.next_output_byte = dstMgr.buffer;
@@ -124,7 +124,7 @@ void DestinationMgr::term_destination(j_compress_ptr cinfo)
 	DestinationMgr& dstMgr = *reinterpret_cast<DestinationMgr*>(cinfo->dest);
 	size_t nbytes = BuffSize - dstMgr.pub.free_in_buffer;
 	if (nbytes > 0) {
-		if (!dstMgr.pStream->Write2(dstMgr.buffer, nbytes)) {
+		if (!dstMgr.pStream->Write(dstMgr.buffer, nbytes)) {
 			ERREXIT(cinfo, JERR_FILE_WRITE);
 		}
 	}

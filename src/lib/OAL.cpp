@@ -862,14 +862,14 @@ int OAL::ExecProgram(
 			idleFlag = false;
 			char* buff = pMemory->GetPointer<char>();
 			size_t bytesRead = ::read(fdsCOut[0], buff, pMemory->GetBytes());
-			pStreamCOut->Write2(buff, bytesRead);
+			pStreamCOut->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
 		if (FD_ISSET(fdsCErr[0], &fdsRead)) {
 			idleFlag = false;
 			char* buff = pMemory->GetPointer<char>();
 			size_t bytesRead = ::read(fdsCErr[0], buff, pMemory->GetBytes());
-			pStreamCErr->Write2(buff, bytesRead);
+			pStreamCErr->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
 		if (idleFlag) {
