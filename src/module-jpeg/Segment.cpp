@@ -19,7 +19,7 @@ Value* Segment::CreateValue() const
 
 bool Segment::Write(Stream& stream) const
 {
-	SHORT_BE buffShort;
+	TypeDef_BE::SHORT buffShort;
 	Gurax_PackUInt16(buffShort.num, _marker);
 	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
 	if (_pBuff) {

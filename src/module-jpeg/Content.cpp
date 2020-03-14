@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 bool Content::Read(Stream& stream)
 {
-	SHORT_BE buffShort;
+	TypeDef_BE::SHORT buffShort;
 	if (stream.Read(&buffShort, sizeof(buffShort)) < sizeof(buffShort)) {
 		IssueError_InvalidFormat();
 		return false;
@@ -56,7 +56,7 @@ bool Content::Read(Stream& stream)
 
 bool Content::Write(Stream& stream) const
 {
-	SHORT_BE buffShort;
+	TypeDef_BE::SHORT buffShort;
 	Gurax_PackUInt16(buffShort.num, Marker::SOI);
 	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
 	for (auto pSegment : GetSegmentOwner()) {

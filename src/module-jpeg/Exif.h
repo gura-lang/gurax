@@ -8,6 +8,8 @@
 
 Gurax_BeginModuleScope(jpeg)
 
+class IFD;
+
 //------------------------------------------------------------------------------
 // Exif
 //------------------------------------------------------------------------------
@@ -30,6 +32,8 @@ public:
 	virtual Value* CreateValue() const override;
 	virtual bool AnalyzeBinary() override;
 	virtual bool Write(Stream& stream) const override;
+protected:
+	template<typename T> IFD* CreateIFD_T(const UInt8*& pBuff, size_t& bytesAvail);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }

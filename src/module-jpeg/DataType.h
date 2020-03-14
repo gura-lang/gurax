@@ -298,163 +298,121 @@ struct ExifHeader {
 };
 
 //------------------------------------------------------------------------------
-// TIFFHeader_BE
+// TypeDef_BE
 //------------------------------------------------------------------------------
-struct TIFFHeader_BE {
-	Gurax_PackedUInt16_BE(Code);
-	Gurax_PackedUInt32_BE(Offset0thIFD);
-};
-
-//------------------------------------------------------------------------------
-// TIFFHeader_LE
-//------------------------------------------------------------------------------
-struct TIFFHeader_LE {
-	Gurax_PackedUInt16_LE(Code);
-	Gurax_PackedUInt32_LE(Offset0thIFD);
-};
-
-//------------------------------------------------------------------------------
-// IFDHeader_BE
-//------------------------------------------------------------------------------
-struct IFDHeader_BE {
-	Gurax_PackedUInt16_BE(TagCount);
-};
-
-//------------------------------------------------------------------------------
-// IFDHeader_LE
-//------------------------------------------------------------------------------
-struct IFDHeader_LE {
-	Gurax_PackedUInt16_LE(TagCount);
-};
-
-//------------------------------------------------------------------------------
-// RATIONAL_BE
-//------------------------------------------------------------------------------
-struct RATIONAL_BE {
-	Gurax_PackedUInt32_BE(numerator);
-	Gurax_PackedUInt32_BE(denominator);
-};
-
-//------------------------------------------------------------------------------
-// RATIONAL_LE
-//------------------------------------------------------------------------------
-struct RATIONAL_LE {
-	Gurax_PackedUInt32_LE(numerator);
-	Gurax_PackedUInt32_LE(denominator);
-};
-
-//------------------------------------------------------------------------------
-// SRATIONAL_BE
-//------------------------------------------------------------------------------
-struct SRATIONAL_BE {
-	Gurax_PackedUInt32_BE(numerator);
-	Gurax_PackedUInt32_BE(denominator);
-};
-
-//------------------------------------------------------------------------------
-// SRATIONAL_LE
-//------------------------------------------------------------------------------
-struct SRATIONAL_LE {
-	Gurax_PackedUInt32_LE(numerator);
-	Gurax_PackedUInt32_LE(denominator);
-};
-
-//------------------------------------------------------------------------------
-// SHORT_BE
-//------------------------------------------------------------------------------
-struct SHORT_BE {
-	Gurax_PackedUInt16_BE(num);
-};
-
-//------------------------------------------------------------------------------
-// SHORT_LE
-//------------------------------------------------------------------------------
-struct SHORT_LE {
-	Gurax_PackedUInt16_LE(num);
-};
-
-//------------------------------------------------------------------------------
-// LONG_BE
-//------------------------------------------------------------------------------
-struct LONG_BE {
-	Gurax_PackedUInt32_BE(num);
-};
-
-//------------------------------------------------------------------------------
-// LONG_LE
-//------------------------------------------------------------------------------
-struct LONG_LE {
-	Gurax_PackedUInt32_LE(num);
-};
-
-//------------------------------------------------------------------------------
-// SLONG_BE
-//------------------------------------------------------------------------------
-struct SLONG_BE {
-	Gurax_PackedUInt32_BE(num);
-};
-
-//------------------------------------------------------------------------------
-// SLONG_LE
-//------------------------------------------------------------------------------
-struct SLONG_LE {
-	Gurax_PackedUInt32_LE(num);
-};
-
-//------------------------------------------------------------------------------
-// ValueRaw_BE
-//------------------------------------------------------------------------------
-union ValueRaw_BE {
-	char BYTE[4];
-	char ASCII[4];
-	struct {
+struct TypeDef_BE {
+	// TIFFHeader
+	struct TIFFHeader {
+		Gurax_PackedUInt16_BE(Code);
+		Gurax_PackedUInt32_BE(Offset0thIFD);
+	};
+	// IFDHeader
+	struct IFDHeader {
+		Gurax_PackedUInt16_BE(TagCount);
+	};
+	// RATIONAL
+	struct RATIONAL {
+		Gurax_PackedUInt32_BE(numerator);
+		Gurax_PackedUInt32_BE(denominator);
+	};
+	// SRATIONAL
+	struct SRATIONAL {
+		Gurax_PackedUInt32_BE(numerator);
+		Gurax_PackedUInt32_BE(denominator);
+	};
+	// SHORT
+	struct SHORT {
 		Gurax_PackedUInt16_BE(num);
-		Gurax_PackedUInt16_BE(second);
-	} SHORT;
-	struct {
+	};
+	// LONG
+	struct LONG {
 		Gurax_PackedUInt32_BE(num);
-	} LONG;
-	struct {
+	};
+	// SLONG
+	struct SLONG {
 		Gurax_PackedUInt32_BE(num);
-	} SLONG;
+	};
+	// ValueRaw
+	union ValueRaw {
+		char BYTE[4];
+		char ASCII[4];
+		struct {
+			Gurax_PackedUInt16_BE(num);
+			Gurax_PackedUInt16_BE(second);
+		} SHORT;
+		struct {
+			Gurax_PackedUInt32_BE(num);
+		} LONG;
+		struct {
+			Gurax_PackedUInt32_BE(num);
+		} SLONG;
+	};
+	// TagRaw
+	struct TagRaw {
+		Gurax_PackedUInt16_BE(Id);
+		Gurax_PackedUInt16_BE(Type);
+		Gurax_PackedUInt32_BE(Count);
+		UChar ValueRaw;
+	};
 };
 
 //------------------------------------------------------------------------------
-// TagRaw_BE
+// TypeDef_LE
 //------------------------------------------------------------------------------
-struct TagRaw_BE {
-	Gurax_PackedUInt16_BE(Id);
-	Gurax_PackedUInt16_BE(Type);
-	Gurax_PackedUInt32_BE(Count);
-	UChar ValueRaw;
-};
-
-//------------------------------------------------------------------------------
-// ValueRaw_LE
-//------------------------------------------------------------------------------
-union ValueRaw_LE {
-	char BYTE[4];
-	char ASCII[4];
-	struct {
+struct TypeDef_LE {
+	// TIFFHeader
+	struct TIFFHeader {
+		Gurax_PackedUInt16_LE(Code);
+		Gurax_PackedUInt32_LE(Offset0thIFD);
+	};
+	// IFDHeader
+	struct IFDHeader {
+		Gurax_PackedUInt16_LE(TagCount);
+	};
+	// RATIONAL
+	struct RATIONAL {
+		Gurax_PackedUInt32_LE(numerator);
+		Gurax_PackedUInt32_LE(denominator);
+	};
+	// SRATIONAL
+	struct SRATIONAL {
+		Gurax_PackedUInt32_LE(numerator);
+		Gurax_PackedUInt32_LE(denominator);
+	};
+	// SHORT
+	struct SHORT {
 		Gurax_PackedUInt16_LE(num);
-		Gurax_PackedUInt16_LE(second);
-	} SHORT;
-	struct {
+	};
+	// LONG
+	struct LONG {
 		Gurax_PackedUInt32_LE(num);
-	} LONG;
-	struct {
+	};
+	// SLONG
+	struct SLONG {
 		Gurax_PackedUInt32_LE(num);
-	} SLONG;
-};
-
-//------------------------------------------------------------------------------
-// TagRaw_LE
-//------------------------------------------------------------------------------
-struct TagRaw_LE {
-	Gurax_PackedUInt16_LE(Id);
-	Gurax_PackedUInt16_LE(Type);
-	Gurax_PackedUInt32_LE(Count);
-	UChar ValueRaw;
+	};
+	// ValueRaw
+	union ValueRaw {
+		char BYTE[4];
+		char ASCII[4];
+		struct {
+			Gurax_PackedUInt16_LE(num);
+			Gurax_PackedUInt16_LE(second);
+		} SHORT;
+		struct {
+			Gurax_PackedUInt32_LE(num);
+		} LONG;
+		struct {
+			Gurax_PackedUInt32_LE(num);
+		} SLONG;
+	};
+	// TagRaw
+	struct TagRaw {
+		Gurax_PackedUInt16_LE(Id);
+		Gurax_PackedUInt16_LE(Type);
+		Gurax_PackedUInt32_LE(Count);
+		UChar ValueRaw;
+	};
 };
 
 //------------------------------------------------------------------------------
