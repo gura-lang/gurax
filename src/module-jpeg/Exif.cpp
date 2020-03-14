@@ -13,7 +13,7 @@ Value* Exif::CreateValue() const
 	return new Value_Exif(Reference());
 }
 
-template<typename T> IFD* Exif::CreateIFD_T(const UInt8*& pBuff, size_t& bytesAvail)
+template<typename T> IFD* Exif::AnalyzeIFD(const UInt8* pBuff, size_t bytesAvail)
 {
 #if 0
 	if (offset + SIZE_IFDHeader >= bytesAPP1 - 1) {
@@ -256,7 +256,8 @@ template<typename T> IFD* Exif::CreateIFD_T(const UInt8*& pBuff, size_t& bytesAv
 bool Exif::AnalyzeBinary()
 {
 	GetBinary()->Dump(Basement::Inst.GetStreamCOut());
-	const UInt8* pBuff = GetBinary()->data();
+	const UInt8* pBuffTop = GetBinary()->data();
+	const UInt8* pBuff = pBuffTop;
 	size_t bytesAvail = GetBinary()->size();
 	do {
 		size_t bytes = sizeof(ExifHeader);
@@ -267,13 +268,33 @@ bool Exif::AnalyzeBinary()
 		const ExifHeader& hdr = *reinterpret_cast<const ExifHeader*>(pBuff);
 		pBuff += bytes, bytesAvail -= bytes;
 		if (::memcmp(hdr.ByteOrder, "MM", 2) == 0) {
-			size_t bytes = sizeof(TypeDef_LE::TIFFHeader);
-			auto& hdr = *reinterpret_cast<const TypeDef_LE::TIFFHeader*>(pBuff);
-			pBuff += bytes, bytesAvail -= bytes;
-		} else if (::memcmp(hdr.ByteOrder, "II", 2) == 0) {
 			size_t bytes = sizeof(TypeDef_BE::TIFFHeader);
+			if (bytesAvail < bytes) {
+				IssueError_InvalidFormat();
+				return false;
+			}
 			auto& hdr = *reinterpret_cast<const TypeDef_BE::TIFFHeader*>(pBuff);
-			pBuff += bytes, bytesAvail -= bytes;
+			//_bigEndianFlag = true;
+			size_t offset = Gurax_UnpackUInt32(hdr.Offset0thIFD);
+			if (Gurax_UnpackUInt16(hdr.Code) != 0x002a || bytesAvail < offset) {
+				IssueError_InvalidFormat();
+				return false;
+			}
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(pBuffTop + offset, bytesAvail - offset));
+
+		} else if (::memcmp(hdr.ByteOrder, "II", 2) == 0) {
+			size_t bytes = sizeof(TypeDef_LE::TIFFHeader);
+			if (bytesAvail < bytes) {
+				IssueError_InvalidFormat();
+				return false;
+			}
+			auto& hdr = *reinterpret_cast<const TypeDef_LE::TIFFHeader*>(pBuff);
+			size_t offset = Gurax_UnpackUInt32(hdr.Offset0thIFD);
+			if (Gurax_UnpackUInt16(hdr.Code) != 0x002a || bytesAvail < offset) {
+				IssueError_InvalidFormat();
+				return false;
+			}
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(pBuffTop + offset, bytesAvail - offset));
 
 		} else {
 			IssueError_InvalidFormat();
