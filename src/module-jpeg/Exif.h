@@ -5,10 +5,9 @@
 #define GURAX_MODULE_JPEG_EXIF_H
 #include <gurax.h>
 #include "Segment.h"
+#include "IFD.h"
 
 Gurax_BeginModuleScope(jpeg)
-
-class IFD;
 
 //------------------------------------------------------------------------------
 // Exif
@@ -17,9 +16,12 @@ class GURAX_DLLDECLARE Exif : public Segment {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Exif);
+protected:
+	bool _bigEndianFlag;
+	IFDOwner _ifdOwner;
 public:
 	// Constructor
-	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff) {}
+	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff), _bigEndianFlag(false) {}
 	// Copy constructor/operator
 	Exif(const Exif& src) = delete;
 	Exif& operator=(const Exif& src) = delete;
@@ -33,7 +35,7 @@ public:
 	virtual bool AnalyzeBinary() override;
 	virtual bool Write(Stream& stream) const override;
 protected:
-	template<typename T> static IFD* AnalyzeIFD(const UInt8* pBuff, size_t bytesAvail);
+	template<typename TypeDef> IFD* AnalyzeIFD(const UInt8* buff, size_t bytesBuff, size_t offset);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }

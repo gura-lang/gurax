@@ -112,9 +112,9 @@ inline const Symbol* MarkerToSymbol(UInt16 marker)
 }
 
 //------------------------------------------------------------------------------
-// Type
+// TypeId
 //------------------------------------------------------------------------------
-struct Type {
+struct TypeId {
 	static const UInt16 BYTE		= 1;
 	static const UInt16 ASCII		= 2;
 	static const UInt16 SHORT		= 3;
@@ -290,25 +290,17 @@ struct TagId {
 };
 
 //------------------------------------------------------------------------------
-// ExifHeader
-//------------------------------------------------------------------------------
-struct ExifHeader {
-	char ID[6];
-	char ByteOrder[2];
-};
-
-//------------------------------------------------------------------------------
 // TypeDef_BE
 //------------------------------------------------------------------------------
 struct TypeDef_BE {
 	// TIFFHeader
 	struct TIFFHeader {
-		Gurax_PackedUInt16_BE(Code);
-		Gurax_PackedUInt32_BE(Offset0thIFD);
+		Gurax_PackedUInt16_BE(code);
+		Gurax_PackedUInt32_BE(offset0thIFD);
 	};
 	// IFDHeader
 	struct IFDHeader {
-		Gurax_PackedUInt16_BE(TagCount);
+		Gurax_PackedUInt16_BE(tagCount);
 	};
 	// RATIONAL
 	struct RATIONAL {
@@ -332,13 +324,13 @@ struct TypeDef_BE {
 	struct SLONG {
 		Gurax_PackedUInt32_BE(num);
 	};
-	// ValueRaw
-	union ValueRaw {
-		char BYTE[4];
+	// Variable
+	union Variable {
+		UInt8 BYTE[4];
 		char ASCII[4];
 		struct {
 			Gurax_PackedUInt16_BE(num);
-			Gurax_PackedUInt16_BE(second);
+			Gurax_PackedUInt16_BE(num2nd);
 		} SHORT;
 		struct {
 			Gurax_PackedUInt32_BE(num);
@@ -347,12 +339,12 @@ struct TypeDef_BE {
 			Gurax_PackedUInt32_BE(num);
 		} SLONG;
 	};
-	// TagRaw
-	struct TagRaw {
-		Gurax_PackedUInt16_BE(Id);
-		Gurax_PackedUInt16_BE(Type);
-		Gurax_PackedUInt32_BE(Count);
-		UChar ValueRaw;
+	// Tag
+	struct Tag {
+		Gurax_PackedUInt16_BE(tagId);
+		Gurax_PackedUInt16_BE(typeId);
+		Gurax_PackedUInt32_BE(count);
+		Variable variable;
 	};
 };
 
@@ -362,12 +354,12 @@ struct TypeDef_BE {
 struct TypeDef_LE {
 	// TIFFHeader
 	struct TIFFHeader {
-		Gurax_PackedUInt16_LE(Code);
-		Gurax_PackedUInt32_LE(Offset0thIFD);
+		Gurax_PackedUInt16_LE(code);
+		Gurax_PackedUInt32_LE(offset0thIFD);
 	};
 	// IFDHeader
 	struct IFDHeader {
-		Gurax_PackedUInt16_LE(TagCount);
+		Gurax_PackedUInt16_LE(tagCount);
 	};
 	// RATIONAL
 	struct RATIONAL {
@@ -391,13 +383,13 @@ struct TypeDef_LE {
 	struct SLONG {
 		Gurax_PackedUInt32_LE(num);
 	};
-	// ValueRaw
-	union ValueRaw {
-		char BYTE[4];
+	// Variable
+	union Variable {
+		UInt8 BYTE[4];
 		char ASCII[4];
 		struct {
 			Gurax_PackedUInt16_LE(num);
-			Gurax_PackedUInt16_LE(second);
+			Gurax_PackedUInt16_LE(num2nd);
 		} SHORT;
 		struct {
 			Gurax_PackedUInt32_LE(num);
@@ -406,12 +398,12 @@ struct TypeDef_LE {
 			Gurax_PackedUInt32_LE(num);
 		} SLONG;
 	};
-	// TagRaw
-	struct TagRaw {
-		Gurax_PackedUInt16_LE(Id);
-		Gurax_PackedUInt16_LE(Type);
-		Gurax_PackedUInt32_LE(Count);
-		UChar ValueRaw;
+	// Tag
+	struct Tag {
+		Gurax_PackedUInt16_LE(tagId);
+		Gurax_PackedUInt16_LE(typeId);
+		Gurax_PackedUInt32_LE(count);
+		Variable variable;
 	};
 };
 
@@ -419,9 +411,9 @@ struct TypeDef_LE {
 // TagInfo
 //------------------------------------------------------------------------------
 struct TagInfo {
-	UInt16 id;
+	UInt16 tagId;
 	const char* name;
-	UInt16 type;
+	UInt16 typeId;
 	const char* nameForIFD;
 };
 
@@ -429,7 +421,7 @@ struct TagInfo {
 // TypeInfo
 //------------------------------------------------------------------------------
 struct TypeInfo {
-	UInt16 type;
+	UInt16 typeId;
 	const char *name;
 	size_t unitSize;
 };

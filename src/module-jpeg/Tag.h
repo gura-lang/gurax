@@ -33,6 +33,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// TagList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TagList : public std::vector<Tag*> {
+};
+
+//------------------------------------------------------------------------------
+// TagOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TagOwner : public TagList {
+public:
+	~TagOwner() { Clear(); }
+	void Clear();
+};
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

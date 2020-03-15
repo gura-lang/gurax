@@ -13,20 +13,98 @@ Value* Exif::CreateValue() const
 	return new Value_Exif(Reference());
 }
 
-template<typename T> IFD* Exif::AnalyzeIFD(const UInt8* pBuff, size_t bytesAvail)
+template<typename TypeDef> IFD* Exif::AnalyzeIFD(const UInt8* buff, size_t bytesBuff, size_t offset)
 {
+	using T_IFDHeader	= typename TypeDef::IFDHeader;
+	using T_RATIONAL	= typename TypeDef::RATIONAL;
+	using T_SRATIONAL	= typename TypeDef::SRATIONAL;
+	using T_SHORT		= typename TypeDef::SHORT;
+	using T_LONG		= typename TypeDef::LONG;
+	using T_SLONG		= typename TypeDef::SLONG;
+	using T_Variable	= typename TypeDef::Variable;
+	using T_Tag			= typename TypeDef::Tag;
+	if (offset + sizeof(T_IFDHeader) > bytesBuff) {
+		IssueError_InvalidFormat();
+		return nullptr;
+	}
+	RefPtr<IFD> pIFD(new IFD());
+	auto& hdr = *reinterpret_cast<const T_IFDHeader*>(buff + offset);
+	size_t tagCount = Gurax_UnpackUInt16(hdr.tagCount);
+	offset += sizeof(T_IFDHeader);
+	::printf("%zu\n", tagCount);
+	if (offset + sizeof(T_Tag) * tagCount > bytesBuff) {
+		IssueError_InvalidFormat();
+		return nullptr;
+	}
+	for (size_t iTag = 0; iTag < tagCount; iTag++) {
+		auto &tag = *reinterpret_cast<const T_Tag*>(buff + offset);
+		offset += sizeof(T_Tag);
+		UInt16 tagId = Gurax_UnpackUInt16(tag.tagId);
+		UInt16 typeId = Gurax_UnpackUInt16(tag.typeId);
+		UInt32 count = Gurax_UnpackUInt32(tag.count);
+		const T_Variable& variable = tag.variable;
+		switch (typeId) {
+		case TypeId::BYTE: {
+			const UInt8* p = variable.BYTE;
+			if (count > 4) {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(UInt8) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				p = buff + offset;
+			}
+			
+			break;
+		}
+		case TypeId::ASCII: {
+			const char* p = variable.ASCII;
+			if (count > 4) {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(char) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				p = reinterpret_cast<const char*>(buff + offset);
+			}
+			
+			break;
+		}
+		case TypeId::SHORT: {
+			if (count == 1) {
+				UInt16 num = Gurax_UnpackUInt16(variable.SHORT.num);
+			} else if (count == 2) {
+				UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
+				UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
+			} else {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(UInt16) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				
+			}
+			break;
+		}
+		case TypeId::LONG: {
+			break;
+		}
+		case TypeId::RATIONAL: {
+			break;
+		}
+		case TypeId::SLONG: {
+			break;
+		}
+		case TypeId::SRATIONAL: {
+			break;
+		}
+		default: {
+			IssueError_InvalidFormat();
+			return nullptr;
+		}
+		}
+	}
 #if 0
-	if (offset + SIZE_IFDHeader >= bytesAPP1 - 1) {
-		SetError_InvalidFormat(sig);
-		return nullptr;
-	}
-	IFDHeader_T *pIFDHeader = reinterpret_cast<IFDHeader_T *>(buff + offset);
-	size_t nTags = Gura_UnpackUInt16(pIFDHeader->TagCount);
-	offset += SIZE_IFDHeader;
-	if (offset + nTags * SIZE_TagRaw >= bytesAPP1 - 1) {
-		SetError_InvalidFormat(sig);
-		return nullptr;
-	}
 	if (pOffsetNext == nullptr) {
 		// nothing to do
 	} else if (offset + nTags * SIZE_TagRaw + UNITSIZE_LONG <= bytesAPP1) {
@@ -250,52 +328,54 @@ template<typename T> IFD* Exif::AnalyzeIFD(const UInt8* pBuff, size_t bytesAvail
 	}
 	return pObjIFD.release();
 #endif
-	return nullptr;
+	return pIFD.release();
 }
 
 bool Exif::AnalyzeBinary()
 {
 	GetBinary()->Dump(Basement::Inst.GetStreamCOut());
-	const UInt8* pBuffTop = GetBinary()->data();
-	const UInt8* pBuff = pBuffTop;
+	const UInt8* pBuff = GetBinary()->data();
 	size_t bytesAvail = GetBinary()->size();
 	do {
-		size_t bytes = sizeof(ExifHeader);
-		if (bytesAvail < bytes) {
+		if (bytesAvail < 6 || ::memcmp(pBuff, "Exif\0\0", 6) != 0) {
 			IssueError_InvalidFormat();
 			return false;
 		}
-		const ExifHeader& hdr = *reinterpret_cast<const ExifHeader*>(pBuff);
-		pBuff += bytes, bytesAvail -= bytes;
-		if (::memcmp(hdr.ByteOrder, "MM", 2) == 0) {
+		pBuff += 6, bytesAvail -= 6;
+		if (bytesAvail < 2) {
+			IssueError_InvalidFormat();
+			return false;
+		} else if (::memcmp(pBuff, "MM", 2) == 0) {
 			size_t bytes = sizeof(TypeDef_BE::TIFFHeader);
-			if (bytesAvail < bytes) {
+			if (bytesAvail - 2 < bytes) {
 				IssueError_InvalidFormat();
 				return false;
 			}
-			auto& hdr = *reinterpret_cast<const TypeDef_BE::TIFFHeader*>(pBuff);
-			//_bigEndianFlag = true;
-			size_t offset = Gurax_UnpackUInt32(hdr.Offset0thIFD);
-			if (Gurax_UnpackUInt16(hdr.Code) != 0x002a || bytesAvail < offset) {
+			auto& hdr = *reinterpret_cast<const TypeDef_BE::TIFFHeader*>(pBuff + 2);
+			_bigEndianFlag = true;
+			size_t offset = Gurax_UnpackUInt32(hdr.offset0thIFD);
+			if (Gurax_UnpackUInt16(hdr.code) != 0x002a || bytesAvail < offset) {
 				IssueError_InvalidFormat();
 				return false;
 			}
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(pBuffTop + offset, bytesAvail - offset));
-
-		} else if (::memcmp(hdr.ByteOrder, "II", 2) == 0) {
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(pBuff, bytesAvail, offset));
+			if (!pIFD) return false;
+			_ifdOwner.push_back(pIFD.release());
+		} else if (::memcmp(pBuff, "II", 2) == 0) {
 			size_t bytes = sizeof(TypeDef_LE::TIFFHeader);
-			if (bytesAvail < bytes) {
+			if (bytesAvail - 2 < bytes) {
 				IssueError_InvalidFormat();
 				return false;
 			}
-			auto& hdr = *reinterpret_cast<const TypeDef_LE::TIFFHeader*>(pBuff);
-			size_t offset = Gurax_UnpackUInt32(hdr.Offset0thIFD);
-			if (Gurax_UnpackUInt16(hdr.Code) != 0x002a || bytesAvail < offset) {
+			auto& hdr = *reinterpret_cast<const TypeDef_LE::TIFFHeader*>(pBuff + 2);
+			size_t offset = Gurax_UnpackUInt32(hdr.offset0thIFD);
+			if (Gurax_UnpackUInt16(hdr.code) != 0x002a || bytesAvail < offset) {
 				IssueError_InvalidFormat();
 				return false;
 			}
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(pBuffTop + offset, bytesAvail - offset));
-
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(pBuff, bytesAvail, offset));
+			if (!pIFD) return false;
+			_ifdOwner.push_back(pIFD.release());
 		} else {
 			IssueError_InvalidFormat();
 			return false;
