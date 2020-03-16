@@ -76,19 +76,49 @@ Gurax_ImplementMethod(Tag, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Tag#propSkeleton
-Gurax_DeclareProperty_R(Tag, propSkeleton)
+// jpeg.Tag#name
+Gurax_DeclareProperty_R(Tag, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Tag, propSkeleton)
+Gurax_ImplementPropertyGetter(Tag, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetTag().GetSymbol()->GetName());
+}
+
+// jpeg.Tag#symbol
+Gurax_DeclareProperty_R(Tag, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetTag().GetSymbol());
+}
+
+// jpeg.Tag#value
+Gurax_DeclareProperty_R(Tag, value)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetTag().GetValue().Reference();
 }
 
 //------------------------------------------------------------------------------
@@ -105,7 +135,25 @@ void VType_Tag::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Tag, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Tag, propSkeleton));
+	Assign(Gurax_CreateProperty(Tag, name));
+	Assign(Gurax_CreateProperty(Tag, symbol));
+	Assign(Gurax_CreateProperty(Tag, value));
+}
+
+//------------------------------------------------------------------------------
+// VType_Tag::Iterator_Each
+//------------------------------------------------------------------------------
+Value* VType_Tag::Iterator_Each::DoNextValue()
+{
+	if (_idx >= GetTagOwner().size()) return nullptr;
+	RefPtr<Tag> pTag(GetTagOwner()[_idx]->Reference());
+	_idx++;
+	return new Value_Tag(pTag.release());
+}
+
+String VType_Tag::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return "Tag.Each";
 }
 
 //------------------------------------------------------------------------------

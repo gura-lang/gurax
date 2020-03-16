@@ -13,6 +13,26 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Tag : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("Tag.Each");
+	private:
+		RefPtr<TagOwner> _pTagOwner;
+		size_t _idx;
+	public:
+		Iterator_Each(TagOwner* pTagOwner) : _pTagOwner(pTagOwner), _idx(0) {}
+	public:
+		TagOwner& GetTagOwner() { return *_pTagOwner; }
+		const TagOwner& GetTagOwner() const { return *_pTagOwner; }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetTagOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };

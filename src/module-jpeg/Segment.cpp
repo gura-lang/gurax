@@ -44,6 +44,13 @@ String Segment::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // SegmentList
 //------------------------------------------------------------------------------
+Segment* SegmentList::FindByMarker(UInt16 marker) const
+{
+	for (Segment* pSegment : *this) {
+		if (pSegment->GetMarker() == marker) return pSegment;
+	}
+	return nullptr;
+}
 
 //------------------------------------------------------------------------------
 // SegmentOwner

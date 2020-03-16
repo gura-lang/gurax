@@ -222,7 +222,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 
 bool Exif::AnalyzeBinary()
 {
-	GetBinary()->Dump(Basement::Inst.GetStreamCOut());
+	//GetBinary()->Dump(Basement::Inst.GetStreamCOut());
 	const UInt8* pBuff = GetBinary()->data();
 	size_t bytesAvail = GetBinary()->size();
 	do {

@@ -77,6 +77,23 @@ Gurax_ImplementMethod(Content, Write)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// jpeg.Content#exif
+Gurax_DeclareProperty_R(Content, exif)
+{
+	Declare(VTYPE_Exif, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, exif)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	Segment* pSegment = valueThis.GetContent().GetSegmentOwner().FindByMarker(Marker::APP1);
+	if (!pSegment) return Value::nil();
+	return new Value_Exif(dynamic_cast<Exif*>(pSegment));
+}
+
 // jpeg.Content#segments
 Gurax_DeclareProperty_R(Content, segments)
 {
@@ -108,6 +125,7 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Content, exif));
 	Assign(Gurax_CreateProperty(Content, segments));
 }
 

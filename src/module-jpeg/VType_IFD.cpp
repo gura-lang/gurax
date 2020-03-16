@@ -75,19 +75,21 @@ Gurax_ImplementMethod(IFD, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.IFD#propSkeleton
-Gurax_DeclareProperty_R(IFD, propSkeleton)
+// jpeg.IFD#tags
+Gurax_DeclareProperty_R(IFD, tags)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(IFD, propSkeleton)
+Gurax_ImplementPropertyGetter(IFD, tags)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const IFD& ifd = valueThis.GetIFD();
+	RefPtr<Iterator> pIterator(new VType_Tag::Iterator_Each(ifd.GetTagOwner().Reference()));
+	return new Value_Iterator(pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +106,7 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(IFD, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(IFD, propSkeleton));
+	Assign(Gurax_CreateProperty(IFD, tags));
 }
 
 //------------------------------------------------------------------------------

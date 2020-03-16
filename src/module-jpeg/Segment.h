@@ -50,6 +50,8 @@ public:
 // SegmentList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SegmentList : public std::vector<Segment*> {
+public:
+	Segment* FindByMarker(UInt16 marker) const;
 };
 
 //------------------------------------------------------------------------------

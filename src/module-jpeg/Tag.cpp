@@ -15,7 +15,11 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 
 String Tag::ToString(const StringStyle& ss) const
 {
-	return "jpeg.Tag";
+	String str;
+	str += _pSymbol->GetName();
+	str += ":";
+	str += _pValue->ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------

@@ -56,9 +56,13 @@ class GURAX_DLLDECLARE TagList : public std::vector<Tag*> {
 //------------------------------------------------------------------------------
 // TagOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TagOwner : public TagList {
+class GURAX_DLLDECLARE TagOwner : public TagList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(TagOwner);
+protected:
 	~TagOwner() { Clear(); }
+public:
 	void Clear();
 };
 

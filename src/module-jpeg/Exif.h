@@ -34,6 +34,8 @@ public:
 	virtual Value* CreateValue() const override;
 	virtual bool AnalyzeBinary() override;
 	virtual bool Write(Stream& stream) const override;
+public:
+	const IFDOwner& GetIFDOwner() const { return _ifdOwner; }
 protected:
 	template<typename TypeDef> IFD* AnalyzeIFD(
 		const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset);

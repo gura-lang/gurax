@@ -53,19 +53,38 @@ Gurax_ImplementMethod(Exif, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Exif#propSkeleton
-Gurax_DeclareProperty_R(Exif, propSkeleton)
+// jpeg.Exif#ifd0
+Gurax_DeclareProperty_R(Exif, ifd0)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_IFD, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Exif, propSkeleton)
+Gurax_ImplementPropertyGetter(Exif, ifd0)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const IFDOwner& ifdOwner = valueThis.GetExif().GetIFDOwner();
+	if (ifdOwner.size() < 1) return Value::nil();
+	return new Value_IFD(ifdOwner[0]->Reference());
+}
+
+// jpeg.Exif#ifd1
+Gurax_DeclareProperty_R(Exif, ifd1)
+{
+	Declare(VTYPE_IFD, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Exif, ifd1)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const IFDOwner& ifdOwner = valueThis.GetExif().GetIFDOwner();
+	if (ifdOwner.size() < 2) return Value::nil();
+	return new Value_IFD(ifdOwner[1]->Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +101,8 @@ void VType_Exif::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Exif, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Exif, propSkeleton));
+	Assign(Gurax_CreateProperty(Exif, ifd0));
+	Assign(Gurax_CreateProperty(Exif, ifd1));
 }
 
 //------------------------------------------------------------------------------
