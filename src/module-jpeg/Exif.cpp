@@ -16,43 +16,37 @@ Value* Exif::CreateValue() const
 template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 	const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset)
 {
-	using T_IFDHeader	= typename TypeDef::IFDHeader;
-	using T_RATIONAL	= typename TypeDef::RATIONAL;
-	using T_SRATIONAL	= typename TypeDef::SRATIONAL;
-	using T_SHORT		= typename TypeDef::SHORT;
-	using T_LONG		= typename TypeDef::LONG;
-	using T_SLONG		= typename TypeDef::SLONG;
-	using T_Variable	= typename TypeDef::Variable;
-	using T_Tag			= typename TypeDef::Tag;
-	if (offset + sizeof(T_IFDHeader) > bytesBuff) {
+	using IFDHeader_T	= typename TypeDef::IFDHeader;
+	using RATIONAL_T	= typename TypeDef::RATIONAL;
+	using SRATIONAL_T	= typename TypeDef::SRATIONAL;
+	using SHORT_T		= typename TypeDef::SHORT;
+	using LONG_T		= typename TypeDef::LONG;
+	using SLONG_T		= typename TypeDef::SLONG;
+	using Variable_T	= typename TypeDef::Variable;
+	using Tag_T			= typename TypeDef::Tag;
+	if (offset + sizeof(IFDHeader_T) > bytesBuff) {
 		IssueError_InvalidFormat();
 		return nullptr;
 	}
 	RefPtr<IFD> pIFD(new IFD());
-	auto& hdr = *reinterpret_cast<const T_IFDHeader*>(buff + offset);
+	auto& hdr = *reinterpret_cast<const IFDHeader_T*>(buff + offset);
 	size_t tagCount = Gurax_UnpackUInt16(hdr.tagCount);
-	offset += sizeof(T_IFDHeader);
+	offset += sizeof(IFDHeader_T);
 	::printf("%zu\n", tagCount);
-	if (offset + sizeof(T_Tag) * tagCount > bytesBuff) {
+	if (offset + sizeof(Tag_T) * tagCount > bytesBuff) {
 		IssueError_InvalidFormat();
 		return nullptr;
 	}
 	for (size_t iTag = 0; iTag < tagCount; iTag++) {
-		auto &tag = *reinterpret_cast<const T_Tag*>(buff + offset);
-		offset += sizeof(T_Tag);
+		auto &tag = *reinterpret_cast<const Tag_T*>(buff + offset);
+		offset += sizeof(Tag_T);
 		UInt16 tagId = Gurax_UnpackUInt16(tag.tagId);
 		UInt16 typeId = Gurax_UnpackUInt16(tag.typeId);
 		UInt32 count = Gurax_UnpackUInt32(tag.count);
-		const T_Variable& variable = tag.variable;
+		const Variable_T& variable = tag.variable;
 		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
-#if 0
-		do {
-			::printf("%s [%04x], %s [%04x], %08x, %08x\n",
-					(pTagInfo == nullptr)? "(unknown)" : pTagInfo->name, tagId,
-					(pTypeInfo == nullptr)? "(unknown)" : pTypeInfo->name, type,
-					count, Gura_UnpackUInt32(pValueRaw->LONG.num));
-		} while (0);
-#endif
+		::printf("[%04x] %s type:%04x, count=%d\n",
+				 tagId, (pTagInfo == nullptr)? "(unknown)" : pTagInfo->name, typeId, count);
 		if (pTagInfo && pTagInfo->nameForIFD) {
 			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 			const Symbol *pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
@@ -102,14 +96,14 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 				pValue.reset(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(T_SHORT) > bytesBuff) {
+				if (offset + count * sizeof(SHORT_T) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(T_SHORT)) {
-					const T_SHORT* pSHORT = reinterpret_cast<const T_SHORT*>(buff + offset);
+				for (size_t i = 0; i < count; i++, offset += sizeof(SHORT_T)) {
+					const SHORT_T* pSHORT = reinterpret_cast<const SHORT_T*>(buff + offset);
 					UInt16 num = Gurax_UnpackUInt16(pSHORT->num);
 					pValueOwner->push_back(new Value_Number(num));
 				}
@@ -123,14 +117,14 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 				pValue.reset(new Value_Number(num));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(T_LONG) > bytesBuff) {
+				if (offset + count * sizeof(LONG_T) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(T_LONG)) {
-					const T_LONG* pLONG = reinterpret_cast<const T_LONG*>(buff + offset);
+				for (size_t i = 0; i < count; i++, offset += sizeof(LONG_T)) {
+					const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
 					UInt32 num = Gurax_UnpackUInt32(pLONG->num);
 					pValueOwner->push_back(new Value_Number(num));
 				}
@@ -140,19 +134,19 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		}
 		case TypeId::RATIONAL: {
 			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-			if (offset + count * sizeof(T_RATIONAL) > bytesBuff) {
+			if (offset + count * sizeof(RATIONAL_T) > bytesBuff) {
 				IssueError_InvalidFormat();
 				return nullptr;
 			}
 			if (count == 1) {
-				const T_RATIONAL* pRATIONAL = reinterpret_cast<const T_RATIONAL*>(buff + offset);
+				const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
 				pValue.reset(CreateValueFromRATIONAL(*pRATIONAL));
 				if (!pValue) return nullptr;
 			} else {
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(T_RATIONAL)) {
-					const T_RATIONAL* pRATIONAL = reinterpret_cast<const T_RATIONAL*>(buff + offset);
+				for (size_t i = 0; i < count; i++, offset += sizeof(RATIONAL_T)) {
+					const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
 					RefPtr<Value> pValueElem(CreateValueFromRATIONAL(*pRATIONAL));
 					if (!pValueElem) return nullptr;
 					pValueOwner->push_back(pValueElem.release());
@@ -161,20 +155,33 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			}
 			break;
 		}
+		case TypeId::UNDEFINED: {
+			const UInt8* pBuff = variable.BYTE;
+			if (count > 4) {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(UInt8) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				pBuff = buff + offset;
+			}
+			pValue.reset(new Value_Binary(Binary(pBuff, count)));
+			break;
+		}
 		case TypeId::SLONG: {
 			if (count == 1) {
 				Int32 num = Gurax_UnpackInt32(variable.SLONG.num);
 				pValue.reset(new Value_Number(num));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(T_SLONG) > bytesBuff) {
+				if (offset + count * sizeof(SLONG_T) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(T_SLONG)) {
-					const T_SLONG* pSLONG = reinterpret_cast<const T_SLONG*>(buff + offset);
+				for (size_t i = 0; i < count; i++, offset += sizeof(SLONG_T)) {
+					const SLONG_T* pSLONG = reinterpret_cast<const SLONG_T*>(buff + offset);
 					Int32 num = Gurax_UnpackInt32(pSLONG->num);
 					pValueOwner->push_back(new Value_Number(num));
 				}
@@ -183,19 +190,19 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		}
 		case TypeId::SRATIONAL: {
 			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-			if (offset + count * sizeof(T_SRATIONAL) > bytesBuff) {
+			if (offset + count * sizeof(SRATIONAL_T) > bytesBuff) {
 				IssueError_InvalidFormat();
 				return nullptr;
 			}
 			if (count == 1) {
-				const T_SRATIONAL* pSRATIONAL = reinterpret_cast<const T_SRATIONAL*>(buff + offset);
+				const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
 				pValue.reset(CreateValueFromSRATIONAL(*pSRATIONAL));
 				if (!pValue) return nullptr;
 			} else {
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(T_SRATIONAL)) {
-					const T_SRATIONAL* pSRATIONAL = reinterpret_cast<const T_SRATIONAL*>(buff + offset);
+				for (size_t i = 0; i < count; i++, offset += sizeof(SRATIONAL_T)) {
+					const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
 					RefPtr<Value> pValueElem(CreateValueFromSRATIONAL(*pSRATIONAL));
 					if (!pValueElem) return nullptr;
 					pValueOwner->push_back(pValueElem.release());
