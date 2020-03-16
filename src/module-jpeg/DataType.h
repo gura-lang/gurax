@@ -339,8 +339,8 @@ struct TypeDef_BE {
 			Gurax_PackedUInt32_BE(num);
 		} SLONG;
 	};
-	// Tag
-	struct Tag {
+	// TagPacked
+	struct TagPacked {
 		Gurax_PackedUInt16_BE(tagId);
 		Gurax_PackedUInt16_BE(typeId);
 		Gurax_PackedUInt32_BE(count);
@@ -398,8 +398,8 @@ struct TypeDef_LE {
 			Gurax_PackedUInt32_LE(num);
 		} SLONG;
 	};
-	// Tag
-	struct Tag {
+	// TagPacked
+	struct TagPacked {
 		Gurax_PackedUInt16_LE(tagId);
 		Gurax_PackedUInt16_LE(typeId);
 		Gurax_PackedUInt32_LE(count);
