@@ -13,7 +13,8 @@ Value* Exif::CreateValue() const
 	return new Value_Exif(Reference());
 }
 
-template<typename TypeDef> IFD* Exif::AnalyzeIFD(const UInt8* buff, size_t bytesBuff, size_t offset)
+template<typename TypeDef> IFD* Exif::AnalyzeIFD(
+	const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset)
 {
 	using T_IFDHeader	= typename TypeDef::IFDHeader;
 	using T_RATIONAL	= typename TypeDef::RATIONAL;
@@ -43,7 +44,27 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(const UInt8* buff, size_t bytes
 		UInt16 typeId = Gurax_UnpackUInt16(tag.typeId);
 		UInt32 count = Gurax_UnpackUInt32(tag.count);
 		const T_Variable& variable = tag.variable;
+		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
+#if 0
+		do {
+			::printf("%s [%04x], %s [%04x], %08x, %08x\n",
+					(pTagInfo == nullptr)? "(unknown)" : pTagInfo->name, tagId,
+					(pTypeInfo == nullptr)? "(unknown)" : pTypeInfo->name, type,
+					count, Gura_UnpackUInt32(pValueRaw->LONG.num));
+		} while (0);
+#endif
+		if (pTagInfo && pTagInfo->nameForIFD) {
+			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+			const Symbol *pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
+			RefPtr<IFD> pIFDSub(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
+			if (!pIFD) return nullptr;
+			RefPtr<Value> pValue(new Value_IFD(pIFDSub.release()));
+			pIFD->GetTagOwner().push_back(new Tag(tagId, typeId, pSymbolOfIFDSub, pValue.release()));
+			continue;
+		}
+		const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
 		RefPtr<Value> pValue;
+		RefPtr<Value> pValueCooked;
 		switch (typeId) {
 		case TypeId::BYTE: {
 			const UInt8* pBuff = variable.BYTE;
@@ -188,6 +209,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(const UInt8* buff, size_t bytes
 			return nullptr;
 		}
 		}
+		pIFD->GetTagOwner().push_back(new Tag(tagId, typeId, pSymbol, pValue.release()));
 	}
 #if 0
 	if (pOffsetNext == nullptr) {
@@ -443,7 +465,7 @@ bool Exif::AnalyzeBinary()
 				IssueError_InvalidFormat();
 				return false;
 			}
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(pBuff, bytesAvail, offset));
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(nullptr, pBuff, bytesAvail, offset));
 			if (!pIFD) return false;
 			_ifdOwner.push_back(pIFD.release());
 		} else if (::memcmp(pBuff, "II", 2) == 0) {
@@ -458,7 +480,7 @@ bool Exif::AnalyzeBinary()
 				IssueError_InvalidFormat();
 				return false;
 			}
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(pBuff, bytesAvail, offset));
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(nullptr, pBuff, bytesAvail, offset));
 			if (!pIFD) return false;
 			_ifdOwner.push_back(pIFD.release());
 		} else {

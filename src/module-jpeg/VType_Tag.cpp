@@ -42,8 +42,9 @@ Gurax_ImplementConstructor(Tag)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Tag> pTag(new Tag());
-	return argument.ReturnValue(processor, new Value_Tag(pTag.release()));
+	//RefPtr<Tag> pTag(new Tag());
+	//return argument.ReturnValue(processor, new Value_Tag(pTag.release()));
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

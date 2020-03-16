@@ -35,7 +35,8 @@ public:
 	virtual bool AnalyzeBinary() override;
 	virtual bool Write(Stream& stream) const override;
 protected:
-	template<typename TypeDef> IFD* AnalyzeIFD(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> IFD* AnalyzeIFD(
+		const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }
