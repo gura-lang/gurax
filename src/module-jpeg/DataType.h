@@ -415,6 +415,13 @@ struct TagInfo {
 	const char* name;
 	UInt16 typeId;
 	const char* nameForIFD;
+public:
+	static const TagInfo Tbl_TIFF[];
+	static const TagInfo Tbl_Exif[];
+	static const TagInfo Tbl_GPSInfo[];
+	static const TagInfo Tbl_Interoperability[];
+public:
+	static const TagInfo* LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId);
 };
 
 //------------------------------------------------------------------------------

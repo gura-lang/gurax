@@ -44,4 +44,8 @@ Gurax_RealizeSymbol(APP14);
 Gurax_RealizeSymbol(APP15);
 Gurax_RealizeSymbol(COM);
 
+Gurax_RealizeSymbol(Exif);
+Gurax_RealizeSymbol(Interoperability);
+Gurax_RealizeSymbol(GPSInfo);
+
 Gurax_EndModuleScope(jpeg)

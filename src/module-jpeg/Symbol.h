@@ -46,6 +46,10 @@ Gurax_DeclareSymbol(APP14);
 Gurax_DeclareSymbol(APP15);
 Gurax_DeclareSymbol(COM);
 
+Gurax_DeclareSymbol(Exif);
+Gurax_DeclareSymbol(Interoperability);
+Gurax_DeclareSymbol(GPSInfo);
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

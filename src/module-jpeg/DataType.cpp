@@ -5,8 +5,11 @@
 
 Gurax_BeginModuleScope(jpeg)
 
+//------------------------------------------------------------------------------
+// TagInfo
+//------------------------------------------------------------------------------
 // 4.6.4 TIFF Rev.6.0 Attribute Information
-static const TagInfo g_tagInfoTbl[] = {
+const TagInfo TagInfo::Tbl_TIFF[] = {
 	// A. Tags relating to image data structure
 	{ TagId::ImageWidth,					"ImageWidth",					TypeId::LONG,		nullptr,	},
 	{ TagId::ImageLength,					"ImageLength",					TypeId::LONG,		nullptr,	},
@@ -48,7 +51,7 @@ static const TagInfo g_tagInfoTbl[] = {
 };
 
 // 4.6.5 Exif IFD Attribute Information
-static const TagInfo g_tagInfoTbl_Exif[] = {
+const TagInfo TagInfo::Tbl_Exif[] = {
 	// A. Tags Relating to Version
 	{ TagId::ExifVersion,					"ExifVersion",					TypeId::UNDEFINED,	nullptr,	},
 	{ TagId::FlashPixVersion,				"FlashPixVersion",				TypeId::UNDEFINED,	nullptr,	},
@@ -119,7 +122,7 @@ static const TagInfo g_tagInfoTbl_Exif[] = {
 };
 
 // 4.6.6 GPS Attribute Information
-static const TagInfo g_tagInfoTbl_GPSInfo[] = {
+const TagInfo TagInfo::Tbl_GPSInfo[] = {
 	// A. Tags Relating to GPS
 	{ TagId::GPSVersionID,					"GPSVersionID",					TypeId::BYTE,		nullptr,	},
 	{ TagId::GPSLatitudeRef,				"GPSLatitudeRef",				TypeId::ASCII,		nullptr,	},
@@ -156,7 +159,7 @@ static const TagInfo g_tagInfoTbl_GPSInfo[] = {
 };
 
 // 4.6.7 Interoperability IFD Attribute Information
-static const TagInfo g_tagInfoTbl_Interoperability[] = {
+const TagInfo TagInfo::Tbl_Interoperability[] = {
 	{ TagId::InteroperabilityIndex,			"InteroperabilityIndex",		TypeId::ASCII,		nullptr,	},
 	{ TagId::InteroperabilityVersion,		"InteroperabilityVersion",		TypeId::BYTE,		nullptr,	},
 	{ TagId::RelatedImageWidth,				"RelatedImageWidth",			TypeId::SHORT,		nullptr,	},
@@ -164,6 +167,23 @@ static const TagInfo g_tagInfoTbl_Interoperability[] = {
 	{ TagId::invalid,						nullptr,						TypeId::UNDEFINED,	nullptr,	},
 };
 
+const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
+{
+	const TagInfo *pTagInfo =
+		!pSymbolOfIFD? Tbl_TIFF :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))? Tbl_Exif :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))? Tbl_Interoperability :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))? Tbl_GPSInfo : nullptr;
+	if (!pTagInfo) return nullptr;
+	for (int i = 0; pTagInfo->name != nullptr; i++, pTagInfo++) {
+		if (pTagInfo->tagId == tagId) return pTagInfo;
+	}
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// TypeInfo
+//------------------------------------------------------------------------------
 #if 0
 static const TypeInfo g_typeInfoTbl[] = {
 	{ TypeId::BYTE,		"BYTE",			UNITSIZE_BYTE,		},
