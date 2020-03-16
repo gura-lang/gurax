@@ -43,59 +43,144 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(const UInt8* buff, size_t bytes
 		UInt16 typeId = Gurax_UnpackUInt16(tag.typeId);
 		UInt32 count = Gurax_UnpackUInt32(tag.count);
 		const T_Variable& variable = tag.variable;
+		RefPtr<Value> pValue;
 		switch (typeId) {
 		case TypeId::BYTE: {
-			const UInt8* p = variable.BYTE;
+			const UInt8* pBuff = variable.BYTE;
 			if (count > 4) {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 				if (offset + count * sizeof(UInt8) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
-				p = buff + offset;
+				pBuff = buff + offset;
 			}
-			
+			pValue.reset(new Value_Binary(Binary(pBuff, count)));
 			break;
 		}
 		case TypeId::ASCII: {
-			const char* p = variable.ASCII;
+			const char* pBuff = variable.ASCII;
 			if (count > 4) {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 				if (offset + count * sizeof(char) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
-				p = reinterpret_cast<const char*>(buff + offset);
+				pBuff = reinterpret_cast<const char*>(buff + offset);
 			}
-			
+			pValue.reset(new Value_String(String(pBuff, count)));
 			break;
 		}
 		case TypeId::SHORT: {
 			if (count == 1) {
 				UInt16 num = Gurax_UnpackUInt16(variable.SHORT.num);
+				pValue.reset(new Value_Number(num));
 			} else if (count == 2) {
 				UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
 				UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
+				pValue.reset(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(UInt16) > bytesBuff) {
+				if (offset + count * sizeof(T_SHORT) > bytesBuff) {
 					IssueError_InvalidFormat();
 					return nullptr;
 				}
-				
+				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+				pValueOwner->reserve(count);
+				for (size_t i = 0; i < count; i++, offset += sizeof(T_SHORT)) {
+					const T_SHORT* pSHORT = reinterpret_cast<const T_SHORT*>(buff + offset);
+					UInt16 num = Gurax_UnpackUInt16(pSHORT->num);
+					pValueOwner->push_back(new Value_Number(num));
+				}
+				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
 			}
 			break;
 		}
 		case TypeId::LONG: {
+			if (count == 1) {
+				UInt32 num = Gurax_UnpackUInt32(variable.LONG.num);
+				pValue.reset(new Value_Number(num));
+			} else {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(T_LONG) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+				pValueOwner->reserve(count);
+				for (size_t i = 0; i < count; i++, offset += sizeof(T_LONG)) {
+					const T_LONG* pLONG = reinterpret_cast<const T_LONG*>(buff + offset);
+					UInt32 num = Gurax_UnpackUInt32(pLONG->num);
+					pValueOwner->push_back(new Value_Number(num));
+				}
+				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+			}
 			break;
 		}
 		case TypeId::RATIONAL: {
+			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+			if (offset + count * sizeof(T_RATIONAL) > bytesBuff) {
+				IssueError_InvalidFormat();
+				return nullptr;
+			}
+			if (count == 1) {
+				const T_RATIONAL* pRATIONAL = reinterpret_cast<const T_RATIONAL*>(buff + offset);
+				pValue.reset(CreateValueFromRATIONAL(*pRATIONAL));
+				if (!pValue) return nullptr;
+			} else {
+				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+				pValueOwner->reserve(count);
+				for (size_t i = 0; i < count; i++, offset += sizeof(T_RATIONAL)) {
+					const T_RATIONAL* pRATIONAL = reinterpret_cast<const T_RATIONAL*>(buff + offset);
+					RefPtr<Value> pValueElem(CreateValueFromRATIONAL(*pRATIONAL));
+					if (!pValueElem) return nullptr;
+					pValueOwner->push_back(pValueElem.release());
+				}
+				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+			}
 			break;
 		}
 		case TypeId::SLONG: {
+			if (count == 1) {
+				Int32 num = Gurax_UnpackInt32(variable.SLONG.num);
+				pValue.reset(new Value_Number(num));
+			} else {
+				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+				if (offset + count * sizeof(T_SLONG) > bytesBuff) {
+					IssueError_InvalidFormat();
+					return nullptr;
+				}
+				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+				pValueOwner->reserve(count);
+				for (size_t i = 0; i < count; i++, offset += sizeof(T_SLONG)) {
+					const T_SLONG* pSLONG = reinterpret_cast<const T_SLONG*>(buff + offset);
+					Int32 num = Gurax_UnpackInt32(pSLONG->num);
+					pValueOwner->push_back(new Value_Number(num));
+				}
+			}
 			break;
 		}
 		case TypeId::SRATIONAL: {
+			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+			if (offset + count * sizeof(T_SRATIONAL) > bytesBuff) {
+				IssueError_InvalidFormat();
+				return nullptr;
+			}
+			if (count == 1) {
+				const T_SRATIONAL* pSRATIONAL = reinterpret_cast<const T_SRATIONAL*>(buff + offset);
+				pValue.reset(CreateValueFromSRATIONAL(*pSRATIONAL));
+				if (!pValue) return nullptr;
+			} else {
+				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+				pValueOwner->reserve(count);
+				for (size_t i = 0; i < count; i++, offset += sizeof(T_SRATIONAL)) {
+					const T_SRATIONAL* pSRATIONAL = reinterpret_cast<const T_SRATIONAL*>(buff + offset);
+					RefPtr<Value> pValueElem(CreateValueFromSRATIONAL(*pSRATIONAL));
+					if (!pValueElem) return nullptr;
+					pValueOwner->push_back(pValueElem.release());
+				}
+				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+			}
 			break;
 		}
 		default: {
