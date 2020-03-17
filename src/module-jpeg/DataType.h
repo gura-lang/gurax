@@ -438,34 +438,31 @@ struct TypeInfo {
 //------------------------------------------------------------------------------
 template<typename RATIONAL_T> Value* CreateValueFromRATIONAL(const RATIONAL_T& rational)
 {
-#if 0
-	UInt32 numerator = Gurax_UnpackUInt32(rational.numerator);
-	UInt32 denominator = Gurax_UnpackUInt32(rational.denominator);
-	if (denominator == 0) {
-		if (numerator != 0) {
+	UInt32 numer = Gurax_UnpackUInt32(rational.numerator);
+	UInt32 denom = Gurax_UnpackUInt32(rational.denominator);
+	if (denom == 0) {
+		if (numer != 0) {
 			Error::Issue(ErrorType::DividedByZero, "rational denominator can't be zero");
 			return nullptr;
 		}
-		denominator = 1;
+		denom = 1;
 	}
-	return new Value_Rational(Rational(numerator, denominator));
-#endif
-	return Value::nil();
+	return new Value_Rational(Rational(numer, denom));
 }
 
 template<typename SRATIONAL_T> Value* CreateValueFromSRATIONAL(const SRATIONAL_T &rational)
 {
 #if 0
-	Int32 numerator = Gura_UnpackInt32(rational.numerator);
-	Int32 denominator = Gura_UnpackInt32(rational.denominator);
-	if (denominator == 0) {
-		if (numerator != 0) {
+	UInt32 numer = Gurax_UnpackUInt32(rational.numerator);
+	UInt32 denom = Gurax_UnpackUInt32(rational.denominator);
+	if (denom == 0) {
+		if (numer != 0) {
 			Error::Issue(ErrorType::DividedByZero, "rational denominator can't be zero");
 			return nullptr;
 		}
-		denominator = 1;
+		denom = 1;
 	}
-	return new Value_Rational(Rational(numerator, denominator));
+	return new Value_Rational(SRational(numer, denom));
 #endif
 	return Value::nil();
 }
