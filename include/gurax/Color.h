@@ -12,6 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Color {
 public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Color");
+public:
 	struct Elem {
 		UInt8 b, g, r, a;
 		constexpr Elem() : b(0), g(0), r(0), a(0) {}

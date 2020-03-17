@@ -10,23 +10,42 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Rational
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Rational : public Referable {
+class GURAX_DLLDECLARE Rational {
 public:
-	// Referable declaration
-	Gurax_DeclareReferable(Rational);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Rational");
+protected:
+	int _numer;
+	int _denom;
 public:
 	// Constructor
-	Rational() {}
+	Rational() : _numer(0), _denom(1) {}
+	Rational(int numer) : _numer(numer), _denom(1) {}
+	Rational(int numer, int denom) : _numer(numer), _denom(denom) {}
 	// Copy constructor/operator
-	Rational(const Rational& src) = delete;
-	Rational& operator=(const Rational& src) = delete;
+	Rational(const Rational& src) : _numer(src._numer), _denom(src._denom) {}
+	Rational& operator=(const Rational& src) {
+		_numer = src._numer, _denom = src._denom;
+		return *this;
+	}
 	// Move constructor/operator
-	Rational(Rational&& src) = delete;
-	Rational& operator=(Rational&& src) noexcept = delete;
-protected:
+	Rational(Rational&& src) : _numer(src._numer), _denom(src._denom) {}
+	Rational& operator=(Rational&& src) noexcept {
+		_numer = src._numer, _denom = src._denom;
+		return *this;
+	}
+public:
 	~Rational() = default;
+public:
+	void SetNumer(int numer) { _numer = numer; }
+	void SetDenom(int denom) { _denom = denom; }
+	int GetNumer() const { return _numer; }
+	int GetDenom() const { return _denom; }
+public:
+	Rational Reduce() const;
+	static Rational MakeFromFP(Double num);
+public:
+	static void IssueError_DenominatorZero();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Rational& other) const { return this == &other; }

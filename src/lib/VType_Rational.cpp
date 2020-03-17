@@ -43,8 +43,8 @@ Gurax_ImplementConstructor(Rational)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Rational> pRational(new Rational());
-	return argument.ReturnValue(processor, new Value_Rational(pRational.release()));
+	Rational rational;
+	return argument.ReturnValue(processor, new Value_Rational(rational));
 }
 
 //-----------------------------------------------------------------------------

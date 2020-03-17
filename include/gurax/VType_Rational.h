@@ -29,17 +29,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Rational");
 protected:
-	RefPtr<Rational> _pRational;
+	Rational _rational;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Rational() = delete;
-	explicit Value_Rational(Rational* pRational, VType& vtype = VTYPE_Rational) :
-		Value_Object(vtype), _pRational(pRational) {}
+	explicit Value_Rational(Rational rational, VType& vtype = VTYPE_Rational) :
+		Value_Object(vtype), _rational(rational) {}
 	// Copy constructor/operator
-	Value_Rational(const Value_Rational& src) :
-		Value_Object(src), _pRational(src._pRational->Reference()) {}
+	Value_Rational(const Value_Rational& src) : Value_Object(src), _rational(src._rational) {}
 	Value_Rational& operator=(const Value_Rational& src) = delete;
 	// Move constructor/operator
 	Value_Rational(Value_Rational&& src) = delete;
@@ -48,8 +47,8 @@ protected:
 	// Destructor
 	~Value_Rational() = default;
 public:
-	Rational& GetRational() { return *_pRational; }
-	const Rational& GetRational() const { return *_pRational; }
+	Rational& GetRational() { return _rational; }
+	const Rational& GetRational() const { return _rational; }
 public:
 	static Rational& GetRational(Value& value) {
 		return dynamic_cast<Value_Rational&>(value).GetRational();
