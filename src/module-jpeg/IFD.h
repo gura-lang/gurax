@@ -20,7 +20,7 @@ protected:
 	TagMap _tagMap;
 public:
 	// Constructor
-	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner) { PrepareMap(); }
+	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner) { PrepareTagMap(); }
 	// Copy constructor/operator
 	IFD(const IFD& src) = delete;
 	IFD& operator=(const IFD& src) = delete;
@@ -34,7 +34,7 @@ public:
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }
 	const TagMap& GetTagMap() { return _tagMap; }
 public:
-	void PrepareMap();
+	void PrepareTagMap();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }

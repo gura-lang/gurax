@@ -77,23 +77,6 @@ Gurax_ImplementMethod(Content, Write)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Content#APP1
-Gurax_DeclareProperty_R(Content, APP1)
-{
-	Declare(VTYPE_Exif, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Content, APP1)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	Segment* pSegment = valueThis.GetContent().GetSegmentOwner().FindByMarker(Marker::APP1);
-	if (!pSegment) return Value::nil();
-	return new Value_Exif(dynamic_cast<Exif*>(pSegment));
-}
-
 // jpeg.Content#segments
 Gurax_DeclareProperty_R(Content, segments)
 {
@@ -125,7 +108,6 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, APP1));
 	Assign(Gurax_CreateProperty(Content, segments));
 }
 
@@ -133,5 +115,12 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 // Value_Content
 //------------------------------------------------------------------------------
 VType& Value_Content::vtype = VTYPE_Content;
+
+Value* Value_Content::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	Segment* pSegment = GetContent().GetSegmentMap().Lookup(pSymbol);
+	if (pSegment) return pSegment->CreateValue();
+	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+}
 
 Gurax_EndModuleScope(jpeg)

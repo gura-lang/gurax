@@ -18,6 +18,7 @@ public:
 protected:
 	RefPtr<SegmentOwner> _pSegmentOwner;
 	RefPtr<BinaryReferable> _pBuffImage;
+	SegmentMap _segmentMap;
 public:
 	// Constructor
 	Content() : _pSegmentOwner(new SegmentOwner()) {}
@@ -33,7 +34,9 @@ public:
 	SegmentOwner& GetSegmentOwner() { return *_pSegmentOwner; }
 	const SegmentOwner& GetSegmentOwner() const { return *_pSegmentOwner; }
 	const Binary* GetBuffImage() const { return _pBuffImage? &_pBuffImage->GetBinary() : nullptr; }
+	const SegmentMap& GetSegmentMap() const { return _segmentMap; }
 public:
+	void PrepareSegmentMap();
 	bool Read(Stream& stream);
 	bool Write(Stream& stream) const;
 public:

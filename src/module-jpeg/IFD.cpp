@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-void IFD::PrepareMap()
+void IFD::PrepareTagMap()
 {
 	for (const Tag* pTag : GetTagOwner()) {
 		_tagMap[pTag->GetSymbol()] = pTag->Reference();

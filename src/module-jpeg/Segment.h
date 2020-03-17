@@ -67,6 +67,17 @@ public:
 	void Clear();
 };
 
+//------------------------------------------------------------------------------
+// SegmentMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE SegmentMap :
+	 public std::unordered_map<const Symbol*, Segment*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+public:
+	~SegmentMap() { Clear(); }
+	void Clear();
+	Segment* Lookup(const Symbol* pSymbol) const;
+};
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

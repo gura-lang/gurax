@@ -8,6 +8,13 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Content
 //------------------------------------------------------------------------------
+void Content::PrepareSegmentMap()
+{
+	for (const Segment* pSegment : GetSegmentOwner()) {
+		_segmentMap[pSegment->GetMarkerSymbol()] = pSegment->Reference();
+	}
+}
+
 bool Content::Read(Stream& stream)
 {
 	TypeDef_BE::SHORT buffShort;
@@ -51,6 +58,7 @@ bool Content::Read(Stream& stream)
 	}
 	_pBuffImage.reset(new BinaryReferable());
 	stream.ReadToEnd(_pBuffImage->GetBinary());
+	PrepareSegmentMap();
 	return true;
 }
 

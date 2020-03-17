@@ -61,4 +61,19 @@ void SegmentOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// SegmentMap
+//------------------------------------------------------------------------------
+void SegmentMap::Clear()
+{
+	for (auto iter = begin(); iter != end(); iter++) Segment::Delete(iter->second);
+	clear();
+}
+
+Segment* SegmentMap::Lookup(const Symbol* pSymbol) const
+{
+	auto iter = find(pSymbol);
+	return (iter == end())? nullptr : iter->second;
+}
+
 Gurax_EndModuleScope(jpeg)
