@@ -452,9 +452,8 @@ template<typename RATIONAL_T> Value* CreateValueFromRATIONAL(const RATIONAL_T& r
 
 template<typename SRATIONAL_T> Value* CreateValueFromSRATIONAL(const SRATIONAL_T &rational)
 {
-#if 0
-	UInt32 numer = Gurax_UnpackUInt32(rational.numerator);
-	UInt32 denom = Gurax_UnpackUInt32(rational.denominator);
+	Int32 numer = Gurax_UnpackInt32(rational.numerator);
+	Int32 denom = Gurax_UnpackInt32(rational.denominator);
 	if (denom == 0) {
 		if (numer != 0) {
 			Error::Issue(ErrorType::DividedByZero, "rational denominator can't be zero");
@@ -462,9 +461,7 @@ template<typename SRATIONAL_T> Value* CreateValueFromSRATIONAL(const SRATIONAL_T
 		}
 		denom = 1;
 	}
-	return new Value_Rational(SRational(numer, denom));
-#endif
-	return Value::nil();
+	return new Value_Rational(Rational(numer, denom));
 }
 
 Gurax_EndModuleScope(jpeg)
