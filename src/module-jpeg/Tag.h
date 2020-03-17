@@ -39,6 +39,8 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Value& GetValue() const { return *_pValue; }
 	const Value& GetValueCooked() const { return *_pValueCooked; }
+	bool CheckAcceptableValue(const Value& value) const;
+	void SetValue(Value* pValue) { _pValue.reset(pValue); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Tag& other) const { return this == &other; }
@@ -74,7 +76,7 @@ class GURAX_DLLDECLARE TagMap :
 public:
 	~TagMap() { Clear(); }
 	void Clear();
-	const Tag* Lookup(const Symbol* pSymbol) const;
+	Tag* Lookup(const Symbol* pSymbol) const;
 };
 
 Gurax_EndModuleScope(jpeg)

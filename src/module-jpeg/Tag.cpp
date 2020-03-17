@@ -13,6 +13,11 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 {
 }
 
+bool Tag::CheckAcceptableValue(const Value& value) const
+{
+	return true;
+}
+
 String Tag::ToString(const StringStyle& ss) const
 {
 	String str;
@@ -44,7 +49,7 @@ void TagMap::Clear()
 	clear();
 }
 
-const Tag* TagMap::Lookup(const Symbol* pSymbol) const
+Tag* TagMap::Lookup(const Symbol* pSymbol) const
 {
 	auto iter = find(pSymbol);
 	return (iter == end())? nullptr : iter->second;

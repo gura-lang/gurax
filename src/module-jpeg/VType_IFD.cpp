@@ -117,12 +117,19 @@ VType& Value_IFD::vtype = VTYPE_IFD;
 
 Value* Value_IFD::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	GetIFD().GetTagOwner();
+	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
+	if (pTag) return pTag->GetValue().Reference();
 	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 }
 
 bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
+	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
+	if (pTag) {
+		if (!pTag->CheckAcceptableValue(*pValue)) return false;
+		pTag->SetValue(pValue.release());
+		return true;
+	}
 	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
 }
 
