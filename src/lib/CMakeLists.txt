@@ -154,6 +154,7 @@ add_library(guraxcore SHARED
 	VType_PUnit.cpp
 	VType_Quote.cpp
 	VType_Random.cpp
+	VType_Rational.cpp
 	VType_Stat.cpp
 	VType_Stream.cpp
 	VType_String.cpp
