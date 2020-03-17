@@ -42,8 +42,9 @@ Gurax_ImplementConstructor(IFD)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<IFD> pIFD(new IFD());
-	return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
+	//RefPtr<IFD> pIFD(new IFD());
+	//return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -113,5 +114,16 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 // Value_IFD
 //------------------------------------------------------------------------------
 VType& Value_IFD::vtype = VTYPE_IFD;
+
+Value* Value_IFD::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	GetIFD().GetTagOwner();
+	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+}
+
+bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
+}
 
 Gurax_EndModuleScope(jpeg)

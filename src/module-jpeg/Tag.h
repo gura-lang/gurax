@@ -66,6 +66,17 @@ public:
 	void Clear();
 };
 
+//------------------------------------------------------------------------------
+// TagMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TagMap :
+	 public std::unordered_map<const Symbol*, Tag*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+public:
+	~TagMap() { Clear(); }
+	void Clear();
+	const Tag* Lookup(const Symbol* pSymbol) const;
+};
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

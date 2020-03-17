@@ -17,9 +17,10 @@ public:
 	Gurax_DeclareReferable(IFD);
 protected:
 	RefPtr<TagOwner> _pTagOwner;
+	TagMap _tagMap;
 public:
 	// Constructor
-	IFD() : _pTagOwner(new TagOwner()) {}
+	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner) { PrepareMap(); }
 	// Copy constructor/operator
 	IFD(const IFD& src) = delete;
 	IFD& operator=(const IFD& src) = delete;
@@ -31,6 +32,9 @@ protected:
 public:
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }
+	const TagMap& GetTagMap() { return _tagMap; }
+public:
+	void PrepareMap();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }

@@ -28,7 +28,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		IssueError_InvalidFormat();
 		return nullptr;
 	}
-	RefPtr<IFD> pIFD(new IFD());
+	RefPtr<TagOwner> pTagOwner(new TagOwner());
 	auto& hdr = *reinterpret_cast<const IFDHeader_T*>(buff + offset);
 	size_t tagCount = Gurax_UnpackUInt16(hdr.tagCount);
 	offset += sizeof(IFDHeader_T);
@@ -49,10 +49,10 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		if (pTagInfo && pTagInfo->nameForIFD) {
 			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 			const Symbol *pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
-			RefPtr<IFD> pIFDSub(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
 			if (!pIFD) return nullptr;
-			RefPtr<Value> pValue(new Value_IFD(pIFDSub.release()));
-			pIFD->GetTagOwner().push_back(new Tag(tagId, typeId, pSymbolOfIFDSub, pValue.release()));
+			RefPtr<Value> pValue(new Value_IFD(pIFD.release()));
+			pTagOwner->push_back(new Tag(tagId, typeId, pSymbolOfIFDSub, pValue.release()));
 			continue;
 		}
 		const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
@@ -215,9 +215,9 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			return nullptr;
 		}
 		}
-		pIFD->GetTagOwner().push_back(new Tag(tagId, typeId, pSymbol, pValue.release()));
+		pTagOwner->push_back(new Tag(tagId, typeId, pSymbol, pValue.release()));
 	}
-	return pIFD.release();
+	return new IFD(pTagOwner.release());
 }
 
 bool Exif::AnalyzeBinary()

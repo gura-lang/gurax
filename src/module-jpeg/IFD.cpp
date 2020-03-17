@@ -8,6 +8,13 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
+void IFD::PrepareMap()
+{
+	for (const Tag* pTag : GetTagOwner()) {
+		_tagMap[pTag->GetSymbol()] = pTag->Reference();
+	}
+}
+
 String IFD::ToString(const StringStyle& ss) const
 {
 	return "jpeg.IFD";

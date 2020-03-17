@@ -35,4 +35,19 @@ void TagOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// TagMap
+//------------------------------------------------------------------------------
+void TagMap::Clear()
+{
+	for (auto iter = begin(); iter != end(); iter++) Tag::Delete(iter->second);
+	clear();
+}
+
+const Tag* TagMap::Lookup(const Symbol* pSymbol) const
+{
+	auto iter = find(pSymbol);
+	return (iter == end())? nullptr : iter->second;
+}
+
 Gurax_EndModuleScope(jpeg)
