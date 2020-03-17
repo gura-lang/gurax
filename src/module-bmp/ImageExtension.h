@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_BMP_IMAGEEXTENSION_H
 #define GURAX_MODULE_BMP_IMAGEEXTENSION_H
 #include <gurax.h>
-#include <gurax/Palette.h>
+#include <gurax-tentative.h>
 #include "DataType.h"
 
 Gurax_BeginModuleScope(bmp)

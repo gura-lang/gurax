@@ -1,3 +1,6 @@
+#===============================================================================
+# CMakeLists for unittest executable
+#===============================================================================
 add_executable(unittest
 	unittest.cpp
 	SampleRecord.cpp

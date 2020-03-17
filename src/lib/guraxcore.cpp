@@ -2,8 +2,7 @@
 // guraxcore.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/VType_Image.h>
-#include <gurax/VType_Palette.h>
+#include <gurax-tentative.h>
 
 namespace Gurax {
 

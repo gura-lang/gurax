@@ -1,3 +1,6 @@
+#===============================================================================
+# CMakeLists for gurax executable
+#===============================================================================
 add_executable(gurax gurax.cpp)
 
 find_library(LIBREADLINE readline REQUIRED)

@@ -2,7 +2,7 @@
 // Image.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/VType_Image.h>
+#include <gurax-tentative.h>
 
 namespace Gurax {
 

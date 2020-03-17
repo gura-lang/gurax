@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Pixel.cpp
+// VType_Rational.cpp
 //==============================================================================
 #include "stdafx.h"
 #include <gurax-tentative.h>
@@ -28,30 +28,30 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Pixel() {block?}
-Gurax_DeclareConstructor(Pixel)
+// Rational() {block?}
+Gurax_DeclareConstructor(Rational)
 {
-	Declare(VTYPE_Pixel, Flag::None);
+	Declare(VTYPE_Rational, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Pixel` instance.");
+		"Creates a `Rational` instance.");
 }
 
-Gurax_ImplementConstructor(Pixel)
+Gurax_ImplementConstructor(Rational)
 {
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Pixel> pPixel(new Pixel(Color::black, 0, 0));
-	return argument.ReturnValue(processor, new Value_Pixel(pPixel.release()));
+	RefPtr<Rational> pRational(new Rational());
+	return argument.ReturnValue(processor, new Value_Rational(pRational.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pixel#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Pixel, MethodSkeleton)
+// Rational#MethodSkeleton(num1:Number, num2:Number)
+Gurax_DeclareMethod(Rational, MethodSkeleton)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -61,7 +61,7 @@ Gurax_DeclareMethod(Pixel, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Pixel, MethodSkeleton)
+Gurax_ImplementMethod(Rational, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -76,73 +76,41 @@ Gurax_ImplementMethod(Pixel, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Pixel#color
-Gurax_DeclareProperty_R(Pixel, color)
-{
-	Declare(VTYPE_Color, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"X-position.");
-}
-
-Gurax_ImplementPropertyGetter(Pixel, color)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Color(valueThis.GetPixel().GetColor());
-}
-
-// Pixel#x
-Gurax_DeclareProperty_R(Pixel, x)
+// Rational#propSkeleton
+Gurax_DeclareProperty_R(Rational, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"X-position.");
+		"");
 }
 
-Gurax_ImplementPropertyGetter(Pixel, x)
+Gurax_ImplementPropertyGetter(Rational, propSkeleton)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetPixel().GetX());
-}
-
-// Pixel#y
-Gurax_DeclareProperty_R(Pixel, y)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Y-position.");
-}
-
-Gurax_ImplementPropertyGetter(Pixel, y)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetPixel().GetY());
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_Pixel
+// VType_Rational
 //------------------------------------------------------------------------------
-VType_Pixel VTYPE_Pixel("Pixel");
+VType_Rational VTYPE_Rational("Rational");
 
-void VType_Pixel::DoPrepare(Frame& frameOuter)
+void VType_Rational::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pixel));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Rational));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Pixel, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Rational, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Pixel, color));
-	Assign(Gurax_CreateProperty(Pixel, x));
-	Assign(Gurax_CreateProperty(Pixel, y));
+	Assign(Gurax_CreateProperty(Rational, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Pixel
+// Value_Rational
 //------------------------------------------------------------------------------
-VType& Value_Pixel::vtype = VTYPE_Pixel;
+VType& Value_Rational::vtype = VTYPE_Rational;
 
 }

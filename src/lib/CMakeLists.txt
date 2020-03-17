@@ -1,3 +1,6 @@
+#===============================================================================
+# CMakeLists for guraxcore library
+#===============================================================================
 set(GURAX_RELDIR ../module-bmp)
 include(module-bmp/build)
 
@@ -87,6 +90,7 @@ add_library(guraxcore SHARED
 	PropHandlerCustom.cpp
 	PUnit.cpp
 	Random.cpp
+	Rational.cpp
 	Referable.cpp
 	Stat.cpp
 	Statements.cpp

@@ -2,7 +2,6 @@
 // module-jpeg.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/VType_Image.h>
 
 Gurax_BeginModule(jpeg)
 

@@ -1,5 +1,5 @@
 //==============================================================================
-// Array.cpp
+// Rational.cpp
 //==============================================================================
 #include "stdafx.h"
 #include <gurax-tentative.h>
@@ -7,15 +7,11 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Array
+// Rational
 //------------------------------------------------------------------------------
-Array::Array(ElemType elemType, Memory* pMemory) : _elemType(elemType), _pMemory(pMemory)
+String Rational::ToString(const StringStyle& ss) const
 {
-}
-
-String Array::ToString(const StringStyle& ss) const
-{
-	return String().Printf("Array:%s", ElemTypeToSymbol(_elemType)->GetName());
+	return "Rational";
 }
 
 }

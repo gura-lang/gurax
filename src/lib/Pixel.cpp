@@ -2,7 +2,7 @@
 // Pixel.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/Pixel.h>
+#include <gurax-tentative.h>
 
 namespace Gurax {
 

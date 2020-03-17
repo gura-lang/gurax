@@ -2,7 +2,7 @@
 // VType_Array.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/VType_Array.h>
+#include <gurax-tentative.h>
 
 namespace Gurax {
 

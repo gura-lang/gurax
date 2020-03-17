@@ -4,6 +4,7 @@
 #ifndef GURAX_H
 #define GURAX_H
 
+//#include "gurax/Array.h"
 #include "gurax/ArgFeeder.h"
 #include "gurax/ArgPicker.h"
 #include "gurax/ArgSlot.h"
@@ -56,6 +57,7 @@
 #include "gurax/PropHandlerCustom.h"
 #include "gurax/PUnit.h"
 #include "gurax/Random.h"
+//#include "gurax/Rational.h"
 #include "gurax/Referable.h"
 #include "gurax/Stat.h"
 #include "gurax/Statements.h"
@@ -81,6 +83,7 @@
 #include "gurax/VType.h"
 #include "gurax/VTypeCustom.h"
 #include "gurax/VType_Any.h"
+//#include "gurax/VType_Array.h"
 #include "gurax/VType_ArgMapper.h"
 #include "gurax/VType_ArgMapper_Multiple.h"
 #include "gurax/VType_ArgSlot.h"
@@ -118,6 +121,7 @@
 #include "gurax/VType_PUnit.h"
 #include "gurax/VType_Quote.h"
 #include "gurax/VType_Random.h"
+//#include "gurax/VType_Rational.h"
 #include "gurax/VType_Stat.h"
 #include "gurax/VType_Stream.h"
 #include "gurax/VType_String.h"

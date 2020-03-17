@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_JPEG_IMAGEEXTENSION_H
 #define GURAX_MODULE_JPEG_IMAGEEXTENSION_H
 #include <gurax.h>
-#include <gurax/Palette.h>
+#include <gurax-tentative.h>
 
 Gurax_BeginModuleScope(jpeg)
 

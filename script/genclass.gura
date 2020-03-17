@@ -30,6 +30,8 @@ class GURAX_DLLDECLARE ${className} : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(${className});
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("${dotClassName}");
 public:
 	// Constructor
 	${className}() {}
