@@ -76,19 +76,34 @@ Gurax_ImplementMethod(Rational, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Rational#propSkeleton
-Gurax_DeclareProperty_R(Rational, propSkeleton)
+// Rational#denom
+Gurax_DeclareProperty_R(Rational, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"The denomation part of the rational number.");
 }
 
-Gurax_ImplementPropertyGetter(Rational, propSkeleton)
+Gurax_ImplementPropertyGetter(Rational, denom)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetRational().GetDenom());
+}
+
+// Rational#numer
+Gurax_DeclareProperty_R(Rational, numer)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The numeration part of the rational number.");
+}
+
+Gurax_ImplementPropertyGetter(Rational, numer)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetRational().GetNumer());
 }
 
 //------------------------------------------------------------------------------
@@ -105,7 +120,8 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Rational, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Rational, propSkeleton));
+	Assign(Gurax_CreateProperty(Rational, denom));
+	Assign(Gurax_CreateProperty(Rational, numer));
 }
 
 //------------------------------------------------------------------------------
