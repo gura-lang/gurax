@@ -136,7 +136,7 @@
 #include "gurax/Imp_VType_Number.h"
 
 namespace Gurax {
-bool Initialize(int& argc, char* argv[]);
+GURAX_DLLDECLARE bool Initialize(int& argc, char* argv[]);
 }
 
 #endif
