@@ -5,6 +5,7 @@
 #define GURAX_COMMON_H
 #include <array>
 #include <complex>
+#include <deque>
 #include <functional>
 #include <iostream>
 #include <list>
@@ -47,6 +48,8 @@
 #endif
 
 #if defined(GURAX_ON_MSWIN)
+#undef min
+#undef max
 #undef SetProp
 #undef GetProp
 #undef GetObject

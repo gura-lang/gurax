@@ -2,6 +2,8 @@
 // PathExtension.cpp
 //==============================================================================
 #include "stdafx.h"
+#include "PathExtension.h"
+#include "VType_StatEx.h"
 
 Gurax_BeginModuleScope(fs)
 
@@ -88,6 +90,7 @@ StatEx::StatEx(struct stat& sb, String pathName) :
 		 OAL::CreateDateTime(sb.st_atime),
 		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
+#if 0
 	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
 	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
 	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
@@ -95,6 +98,7 @@ StatEx::StatEx(struct stat& sb, String pathName) :
 	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
 	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
 	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
+#endif
 }
 
 StatEx* StatEx::Create(const char* pathName)
@@ -108,6 +112,7 @@ StatEx* StatEx::Create(const char* pathName)
 
 #if defined(GURAX_ON_MSWIN)
 
+#if 0
 StatEx::StatEx(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
 {
 }
@@ -119,6 +124,7 @@ StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
 StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
 {
 }
+#endif
 
 #endif
 

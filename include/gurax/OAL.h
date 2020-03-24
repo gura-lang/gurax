@@ -7,6 +7,9 @@
 #include "StringPicker.h"
 
 #if defined(GURAX_ON_MSWIN)
+#include <windows.h>
+#include <stdarg.h>
+#include <io.h>
 #include <shlobj.h>
 #if defined(_MSC_VER)
 using mode_t = int;
@@ -73,7 +76,7 @@ public:
 public:
 	class GURAX_DLLDECLARE DirLister {
 		String _dirName;
-#if defined(GURA_ON_MSWIN)
+#if defined(GURAX_ON_MSWIN)
 		HANDLE _hFind;
 #else
 		DIR* _dirp;
@@ -207,7 +210,7 @@ public:
 	static bool ParseStatMode(const char* mode, mode_t& st_mode);
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
-	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
+	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst);
 #else
 	static String ReadLink(const char* pathName);
 	static bool FollowLink(String& pathName);

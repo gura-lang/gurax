@@ -34,7 +34,6 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Template(VType& vtype = VTYPE_Template) = delete;
 	explicit Value_Template(Template* pTempl, VType& vtype = VTYPE_Template) :
 		Value_Object(vtype), _pTempl(pTempl) {}
 	// Copy constructor/operator

@@ -7,6 +7,8 @@
 #include "Iterator.h"
 #include "Processor.h"
 
+#undef min
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------

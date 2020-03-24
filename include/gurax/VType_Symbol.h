@@ -34,7 +34,6 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_Symbol(VType& vtype = VTYPE_Symbol) = delete;
 	explicit Value_Symbol(const Symbol* pSymbol, VType& vtype = VTYPE_Symbol) :
 		Value_Object(vtype), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
