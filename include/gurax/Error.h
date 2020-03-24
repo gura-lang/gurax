@@ -14,7 +14,7 @@ class Stream;
 //------------------------------------------------------------------------------
 // ErrorType
 //------------------------------------------------------------------------------
-class ErrorType {
+class GURAX_DLLDECLARE ErrorType {
 private:
 	String _name;
 	String _dispName;
@@ -60,7 +60,7 @@ public:
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
-class ErrorList : public std::vector<Error*> {
+class GURAX_DLLDECLARE ErrorList : public std::vector<Error*> {
 public:
 	void SetExpr(const Expr& expr);
 };
@@ -68,7 +68,7 @@ public:
 //------------------------------------------------------------------------------
 // ErrorOwner
 //------------------------------------------------------------------------------
-class ErrorOwner : public ErrorList {
+class GURAX_DLLDECLARE ErrorOwner : public ErrorList {
 private:
 	bool _suppressFlag;
 public:
@@ -83,7 +83,7 @@ public:
 //------------------------------------------------------------------------------
 // Error
 //------------------------------------------------------------------------------
-class Error : public Referable {
+class GURAX_DLLDECLARE Error : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Error);

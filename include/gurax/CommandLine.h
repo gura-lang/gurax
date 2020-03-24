@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // CommandLine
 //------------------------------------------------------------------------------
-class CommandLine {
+class GURAX_DLLDECLARE CommandLine {
 public:
 	enum class Type { Bool, String, Int, MultiString, MultiInt };
 	class Opt : public Referable {

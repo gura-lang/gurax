@@ -13,7 +13,7 @@ class ValueList;
 //------------------------------------------------------------------------------
 // String
 //------------------------------------------------------------------------------
-class String : public std::string {
+class GURAX_DLLDECLARE String : public std::string {
 public:
 	// Algorithm operators
 	struct EqualTo {
@@ -93,6 +93,7 @@ private:
 	static char   _toLowerTbl[256];
 	static char   _toEscapedTbl[256];
 public:
+	String() {}
 	String(const std::string& src) : std::string(src) {}
 	String(std::string&& src) : std::string(std::move(src)) {}
 	// Inherits constructors
@@ -339,7 +340,7 @@ inline String operator+(const String& v1, const String& v2) {
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------
-class StringList : public std::vector<String> {
+class GURAX_DLLDECLARE StringList : public std::vector<String> {
 public:
 	static const StringList Empty;
 public:
@@ -360,7 +361,7 @@ public:
 //------------------------------------------------------------------------------
 // StringReferable
 //------------------------------------------------------------------------------
-class StringReferable : public Referable {
+class GURAX_DLLDECLARE StringReferable : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(StringReferable);
