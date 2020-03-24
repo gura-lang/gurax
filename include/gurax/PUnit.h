@@ -145,7 +145,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Value> _pValue;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Value(Value* pValue) : _pValue(pValue) {}
@@ -187,7 +187,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Lookup(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
@@ -232,7 +232,7 @@ private:
 	RefPtr<StringReferable> _pStr;
 	SuffixMgr::Target _target;
 	const Symbol* _pSymbolSuffix;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix) :
@@ -283,7 +283,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_AssignToSymbol(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
@@ -326,7 +326,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<DeclArg> _pDeclArg;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_AssignToDeclArg(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
@@ -369,7 +369,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Function> _pFunction;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_AssignFunction(Function* pFunction) : _pFunction(pFunction) {}
@@ -412,7 +412,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Function> _pFunction;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_AssignMethod(Function* pFunction) : _pFunction(pFunction) {}
@@ -458,7 +458,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	PropHandler::Flags _flags;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags) :
@@ -509,7 +509,7 @@ public:
 private:
 	const VType& _vtype;
 	DeclArg::Flags _flags;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Cast(const VType& vtype, DeclArg::Flags flags) : _vtype(vtype), _flags(flags) {}
@@ -552,7 +552,7 @@ class GURAX_DLLDECLARE PUnit_GenIterator : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator() {}
@@ -588,7 +588,7 @@ class GURAX_DLLDECLARE PUnit_GenIterator_Range : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_Range() {}
@@ -624,7 +624,7 @@ class GURAX_DLLDECLARE PUnit_GenIterator_Counter : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_Counter() {}
@@ -660,7 +660,7 @@ class GURAX_DLLDECLARE PUnit_GenIterator_ForLister : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_ForLister() {}
@@ -699,7 +699,7 @@ public:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	bool _skipNilFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag) :
@@ -751,7 +751,7 @@ public:
 	RefPtr<Expr> _pExprCriteria;
 	RefPtr<Expr_Block> _pExprOfBlock;
 	bool _skipNilFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag) :
@@ -804,7 +804,7 @@ public:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	bool _finiteFlag;
 	bool _skipNilFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_GenIterator_repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
@@ -856,7 +856,7 @@ public:
 private:
 	size_t _offset;
 	bool _raiseFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_EvalIterator(size_t offset, bool raiseFlag, const PUnit* pPUnitBranchDest) :
@@ -903,7 +903,7 @@ public:
 private:
 	size_t _offset;
 	RefPtr<DeclArgOwner> _pDeclArgOwner;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
@@ -951,7 +951,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Operator* _pOp;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_UnaryOp(const Operator* pOp) : _pOp(pOp) {}
@@ -994,7 +994,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Operator* _pOp;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_BinaryOp(const Operator* pOp) : _pOp(pOp) {}
@@ -1042,7 +1042,7 @@ private:
 	bool _mixInFlag;
 	bool _overwriteFlag;
 	bool _symbolForModuleFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool binaryFlag, bool mixInFlag, bool overwriteFlag, bool symbolForModuleFlag) :
@@ -1099,7 +1099,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_CreateVType() {}
@@ -1138,7 +1138,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_CompleteStruct() {}
@@ -1177,7 +1177,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _sizeReserve;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_CreateList(size_t sizeReserve) : _sizeReserve(sizeReserve) {}
@@ -1220,7 +1220,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_ListElem(size_t offset) : _offset(offset) {}
@@ -1264,7 +1264,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_CreateDict() {}
@@ -1302,7 +1302,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_DictElem(size_t offset) : _offset(offset) {}
@@ -1345,7 +1345,7 @@ public:
 private:
 	RefPtr<Attribute> _pAttr;
 	size_t _sizeReserve;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Index(Attribute* pAttr, size_t sizeReserve) : _pAttr(pAttr), _sizeReserve(sizeReserve) {}
@@ -1390,7 +1390,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_FeedIndex() {}
@@ -1427,7 +1427,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_IndexGet() {}
@@ -1464,7 +1464,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_IndexSet() {}
@@ -1504,7 +1504,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 	const Operator* _pOp;
 public:
 	// Constructor
@@ -1551,7 +1551,7 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr) :
@@ -1601,7 +1601,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	bool _mapAssignedFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool mapAssignedFlag) :
@@ -1653,7 +1653,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	const Operator* _pOp;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
@@ -1706,7 +1706,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 	const Operator* _pOp;
 	bool _mapAssignedFlag;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag) :
@@ -1759,7 +1759,7 @@ public:
 protected:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr) :
@@ -1807,7 +1807,7 @@ public:
 protected:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberGet_MapAlong(const Symbol* pSymbol, Attribute* pAttr) :
@@ -1855,7 +1855,7 @@ public:
 protected:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberGet_MapToList(const Symbol* pSymbol, Attribute* pAttr) :
@@ -1903,7 +1903,7 @@ public:
 protected:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_MemberGet_MapToIter(const Symbol* pSymbol, Attribute* pAttr) :
@@ -1952,7 +1952,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 	DeclCallable::Flags _flags;
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock);
@@ -2001,7 +2001,7 @@ public:
 private:
 	RefPtr<Attribute> _pAttr;
 	DeclCallable::Flags _flags;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_ArgumentDelegation(const Attribute& attr);
@@ -2046,7 +2046,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitSentinel;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_BeginArgSlot(const PUnit* pPUnitBranchDest) :
@@ -2092,7 +2092,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_EndArgSlot() {}
@@ -2130,7 +2130,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_EndArgSlotExpand() {}
@@ -2171,7 +2171,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
 	const PUnit* _pPUnitSentinel;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
@@ -2223,7 +2223,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_EndArgSlotNamed() {}
@@ -2261,7 +2261,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_Call() {}
@@ -2299,7 +2299,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitCont;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Jump(const PUnit* pPUnitCont) : _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
@@ -2344,7 +2344,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_JumpIf(const PUnit* pPUnitBranchDest) :
@@ -2385,7 +2385,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_JumpIfNot(const PUnit* pPUnitBranchDest) :
@@ -2426,7 +2426,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_NilJumpIf(const PUnit* pPUnitBranchDest) :
@@ -2467,7 +2467,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_NilJumpIfNot(const PUnit* pPUnitBranchDest) :
@@ -2508,7 +2508,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_KeepJumpIf(const PUnit* pPUnitBranchDest) :
@@ -2549,7 +2549,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_KeepJumpIfNot(const PUnit* pPUnitBranchDest) :
@@ -2590,7 +2590,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_BeginTryBlock(const PUnit* pPUnitBranchDest) :
@@ -2632,7 +2632,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitCont;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_EndTryBlock(const PUnit* pPUnitCont) : _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
@@ -2675,7 +2675,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_JumpIfNoCatch(const PUnit* pPUnitBranchDest) :
@@ -2716,7 +2716,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest) :
@@ -2757,7 +2757,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_NilJumpIfNoCatch(const PUnit* pPUnitBranchDest) :
@@ -2798,7 +2798,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_NilJumpIfNoCatchAny(const PUnit* pPUnitBranchDest) :
@@ -2840,7 +2840,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitSentinel;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_BeginSequence(const PUnit* pPUnitSentinel) : _pPUnitSentinel(pPUnitSentinel) {}
@@ -2884,7 +2884,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_EndSequence() {}
@@ -2922,7 +2922,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_DiscardValue() {}
@@ -2960,7 +2960,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_RemoveValue(size_t offset) : _offset(offset) {}
@@ -3004,7 +3004,7 @@ public:
 private:
 	size_t _offset;
 	size_t _cnt;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	explicit PUnit_RemoveValues(size_t offset, size_t cnt) : _offset(offset), _cnt(cnt) {}
@@ -3050,7 +3050,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitMarked;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Break(const PUnit* pPUnitMarked) : _pPUnitMarked(pPUnitMarked) {}
@@ -3095,7 +3095,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitOfLoop;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Continue(const PUnit* pPUnitOfLoop) : _pPUnitOfLoop(pPUnitOfLoop) {}
@@ -3138,7 +3138,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Value> _pValue;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Miscatch(Value* pValue) : _pValue(pValue) {}
@@ -3180,7 +3180,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_Return() {}
@@ -3218,7 +3218,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_PushFrame() {}
@@ -3256,7 +3256,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_PushFrameFromStack() {}
@@ -3293,7 +3293,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_PopFrame() {}
@@ -3330,7 +3330,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_NoOperation() {}
