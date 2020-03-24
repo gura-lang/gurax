@@ -256,7 +256,7 @@ String OAL::GetPathName_Executable()
 String OAL::GetDirName_Base()
 {
 	String pathName = GetPathName_Executable();
-	FollowLink(pathName);
+	//FollowLink(pathName);
 	pathName = PathName(pathName).ExtractDirName();
 	return PathName(pathName).ExtractHeadName();
 }
@@ -306,6 +306,13 @@ String OAL::GetDirName_Local()
 //------------------------------------------------------------------------------
 // OAL (MSWIN)
 //------------------------------------------------------------------------------
+int OAL::ExecProgram(
+	const char* pathName, StringPicker&& args,
+	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag)
+{
+	return 0;
+}
+
 void OAL::PutEnv(const char* name, const char* value)
 {
 	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
@@ -455,13 +462,13 @@ DateTime* OAL::CreateDateTime(const FILETIME& ft, bool utcFlag)
 DateTime* OAL::CreateDateTimeCur(bool utcFlag)
 {
 	SYSTEMTIME st;
-	DateTime dateTime;
+	//DateTime dateTime;
 	if (utcFlag) {
 		::GetSystemTime(&st);
 		return CreateDateTime(st, 0);
 	} else {
 		::GetLocalTime(&st);
-		retnrn CreateDateTime(st, GetSecsOffsetTZ());
+		return CreateDateTime(st, GetSecsOffsetTZ());
 	}
 }
 
@@ -481,10 +488,14 @@ SYSTEMTIME OAL::DateTimeToSYSTEMTIME(const DateTime& dt)
 
 FILETIME OAL::DateTimeToFILETIME(const DateTime& dt)
 {
+#if 0
 	SYSTEMTIME st = ToSYSTEMTIME(dt);
 	FILETIME ftLocal, ft;
 	::SystemTimeToFileTime(&st, &ftLocal);
 	::LocalFileTimeToFileTime(&ftLocal, &ft);
+	return ft;
+#endif
+	FILETIME ft;
 	return ft;
 }
 
@@ -532,7 +543,7 @@ bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
 	String fileName;
 	for (;;) {
 		if (_hFind == INVALID_HANDLE_VALUE) {
-			String pattern = JoinPathName(_dirName.c_str(), "*.*");
+			String pattern; // = JoinPathName(_dirName.c_str(), "*.*");
 			_hFind = ::FindFirstFile(ToNativeString(pattern.c_str()).c_str(), &findData);
 			if (_hFind == INVALID_HANDLE_VALUE) return false;
 		} else {
@@ -543,7 +554,7 @@ bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
 			(!pattern || PathName(fileName).DoesMatchPattern(pattern))) break;
 	}
 	if (_joinPathNameFlag) {
-		pathName = JoinPathName(_dirName.c_str(), fileName.c_str());
+		//pathName = JoinPathName(_dirName.c_str(), fileName.c_str());
 	} else {
 		pathName = fileName;
 	}
@@ -554,14 +565,14 @@ bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
 //-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (MSWIN)
 //-----------------------------------------------------------------------------
-OAL::DynamicLibrary::DynamicLibrary() : _hModule(nullptr)
+OAL::DynamicLibrary::DynamicLibrary() : _hLibrary(nullptr)
 {
 }
 
 bool OAL::DynamicLibrary::Open(const char* pathName)
 {
-	_hModule = ::LoadLibrary(ToNativeString(pathName).c_str());
-	if (!_hModule) {
+	_hLibrary = ::LoadLibrary(ToNativeString(pathName).c_str());
+	if (!_hLibrary) {
 		Error::Issue(ErrorType::ImportError, "can't open module file '%s'", pathName);
 		return false;
 	}
@@ -570,18 +581,18 @@ bool OAL::DynamicLibrary::Open(const char* pathName)
 
 void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 {
-	if (!_hModule) {
+	if (!_hLibrary) {
 		Error::Issue(ErrorType::ImportError, "library has not been opened");
 		return nullptr;
 	}
-	FARPROC pFunc = ::GetProcAddress(_hModule, funcName);
+	FARPROC pFunc = ::GetProcAddress(_hLibrary, funcName);
 	if (!pFunc) {
 		String funcNameEx = "_";
 		funcNameEx += funcName;
-		pFunc = ::GetProcAddress(_hModule, funcNameEx.c_str());
+		pFunc = ::GetProcAddress(_hLibrary, funcNameEx.c_str());
 	}
 	if (!pFunc) {
-		sig.SetError(ErrorType::ImportError, "can't find entry function '%s'", funcName);
+		//sig.SetError(ErrorType::ImportError, "can't find entry function '%s'", funcName);
 		return nullptr;
 	}
 	return pFunc;

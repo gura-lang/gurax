@@ -63,7 +63,7 @@ public:
 		} u;
 		const char* ownerName;
 	};
-	class Chunk {
+	class GURAX_DLLDECLARE Chunk {
 	public:
 		// Constructor
 		Chunk() = default;
@@ -78,7 +78,7 @@ public:
 	public:
 		virtual void Deallocate(void* p) = 0;
 	};
-	class ChunkPUnit : public Chunk {
+	class GURAX_DLLDECLARE ChunkPUnit : public Chunk {
 	public:
 		struct Pool {
 			size_t offsetNext;
@@ -117,7 +117,7 @@ public:
 	private:
 		void* DoAllocate(size_t bytes);
 	};
-	class ChunkFixed : public Chunk {
+	class GURAX_DLLDECLARE ChunkFixed : public Chunk {
 	public:
 		struct Pool {
 			Pool* pPoolNext;
@@ -142,7 +142,7 @@ public:
 		virtual void Deallocate(void* p);
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
-	class ChunkVariable : public Chunk {
+	class GURAX_DLLDECLARE ChunkVariable : public Chunk {
 	public:
 		inline ChunkVariable() {}
 		void* Allocate(size_t bytes, const char* ownerName);

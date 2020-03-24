@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Symbol
 //------------------------------------------------------------------------------
-static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
+//static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
 
 const Symbol* Symbol::Empty = nullptr;
 

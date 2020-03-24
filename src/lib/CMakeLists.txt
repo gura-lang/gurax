@@ -167,7 +167,9 @@ add_library(guraxcore SHARED
 	${files-module}
 )
 
-target_link_libraries(guraxcore dl pthread)
+#target_link_libraries(guraxcore dl pthread)
+
+target_link_libraries(guraxcore)
 
 set_target_properties(guraxcore PROPERTIES
 	VERSION						${GURAX_VERSION}
@@ -176,5 +178,7 @@ set_target_properties(guraxcore PROPERTIES
 	INSTALL_NAME_DIR			"@executable_path/../lib")
 
 target_precompile_headers(guraxcore PUBLIC stdafx.h)
+
+add_definitions("-Dgurax_EXPORTS -bigobj")
 
 install(TARGETS guraxcore DESTINATION ${GURAX_RELDIR_LIBRARY})

@@ -16,7 +16,7 @@ class Expr_Block;
 //------------------------------------------------------------------------------
 // DeclCallable
 //------------------------------------------------------------------------------
-class DeclCallable : public Referable {
+class GURAX_DLLDECLARE DeclCallable : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclCallable);

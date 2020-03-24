@@ -69,9 +69,9 @@ Gurax_DeclareClassMethod(Color, RGB)
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(ja),
-		u8"色要素 R, G, B から `Color` インスタンスを生成する。");
+	//AddHelp(
+	//	Gurax_Symbol(ja),
+	//	u8"色要素 R, G, B から `Color` インスタンスを生成する。");
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Color` instance from color elements R, G and B.");
@@ -98,9 +98,9 @@ Gurax_DeclareClassMethod(Color, RGBA)
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(ja),
-		u8"色要素 R, G, B, A から `Color` インスタンスを生成する。");
+	//AddHelp(
+	//	Gurax_Symbol(ja),
+	//	u8"色要素 R, G, B, A から `Color` インスタンスを生成する。");
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Color` instance from color elements R, G, B and A.");

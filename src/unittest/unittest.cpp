@@ -19,7 +19,7 @@ int Main(int argc, char* argv[])
 	bool foundFlag = false;
 	size_t nLen = ::strlen(testerName);
 	for (auto pTester : Tester::GetTesterList()) {
-		if (::strncasecmp(pTester->GetName(), testerName, nLen) == 0) {
+		if (::strncmp(pTester->GetName(), testerName, nLen) == 0) {
 			::printf("[%s]\n", pTester->GetName());
 			pTester->Entry(argc - 2, argv + 2);
 			foundFlag = true;
