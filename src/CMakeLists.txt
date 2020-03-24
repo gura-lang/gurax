@@ -18,7 +18,7 @@ else()
 	set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
-add_definitions("-w")
+#add_definitions("-w")
 
 #add_definitions("-Wall -std=c++14")
 #add_definitions("-O2")

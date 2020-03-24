@@ -197,7 +197,7 @@ public:
 private:
 	RefPtr<Template> _pTmpl;
 	String _str;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_TmplString(Template* pTmpl, String str) : _pTmpl(pTmpl), _str(std::move(str)) {}
@@ -243,7 +243,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Expr_TmplScript> _pExprTmplScript;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript) : _pExprTmplScript(pExprTmplScript) {}
@@ -293,7 +293,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Template> _pTmpl;
-	Expr* _ppExprSrc[nExprSrc];
+	Expr* _ppExprSrc[1];
 public:
 	// Constructor
 	PUnit_TmplEmbedded(Template* pTmpl) : _pTmpl(pTmpl) {}
