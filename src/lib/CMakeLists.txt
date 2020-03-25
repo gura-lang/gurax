@@ -2,37 +2,37 @@
 # CMakeLists for guraxcore library
 #===============================================================================
 set(GURAX_RELDIR ../module-bmp)
-include(module-bmp/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-bmp/build.cmake)
 
 set(GURAX_RELDIR ../module-codecs)
-include(module-codecs/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-codecs/build.cmake)
 
 set(GURAX_RELDIR ../module-codecs_basic)
-include(module-codecs_basic/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-codecs_basic/build.cmake)
 
 set(GURAX_RELDIR ../module-codecs_chinese)
-include(module-codecs_chinese/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-codecs_chinese/build.cmake)
 
 set(GURAX_RELDIR ../module-codecs_iso8859)
-include(module-codecs_iso8859/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-codecs_iso8859/build.cmake)
 
 set(GURAX_RELDIR ../module-codecs_japanese)
-include(module-codecs_japanese/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-codecs_japanese/build.cmake)
 
 set(GURAX_RELDIR ../module-fs)
-include(module-fs/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-fs/build.cmake)
 
 set(GURAX_RELDIR ../module-math)
-include(module-math/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-math/build.cmake)
 
 set(GURAX_RELDIR ../module-os)
-include(module-os/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-os/build.cmake)
 
 set(GURAX_RELDIR ../module-path)
-include(module-path/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-path/build.cmake)
 
 set(GURAX_RELDIR ../module-sys)
-include(module-sys/build)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../module-sys/build.cmake)
 
 add_library(guraxcore SHARED
 	guraxcore.cpp
