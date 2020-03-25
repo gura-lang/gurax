@@ -1,3 +1,3 @@
-list(APPEND files-module
-	${GURAX_RELDIR}/module-sys.cpp
+set(files
+	module-sys.cpp
 )

@@ -1,8 +1,8 @@
 list(APPEND files-module
-	${GURAX_RELDIR}/Document.cpp
-	${GURAX_RELDIR}/Item.cpp
-	${GURAX_RELDIR}/Util.cpp
-	${GURAX_RELDIR}/VType_Document.cpp
-	${GURAX_RELDIR}/VType_Item.cpp
-	${GURAX_RELDIR}/module-markdown.cpp
+	${GURAX_CURDIR}/Document.cpp
+	${GURAX_CURDIR}/Item.cpp
+	${GURAX_CURDIR}/Util.cpp
+	${GURAX_CURDIR}/VType_Document.cpp
+	${GURAX_CURDIR}/VType_Item.cpp
+	${GURAX_CURDIR}/module-markdown.cpp
 )

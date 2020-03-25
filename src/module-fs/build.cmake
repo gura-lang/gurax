@@ -1,5 +1,5 @@
-list(APPEND files-module
-	${GURAX_RELDIR}/module-fs.cpp
-	${GURAX_RELDIR}/PathExtension.cpp
-	${GURAX_RELDIR}/VType_StatEx.cpp
+set(files
+	module-fs.cpp
+	PathExtension.cpp
+	VType_StatEx.cpp
 )

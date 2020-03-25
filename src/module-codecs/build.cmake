@@ -1,3 +1,3 @@
-list(APPEND files-module
-	${GURAX_RELDIR}/module-codecs.cpp
+set(files
+	module-codecs.cpp
 )
