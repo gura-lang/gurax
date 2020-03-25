@@ -9,4 +9,4 @@ add_executable(gurax gurax.cpp)
 
 target_link_libraries(gurax guraxcore)
 
-install(TARGETS gurax DESTINATION ${GURAX_RELDIR_BINARY})
+install(TARGETS gurax) # DESTINATION ${GURAX_RELDIR_BINARY}
