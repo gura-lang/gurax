@@ -1,14 +1,10 @@
 #===============================================================================
-# CMakeLists for Basement
+# CMakeLists for source basement
 #===============================================================================
-project(gurax)
-
-# Handling of precompiled header is supported by 3.16 or newer.
-cmake_minimum_required(VERSION 3.16)
-
 set(GURAX_VERSION_MAJOR		0)
 set(GURAX_VERSION_MINOR		1)
 set(GURAX_VERSION_PATCH		0)
+
 set(GURAX_VERSION			${GURAX_VERSION_MAJOR}.${GURAX_VERSION_MINOR}.${GURAX_VERSION_PATCH})
 set(GURAX_VERSION_SO		${GURAX_VERSION_MAJOR})
 
