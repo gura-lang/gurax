@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_StringPtr VTYPE_StringPtr;
+extern GURAX_DLLDECLARE VType_StringPtr VTYPE_StringPtr;
 
 //------------------------------------------------------------------------------
 // Value_StringPtr

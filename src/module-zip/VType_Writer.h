@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Writer VTYPE_Writer;
+extern GURAX_DLLDECLARE VType_Writer VTYPE_Writer;
 
 //------------------------------------------------------------------------------
 // Value_Writer

@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_TimeDelta VTYPE_TimeDelta;
+extern GURAX_DLLDECLARE VType_TimeDelta VTYPE_TimeDelta;
 
 //------------------------------------------------------------------------------
 // Value_TimeDelta

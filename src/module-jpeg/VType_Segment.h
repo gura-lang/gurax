@@ -37,7 +37,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Segment VTYPE_Segment;
+extern GURAX_DLLDECLARE VType_Segment VTYPE_Segment;
 
 //------------------------------------------------------------------------------
 // Value_Segment

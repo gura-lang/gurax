@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_PathMgr VTYPE_PathMgr;
+extern GURAX_DLLDECLARE VType_PathMgr VTYPE_PathMgr;
 
 //------------------------------------------------------------------------------
 // Value_PathMgr

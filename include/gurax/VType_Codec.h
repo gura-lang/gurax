@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Codec VTYPE_Codec;
+extern GURAX_DLLDECLARE VType_Codec VTYPE_Codec;
 
 //------------------------------------------------------------------------------
 // Value_Codec

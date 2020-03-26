@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Index VTYPE_Index;
+extern GURAX_DLLDECLARE VType_Index VTYPE_Index;
 
 //------------------------------------------------------------------------------
 // Value_Index

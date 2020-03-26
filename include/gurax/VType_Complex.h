@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Complex VTYPE_Complex;
+extern GURAX_DLLDECLARE VType_Complex VTYPE_Complex;
 
 //------------------------------------------------------------------------------
 // Value_Complex

@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Group VTYPE_Group;
+extern GURAX_DLLDECLARE VType_Group VTYPE_Group;
 
 //------------------------------------------------------------------------------
 // Value_Group

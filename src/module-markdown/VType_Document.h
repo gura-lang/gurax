@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Document VTYPE_Document;
+extern GURAX_DLLDECLARE VType_Document VTYPE_Document;
 
 //------------------------------------------------------------------------------
 // Value_Document

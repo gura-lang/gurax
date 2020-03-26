@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_PUnit VTYPE_PUnit;
+extern GURAX_DLLDECLARE VType_PUnit VTYPE_PUnit;
 
 //------------------------------------------------------------------------------
 // Value_PUnit

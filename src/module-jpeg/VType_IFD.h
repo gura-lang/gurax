@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_IFD VTYPE_IFD;
+extern GURAX_DLLDECLARE VType_IFD VTYPE_IFD;
 
 //------------------------------------------------------------------------------
 // Value_IFD

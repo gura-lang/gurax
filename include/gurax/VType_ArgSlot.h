@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_ArgSlot VTYPE_ArgSlot;
+extern GURAX_DLLDECLARE VType_ArgSlot VTYPE_ArgSlot;
 
 //------------------------------------------------------------------------------
 // Value_ArgSlot

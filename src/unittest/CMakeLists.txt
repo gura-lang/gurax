@@ -4,7 +4,7 @@
 add_executable(unittest
 	unittest.cpp
 	SampleRecord.cpp
-	#test-Argument.cpp
+	test-Argument.cpp
 	#test-CommandLine.cpp
 	#test-DateTime.cpp
 	#test-DeclCallable.cpp

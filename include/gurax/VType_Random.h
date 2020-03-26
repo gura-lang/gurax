@@ -72,7 +72,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Random VTYPE_Random;
+extern GURAX_DLLDECLARE VType_Random VTYPE_Random;
 
 //------------------------------------------------------------------------------
 // Value_Random

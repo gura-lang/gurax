@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Rational VTYPE_Rational;
+extern GURAX_DLLDECLARE VType_Rational VTYPE_Rational;
 
 //------------------------------------------------------------------------------
 // Value_Rational

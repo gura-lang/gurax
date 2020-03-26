@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_ArgMapper_Multiple VTYPE_ArgMapper_Multiple;
+extern GURAX_DLLDECLARE VType_ArgMapper_Multiple VTYPE_ArgMapper_Multiple;
 
 //------------------------------------------------------------------------------
 // Value_ArgMapper_Multiple

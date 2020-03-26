@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_DateTime VTYPE_DateTime;
+extern GURAX_DLLDECLARE VType_DateTime VTYPE_DateTime;
 
 //------------------------------------------------------------------------------
 // Value_DateTime

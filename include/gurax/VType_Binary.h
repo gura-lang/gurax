@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Binary VTYPE_Binary;
+extern GURAX_DLLDECLARE VType_Binary VTYPE_Binary;
 
 //------------------------------------------------------------------------------
 // Value_Binary

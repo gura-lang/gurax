@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Array VTYPE_Array;
+extern GURAX_DLLDECLARE VType_Array VTYPE_Array;
 
 //------------------------------------------------------------------------------
 // Value_Array

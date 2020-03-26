@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Nil VTYPE_Nil;
+extern GURAX_DLLDECLARE VType_Nil VTYPE_Nil;
 
 //------------------------------------------------------------------------------
 // Value_Nil

@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_VType VTYPE_VType;
+extern GURAX_DLLDECLARE VType_VType VTYPE_VType;
 
 //------------------------------------------------------------------------------
 // Value_VType

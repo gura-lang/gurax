@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Argument VTYPE_Argument;
+extern GURAX_DLLDECLARE VType_Argument VTYPE_Argument;
 
 //------------------------------------------------------------------------------
 // Value_Argument

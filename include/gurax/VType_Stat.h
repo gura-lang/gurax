@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Stat VTYPE_Stat;
+extern GURAX_DLLDECLARE VType_Stat VTYPE_Stat;
 
 //------------------------------------------------------------------------------
 // Value_Stat

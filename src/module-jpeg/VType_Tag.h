@@ -37,7 +37,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Tag VTYPE_Tag;
+extern GURAX_DLLDECLARE VType_Tag VTYPE_Tag;
 
 //------------------------------------------------------------------------------
 // Value_Tag

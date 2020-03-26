@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Error VTYPE_Error;
+extern GURAX_DLLDECLARE VType_Error VTYPE_Error;
 
 //------------------------------------------------------------------------------
 // Value_Error

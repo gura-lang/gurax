@@ -123,7 +123,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_String VTYPE_String;
+extern GURAX_DLLDECLARE VType_String VTYPE_String;
 
 //------------------------------------------------------------------------------
 // Value_String

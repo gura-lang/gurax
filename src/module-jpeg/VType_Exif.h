@@ -18,7 +18,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Exif VTYPE_Exif;
+extern GURAX_DLLDECLARE VType_Exif VTYPE_Exif;
 
 //------------------------------------------------------------------------------
 // Value_Exif

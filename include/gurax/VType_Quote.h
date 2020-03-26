@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Quote VTYPE_Quote;
+extern GURAX_DLLDECLARE VType_Quote VTYPE_Quote;
 
 //------------------------------------------------------------------------------
 // Value_Quote

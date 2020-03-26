@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Reader VTYPE_Reader;
+extern GURAX_DLLDECLARE VType_Reader VTYPE_Reader;
 
 //------------------------------------------------------------------------------
 // Value_Reader

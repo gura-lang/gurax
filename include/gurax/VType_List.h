@@ -21,7 +21,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_List VTYPE_List;
+extern GURAX_DLLDECLARE VType_List VTYPE_List;
 
 //------------------------------------------------------------------------------
 // Value_List

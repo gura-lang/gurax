@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_KeyValuePair VTYPE_KeyValuePair;
+extern GURAX_DLLDECLARE VType_KeyValuePair VTYPE_KeyValuePair;
 
 //------------------------------------------------------------------------------
 // Value_KeyValuePair

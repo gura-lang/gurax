@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_PropHandler VTYPE_PropHandler;
+extern GURAX_DLLDECLARE VType_PropHandler VTYPE_PropHandler;
 
 //------------------------------------------------------------------------------
 // Value_PropHandler

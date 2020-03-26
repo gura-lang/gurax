@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Dict VTYPE_Dict;
+extern GURAX_DLLDECLARE VType_Dict VTYPE_Dict;
 
 //------------------------------------------------------------------------------
 // Value_Dict

@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Accumulator VTYPE_Accumulator;
+extern GURAX_DLLDECLARE VType_Accumulator VTYPE_Accumulator;
 
 //------------------------------------------------------------------------------
 // Value_Accumulator

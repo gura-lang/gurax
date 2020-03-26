@@ -46,7 +46,7 @@ public:
 	static Value* Method_While(Processor& processor, Argument& argument, Iterator& iteratorSrc);
 };
 
-extern VType_Iterator VTYPE_Iterator;
+extern GURAX_DLLDECLARE VType_Iterator VTYPE_Iterator;
 
 //------------------------------------------------------------------------------
 // Value_Iterator

@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Color VTYPE_Color;
+extern GURAX_DLLDECLARE VType_Color VTYPE_Color;
 
 //------------------------------------------------------------------------------
 // Value_Color

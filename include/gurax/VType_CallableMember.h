@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_CallableMember VTYPE_CallableMember;
+extern GURAX_DLLDECLARE VType_CallableMember VTYPE_CallableMember;
 
 //------------------------------------------------------------------------------
 // Value_CallableMember

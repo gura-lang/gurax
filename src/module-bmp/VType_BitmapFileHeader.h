@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_BitmapFileHeader VTYPE_BitmapFileHeader;
+extern GURAX_DLLDECLARE VType_BitmapFileHeader VTYPE_BitmapFileHeader;
 
 //------------------------------------------------------------------------------
 // Value_BitmapFileHeader

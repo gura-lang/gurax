@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Expr VTYPE_Expr;
+extern GURAX_DLLDECLARE VType_Expr VTYPE_Expr;
 
 //------------------------------------------------------------------------------
 // Value_Expr

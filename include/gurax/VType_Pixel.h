@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Pixel VTYPE_Pixel;
+extern GURAX_DLLDECLARE VType_Pixel VTYPE_Pixel;
 
 //------------------------------------------------------------------------------
 // Value_Pixel

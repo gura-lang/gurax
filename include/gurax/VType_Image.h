@@ -38,7 +38,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Image VTYPE_Image;
+extern GURAX_DLLDECLARE VType_Image VTYPE_Image;
 
 //------------------------------------------------------------------------------
 // Value_Image

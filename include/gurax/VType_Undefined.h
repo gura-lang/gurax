@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Undefined VTYPE_Undefined;
+extern GURAX_DLLDECLARE VType_Undefined VTYPE_Undefined;
 
 //------------------------------------------------------------------------------
 // Value_Undefined

@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Directory VTYPE_Directory;
+extern GURAX_DLLDECLARE VType_Directory VTYPE_Directory;
 
 //------------------------------------------------------------------------------
 // Value_Directory

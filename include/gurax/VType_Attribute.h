@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Attribute VTYPE_Attribute;
+extern GURAX_DLLDECLARE VType_Attribute VTYPE_Attribute;
 
 //------------------------------------------------------------------------------
 // Value_Attribute

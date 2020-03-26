@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_ArgMapper VTYPE_ArgMapper;
+extern GURAX_DLLDECLARE VType_ArgMapper VTYPE_ArgMapper;
 
 //------------------------------------------------------------------------------
 // Value_ArgMapper

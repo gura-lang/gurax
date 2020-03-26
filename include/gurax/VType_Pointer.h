@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Pointer VTYPE_Pointer;
+extern GURAX_DLLDECLARE VType_Pointer VTYPE_Pointer;
 
 //------------------------------------------------------------------------------
 // Value_Pointer

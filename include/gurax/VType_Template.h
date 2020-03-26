@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Template VTYPE_Template;
+extern GURAX_DLLDECLARE VType_Template VTYPE_Template;
 
 //------------------------------------------------------------------------------
 // Value_Template

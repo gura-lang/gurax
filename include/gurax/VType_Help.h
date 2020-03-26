@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Help VTYPE_Help;
+extern GURAX_DLLDECLARE VType_Help VTYPE_Help;
 
 //------------------------------------------------------------------------------
 // Value_Help

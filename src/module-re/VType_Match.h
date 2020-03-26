@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Match VTYPE_Match;
+extern GURAX_DLLDECLARE VType_Match VTYPE_Match;
 
 //------------------------------------------------------------------------------
 // Value_Match

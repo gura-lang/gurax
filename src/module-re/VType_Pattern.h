@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Pattern VTYPE_Pattern;
+extern GURAX_DLLDECLARE VType_Pattern VTYPE_Pattern;
 
 //------------------------------------------------------------------------------
 // Value_Pattern

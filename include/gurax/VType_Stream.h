@@ -18,7 +18,7 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
-extern VType_Stream VTYPE_Stream;
+extern GURAX_DLLDECLARE VType_Stream VTYPE_Stream;
 
 //------------------------------------------------------------------------------
 // Value_Stream

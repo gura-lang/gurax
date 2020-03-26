@@ -13,10 +13,10 @@ extern GURAX_DLLDECLARE const Symbol* g_pSymbol_##name;
 extern GURAX_DLLDECLARE const Symbol* g_pSymbolMark_##name;
 
 #define Gurax_RealizeSymbolAlias(name, str) \
-GURAX_DLLDECLARE const Symbol* g_pSymbol_##name = Symbol::Add(str);
+const Symbol* g_pSymbol_##name = Symbol::Add(str);
 
 #define Gurax_RealizeSymbolMark(name, str) \
-GURAX_DLLDECLARE const Symbol* g_pSymbolMark_##name = Symbol::Add(str);
+const Symbol* g_pSymbolMark_##name = Symbol::Add(str);
 
 #define Gurax_RealizeSymbol(name) Gurax_RealizeSymbolAlias(name, #name)
 

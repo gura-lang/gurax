@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Item VTYPE_Item;
+extern GURAX_DLLDECLARE VType_Item VTYPE_Item;
 
 //------------------------------------------------------------------------------
 // Value_Item

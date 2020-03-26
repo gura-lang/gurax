@@ -16,7 +16,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Bool VTYPE_Bool;
+extern GURAX_DLLDECLARE VType_Bool VTYPE_Bool;
 
 //------------------------------------------------------------------------------
 // Value_Bool

@@ -17,7 +17,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Content VTYPE_Content;
+extern GURAX_DLLDECLARE VType_Content VTYPE_Content;
 
 //------------------------------------------------------------------------------
 // Value_Content

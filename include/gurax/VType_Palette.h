@@ -33,7 +33,7 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Palette VTYPE_Palette;
+extern GURAX_DLLDECLARE VType_Palette VTYPE_Palette;
 
 //------------------------------------------------------------------------------
 // Value_Palette
