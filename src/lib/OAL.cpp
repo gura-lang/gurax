@@ -451,22 +451,34 @@ bool OAL::ChangeDir(const char* dirName)
 
 bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
 {
-	return false;
+	// nothing to do
+	return true;
 }
 
 bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
 {
-	return false;
+	// nothing to do
+	return true;
 }
 
 bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
 {
-	return false;
+	String pathNameSrcN = ToNativeString(pathNameSrc);
+	String pathNameDstN;
+	if (IsDir(pathNameDst, nullptr)) {
+		String fileName = PathName(pathNameSrc).ExtractFileName();
+		pathNameDstN = ToNativeString(PathName(pathNameDst).JoinAfter(fileName.c_str()).c_str());
+	}
+	else {
+		pathNameDstN = ToNativeString(pathNameDst);
+	}
+	return ::CopyFile(pathNameSrcN.c_str(), pathNameDstN.c_str(), failIfExistFlag) ? true : false;
 }
 
 bool OAL::CreateLink(const char* pathNameSrc, const char* pathNameDst)
 {
-	return false;
+	// nothing to do
+	return true;
 }
 
 bool OAL::CreateDir(const char* dirName)
