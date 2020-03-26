@@ -219,7 +219,9 @@ bool OAL::RemoveDirTree(const char* dirName)
 
 String OAL::GetPathName_Executable()
 {
-	return "";
+	char pathName[MAX_PATH];
+	::GetModuleFileName(nullptr, pathName, MAX_PATH); // Win32 API
+	return FromNativeString(pathName);
 }
 
 #elif defined(GURAX_ON_DARWIN)
@@ -310,7 +312,105 @@ int OAL::ExecProgram(
 	const char* pathName, StringPicker&& args,
 	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag)
 {
-	return 0;
+	String cmdLine;
+	AppendCmdLine(cmdLine, ToNativeString(pathName).c_str());
+	while (const char* arg = args.Pick()) {
+		cmdLine += " ";
+		AppendCmdLine(cmdLine, ToNativeString(arg).c_str());
+	}
+	if (forkFlag) {
+		STARTUPINFO si;
+		PROCESS_INFORMATION ps;
+		::memset(&si, 0x00, sizeof(si));
+		si.cb = sizeof(STARTUPINFO);
+		si.dwFlags = STARTF_USESTDHANDLES;
+		si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
+		si.hStdOutput = ::GetStdHandle(STD_OUTPUT_HANDLE);
+		si.hStdError = ::GetStdHandle(STD_ERROR_HANDLE);
+		BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
+			nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
+		if (!rtn) {
+			Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
+			return -1;
+		}
+		return 0;
+	}
+	HANDLE hStdout = INVALID_HANDLE_VALUE;
+	HANDLE hStderr = INVALID_HANDLE_VALUE;
+	HANDLE hStdoutWatch = INVALID_HANDLE_VALUE;
+	HANDLE hStderrWatch = INVALID_HANDLE_VALUE;
+	do {
+		SECURITY_ATTRIBUTES sa;
+		::memset(&sa, 0x00, sizeof(sa));
+		sa.nLength = sizeof(sa);
+		sa.lpSecurityDescriptor = nullptr;
+		sa.bInheritHandle = TRUE;
+		if (pStreamCOut && !::CreatePipe(&hStdoutWatch, &hStdout, &sa, 0)) {
+			Error::Issue(ErrorType::IOError, "failed to create a pipe");
+			return -1;
+		}
+		if (pStreamCErr && !::CreatePipe(&hStderrWatch, &hStderr, &sa, 0)) {
+			Error::Issue(ErrorType::IOError, "failed to create a pipe");
+			return -1;
+		}
+	} while (0);
+	STARTUPINFO si;
+	PROCESS_INFORMATION ps;
+	::memset(&si, 0x00, sizeof(si));
+	si.cb = sizeof(STARTUPINFO);
+	si.dwFlags = STARTF_USESTDHANDLES;
+	si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
+	si.hStdOutput = hStdout;
+	si.hStdError = hStderr;
+	BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
+		nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
+	if (!rtn) {
+		Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
+		return -1;
+	}
+	::WaitForInputIdle(ps.hProcess, INFINITE);
+	RefPtr<Memory> pMemory(new MemoryHeap(32768));
+	DWORD exitCode = 0;
+	for (;;) {
+		bool dataAvailFlag = false;
+		if (pStreamCOut) {
+			DWORD bytesAvail;
+			::PeekNamedPipe(hStdoutWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
+			if (bytesAvail > 0) {
+				dataAvailFlag = true;
+				char* buff = pMemory->GetPointer<char>();
+				DWORD bytesRead;
+				::ReadFile(hStdoutWatch, buff,
+					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
+				pStreamCOut->Write(buff, bytesRead);
+			}
+		}
+		if (pStreamCErr) {
+			DWORD bytesAvail;
+			::PeekNamedPipe(hStderrWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
+			if (bytesAvail > 0) {
+				dataAvailFlag = true;
+				char* buff = pMemory->GetPointer<char>();
+				DWORD bytesRead;
+				::ReadFile(hStderrWatch, buff,
+					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
+				pStreamCErr->Write(buff, bytesRead);
+			}
+		}
+		if (!dataAvailFlag) {
+			::GetExitCodeProcess(ps.hProcess, &exitCode);
+			if (exitCode != STILL_ACTIVE) break;
+			::Sleep(100);
+		}
+	}
+	::CloseHandle(ps.hProcess);
+	::CloseHandle(ps.hThread);
+	::CloseHandle(hStdout);
+	::CloseHandle(hStderr);
+	::CloseHandle(hStdoutWatch);
+	::CloseHandle(hStderrWatch);
+	return static_cast<int>(exitCode);
+
 }
 
 void OAL::PutEnv(const char* name, const char* value)
@@ -344,9 +444,9 @@ String OAL::FromNativeString(const char* str)
 	return ConvCodePage(str, CP_THREAD_ACP, CP_UTF8);
 }
 
-bool OAL::ChangeDir(const char* pathName)
+bool OAL::ChangeDir(const char* dirName)
 {
-	return false;
+	return ::SetCurrentDirectory(ToNativeString(dirName).c_str())? true : false;
 }
 
 bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
@@ -397,17 +497,18 @@ bool OAL::IsDir(const char* pathName, bool* pExistFlag)
 
 bool OAL::Remove(const char* pathName)
 {
-	return false;
+	return ::DeleteFile(ToNativeString(pathName).c_str())? true : false;
 }
 
 bool OAL::RemoveDir(const char* dirName)
 {
-	return false;
+	return ::RemoveDirectory(ToNativeString(dirName).c_str())? true : false;
 }
 
 bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
-	return false;
+	return ::MoveFileEx(ToNativeString(pathNameOld).c_str(), ToNativeString(pathNameNew).c_str(),
+		MOVEFILE_REPLACE_EXISTING)? true : false;
 }
 
 void OAL::Sleep(Double secs)
@@ -451,18 +552,30 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 
 DateTime* OAL::CreateDateTime(const SYSTEMTIME& st, int secsOffset)
 {
-	return nullptr;
+	return new DateTime(
+		static_cast<short>(st.wYear),
+		static_cast<char>(st.wMonth),
+		static_cast<char>(st.wDay),
+		static_cast<long>(st.wHour) * 3600 +
+		static_cast<long>(st.wMinute) * 60 + st.wSecond,
+		static_cast<long>(st.wMilliseconds) * 1000, secsOffset);
 }
 
 DateTime* OAL::CreateDateTime(const FILETIME& ft, bool utcFlag)
 {
-	return nullptr;
+	SYSTEMTIME stUTC;
+	::FileTimeToSystemTime(&ft, &stUTC);
+	if (!utcFlag) {
+		SYSTEMTIME stLocal;
+		::SystemTimeToTzSpecificLocalTime(nullptr, &stUTC, &stLocal);
+		return CreateDateTime(stLocal, GetSecsOffsetTZ());
+	}
+	return CreateDateTime(stUTC, 0);
 }
 
 DateTime* OAL::CreateDateTimeCur(bool utcFlag)
 {
 	SYSTEMTIME st;
-	//DateTime dateTime;
 	if (utcFlag) {
 		::GetSystemTime(&st);
 		return CreateDateTime(st, 0);
@@ -488,14 +601,10 @@ SYSTEMTIME OAL::DateTimeToSYSTEMTIME(const DateTime& dt)
 
 FILETIME OAL::DateTimeToFILETIME(const DateTime& dt)
 {
-#if 0
-	SYSTEMTIME st = ToSYSTEMTIME(dt);
+	SYSTEMTIME st = DateTimeToSYSTEMTIME(dt);
 	FILETIME ftLocal, ft;
 	::SystemTimeToFileTime(&st, &ftLocal);
 	::LocalFileTimeToFileTime(&ftLocal, &ft);
-	return ft;
-#endif
-	FILETIME ft;
 	return ft;
 }
 
@@ -505,22 +614,24 @@ int OAL::GetSecsOffsetTZ()
 	if (::GetTimeZoneInformation(&tzInfo) == TIME_ZONE_ID_INVALID) return 0;
 	return -tzInfo.Bias * 60;
 }
+bool OAL::FollowLink(String& pathName)
+{
+	// nothing to do
+	return true;
+}
 
 String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 {
 	int cchWideChar = ::MultiByteToWideChar(codePageSrc, 0, str, -1, nullptr, 0);
-	WCHAR* wcharBuff = new WCHAR [cchWideChar + 1];
-	::MultiByteToWideChar(codePageSrc, 0, str, -1, wcharBuff, cchWideChar);
+	std::unique_ptr<WCHAR []> wcharBuff(new WCHAR [static_cast<size_t>(cchWideChar) + 1]);
+	::MultiByteToWideChar(codePageSrc, 0, str, -1, wcharBuff.get(), cchWideChar);
 	int cchMultiByte = ::WideCharToMultiByte(codePageDst, 0,
-				wcharBuff, cchWideChar, nullptr, 0, nullptr, nullptr);
-	char* charBuff = new char [cchMultiByte + 1];
+				wcharBuff.get(), cchWideChar, nullptr, 0, nullptr, nullptr);
+	std::unique_ptr<char []> charBuff(new char [static_cast<size_t>(cchMultiByte) + 1]);
 	::WideCharToMultiByte(codePageDst, 0,
-				wcharBuff, cchWideChar, charBuff, cchMultiByte, nullptr, nullptr);
+				wcharBuff.get(), cchWideChar, charBuff.get(), cchMultiByte, nullptr, nullptr);
 	charBuff[cchMultiByte] = '\0';
-	String rtn(charBuff); // don't use String(charBuff, cchMultiByte) here!
-	delete[] wcharBuff;
-	delete[] charBuff;
-	return rtn;
+	return String(charBuff.get()); // don't use String(charBuff, cchMultiByte) here!
 }
 
 //-----------------------------------------------------------------------------
@@ -630,9 +741,9 @@ String OAL::FromNativeString(const char* str)
 	return str;
 }
 
-bool OAL::ChangeDir(const char* pathName)
+bool OAL::ChangeDir(const char* dirName)
 {
-	return ::chdir(ToNativeString(pathName).c_str()) == 0;
+	return ::chdir(ToNativeString(dirName).c_str()) == 0;
 }
 
 bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
