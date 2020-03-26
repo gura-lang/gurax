@@ -66,7 +66,7 @@
 #pragma warning(disable:4996)
 #define GURAX_DLLIMPORT __declspec(dllimport)
 #define GURAX_DLLEXPORT __declspec(dllexport)
-#if defined(GURAX_COREBUILD)
+#if defined(guraxcore_EXPORTS)
 #define GURAX_DLLDECLARE __declspec(dllexport)
 #else
 #define GURAX_DLLDECLARE __declspec(dllimport)

@@ -164,6 +164,6 @@ set_target_properties(guraxcore PROPERTIES
 
 target_precompile_headers(guraxcore PUBLIC stdafx.h)
 
-add_definitions("-DGURAX_COREBUILD -bigobj")
+add_definitions("-bigobj")
 
 install(TARGETS guraxcore) # DESTINATION ${GURAX_RELDIR_LIBRARY}
