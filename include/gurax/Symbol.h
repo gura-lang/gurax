@@ -7,18 +7,18 @@
 #include "String.h"
 
 #define Gurax_DeclareSymbol(name) \
-extern const Symbol* g_pSymbol_##name;
+extern GURAX_DLLDECLARE const Symbol* g_pSymbol_##name;
 
 #define Gurax_DeclareSymbolMark(name) \
-extern const Symbol* g_pSymbolMark_##name;
+extern GURAX_DLLDECLARE const Symbol* g_pSymbolMark_##name;
 
 #define Gurax_RealizeSymbolAlias(name, str) \
-const Symbol* g_pSymbol_##name = Symbol::Add(str);
-
-#define Gurax_RealizeSymbol(name) Gurax_RealizeSymbolAlias(name, #name)
+GURAX_DLLDECLARE const Symbol* g_pSymbol_##name = Symbol::Add(str);
 
 #define Gurax_RealizeSymbolMark(name, str) \
-const Symbol* g_pSymbolMark_##name = Symbol::Add(str);
+GURAX_DLLDECLARE const Symbol* g_pSymbolMark_##name = Symbol::Add(str);
+
+#define Gurax_RealizeSymbol(name) Gurax_RealizeSymbolAlias(name, #name)
 
 #define Gurax_Symbol(name) g_pSymbol_##name
 
