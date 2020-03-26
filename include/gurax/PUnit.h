@@ -3347,7 +3347,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_NoOperation : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_NoOperation : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NoOperation");
 public:
