@@ -1,3 +1,3 @@
-set(files
+set(fileNamesSrc
 	module-os.cpp
 )

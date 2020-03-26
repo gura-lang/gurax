@@ -1,3 +1,3 @@
-set(files
+set(fileNamesSrc
 	module-math.cpp
 )

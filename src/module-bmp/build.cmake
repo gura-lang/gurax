@@ -1,4 +1,4 @@
-set(files
+set(fileNamesSrc
 	module-bmp.cpp
 	ImageExtension.cpp
 	Util.cpp

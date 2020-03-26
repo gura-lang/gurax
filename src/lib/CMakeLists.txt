@@ -14,7 +14,7 @@ set(moduleNames
 foreach(moduleName IN ITEMS ${moduleNames})
 	set(dirName ${GURAX_SRCDIR_ROOT}/module-${moduleName})
 	include(${dirName}/build.cmake)
-	foreach(fileName IN ITEMS ${files})
+	foreach(fileName IN ITEMS ${fileNamesSrc})
 		list(APPEND fileNamesModule ${dirName}/${fileName})
 	endforeach()
 endforeach()
