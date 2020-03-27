@@ -129,6 +129,14 @@ public:
 		int get() { return _fd; }
 	};
 #if defined(GURAX_ON_MSWIN)
+	class GURAX_DLLDECLARE HANDLECloser {
+	private:
+		HANDLE _handle;
+	public:
+		HANDLECloser(HANDLE handle) : _handle(handle) {}
+		~HANDLECloser() { ::CloseHandle(_handle); }
+		HANDLE get() { return _handle; }
+	};
 #else
 	class GURAX_DLLDECLARE MemoryUnmapper {
 	private:

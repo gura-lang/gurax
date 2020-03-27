@@ -2,6 +2,7 @@
 // module-math.cpp
 //==============================================================================
 #include "stdafx.h"
+#include "module-math.h"
 
 Gurax_BeginModule(math)
 

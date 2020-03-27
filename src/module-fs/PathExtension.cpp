@@ -193,6 +193,33 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
+	::printf("check-1\n");
+	WIN32_FIND_DATA findData;
+	if (_hFind == INVALID_HANDLE_VALUE) {
+		String pathName(MakeFullPathName(false));
+		if (!pathName.empty()) pathName += '\\';
+		pathName += "*.*";
+		_hFind = ::FindFirstFile(OAL::ToNativeString(pathName.c_str()).c_str(), &findData);
+		if (_hFind == INVALID_HANDLE_VALUE) return nullptr;
+	}
+	else if (!::FindNextFile(_hFind, &findData)) {
+		::FindClose(_hFind);
+		_hFind = INVALID_HANDLE_VALUE;
+		return nullptr;
+	}
+	while (::strcmp(findData.cFileName, ".") == 0 ||
+		::strcmp(findData.cFileName, "..") == 0) {
+		if (!::FindNextFile(_hFind, &findData)) {
+			::FindClose(_hFind);
+			_hFind = INVALID_HANDLE_VALUE;
+			return nullptr;
+		}
+	}
+	::printf("check-2\n");
+	Type type = (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)? Type::Folder : Type::Item;
+	String fileName = OAL::FromNativeString(findData.cFileName);
+	RefPtr<Directory> pDirectory(new DirectoryEx(type, OAL::FromNativeString(findData.cFileName).c_str(), nullptr));
+	pDirectory->SetDirectoryParent(Reference());
 	return nullptr;
 }
 
@@ -303,7 +330,7 @@ Value* StreamEx::DoCreateStatValue()
 	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
 	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
 	//return new Value_StatEx(pStatEx.release());
-	return new Value_StatEx(StatEx::Create(_pathName.c_str());
+	return new Value_StatEx(StatEx::Create(_pathName.c_str()));
 }
 
 size_t StreamEx::DoRead(void* buff, size_t len)
