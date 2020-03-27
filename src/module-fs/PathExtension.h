@@ -25,7 +25,11 @@ class GURAX_DLLDECLARE StatEx : public Stat {
 public:
 	using Stat::Stat;
 public:
+#if defined(GURAX_ON_MSWIN)
+	StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData);
+#else
 	StatEx(struct stat& sb, String pathName);
+#endif
 	static StatEx* Create(const char* pathName);
 };
 

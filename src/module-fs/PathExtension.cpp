@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "PathExtension.h"
 #include "VType_StatEx.h"
+#include <sys/stat.h>
 
 Gurax_BeginModuleScope(fs)
 
@@ -85,12 +86,90 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
+#if defined(GURAX_ON_MSWIN)
+StatEx::StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData) :
+	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
+		OAL::CreateDateTime(attrData.ftLastWriteTime),
+		OAL::CreateDateTime(attrData.ftLastAccessTime),
+		pathName, 0, 0, attrData.nFileSizeLow, 0, 0)
+{
+	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		_flags |= Flag::Dir;
+	} else {
+		_flags |= Flag::Reg;
+	}
+	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		_flags |= 0666;
+	} else {
+		_flags |= 0777;
+	}
+}
+#if 0
+StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
+	_pathName(pathName), _attr(0), _bytes(attrData.nFileSizeLow), _uid(0), _gid(0)
+{
+	_atime = ToDateTime(attrData.ftLastAccessTime);
+	_mtime = ToDateTime(attrData.ftLastWriteTime);
+	_ctime = ToDateTime(attrData.ftCreationTime);
+	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		_attr |= ATTR_Dir;
+	}
+	else {
+		_attr |= ATTR_Reg;
+	}
+	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		_attr |= 0666;
+	}
+	else {
+		_attr |= 0777;
+	}
+}
+
+StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData) :
+	_pathName(pathName), _attr(0), _bytes(findData.nFileSizeLow), _uid(0), _gid(0)
+{
+	_atime = ToDateTime(findData.ftLastAccessTime);
+	_mtime = ToDateTime(findData.ftLastWriteTime);
+	_ctime = ToDateTime(findData.ftCreationTime);
+	if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		_attr |= ATTR_Dir;
+	}
+	else {
+		_attr |= ATTR_Reg;
+	}
+	if (findData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		_attr |= 0666;
+	}
+	else {
+		_attr |= 0777;
+	}
+}
+
+StatEx* StatEx::Generate(Signal& sig, const char* fileName)
+{
+	ULong attr = 0;
+	WIN32_FILE_ATTRIBUTE_DATA attrData;
+	String pathName = ToNativeString(MakeAbsPathName(
+		FileSeparator, fileName).c_str());
+	if (::GetFileAttributesEx(pathName.c_str(), GetFileExInfoStandard, &attrData) == 0) {
+		sig.SetError(ERR_IOError, "failed to get file status of %s", pathName.c_str());
+		return nullptr;
+	}
+	return new StatEx(pathName.c_str(), attrData);
+}
+#endif
+
+StatEx* StatEx::Create(const char* pathName)
+{
+	return nullptr;
+}
+
+#else
 StatEx::StatEx(struct stat& sb, String pathName) :
 	Stat(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
 		 OAL::CreateDateTime(sb.st_atime),
 		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
-#if 0
 	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
 	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
 	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
@@ -98,7 +177,6 @@ StatEx::StatEx(struct stat& sb, String pathName) :
 	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
 	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
 	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
-#endif
 }
 
 StatEx* StatEx::Create(const char* pathName)
@@ -109,6 +187,7 @@ StatEx* StatEx::Create(const char* pathName)
 	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
 	return new StatEx(sb, pathNameAbs);
 }
+#endif
 
 #if defined(GURAX_ON_MSWIN)
 
@@ -249,18 +328,20 @@ size_t StreamEx::DoGetBytes()
 
 Stat* StreamEx::DoCreateStat()
 {
-	struct stat sb;
-	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	return pStatEx.release();
+	//struct stat sb;
+	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
+	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	//return pStatEx.release();
+	return nullptr;
 }
 
 Value* StreamEx::DoCreateStatValue()
 {
-	struct stat sb;
-	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	return new Value_StatEx(pStatEx.release());
+	//struct stat sb;
+	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
+	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	//return new Value_StatEx(pStatEx.release());
+	return nullptr;
 }
 
 size_t StreamEx::DoRead(void* buff, size_t len)
