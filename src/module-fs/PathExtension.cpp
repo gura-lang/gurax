@@ -91,84 +91,64 @@ StatEx::StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
 		OAL::CreateDateTime(attrData.ftLastAccessTime),
-		pathName, 0, 0, attrData.nFileSizeLow, 0, 0)
+		pathName, MakeFlags(attrData.dwFileAttributes), 0, attrData.nFileSizeLow, 0, 0)
 {
-	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-		_flags |= Flag::Dir;
-	} else {
-		_flags |= Flag::Reg;
-	}
-	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
-		_flags |= 0666;
-	} else {
-		_flags |= 0777;
-	}
-}
-#if 0
-StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
-	_pathName(pathName), _attr(0), _bytes(attrData.nFileSizeLow), _uid(0), _gid(0)
-{
-	_atime = ToDateTime(attrData.ftLastAccessTime);
-	_mtime = ToDateTime(attrData.ftLastWriteTime);
-	_ctime = ToDateTime(attrData.ftCreationTime);
-	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-		_attr |= ATTR_Dir;
-	}
-	else {
-		_attr |= ATTR_Reg;
-	}
-	if (attrData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
-		_attr |= 0666;
-	}
-	else {
-		_attr |= 0777;
-	}
 }
 
-StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData) :
-	_pathName(pathName), _attr(0), _bytes(findData.nFileSizeLow), _uid(0), _gid(0)
+StatEx::StatEx(String pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
+	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
+		OAL::CreateDateTime(attrData.ftLastWriteTime),
+		OAL::CreateDateTime(attrData.ftLastAccessTime),
+		pathName, MakeFlags(attrData.dwFileAttributes), 0, attrData.nFileSizeLow, 0, 0)
 {
-	_atime = ToDateTime(findData.ftLastAccessTime);
-	_mtime = ToDateTime(findData.ftLastWriteTime);
-	_ctime = ToDateTime(findData.ftCreationTime);
-	if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-		_attr |= ATTR_Dir;
-	}
-	else {
-		_attr |= ATTR_Reg;
-	}
-	if (findData.dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
-		_attr |= 0666;
-	}
-	else {
-		_attr |= 0777;
-	}
 }
 
-StatEx* StatEx::Generate(Signal& sig, const char* fileName)
+StatEx::StatEx(String pathName, const WIN32_FIND_DATA& findData) :
+	Stat(OAL::CreateDateTime(findData.ftCreationTime),
+		OAL::CreateDateTime(findData.ftLastWriteTime),
+		OAL::CreateDateTime(findData.ftLastAccessTime),
+		pathName, MakeFlags(findData.dwFileAttributes), 0, findData.nFileSizeLow, 0, 0)
+{
+}
+
+StatEx* StatEx::Create(const char* fileName)
 {
 	ULong attr = 0;
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
-	String pathName = ToNativeString(MakeAbsPathName(
-		FileSeparator, fileName).c_str());
-	if (::GetFileAttributesEx(pathName.c_str(), GetFileExInfoStandard, &attrData) == 0) {
-		sig.SetError(ERR_IOError, "failed to get file status of %s", pathName.c_str());
+	String pathName = PathName(fileName).MakeAbsName();
+	String pathNameN = OAL::ToNativeString(pathName.c_str());
+	if (::GetFileAttributesEx(pathNameN.c_str(), GetFileExInfoStandard, &attrData) == 0) {
+		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
 		return nullptr;
 	}
 	return new StatEx(pathName.c_str(), attrData);
 }
-#endif
 
-StatEx* StatEx::Create(const char* pathName)
+UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)
 {
-	return nullptr;
+	UInt32 flags = 0;
+	if (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		flags |= Flag::Dir;
+	}
+	else {
+		flags |= Flag::Reg;
+	}
+	if (dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		flags |= 0666;
+	}
+	else {
+		flags |= 0777;
+	}
+	return flags;
 }
 
 #else
-StatEx::StatEx(struct stat& sb, String pathName) :
-	Stat(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
-		 OAL::CreateDateTime(sb.st_atime),
-		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
+
+StatEx::StatEx(String pathName, struct stat& sb) :
+	Stat(OAL::CreateDateTime(sb.st_ctime),
+		OAL::CreateDateTime(sb.st_mtime),
+		OAL::CreateDateTime(sb.st_atime),
+	pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
 	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
 	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
@@ -187,24 +167,6 @@ StatEx* StatEx::Create(const char* pathName)
 	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
 	return new StatEx(sb, pathNameAbs);
 }
-#endif
-
-#if defined(GURAX_ON_MSWIN)
-
-#if 0
-StatEx::StatEx(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
-{
-}
-
-StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
-{
-}
-
-StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
-{
-}
-#endif
-
 #endif
 
 //------------------------------------------------------------------------------
