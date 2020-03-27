@@ -87,6 +87,7 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 // StatEx
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
+
 StatEx::StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
@@ -129,14 +130,12 @@ UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)
 	UInt32 flags = 0;
 	if (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 		flags |= Flag::Dir;
-	}
-	else {
+	} else {
 		flags |= Flag::Reg;
 	}
 	if (dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
 		flags |= 0666;
-	}
-	else {
+	} else {
 		flags |= 0777;
 	}
 	return flags;
@@ -167,6 +166,7 @@ StatEx* StatEx::Create(const char* pathName)
 	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
 	return new StatEx(sb, pathNameAbs);
 }
+
 #endif
 
 //------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ Stat* StreamEx::DoCreateStat()
 	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
 	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
 	//return pStatEx.release();
-	return nullptr;
+	return StatEx::Create(_pathName.c_str());
 }
 
 Value* StreamEx::DoCreateStatValue()
@@ -303,7 +303,7 @@ Value* StreamEx::DoCreateStatValue()
 	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
 	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
 	//return new Value_StatEx(pStatEx.release());
-	return nullptr;
+	return new Value_StatEx(StatEx::Create(_pathName.c_str());
 }
 
 size_t StreamEx::DoRead(void* buff, size_t len)
