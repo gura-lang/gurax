@@ -90,7 +90,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		}
 	} while (0);
 	RefPtr<Palette> pPalette(Palette::Reference(image.GetPalette()));
-	if (pPalette && pPalette->GetSize() == (1 << biBitCount)) {
+	if (pPalette && pPalette->GetSize() == (1LL << biBitCount)) {
 		// nothing to do
 	} else if (biBitCount == 2) {
 		pPalette.reset(Palette::Mono()->Reference());
@@ -109,7 +109,7 @@ int ImageMgrEx::CalcDIBBitCount(const Image& image)
 	if (!pPalette) return 24;
 	size_t nEntries = pPalette->GetSize();
 	size_t nBits = 1;
-	for ( ; nEntries > static_cast<size_t>(1 << nBits); nBits++) ;
+	for ( ; nEntries > static_cast<size_t>(1LL << nBits); nBits++) ;
 	nBits =
 		(nBits == 2 || nBits == 3)? 4 :
 		(nBits == 5 || nBits == 6 || nBits == 7)? 8 :
@@ -141,7 +141,7 @@ UInt32 ImageMgrEx::CalcDIBImageSize(size_t width, size_t height, int biBitCount,
 
 Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
 {
-	size_t nEntries = 1 << biBitCount;
+	size_t nEntries = 1LL << biBitCount;
 	RefPtr<Palette> pPalette(new Palette(nEntries));
 	for (size_t idx = 0; idx < nEntries; idx++) {
 		UInt32 packed;
@@ -156,7 +156,7 @@ Palette* ImageMgrEx::ReadDIBPalette(Stream& stream, int biBitCount)
 
 bool ImageMgrEx::WriteDIBPalette(Stream& stream, const Palette& palette, int biBitCount)
 {
-	size_t nEntries = 1 << biBitCount;
+	size_t nEntries = 1LL << biBitCount;
 	size_t idxMax = std::min(nEntries, palette.GetSize());
 	size_t idx = 0;
 	for ( ; idx < idxMax; idx++) {
@@ -250,7 +250,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 		}
 	} else if (biBitCount == 8) {
-		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
+		size_t bytesAlign = (static_cast<size_t>(biWidth) + 3) / 4 * 4 - biWidth;
 		UInt8 ch;
 		Image::Scanner scanner(
 			vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
@@ -274,7 +274,7 @@ bool ImageMgrEx::ReadDIB(Stream& stream, Image& image, int biWidth, int biHeight
 			}
 		}
 	} else if (biBitCount == 24) {
-		size_t bytesAlign = (3 * biWidth + 3) / 4 * 4 - 3 * biWidth;
+		size_t bytesAlign = (static_cast<size_t>(biWidth) * 3 + 3) / 4 * 4 - static_cast<size_t>(biWidth) * 3;
 		UInt8 buff[3];
 		Image::Scanner scanner(
 			vertRevFlag? Image::Scanner::LeftBottomHorz(image) : Image::Scanner::LeftTopHorz(image));
@@ -435,7 +435,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 		}
 	} else if (biBitCount == 8) {
-		size_t bytesAlign = (biWidth + 3) / 4 * 4 - biWidth;
+		size_t bytesAlign = (static_cast<size_t>(biWidth) + 3) / 4 * 4 - static_cast<size_t>(biWidth);
 		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {
 			const UInt8* p = scanner.GetPointer();
@@ -454,7 +454,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 			}
 		}
 	} else if (biBitCount == 24) {
-		size_t bytesAlign = ((3 * biWidth) + 3) / 4 * 4 - 3 * biWidth;
+		size_t bytesAlign = (static_cast<size_t>(biWidth) * 3 + 3) / 4 * 4 - static_cast<size_t>(biWidth) * 3;
 		UInt8 buff[3];
 		Image::Scanner scanner(Image::Scanner::LeftBottomHorz(image));
 		for (;;) {

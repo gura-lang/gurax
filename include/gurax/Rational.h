@@ -29,7 +29,7 @@ public:
 		return *this;
 	}
 	// Move constructor/operator
-	Rational(Rational&& src) : _numer(src._numer), _denom(src._denom) {}
+	Rational(Rational&& src) noexcept : _numer(src._numer), _denom(src._denom) {}
 	Rational& operator=(Rational&& src) noexcept {
 		_numer = src._numer, _denom = src._denom;
 		return *this;

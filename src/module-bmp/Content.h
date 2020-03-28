@@ -21,7 +21,7 @@ protected:
 	RefPtr<Memory> _pMemory;
 public:
 	// Constructor
-	Content() {}
+	Content() : _bfh{0}, _bih{0} {}
 	// Copy constructor/operator
 	Content(const Content& src) = delete;
 	Content& operator=(const Content& src) = delete;
