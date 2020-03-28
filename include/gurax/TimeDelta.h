@@ -30,7 +30,7 @@ public:
 		return *this;
 	}
 	// Move constructor/operator
-	TimeDelta(TimeDelta&& src) : _days(src._days), _secsPacked(src._secsPacked), _usecsPacked(src._usecsPacked) {}
+	TimeDelta(TimeDelta&& src) noexcept : _days(src._days), _secsPacked(src._secsPacked), _usecsPacked(src._usecsPacked) {}
 	TimeDelta& operator=(TimeDelta&& src) noexcept {
 		_days = src._days, _secsPacked = src._secsPacked, _usecsPacked = src._usecsPacked;
 		return *this;

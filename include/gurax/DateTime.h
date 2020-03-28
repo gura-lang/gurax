@@ -50,7 +50,7 @@ public:
 		return *this;
 	}
 	// Move constructor/operator
-	DateTime(DateTime&& dt) :
+	DateTime(DateTime&& dt) noexcept :
 		_year(dt._year), _month(dt._month), _day(dt._day), _secPacked(dt._secPacked), _usecPacked(dt._usecPacked), _tz(dt._tz) {
 	}
 	DateTime& operator=(DateTime&& dt) noexcept {

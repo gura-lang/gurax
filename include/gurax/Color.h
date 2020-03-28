@@ -72,7 +72,7 @@ public:
 	Color(const Color& src) : _packed(src._packed) {}
 	Color& operator=(const Color& src) { _packed = src._packed; return *this; }
 	// Move constructor/operator
-	Color(Color&& src) : _packed(src._packed) {}
+	Color(Color&& src) noexcept : _packed(src._packed) {}
 	Color& operator=(Color&& src) noexcept { _packed = src._packed; return *this; }
 	// Destructor
 	~Color() = default;

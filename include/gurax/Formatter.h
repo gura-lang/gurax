@@ -3,6 +3,7 @@
 //=============================================================================
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
+#include "Common.h"
 #include "OAL.h"
 #include "VType_Number.h"
 #include "VType_StringPtr.h"

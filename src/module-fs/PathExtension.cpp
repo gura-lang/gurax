@@ -193,7 +193,6 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
-	::printf("check-1\n");
 	WIN32_FIND_DATA findData;
 	if (_hFind == INVALID_HANDLE_VALUE) {
 		String pathName(MakeFullPathName(false));
@@ -201,8 +200,7 @@ Directory* DirectoryEx::DoNextChild()
 		pathName += "*.*";
 		_hFind = ::FindFirstFile(OAL::ToNativeString(pathName.c_str()).c_str(), &findData);
 		if (_hFind == INVALID_HANDLE_VALUE) return nullptr;
-	}
-	else if (!::FindNextFile(_hFind, &findData)) {
+	} else if (!::FindNextFile(_hFind, &findData)) {
 		::FindClose(_hFind);
 		_hFind = INVALID_HANDLE_VALUE;
 		return nullptr;
@@ -215,12 +213,11 @@ Directory* DirectoryEx::DoNextChild()
 			return nullptr;
 		}
 	}
-	::printf("check-2\n");
 	Type type = (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)? Type::Folder : Type::Item;
 	String fileName = OAL::FromNativeString(findData.cFileName);
 	RefPtr<Directory> pDirectory(new DirectoryEx(type, OAL::FromNativeString(findData.cFileName).c_str(), nullptr));
 	pDirectory->SetDirectoryParent(Reference());
-	return nullptr;
+	return pDirectory.release();
 }
 
 #else

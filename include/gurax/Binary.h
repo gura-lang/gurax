@@ -51,7 +51,7 @@ public:
 	Binary(const Binary& src) : basic_string(src), _writableFlag(src._writableFlag) {}
 	Binary& operator=(const Binary& src) noexcept;
 	// Move constructor/operator
-	Binary(Binary&& src) : basic_string(src), _writableFlag(src._writableFlag) {}
+	Binary(Binary&& src) noexcept : basic_string(src), _writableFlag(src._writableFlag) {}
 	Binary& operator=(Binary&& src) noexcept;
 	// Destructor
 	~Binary() = default;

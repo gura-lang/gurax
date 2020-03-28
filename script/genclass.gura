@@ -39,7 +39,7 @@ public:
 	${className}(const ${className}& src) = delete;
 	${className}& operator=(const ${className}& src) = delete;
 	// Move constructor/operator
-	${className}(${className}&& src) = delete;
+	${className}(${className}&& src) noexcept = delete;
 	${className}& operator=(${className}&& src) noexcept = delete;
 protected:
 	~${className}() = default;
@@ -147,7 +147,7 @@ public:
 		Value_Object(src), _p${entityName}(src._p${entityName}->Reference()) {}
 	Value_${className}& operator=(const Value_${className}& src) = delete;
 	// Move constructor/operator
-	Value_${className}(Value_${className}&& src) = delete;
+	Value_${className}(Value_${className}&& src) noexcept = delete;
 	Value_${className}& operator=(Value_${className}&& src) noexcept = delete;
 protected:
 	// Destructor

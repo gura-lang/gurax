@@ -119,7 +119,7 @@ public:
 	Value(const Value& src) : _pVType(src._pVType) {}
 	Value& operator=(const Value& src) = delete;
 	// Move constructor/operator
-	Value(Value&& src) : _pVType(src._pVType) {}
+	Value(Value&& src) noexcept : _pVType(src._pVType) {}
 	Value& operator=(Value&& src) noexcept = delete;
 protected:
 	// Destructor

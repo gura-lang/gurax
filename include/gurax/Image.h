@@ -155,7 +155,7 @@ public:
 		Pixel(const Pixel& src) : _metrics(src._metrics), _p(src._p) {}
 		Pixel& operator=(const Pixel& src) = delete;
 		// Move constructor/operator
-		Pixel(const Pixel&& src) : _metrics(src._metrics), _p(src._p) {}
+		Pixel(const Pixel&& src) noexcept : _metrics(src._metrics), _p(src._p) {}
 		Pixel& operator=(const Pixel&& src) noexcept = delete;
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
@@ -301,7 +301,7 @@ public:
 			_pitchCol(src._pitchCol), _pitchRow(src._pitchRow), _horzFlag(src._horzFlag) {}
 		Scanner& operator=(const Scanner& src) = delete;
 		// Move constructor/operator
-		Scanner(Scanner&& src) :
+		Scanner(Scanner&& src) noexcept :
 			_metrics(src._metrics), _p(src._p), _pRow(src._pRow), _x(src._x), _y(src._y),
 			_iCol(src._iCol), _iRow(src._iRow), _nCols(src._nCols), _nRows(src._nRows),
 			_pitchCol(src._pitchCol), _pitchRow(src._pitchRow), _horzFlag(src._horzFlag) {}

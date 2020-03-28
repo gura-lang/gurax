@@ -134,7 +134,7 @@ public:
 // Iterator_FunctionImpMap
 //------------------------------------------------------------------------------
 template<bool skipNilFlag>
-class GURAX_DLLDECLARE Iterator_FunctionImpMap : public Iterator {
+class Iterator_FunctionImpMap : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Function> _pFunction;

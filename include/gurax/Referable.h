@@ -69,7 +69,7 @@ public:
 	RefPtr(const RefPtr& obj) = delete;
 	RefPtr& operator=(const RefPtr& obj) = delete;
 	// Move constructor/operator
-	RefPtr(RefPtr&& obj) : _p(obj._p) { obj._p = nullptr; }
+	RefPtr(RefPtr&& obj) noexcept : _p(obj._p) { obj._p = nullptr; }
 	RefPtr& operator=(RefPtr&& obj) noexcept {
 		T::Delete(_p);
 		_p = obj._p;

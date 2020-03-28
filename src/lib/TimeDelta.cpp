@@ -96,13 +96,13 @@ void TimeDelta::Unpack(Int64 num, Int32* pDays, Int32* pSecsPacked, Int32* pUsec
 		num /= 24 * 60 * 60;
 		*pDays = static_cast<Int32>(num);
 	} else {
-		Int64 tmp = -num % (24L * 60 * 60 * 1000000);
-		*pDays = num / (24L * 60 * 60 * 1000000);
+		Int64 tmp = -num % (24LL * 60 * 60 * 1000000);
+		*pDays = num / (24LL * 60 * 60 * 1000000);
 		if (tmp == 0) {
 			*pUsecsPacked = 0;
 			*pSecsPacked = 0;
 		} else {
-			tmp = 24L * 60 * 60 * 1000000 - tmp;
+			tmp = 24LL * 60 * 60 * 1000000 - tmp;
 			*pUsecsPacked = static_cast<Int32>(tmp % 1000000);
 			*pSecsPacked = static_cast<Int32>(tmp / 1000000);
 			(*pDays)--;

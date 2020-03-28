@@ -67,8 +67,8 @@ public:
 		int _idxBuff;
 		char _buffOut[8];
 	public:
-		DecEncBase() : _idxBuff(0) {}
-		bool FollowChar(char& chConv);
+		DecEncBase() : _idxBuff(0), _buffOut{0} {}
+		bool FollowChar(char& chConv);		
 		virtual Result FeedChar(char ch, char& chConv) = 0;
 		virtual Result Flush(char& chConv);
 	protected:
