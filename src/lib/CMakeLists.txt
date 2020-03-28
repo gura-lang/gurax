@@ -3,7 +3,11 @@
 #===============================================================================
 set(moduleNames
 	bmp
-	codecs codecs_basic codecs_chinese codecs_iso8859 codecs_japanese
+	codecs
+	codecs_basic
+	codecs_chinese
+	codecs_iso8859
+	codecs_japanese
 	fs
 	math
 	os

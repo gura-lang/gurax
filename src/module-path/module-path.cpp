@@ -2,7 +2,6 @@
 // module-path.cpp
 //==============================================================================
 #include "stdafx.h"
-#include "module-path.h"
 
 Gurax_BeginModule(path)
 

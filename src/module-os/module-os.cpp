@@ -2,7 +2,6 @@
 // module-os.cpp
 //==============================================================================
 #include "stdafx.h"
-#include "module-os.h"
 
 Gurax_BeginModule(os)
 
