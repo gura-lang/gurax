@@ -87,7 +87,7 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 			Error::Issue(ErrorType::ValueError, "can't accept nil value");
 		} else {
 			Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
-						 value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+				value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
 		}
 	};
 	if (flags & DeclArg::Flag::ListVar) {

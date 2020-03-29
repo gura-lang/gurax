@@ -156,18 +156,19 @@ add_library(guraxcore SHARED
 	${fileNamesModule}
 )
 
-#target_link_libraries(guraxcore dl pthread)
-
-target_link_libraries(guraxcore)
-
-set_target_properties(guraxcore PROPERTIES
-	VERSION						${GURAX_VERSION}
-	SOVERSION					${GURAX_VERSION_SO}
-	BUILD_WITH_INSTALL_NAME_DIR	1
-	INSTALL_NAME_DIR			"@executable_path/../lib")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	target_link_libraries(guraxcore)
+	add_definitions("-bigobj")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	target_link_libraries(guraxcore dl pthread)
+	set_target_properties(guraxcore PROPERTIES
+		VERSION						${GURAX_VERSION}
+		SOVERSION					${GURAX_SOVERSION}
+		BUILD_WITH_INSTALL_NAME_DIR	1
+		INSTALL_NAME_DIR			"@executable_path/../lib")
+else ()
+	target_link_libraries(guraxcore dl pthread)
+endif ()
 
 target_precompile_headers(guraxcore PUBLIC stdafx.h)
-
-add_definitions("-bigobj")
-
-install(TARGETS guraxcore) # DESTINATION ${GURAX_RELDIR_LIBRARY}
+install(TARGETS guraxcore)
