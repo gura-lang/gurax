@@ -116,7 +116,7 @@ void Basement::PreparePathList()
 {
 	AppendPathList(".");
 	AppendPathList(_cmdLine.GetStringList("module-path"));
-	AppendPathList(OAL::GetEnv("GURAXPATH"));
+	AppendPathList(OAL::GetEnv("GURAX_PATH"));
 	AppendPathList(OAL::GetDirName_Module());
 	AppendPathList(PathName(OAL::GetDirName_Module()).JoinAfter("site"));
 }
@@ -138,7 +138,7 @@ void Basement::PrepareConsoleStream()
 void Basement::AppendPathList(const String& str)
 {
 	StringList dirNames;
-	str.Split(dirNames, ':');
+	str.Split(dirNames, OAL::SepPathList);
 	for (const String& dirName : dirNames) {
 		String dirNameStripped = dirName.Strip(true, true);
 		if (!dirNameStripped.empty()) _pathList.push_back(dirNameStripped);

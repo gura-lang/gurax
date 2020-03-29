@@ -215,52 +215,17 @@ bool OAL::RemoveDirTree(const char* dirName)
 //-----------------------------------------------------------------------------
 // Path Information (MSWIN/DARWIN/LINUX/Others)
 //-----------------------------------------------------------------------------
-#if defined(GURAX_ON_MSWIN)
-
-String OAL::GetPathName_Executable()
-{
-	char pathName[MAX_PATH];
-	::GetModuleFileName(nullptr, pathName, MAX_PATH); // Win32 API
-	return FromNativeString(pathName);
-}
-
-#elif defined(GURAX_ON_DARWIN)
-
-String OAL::GetPathName_Executable()
-{
-	String pathName;
-	uint32_t bytes = 1024;
-	char* buff = new char [bytes];
-	if (::_NSGetExecutablePath(buff, &bytes) != 0) {
-		delete[] buff;
-		buff = new char [bytes];
-		if (::_NSGetExecutablePath(buff, &bytes) != 0) return "";
-	}
-	return PathName(FromNativeString(buff)).Regulate();
-}
-
-#elif defined(GURAX_ON_LINUX)
-
-String OAL::GetPathName_Executable()
-{
-	return PathName(ReadLink("/proc/self/exe")).Regulate();
-}
-
-#else
-
-String OAL::GetPathName_Executable()
-{
-	return "/usr/bin/gurax";
-}
-
-#endif
-
 String OAL::GetDirName_Base()
 {
-	String pathName = GetPathName_Executable();
-	FollowLink(pathName);
-	pathName = PathName(pathName).ExtractDirName();
-	return PathName(pathName).ExtractHeadName();
+	bool foundFlag;
+	String dirNameBase = GetEnv("GURAX_DIRBASE", &foundFlag);
+	if (!foundFlag) {
+		String pathName = GetPathName_Executable();
+		FollowLink(pathName);
+		pathName = PathName(pathName).ExtractDirName();
+		dirNameBase = PathName(pathName).ExtractHeadName();
+	}
+	return dirNameBase;
 }
 
 String OAL::GetDirName_Executable()
@@ -270,17 +235,29 @@ String OAL::GetDirName_Executable()
 
 String OAL::GetDirName_Data()
 {
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Base()).JoinAfter("share");
+#else
 	return PathName(GetDirName_Base()).JoinAfter("share/gurax/" GURAX_VERSION);
+#endif
 }
 
 String OAL::GetDirName_Module()
 {
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Base()).JoinAfter("module");
+#else
 	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/" GURAX_VERSION "/module");
+#endif
 }
 
 String OAL::GetDirName_Include()
 {
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Base()).JoinAfter("include");
+#else
 	return PathName(GetDirName_Base()).JoinAfter("include/gurax/" GURAX_VERSION);
+#endif
 }
 
 String OAL::GetDirName_Library()
@@ -297,7 +274,7 @@ String OAL::GetDirName_Script()
 {
 	return PathName(GetDirName_Data()).JoinAfter("script");
 }
-
+	
 String OAL::GetDirName_Local()
 {
 	return "";
@@ -308,114 +285,13 @@ String OAL::GetDirName_Local()
 //------------------------------------------------------------------------------
 // OAL (MSWIN)
 //------------------------------------------------------------------------------
-int OAL::ExecProgram(
-	const char* pathName, StringPicker&& args,
-	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag)
-{
-	String cmdLine;
-	AppendCmdLine(cmdLine, ToNativeString(pathName).c_str());
-	while (const char* arg = args.Pick()) {
-		cmdLine += " ";
-		AppendCmdLine(cmdLine, ToNativeString(arg).c_str());
-	}
-	if (forkFlag) {
-		STARTUPINFO si;
-		PROCESS_INFORMATION ps;
-		::memset(&si, 0x00, sizeof(si));
-		si.cb = sizeof(STARTUPINFO);
-		si.dwFlags = STARTF_USESTDHANDLES;
-		si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
-		si.hStdOutput = ::GetStdHandle(STD_OUTPUT_HANDLE);
-		si.hStdError = ::GetStdHandle(STD_ERROR_HANDLE);
-		BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
-			nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
-		if (!rtn) {
-			Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
-			return -1;
-		}
-		return 0;
-	}
-	HANDLE hStdout = INVALID_HANDLE_VALUE;
-	HANDLE hStderr = INVALID_HANDLE_VALUE;
-	HANDLE hStdoutWatch = INVALID_HANDLE_VALUE;
-	HANDLE hStderrWatch = INVALID_HANDLE_VALUE;
-	do {
-		SECURITY_ATTRIBUTES sa;
-		::memset(&sa, 0x00, sizeof(sa));
-		sa.nLength = sizeof(sa);
-		sa.lpSecurityDescriptor = nullptr;
-		sa.bInheritHandle = TRUE;
-		if (pStreamCOut && !::CreatePipe(&hStdoutWatch, &hStdout, &sa, 0)) {
-			Error::Issue(ErrorType::IOError, "failed to create a pipe");
-			return -1;
-		}
-		if (pStreamCErr && !::CreatePipe(&hStderrWatch, &hStderr, &sa, 0)) {
-			Error::Issue(ErrorType::IOError, "failed to create a pipe");
-			return -1;
-		}
-	} while (0);
-	STARTUPINFO si;
-	PROCESS_INFORMATION ps;
-	::memset(&si, 0x00, sizeof(si));
-	si.cb = sizeof(STARTUPINFO);
-	si.dwFlags = STARTF_USESTDHANDLES;
-	si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
-	si.hStdOutput = hStdout;
-	si.hStdError = hStderr;
-	BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
-		nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
-	if (!rtn) {
-		Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
-		return -1;
-	}
-	::WaitForInputIdle(ps.hProcess, INFINITE);
-	RefPtr<Memory> pMemory(new MemoryHeap(32768));
-	DWORD exitCode = 0;
-	for (;;) {
-		bool dataAvailFlag = false;
-		if (pStreamCOut) {
-			DWORD bytesAvail;
-			::PeekNamedPipe(hStdoutWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
-			if (bytesAvail > 0) {
-				dataAvailFlag = true;
-				char* buff = pMemory->GetPointer<char>();
-				DWORD bytesRead;
-				::ReadFile(hStdoutWatch, buff,
-					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
-				pStreamCOut->Write(buff, bytesRead);
-			}
-		}
-		if (pStreamCErr) {
-			DWORD bytesAvail;
-			::PeekNamedPipe(hStderrWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
-			if (bytesAvail > 0) {
-				dataAvailFlag = true;
-				char* buff = pMemory->GetPointer<char>();
-				DWORD bytesRead;
-				::ReadFile(hStderrWatch, buff,
-					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
-				pStreamCErr->Write(buff, bytesRead);
-			}
-		}
-		if (!dataAvailFlag) {
-			::GetExitCodeProcess(ps.hProcess, &exitCode);
-			if (exitCode != STILL_ACTIVE) break;
-			::Sleep(100);
-		}
-	}
-	::CloseHandle(ps.hProcess);
-	::CloseHandle(ps.hThread);
-	::CloseHandle(hStdout);
-	::CloseHandle(hStderr);
-	::CloseHandle(hStdoutWatch);
-	::CloseHandle(hStderrWatch);
-	return static_cast<int>(exitCode);
+const char OAL::SepPathList = ';';
 
-}
-
-void OAL::PutEnv(const char* name, const char* value)
+String OAL::GetPathName_Executable()
 {
-	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
+	char pathName[MAX_PATH];
+	::GetModuleFileName(nullptr, pathName, MAX_PATH); // Win32 API
+	return FromNativeString(pathName);
 }
 
 String OAL::GetEnv(const char* name, bool* pFoundFlag)
@@ -426,12 +302,17 @@ String OAL::GetEnv(const char* name, bool* pFoundFlag)
 		if (pFoundFlag != nullptr) *pFoundFlag = false;
 		return String("");
 	}
-	char* buff = new char [len];
+	char* buff = new char[len];
 	::GetEnvironmentVariable(nameEnc.c_str(), buff, len);
 	String rtn(FromNativeString(buff));
 	delete[] buff;
 	if (pFoundFlag != nullptr) *pFoundFlag = true;
 	return rtn;
+}
+
+void OAL::PutEnv(const char* name, const char* value)
+{
+	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
 }
 
 String OAL::ToNativeString(const char* str)
@@ -537,6 +418,111 @@ OAL::FileType OAL::GetFileType(const char* pathName)
 		((attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) != 0)? FileType::Normal :
 		((attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)? FileType::Directory :
 		FileType::Unknown;
+}
+
+int OAL::ExecProgram(
+	const char* pathName, StringPicker&& args,
+	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag)
+{
+	String cmdLine;
+	AppendCmdLine(cmdLine, ToNativeString(pathName).c_str());
+	while (const char* arg = args.Pick()) {
+		cmdLine += " ";
+		AppendCmdLine(cmdLine, ToNativeString(arg).c_str());
+	}
+	if (forkFlag) {
+		STARTUPINFO si;
+		PROCESS_INFORMATION ps;
+		::memset(&si, 0x00, sizeof(si));
+		si.cb = sizeof(STARTUPINFO);
+		si.dwFlags = STARTF_USESTDHANDLES;
+		si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
+		si.hStdOutput = ::GetStdHandle(STD_OUTPUT_HANDLE);
+		si.hStdError = ::GetStdHandle(STD_ERROR_HANDLE);
+		BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
+			nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
+		if (!rtn) {
+			Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
+			return -1;
+		}
+		return 0;
+	}
+	HANDLE hStdout = INVALID_HANDLE_VALUE;
+	HANDLE hStderr = INVALID_HANDLE_VALUE;
+	HANDLE hStdoutWatch = INVALID_HANDLE_VALUE;
+	HANDLE hStderrWatch = INVALID_HANDLE_VALUE;
+	do {
+		SECURITY_ATTRIBUTES sa;
+		::memset(&sa, 0x00, sizeof(sa));
+		sa.nLength = sizeof(sa);
+		sa.lpSecurityDescriptor = nullptr;
+		sa.bInheritHandle = TRUE;
+		if (pStreamCOut && !::CreatePipe(&hStdoutWatch, &hStdout, &sa, 0)) {
+			Error::Issue(ErrorType::IOError, "failed to create a pipe");
+			return -1;
+		}
+		if (pStreamCErr && !::CreatePipe(&hStderrWatch, &hStderr, &sa, 0)) {
+			Error::Issue(ErrorType::IOError, "failed to create a pipe");
+			return -1;
+		}
+	} while (0);
+	STARTUPINFO si;
+	PROCESS_INFORMATION ps;
+	::memset(&si, 0x00, sizeof(si));
+	si.cb = sizeof(STARTUPINFO);
+	si.dwFlags = STARTF_USESTDHANDLES;
+	si.hStdInput = ::GetStdHandle(STD_INPUT_HANDLE);
+	si.hStdOutput = hStdout;
+	si.hStdError = hStderr;
+	BOOL rtn = ::CreateProcess(nullptr, const_cast<char*>(cmdLine.c_str()),
+		nullptr, nullptr, TRUE, 0, nullptr, nullptr, &si, &ps);
+	if (!rtn) {
+		Error::Issue(ErrorType::IOError, "failed to execute %s", pathName);
+		return -1;
+	}
+	::WaitForInputIdle(ps.hProcess, INFINITE);
+	RefPtr<Memory> pMemory(new MemoryHeap(32768));
+	DWORD exitCode = 0;
+	for (;;) {
+		bool dataAvailFlag = false;
+		if (pStreamCOut) {
+			DWORD bytesAvail;
+			::PeekNamedPipe(hStdoutWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
+			if (bytesAvail > 0) {
+				dataAvailFlag = true;
+				char* buff = pMemory->GetPointer<char>();
+				DWORD bytesRead;
+				::ReadFile(hStdoutWatch, buff,
+					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
+				pStreamCOut->Write(buff, bytesRead);
+			}
+		}
+		if (pStreamCErr) {
+			DWORD bytesAvail;
+			::PeekNamedPipe(hStderrWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
+			if (bytesAvail > 0) {
+				dataAvailFlag = true;
+				char* buff = pMemory->GetPointer<char>();
+				DWORD bytesRead;
+				::ReadFile(hStderrWatch, buff,
+					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
+				pStreamCErr->Write(buff, bytesRead);
+			}
+		}
+		if (!dataAvailFlag) {
+			::GetExitCodeProcess(ps.hProcess, &exitCode);
+			if (exitCode != STILL_ACTIVE) break;
+			::Sleep(100);
+		}
+	}
+	::CloseHandle(ps.hProcess);
+	::CloseHandle(ps.hThread);
+	::CloseHandle(hStdout);
+	::CloseHandle(hStderr);
+	::CloseHandle(hStdoutWatch);
+	::CloseHandle(hStderrWatch);
+	return static_cast<int>(exitCode);
+
 }
 
 Double OAL::GetTickTime()
@@ -726,6 +712,8 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 //------------------------------------------------------------------------------
 // OAL (POSIX)
 //------------------------------------------------------------------------------
+const char OAL::SepPathList = ':';
+
 String OAL::GetEnv(const char* name, bool* pFoundFlag)
 {
 	const char* str = ::getenv(ToNativeString(name).c_str());
@@ -1113,6 +1101,37 @@ bool OAL::FollowLink(String& pathName)
 	}
 	return false;
 }
+
+#if defined(GURAX_ON_DARWIN)
+
+String OAL::GetPathName_Executable()
+{
+	String pathName;
+	uint32_t bytes = 1024;
+	char* buff = new char[bytes];
+	if (::_NSGetExecutablePath(buff, &bytes) != 0) {
+		delete[] buff;
+		buff = new char[bytes];
+		if (::_NSGetExecutablePath(buff, &bytes) != 0) return "";
+	}
+	return PathName(FromNativeString(buff)).Regulate();
+}
+
+#elif defined(GURAX_ON_LINUX)
+
+String OAL::GetPathName_Executable()
+{
+	return PathName(ReadLink("/proc/self/exe")).Regulate();
+}
+
+#else
+
+String OAL::GetPathName_Executable()
+{
+	return "/usr/bin/gurax";
+}
+
+#endif
 
 //-----------------------------------------------------------------------------
 // OAL::DirLister (POSIX)

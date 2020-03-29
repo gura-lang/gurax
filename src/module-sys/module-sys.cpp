@@ -136,6 +136,20 @@ Gurax_ImplementModulePropertySetter(cerr)
 		value.IsNil()? Stream::Dumb->Reference() : Value_Stream::GetStream(value).Reference());
 }
 
+// sys.dirBase
+Gurax_DeclareModuleProperty_R(dirBase)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the base directory.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirBase)
+{
+	return new Value_String(OAL::GetDirName_Base());
+}
+
 // sys.dirFont
 Gurax_DeclareModuleProperty_R(dirFont)
 {
@@ -370,6 +384,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateModuleProperty(cin));
 	Assign(Gurax_CreateModuleProperty(cout));
 	Assign(Gurax_CreateModuleProperty(cerr));
+	Assign(Gurax_CreateModuleProperty(dirBase));
 	Assign(Gurax_CreateModuleProperty(dirFont));
 	Assign(Gurax_CreateModuleProperty(dirInclude));
 	Assign(Gurax_CreateModuleProperty(dirLib));

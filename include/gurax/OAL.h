@@ -50,6 +50,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
 public:
+	static const char SepPathList;
+public:
 	enum class FileType { None, Unknown, Normal, Directory, Device, FIFO, Link, Socket };
 	class GURAX_DLLDECLARE SymbolAssoc_FileType : public SymbolAssoc<FileType, FileType::None> {
 	public:
