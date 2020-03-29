@@ -414,10 +414,8 @@ OAL::FileType OAL::GetFileType(const char* pathName)
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
 	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
 							  GetFileExInfoStandard, &attrData) == 0) return FileType::None;
-	return
-		((attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) != 0)? FileType::Normal :
-		((attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)? FileType::Directory :
-		FileType::Unknown;
+	return ((attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)?
+		FileType::Directory : FileType::Normal;
 }
 
 int OAL::ExecProgram(
