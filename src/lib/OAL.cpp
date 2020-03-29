@@ -258,7 +258,7 @@ String OAL::GetPathName_Executable()
 String OAL::GetDirName_Base()
 {
 	String pathName = GetPathName_Executable();
-	//FollowLink(pathName);
+	FollowLink(pathName);
 	pathName = PathName(pathName).ExtractDirName();
 	return PathName(pathName).ExtractHeadName();
 }
