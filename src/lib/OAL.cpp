@@ -212,6 +212,18 @@ bool OAL::RemoveDirTree(const char* dirName)
 	return rtn;
 }
 
+bool OAL::PrepareLocalDir()
+{
+	String dirName = GetDirName_Local();
+	if (CreateDirTree(dirName.c_str()) &&
+		CreateDir(PathName(dirName).JoinAfter("module").c_str()) &&
+		CreateDir(PathName(dirName).JoinAfter("application").c_str()) &&
+		CreateDir(PathName(dirName).JoinAfter("config").c_str()) &&
+		CreateDir(PathName(dirName).JoinAfter("work").c_str())) return true;
+	Error::Issue(ErrorType::IOError, "failed to create local directory");
+	return false;
+}
+
 //-----------------------------------------------------------------------------
 // Path Information (MSWIN/DARWIN/LINUX/Others)
 //-----------------------------------------------------------------------------
@@ -236,7 +248,7 @@ String OAL::GetDirName_Executable()
 String OAL::GetDirName_Data()
 {
 #if defined(GURAX_ON_MSWIN)
-	return PathName(GetDirName_Base()).JoinAfter("share");
+	return GetDirName_Base();
 #else
 	return PathName(GetDirName_Base()).JoinAfter("share/gurax/" GURAX_VERSION);
 #endif
@@ -277,7 +289,19 @@ String OAL::GetDirName_Script()
 	
 String OAL::GetDirName_Local()
 {
-	return "";
+#if defined(GURAX_ON_MSWIN)
+	char dirNameN[MAX_PATH];
+	::SHGetSpecialFolderPath(nullptr, dirNameN, CSIDL_LOCAL_APPDATA, FALSE);
+	String dirName = FromNativeString(dirNameN);
+	dirName += "\\Gura\\";
+	dirName += Version::GetVersion();
+	return dirName;
+#else
+	String dirName = FromNativeString(GetEnv("HOME").c_str());
+	dirName += "/.gurax/";
+	dirName += Version::GetVersion();
+	return dirName;
+#endif
 }
 
 #if defined(GURAX_ON_MSWIN)

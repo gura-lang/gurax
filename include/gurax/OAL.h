@@ -204,6 +204,7 @@ public:
 	static bool CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
 	static bool CreateDirTree(const char* dirName);
 	static bool RemoveDirTree(const char* dirName);
+	static bool PrepareLocalDir();
 public:
 	static bool ChangeDir(const char* dirName);
 	static bool ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag);
