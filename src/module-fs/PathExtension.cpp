@@ -116,13 +116,10 @@ StatEx* StatEx::Create(const char* fileName)
 {
 	ULong attr = 0;
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
-	String pathName = PathName(fileName).MakeAbsName();
-	String pathNameN = OAL::ToNativeString(pathName.c_str());
-	if (::GetFileAttributesEx(pathNameN.c_str(), GetFileExInfoStandard, &attrData) == 0) {
-		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
-		return nullptr;
-	}
-	return new StatEx(pathName.c_str(), attrData);
+	String pathNameAbs = PathName(fileName).MakeAbsName();
+	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
+	if (::GetFileAttributesEx(pathNameAbsN.c_str(), GetFileExInfoStandard, &attrData) == 0) return nullptr;
+	return new StatEx(pathNameAbs.c_str(), attrData);
 }
 
 UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)

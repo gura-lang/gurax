@@ -1,0 +1,15 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('test')
+b.pathNamesSrc = ['module-test.cpp', 'Util.cpp']
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cxxflags = []
+b.ldflags = []
+b.libs = []
+b.Run()
