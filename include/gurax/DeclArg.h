@@ -20,7 +20,7 @@ public:
 	Gurax_DeclareReferable(DeclArg);
 public:
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None			= 0;
 		static const Flags ListVar		= 1 << 0;	// :listvar
 		static const Flags Nil			= 1 << 1;	// :nil
@@ -36,7 +36,7 @@ public:
 		static const Flags Readable		= 1 << 11;	// :readable
 		static const Flags Writable		= 1 << 12;	// :writable
 	};
-	class Occur {
+	class GURAX_DLLDECLARE Occur {
 	private:
 		const char* _marker;
 		const ArgSlotFactory& _argSlotFactory;
@@ -68,7 +68,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
+	class GURAX_DLLDECLARE SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(listvar),	Flag::ListVar);

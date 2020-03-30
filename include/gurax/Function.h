@@ -123,7 +123,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Function
 //------------------------------------------------------------------------------
-class Function : public Referable {
+class GURAX_DLLDECLARE Function : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);

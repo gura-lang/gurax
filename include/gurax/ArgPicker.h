@@ -40,7 +40,7 @@ class Stream;
 //------------------------------------------------------------------------------
 // ArgPicker
 //------------------------------------------------------------------------------
-class ArgPicker {
+class GURAX_DLLDECLARE ArgPicker {
 private:
 	ArgSlot* _pArgSlot;
 	RefPtr<Value> _pValuePicked;

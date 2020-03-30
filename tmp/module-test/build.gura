@@ -12,4 +12,5 @@ b.dirNamesLib = []
 b.cxxflags = []
 b.ldflags = []
 b.libs = []
+b.pathNameHdr = nil
 b.Run()
