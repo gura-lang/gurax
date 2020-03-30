@@ -2,4 +2,4 @@
 !.gitignore
 !prepare-for-darwin
 !prepare-for-linux
-!prepare-for-mswin.bat
+!prepare-for-mswin.ps1
