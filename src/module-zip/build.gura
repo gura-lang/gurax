@@ -10,10 +10,13 @@ b.pathNamesSrc = [
 	'Reader.cpp', 'Writer.cpp', 'PathExtension.cpp'
 	'VType_Reader.cpp', 'VType_Writer.cpp', 'VType_StatEx.cpp'
 ]
-b.pathNamesScript = []
-b.dirNamesInc = []
-b.dirNamesLib = []
-b.cxxflags = []
-b.ldflags = []
-b.libs = ['z', 'bz2']
+if (sys.platform == `mswin) {
+	dirNameGuest1 = b.GetDirNameGuest('zlib-1.2.8')
+	dirNameGuest2 = b.GetDirNameGuest('bzip2-1.0.8')
+    b.dirNamesInc = [dirNameGuest1, dirNameGuest2]
+    b.dirNamesLib = [dirNameGuest1, dirNameGuest2]
+    b.libs = ['zlib', 'libbz2']
+} elsif (sys.platform == `darwin) {
+    b.libs = ['z', 'bz2']
+}
 b.Run()

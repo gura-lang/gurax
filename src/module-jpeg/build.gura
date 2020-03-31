@@ -13,8 +13,8 @@ b.pathNamesSrc = [
 b.pathNamesScript = []
 if (sys.platform == `mswin) {
 	dirNameGuest = b.GetDirNameGuest('jpeg-9d')
-	b.dirNamesInc = [path.Join(dirNameGuest)]
-	b.dirNamesLib = [path.Join(dirNameGuest)]
+	b.dirNamesInc = [dirNameGuest]
+	b.dirNamesLib = [dirNameGuest]
 	b.libs = ['libjpeg']
 	b.ldflags = ['/NODEFAULTLIB:LIBCMT']
 } elsif (sys.platform == `darwin) {

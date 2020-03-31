@@ -8,8 +8,8 @@ b = Builder('bzip2')
 b.pathNamesSrc = ['module-bzip2.cpp', 'Util.cpp']
 if (sys.platform == `mswin) {
 	dirNameGuest = b.GetDirNameGuest('bzip2-1.0.8')
-    b.dirNamesInc = [path.Join(dirNameGuest)]
-    b.dirNamesLib = [path.Join(dirNameGuest)]
+    b.dirNamesInc = [dirNameGuest]
+    b.dirNamesLib = [dirNameGuest]
     b.libs = ['libbz2']
 } elsif (sys.platform == `darwin) {
     b.libs = ['bz2']

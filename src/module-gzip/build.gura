@@ -8,8 +8,8 @@ b = Builder('gzip')
 b.pathNamesSrc = ['module-gzip.cpp', 'Util.cpp']
 if (sys.platform == `mswin) {
 	dirNameGuest = b.GetDirNameGuest('zlib-1.2.8')
-    b.dirNamesInc = [path.Join(dirNameGuest)]
-    b.dirNamesLib = [path.Join(dirNameGuest)]
+    b.dirNamesInc = [dirNameGuest]
+    b.dirNamesLib = [dirNameGuest]
     b.libs = ['zlib']
 } elsif (sys.platform == `darwin) {
     b.libs = ['z']
