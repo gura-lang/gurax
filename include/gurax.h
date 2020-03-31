@@ -139,4 +139,8 @@ namespace Gurax {
 GURAX_DLLDECLARE bool Initialize(int& argc, char* argv[]);
 }
 
+// Undefines GURAX_DLLDECLARE
+#undef GURAX_DLLDECLARE
+#define GURAX_DLLDECLARE
+
 #endif
