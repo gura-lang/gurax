@@ -14,8 +14,8 @@ if (sys.platform == `mswin) {
 	b.dirNamesInc = [dirBase]
 	b.dirNamesLib = [path.Join(dirBase, 'build_x86')]
 	b.libs = ['onigmo_s']
-	//b.pathNameHdr = nil
-	b.cxxflags = ['-DONIG_EXTERN=extern']
+	b.cxxflags = ['/DONIG_EXTERN=extern']
+	b.ldflags = ['/LTCG', '/NODEFAULTLIB:LIBCMT']
 } elsif (sys.platoform == `darwin) {
 	b.dirNamesInc = ['guest/include/onigmo']
 	b.dirNamesLib = ['guest/lib']

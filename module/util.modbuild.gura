@@ -116,8 +116,9 @@ Builder = class {
 					('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 					'-o' + this.pathNamePch, this.pathNameHdr)
 	}
-	Compile(pathNameObj:String, pathNameSrc:String, idx:Number) = {
+	Compile(pathNameObj:String, pathNameSrc:String, idx:Number, nSrcs:Number) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
+		nDigits = Format('%d', nSrcs).len
 		cflags = if (pathNameSrc.EndsWith('.c'):icase) {
 			this.cflagsBase |+| this.cflagsCompile |+| this.cflags
 		} else {
@@ -125,20 +126,18 @@ Builder = class {
 		}
 		if (this.compiler == 'cl') {
 			cflagsPreCompile = if (!this.pathNameHdr) {
-				Printf('-- compiling: %s\n', pathNameSrc)
 				[]
 			} elsif (idx == 0) {
-				Printf('-- compiling(create pch): %s\n', pathNameSrc)
 				['/Yc' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			} else {
-				Printf('-- compiling(use pch): %s\n', pathNameSrc)
 				['/Yu' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			}
+			Printf('-- [%*d/%d] compiling: ', nDigits, idx + 1, nSrcs)
 			this.Exec(this.compiler, cflags*,
 						('/I' + this.dirNameSysInc), ('/I' + this.dirNamesInc)*, cflagsPreCompile*,
 						'/Fo' + pathNameObj, '/c', pathNameSrc)
 		} else {
-			Printf('-- compiling: %s\n', pathNameSrc)
+			Printf('-- [%*d/%d] compiling: %s\n', nDigits, idx + 1, nSrcs, pathNameSrc)
 			this.Exec(this.compiler, cflags*,
 						('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 						'-o' + pathNameObj, '-c', pathNameSrc)
@@ -162,8 +161,9 @@ Builder = class {
 	}
 	Command_build() = {
 		!this.PreCompile() && return
+		nSrcs = this.pathNamesSrc.len
 		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {|idx|
-			!this.Compile(pathNameObj, pathNameSrc, idx) && return(false)
+			!this.Compile(pathNameObj, pathNameSrc, idx, nSrcs) && return(false)
 		}
 		this.Link(this.pathNameGurd, this.pathNamesObj*)
 	}
