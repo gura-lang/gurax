@@ -48,4 +48,5 @@ cmake_install.cmake
 # Directories
 out/
 gnuc/
+mswin/
 /build
