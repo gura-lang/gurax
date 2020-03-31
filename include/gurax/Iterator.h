@@ -21,7 +21,7 @@ public:
 	Gurax_DeclareReferable(Iterator);
 public:
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None				= 0;
 		static const Flags Infinite			= (0 << 0);
 		static const Flags Finite			= (1 << 0);

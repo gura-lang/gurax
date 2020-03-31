@@ -26,32 +26,32 @@ public:
 	Gurax_DeclareReferable(Value);
 public:
 	// Algorithm operators
-	struct EqualTo {
+	struct GURAX_DLLDECLARE EqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->IsEqualTo(pValue2);
 		}
 	};
-	struct LessThan {
+	struct GURAX_DLLDECLARE LessThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->IsLessThan(pValue2);
 		}
 	};
-	struct LessThanOrEqualTo {
+	struct GURAX_DLLDECLARE LessThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue2->IsLessThan(pValue1);
 		}
 	};
-	struct GreaterThan {
+	struct GURAX_DLLDECLARE GreaterThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue2->IsLessThan(pValue1);
 		}
 	};
-	struct GreaterThanOrEqualTo {
+	struct GURAX_DLLDECLARE GreaterThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue1->IsLessThan(pValue2);
 		}
 	};
-	struct CustomCompare {
+	struct GURAX_DLLDECLARE CustomCompare {
 	private:
 		Processor& _processor;
 		const Function& _function;
@@ -61,32 +61,32 @@ public:
 			_processor(processor), _function(function), _argument(argument) {}
 		bool operator()(const Value* pValue1, const Value* pValue2) const;
 	};
-	struct KeyEqualTo {
+	struct GURAX_DLLDECLARE KeyEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->GetValueKey().IsEqualTo(&pValue2->GetValueKey());
 		}
 	};
-	struct KeyLessThan {
+	struct GURAX_DLLDECLARE KeyLessThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
 		}
 	};
-	struct KeyLessThanOrEqualTo {
+	struct GURAX_DLLDECLARE KeyLessThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
 		}
 	};
-	struct KeyGreaterThan {
+	struct GURAX_DLLDECLARE KeyGreaterThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
 		}
 	};
-	struct KeyGreaterThanOrEqualTo {
+	struct GURAX_DLLDECLARE KeyGreaterThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
 		}
 	};
-	struct KeyCustomCompare {
+	struct GURAX_DLLDECLARE KeyCustomCompare {
 	private:
 		Processor& _processor;
 		const Function& _function;
@@ -96,7 +96,7 @@ public:
 			_processor(processor), _function(function), _argument(argument) {}
 		bool operator()(const Value* pValue1, const Value* pValue2) const;
 	};
-	struct Hash {
+	struct GURAX_DLLDECLARE Hash {
 		size_t operator()(const Value* pValue) const {
 			return pValue->CalcHash();
 		}

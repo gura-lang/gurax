@@ -22,7 +22,7 @@ public:
 	static const size_t offsetB = 0;
 	static const size_t offsetA = 3;
 public:
-	struct Format {
+	struct GURAX_DLLDECLARE Format {
 		size_t bytesPerPixel;
 		static const Format None;
 		static const Format RGB;
@@ -32,7 +32,7 @@ public:
 		size_t WidthToBytes(size_t width) const { return bytesPerPixel * width; }
 		bool IsIdentical(const Format& format) const { return this == &format; }
 	};
-	struct Rect {
+	struct GURAX_DLLDECLARE Rect {
 		size_t x;
 		size_t y;
 		size_t width;
@@ -45,7 +45,7 @@ public:
 		RightTopHorz, RightTopVert,
 		RightBottomHorz, RightBottomVert,
 	};
-	class SymbolAssoc_ScanDir : public SymbolAssoc<ScanDir, ScanDir::None> {
+	class GURAX_DLLDECLARE SymbolAssoc_ScanDir : public SymbolAssoc<ScanDir, ScanDir::None> {
 	public:
 		SymbolAssoc_ScanDir() {
 			Assoc(Gurax_Symbol(left_top_horz),		ScanDir::LeftTopHorz);
@@ -62,7 +62,7 @@ public:
 			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ScanDir());
 		}
 	};
-	struct Metrics {
+	struct GURAX_DLLDECLARE Metrics {
 		const Format& format;
 		size_t width;
 		size_t height;
@@ -80,7 +80,7 @@ public:
 		bool CheckArea(int x, int y, int width, int height) const;
 		size_t CountPixels() const { return width * height; }
 	};
-	class Accumulator {
+	class GURAX_DLLDECLARE Accumulator {
 	public:
 		struct Elem {
 			UInt32 r;
@@ -144,7 +144,7 @@ public:
 	};
 	class PixelRGB;
 	class PixelRGBA;
-	class Pixel {
+	class GURAX_DLLDECLARE Pixel {
 	protected:
 		const Metrics& _metrics;
 		UInt8* _p;
@@ -194,7 +194,7 @@ public:
 		static void Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height);
 		static void Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height);
 	};
-	class PixelRGB : public Pixel {
+	class GURAX_DLLDECLARE PixelRGB : public Pixel {
 	public:
 		using Pixel::Pixel;
 	public:
@@ -241,7 +241,7 @@ public:
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
 	};
-	class PixelRGBA : public Pixel {
+	class GURAX_DLLDECLARE PixelRGBA : public Pixel {
 	public:
 		using Pixel::Pixel;
 	public:
@@ -275,7 +275,7 @@ public:
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
 		}
 	};
-	class Scanner {
+	class GURAX_DLLDECLARE Scanner {
 	protected:
 		const Metrics& _metrics;
 		UInt8* _p;

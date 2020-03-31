@@ -23,7 +23,7 @@ public:
 public:
 	enum class Type { Statement, Function, Constructor, Method };
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None				= 0;
 		static const Flags Map				= 1 << 0;	// :map .. must be here
 		static const Flags NoMap			= 1 << 1;	// :nomap .. must be here
@@ -50,7 +50,7 @@ public:
 		static const Flags XIter			= 1 << 22;	// :xiter
 		static const Flags AnyAttr			= 1 << 23;	// :any_attr
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
+	class GURAX_DLLDECLARE SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(map),			Flag::Map);

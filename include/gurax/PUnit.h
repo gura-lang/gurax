@@ -127,7 +127,7 @@ public:
 	virtual const PUnit* GetPUnitBranchDest() const override { return _pPUnitBranchDest; }
 };
 
-class PUnitFactory_Branch : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Branch : public PUnitFactory {
 protected:
 	const PUnit* _pPUnitBranchDest;
 public:
@@ -164,7 +164,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Value : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Value : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Value");
 private:
@@ -206,7 +206,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Lookup : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Lookup : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Lookup");
 private:
@@ -257,7 +257,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Suffixed : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Suffixed : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Suffixed");
 private:
@@ -302,7 +302,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignToSymbol : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignToSymbol : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignToSymbol");
 private:
@@ -345,7 +345,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignToDeclArg : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignToDeclArg : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignToDeclArg");
 private:
@@ -388,7 +388,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignFunction : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignFunction : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignFunction");
 private:
@@ -431,7 +431,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignMethod : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignMethod : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignMethod");
 private:
@@ -481,7 +481,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignPropHandler : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignPropHandler : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignPropHandler");
 private:
@@ -529,7 +529,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Cast : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Cast : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Cast");
 private:
@@ -569,7 +569,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator");
 public:
@@ -605,7 +605,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_Range : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_Range : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_Range");
 public:
@@ -641,7 +641,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_Counter : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_Counter : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_Counter");
 public:
@@ -677,7 +677,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_ForLister : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_ForLister : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_ForLister");
 public:
@@ -722,7 +722,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_for : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_for : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_for");
 private:
@@ -774,7 +774,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_while : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_while : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_while");
 private:
@@ -827,7 +827,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenIterator_repeat : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_repeat : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_repeat");
 private:
@@ -877,7 +877,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_EvalIterator : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_EvalIterator : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EvalIterator");
 private:
@@ -926,7 +926,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_ForEach : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_ForEach : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ForEach");
 private:
@@ -970,7 +970,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_UnaryOp : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_UnaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_UnaryOp");
 private:
@@ -1013,7 +1013,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_BinaryOp : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_BinaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BinaryOp");
 private:
@@ -1070,7 +1070,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Import : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Import : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Import");
 private:
@@ -1116,7 +1116,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_CreateVType : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_CreateVType : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_CreateVType");
 private:
@@ -1155,7 +1155,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_CompleteStruct : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_CompleteStruct : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_CompleteStruct");
 private:
@@ -1196,7 +1196,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_CreateList : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_CreateList : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_CreateList");
 private:
@@ -1239,7 +1239,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_ListElem : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_ListElem : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ListElem");
 private:
@@ -1281,7 +1281,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_CreateDict : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_CreateDict : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_CreateDict");
 public:
@@ -1321,7 +1321,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_DictElem : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_DictElem : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_DictElem");
 private:
@@ -1366,7 +1366,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Index : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Index : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Index");
 private:
@@ -1407,7 +1407,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_FeedIndex : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_FeedIndex : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_FeedIndex");
 public:
@@ -1444,7 +1444,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_IndexGet : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_IndexGet : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexGet");
 public:
@@ -1481,7 +1481,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_IndexSet : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_IndexSet : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexSet");
 private:
@@ -1525,7 +1525,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_IndexOpApply : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_IndexOpApply : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexOpApply");
 private:
@@ -1573,7 +1573,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberSet_Normal : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberSet_Normal : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberSet_Normal");
 private:
@@ -1624,7 +1624,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberSet_Map : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberSet_Map : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberSet_Map");
 private:
@@ -1676,7 +1676,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberOpApply_Normal : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberOpApply_Normal : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberOpApply_Normal");
 private:
@@ -1730,7 +1730,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberOpApply_Map : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberOpApply_Map : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberOpApply_Map");
 private:
@@ -1781,7 +1781,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberGet_Normal : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberGet_Normal : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_Normal");
 private:
@@ -1829,7 +1829,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberGet_MapAlong : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberGet_MapAlong : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapAlong");
 private:
@@ -1877,7 +1877,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberGet_MapToList : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberGet_MapToList : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapToList");
 private:
@@ -1925,7 +1925,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_MemberGet_MapToIter : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_MemberGet_MapToIter : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapToIter");
 private:
@@ -1974,7 +1974,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Argument : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Argument : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Argument");
 private:
@@ -2022,7 +2022,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_ArgumentDelegation : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_ArgumentDelegation : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ArgumentDelegation");
 private:
@@ -2071,7 +2071,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_BeginArgSlot : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_BeginArgSlot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginArgSlot");
 public:
@@ -2109,7 +2109,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_EndArgSlot : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_EndArgSlot : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlot");
 private:
@@ -2147,7 +2147,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_EndArgSlotExpand : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_EndArgSlotExpand : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlotExpand");
 private:
@@ -2198,7 +2198,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_BeginArgSlotNamed : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_BeginArgSlotNamed : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginArgSlotNamed");
 private:
@@ -2240,7 +2240,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_EndArgSlotNamed : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_EndArgSlotNamed : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlotNamed");
 private:
@@ -2278,7 +2278,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Call : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Call : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Call");
 public:
@@ -2321,7 +2321,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
-class PUnitFactory_Jump : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Jump : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Jump");
 private:
@@ -2363,7 +2363,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_JumpIf : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_JumpIf : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIf");
 private:
@@ -2404,7 +2404,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_JumpIfNot : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_JumpIfNot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNot");
 private:
@@ -2445,7 +2445,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_NilJumpIf : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_NilJumpIf : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIf");
 private:
@@ -2486,7 +2486,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_NilJumpIfNot : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_NilJumpIfNot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNot");
 private:
@@ -2527,7 +2527,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_KeepJumpIf : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_KeepJumpIf : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_KeepJumpIf");
 private:
@@ -2568,7 +2568,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_KeepJumpIfNot : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_KeepJumpIfNot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_KeepJumpIfNot");
 private:
@@ -2609,7 +2609,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_BeginTryBlock : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_BeginTryBlock : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginTryBlock");
 private:
@@ -2652,7 +2652,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
-class PUnitFactory_EndTryBlock : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_EndTryBlock : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EndTryBlock");
 private:
@@ -2694,7 +2694,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_JumpIfNoCatch : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_JumpIfNoCatch : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatch");
 private:
@@ -2735,7 +2735,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_JumpIfNoCatchAny : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_JumpIfNoCatchAny : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatchAny");
 private:
@@ -2776,7 +2776,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_NilJumpIfNoCatch : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_NilJumpIfNoCatch : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatch");
 private:
@@ -2817,7 +2817,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_NilJumpIfNoCatchAny : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_NilJumpIfNoCatchAny : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatchAny");
 private:
@@ -2861,7 +2861,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_BeginSequence : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_BeginSequence : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginSequence");
 private:
@@ -2902,7 +2902,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class PUnitFactory_EndSequence : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_EndSequence : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EndSequence");
 public:
@@ -2939,7 +2939,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_DiscardValue : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_DiscardValue : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_DiscardValue");
 public:
@@ -2979,7 +2979,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_RemoveValue : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_RemoveValue : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_RemoveValue");
 private:
@@ -3025,7 +3025,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_RemoveValues : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_RemoveValues : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_RemoveValues");
 private:
@@ -3069,7 +3069,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class PUnitFactory_Break : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Break : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
 private:
@@ -3114,7 +3114,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class PUnitFactory_Continue : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Continue : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Continue");
 private:
@@ -3157,7 +3157,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Miscatch : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Miscatch : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Miscatch");
 private:
@@ -3198,7 +3198,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class PUnitFactory_Return : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Return : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Return");
 public:
@@ -3273,7 +3273,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_PushFrameFromStack : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_PushFrameFromStack : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_PushFrameFromStack");
 public:
@@ -3310,7 +3310,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_PopFrame : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_PopFrame : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_PopFrame");
 public:
@@ -3380,7 +3380,7 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class PUnitFactory_Terminate : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Terminate : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Terminate");
 public:

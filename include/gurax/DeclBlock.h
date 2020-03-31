@@ -14,11 +14,11 @@ namespace Gurax {
 class GURAX_DLLDECLARE DeclBlock {
 public:
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None		= 0;
 		static const Flags Quote	= (1 << 0);
 	};
-	class Occur {
+	class GURAX_DLLDECLARE Occur {
 	private:
 		const char* _marker;
 	public:
@@ -45,7 +45,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
+	class GURAX_DLLDECLARE SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 		}

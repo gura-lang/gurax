@@ -18,7 +18,7 @@ public:
 	enum class ElemType {
 		None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
 	};
-	class SymbolAssoc_ElemType : public SymbolAssoc<ElemType, ElemType::None> {
+	class GURAX_DLLDECLARE SymbolAssoc_ElemType : public SymbolAssoc<ElemType, ElemType::None> {
 	public:
 		SymbolAssoc_ElemType() {
 			Assoc(Gurax_Symbol(int8),			ElemType::Int8);

@@ -7,7 +7,7 @@
 
 namespace Gurax {
 
-class Statements {
+class GURAX_DLLDECLARE Statements {
 public:
 	static void AssignToBasement(Frame& frame);
 };

@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ArgFeeder
 //------------------------------------------------------------------------------
-class ArgFeeder {
+class GURAX_DLLDECLARE ArgFeeder {
 private:
 	Argument& _argument;
 	ArgSlot* _pArgSlot;

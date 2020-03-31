@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Function_Empty
 //------------------------------------------------------------------------------
-class Function_Empty : public Function {
+class GURAX_DLLDECLARE Function_Empty : public Function {
 public:
 	Function_Empty() : Function(Type::Function, Flag::None) {}
 public:
@@ -20,7 +20,7 @@ public:
 //------------------------------------------------------------------------------
 // Functions
 //------------------------------------------------------------------------------
-class Functions {
+class GURAX_DLLDECLARE Functions {
 public:
 	static void AssignToBasement(Frame& frame);
 };

@@ -184,32 +184,32 @@ public:
 	Gurax_DeclareReferable(PropHandler);
 public:
 	// Algorithm operators
-	struct EqualTo_SeqId {
+	struct GURAX_DLLDECLARE EqualTo_SeqId {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return pPropHandler1->GetSeqId() == pPropHandler2->GetSeqId();
 		}
 	};
-	struct LessThan_SeqId {
+	struct GURAX_DLLDECLARE LessThan_SeqId {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return pPropHandler1->GetSeqId() < pPropHandler2->GetSeqId();
 		}
 	};
-	struct GreaterThan_SeqId {
+	struct GURAX_DLLDECLARE GreaterThan_SeqId {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return pPropHandler1->GetSeqId() > pPropHandler2->GetSeqId();
 		}
 	};
-	struct EqualTo_SymbolName {
+	struct GURAX_DLLDECLARE EqualTo_SymbolName {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return Symbol::EqualTo_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
 		}
 	};
-	struct LessThan_SymbolName {
+	struct GURAX_DLLDECLARE LessThan_SymbolName {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return Symbol::LessThan_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
 		}
 	};
-	struct GreaterThan_SymbolName {
+	struct GURAX_DLLDECLARE GreaterThan_SymbolName {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return Symbol::GreaterThan_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
 		}
@@ -219,7 +219,7 @@ public:
 	using Flags = DeclArg::Flags;
 	using Flag = DeclArg::Flag;
 	using SymbolAssoc_Flag = DeclArg::SymbolAssoc_Flag;
-	struct AttributeOpt {
+	struct GURAX_DLLDECLARE AttributeOpt {
 		SymbolList symbolList;
 		SymbolSet symbolSet;
 	};

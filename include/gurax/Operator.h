@@ -196,7 +196,7 @@ public:
 class GURAX_DLLDECLARE Operator {
 public:
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None		= 0;
 		static const Flags Raw		= 1 << 0;
 		static const Flags Map		= 1 << 1;

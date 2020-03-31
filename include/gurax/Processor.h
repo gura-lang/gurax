@@ -144,7 +144,7 @@ protected:
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
-class Processor_Normal : public Processor {
+class GURAX_DLLDECLARE Processor_Normal : public Processor {
 protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit) override;
@@ -153,7 +153,7 @@ protected:
 //------------------------------------------------------------------------------
 // Processor_Debug
 //------------------------------------------------------------------------------
-class Processor_Debug : public Processor {
+class GURAX_DLLDECLARE Processor_Debug : public Processor {
 private:
 	int _nestLevel;
 public:

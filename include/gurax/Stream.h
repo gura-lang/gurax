@@ -34,7 +34,7 @@ public:
 	};
 	enum class SeekMode { Set, Cur, End };
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags None			= 0;
 		static const Flags Readable		= (1 << 0);
 		static const Flags Writable		= (1 << 1);
@@ -43,7 +43,7 @@ public:
 		static const Flags Infinite		= (1 << 4);
 	};
 	using OpenFlags = UInt32;
-	struct OpenFlag {
+	struct GURAX_DLLDECLARE OpenFlag {
 		static const Flags None			= 0;
 		static const Flags Read			= (1 << 0);
 		static const Flags Write		= (1 << 1);

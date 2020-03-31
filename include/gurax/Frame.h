@@ -127,7 +127,7 @@ public:
 //------------------------------------------------------------------------------
 // Frame_ValueMap
 //------------------------------------------------------------------------------
-class Frame_ValueMap : public Frame {
+class GURAX_DLLDECLARE Frame_ValueMap : public Frame {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame_ValueMap);

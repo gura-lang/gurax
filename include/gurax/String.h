@@ -16,42 +16,42 @@ class ValueList;
 class GURAX_DLLDECLARE String : public std::string {
 public:
 	// Algorithm operators
-	struct EqualTo {
+	struct GURAX_DLLDECLARE EqualTo {
 		bool operator()(const String& str1, const String& str2) const {
 			return str1.IsEqualTo(str2);
 		}
 	};
-	struct EqualToICase {
+	struct GURAX_DLLDECLARE EqualToICase {
 		bool operator()(const String& str1, const String& str2) const {
 			return str1.IsEqualToICase(str2);
 		}
 	};
-	struct LessThan {
+	struct GURAX_DLLDECLARE LessThan {
 		bool operator()(const String& str1, const String& str2) const {
 			return str1.IsLessThan(str2);
 		}
 	};
-	struct LessThanICase {
+	struct GURAX_DLLDECLARE LessThanICase {
 		bool operator()(const String& str1, const String& str2) const {
 			return str1.IsLessThanICase(str2);
 		}
 	};
-	struct GreaterThan {
+	struct GURAX_DLLDECLARE GreaterThan {
 		bool operator()(const String& str1, const String& str2) const {
 			return str2.IsLessThan(str1);
 		}
 	};
-	struct GreaterThanICase {
+	struct GURAX_DLLDECLARE GreaterThanICase {
 		bool operator()(const String& str1, const String& str2) const {
 			return str2.IsLessThanICase(str1);
 		}
 	};
-	struct Hash {
+	struct GURAX_DLLDECLARE Hash {
 		bool operator()(const String& str) const {
 			return str.CalcHash();
 		}
 	};
-	class CharSeq : public Gurax::CharSeq {
+	class GURAX_DLLDECLARE CharSeq : public Gurax::CharSeq {
 	private:
 		const char* _p;
 	public:
@@ -62,7 +62,7 @@ public:
 	};
 public:
 	using CTypes = UInt32;
-	struct CType {
+	struct GURAX_DLLDECLARE CType {
 		static constexpr CTypes Alpha			= 1 << 0;
 		static constexpr CTypes Digit			= 1 << 1;
 		static constexpr CTypes HexDigit		= 1 << 2;
@@ -321,13 +321,13 @@ public:
 	}
 };
 
-struct CharCase {
+struct GURAX_DLLDECLARE CharCase {
 	int operator()(char ch1, char ch2) const {
 		return static_cast<int>(ch1) - ch2;
 	}
 };
 
-struct CharICase {
+struct GURAX_DLLDECLARE CharICase {
 	int operator()(char ch1, char ch2) const {
 		return static_cast<int>(String::ToUpper(ch1)) - String::ToUpper(ch2);
 	}

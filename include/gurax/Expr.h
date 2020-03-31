@@ -27,7 +27,7 @@ enum class MemberMode {
 	MapToList,	// foo::bar .. map-to-list
 };
 
-class SymbolAssoc_MemberMode : public SymbolAssoc<MemberMode, MemberMode::None> {
+class GURAX_DLLDECLARE SymbolAssoc_MemberMode : public SymbolAssoc<MemberMode, MemberMode::None> {
 public:
 	SymbolAssoc_MemberMode() {
 		Assoc(Gurax_SymbolMark(Period),			MemberMode::Normal);
@@ -74,7 +74,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Expr);
 public:
-	class TypeInfo {
+	class GURAX_DLLDECLARE TypeInfo {
 	private:
 		const char* _name;
 	public:
@@ -82,15 +82,15 @@ public:
 		const char* GetName() const { return _name; }
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 	};
-	class Visitor {
+	class GURAX_DLLDECLARE Visitor {
 	public:
 		virtual bool Visit(Expr* pExpr) = 0;
 	};
-	class Visitor_Prepare : public Visitor {
+	class GURAX_DLLDECLARE Visitor_Prepare : public Visitor {
 	public:
 		virtual bool Visit(Expr* pExpr) override { return pExpr->DoPrepare(); }
 	};
-	class Visitor_GatherArgSymbols : public Visitor {
+	class GURAX_DLLDECLARE Visitor_GatherArgSymbols : public Visitor {
 	private:
 		SymbolList& _symbolList;
 	public:
@@ -243,7 +243,7 @@ public:
 //------------------------------------------------------------------------------
 // ExprLink
 //------------------------------------------------------------------------------
-class ExprLink : public Referable {
+class GURAX_DLLDECLARE ExprLink : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ExprLink);

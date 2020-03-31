@@ -41,13 +41,13 @@ public:
 //------------------------------------------------------------------------------
 // MemoryList
 //------------------------------------------------------------------------------
-class MemoryList : public std::vector<Memory*> {
+class GURAX_DLLDECLARE MemoryList : public std::vector<Memory*> {
 };
 
 //------------------------------------------------------------------------------
 // MemoryOwner
 //------------------------------------------------------------------------------
-class MemoryOwner : public MemoryList {
+class GURAX_DLLDECLARE MemoryOwner : public MemoryList {
 public:
 	~MemoryOwner();
 	void Clear();

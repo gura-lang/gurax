@@ -16,7 +16,7 @@ public:
 	Gurax_DeclareReferable(Stat);
 public:
 	using Flags = UInt32;
-	struct Flag {
+	struct GURAX_DLLDECLARE Flag {
 		static const Flags Dir	= (1 << 0);
 		static const Flags Chr	= (1 << 1);
 		static const Flags Blk	= (1 << 2);
@@ -80,7 +80,7 @@ public:
 //------------------------------------------------------------------------------
 // StatList
 //------------------------------------------------------------------------------
-class StatList : public std::vector<Stat*> {
+class GURAX_DLLDECLARE StatList : public std::vector<Stat*> {
 public:
 	Stat* FindByName(const char* fileName) const;
 };

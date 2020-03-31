@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
-class FunctionCustom : public Function {
+class GURAX_DLLDECLARE FunctionCustom : public Function {
 protected:
 	RefPtr<Expr> _pExprBody;
 	const PUnit* _pPUnitBody;

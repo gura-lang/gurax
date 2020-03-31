@@ -15,7 +15,7 @@ class IteratorOwner;
 //-----------------------------------------------------------------------------
 // FormatterFlags
 //-----------------------------------------------------------------------------
-class FormatterFlags {
+class GURAX_DLLDECLARE FormatterFlags {
 public:
 	enum class PlusMode { None, Space, Plus };
 	struct Prec {
@@ -48,7 +48,7 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Formatter {
 public:
-	class Source {
+	class GURAX_DLLDECLARE Source {
 	public:
 		virtual bool IsEnd() = 0;
 		virtual Value* FetchInt() = 0;
@@ -57,7 +57,7 @@ public:
 		virtual Value* FetchDouble() = 0;
 		virtual Value* FetchString() = 0;
 	};
-	class Source_ValueList : public Source {
+	class GURAX_DLLDECLARE Source_ValueList : public Source {
 	private:
 		const ValueList& _valueList;
 		ValueList::const_iterator _ppValue;
@@ -72,7 +72,7 @@ public:
 		virtual Value* FetchDouble() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchString() override { return (*_ppValue++)->Reference(); }
 	};
-	class Source_va_list : public Source {
+	class GURAX_DLLDECLARE Source_va_list : public Source {
 	private:
 		va_list _ap;
 	public:

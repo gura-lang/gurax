@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Math
 //------------------------------------------------------------------------------
-class Math {
+class GURAX_DLLDECLARE Math {
 public:
 	static const Double E;
 	static const Double PI;

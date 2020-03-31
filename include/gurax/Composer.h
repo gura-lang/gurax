@@ -40,9 +40,9 @@ public:
 		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
 		const PUnit* GetPUnitOfBreak() const { return _pPUnitOfBreak; }
 	};
-	class RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
+	class GURAX_DLLDECLARE RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
 	};
-	class RepeaterInfoOwner : public RepeaterInfoTbl {
+	class GURAX_DLLDECLARE RepeaterInfoOwner : public RepeaterInfoTbl {
 	public:
 		~RepeaterInfoOwner() { Clear(); }
 		void Clear();

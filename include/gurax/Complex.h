@@ -13,6 +13,7 @@ namespace Gurax {
 class GURAX_DLLDECLARE Complex : public std::complex<Double> {
 public:
 	using std::complex<Double>::complex;
+	Complex() {}
 	Complex(std::complex<Double>& num) : std::complex<Double>(num) {}
 	bool IsZero() const { return real() == 0. && imag() == 0.; }
 };
@@ -20,7 +21,7 @@ public:
 //------------------------------------------------------------------------------
 // ComplexList
 //------------------------------------------------------------------------------
-class ComplexList : public std::vector<Complex>
+class GURAX_DLLDECLARE ComplexList : public std::vector<Complex>
 {
 public:
 	using std::vector<Complex>::vector;
