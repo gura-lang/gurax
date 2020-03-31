@@ -12,7 +12,6 @@ $dirName = "${PSScriptRoot}\include"
 if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
     $Env:INCLUDE += ";" + $dirName
 }
-#Write-Host $Env:INCLUDE
 
 #------------------------------------------------------------------------------
 # main
@@ -35,7 +34,7 @@ function main() {
 function DownloadPackages() {
     foreach ($package in $packages) {
         foreach ($fileName in $package.fileNames) {
-            Write-Output $fileName
+            Write-Output "download: ${fileName}"
             Invoke-WebRequest -Uri "${urlGuest}/${fileName}" -OutFile $fileName
         }
     }
@@ -68,6 +67,7 @@ function BuildPackages() {
 #------------------------------------------------------------------------------
 function ExpandFiles([String[]] $fileNames) {
     foreach ($fileName in $fileNames) {
+        Write-Host "--------------------------------------------------------------------------------"
         Write-Host "expand: ${fileName}"
         if ($fileName -like "*.tar.gz") {
             tar -xf $fileName
@@ -77,6 +77,37 @@ function ExpandFiles([String[]] $fileNames) {
         }
     }
 }
+
+#---------------------------------------------------------------------------------
+# Package: bzip2
+#---------------------------------------------------------------------------------
+class Package_bzip2 {
+    [String] $name = "bzip2"
+    [String] $ver = "1.0.8"
+    [String] $fullName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.fullName).tar.gz")
+    [String] $dirName = $this.fullName
+    Build() {
+        nmake -f makefile.msc
+    }
+}
+$packages += [Package_bzip2]::new()
+
+#---------------------------------------------------------------------------------
+# Package: jpegsrc
+#---------------------------------------------------------------------------------
+class Package_jpegsrc {
+    [String] $name = "jpegsrc"
+    [String] $ver = "9d"
+    [String] $fullName = "$($this.name).v$($this.ver)"
+    [String[]] $fileNames = @("$($this.fullName).tar.gz")
+    [String] $dirName = "jpeg-$($($this.ver))"
+    Build() {
+        copy jconfig.vc jconfig.h
+        nmake -f makefile.vc nodebug=1
+    }
+}
+$packages += [Package_jpegsrc]::new()
 
 #------------------------------------------------------------------------------
 # Package: Onigmo
@@ -96,19 +127,21 @@ class Package_onigmo {
 $packages += [Package_onigmo]::new()
 
 #---------------------------------------------------------------------------------
-# Package: jpegsrc
+# Package: zlib
 #---------------------------------------------------------------------------------
-class Package_jpegsrc {
-    [String] $name = "jpegsrc"
-    [String] $ver = "9d"
-    [String] $fullName = "$($this.name).v$($this.ver)"
+class Package_zlib {
+    [String] $name = "zlib"
+    [String] $ver = "1.2.8"
+    [String] $fullName = "$($this.name)-$($this.ver)"
     [String[]] $fileNames = @("$($this.fullName).tar.gz")
-    [String] $dirName = "jpeg-$($($this.ver))"
+    [String] $dirName = $this.fullName
     Build() {
-        copy jconfig.vc jconfig.h
-        nmake -f makefile.vc nodebug=1
+        nmake -f win32\Makefile.msc
     }
 }
-$packages += [Package_jpegsrc]::new()
+$packages += [Package_zlib]::new()
 
+#------------------------------------------------------------------------------
+# call main
+#------------------------------------------------------------------------------
 main
