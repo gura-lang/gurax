@@ -9,9 +9,18 @@ b.pathNamesSrc = [
 b.pathNamesScript = [
 	'script/sed.gura', 'script/sed.doc.gura', 'script/tokenizer.gura', 'script/tokenizer.doc.gura'
 ]
-b.dirNamesInc = ['guest/include/onigmo']
-b.dirNamesLib = ['guest/lib']
-b.libs = ['onigmo']
+if (sys.platform == `mswin) {
+	dirBase = path.Join(sys.dirBase, 'guest/onigmo-6.2.0')
+	b.dirNamesInc = [dirBase]
+	b.dirNamesLib = [path.Join(dirBase, 'build_x86')]
+	b.libs = ['onigmo_s']
+	//b.pathNameHdr = nil
+	b.cxxflags = ['-DONIG_EXTERN=extern']
+} elsif (sys.platoform == `darwin) {
+	b.dirNamesInc = ['guest/include/onigmo']
+	b.dirNamesLib = ['guest/lib']
+	b.libs = ['onigmo']
+}
 b.Run()
 /*
 if (sys.platform == `mswin) {
