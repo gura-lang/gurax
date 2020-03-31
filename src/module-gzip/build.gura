@@ -6,10 +6,12 @@ import(util.modbuild) {Builder}
 
 b = Builder('gzip')
 b.pathNamesSrc = ['module-gzip.cpp', 'Util.cpp']
-b.pathNamesScript = []
-b.dirNamesInc = []
-b.dirNamesLib = []
-b.cxxflags = []
-b.ldflags = []
-b.libs = ['z']
+if (sys.platform == `mswin) {
+	dirNameGuest = b.GetDirNameGuest('zlib-1.2.8')
+    b.dirNamesInc = [path.Join(dirNameGuest)]
+    b.dirNamesLib = [path.Join(dirNameGuest)]
+    b.libs = ['zlib']
+} elsif (sys.platform == `darwin) {
+    b.libs = ['z']
+}
 b.Run()
