@@ -66,8 +66,6 @@ Builder = class {
 	compiler = ''
 	linker = ''
 	suffixObj = ''
-	optObjOut = ''
-	optGurdOut = ''
 	cflagsBase = []
 	cxxflagsBase = []
 	ldflagsBase = []
@@ -82,27 +80,19 @@ Builder = class {
 			this.compiler = 'cl'
 			this.linker = 'link'
 			this.suffixObj = '.obj'
-			this.optObjOut = '-Fo'
-			this.optGurdOut = '-out:'
-			this.cflagsBase = ['-nologo', '-EHsc', '-MD', '-DGURAX_MODULE_SEPARATED']
-			//this.cxxflagsBase = ['-nologo', '-TP', '-EHsc', '-MD', '-DGURAX_MODULE_SEPARATED',
-			//	'/W3', '/GR', '/EHsc', '/MD', '/Zi', '/O2', '/Ob1', '/DNDEBUG', '/FS']
-			this.cxxflagsBase = ['/TP', '/DWIN32', '/D_WINDOWS', '/W3', '/GR', '/EHsc', '/MD', '/Zi', '/O2', '/Ob1', '/DNDEBUG', '/FS', '-DGURAX_MODULE_SEPARATED']
-			this.ldflagsBase = ['-dll', '/MACHINE:x64', '/version:0.0', '/machine:x64', '/debug', '/INCREMENTAL', '/subsystem:console']
-			//this.ldflagsBase = ['-nologo', '-dll', 
-			//	'/subsystem:windows', '/OPT:REF', '/OPT:ICF', '/DYNAMICBASE:NO',
-			//	'/ERRORREPORT:PROMPT', '/MACHINE:X64']
-			this.cxxflagsPreCompile = ['-x', 'c++-header']
-			this.libsBase = ['guraxcore']
-			//this.libsBase = ['guraxcore', 'kernel32', 'user32', 'gdi32', 'winspool', 'shell32',
-			//	'ole32', 'oleaut32', 'uuid', 'comdlg32', 'advapi32']
+			this.cflagsBase = ['/nologo', '/DWIN32', '/D_WINDOWS', '/W3', '/GR', '/EHsc', '/MD',
+				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
+			this.cxxflagsBase = ['/nologo', '/DWIN32', '/D_WINDOWS', '/W3', '/GR', '/EHsc', '/MD',
+				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
+			this.ldflagsBase = ['/nologo', '/dll', '/version:0.0', '/machine:x64']
+			this.cxxflagsPreCompile = []
+			this.libsBase = ['guraxcore', 'kernel32', 'user32', 'gdi32', 'winspool', 'shell32',
+				'ole32', 'oleaut32', 'uuid', 'comdlg32', 'advapi32']
 		} elsif (sys.platform == `darwin) {
 			this.nameOut = 'gnuc'
 			this.compiler = 'clang'
 			this.linker = 'clang'
 			this.suffixObj = '.o'
-			this.optObjOut = '-o'
-			this.optGurdOut = '-o'
 			this.cflagsBase = ['-fPIC', '-Wall', '-DGURAX_MODULE_SEPARATED']
 			this.cxxflagsBase = ['-fPIC', '-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED']
 			this.ldflagsBase = ['-fPIC', '-shared', '-install_name', this.targetName + '.gurd']
@@ -119,13 +109,14 @@ Builder = class {
 		os.Exec(pathName, args*) == 0
 	}
 	PreCompile() = {
+		(this.compiler == 'cl') && return(true)
 		(!this.pathNameHdr || !this.ShouldProcess(this.pathNamePch, this.pathNameHdr)) && return(true)
 		Printf('-- compiling: %s\n', this.pathNameHdr)
 		this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsPreCompile*, this.cxxflags*,
-				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
-				  '-o' + this.pathNamePch, this.pathNameHdr)
+					('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
+					'-o' + this.pathNamePch, this.pathNameHdr)
 	}
-	Compile(pathNameObj:String, pathNameSrc:String) = {
+	Compile(pathNameObj:String, pathNameSrc:String, idx:Number) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		Printf('-- compiling: %s\n', pathNameSrc)
 		cflags = if (pathNameSrc.EndsWith('.c'):icase) {
@@ -133,30 +124,43 @@ Builder = class {
 		} else {
 			this.cxxflagsBase |+| this.cxxflagsCompile |+| this.cxxflags
 		}
-		this.Exec(this.compiler, cflags*,
-					('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
-					this.optObjOut + pathNameObj, '-c', pathNameSrc)
+		if (this.compiler == 'cl') {
+			cflagsPreCompile = if (!this.pathNameHdr) {
+				[]
+			} elsif (idx == 0) {
+				['/Yc' + this.pathNameHdr, '/Fp' + this.pathNamePch]
+			} else {
+				['/Yu' + this.pathNameHdr, '/Fp' + this.pathNamePch]
+			}
+			this.Exec(this.compiler, cflags*,
+						('/I' + this.dirNameSysInc), ('/I' + this.dirNamesInc)*, cflagsPreCompile*,
+						'/Fo' + pathNameObj, '/c', pathNameSrc)
+		} else {
+			this.Exec(this.compiler, cflags*,
+						('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
+						'-o' + pathNameObj, '-c', pathNameSrc)
+		}
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
 		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return(true)
-		//!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-		//		   '-L' + this.dirNameSysLib, ('-L' + this.dirNamesLib)*,
-		//		   this.optGurdOut + pathNameGurd, pathNamesObj*,
-		//		   ('-l' + this.libsBase)*, ('-l' + this.libs)*) && return(false)
-		!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-				   '-LIBPATH:' + this.dirNameSysLib, ('-LIBPATH:' + this.dirNamesLib)*,
-				   this.optGurdOut + pathNameGurd, pathNamesObj*,
-				   (this.libsBase + '.lib')*, (this.libs + '.lib')*) && return(false)
-		//!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-		//		   this.optGurdOut + pathNameGurd, pathNamesObj*,
-		//		   (this.libsBase + '.lib')*, (this.libs + '.lib')*) && return(false)
+		if (this.linker == 'link') {
+			!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
+						'/LIBPATH:' + this.dirNameSysLib, ('/LIBPATH:' + this.dirNamesLib)*,
+						'/out:' + pathNameGurd, pathNamesObj*,
+						(this.libsBase + '.lib')*, (this.libs + '.lib')*) && return(false)
+		} else {
+			!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
+						'-L' + this.dirNameSysLib, ('-L' + this.dirNamesLib)*,
+						'-o' + pathNameGurd, pathNamesObj*,
+						('-l' + this.libsBase)*, ('-l' + this.libs)*) && return(false)
+		}
 		Printf('-- generated: %s\n', pathNameGurd)
 		true
 	}
 	Command_build() = {
 		!this.PreCompile() && return
-		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {
-			!this.Compile(pathNameObj, pathNameSrc) && return(false)
+		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {|idx|
+			!this.Compile(pathNameObj, pathNameSrc, idx) && return(false)
 		}
 		this.Link(this.pathNameGurd, this.pathNamesObj*)
 	}
@@ -208,8 +212,8 @@ Builder = class {
 		if (!this.pathNameHdr) {
 			// nothing to do
 		} elsif (sys.platform == `mswin) {
-			//this.pathNamePch = path.Join(this.dirNameOut, path.FileName(this.pathNameHdr) + '.gch')
-			this.cxxflagsCompile.Add('/Yc', this.pathNamePch)
+			this.pathNamePch = path.Join(this.dirNameOut, path.FileName(this.pathNameHdr) + '.pch')
+			//this.cxxflagsCompile.Add('/Yu' + this.pathNameHdr, '/Fp' + this.pathNamePch)
 		} elsif (sys.platform == `darwin) {
 			this.pathNamePch = path.Join(this.dirNameOut, path.FileName(this.pathNameHdr) + '.gch')
 			this.cxxflagsCompile.Add('-include-pch', this.pathNamePch)
