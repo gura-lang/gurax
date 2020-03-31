@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.pdb
 
 # Visual Studio Project Files
 .vs

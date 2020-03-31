@@ -4,8 +4,10 @@
 #ifndef GURAX_MODULE_JPEG_UTIL_H
 #define GURAX_MODULE_JPEG_UTIL_H
 #include <gurax.h>
+#if !defined(GURAX_ON_MSWIN)
 #define HAVE_BOOLEAN
 using boolean = int;
+#endif
 #include <jpeglib.h>
 #include <jerror.h>
 #include <setjmp.h>

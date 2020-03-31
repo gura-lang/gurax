@@ -11,9 +11,15 @@ b.pathNamesSrc = [
 	'VType_Content.cpp', 'VType_Exif.cpp', 'VType_IFD.cpp', 'VType_Segment.cpp', 'VType_Tag.cpp'
 ]
 b.pathNamesScript = []
-b.dirNamesInc = ['guest/include/libjpeg']
-b.dirNamesLib = ['guest/lib']
-b.cxxflags = []
-b.ldflags = []
-b.libs = ['jpeg']
+if (sys.platform == `mswin) {
+	dirNameGuest = b.GetDirNameGuest('jpeg-9d')
+	b.dirNamesInc = [path.Join(dirNameGuest)]
+	b.dirNamesLib = [path.Join(dirNameGuest)]
+	b.libs = ['libjpeg']
+	b.ldflags = ['/NODEFAULTLIB:LIBCMT']
+} elsif (sys.platform == `darwin) {
+	b.dirNamesInc = ['guest/include/libjpeg']
+	b.dirNamesLib = ['guest/lib']
+	b.libs = ['jpeg']
+}
 b.Run()
