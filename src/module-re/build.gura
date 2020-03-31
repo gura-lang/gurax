@@ -10,9 +10,9 @@ b.pathNamesScript = [
 	'script/sed.gura', 'script/sed.doc.gura', 'script/tokenizer.gura', 'script/tokenizer.doc.gura'
 ]
 if (sys.platform == `mswin) {
-	dirBase = path.Join(sys.dirBase, 'guest/onigmo-6.2.0')
-	b.dirNamesInc = [dirBase]
-	b.dirNamesLib = [path.Join(dirBase, 'build_x86')]
+	dirNameGuest = b.GetDirNameGuest('onigmo-6.2.0')
+	b.dirNamesInc = [path.Join(dirNameGuest)]
+	b.dirNamesLib = [path.Join(dirNameGuest, 'build_x86')]
 	b.libs = ['onigmo_s']
 	b.cxxflags = ['/DONIG_EXTERN=extern']
 	b.ldflags = ['/LTCG', '/NODEFAULTLIB:LIBCMT']
@@ -23,13 +23,7 @@ if (sys.platform == `mswin) {
 }
 b.Run()
 /*
-if (sys.platform == `mswin) {
-	baseDir = path.join(b.guestDir, 'onig-5.9.5')
-	b.dirNamesInc = [baseDir]
-	b.dirNamesLib = [baseDir]
-	b.libs = ['onig_s.lib']
-	b.cxxflags = ['-DONIG_EXTERN=extern']
-} elsif (sys.platform == `linux) {
+if (sys.platform == `linux) {
 	b.libs = ['onig']
 	b.debFiles = ['libonig']
 	b.rpmFiles = ['oniguruma']

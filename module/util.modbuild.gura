@@ -240,4 +240,5 @@ Builder = class {
 		}
 		this
 	}
+	GetDirNameGuest(dirName:String) = path.Join(sys.dirBase, 'guest', dirName)
 }
