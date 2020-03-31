@@ -118,7 +118,6 @@ Builder = class {
 	}
 	Compile(pathNameObj:String, pathNameSrc:String, idx:Number) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
-		Printf('-- compiling: %s\n', pathNameSrc)
 		cflags = if (pathNameSrc.EndsWith('.c'):icase) {
 			this.cflagsBase |+| this.cflagsCompile |+| this.cflags
 		} else {
@@ -126,16 +125,20 @@ Builder = class {
 		}
 		if (this.compiler == 'cl') {
 			cflagsPreCompile = if (!this.pathNameHdr) {
+				Printf('-- compiling: %s\n', pathNameSrc)
 				[]
 			} elsif (idx == 0) {
+				Printf('-- compiling(create pch): %s\n', pathNameSrc)
 				['/Yc' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			} else {
+				Printf('-- compiling(use pch): %s\n', pathNameSrc)
 				['/Yu' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			}
 			this.Exec(this.compiler, cflags*,
 						('/I' + this.dirNameSysInc), ('/I' + this.dirNamesInc)*, cflagsPreCompile*,
 						'/Fo' + pathNameObj, '/c', pathNameSrc)
 		} else {
+			Printf('-- compiling: %s\n', pathNameSrc)
 			this.Exec(this.compiler, cflags*,
 						('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 						'-o' + pathNameObj, '-c', pathNameSrc)
