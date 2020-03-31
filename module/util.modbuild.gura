@@ -84,7 +84,7 @@ Builder = class {
 				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
 			this.cxxflagsBase = ['/nologo', '/DWIN32', '/D_WINDOWS', '/W3', '/GR', '/EHsc', '/MD',
 				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
-			this.ldflagsBase = ['/nologo', '/dll', '/version:0.0', '/machine:x64']
+			this.ldflagsBase = ['/nologo', '/dll', '/version:0.0', '/machine:x64', '/debug'] // /INCREMENTAL
 			this.cxxflagsPreCompile = []
 			this.libsBase = ['guraxcore', 'kernel32', 'user32', 'gdi32', 'winspool', 'shell32',
 				'ole32', 'oleaut32', 'uuid', 'comdlg32', 'advapi32']
@@ -146,7 +146,7 @@ Builder = class {
 		if (this.linker == 'link') {
 			!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
 						'/LIBPATH:' + this.dirNameSysLib, ('/LIBPATH:' + this.dirNamesLib)*,
-						'/out:' + pathNameGurd, pathNamesObj*,
+						'/out:' + pathNameGurd, '/pdb:' + pathNameGurd + '.pdb', pathNamesObj*,
 						(this.libsBase + '.lib')*, (this.libs + '.lib')*) && return(false)
 		} else {
 			!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
