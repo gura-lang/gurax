@@ -84,7 +84,7 @@ Builder = class {
 				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
 			this.cxxflagsBase = ['/nologo', '/DWIN32', '/D_WINDOWS', '/W3', '/GR', '/EHsc', '/MD',
 				'/Zi', '/O2', '/Ob1', '/DNDEBUG', '/DGURAX_MODULE_SEPARATED']
-			this.ldflagsBase = ['/nologo', '/dll', '/version:0.0', '/machine:x64', '/debug'] // /INCREMENTAL
+			this.ldflagsBase = ['/nologo', '/DLL', '/VERSION:0.0', '/MACHINE:x64', '/DEBUG', '/INCREMENTAL:NO']
 			this.cxxflagsPreCompile = []
 			this.libsBase = ['guraxcore', 'kernel32', 'user32', 'gdi32', 'winspool', 'shell32',
 				'ole32', 'oleaut32', 'uuid', 'comdlg32', 'advapi32']
@@ -111,7 +111,7 @@ Builder = class {
 	PreCompile() = {
 		(this.compiler == 'cl') && return(true)
 		(!this.pathNameHdr || !this.ShouldProcess(this.pathNamePch, this.pathNameHdr)) && return(true)
-		Printf('-- compiling: %s\n', this.pathNameHdr)
+		Printf('-- Precompiled Header: %s\n', this.pathNameHdr)
 		this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsPreCompile*, this.cxxflags*,
 					('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 					'-o' + this.pathNamePch, this.pathNameHdr)
@@ -119,25 +119,26 @@ Builder = class {
 	Compile(pathNameObj:String, pathNameSrc:String, idx:Number, nSrcs:Number) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		nDigits = Format('%d', nSrcs).len
-		cflags = if (pathNameSrc.EndsWith('.c'):icase) {
+		isCLanguage = pathNameSrc.EndsWith('.c'):icase
+		cflags = if (isCLanguage) {
 			this.cflagsBase |+| this.cflagsCompile |+| this.cflags
 		} else {
 			this.cxxflagsBase |+| this.cxxflagsCompile |+| this.cxxflags
 		}
 		if (this.compiler == 'cl') {
-			cflagsPreCompile = if (!this.pathNameHdr) {
+			cflagsPreCompile = if (!this.pathNameHdr || isCLanguage) {
 				[]
 			} elsif (idx == 0) {
 				['/Yc' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			} else {
 				['/Yu' + this.pathNameHdr, '/Fp' + this.pathNamePch]
 			}
-			Printf('-- [%*d/%d] compiling: ', nDigits, idx + 1, nSrcs)
+			Printf('-- compiling %*d/%d: ', nDigits, idx + 1, nSrcs)
 			this.Exec(this.compiler, cflags*,
 						('/I' + this.dirNameSysInc), ('/I' + this.dirNamesInc)*, cflagsPreCompile*,
 						'/Fo' + pathNameObj, '/c', pathNameSrc)
 		} else {
-			Printf('-- [%*d/%d] compiling: %s\n', nDigits, idx + 1, nSrcs, pathNameSrc)
+			Printf('-- compiling %*d/%d: %s\n', nDigits, idx + 1, nSrcs, pathNameSrc)
 			this.Exec(this.compiler, cflags*,
 						('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 						'-o' + pathNameObj, '-c', pathNameSrc)

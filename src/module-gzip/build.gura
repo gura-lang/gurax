@@ -7,7 +7,7 @@ import(util.modbuild) {Builder}
 b = Builder('gzip')
 b.pathNamesSrc = ['module-gzip.cpp', 'Util.cpp']
 if (sys.platform == `mswin) {
-	dirNameGuest = b.GetDirNameGuest('zlib-1.2.8')
+	dirNameGuest = b.GetDirNameGuest('zlib-1.2.11')
     b.dirNamesInc = [dirNameGuest]
     b.dirNamesLib = [dirNameGuest]
     b.libs = ['zlib']
