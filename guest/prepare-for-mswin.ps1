@@ -95,6 +95,7 @@ function CleanPackages([String] $packageName) {
 function BuildPackages([String] $packageName) {
     foreach ($package in $packages) {
         if (($packageName.Length -eq 0) -or ($package.name -eq $packageName)) {
+            Write-Host "-------------------------------------------"
             Write-Host "building: $($package.name)"
             ExpandFiles $package.fileNames
             Push-Location $package.dirName
