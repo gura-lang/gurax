@@ -11,10 +11,10 @@ b.pathNamesSrc = [
 	'VType_Reader.cpp', 'VType_Writer.cpp', 'VType_StatEx.cpp'
 ]
 if (sys.platform == `mswin) {
-	dirNameGuest1 = b.GetDirNameGuest('zlib-1.2.11')
-	dirNameGuest2 = b.GetDirNameGuest('bzip2-1.0.8')
-    b.dirNamesInc = [dirNameGuest1, dirNameGuest2]
-    b.dirNamesLib = [dirNameGuest1, dirNameGuest2]
+	dirNameGuest_zlib = b.GetDirNameGuest('zlib-1.2.11')
+	dirNameGuest_bzip2 = b.GetDirNameGuest('bzip2-1.0.8')
+    b.dirNamesInc = [dirNameGuest_zlib, dirNameGuest_bzip2]
+    b.dirNamesLib = [dirNameGuest_zlib, dirNameGuest_bzip2]
     b.libs = ['zlib', 'libbz2']
 } elsif (sys.platform == `darwin) {
     b.libs = ['z', 'bz2']
