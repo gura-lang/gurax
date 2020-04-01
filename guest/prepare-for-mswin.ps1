@@ -3,9 +3,13 @@
 #==============================================================================
 
 #------------------------------------------------------------------------------
+# Command-line parameter
+#------------------------------------------------------------------------------
+Param([switch]$help, [switch] $list, [switch] $download, [switch] $clean, [switch] $build)
+
+#------------------------------------------------------------------------------
 # Global variables
 #------------------------------------------------------------------------------
-Param([String] $cmd)
 $urlGuest = "https://www.gura-lang.org/guest"
 $packages = @()
 $dirName = "${PSScriptRoot}\include"
@@ -16,26 +20,56 @@ if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 #------------------------------------------------------------------------------
 # main
 #------------------------------------------------------------------------------
-function main() {
-    switch ($cmd) {
-        "clean" {
-            CleanPackages
-        }
-        default {
-            DownloadPackages
-            BuildPackages
-        }
+function main([String[]] $packageNames) {
+    if ($help) {
+        PrintHelp
+    } elseif ($list) {
+        ListPackages
+    } elseif ($download) {
+        DownloadPackages $packageNames
+    } elseif ($clean) {
+        CleanPackages $packageNames
+    } elseif ($build) {
+        BuildPackages $packageNames
+    } else {
+        DownloadPackages $packageNames
+        BuildPackages $packageNames
+    }
+}
+
+#------------------------------------------------------------------------------
+# PrintHelp
+#------------------------------------------------------------------------------
+function PrintHelp() {
+    Write-Host "usage: prepare-for-mswin.ps1 [options]"
+    Write-Host "[options]"
+    Write-Host " -help"
+    Write-Host " -list"
+    Write-Host " -clean [packages*]"
+    Write-Host " -download [packages*]"
+    Write-Host " -build [packages*]"
+}
+
+#------------------------------------------------------------------------------
+# ListPackages
+#------------------------------------------------------------------------------
+function ListPackages() {
+    foreach ($package in $packages) {
+        Write-Host $package.name
     }
 }
 
 #------------------------------------------------------------------------------
 # DownloadPackages
 #------------------------------------------------------------------------------
-function DownloadPackages() {
+function DownloadPackages([String[]] $packageNames) {
     foreach ($package in $packages) {
-        foreach ($fileName in $package.fileNames) {
-            Write-Output "download: ${fileName}"
-            Invoke-WebRequest -Uri "${urlGuest}/${fileName}" -OutFile $fileName
+        if (($packageNames.length -eq 0) -or ($packageNames -contains $package.name)) {
+            Write-Host "downloading: $($package.name)"
+            foreach ($fileName in $package.fileNames) {
+                Write-Host "  $fileName"
+                Invoke-WebRequest -Uri "${urlGuest}/${fileName}" -OutFile $fileName
+            }
         }
     }
 }
@@ -43,22 +77,30 @@ function DownloadPackages() {
 #------------------------------------------------------------------------------
 # CleanPackages
 #------------------------------------------------------------------------------
-function CleanPackages() {
+function CleanPackages([String] $packageName) {
     foreach ($package in $packages) {
-        Write-Output "clean: $($package.name)"
-        Remove-Item -ErrorAction Ignore -Force -Recurse $package.dirName
+        if (($packageName.Length -eq 0) -or ($package.name -eq $packageName)) {
+            foreach ($fileName in $package.fileNames) {
+                Remove-Item -ErrorAction Ignore -Force $fileName
+            }
+            Remove-Item -ErrorAction Ignore -Force -Recurse $package.dirName
+            Write-Host "cleaned: $($package.name)"
+        }
     }
 }
 
 #------------------------------------------------------------------------------
 # BuildPackages
 #------------------------------------------------------------------------------
-function BuildPackages() {
+function BuildPackages([String] $packageName) {
     foreach ($package in $packages) {
-        ExpandFiles $package.fileNames
-        Push-Location $package.dirName
-        $package.Build()
-        Pop-Location
+        if (($packageName.Length -eq 0) -or ($package.name -eq $packageName)) {
+            Write-Host "building: $($package.name)"
+            ExpandFiles $package.fileNames
+            Push-Location $package.dirName
+            $package.Build()
+            Pop-Location
+        }
     }
 }
 
@@ -67,8 +109,6 @@ function BuildPackages() {
 #------------------------------------------------------------------------------
 function ExpandFiles([String[]] $fileNames) {
     foreach ($fileName in $fileNames) {
-        Write-Host "--------------------------------------------------------------------------------"
-        Write-Host "expand: ${fileName}"
         if ($fileName -like "*.tar.gz") {
             tar -xf $fileName
         } elseif (($fileName -match "(.+).zip$") -or ($fileName -match "(.+).7z$")) {
@@ -88,7 +128,7 @@ class Package_bzip2 {
     [String[]] $fileNames = @("$($this.fullName).tar.gz")
     [String] $dirName = $this.fullName
     Build() {
-        nmake -f makefile.msc
+        nmake /nologo /f makefile.msc
     }
 }
 $packages += [Package_bzip2]::new()
@@ -104,7 +144,7 @@ class Package_jpegsrc {
     [String] $dirName = "jpeg-$($($this.ver))"
     Build() {
         copy jconfig.vc jconfig.h
-        nmake -f makefile.vc nodebug=1
+        nmake /nologo /f makefile.vc nodebug=1
     }
 }
 $packages += [Package_jpegsrc]::new()
@@ -121,7 +161,7 @@ class Package_onigmo {
     Build() {
         Copy-Item win32/Makefile .
         Copy-Item win32/config.h .
-        nmake
+        nmake /nologo
     }
 }
 $packages += [Package_onigmo]::new()
@@ -131,12 +171,12 @@ $packages += [Package_onigmo]::new()
 #---------------------------------------------------------------------------------
 class Package_zlib {
     [String] $name = "zlib"
-    [String] $ver = "1.2.8"
+    [String] $ver = "1.2.11"
     [String] $fullName = "$($this.name)-$($this.ver)"
     [String[]] $fileNames = @("$($this.fullName).tar.gz")
     [String] $dirName = $this.fullName
     Build() {
-        nmake -f win32\Makefile.msc
+        nmake /nologo /f win32\Makefile.msc
     }
 }
 $packages += [Package_zlib]::new()
@@ -144,4 +184,4 @@ $packages += [Package_zlib]::new()
 #------------------------------------------------------------------------------
 # call main
 #------------------------------------------------------------------------------
-main
+main $args
