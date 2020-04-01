@@ -11,7 +11,7 @@ b.pathNamesSrc = [
 	'VType_Reader.cpp', 'VType_Writer.cpp', 'VType_StatEx.cpp'
 ]
 if (sys.platform == `mswin) {
-	dirNameGuest1 = b.GetDirNameGuest('zlib-1.2.8')
+	dirNameGuest1 = b.GetDirNameGuest('zlib-1.2.11')
 	dirNameGuest2 = b.GetDirNameGuest('bzip2-1.0.8')
     b.dirNamesInc = [dirNameGuest1, dirNameGuest2]
     b.dirNamesLib = [dirNameGuest1, dirNameGuest2]
