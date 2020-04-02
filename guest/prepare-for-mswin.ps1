@@ -224,10 +224,10 @@ class Package_wx {
     [String[]] $fileNames = @("$($this.baseName).7z")
     [String] $dirName = $this.baseName
     Build() {
-        #ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration=Release /p:Platofrm=x64'
+        ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration=Release /p:Platofrm=x64'
     }
 }
-$packages += [Package_wx]::new()
+#$packages += [Package_wx]::new()
 
 #------------------------------------------------------------------------------
 # call main
