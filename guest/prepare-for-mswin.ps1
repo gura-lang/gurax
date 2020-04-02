@@ -143,6 +143,14 @@ function ExpandFiles([String[]] $fileNames) {
     }
 }
 
+#------------------------------------------------------------------------------
+# ExecCommand
+# Executes an external command while displaying its progress to the console. 
+#------------------------------------------------------------------------------
+function ExecCommand([String] $cmd, [String] $argList) {
+    Start-Process -FilePath $cmd -ArgumentList $argList -NoNewWindow -Wait
+}
+
 #---------------------------------------------------------------------------------
 # Package: bzip2
 #---------------------------------------------------------------------------------
@@ -205,6 +213,21 @@ class Package_zlib {
     }
 }
 $packages += [Package_zlib]::new()
+
+#---------------------------------------------------------------------------------
+# Package: wx
+#---------------------------------------------------------------------------------
+class Package_wx {
+    [String] $name = "wx"
+    [String] $ver = "3.1.3"
+    [String] $baseName = "wxWidgets-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).7z")
+    [String] $dirName = $this.baseName
+    Build() {
+        #ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration=Release /p:Platofrm=x64'
+    }
+}
+$packages += [Package_wx]::new()
 
 #------------------------------------------------------------------------------
 # call main
