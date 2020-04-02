@@ -20,14 +20,13 @@ if (sys.platform == `mswin) {
 	b.dirNamesInc = ['guest/include/onigmo']
 	b.dirNamesLib = ['guest/lib']
 	b.libs = ['onigmo']
-}
-b.Run()
-/*
-if (sys.platform == `linux) {
-	b.libs = ['onig']
+} elsif (sys.platform == `linux) {
+	/*
+	b.libs = ['onigmo']
 	b.debFiles = ['libonig']
 	b.rpmFiles = ['oniguruma']
 	b.debFilesDevel = ['libonig-dev']
 	b.rpmFilesDevel = ['oniguruma-devel']
+	*/
 }
-*/
+b.Run()

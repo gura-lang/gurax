@@ -320,20 +320,23 @@ ${else}
 ${end}
 '''
 
-strHelp = R'''
+tmplHelp = tR'''
+usage: genclass [options] class-name
+options:
+  ${p.FormatHelp() + '\n'}
 '''
 
 //------------------------------------------------------------------------------
 // main
 //------------------------------------------------------------------------------
 main() = {
-	[argv, opt] = argopt.Parser {|p|
+	argopt.Parser {|p|
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
-		p.Parse(sys.argv)
-	}
-	if (argv.len < 1) {
-		sys.cerr.Print(strHelp)
-		sys.Exit(1)
+		[argv, opt] = p.Parse(sys.argv)
+		if (argv.len < 1) {
+			tmplHelp.Render(sys.cerr)
+			sys.Exit(1)
+		}
 	}
 	dotClassName = path.FileName(argv[0])
 	fields = dotClassName.Split('.'):list

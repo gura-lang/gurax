@@ -153,23 +153,25 @@ Gurax_BeginModuleScope(${ubarModuleName})
 Gurax_EndModuleScope(${ubarModuleName})
 '''
 
-strHelp = tR'''
+tmplHelp = tR'''
 Generates a set of files to build a Gura binary module.
 usage: genmod.gura module-name
+options:
+  ${p.FormatHelp() + '\n'}
 '''
 
 //------------------------------------------------------------------------------
 // main
 //------------------------------------------------------------------------------
 main() = {
-	[argv, opt] = argopt.Parser {|p|
+	argopt.Parser {|p|
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
 		p.AddFlag('here', 'h', 'create files in the current directory')
-		p.Parse(sys.argv)
-	}
-	if (argv.len < 1) {
-		sys.cerr.Print(strHelp)
-		sys.Exit(1)
+		[argv, opt] = p.Parse(sys.argv)
+		if (argv.len < 1) {
+			tmplHelp.Render(sys.cerr)
+			sys.Exit(1)
+		}
 	}
 	fields = path.FileName(argv[0]).Split('.'):list
 	dotModuleName = fields.Join('.')
