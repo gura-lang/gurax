@@ -21,6 +21,7 @@ if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 # main
 #------------------------------------------------------------------------------
 function main([String[]] $packageNames) {
+    CheckPackages $packageNames
     if ($help) {
         PrintHelp
     } elseif ($list) {
@@ -51,6 +52,19 @@ function PrintHelp() {
 }
 
 #------------------------------------------------------------------------------
+# CheckPackages
+#------------------------------------------------------------------------------
+function CheckPackages([String[]] $packageNames) {
+    if ($packageNames.length -eq 0) { return True }
+    foreach ($packageName in $packageNames) {
+        if ($packages.name -notcontains $packageName) {
+            Write-Host "unknown package: ${packageName}"
+            Exit
+        }
+    }
+}
+
+#------------------------------------------------------------------------------
 # ListPackages
 #------------------------------------------------------------------------------
 function ListPackages() {
@@ -63,6 +77,8 @@ function ListPackages() {
 # DownloadPackages
 #------------------------------------------------------------------------------
 function DownloadPackages([String[]] $packageNames) {
+    $progressPreferenceSaved = $global:ProgressPreference
+    $global:ProgressPreference = 'silentlyContinue'
     foreach ($package in $packages) {
         if (($packageNames.length -eq 0) -or ($packageNames -contains $package.name)) {
             Write-Host "downloading: $($package.name)"
@@ -72,14 +88,19 @@ function DownloadPackages([String[]] $packageNames) {
             }
         }
     }
+    $global:ProgressPreference = $progressPreferenceSaved
 }
 
 #------------------------------------------------------------------------------
 # CleanPackages
 #------------------------------------------------------------------------------
-function CleanPackages([String] $packageName) {
+function CleanPackages([String[]] $packageNames) {
+    if ($packageNames.Length -eq 0) {
+        $rtn = Read-Host "Are you sure to clean all the packages? [y/N]"
+        if ($rtn -ne 'y') { Exit }
+    }
     foreach ($package in $packages) {
-        if (($packageName.Length -eq 0) -or ($package.name -eq $packageName)) {
+        if (($packageNames.length -eq 0) -or ($packageNames -contains $package.name)) {
             foreach ($fileName in $package.fileNames) {
                 Remove-Item -ErrorAction Ignore -Force $fileName
             }
@@ -92,9 +113,9 @@ function CleanPackages([String] $packageName) {
 #------------------------------------------------------------------------------
 # BuildPackages
 #------------------------------------------------------------------------------
-function BuildPackages([String] $packageName) {
+function BuildPackages([String[]] $packageNames) {
     foreach ($package in $packages) {
-        if (($packageName.Length -eq 0) -or ($package.name -eq $packageName)) {
+        if (($packageNames.length -eq 0) -or ($packageNames -contains $package.name)) {
             Write-Host "-------------------------------------------"
             Write-Host "building: $($package.name)"
             ExpandFiles $package.fileNames
@@ -110,11 +131,14 @@ function BuildPackages([String] $packageName) {
 #------------------------------------------------------------------------------
 function ExpandFiles([String[]] $fileNames) {
     foreach ($fileName in $fileNames) {
-        if ($fileName -like "*.tar.gz") {
+        if ($fileName -match "(?<baseName>.+).tar.gz$") {
             tar -xf $fileName
-        } elseif (($fileName -match "(.+).zip$") -or ($fileName -match "(.+).7z$")) {
-            $baseName = $Matches[1]
+        } elseif (($fileName -match "(?<baseName>.+).zip$") -or ($fileName -match "(?<baseName>.+).7z$")) {
+            $baseName = $Matches['baseName']
             7z x -y -o"${baseName}" $fileName
+        } else {
+            Write-Host "unsupported type of archive file: ${fileName}"
+            Exit
         }
     }
 }
@@ -125,30 +149,30 @@ function ExpandFiles([String[]] $fileNames) {
 class Package_bzip2 {
     [String] $name = "bzip2"
     [String] $ver = "1.0.8"
-    [String] $fullName = "$($this.name)-$($this.ver)"
-    [String[]] $fileNames = @("$($this.fullName).tar.gz")
-    [String] $dirName = $this.fullName
+    [String] $baseName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz")
+    [String] $dirName = $this.baseName
     Build() {
-        nmake /nologo /f makefile.msc
+        nmake /f makefile.msc
     }
 }
 $packages += [Package_bzip2]::new()
 
 #---------------------------------------------------------------------------------
-# Package: jpegsrc
+# Package: libjpeg
 #---------------------------------------------------------------------------------
-class Package_jpegsrc {
-    [String] $name = "jpegsrc"
+class Package_libjpeg {
+    [String] $name = "libjpeg"
     [String] $ver = "9d"
-    [String] $fullName = "$($this.name).v$($this.ver)"
-    [String[]] $fileNames = @("$($this.fullName).tar.gz")
+    [String] $baseName = "jpegsrc.v$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz")
     [String] $dirName = "jpeg-$($($this.ver))"
     Build() {
         copy jconfig.vc jconfig.h
-        nmake /nologo /f makefile.vc nodebug=1
+        nmake /f makefile.vc nodebug=1
     }
 }
-$packages += [Package_jpegsrc]::new()
+$packages += [Package_libjpeg]::new()
 
 #------------------------------------------------------------------------------
 # Package: Onigmo
@@ -156,13 +180,13 @@ $packages += [Package_jpegsrc]::new()
 class Package_onigmo {
     [String] $name = "onigmo"
     [String] $ver = "6.2.0"
-    [String] $fullName = "$($this.name)-$($this.ver)"
-    [String[]] $fileNames = @("$($this.fullName).tar.gz")
-    [String] $dirName = $this.fullName
+    [String] $baseName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz")
+    [String] $dirName = $this.baseName
     Build() {
         Copy-Item win32/Makefile .
         Copy-Item win32/config.h .
-        nmake /nologo
+        nmake
     }
 }
 $packages += [Package_onigmo]::new()
@@ -173,11 +197,11 @@ $packages += [Package_onigmo]::new()
 class Package_zlib {
     [String] $name = "zlib"
     [String] $ver = "1.2.11"
-    [String] $fullName = "$($this.name)-$($this.ver)"
-    [String[]] $fileNames = @("$($this.fullName).tar.gz")
-    [String] $dirName = $this.fullName
+    [String] $baseName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz")
+    [String] $dirName = $this.baseName
     Build() {
-        nmake /nologo /f win32\Makefile.msc
+        nmake /f win32\Makefile.msc
     }
 }
 $packages += [Package_zlib]::new()
