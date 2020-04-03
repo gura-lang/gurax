@@ -135,12 +135,15 @@ Builder = class {
 			}
 			Printf('-- compiling %*d/%d: ', nDigits, idx + 1, nSrcs)
 			this.Exec(this.compiler, cflags*,
-						('/I' + this.dirNameSysInc), ('/I' + this.dirNamesInc)*, cflagsPreCompile*,
+						('/I"' + path.Regulate(this.dirNameSysInc) + '"'),
+						('/I"' + path.Regulate(this.dirNamesInc) + '"')*,
+						cflagsPreCompile*,
 						'/Fo' + pathNameObj, '/c', pathNameSrc)
 		} else {
 			Printf('-- compiling %*d/%d: %s\n', nDigits, idx + 1, nSrcs, pathNameSrc)
 			this.Exec(this.compiler, cflags*,
-						('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
+						('-I' + this.dirNameSysInc),
+						('-I' + this.dirNamesInc)*,
 						'-o' + pathNameObj, '-c', pathNameSrc)
 		}
 	}
@@ -148,7 +151,8 @@ Builder = class {
 		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return(true)
 		if (this.linker == 'link') {
 			!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-						'/LIBPATH:' + this.dirNameSysLib, ('/LIBPATH:' + this.dirNamesLib)*,
+						'/LIBPATH:"' + path.Regulate(this.dirNameSysLib) + '"',
+						('/LIBPATH:"' + path.Regulate(this.dirNamesLib) + '"')*,
 						'/out:' + pathNameGurd, '/pdb:' + pathNameGurd + '.pdb', pathNamesObj*,
 						(this.libsBase + '.lib')*, (this.libs + '.lib')*) && return(false)
 		} else {
