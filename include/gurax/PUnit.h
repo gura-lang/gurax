@@ -650,6 +650,7 @@ class GURAX_DLLDECLARE PUnit_GenIterator_ForLister : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+protected:
 	Expr* _pExprSrc;
 public:
 	// Constructor
@@ -865,7 +866,6 @@ public:
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _raiseFlag(raiseFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_EvalIterator<false>);
-
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

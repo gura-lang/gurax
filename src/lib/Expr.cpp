@@ -556,7 +556,7 @@ void Expr_Suffixed::Compose(Composer& composer)
 	if (pSuffixMgr) {
 		pSuffixMgr->Compose(composer, GetSegmentReferable(), this);
 	} else {
-		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetTarget(), GetSymbolSuffix());
+		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetTarget(), GetSymbolSuffix(), this);
 	}
 }
 
@@ -947,7 +947,7 @@ void Expr_Iterer::Compose(Composer& composer)
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeOrNil(composer);							// [List Elem]
-		composer.Add_ListElem(0, false, false);					// [List]
+		composer.Add_ListElem(0, false, false, this);			// [List]
 	}	
 	composer.Add_GenIterator(this);								// [Iterator]
 }
@@ -1007,8 +1007,8 @@ void Expr_Lister::ComposeForAssignment(
 	exprAssigned.ComposeOrNil(composer);						// [Assigned]
 	composer.Add_GenIterator_ForLister(this);					// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		composer.Add_EvalIterator(0, true);						// [Assigned Iterator Value]
-		pExpr->ComposeForValueAssignment(composer, pOp);	// [Assigned Iterator]
+		composer.Add_EvalIterator(0, true, this);				// [Assigned Iterator Value]
+		pExpr->ComposeForValueAssignment(composer, pOp);		// [Assigned Iterator]
 		if (Error::IsIssued()) return;
 	}
 	composer.Add_DiscardValue(this);							// [Assigned]
@@ -1302,7 +1302,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 	pExprBody->ComposeOrNil(composer);
 	if (GetAttr().IsSet(Gurax_Symbol(void_))) {
 		composer.Add_DiscardValue(this);
-		composer.Add_Value(Value::nil());
+		composer.Add_Value(Value::nil(), this);
 	}
 	composer.Add_Return(this);
 	for (Expr* pExprParam = GetExprCdrFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
