@@ -182,6 +182,21 @@ class Package_libjpeg {
 }
 $packages += [Package_libjpeg]::new()
 
+#---------------------------------------------------------------------------------
+# Package: libpng
+#---------------------------------------------------------------------------------
+class Package_libpng {
+    [String] $name = "libpng"
+    [String] $ver = "1.6.37"
+    [String] $baseName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz", "$($this.baseName)-gurapatch-vs2019.tar.gz")
+    [String] $dirName = $this.baseName
+    Build() {
+        msbuild projects\vstudio\vstudio.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release Library" /p:Platform=x64
+    }
+}
+$packages += [Package_libpng]::new()
+
 #------------------------------------------------------------------------------
 # Package: Onigmo
 #------------------------------------------------------------------------------
