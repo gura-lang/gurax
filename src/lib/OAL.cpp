@@ -96,7 +96,7 @@ bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
 
 void OAL::AppendCmdLine(String& cmdLine, const char* arg)
 {
-	if (::strchr(arg, ' ')) {
+	if (::strchr(arg, ' ') && !::strchr(arg, '"')) {
 		cmdLine += '"';
 		cmdLine += arg;
 		cmdLine += '"';
