@@ -30,7 +30,5 @@ add_executable(unittest
 	test-Tokenizer.cpp
 	test-Value.cpp
 )
-#find_library(LIBREADLINE readline REQUIRED)
-#target_link_libraries(unittest guraxcore ${LIBREADLINE})
-target_link_libraries(unittest guraxcore)
-install(TARGETS unittest)
+target_link_libraries(unittest guraxcore) # ${LIBREADLINE}
+install(TARGETS unittest RUNTIME DESTINATION bin)

@@ -3,6 +3,5 @@
 #===============================================================================
 add_executable(gurax gurax.cpp)
 #find_library(LIBREADLINE readline REQUIRED)
-#target_link_libraries(gurax guraxcore ${LIBREADLINE})
-target_link_libraries(gurax guraxcore)
-install(TARGETS gurax)
+target_link_libraries(gurax guraxcore) # ${LIBREADLINE}
+install(TARGETS gurax RUNTIME DESTINATION bin)

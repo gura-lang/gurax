@@ -1,10 +1,8 @@
 #===============================================================================
 # CMakeLists for gurax project
 #===============================================================================
+cmake_minimum_required(VERSION 3.16) # 3.16 or newer supports handling of precompiled header
 project(gurax)
-
-# Handling of precompiled header is supported by 3.16 or newer.
-cmake_minimum_required(VERSION 3.16)
 
 set(GURAX_VERSION_MAJOR		0)
 set(GURAX_VERSION_MINOR		1)

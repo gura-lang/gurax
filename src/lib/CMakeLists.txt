@@ -171,4 +171,7 @@ else ()
 endif ()
 
 target_precompile_headers(guraxcore PUBLIC stdafx.h)
-install(TARGETS guraxcore)
+install(TARGETS guraxcore
+	RUNTIME DESTINATION bin
+	ARCHIVE DESTINATION lib
+)
