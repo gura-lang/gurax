@@ -56,7 +56,7 @@ bool Main(int argc, char* argv[])
 	}
 	const char* arg = cmdLine.argv[1];
 	String pathName =
-		PathName(pathName).IsAbsName()? arg :
+		PathName(arg).IsAbsName()? arg :
 		cmdLine.GetBool("shared-script")? PathName(arg).JoinBefore(OAL::GetDirName_Script().c_str()) :
 		PathName(arg).MakeAbsName();
 	RefPtr<Stream> pStream(Stream::Open(pathName.c_str(), Stream::OpenFlag::Read));
