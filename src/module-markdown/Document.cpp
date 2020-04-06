@@ -225,8 +225,8 @@ void Document::ResolveReference()
 
 bool Document::FeedChars(const String& text)
 {
-	for (auto p = text.begin(); p != text.end(); p++) { // for (ch : text)
-		if (!FeedChar(*p)) return false;
+	for (char ch : text) {
+		if (!FeedChar(ch)) return false;
 	}
 	return true;
 }
@@ -801,7 +801,7 @@ bool Document::FeedChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -822,7 +822,7 @@ bool Document::FeedChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -843,7 +843,7 @@ bool Document::FeedChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -867,7 +867,7 @@ bool Document::FeedChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -888,7 +888,7 @@ bool Document::FeedChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -1732,7 +1732,7 @@ bool Document::FeedChar(char ch)
 		} else {
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Text;
-			if (!FeedChars(_textAhead)) return false;
+			if (!FeedChars(String(_textAhead))) return false;
 		}
 		break;
 	}

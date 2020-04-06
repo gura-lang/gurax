@@ -339,9 +339,7 @@ markdown.Item.__prop__(`align) .. <PropHandler:align:Symbol:R>
     <li>
       <text>'item-3'
   <p>
-    <text>'3'
-  <p>
-    <text>'1415 at beginning of line'
+    <text>'3.1415 at beginning of line'
 ======== list-3 ========
 <root>
   <ul>
@@ -936,9 +934,9 @@ markdown.Item.__prop__(`align) .. <PropHandler:align:Symbol:R>
     <img url='/path/img.jpg' title='Title "hoge"'>'alt text'
     <text>' .. with title (single quote)'
   <p>
-    <text>'['
-  <p>
-    <text>'ike this]() .. without url nor title'
+    <a url=''>
+      <text>'like this'
+    <text>' .. without url nor title'
   <p>
     <img url=''>'like this'
     <text>' .. without url nor title'
@@ -963,9 +961,10 @@ markdown.Item.__prop__(`align) .. <PropHandler:align:Symbol:R>
   <p>
     <text>'pre text post'
   <p>
-    <text>'pre ['
-  <p>
-    <text>'ext](http://a.b.c/) post'
+    <text>'pre '
+    <a url='http://a.b.c/'>
+      <text>'text'
+    <text>' post'
   <p>
     <text>'pre '
     <a url='http://a.b.c/'>
