@@ -20,3 +20,12 @@ add_definitions(-DGURAX_MODULE_SEPARATED)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 install(TARGETS markdown RUNTIME DESTINATION module/site)
+install(PROGRAMS
+    script-module/markdown.composer.gura
+    script-module/markdown.console.gura
+    script-module/markdown.gura
+    script-module/markdown.html.gura
+    script-module/markdown.rtf.gura
+    script-module/markdown.tex.gura
+    script-module/markdown.toc.gura
+    DESTINATION module/site)

@@ -8,6 +8,7 @@ add_subdirectory(lib)
 add_subdirectory(gurax)
 add_subdirectory(unittest)
 
+add_subdirectory(module-bmp)
 add_subdirectory(module-bzip2)
 add_subdirectory(module-conio)
 add_subdirectory(module-gzip)

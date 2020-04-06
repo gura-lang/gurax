@@ -35,3 +35,9 @@ add_definitions(-DGURAX_MODULE_SEPARATED)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 install(TARGETS re RUNTIME DESTINATION module/site)
+install(PROGRAMS
+    script/sed.doc.gura
+    script/sed.gura
+    script/tokenizer.doc.gura
+    script/tokenizer.gura
+    DESTINATION module/site)
