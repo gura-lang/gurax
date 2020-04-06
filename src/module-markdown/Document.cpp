@@ -225,7 +225,9 @@ void Document::ResolveReference()
 
 bool Document::FeedChars(const String& text)
 {
-	for (char ch : text) if (!FeedChar(ch)) return false;
+	for (auto p = text.begin(); p != text.end(); p++) { // for (ch : text)
+		if (!FeedChar(*p)) return false;
+	}
 	return true;
 }
 
