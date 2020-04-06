@@ -4,14 +4,10 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_png)
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}/../../include
-    ${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37
-)
-link_directories(
-    ${PROJECT_SOURCE_DIR}/../../lib
-    "${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37/projects/vstudio/x64/Release Library"
-)
+include_directories(${PROJECT_SOURCE_DIR}/../../include)
+link_directories(${PROJECT_SOURCE_DIR}/../../lib)
+include_directories(${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37)
+link_directories("${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37/projects/vstudio/x64/Release Library")
 add_library(png SHARED
     module-png.cpp
     Util.cpp
