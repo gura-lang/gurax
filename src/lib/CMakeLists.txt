@@ -171,7 +171,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
 else ()
 	target_link_libraries(guraxcore dl pthread)
 endif ()
-
 target_precompile_headers(guraxcore PUBLIC stdafx.h)
 install(TARGETS guraxcore
 	RUNTIME DESTINATION bin

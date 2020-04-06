@@ -8,4 +8,5 @@ add_subdirectory(lib)
 add_subdirectory(gurax)
 add_subdirectory(unittest)
 
+add_subdirectory(module-gzip)
 add_subdirectory(module-png)
