@@ -9,4 +9,8 @@ add_subdirectory(gurax)
 add_subdirectory(unittest)
 
 add_subdirectory(module-gzip)
+#add_subdirectory(module-hash)
+add_subdirectory(module-jpeg)
 add_subdirectory(module-png)
+add_subdirectory(module-re)
+add_subdirectory(module-zip)
