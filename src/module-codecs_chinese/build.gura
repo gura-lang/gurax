@@ -1,6 +1,0 @@
-#!/usr/bin/env gurax
-import(util.modbuild) {Builder}
-
-builder = Builder('codecs_chinese')
-builder.pathNamesSrc = ['module-codecs_chinese.cpp', 'CP936.cpp', 'CP950.cpp']
-builder.Run()
