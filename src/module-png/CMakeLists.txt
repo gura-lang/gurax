@@ -20,6 +20,7 @@ endif ()
 add_library(png SHARED
     module-png.cpp
     Util.cpp
+    ImageExtension.cpp
 )
 target_link_libraries(png guraxcore ${GUEST_LIBRARY})
 add_definitions(-DGURAX_MODULE_SEPARATED)

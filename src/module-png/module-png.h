@@ -5,6 +5,7 @@
 #define GURAX_MODULE_PNG_H
 #include <gurax.h>
 #include "Util.h"
+#include "ImageExtension.h"
 
 Gurax_BeginModuleHeader(png)
 Gurax_EndModuleHeader(png)
