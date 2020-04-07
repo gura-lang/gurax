@@ -2,24 +2,27 @@
 import(argopt)
 
 //------------------------------------------------------------------------------
-// Template of build.gura
+// Template of CMakeLists.txt
 //------------------------------------------------------------------------------
-tmpl_build = tR'''
-#!/usr/bin/env gurax
-//==============================================================================
-// build.gura
-//==============================================================================
-import(util.modbuild) {Builder}
+tmpl_cmake = tR'''
+#===============================================================================
+# CMakeLists for module: ${dotModuleName}
+#===============================================================================
+cmake_minimum_required(VERSION 3.16)
+project(gurax_module_${ubarModuleName})
 
-b = Builder('${dotModuleName}')
-b.pathNamesSrc = ['module-${ubarModuleName}.cpp', 'Util.cpp']
-b.pathNamesScript = []
-b.dirNamesInc = []
-b.dirNamesLib = []
-b.cxxflags = []
-b.ldflags = []
-b.libs = []
-b.Run()
+include_directories($\{PROJECT_SOURCE_DIR}/../../include)
+link_directories($\{PROJECT_SOURCE_DIR}/../../lib)
+include_directories(md5 sha1)
+add_library(${ubarModuleName} SHARED
+    module-${ubarModuleName}.cpp
+    Util.cpp
+)
+target_link_libraries(${ubarModuleName} guraxcore)
+add_definitions(-DGURAX_MODULE_SEPARATED)
+set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
+install(TARGETS ${ubarModuleName} RUNTIME DESTINATION module/site)
 '''
 
 //------------------------------------------------------------------------------
@@ -183,14 +186,14 @@ main() = {
 		dirNameOut = cond(opt['here'], '', 'module-' + ubarModuleName)
 		!fs.Exists(dirNameOut) && fs.CreateDir(dirNameOut)
 	}
-	fileName_build = 'build.gura'
+	fileName_cmake = 'CMakeLists.txt'
 	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_mainHdr = 'module-' + ubarModuleName + '.h'
 	fileName_mainSrc = 'module-' + ubarModuleName + '.cpp'
 	fileName_utilHdr = 'Util.h'
 	fileName_utilSrc = 'Util.cpp'
-	pathName_build = path.Join(dirNameOut, fileName_build)
+	pathName_cmake = path.Join(dirNameOut, fileName_cmake)
 	pathName_test = path.Join(dirNameOut, fileName_test)
 	pathName_stdafx = path.Join(dirNameOut, fileName_stdafx)
 	pathName_mainHdr = path.Join(dirNameOut, fileName_mainHdr)
@@ -198,29 +201,29 @@ main() = {
 	pathName_utilHdr = path.Join(dirNameOut, fileName_utilHdr)
 	pathName_utilSrc = path.Join(dirNameOut, fileName_utilSrc)
 	if (!opt['force'] && \
-		fs.Exists([pathName_build, pathName_test, pathName_stdafx,
+		fs.Exists([pathName_cmake, pathName_test, pathName_stdafx,
 			pathName_mainHdr, pathName_mainSrc, pathName_utilHdr, pathName_utilSrc]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
-	tmpl_build.Render(Open(pathName_build, 'w'))
+	tmpl_cmake.Render(Open(pathName_cmake, 'w'))
 	tmpl_test.Render(Open(pathName_test, 'w'))
 	tmpl_stdafx.Render(Open(pathName_stdafx, 'w'))
 	tmpl_mainHdr.Render(Open(pathName_mainHdr, 'w'))
 	tmpl_mainSrc.Render(Open(pathName_mainSrc, 'w'))
 	tmpl_utilHdr.Render(Open(pathName_utilHdr, 'w'))
 	tmpl_utilSrc.Render(Open(pathName_utilSrc, 'w'))
-	fs.ChangeMode(pathName_build, 'a+x')
+	fs.ChangeMode(pathName_cmake, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
 	tR'''
-	Following files were generated for the ${dotModuleName} module.
-	- Build Script: ${pathName_build}
-	- Test Script:  ${pathName_test}
-	- Source Files: ${pathName_stdafx}
-	                ${pathName_mainHdr}
-	                ${pathName_mainSrc}
-	                ${pathName_utilHdr}
-	                ${pathName_utilSrc}
+	To configure the project:
+	  $ mkdir build; cd build; cmake ..
+	To build and install a Debug edition:
+	  $ cmake --build . --config Debug
+	  $ cmake --install . --config Debug
+	To build and install a Release edition:
+	  $ cmake --build . --config Release
+	  $ cmake --install . --config Release
 	'''.Render(sys.cout)
 }
 

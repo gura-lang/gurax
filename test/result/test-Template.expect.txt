@@ -593,3 +593,6 @@ f(10, 2) .. 10 + 2 = 12
         &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
     </div>
 </body>
+======== Escape ========
+expanded
+${variable}

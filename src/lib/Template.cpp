@@ -215,7 +215,7 @@ bool Template::Parser::FeedChar(char ch)
 			_strIndent.clear();
 			_str += chMarker;
 			_stringAheadFlag = true;
-			Gurax_Pushback();
+			if (ch != '\\') Gurax_Pushback();
 			_stat = Stat::String;
 		}
 		break;

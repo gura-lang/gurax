@@ -660,3 +660,11 @@ TestCase('HTML output using inheritance') {
 	${end}
 	'''.Render(sys.cout)
 }
+//-----------------------------------------------------------------------------
+TestCase('Escape') {
+	variable = 'expanded'
+	tR'''
+	${variable}
+	$\{variable}
+	'''.Render(sys.cout)
+}
