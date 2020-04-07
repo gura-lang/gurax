@@ -1,0 +1,24 @@
+#!/usr/bin/env gurax
+if (sys.argv.len < 2) {
+	sys.cerr.Println('usage: bmp-printinfo.gura file')
+	sys.Exit(1)
+}
+fileName = sys.argv[1]
+bmp.Content(fileName) {|c|
+	Println('[BitmapFileHeader]')
+	Printf(' bfType          0x%04x\n', c.bfh.bfType)
+	Printf(' bfSize          %d\n', c.bfh.bfSize)
+	Printf(' bfOffBits       %d\n', c.bfh.bfOffBits)
+	Println('[BitmapInfoHeader]')
+	Printf(' biSize          %d\n', c.bih.biSize)
+	Printf(' biWidth         %d\n', c.bih.biWidth)
+	Printf(' biHeight        %d\n', c.bih.biHeight)
+	Printf(' biPlanes        %d\n', c.bih.biPlanes)
+	Printf(' biBitCount      %d\n', c.bih.biBitCount)
+	Printf(' biCompression   %d\n', c.bih.biCompression)
+	Printf(' biSizeImage     %d\n', c.bih.biSizeImage)
+	Printf(' biXPelsPerMeter %d\n', c.bih.biXPelsPerMeter)
+	Printf(' biYPelsPerMeter %d\n', c.bih.biYPelsPerMeter)
+	Printf(' biClrUsed       %d\n', c.bih.biClrUsed)
+	Printf(' biClrImportant  %d\n', c.bih.biClrImportant)
+}
