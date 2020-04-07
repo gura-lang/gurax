@@ -139,7 +139,7 @@ Gurax_ImplementModulePropertySetter(cerr)
 // sys.dirBase
 Gurax_DeclareModuleProperty_R(dirBase)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the base directory.");
@@ -153,7 +153,7 @@ Gurax_ImplementModulePropertyGetter(dirBase)
 // sys.dirFont
 Gurax_DeclareModuleProperty_R(dirFont)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the directory for font files.");
@@ -167,7 +167,7 @@ Gurax_ImplementModulePropertyGetter(dirFont)
 // sys.dirInclude
 Gurax_DeclareModuleProperty_R(dirInclude)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the directory for include files.");
@@ -181,7 +181,7 @@ Gurax_ImplementModulePropertyGetter(dirInclude)
 // sys.dirLib
 Gurax_DeclareModuleProperty_R(dirLib)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the directory for library files.");
@@ -195,7 +195,7 @@ Gurax_ImplementModulePropertyGetter(dirLib)
 // sys.dirLocal
 Gurax_DeclareModuleProperty_R(dirLocal)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the base directory for local files.");
@@ -209,7 +209,7 @@ Gurax_ImplementModulePropertyGetter(dirLocal)
 // sys.dirMain
 Gurax_DeclareModuleProperty_R(dirMain)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the main directory.");
@@ -223,7 +223,7 @@ Gurax_ImplementModulePropertyGetter(dirMain)
 // sys.dirModule
 Gurax_DeclareModuleProperty_R(dirModule)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the base directory for module files.");
@@ -237,7 +237,7 @@ Gurax_ImplementModulePropertyGetter(dirModule)
 // sys.dirScript
 Gurax_DeclareModuleProperty_R(dirScript)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the base directory for script files.");
@@ -251,7 +251,7 @@ Gurax_ImplementModulePropertyGetter(dirScript)
 // sys.executable
 Gurax_DeclareModuleProperty_R(executable)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The path name of the executable.");
@@ -296,7 +296,7 @@ Gurax_ImplementModulePropertySetter(path)
 // sys.platform
 Gurax_DeclareModuleProperty_R(platform)
 {
-	Declare(VTYPE_Symbol, Flag::Nil);
+	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The symbol of the current platform.");
@@ -354,6 +354,34 @@ Gurax_ImplementModulePropertySetter(ps2)
 	Basement::Inst.SetPS2(Value_String::GetString(value));
 }
 
+// sys.timeStamp
+Gurax_DeclareModuleProperty_R(timeStamp)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The time stamp of the executable.");
+}
+
+Gurax_ImplementModulePropertyGetter(timeStamp)
+{
+	return new Value_String(Version::GetTimeStamp());
+}
+
+// sys.version
+Gurax_DeclareModuleProperty_R(version)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The version of the executable.");
+}
+
+Gurax_ImplementModulePropertyGetter(version)
+{
+	return new Value_String(Version::GetVersion());
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -397,6 +425,8 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateModuleProperty(platform));
 	Assign(Gurax_CreateModuleProperty(ps1));
 	Assign(Gurax_CreateModuleProperty(ps2));
+	Assign(Gurax_CreateModuleProperty(timeStamp));
+	Assign(Gurax_CreateModuleProperty(version));
 	return true;
 }
 
