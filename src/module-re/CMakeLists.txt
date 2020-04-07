@@ -34,6 +34,7 @@ target_link_libraries(re guraxcore ${GUEST_LIBRARY})
 add_definitions(-DGURAX_MODULE_SEPARATED)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+target_precompile_headers(re PUBLIC stdafx.h)
 install(TARGETS re RUNTIME DESTINATION module/site)
 install(PROGRAMS
     script/sed.doc.gura

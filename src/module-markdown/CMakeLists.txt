@@ -19,6 +19,7 @@ target_link_libraries(markdown guraxcore)
 add_definitions(-DGURAX_MODULE_SEPARATED)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+target_precompile_headers(markdown PUBLIC stdafx.h)
 install(TARGETS markdown RUNTIME DESTINATION module/site)
 install(PROGRAMS
     script-module/markdown.composer.gura

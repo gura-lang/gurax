@@ -22,6 +22,7 @@ target_link_libraries(${ubarModuleName} guraxcore)
 add_definitions(-DGURAX_MODULE_SEPARATED)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
+target_precompile_headers(${ubarModuleName} PUBLIC stdafx.h)
 install(TARGETS ${ubarModuleName} RUNTIME DESTINATION module/site)
 '''
 
@@ -216,16 +217,17 @@ main() = {
 	tmpl_utilSrc.Render(Open(pathName_utilSrc, 'w'))
 	fs.ChangeMode(pathName_cmake, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
-	os.Exec('cmake', '-S', dirNameOut, '-B', dirNameBuild)
 	tR'''
+	To configure the project:
+	  $ cmake -B build
 	To clean generated files:
-	  $ cmake -t clean
+	  $ cmake --build build -t clean
 	To build and install a Debug edition:
-	  $ cmake --build . --config Debug
-	  $ cmake --install . --config Debug
+	  $ cmake --build build --config Debug
+	  $ cmake --install build . --config Debug
 	To build and install a Release edition:
-	  $ cmake --build . --config Release
-	  $ cmake --install . --config Release
+	  $ cmake --build build . --config Release
+	  $ cmake --install build . --config Release
 	'''.Render(sys.cout)
 }
 
