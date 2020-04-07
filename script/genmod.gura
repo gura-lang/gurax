@@ -193,6 +193,7 @@ main() = {
 	fileName_mainSrc = 'module-' + ubarModuleName + '.cpp'
 	fileName_utilHdr = 'Util.h'
 	fileName_utilSrc = 'Util.cpp'
+	dirNameBuild = path.Join(dirNameOut, 'build')
 	pathName_cmake = path.Join(dirNameOut, fileName_cmake)
 	pathName_test = path.Join(dirNameOut, fileName_test)
 	pathName_stdafx = path.Join(dirNameOut, fileName_stdafx)
@@ -215,9 +216,10 @@ main() = {
 	tmpl_utilSrc.Render(Open(pathName_utilSrc, 'w'))
 	fs.ChangeMode(pathName_cmake, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
+	os.Exec('cmake', '-S', dirNameOut, '-B', dirNameBuild)
 	tR'''
-	To configure the project:
-	  $ mkdir build; cd build; cmake ..
+	To clean generated files:
+	  $ cmake -t clean
 	To build and install a Debug edition:
 	  $ cmake --build . --config Debug
 	  $ cmake --install . --config Debug
