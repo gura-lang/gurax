@@ -46,7 +46,5 @@ CMakeCache.txt
 cmake_install.cmake
 
 # Directories
-out/
-gnuc/
-mswin/
-/build
+/bin
+build/
