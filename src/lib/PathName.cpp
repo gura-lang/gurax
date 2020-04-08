@@ -14,7 +14,7 @@ const bool PathName::CaseFlagPlatform	= false;
 #elif defined(GURAX_ON_LINUX)
 const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagPlatform	= true;
-#elis defined(GURAX_ON_DARWIN)
+#elif defined(GURAX_ON_DARWIN)
 const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagPlatform	= false;
 #else

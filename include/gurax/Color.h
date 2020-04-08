@@ -25,15 +25,6 @@ public:
 		const char* name;
 		UInt32 packed;
 	};
-	class GURAX_DLLDECLARE StringMap : public std::unordered_map<String, Color, String::Hash, String::EqualTo> {
-	public:
-		const Color* Lookup(const char* str) const;
-	};
-	class GURAX_DLLDECLARE SymbolMap :
-		 public std::unordered_map<const Symbol*, Color, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
-	public:
-		const Color* Lookup(const Symbol* pSymbol) const;
-	};
 private:
 	union {
 		UInt32 _packed;
@@ -59,8 +50,6 @@ public:
 	static const Color white;
 protected:
 	static const NamedEntry _namedEntries[];
-	static StringMap _stringMap;
-	static SymbolMap _symbolMap;
 public:
 	// Constructor
 	Color() : _packed(0) {}
@@ -123,8 +112,8 @@ public:
 			 static_cast<UInt32>(b) * 114) / 1000);
 	}
 public:
-	static const Color* Lookup(const char* name) { return _stringMap.Lookup(name); }
-	static const Color* Lookup(const Symbol* pSymbol) { return _symbolMap.Lookup(pSymbol); }
+	static const Color* Lookup(const char* name);
+	static const Color* Lookup(const Symbol* pSymbol);
 public:
 	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) {
 		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
@@ -154,6 +143,27 @@ public:
 	bool IsEqualTo(const Color& color) const { return IsIdentical(color); }
 	bool IsLessThan(const Color& color) const { return this < &color; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// ColorStringMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ColorStringMap : public std::unordered_map<String, Color, String::Hash, String::EqualTo> {
+public:
+	static ColorStringMap Instance;
+public:
+	const Color* Lookup(const char* str) const;
+};
+
+//------------------------------------------------------------------------------
+// ColorSymbolMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ColorSymbolMap :
+		public std::unordered_map<const Symbol*, Color, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+public:
+	static ColorSymbolMap Instance;
+public:
+	const Color* Lookup(const Symbol* pSymbol) const;
 };
 
 #if 0

@@ -26,6 +26,7 @@ using mode_t = int;
 #define S_IWOTH 0x0002
 #define S_IXOTH 0x0001
 #else
+#include <stdarg.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <dlfcn.h>
@@ -225,7 +226,6 @@ public:
 	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst);
 #else
 	static String ReadLink(const char* pathName);
-	static bool FollowLink(String& pathName);
 #endif
 };
 

@@ -798,17 +798,24 @@ const Color::NamedEntry Color::_namedEntries[] = {
 	{ "LightGreen",				PackRGBA(144, 238, 144, 255) },
 };
 
-Color::StringMap Color::_stringMap;
-Color::SymbolMap Color::_symbolMap;
-
 void Color::Bootup()
 {
 	for (size_t i = 0; i < Gurax_ArraySizeOf(_namedEntries); i++) {
 		const NamedEntry& namedEntry = _namedEntries[i];
 		Color color(namedEntry.packed);
-		_stringMap[namedEntry.name] = color;
-		_symbolMap[Symbol::Add(namedEntry.name)] = color;
+		ColorStringMap::Instance[namedEntry.name] = color;
+		ColorSymbolMap::Instance[Symbol::Add(namedEntry.name)] = color;
 	}
+}
+
+const Color* Color::Lookup(const char* name)
+{
+	return ColorStringMap::Instance.Lookup(name);
+}
+
+const Color* Color::Lookup(const Symbol* pSymbol)
+{
+	return ColorSymbolMap::Instance.Lookup(pSymbol);
 }
 
 String Color::ToString(const StringStyle& ss) const
@@ -819,18 +826,22 @@ String Color::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Color::StringMap
+// ColorStringMap
 //------------------------------------------------------------------------------
-const Color* Color::StringMap::Lookup(const char* str) const
+ColorStringMap ColorStringMap::Instance;
+
+const Color* ColorStringMap::Lookup(const char* str) const
 {
 	auto iter = find(str);
 	return (iter == end())? nullptr : &iter->second;
 }
 
 //------------------------------------------------------------------------------
-// Color::SymbolMap
+// ColorSymbolMap
 //------------------------------------------------------------------------------
-const Color* Color::SymbolMap::Lookup(const Symbol* pSymbol) const
+ColorSymbolMap ColorSymbolMap::Instance;
+
+const Color* ColorSymbolMap::Lookup(const Symbol* pSymbol) const
 {
 	auto iter = find(pSymbol);
 	return (iter == end())? nullptr : &iter->second;
