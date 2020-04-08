@@ -161,7 +161,7 @@ StatEx* StatEx::Create(const char* pathName)
 	String pathNameAbs = PathName(pathName).MakeAbsName();
 	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
 	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
-	return new StatEx(sb, pathNameAbs);
+	return new StatEx(pathNameAbs, sb);
 }
 
 #endif

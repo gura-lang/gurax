@@ -13,6 +13,8 @@ set(GURAX_SRCDIR_ROOT		${PROJECT_SOURCE_DIR}/src)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
     set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
+elseif (${CMAKE_SYSTEM_NAME} MATCHES Linux)
+	set(CMAKE_INSTALL_PREFIX /usr)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
 	set(CMAKE_INSTALL_PREFIX /Applications/GURAX.app/Contents/Resources)
 else ()

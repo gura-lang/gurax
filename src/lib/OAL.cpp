@@ -770,9 +770,10 @@ bool OAL::ChangeDir(const char* dirName)
 
 bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
 {
-	return followLinkFlag?
-		::chmod(ToNativeString(pathName).c_str(), mode) == 0 :
-		lchmod(ToNativeString(pathName).c_str(), mode) == 0;
+	//return followLinkFlag?
+	//	::chmod(ToNativeString(pathName).c_str(), mode) == 0 :
+	//	lchmod(ToNativeString(pathName).c_str(), mode) == 0;
+	return ::chmod(ToNativeString(pathName).c_str(), mode) == 0;
 }
 
 bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
@@ -789,9 +790,10 @@ bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag
 		st_mode = statFs.st_mode;
 	} while (0);
 	if (!ParseStatMode(mode, st_mode)) return false;
-	return followLinkFlag?
-		::chmod(pathNameEnc.c_str(), st_mode) == 0 :
-		lchmod(pathNameEnc.c_str(), st_mode) == 0;
+	//return followLinkFlag?
+	//	::chmod(pathNameEnc.c_str(), st_mode) == 0 :
+	//	lchmod(pathNameEnc.c_str(), st_mode) == 0;
+	return ::chmod(pathNameEnc.c_str(), st_mode) == 0;
 }
 
 bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)

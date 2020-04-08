@@ -307,7 +307,7 @@ Gurax_ImplementModulePropertyGetter(platform)
 #if defined(GURAX_ON_MSWIN)
 	const Symbol* pSymbol = Gurax_Symbol(mswin);
 #elif defined(GURAX_ON_LINUX)
-	const Symbol* pSymbol = Gurax_Symbol(linux);
+	const Symbol* pSymbol = Gurax_Symbol(linux_);
 #elif defined(GURAX_ON_DARWIN)
 	const Symbol* pSymbol = Gurax_Symbol(darwin);
 #else
