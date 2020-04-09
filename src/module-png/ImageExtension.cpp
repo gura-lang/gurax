@@ -103,7 +103,6 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image)
 	}
 	::png_read_image(png_ptr, row_pointers.get());
 	::png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	//delete [] row_pointers;
 	if (Error::IsIssued()) return false;
 	return true;
 }
@@ -140,7 +139,6 @@ bool ImageMgrEx::WriteStream(Stream& stream, Image& image)
 	::png_write_image(png_ptr, row_pointers.get());
 	::png_write_end(png_ptr, info_ptr);
 	::png_destroy_write_struct(&png_ptr, &info_ptr);
-	//delete [] row_pointers;
 	return true;
 }
 
