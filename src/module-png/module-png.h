@@ -7,6 +7,8 @@
 #include "Util.h"
 #include "ImageExtension.h"
 
+#pragma warning(disable: 5045)
+
 Gurax_BeginModuleHeader(png)
 Gurax_EndModuleHeader(png)
 
