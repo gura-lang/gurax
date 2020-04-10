@@ -26,6 +26,8 @@ Gurax_ImplementFunction(Test)
 	const char* str = args.PickString();
 	Int num = args.PickNumber<Int>();
 	// Function body
+	RefPtr<Palette> pPalette(new Palette(100));
+
 	return new Value_String(String::Repeat(str, num));
 }
 

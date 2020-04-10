@@ -79,14 +79,16 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 		}
 	}
 	if (::png_get_valid(png_ptr, info_ptr, PNG_INFO_PLTE)) {
-		png_color *palette;
+		png_color* palette;
 		int num_palette;
 		::png_get_PLTE(png_ptr, info_ptr, &palette, &num_palette);
 		if (num_palette > 0) {
 			RefPtr<Palette> pPalette(new Palette(num_palette));
+#if 1
 			for (size_t idx = 0; idx < num_palette; idx++, palette++) {
 				pPalette->SetRGB(idx, palette->red, palette->green, palette->blue);
 			}
+#endif
 			image.SetPalette(pPalette.release());
 		}
 	}
@@ -162,8 +164,7 @@ void ImageMgrEx::Handler::ReadData(png_structp png_ptr, png_bytep data, png_size
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
-	stream.Read(data, length);
-	if (Error::IsIssued()) {
+	if (stream.Read(data, length) < length) {
 		::png_error(png_ptr, "read data error");
 	}
 }
@@ -172,8 +173,7 @@ void ImageMgrEx::Handler::WriteData(png_structp png_ptr, png_bytep data, png_siz
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
-	stream.Write(data, length);
-	if (Error::IsIssued()) {
+	if (!stream.Write(data, length)) {
 		::png_error(png_ptr, "write data error");
 	}
 }
@@ -182,8 +182,7 @@ void ImageMgrEx::Handler::FlushData(png_structp png_ptr)
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
-	stream.Flush();
-	if (Error::IsIssued()) {
+	if (!stream.Flush()) {
 		::png_error(png_ptr, "flush data error");
 	}
 }

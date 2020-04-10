@@ -5,9 +5,7 @@
 import(util.tester) {*}
 import(png)
 
-TestCase('Basic test') {
-	repeat (100) {|i|
-		Println(i)
-		Image('test.png').Write('a.png')
-	}
+repeat (100) {|i|
+    Println(i)
+    Image('test.png')
 }
