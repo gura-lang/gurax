@@ -133,7 +133,6 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 				color_type, interlace_type, compression_type, filter_method);
 	::png_write_info(png_ptr, info_ptr);
 	::png_set_packing(png_ptr);		// pack pixels into bytes
-	::png_set_swap_alpha(png_ptr);	// swap location of alpha bytes from ARGB to RGBA
 	::png_set_bgr(png_ptr);			// flip BGR pixel to RGB 
 	const UInt8* pRow = image.GetPointer();
 	for (size_t y = 0; y < static_cast<size_t>(height); y++, pRow += image.GetBytesPerLine()) {

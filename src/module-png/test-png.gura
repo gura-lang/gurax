@@ -5,5 +5,5 @@
 import(util.tester) {*}
 import(png)
 
-//Image('test.png').Write('a.png')
-(Image('test.png'):rgb).Write('a.png')
+Image('test.png').Write('a.png')
+//(Image('test.png'):rgba).Write('a.png')
