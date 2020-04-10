@@ -5,7 +5,5 @@
 import(util.tester) {*}
 import(png)
 
-repeat (100) {|i|
-    Println(i)
-    Image('test.png').Write('a.png')
-}
+//Image('test.png').Write('a.png')
+(Image('test.png'):rgb).Write('a.png')

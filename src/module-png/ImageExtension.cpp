@@ -58,7 +58,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 	} else if (color_type == PNG_COLOR_TYPE_PALETTE) {
 		::png_set_palette_to_rgb(png_ptr);
 		::png_set_bgr(png_ptr);
-		if (image.IsFormat(Image::Format::RGBA)) {
+		if (image.IsFormat(Image::Format::RGB)) {
 			::png_set_strip_alpha(png_ptr);
 		} else if (::png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
 			::png_set_tRNS_to_alpha(png_ptr);
@@ -131,10 +131,10 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 	int filter_method = PNG_FILTER_TYPE_BASE;
 	::png_set_IHDR(png_ptr, info_ptr, width, height, bit_depth,
 				color_type, interlace_type, compression_type, filter_method);
+	::png_write_info(png_ptr, info_ptr);
 	::png_set_packing(png_ptr);		// pack pixels into bytes
 	::png_set_swap_alpha(png_ptr);	// swap location of alpha bytes from ARGB to RGBA
 	::png_set_bgr(png_ptr);			// flip BGR pixel to RGB 
-	::png_write_info(png_ptr, info_ptr);
 	const UInt8* pRow = image.GetPointer();
 	for (size_t y = 0; y < static_cast<size_t>(height); y++, pRow += image.GetBytesPerLine()) {
 		::png_write_row(png_ptr, pRow);
