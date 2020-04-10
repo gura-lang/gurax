@@ -43,9 +43,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 	int bit_depth, color_type, interlace_type;
 	::png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth,
 							&color_type, &interlace_type, nullptr, nullptr);
-	if (bit_depth == 16 ) {
-		::png_set_strip_16(png_ptr); // 16-bit RGB is converted into 8-bit.
-	}
+	::png_set_strip_16(png_ptr); // 16-bit RGB is converted into 8-bit.
 	if (color_type == PNG_COLOR_TYPE_GRAY) {
 		::png_set_expand(png_ptr);
 		::png_set_add_alpha(png_ptr, 0x00, PNG_FILLER_AFTER);
@@ -84,11 +82,9 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 		::png_get_PLTE(png_ptr, info_ptr, &palette, &num_palette);
 		if (num_palette > 0) {
 			RefPtr<Palette> pPalette(new Palette(num_palette));
-#if 1
 			for (size_t idx = 0; idx < num_palette; idx++, palette++) {
 				pPalette->SetRGB(idx, palette->red, palette->green, palette->blue);
 			}
-#endif
 			image.SetPalette(pPalette.release());
 		}
 	}
@@ -124,22 +120,25 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 	png_uint_32 width = static_cast<png_uint_32>(image.GetWidth());
 	png_uint_32 height = static_cast<png_uint_32>(image.GetHeight());
 	int bit_depth = 8;
-	int color_type = 
-		(image.IsFormat(Image::Format::RGB))? PNG_COLOR_TYPE_RGB :
-		(image.IsFormat(Image::Format::RGBA))? PNG_COLOR_TYPE_RGB_ALPHA :
-		PNG_COLOR_TYPE_RGB;
+	int color_type = PNG_COLOR_TYPE_RGB;
+	if (image.IsFormat(Image::Format::RGB)) {
+		color_type = PNG_COLOR_TYPE_RGB;
+	} else if (image.IsFormat(Image::Format::RGBA)) {
+		color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+	}
 	int interlace_type = PNG_INTERLACE_NONE;
-	int compression_type = PNG_COMPRESSION_TYPE_DEFAULT;
-	int filter_method = PNG_FILTER_TYPE_DEFAULT;
+	int compression_type = PNG_COMPRESSION_TYPE_BASE;
+	int filter_method = PNG_FILTER_TYPE_BASE;
 	::png_set_IHDR(png_ptr, info_ptr, width, height, bit_depth,
 				color_type, interlace_type, compression_type, filter_method);
-	::png_set_bgr(png_ptr);
+	::png_set_packing(png_ptr);		// pack pixels into bytes
+	::png_set_swap_alpha(png_ptr);	// swap location of alpha bytes from ARGB to RGBA
+	::png_set_bgr(png_ptr);			// flip BGR pixel to RGB 
 	::png_write_info(png_ptr, info_ptr);
-	std::unique_ptr<png_bytep[]> row_pointers(new png_bytep [height]);
-	for (size_t y = 0; y < static_cast<size_t>(height); y++) {
-		row_pointers[y] = reinterpret_cast<png_bytep>(image.GetPointer(0, y));
+	const UInt8* pRow = image.GetPointer();
+	for (size_t y = 0; y < static_cast<size_t>(height); y++, pRow += image.GetBytesPerLine()) {
+		::png_write_row(png_ptr, pRow);
 	}
-	::png_write_image(png_ptr, row_pointers.get());
 	::png_write_end(png_ptr, info_ptr);
 	::png_destroy_write_struct(&png_ptr, &info_ptr);
 	return true;
