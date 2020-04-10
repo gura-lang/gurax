@@ -34,8 +34,8 @@ public:
 	virtual bool Read(Stream& stream, Image& image) const override;
 	virtual bool Write(Stream& stream, const Image& image) const override;
 public:
-	bool ReadStream(Stream& stream, Image& image);
-	bool WriteStream(Stream& stream, Image& image);
+	bool ReadStream(Stream& stream, Image& image) const;
+	bool WriteStream(Stream& stream, const Image& image) const;
 };
 
 Gurax_EndModuleScope(png)

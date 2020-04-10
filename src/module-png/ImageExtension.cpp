@@ -7,25 +7,26 @@ Gurax_BeginModuleScope(png)
 
 bool ImageMgrEx::IsResponsible(Stream& stream) const
 {
-	return false;
+	char buff[8];
+	return stream.Read(buff, 8) == 8 && ::memcmp(buff, "\x89PNG\x0d\x0a\x1a\x0a", 2) == 0;
 }
 
 bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
 {
-	return false;
+	return ::strcasecmp(extName, ".png") == 0;
 }
 
 bool ImageMgrEx::Read(Stream& stream, Image& image) const
 {
-	return false;
+	return ReadStream(stream, image);
 }
 
 bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 {
-	return false;
+	return WriteStream(stream, image);
 }
 
-bool ImageMgrEx::ReadStream(Stream& stream, Image& image)
+bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 {
 	Handler handler(stream);
 	png_structp png_ptr = ::png_create_read_struct(
@@ -107,7 +108,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image)
 	return true;
 }
 
-bool ImageMgrEx::WriteStream(Stream& stream, Image& image)
+bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 {
 	Handler handler(stream);
 	png_structp png_ptr = ::png_create_write_struct(
@@ -162,7 +163,7 @@ void ImageMgrEx::Handler::ReadData(png_structp png_ptr, png_bytep data, png_size
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
 	stream.Read(data, length);
-	if (Error::IsIssued) {
+	if (Error::IsIssued()) {
 		::png_error(png_ptr, "read data error");
 	}
 }
