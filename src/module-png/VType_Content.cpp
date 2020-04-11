@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// png.Content() {block?}
+// png.Content(stream:Stream) {block?}
 Gurax_DeclareConstructor(Content)
 {
 	Declare(VTYPE_Content, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,9 +41,11 @@ Gurax_DeclareConstructor(Content)
 Gurax_ImplementConstructor(Content)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Content> pContent(new Content());
+	if (!pContent->Read(stream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Content(pContent.release()));
 }
 

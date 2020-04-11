@@ -144,21 +144,21 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 }
 
 //-----------------------------------------------------------------------------
-// ImageMgrEx::Handler
+// Handler
 //-----------------------------------------------------------------------------
-void ImageMgrEx::Handler::Error(png_structp png_ptr, png_const_charp error_msg)
+void Handler::Error(png_structp png_ptr, png_const_charp error_msg)
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_error_ptr(png_ptr));
 	Error::Issue(ErrorType::FormatError, "%s", reinterpret_cast<const char *>(error_msg));
 	::longjmp(png_jmpbuf(png_ptr), 1);
 }
 
-void ImageMgrEx::Handler::Warning(png_structp png_ptr, png_const_charp warning_msg)
+void Handler::Warning(png_structp png_ptr, png_const_charp warning_msg)
 {
 	// just ignore it
 }
 
-void ImageMgrEx::Handler::ReadData(png_structp png_ptr, png_bytep data, png_size_t length)
+void Handler::ReadData(png_structp png_ptr, png_bytep data, png_size_t length)
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
@@ -167,7 +167,7 @@ void ImageMgrEx::Handler::ReadData(png_structp png_ptr, png_bytep data, png_size
 	}
 }
 
-void ImageMgrEx::Handler::WriteData(png_structp png_ptr, png_bytep data, png_size_t length)
+void Handler::WriteData(png_structp png_ptr, png_bytep data, png_size_t length)
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();
@@ -176,7 +176,7 @@ void ImageMgrEx::Handler::WriteData(png_structp png_ptr, png_bytep data, png_siz
 	}
 }
 
-void ImageMgrEx::Handler::FlushData(png_structp png_ptr)
+void Handler::FlushData(png_structp png_ptr)
 {
 	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_io_ptr(png_ptr));
 	Stream& stream = hdr.GetStream();

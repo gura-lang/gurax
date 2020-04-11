@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_PNG_CONTENT_H
 #define GURAX_MODULE_PNG_CONTENT_H
 #include <gurax.h>
+#include "ImageExtension.h"
 
 Gurax_BeginModuleScope(png)
 
@@ -27,6 +28,8 @@ public:
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
 	~Content() = default;
+public:
+	bool Read(Stream& stream);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }
