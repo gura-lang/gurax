@@ -21,6 +21,8 @@ add_library(png SHARED
     module-png.cpp
     Util.cpp
     ImageExtension.cpp
+    Content.cpp
+    VType_Content.cpp
 )
 target_link_libraries(png guraxcore ${GUEST_LIBRARY})
 add_definitions(-DGURAX_MODULE_SEPARATED)
