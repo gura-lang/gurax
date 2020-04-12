@@ -30,7 +30,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 {
 	Handler handler(stream);
 	png_structp png_ptr = ::png_create_read_struct(
-			PNG_LIBPNG_VER_STRING, &handler, Handler::Error, Handler::Warning);
+			PNG_LIBPNG_VER_STRING, nullptr, Handler::Error, Handler::Warning);
 	png_infop info_ptr = ::png_create_info_struct(png_ptr);
 	png_infop end_info = ::png_create_info_struct(png_ptr);
 	if (::setjmp(png_jmpbuf(png_ptr))) {
@@ -148,7 +148,6 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 //-----------------------------------------------------------------------------
 void Handler::Error(png_structp png_ptr, png_const_charp error_msg)
 {
-	Handler& hdr = *reinterpret_cast<Handler*>(::png_get_error_ptr(png_ptr));
 	Error::Issue(ErrorType::FormatError, "%s", reinterpret_cast<const char *>(error_msg));
 	::longjmp(png_jmpbuf(png_ptr), 1);
 }

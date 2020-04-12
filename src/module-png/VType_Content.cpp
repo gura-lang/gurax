@@ -78,8 +78,8 @@ Gurax_ImplementMethod(Content, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// png.Content#propSkeleton
-Gurax_DeclareProperty_R(Content, propSkeleton)
+// png.Content#image_width
+Gurax_DeclareProperty_R(Content, image_width)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -87,10 +87,25 @@ Gurax_DeclareProperty_R(Content, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Content, propSkeleton)
+Gurax_ImplementPropertyGetter(Content, image_width)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_image_width(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#image_height
+Gurax_DeclareProperty_R(Content, image_height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, image_height)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_image_height(c.png_ptr, c.info_ptr));
 }
 
 //------------------------------------------------------------------------------
@@ -107,7 +122,8 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Content, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, propSkeleton));
+	Assign(Gurax_CreateProperty(Content, image_width));
+	Assign(Gurax_CreateProperty(Content, image_height));
 }
 
 //------------------------------------------------------------------------------

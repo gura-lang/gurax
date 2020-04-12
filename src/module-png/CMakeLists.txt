@@ -13,9 +13,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
     include_directories(${PROJECT_SOURCE_DIR}/guest/include/libpng)
     link_directories("${PROJECT_SOURCE_DIR}/guest/lib")
-    set(GUEST_LIBRARY png16)
+    set(GUEST_LIBRARY png16 z)
 else ()
-    set(GUEST_LIBRARY png16)
+    set(GUEST_LIBRARY png16 z)
 endif ()
 add_library(png SHARED
     module-png.cpp

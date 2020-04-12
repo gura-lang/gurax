@@ -18,8 +18,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("png.Content");
 public:
+	png_structp png_ptr;
+	png_infop info_ptr;
+public:
 	// Constructor
-	Content() {}
+	Content() : png_ptr(nullptr), info_ptr(nullptr) {}
 	// Copy constructor/operator
 	Content(const Content& src) = delete;
 	Content& operator=(const Content& src) = delete;
@@ -27,7 +30,7 @@ public:
 	Content(Content&& src) noexcept = delete;
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
-	~Content() = default;
+	~Content();
 public:
 	bool Read(Stream& stream);
 public:

@@ -9,8 +9,6 @@
 #include "ImageExtension.h"
 #include "VType_Content.h"
 
-#pragma warning(disable: 5045)
-
 Gurax_BeginModuleHeader(png)
 Gurax_EndModuleHeader(png)
 
