@@ -13,7 +13,6 @@ project(gurax_module_${ubarModuleName})
 
 include_directories($\{PROJECT_SOURCE_DIR}/../../include)
 link_directories($\{PROJECT_SOURCE_DIR}/../../lib)
-include_directories(md5 sha1)
 add_library(${ubarModuleName} SHARED
     module-${ubarModuleName}.cpp
     Util.cpp
