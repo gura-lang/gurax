@@ -167,7 +167,7 @@ Value* MoveTo(Processor& processor, int x, int y, const Expr_Block* pExprOfBlock
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	::GetConsoleScreenBufferInfo(hConsole, &csbi);
-	COORD pos = { x, y };
+	COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
 	::SetConsoleCursorPosition(hConsole, pos);
 	if (pExprOfBlock) {
 		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
