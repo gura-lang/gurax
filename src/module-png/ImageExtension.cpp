@@ -7,8 +7,8 @@ Gurax_BeginModuleScope(png)
 
 bool ImageMgrEx::IsResponsible(Stream& stream) const
 {
-	char buff[8];
-	return stream.Read(buff, 8) == 8 && ::memcmp(buff, "\x89PNG\x0d\x0a\x1a\x0a", 2) == 0;
+	png_byte sig[8];
+	return stream.Read(sig, sizeof(sig)) == sizeof(sig) && ::png_sig_cmp(sig, 0, sizeof(sig)) == 0;
 }
 
 bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
@@ -81,11 +81,11 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 		int num_palette;
 		::png_get_PLTE(png_ptr, info_ptr, &palette, &num_palette);
 		if (num_palette > 0) {
-			RefPtr<Palette> pPalette(new Palette(num_palette));
+			RefPtr<Palette> pPaletteDst(new Palette(num_palette));
 			for (size_t idx = 0; idx < num_palette; idx++, palette++) {
-				pPalette->SetRGB(idx, palette->red, palette->green, palette->blue);
+				pPaletteDst->SetRGB(idx, palette->red, palette->green, palette->blue);
 			}
-			image.SetPalette(pPalette.release());
+			image.SetPalette(pPaletteDst.release());
 		}
 	}
 	::png_set_packing(png_ptr);
@@ -102,8 +102,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 	}
 	::png_read_image(png_ptr, row_pointers.get());
 	::png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	if (Error::IsIssued()) return false;
-	return true;
+	return !Error::IsIssued();
 }
 
 bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
@@ -121,9 +120,28 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 	png_uint_32 height = static_cast<png_uint_32>(image.GetHeight());
 	int bit_depth = 8;
 	int color_type = PNG_COLOR_TYPE_RGB;
+#if 0
+	if (image.HasPalette()) {
+		const Palette* pPaletteSrc = image.GetPalette();
+		int num_palette = static_cast<int>(pPaletteSrc->GetSize());
+		std::unique_ptr<png_color[]> palette(new png_color [num_palette]);
+		for (int idx = 0; idx < num_palette; idx++) {
+			const Color& color = pPaletteSrc->GetColor(idx);
+			palette[idx].red = color.GetR();
+			palette[idx].green = color.GetG();
+			palette[idx].blue = color.GetB();
+		}
+		::png_set_PLTE(png_ptr, info_ptr, palette.get(), num_palette);
+		::png_set_palette_to_rgb(png_ptr);
+		color_type = PNG_COLOR_TYPE_PALETTE;
+		if (image.IsFormat(Image::Format::RGBA)) {
+			//*********************
+		}
+	}
+#endif
 	if (image.IsFormat(Image::Format::RGB)) {
 		color_type = PNG_COLOR_TYPE_RGB;
-	} else if (image.IsFormat(Image::Format::RGBA)) {
+	} else { // if (image.IsFormat(Image::Format::RGBA))
 		color_type = PNG_COLOR_TYPE_RGB_ALPHA;
 	}
 	int interlace_type = PNG_INTERLACE_NONE;

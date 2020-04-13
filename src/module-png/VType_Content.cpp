@@ -258,6 +258,156 @@ Gurax_ImplementPropertyGetter(Content, pixel_aspect_ratio)
 	return new Value_Number(::png_get_pixel_aspect_ratio(c.png_ptr, c.info_ptr));
 }
 
+// png.Content#x_offset_microns
+Gurax_DeclareProperty_R(Content, x_offset_microns)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, x_offset_microns)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_x_offset_microns(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#y_offset_microns
+Gurax_DeclareProperty_R(Content, y_offset_microns)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, y_offset_microns)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_y_offset_microns(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#x_offset_pixels
+Gurax_DeclareProperty_R(Content, x_offset_pixels)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, x_offset_pixels)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_x_offset_pixels(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#y_offset_pixels
+Gurax_DeclareProperty_R(Content, y_offset_pixels)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, y_offset_pixels)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_y_offset_pixels(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#compression_x_pixels_per_inch
+Gurax_DeclareProperty_R(Content, x_pixels_per_inch)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, x_pixels_per_inch)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_x_pixels_per_inch(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#y_pixels_per_inch
+Gurax_DeclareProperty_R(Content, y_pixels_per_inch)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, y_pixels_per_inch)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_y_pixels_per_inch(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#pixels_per_inch
+Gurax_DeclareProperty_R(Content, pixels_per_inch)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, pixels_per_inch)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_pixels_per_inch(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#x_offset_inches
+Gurax_DeclareProperty_R(Content, x_offset_inches)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, x_offset_inches)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_x_offset_inches(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#y_offset_inches
+Gurax_DeclareProperty_R(Content, y_offset_inches)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, y_offset_inches)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_y_offset_inches(c.png_ptr, c.info_ptr));
+}
+
+// png.Content#channels
+Gurax_DeclareProperty_R(Content, channels)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, channels)
+{
+	Content& c = GetValueThis(valueTarget).GetContent();
+	return new Value_Number(::png_get_channels(c.png_ptr, c.info_ptr));
+}
+
 //------------------------------------------------------------------------------
 // VType_Content
 //------------------------------------------------------------------------------
@@ -284,6 +434,16 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Content, y_pixels_per_meter));
 	Assign(Gurax_CreateProperty(Content, pixels_per_meter));
 	Assign(Gurax_CreateProperty(Content, pixel_aspect_ratio));
+	Assign(Gurax_CreateProperty(Content, x_offset_microns));
+	Assign(Gurax_CreateProperty(Content, y_offset_microns));
+	Assign(Gurax_CreateProperty(Content, x_offset_pixels));
+	Assign(Gurax_CreateProperty(Content, y_offset_pixels));
+	Assign(Gurax_CreateProperty(Content, x_pixels_per_inch));
+	Assign(Gurax_CreateProperty(Content, y_pixels_per_inch));
+	Assign(Gurax_CreateProperty(Content, pixels_per_inch));
+	Assign(Gurax_CreateProperty(Content, x_offset_inches));
+	Assign(Gurax_CreateProperty(Content, y_offset_inches));
+	Assign(Gurax_CreateProperty(Content, channels));
 }
 
 //------------------------------------------------------------------------------

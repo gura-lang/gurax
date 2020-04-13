@@ -9,6 +9,9 @@ png.Content('test.png') {|c|
     Println(c.image_width)
     Println(c.image_height)
     Println(c.x_pixels_per_meter)
+    Println(c.y_pixels_per_meter)
+    Println(c.color_type)
+    Println(c.channels)
 }
 
 //repeat (100) {
