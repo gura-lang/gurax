@@ -1,0 +1,3 @@
+#!/bin/sh
+apt install libbz2-dev
+apt install zlib1g-dev
