@@ -48,3 +48,5 @@ cmake_install.cmake
 # Directories
 /bin
 build/
+build-Release/
+.vscode/

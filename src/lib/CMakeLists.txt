@@ -158,7 +158,7 @@ add_library(guraxcore SHARED
 
 if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 	target_link_libraries(guraxcore)
-	add_definitions("-bigobj")
+	target_compile_options(guraxcore PUBLIC -bigobj)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES Linux)
 	target_link_libraries(guraxcore dl pthread)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES Darwin)

@@ -26,6 +26,8 @@ Gurax_ImplementFunction(Test)
 	const char* str = args.PickString();
 	Int num = args.PickNumber<Int>();
 	// Function body
+	RefPtr<Palette> pPalette(new Palette(100));
+
 	return new Value_String(String::Repeat(str, num));
 }
 
@@ -39,8 +41,12 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_Content);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of ImageMgr
+	ImageMgr::Assign(new ImageMgrEx());
 	return true;
 }
 
