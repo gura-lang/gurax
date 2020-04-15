@@ -1,0 +1,2 @@
+Diff.hpp: Replaces "private" declaration in Diff class with "public"
+so that you can access its member variables without any restriction.

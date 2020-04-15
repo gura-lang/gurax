@@ -26,6 +26,7 @@ Gurax_ImplementFunction(Test)
 	const char* str = args.PickString();
 	Int num = args.PickNumber<Int>();
 	// Function body
+
 	typedef char elem;
 	typedef std::string sequence;
 	sequence A("abc");
@@ -45,6 +46,10 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_DiffLine);
+	Assign(VTYPE_EditLine);
+	Assign(VTYPE_HunkLine);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;
