@@ -6,7 +6,7 @@ project(gurax_module_diff)
 
 include_directories(${PROJECT_SOURCE_DIR}/../../include)
 link_directories(${PROJECT_SOURCE_DIR}/../../lib)
-include_directories(dtl-1.19/dtl)
+include_directories(dtl-1.19)
 add_library(diff SHARED
     module-diff.cpp
     Util.cpp

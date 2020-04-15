@@ -26,6 +26,12 @@ Gurax_ImplementFunction(Test)
 	const char* str = args.PickString();
 	Int num = args.PickNumber<Int>();
 	// Function body
+	typedef char elem;
+	typedef std::string sequence;
+	sequence A("abc");
+	sequence B("abd");
+	dtl::Diff<elem, sequence> d(A, B);
+	d.compose();
 	return new Value_String(String::Repeat(str, num));
 }
 

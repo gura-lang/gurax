@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_DIFF_H
 #define GURAX_MODULE_DIFF_H
 #include <gurax.h>
+#include <dtl/dtl.hpp>
 #include "Util.h"
 
 Gurax_BeginModuleHeader(diff)
