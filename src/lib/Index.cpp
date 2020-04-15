@@ -11,7 +11,7 @@ namespace Gurax {
 String Index::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetValueCar().ToString(StringStyle(ss).Digest());
+	str += GetValueCar().ToString(StringStyle(ss).SetDigest());
 	return str;
 }
 

@@ -414,9 +414,11 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
+	static const StringStyle AsValue;
 public:
 	// Constructor
-	explicit StringStyle(const char* indentUnit = "  ") : _flags(Flag::None), _indentUnit(indentUnit) {}
+	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :
+		_flags(flags), _indentUnit(indentUnit) {}
 	// Copy constructor/operator
 	StringStyle(const StringStyle& src) : _flags(src._flags), _indentUnit(src._indentUnit) {}
 	StringStyle& operator=(const StringStyle& src) {
@@ -430,22 +432,22 @@ public:
 public:	
 	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
-	StringStyle& AsSource()				{ _flags |= Flag::AsSource; return *this; }
-	StringStyle& NoAsSource()			{ _flags &= ~Flag::AsSource; return *this; }
-	StringStyle& AsValue()				{ _flags |= Flag::AsValue; return *this; }
-	StringStyle& NoAsValue()			{ _flags &= ~Flag::AsValue; return *this; }
-	StringStyle& Cram()					{ _flags |= Flag::Cram; return *this; }
-	StringStyle& NoCram()				{ _flags &= ~Flag::Cram; return *this; }
-	StringStyle& MultiLine()			{ _flags |= Flag::MultiLine; return *this; }
-	StringStyle& NoMultiLine()			{ _flags &= ~Flag::MultiLine; return *this; }
-	StringStyle& UpperCase()			{ _flags |= Flag::UpperCase; return *this; }
-	StringStyle& NoUpperCase()			{ _flags &= ~Flag::UpperCase; return *this; }
-	StringStyle& Verbose()				{ _flags |= Flag::Verbose; return *this; }
-	StringStyle& NoVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	StringStyle& Digest()				{ _flags |= Flag::Digest; return *this; }
-	StringStyle& NoDigest()				{ _flags &= ~Flag::Digest; return *this; }
-	StringStyle& AddressInfo()			{ _flags |= Flag::AddressInfo; return *this; }
-	StringStyle& NoAddressInfo()		{ _flags &= ~Flag::AddressInfo; return *this; }
+	StringStyle& SetAsSource()			{ _flags |= Flag::AsSource; return *this; }
+	StringStyle& UnsetAsSource()		{ _flags &= ~Flag::AsSource; return *this; }
+	StringStyle& SetAsValue()			{ _flags |= Flag::AsValue; return *this; }
+	StringStyle& UnsetAsValue()			{ _flags &= ~Flag::AsValue; return *this; }
+	StringStyle& SetCram()				{ _flags |= Flag::Cram; return *this; }
+	StringStyle& UnsetCram()			{ _flags &= ~Flag::Cram; return *this; }
+	StringStyle& SetMultiLine()			{ _flags |= Flag::MultiLine; return *this; }
+	StringStyle& UnsetMultiLine()		{ _flags &= ~Flag::MultiLine; return *this; }
+	StringStyle& SetUpperCase()			{ _flags |= Flag::UpperCase; return *this; }
+	StringStyle& UnsetUpperCase()		{ _flags &= ~Flag::UpperCase; return *this; }
+	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
+	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
+	StringStyle& SetDigest()			{ _flags |= Flag::Digest; return *this; }
+	StringStyle& UnsetDigest()			{ _flags &= ~Flag::Digest; return *this; }
+	StringStyle& SetAddressInfo()		{ _flags |= Flag::AddressInfo; return *this; }
+	StringStyle& UnsetAddressInfo()		{ _flags &= ~Flag::AddressInfo; return *this; }
 	bool IsAsSource() const				{ return (_flags & Flag::AsSource) != 0; }
 	bool IsAsValue() const				{ return (_flags & Flag::AsValue) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }

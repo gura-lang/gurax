@@ -132,7 +132,7 @@ Gurax_TesterEntry(DeclCallable)
 			const Expr& expr = pExprEx->GetExprLeft();
 			if (expr.IsType<Expr_Caller>()) {
 				const Expr_Caller& exprEx = dynamic_cast<const Expr_Caller&>(expr);
-				::printf("%s\n", exprEx.GetDeclCallable().ToString(StringStyle().Verbose()).c_str());
+				::printf("%s\n", exprEx.GetDeclCallable().ToString(StringStyle().SetVerbose()).c_str());
 			}
 		}
 	}

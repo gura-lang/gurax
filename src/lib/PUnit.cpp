@@ -86,7 +86,7 @@ template<bool discardValueFlag>
 String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Value(%s)", GetValue()->ToString(StringStyle().Digest()).c_str());
+	str.Printf("Value(%s)", GetValue()->ToString(StringStyle().SetDigest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -323,7 +323,7 @@ String PUnit_AssignFunction<discardValueFlag>::ToString(const StringStyle& ss, i
 {
 	String str;
 	str.Printf("AssignFunction(%s,cont=%s)",
-			   GetFunction().ToString(StringStyle().Cram()).c_str(),
+			   GetFunction().ToString(StringStyle().SetCram()).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -375,7 +375,7 @@ String PUnit_AssignMethod<discardValueFlag, keepTargetFlag>::ToString(const Stri
 {
 	String str;
 	str.Printf("AssignMethod(%s,cont=%s)",
-			   GetFunction().ToString(StringStyle().Cram()).c_str(),
+			   GetFunction().ToString(StringStyle().SetCram()).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -945,7 +945,7 @@ String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 	String str;
 	str.Printf("ForEach(offsetToIterator=%zu,branchdest=%s, decls=[%s])", GetOffset(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
-			   GetDeclArgOwner().ToString(StringStyle().Digest().Cram()).c_str());
+			   GetDeclArgOwner().ToString(StringStyle().SetDigest().SetCram()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2549,7 +2549,7 @@ String PUnit_BeginArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int
 {
 	String str;
 	RefPtr<Expr> pExpr(new Expr_UnaryOp(GetExprSrc().Reference(), Operator::Quote));
-	str.Printf("BeginArgSlot(%s", pExpr->ToString(StringStyle().Cram()).c_str());
+	str.Printf("BeginArgSlot(%s", pExpr->ToString(StringStyle().SetCram()).c_str());
 	if (GetExprSrc().GetPUnitFirst()) {
 		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
@@ -2769,7 +2769,7 @@ String PUnit_BeginArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss
 {
 	String str;
 	str.Printf("BeginArgSlotNamed(`%s,symbol=%s,sentinel=%s,branchdest=%s)",
-			   GetExprSrc().ToString(StringStyle().Cram()).c_str(), GetSymbol()->GetName(),
+			   GetExprSrc().ToString(StringStyle().SetCram()).c_str(), GetSymbol()->GetName(),
 			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
@@ -3812,7 +3812,7 @@ template<bool discardValueFlag>
 String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Miscatch(%s)", GetValue()->ToString(StringStyle().Digest()).c_str());
+	str.Printf("Miscatch(%s)", GetValue()->ToString(StringStyle().SetDigest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }

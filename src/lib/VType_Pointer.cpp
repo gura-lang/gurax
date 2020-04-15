@@ -120,7 +120,7 @@ Gurax_ImplementMethod(Pointer, Dump)
 	bool upperFlag = argument.IsSet(Gurax_Symbol(upper));
 	// Function body
 	StringStyle ss;
-	if (upperFlag) ss.UpperCase();
+	if (upperFlag) ss.SetUpperCase();
 	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ss);
 	return Value::nil();
 }

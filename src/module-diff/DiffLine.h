@@ -47,9 +47,13 @@ protected:
 public:
 	Lcs& GetLcs() { return _diff.lcs; }
 	Ses& GetSes() { return _diff.ses; }
-	bool Compose(const Value& value1, const Value& value2);
+	bool Compose(Value& value1, Value& value2);
 public:
-	static bool FeedSequence(Sequence& seq, const Value& value);
+	static bool FeedValue(Sequence& seq, Value& value);
+	static void FeedString(Sequence& seq, const char* src);
+	static bool FeedStream(Sequence& seq, Stream& src);
+	static bool FeedIterator(Sequence& seq, Iterator& iter);
+	static void FeedList(Sequence& seq, const ValueList& valList);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DiffLine& other) const { return this == &other; }

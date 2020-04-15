@@ -128,7 +128,7 @@ String Value_VType::ToStringDigest(const StringStyle& ss) const
 	_ToStringDigest(str, ss);
 	str += ":";
 	str += constructor.IsEmpty()?
-		GetVTypeThis().MakeFullName() : constructor.ToString(StringStyle().Cram());
+		GetVTypeThis().MakeFullName() : constructor.ToString(StringStyle().SetCram());
 	str += ">";
 	return str;
 }

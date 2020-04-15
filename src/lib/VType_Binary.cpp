@@ -81,7 +81,7 @@ Gurax_ImplementMethod(Binary, Dump)
 	bool upperFlag = argument.IsSet(Gurax_Symbol(upper));
 	// Function body
 	StringStyle ss;
-	if (upperFlag) ss.UpperCase();
+	if (upperFlag) ss.SetUpperCase();
 	binary.GetBinary().Dump(stream, ss);
 	return Value::nil();
 }

@@ -245,7 +245,7 @@ Value* Iterator_IteratorEvaluator::DoNextValue()
 String Iterator_IteratorEvaluator::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("IteratorEvaluator:%s", GetArgument().ToString(StringStyle().Cram()).c_str());
+	str.Printf("IteratorEvaluator:%s", GetArgument().ToString(StringStyle().SetCram()).c_str());
 	return str;
 }
 

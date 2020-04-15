@@ -840,6 +840,7 @@ RefPtr<StringReferable> StringReferable::Empty;
 // StringStyle
 //------------------------------------------------------------------------------
 const StringStyle StringStyle::Empty;
+const StringStyle StringStyle::AsValue(StringStyle::Flag::AsValue);
 
 const char* StringStyle::_strsComma[2]		{ ", ", "," };
 const char* StringStyle::_strsColon[2]		{ ": ", ":" };

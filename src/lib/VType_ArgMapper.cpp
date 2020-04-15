@@ -47,7 +47,7 @@ String Value_ArgMapper::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetIterator().ToString(StringStyle().Digest());
+	str += GetIterator().ToString(StringStyle().SetDigest());
 	str += ">";
 	return str;
 }
