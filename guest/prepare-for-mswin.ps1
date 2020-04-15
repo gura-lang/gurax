@@ -167,6 +167,19 @@ class Package_bzip2 {
 $packages += [Package_bzip2]::new()
 
 #---------------------------------------------------------------------------------
+# Package: dtl
+#---------------------------------------------------------------------------------
+class Package_dtl {
+    [String] $name = "dtl"
+    [String] $ver = "1.19"
+    [String] $baseName = "$($this.name)-$($this.ver)"
+    [String[]] $fileNames = @("$($this.baseName).tar.gz")
+    [String] $dirName = $this.baseName
+    Build() {}
+}
+$packages += [Package_dtl]::new()
+
+#---------------------------------------------------------------------------------
 # Package: libjpeg
 #---------------------------------------------------------------------------------
 class Package_libjpeg {
