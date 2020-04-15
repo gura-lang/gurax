@@ -63,19 +63,17 @@ bool DiffLine::FeedStream(Sequence& seq, Stream& src)
 
 bool DiffLine::FeedIterator(Sequence& seq, Iterator& iter)
 {
-	StringStyle ss(StringStyle::Flag::AsValue);
 	do {
 		RefPtr<Value> pValue(iter.NextValue());
-		seq.push_back(pValue->ToString(ss));
+		seq.push_back(pValue->ToString(StringStyle::AsValue));
 	} while (0);
 	return !Error::IsIssued();
 }
 
 void DiffLine::FeedList(Sequence& seq, const ValueList& valList)
 {
-	StringStyle ss(StringStyle::Flag::AsValue);
 	for (const Value* pValue : valList) {
-		seq.push_back(pValue->ToString(ss));
+		seq.push_back(pValue->ToString(StringStyle::AsValue));
 	}
 }
 
