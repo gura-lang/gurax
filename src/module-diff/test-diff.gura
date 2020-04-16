@@ -14,6 +14,8 @@ third
 str2 = R'''
 first
 second
+xxxxx
+xxxxx
 third
 '''
 

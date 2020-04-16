@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(diff)
 //------------------------------------------------------------------------------
 bool DiffLine::Compose(Value& value1, Value& value2)
 {
-	if (!FeedValue(_diff.A, value1) && !FeedValue(_diff.B, value2)) return false;
+	if (!FeedValue(_diff.A, value1) || !FeedValue(_diff.B, value2)) return false;
 	_diff.init();
 	_diff.onHuge();
 	_diff.compose();

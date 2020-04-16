@@ -44,8 +44,8 @@ Gurax_ImplementConstructor(DiffLine)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Value& src1 = args.PeekValue();
-	Value& src2 = args.PeekValue();
+	Value& src1 = args.PickValue();
+	Value& src2 = args.PickValue();
 	// Function body
 	bool icaseFlag = argument.IsSet(Gurax_Symbol(icase));
 	RefPtr<DiffLine> pDiffLine(new DiffLine(icaseFlag));
