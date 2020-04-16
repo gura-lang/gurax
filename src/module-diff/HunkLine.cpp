@@ -8,6 +8,32 @@ Gurax_BeginModuleScope(diff)
 //------------------------------------------------------------------------------
 // HunkLine
 //------------------------------------------------------------------------------
+void HunkLine::Print(Stream& stream) const
+{
+#if 0
+	const EditList &edits = GetEditList();
+	EditList::const_iterator pEdit = edits.begin() + hunk.idxEditBegin;
+	EditList::const_iterator pEditEnd = edits.begin() + hunk.idxEditEnd;
+	if (hunk.format == FORMAT_Normal) {
+		stream.Printf(sig, "%s\n", hunk.TextizeRange_Normal().c_str());
+		for ( ; pEdit != pEditEnd; pEdit++) {
+			stream.Println(sig, TextizeEdit_Normal(*pEdit).c_str());
+			if (sig.IsSignalled()) return false;
+		}
+	} else if (hunk.format == FORMAT_Context) {
+
+	} else if (hunk.format == FORMAT_Unified) {
+		stream.Printf(sig, "@@ %s @@\n", hunk.TextizeRange_Unified().c_str());
+		if (sig.IsSignalled()) return false;
+		for ( ; pEdit != pEditEnd; pEdit++) {
+			stream.Println(sig, TextizeEdit_Unified(*pEdit).c_str());
+			if (sig.IsSignalled()) return false;
+		}
+	}
+	return true;
+#endif
+}
+
 String HunkLine::TextizeRange_Normal() const
 {
 	String str;

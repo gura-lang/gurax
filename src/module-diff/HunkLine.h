@@ -38,6 +38,7 @@ public:
 protected:
 	~HunkLine() = default;
 public:
+	void Print(Stream& stream) const;
 	String TextizeRange_Normal() const;
 	String TextizeRange_Context() const;
 	String TextizeRange_Unified() const;
