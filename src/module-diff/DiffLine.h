@@ -28,11 +28,14 @@ public:
 		}
 	};
 	using Sequence = std::vector<String>;
+	using Diff = dtl::Diff<String, Sequence, Comparator>;
 	using Lcs = dtl::Lcs<String>;	// Longest Common Subsequence
 	using Ses = dtl::Ses<String>;	// Shortest Edit Script
+	using SesElem = Ses::sesElem;
+	using UniHunk = dtl::uniHunk<SesElem>;
 	using LcsElemVec = Lcs::elemVec;
 	using SesElemVec = Ses::sesElemVec;
-	using Diff = dtl::Diff<String, Sequence, Comparator>;
+	using UniHunkVec = Diff::uniHunkVec;
 private:
 	Diff _diff;
 public:
@@ -51,8 +54,10 @@ public:
 	Ses& GetSes() { return _diff.ses; }
 	LcsElemVec& GetLcsElemVec() { return GetLcs().getSequence(); }
 	SesElemVec& GetSesElemVec() { return GetSes().getSequence(); }
+	
 	bool Compose(Value& value1, Value& value2);
 public:
+	static void PrintUniHunk(const UniHunk& uniHunk);
 	static bool FeedValue(Sequence& seq, Value& value);
 	static void FeedString(Sequence& seq, const char* src);
 	static bool FeedStream(Sequence& seq, Stream& src);

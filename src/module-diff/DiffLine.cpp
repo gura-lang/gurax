@@ -14,7 +14,22 @@ bool DiffLine::Compose(Value& value1, Value& value2)
 	_diff.init();
 	_diff.onHuge();
 	_diff.compose();
+	_diff.composeUnifiedHunks();
 	return true;
+}
+
+void DiffLine::PrintUniHunk(const UniHunk& uniHunk)
+{
+#if 0
+	out_ << "@@"
+			<< " -"  << hunk.a << "," << hunk.b
+			<< " +"  << hunk.c << "," << hunk.d
+			<< " @@" << endl;
+	
+	for_each(hunk.common[0].begin(), hunk.common[0].end(), CommonPrinter< sesElem, stream >(out_));
+	for_each(hunk.change.begin(),    hunk.change.end(),    ChangePrinter< sesElem, stream >(out_));
+	for_each(hunk.common[1].begin(), hunk.common[1].end(), CommonPrinter< sesElem, stream >(out_));
+#endif
 }
 
 bool DiffLine::FeedValue(Sequence& seq, Value& value)
