@@ -56,27 +56,23 @@ Gurax_ImplementConstructor(DiffLine)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// diff.DiffLine#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(DiffLine, MethodSkeleton)
+// diff.DiffLine#EachHunk() {block?}
+Gurax_DeclareMethod(DiffLine, EachHunk)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Creates an iterator that returns stored hunk information.\n");
 }
 
-Gurax_ImplementMethod(DiffLine, MethodSkeleton)
+Gurax_ImplementMethod(DiffLine, EachHunk)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiffLine().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -109,7 +105,7 @@ void VType_DiffLine::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DiffLine));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(DiffLine, MethodSkeleton));
+	Assign(Gurax_CreateMethod(DiffLine, EachHunk));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DiffLine, propSkeleton));
 }

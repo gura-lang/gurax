@@ -5,6 +5,21 @@
 import(util.tester) {*}
 import(diff)
 
+str1 = R'''
+first
+second
+third
+'''
+
+str2 = R'''
+first
+second
+third
+'''
+
 TestCase('Basic test') {
-	Println(diff.Test('hello', 4))
+	d = diff.DiffLine(str1, str2)
+	d.EachHunk {|hunk|
+		hunk.Print()
+	}
 }
