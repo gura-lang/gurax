@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// diff.EditLine() {block?}
-Gurax_DeclareConstructor(EditLine)
-{
-	Declare(VTYPE_EditLine, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `diff.EditLine` instance.");
-}
-
-Gurax_ImplementConstructor(EditLine)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<EditLine> pEditLine(new EditLine());
-	return argument.ReturnValue(processor, new Value_EditLine(pEditLine.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_EditLine::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(EditLine));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(EditLine, MethodSkeleton));
 	// Assignment of property

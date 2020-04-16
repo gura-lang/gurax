@@ -55,7 +55,6 @@ public:
 	LcsElemVec& GetLcsElemVec() { return GetLcs().getSequence(); }
 	SesElemVec& GetSesElemVec() { return GetSes().getSequence(); }
 	HunkVec& GetHunkVec() { return _diff.uniHunks; }
-	Hunk& GetHunk(size_t iHunk) { return GetHunkVec()[iHunk]; }
 	bool Compose(Value& value1, Value& value2);
 public:
 	void PrintHunks(Stream& stream) const;

@@ -30,17 +30,17 @@ public:
 	Gurax_MemoryPoolAllocator("Value_HunkLine");
 protected:
 	RefPtr<DiffLine> _pDiffLine;
-	size_t _iHunk;
+	const DiffLine::Hunk& _hunk;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_HunkLine() = delete;
-	explicit Value_HunkLine(DiffLine* pDiffLine, size_t iHunk, VType& vtype = VTYPE_HunkLine) :
-		Value_Object(vtype), _pDiffLine(pDiffLine), _iHunk(iHunk) {}
+	explicit Value_HunkLine(DiffLine* pDiffLine, const DiffLine::Hunk& hunk, VType& vtype = VTYPE_HunkLine) :
+		Value_Object(vtype), _pDiffLine(pDiffLine), _hunk(hunk) {}
 	// Copy constructor/operator
 	Value_HunkLine(const Value_HunkLine& src) :
-		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _iHunk(src._iHunk) {}
+		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _hunk(src._hunk) {}
 	Value_HunkLine& operator=(const Value_HunkLine& src) = delete;
 	// Move constructor/operator
 	Value_HunkLine(Value_HunkLine&& src) noexcept = delete;
@@ -49,12 +49,8 @@ protected:
 	// Destructor
 	~Value_HunkLine() = default;
 public:
-	DiffLine::Hunk& GetHunk() { return _pDiffLine->GetHunk(_iHunk); }
-	const DiffLine::Hunk& GetHunk() const { return _pDiffLine->GetHunk(_iHunk); }
+	const DiffLine::Hunk& GetHunk() const { return _hunk; }
 public:
-	static DiffLine::Hunk& GetHunk(Value& value) {
-		return dynamic_cast<Value_HunkLine&>(value).GetHunk();
-	}
 	static const DiffLine::Hunk& GetHunk(const Value& value) {
 		return dynamic_cast<const Value_HunkLine&>(value).GetHunk();
 	}

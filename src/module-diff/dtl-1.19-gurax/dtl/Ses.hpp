@@ -119,7 +119,7 @@ namespace dtl {
         sesElemVec getSequence () const {
             return sequence;
         }
-    private :
+    public :
         sesElemVec sequence;
         bool       onlyAdd;
         bool       onlyDelete;

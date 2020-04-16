@@ -98,8 +98,9 @@ Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine) : _pDiffLine(pDiffLine
 
 Value* Iterator_HunkLine::DoNextValue()
 {
-	if (_iHunk >= _pDiffLine->GetHunkVec().size()) return nullptr;
-	RefPtr<Value> pValue(new Value_HunkLine(_pDiffLine->Reference(), _iHunk));
+	DiffLine::HunkVec& hunks = _pDiffLine->GetHunkVec();
+	if (_iHunk >= hunks.size()) return nullptr;
+	RefPtr<Value> pValue(new Value_HunkLine(_pDiffLine->Reference(), hunks[_iHunk]));
 	_iHunk++;
 	return pValue.release();
 }
