@@ -49,6 +49,7 @@ protected:
 	// Destructor
 	~Value_HunkLine() = default;
 public:
+	const DiffLine& GetDiffLine() const { return *_pDiffLine; }
 	const DiffLine::Hunk& GetHunk() const { return _hunk; }
 public:
 	static const DiffLine::Hunk& GetHunk(const Value& value) {

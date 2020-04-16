@@ -56,6 +56,26 @@ Gurax_ImplementConstructor(DiffLine)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// diff.DiffLine#EachEdit() {block?}
+Gurax_DeclareMethod(DiffLine, EachEdit)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that returns stored edit information.\n");
+}
+
+Gurax_ImplementMethod(DiffLine, EachEdit)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	DiffLine& diffLine = valueThis.GetDiffLine();
+	RefPtr<Iterator> pIterator(new Iterator_EditLine(diffLine.Reference(), diffLine.GetSesElemVec()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // diff.DiffLine#EachHunk() {block?}
 Gurax_DeclareMethod(DiffLine, EachHunk)
 {
@@ -105,6 +125,7 @@ void VType_DiffLine::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DiffLine));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(DiffLine, EachEdit));
 	Assign(Gurax_CreateMethod(DiffLine, EachHunk));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DiffLine, propSkeleton));

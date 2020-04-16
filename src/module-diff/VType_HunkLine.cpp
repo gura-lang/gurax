@@ -27,6 +27,32 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// diff.HunkLine#EachEdit(symbol:Symbol) {block?}
+Gurax_DeclareMethod(HunkLine, EachEdit)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that returns stored edit information.\n");
+}
+
+Gurax_ImplementMethod(HunkLine, EachEdit)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	//SesElemVec* pSesElems =
+	//	pSymbol->IsIdentical(Gurax_Symbol()
+	const DiffLine::Hunk& hunk = valueThis.GetHunk();
+	RefPtr<Iterator> pIterator(new Iterator_EditLine(valueThis.GetDiffLine().Reference(), hunk.common[0]));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // diff.HunkLine#Print(stream?:Stream:w)
 Gurax_DeclareMethod(HunkLine, Print)
 {
@@ -79,6 +105,7 @@ void VType_HunkLine::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(HunkLine, EachEdit));
 	Assign(Gurax_CreateMethod(HunkLine, Print));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(HunkLine, propSkeleton));
