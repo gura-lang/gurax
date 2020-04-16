@@ -27,27 +27,26 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// diff.HunkLine#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(HunkLine, MethodSkeleton)
+// diff.HunkLine#Print(stream?:Stream:w)
+Gurax_DeclareMethod(HunkLine, Print)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Prints the unified hunk.\n");
 }
 
-Gurax_ImplementMethod(HunkLine, MethodSkeleton)
+Gurax_ImplementMethod(HunkLine, Print)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	// Function body
-	return new Value_Number(num1 + num2);
+	DiffLine::PrintHunk(stream, valueThis.GetHunk());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -80,7 +79,7 @@ void VType_HunkLine::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(HunkLine, MethodSkeleton));
+	Assign(Gurax_CreateMethod(HunkLine, Print));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(HunkLine, propSkeleton));
 }
@@ -89,5 +88,25 @@ void VType_HunkLine::DoPrepare(Frame& frameOuter)
 // Value_HunkLine
 //------------------------------------------------------------------------------
 VType& Value_HunkLine::vtype = VTYPE_HunkLine;
+
+//-----------------------------------------------------------------------------
+// Iterator_HunkLine
+//-----------------------------------------------------------------------------
+Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine) : _pDiffLine(pDiffLine), _iHunk(0)
+{
+}
+
+Value* Iterator_HunkLine::DoNextValue()
+{
+	if (_iHunk >= _pDiffLine->GetHunkVec().size()) return nullptr;
+	RefPtr<Value> pValue(new Value_HunkLine(_pDiffLine->Reference(), _iHunk));
+	_iHunk++;
+	return pValue.release();
+}
+
+String Iterator_HunkLine::ToString(const StringStyle& ss) const
+{
+	return "diff.HunkLine";
+}
 
 Gurax_EndModuleScope(diff)
