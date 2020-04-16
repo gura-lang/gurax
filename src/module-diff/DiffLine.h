@@ -32,10 +32,10 @@ public:
 	using Lcs = dtl::Lcs<String>;	// Longest Common Subsequence
 	using Ses = dtl::Ses<String>;	// Shortest Edit Script
 	using SesElem = Ses::sesElem;
-	using UniHunk = dtl::uniHunk<SesElem>;
+	using Hunk = dtl::uniHunk<SesElem>;
 	using LcsElemVec = Lcs::elemVec;
 	using SesElemVec = Ses::sesElemVec;
-	using UniHunkVec = Diff::uniHunkVec;
+	using HunkVec = Diff::uniHunkVec;
 private:
 	Diff _diff;
 public:
@@ -54,10 +54,12 @@ public:
 	Ses& GetSes() { return _diff.ses; }
 	LcsElemVec& GetLcsElemVec() { return GetLcs().getSequence(); }
 	SesElemVec& GetSesElemVec() { return GetSes().getSequence(); }
-	
+	HunkVec& GetHunkVec() { return _diff.getUniHunks(); }
+	Hunk& GetHunk(size_t idxHunk) { return GetHunkVec()[idxHunk]; }
 	bool Compose(Value& value1, Value& value2);
 public:
-	static void PrintUniHunk(const UniHunk& uniHunk);
+	void PrintHunks(Stream& stream) const;
+	static void PrintHunk(Stream& stream, const Hunk& hunk);
 	static bool FeedValue(Sequence& seq, Value& value);
 	static void FeedString(Sequence& seq, const char* src);
 	static bool FeedStream(Sequence& seq, Stream& src);

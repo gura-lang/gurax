@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// diff.HunkLine() {block?}
-Gurax_DeclareConstructor(HunkLine)
-{
-	Declare(VTYPE_HunkLine, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `diff.HunkLine` instance.");
-}
-
-Gurax_ImplementConstructor(HunkLine)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<HunkLine> pHunkLine(new HunkLine());
-	return argument.ReturnValue(processor, new Value_HunkLine(pHunkLine.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_HunkLine::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(HunkLine));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(HunkLine, MethodSkeleton));
 	// Assignment of property

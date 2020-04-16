@@ -18,18 +18,27 @@ bool DiffLine::Compose(Value& value1, Value& value2)
 	return true;
 }
 
-void DiffLine::PrintUniHunk(const UniHunk& uniHunk)
+void DiffLine::PrintHunks(Stream& stream) const
 {
-#if 0
-	out_ << "@@"
-			<< " -"  << hunk.a << "," << hunk.b
-			<< " +"  << hunk.c << "," << hunk.d
-			<< " @@" << endl;
-	
-	for_each(hunk.common[0].begin(), hunk.common[0].end(), CommonPrinter< sesElem, stream >(out_));
-	for_each(hunk.change.begin(),    hunk.change.end(),    ChangePrinter< sesElem, stream >(out_));
-	for_each(hunk.common[1].begin(), hunk.common[1].end(), CommonPrinter< sesElem, stream >(out_));
-#endif
+	for (const Hunk& hunk : _diff.uniHunks) PrintHunk(stream, hunk);
+}
+
+void DiffLine::PrintHunk(Stream& stream, const Hunk& hunk)
+{
+	stream.Printf("@@ -%d,%d +%d,%d @@\n", hunk.a, hunk.b, hunk.c, hunk.d);
+	for (const SesElem& sesElem : hunk.common[0]) {
+		stream.Printf(" %s\n", sesElem.first.c_str());
+	}
+	for (const SesElem& sesElem : hunk.change) {
+		stream.Printf("%s%s\n",
+			(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
+			(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
+			(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : "?",
+			sesElem.first.c_str());
+	}
+	for (const SesElem& sesElem : hunk.common[1]) {
+		stream.Printf(" %s\n", sesElem.first.c_str());
+	}
 }
 
 bool DiffLine::FeedValue(Sequence& seq, Value& value)

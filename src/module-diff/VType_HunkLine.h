@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
 #define GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
 #include <gurax.h>
-#include "HunkLine.h"
+#include "DiffLine.h"
 
 Gurax_BeginModuleScope(diff)
 
@@ -29,17 +29,18 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_HunkLine");
 protected:
-	RefPtr<HunkLine> _pHunkLine;
+	RefPtr<DiffLine> _pDiffLine;
+	size_t _idxHunk;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_HunkLine() = delete;
-	explicit Value_HunkLine(HunkLine* pHunkLine, VType& vtype = VTYPE_HunkLine) :
-		Value_Object(vtype), _pHunkLine(pHunkLine) {}
+	explicit Value_HunkLine(DiffLine* pDiffLine, size_t idxHunk, VType& vtype = VTYPE_HunkLine) :
+		Value_Object(vtype), _pDiffLine(pDiffLine), _idxHunk(idxHunk) {}
 	// Copy constructor/operator
 	Value_HunkLine(const Value_HunkLine& src) :
-		Value_Object(src), _pHunkLine(src._pHunkLine->Reference()) {}
+		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _idxHunk(src._idxHunk) {}
 	Value_HunkLine& operator=(const Value_HunkLine& src) = delete;
 	// Move constructor/operator
 	Value_HunkLine(Value_HunkLine&& src) noexcept = delete;
@@ -48,33 +49,18 @@ protected:
 	// Destructor
 	~Value_HunkLine() = default;
 public:
-	HunkLine& GetHunkLine() { return *_pHunkLine; }
-	const HunkLine& GetHunkLine() const { return *_pHunkLine; }
+	DiffLine::Hunk& GetHunk() { return _pDiffLine->GetHunk(_idxHunk); }
+	const DiffLine::Hunk& GetHunk() const { return _pDiffLine->GetHunk(_idxHunk); }
 public:
-	static HunkLine& GetHunkLine(Value& value) {
-		return dynamic_cast<Value_HunkLine&>(value).GetHunkLine();
+	static DiffLine::Hunk& GetHunk(Value& value) {
+		return dynamic_cast<Value_HunkLine&>(value).GetHunk();
 	}
-	static const HunkLine& GetHunkLine(const Value& value) {
-		return dynamic_cast<const Value_HunkLine&>(value).GetHunkLine();
+	static const DiffLine::Hunk& GetHunk(const Value& value) {
+		return dynamic_cast<const Value_HunkLine&>(value).GetHunk();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override {
-		return GetHunkLine().CalcHash();
-	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetHunkLine().IsEqualTo(Value_HunkLine::GetHunkLine(*pValue));
-	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetHunkLine().IsLessThan(Value_HunkLine::GetHunkLine(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
-	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetHunkLine().ToString(ss);
-	}
 };
 
 Gurax_EndModuleScope(diff)
