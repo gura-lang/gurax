@@ -30,6 +30,8 @@ public:
 	using Sequence = std::vector<String>;
 	using Lcs = dtl::Lcs<String>;	// Longest Common Subsequence
 	using Ses = dtl::Ses<String>;	// Shortest Edit Script
+	using LcsElemVec = Lcs::elemVec;
+	using SesElemVec = Ses::sesElemVec;
 	using Diff = dtl::Diff<String, Sequence, Comparator>;
 private:
 	Diff _diff;
@@ -47,6 +49,8 @@ protected:
 public:
 	Lcs& GetLcs() { return _diff.lcs; }
 	Ses& GetSes() { return _diff.ses; }
+	LcsElemVec& GetLcsElemVec() { return GetLcs().getSequence(); }
+	SesElemVec& GetSesElemVec() { return GetSes().getSequence(); }
 	bool Compose(Value& value1, Value& value2);
 public:
 	static bool FeedValue(Sequence& seq, Value& value);

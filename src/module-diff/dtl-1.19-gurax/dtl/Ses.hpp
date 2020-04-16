@@ -46,7 +46,7 @@ namespace dtl {
     template <typename elem>
     class Ses : public Sequence< elem >
     {
-    private :
+    public :
         typedef pair< elem, elemInfo > sesElem;
         typedef vector< sesElem >      sesElemVec;
     public :
