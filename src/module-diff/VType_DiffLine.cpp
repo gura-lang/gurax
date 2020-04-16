@@ -108,6 +108,10 @@ void VType_DiffLine::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(DiffLine, EachHunk));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DiffLine, propSkeleton));
+	//Gura_AssignProperty(diff_at_line, distance);
+	//Gura_AssignProperty(diff_at_line, edits);
+	//Gura_AssignProperty(diff_at_line, nlines_at_new);
+	//Gura_AssignProperty(diff_at_line, nlines_at_org);
 }
 
 //------------------------------------------------------------------------------
