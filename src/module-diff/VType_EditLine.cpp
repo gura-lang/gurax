@@ -90,4 +90,25 @@ void VType_EditLine::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_EditLine::vtype = VTYPE_EditLine;
 
+//-----------------------------------------------------------------------------
+// Iterator_EditLine
+//-----------------------------------------------------------------------------
+Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine, const DiffLine::SesElemVec& sesElems) :
+	_pDiffLine(pDiffLine), _sesElems(sesElems), _iSesElem(0)
+{
+}
+
+Value* Iterator_EditLine::DoNextValue()
+{
+	if (_iSesElem >= _sesElems.size()) return nullptr;
+	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), _sesElems[_iSesElem]));
+	_iSesElem++;
+	return pValue.release();
+}
+
+String Iterator_EditLine::ToString(const StringStyle& ss) const
+{
+	return "diff.EditLine";
+}
+
 Gurax_EndModuleScope(diff)

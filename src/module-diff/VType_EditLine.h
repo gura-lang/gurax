@@ -59,6 +59,26 @@ public:
 	virtual Value* Clone() const override { return Reference(); }
 };
 
+//-----------------------------------------------------------------------------
+// Iterator_EditLine
+//-----------------------------------------------------------------------------
+class Iterator_EditLine : public Iterator {
+private:
+	RefPtr<DiffLine> _pDiffLine;
+	const DiffLine::SesElemVec& _sesElems;
+	size_t _iSesElem;
+public:
+	Iterator_EditLine(DiffLine* pDiffLine, const DiffLine::SesElemVec& sesElems);
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return _sesElems.size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(diff)
 
 #endif
