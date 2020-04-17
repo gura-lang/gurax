@@ -67,6 +67,7 @@ TestCase('Basic test') {
 	d.EachEdit {|edit|
 		Println(edit.mark, ' ', edit.source)
 	}
+	Println('----')
 	d.EachHunk {|hunk|
 		hunk.Print()
 	}
