@@ -52,8 +52,8 @@ protected:
 public:
 	Lcs& GetLcs() { return _diff.lcs; }
 	Ses& GetSes() { return _diff.ses; }
-	LcsElemVec& GetLcsElemVec() { return GetLcs().getSequence(); }
-	SesElemVec& GetSesElemVec() { return GetSes().getSequence(); }
+	LcsElemVec& GetLcsElemVec() { return GetLcs().sequence; }
+	SesElemVec& GetSesElemVec() { return GetSes().sequence; }
 	HunkVec& GetHunkVec() { return _diff.uniHunks; }
 	bool Compose(Value& value1, Value& value2);
 public:

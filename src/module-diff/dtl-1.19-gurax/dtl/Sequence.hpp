@@ -57,7 +57,7 @@ namespace dtl {
         void addSequence (elem e) {
             sequence.push_back(e);
         }
-    protected :
+    public :
         elemVec sequence;
     };
 }
