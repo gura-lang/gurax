@@ -33,7 +33,7 @@ void DiffLine::PrintHunk(Stream& stream, const Hunk& hunk)
 		stream.Printf("%s%s\n",
 			(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
 			(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
-			(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : "?",
+			(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : " ",
 			sesElem.first.c_str());
 	}
 	for (const SesElem& sesElem : hunk.common[1]) {

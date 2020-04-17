@@ -53,19 +53,60 @@ Gurax_ImplementMethod(EditLine, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// diff.EditLine#propSkeleton
-Gurax_DeclareProperty_R(EditLine, propSkeleton)
+// diff.EditLine#source
+Gurax_DeclareProperty_R(EditLine, source)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(EditLine, propSkeleton)
+Gurax_ImplementPropertyGetter(EditLine, source)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	return new Value_String(sesElem.first);
+}
+
+// diff.EditLine#type
+Gurax_DeclareProperty_R(EditLine, type)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(EditLine, type)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Symbol* pSymbol =
+		(sesElem.second.type == dtl::SES_ADD)? Gurax_Symbol(add) :
+		(sesElem.second.type == dtl::SES_DELETE)? Gurax_Symbol(delete_) :
+		(sesElem.second.type == dtl::SES_COMMON)? Gurax_Symbol(common) : Symbol::Empty;
+	return new Value_Symbol(pSymbol);
+}
+
+// diff.EditLine#mark
+Gurax_DeclareProperty_R(EditLine, mark)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(EditLine, mark)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const char* str =
+		(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
+		(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
+		(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : "";
+	return new Value_String(str);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +123,9 @@ void VType_EditLine::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(EditLine, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(EditLine, propSkeleton));
+	Assign(Gurax_CreateProperty(EditLine, source));
+	Assign(Gurax_CreateProperty(EditLine, type));
+	Assign(Gurax_CreateProperty(EditLine, mark));
 }
 
 //------------------------------------------------------------------------------

@@ -98,8 +98,8 @@ Gurax_ImplementMethod(DiffLine, EachHunk)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// diff.DiffLine#propSkeleton
-Gurax_DeclareProperty_R(DiffLine, propSkeleton)
+// diff.DiffLine#distance
+Gurax_DeclareProperty_R(DiffLine, distance)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -107,10 +107,10 @@ Gurax_DeclareProperty_R(DiffLine, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(DiffLine, propSkeleton)
+Gurax_ImplementPropertyGetter(DiffLine, distance)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDiffLine().GetDistance());
 }
 
 //------------------------------------------------------------------------------
@@ -128,9 +128,7 @@ void VType_DiffLine::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(DiffLine, EachEdit));
 	Assign(Gurax_CreateMethod(DiffLine, EachHunk));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(DiffLine, propSkeleton));
-	//Gura_AssignProperty(diff_at_line, distance);
-	//Gura_AssignProperty(diff_at_line, edits);
+	Assign(Gurax_CreateProperty(DiffLine, distance));
 	//Gura_AssignProperty(diff_at_line, nLinesNew);
 	//Gura_AssignProperty(diff_at_line, nLinesOrg);
 }

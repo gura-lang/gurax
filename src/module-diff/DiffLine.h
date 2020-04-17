@@ -50,6 +50,7 @@ public:
 protected:
 	~DiffLine() = default;
 public:
+	Int64 GetDistance() const { return _diff.editDistance; }
 	Lcs& GetLcs() { return _diff.lcs; }
 	Ses& GetSes() { return _diff.ses; }
 	LcsElemVec& GetLcsElemVec() { return GetLcs().sequence; }

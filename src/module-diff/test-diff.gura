@@ -5,22 +5,68 @@
 import(util.tester) {*}
 import(diff)
 
-str1 = R'''
-first
-second
-third
-'''
-
-str2 = R'''
-first
-second
-xxxxx
-xxxxx
-third
-'''
-
 TestCase('Basic test') {
-	d = diff.DiffLine(str1, str2)
+	textOrg = R'''
+	This part of the
+	document has stayed the
+	same from version to
+	version.  It shouldn't
+	be shown if it doesn't
+	change.  Otherwise, that
+	would not be helping to
+	compress the size of the
+	changes.
+	
+	This paragraph contains
+	text that is outdated.
+	It will be deleted in the
+	near future.
+	
+	It is important to spell
+	check this dokument. On
+	the other hand, a
+	misspelled word isn't
+	the end of the world.
+	Nothing in the rest of
+	this paragraph needs to
+	be changed. Things can
+	be added after it.
+	'''
+	textNew = R'''
+	This is an important
+	notice! It should
+	therefore be located at
+	the beginning of this
+	document!
+	
+	This part of the
+	document has stayed the
+	same from version to
+	version.  It shouldn't
+	be shown if it doesn't
+	change.  Otherwise, that
+	would not be helping to
+	compress anything.
+	
+	It is important to spell
+	check this document. On
+	the other hand, a
+	misspelled word isn't
+	the end of the world.
+	Nothing in the rest of
+	this paragraph needs to
+	be changed. Things can
+	be added after it.
+	
+	This paragraph contains
+	important new additions
+	to this document.
+	'''
+	d = diff.DiffLine(textOrg, textNew)
+	Println(d.distance)
+	d.EachEdit {|edit|
+		Println(edit.mark, ' ', edit.source)
+	}
 	d.EachHunk {|hunk|
 		hunk.Print()
 	}
