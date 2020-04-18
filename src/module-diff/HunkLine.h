@@ -16,9 +16,18 @@ public:
 	Gurax_DeclareReferable(HunkLine);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("diff.HunkLine");
+protected:
+	RefPtr<DiffLine> _pDiffLine;
+	size_t _iSesElemBegin;
+	size_t _iSesElemEnd;
+	size_t _lineNoOrg;
+	size_t _lineNoNew;
+	size_t _nLinesOrg;
+	size_t _nLinesNew;
 public:
 	// Constructor
-	HunkLine() {}
+	HunkLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd,
+		size_t lineNoOrg, size_t lineNoNew, size_t nLinesOrg, size_t nLinesNew);
 	// Copy constructor/operator
 	HunkLine(const HunkLine& src) = delete;
 	HunkLine& operator=(const HunkLine& src) = delete;
@@ -27,6 +36,11 @@ public:
 	HunkLine& operator=(HunkLine&& src) noexcept = delete;
 protected:
 	~HunkLine() = default;
+public:
+	size_t GetLineNoOrg() const { return _lineNoOrg; }
+	size_t GetLineNoNew() const { return _lineNoNew; }
+	size_t GetNLinesOrg() const { return _nLinesOrg; }
+	size_t GetNLinesNew() const { return _nLinesNew; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const HunkLine& other) const { return this == &other; }

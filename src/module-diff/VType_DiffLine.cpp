@@ -91,7 +91,7 @@ Gurax_ImplementMethod(DiffLine, EachHunk)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiffLine().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiffLine().Reference(), 3));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

@@ -120,88 +120,84 @@ VType& Value_HunkLine::vtype = VTYPE_HunkLine;
 //-----------------------------------------------------------------------------
 // Iterator_HunkLine
 //-----------------------------------------------------------------------------
-Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine) : _pDiffLine(pDiffLine), _iHunk(0)
+Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon) :
+	_pDiffLine(pDiffLine), _nLinesCommon(nLinesCommon), _iSesElem(0)
 {
 }
 
 Value* Iterator_HunkLine::DoNextValue()
 {
 	DiffLine::HunkVec& hunks = _pDiffLine->GetHunkVec();
-	if (_iHunk >= hunks.size()) return nullptr;
+	//if (_iHunk >= hunks.size()) return nullptr;
 	//RefPtr<Value> pValue(new Value_HunkLine(_pDiffLine->Reference(), hunks[_iHunk]));
-	_iHunk++;
+	//_iHunk++;
 	//return pValue.release();
 	return Value::nil();
 }
 
-#if 0
-HunkLine* Iterator_HunkLine::NextHunk(size_t nLinesCommon) const
+HunkLine* Iterator_HunkLine::NextHunk()
 {
-	pHunk->Clear();
-	pHunk->format = format;
-	if (format == FORMAT_Normal) nLinesCommon = 0;
-	size_t idxEdit = *pIdxEdit;
-	size_t idxEditTop = idxEdit;
-	size_t nEdits = GetEditList().size();
-	if (idxEdit >= nEdits) return false;
-	size_t nLines = 0;
-	for ( ; idxEdit < nEdits; idxEdit++) {
-		const Edit &edit = GetEdit(idxEdit);
-		if (edit.second.type == EDITTYPE_Copy) continue;
-		pHunk->idxEditBegin = (idxEdit > idxEditTop + nLinesCommon)?
-			idxEdit - nLinesCommon : idxEditTop;
-		idxEdit++;
-		for ( ; idxEdit < nEdits; idxEdit++) {
-			const Edit &edit = GetEdit(idxEdit);
-			if (edit.second.type == EDITTYPE_Copy) {
-				if (nLinesCommon == 0) break;
-				nLines++;
-				if (nLines >= nLinesCommon * 2) {
-					idxEdit = idxEdit + 1 - nLinesCommon;
-					break;
-				}
-			} else {
-				nLines = 0;
-			}
-		}
-		*pIdxEdit = idxEdit;
-		pHunk->idxEditEnd = idxEdit;
-		for (size_t idxEdit = pHunk->idxEditBegin; idxEdit < pHunk->idxEditEnd; idxEdit++) {
-			const Edit &edit = GetEdit(idxEdit);
-			if (edit.second.beforeIdx > 0) {
-				pHunk->linenoOrg = edit.second.beforeIdx;
-				break;
-			}
-		}
-		for (size_t idxEdit = pHunk->idxEditBegin; idxEdit < pHunk->idxEditEnd; idxEdit++) {
-			const Edit &edit = GetEdit(idxEdit);
-			if (edit.second.afterIdx > 0) {
-				pHunk->linenoNew = edit.second.afterIdx;
-				break;
-			}
-		}
-		do {
-			const Edit &edit = GetEdit(pHunk->idxEditBegin);
-			if (pHunk->linenoOrg == 0 && pHunk->idxEditBegin > 0) {
-				const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
-				pHunk->linenoOrg = edit.second.beforeIdx;
-			}
-			if (pHunk->linenoNew == 0 && pHunk->idxEditBegin > 0) {
-				const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
-				pHunk->linenoNew = edit.second.afterIdx;
-			}
-		} while (0);
-		for (size_t idxEdit = pHunk->idxEditBegin; idxEdit < pHunk->idxEditEnd; idxEdit++) {
-			const Edit &edit = GetEdit(idxEdit);
-			if (edit.second.type != EDITTYPE_Add) pHunk->nLinesOrg++;
-			if (edit.second.type != EDITTYPE_Delete) pHunk->nLinesNew++;
-		}
-		return true;
+	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElemVec();
+	if (_iSesElem >= sesElems.size()) return false;
+	size_t iSesElemTop = _iSesElem;
+	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {
+		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		if (sesElem.second.type != dtl::SES_COMMON) break;
 	}
-	*pIdxEdit = idxEdit;
-	return false;
-}
+	if (_iSesElem == sesElems.size()) return nullptr;
+	size_t iSesElemBegin = (_iSesElem > iSesElemTop + _nLinesCommon)? _iSesElem - _nLinesCommon : iSesElemTop;
+	size_t nLines = 0;
+	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {
+		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		if (sesElem.second.type == dtl::SES_COMMON) {
+			if (_nLinesCommon == 0) break;
+			nLines++;
+			if (nLines >= _nLinesCommon * 2) {
+				_iSesElem = _iSesElem + 1 - _nLinesCommon;
+				break;
+			}
+		} else {
+			nLines = 0;
+		}
+	}
+	size_t iSesElemEnd = _iSesElem;
+	size_t lineNoOrg = 0, lineNoNew = 0;
+	size_t nLinesOrg = 0, nLinesNew = 0;
+	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
+		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		if (sesElem.second.beforeIdx > 0) {
+			lineNoOrg = sesElem.second.beforeIdx;
+			break;
+		}
+	}
+	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
+		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		if (sesElem.second.afterIdx > 0) {
+			lineNoNew = sesElem.second.afterIdx;
+			break;
+		}
+	}
+	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
+		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
+		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
+	}
+#if 0
+	do {
+		const Edit &edit = GetEdit(pHunk->idxEditBegin);
+		if (pHunk->linenoOrg == 0 && pHunk->idxEditBegin > 0) {
+			const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
+			pHunk->linenoOrg = edit.second.beforeIdx;
+		}
+		if (pHunk->linenoNew == 0 && pHunk->idxEditBegin > 0) {
+			const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
+			pHunk->linenoNew = edit.second.afterIdx;
+		}
+	} while (0);
 #endif
+	return new HunkLine(_pDiffLine->Reference(), iSesElemBegin, iSesElemEnd,
+									lineNoOrg, lineNoNew, nLinesOrg, nLinesNew);
+}
 
 String Iterator_HunkLine::ToString(const StringStyle& ss) const
 {
