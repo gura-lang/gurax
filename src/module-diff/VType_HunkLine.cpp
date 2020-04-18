@@ -127,24 +127,21 @@ Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon) :
 
 Value* Iterator_HunkLine::DoNextValue()
 {
-	DiffLine::HunkVec& hunks = _pDiffLine->GetHunkVec();
-	//if (_iHunk >= hunks.size()) return nullptr;
-	//RefPtr<Value> pValue(new Value_HunkLine(_pDiffLine->Reference(), hunks[_iHunk]));
-	//_iHunk++;
-	//return pValue.release();
-	return Value::nil();
+	RefPtr<HunkLine> pHunkLine(NextHunkLine());
+	if (!pHunkLine) return nullptr;
+	return new Value_HunkLine(pHunkLine.release());
 }
 
-HunkLine* Iterator_HunkLine::NextHunk()
+HunkLine* Iterator_HunkLine::NextHunkLine()
 {
 	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElemVec();
-	if (_iSesElem >= sesElems.size()) return false;
+	if (_iSesElem >= sesElems.size()) return nullptr;
 	size_t iSesElemTop = _iSesElem;
 	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {
 		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
 		if (sesElem.second.type != dtl::SES_COMMON) break;
 	}
-	if (_iSesElem == sesElems.size()) return nullptr;
+	if (_iSesElem >= sesElems.size()) return nullptr;
 	size_t iSesElemBegin = (_iSesElem > iSesElemTop + _nLinesCommon)? _iSesElem - _nLinesCommon : iSesElemTop;
 	size_t nLines = 0;
 	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {

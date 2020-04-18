@@ -77,7 +77,7 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 private:
-	HunkLine* NextHunk();
+	HunkLine* NextHunkLine();
 };
 
 Gurax_EndModuleScope(diff)
