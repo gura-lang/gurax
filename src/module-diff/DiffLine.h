@@ -53,8 +53,8 @@ public:
 	Int64 GetDistance() const { return _diff.editDistance; }
 	Lcs& GetLcs() { return _diff.lcs; }
 	Ses& GetSes() { return _diff.ses; }
-	LcsElemVec& GetLcsElemVec() { return GetLcs().sequence; }
-	SesElemVec& GetSesElemVec() { return GetSes().sequence; }
+	LcsElemVec& GetLcsElems() { return GetLcs().sequence; }
+	SesElemVec& GetSesElems() { return GetSes().sequence; }
 	HunkVec& GetHunkVec() { return _diff.uniHunks; }
 	bool Compose(Value& value1, Value& value2);
 public:

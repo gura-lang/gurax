@@ -65,16 +65,18 @@ public:
 class Iterator_EditLine : public Iterator {
 private:
 	RefPtr<DiffLine> _pDiffLine;
-	const DiffLine::SesElemVec& _sesElems;
+	size_t _iSesElemBegin;
+	size_t _iSesElemEnd;
 	size_t _iSesElem;
 public:
-	Iterator_EditLine(DiffLine* pDiffLine, const DiffLine::SesElemVec& sesElems);
+	Iterator_EditLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd);
+	Iterator_EditLine(DiffLine* pDiffLine);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
 		return Flag::Finite | Flag::LenDetermined;
 	}
-	virtual size_t GetLength() const override { return _sesElems.size(); }
+	virtual size_t GetLength() const override { return _iSesElemEnd - _iSesElemBegin; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

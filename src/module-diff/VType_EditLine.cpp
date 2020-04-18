@@ -136,15 +136,21 @@ VType& Value_EditLine::vtype = VTYPE_EditLine;
 //-----------------------------------------------------------------------------
 // Iterator_EditLine
 //-----------------------------------------------------------------------------
-Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine, const DiffLine::SesElemVec& sesElems) :
-	_pDiffLine(pDiffLine), _sesElems(sesElems), _iSesElem(0)
+Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd) :
+	_iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd), _iSesElem(iSesElemBegin)
+{
+}
+
+Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine) :
+	Iterator_EditLine(pDiffLine, 0, pDiffLine->GetSesElems().size())
 {
 }
 
 Value* Iterator_EditLine::DoNextValue()
 {
-	if (_iSesElem >= _sesElems.size()) return nullptr;
-	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), _sesElems[_iSesElem]));
+	const DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
+	if (_iSesElem == _iSesElemEnd) return nullptr;
+	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), sesElems[_iSesElem]));
 	_iSesElem++;
 	return pValue.release();
 }

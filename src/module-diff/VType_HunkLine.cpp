@@ -134,7 +134,7 @@ Value* Iterator_HunkLine::DoNextValue()
 
 HunkLine* Iterator_HunkLine::NextHunkLine()
 {
-	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElemVec();
+	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
 	if (_iSesElem >= sesElems.size()) return nullptr;
 	size_t iSesElemTop = _iSesElem;
 	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {

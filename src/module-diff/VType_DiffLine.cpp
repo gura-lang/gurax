@@ -72,7 +72,7 @@ Gurax_ImplementMethod(DiffLine, EachEdit)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	DiffLine& diffLine = valueThis.GetDiffLine();
-	RefPtr<Iterator> pIterator(new Iterator_EditLine(diffLine.Reference(), diffLine.GetSesElemVec()));
+	RefPtr<Iterator> pIterator(new Iterator_EditLine(diffLine.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
