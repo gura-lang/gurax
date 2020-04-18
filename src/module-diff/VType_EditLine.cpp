@@ -171,7 +171,7 @@ VType& Value_EditLine::vtype = VTYPE_EditLine;
 // Iterator_EditLine
 //-----------------------------------------------------------------------------
 Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd) :
-	_iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd), _iSesElem(iSesElemBegin)
+	_pDiffLine(pDiffLine), _iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd), _iSesElem(iSesElemBegin)
 {
 }
 
@@ -182,13 +182,10 @@ Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine) :
 
 Value* Iterator_EditLine::DoNextValue()
 {
-	::printf("check1\n");
 	const DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
-	if (_iSesElem == _iSesElemEnd) return nullptr;
-	::printf("check2\n");
-	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), sesElems[_iSesElem]));
+	if (_iSesElem >= _iSesElemEnd) return nullptr;
+	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), _iSesElem));
 	_iSesElem++;
-	::printf("check3\n");
 	return pValue.release();
 }
 

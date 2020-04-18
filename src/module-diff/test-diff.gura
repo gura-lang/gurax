@@ -2,10 +2,9 @@
 //==============================================================================
 // test-diff.gura
 //==============================================================================
-import(util.tester) {*}
+//import(util.tester) {*}
 import(diff)
 
-TestCase('Basic test') {
 	textOrg = R'''
 	This part of the
 	document has stayed the
@@ -71,4 +70,3 @@ TestCase('Basic test') {
 	//d.EachHunkLine {|hunkLine|
 	//	//hunk.Print()
 	//}
-}

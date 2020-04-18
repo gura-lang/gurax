@@ -30,17 +30,17 @@ public:
 	Gurax_MemoryPoolAllocator("Value_EditLine");
 protected:
 	RefPtr<DiffLine> _pDiffLine;
-	const DiffLine::SesElem& _sesElem;
+	size_t _iSesElem;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_EditLine() = delete;
-	Value_EditLine(DiffLine* pDiffLine, const DiffLine::SesElem& sesElem, VType& vtype = VTYPE_EditLine) :
-		Value_Object(vtype), _pDiffLine(pDiffLine), _sesElem(sesElem) {}
+	Value_EditLine(DiffLine* pDiffLine, size_t iSesElem, VType& vtype = VTYPE_EditLine) :
+		Value_Object(vtype), _pDiffLine(pDiffLine), _iSesElem(iSesElem) {}
 	// Copy constructor/operator
 	Value_EditLine(const Value_EditLine& src) :
-		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _sesElem(src._sesElem) {}
+		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _iSesElem(src._iSesElem) {}
 	Value_EditLine& operator=(const Value_EditLine& src) = delete;
 	// Move constructor/operator
 	Value_EditLine(Value_EditLine&& src) noexcept = delete;
@@ -49,7 +49,7 @@ protected:
 	// Destructor
 	~Value_EditLine() = default;
 public:
-	const DiffLine::SesElem& GetSesElem() const { return _sesElem; }
+	const DiffLine::SesElem& GetSesElem() const { return _pDiffLine->GetSesElems()[_iSesElem]; }
 public:
 	static const DiffLine::SesElem& GetSesElem(const Value& value) {
 		return dynamic_cast<const Value_EditLine&>(value).GetSesElem();
