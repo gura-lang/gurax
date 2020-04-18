@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
 #define GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
 #include <gurax.h>
-#include "DiffLine.h"
+#include "HunkLine.h"
 
 Gurax_BeginModuleScope(diff)
 
@@ -29,18 +29,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_HunkLine");
 protected:
-	RefPtr<DiffLine> _pDiffLine;
-	const DiffLine::Hunk& _hunk;
+	RefPtr<HunkLine> _pHunkLine;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_HunkLine() = delete;
-	explicit Value_HunkLine(DiffLine* pDiffLine, const DiffLine::Hunk& hunk, VType& vtype = VTYPE_HunkLine) :
-		Value_Object(vtype), _pDiffLine(pDiffLine), _hunk(hunk) {}
+	explicit Value_HunkLine(HunkLine* pHunkLine, VType& vtype = VTYPE_HunkLine) :
+		Value_Object(vtype), _pHunkLine(pHunkLine) {}
 	// Copy constructor/operator
 	Value_HunkLine(const Value_HunkLine& src) :
-		Value_Object(src), _pDiffLine(src._pDiffLine->Reference()), _hunk(src._hunk) {}
+		Value_Object(src), _pHunkLine(src._pHunkLine->Reference()) {}
 	Value_HunkLine& operator=(const Value_HunkLine& src) = delete;
 	// Move constructor/operator
 	Value_HunkLine(Value_HunkLine&& src) noexcept = delete;
@@ -49,11 +48,10 @@ protected:
 	// Destructor
 	~Value_HunkLine() = default;
 public:
-	const DiffLine& GetDiffLine() const { return *_pDiffLine; }
-	const DiffLine::Hunk& GetHunk() const { return _hunk; }
+	const HunkLine& GetHunkLine() const { return *_pHunkLine; }
 public:
-	static const DiffLine::Hunk& GetHunk(const Value& value) {
-		return dynamic_cast<const Value_HunkLine&>(value).GetHunk();
+	static const HunkLine& GetHunkLine(const Value& value) {
+		return dynamic_cast<const Value_HunkLine&>(value).GetHunkLine();
 	}
 public:
 	// Virtual functions of Value
@@ -72,9 +70,9 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
+		return Flag::Finite | Flag::LenUndetermined;
 	}
-	virtual size_t GetLength() const override { return _pDiffLine->GetHunkVec().size(); }
+	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
