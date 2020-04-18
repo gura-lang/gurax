@@ -18,6 +18,7 @@ bool DiffLine::Compose(Value& value1, Value& value2)
 	return true;
 }
 
+#if 0
 void DiffLine::PrintHunks(Stream& stream) const
 {
 	for (const Hunk& hunk : _diff.uniHunks) PrintHunk(stream, hunk);
@@ -40,6 +41,7 @@ void DiffLine::PrintHunk(Stream& stream, const Hunk& hunk)
 		stream.Printf(" %s\n", sesElem.first.c_str());
 	}
 }
+#endif
 
 bool DiffLine::FeedValue(Sequence& seq, Value& value)
 {

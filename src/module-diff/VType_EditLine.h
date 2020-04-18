@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_EditLine() = delete;
-	explicit Value_EditLine(DiffLine* pDiffLine, const DiffLine::SesElem& sesElem, VType& vtype = VTYPE_EditLine) :
+	Value_EditLine(DiffLine* pDiffLine, const DiffLine::SesElem& sesElem, VType& vtype = VTYPE_EditLine) :
 		Value_Object(vtype), _pDiffLine(pDiffLine), _sesElem(sesElem) {}
 	// Copy constructor/operator
 	Value_EditLine(const Value_EditLine& src) :

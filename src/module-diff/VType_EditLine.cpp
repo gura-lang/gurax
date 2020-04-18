@@ -182,10 +182,13 @@ Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine) :
 
 Value* Iterator_EditLine::DoNextValue()
 {
+	::printf("check1\n");
 	const DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
 	if (_iSesElem == _iSesElemEnd) return nullptr;
+	::printf("check2\n");
 	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), sesElems[_iSesElem]));
 	_iSesElem++;
+	::printf("check3\n");
 	return pValue.release();
 }
 

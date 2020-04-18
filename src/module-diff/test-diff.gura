@@ -64,11 +64,11 @@ TestCase('Basic test') {
 	'''
 	d = diff.DiffLine(textOrg, textNew)
 	Println(d.distance)
-	d.EachEdit {|edit|
-		Println(edit.mark, ' ', edit.source)
+	d.EachEditLine {|editLine|
+		Println(editLine.mark, ' ', editLine.source)
 	}
-	Println('----')
-	d.EachHunk {|hunk|
-		hunk.Print()
-	}
+	//Println('----')
+	//d.EachHunkLine {|hunkLine|
+	//	//hunk.Print()
+	//}
 }

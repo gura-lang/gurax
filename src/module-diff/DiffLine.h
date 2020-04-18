@@ -32,10 +32,8 @@ public:
 	using Lcs = dtl::Lcs<String>;	// Longest Common Subsequence
 	using Ses = dtl::Ses<String>;	// Shortest Edit Script
 	using SesElem = Ses::sesElem;
-	using Hunk = dtl::uniHunk<SesElem>;
 	using LcsElemVec = Lcs::elemVec;
 	using SesElemVec = Ses::sesElemVec;
-	using HunkVec = Diff::uniHunkVec;
 private:
 	Diff _diff;
 public:
@@ -55,11 +53,9 @@ public:
 	Ses& GetSes() { return _diff.ses; }
 	LcsElemVec& GetLcsElems() { return GetLcs().sequence; }
 	SesElemVec& GetSesElems() { return GetSes().sequence; }
-	HunkVec& GetHunkVec() { return _diff.uniHunks; }
 	bool Compose(Value& value1, Value& value2);
 public:
-	void PrintHunks(Stream& stream) const;
-	static void PrintHunk(Stream& stream, const Hunk& hunk);
+	//void PrintHunks(Stream& stream) const;
 	static bool FeedValue(Sequence& seq, Value& value);
 	static void FeedString(Sequence& seq, const char* src);
 	static bool FeedStream(Sequence& seq, Stream& src);
