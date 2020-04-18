@@ -53,6 +53,38 @@ Gurax_ImplementMethod(EditLine, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// diff.EditLine#lineNoOrg
+Gurax_DeclareProperty_R(EditLine, lineNoOrg)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(EditLine, lineNoOrg)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	return new Value_Number(sesElem.second.beforeIdx);
+}
+
+// diff.EditLine#lineNoNew
+Gurax_DeclareProperty_R(EditLine, lineNoNew)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(EditLine, lineNoNew)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	return new Value_Number(sesElem.second.afterIdx);
+}
+
 // diff.EditLine#source
 Gurax_DeclareProperty_R(EditLine, source)
 {
@@ -123,6 +155,8 @@ void VType_EditLine::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(EditLine, MethodSkeleton));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(EditLine, lineNoOrg));
+	Assign(Gurax_CreateProperty(EditLine, lineNoNew));
 	Assign(Gurax_CreateProperty(EditLine, source));
 	Assign(Gurax_CreateProperty(EditLine, type));
 	Assign(Gurax_CreateProperty(EditLine, mark));
