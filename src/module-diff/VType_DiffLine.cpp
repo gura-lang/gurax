@@ -76,10 +76,11 @@ Gurax_ImplementMethod(DiffLine, EachEditLine)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.DiffLine#EachHunkLine() {block?}
+// diff.DiffLine#EachHunkLine(nLinesCommon?:Number) {block?}
 Gurax_DeclareMethod(DiffLine, EachHunkLine)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("nLinesCommon", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -90,8 +91,11 @@ Gurax_ImplementMethod(DiffLine, EachHunkLine)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t nLinesCommon = args.IsValid()? args.PickNumberNonNeg<size_t>() : 3;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiffLine().Reference(), 3));
+	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiffLine().Reference(), nLinesCommon));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

@@ -132,19 +132,19 @@ Gurax_ImplementPropertyGetter(HunkLine, nLinesOrg)
 	return new Value_Number(valueThis.GetHunkLine().GetNLinesOrg());
 }
 
-// diff.HunkLine#propSkeleton
-Gurax_DeclareProperty_R(HunkLine, propSkeleton)
+// diff.HunkLine#range
+Gurax_DeclareProperty_R(HunkLine, range)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, propSkeleton)
+Gurax_ImplementPropertyGetter(HunkLine, range)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetHunkLine().MakeRangeString());
 }
 
 //------------------------------------------------------------------------------
@@ -166,6 +166,7 @@ void VType_HunkLine::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(HunkLine, lineNoNew));
 	Assign(Gurax_CreateProperty(HunkLine, nLinesOrg));
 	Assign(Gurax_CreateProperty(HunkLine, nLinesNew));
+	Assign(Gurax_CreateProperty(HunkLine, range));
 }
 
 //------------------------------------------------------------------------------

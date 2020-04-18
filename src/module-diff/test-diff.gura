@@ -2,9 +2,11 @@
 //==============================================================================
 // test-diff.gura
 //==============================================================================
-//import(util.tester) {*}
+import(util.tester) {*}
 import(diff)
 
+TestCase('') {
+	/*
 	textOrg = R'''
 	This part of the
 	document has stayed the
@@ -61,17 +63,75 @@ import(diff)
 	important new additions
 	to this document.
 	'''
+	*/
+	textOrg = R'''
+	aaaaaaaa
+	bbbbbbbb
+	cccccccc
+	dddddddd
+	eeeeeeee
+	ffffffff
+	gggggggg
+	hhhhhhhh
+	iiiiiiii
+	jjjjjjjj
+	kkkkkkkk
+	llllllll
+	mmmmmmmm
+	nnnnnnnn
+	oooooooo
+	pppppppp
+	qqqqqqqq
+	rrrrrrrr
+	ssssssss
+	tttttttt
+	uuuuuuuu
+	vvvvvvvv
+	wwwwwwww
+	xxxxxxxx
+	yyyyyyyy
+	zzzzzzzz
+	'''
+	textNew = R'''
+	aaaaaaaa
+	bbbbbbbb
+	cccccccc
+	ddddddddxxxx
+	eeeeeeeexxxx
+	ffffffff
+	gggggggg
+	hhhhhhhh
+	XXXX
+	iiiiiiii
+	jjjjjjjj
+	kkkkkkkk
+	llllllll
+	mmmmmmmm
+	nnnnnnnn
+	ooooooooxxxx
+	ppppppppxxxx
+	qqqqqqqqxxxx
+	rrrrrrrr
+	ssssssss
+	tttttttt
+	uuuuuuuu
+	vvvvvvvv
+	wwwwwwww
+	XXXX
+	xxxxxxxx
+	yyyyyyyy
+	zzzzzzzz
+	'''
 	d = diff.DiffLine(textOrg, textNew)
 	Println(d.distance)
 	d.EachEditLine {|editLine|
 		Printf('%s %3d %3d %s\n', editLine.mark, editLine.lineNoOrg, editLine.lineNoNew, editLine.source)
 	}
-	/*
 	d.EachHunkLine {|hunkLine|
-		Println('----')
+		Printf('%s\n', hunkLine.range)
 		Printf('%d\n', hunkLine.lineNoOrg)
 		hunkLine.EachEditLine {|editLine|
 			Println(editLine.mark, ' ', editLine.source)
 		}
 	}
-	*/
+}

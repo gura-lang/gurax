@@ -45,6 +45,7 @@ public:
 	size_t GetLineNoNew() const { return _lineNoNew; }
 	size_t GetNLinesOrg() const { return _nLinesOrg; }
 	size_t GetNLinesNew() const { return _nLinesNew; }
+	String MakeRangeString() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const HunkLine& other) const { return this == &other; }
