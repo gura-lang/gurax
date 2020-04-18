@@ -68,5 +68,5 @@ import(diff)
 	}
 	Println('----')
 	d.EachHunkLine {|hunkLine|
-		//hunk.Print()
+		Println(hunkLine)
 	}

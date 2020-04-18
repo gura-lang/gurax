@@ -217,21 +217,21 @@ HunkLine* Iterator_HunkLine::NextHunkLine()
 	size_t lineNoOrg = 0, lineNoNew = 0;
 	size_t nLinesOrg = 0, nLinesNew = 0;
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.beforeIdx > 0) {
 			lineNoOrg = sesElem.second.beforeIdx;
 			break;
 		}
 	}
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.afterIdx > 0) {
 			lineNoNew = sesElem.second.afterIdx;
 			break;
 		}
 	}
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
 		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
 	}
