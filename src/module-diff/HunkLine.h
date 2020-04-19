@@ -17,6 +17,16 @@ public:
 	Gurax_DeclareReferable(HunkLine);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("diff.HunkLine");
+public:
+	class GURAX_DLLDECLARE Picker {
+	private:
+		RefPtr<DiffLine> _pDiffLine;
+		size_t _nLinesCommon;
+		size_t _iSesElem;
+	public:
+		Picker(DiffLine* pDiffLine, size_t nLinesCommon);
+		HunkLine* NextHunkLine();
+	};
 protected:
 	RefPtr<DiffLine> _pDiffLine;
 	size_t _iSesElemBegin;
@@ -46,6 +56,7 @@ public:
 	size_t GetNLinesOrg() const { return _nLinesOrg; }
 	size_t GetNLinesNew() const { return _nLinesNew; }
 	String MakeRangeString() const;
+	void Print(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const HunkLine& other) const { return this == &other; }

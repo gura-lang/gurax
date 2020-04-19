@@ -99,6 +99,31 @@ Gurax_ImplementMethod(DiffLine, EachHunkLine)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// diff.DiffLine#PrintHunkLines(stream?:Stream:w, nLinesCommon?:Number):void
+Gurax_DeclareMethod(DiffLine, PrintHunkLines)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("nLinesCommon", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints the unified hunks.\n");
+}
+
+Gurax_ImplementMethod(DiffLine, PrintHunkLines)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
+	size_t nLinesCommon = args.IsValid()? args.PickNumberNonNeg<size_t>() : 3;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	valueThis.GetDiffLine().PrintHunkLines(stream, nLinesCommon);
+	return Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -131,6 +156,7 @@ void VType_DiffLine::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(DiffLine, EachEditLine));
 	Assign(Gurax_CreateMethod(DiffLine, EachHunkLine));
+	Assign(Gurax_CreateMethod(DiffLine, PrintHunkLines));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DiffLine, distance));
 	//Gura_AssignProperty(diff_at_line, nLinesNew);

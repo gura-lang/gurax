@@ -63,9 +63,7 @@ public:
 //-----------------------------------------------------------------------------
 class Iterator_HunkLine : public Iterator {
 private:
-	RefPtr<DiffLine> _pDiffLine;
-	size_t _nLinesCommon;
-	size_t _iSesElem;
+	HunkLine::Picker _picker;
 public:
 	Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon);
 public:
@@ -76,8 +74,6 @@ public:
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
-private:
-	HunkLine* NextHunkLine();
 };
 
 Gurax_EndModuleScope(diff)

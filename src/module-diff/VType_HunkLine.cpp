@@ -47,7 +47,7 @@ Gurax_ImplementMethod(HunkLine, EachEditLine)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.HunkLine#Print(stream?:Stream:w)
+// diff.HunkLine#Print(stream?:Stream:w):void
 Gurax_DeclareMethod(HunkLine, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -65,7 +65,7 @@ Gurax_ImplementMethod(HunkLine, Print)
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	// Function body
-	//DiffLine::PrintHunk(stream, valueThis.GetHunk());
+	valueThis.GetHunkLine().Print(stream);
 	return Value::nil();
 }
 
@@ -178,17 +178,18 @@ VType& Value_HunkLine::vtype = VTYPE_HunkLine;
 // Iterator_HunkLine
 //-----------------------------------------------------------------------------
 Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon) :
-	_pDiffLine(pDiffLine), _nLinesCommon(nLinesCommon), _iSesElem(0)
+	_picker(pDiffLine, nLinesCommon)
 {
 }
 
 Value* Iterator_HunkLine::DoNextValue()
 {
-	RefPtr<HunkLine> pHunkLine(NextHunkLine());
+	RefPtr<HunkLine> pHunkLine(_picker.NextHunkLine());
 	if (!pHunkLine) return nullptr;
 	return new Value_HunkLine(pHunkLine.release());
 }
 
+#if 0
 HunkLine* Iterator_HunkLine::NextHunkLine()
 {
 	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
@@ -236,22 +237,10 @@ HunkLine* Iterator_HunkLine::NextHunkLine()
 		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
 		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
 	}
-#if 0
-	do {
-		const Edit &edit = GetEdit(pHunk->idxEditBegin);
-		if (pHunk->linenoOrg == 0 && pHunk->idxEditBegin > 0) {
-			const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
-			pHunk->linenoOrg = edit.second.beforeIdx;
-		}
-		if (pHunk->linenoNew == 0 && pHunk->idxEditBegin > 0) {
-			const Edit &edit = GetEdit(pHunk->idxEditBegin - 1);
-			pHunk->linenoNew = edit.second.afterIdx;
-		}
-	} while (0);
-#endif
 	return new HunkLine(_pDiffLine->Reference(), iSesElemBegin, iSesElemEnd,
 									lineNoOrg, lineNoNew, nLinesOrg, nLinesNew);
 }
+#endif
 
 String Iterator_HunkLine::ToString(const StringStyle& ss) const
 {

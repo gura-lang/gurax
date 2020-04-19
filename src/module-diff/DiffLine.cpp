@@ -18,30 +18,15 @@ bool DiffLine::Compose(Value& value1, Value& value2)
 	return true;
 }
 
-#if 0
-void DiffLine::PrintHunks(Stream& stream) const
+void DiffLine::PrintHunkLines(Stream& stream, size_t nLinesCommon) const
 {
-	for (const Hunk& hunk : _diff.uniHunks) PrintHunk(stream, hunk);
-}
-
-void DiffLine::PrintHunk(Stream& stream, const Hunk& hunk)
-{
-	stream.Printf("@@ -%d,%d +%d,%d @@\n", hunk.a, hunk.b, hunk.c, hunk.d);
-	for (const SesElem& sesElem : hunk.common[0]) {
-		stream.Printf(" %s\n", sesElem.first.c_str());
-	}
-	for (const SesElem& sesElem : hunk.change) {
-		stream.Printf("%s%s\n",
-			(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
-			(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
-			(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : " ",
-			sesElem.first.c_str());
-	}
-	for (const SesElem& sesElem : hunk.common[1]) {
-		stream.Printf(" %s\n", sesElem.first.c_str());
+	HunkLine::Picker picker(Reference(), nLinesCommon);
+	for (;;) {
+		RefPtr<HunkLine> pHunkLine(picker.NextHunkLine());
+		if (!pHunkLine) break;
+		pHunkLine->Print(stream);
 	}
 }
-#endif
 
 bool DiffLine::FeedValue(Sequence& seq, Value& value)
 {
