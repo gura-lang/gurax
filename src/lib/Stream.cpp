@@ -162,6 +162,13 @@ Stream& Stream::Printf(const char* format, ...)
 	return PrintfV(format, ap);
 }
 
+Stream& Stream::Printf(const String& format, ...)
+{
+	va_list ap;
+	va_start(ap, &format);
+	return PrintfV(format, ap);
+}
+
 Stream& Stream::PrintFmt(const char* format, const ValueList& valueList)
 {
 	FormatterEx(*this).Format(format, valueList);
