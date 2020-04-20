@@ -1,24 +1,24 @@
 //==============================================================================
-// DiffLine.cpp
+// Diff.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(diff)
 
 //------------------------------------------------------------------------------
-// DiffLine
+// Diff
 //------------------------------------------------------------------------------
-bool DiffLine::Compose(Value& value1, Value& value2)
+bool Diff::Compose(Value& value1, Value& value2)
 {
-	if (!FeedValue(_diff.A, value1) || !FeedValue(_diff.B, value2)) return false;
-	_diff.init();
-	_diff.onHuge();
-	_diff.compose();
-	_diff.composeUnifiedHunks();
+	if (!FeedValue(_context.A, value1) || !FeedValue(_context.B, value2)) return false;
+	_context.init();
+	_context.onHuge();
+	_context.compose();
+	_context.composeUnifiedHunks();
 	return true;
 }
 
-void DiffLine::PrintHunkLines(Stream& stream, size_t nLinesCommon) const
+void Diff::PrintHunkLines(Stream& stream, size_t nLinesCommon) const
 {
 	HunkLine::Picker picker(Reference(), nLinesCommon);
 	for (;;) {
@@ -28,7 +28,7 @@ void DiffLine::PrintHunkLines(Stream& stream, size_t nLinesCommon) const
 	}
 }
 
-bool DiffLine::FeedValue(Sequence& seq, Value& value)
+bool Diff::FeedValue(Sequence& seq, Value& value)
 {
 	bool rtn = true;
 	if (value.IsType(VTYPE_String)) {
@@ -46,7 +46,7 @@ bool DiffLine::FeedValue(Sequence& seq, Value& value)
 	return rtn;
 }
 
-void DiffLine::FeedString(Sequence& seq, const char* src)
+void Diff::FeedString(Sequence& seq, const char* src)
 {
 	String str;
 	for (const char* p = src; *p != '\0'; p++) {
@@ -61,7 +61,7 @@ void DiffLine::FeedString(Sequence& seq, const char* src)
 	if (!str.empty()) seq.push_back(str);
 }
 
-bool DiffLine::FeedStream(Sequence& seq, Stream& src)
+bool Diff::FeedStream(Sequence& seq, Stream& src)
 {
 	bool includeEOLFlag = false;
 	for (;;) {
@@ -72,7 +72,7 @@ bool DiffLine::FeedStream(Sequence& seq, Stream& src)
 	return !Error::IsIssued();
 }
 
-bool DiffLine::FeedIterator(Sequence& seq, Iterator& iter)
+bool Diff::FeedIterator(Sequence& seq, Iterator& iter)
 {
 	do {
 		RefPtr<Value> pValue(iter.NextValue());
@@ -81,16 +81,16 @@ bool DiffLine::FeedIterator(Sequence& seq, Iterator& iter)
 	return !Error::IsIssued();
 }
 
-void DiffLine::FeedList(Sequence& seq, const ValueList& valList)
+void Diff::FeedList(Sequence& seq, const ValueList& valList)
 {
 	for (const Value* pValue : valList) {
 		seq.push_back(pValue->ToString(StringStyle::AsValue));
 	}
 }
 
-String DiffLine::ToString(const StringStyle& ss) const
+String Diff::ToString(const StringStyle& ss) const
 {
-	return "diff.DiffLine";
+	return "diff.Diff";
 }
 
 Gurax_EndModuleScope(diff)

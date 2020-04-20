@@ -65,7 +65,7 @@ class Iterator_HunkLine : public Iterator {
 private:
 	HunkLine::Picker _picker;
 public:
-	Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon);
+	Iterator_HunkLine(Diff* pDiff, size_t nLinesCommon);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

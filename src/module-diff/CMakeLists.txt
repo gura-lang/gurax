@@ -10,9 +10,9 @@ link_directories(${PROJECT_SOURCE_DIR}/../../lib)
 add_library(diff SHARED
     module-diff.cpp
     Util.cpp
-    DiffLine.cpp
+    Diff.cpp
     HunkLine.cpp
-    VType_DiffLine.cpp
+    VType_Diff.cpp
     VType_EditLine.cpp
     VType_HunkLine.cpp
 )

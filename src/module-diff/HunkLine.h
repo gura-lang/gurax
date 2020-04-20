@@ -20,15 +20,15 @@ public:
 public:
 	class GURAX_DLLDECLARE Picker {
 	private:
-		RefPtr<DiffLine> _pDiffLine;
+		RefPtr<Diff> _pDiff;
 		size_t _nLinesCommon;
 		size_t _iSesElem;
 	public:
-		Picker(DiffLine* pDiffLine, size_t nLinesCommon);
+		Picker(Diff* pDiff, size_t nLinesCommon);
 		HunkLine* NextHunkLine();
 	};
 protected:
-	RefPtr<DiffLine> _pDiffLine;
+	RefPtr<Diff> _pDiff;
 	size_t _iSesElemBegin;
 	size_t _iSesElemEnd;
 	size_t _lineNoOrg;
@@ -37,7 +37,7 @@ protected:
 	size_t _nLinesNew;
 public:
 	// Constructor
-	HunkLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd,
+	HunkLine(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
 		size_t lineNoOrg, size_t lineNoNew, size_t nLinesOrg, size_t nLinesNew);
 	// Copy constructor/operator
 	HunkLine(const HunkLine& src) = delete;
@@ -49,7 +49,7 @@ protected:
 	~HunkLine() = default;
 public:
 	Iterator* EachEditLine() const {
-		return new Iterator_EditLine(_pDiffLine->Reference(), _iSesElemBegin, _iSesElemEnd);
+		return new Iterator_EditLine(_pDiff->Reference(), _iSesElemBegin, _iSesElemEnd);
 	}
 	size_t GetLineNoOrg() const { return _lineNoOrg; }
 	size_t GetLineNoNew() const { return _lineNoNew; }

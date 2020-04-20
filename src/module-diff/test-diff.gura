@@ -122,7 +122,7 @@ TestCase('') {
 	yyyyyyyy
 	zzzzzzzz
 	'''
-	d = diff.DiffLine(textOrg, textNew)
+	d = diff.Diff(textOrg, textNew)
 	Println(d.distance)
 	d.EachEditLine {|editLine|
 		Printf('%s %3d %3d %s\n', editLine.mark, editLine.lineNoOrg, editLine.lineNoNew, editLine.source)

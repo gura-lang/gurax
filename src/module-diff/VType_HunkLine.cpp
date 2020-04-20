@@ -177,8 +177,8 @@ VType& Value_HunkLine::vtype = VTYPE_HunkLine;
 //-----------------------------------------------------------------------------
 // Iterator_HunkLine
 //-----------------------------------------------------------------------------
-Iterator_HunkLine::Iterator_HunkLine(DiffLine* pDiffLine, size_t nLinesCommon) :
-	_picker(pDiffLine, nLinesCommon)
+Iterator_HunkLine::Iterator_HunkLine(Diff* pDiff, size_t nLinesCommon) :
+	_picker(pDiff, nLinesCommon)
 {
 }
 
@@ -192,18 +192,18 @@ Value* Iterator_HunkLine::DoNextValue()
 #if 0
 HunkLine* Iterator_HunkLine::NextHunkLine()
 {
-	DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
+	Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
 	if (_iSesElem >= sesElems.size()) return nullptr;
 	size_t iSesElemTop = _iSesElem;
 	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		const Diff::SesElem& sesElem = sesElems[_iSesElem];
 		if (sesElem.second.type != dtl::SES_COMMON) break;
 	}
 	if (_iSesElem >= sesElems.size()) return nullptr;
 	size_t iSesElemBegin = (_iSesElem > iSesElemTop + _nLinesCommon)? _iSesElem - _nLinesCommon : iSesElemTop;
 	size_t nLines = 0;
 	for ( ; _iSesElem < sesElems.size(); _iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[_iSesElem];
+		const Diff::SesElem& sesElem = sesElems[_iSesElem];
 		if (sesElem.second.type == dtl::SES_COMMON) {
 			if (_nLinesCommon == 0) break;
 			nLines++;
@@ -219,25 +219,25 @@ HunkLine* Iterator_HunkLine::NextHunkLine()
 	size_t lineNoOrg = 0, lineNoNew = 0;
 	size_t nLinesOrg = 0, nLinesNew = 0;
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
+		const Diff::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.beforeIdx > 0) {
 			lineNoOrg = sesElem.second.beforeIdx;
 			break;
 		}
 	}
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
+		const Diff::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.afterIdx > 0) {
 			lineNoNew = sesElem.second.afterIdx;
 			break;
 		}
 	}
 	for (size_t iSesElem = iSesElemBegin; iSesElem < iSesElemEnd; iSesElem++) {
-		const DiffLine::SesElem& sesElem = sesElems[iSesElem];
+		const Diff::SesElem& sesElem = sesElems[iSesElem];
 		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
 		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
 	}
-	return new HunkLine(_pDiffLine->Reference(), iSesElemBegin, iSesElemEnd,
+	return new HunkLine(_pDiff->Reference(), iSesElemBegin, iSesElemEnd,
 									lineNoOrg, lineNoNew, nLinesOrg, nLinesNew);
 }
 #endif

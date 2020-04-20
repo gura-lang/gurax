@@ -47,7 +47,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_DiffLine);
+	Assign(VTYPE_Diff);
 	Assign(VTYPE_EditLine);
 	Assign(VTYPE_HunkLine);
 	// Assignment of function

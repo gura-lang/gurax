@@ -1,22 +1,22 @@
 //==============================================================================
-// DiffLine.h
+// Diff.h
 //==============================================================================
-#ifndef GURAX_MODULE_DIFF_DIFFLINE_H
-#define GURAX_MODULE_DIFF_DIFFLINE_H
+#ifndef GURAX_MODULE_DIFF_DIFF_H
+#define GURAX_MODULE_DIFF_DIFF_H
 #include <gurax.h>
 #include <dtl/dtl.hpp>
 
 Gurax_BeginModuleScope(diff)
 
 //------------------------------------------------------------------------------
-// DiffLine
+// Diff
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DiffLine : public Referable {
+class GURAX_DLLDECLARE Diff : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(DiffLine);
+	Gurax_DeclareReferable(Diff);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("diff.DiffLine");
+	Gurax_MemoryPoolAllocator("diff.Diff");
 public:
 	class Comparator {
 	private:
@@ -28,29 +28,29 @@ public:
 		}
 	};
 	using Sequence = std::vector<String>;
-	using Diff = dtl::Diff<String, Sequence, Comparator>;
+	using Context = dtl::Diff<String, Sequence, Comparator>;
 	using Lcs = dtl::Lcs<String>;	// Longest Common Subsequence
 	using Ses = dtl::Ses<String>;	// Shortest Edit Script
 	using SesElem = Ses::sesElem;
 	using LcsElemVec = Lcs::elemVec;
 	using SesElemVec = Ses::sesElemVec;
 private:
-	Diff _diff;
+	Context _context;
 public:
 	// Constructor
-	DiffLine(bool icaseFlag) { _diff.cmp.SetICaseFlag(icaseFlag); }
+	Diff(bool icaseFlag) { _context.cmp.SetICaseFlag(icaseFlag); }
 	// Copy constructor/operator
-	DiffLine(const DiffLine& src) = delete;
-	DiffLine& operator=(const DiffLine& src) = delete;
+	Diff(const Diff& src) = delete;
+	Diff& operator=(const Diff& src) = delete;
 	// Move constructor/operator
-	DiffLine(DiffLine&& src) noexcept = delete;
-	DiffLine& operator=(DiffLine&& src) noexcept = delete;
+	Diff(Diff&& src) noexcept = delete;
+	Diff& operator=(Diff&& src) noexcept = delete;
 protected:
-	~DiffLine() = default;
+	~Diff() = default;
 public:
-	Int64 GetDistance() const { return _diff.editDistance; }
-	Lcs& GetLcs() { return _diff.lcs; }
-	Ses& GetSes() { return _diff.ses; }
+	Int64 GetDistance() const { return _context.editDistance; }
+	Lcs& GetLcs() { return _context.lcs; }
+	Ses& GetSes() { return _context.ses; }
 	LcsElemVec& GetLcsElems() { return GetLcs().sequence; }
 	SesElemVec& GetSesElems() { return GetSes().sequence; }
 	bool Compose(Value& value1, Value& value2);
@@ -63,9 +63,9 @@ public:
 	static void FeedList(Sequence& seq, const ValueList& valList);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const DiffLine& other) const { return this == &other; }
-	bool IsEqualTo(const DiffLine& other) const { return IsIdentical(other); }
-	bool IsLessThan(const DiffLine& other) const { return this < &other; }
+	bool IsIdentical(const Diff& other) const { return this == &other; }
+	bool IsEqualTo(const Diff& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Diff& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

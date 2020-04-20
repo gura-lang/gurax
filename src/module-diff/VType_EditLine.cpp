@@ -39,7 +39,7 @@ Gurax_DeclareProperty_R(EditLine, lineNoOrg)
 Gurax_ImplementPropertyGetter(EditLine, lineNoOrg)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Diff::SesElem& sesElem = valueThis.GetSesElem();
 	return new Value_Number(sesElem.second.beforeIdx);
 }
 
@@ -55,7 +55,7 @@ Gurax_DeclareProperty_R(EditLine, lineNoNew)
 Gurax_ImplementPropertyGetter(EditLine, lineNoNew)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Diff::SesElem& sesElem = valueThis.GetSesElem();
 	return new Value_Number(sesElem.second.afterIdx);
 }
 
@@ -71,7 +71,7 @@ Gurax_DeclareProperty_R(EditLine, source)
 Gurax_ImplementPropertyGetter(EditLine, source)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Diff::SesElem& sesElem = valueThis.GetSesElem();
 	return new Value_String(sesElem.first);
 }
 
@@ -87,7 +87,7 @@ Gurax_DeclareProperty_R(EditLine, type)
 Gurax_ImplementPropertyGetter(EditLine, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Diff::SesElem& sesElem = valueThis.GetSesElem();
 	const Symbol* pSymbol =
 		(sesElem.second.type == dtl::SES_ADD)? Gurax_Symbol(add) :
 		(sesElem.second.type == dtl::SES_DELETE)? Gurax_Symbol(delete_) :
@@ -107,7 +107,7 @@ Gurax_DeclareProperty_R(EditLine, mark)
 Gurax_ImplementPropertyGetter(EditLine, mark)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const DiffLine::SesElem& sesElem = valueThis.GetSesElem();
+	const Diff::SesElem& sesElem = valueThis.GetSesElem();
 	const char* str =
 		(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
 		(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
@@ -142,21 +142,21 @@ VType& Value_EditLine::vtype = VTYPE_EditLine;
 //-----------------------------------------------------------------------------
 // Iterator_EditLine
 //-----------------------------------------------------------------------------
-Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine, size_t iSesElemBegin, size_t iSesElemEnd) :
-	_pDiffLine(pDiffLine), _iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd), _iSesElem(iSesElemBegin)
+Iterator_EditLine::Iterator_EditLine(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd) :
+	_pDiff(pDiff), _iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd), _iSesElem(iSesElemBegin)
 {
 }
 
-Iterator_EditLine::Iterator_EditLine(DiffLine* pDiffLine) :
-	Iterator_EditLine(pDiffLine, 0, pDiffLine->GetSesElems().size())
+Iterator_EditLine::Iterator_EditLine(Diff* pDiff) :
+	Iterator_EditLine(pDiff, 0, pDiff->GetSesElems().size())
 {
 }
 
 Value* Iterator_EditLine::DoNextValue()
 {
-	const DiffLine::SesElemVec& sesElems = _pDiffLine->GetSesElems();
+	const Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
 	if (_iSesElem >= _iSesElemEnd) return nullptr;
-	RefPtr<Value> pValue(new Value_EditLine(_pDiffLine->Reference(), _iSesElem));
+	RefPtr<Value> pValue(new Value_EditLine(_pDiff->Reference(), _iSesElem));
 	_iSesElem++;
 	return pValue.release();
 }
