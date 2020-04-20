@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_HunkLine.cpp
+// VType_Hunk.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// diff.HunkLine#EachEditLine() {block?}
-Gurax_DeclareMethod(HunkLine, EachEditLine)
+// diff.Hunk#EachEditLine() {block?}
+Gurax_DeclareMethod(Hunk, EachEditLine)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -37,18 +37,18 @@ Gurax_DeclareMethod(HunkLine, EachEditLine)
 		"Creates an iterator that returns stored edit information.\n");
 }
 
-Gurax_ImplementMethod(HunkLine, EachEditLine)
+Gurax_ImplementMethod(Hunk, EachEditLine)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	const HunkLine& hunkLine = valueThis.GetHunkLine();
-	RefPtr<Iterator> pIterator(valueThis.GetHunkLine().EachEditLine());
+	const Hunk& Hunk = valueThis.GetHunk();
+	RefPtr<Iterator> pIterator(valueThis.GetHunk().EachEditLine());
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.HunkLine#Print(stream?:Stream:w):void
-Gurax_DeclareMethod(HunkLine, Print)
+// diff.Hunk#Print(stream?:Stream:w):void
+Gurax_DeclareMethod(Hunk, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
@@ -57,7 +57,7 @@ Gurax_DeclareMethod(HunkLine, Print)
 		"Prints the unified hunk.\n");
 }
 
-Gurax_ImplementMethod(HunkLine, Print)
+Gurax_ImplementMethod(Hunk, Print)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -65,15 +65,15 @@ Gurax_ImplementMethod(HunkLine, Print)
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	// Function body
-	valueThis.GetHunkLine().Print(stream);
+	valueThis.GetHunk().Print(stream);
 	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// diff.HunkLine#lineNoOrg
-Gurax_DeclareProperty_R(HunkLine, lineNoOrg)
+// diff.Hunk#lineNoOrg
+Gurax_DeclareProperty_R(Hunk, lineNoOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -81,14 +81,14 @@ Gurax_DeclareProperty_R(HunkLine, lineNoOrg)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, lineNoOrg)
+Gurax_ImplementPropertyGetter(Hunk, lineNoOrg)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetHunkLine().GetLineNoOrg());
+	return new Value_Number(valueThis.GetHunk().GetLineNoOrg());
 }
 
-// diff.HunkLine#lineNoNew
-Gurax_DeclareProperty_R(HunkLine, lineNoNew)
+// diff.Hunk#lineNoNew
+Gurax_DeclareProperty_R(Hunk, lineNoNew)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -96,14 +96,14 @@ Gurax_DeclareProperty_R(HunkLine, lineNoNew)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, lineNoNew)
+Gurax_ImplementPropertyGetter(Hunk, lineNoNew)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetHunkLine().GetLineNoNew());
+	return new Value_Number(valueThis.GetHunk().GetLineNoNew());
 }
 
-// diff.HunkLine#nLinesNew
-Gurax_DeclareProperty_R(HunkLine, nLinesNew)
+// diff.Hunk#nLinesNew
+Gurax_DeclareProperty_R(Hunk, nLinesNew)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -111,14 +111,14 @@ Gurax_DeclareProperty_R(HunkLine, nLinesNew)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, nLinesNew)
+Gurax_ImplementPropertyGetter(Hunk, nLinesNew)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetHunkLine().GetNLinesNew());
+	return new Value_Number(valueThis.GetHunk().GetNLinesNew());
 }
 
-// diff.HunkLine#nLinesOrg
-Gurax_DeclareProperty_R(HunkLine, nLinesOrg)
+// diff.Hunk#nLinesOrg
+Gurax_DeclareProperty_R(Hunk, nLinesOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -126,14 +126,14 @@ Gurax_DeclareProperty_R(HunkLine, nLinesOrg)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, nLinesOrg)
+Gurax_ImplementPropertyGetter(Hunk, nLinesOrg)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetHunkLine().GetNLinesOrg());
+	return new Value_Number(valueThis.GetHunk().GetNLinesOrg());
 }
 
-// diff.HunkLine#range
-Gurax_DeclareProperty_R(HunkLine, range)
+// diff.Hunk#range
+Gurax_DeclareProperty_R(Hunk, range)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -141,56 +141,56 @@ Gurax_DeclareProperty_R(HunkLine, range)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(HunkLine, range)
+Gurax_ImplementPropertyGetter(Hunk, range)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetHunkLine().MakeRangeString());
+	return new Value_String(valueThis.GetHunk().MakeRangeString());
 }
 
 //------------------------------------------------------------------------------
-// VType_HunkLine
+// VType_Hunk
 //------------------------------------------------------------------------------
-VType_HunkLine VTYPE_HunkLine("HunkLine");
+VType_Hunk VTYPE_Hunk("Hunk");
 
-void VType_HunkLine::DoPrepare(Frame& frameOuter)
+void VType_Hunk::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(HunkLine, EachEditLine));
-	Assign(Gurax_CreateMethod(HunkLine, Print));
+	Assign(Gurax_CreateMethod(Hunk, EachEditLine));
+	Assign(Gurax_CreateMethod(Hunk, Print));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(HunkLine, lineNoOrg));
-	Assign(Gurax_CreateProperty(HunkLine, lineNoNew));
-	Assign(Gurax_CreateProperty(HunkLine, nLinesOrg));
-	Assign(Gurax_CreateProperty(HunkLine, nLinesNew));
-	Assign(Gurax_CreateProperty(HunkLine, range));
+	Assign(Gurax_CreateProperty(Hunk, lineNoOrg));
+	Assign(Gurax_CreateProperty(Hunk, lineNoNew));
+	Assign(Gurax_CreateProperty(Hunk, nLinesOrg));
+	Assign(Gurax_CreateProperty(Hunk, nLinesNew));
+	Assign(Gurax_CreateProperty(Hunk, range));
 }
 
 //------------------------------------------------------------------------------
-// Value_HunkLine
+// Value_Hunk
 //------------------------------------------------------------------------------
-VType& Value_HunkLine::vtype = VTYPE_HunkLine;
+VType& Value_Hunk::vtype = VTYPE_Hunk;
 
 //-----------------------------------------------------------------------------
-// Iterator_HunkLine
+// Iterator_Hunk
 //-----------------------------------------------------------------------------
-Iterator_HunkLine::Iterator_HunkLine(Diff* pDiff, size_t nLinesCommon) :
+Iterator_Hunk::Iterator_Hunk(Diff* pDiff, size_t nLinesCommon) :
 	_picker(pDiff, nLinesCommon)
 {
 }
 
-Value* Iterator_HunkLine::DoNextValue()
+Value* Iterator_Hunk::DoNextValue()
 {
-	RefPtr<HunkLine> pHunkLine(_picker.NextHunkLine());
-	if (!pHunkLine) return nullptr;
-	return new Value_HunkLine(pHunkLine.release());
+	RefPtr<Hunk> pHunk(_picker.NextHunk());
+	if (!pHunk) return nullptr;
+	return new Value_Hunk(pHunk.release());
 }
 
 #if 0
-HunkLine* Iterator_HunkLine::NextHunkLine()
+Hunk* Iterator_Hunk::NextHunk()
 {
 	Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
 	if (_iSesElem >= sesElems.size()) return nullptr;
@@ -237,14 +237,14 @@ HunkLine* Iterator_HunkLine::NextHunkLine()
 		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
 		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
 	}
-	return new HunkLine(_pDiff->Reference(), iSesElemBegin, iSesElemEnd,
+	return new Hunk(_pDiff->Reference(), iSesElemBegin, iSesElemEnd,
 									lineNoOrg, lineNoNew, nLinesOrg, nLinesNew);
 }
 #endif
 
-String Iterator_HunkLine::ToString(const StringStyle& ss) const
+String Iterator_Hunk::ToString(const StringStyle& ss) const
 {
-	return "diff.HunkLine";
+	return "diff.Hunk";
 }
 
 Gurax_EndModuleScope(diff)

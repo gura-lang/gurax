@@ -1,57 +1,57 @@
 //==============================================================================
-// VType_HunkLine.h
+// VType_Hunk.h
 //==============================================================================
-#ifndef GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
-#define GURAX_MODULE_DIFF_VTYPE_HUNKLINE_H
+#ifndef GURAX_MODULE_DIFF_VTYPE_Hunk_H
+#define GURAX_MODULE_DIFF_VTYPE_Hunk_H
 #include <gurax.h>
-#include "HunkLine.h"
+#include "Hunk.h"
 
 Gurax_BeginModuleScope(diff)
 
 //------------------------------------------------------------------------------
-// VType_HunkLine
+// VType_Hunk
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_HunkLine : public VType {
+class GURAX_DLLDECLARE VType_Hunk : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_HunkLine VTYPE_HunkLine;
+extern GURAX_DLLDECLARE VType_Hunk VTYPE_Hunk;
 
 //------------------------------------------------------------------------------
-// Value_HunkLine
+// Value_Hunk
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_HunkLine : public Value_Object {
+class GURAX_DLLDECLARE Value_Hunk : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_HunkLine);
+	Gurax_DeclareReferable(Value_Hunk);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_HunkLine");
+	Gurax_MemoryPoolAllocator("Value_Hunk");
 protected:
-	RefPtr<HunkLine> _pHunkLine;
+	RefPtr<Hunk> _pHunk;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_HunkLine() = delete;
-	explicit Value_HunkLine(HunkLine* pHunkLine, VType& vtype = VTYPE_HunkLine) :
-		Value_Object(vtype), _pHunkLine(pHunkLine) {}
+	Value_Hunk() = delete;
+	explicit Value_Hunk(Hunk* pHunk, VType& vtype = VTYPE_Hunk) :
+		Value_Object(vtype), _pHunk(pHunk) {}
 	// Copy constructor/operator
-	Value_HunkLine(const Value_HunkLine& src) :
-		Value_Object(src), _pHunkLine(src._pHunkLine->Reference()) {}
-	Value_HunkLine& operator=(const Value_HunkLine& src) = delete;
+	Value_Hunk(const Value_Hunk& src) :
+		Value_Object(src), _pHunk(src._pHunk->Reference()) {}
+	Value_Hunk& operator=(const Value_Hunk& src) = delete;
 	// Move constructor/operator
-	Value_HunkLine(Value_HunkLine&& src) noexcept = delete;
-	Value_HunkLine& operator=(Value_HunkLine&& src) noexcept = delete;
+	Value_Hunk(Value_Hunk&& src) noexcept = delete;
+	Value_Hunk& operator=(Value_Hunk&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_HunkLine() = default;
+	~Value_Hunk() = default;
 public:
-	const HunkLine& GetHunkLine() const { return *_pHunkLine; }
+	const Hunk& GetHunk() const { return *_pHunk; }
 public:
-	static const HunkLine& GetHunkLine(const Value& value) {
-		return dynamic_cast<const Value_HunkLine&>(value).GetHunkLine();
+	static const Hunk& GetHunk(const Value& value) {
+		return dynamic_cast<const Value_Hunk&>(value).GetHunk();
 	}
 public:
 	// Virtual functions of Value
@@ -59,13 +59,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Iterator_HunkLine
+// Iterator_Hunk
 //-----------------------------------------------------------------------------
-class Iterator_HunkLine : public Iterator {
+class Iterator_Hunk : public Iterator {
 private:
-	HunkLine::Picker _picker;
+	Hunk::Picker _picker;
 public:
-	Iterator_HunkLine(Diff* pDiff, size_t nLinesCommon);
+	Iterator_Hunk(Diff* pDiff, size_t nLinesCommon);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

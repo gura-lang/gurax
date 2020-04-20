@@ -76,8 +76,8 @@ Gurax_ImplementMethod(Diff, EachEditLine)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.Diff#EachHunkLine(nLinesCommon?:Number) {block?}
-Gurax_DeclareMethod(Diff, EachHunkLine)
+// diff.Diff#EachHunk(nLinesCommon?:Number) {block?}
+Gurax_DeclareMethod(Diff, EachHunk)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("nLinesCommon", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -87,7 +87,7 @@ Gurax_DeclareMethod(Diff, EachHunkLine)
 		"Creates an iterator that returns stored hunk information.\n");
 }
 
-Gurax_ImplementMethod(Diff, EachHunkLine)
+Gurax_ImplementMethod(Diff, EachHunk)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -95,12 +95,12 @@ Gurax_ImplementMethod(Diff, EachHunkLine)
 	ArgPicker args(argument);
 	size_t nLinesCommon = args.IsValid()? args.PickNumberNonNeg<size_t>() : 3;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_HunkLine(valueThis.GetDiff().Reference(), nLinesCommon));
+	RefPtr<Iterator> pIterator(new Iterator_Hunk(valueThis.GetDiff().Reference(), nLinesCommon));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.Diff#PrintHunkLines(stream?:Stream:w, nLinesCommon?:Number):void
-Gurax_DeclareMethod(Diff, PrintHunkLines)
+// diff.Diff#PrintHunks(stream?:Stream:w, nLinesCommon?:Number):void
+Gurax_DeclareMethod(Diff, PrintHunks)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
@@ -110,7 +110,7 @@ Gurax_DeclareMethod(Diff, PrintHunkLines)
 		"Prints the unified hunks.\n");
 }
 
-Gurax_ImplementMethod(Diff, PrintHunkLines)
+Gurax_ImplementMethod(Diff, PrintHunks)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -120,7 +120,7 @@ Gurax_ImplementMethod(Diff, PrintHunkLines)
 	size_t nLinesCommon = args.IsValid()? args.PickNumberNonNeg<size_t>() : 3;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	valueThis.GetDiff().PrintHunkLines(stream, nLinesCommon);
+	valueThis.GetDiff().PrintHunks(stream, nLinesCommon);
 	return Value::nil();
 }
 
@@ -155,8 +155,8 @@ void VType_Diff::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Diff));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Diff, EachEditLine));
-	Assign(Gurax_CreateMethod(Diff, EachHunkLine));
-	Assign(Gurax_CreateMethod(Diff, PrintHunkLines));
+	Assign(Gurax_CreateMethod(Diff, EachHunk));
+	Assign(Gurax_CreateMethod(Diff, PrintHunks));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Diff, distance));
 	//Gura_AssignProperty(diff_at_line, nLinesNew);

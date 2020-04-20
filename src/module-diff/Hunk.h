@@ -1,22 +1,22 @@
 //==============================================================================
-// HunkLine.h
+// Hunk.h
 //==============================================================================
-#ifndef GURAX_MODULE_DIFF_HUNKLINE_H
-#define GURAX_MODULE_DIFF_HUNKLINE_H
+#ifndef GURAX_MODULE_DIFF_Hunk_H
+#define GURAX_MODULE_DIFF_Hunk_H
 #include <gurax.h>
 #include "VTYPE_EditLine.h"
 
 Gurax_BeginModuleScope(diff)
 
 //------------------------------------------------------------------------------
-// HunkLine
+// Hunk
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE HunkLine : public Referable {
+class GURAX_DLLDECLARE Hunk : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(HunkLine);
+	Gurax_DeclareReferable(Hunk);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("diff.HunkLine");
+	Gurax_MemoryPoolAllocator("diff.Hunk");
 public:
 	class GURAX_DLLDECLARE Picker {
 	private:
@@ -25,7 +25,7 @@ public:
 		size_t _iSesElem;
 	public:
 		Picker(Diff* pDiff, size_t nLinesCommon);
-		HunkLine* NextHunkLine();
+		Hunk* NextHunk();
 	};
 protected:
 	RefPtr<Diff> _pDiff;
@@ -37,16 +37,16 @@ protected:
 	size_t _nLinesNew;
 public:
 	// Constructor
-	HunkLine(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
+	Hunk(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
 		size_t lineNoOrg, size_t lineNoNew, size_t nLinesOrg, size_t nLinesNew);
 	// Copy constructor/operator
-	HunkLine(const HunkLine& src) = delete;
-	HunkLine& operator=(const HunkLine& src) = delete;
+	Hunk(const Hunk& src) = delete;
+	Hunk& operator=(const Hunk& src) = delete;
 	// Move constructor/operator
-	HunkLine(HunkLine&& src) noexcept = delete;
-	HunkLine& operator=(HunkLine&& src) noexcept = delete;
+	Hunk(Hunk&& src) noexcept = delete;
+	Hunk& operator=(Hunk&& src) noexcept = delete;
 protected:
-	~HunkLine() = default;
+	~Hunk() = default;
 public:
 	Iterator* EachEditLine() const {
 		return new Iterator_EditLine(_pDiff->Reference(), _iSesElemBegin, _iSesElemEnd);
@@ -59,9 +59,9 @@ public:
 	void Print(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const HunkLine& other) const { return this == &other; }
-	bool IsEqualTo(const HunkLine& other) const { return IsIdentical(other); }
-	bool IsLessThan(const HunkLine& other) const { return this < &other; }
+	bool IsIdentical(const Hunk& other) const { return this == &other; }
+	bool IsEqualTo(const Hunk& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Hunk& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

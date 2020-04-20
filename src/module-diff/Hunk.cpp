@@ -1,19 +1,19 @@
 //==============================================================================
-// HunkLine.cpp
+// Hunk.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(diff)
 
 //------------------------------------------------------------------------------
-// HunkLine
+// Hunk
 //------------------------------------------------------------------------------
-HunkLine::HunkLine(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
+Hunk::Hunk(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
 		size_t lineNoOrg, size_t lineNoNew, size_t nLinesOrg, size_t nLinesNew) :
 	_pDiff(pDiff), _iSesElemBegin(iSesElemBegin), _iSesElemEnd(iSesElemEnd),
 	_lineNoOrg(lineNoOrg), _lineNoNew(lineNoNew), _nLinesOrg(nLinesOrg), _nLinesNew(nLinesNew) {}
 
-String HunkLine::MakeRangeString() const
+String Hunk::MakeRangeString() const
 {
 	String str;
 	str.Printf("-%lu", _lineNoOrg);
@@ -23,7 +23,7 @@ String HunkLine::MakeRangeString() const
 	return str;
 }
 
-void HunkLine::Print(Stream& stream) const
+void Hunk::Print(Stream& stream) const
 {
 	stream.Printf("@@ %s @@\n", MakeRangeString().c_str());
 	const Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
@@ -37,20 +37,20 @@ void HunkLine::Print(Stream& stream) const
 	}
 }
 
-String HunkLine::ToString(const StringStyle& ss) const
+String Hunk::ToString(const StringStyle& ss) const
 {
-	return "diff.HunkLine";
+	return "diff.Hunk";
 }
 
 //------------------------------------------------------------------------------
-// HunkLine::Picker
+// Hunk::Picker
 //------------------------------------------------------------------------------
-HunkLine::Picker::Picker(Diff* pDiff, size_t nLinesCommon) :
+Hunk::Picker::Picker(Diff* pDiff, size_t nLinesCommon) :
 	_pDiff(pDiff), _nLinesCommon(nLinesCommon), _iSesElem(0)
 {
 }
 
-HunkLine* HunkLine::Picker::NextHunkLine()
+Hunk* Hunk::Picker::NextHunk()
 {
 	Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
 	if (_iSesElem >= sesElems.size()) return nullptr;
@@ -97,7 +97,7 @@ HunkLine* HunkLine::Picker::NextHunkLine()
 		if (sesElem.second.type != dtl::SES_ADD) nLinesOrg++;
 		if (sesElem.second.type != dtl::SES_DELETE) nLinesNew++;
 	}
-	return new HunkLine(_pDiff->Reference(), iSesElemBegin, iSesElemEnd,
+	return new Hunk(_pDiff->Reference(), iSesElemBegin, iSesElemEnd,
 									lineNoOrg, lineNoNew, nLinesOrg, nLinesNew);
 }
 

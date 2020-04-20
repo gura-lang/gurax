@@ -49,7 +49,7 @@ Gurax_ModulePrepare()
 	// Assignment of VType
 	Assign(VTYPE_Diff);
 	Assign(VTYPE_EditLine);
-	Assign(VTYPE_HunkLine);
+	Assign(VTYPE_Hunk);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

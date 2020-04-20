@@ -127,12 +127,12 @@ TestCase('') {
 	d.EachEditLine {|editLine|
 		Printf('%s %3d %3d %s\n', editLine.mark, editLine.lineNoOrg, editLine.lineNoNew, editLine.source)
 	}
-	d.PrintHunkLines()
+	d.PrintHunks()
 /*
-	d.EachHunkLine {|hunkLine|
-		Printf('%s\n', hunkLine.range)
-		Printf('%d\n', hunkLine.lineNoOrg)
-		hunkLine.EachEditLine {|editLine|
+	d.EachHunk {|Hunk|
+		Printf('%s\n', Hunk.range)
+		Printf('%d\n', Hunk.lineNoOrg)
+		Hunk.EachEditLine {|editLine|
 			Println(editLine.mark, ' ', editLine.source)
 		}
 	}

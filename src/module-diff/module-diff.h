@@ -8,7 +8,7 @@
 #include "Util.h"
 #include "VType_Diff.h"
 #include "VType_EditLine.h"
-#include "VType_HunkLine.h"
+#include "VType_Hunk.h"
 
 Gurax_BeginModuleHeader(diff)
 Gurax_EndModuleHeader(diff)

@@ -11,10 +11,10 @@ add_library(diff SHARED
     module-diff.cpp
     Util.cpp
     Diff.cpp
-    HunkLine.cpp
+    Hunk.cpp
     VType_Diff.cpp
     VType_EditLine.cpp
-    VType_HunkLine.cpp
+    VType_Hunk.cpp
 )
 target_link_libraries(diff guraxcore)
 add_definitions(-DGURAX_MODULE_SEPARATED)
