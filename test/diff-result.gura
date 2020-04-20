@@ -1,0 +1,58 @@
+#!/usr/bin/gurax
+#===============================================================================
+# diff-result.gura
+#===============================================================================
+import(diff)
+import(conio)
+import(argopt)
+
+PrintEdits(edits[]:diff.Edit) = {
+	edits.Each {|edit|
+		if (edit.type == `common) {
+			Println(' ', edit.source)
+		} else {
+			clr = cond(edit.type == `add, `green, `red)
+			conio.SetColor(`white, clr) { Print(edit.mark) }
+			conio.SetColor(clr) { Println(edit.source) }
+		}
+	}
+}
+
+main() = {
+	argopt.Parser {|p|
+		p.AddFlag('detail', 'd')
+		errorFlag = false
+		try {
+			[argv, cfg] = p.Parse(sys.argv)
+		} catch {|e|
+			errorFlag = true
+		}
+		if (errorFlag || argv.len < 2) {
+			sys.cerr.Println('usage: diff-result.gura [--detail] file1 file2')
+			sys.Exit(1)
+		}
+		detailFlag = cfg['detail']
+	}
+	[fileNameExpect, fileNameResult] = argv[0, 1]
+	d = diff.Diff(Stream(fileNameExpect), Stream(fileNameResult))
+	if (!detailFlag && d.distance > 20) {
+		conio.SetColor(`red) {
+			Println('******** too much difference ********')
+		}
+	} elsif (d.distance > 0) {
+		edits = []
+		diffFoundFlag = false
+		d.EachEdit {|edit|
+			if (edit.source.StartsWith('========')) {
+				(!edits.IsEmpty() && diffFoundFlag) && PrintEdits(edits)
+				edits.Clear()
+				diffFoundFlag = false
+			}
+			(detailFlag || edit.type != `common) && edits.Add(edit)
+			if (edit.type != `common) { diffFoundFlag = true }
+		}
+		(!edits.IsEmpty() && diffFoundFlag) && PrintEdits(edits)
+	}
+}
+
+main()
