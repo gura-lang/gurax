@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_DIFF_Hunk_H
 #define GURAX_MODULE_DIFF_Hunk_H
 #include <gurax.h>
-#include "VTYPE_EditLine.h"
+#include "VTYPE_Edit.h"
 
 Gurax_BeginModuleScope(diff)
 
@@ -48,8 +48,8 @@ public:
 protected:
 	~Hunk() = default;
 public:
-	Iterator* EachEditLine() const {
-		return new Iterator_EditLine(_pDiff->Reference(), _iSesElemBegin, _iSesElemEnd);
+	Iterator* EachEdit() const {
+		return new Iterator_Edit(_pDiff->Reference(), _iSesElemBegin, _iSesElemEnd);
 	}
 	size_t GetLineNoOrg() const { return _lineNoOrg; }
 	size_t GetLineNoNew() const { return _lineNoNew; }

@@ -7,7 +7,7 @@
 #include <dtl/dtl.hpp>
 #include "Util.h"
 #include "VType_Diff.h"
-#include "VType_EditLine.h"
+#include "VType_Edit.h"
 #include "VType_Hunk.h"
 
 Gurax_BeginModuleHeader(diff)

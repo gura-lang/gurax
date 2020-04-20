@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// diff.Hunk#EachEditLine() {block?}
-Gurax_DeclareMethod(Hunk, EachEditLine)
+// diff.Hunk#EachEdit() {block?}
+Gurax_DeclareMethod(Hunk, EachEdit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -37,13 +37,13 @@ Gurax_DeclareMethod(Hunk, EachEditLine)
 		"Creates an iterator that returns stored edit information.\n");
 }
 
-Gurax_ImplementMethod(Hunk, EachEditLine)
+Gurax_ImplementMethod(Hunk, EachEdit)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	const Hunk& Hunk = valueThis.GetHunk();
-	RefPtr<Iterator> pIterator(valueThis.GetHunk().EachEditLine());
+	RefPtr<Iterator> pIterator(valueThis.GetHunk().EachEdit());
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -159,7 +159,7 @@ void VType_Hunk::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Hunk, EachEditLine));
+	Assign(Gurax_CreateMethod(Hunk, EachEdit));
 	Assign(Gurax_CreateMethod(Hunk, Print));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Hunk, lineNoOrg));

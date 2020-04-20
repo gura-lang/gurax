@@ -13,7 +13,7 @@ add_library(diff SHARED
     Diff.cpp
     Hunk.cpp
     VType_Diff.cpp
-    VType_EditLine.cpp
+    VType_Edit.cpp
     VType_Hunk.cpp
 )
 target_link_libraries(diff guraxcore)
