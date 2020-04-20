@@ -11,7 +11,7 @@ PrintEdits(edits[]:diff.Edit) = {
 		if (edit.type == `common) {
 			Println(' ', edit.source)
 		} else {
-			clr = cond(edit.type == `add, `green, `red)
+			clr = cond(edit.type == `add, `bright_green, `bright_red)
 			conio.SetColor(`white, clr) { Print(edit.mark) }
 			conio.SetColor(clr) { Println(edit.source) }
 		}
@@ -36,7 +36,7 @@ main() = {
 	[fileNameExpect, fileNameResult] = argv[0, 1]
 	d = diff.Diff(Stream(fileNameExpect), Stream(fileNameResult))
 	if (!detailFlag && d.distance > 20) {
-		conio.SetColor(`red) {
+		conio.SetColor(`bright_red) {
 			Println('******** too much difference ********')
 		}
 	} elsif (d.distance > 0) {
