@@ -124,16 +124,16 @@ TestCase('') {
 	'''
 	d = diff.Diff(textOrg, textNew)
 	Println(d.distance)
-	d.EachEdit {|Edit|
-		Printf('%s %3d %3d %s\n', Edit.mark, Edit.lineNoOrg, Edit.lineNoNew, Edit.source)
+	d.EachEdit {|edit|
+		Printf('%s %3d %3d %s\n', edit.mark, edit.lineNoOrg, edit.lineNoNew, edit.source)
 	}
 	d.PrintHunks()
 /*
-	d.EachHunk {|Hunk|
-		Printf('%s\n', Hunk.range)
-		Printf('%d\n', Hunk.lineNoOrg)
-		Hunk.EachEdit {|Edit|
-			Println(Edit.mark, ' ', Edit.source)
+	d.EachHunk {|hunk|
+		Printf('%s\n', hunk.range)
+		Printf('%d\n', hunk.lineNoOrg)
+		hunk.Eachedit {|edit|
+			Println(edit.mark, ' ', edit.source)
 		}
 	}
 */
