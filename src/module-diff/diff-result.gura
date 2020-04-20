@@ -6,56 +6,53 @@ import(diff)
 import(conio)
 import(argopt)
 
-PrintEdits(edits[]:diff.edit@line) = {
-	edits.each {|edit|
-		if (edit.type == `copy) {
-			println(' ', edit.source)
+PrintEdits(edits[]:diff.Edit) = {
+	edits.Each {|edit|
+		if (edit.type == `common) {
+			Println(' ', edit.source)
 		} else {
 			clr = cond(edit.type == `add, `green, `red)
-			conio.setcolor(`white, clr) {
-				print(edit.mark@unified)
-			}
-			conio.setcolor(clr) {
-				println(edit.source)
-			}
+			conio.SetColor(`white, clr) { Print(edit.mark) }
+			conio.SetColor(clr) { Println(edit.source) }
 		}
 	}
 }
 
 main() = {
 	argopt.Parser {|p|
-		p.addFlag('detail', 'd')
+		p.AddFlag('detail', 'd')
 		errorFlag = false
 		try {
-			[cfg, argv] = p.parse(sys.argv)
-		} catch {
+			[argv, cfg] = p.Parse(sys.argv)
+		} catch {|e|
 			errorFlag = true
 		}
-		if (errorFlag || argv.len() < 2) {
-			sys.stderr.println('usage: diff-result.gura [--detail] file1 file2')
-			sys.exit(1)
+		if (errorFlag || argv.len < 2) {
+			sys.cerr.Println('usage: diff-result.gura [--detail] file1 file2')
+			sys.Exit(1)
 		}
 		detailFlag = cfg['detail']
 	}
-	[fileNameSample, fileNameResult] = argv[0, 1]
-	edits = []
-	diffFlag = false
-	result = diff.compose(stream(fileNameSample), stream(fileNameResult))
-	if (!detailFlag && result.distance > 20) {
-		conio.setcolor(`red) {
-			println('******** too much difference ********')
+	[fileNameExpect, fileNameResult] = argv[0, 1]
+	d = diff.Diff(Stream(fileNameExpect), Stream(fileNameResult))
+	if (!detailFlag && d.distance > 20) {
+		conio.SetColor(`red) {
+			Println('******** too much difference ********')
 		}
-	} elsif (result.distance != 0) {
-		result.edits.each {|edit|
-			if (edit.source.startswith('========')) {
-				(!edits.isempty() && diffFlag) && PrintEdits(edits)
-				edits.clear()
+	} elsif (d.distance > 0) {
+		edits = []
+		diffFlag = false
+		d.EachEdit {|edit|
+			if (edit.source.StartsWith('========')) {
+				(!edits.IsEmpty() && diffFlag) && PrintEdits(edits)
+				edits.Clear()
 				diffFlag = false
 			}
-			(detailFlag || edit.type != `copy) && edits.add(edit)
-			if (edit.type != `copy) { diffFlag = true }
+			(detailFlag || edit.type != `common) && edits.Add(edit)
+			if (edit.type != `common) { diffFlag = true }
 		}
-		(!edits.isempty() && diffFlag) && PrintEdits(edits)
+		(!edits.IsEmpty() && diffFlag) && PrintEdits(edits)
 	}
 }
+
 main()

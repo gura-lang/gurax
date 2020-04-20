@@ -4,6 +4,19 @@
 //==============================================================================
 import(util.tester) {*}
 import(diff)
+import(conio)
+
+PrintEdits(edits[]:diff.Edit) = {
+	edits.Each {|edit|
+		if (edit.type == `common) {
+			Println(' ', edit.source)
+		} else {
+			clr = cond(edit.type == `add, `green, `red)
+			conio.SetColor(`white, clr) { Print(edit.mark) }
+			conio.SetColor(clr) { Println(edit.source) }
+		}
+	}
+}
 
 TestCase('') {
 	/*
@@ -124,10 +137,11 @@ TestCase('') {
 	'''
 	d = diff.Diff(textOrg, textNew)
 	Println(d.distance)
-	d.EachEdit {|edit|
-		Printf('%s %3d %3d %s\n', edit.mark, edit.lineNoOrg, edit.lineNoNew, edit.source)
-	}
-	d.PrintHunks()
+	PrintEdits(d.EachEdit())
+	// d.EachEdit {|edit|
+	// 	Printf('%s %3d %3d %s\n', edit.mark, edit.lineNoOrg, edit.lineNoNew, edit.source)
+	// }
+	// d.PrintHunks()
 /*
 	d.EachHunk {|hunk|
 		Printf('%s\n', hunk.range)
