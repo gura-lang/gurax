@@ -6,6 +6,10 @@ import(util.tester) {*}
 import(diff)
 import(conio)
 
+PrintProperty(vtype:VType) = {
+	props = vtype.__EachProp__():list
+	Println()
+}
 TestCase('Property') {
 	Println('  ', diff.Diff.__props__)
 	Println('  ', diff.Edit.__props__)

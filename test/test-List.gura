@@ -28,10 +28,10 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	Tester(`List.__prop__(`first))
-	Tester(`List.__prop__(`last))
-	Tester(`List.__prop__(`len))
-	Tester(`List.__prop__(`vtypeOfElem))
+	Tester(`List.__GetProp__(`first))
+	Tester(`List.__GetProp__(`last))
+	Tester(`List.__GetProp__(`len))
+	Tester(`List.__GetProp__(`vtypeOfElem))
 }
 
 TestCase('Initializer') {

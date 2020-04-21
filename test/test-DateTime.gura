@@ -2,21 +2,21 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`DateTime.__prop__(`year))
-	Tester(`DateTime.__prop__(`month))
-	Tester(`DateTime.__prop__(`day))
-	Tester(`DateTime.__prop__(`hour))
-	Tester(`DateTime.__prop__(`min))
-	Tester(`DateTime.__prop__(`sec))
-	Tester(`DateTime.__prop__(`msec))
-	Tester(`DateTime.__prop__(`usec))
-	Tester(`DateTime.__prop__(`minsOff))
-	Tester(`DateTime.__prop__(`wday))
-	Tester(`DateTime.__prop__(`week))
-	Tester(`DateTime.__prop__(`weekShort))
-	Tester(`DateTime.__prop__(`yday))
-	Tester(`DateTime.__prop__(`utc))
-	Tester(`DateTime.__prop__(`unixTime))
+	Tester(`DateTime.__GetProp__(`year))
+	Tester(`DateTime.__GetProp__(`month))
+	Tester(`DateTime.__GetProp__(`day))
+	Tester(`DateTime.__GetProp__(`hour))
+	Tester(`DateTime.__GetProp__(`min))
+	Tester(`DateTime.__GetProp__(`sec))
+	Tester(`DateTime.__GetProp__(`msec))
+	Tester(`DateTime.__GetProp__(`usec))
+	Tester(`DateTime.__GetProp__(`minsOff))
+	Tester(`DateTime.__GetProp__(`wday))
+	Tester(`DateTime.__GetProp__(`week))
+	Tester(`DateTime.__GetProp__(`weekShort))
+	Tester(`DateTime.__GetProp__(`yday))
+	Tester(`DateTime.__GetProp__(`utc))
+	Tester(`DateTime.__GetProp__(`unixTime))
 }
 
 TestCase('Constructor') {

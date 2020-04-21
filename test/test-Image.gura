@@ -2,14 +2,14 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Image.__prop__(`bytes))
-	Tester(`Image.__prop__(`bytesPerLine))
-	Tester(`Image.__prop__(`bytesPerPixel))
-	Tester(`Image.__prop__(`format))
-	Tester(`Image.__prop__(`height))
-	Tester(`Image.__prop__(`p))
-	Tester(`Image.__prop__(`palette))
-	Tester(`Image.__prop__(`width))
+	Tester(`Image.__GetProp__(`bytes))
+	Tester(`Image.__GetProp__(`bytesPerLine))
+	Tester(`Image.__GetProp__(`bytesPerPixel))
+	Tester(`Image.__GetProp__(`format))
+	Tester(`Image.__GetProp__(`height))
+	Tester(`Image.__GetProp__(`p))
+	Tester(`Image.__GetProp__(`palette))
+	Tester(`Image.__GetProp__(`width))
 }
 
 TestCase('Property Test') {

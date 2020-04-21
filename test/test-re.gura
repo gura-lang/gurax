@@ -3,13 +3,13 @@ import(util.tester) {*}
 import(re)
 
 TestCase('Property') {
-	Tester(`re.Match.__prop__(`begin))
-	Tester(`re.Match.__prop__(`end))
-	Tester(`re.Match.__prop__(`source))
-	Tester(`re.Match.__prop__(`string))
-	Tester(`re.Group.__prop__(`begin))
-	Tester(`re.Group.__prop__(`end))
-	Tester(`re.Group.__prop__(`string))
+	Tester(`re.Match.__GetProp__(`begin))
+	Tester(`re.Match.__GetProp__(`end))
+	Tester(`re.Match.__GetProp__(`source))
+	Tester(`re.Match.__GetProp__(`string))
+	Tester(`re.Group.__GetProp__(`begin))
+	Tester(`re.Group.__GetProp__(`end))
+	Tester(`re.Group.__GetProp__(`string))
 }
 
 TestCase('String#Sub(), Pattern#Sub()') {

@@ -14,10 +14,10 @@ TestCase('Initializer') {
 }
 
 TestCase('Property') {
-	Tester(`Dict.__prop__(`items))
-	Tester(`Dict.__prop__(`len))
-	Tester(`Dict.__prop__(`keys))
-	Tester(`Dict.__prop__(`values))
+	Tester(`Dict.__GetProp__(`items))
+	Tester(`Dict.__GetProp__(`len))
+	Tester(`Dict.__GetProp__(`keys))
+	Tester(`Dict.__GetProp__(`values))
 }
 
 TestCase('IndexGet') {

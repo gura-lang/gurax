@@ -2,10 +2,10 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Color.__prop__(`r))
-	Tester(`Color.__prop__(`g))
-	Tester(`Color.__prop__(`b))
-	Tester(`Color.__prop__(`a))
+	Tester(`Color.__GetProp__(`r))
+	Tester(`Color.__GetProp__(`g))
+	Tester(`Color.__GetProp__(`b))
+	Tester(`Color.__GetProp__(`a))
 }
 
 TestCase('Constructor') {

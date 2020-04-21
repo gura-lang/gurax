@@ -2,14 +2,14 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`TimeDelta.__prop__(`days))
-	Tester(`TimeDelta.__prop__(`hours))
-	Tester(`TimeDelta.__prop__(`mins))
-	Tester(`TimeDelta.__prop__(`secs))
-	Tester(`TimeDelta.__prop__(`secsPacked))
-	Tester(`TimeDelta.__prop__(`msecs))
-	Tester(`TimeDelta.__prop__(`usecs))
-	Tester(`TimeDelta.__prop__(`usecsPacked))
+	Tester(`TimeDelta.__GetProp__(`days))
+	Tester(`TimeDelta.__GetProp__(`hours))
+	Tester(`TimeDelta.__GetProp__(`mins))
+	Tester(`TimeDelta.__GetProp__(`secs))
+	Tester(`TimeDelta.__GetProp__(`secsPacked))
+	Tester(`TimeDelta.__GetProp__(`msecs))
+	Tester(`TimeDelta.__GetProp__(`usecs))
+	Tester(`TimeDelta.__GetProp__(`usecsPacked))
 }
 
 TestCase('Constructor') {

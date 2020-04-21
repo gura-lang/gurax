@@ -50,8 +50,29 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__prop__(symbol:Symbol):map {block?}
-Gurax_DeclareClassMethod(VType, __prop__)
+// VType#__EachProp__() {block?}
+Gurax_DeclareClassMethod(VType, __EachProp__)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(VType, __EachProp__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(valueThis.GetVTypeThis().GetPropHandlerMap().CreatePropHandlerOwner());
+	pPropHandlerOwner->SortBySymbolName();
+	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// VType#__GetProp__(symbol:Symbol):map {block?}
+Gurax_DeclareClassMethod(VType, __GetProp__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -61,7 +82,7 @@ Gurax_DeclareClassMethod(VType, __prop__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __prop__)
+Gurax_ImplementClassMethod(VType, __GetProp__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -80,23 +101,19 @@ Gurax_ImplementClassMethod(VType, __prop__)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// VType#__props__
-Gurax_DeclareProperty_R(VType, __props__)
+// VType#__fullName__
+Gurax_DeclareProperty_R(VType, __fullName__)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"The full name of the VType.");
 }
 
-Gurax_ImplementPropertyGetter(VType, __props__)
+Gurax_ImplementPropertyGetter(VType, __fullName__)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	// Function body
-	RefPtr<PropHandlerOwner> pPropHandlerOwner(valueThis.GetVTypeThis().GetPropHandlerMap().CreatePropHandlerOwner());
-	pPropHandlerOwner->SortBySymbolName();
-	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
-	return new Value_Iterator(pIterator.release());
+	return new Value_String(valueThis.GetVTypeThis().MakeFullName());
 }
 
 //------------------------------------------------------------------------------
@@ -111,9 +128,10 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __prop__));
+	Assign(Gurax_CreateMethod(VType, __EachProp__));
+	Assign(Gurax_CreateMethod(VType, __GetProp__));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(VType, __props__));
+	Assign(Gurax_CreateProperty(VType, __fullName__));
 }
 
 //------------------------------------------------------------------------------

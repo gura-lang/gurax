@@ -2,11 +2,11 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Binary.__prop__(`bytes))
-	Tester(`Binary.__prop__(`p))
-	Tester(`Binary.__prop__(`reader))
-	Tester(`Binary.__prop__(`writable))
-	Tester(`Binary.__prop__(`writer))
+	Tester(`Binary.__GetProp__(`bytes))
+	Tester(`Binary.__GetProp__(`p))
+	Tester(`Binary.__GetProp__(`reader))
+	Tester(`Binary.__GetProp__(`writable))
+	Tester(`Binary.__GetProp__(`writer))
 }
 
 TestCase('Constructor') {

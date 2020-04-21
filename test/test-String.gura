@@ -20,8 +20,8 @@ words100 = [
 ]
 
 TestCase('Property') {
-	Tester(`String.__prop__(`len))
-	Tester(`String.__prop__(`width))
+	Tester(`String.__GetProp__(`len))
+	Tester(`String.__GetProp__(`width))
 }
 
 TestCase('String#Align()') {

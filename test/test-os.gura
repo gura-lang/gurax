@@ -2,9 +2,9 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	//Tester(`os.__prop__(`cin))
-	//Tester(`os.__prop__(`cout))
-	//Tester(`os.__prop__(`cerr))
+	//Tester(`os.__GetProp__(`cin))
+	//Tester(`os.__GetProp__(`cout))
+	//Tester(`os.__GetProp__(`cerr))
 }
 
 TestCase('Streams') {
