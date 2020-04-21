@@ -2,11 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Number.__GetProp__(`abs))
-	Tester(`Number.__GetProp__(`arg))
-	Tester(`Number.__GetProp__(`imag))
-	Tester(`Number.__GetProp__(`norm))
-	Tester(`Number.__GetProp__(`real))
+	PrintProperty(Number)
 }
 
 TestCase('Property Access') {

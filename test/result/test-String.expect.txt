@@ -1,6 +1,9 @@
 ======== Property ========
-String.__prop__(`len) .. <PropHandler:len:Number:R>
-String.__prop__(`width) .. <PropHandler:width:Number:R>
+String
+  #first            String       R
+  #last             String       R
+  #len              Number       R
+  #width            Number       R
 ======== String#Align() ========
   bubble  
  tasteful 

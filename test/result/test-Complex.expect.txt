@@ -1,9 +1,10 @@
 ======== Property ========
-Complex.__prop__(`abs) .. <PropHandler:abs:Complex:R>
-Complex.__prop__(`arg) .. <PropHandler:arg:Complex:R>
-Complex.__prop__(`imag) .. <PropHandler:imag:Complex:R>
-Complex.__prop__(`norm) .. <PropHandler:norm:Complex:R>
-Complex.__prop__(`real) .. <PropHandler:real:Complex:R>
+Complex
+  #abs              Number       R
+  #arg              Number       R
+  #imag             Number       R
+  #norm             Number       R
+  #real             Number       R
 ======== Property Access ========
 a .. <Complex:3>
 a.abs .. 3

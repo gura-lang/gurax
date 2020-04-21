@@ -1,12 +1,13 @@
 ======== Property ========
-TimeDelta.__prop__(`days) .. <PropHandler:days:Number:R:W>
-TimeDelta.__prop__(`hours) .. <PropHandler:hours:Number:R:W>
-TimeDelta.__prop__(`mins) .. <PropHandler:mins:Number:R:W>
-TimeDelta.__prop__(`secs) .. <PropHandler:secs:Number:R:W>
-TimeDelta.__prop__(`secsPacked) .. <PropHandler:secsPacked:Number:R:W>
-TimeDelta.__prop__(`msecs) .. <PropHandler:msecs:Number:R:W>
-TimeDelta.__prop__(`usecs) .. <PropHandler:usecs:Number:R:W>
-TimeDelta.__prop__(`usecsPacked) .. <PropHandler:usecsPacked:Number:R:W>
+TimeDelta
+  #days             Number       R/W
+  #hours            Number       R/W
+  #mins             Number       R/W
+  #msecs            Number       R/W
+  #secs             Number       R/W
+  #secsPacked       Number       R/W
+  #usecs            Number       R/W
+  #usecsPacked      Number       R/W
 ======== Constructor ========
 TimeDelta() .. 0days,00:00:00.000
 TimeDelta(123) .. 123days,00:00:00.000

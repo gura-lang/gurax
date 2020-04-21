@@ -2,19 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Pointer.__GetProp__(`bytesAvail))
-	Tester(`Pointer.__GetProp__(`bytesEntire))
-	Tester(`Pointer.__GetProp__(`offset))
-	Tester(`Pointer.__GetProp__(`int8))
-	Tester(`Pointer.__GetProp__(`int16))
-	Tester(`Pointer.__GetProp__(`int32))
-	Tester(`Pointer.__GetProp__(`int64))
-	Tester(`Pointer.__GetProp__(`uint8))
-	Tester(`Pointer.__GetProp__(`uint16))
-	Tester(`Pointer.__GetProp__(`uint32))
-	Tester(`Pointer.__GetProp__(`uint64))
-	Tester(`Pointer.__GetProp__(`float))
-	Tester(`Pointer.__GetProp__(`double))
+	PrintProperty(Pointer)
 }
 
 TestCase('Basic test of pack/unpack') {

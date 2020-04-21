@@ -1,7 +1,31 @@
 ======== Property ========
-Error.__prop__(`errorType) .. <PropHandler:errorType:Number:R>
-Error.__prop__(`expr) .. <PropHandler:expr:Expr:R>
-Error.__prop__(`fileName) .. <PropHandler:fileName:String:R>
-Error.__prop__(`lineNo) .. <PropHandler:lineNo:Number:R>
-Error.__prop__(`lineNoBtm) .. <PropHandler:lineNoBtm:Number:R>
-Error.__prop__(`text) .. <PropHandler:text:String:R>
+Error
+  .AccessError      ErrorType    R
+  .ArgumentError    ErrorType    R
+  .CastError        ErrorType    R
+  .CodecError       ErrorType    R
+  .CommandError     ErrorType    R
+  .ContextError     ErrorType    R
+  .DeclarationError ErrorType    R
+  .DividedByZero    ErrorType    R
+  .FormatError      ErrorType    R
+  .GuestError       ErrorType    R
+  .IOError          ErrorType    R
+  .ImportError      ErrorType    R
+  .InvalidOperation ErrorType    R
+  .IteratorError    ErrorType    R
+  .KeyError         ErrorType    R
+  .MemoryError      ErrorType    R
+  .PathError        ErrorType    R
+  .PropertyError    ErrorType    R
+  .StreamError      ErrorType    R
+  .SymbolError      ErrorType    R
+  .SyntaxError      ErrorType    R
+  .TypeError        ErrorType    R
+  .ValueError       ErrorType    R
+  #errorType        Number       R
+  #expr             Expr         R
+  #fileName         String       R
+  #lineNo           Number       R
+  #lineNoBtm        Number       R
+  #text             String       R

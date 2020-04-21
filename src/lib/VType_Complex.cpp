@@ -55,7 +55,7 @@ Gurax_ImplementConstructor(Complex)
 // Complex#abs
 Gurax_DeclareProperty_R(Complex, abs)
 {
-	Declare(VTYPE_Complex, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The absolute value of the number.");
@@ -70,7 +70,7 @@ Gurax_ImplementPropertyGetter(Complex, abs)
 // Complex#arg
 Gurax_DeclareProperty_R(Complex, arg)
 {
-	Declare(VTYPE_Complex, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The argument value of the number. Always returns zero.");
@@ -85,7 +85,7 @@ Gurax_ImplementPropertyGetter(Complex, arg)
 // Complex#imag
 Gurax_DeclareProperty_R(Complex, imag)
 {
-	Declare(VTYPE_Complex, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The imaginary part of the Complex value.");
@@ -100,7 +100,7 @@ Gurax_ImplementPropertyGetter(Complex, imag)
 // Complex#norm
 Gurax_DeclareProperty_R(Complex, norm)
 {
-	Declare(VTYPE_Complex, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The norm value of the number.");
@@ -115,7 +115,7 @@ Gurax_ImplementPropertyGetter(Complex, norm)
 // Complex#real
 Gurax_DeclareProperty_R(Complex, real)
 {
-	Declare(VTYPE_Complex, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The real part of the Complex Value.");

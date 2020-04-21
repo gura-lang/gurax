@@ -123,7 +123,7 @@ Gurax_ImplementClassMethod(Expr, Parse)
 // Expr#child
 Gurax_DeclareProperty_R(Expr, child)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the child element.\n");
@@ -140,7 +140,7 @@ Gurax_ImplementPropertyGetter(Expr, child)
 // Expr#left
 Gurax_DeclareProperty_R(Expr, left)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the left element.\n");
@@ -157,7 +157,7 @@ Gurax_ImplementPropertyGetter(Expr, left)
 // Expr#right
 Gurax_DeclareProperty_R(Expr, right)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the right element.\n");
@@ -174,7 +174,7 @@ Gurax_ImplementPropertyGetter(Expr, right)
 // Expr#car
 Gurax_DeclareProperty_R(Expr, car)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the car element.\n");
@@ -191,7 +191,7 @@ Gurax_ImplementPropertyGetter(Expr, car)
 // Expr#target
 Gurax_DeclareProperty_R(Expr, target)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the target element.\n");
@@ -208,7 +208,7 @@ Gurax_ImplementPropertyGetter(Expr, target)
 // Expr#block
 Gurax_DeclareProperty_R(Expr, block)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the block element.\n");
@@ -225,7 +225,7 @@ Gurax_ImplementPropertyGetter(Expr, block)
 // Expr#trailer
 Gurax_DeclareProperty_R(Expr, trailer)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance of the trailer element.\n");
@@ -293,7 +293,7 @@ Gurax_ImplementPropertyGetter(Expr, params)
 // Expr#isValue
 Gurax_DeclareProperty_R(Expr, isValue)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Value");
@@ -308,7 +308,7 @@ Gurax_ImplementPropertyGetter(Expr, isValue)
 // Expr#isIdentifier
 Gurax_DeclareProperty_R(Expr, isIdentifier)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Identifier");
@@ -323,7 +323,7 @@ Gurax_ImplementPropertyGetter(Expr, isIdentifier)
 // Expr#isSuffixed
 Gurax_DeclareProperty_R(Expr, isSuffixed)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Suffixed");
@@ -338,7 +338,7 @@ Gurax_ImplementPropertyGetter(Expr, isSuffixed)
 // Expr#isMember
 Gurax_DeclareProperty_R(Expr, isMember)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Member");
@@ -353,7 +353,7 @@ Gurax_ImplementPropertyGetter(Expr, isMember)
 // Expr#isUnaryOp
 Gurax_DeclareProperty_R(Expr, isUnaryOp)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is UnaryOp");
@@ -368,7 +368,7 @@ Gurax_ImplementPropertyGetter(Expr, isUnaryOp)
 // Expr#isBinaryOp
 Gurax_DeclareProperty_R(Expr, isBinaryOp)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is BinaryOp");
@@ -383,7 +383,7 @@ Gurax_ImplementPropertyGetter(Expr, isBinaryOp)
 // Expr#isAssign
 Gurax_DeclareProperty_R(Expr, isAssign)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Assign");
@@ -398,7 +398,7 @@ Gurax_ImplementPropertyGetter(Expr, isAssign)
 // Expr#isRoot
 Gurax_DeclareProperty_R(Expr, isRoot)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Root");
@@ -413,7 +413,7 @@ Gurax_ImplementPropertyGetter(Expr, isRoot)
 // Expr#isBlock
 Gurax_DeclareProperty_R(Expr, isBlock)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Block");
@@ -428,7 +428,7 @@ Gurax_ImplementPropertyGetter(Expr, isBlock)
 // Expr#isLister
 Gurax_DeclareProperty_R(Expr, isLister)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Lister");
@@ -443,7 +443,7 @@ Gurax_ImplementPropertyGetter(Expr, isLister)
 // Expr#isIterer
 Gurax_DeclareProperty_R(Expr, isIterer)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Iterer");
@@ -458,7 +458,7 @@ Gurax_ImplementPropertyGetter(Expr, isIterer)
 // Expr#isIndexer
 Gurax_DeclareProperty_R(Expr, isIndexer)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Indexer");
@@ -473,7 +473,7 @@ Gurax_ImplementPropertyGetter(Expr, isIndexer)
 // Expr#isCaller
 Gurax_DeclareProperty_R(Expr, isCaller)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is Caller");

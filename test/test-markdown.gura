@@ -6,15 +6,8 @@ import(util.tester) {*}
 import(markdown)
 
 TestCase('Property') {
-	Tester(`markdown.Document.__GetProp__(`refs))
-	Tester(`markdown.Document.__GetProp__(`root))
-	Tester(`markdown.Item.__GetProp__(`type))
-	Tester(`markdown.Item.__GetProp__(`text))
-	Tester(`markdown.Item.__GetProp__(`children))
-	Tester(`markdown.Item.__GetProp__(`url))
-	Tester(`markdown.Item.__GetProp__(`title))
-	Tester(`markdown.Item.__GetProp__(`attrs))
-	Tester(`markdown.Item.__GetProp__(`align))
+  PrintProperty(markdown.Document)
+  PrintProperty(markdown.Item)
 }
 
 TestCase@markdown(title:String, str:String):void = {

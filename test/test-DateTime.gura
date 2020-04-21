@@ -2,21 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`DateTime.__GetProp__(`year))
-	Tester(`DateTime.__GetProp__(`month))
-	Tester(`DateTime.__GetProp__(`day))
-	Tester(`DateTime.__GetProp__(`hour))
-	Tester(`DateTime.__GetProp__(`min))
-	Tester(`DateTime.__GetProp__(`sec))
-	Tester(`DateTime.__GetProp__(`msec))
-	Tester(`DateTime.__GetProp__(`usec))
-	Tester(`DateTime.__GetProp__(`minsOff))
-	Tester(`DateTime.__GetProp__(`wday))
-	Tester(`DateTime.__GetProp__(`week))
-	Tester(`DateTime.__GetProp__(`weekShort))
-	Tester(`DateTime.__GetProp__(`yday))
-	Tester(`DateTime.__GetProp__(`utc))
-	Tester(`DateTime.__GetProp__(`unixTime))
+	PrintProperty(DateTime)
 }
 
 TestCase('Constructor') {

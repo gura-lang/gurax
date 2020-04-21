@@ -20,9 +20,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	Tester(`Function.__GetProp__(`expr))
-	Tester(`Function.__GetProp__(`name))
-	Tester(`Function.__GetProp__(`type))
+	PrintProperty(Function)
 }
 
 TestCase('Default Value (1)') {

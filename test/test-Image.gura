@@ -2,14 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Image.__GetProp__(`bytes))
-	Tester(`Image.__GetProp__(`bytesPerLine))
-	Tester(`Image.__GetProp__(`bytesPerPixel))
-	Tester(`Image.__GetProp__(`format))
-	Tester(`Image.__GetProp__(`height))
-	Tester(`Image.__GetProp__(`p))
-	Tester(`Image.__GetProp__(`palette))
-	Tester(`Image.__GetProp__(`width))
+	PrintProperty(Image)
 }
 
 TestCase('Property Test') {

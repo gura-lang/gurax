@@ -1,13 +1,15 @@
 ======== Property ========
-markdown.Document.__prop__(`refs) .. <PropHandler:refs:Iterator:R>
-markdown.Document.__prop__(`root) .. <PropHandler:root:markdown.Item:R>
-markdown.Item.__prop__(`type) .. <PropHandler:type:Symbol:R>
-markdown.Item.__prop__(`text) .. <PropHandler:text:String:nil:R>
-markdown.Item.__prop__(`children) .. <PropHandler:children:Iterator:nil:R>
-markdown.Item.__prop__(`url) .. <PropHandler:url:String:nil:R>
-markdown.Item.__prop__(`title) .. <PropHandler:title:String:nil:R>
-markdown.Item.__prop__(`attrs) .. <PropHandler:attrs:String:nil:R>
-markdown.Item.__prop__(`align) .. <PropHandler:align:Symbol:R>
+markdown.Document
+  #refs             Iterator      R
+  #root             markdown.Item R
+markdown.Item
+  #align            Symbol       R
+  #attrs            String       R,nil
+  #children         Iterator     R,nil
+  #text             String       R,nil
+  #title            String       R,nil
+  #type             Symbol       R
+  #url              String       R,nil
 ======== header-1 ========
 <root>
   <p>

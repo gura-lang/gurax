@@ -1,9 +1,11 @@
 ======== Property ========
-Number.__prop__(`abs) .. <PropHandler:abs:Number:R>
-Number.__prop__(`arg) .. <PropHandler:arg:Number:R>
-Number.__prop__(`imag) .. <PropHandler:imag:Number:R>
-Number.__prop__(`norm) .. <PropHandler:norm:Number:R>
-Number.__prop__(`real) .. <PropHandler:real:Number:R>
+Number
+  #abs              Number       R
+  #arg              Number       R
+  .format           String       R/W
+  #imag             Number       R
+  #norm             Number       R
+  #real             Number       R
 ======== Property Access ========
 a .. 3
 a.abs .. 3

@@ -28,10 +28,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	Tester(`List.__GetProp__(`first))
-	Tester(`List.__GetProp__(`last))
-	Tester(`List.__GetProp__(`len))
-	Tester(`List.__GetProp__(`vtypeOfElem))
+	//PrintProperty(List):nomap
 }
 
 TestCase('Initializer') {

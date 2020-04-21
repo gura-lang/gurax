@@ -48,10 +48,11 @@ PrintProperty(vtype:VType) = {
 	maxLenVTypeFullName = [props:*vtype:*__fullName__:*len*, 12].Max()
 	Printf('%s\n', vtype.__fullName__)
 	props.Each {|prop|
-		Printf('  %s%-*s %-*s %s\n',
+		Printf('  %s%-*s %-*s %s%s\n',
 			cond(prop.isOfClass, '.', '#'),
 			maxLenSymbolName, prop.symbol.name,
 			maxLenVTypeFullName, prop.vtype.__fullName__,
-			['', 'R', 'W', 'R/W'][cond(prop.IsSet(`R), 1, 0) + cond(prop.IsSet(`W), 2, 0)])
+			['', 'R', 'W', 'R/W'][cond(prop.IsSet(`R), 1, 0) + cond(prop.IsSet(`W), 2, 0)],
+			cond(prop.IsSet(`nil), ',nil', ''))
 	}
 }

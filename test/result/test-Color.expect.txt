@@ -1,8 +1,9 @@
 ======== Property ========
-Color.__prop__(`r) .. <PropHandler:r:Number:R:W>
-Color.__prop__(`g) .. <PropHandler:g:Number:R:W>
-Color.__prop__(`b) .. <PropHandler:b:Number:R:W>
-Color.__prop__(`a) .. <PropHandler:a:Number:R:W>
+Color
+  #a                Number       R/W
+  #b                Number       R/W
+  #g                Number       R/W
+  #r                Number       R/W
 ======== Constructor ========
 Color(`black) .. Color:#000000,ff
 Color(`maroon) .. Color:#800000,ff

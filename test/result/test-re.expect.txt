@@ -1,11 +1,13 @@
 ======== Property ========
-re.Match.__prop__(`begin) .. <PropHandler:begin:Number:R>
-re.Match.__prop__(`end) .. <PropHandler:end:Number:R>
-re.Match.__prop__(`source) .. <PropHandler:source:String:R>
-re.Match.__prop__(`string) .. <PropHandler:string:String:R>
-re.Group.__prop__(`begin) .. <PropHandler:begin:Number:R>
-re.Group.__prop__(`end) .. <PropHandler:end:Number:R>
-re.Group.__prop__(`string) .. <PropHandler:string:String:R>
+re.Match
+  #begin            Number       R
+  #end              Number       R
+  #source           String       R
+  #string           String       R
+re.Group
+  #begin            Number       R
+  #end              Number       R
+  #string           String       R
 ======== String#Sub(), Pattern#Sub() ========
 hoge NUM foo
 no number here

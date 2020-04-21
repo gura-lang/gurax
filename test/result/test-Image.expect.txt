@@ -1,12 +1,14 @@
 ======== Property ========
-Image.__prop__(`bytes) .. <PropHandler:bytes:Number:R>
-Image.__prop__(`bytesPerLine) .. <PropHandler:bytesPerLine:Number:R>
-Image.__prop__(`bytesPerPixel) .. <PropHandler:bytesPerPixel:Number:R>
-Image.__prop__(`format) .. <PropHandler:format:Symbol:R>
-Image.__prop__(`height) .. <PropHandler:height:Number:R>
-Image.__prop__(`p) .. <PropHandler:p:Pointer:R>
-Image.__prop__(`palette) .. <PropHandler:palette:Palette:nil:R:W>
-Image.__prop__(`width) .. <PropHandler:width:Number:R>
+Image
+  #alphaDefault     Number       R/W
+  #bytes            Number       R
+  #bytesPerLine     Number       R
+  #bytesPerPixel    Number       R
+  #format           Symbol       R
+  #height           Number       R
+  #p                Pointer      R
+  #palette          Palette      R/W,nil
+  #width            Number       R
 ======== Property Test ========
 Image.Blank(48, 32) .. Image:rgba:48x32
 img.format .. `rgba

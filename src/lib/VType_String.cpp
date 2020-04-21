@@ -1186,7 +1186,7 @@ Gurax_DeclareProperty_R(String, first)
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The first character in the string.");
+		"The first character in the string. Returns an empty string if the string is empty.");
 }
 
 Gurax_ImplementPropertyGetter(String, first)
@@ -1199,10 +1199,10 @@ Gurax_ImplementPropertyGetter(String, first)
 // String#last
 Gurax_DeclareProperty_R(String, last)
 {
-	Declare(VTYPE_String, Flag::Nil);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The last character in the string.");
+		"The last character in the string. Returns an empty string if the string is empty.");
 }
 
 Gurax_ImplementPropertyGetter(String, last)

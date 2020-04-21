@@ -1,17 +1,18 @@
 ======== Property ========
-Pointer.__prop__(`bytesAvail) .. <PropHandler:bytesAvail:Number:R>
-Pointer.__prop__(`bytesEntire) .. <PropHandler:bytesEntire:Number:R>
-Pointer.__prop__(`offset) .. <PropHandler:offset:Number:R:W>
-Pointer.__prop__(`int8) .. <PropHandler:int8:Number:R:W>
-Pointer.__prop__(`int16) .. <PropHandler:int16:Number:R:W>
-Pointer.__prop__(`int32) .. <PropHandler:int32:Number:R:W>
-Pointer.__prop__(`int64) .. <PropHandler:int64:Number:R:W>
-Pointer.__prop__(`uint8) .. <PropHandler:uint8:Number:R:W>
-Pointer.__prop__(`uint16) .. <PropHandler:uint16:Number:R:W>
-Pointer.__prop__(`uint32) .. <PropHandler:uint32:Number:R:W>
-Pointer.__prop__(`uint64) .. <PropHandler:uint64:Number:R:W>
-Pointer.__prop__(`float) .. <PropHandler:float:Number:R:W>
-Pointer.__prop__(`double) .. <PropHandler:double:Number:R:W>
+Pointer
+  #bytesAvail       Number       R
+  #bytesEntire      Number       R
+  #double           Number       R/W
+  #float            Number       R/W
+  #int16            Number       R/W
+  #int32            Number       R/W
+  #int64            Number       R/W
+  #int8             Number       R/W
+  #offset           Number       R/W
+  #uint16           Number       R/W
+  #uint32           Number       R/W
+  #uint64           Number       R/W
+  #uint8            Number       R/W
 ======== Basic test of pack/unpack ========
 ---
 buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12) .. <Pointer:4/4>

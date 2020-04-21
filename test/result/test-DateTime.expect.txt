@@ -1,19 +1,21 @@
 ======== Property ========
-DateTime.__prop__(`year) .. <PropHandler:year:Number:R:W>
-DateTime.__prop__(`month) .. <PropHandler:month:Number:R:W>
-DateTime.__prop__(`day) .. <PropHandler:day:Number:R:W>
-DateTime.__prop__(`hour) .. <PropHandler:hour:Number:R:W>
-DateTime.__prop__(`min) .. <PropHandler:min:Number:R:W>
-DateTime.__prop__(`sec) .. <PropHandler:sec:Number:R:W>
-DateTime.__prop__(`msec) .. <PropHandler:msec:Number:R:W>
-DateTime.__prop__(`usec) .. <PropHandler:usec:Number:R:W>
-DateTime.__prop__(`minsOff) .. <PropHandler:minsOff:Number:nil:R:W>
-DateTime.__prop__(`wday) .. <PropHandler:wday:Number:R>
-DateTime.__prop__(`week) .. <PropHandler:week:Symbol:R>
-DateTime.__prop__(`weekShort) .. <PropHandler:weekShort:Symbol:R>
-DateTime.__prop__(`yday) .. <PropHandler:yday:Number:R>
-DateTime.__prop__(`utc) .. <PropHandler:utc:DateTime:R>
-DateTime.__prop__(`unixTime) .. <PropHandler:unixTime:DateTime:R>
+DateTime
+  #day              Number       R/W
+  #hour             Number       R/W
+  #min              Number       R/W
+  #minsOff          Number       R/W,nil
+  #month            Number       R/W
+  #msec             Number       R/W
+  #sec              Number       R/W
+  .tzOffset         TimeDelta    R
+  #unixTime         DateTime     R
+  #usec             Number       R/W
+  #utc              DateTime     R
+  #wday             Number       R
+  #week             Symbol       R
+  #weekShort        Symbol       R
+  #yday             Number       R
+  #year             Number       R/W
 ======== Constructor ========
 DateTime() .. 1970-01-01 00:00:00.000
 DateTime(2019) .. 2019-01-01 00:00:00.000

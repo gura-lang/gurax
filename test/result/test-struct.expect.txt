@@ -7,10 +7,11 @@ a .. <A>
 A().Format() .. <Nil>, <Nil>, <Nil>, <Nil>, <Nil>, 3, P7, 1970-01-01 00:00:00.000
 ======== Default Value for Property ========
 <VType:A(p1?:String,p2?:String,p3?:String,p4?:String){block?}>
-<PropHandler:p1:String:public:R:W>
-<PropHandler:p2:String:nil:public:R:W>
-<PropHandler:p3:String:public:R:W>
-<PropHandler:p4:String:nil:public:R:W>
+A
+  #p1               String       R/W
+  #p2               String       R/W,nil
+  #p3               String       R/W
+  #p4               String       R/W,nil
 A().Format() .. P1, <Nil>, P3, <Nil>
 A('P1-mod').Format() .. P1-mod, <Nil>, P3, <Nil>
 A('P1-mod', 'P2-mod').Format() .. P1-mod, P2-mod, P3, <Nil>
