@@ -25,6 +25,34 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// PropHandler#IsSet(symbol:Symbol)
+Gurax_DeclareMethod(PropHandler, IsSet)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns `true` if the property handler is declared with the flag specified by `symbol`.\n");
+}
+
+Gurax_ImplementMethod(PropHandler, IsSet)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	DeclArg::Flags flags = DeclArg::SymbolToFlag(args.PickSymbol());
+	if (flags == DeclArg::Flag::None) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for flag");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Bool(valueThis.GetPropHandler().IsSet(flags));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // PropHandler#symbol
@@ -68,6 +96,8 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(PropHandler, IsSet));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PropHandler, symbol));
 	Assign(Gurax_CreateProperty(PropHandler, vtype));
