@@ -14,7 +14,6 @@ bool Diff::Compose(Value& value1, Value& value2)
 	_context.init();
 	_context.onHuge();
 	_context.compose();
-	_context.composeUnifiedHunks();
 	return true;
 }
 

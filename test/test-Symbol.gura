@@ -3,14 +3,14 @@ import(util.tester) {*}
 
 TestCase('Operator ==') {
 	x = `a
-	Println(x.vtype)
+	Println(x.__vtype__)
 	Tester(`(`a == `a))
 	Tester(`(x == `a))
 }
 
 TestCase('Operator !=') {
 	x = `a
-	Println(x.vtype)
+	Println(x.__vtype__)
 	Tester(`(`a != `a))
 	Tester(`(x != `a))
 }

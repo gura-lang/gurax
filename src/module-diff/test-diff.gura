@@ -6,18 +6,12 @@ import(util.tester) {*}
 import(diff)
 import(conio)
 
-PrintEdits(edits[]:diff.Edit) = {
-	edits.Each {|edit|
-		if (edit.type == `common) {
-			Println(' ', edit.source)
-		} else {
-			clr = cond(edit.type == `add, `green, `red)
-			conio.SetColor(`white, clr) { Print(edit.mark) }
-			conio.SetColor(clr) { Println(edit.source) }
-		}
-	}
+TestCase('Property') {
+	Println('  ', diff.Diff.__props__)
+	Println('  ', diff.Edit.__props__)
+	Println('  ', diff.Hunk.__props__)
 }
-
+sys.Exit()
 TestCase('') {
 	/*
 	textOrg = R'''
