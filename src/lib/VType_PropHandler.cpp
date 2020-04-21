@@ -85,6 +85,36 @@ Gurax_ImplementPropertyGetter(PropHandler, vtype)
 	return new Value_VType(valueThis.GetPropHandler().GetVType());
 }
 
+// PropHandler#isOfClass
+Gurax_DeclareProperty_R(PropHandler, isOfClass)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the property belongs to a class.");
+}
+
+Gurax_ImplementPropertyGetter(PropHandler, isOfClass)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetPropHandler().IsSet(PropHandler::Flag::OfClass));
+}
+
+// PropHandler#isOfInstance
+Gurax_DeclareProperty_R(PropHandler, isOfInstance)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the property belongs to an instance.");
+}
+
+Gurax_ImplementPropertyGetter(PropHandler, isOfInstance)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetPropHandler().IsSet(PropHandler::Flag::OfInstance));
+}
+
 //------------------------------------------------------------------------------
 // VType_PropHandler
 //------------------------------------------------------------------------------
@@ -101,6 +131,8 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PropHandler, symbol));
 	Assign(Gurax_CreateProperty(PropHandler, vtype));
+	Assign(Gurax_CreateProperty(PropHandler, isOfClass));
+	Assign(Gurax_CreateProperty(PropHandler, isOfInstanced));
 }
 
 //------------------------------------------------------------------------------

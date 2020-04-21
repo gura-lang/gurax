@@ -65,7 +65,13 @@ Gurax_ImplementClassMethod(VType, __EachProp__)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<PropHandlerOwner> pPropHandlerOwner(valueThis.GetVTypeThis().GetPropHandlerMap().CreatePropHandlerOwner());
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(new PropHandlerOwner());
+	for (auto iter : valueThis.GetVTypeThis().GetPropHandlerMap()) {
+		pPropHandlerOwner->push_back(iter.second->Reference());
+	}
+	for (auto iter : valueThis.GetVTypeThis().GetPropHandlerMapOfClass()) {
+		pPropHandlerOwner->push_back(iter.second->Reference());
+	}
 	pPropHandlerOwner->SortBySymbolName();
 	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
 	return argument.ReturnIterator(processor, pIterator.release());

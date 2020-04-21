@@ -25,6 +25,24 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Symbol#name
+Gurax_DeclareProperty_R(Symbol, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The name of the symbol.");
+}
+
+Gurax_ImplementPropertyGetter(Symbol, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetSymbol()->GetName());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Symbol == Symbol
@@ -46,6 +64,8 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Symbol, name));
 	// Implementation of operator
 	Gurax_AssignOpBinary(Eq, Symbol, Symbol);
 }
