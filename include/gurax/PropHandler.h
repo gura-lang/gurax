@@ -226,7 +226,7 @@ public:
 private:
 	SeqId _seqId;
 	const Symbol* _pSymbol;
-	const VType* _pVType;
+	VType* _pVType;
 	Flags _flags;
 	std::unique_ptr<AttributeOpt> _pAttributeOpt;
 	RefPtr<HelpHolder> _pHelpHolder;
@@ -246,7 +246,7 @@ protected:
 public:
 	void SetSeqId(SeqId seqId) { _seqId = seqId; }
 	SeqId GetSeqId() const { return _seqId; }
-	void Declare(const VType& vtype, Flags flags) { _pVType = &vtype, _flags |= flags; }
+	void Declare(VType& vtype, Flags flags) { _pVType = &vtype, _flags |= flags; }
 	void DeclareAttrOpt(const Symbol* pSymbol);
 	bool IsSetOpt(const Symbol* pSymbol) const {
 		return _pAttributeOpt && _pAttributeOpt->symbolSet.IsSet(pSymbol);
@@ -257,7 +257,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	const VType& GetVType() const { return *_pVType; }
+	VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
 	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
 	Value* GetValue(Value& valueTarget, const Attribute& attr) const {

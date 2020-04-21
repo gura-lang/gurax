@@ -42,6 +42,21 @@ Gurax_ImplementPropertyGetter(PropHandler, symbol)
 	return new Value_Symbol(valueThis.GetPropHandler().GetSymbol());
 }
 
+// PropHandler#vtype
+Gurax_DeclareProperty_R(PropHandler, vtype)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The property's value type.");
+}
+
+Gurax_ImplementPropertyGetter(PropHandler, vtype)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_VType(valueThis.GetPropHandler().GetVType());
+}
+
 //------------------------------------------------------------------------------
 // VType_PropHandler
 //------------------------------------------------------------------------------
@@ -55,6 +70,7 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PropHandler, symbol));
+	Assign(Gurax_CreateProperty(PropHandler, vtype));
 }
 
 //------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	bool ofClassFlag = (flags & PropHandler::Flag::OfClass);
 	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
 	size_t iProp = valuesProp.size();
-	const VType *pVType = &VTYPE_Any;
+	VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
 	if (pValueInit->IsNil()) flags |= PropHandler::Flag::Nil;
 	if (pValue && pValue->IsType(VTYPE_VType)) {
