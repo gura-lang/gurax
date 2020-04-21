@@ -132,7 +132,7 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(PropHandler, symbol));
 	Assign(Gurax_CreateProperty(PropHandler, vtype));
 	Assign(Gurax_CreateProperty(PropHandler, isOfClass));
-	Assign(Gurax_CreateProperty(PropHandler, isOfInstanced));
+	Assign(Gurax_CreateProperty(PropHandler, isOfInstance));
 }
 
 //------------------------------------------------------------------------------
