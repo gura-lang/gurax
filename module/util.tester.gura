@@ -41,3 +41,17 @@ PrintPUnitWithLabel(expr:Expr):void:map = {
 	Printf('%s\n', expr)
 	PrintPUnit(expr)
 }
+
+PrintProperty(vtype:VType) = {
+	props = vtype.__EachProp__():list
+	maxLenSymbolName = [props:*symbol:*name:*len*, 16].Max()
+	maxLenVTypeFullName = [props:*vtype:*__fullName__:*len*, 12].Max()
+	Printf('%s\n', vtype.__fullName__)
+	props.Each {|prop|
+		Printf('  %s%-*s %-*s %s\n',
+			cond(prop.isOfClass, '.', '#'),
+			maxLenSymbolName, prop.symbol.name,
+			maxLenVTypeFullName, prop.vtype.__fullName__,
+			['', 'R', 'W', 'R/W'][cond(prop.IsSet(`R), 1, 0) + cond(prop.IsSet(`W), 2, 0)])
+	}
+}

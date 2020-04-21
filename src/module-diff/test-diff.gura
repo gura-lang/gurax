@@ -6,23 +6,6 @@ import(util.tester) {*}
 import(diff)
 import(conio)
 
-PrintProperty(vtype:VType) = {
-	props = vtype.__EachProp__():list
-	maxLenSymbolName = [props:*symbol:*name:*len*, 16].Max()
-	maxLenVTypeFullName = [props:*vtype:*__fullName__:*len*, 12].Max()
-	Printf('%s\n', vtype.__fullName__)
-	props.Each {|prop|
-		readableFlag = prop.IsSet(`R)
-		writableFlag = prop.IsSet(`W)
-		Printf('  %-*s %-*s %s\n',
-			maxLenSymbolName, prop.symbol.name,
-			maxLenVTypeFullName, prop.vtype.__fullName__,
-			if (readableFlag && writableFlag) { 'R/W'
-			} elsif (readableFlag) { 'R'
-			} elsif (writableFlag) { 'W'
-			} else { '' })
-	}
-}
 TestCase('Property') {
 	PrintProperty(diff.Diff)
 	PrintProperty(diff.Edit)
