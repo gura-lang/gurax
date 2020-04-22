@@ -107,8 +107,8 @@ Gurax_ImplementClassMethod(VType, __GetProp__)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// VType#__fullName__
-Gurax_DeclareProperty_R(VType, __fullName__)
+// VType##__fullName__
+Gurax_DeclareHybridProperty_R(VType, __fullName__)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -116,7 +116,7 @@ Gurax_DeclareProperty_R(VType, __fullName__)
 		"The full name of the VType.");
 }
 
-Gurax_ImplementPropertyGetter(VType, __fullName__)
+Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_String(valueThis.GetVTypeThis().MakeFullName());
@@ -210,11 +210,13 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 	}
 	if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
 	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
-		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
+		Error::Issue(ErrorType::PropertyError,
+			"property '%s' is not readable", pSymbol->GetName());
 		return nullptr;
 	}
 	if (!pPropHandler->IsSet(PropHandler::Flag::OfClass)) {
-		Error::Issue(ErrorType::PropertyError, "property '%s' belongs to an instance", pSymbol->GetName());
+		Error::Issue(ErrorType::PropertyError,
+			"property '%s' belongs to an instance", pSymbol->GetName());
 		return nullptr;
 	}
 	return pPropHandler->GetValue(*this, attr);
