@@ -201,7 +201,7 @@ TestCase('diff.Diff') {
 	Println('Feed list')
 	Tester(`diff.Diff(src_ABC.old.EachLine():list, src_ABC.new.EachLine():list).distance)
 }
-sys.Exit()
+
 TestCase('diff.Edit') {
 	d = diff.Diff(src_ABC.old, src_ABC.new)
 	Println('distance: ', d.distance)

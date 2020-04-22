@@ -73,10 +73,11 @@ bool Diff::FeedStream(Sequence& seq, Stream& src)
 
 bool Diff::FeedIterator(Sequence& seq, Iterator& iter)
 {
-	do {
+	for (;;) {
 		RefPtr<Value> pValue(iter.NextValue());
+		if (!pValue) break;
 		seq.push_back(pValue->ToString(StringStyle::AsValue));
-	} while (0);
+	}
 	return !Error::IsIssued();
 }
 

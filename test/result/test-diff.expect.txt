@@ -1,0 +1,173 @@
+======== Property ========
+diff.Diff
+  #distance         Number       R
+diff.Edit
+  #lineNoNew        Number       R
+  #lineNoOrg        Number       R
+  #mark             Symbol       R
+  #source           String       R
+  #type             Symbol       R
+diff.Hunk
+  #lineNoNew        Number       R
+  #lineNoOrg        Number       R
+  #nLinesNew        Number       R
+  #nLinesOrg        Number       R
+  #range            String       R
+======== diff.Diff ========
+Feed string
+diff.Diff(src_ABC.old, src_ABC.new).distance .. 12
+Feed stream
+diff.Diff(src_ABC_Binary.old.Reader(), src_ABC_Binary.new.Reader()).distance .. 12
+Feed iterator
+diff.Diff(src_ABC.old.EachLine(), src_ABC.new.EachLine()).distance .. 12
+Feed list
+diff.Diff(src_ABC.old.EachLine():list, src_ABC.new.EachLine():list).distance .. 12
+======== diff.Edit ========
+distance: 12
+    1   1 aaaaaaaa
+    2   2 bbbbbbbb
+    3   3 cccccccc
++   0   4 ddddddddxxxx
++   0   5 eeeeeeeexxxx
+-   4   0 dddddddd
+-   5   0 eeeeeeee
+    6   6 ffffffff
+    7   7 gggggggg
+    8   8 hhhhhhhh
++   0   9 XXXX
+    9  10 iiiiiiii
+   10  11 jjjjjjjj
+   11  12 kkkkkkkk
+   12  13 llllllll
+   13  14 mmmmmmmm
+   14  15 nnnnnnnn
++   0  16 ooooooooxxxx
++   0  17 ppppppppxxxx
++   0  18 qqqqqqqqxxxx
+-  15   0 oooooooo
+-  16   0 pppppppp
+-  17   0 qqqqqqqq
+   18  19 rrrrrrrr
+   19  20 ssssssss
+   20  21 tttttttt
+   21  22 uuuuuuuu
+   22  23 vvvvvvvv
+   23  24 wwwwwwww
++   0  25 XXXX
+   24  26 xxxxxxxx
+   25  27 yyyyyyyy
+   26  28 zzzzzzzz
+======== diff.Hunk ========
+-1,11 +1,12
+1
+  aaaaaaaa
+  bbbbbbbb
+  cccccccc
++ ddddddddxxxx
++ eeeeeeeexxxx
+- dddddddd
+- eeeeeeee
+  ffffffff
+  gggggggg
+  hhhhhhhh
++ XXXX
+  iiiiiiii
+  jjjjjjjj
+  kkkkkkkk
+-12,9 +13,9
+12
+  llllllll
+  mmmmmmmm
+  nnnnnnnn
++ ooooooooxxxx
++ ppppppppxxxx
++ qqqqqqqqxxxx
+- oooooooo
+- pppppppp
+- qqqqqqqq
+  rrrrrrrr
+  ssssssss
+  tttttttt
+-21,6 +22,7
+21
+  uuuuuuuu
+  vvvvvvvv
+  wwwwwwww
++ XXXX
+  xxxxxxxx
+  yyyyyyyy
+  zzzzzzzz
+======== diff.Diff#PrintHunks ========
+@@ -1,11 +1,12 @@
+ aaaaaaaa
+ bbbbbbbb
+ cccccccc
++ddddddddxxxx
++eeeeeeeexxxx
+-dddddddd
+-eeeeeeee
+ ffffffff
+ gggggggg
+ hhhhhhhh
++XXXX
+ iiiiiiii
+ jjjjjjjj
+ kkkkkkkk
+@@ -12,9 +13,9 @@
+ llllllll
+ mmmmmmmm
+ nnnnnnnn
++ooooooooxxxx
++ppppppppxxxx
++qqqqqqqqxxxx
+-oooooooo
+-pppppppp
+-qqqqqqqq
+ rrrrrrrr
+ ssssssss
+ tttttttt
+@@ -21,6 +22,7 @@
+ uuuuuuuu
+ vvvvvvvv
+ wwwwwwww
++XXXX
+ xxxxxxxx
+ yyyyyyyy
+ zzzzzzzz
+@@ -1,3 +1,9 @@
++This is an important
++notice! It should
++therefore be located at
++the beginning of this
++document!
++
+ This part of the
+ document has stayed the
+ same from version to
+@@ -5,16 +11,10 @@
+ be shown if it doesn't
+ change.  Otherwise, that
+ would not be helping to
++compress anything.
+-compress the size of the
+-changes.
+ 
+-This paragraph contains
+-text that is outdated.
+-It will be deleted in the
+-near future.
+-
+ It is important to spell
++check this document. On
+-check this dokument. On
+ the other hand, a
+ misspelled word isn't
+ the end of the world.
+@@ -22,3 +22,7 @@
+ this paragraph needs to
+ be changed. Things can
+ be added after it.
++
++This paragraph contains
++important new additions
++to this document.
