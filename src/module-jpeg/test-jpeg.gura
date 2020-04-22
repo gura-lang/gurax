@@ -5,6 +5,15 @@
 import(util.tester) {*}
 import(jpeg)
 
+TestCase('Property') {
+	PrintProperty(jpeg.Content)
+	PrintProperty(jpeg.Exif)
+	PrintProperty(jpeg.IFD)
+	PrintProperty(jpeg.Segment)
+	PrintProperty(jpeg.Tag)
+}
 TestCase('Basic test') {
-	Println(jpeg.Test('hello', 4))
+	jpeg.Content('test.jpg').segments.Each {|segment|
+		Println(segment)
+	}
 }
