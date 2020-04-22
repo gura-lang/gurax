@@ -4,145 +4,224 @@
 //==============================================================================
 import(util.tester) {*}
 import(diff)
-import(conio)
 
+//------------------------------------------------------------------------------
+// text table
+//------------------------------------------------------------------------------
+Source = struct { old, new }
+
+src_ABC = Source(R'''
+aaaaaaaa
+bbbbbbbb
+cccccccc
+dddddddd
+eeeeeeee
+ffffffff
+gggggggg
+hhhhhhhh
+iiiiiiii
+jjjjjjjj
+kkkkkkkk
+llllllll
+mmmmmmmm
+nnnnnnnn
+oooooooo
+pppppppp
+qqqqqqqq
+rrrrrrrr
+ssssssss
+tttttttt
+uuuuuuuu
+vvvvvvvv
+wwwwwwww
+xxxxxxxx
+yyyyyyyy
+zzzzzzzz
+''', R'''
+aaaaaaaa
+bbbbbbbb
+cccccccc
+ddddddddxxxx
+eeeeeeeexxxx
+ffffffff
+gggggggg
+hhhhhhhh
+XXXX
+iiiiiiii
+jjjjjjjj
+kkkkkkkk
+llllllll
+mmmmmmmm
+nnnnnnnn
+ooooooooxxxx
+ppppppppxxxx
+qqqqqqqqxxxx
+rrrrrrrr
+ssssssss
+tttttttt
+uuuuuuuu
+vvvvvvvv
+wwwwwwww
+XXXX
+xxxxxxxx
+yyyyyyyy
+zzzzzzzz
+''')
+
+src_ABC_Binary = Source(bR'''
+aaaaaaaa
+bbbbbbbb
+cccccccc
+dddddddd
+eeeeeeee
+ffffffff
+gggggggg
+hhhhhhhh
+iiiiiiii
+jjjjjjjj
+kkkkkkkk
+llllllll
+mmmmmmmm
+nnnnnnnn
+oooooooo
+pppppppp
+qqqqqqqq
+rrrrrrrr
+ssssssss
+tttttttt
+uuuuuuuu
+vvvvvvvv
+wwwwwwww
+xxxxxxxx
+yyyyyyyy
+zzzzzzzz
+''', bR'''
+aaaaaaaa
+bbbbbbbb
+cccccccc
+ddddddddxxxx
+eeeeeeeexxxx
+ffffffff
+gggggggg
+hhhhhhhh
+XXXX
+iiiiiiii
+jjjjjjjj
+kkkkkkkk
+llllllll
+mmmmmmmm
+nnnnnnnn
+ooooooooxxxx
+ppppppppxxxx
+qqqqqqqqxxxx
+rrrrrrrr
+ssssssss
+tttttttt
+uuuuuuuu
+vvvvvvvv
+wwwwwwww
+XXXX
+xxxxxxxx
+yyyyyyyy
+zzzzzzzz
+''')
+
+src_Message = Source(R'''
+This part of the
+document has stayed the
+same from version to
+version.  It shouldn't
+be shown if it doesn't
+change.  Otherwise, that
+would not be helping to
+compress the size of the
+changes.
+
+This paragraph contains
+text that is outdated.
+It will be deleted in the
+near future.
+
+It is important to spell
+check this dokument. On
+the other hand, a
+misspelled word isn't
+the end of the world.
+Nothing in the rest of
+this paragraph needs to
+be changed. Things can
+be added after it.
+''', R'''
+This is an important
+notice! It should
+therefore be located at
+the beginning of this
+document!
+
+This part of the
+document has stayed the
+same from version to
+version.  It shouldn't
+be shown if it doesn't
+change.  Otherwise, that
+would not be helping to
+compress anything.
+
+It is important to spell
+check this document. On
+the other hand, a
+misspelled word isn't
+the end of the world.
+Nothing in the rest of
+this paragraph needs to
+be changed. Things can
+be added after it.
+
+This paragraph contains
+important new additions
+to this document.
+''')
+
+//------------------------------------------------------------------------------
+// test cases
+//------------------------------------------------------------------------------
 TestCase('Property') {
 	PrintProperty(diff.Diff)
 	PrintProperty(diff.Edit)
 	PrintProperty(diff.Hunk)
 }
+
+TestCase('diff.Diff') {
+	Println('Feed string')
+	Tester(`diff.Diff(src_ABC.old, src_ABC.new).distance)
+	Println('Feed stream')
+	Tester(`diff.Diff(src_ABC_Binary.old.Reader(), src_ABC_Binary.new.Reader()).distance)
+	Println('Feed iterator')
+	Tester(`diff.Diff(src_ABC.old.EachLine(), src_ABC.new.EachLine()).distance)
+	Println('Feed list')
+	Tester(`diff.Diff(src_ABC.old.EachLine():list, src_ABC.new.EachLine():list).distance)
+}
 sys.Exit()
-TestCase('') {
-	/*
-	textOrg = R'''
-	This part of the
-	document has stayed the
-	same from version to
-	version.  It shouldn't
-	be shown if it doesn't
-	change.  Otherwise, that
-	would not be helping to
-	compress the size of the
-	changes.
-	
-	This paragraph contains
-	text that is outdated.
-	It will be deleted in the
-	near future.
-	
-	It is important to spell
-	check this dokument. On
-	the other hand, a
-	misspelled word isn't
-	the end of the world.
-	Nothing in the rest of
-	this paragraph needs to
-	be changed. Things can
-	be added after it.
-	'''
-	textNew = R'''
-	This is an important
-	notice! It should
-	therefore be located at
-	the beginning of this
-	document!
-	
-	This part of the
-	document has stayed the
-	same from version to
-	version.  It shouldn't
-	be shown if it doesn't
-	change.  Otherwise, that
-	would not be helping to
-	compress anything.
-	
-	It is important to spell
-	check this document. On
-	the other hand, a
-	misspelled word isn't
-	the end of the world.
-	Nothing in the rest of
-	this paragraph needs to
-	be changed. Things can
-	be added after it.
-	
-	This paragraph contains
-	important new additions
-	to this document.
-	'''
-	*/
-	textOrg = R'''
-	aaaaaaaa
-	bbbbbbbb
-	cccccccc
-	dddddddd
-	eeeeeeee
-	ffffffff
-	gggggggg
-	hhhhhhhh
-	iiiiiiii
-	jjjjjjjj
-	kkkkkkkk
-	llllllll
-	mmmmmmmm
-	nnnnnnnn
-	oooooooo
-	pppppppp
-	qqqqqqqq
-	rrrrrrrr
-	ssssssss
-	tttttttt
-	uuuuuuuu
-	vvvvvvvv
-	wwwwwwww
-	xxxxxxxx
-	yyyyyyyy
-	zzzzzzzz
-	'''
-	textNew = R'''
-	aaaaaaaa
-	bbbbbbbb
-	cccccccc
-	ddddddddxxxx
-	eeeeeeeexxxx
-	ffffffff
-	gggggggg
-	hhhhhhhh
-	XXXX
-	iiiiiiii
-	jjjjjjjj
-	kkkkkkkk
-	llllllll
-	mmmmmmmm
-	nnnnnnnn
-	ooooooooxxxx
-	ppppppppxxxx
-	qqqqqqqqxxxx
-	rrrrrrrr
-	ssssssss
-	tttttttt
-	uuuuuuuu
-	vvvvvvvv
-	wwwwwwww
-	XXXX
-	xxxxxxxx
-	yyyyyyyy
-	zzzzzzzz
-	'''
-	d = diff.Diff(textOrg, textNew)
-	Println(d.distance)
-	PrintEdits(d.EachEdit())
-	// d.EachEdit {|edit|
-	// 	Printf('%s %3d %3d %s\n', edit.mark, edit.lineNoOrg, edit.lineNoNew, edit.source)
-	// }
-	// d.PrintHunks()
-/*
+TestCase('diff.Edit') {
+	d = diff.Diff(src_ABC.old, src_ABC.new)
+	Println('distance: ', d.distance)
+	d.EachEdit {|edit|
+		Printf('%s %3d %3d %s\n', edit.mark, edit.lineNoOrg, edit.lineNoNew, edit.source)
+	}
+}
+
+TestCase('diff.Hunk') {
+	d = diff.Diff(src_ABC.old, src_ABC.new)
 	d.EachHunk {|hunk|
 		Printf('%s\n', hunk.range)
 		Printf('%d\n', hunk.lineNoOrg)
-		hunk.Eachedit {|edit|
+		hunk.EachEdit {|edit|
 			Println(edit.mark, ' ', edit.source)
 		}
 	}
-*/
+}
+
+TestCase('diff.Diff#PrintHunks') {
+	diff.Diff(src_ABC.old, src_ABC.new).PrintHunks()
+	diff.Diff(src_Message.old, src_Message.new).PrintHunks()
 }
