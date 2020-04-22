@@ -50,8 +50,8 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__EachProp__() {block?}
-Gurax_DeclareClassMethod(VType, __EachProp__)
+// VType#__EachPropHandler__() {block?}
+Gurax_DeclareClassMethod(VType, __EachPropHandler__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
@@ -60,7 +60,7 @@ Gurax_DeclareClassMethod(VType, __EachProp__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __EachProp__)
+Gurax_ImplementClassMethod(VType, __EachPropHandler__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -77,8 +77,8 @@ Gurax_ImplementClassMethod(VType, __EachProp__)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// VType#__GetProp__(symbol:Symbol):map {block?}
-Gurax_DeclareClassMethod(VType, __GetProp__)
+// VType#__GetPropHandler__(symbol:Symbol):map {block?}
+Gurax_DeclareClassMethod(VType, __GetPropHandler__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -88,7 +88,7 @@ Gurax_DeclareClassMethod(VType, __GetProp__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __GetProp__)
+Gurax_ImplementClassMethod(VType, __GetPropHandler__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -134,8 +134,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __EachProp__));
-	Assign(Gurax_CreateMethod(VType, __GetProp__));
+	Assign(Gurax_CreateMethod(VType, __EachPropHandler__));
+	Assign(Gurax_CreateMethod(VType, __GetPropHandler__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
 }
