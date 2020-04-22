@@ -27,6 +27,29 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Object#__PropGet__(symbol:Symbol):map {block?}
+Gurax_DeclareMethod(Object, __PropGet__)
+{
+	Declare(VTYPE_Bool, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the value of the specified property.\n");
+}
+
+Gurax_ImplementMethod(Object, __PropGet__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	RefPtr<Value> pValue(valueThis.DoPropGet(pSymbol, argument.GetAttr(), false));
+	if (!pValue) return Value::nil();
+	return argument.ReturnValue(processor, pValue.release());
+}
+
 // Object#Clone()
 Gurax_DeclareMethod(Object, Clone)
 {
@@ -116,6 +139,7 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Object, __PropGet__));
 	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
 	Assign(Gurax_CreateMethod(Object, ToString));

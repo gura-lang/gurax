@@ -9,17 +9,12 @@ TestCase('Property') {
 	PrintProperty(png.Content)
 }
 
-TestCase('png.Content) {}
+TestCase('png.Content') {
 	png.Content('test.png') {|c|
-		c.__EachPropHandler__ {|prop|
-			
+		png.Content.__EachPropHandler__ {|prop|
+			value = c.__PropGet__(prop.symbol)
+			Printf('%-20s .. %d\n', prop.symbol.name, value)
 		}
-		Println(c.image_width)
-		Println(c.image_height)
-		Println(c.x_pixels_per_meter)
-		Println(c.y_pixels_per_meter)
-		Println(c.color_type)
-		Println(c.channels)
 	}
 }
 
