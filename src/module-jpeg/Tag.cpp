@@ -23,24 +23,37 @@ bool Tag::CheckAcceptableValue(Value& value) const
 		return value.IsType(VTYPE_String);
 	}
 	case TypeId::SHORT: {
+		if (value.IsType(VTYPE_Number)) {
+			
+		} else if (value.IsType(VTYPE_List)) {
+			for (const Value* pValue : Value_List::GetValueOwner(value)) {
+				
+			}
+		}
+		break;
+	}
+	case TypeId::LONG: {
 		return value.IsType(VTYPE_Number) ||
 			(value.IsType(VTYPE_List) &&
 			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
 	}
-	case TypeId::LONG: {
-		return value.IsType(VTYPE_Number);
-	}
 	case TypeId::RATIONAL: {
-		return value.IsType(VTYPE_Number);
+		return value.IsType(VTYPE_Number) ||
+			(value.IsType(VTYPE_List) &&
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
 	}
 	case TypeId::UNDEFINED: {
 		return value.IsType(VTYPE_Binary);
 	}
 	case TypeId::SLONG: {
-		return value.IsType(VTYPE_Number);
+		return value.IsType(VTYPE_Number) ||
+			(value.IsType(VTYPE_List) &&
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
 	}
 	case TypeId::SRATIONAL: {
-		return value.IsType(VTYPE_Number);
+		return value.IsType(VTYPE_Number) ||
+			(value.IsType(VTYPE_List) &&
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
 	}
 	default:
 		break;
