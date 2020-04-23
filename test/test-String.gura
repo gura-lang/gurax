@@ -20,7 +20,7 @@ words100 = [
 ]
 
 TestCase('Property') {
-	PrintProperty(String)
+	PrintPropSlots(String)
 }
 
 TestCase('String#Align()') {

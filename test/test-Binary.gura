@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(Binary)
+	PrintPropSlots(Binary)
 }
 
 TestCase('Constructor') {

@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(TimeDelta)
+	PrintPropSlots(TimeDelta)
 }
 
 TestCase('Constructor') {

@@ -28,7 +28,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	PrintProperty(List):nomap
+	PrintPropSlots(List):nomap
 }
 
 TestCase('Initializer') {

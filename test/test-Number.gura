@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(Number)
+	PrintPropSlots(Number)
 }
 
 TestCase('Property Access') {

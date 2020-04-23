@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(Complex)
+	PrintPropSlots(Complex)
 }
 
 TestCase('Property Access') {

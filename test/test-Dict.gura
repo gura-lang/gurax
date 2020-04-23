@@ -14,7 +14,7 @@ TestCase('Initializer') {
 }
 
 TestCase('Property') {
-	PrintProperty(Dict)
+	PrintPropSlots(Dict)
 }
 
 TestCase('IndexGet') {

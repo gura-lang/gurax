@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(Image)
+	PrintPropSlots(Image)
 }
 
 TestCase('Property Test') {

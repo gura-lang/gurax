@@ -42,17 +42,17 @@ PrintPUnitWithLabel(expr:Expr):void:map = {
 	PrintPUnit(expr)
 }
 
-PrintProperty(vtype:VType) = {
-	props = vtype.__EachPropSlot__():list
-	maxLenSymbolName = [props:*symbol:*name:*len*, 16].Max()
-	maxLenVTypeFullName = [props:*vtype:*__fullName__:*len*, 12].Max()
+PrintPropSlots(vtype:VType) = {
+	propSlots = vtype.__EachPropSlot__():list
+	maxLenSymbolName = [propSlots:*symbol:*name:*len*, 16].Max()
+	maxLenVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
 	Printf('%s\n', vtype.__fullName__)
-	props.Each {|prop|
+	propSlots.Each {|propSlot|
 		Printf('  %s%-*s %-*s %s%s\n',
-			cond(prop.isOfClass, '.', '#'),
-			maxLenSymbolName, prop.symbol.name,
-			maxLenVTypeFullName, prop.vtype.__fullName__,
-			['', 'R', 'W', 'R/W'][cond(prop.IsSet(`R), 1, 0) + cond(prop.IsSet(`W), 2, 0)],
-			cond(prop.IsSet(`nil), ',nil', ''))
+			cond(propSlot.isOfClass, '.', '#'),
+			maxLenSymbolName, propSlot.symbol.name,
+			maxLenVTypeFullName, propSlot.vtype.__fullName__,
+			['', 'R', 'W', 'R/W'][cond(propSlot.IsSet(`R), 1, 0) + cond(propSlot.IsSet(`W), 2, 0)],
+			cond(propSlot.IsSet(`nil), ',nil', ''))
 	}
 }

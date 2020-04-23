@@ -38,7 +38,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	PrintProperty(Expr)
+	PrintPropSlots(Expr)
 }
 
 TestCase('Assignment') {

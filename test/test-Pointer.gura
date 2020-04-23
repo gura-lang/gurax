@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintProperty(Pointer)
+	PrintPropSlots(Pointer)
 }
 
 TestCase('Basic test of pack/unpack') {

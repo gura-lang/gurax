@@ -20,7 +20,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	PrintProperty(Function)
+	PrintPropSlots(Function)
 }
 
 TestCase('Default Value (1)') {

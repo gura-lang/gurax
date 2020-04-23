@@ -186,9 +186,9 @@ to this document.
 // test cases
 //------------------------------------------------------------------------------
 TestCase('Property') {
-	PrintProperty(diff.Diff)
-	PrintProperty(diff.Edit)
-	PrintProperty(diff.Hunk)
+	PrintPropSlots(diff.Diff)
+	PrintPropSlots(diff.Edit)
+	PrintPropSlots(diff.Hunk)
 }
 
 TestCase('diff.Diff') {

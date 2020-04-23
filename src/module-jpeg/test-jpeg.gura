@@ -6,11 +6,11 @@ import(util.tester) {*}
 import(jpeg)
 
 TestCase('Property') {
-	PrintProperty(jpeg.Content)
-	PrintProperty(jpeg.Exif)
-	PrintProperty(jpeg.IFD)
-	PrintProperty(jpeg.Segment)
-	PrintProperty(jpeg.Tag)
+	PrintPropSlots(jpeg.Content)
+	PrintPropSlots(jpeg.Exif)
+	PrintPropSlots(jpeg.IFD)
+	PrintPropSlots(jpeg.Segment)
+	PrintPropSlots(jpeg.Tag)
 }
 
 TestCase('jpeg.Content#segments') {
