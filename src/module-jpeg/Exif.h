@@ -31,6 +31,7 @@ public:
 protected:
 	~Exif() = default;
 public:
+	virtual bool IsExif() const override { return true; }
 	virtual Value* CreateValue() const override;
 	virtual bool AnalyzeBinary() override;
 	virtual bool Write(Stream& stream) const override;

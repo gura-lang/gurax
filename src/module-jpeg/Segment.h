@@ -35,6 +35,7 @@ public:
 	const Binary* GetBinary() const { return _pBuff? &_pBuff->GetBinary() : nullptr; }
 	const BinaryReferable* GetBinaryReferable() const { return _pBuff.get(); }
 public:
+	virtual bool IsExif() const { return false; }
 	virtual Value* CreateValue() const;
 	virtual bool AnalyzeBinary() { return true; }
 	virtual bool Write(Stream& stream) const;

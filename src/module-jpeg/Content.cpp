@@ -73,6 +73,14 @@ bool Content::Write(Stream& stream) const
 	return _pBuffImage? stream.Write(_pBuffImage->GetBinary()) : true;
 }
 	
+Exif* Content::FindExif()
+{
+	for (auto pSegment: GetSegmentOwner()) {
+		if (pSegment->IsExif()) return dynamic_cast<Exif*>(pSegment);
+	}
+	return nullptr;
+}
+
 String Content::ToString(const StringStyle& ss) const
 {
 	return "jpeg.Content";

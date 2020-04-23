@@ -94,6 +94,21 @@ Gurax_ImplementPropertyGetter(Content, segments)
 	return new Value_Iterator(pIterator.release());
 }
 
+// jpeg.Content#exif
+Gurax_DeclareProperty_R(Content, exif)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, exif)
+{
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
+}
+
 //------------------------------------------------------------------------------
 // VType_Content
 //------------------------------------------------------------------------------
@@ -109,6 +124,7 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Content, segments));
+	Assign(Gurax_CreateProperty(Content, exif));
 }
 
 //------------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 
 Gurax_BeginModuleScope(jpeg)
 
+class Exif;
+
 //------------------------------------------------------------------------------
 // Content
 //------------------------------------------------------------------------------
@@ -31,6 +33,7 @@ public:
 protected:
 	~Content() = default;
 public:
+	Exif* FindExif();
 	SegmentOwner& GetSegmentOwner() { return *_pSegmentOwner; }
 	const SegmentOwner& GetSegmentOwner() const { return *_pSegmentOwner; }
 	const Binary* GetBuffImage() const { return _pBuffImage? &_pBuffImage->GetBinary() : nullptr; }
