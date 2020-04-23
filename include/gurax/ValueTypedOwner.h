@@ -95,6 +95,7 @@ public:
 	ValueOwner& GetValueOwnerToSort() { return *_pValueOwner; }
 	ValueOwner* GetValueOwnerReference() const { return _pValueOwner->Reference(); }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
+	VType& RefreshVTypeOfElems();
 	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;

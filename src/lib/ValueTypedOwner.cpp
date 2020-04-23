@@ -321,6 +321,27 @@ void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 	}
 }
 
+VType& ValueTypedOwner::RefreshVTypeOfElems()
+{
+	if (_pVTypeOfElems->IsIdentical(VTYPE_Any) ||
+		_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
+		const ValueOwner& valueOwner = GetValueOwner();
+		auto ppValue = valueOwner.begin();
+		if (ppValue != valueOwner.end()) {
+			VType* pVType = &(*ppValue)->GetVType();
+			ppValue++;
+			for ( ; ppValue != valueOwner.end(); ppValue++) {
+				if (pVType->IsIdentical((*ppValue)->GetVType())) {
+					pVType = &VTYPE_Any;
+					break;
+				}
+			}
+			_pVTypeOfElems = pVType;
+		}
+	}
+	return *_pVTypeOfElems;
+}
+
 bool ValueTypedOwner::HasDeterminedVTypeOfElems() const
 {
 	return !_pVTypeOfElems->IsIdentical(VTYPE_Undefined) && !_pVTypeOfElems->IsIdentical(VTYPE_Any);

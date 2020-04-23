@@ -13,39 +13,40 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 {
 }
 
-bool Tag::CheckAcceptableValue(const Value& value) const
+bool Tag::CheckAcceptableValue(Value& value) const
 {
 	switch (_typeId) {
 	case TypeId::BYTE: {
-		break;
+		return value.IsType(VTYPE_Binary);
 	}
 	case TypeId::ASCII: {
-		break;
+		return value.IsType(VTYPE_String);
 	}
 	case TypeId::SHORT: {
-		break;
+		return value.IsType(VTYPE_Number) ||
+			(value.IsType(VTYPE_List) &&
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
 	}
 	case TypeId::LONG: {
-		break;
+		return value.IsType(VTYPE_Number);
 	}
 	case TypeId::RATIONAL: {
-		break;
+		return value.IsType(VTYPE_Number);
 	}
 	case TypeId::UNDEFINED: {
-		break;
+		return value.IsType(VTYPE_Binary);
 	}
 	case TypeId::SLONG: {
-		break;
+		return value.IsType(VTYPE_Number);
 	}
 	case TypeId::SRATIONAL: {
+		return value.IsType(VTYPE_Number);
+	}
+	default:
 		break;
 	}
-	default: {
-		IssueError_InvalidFormat();
-		return false;
-	}
-	}
-	return true;
+	IssueError_InvalidFormat();
+	return false;
 }
 
 String Tag::ToString(const StringStyle& ss) const

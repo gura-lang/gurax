@@ -39,7 +39,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Value& GetValue() const { return *_pValue; }
 	const Value& GetValueCooked() const { return *_pValueCooked; }
-	bool CheckAcceptableValue(const Value& value) const;
+	bool CheckAcceptableValue(Value& value) const;
 	void SetValue(Value* pValue) { _pValue.reset(pValue); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
