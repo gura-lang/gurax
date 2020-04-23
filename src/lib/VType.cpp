@@ -14,7 +14,7 @@ VType VType::Empty("");
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
-	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
+	_pPropSlotMap(new PropSlotMap()), _pPropSlotMapOfClass(new PropSlotMap())
 {
 }
 
@@ -28,8 +28,8 @@ void VType::GatherMemberSymbol(SymbolList& symbolList) const
 {
 	GetFrame().GatherSymbol(symbolList);
 	if (_pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList);
-	GetPropHandlerMap().GatherSymbol(symbolList);
-	GetPropHandlerMapOfClass().GatherSymbol(symbolList);
+	GetPropSlotMap().GatherSymbol(symbolList);
+	GetPropSlotMapOfClass().GatherSymbol(symbolList);
 }
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
@@ -67,13 +67,13 @@ DottedSymbol* VType::MakeDottedSymbol() const
 	return pDottedSymbol.release();
 }
 
-const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
+const PropSlot* VType::LookupPropSlot(const Symbol* pSymbol) const
 {
 	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInh()) {
-		const PropHandler* pPropHandler = pVType->GetPropHandlerMap().Lookup(pSymbol);
-		if (pPropHandler) return pPropHandler;
-		pPropHandler = pVType->GetPropHandlerMapOfClass().Lookup(pSymbol);
-		if (pPropHandler) return pPropHandler;
+		const PropSlot* pPropSlot = pVType->GetPropSlotMap().Lookup(pSymbol);
+		if (pPropSlot) return pPropSlot;
+		pPropSlot = pVType->GetPropSlotMapOfClass().Lookup(pSymbol);
+		if (pPropSlot) return pPropSlot;
 	}
 	return nullptr;
 }

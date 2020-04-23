@@ -25,22 +25,22 @@ void VTypeCustom::Inherit()
 	}
 }
 
-bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
-									PropHandler::Flags flags, RefPtr<Value> pValueInit)
+bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
+									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
-	bool ofClassFlag = (flags & PropHandler::Flag::OfClass);
+	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);
 	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
 	size_t iProp = valuesProp.size();
 	VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
-	if (pValueInit->IsNil()) flags |= PropHandler::Flag::Nil;
+	if (pValueInit->IsNil()) flags |= PropSlot::Flag::Nil;
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		if (!pValueInit->IsNil()) {
 			pValueInit.reset(pVType->Cast(*pValueInit, flags));
 			if (!pValueInit) return false;
 		}
-	} else if (flags & PropHandler::Flag::ListVar) {
+	} else if (flags & PropSlot::Flag::ListVar) {
 		if (pValueInit->IsType(VTYPE_List)) {
 			const ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(*pValueInit);
 			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
@@ -55,13 +55,13 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	}
 	valuesProp.push_back(pValueInit.release());
 	if (ofClassFlag) {
-		RefPtr<PropHandler> pPropHandler(new PropHandlerCustom_Class(pSymbol, iProp));
-		pPropHandler->Declare(*pVType, flags);
-		GetPropHandlerMapOfClass().Assign(pPropHandler.release());
+		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Class(pSymbol, iProp));
+		pPropSlot->Declare(*pVType, flags);
+		GetPropSlotMapOfClass().Assign(pPropSlot.release());
 	} else {
-		RefPtr<PropHandler> pPropHandler(new PropHandlerCustom_Instance(pSymbol, iProp));
-		pPropHandler->Declare(*pVType, flags);
-		GetPropHandlerMap().Assign(pPropHandler.release());
+		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Instance(pSymbol, iProp));
+		pPropSlot->Declare(*pVType, flags);
+		GetPropSlotMap().Assign(pPropSlot.release());
 	}
 	return true;
 }
@@ -188,9 +188,9 @@ String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
 // VTypeCustom::ConstructorStruct
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorStruct::ConstructorStruct(
-	VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropHandlerOwner* pPropHandlerOwner) :
+	VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropSlotOwner* pPropSlotOwner) :
 	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
-	_vtypeCustom(vtypeCustom), _pPropHandlerOwner(pPropHandlerOwner)
+	_vtypeCustom(vtypeCustom), _pPropSlotOwner(pPropSlotOwner)
 {
 }
 
@@ -199,14 +199,14 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return Value::nil();
 	ArgPicker args(argument);
-	for (PropHandler* pPropHandler : GetPropHandlerOwner()) {
+	for (PropSlot* pPropSlot : GetPropSlotOwner()) {
 		if (args.IsUndefined()) {
 			args.Next();
 			continue;
 		}
 		const Value& value = args.PickValue();
-		if (!pPropHandler->IsSet(PropHandler::Flag::Nil) && value.IsNil()) continue;
-		if (!pPropHandler->SetValue(*pValueThis, value, *Attribute::Empty)) {
+		if (!pPropSlot->IsSet(PropSlot::Flag::Nil) && value.IsNil()) continue;
+		if (!pPropSlot->SetValue(*pValueThis, value, *Attribute::Empty)) {
 			return Value::nil();
 		}
 	}

@@ -8,7 +8,7 @@
 #include "Referable.h"
 #include "DottedSymbol.h"
 #include "Frame.h"
-#include "PropHandler.h"
+#include "PropSlot.h"
 #include "DeclArg.h"
 
 namespace Gurax {
@@ -38,8 +38,8 @@ protected:
 	Flags _flags;
 	RefPtr<Frame_VType> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
-	RefPtr<PropHandlerMap> _pPropHandlerMap;
-	RefPtr<PropHandlerMap> _pPropHandlerMapOfClass;
+	RefPtr<PropSlotMap> _pPropSlotMap;
+	RefPtr<PropSlotMap> _pPropSlotMapOfClass;
 	RefPtr<Function> _pConstructor;
 private:
 	static UniqId _uniqIdNext;
@@ -78,11 +78,11 @@ public:
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
 	Frame_VType& GetFrame() { return *_pFrame; }
 	const Frame_VType& GetFrame() const { return *_pFrame; }
-	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
-	PropHandlerMap& GetPropHandlerMapOfClass() { return *_pPropHandlerMapOfClass; }
-	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
-	const PropHandlerMap& GetPropHandlerMapOfClass() const { return *_pPropHandlerMapOfClass; }
-	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
+	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
+	PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
+	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }
+	const PropSlotMap& GetPropSlotMapOfClass() const { return *_pPropSlotMapOfClass; }
+	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
@@ -91,9 +91,9 @@ public:
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction);
-	void Assign(PropHandler* pPropHandler) {
-		(pPropHandler->IsSet(PropHandler::Flag::OfClass)?
-		 GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
+	void Assign(PropSlot* pPropSlot) {
+		(pPropSlot->IsSet(PropSlot::Flag::OfClass)?
+		 GetPropSlotMapOfClass() : GetPropSlotMap()).Assign(pPropSlot);
 	}
 	void GatherMemberSymbol(SymbolList& symbolList) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;

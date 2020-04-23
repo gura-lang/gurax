@@ -439,26 +439,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AssignPropHandler
+// PUnit_AssignPropSlot
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, bool initByNilFlag>
-class GURAX_DLLDECLARE PUnit_AssignPropHandler : public PUnit {
+class GURAX_DLLDECLARE PUnit_AssignPropSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
-	PropHandler::Flags _flags;
+	PropSlot::Flags _flags;
 	Expr* _pExprSrc;
 public:
 	// Constructor
-	PUnit_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags, Expr* pExpr) :
+	PUnit_AssignPropSlot(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropSlot::Flags flags, Expr* pExpr) :
 		_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _pExprSrc(pExpr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-	const PropHandler::Flags GetFlags() const { return _flags; }
+	const PropSlot::Flags GetFlags() const { return _flags; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -471,19 +471,19 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_AssignPropHandler : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_AssignPropSlot : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_AssignPropHandler");
+	Gurax_MemoryPoolAllocator("PUnitFactory_AssignPropSlot");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
-	PropHandler::Flags _flags;
+	PropSlot::Flags _flags;
 	bool _initByNilFlag;
 public:
-	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags, bool initByNilFlag, Expr* pExprSrc) :
+	PUnitFactory_AssignPropSlot(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropSlot::Flags flags, bool initByNilFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _initByNilFlag(initByNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_AssignPropHandler<false, false>);
+		return sizeof(PUnit_AssignPropSlot<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

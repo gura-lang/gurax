@@ -25,8 +25,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_AssignFunction_);
 	using PUnit_AssignMethod_ = PUnit_AssignMethod<false, false>;
 	PrintSizeOf(PUnit_AssignMethod_);
-	using PUnit_AssignPropHandler_ = PUnit_AssignPropHandler<false, false>;
-	PrintSizeOf(PUnit_AssignPropHandler_);
+	using PUnit_AssignPropSlot_ = PUnit_AssignPropSlot<false, false>;
+	PrintSizeOf(PUnit_AssignPropSlot_);
 	using PUnit_Cast_ = PUnit_Cast<false>;
 	PrintSizeOf(PUnit_Cast_);
 	using PUnit_GenIterator_ = PUnit_GenIterator<false>;

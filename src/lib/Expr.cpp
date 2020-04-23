@@ -493,8 +493,8 @@ void Expr_Identifier::ComposeForAssignment(
 
 void Expr_Identifier::ComposeForClass(Composer& composer, bool publicFlag)
 {
-	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
-	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), true, this);
+	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
+	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 	
@@ -506,9 +506,9 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 						 "operator can not be applied in property assigment");
 		return;
 	}
-	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
+	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
 	exprAssigned.ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), false, this);
+	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -1106,9 +1106,9 @@ void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
 						 "invalid format of property declaration");
 		return;
 	}
-	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
+	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
-	composer.Add_AssignPropHandler(exprCar.GetSymbol(), flags, GetAttr(), true, this);
+	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -1125,10 +1125,10 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 						 "invalid format of property declaration");
 		return;
 	}
-	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
+	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
 	exprAssigned.ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(exprCar.GetSymbol(), flags, GetAttr(), false, this);
+	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 

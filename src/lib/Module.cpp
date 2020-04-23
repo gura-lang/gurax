@@ -12,14 +12,14 @@ ModuleMap Module::_moduleMap;
 
 Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 	_pFrame(new Frame_Module(pFrameOuter, pDottedSymbol->Reference())),
-	_pHelpHolder(new HelpHolder()), _pPropHandlerMap(new PropHandlerMap())
+	_pHelpHolder(new HelpHolder()), _pPropSlotMap(new PropSlotMap())
 {
 }
 
 void Module::GatherMemberSymbol(SymbolList& symbolList) const
 {
 	GetFrame().GatherSymbol(symbolList);
-	GetPropHandlerMap().GatherSymbol(symbolList);
+	GetPropSlotMap().GatherSymbol(symbolList);
 }
 
 bool Module::Prepare(DottedSymbol* pDottedSymbol)

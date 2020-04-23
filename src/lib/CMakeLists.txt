@@ -75,8 +75,8 @@ add_library(guraxcore SHARED
 	Pointer.cpp
 	Pointers.cpp
 	Processor.cpp
-	PropHandler.cpp
-	PropHandlerCustom.cpp
+	PropSlot.cpp
+	PropSlotCustom.cpp
 	PUnit.cpp
 	Random.cpp
 	Rational.cpp
@@ -139,7 +139,7 @@ add_library(guraxcore SHARED
 	VType_PathMgr.cpp
 	VType_Pixel.cpp
 	VType_Pointer.cpp
-	VType_PropHandler.cpp
+	VType_PropSlot.cpp
 	VType_PUnit.cpp
 	VType_Quote.cpp
 	VType_Random.cpp

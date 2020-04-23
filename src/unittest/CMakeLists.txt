@@ -19,7 +19,7 @@ add_executable(unittest
 	test-OAL.cpp
 	test-Parser.cpp
 	test-PathName.cpp
-	test-PropHandler.cpp
+	test-PropSlot.cpp
 	test-PUnit.cpp
 	test-Random.cpp
 	test-Referable.cpp

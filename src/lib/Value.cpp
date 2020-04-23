@@ -107,14 +107,14 @@ Value* Value::DoIndexOpApply(const Index& index, Value& value, Processor& proces
 
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
-		if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
-		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+	const PropSlot* pPropSlot = GetVType().LookupPropSlot(pSymbol);
+	if (pPropSlot) {
+		if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
+		if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 			return nullptr;
 		}
-		return pPropHandler->GetValue(*this, attr);
+		return pPropSlot->GetValue(*this, attr);
 	}
 	Value* pValue = GetVType().GetFrame().Lookup(pSymbol);
 	if (pValue) return pValue;
@@ -128,14 +128,14 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFo
 
 bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
-		if (!pPropHandler->CheckValidAttribute(attr)) return false;
-		if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+	const PropSlot* pPropSlot = GetVType().LookupPropSlot(pSymbol);
+	if (pPropSlot) {
+		if (!pPropSlot->CheckValidAttribute(attr)) return false;
+		if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 			return false;
 		}
-		return pPropHandler->SetValue(*this, *pValue, attr);
+		return pPropSlot->SetValue(*this, *pValue, attr);
 	}
 	Error::Issue(ErrorType::PropertyError,
 				 "value type '%s' doesn't have a property '%s'",

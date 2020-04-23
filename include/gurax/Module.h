@@ -101,7 +101,7 @@ public:
 protected:
 	RefPtr<Frame_Module> _pFrame;
 	RefPtr<HelpHolder> _pHelpHolder;
-	RefPtr<PropHandlerMap> _pPropHandlerMap;
+	RefPtr<PropSlotMap> _pPropSlotMap;
 	String _pathName;
 private:
 	static ModuleMap _moduleMap;
@@ -129,16 +129,16 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelpTmpl(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	Frame_Module& GetFrame() const { return *_pFrame; }
-	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
-	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
-	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const {
-		return GetPropHandlerMap().Lookup(pSymbol);
+	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
+	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }
+	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const {
+		return GetPropSlotMap().Lookup(pSymbol);
 	}
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { vtype.Prepare(GetFrame()); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
-	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
+	void Assign(PropSlot* pPropSlot) { GetPropSlotMap().Assign(pPropSlot); }
 	void GatherMemberSymbol(SymbolList& symbolList) const;
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);

@@ -110,7 +110,7 @@ public:
 	void Add_AssignMethod(Function* pFunction, bool keepTargetFlag, const Expr* pExprSrc) {
 		SetFactory(new PUnitFactory_AssignMethod(pFunction, keepTargetFlag, Expr::Reference(pExprSrc)));
 	}
-	void Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags flags,
+	void Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 							   const Attribute& attr, bool initByNilFlag, const Expr* pExprSrc);
 	void Add_Cast(const VType& vtype, const Expr* pExprSrc) {
 		SetFactory(new PUnitFactory_Cast(vtype, DeclArg::Flag::None, Expr::Reference(pExprSrc)));

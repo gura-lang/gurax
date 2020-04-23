@@ -416,14 +416,14 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AssignPropHandler
+// PUnit_AssignPropSlot
 // Stack View: initByNilFlag=false .. [VType ValueInit] -> [VType ValueInit] (continue)
 //                                                      -> [VType]           (discard)
 //             initByNilFlag=true ..  [VType]           -> [VType]           (continue)
 //                                                      -> [VType]           (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, bool initByNilFlag>
-void PUnit_AssignPropHandler<discardValueFlag, initByNilFlag>::Exec(Processor& processor) const
+void PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
@@ -432,7 +432,7 @@ void PUnit_AssignPropHandler<discardValueFlag, initByNilFlag>::Exec(Processor& p
 	RefPtr<Value> pValueInit(
 		initByNilFlag? Value::nil() :
 		(discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference()));
-	if (!vtypeCustom.AssignPropHandler(frame, GetSymbol(), GetDottedSymbol(), GetFlags(), pValueInit.release())) {
+	if (!vtypeCustom.AssignPropSlot(frame, GetSymbol(), GetDottedSymbol(), GetFlags(), pValueInit.release())) {
 		processor.ErrorDone();
 		return;
 	}		
@@ -440,48 +440,48 @@ void PUnit_AssignPropHandler<discardValueFlag, initByNilFlag>::Exec(Processor& p
 }
 
 template<bool discardValueFlag, bool initByNilFlag>
-String PUnit_AssignPropHandler<discardValueFlag, initByNilFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("AssignPropHandler(%s,cont=%s,initByNil=%s)",
+	str.Printf("AssignPropSlot(%s,cont=%s,initByNil=%s)",
 			   GetSymbol()->GetName(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initByNilFlag? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
+PUnit* PUnitFactory_AssignPropSlot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_initByNilFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<true, true>(
+				_pPUnitCreated = new PUnit_AssignPropSlot<true, true>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<true, false>(
+				_pPUnitCreated = new PUnit_AssignPropSlot<true, false>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
 		} else {
 			if (_initByNilFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<false, true>(
+				_pPUnitCreated = new PUnit_AssignPropSlot<false, true>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<false, false>(
+				_pPUnitCreated = new PUnit_AssignPropSlot<false, false>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_initByNilFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<true, true>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
+				_pPUnitCreated = new PUnit_AssignPropSlot<true, true>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<true, false>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
+				_pPUnitCreated = new PUnit_AssignPropSlot<true, false>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
 			}
 		} else {
 			if (_initByNilFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<false, true>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
+				_pPUnitCreated = new PUnit_AssignPropSlot<false, true>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<false, false>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
+				_pPUnitCreated = new PUnit_AssignPropSlot<false, false>(_pSymbol, _pDottedSymbol.release(), _flags, nullptr);
 			}
 		}
 	}
@@ -1205,20 +1205,20 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
-	RefPtr<PropHandlerOwner> pPropHandlerOwner(vtypeCustom.GetPropHandlerMap().CreatePropHandlerOwner());
-	pPropHandlerOwner->SortBySeqId();
+	RefPtr<PropSlotOwner> pPropSlotOwner(vtypeCustom.GetPropSlotMap().CreatePropSlotOwner());
+	pPropSlotOwner->SortBySeqId();
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
-	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
-		PropHandler::Flags flags = pPropHandler->GetFlags();
+	for (PropSlot* pPropSlot : *pPropSlotOwner) {
+		PropSlot::Flags flags = pPropSlot->GetFlags();
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
-		flags &= ~(PropHandler::Flag::Nil | PropHandler::Flag::OfClass | PropHandler::Flag::OfInstance |
-				   PropHandler::Flag::Public | PropHandler::Flag::Readable | PropHandler::Flag::Writable);
+		flags &= ~(PropSlot::Flag::Nil | PropSlot::Flag::OfClass | PropSlot::Flag::OfInstance |
+				   PropSlot::Flag::Public | PropSlot::Flag::Readable | PropSlot::Flag::Writable);
 		pDeclCallable->GetDeclArgOwner().push_back(
-			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(), occur, flags, nullptr));
+			new DeclArg(pPropSlot->GetSymbol(), pPropSlot->GetVType(), occur, flags, nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(
-								   vtypeCustom, pDeclCallable.release(), pPropHandlerOwner.release()));
+								   vtypeCustom, pDeclCallable.release(), pPropSlotOwner.release()));
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;

@@ -71,22 +71,22 @@ Iterator* Composer::EachPUnit() const
 	return new Iterator_PUnit(GetPUnitFirst(), nullptr);
 }
 
-void Composer::Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags flags,
+void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 									 const Attribute& attr, bool initByNilFlag, const Expr* pExprSrc)
 {
-	auto& symbolAssoc = PropHandler::SymbolAssoc_Flag::GetInstance();
+	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
 	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
 	if (pDottedSymbol->IsSingleSymbol() && symbolAssoc.DoesExist(pDottedSymbol->GetSymbolFirst())) {
 		pDottedSymbol = &DottedSymbol::Empty;
 	}
-	flags |= PropHandler::Flag::Readable | PropHandler::Flag::Writable;
+	flags |= PropSlot::Flag::Readable | PropSlot::Flag::Writable;
 	const SymbolList& symbols = attr.GetSymbols();
 	for (auto ppSymbol = symbols.begin(); ppSymbol != symbols.end(); ppSymbol++) {
 		const Symbol* pSymbol = *ppSymbol;
-		PropHandler::Flags flagsUpdate = symbolAssoc.ToAssociated(pSymbol);
-		if (flagsUpdate == PropHandler::Flag::None) {
+		PropSlot::Flags flagsUpdate = symbolAssoc.ToAssociated(pSymbol);
+		if (flagsUpdate == PropSlot::Flag::None) {
 			if (pSymbol->IsIdentical(Gurax_Symbol(const_))) {
-				flags &= ~PropHandler::Flag::Writable;
+				flags &= ~PropSlot::Flag::Writable;
 			} else if (ppSymbol != symbols.begin()) {
 				Error::IssueWith(ErrorType::SyntaxError, *pExprSrc, "unknown attribute: %s", pSymbol->GetName());
 				return;
@@ -95,7 +95,7 @@ void Composer::Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags f
 			flags |= flagsUpdate;
 		}
 	}
-	SetFactory(new PUnitFactory_AssignPropHandler(
+	SetFactory(new PUnitFactory_AssignPropSlot(
 				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, Expr::Reference(pExprSrc)));
 }
 

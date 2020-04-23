@@ -32,7 +32,7 @@ static const char* g_docHelp_en = u8R"**(
 // Module#__prop__(symbol:Symbol):map {block?}
 Gurax_DeclareMethod(Module, __prop__)
 {
-	Declare(VTYPE_PropHandler, Flag::Map);
+	Declare(VTYPE_PropSlot, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -48,12 +48,12 @@ Gurax_ImplementMethod(Module, __prop__)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	const PropHandler* pPropHandler = valueThis.GetModule().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
+	const PropSlot* pPropSlot = valueThis.GetModule().LookupPropSlot(pSymbol);
+	if (!pPropSlot) {
 		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
 		return Value::nil();
 	}
-	return argument.ReturnValue(processor, new Value_PropHandler(pPropHandler->Reference()));
+	return argument.ReturnValue(processor, new Value_PropSlot(pPropSlot->Reference()));
 }
 #endif
 
@@ -100,14 +100,14 @@ void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) co
 
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
-		if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
-		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+	const PropSlot* pPropSlot = GetModule().LookupPropSlot(pSymbol);
+	if (pPropSlot) {
+		if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
+		if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
 			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 			return nullptr;
 		}
-		return pPropHandler->GetValue(*this, attr);
+		return pPropSlot->GetValue(*this, attr);
 	}
 	Value* pValue = GetModule().GetFrame().LookupLocal(pSymbol);
 	if (pValue) return pValue;
@@ -121,17 +121,17 @@ Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, boo
 
 bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
+	const PropSlot* pPropSlot = GetModule().LookupPropSlot(pSymbol);
+	if (!pPropSlot) {
 		GetModule().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
 	}
-	if (!pPropHandler->CheckValidAttribute(attr)) return false;
-	if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+	if (!pPropSlot->CheckValidAttribute(attr)) return false;
+	if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;
 	}
-	return pPropHandler->SetValue(*this, *pValue, attr);
+	return pPropSlot->SetValue(*this, *pValue, attr);
 }
 
 }

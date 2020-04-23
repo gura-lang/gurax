@@ -50,8 +50,8 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__EachPropHandler__() {block?}
-Gurax_DeclareClassMethod(VType, __EachPropHandler__)
+// VType#__EachPropSlot__() {block?}
+Gurax_DeclareClassMethod(VType, __EachPropSlot__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
@@ -60,27 +60,27 @@ Gurax_DeclareClassMethod(VType, __EachPropHandler__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __EachPropHandler__)
+Gurax_ImplementClassMethod(VType, __EachPropSlot__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<PropHandlerOwner> pPropHandlerOwner(new PropHandlerOwner());
-	for (auto iter : valueThis.GetVTypeThis().GetPropHandlerMap()) {
-		pPropHandlerOwner->push_back(iter.second->Reference());
+	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
+	for (auto iter : valueThis.GetVTypeThis().GetPropSlotMap()) {
+		pPropSlotOwner->push_back(iter.second->Reference());
 	}
-	for (auto iter : valueThis.GetVTypeThis().GetPropHandlerMapOfClass()) {
-		pPropHandlerOwner->push_back(iter.second->Reference());
+	for (auto iter : valueThis.GetVTypeThis().GetPropSlotMapOfClass()) {
+		pPropSlotOwner->push_back(iter.second->Reference());
 	}
-	pPropHandlerOwner->SortBySymbolName();
-	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
+	pPropSlotOwner->SortBySymbolName();
+	RefPtr<Iterator> pIterator(new Iterator_PropSlot(pPropSlotOwner.release()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// VType#__GetPropHandler__(symbol:Symbol):map {block?}
-Gurax_DeclareClassMethod(VType, __GetPropHandler__)
+// VType#__GetPropSlot__(symbol:Symbol):map {block?}
+Gurax_DeclareClassMethod(VType, __GetPropSlot__)
 {
-	Declare(VTYPE_PropHandler, Flag::Map);
+	Declare(VTYPE_PropSlot, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -88,7 +88,7 @@ Gurax_DeclareClassMethod(VType, __GetPropHandler__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __GetPropHandler__)
+Gurax_ImplementClassMethod(VType, __GetPropSlot__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -96,12 +96,12 @@ Gurax_ImplementClassMethod(VType, __GetPropHandler__)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	const PropHandler* pPropHandler = valueThis.GetVTypeThis().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
+	const PropSlot* pPropSlot = valueThis.GetVTypeThis().LookupPropSlot(pSymbol);
+	if (!pPropSlot) {
 		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
 		return Value::nil();
 	}
-	return argument.ReturnValue(processor, new Value_PropHandler(pPropHandler->Reference()));
+	return argument.ReturnValue(processor, new Value_PropSlot(pPropSlot->Reference()));
 }
 
 //------------------------------------------------------------------------------
@@ -134,8 +134,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __EachPropHandler__));
-	Assign(Gurax_CreateMethod(VType, __GetPropHandler__));
+	Assign(Gurax_CreateMethod(VType, __EachPropSlot__));
+	Assign(Gurax_CreateMethod(VType, __GetPropSlot__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
 }
@@ -203,38 +203,38 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
+	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
+	if (!pPropSlot) {
 		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
 		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
-	if (!pPropHandler->CheckValidAttribute(attr)) return nullptr;
-	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+	if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
+	if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
 		Error::Issue(ErrorType::PropertyError,
 			"property '%s' is not readable", pSymbol->GetName());
 		return nullptr;
 	}
-	if (!pPropHandler->IsSet(PropHandler::Flag::OfClass)) {
+	if (!pPropSlot->IsSet(PropSlot::Flag::OfClass)) {
 		Error::Issue(ErrorType::PropertyError,
 			"property '%s' belongs to an instance", pSymbol->GetName());
 		return nullptr;
 	}
-	return pPropHandler->GetValue(*this, attr);
+	return pPropSlot->GetValue(*this, attr);
 }
 
 bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
+	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
+	if (!pPropSlot) {
 		GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
 	}
-	if (!pPropHandler->CheckValidAttribute(attr)) return false;
-	if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+	if (!pPropSlot->CheckValidAttribute(attr)) return false;
+	if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;
 	}
-	return pPropHandler->SetValue(*this, *pValue, attr);
+	return pPropSlot->SetValue(*this, *pValue, attr);
 }
 
 bool Value_VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
