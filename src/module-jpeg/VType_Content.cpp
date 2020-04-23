@@ -90,23 +90,25 @@ Gurax_ImplementPropertyGetter(Content, segments)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	RefPtr<Iterator> pIterator(new VType_Segment::Iterator_Each(
-								   valueThis.GetContent().GetSegmentOwner().Reference()));
+						valueThis.GetContent().GetSegmentOwner().Reference()));
 	return new Value_Iterator(pIterator.release());
 }
 
 // jpeg.Content#exif
 Gurax_DeclareProperty_R(Content, exif)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Exif, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns `jpeg.Exif` instance if exists, and `nil` otherwise.");
 }
 
 Gurax_ImplementPropertyGetter(Content, exif)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	Exif* pExif = valueThis.GetContent().FindExif();
+	if (!pExif) return Value::nil();
+	return new Value_Exif(pExif->Reference());
 }
 
 //------------------------------------------------------------------------------

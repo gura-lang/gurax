@@ -12,8 +12,15 @@ TestCase('Property') {
 	PrintProperty(jpeg.Segment)
 	PrintProperty(jpeg.Tag)
 }
-TestCase('Basic test') {
+
+TestCase('jpeg.Content#segments') {
 	jpeg.Content('test.jpg').segments.Each {|segment|
 		Println(segment)
 	}
+}
+
+TestCase('jpeg.Content#exif') {
+	exif = jpeg.Content('test.jpg').exif
+	Println(exif.ifd0.tags)
+	Println(exif.ifd1.tags)
 }

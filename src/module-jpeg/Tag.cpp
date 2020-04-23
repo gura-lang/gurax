@@ -15,6 +15,36 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 
 bool Tag::CheckAcceptableValue(const Value& value) const
 {
+	switch (_typeId) {
+	case TypeId::BYTE: {
+		break;
+	}
+	case TypeId::ASCII: {
+		break;
+	}
+	case TypeId::SHORT: {
+		break;
+	}
+	case TypeId::LONG: {
+		break;
+	}
+	case TypeId::RATIONAL: {
+		break;
+	}
+	case TypeId::UNDEFINED: {
+		break;
+	}
+	case TypeId::SLONG: {
+		break;
+	}
+	case TypeId::SRATIONAL: {
+		break;
+	}
+	default: {
+		IssueError_InvalidFormat();
+		return false;
+	}
+	}
 	return true;
 }
 

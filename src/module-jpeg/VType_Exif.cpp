@@ -59,7 +59,7 @@ Gurax_DeclareProperty_R(Exif, ifd0)
 	Declare(VTYPE_IFD, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"IFD0 field in the Exif. Returns `nil` if not exist.");
 }
 
 Gurax_ImplementPropertyGetter(Exif, ifd0)
@@ -76,7 +76,7 @@ Gurax_DeclareProperty_R(Exif, ifd1)
 	Declare(VTYPE_IFD, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"IFD1 field in the Exif. Returns `nil` if not exist.");
 }
 
 Gurax_ImplementPropertyGetter(Exif, ifd1)
