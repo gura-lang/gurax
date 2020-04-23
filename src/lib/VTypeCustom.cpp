@@ -42,8 +42,7 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 		}
 	} else if (flags & PropHandler::Flag::ListVar) {
 		if (pValueInit->IsType(VTYPE_List)) {
-			const Value_List& valueEx = dynamic_cast<const Value_List&>(*pValueInit);
-			const ValueTypedOwner& valueTypedOwner = valueEx.GetValueTypedOwner();
+			const ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(*pValueInit);
 			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
 				pVType = &valueTypedOwner.GetVTypeOfElems();
 			}
