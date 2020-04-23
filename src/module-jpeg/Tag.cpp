@@ -15,6 +15,25 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 
 bool Tag::CheckAcceptableValue(Value& value) const
 {
+	auto _CheckRangedNumber = [](const Value& value, Double numMin, Double numMax) {
+		if (!value.IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::ValueError, "number value is expected");
+			return false;
+		}
+		Double num = Value_Number::GetNumber<Double>(value);
+		if (num <= numMin && num <= numMax) return true;
+		Error::Issue(ErrorType::RangeError, "value number is out of range");
+		return false;
+	};
+	auto CheckRangedNumber = [_CheckRangedNumber](const Value& value, Double numMin, Double numMax) {
+		if (value.IsType(VTYPE_List)) {
+			for (const Value* pValue : Value_List::GetValueOwner(value)) {
+				if (!_CheckRangedNumber(value, numMin, numMax)) return false;
+			}
+			return true;
+		}
+		return _CheckRangedNumber(value, numMin, numMax);
+	};
 	switch (_typeId) {
 	case TypeId::BYTE: {
 		return value.IsType(VTYPE_Binary);
@@ -23,37 +42,26 @@ bool Tag::CheckAcceptableValue(Value& value) const
 		return value.IsType(VTYPE_String);
 	}
 	case TypeId::SHORT: {
-		if (value.IsType(VTYPE_Number)) {
-			
-		} else if (value.IsType(VTYPE_List)) {
-			for (const Value* pValue : Value_List::GetValueOwner(value)) {
-				
-			}
-		}
-		break;
+		return CheckRangedNumber(value, -0x8000, 0x7fff);
 	}
 	case TypeId::LONG: {
-		return value.IsType(VTYPE_Number) ||
-			(value.IsType(VTYPE_List) &&
-			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
+		return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 	}
 	case TypeId::RATIONAL: {
-		return value.IsType(VTYPE_Number) ||
+		return value.IsType(VTYPE_Rational);
 			(value.IsType(VTYPE_List) &&
-			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 	}
 	case TypeId::UNDEFINED: {
 		return value.IsType(VTYPE_Binary);
 	}
 	case TypeId::SLONG: {
-		return value.IsType(VTYPE_Number) ||
-			(value.IsType(VTYPE_List) &&
-			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
+		return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 	}
 	case TypeId::SRATIONAL: {
-		return value.IsType(VTYPE_Number) ||
+		return value.IsType(VTYPE_Rational);
 			(value.IsType(VTYPE_List) &&
-			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Number));
+			 Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 	}
 	default:
 		break;
