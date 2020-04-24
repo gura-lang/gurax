@@ -71,28 +71,9 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			break;
 		}
 		case TypeId::SHORT: {
-			if (count == 1) {
-				UInt16 num = Gurax_UnpackUInt16(variable.SHORT.num);
-				pTag.reset(new Tag_SHORT(tagId, pSymbol, new Value_Number(num)));
-			} else if (count == 2) {
-				UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
-				UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
-				pTag.reset(new Tag_SHORT(tagId, pSymbol, Value_List::Create(new Value_Number(num1), new Value_Number(num2))));
-			} else {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(SHORT_T) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(SHORT_T)) {
-					const SHORT_T* pSHORT = reinterpret_cast<const SHORT_T*>(buff + offset);
-					UInt16 num = Gurax_UnpackUInt16(pSHORT->num);
-					pValueOwner->push_back(new Value_Number(num));
-				}
-				pTag.reset(new Tag_SHORT(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
-			}
+			pTag.reset((new Tag_SHORT(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::LONG: {

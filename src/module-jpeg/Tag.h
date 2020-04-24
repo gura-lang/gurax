@@ -126,8 +126,7 @@ template<typename TypeDef> Tag* Tag_ASCII::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SHORT : public Tag {
 public:
-	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
-		Tag(TypeId::SHORT, tagId, pSymbol, pValue) {}
+	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::SHORT, tagId, pSymbol) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -138,10 +137,32 @@ public:
 template<typename TypeDef> Tag* Tag_SHORT::ReadFromBuff(
 	const UInt8* buff, size_t bytesBuff, size_t offset)
 {
+	using SHORT_T = typename TypeDef::SHORT;
 	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
 	auto &variable = tagPacked.variable;
-
+	if (count == 1) {
+		UInt16 num = Gurax_UnpackUInt16(variable.SHORT.num);
+		SetValue(new Value_Number(num));
+	} else if (count == 2) {
+		UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
+		UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
+		SetValue(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
+	} else {
+		size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+		if (offset + count * sizeof(SHORT_T) > bytesBuff) {
+			IssueError_InvalidFormat();
+			return nullptr;
+		}
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		pValueOwner->reserve(count);
+		for (size_t i = 0; i < count; i++, offset += sizeof(SHORT_T)) {
+			const SHORT_T* pSHORT = reinterpret_cast<const SHORT_T*>(buff + offset);
+			UInt16 num = Gurax_UnpackUInt16(pSHORT->num);
+			pValueOwner->push_back(new Value_Number(num));
+		}
+		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
+	}
 	return this;
 }
 
