@@ -32,5 +32,6 @@ PrintIFD(ifd:jpeg.IFD, indentLevel:Number) = {
 TestCase('jpeg.Content#exif') {
 	exif = jpeg.Content('test.jpg').exif
 	PrintIFD(exif.ifd0, 0)
+	Println('-----')
 	PrintIFD(exif.ifd1, 0)
 }
