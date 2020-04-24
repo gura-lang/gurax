@@ -52,7 +52,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
 			if (!pIFD) return nullptr;
 			RefPtr<Value> pValue(new Value_IFD(pIFD.release()));
-			pTagOwner->push_back(new Tag(tagId, typeId, pSymbolOfIFDSub, pValue.release()));
+			pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbolOfIFDSub, pValue.release()));
 			continue;
 		}
 		const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
@@ -215,7 +215,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			return nullptr;
 		}
 		}
-		pTagOwner->push_back(new Tag(tagId, typeId, pSymbol, pValue.release()));
+		pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbol, pValue.release()));
 	}
 	if (pOffsetNext) {
 		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);

@@ -13,27 +13,13 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Valu
 {
 }
 
+Tag* Tag::Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked)
+{
+	return new Tag(typeId, tagId, pSymbol, pValue, pValueCooked);
+}
+
 bool Tag::CheckAcceptableValue(Value& value) const
 {
-	auto _CheckRangedNumber = [](const Value& value, Double numMin, Double numMax) {
-		if (!value.IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::ValueError, "number value is expected");
-			return false;
-		}
-		Double num = Value_Number::GetNumber<Double>(value);
-		if (num <= numMin && num <= numMax) return true;
-		Error::Issue(ErrorType::RangeError, "value number is out of range");
-		return false;
-	};
-	auto CheckRangedNumber = [_CheckRangedNumber](const Value& value, Double numMin, Double numMax) {
-		if (value.IsType(VTYPE_List)) {
-			for (const Value* pValue : Value_List::GetValueOwner(value)) {
-				if (!_CheckRangedNumber(value, numMin, numMax)) return false;
-			}
-			return true;
-		}
-		return _CheckRangedNumber(value, numMin, numMax);
-	};
 	switch (_typeId) {
 	case TypeId::BYTE: {
 		return value.IsType(VTYPE_Binary);
@@ -42,10 +28,10 @@ bool Tag::CheckAcceptableValue(Value& value) const
 		return value.IsType(VTYPE_String);
 	}
 	case TypeId::SHORT: {
-		return CheckRangedNumber(value, -0x8000, 0x7fff);
+		return CheckRangedNumber(value, 0x0000, 0xffff);
 	}
 	case TypeId::LONG: {
-		return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
+		return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 	}
 	case TypeId::RATIONAL: {
 		return value.IsType(VTYPE_Rational);
@@ -69,6 +55,25 @@ bool Tag::CheckAcceptableValue(Value& value) const
 	IssueError_InvalidFormat();
 	return false;
 }
+
+bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax)
+{
+	auto CheckSub = [numMin, numMax](const Value& value) {
+		if (!value.IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::ValueError, "number value is expected");
+			return false;
+		}
+		Double num = Value_Number::GetNumber<Double>(value);
+		if (num <= numMin && num <= numMax) return true;
+		Error::Issue(ErrorType::RangeError, "value number is out of range");
+		return false;
+	};
+	if (!value.IsType(VTYPE_List)) return CheckSub(value);
+	for (const Value* pValue : Value_List::GetValueOwner(value)) {
+		if (!CheckSub(value)) return false;
+	}
+	return true;
+};
 
 String Tag::ToString(const StringStyle& ss) const
 {

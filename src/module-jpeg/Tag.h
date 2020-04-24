@@ -15,16 +15,14 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Tag);
 protected:
-	UInt16 _tagId;
 	UInt16 _typeId;
+	UInt16 _tagId;
 	const Symbol* _pSymbol;
 	RefPtr<Value> _pValue;
 	RefPtr<Value> _pValueCooked;
-public:
+protected:
 	// Constructor
-	Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked);
-	Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol, Value* pValue) :
-		Tag(tagId, typeId, pSymbol, pValue, pValue->Reference()) {}
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked);
 	// Copy constructor/operator
 	Tag(const Tag& src) = delete;
 	Tag& operator=(const Tag& src) = delete;
@@ -34,6 +32,12 @@ public:
 protected:
 	~Tag() = default;
 public:
+	static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol,
+										Value* pValue, Value* pValueCooked);
+	static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) {
+		return Create(typeId, tagId, pSymbol, pValue, pValue->Reference());
+	}
+public:
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -41,6 +45,8 @@ public:
 	const Value& GetValueCooked() const { return *_pValueCooked; }
 	bool CheckAcceptableValue(Value& value) const;
 	void SetValue(Value* pValue) { _pValue.reset(pValue); }
+protected:
+	static bool CheckRangedNumber(const Value& value, Double numMin, Double numMax);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Tag& other) const { return this == &other; }
