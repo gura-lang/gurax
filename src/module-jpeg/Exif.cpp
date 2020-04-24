@@ -89,60 +89,21 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			break;
 		}
 		case TypeId::UNDEFINED: {
-			const UInt8* pBuff = variable.BYTE;
-			if (count > 4) {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(UInt8) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				pBuff = buff + offset;
-			}
-			pTag.reset(new Tag_UNDEFINED(tagId, pSymbol, new Value_Binary(Binary(pBuff, count))));
+			pTag.reset((new Tag_UNDEFINED(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SLONG: {
-			if (count == 1) {
-				Int32 num = Gurax_UnpackInt32(variable.SLONG.num);
-				pTag.reset(new Tag_SLONG(tagId, pSymbol, new Value_Number(num)));
-			} else {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(SLONG_T) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(SLONG_T)) {
-					const SLONG_T* pSLONG = reinterpret_cast<const SLONG_T*>(buff + offset);
-					Int32 num = Gurax_UnpackInt32(pSLONG->num);
-					pValueOwner->push_back(new Value_Number(num));
-				}
-			}
+			pTag.reset((new Tag_SLONG(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SRATIONAL: {
-			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-			if (offset + count * sizeof(SRATIONAL_T) > bytesBuff) {
-				IssueError_InvalidFormat();
-				return nullptr;
-			}
-			if (count == 1) {
-				const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
-				RefPtr<Value> pValue(CreateValueFromSRATIONAL(*pSRATIONAL));
-				if (!pValue) return nullptr;
-				pTag.reset(new Tag_SRATIONAL(tagId, pSymbol, pValue.release()));
-			} else {
-				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(SRATIONAL_T)) {
-					const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
-					RefPtr<Value> pValueElem(CreateValueFromSRATIONAL(*pSRATIONAL));
-					if (!pValueElem) return nullptr;
-					pValueOwner->push_back(pValueElem.release());
-				}
-				pTag.reset(new Tag_SRATIONAL(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
-			}
+			pTag.reset((new Tag_SRATIONAL(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		default: {
