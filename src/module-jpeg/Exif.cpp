@@ -77,48 +77,15 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			break;
 		}
 		case TypeId::LONG: {
-			if (count == 1) {
-				UInt32 num = Gurax_UnpackUInt32(variable.LONG.num);
-				pTag.reset(new Tag_LONG(tagId, pSymbol, new Value_Number(num)));
-			} else {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(LONG_T) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(LONG_T)) {
-					const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
-					UInt32 num = Gurax_UnpackUInt32(pLONG->num);
-					pValueOwner->push_back(new Value_Number(num));
-				}
-				pTag.reset(new Tag_LONG(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
-			}
+			pTag.reset((new Tag_LONG(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::RATIONAL: {
-			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-			if (offset + count * sizeof(RATIONAL_T) > bytesBuff) {
-				IssueError_InvalidFormat();
-				return nullptr;
-			}
-			if (count == 1) {
-				const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
-				RefPtr<Value> pValue(CreateValueFromRATIONAL(*pRATIONAL));
-				if (!pValue) return nullptr;
-				pTag.reset(new Tag_RATIONAL(tagId, pSymbol, pValue.release()));
-			} else {
-				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-				pValueOwner->reserve(count);
-				for (size_t i = 0; i < count; i++, offset += sizeof(RATIONAL_T)) {
-					const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
-					RefPtr<Value> pValueElem(CreateValueFromRATIONAL(*pRATIONAL));
-					if (!pValueElem) return nullptr;
-					pValueOwner->push_back(pValueElem.release());
-				}
-				pTag.reset(new Tag_RATIONAL(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
-			}
+			pTag.reset((new Tag_RATIONAL(tagId, pSymbol))->
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::UNDEFINED: {
