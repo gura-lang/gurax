@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_JPEG_TAG_H
 #define GURAX_MODULE_JPEG_TAG_H
 #include <gurax.h>
+#include "Symbol.h"
 
 Gurax_BeginModuleScope(jpeg)
 
@@ -14,6 +15,25 @@ class GURAX_DLLDECLARE Tag : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Tag);
+public:
+	class GURAX_DLLDECLARE SymbolAssoc_TypeId : public SymbolAssoc<UInt16, TypeId::None> {
+	public:
+		SymbolAssoc_TypeId() {
+			Assoc(Gurax_Symbol(BYTE),		TypeId::BYTE);
+			Assoc(Gurax_Symbol(ASCII),		TypeId::ASCII);
+			Assoc(Gurax_Symbol(SHORT),		TypeId::SHORT);
+			Assoc(Gurax_Symbol(LONG),		TypeId::LONG);
+			Assoc(Gurax_Symbol(RATIONAL),	TypeId::RATIONAL);
+			Assoc(Gurax_Symbol(UNDEFINED),	TypeId::UNDEFINED);
+			Assoc(Gurax_Symbol(SLONG),		TypeId::SLONG);
+			Assoc(Gurax_Symbol(SRATIONAL),	TypeId::SRATIONAL);
+			Assoc(Gurax_Symbol(IFD),		TypeId::IFD);
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_TypeId());
+		}
+	};
 protected:
 	UInt16 _typeId;
 	UInt16 _tagId;
@@ -49,6 +69,13 @@ public:
 	virtual bool WriteToStream(Stream& stream) const = 0;
 protected:
 	static bool CheckRangedNumber(const Value& value, Double numMin, Double numMax);
+public:
+	static UInt16 SymbolToTypeId(const Symbol* pSymbol) {
+		return SymbolAssoc_TypeId::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* TypeIdToSymbol(UInt16 typeId) {
+		return SymbolAssoc_TypeId::GetInstance().ToSymbol(typeId);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Tag& other) const { return this == &other; }
@@ -374,7 +401,7 @@ template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
 class GURAX_DLLDECLARE Tag_IFD : public Tag {
 public:
 	Tag_IFD(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
-		Tag(TypeId::SRATIONAL, tagId, pSymbol, pValue) {}
+		Tag(TypeId::IFD, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;

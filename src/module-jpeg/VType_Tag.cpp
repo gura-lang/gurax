@@ -106,6 +106,21 @@ Gurax_ImplementPropertyGetter(Tag, symbol)
 	return new Value_Symbol(valueThis.GetTag().GetSymbol());
 }
 
+// jpeg.Tag#type
+Gurax_DeclareProperty_R(Tag, type)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, type)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(Tag::TypeIdToSymbol(valueThis.GetTag().GetTypeId()));
+}
+
 // jpeg.Tag#value
 Gurax_DeclareProperty_R(Tag, value)
 {
@@ -137,6 +152,7 @@ void VType_Tag::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Tag, name));
 	Assign(Gurax_CreateProperty(Tag, symbol));
+	Assign(Gurax_CreateProperty(Tag, type));
 	Assign(Gurax_CreateProperty(Tag, value));
 }
 

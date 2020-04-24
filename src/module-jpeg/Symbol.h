@@ -50,6 +50,16 @@ Gurax_DeclareSymbol(Exif);
 Gurax_DeclareSymbol(Interoperability);
 Gurax_DeclareSymbol(GPSInfo);
 
+Gurax_DeclareSymbol(BYTE);
+Gurax_DeclareSymbol(ASCII);
+Gurax_DeclareSymbol(SHORT);
+Gurax_DeclareSymbol(LONG);
+Gurax_DeclareSymbol(RATIONAL);
+Gurax_DeclareSymbol(UNDEFINED);
+Gurax_DeclareSymbol(SLONG);
+Gurax_DeclareSymbol(SRATIONAL);
+Gurax_DeclareSymbol(IFD);
+
 Gurax_EndModuleScope(jpeg)
 
 #endif

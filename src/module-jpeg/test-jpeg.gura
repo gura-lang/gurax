@@ -19,8 +19,18 @@ TestCase('jpeg.Content#segments') {
 	}
 }
 
+PrintIFD(ifd:jpeg.IFD, indentLevel:Number) = {
+	ifd.tags.Each {|tag|
+		Printf('%*s%s [%s]: %s\n',
+			indentLevel * 2, '', tag.name, tag.type.name, tag.value)
+		if (tag.type == `IFD) {
+			PrintIFD(tag.value, indentLevel + 1)
+		}
+	}
+}
+
 TestCase('jpeg.Content#exif') {
 	exif = jpeg.Content('test.jpg').exif
-	Println(exif.ifd0.tags)
-	Println(exif.ifd1.tags)
+	PrintIFD(exif.ifd0, 0)
+	PrintIFD(exif.ifd1, 0)
 }

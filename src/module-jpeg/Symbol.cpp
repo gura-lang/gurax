@@ -48,4 +48,14 @@ Gurax_RealizeSymbol(Exif);
 Gurax_RealizeSymbol(Interoperability);
 Gurax_RealizeSymbol(GPSInfo);
 
+Gurax_RealizeSymbol(BYTE);
+Gurax_RealizeSymbol(ASCII);
+Gurax_RealizeSymbol(SHORT);
+Gurax_RealizeSymbol(LONG);
+Gurax_RealizeSymbol(RATIONAL);
+Gurax_RealizeSymbol(UNDEFINED);
+Gurax_RealizeSymbol(SLONG);
+Gurax_RealizeSymbol(SRATIONAL);
+Gurax_RealizeSymbol(IFD);
+
 Gurax_EndModuleScope(jpeg)
