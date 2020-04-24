@@ -129,9 +129,21 @@ public:
 	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::SHORT, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_SHORT::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_LONG
@@ -141,9 +153,21 @@ public:
 	Tag_LONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::LONG, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_LONG::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_RATIONAL
@@ -153,9 +177,21 @@ public:
 	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::RATIONAL, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_RATIONAL::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_UNDEFINED
@@ -165,9 +201,21 @@ public:
 	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::UNDEFINED, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_UNDEFINED::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_SLONG
@@ -177,9 +225,21 @@ public:
 	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::SLONG, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_SLONG::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_SRATIONAL
@@ -189,9 +249,21 @@ public:
 	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(TypeId::SRATIONAL, tagId, pSymbol, pValue) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
+
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_IFD
