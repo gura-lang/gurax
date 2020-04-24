@@ -23,6 +23,8 @@ protected:
 protected:
 	// Constructor
 	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked);
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(typeId, tagId, pSymbol, pValue, pValue->Reference()) {}
 	// Copy constructor/operator
 	Tag(const Tag& src) = delete;
 	Tag& operator=(const Tag& src) = delete;
@@ -32,11 +34,11 @@ protected:
 protected:
 	~Tag() = default;
 public:
-	static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol,
-										Value* pValue, Value* pValueCooked);
-	static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) {
-		return Create(typeId, tagId, pSymbol, pValue, pValue->Reference());
-	}
+	// static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol,
+	// 									Value* pValue, Value* pValueCooked);
+	// static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) {
+	// 	return Create(typeId, tagId, pSymbol, pValue, pValue->Reference());
+	// }
 public:
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
@@ -57,73 +59,109 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// Tag_BYTE
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
-	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::BYTE, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::BYTE, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_ASCII
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
-	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::ASCII, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::ASCII, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_SHORT
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SHORT : public Tag {
 public:
-	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::SHORT, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::SHORT, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_LONG
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_LONG : public Tag {
 public:
-	Tag_LONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::LONG, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_LONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::LONG, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_RATIONAL
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_RATIONAL : public Tag {
 public:
-	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::RATIONAL, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::RATIONAL, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_UNDEFINED
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_UNDEFINED : public Tag {
 public:
-	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::UNDEFINED, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::UNDEFINED, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_SLONG
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SLONG : public Tag {
 public:
-	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::SLONG, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::SLONG, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
+//------------------------------------------------------------------------------
+// Tag_SRATIONAL
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SRATIONAL : public Tag {
 public:
-	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked) :
-		Tag(TypeId::SRATIONAL, tagId, pSymbol, pValue, pValueCooked) {}
+	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::SRATIONAL, tagId, pSymbol, pValue) {}
+public:
+	virtual bool CheckAcceptableValue(Value& value) const override;
+	virtual bool WriteToStream(Stream& stream) const override;
+};
+
+//------------------------------------------------------------------------------
+// Tag_IFD
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Tag_IFD : public Tag {
+public:
+	Tag_IFD(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
+		Tag(TypeId::SRATIONAL, tagId, pSymbol, pValue) {}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;

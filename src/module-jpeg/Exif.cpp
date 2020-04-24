@@ -51,13 +51,12 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			const Symbol *pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
 			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
 			if (!pIFD) return nullptr;
-			RefPtr<Value> pValue(new Value_IFD(pIFD.release()));
-			pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbolOfIFDSub, pValue.release()));
+			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, new Value_IFD(pIFD.release())));
+			pTagOwner->push_back(pTag.release());
 			continue;
 		}
 		const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
 		RefPtr<Value> pValue;
-		RefPtr<Value> pValueCooked;
 		switch (typeId) {
 		case TypeId::BYTE: {
 			const UInt8* pBuff = variable.BYTE;
@@ -215,7 +214,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			return nullptr;
 		}
 		}
-		pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbol, pValue.release()));
+		// pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbol, pValue.release()));
 	}
 	if (pOffsetNext) {
 		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);

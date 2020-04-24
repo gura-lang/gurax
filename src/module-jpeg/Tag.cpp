@@ -13,6 +13,7 @@ Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Valu
 {
 }
 
+#if 0
 Tag* Tag::Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked)
 {
 	switch (typeId) {
@@ -37,6 +38,7 @@ Tag* Tag::Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue
 	}
 	return nullptr;
 }
+#endif
 
 bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax)
 {
@@ -170,6 +172,19 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 }
 
 bool Tag_SRATIONAL::WriteToStream(Stream& stream) const
+{
+	return true;
+}
+
+//------------------------------------------------------------------------------
+// Tag_IFD
+//------------------------------------------------------------------------------
+bool Tag_IFD::CheckAcceptableValue(Value& value) const
+{
+	return false;
+}
+
+bool Tag_IFD::WriteToStream(Stream& stream) const
 {
 	return true;
 }
