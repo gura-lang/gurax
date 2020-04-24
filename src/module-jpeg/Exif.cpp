@@ -17,11 +17,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 	const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset, size_t* pOffsetNext)
 {
 	using IFDHeader_T	= typename TypeDef::IFDHeader;
-	using RATIONAL_T	= typename TypeDef::RATIONAL;
-	using SRATIONAL_T	= typename TypeDef::SRATIONAL;
-	using SHORT_T		= typename TypeDef::SHORT;
 	using LONG_T		= typename TypeDef::LONG;
-	using SLONG_T		= typename TypeDef::SLONG;
 	using Variable_T	= typename TypeDef::Variable;
 	using TagPacked_T	= typename TypeDef::TagPacked;
 	if (pOffsetNext) *pOffsetNext = 0;
