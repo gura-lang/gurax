@@ -56,7 +56,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			continue;
 		}
 		const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
-		RefPtr<Value> pValue;
+		RefPtr<Tag> pTag;
 		switch (typeId) {
 		case TypeId::BYTE: {
 			const UInt8* pBuff = variable.BYTE;
@@ -68,7 +68,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 				}
 				pBuff = buff + offset;
 			}
-			pValue.reset(new Value_Binary(Binary(pBuff, count)));
+			pTag.reset(new Tag_BYTE(tagId, pSymbol, new Value_Binary(Binary(pBuff, count))));
 			break;
 		}
 		case TypeId::ASCII: {
@@ -81,17 +81,17 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 				}
 				pBuff = reinterpret_cast<const char*>(buff + offset);
 			}
-			pValue.reset(new Value_String(String(pBuff, count)));
+			pTag.reset(new Tag_ASCII(tagId, pSymbol, new Value_String(String(pBuff, count))));
 			break;
 		}
 		case TypeId::SHORT: {
 			if (count == 1) {
 				UInt16 num = Gurax_UnpackUInt16(variable.SHORT.num);
-				pValue.reset(new Value_Number(num));
+				pTag.reset(new Tag_SHORT(tagId, pSymbol, new Value_Number(num)));
 			} else if (count == 2) {
 				UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
 				UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
-				pValue.reset(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
+				pTag.reset(new Tag_SHORT(tagId, pSymbol, Value_List::Create(new Value_Number(num1), new Value_Number(num2))));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 				if (offset + count * sizeof(SHORT_T) > bytesBuff) {
@@ -105,14 +105,14 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 					UInt16 num = Gurax_UnpackUInt16(pSHORT->num);
 					pValueOwner->push_back(new Value_Number(num));
 				}
-				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+				pTag.reset(new Tag_SHORT(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
 			}
 			break;
 		}
 		case TypeId::LONG: {
 			if (count == 1) {
 				UInt32 num = Gurax_UnpackUInt32(variable.LONG.num);
-				pValue.reset(new Value_Number(num));
+				pTag.reset(new Tag_LONG(tagId, pSymbol, new Value_Number(num)));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 				if (offset + count * sizeof(LONG_T) > bytesBuff) {
@@ -126,7 +126,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 					UInt32 num = Gurax_UnpackUInt32(pLONG->num);
 					pValueOwner->push_back(new Value_Number(num));
 				}
-				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+				pTag.reset(new Tag_LONG(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
 			}
 			break;
 		}
@@ -138,8 +138,9 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			}
 			if (count == 1) {
 				const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
-				pValue.reset(CreateValueFromRATIONAL(*pRATIONAL));
+				RefPtr<Value> pValue(CreateValueFromRATIONAL(*pRATIONAL));
 				if (!pValue) return nullptr;
+				pTag.reset(new Tag_RATIONAL(tagId, pSymbol, pValue.release()));
 			} else {
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
@@ -149,7 +150,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 					if (!pValueElem) return nullptr;
 					pValueOwner->push_back(pValueElem.release());
 				}
-				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+				pTag.reset(new Tag_RATIONAL(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
 			}
 			break;
 		}
@@ -163,13 +164,13 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 				}
 				pBuff = buff + offset;
 			}
-			pValue.reset(new Value_Binary(Binary(pBuff, count)));
+			pTag.reset(new Tag_UNDEFINED(tagId, pSymbol, new Value_Binary(Binary(pBuff, count))));
 			break;
 		}
 		case TypeId::SLONG: {
 			if (count == 1) {
 				Int32 num = Gurax_UnpackInt32(variable.SLONG.num);
-				pValue.reset(new Value_Number(num));
+				pTag.reset(new Tag_SLONG(tagId, pSymbol, new Value_Number(num)));
 			} else {
 				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
 				if (offset + count * sizeof(SLONG_T) > bytesBuff) {
@@ -194,8 +195,9 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			}
 			if (count == 1) {
 				const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
-				pValue.reset(CreateValueFromSRATIONAL(*pSRATIONAL));
+				RefPtr<Value> pValue(CreateValueFromSRATIONAL(*pSRATIONAL));
 				if (!pValue) return nullptr;
+				pTag.reset(new Tag_SRATIONAL(tagId, pSymbol, pValue.release()));
 			} else {
 				RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 				pValueOwner->reserve(count);
@@ -205,7 +207,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 					if (!pValueElem) return nullptr;
 					pValueOwner->push_back(pValueElem.release());
 				}
-				pValue.reset(new Value_List(VTYPE_Number, pValueOwner.release()));
+				pTag.reset(new Tag_SRATIONAL(tagId, pSymbol, new Value_List(VTYPE_Number, pValueOwner.release())));
 			}
 			break;
 		}
@@ -214,7 +216,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			return nullptr;
 		}
 		}
-		// pTagOwner->push_back(Tag::Create(typeId, tagId, pSymbol, pValue.release()));
+		pTagOwner->push_back(pTag.release());
 	}
 	if (pOffsetNext) {
 		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
