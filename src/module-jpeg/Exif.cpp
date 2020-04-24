@@ -60,13 +60,13 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		switch (typeId) {
 		case TypeId::BYTE: {
 			pTag.reset((new Tag_BYTE(tagId, pSymbol))->
-				StoreVariable<TypeDef>(count, variable, buff, bytesBuff));
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::ASCII: {
 			pTag.reset((new Tag_ASCII(tagId, pSymbol))->
-				StoreVariable<TypeDef>(count, variable, buff, bytesBuff));
+						ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}

@@ -64,17 +64,18 @@ class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
 	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::BYTE, tagId, pSymbol) {}
 public:
-	template<typename TypeDef> inline Tag* StoreVariable(
-		UInt32 count, const typename TypeDef::Variable& variable,
-		const UInt8* buff, size_t bytesBuff);
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
-template<typename TypeDef> Tag* Tag_BYTE::StoreVariable(
-	UInt32 count, const typename TypeDef::Variable& variable,
-	const UInt8* buff, size_t bytesBuff)
+template<typename TypeDef> Tag* Tag_BYTE::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
 {
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
 	const UInt8* pBuff = variable.BYTE;
 	if (count > 4) {
 		size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
@@ -95,17 +96,18 @@ class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
 	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::ASCII, tagId, pSymbol) {}
 public:
-	template<typename TypeDef> inline Tag* StoreVariable(
-		UInt32 count, const typename TypeDef::Variable& variable,
-		const UInt8* buff, size_t bytesBuff);
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
 
-template<typename TypeDef> Tag* Tag_ASCII::StoreVariable(
-	UInt32 count, const typename TypeDef::Variable& variable,
-	const UInt8* buff, size_t bytesBuff)
+template<typename TypeDef> Tag* Tag_ASCII::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
 {
+	auto &tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto &variable = tagPacked.variable;
 	const char* pBuff = variable.ASCII;
 	if (count > 4) {
 		size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
