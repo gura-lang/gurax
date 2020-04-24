@@ -59,29 +59,15 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		RefPtr<Tag> pTag;
 		switch (typeId) {
 		case TypeId::BYTE: {
-			const UInt8* pBuff = variable.BYTE;
-			if (count > 4) {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(UInt8) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				pBuff = buff + offset;
-			}
-			pTag.reset(new Tag_BYTE(tagId, pSymbol, new Value_Binary(Binary(pBuff, count))));
+			pTag.reset((new Tag_BYTE(tagId, pSymbol))->
+				StoreVariable<TypeDef>(count, variable, buff, bytesBuff));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::ASCII: {
-			const char* pBuff = variable.ASCII;
-			if (count > 4) {
-				size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
-				if (offset + count * sizeof(char) > bytesBuff) {
-					IssueError_InvalidFormat();
-					return nullptr;
-				}
-				pBuff = reinterpret_cast<const char*>(buff + offset);
-			}
-			pTag.reset(new Tag_ASCII(tagId, pSymbol, new Value_String(String(pBuff, count))));
+			pTag.reset((new Tag_ASCII(tagId, pSymbol))->
+				StoreVariable<TypeDef>(count, variable, buff, bytesBuff));
+			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SHORT: {

@@ -25,6 +25,8 @@ protected:
 	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked);
 	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
 		Tag(typeId, tagId, pSymbol, pValue, pValue->Reference()) {}
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol) :
+		Tag(typeId, tagId, pSymbol, Value::nil(), Value::nil()) {}
 	// Copy constructor/operator
 	Tag(const Tag& src) = delete;
 	Tag& operator=(const Tag& src) = delete;
@@ -34,18 +36,14 @@ protected:
 protected:
 	~Tag() = default;
 public:
-	// static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol,
-	// 									Value* pValue, Value* pValueCooked);
-	// static Tag* Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue) {
-	// 	return Create(typeId, tagId, pSymbol, pValue, pValue->Reference());
-	// }
-public:
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Value& GetValue() const { return *_pValue; }
 	const Value& GetValueCooked() const { return *_pValueCooked; }
-	void SetValue(Value* pValue) { _pValue.reset(pValue); }
+	void SetValue(Value* pValue) {
+		_pValue.reset(pValue); _pValueCooked.reset(pValue->Reference());
+	}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const = 0;
 	virtual bool WriteToStream(Stream& stream) const = 0;
@@ -64,24 +62,62 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
-	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
-		Tag(TypeId::BYTE, tagId, pSymbol, pValue) {}
+	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::BYTE, tagId, pSymbol) {}
 public:
+	template<typename TypeDef> inline Tag* StoreVariable(
+		UInt32 count, const typename TypeDef::Variable& variable,
+		const UInt8* buff, size_t bytesBuff);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_BYTE::StoreVariable(
+	UInt32 count, const typename TypeDef::Variable& variable,
+	const UInt8* buff, size_t bytesBuff)
+{
+	const UInt8* pBuff = variable.BYTE;
+	if (count > 4) {
+		size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+		if (offset + count * sizeof(UInt8) > bytesBuff) {
+			IssueError_InvalidFormat();
+			return nullptr;
+		}
+		pBuff = buff + offset;
+	}
+	SetValue(new Value_Binary(Binary(pBuff, count)));
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_ASCII
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
-	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol, Value* pValue) :
-		Tag(TypeId::ASCII, tagId, pSymbol, pValue) {}
+	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::ASCII, tagId, pSymbol) {}
 public:
+	template<typename TypeDef> inline Tag* StoreVariable(
+		UInt32 count, const typename TypeDef::Variable& variable,
+		const UInt8* buff, size_t bytesBuff);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool WriteToStream(Stream& stream) const override;
 };
+
+template<typename TypeDef> Tag* Tag_ASCII::StoreVariable(
+	UInt32 count, const typename TypeDef::Variable& variable,
+	const UInt8* buff, size_t bytesBuff)
+{
+	const char* pBuff = variable.ASCII;
+	if (count > 4) {
+		size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+		if (offset + count * sizeof(char) > bytesBuff) {
+			IssueError_InvalidFormat();
+			return nullptr;
+		}
+		pBuff = reinterpret_cast<const char*>(buff + offset);
+	}
+	SetValue(new Value_String(String(pBuff, count)));
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // Tag_SHORT

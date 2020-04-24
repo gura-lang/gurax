@@ -13,33 +13,6 @@ Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Valu
 {
 }
 
-#if 0
-Tag* Tag::Create(UInt typeId, UInt16 tagId, const Symbol* pSymbol, Value* pValue, Value* pValueCooked)
-{
-	switch (typeId) {
-	case TypeId::BYTE:
-		return new Tag_BYTE(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::ASCII:
-		return new Tag_ASCII(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::SHORT:
-		return new Tag_SHORT(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::LONG:
-		return new Tag_LONG(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::RATIONAL:
-		return new Tag_RATIONAL(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::UNDEFINED:
-		return new Tag_UNDEFINED(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::SLONG:
-		return new Tag_SLONG(tagId, pSymbol, pValue, pValueCooked);
-	case TypeId::SRATIONAL:
-		return new Tag_SRATIONAL(tagId, pSymbol, pValue, pValueCooked);
-	default:
-		break;
-	}
-	return nullptr;
-}
-#endif
-
 bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax)
 {
 	auto CheckSub = [numMin, numMax](const Value& value) {
