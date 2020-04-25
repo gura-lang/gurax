@@ -47,7 +47,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			const Symbol* pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
 			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
 			if (!pIFD) return nullptr;
-			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, new Value_IFD(pIFD.release())));
+			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, offset, new Value_IFD(pIFD.release())));
 			pTagOwner->push_back(pTag.release());
 			continue;
 		}
@@ -55,42 +55,42 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		RefPtr<Tag> pTag;
 		switch (typeId) {
 		case TypeId::BYTE: {
-			pTag.reset((new Tag_BYTE(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_BYTE(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::ASCII: {
-			pTag.reset((new Tag_ASCII(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_ASCII(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SHORT: {
-			pTag.reset((new Tag_SHORT(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_SHORT(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::LONG: {
-			pTag.reset((new Tag_LONG(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_LONG(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::RATIONAL: {
-			pTag.reset((new Tag_RATIONAL(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_RATIONAL(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::UNDEFINED: {
-			pTag.reset((new Tag_UNDEFINED(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_UNDEFINED(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SLONG: {
-			pTag.reset((new Tag_SLONG(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_SLONG(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::SRATIONAL: {
-			pTag.reset((new Tag_SRATIONAL(tagId, pSymbol))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			pTag.reset((new Tag_SRATIONAL(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			if (!pTag) return nullptr;
 			break;
 		}
