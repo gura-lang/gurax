@@ -187,6 +187,25 @@ template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff)
 
 template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff) const
 {
+	typename TypeDef::TagPacked tagPacked;
+	if (GetValue().IsList()) {
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+		UInt32 count = static_cast<UInt32>(valueOwner.size());
+		tagPacked = MakeTagPacked<TypeDef>(count);
+		if (count == 1) {
+			UInt32 num = Value_Number::GetNumber<UInt32>(*valueOwner[0]);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
+		} else {
+			UInt32 offset = static_cast<UInt32>(_offsetToValue);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+		}
+	} else {
+		UInt32 num = Value_Number::GetNumber<UInt32>(GetValue());
+		UInt32 count = 1;
+		tagPacked = MakeTagPacked<TypeDef>(count);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
+	}
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
@@ -217,6 +236,12 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialB
 
 template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(SerialBuff& serialBuff) const
 {
+	UInt32 count = GetValue().IsList()?
+		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	UInt32 offset = static_cast<UInt32>(_offsetToValue);
+	Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
@@ -245,6 +270,16 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePre(SerialBuff& serial
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(SerialBuff& serialBuff) const
 {
+	const Binary& buff = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buff.size());
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	if (count <= 4) {
+		::memcpy(tagPacked.variable.BYTE, buff.data(), count);
+	} else {
+		UInt32 offset = static_cast<UInt32>(_offsetToValue);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+	}
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
@@ -273,6 +308,25 @@ template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff
 
 template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff) const
 {
+	typename TypeDef::TagPacked tagPacked;
+	if (GetValue().IsList()) {
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+		UInt32 count = static_cast<UInt32>(valueOwner.size());
+		tagPacked = MakeTagPacked<TypeDef>(count);
+		if (count == 1) {
+			Int32 num = Value_Number::GetNumber<Int32>(*valueOwner[0]);
+			Gurax_PackInt32(tagPacked.variable.LONG.num, num);
+		} else {
+			UInt32 offset = static_cast<UInt32>(_offsetToValue);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+		}
+	} else {
+		Int32 num = Value_Number::GetNumber<Int32>(GetValue());
+		UInt32 count = 1;
+		tagPacked = MakeTagPacked<TypeDef>(count);
+		Gurax_PackInt32(tagPacked.variable.LONG.num, num);
+	}
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
@@ -303,6 +357,12 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serial
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(SerialBuff& serialBuff) const
 {
+	UInt32 count = GetValue().IsList()?
+		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	UInt32 offset = static_cast<UInt32>(_offsetToValue);
+	Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
