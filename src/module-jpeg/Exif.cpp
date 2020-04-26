@@ -129,7 +129,7 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			auto& hdr = *reinterpret_cast<const TypeDef_BE::TIFFHeader*>(pBuff + 2);
-			_bigEndianFlag = true;
+			_beFlag = true;
 			size_t offset = Gurax_UnpackUInt32(hdr.offset0thIFD);
 			if (Gurax_UnpackUInt16(hdr.code) != 0x002a || bytesAvail < offset) {
 				IssueError_InvalidFormat();
@@ -165,9 +165,32 @@ bool Exif::AnalyzeBinary()
 	return true;
 }
 
-bool Exif::Write(Stream& stream) const
+bool Exif::WriteToStream(Stream& stream) const
 {
-	return Segment::Write(stream);
+	TypeDef_BE::SHORT packed;
+	Gurax_PackUInt16(packed.num, _marker);
+	if (!stream.Write(&packed, sizeof(packed))) return false;
+	if (!stream.Write("Exif\0\0", 6)) return false;
+	const UInt32 offset0thIFD = 2 + sizeof(TypeDef_BE::TIFFHeader);
+	if (_beFlag) {
+		if (!stream.Write("MM", 2)) return false;
+		TypeDef_BE::TIFFHeader hdr;
+		Gurax_PackUInt16(hdr.code, 0x002a);
+		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
+		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+	} else {
+		if (!stream.Write("II", 2)) return false;
+		TypeDef_LE::TIFFHeader hdr;
+		Gurax_PackUInt16(hdr.code, 0x002a);
+		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
+		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+	}
+	const UInt32 offset = offset0thIFD;
+	for (IFD* pIFD : GetIFDOwner()) {
+		pIFD->WriteToStream(stream, offset, _beFlag);
+	}
+	//return Segment::WriteToStream(stream);
+	return true;
 }
 
 String Exif::ToString(const StringStyle& ss) const

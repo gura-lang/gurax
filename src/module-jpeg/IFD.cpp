@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-bool IFD::Serialize(Stream& stream, size_t offset, bool beFlag)
+bool IFD::WriteToStream(Stream& stream, size_t offset, bool beFlag)
 {
 	SerialBuff serialBuff;
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->SerializePre(serialBuff,
-			offset + GetTagOwner().size() * BytesTag, beFlag)) return false;
+			offset + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked), beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(serialBuff, offset, beFlag)) return false;

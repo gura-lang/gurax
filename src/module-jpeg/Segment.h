@@ -38,7 +38,7 @@ public:
 	virtual bool IsExif() const { return false; }
 	virtual Value* CreateValue() const;
 	virtual bool AnalyzeBinary() { return true; }
-	virtual bool Write(Stream& stream) const;
+	virtual bool WriteToStream(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Segment& other) const { return this == &other; }

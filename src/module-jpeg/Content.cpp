@@ -68,7 +68,7 @@ bool Content::Write(Stream& stream) const
 	Gurax_PackUInt16(buffShort.num, Marker::SOI);
 	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
 	for (auto pSegment : GetSegmentOwner()) {
-		if (!pSegment->Write(stream)) return false;
+		if (!pSegment->WriteToStream(stream)) return false;
 	}
 	return _pBuffImage? stream.Write(_pBuffImage->GetBinary()) : true;
 }

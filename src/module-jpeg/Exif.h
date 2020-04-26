@@ -17,11 +17,11 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Exif);
 protected:
-	bool _bigEndianFlag;
+	bool _beFlag;
 	IFDOwner _ifdOwner;
 public:
 	// Constructor
-	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff), _bigEndianFlag(false) {}
+	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff), _beFlag(false) {}
 	// Copy constructor/operator
 	Exif(const Exif& src) = delete;
 	Exif& operator=(const Exif& src) = delete;
@@ -34,7 +34,7 @@ public:
 	virtual bool IsExif() const override { return true; }
 	virtual Value* CreateValue() const override;
 	virtual bool AnalyzeBinary() override;
-	virtual bool Write(Stream& stream) const override;
+	virtual bool WriteToStream(Stream& stream) const override;
 public:
 	const IFDOwner& GetIFDOwner() const { return _ifdOwner; }
 protected:

@@ -17,11 +17,11 @@ Value* Segment::CreateValue() const
 	return new Value_Segment(Reference());
 }
 
-bool Segment::Write(Stream& stream) const
+bool Segment::WriteToStream(Stream& stream) const
 {
-	TypeDef_BE::SHORT buffShort;
-	Gurax_PackUInt16(buffShort.num, _marker);
-	if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
+	TypeDef_BE::SHORT packed;
+	Gurax_PackUInt16(packed.num, _marker);
+	if (!stream.Write(&packed, sizeof(packed))) return false;
 	if (_pBuff) {
 		const Binary& buff = _pBuff->GetBinary();
 		size_t bytes = buff.size() + 2;
@@ -29,8 +29,8 @@ bool Segment::Write(Stream& stream) const
 			Error::Issue(ErrorType::FormatError, "too large segment");
 			return false;
 		}
-		Gurax_PackUInt16(buffShort.num, static_cast<UInt16>(bytes));
-		if (!stream.Write(&buffShort, sizeof(buffShort))) return false;
+		Gurax_PackUInt16(packed.num, static_cast<UInt16>(bytes));
+		if (!stream.Write(&packed, sizeof(packed))) return false;
 		if (!stream.Write(buff)) return false;
 	}
 	return true;
