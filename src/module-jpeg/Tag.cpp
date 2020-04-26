@@ -262,6 +262,16 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialBuff)
 {
+	if (!GetValue().IsList()) return true;
+	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+	typename TypeDef::RATIONAL packed;
+	for (const Value* pValue : valueOwner) {
+		const Rational& num = Value_Rational::GetRational(*pValue);
+		int numer = num.GetNumer(), denom = num.GetDenom();
+		Gurax_PackUInt32(packed.numerator, numer);
+		Gurax_PackUInt32(packed.denominator, denom);
+		serialBuff.GetBuffData_RATIONAL().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+	}
 	return true;
 }
 
@@ -393,6 +403,16 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serialBuff)
 {
+	if (!GetValue().IsList()) return true;
+	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+	typename TypeDef::SRATIONAL packed;
+	for (const Value* pValue : valueOwner) {
+		const Rational& num = Value_Rational::GetRational(*pValue);
+		int numer = num.GetNumer(), denom = num.GetDenom();
+		Gurax_PackUInt32(packed.numerator, numer);
+		Gurax_PackUInt32(packed.denominator, denom);
+		serialBuff.GetBuffData_SRATIONAL().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+	}
 	return true;
 }
 
