@@ -11,6 +11,39 @@ Gurax_BeginModuleScope(jpeg)
 class IFD;
 
 //------------------------------------------------------------------------------
+// SerialBuff
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE SerialBuff : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(SerialBuff);
+protected:
+	// Constructor
+	SerialBuff() {}
+	// Copy constructor/operator
+	SerialBuff(const SerialBuff& src) = delete;
+	SerialBuff& operator=(const SerialBuff& src) = delete;
+	// Move constructor/operator
+	SerialBuff(SerialBuff&& src) = delete;
+	SerialBuff& operator=(SerialBuff&& src) noexcept = delete;
+protected:
+	~SerialBuff() = default;
+protected:
+	Binary _buff;
+	Binary _buffData;
+public:
+	Binary& GetBuff() { return _buff; }
+	Binary& GetBuffData_BYTE() { return _buffData; }
+	Binary& GetBuffData_ASCII() { return _buffData; }
+	Binary& GetBuffData_SHORT() { return _buffData; }
+	Binary& GetBuffData_LONG() { return _buffData; }
+	Binary& GetBuffData_RATIONAL() { return _buffData; }
+	Binary& GetBuffData_UNDEFINED() { return _buffData; }
+	Binary& GetBuffData_SLONG() { return _buffData; }
+	Binary& GetBuffData_SRATIONAL() { return _buffData; }
+};
+
+//------------------------------------------------------------------------------
 // Tag
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag : public Referable {
@@ -77,8 +110,8 @@ public:
 	}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const = 0;
-	virtual bool SerializePre(IFD& ifd) const = 0;
-	virtual bool Serialize(IFD& ifd) const = 0;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) = 0;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const = 0;
 protected:
 	static bool CheckRangedNumber(const Value& value, Double numMin, Double numMax);
 public:
@@ -106,8 +139,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_BYTE::ReadFromBuff(
@@ -139,8 +175,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_ASCII::ReadFromBuff(
@@ -172,8 +211,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_SHORT::ReadFromBuff(
@@ -219,8 +261,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_LONG::ReadFromBuff(
@@ -262,8 +307,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_RATIONAL::ReadFromBuff(
@@ -308,8 +356,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_UNDEFINED::ReadFromBuff(
@@ -341,8 +392,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_SLONG::ReadFromBuff(
@@ -384,8 +438,11 @@ public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
@@ -429,8 +486,11 @@ public:
 		Tag(TypeId::IFD, tagId, pSymbol, offset, pValue) { _offsetToValue = offsetToValue; }
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
-	virtual bool SerializePre(IFD& ifd) const override;
-	virtual bool Serialize(IFD& ifd) const override;
+	virtual bool SerializePre(SerialBuff& serialBuff, bool beFlag) override;
+	virtual bool Serialize(SerialBuff& serialBuff, bool beFlag) const override;
+protected:
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff);
+	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff) const;
 };
 
 //------------------------------------------------------------------------------

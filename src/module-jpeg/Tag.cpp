@@ -51,14 +51,24 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-bool Tag_BYTE::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_BYTE::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_BYTE::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_BYTE::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_BYTE::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -69,14 +79,24 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_String);
 }
 
-bool Tag_ASCII::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_ASCII::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_ASCII::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_ASCII::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_ASCII::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -87,14 +107,24 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x0000, 0xffff);
 }
 
-bool Tag_SHORT::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_SHORT::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_SHORT::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_SHORT::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_SHORT::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_SHORT::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -105,14 +135,24 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 }
 
-bool Tag_LONG::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_LONG::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_LONG::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_LONG::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -125,14 +165,24 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-bool Tag_RATIONAL::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_RATIONAL::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_RATIONAL::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_RATIONAL::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -143,14 +193,24 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-bool Tag_UNDEFINED::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_UNDEFINED::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_UNDEFINED::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_UNDEFINED::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -161,14 +221,24 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 }
 
-bool Tag_SLONG::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_SLONG::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_SLONG::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_SLONG::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -181,14 +251,24 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-bool Tag_SRATIONAL::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_SRATIONAL::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_SRATIONAL::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_SRATIONAL::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
@@ -199,14 +279,24 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
-bool Tag_IFD::SerializePre(IFD& ifd) const
+template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff)
 {
 	return true;
 }
 
-bool Tag_IFD::Serialize(IFD& ifd) const
+template<typename TypeDef> bool Tag_IFD::DoSerialize(SerialBuff& serialBuff) const
 {
 	return true;
+}
+
+bool Tag_IFD::SerializePre(SerialBuff& serialBuff, bool beFlag)
+{
+	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff) : DoSerializePre<TypeDef_LE>(serialBuff);
+}
+
+bool Tag_IFD::Serialize(SerialBuff& serialBuff, bool beFlag) const
+{
+	return beFlag? DoSerialize<TypeDef_BE>(serialBuff) : DoSerialize<TypeDef_LE>(serialBuff);
 }
 
 //------------------------------------------------------------------------------
