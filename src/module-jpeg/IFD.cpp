@@ -11,9 +11,9 @@ Gurax_BeginModuleScope(jpeg)
 bool IFD::WriteToStream(Stream& stream, size_t offset, bool beFlag)
 {
 	SerialBuff serialBuff;
+	size_t offsetToData = offset + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->SerializePre(serialBuff,
-			offset + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked), beFlag)) return false;
+		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(serialBuff, offset, beFlag)) return false;
