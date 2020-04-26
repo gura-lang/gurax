@@ -91,6 +91,36 @@ Gurax_ImplementPropertyGetter(Tag, name)
 	return new Value_String(valueThis.GetTag().GetSymbol()->GetName());
 }
 
+// jpeg.Tag#offset
+Gurax_DeclareProperty_R(Tag, offset)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, offset)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetTag().GetOffset());
+}
+
+// jpeg.Tag#offsetToValue
+Gurax_DeclareProperty_R(Tag, offsetToValue)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, offsetToValue)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetTag().GetOffsetToValue());
+}
+
 // jpeg.Tag#symbol
 Gurax_DeclareProperty_R(Tag, symbol)
 {
@@ -151,6 +181,8 @@ void VType_Tag::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Tag, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Tag, name));
+	Assign(Gurax_CreateProperty(Tag, offset));
+	Assign(Gurax_CreateProperty(Tag, offsetToValue));
 	Assign(Gurax_CreateProperty(Tag, symbol));
 	Assign(Gurax_CreateProperty(Tag, type));
 	Assign(Gurax_CreateProperty(Tag, value));

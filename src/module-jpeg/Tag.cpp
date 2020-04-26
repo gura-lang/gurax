@@ -8,9 +8,10 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Tag
 //------------------------------------------------------------------------------
-Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, size_t offset, Value* pValue, Value* pValueCooked) :
-	_typeId(typeId), _tagId(tagId), _pSymbol(pSymbol), _offset(offset), _offsetValue(offset),
-	_pValue(pValue), _pValueCooked(pValueCooked)
+Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol,
+	size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked) :
+	_typeId(typeId), _tagId(tagId), _pSymbol(pSymbol),
+	_offset(offset), _offsetToValue(offsetToValue), _pValue(pValue), _pValueCooked(pValueCooked)
 {
 }
 
@@ -50,7 +51,12 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-bool Tag_BYTE::WriteToStream(Stream& stream) const
+bool Tag_BYTE::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_BYTE::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -63,7 +69,12 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_String);
 }
 
-bool Tag_ASCII::WriteToStream(Stream& stream) const
+bool Tag_ASCII::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_ASCII::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -76,7 +87,12 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x0000, 0xffff);
 }
 
-bool Tag_SHORT::WriteToStream(Stream& stream) const
+bool Tag_SHORT::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_SHORT::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -89,7 +105,12 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 }
 
-bool Tag_LONG::WriteToStream(Stream& stream) const
+bool Tag_LONG::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_LONG::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -104,7 +125,12 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-bool Tag_RATIONAL::WriteToStream(Stream& stream) const
+bool Tag_RATIONAL::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_RATIONAL::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -117,7 +143,12 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-bool Tag_UNDEFINED::WriteToStream(Stream& stream) const
+bool Tag_UNDEFINED::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_UNDEFINED::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -130,7 +161,12 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 }
 
-bool Tag_SLONG::WriteToStream(Stream& stream) const
+bool Tag_SLONG::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_SLONG::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -145,7 +181,12 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-bool Tag_SRATIONAL::WriteToStream(Stream& stream) const
+bool Tag_SRATIONAL::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_SRATIONAL::Serialize(IFD& ifd) const
 {
 	return true;
 }
@@ -158,7 +199,12 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
-bool Tag_IFD::WriteToStream(Stream& stream) const
+bool Tag_IFD::SerializePre(IFD& ifd) const
+{
+	return true;
+}
+
+bool Tag_IFD::Serialize(IFD& ifd) const
 {
 	return true;
 }

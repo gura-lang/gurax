@@ -43,11 +43,11 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		//::printf("[%04x] %s type:%04x, count=%d\n",
 		//		 tagId, (pTagInfo == nullptr)? "(unknown)" : pTagInfo->name, typeId, count);
 		if (pTagInfo && pTagInfo->nameForIFD) {
-			size_t offset = Gurax_UnpackUInt32(variable.LONG.num);
+			size_t offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 			const Symbol* pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offset));
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offsetToValue));
 			if (!pIFD) return nullptr;
-			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, offset, new Value_IFD(pIFD.release())));
+			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, offset, offsetToValue, new Value_IFD(pIFD.release())));
 			pTagOwner->push_back(pTag.release());
 			continue;
 		}

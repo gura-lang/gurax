@@ -21,8 +21,13 @@ TestCase('jpeg.Content#segments') {
 
 PrintIFD(ifd:jpeg.IFD, indentLevel:Number) = {
 	ifd.tags.Each {|tag|
-		Printf('%*s%s [%s]: %s\n',
-			indentLevel * 2, '', tag.name, tag.type.name, tag.value)
+		if (tag.offset == tag.offsetToValue) {
+			Printf('%*s%04x:%s [%s]: %s\n',
+				indentLevel * 2, '', tag.offset, tag.name, tag.type.name, tag.value)
+		} else {
+			Printf('%*s%04x:%s [%s,%04x]: %s\n',
+				indentLevel * 2, '', tag.offset, tag.name, tag.type.name, tag.offsetToValue, tag.value)
+		}
 		if (tag.type == `IFD) {
 			PrintIFD(tag.value, indentLevel + 1)
 		}
@@ -31,6 +36,7 @@ PrintIFD(ifd:jpeg.IFD, indentLevel:Number) = {
 
 TestCase('jpeg.Content#exif') {
 	exif = jpeg.Content('test.jpg').exif
+	(exif.parameter + 6).Dump()
 	PrintIFD(exif.ifd0, 0)
 	Println('-----')
 	PrintIFD(exif.ifd1, 0)
