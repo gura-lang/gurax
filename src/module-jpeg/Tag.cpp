@@ -53,7 +53,12 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff)
 {
-	_offsetToValue = _offset;
+	const Binary& buff = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buff.size());
+	if (count > 4) {
+		_offsetToValue = serialBuff.GetBuffData_BYTE().size();
+		serialBuff.GetBuffData_BYTE().append(buff);
+	}
 	return true;
 }
 
@@ -92,6 +97,12 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff)
 {
+	const String& str = Value_String::GetString(GetValue());
+	UInt32 count = static_cast<UInt32>(str.size());
+	if (count > 4) {
+		_offsetToValue = serialBuff.GetBuffData_BYTE().size();
+		serialBuff.GetBuffData_BYTE().append(reinterpret_cast<const UInt8*>(str.data()), count);
+	}
 	return true;
 }
 
@@ -130,6 +141,16 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_SHORT::DoSerializePre(SerialBuff& serialBuff)
 {
+	if (!GetValue().IsList()) return true;
+	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+	UInt32 count = static_cast<UInt32>(valueOwner.size());
+	if (count <= 2) return true;
+	typename TypeDef::SHORT packed;
+	for (const Value* pValue : valueOwner) {
+		UInt16 num = Value_Number::GetNumber<UInt16>(*pValue);
+		Gurax_PackUInt16(packed.num, num);
+		serialBuff.GetBuffData_SHORT().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+	}
 	return true;
 }
 
@@ -182,6 +203,16 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff)
 {
+	if (!GetValue().IsList()) return true;
+	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+	UInt32 count = static_cast<UInt32>(valueOwner.size());
+	if (count <= 1) return true;
+	typename TypeDef::LONG packed;
+	for (const Value* pValue : valueOwner) {
+		UInt32 num = Value_Number::GetNumber<UInt32>(*pValue);
+		Gurax_PackUInt32(packed.num, num);
+		serialBuff.GetBuffData_LONG().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+	}
 	return true;
 }
 
@@ -303,6 +334,16 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff)
 {
+	if (!GetValue().IsList()) return true;
+	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+	UInt32 count = static_cast<UInt32>(valueOwner.size());
+	if (count <= 1) return true;
+	typename TypeDef::SLONG packed;
+	for (const Value* pValue : valueOwner) {
+		Int32 num = Value_Number::GetNumber<Int32>(*pValue);
+		Gurax_PackInt32(packed.num, num);
+		serialBuff.GetBuffData_SLONG().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+	}
 	return true;
 }
 
