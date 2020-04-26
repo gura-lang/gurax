@@ -122,12 +122,23 @@ public:
 		return SymbolAssoc_TypeId::GetInstance().ToSymbol(typeId);
 	}
 public:
+	template<typename TypeDef> inline typename TypeDef::TagPacked MakeTagPacked(UInt32 count) const;
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Tag& other) const { return this == &other; }
 	bool IsEqualTo(const Tag& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Tag& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+template<typename TypeDef> typename TypeDef::TagPacked Tag::MakeTagPacked(UInt32 count) const
+{
+	typename TypeDef::TagPacked tagPacked = { 0 };
+	Gurax_PackUInt16(tagPacked.tagId, _tagId);
+	Gurax_PackUInt16(tagPacked.typeId, _typeId);
+	Gurax_PackUInt32(tagPacked.count, count);
+	return tagPacked;
+}
 
 //------------------------------------------------------------------------------
 // Tag_BYTE

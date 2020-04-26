@@ -53,11 +53,22 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff)
 {
+	_offsetToValue = _offset;
 	return true;
 }
 
 template<typename TypeDef> bool Tag_BYTE::DoSerialize(SerialBuff& serialBuff) const
 {
+	const Binary& buff = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buff.size());
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	if (_offsetToValue == _offset) {
+		::memcpy(tagPacked.variable.BYTE, buff.data(), buff.size());
+	} else {
+		UInt32 offset = static_cast<UInt32>(_offsetToValue);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+	}
+	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
 	return true;
 }
 
