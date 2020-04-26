@@ -8,15 +8,27 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-bool IFD::Serialize(SerialBuff& serialBuff, bool beFlag)
+bool IFD::Serialize(Stream& stream, size_t offset, bool beFlag)
 {
+	SerialBuff serialBuff;
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->SerializePre(serialBuff, beFlag)) return false;
+		if (!pTag->SerializePre(serialBuff,
+			offset + GetTagOwner().size() * BytesTag, beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->Serialize(serialBuff, beFlag)) return false;
+		if (!pTag->Serialize(serialBuff, offset, beFlag)) return false;
 	}
-	return true;
+	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
+	if (beFlag) {
+		TypeDef_BE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+	} else {
+		TypeDef_LE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+	}
+	return serialBuff.WriteToStream(stream);
 }
 
 void IFD::PrepareTagMap()
