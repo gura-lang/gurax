@@ -25,9 +25,7 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 		serialBuff.GetBuff().Append(&hdr, sizeof(hdr));
 	}
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->IsIFD()) {
-			if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
-		}
+		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(serialBuff, 0, beFlag)) return false;

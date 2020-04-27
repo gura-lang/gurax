@@ -478,6 +478,7 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 
 template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
+	// nothing to do
 	return true;
 }
 
