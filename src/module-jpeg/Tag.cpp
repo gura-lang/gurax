@@ -61,12 +61,12 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	const Binary& buff = Value_Binary::GetBinary(GetValue());
 	UInt32 count = static_cast<UInt32>(buff.size());
 	if (count > 4) {
-		_offsetToValue = serialBuff.GetBuffData_BYTE().size();
+		_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
 		serialBuff.GetBuffData_BYTE().append(buff);
 	}
 	return true;
@@ -83,7 +83,7 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(SerialBuff& serialBuff, si
 		UInt32 offset = static_cast<UInt32>(_offsetToValue);
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -105,13 +105,13 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_String);
 }
 
-template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	const String& str = Value_String::GetString(GetValue());
 	UInt32 count = static_cast<UInt32>(str.size()) + 1;
 	if (count > 4) {
-		_offsetToValue = serialBuff.GetBuffData_BYTE().size();
-		serialBuff.GetBuffData_BYTE().append(reinterpret_cast<const UInt8*>(str.data()), count);
+		_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
+		serialBuff.GetBuffData_BYTE().Append(str.data(), count);
 	}
 	return true;
 }
@@ -127,7 +127,7 @@ template<typename TypeDef> bool Tag_ASCII::DoSerialize(SerialBuff& serialBuff, s
 		UInt32 offset = static_cast<UInt32>(_offsetToValue);
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -149,17 +149,18 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x0000, 0xffff);
 }
 
-template<typename TypeDef> bool Tag_SHORT::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_SHORT::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	if (!GetValue().IsList()) return true;
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	UInt32 count = static_cast<UInt32>(valueOwner.size());
 	if (count <= 2) return true;
+	_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
 	typename TypeDef::SHORT packed;
 	for (const Value* pValue : valueOwner) {
 		UInt16 num = Value_Number::GetNumber<UInt16>(*pValue);
 		Gurax_PackUInt16(packed.num, num);
-		serialBuff.GetBuffData_SHORT().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+		serialBuff.GetBuffData_SHORT().Append(&packed, sizeof(packed));
 	}
 	return true;
 }
@@ -189,7 +190,7 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(SerialBuff& serialBuff, s
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackUInt16(tagPacked.variable.SHORT.num, num);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -211,17 +212,18 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 }
 
-template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	if (!GetValue().IsList()) return true;
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	UInt32 count = static_cast<UInt32>(valueOwner.size());
 	if (count <= 1) return true;
+	_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
 	typename TypeDef::LONG packed;
 	for (const Value* pValue : valueOwner) {
 		UInt32 num = Value_Number::GetNumber<UInt32>(*pValue);
 		Gurax_PackUInt32(packed.num, num);
-		serialBuff.GetBuffData_LONG().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+		serialBuff.GetBuffData_LONG().Append(&packed, sizeof(packed));
 	}
 	return true;
 }
@@ -246,7 +248,7 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff, si
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -270,17 +272,26 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
-	if (!GetValue().IsList()) return true;
-	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
-	typename TypeDef::RATIONAL packed;
-	for (const Value* pValue : valueOwner) {
-		const Rational& num = Value_Rational::GetRational(*pValue);
+	_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
+	if (GetValue().IsList()) {
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
+		typename TypeDef::RATIONAL packed;
+		for (const Value* pValue : valueOwner) {
+			const Rational& num = Value_Rational::GetRational(*pValue);
+			int numer = num.GetNumer(), denom = num.GetDenom();
+			Gurax_PackUInt32(packed.numerator, numer);
+			Gurax_PackUInt32(packed.denominator, denom);
+			serialBuff.GetBuffData_RATIONAL().Append(&packed, sizeof(packed));
+		}
+	} else {
+		typename TypeDef::RATIONAL packed;
+		const Rational& num = Value_Rational::GetRational(GetValue());
 		int numer = num.GetNumer(), denom = num.GetDenom();
 		Gurax_PackUInt32(packed.numerator, numer);
 		Gurax_PackUInt32(packed.denominator, denom);
-		serialBuff.GetBuffData_RATIONAL().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+		serialBuff.GetBuffData_RATIONAL().Append(&packed, sizeof(packed));
 	}
 	return true;
 }
@@ -292,7 +303,7 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(SerialBuff& serialBuff
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
 	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -314,8 +325,14 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
+	const Binary& buff = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buff.size());
+	if (count > 4) {
+		_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
+		serialBuff.GetBuffData_BYTE().append(buff);
+	}
 	return true;
 }
 
@@ -330,7 +347,7 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(SerialBuff& serialBuf
 		UInt32 offset = static_cast<UInt32>(_offsetToValue);
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -352,17 +369,18 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 }
 
-template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	if (!GetValue().IsList()) return true;
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	UInt32 count = static_cast<UInt32>(valueOwner.size());
 	if (count <= 1) return true;
+	_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
 	typename TypeDef::SLONG packed;
 	for (const Value* pValue : valueOwner) {
 		Int32 num = Value_Number::GetNumber<Int32>(*pValue);
 		Gurax_PackInt32(packed.num, num);
-		serialBuff.GetBuffData_SLONG().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+		serialBuff.GetBuffData_SLONG().Append(&packed, sizeof(packed));
 	}
 	return true;
 }
@@ -387,7 +405,7 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff, s
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackInt32(tagPacked.variable.LONG.num, num);
 	}
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -411,8 +429,9 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
+	_offsetToValue = serialBuff.CalcOffsetToValue(offsetToData);
 	if (!GetValue().IsList()) return true;
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	typename TypeDef::SRATIONAL packed;
@@ -421,7 +440,7 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serial
 		int numer = num.GetNumer(), denom = num.GetDenom();
 		Gurax_PackUInt32(packed.numerator, numer);
 		Gurax_PackUInt32(packed.denominator, denom);
-		serialBuff.GetBuffData_SRATIONAL().append(reinterpret_cast<const UInt8*>(&packed), sizeof(packed));
+		serialBuff.GetBuffData_SRATIONAL().Append(&packed, sizeof(packed));
 	}
 	return true;
 }
@@ -433,7 +452,7 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(SerialBuff& serialBuf
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
 	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
-	serialBuff.GetBuff().append(reinterpret_cast<const UInt8*>(&tagPacked), sizeof(tagPacked));
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -455,7 +474,7 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
-template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff, size_t offset)
+template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff, size_t offsetToData)
 {
 	return true;
 }

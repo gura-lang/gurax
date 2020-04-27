@@ -38,6 +38,9 @@ public:
 	Binary& GetBuffData_UNDEFINED() { return _buffData; }
 	Binary& GetBuffData_SLONG() { return _buffData; }
 	Binary& GetBuffData_SRATIONAL() { return _buffData; }
+	size_t CalcOffsetToValue(size_t offsetToData) {
+		return offsetToData + _buffData.size();
+	}
 public:
 	bool WriteToBinary(Binary& buff);
 };
@@ -152,7 +155,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -188,7 +191,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -224,7 +227,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -274,7 +277,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -320,7 +323,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -369,7 +372,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -405,7 +408,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -451,7 +454,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
@@ -499,7 +502,7 @@ public:
 	virtual bool SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag) override;
 	virtual bool Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const override;
 protected:
-	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offset);
+	template<typename TypeDef> bool DoSerializePre(SerialBuff& serialBuff, size_t offsetToData);
 	template<typename TypeDef> bool DoSerialize(SerialBuff& serialBuff, size_t offset) const;
 };
 
