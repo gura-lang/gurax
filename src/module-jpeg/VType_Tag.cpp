@@ -193,7 +193,7 @@ Gurax_DeclareProperty_R(Tag, typeId)
 Gurax_ImplementPropertyGetter(Tag, typeId)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetTag().GetTypeId());
+	return new Value_Number(valueThis.GetTag().GetTypeIdRaw());
 }
 
 // jpeg.Tag#value

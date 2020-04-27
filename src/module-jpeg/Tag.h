@@ -103,6 +103,7 @@ public:
 	void ClearOffset() { _offset = _offsetToValue = 0; }
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
+	UInt16 GetTypeIdRaw() const { return (_typeId == TypeId::IFD)? TypeId::LONG : _typeId; }
 	UInt32 GetCount() const { return _count; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	size_t GetOffset() const { return _offset; }
@@ -140,7 +141,7 @@ template<typename TypeDef> typename TypeDef::TagPacked Tag::MakeTagPacked(UInt32
 {
 	typename TypeDef::TagPacked tagPacked = { 0 };
 	Gurax_PackUInt16(tagPacked.tagId, _tagId);
-	Gurax_PackUInt16(tagPacked.typeId, _typeId);
+	Gurax_PackUInt16(tagPacked.typeId, GetTypeIdRaw());
 	Gurax_PackUInt32(tagPacked.count, count);
 	return tagPacked;
 }

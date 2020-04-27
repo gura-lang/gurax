@@ -11,7 +11,19 @@ Gurax_BeginModuleScope(jpeg)
 bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 {
 	SerialBuff serialBuff;
-	size_t offsetToData = buff.size() + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
+	size_t offsetToData = buff.size() +
+					GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
+	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
+	UInt32 offsetNextIFD = 0;
+	if (beFlag) {
+		TypeDef_BE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		serialBuff.GetBuff().Append(&hdr, sizeof(hdr));
+	} else {
+		TypeDef_LE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		serialBuff.GetBuff().Append(&hdr, sizeof(hdr));
+	}
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->IsIFD()) {
 			if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
@@ -20,16 +32,17 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(serialBuff, 0, beFlag)) return false;
 	}
-	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
-	if (beFlag) {
-		TypeDef_BE::IFDHeader hdr;
-		Gurax_PackUInt16(hdr.tagCount, tagCount);
-		buff.Append(&hdr, sizeof(hdr));
-	} else {
-		TypeDef_LE::IFDHeader hdr;
-		Gurax_PackUInt16(hdr.tagCount, tagCount);
-		buff.Append(&hdr, sizeof(hdr));
-	}
+	do {
+		if (beFlag) {
+			TypeDef_BE::LONG packed;
+			Gurax_PackUInt32(packed.num, offsetNextIFD);
+			serialBuff.GetBuff().Append(&packed, sizeof(packed));
+		} else {
+			TypeDef_LE::LONG packed;
+			Gurax_PackUInt32(packed.num, offsetNextIFD);
+			serialBuff.GetBuff().Append(&packed, sizeof(packed));
+		}
+	} while (0);
 	return serialBuff.WriteToBinary(buff);
 }
 

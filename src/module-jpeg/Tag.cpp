@@ -483,6 +483,11 @@ template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff, 
 
 template<typename TypeDef> bool Tag_IFD::DoSerialize(SerialBuff& serialBuff, size_t offset) const
 {
+	UInt32 count = 1;
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
+	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
+	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
