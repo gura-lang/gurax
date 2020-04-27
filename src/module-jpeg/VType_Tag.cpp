@@ -76,6 +76,21 @@ Gurax_ImplementMethod(Tag, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// jpeg.Tag#count
+Gurax_DeclareProperty_R(Tag, count)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, count)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetTag().GetCount());
+}
+
 // jpeg.Tag#name
 Gurax_DeclareProperty_R(Tag, name)
 {
@@ -166,6 +181,21 @@ Gurax_ImplementPropertyGetter(Tag, type)
 	return new Value_Symbol(Tag::TypeIdToSymbol(valueThis.GetTag().GetTypeId()));
 }
 
+// jpeg.Tag#typeId
+Gurax_DeclareProperty_R(Tag, typeId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Tag, typeId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetTag().GetTypeId());
+}
+
 // jpeg.Tag#value
 Gurax_DeclareProperty_R(Tag, value)
 {
@@ -195,12 +225,14 @@ void VType_Tag::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Tag, MethodSkeleton));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Tag, count));
 	Assign(Gurax_CreateProperty(Tag, name));
 	Assign(Gurax_CreateProperty(Tag, offset));
 	Assign(Gurax_CreateProperty(Tag, offsetToValue));
 	Assign(Gurax_CreateProperty(Tag, symbol));
 	Assign(Gurax_CreateProperty(Tag, tagId));
 	Assign(Gurax_CreateProperty(Tag, type));
+	Assign(Gurax_CreateProperty(Tag, typeId));
 	Assign(Gurax_CreateProperty(Tag, value));
 }
 

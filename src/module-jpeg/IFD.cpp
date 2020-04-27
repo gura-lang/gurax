@@ -13,7 +13,9 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 	SerialBuff serialBuff;
 	size_t offsetToData = buff.size() + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
+		if (!pTag->IsIFD()) {
+			if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
+		}
 	}
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(serialBuff, 0, beFlag)) return false;
