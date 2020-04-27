@@ -165,31 +165,37 @@ bool Exif::AnalyzeBinary()
 	return true;
 }
 
-bool Exif::WriteToStream(Stream& stream) const
+bool Exif::WriteToStream(Stream& stream)
 {
+	return UpdateBinary() && Segment::WriteToStream(stream);
+}
+
+bool Exif::UpdateBinary()
+{
+	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
+	Binary& buff = pBuff->GetBinary();
 	TypeDef_BE::SHORT packed;
 	Gurax_PackUInt16(packed.num, _marker);
-	if (!stream.Write(&packed, sizeof(packed))) return false;
-	if (!stream.Write("Exif\0\0", 6)) return false;
+	buff.Append(&packed, sizeof(packed));
+	buff.Append("Exif\0\0", 6);
 	const UInt32 offset0thIFD = 2 + sizeof(TypeDef_BE::TIFFHeader);
 	if (_beFlag) {
-		if (!stream.Write("MM", 2)) return false;
+		buff.Append("MM", 2);
 		TypeDef_BE::TIFFHeader hdr;
 		Gurax_PackUInt16(hdr.code, 0x002a);
 		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
-		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+		buff.Append(&hdr, sizeof(hdr));
 	} else {
-		if (!stream.Write("II", 2)) return false;
+		buff.Append("II", 2);
 		TypeDef_LE::TIFFHeader hdr;
 		Gurax_PackUInt16(hdr.code, 0x002a);
 		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
-		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+		buff.Append(&hdr, sizeof(hdr));
 	}
 	const UInt32 offset = offset0thIFD;
 	for (IFD* pIFD : GetIFDOwner()) {
-		pIFD->WriteToStream(stream, offset, _beFlag);
+		pIFD->WriteToBinary(buff, offset, _beFlag);
 	}
-	//return Segment::WriteToStream(stream);
 	return true;
 }
 

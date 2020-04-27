@@ -17,7 +17,7 @@ Value* Segment::CreateValue() const
 	return new Value_Segment(Reference());
 }
 
-bool Segment::WriteToStream(Stream& stream) const
+bool Segment::WriteToStream(Stream& stream)
 {
 	TypeDef_BE::SHORT packed;
 	Gurax_PackUInt16(packed.num, _marker);

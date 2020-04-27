@@ -39,7 +39,7 @@ public:
 	Binary& GetBuffData_SLONG() { return _buffData; }
 	Binary& GetBuffData_SRATIONAL() { return _buffData; }
 public:
-	bool WriteToStream(Stream& stream);
+	bool WriteToBinary(Binary& buff);
 };
 
 //------------------------------------------------------------------------------

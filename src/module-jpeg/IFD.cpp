@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-bool IFD::WriteToStream(Stream& stream, size_t offset, bool beFlag)
+bool IFD::WriteToBinary(Binary& buff, size_t offset, bool beFlag)
 {
 	SerialBuff serialBuff;
 	size_t offsetToData = offset + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
@@ -22,13 +22,13 @@ bool IFD::WriteToStream(Stream& stream, size_t offset, bool beFlag)
 	if (beFlag) {
 		TypeDef_BE::IFDHeader hdr;
 		Gurax_PackUInt16(hdr.tagCount, tagCount);
-		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+		buff.Append(&hdr, sizeof(hdr));
 	} else {
 		TypeDef_LE::IFDHeader hdr;
 		Gurax_PackUInt16(hdr.tagCount, tagCount);
-		if (!stream.Write(&hdr, sizeof(hdr))) return false;
+		buff.Append(&hdr, sizeof(hdr));
 	}
-	return serialBuff.WriteToStream(stream);
+	return serialBuff.WriteToBinary(buff);
 }
 
 void IFD::PrepareTagMap()

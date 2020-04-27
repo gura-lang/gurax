@@ -34,7 +34,8 @@ public:
 	virtual bool IsExif() const override { return true; }
 	virtual Value* CreateValue() const override;
 	virtual bool AnalyzeBinary() override;
-	virtual bool WriteToStream(Stream& stream) const override;
+	virtual bool WriteToStream(Stream& stream) override;
+	bool UpdateBinary();
 public:
 	const IFDOwner& GetIFDOwner() const { return _ifdOwner; }
 protected:

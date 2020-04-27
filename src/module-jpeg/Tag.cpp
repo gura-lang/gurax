@@ -8,9 +8,11 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // SerialBuff
 //------------------------------------------------------------------------------
-bool SerialBuff::WriteToStream(Stream& stream)
+bool SerialBuff::WriteToBinary(Binary& buff)
 {
-	return stream.Write(_buff) && stream.Write(_buffData);
+	buff.append(_buff);
+	buff.append(_buffData);
+	return true;
 }
 
 //------------------------------------------------------------------------------
