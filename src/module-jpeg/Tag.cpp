@@ -21,7 +21,8 @@ bool SerialBuff::WriteToBinary(Binary& buff)
 Tag::Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol,
 	size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked) :
 	_typeId(typeId), _tagId(tagId), _count(count), _pSymbol(pSymbol),
-	_offset(offset), _offsetToValue(offsetToValue), _pValue(pValue), _pValueCooked(pValueCooked)
+	_offset(offset), _offsetToValue(offsetToValue), _offsetHolder(0),
+	_pValue(pValue), _pValueCooked(pValueCooked)
 {
 }
 
@@ -72,18 +73,19 @@ template<typename TypeDef> bool Tag_BYTE::DoSerializePre(SerialBuff& serialBuff,
 	return true;
 }
 
-template<typename TypeDef> bool Tag_BYTE::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff)
 {
-	const Binary& buff = Value_Binary::GetBinary(GetValue());
-	UInt32 count = static_cast<UInt32>(buff.size());
+	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buffSrc.size());
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	if (count <= 4) {
-		::memcpy(tagPacked.variable.BYTE, buff.data(), count);
+		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
-		UInt32 offset = static_cast<UInt32>(_offsetToValue);
+		_offsetHolder = buff.size() + 4;
+		UInt32 offset = 0x00000000;
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -92,9 +94,9 @@ bool Tag_BYTE::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_BYTE::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_BYTE::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -118,7 +120,7 @@ template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff
 	return true;
 }
 
-template<typename TypeDef> bool Tag_ASCII::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff)
 {
 	const String& str = Value_String::GetString(GetValue());
 	UInt32 count = static_cast<UInt32>((::strlen(str.c_str()) + 2) / 2 * 2);
@@ -126,10 +128,11 @@ template<typename TypeDef> bool Tag_ASCII::DoSerialize(SerialBuff& serialBuff, s
 	if (count <= 4) {
 		::memcpy(tagPacked.variable.BYTE, str.data(), count);
 	} else {
-		UInt32 offset = static_cast<UInt32>(_offsetToValue);
+		_offsetHolder = buff.size() + 4;
+		UInt32 offset = 0x00000000;
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -138,9 +141,9 @@ bool Tag_ASCII::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_ASCII::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_ASCII::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -167,7 +170,7 @@ template<typename TypeDef> bool Tag_SHORT::DoSerializePre(SerialBuff& serialBuff
 	return true;
 }
 
-template<typename TypeDef> bool Tag_SHORT::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -183,7 +186,8 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(SerialBuff& serialBuff, s
 				Gurax_PackUInt16(tagPacked.variable.SHORT.num2nd, num);
 			}
 		} else {
-			UInt32 offset = static_cast<UInt32>(_offsetToValue);
+			_offsetHolder = buff.size() + 4;
+			UInt32 offset = 0x00000000;
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 		}
 	} else {
@@ -192,7 +196,7 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(SerialBuff& serialBuff, s
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackUInt16(tagPacked.variable.SHORT.num, num);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -201,9 +205,9 @@ bool Tag_SHORT::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_SHORT::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_SHORT::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -230,7 +234,7 @@ template<typename TypeDef> bool Tag_LONG::DoSerializePre(SerialBuff& serialBuff,
 	return true;
 }
 
-template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -241,7 +245,8 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff, si
 			UInt32 num = Value_Number::GetNumber<UInt32>(*valueOwner[0]);
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
 		} else {
-			UInt32 offset = static_cast<UInt32>(_offsetToValue);
+			_offsetHolder = buff.size() + 4;
+			UInt32 offset = 0x00000000;
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 		}
 	} else {
@@ -250,7 +255,7 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(SerialBuff& serialBuff, si
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -259,9 +264,9 @@ bool Tag_LONG::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_LONG::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_LONG::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -298,14 +303,14 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerializePre(SerialBuff& serialB
 	return true;
 }
 
-template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
 	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -314,9 +319,9 @@ bool Tag_RATIONAL::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFl
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_RATIONAL::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_RATIONAL::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -338,18 +343,19 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePre(SerialBuff& serial
 	return true;
 }
 
-template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff)
 {
-	const Binary& buff = Value_Binary::GetBinary(GetValue());
-	UInt32 count = static_cast<UInt32>(buff.size());
+	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
+	UInt32 count = static_cast<UInt32>(buffSrc.size());
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	if (count <= 4) {
-		::memcpy(tagPacked.variable.BYTE, buff.data(), count);
+		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
-		UInt32 offset = static_cast<UInt32>(_offsetToValue);
+		_offsetHolder = buff.size() + 4;
+		UInt32 offset = 0x00000000;
 		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -358,9 +364,9 @@ bool Tag_UNDEFINED::SerializePre(SerialBuff& serialBuff, size_t offset, bool beF
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_UNDEFINED::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_UNDEFINED::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -387,7 +393,7 @@ template<typename TypeDef> bool Tag_SLONG::DoSerializePre(SerialBuff& serialBuff
 	return true;
 }
 
-template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -398,7 +404,8 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff, s
 			Int32 num = Value_Number::GetNumber<Int32>(*valueOwner[0]);
 			Gurax_PackInt32(tagPacked.variable.LONG.num, num);
 		} else {
-			UInt32 offset = static_cast<UInt32>(_offsetToValue);
+			_offsetHolder = buff.size() + 4;
+			UInt32 offset = 0x00000000;
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
 		}
 	} else {
@@ -407,7 +414,7 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(SerialBuff& serialBuff, s
 		tagPacked = MakeTagPacked<TypeDef>(count);
 		Gurax_PackInt32(tagPacked.variable.LONG.num, num);
 	}
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -416,9 +423,9 @@ bool Tag_SLONG::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_SLONG::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_SLONG::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -447,14 +454,14 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePre(SerialBuff& serial
 	return true;
 }
 
-template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
 	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -463,9 +470,9 @@ bool Tag_SRATIONAL::SerializePre(SerialBuff& serialBuff, size_t offset, bool beF
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_SRATIONAL::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_SRATIONAL::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------
@@ -482,13 +489,13 @@ template<typename TypeDef> bool Tag_IFD::DoSerializePre(SerialBuff& serialBuff, 
 	return true;
 }
 
-template<typename TypeDef> bool Tag_IFD::DoSerialize(SerialBuff& serialBuff, size_t offset) const
+template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff)
 {
 	UInt32 count = 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
 	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
-	serialBuff.GetBuff().Append(&tagPacked, sizeof(tagPacked));
+	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
 
@@ -497,9 +504,9 @@ bool Tag_IFD::SerializePre(SerialBuff& serialBuff, size_t offset, bool beFlag)
 	return beFlag? DoSerializePre<TypeDef_BE>(serialBuff, offset) : DoSerializePre<TypeDef_LE>(serialBuff, offset);
 }
 
-bool Tag_IFD::Serialize(SerialBuff& serialBuff, size_t offset, bool beFlag) const
+bool Tag_IFD::Serialize(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(serialBuff, offset) : DoSerialize<TypeDef_LE>(serialBuff, offset);
+	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
 }
 
 //------------------------------------------------------------------------------

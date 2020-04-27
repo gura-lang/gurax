@@ -10,6 +10,12 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 {
+	return true;
+}
+
+#if 0
+bool IFD::WriteToBinary(Binary& buff, bool beFlag)
+{
 	SerialBuff serialBuff;
 	size_t offsetToData = buff.size() +
 					GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
@@ -28,7 +34,7 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->Serialize(serialBuff, 0, beFlag)) return false;
+		if (!pTag->Serialize(serialBuff, beFlag)) return false;
 	}
 	do {
 		if (beFlag) {
@@ -43,6 +49,7 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 	} while (0);
 	return serialBuff.WriteToBinary(buff);
 }
+#endif
 
 void IFD::PrepareTagMap()
 {
