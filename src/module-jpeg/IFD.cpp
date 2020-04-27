@@ -8,15 +8,15 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-bool IFD::WriteToBinary(Binary& buff, size_t offset, bool beFlag)
+bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 {
 	SerialBuff serialBuff;
-	size_t offsetToData = offset + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
+	size_t offsetToData = buff.size() - 6 + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
 	}
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->Serialize(serialBuff, offset, beFlag)) return false;
+		if (!pTag->Serialize(serialBuff, 0, beFlag)) return false;
 	}
 	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
 	if (beFlag) {

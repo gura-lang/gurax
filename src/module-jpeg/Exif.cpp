@@ -189,9 +189,8 @@ bool Exif::UpdateBinary()
 		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
 		buff.Append(&hdr, sizeof(hdr));
 	}
-	const UInt32 offset = offset0thIFD;
 	for (IFD* pIFD : GetIFDOwner()) {
-		if (!pIFD->WriteToBinary(buff, offset, _beFlag)) return false;
+		if (!pIFD->WriteToBinary(buff, _beFlag)) return false;
 	}
 	_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
 	buff.Dump(Basement::Inst.GetStreamCOut());

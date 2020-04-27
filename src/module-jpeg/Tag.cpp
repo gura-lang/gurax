@@ -108,7 +108,7 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff, size_t offset)
 {
 	const String& str = Value_String::GetString(GetValue());
-	UInt32 count = static_cast<UInt32>(str.size());
+	UInt32 count = static_cast<UInt32>(str.size()) + 1;
 	if (count > 4) {
 		_offsetToValue = serialBuff.GetBuffData_BYTE().size();
 		serialBuff.GetBuffData_BYTE().append(reinterpret_cast<const UInt8*>(str.data()), count);
@@ -119,7 +119,7 @@ template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff
 template<typename TypeDef> bool Tag_ASCII::DoSerialize(SerialBuff& serialBuff, size_t offset) const
 {
 	const String& str = Value_String::GetString(GetValue());
-	UInt32 count = static_cast<UInt32>(str.size());
+	UInt32 count = static_cast<UInt32>(str.size()) + 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	if (count <= 4) {
 		::memcpy(tagPacked.variable.BYTE, str.data(), count);

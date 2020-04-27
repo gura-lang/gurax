@@ -35,7 +35,7 @@ public:
 	const TagMap& GetTagMap() { return _tagMap; }
 public:
 	void PrepareTagMap();
-	bool WriteToBinary(Binary& buff, size_t offset, bool beFlag);
+	bool WriteToBinary(Binary& buff, bool beFlag);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }
