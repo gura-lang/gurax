@@ -10,6 +10,31 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 {
+	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
+	UInt32 offsetNextIFD = 0;
+	if (beFlag) {
+		TypeDef_BE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		buff.Append(&hdr, sizeof(hdr));
+	} else {
+		TypeDef_LE::IFDHeader hdr;
+		Gurax_PackUInt16(hdr.tagCount, tagCount);
+		buff.Append(&hdr, sizeof(hdr));
+	}
+	for (Tag* pTag : GetTagOwner()) {
+		if (!pTag->Serialize(buff, beFlag)) return false;
+	}
+	do {
+		if (beFlag) {
+			TypeDef_BE::LONG packed;
+			Gurax_PackUInt32(packed.num, offsetNextIFD);
+			buff.Append(&packed, sizeof(packed));
+		} else {
+			TypeDef_LE::LONG packed;
+			Gurax_PackUInt32(packed.num, offsetNextIFD);
+			buff.Append(&packed, sizeof(packed));
+		}
+	} while (0);
 	return true;
 }
 
