@@ -11,7 +11,7 @@ Gurax_BeginModuleScope(jpeg)
 bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 {
 	SerialBuff serialBuff;
-	size_t offsetToData = buff.size() - 6 + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
+	size_t offsetToData = buff.size() + GetTagOwner().size() * sizeof(TypeDef_BE::TagPacked);
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->SerializePre(serialBuff, offsetToData, beFlag)) return false;
 	}
