@@ -174,9 +174,6 @@ bool Exif::UpdateBinary()
 {
 	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 	Binary& buff = pBuff->GetBinary();
-	TypeDef_BE::SHORT packed;
-	Gurax_PackUInt16(packed.num, _marker);
-	buff.Append(&packed, sizeof(packed));
 	buff.Append("Exif\0\0", 6);
 	const UInt32 offset0thIFD = 2 + sizeof(TypeDef_BE::TIFFHeader);
 	if (_beFlag) {
@@ -194,8 +191,11 @@ bool Exif::UpdateBinary()
 	}
 	const UInt32 offset = offset0thIFD;
 	for (IFD* pIFD : GetIFDOwner()) {
-		pIFD->WriteToBinary(buff, offset, _beFlag);
+		if (!pIFD->WriteToBinary(buff, offset, _beFlag)) return false;
 	}
+	_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
+	buff.Dump(Basement::Inst.GetStreamCOut());
+	_pBuff.reset(pBuff.release());
 	return true;
 }
 

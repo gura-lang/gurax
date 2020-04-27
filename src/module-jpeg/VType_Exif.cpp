@@ -27,27 +27,22 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// jpeg.Exif#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Exif, MethodSkeleton)
+// jpeg.Exif#Test()
+Gurax_DeclareMethod(Exif, Test)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Exif, MethodSkeleton)
+Gurax_ImplementMethod(Exif, Test)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
+	valueThis.GetExif().UpdateBinary();
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -99,7 +94,7 @@ void VType_Exif::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Segment, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Exif, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Exif, Test));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Exif, ifd0));
 	Assign(Gurax_CreateProperty(Exif, ifd1));
