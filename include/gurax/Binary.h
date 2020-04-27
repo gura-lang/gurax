@@ -65,6 +65,10 @@ public:
 	bool CheckWritable() const;
 	void Dump(Stream& stream, const StringStyle& ss = StringStyle::Empty) const;
 public:
+	Binary& Append(const void* p, size_t bytes) {
+		append(reinterpret_cast<const UInt8*>(p), bytes);
+		return *this;
+	}
 	Binary Repeat(bool writableFlag, size_t n) const { return Repeat(*this, writableFlag, n); }
 	static Binary Repeat(const Binary& binary, bool writableFlag, size_t n);
 public:
