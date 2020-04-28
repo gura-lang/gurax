@@ -190,7 +190,7 @@ bool Exif::UpdateBinary()
 		buff.Append(&hdr, sizeof(hdr));
 	}
 	for (IFD* pIFD : GetIFDOwner()) {
-		if (!pIFD->WriteToBinary(buff, _beFlag)) return false;
+		if (!pIFD->Serialize(buff, _beFlag)) return false;
 	}
 	_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
 	buff.Dump(Basement::Inst.GetStreamCOut());

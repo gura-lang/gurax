@@ -467,12 +467,6 @@ template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList& tags
 	return true;
 }
 
-template<typename TypeDef> bool Tag_IFD::DoSerializePointed(Binary& buff)
-{
-	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
-	return true;
-}
-
 bool Tag_IFD::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
 	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
@@ -480,7 +474,13 @@ bool Tag_IFD::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 
 bool Tag_IFD::SerializePointed(Binary& buff, bool beFlag)
 {
-	return beFlag? DoSerializePointed<TypeDef_BE>(buff) : DoSerializePointed<TypeDef_LE>(buff);
+	if (beFlag) {
+		ReplaceLONG<TypeDef_BE>(buff, _posPointer, CalcOffset(buff));
+	} else {
+		ReplaceLONG<TypeDef_LE>(buff, _posPointer, CalcOffset(buff));
+	}
+	IFD& ifd = Value_IFD::GetIFD(GetValue());
+	return ifd.Serialize(buff, beFlag);
 }
 
 //------------------------------------------------------------------------------

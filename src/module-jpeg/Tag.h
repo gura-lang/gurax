@@ -80,7 +80,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	size_t GetOffset() const { return _offset; }
 	size_t GetOffsetToValue() const { return _offsetToValue; }
-	const Value& GetValue() const { return *_pValue; }
+	Value& GetValue() { return *_pValue; }
 	const Value& GetValueCooked() const { return *_pValueCooked; }
 	void SetValue(Value* pValue) {
 		_pValue.reset(pValue); _pValueCooked.reset(pValue->Reference());
@@ -499,7 +499,6 @@ public:
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
-	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
 
 //------------------------------------------------------------------------------
