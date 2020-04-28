@@ -511,15 +511,33 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_JPEGInterchangeFormat : public Tag {
 public:
-	Tag_JPEGInterchangeFormat(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
-		Tag(TypeId::JPEGInterchangeFormat, tagId, count, pSymbol, offset, pValue) { _offsetToValue = offsetToValue; }
+	Tag_JPEGInterchangeFormat(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::JPEGInterchangeFormat, tagId, count, pSymbol, offset) {}
 public:
+	template<typename TypeDef> inline Tag* ReadFromBuff(
+		const UInt8* buff, size_t bytesBuff, size_t offset);
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
+	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
+
+template<typename TypeDef> Tag* Tag_JPEGInterchangeFormat::ReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset)
+{
+	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	auto& variable = tagPacked.variable;
+	_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+	if (_offsetToValue >= bytesBuff) {
+		IssueError_InvalidFormat();
+		return nullptr;
+	}
+	const UInt8* pBuff = buff + _offsetToValue;
+	SetValue(new Value_Binary(Binary(pBuff, bytesBuff - _offsetToValue)));
+	return this;
+}
 
 //------------------------------------------------------------------------------
 // TagList

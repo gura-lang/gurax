@@ -484,6 +484,43 @@ bool Tag_IFD::SerializePointed(Binary& buff, bool beFlag)
 }
 
 //------------------------------------------------------------------------------
+// Tag_JPEGInterchangeFormat
+//------------------------------------------------------------------------------
+bool Tag_JPEGInterchangeFormat::CheckAcceptableValue(Value& value) const
+{
+	return value.IsType(VTYPE_Binary);
+}
+
+template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoSerialize(Binary& buff, TagList& tagsPointed)
+{
+	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
+	UInt32 count = 1;
+	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
+	_posPointer = CalcPosPointer(buff);
+	tagsPointed.push_back(this);
+	buff.Append(&tagPacked, sizeof(tagPacked));
+	return true;
+}
+
+template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoSerializePointed(Binary& buff)
+{
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
+	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
+	buff.append(buffSrc);
+	return true;
+}
+
+bool Tag_JPEGInterchangeFormat::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
+{
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
+}
+
+bool Tag_JPEGInterchangeFormat::SerializePointed(Binary& buff, bool beFlag)
+{
+	return beFlag? DoSerializePointed<TypeDef_BE>(buff) : DoSerializePointed<TypeDef_LE>(buff);
+}
+
+//------------------------------------------------------------------------------
 // TagList
 //------------------------------------------------------------------------------
 

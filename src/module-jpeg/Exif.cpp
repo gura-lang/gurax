@@ -71,8 +71,8 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		}
 		case TypeId::LONG: {
 			if (tagId == TagId::JPEGInterchangeFormat) {
-				//pTag.reset((new Tag_JPEGInterchangeFormat(tagId, count, pSymbol, offset))->
-				//								ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+				pTag.reset((new Tag_JPEGInterchangeFormat(tagId, count, pSymbol, offset))->
+												ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			} else {
 				pTag.reset((new Tag_LONG(tagId, count, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
 			}
