@@ -115,16 +115,17 @@ inline const Symbol* MarkerToSymbol(UInt16 marker)
 // TypeId
 //------------------------------------------------------------------------------
 struct TypeId {
-	static const UInt16 None		= 0;
-	static const UInt16 BYTE		= 1;
-	static const UInt16 ASCII		= 2;
-	static const UInt16 SHORT		= 3;
-	static const UInt16 LONG		= 4;
-	static const UInt16 RATIONAL	= 5;
-	static const UInt16 UNDEFINED	= 7;
-	static const UInt16 SLONG		= 9;
-	static const UInt16 SRATIONAL	= 10;
-	static const UInt16 IFD			= 0xffff;
+	static const UInt16 None					= 0;
+	static const UInt16 BYTE					= 1;
+	static const UInt16 ASCII					= 2;
+	static const UInt16 SHORT					= 3;
+	static const UInt16 LONG					= 4;
+	static const UInt16 RATIONAL				= 5;
+	static const UInt16 UNDEFINED				= 7;
+	static const UInt16 SLONG					= 9;
+	static const UInt16 SRATIONAL				= 10;
+	static const UInt16 JPEGInterchangeFormat	= 0xfffe;
+	static const UInt16 IFD						= 0xffff;
 };
 
 //------------------------------------------------------------------------------

@@ -70,7 +70,12 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			break;
 		}
 		case TypeId::LONG: {
-			pTag.reset((new Tag_LONG(tagId, count, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			if (tagId == TagId::JPEGInterchangeFormat) {
+				//pTag.reset((new Tag_JPEGInterchangeFormat(tagId, count, pSymbol, offset))->
+				//								ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			} else {
+				pTag.reset((new Tag_LONG(tagId, count, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+			}
 			if (!pTag) return nullptr;
 			break;
 		}

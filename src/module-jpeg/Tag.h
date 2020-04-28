@@ -21,25 +21,26 @@ public:
 	class GURAX_DLLDECLARE SymbolAssoc_TypeId : public SymbolAssoc<UInt16, TypeId::None> {
 	public:
 		SymbolAssoc_TypeId() {
-			Assoc(Gurax_Symbol(BYTE),		TypeId::BYTE);
-			Assoc(Gurax_Symbol(ASCII),		TypeId::ASCII);
-			Assoc(Gurax_Symbol(SHORT),		TypeId::SHORT);
-			Assoc(Gurax_Symbol(LONG),		TypeId::LONG);
-			Assoc(Gurax_Symbol(RATIONAL),	TypeId::RATIONAL);
-			Assoc(Gurax_Symbol(UNDEFINED),	TypeId::UNDEFINED);
-			Assoc(Gurax_Symbol(SLONG),		TypeId::SLONG);
-			Assoc(Gurax_Symbol(SRATIONAL),	TypeId::SRATIONAL);
-			Assoc(Gurax_Symbol(IFD),		TypeId::IFD);
+			Assoc(Gurax_Symbol(BYTE),					TypeId::BYTE);
+			Assoc(Gurax_Symbol(ASCII),					TypeId::ASCII);
+			Assoc(Gurax_Symbol(SHORT),					TypeId::SHORT);
+			Assoc(Gurax_Symbol(LONG),					TypeId::LONG);
+			Assoc(Gurax_Symbol(RATIONAL),				TypeId::RATIONAL);
+			Assoc(Gurax_Symbol(UNDEFINED),				TypeId::UNDEFINED);
+			Assoc(Gurax_Symbol(SLONG),					TypeId::SLONG);
+			Assoc(Gurax_Symbol(SRATIONAL),				TypeId::SRATIONAL);
+			Assoc(Gurax_Symbol(JPEGInterchangeFormat),	TypeId::JPEGInterchangeFormat);
+			Assoc(Gurax_Symbol(IFD),					TypeId::IFD);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
 			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_TypeId());
 		}
 	};
-	struct GURAX_DLLDECLARE TypeIdCompare {
+	struct GURAX_DLLDECLARE OrderHintCompare {
 	public:
 		bool operator()(const Tag* pTag1, const Tag* pTag2) const {
-			return pTag1->GetTypeId() < pTag2->GetTypeId();
+			return pTag1->GetOrderHint() < pTag2->GetOrderHint();
 		}
 	};
 protected:
@@ -75,7 +76,13 @@ public:
 	void ClearOffset() { _offset = _offsetToValue = 0; }
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
-	UInt16 GetTypeIdRaw() const { return (_typeId == TypeId::IFD)? TypeId::LONG : _typeId; }
+	UInt16 GetTypeIdRaw() const {
+		return (_typeId == TypeId::JPEGInterchangeFormat || _typeId == TypeId::IFD)?
+			TypeId::LONG : _typeId;
+	}
+	int GetOrderHint() const {
+		return (_typeId == TypeId::IFD)? 1 : (_typeId == TypeId::JPEGInterchangeFormat)? 2 : 0;
+	}
 	UInt32 GetCount() const { return _count; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	size_t GetOffset() const { return _offset; }
@@ -89,7 +96,6 @@ public:
 	static UInt32 CalcOffset(const Binary& buff) { return static_cast<UInt32>(buff.size()) - 6; }
 	template<typename TypeDef> static void ReplaceLONG(Binary& buff, size_t pos, UInt32 num);
 public:
-	virtual bool IsIFD() const { return false; }
 	virtual bool CheckAcceptableValue(Value& value) const = 0;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) = 0;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) = 0;
@@ -493,7 +499,21 @@ public:
 	Tag_IFD(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
 		Tag(TypeId::IFD, tagId, count, pSymbol, offset, pValue) { _offsetToValue = offsetToValue; }
 public:
-	virtual bool IsIFD() const override { return true; }
+	virtual bool CheckAcceptableValue(Value& value) const override;
+	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
+	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
+protected:
+	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
+};
+
+//------------------------------------------------------------------------------
+// Tag_JPEGInterchangeFormat
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Tag_JPEGInterchangeFormat : public Tag {
+public:
+	Tag_JPEGInterchangeFormat(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
+		Tag(TypeId::JPEGInterchangeFormat, tagId, count, pSymbol, offset, pValue) { _offsetToValue = offsetToValue; }
+public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
@@ -506,7 +526,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE TagList : public std::vector<Tag*> {
 public:
-	void SortByTypeId() { std::stable_sort(begin(), end(), Tag::TypeIdCompare()); }
+	void SortByOrderHint() { std::stable_sort(begin(), end(), Tag::OrderHintCompare()); }
 };
 
 //------------------------------------------------------------------------------

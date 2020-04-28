@@ -58,6 +58,7 @@ Gurax_DeclareSymbol(RATIONAL);
 Gurax_DeclareSymbol(UNDEFINED);
 Gurax_DeclareSymbol(SLONG);
 Gurax_DeclareSymbol(SRATIONAL);
+Gurax_DeclareSymbol(JPEGInterchangeFormat);
 Gurax_DeclareSymbol(IFD);
 
 Gurax_EndModuleScope(jpeg)
