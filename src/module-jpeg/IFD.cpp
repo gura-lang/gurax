@@ -24,6 +24,9 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(buff, beFlag)) return false;
 	}
+	for (Tag* pTag : GetTagOwner()) {
+		if (!pTag->SerializePointed(buff, beFlag)) return false;
+	}
 	do {
 		if (beFlag) {
 			TypeDef_BE::LONG packed;

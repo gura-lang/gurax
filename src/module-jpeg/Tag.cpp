@@ -21,7 +21,7 @@ bool SerialBuff::WriteToBinary(Binary& buff)
 Tag::Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol,
 	size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked) :
 	_typeId(typeId), _tagId(tagId), _count(count), _pSymbol(pSymbol),
-	_offset(offset), _offsetToValue(offsetToValue), _offsetPointer(0),
+	_offset(offset), _offsetToValue(offsetToValue), _posPointer(0),
 	_pValue(pValue), _pValueCooked(pValueCooked)
 {
 }
@@ -81,9 +81,8 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff)
 	if (count <= 4) {
 		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
-		_offsetPointer = buff.size() + 4;
-		UInt32 offset = 0x00000000;
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+		_posPointer = CalcPosPointer(buff);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -91,6 +90,10 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_BYTE::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
+	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
+	buff.append(buffSrc);
 	return true;
 }
 
@@ -133,14 +136,14 @@ template<typename TypeDef> bool Tag_ASCII::DoSerializePre(SerialBuff& serialBuff
 template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff)
 {
 	const String& str = Value_String::GetString(GetValue());
-	UInt32 count = static_cast<UInt32>((::strlen(str.c_str()) + 2) / 2 * 2);
+	size_t len = ::strlen(str.c_str());
+	UInt32 count = static_cast<UInt32>((len + 2) / 2 * 2);
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
 	if (count <= 4) {
-		::memcpy(tagPacked.variable.BYTE, str.data(), count);
+		::memcpy(tagPacked.variable.BYTE, str.c_str(), len);
 	} else {
-		_offsetPointer = buff.size() + 4;
-		UInt32 offset = 0x00000000;
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+		_posPointer = CalcPosPointer(buff);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -148,6 +151,12 @@ template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_ASCII::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
+	const String& str = Value_String::GetString(GetValue());
+	size_t len = ::strlen(str.c_str());
+	buff.Append(str.c_str(), len);
+	buff.Append("\0\0", (len + 2) / 2 * 2 - len);
 	return true;
 }
 
@@ -206,9 +215,8 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff)
 				Gurax_PackUInt16(tagPacked.variable.SHORT.num2nd, num);
 			}
 		} else {
-			_offsetPointer = buff.size() + 4;
-			UInt32 offset = 0x00000000;
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+			_posPointer = CalcPosPointer(buff);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 		}
 	} else {
 		UInt16 num = Value_Number::GetNumber<UInt16>(GetValue());
@@ -222,6 +230,8 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SHORT::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
@@ -275,9 +285,8 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff)
 			UInt32 num = Value_Number::GetNumber<UInt32>(*valueOwner[0]);
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
 		} else {
-			_offsetPointer = buff.size() + 4;
-			UInt32 offset = 0x00000000;
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+			_posPointer = CalcPosPointer(buff);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 		}
 	} else {
 		UInt32 num = Value_Number::GetNumber<UInt32>(GetValue());
@@ -291,6 +300,8 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_LONG::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
@@ -356,6 +367,8 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_RATIONAL::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
@@ -401,9 +414,8 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff)
 	if (count <= 4) {
 		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
-		_offsetPointer = buff.size() + 4;
-		UInt32 offset = 0x00000000;
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+		_posPointer = CalcPosPointer(buff);
+		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -411,6 +423,8 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
@@ -464,9 +478,8 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff)
 			Int32 num = Value_Number::GetNumber<Int32>(*valueOwner[0]);
 			Gurax_PackInt32(tagPacked.variable.LONG.num, num);
 		} else {
-			_offsetPointer = buff.size() + 4;
-			UInt32 offset = 0x00000000;
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, offset);
+			_posPointer = CalcPosPointer(buff);
+			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 		}
 	} else {
 		Int32 num = Value_Number::GetNumber<Int32>(GetValue());
@@ -480,6 +493,8 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SLONG::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
@@ -537,6 +552,9 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
+
 	return true;
 }
 
@@ -581,6 +599,8 @@ template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_IFD::DoSerializePointed(Binary& buff)
 {
+	if (_posPointer == 0) return true;
+	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 

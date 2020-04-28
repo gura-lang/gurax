@@ -78,7 +78,7 @@ protected:
 	const Symbol* _pSymbol;
 	size_t _offset;
 	size_t _offsetToValue;
-	size_t _offsetPointer;
+	size_t _posPointer;
 	RefPtr<Value> _pValue;
 	RefPtr<Value> _pValueCooked;
 protected:
@@ -114,6 +114,9 @@ public:
 	void SetValue(Value* pValue) {
 		_pValue.reset(pValue); _pValueCooked.reset(pValue->Reference());
 	}
+	static size_t CalcPosPointer(const Binary& buff) { return buff.size() + 4; }
+	static UInt32 CalcOffset(const Binary& buff) { return static_cast<UInt32>(buff.size()) - 6; }
+	template<typename TypeDef> static void ReplaceLONG(Binary& buff, size_t pos, UInt32 num);
 public:
 	virtual bool IsIFD() const { return false; }
 	virtual bool CheckAcceptableValue(Value& value) const = 0;
@@ -146,6 +149,14 @@ template<typename TypeDef> typename TypeDef::TagPacked Tag::MakeTagPacked(UInt32
 	Gurax_PackUInt16(tagPacked.typeId, GetTypeIdRaw());
 	Gurax_PackUInt32(tagPacked.count, count);
 	return tagPacked;
+}
+
+template<typename TypeDef> void Tag::ReplaceLONG(Binary& buff, size_t pos, UInt32 num)
+{
+	TypeDef::LONG packed;
+	Gurax_PackUInt32(packed.num, num);
+	buff.replace(pos, sizeof(TypeDef::LONG),
+		reinterpret_cast<UInt8*>(&packed), sizeof(TypeDef::LONG));
 }
 
 //------------------------------------------------------------------------------
