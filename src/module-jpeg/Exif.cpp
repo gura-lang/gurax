@@ -206,8 +206,6 @@ bool Exif::UpdateBinary()
 		if (!pIFD->Serialize(buff, _beFlag)) return false;
 		pIFDPrev = pIFD;
 	}
-	//_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut(), StringStyle().SetAddressInfo());
-	buff.Dump(Basement::Inst.GetStreamCOut(), StringStyle().SetAddressInfo());
 	_pBuff.reset(pBuff.release());
 	return true;
 }
