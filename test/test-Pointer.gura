@@ -90,6 +90,16 @@ TestCase('Basic test of pack/unpack') {
 	Number.format = '%g'
 }
 
+TestCase('Pointer#Dump()') {
+	buff = B'', buff.p.Put(`uint8, 0), buff.p.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..14), buff.p.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..15), buff.p.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..255), buff.p.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..255), buff.p.Dump():addr, Println()
+	buff = B'', buff.p.Put(`uint8, 0..256), buff.p.Dump():addr, Println()
+	buff = B'', buff.p.Put(`uint8, 0..300), buff.p.Dump():addr, Println()
+}
+
 TestCase('Pointer#Pack()') {
 }
 

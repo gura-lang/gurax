@@ -88,11 +88,12 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pointer#Dump(stream?:Stream:w):void:[upper]
+// Pointer#Dump(stream?:Stream:w):void:[addr,upper]
 Gurax_DeclareMethod(Pointer, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(addr));
 	DeclareAttrOpt(Gurax_Symbol(upper));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -101,6 +102,8 @@ Gurax_DeclareMethod(Pointer, Dump)
 		"\n"
 		"In default, hexadecimal digit are printed with lower-case characters.\n"
 		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
+		"\n"
+		"Specifying `:addr` attribute will apppend the current address number on each line.\n"
 		"\n"
 		"Example:\n"
 		"    >>> b'A quick brown fox jumps over the lazy dog.'.p.Dump():upper\n"
@@ -117,10 +120,10 @@ Gurax_ImplementMethod(Pointer, Dump)
 	// Argument
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	bool upperFlag = argument.IsSet(Gurax_Symbol(upper));
-	// Function body
 	StringStyle ss;
-	if (upperFlag) ss.SetUpperCase();
+	if (argument.IsSet(Gurax_Symbol(addr))) ss.SetAddressInfo();
+	if (argument.IsSet(Gurax_Symbol(upper))) ss.SetUpperCase();
+	// Function body
 	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ss);
 	return Value::nil();
 }
