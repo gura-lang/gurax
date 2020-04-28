@@ -52,7 +52,7 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList&)
 {
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	UInt32 count = static_cast<UInt32>(buffSrc.size());
@@ -69,16 +69,15 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_BYTE::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	buff.append(buffSrc);
 	return true;
 }
 
-bool Tag_BYTE::Serialize(Binary& buff, bool beFlag)
+bool Tag_BYTE::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_BYTE::SerializePointed(Binary& buff, bool beFlag)
@@ -94,7 +93,7 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_String);
 }
 
-template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff, TagList&)
 {
 	const String& str = Value_String::GetString(GetValue());
 	size_t len = ::strlen(str.c_str());
@@ -112,7 +111,6 @@ template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_ASCII::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const String& str = Value_String::GetString(GetValue());
 	size_t len = ::strlen(str.c_str());
@@ -121,9 +119,9 @@ template<typename TypeDef> bool Tag_ASCII::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_ASCII::Serialize(Binary& buff, bool beFlag)
+bool Tag_ASCII::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_ASCII::SerializePointed(Binary& buff, bool beFlag)
@@ -139,7 +137,7 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x0000, 0xffff);
 }
 
-template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff, TagList&)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -170,7 +168,6 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SHORT::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	typename TypeDef::SHORT packed;
@@ -182,9 +179,9 @@ template<typename TypeDef> bool Tag_SHORT::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SHORT::Serialize(Binary& buff, bool beFlag)
+bool Tag_SHORT::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_SHORT::SerializePointed(Binary& buff, bool beFlag)
@@ -200,7 +197,7 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 }
 
-template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff, TagList&)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -226,7 +223,6 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_LONG::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	typename TypeDef::LONG packed;
@@ -238,9 +234,9 @@ template<typename TypeDef> bool Tag_LONG::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_LONG::Serialize(Binary& buff, bool beFlag)
+bool Tag_LONG::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_LONG::SerializePointed(Binary& buff, bool beFlag)
@@ -258,7 +254,7 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff, TagList&)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
@@ -271,7 +267,6 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_RATIONAL::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	if (GetValue().IsList()) {
 		const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
@@ -294,9 +289,9 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_RATIONAL::Serialize(Binary& buff, bool beFlag)
+bool Tag_RATIONAL::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_RATIONAL::SerializePointed(Binary& buff, bool beFlag)
@@ -312,7 +307,7 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff, TagList&)
 {
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	UInt32 count = static_cast<UInt32>(buffSrc.size());
@@ -329,16 +324,15 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	buff.append(buffSrc);
 	return true;
 }
 
-bool Tag_UNDEFINED::Serialize(Binary& buff, bool beFlag)
+bool Tag_UNDEFINED::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_UNDEFINED::SerializePointed(Binary& buff, bool beFlag)
@@ -354,7 +348,7 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 }
 
-template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff, TagList&)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -380,7 +374,6 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SLONG::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
 	typename TypeDef::SLONG packed;
@@ -392,9 +385,9 @@ template<typename TypeDef> bool Tag_SLONG::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SLONG::Serialize(Binary& buff, bool beFlag)
+bool Tag_SLONG::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_SLONG::SerializePointed(Binary& buff, bool beFlag)
@@ -412,7 +405,7 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff, TagList&)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
@@ -425,7 +418,6 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	if (GetValue().IsList()) {
 		const ValueOwner& valueOwner = Value_List::GetValueOwner(GetValue());
@@ -448,9 +440,9 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SRATIONAL::Serialize(Binary& buff, bool beFlag)
+bool Tag_SRATIONAL::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_SRATIONAL::SerializePointed(Binary& buff, bool beFlag)
@@ -466,7 +458,7 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
-template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff)
+template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList&)
 {
 	UInt32 count = 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
@@ -478,14 +470,13 @@ template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff)
 
 template<typename TypeDef> bool Tag_IFD::DoSerializePointed(Binary& buff)
 {
-	if (_posPointer == 0) return true;
 	ReplaceLONG<TypeDef>(buff, _posPointer, CalcOffset(buff));
 	return true;
 }
 
-bool Tag_IFD::Serialize(Binary& buff, bool beFlag)
+bool Tag_IFD::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
 {
-	return beFlag? DoSerialize<TypeDef_BE>(buff) : DoSerialize<TypeDef_LE>(buff);
+	return beFlag? DoSerialize<TypeDef_BE>(buff, tagsPointed) : DoSerialize<TypeDef_LE>(buff, tagsPointed);
 }
 
 bool Tag_IFD::SerializePointed(Binary& buff, bool beFlag)

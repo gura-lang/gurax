@@ -21,10 +21,11 @@ bool IFD::WriteToBinary(Binary& buff, bool beFlag)
 		Gurax_PackUInt16(hdr.tagCount, tagCount);
 		buff.Append(&hdr, sizeof(hdr));
 	}
+	TagList tagsPointed;
 	for (Tag* pTag : GetTagOwner()) {
-		if (!pTag->Serialize(buff, beFlag)) return false;
+		if (!pTag->Serialize(buff, beFlag, tagsPointed)) return false;
 	}
-	for (Tag* pTag : GetTagOwner()) {
+	for (Tag* pTag : tagsPointed) {
 		if (!pTag->SerializePointed(buff, beFlag)) return false;
 	}
 	do {
