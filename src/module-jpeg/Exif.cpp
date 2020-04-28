@@ -192,7 +192,7 @@ bool Exif::UpdateBinary()
 	for (IFD* pIFD : GetIFDOwner()) {
 		if (!pIFD->Serialize(buff, _beFlag)) return false;
 	}
-	_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
+	//_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
 	buff.Dump(Basement::Inst.GetStreamCOut());
 	_pBuff.reset(pBuff.release());
 	return true;

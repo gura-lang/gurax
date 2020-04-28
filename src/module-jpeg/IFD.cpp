@@ -25,7 +25,7 @@ bool IFD::Serialize(Binary& buff, bool beFlag)
 		if (!pTag->Serialize(buff, beFlag, tagsPointed)) return false;
 	}
 	buff.Append("\0\0\0\0", 4);	// place holder for offsetNextIFD
-	tagsPointed.SortByTypeId();
+	//tagsPointed.SortByTypeId();
 	for (Tag* pTag : tagsPointed) {
 		if (!pTag->SerializePointed(buff, beFlag)) return false;
 	}

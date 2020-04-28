@@ -85,7 +85,7 @@ public:
 	void SetValue(Value* pValue) {
 		_pValue.reset(pValue); _pValueCooked.reset(pValue->Reference());
 	}
-	static size_t CalcPosPointer(const Binary& buff) { return buff.size() + 4; }
+	static size_t CalcPosPointer(const Binary& buff) { return buff.size() + 2 + 2 + 4; }
 	static UInt32 CalcOffset(const Binary& buff) { return static_cast<UInt32>(buff.size()) - 6; }
 	template<typename TypeDef> static void ReplaceLONG(Binary& buff, size_t pos, UInt32 num);
 public:
