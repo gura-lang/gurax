@@ -39,6 +39,16 @@ TestCase('Binary#writable') {
 	Tester(`Binary().writable)
 }
 
+TestCase('Binary#Dump()') {
+	buff = B'', buff.p.Put(`uint8, 0), buff.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..14), buff.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..15), buff.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..255), buff.Dump(), Println()
+	buff = B'', buff.p.Put(`uint8, 0..255), buff.Dump():addr, Println()
+	buff = B'', buff.p.Put(`uint8, 0..256), buff.Dump():addr, Println()
+	buff = B'', buff.p.Put(`uint8, 0..300), buff.Dump():addr, Println()
+}
+
 TestCase('Binary#Pointer()') {
 	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f'
 	Tester(`buff.Pointer())

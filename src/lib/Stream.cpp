@@ -269,16 +269,20 @@ Stream* Stream::CreateBwdSeekable()
 
 void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 {
+	if (bytes == 0) return;
 	const int nCols = 16;
 	int iCol = 0;
-	char str[64];
+	size_t nDigitsAddr = (String().Printf("%x", bytes - 1).size() + 1) / 2 * 2;
 	String strLine, strASCII;
 	const UInt8* p = reinterpret_cast<const UInt8*>(buff);
 	for (size_t i = 0; i < bytes; ++i, ++p) {
 		UInt8 data = *p;
-		if (iCol > 0) strLine += ' ';
-		::sprintf(str, ss.IsUpperCase()? "%02X" : "%02x", data);
-		strLine += str;
+		if (iCol > 0) {
+			strLine += ' ';
+		} else if (ss.IsAddressInfo()) {
+			strLine.Printf("%0*x  ", nDigitsAddr, i);
+		}
+		strLine.Printf(ss.IsUpperCase()? "%02X" : "%02x", data);
 		strASCII += (0x20 <= data && data < 0x7f)? data : '.';
 		iCol++;
 		if (iCol == nCols) {

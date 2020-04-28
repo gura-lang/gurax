@@ -45,6 +45,7 @@ Gurax_DeclareSymbol(a);
 Gurax_DeclareSymbol(A);
 Gurax_DeclareSymbol(abs);
 Gurax_DeclareSymbol(add);
+Gurax_DeclareSymbol(addr);
 Gurax_DeclareSymbol(align);
 Gurax_DeclareSymbol(all);
 Gurax_DeclareSymbol(alpha);
