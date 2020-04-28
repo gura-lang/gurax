@@ -52,7 +52,7 @@ bool Tag_BYTE::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	UInt32 count = static_cast<UInt32>(buffSrc.size());
@@ -61,7 +61,7 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList&)
 		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
 		_posPointer = CalcPosPointer(buff);
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
+		tagsPointed.push_back(this);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -93,7 +93,7 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_String);
 }
 
-template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	const String& str = Value_String::GetString(GetValue());
 	size_t len = ::strlen(str.c_str());
@@ -103,7 +103,7 @@ template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff, TagList&)
 		::memcpy(tagPacked.variable.BYTE, str.c_str(), len);
 	} else {
 		_posPointer = CalcPosPointer(buff);
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
+		tagsPointed.push_back(this);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -137,7 +137,7 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x0000, 0xffff);
 }
 
-template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -154,7 +154,7 @@ template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff, TagList&)
 			}
 		} else {
 			_posPointer = CalcPosPointer(buff);
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
+			tagsPointed.push_back(this);
 		}
 	} else {
 		UInt16 num = Value_Number::GetNumber<UInt16>(GetValue());
@@ -197,7 +197,7 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
 }
 
-template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -209,7 +209,7 @@ template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff, TagList&)
 			Gurax_PackUInt32(tagPacked.variable.LONG.num, num);
 		} else {
 			_posPointer = CalcPosPointer(buff);
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
+			tagsPointed.push_back(this);
 		}
 	} else {
 		UInt32 num = Value_Number::GetNumber<UInt32>(GetValue());
@@ -254,13 +254,13 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
-	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
-	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
+	_posPointer = CalcPosPointer(buff);
+	tagsPointed.push_back(this);
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
@@ -307,7 +307,7 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 	return value.IsType(VTYPE_Binary);
 }
 
-template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	const Binary& buffSrc = Value_Binary::GetBinary(GetValue());
 	UInt32 count = static_cast<UInt32>(buffSrc.size());
@@ -316,7 +316,7 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff, TagList
 		::memcpy(tagPacked.variable.BYTE, buffSrc.data(), count);
 	} else {
 		_posPointer = CalcPosPointer(buff);
-		Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
+		tagsPointed.push_back(this);
 	}
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
@@ -348,7 +348,7 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
 }
 
-template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	typename TypeDef::TagPacked tagPacked;
 	if (GetValue().IsList()) {
@@ -360,7 +360,6 @@ template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff, TagList&)
 			Gurax_PackInt32(tagPacked.variable.LONG.num, num);
 		} else {
 			_posPointer = CalcPosPointer(buff);
-			Gurax_PackUInt32(tagPacked.variable.LONG.num, 0);
 		}
 	} else {
 		Int32 num = Value_Number::GetNumber<Int32>(GetValue());
@@ -405,13 +404,13 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
 }
 
-template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	UInt32 count = GetValue().IsList()?
 		static_cast<UInt32>(Value_List::GetValueOwner(GetValue()).size()) : 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
-	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
-	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
+	_posPointer = CalcPosPointer(buff);
+	tagsPointed.push_back(this);
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
@@ -458,12 +457,12 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
-template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList&)
+template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	UInt32 count = 1;
 	typename TypeDef::TagPacked tagPacked = MakeTagPacked<TypeDef>(count);
-	UInt32 offsetToValue = static_cast<UInt32>(_offsetToValue);
-	Gurax_PackUInt32(tagPacked.variable.LONG.num, offsetToValue);
+	_posPointer = CalcPosPointer(buff);
+	tagsPointed.push_back(this);
 	buff.Append(&tagPacked, sizeof(tagPacked));
 	return true;
 }
