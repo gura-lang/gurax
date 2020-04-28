@@ -189,11 +189,20 @@ bool Exif::UpdateBinary()
 		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
 		buff.Append(&hdr, sizeof(hdr));
 	}
+	IFD* pIFDPrev = nullptr;
 	for (IFD* pIFD : GetIFDOwner()) {
+		if (!pIFDPrev) {
+			// nothing to do
+		} else if (_beFlag) {
+			Tag::ReplaceLONG<TypeDef_BE>(buff, pIFDPrev->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
+		} else {
+			Tag::ReplaceLONG<TypeDef_LE>(buff, pIFDPrev->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
+		}
 		if (!pIFD->Serialize(buff, _beFlag)) return false;
+		pIFDPrev = pIFD;
 	}
-	//_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut());
-	buff.Dump(Basement::Inst.GetStreamCOut());
+	//_pBuff->GetBinary().Dump(Basement::Inst.GetStreamCOut(), StringStyle().SetAddressInfo());
+	buff.Dump(Basement::Inst.GetStreamCOut(), StringStyle().SetAddressInfo());
 	_pBuff.reset(pBuff.release());
 	return true;
 }

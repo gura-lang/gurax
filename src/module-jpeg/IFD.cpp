@@ -24,10 +24,15 @@ bool IFD::Serialize(Binary& buff, bool beFlag)
 	for (Tag* pTag : GetTagOwner()) {
 		if (!pTag->Serialize(buff, beFlag, tagsPointed)) return false;
 	}
+	_posNextIFDOffset = buff.size();
 	buff.Append("\0\0\0\0", 4);	// place holder for offsetNextIFD
-	//tagsPointed.SortByTypeId();
 	for (Tag* pTag : tagsPointed) {
-		if (!pTag->SerializePointed(buff, beFlag)) return false;
+		if (!pTag->IsIFD() &&
+			!pTag->SerializePointed(buff, beFlag)) return false;
+	}
+	for (Tag* pTag : tagsPointed) {
+		if (pTag->IsIFD() &&
+			!pTag->SerializePointed(buff, beFlag)) return false;
 	}
 	return true;
 }

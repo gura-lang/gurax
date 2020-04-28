@@ -18,9 +18,12 @@ public:
 protected:
 	RefPtr<TagOwner> _pTagOwner;
 	TagMap _tagMap;
+	size_t _posNextIFDOffset;
 public:
 	// Constructor
-	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner) { PrepareTagMap(); }
+	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
+		PrepareTagMap();
+	}
 	// Copy constructor/operator
 	IFD(const IFD& src) = delete;
 	IFD& operator=(const IFD& src) = delete;
@@ -33,6 +36,7 @@ public:
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }
 	const TagMap& GetTagMap() { return _tagMap; }
+	size_t GetPosNextIFDOffset() { return _posNextIFDOffset; }
 public:
 	void PrepareTagMap();
 	bool Serialize(Binary& buff, bool beFlag);
