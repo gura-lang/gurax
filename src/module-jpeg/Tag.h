@@ -51,6 +51,7 @@ protected:
 	size_t _offset;
 	size_t _offsetToValue;
 	size_t _posPointer;
+	UInt32 _orderHint;
 	RefPtr<Value> _pValue;
 	RefPtr<Value> _pValueCooked;
 protected:
@@ -80,9 +81,7 @@ public:
 		return (_typeId == TypeId::JPEGInterchangeFormat || _typeId == TypeId::IFD)?
 			TypeId::LONG : _typeId;
 	}
-	int GetOrderHint() const {
-		return (_typeId == TypeId::IFD)? 1 : (_typeId == TypeId::JPEGInterchangeFormat)? 2 : 0;
-	}
+	int GetOrderHint() const { return _orderHint; }
 	UInt32 GetCount() const { return _count; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	size_t GetOffset() const { return _offset; }
@@ -161,7 +160,7 @@ template<typename TypeDef> Tag* Tag_BYTE::ReadFromBuff(
 	auto& variable = tagPacked.variable;
 	const UInt8* pBuff = variable.BYTE;
 	if (count > 4) {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(UInt8) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -198,7 +197,7 @@ template<typename TypeDef> Tag* Tag_ASCII::ReadFromBuff(
 	auto& variable = tagPacked.variable;
 	const char* pBuff = variable.ASCII;
 	if (count > 4) {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(char) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -242,7 +241,7 @@ template<typename TypeDef> Tag* Tag_SHORT::ReadFromBuff(
 		UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
 		SetValue(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
 	} else {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(SHORT_T) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -289,7 +288,7 @@ template<typename TypeDef> Tag* Tag_LONG::ReadFromBuff(
 		UInt32 num = Gurax_UnpackUInt32(variable.LONG.num);
 		SetValue(new Value_Number(num));
 	} else {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(LONG_T) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -332,7 +331,7 @@ template<typename TypeDef> Tag* Tag_RATIONAL::ReadFromBuff(
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
 	auto& variable = tagPacked.variable;
-	_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue + count * sizeof(RATIONAL_T) > bytesBuff) {
 		IssueError_InvalidFormat();
 		return nullptr;
@@ -383,7 +382,7 @@ template<typename TypeDef> Tag* Tag_UNDEFINED::ReadFromBuff(
 	auto& variable = tagPacked.variable;
 	const UInt8* pBuff = variable.BYTE;
 	if (count > 4) {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(UInt8) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -423,7 +422,7 @@ template<typename TypeDef> Tag* Tag_SLONG::ReadFromBuff(
 		Int32 num = Gurax_UnpackInt32(variable.SLONG.num);
 		SetValue(new Value_Number(num));
 	} else {
-		_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(SLONG_T) > bytesBuff) {
 			IssueError_InvalidFormat();
 			return nullptr;
@@ -466,7 +465,7 @@ template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
 	auto& variable = tagPacked.variable;
-	_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue + count * sizeof(SRATIONAL_T) > bytesBuff) {
 		IssueError_InvalidFormat();
 		return nullptr;
@@ -497,7 +496,9 @@ template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
 class GURAX_DLLDECLARE Tag_IFD : public Tag {
 public:
 	Tag_IFD(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
-		Tag(TypeId::IFD, tagId, count, pSymbol, offset, pValue) { _offsetToValue = offsetToValue; }
+		Tag(TypeId::IFD, tagId, count, pSymbol, offset, pValue) {
+		_orderHint = _offsetToValue = offsetToValue;
+	}
 public:
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
@@ -529,7 +530,7 @@ template<typename TypeDef> Tag* Tag_JPEGInterchangeFormat::ReadFromBuff(
 {
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	auto& variable = tagPacked.variable;
-	_offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue >= bytesBuff) {
 		IssueError_InvalidFormat();
 		return nullptr;
