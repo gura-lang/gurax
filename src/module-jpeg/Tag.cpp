@@ -554,6 +554,17 @@ void TagOwner::Clear()
 	clear();
 }
 
+void TagOwner::Erase(const Symbol* pSymbol)
+{
+	for (auto ppTag = begin(); ppTag != end(); ppTag++) {
+		if ((*ppTag)->GetSymbol()->IsIdentical(pSymbol)) {
+			Tag::Delete(*ppTag);
+			erase(ppTag);
+			break;
+		}
+	}
+}
+
 //------------------------------------------------------------------------------
 // TagMap
 //------------------------------------------------------------------------------
@@ -567,6 +578,15 @@ Tag* TagMap::Lookup(const Symbol* pSymbol) const
 {
 	auto iter = find(pSymbol);
 	return (iter == end())? nullptr : iter->second;
+}
+
+void TagMap::Erase(const Symbol* pSymbol)
+{
+	auto ppTag = find(pSymbol);
+	if (ppTag != end()) {
+		Tag::Delete(ppTag->second);
+		erase(ppTag);
+	}
 }
 
 Gurax_EndModuleScope(jpeg)

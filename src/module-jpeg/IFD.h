@@ -35,11 +35,13 @@ protected:
 public:
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }
-	const TagMap& GetTagMap() { return _tagMap; }
+	TagMap& GetTagMap() { return _tagMap; }
+	const TagMap& GetTagMap() const { return _tagMap; }
 	size_t GetPosNextIFDOffset() { return _posNextIFDOffset; }
 public:
 	void PrepareTagMap();
 	bool Serialize(Binary& buff, bool beFlag);
+	void DeleteTag(const Symbol* pSymbol);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }

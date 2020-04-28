@@ -1,0 +1,24 @@
+#!/usr/bin/env gurax
+import(jpeg)
+
+PrintIFD(ifd:jpeg.IFD, indentLevel:Number = 0) = {
+	ifd.tags.Each {|tag|
+		if (tag.offset == tag.offsetToValue) {
+			Printf('%*s%04x:%s(%04x) [%s]: %s\n',
+				indentLevel * 2, '', tag.offset, tag.name, tag.tagId,
+				tag.type.name, tag.value)
+		} else {
+			Printf('%*s%04x:%s(%04x) [%s,%04x]: %s\n',
+				indentLevel * 2, '', tag.offset, tag.name, tag.tagId,
+				tag.type.name, tag.offsetToValue, tag.value)
+		}
+		if (tag.type == `IFD) {
+			PrintIFD(tag.value, indentLevel + 1)
+		}
+	}
+}
+
+fileName = sys.argv[1]
+c = jpeg.Content(fileName)
+PrintIFD(c.exif.ifd0)
+PrintIFD(c.exif.ifd1)

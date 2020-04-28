@@ -559,6 +559,7 @@ protected:
 	~TagOwner() { Clear(); }
 public:
 	void Clear();
+	void Erase(const Symbol* pSymbol);
 };
 
 //------------------------------------------------------------------------------
@@ -570,6 +571,7 @@ public:
 	~TagMap() { Clear(); }
 	void Clear();
 	Tag* Lookup(const Symbol* pSymbol) const;
+	void Erase(const Symbol* pSymbol);
 };
 
 Gurax_EndModuleScope(jpeg)

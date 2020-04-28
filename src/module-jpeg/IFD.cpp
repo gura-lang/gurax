@@ -40,6 +40,12 @@ void IFD::PrepareTagMap()
 	}
 }
 
+void IFD::DeleteTag(const Symbol* pSymbol)
+{
+	GetTagOwner().Erase(pSymbol);
+	GetTagMap().Erase(pSymbol);
+}
+
 String IFD::ToString(const StringStyle& ss) const
 {
 	return "jpeg.IFD";

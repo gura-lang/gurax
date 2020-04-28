@@ -125,12 +125,15 @@ Value* Value_IFD::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool n
 bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
-	if (pTag) {
+	if (!pTag) return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
+	if (pValue->IsNil()) {
+		GetIFD().DeleteTag(pSymbol);
+		return true;
+	} else {
 		if (!pTag->CheckAcceptableValue(*pValue)) return false;
 		pTag->SetValue(pValue.release());
 		return true;
 	}
-	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
 }
 
 Gurax_EndModuleScope(jpeg)
