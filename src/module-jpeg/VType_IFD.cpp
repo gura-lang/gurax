@@ -117,23 +117,15 @@ VType& Value_IFD::vtype = VTYPE_IFD;
 
 Value* Value_IFD::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
-	if (pTag) return pTag->GetValue().Reference();
-	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	const Value* pValue = GetIFD().GetTagValue(pSymbol);
+	return pValue? pValue->Reference() : Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 }
 
 bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
-	if (!pTag) return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
-	if (pValue->IsNil()) {
-		GetIFD().DeleteTag(pSymbol);
-		return true;
-	} else {
-		if (!pTag->CheckAcceptableValue(*pValue)) return false;
-		pTag->SetValue(pValue.release());
-		return true;
-	}
+	if (GetIFD().SetTagValue(pSymbol, pValue.Reference())) return true;
+	if (Error::IsIssued()) return false;
+	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
 }
 
 Gurax_EndModuleScope(jpeg)

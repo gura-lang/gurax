@@ -181,20 +181,4 @@ const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 	return nullptr;
 }
 
-//------------------------------------------------------------------------------
-// TypeInfo
-//------------------------------------------------------------------------------
-#if 0
-static const TypeInfo g_typeInfoTbl[] = {
-	{ TypeId::BYTE,		"BYTE",			UNITSIZE_BYTE,		},
-	{ TypeId::ASCII,		"ASCII",		UNITSIZE_ASCII,		},
-	{ TypeId::SHORT,		"SHORT",		UNITSIZE_SHORT,		},
-	{ TypeId::LONG,		"LONG",			UNITSIZE_LONG,		},
-	{ TypeId::RATIONAL,	"RATIONAL",		UNITSIZE_RATIONAL,	},
-	{ TypeId::UNDEFINED,	"UNDEFINED",	UNITSIZE_UNDEFINED,	},
-	{ TypeId::SLONG,		"SLONG",		UNITSIZE_SLONG,		},
-	{ TypeId::SRATIONAL,	"SRATIONAL",	UNITSIZE_SRATIONAL,	},
-};
-#endif
-
 Gurax_EndModuleScope(jpeg)

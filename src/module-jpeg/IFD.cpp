@@ -46,6 +46,26 @@ void IFD::DeleteTag(const Symbol* pSymbol)
 	GetTagMap().Erase(pSymbol);
 }
 
+const Value* IFD::GetTagValue(const Symbol* pSymbol)
+{
+	Tag* pTag = GetTagMap().Lookup(pSymbol);
+	return pTag? pTag->GetValue().Reference() : nullptr;
+}
+
+bool IFD::SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
+{
+	Tag* pTag = GetTagMap().Lookup(pSymbol);
+	if (!pTag) return false;
+	if (pValue->IsNil()) {
+		DeleteTag(pSymbol);
+		return true;
+	} else {
+		if (!pTag->CheckAcceptableValue(*pValue)) return false;
+		pTag->SetValue(pValue.release());
+		return true;
+	}
+}
+
 String IFD::ToString(const StringStyle& ss) const
 {
 	return "jpeg.IFD";

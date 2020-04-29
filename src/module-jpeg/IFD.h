@@ -42,6 +42,8 @@ public:
 	void PrepareTagMap();
 	bool Serialize(Binary& buff, bool beFlag);
 	void DeleteTag(const Symbol* pSymbol);
+	const Value* GetTagValue(const Symbol* pSymbol);
+	bool SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }
