@@ -14,7 +14,8 @@ Value* Exif::CreateValue() const
 }
 
 template<typename TypeDef> IFD* Exif::AnalyzeIFD(
-	const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset, size_t* pOffsetNext)
+	const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset,
+	bool beFlag, size_t* pOffsetNext)
 {
 	using IFDHeader_T	= typename TypeDef::IFDHeader;
 	using LONG_T		= typename TypeDef::LONG;
@@ -45,7 +46,8 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		if (pTagInfo && pTagInfo->nameForIFD) {
 			size_t offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 			const Symbol* pSymbolOfIFDSub = Symbol::Add(pTagInfo->nameForIFD);
-			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff, offsetToValue));
+			RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef>(pSymbolOfIFDSub, buff, bytesBuff,
+														offsetToValue, beFlag));
 			if (!pIFD) return nullptr;
 			RefPtr<Tag> pTag(new Tag_IFD(tagId, pSymbolOfIFDSub, offset, offsetToValue, new Value_IFD(pIFD.release())));
 			pTagOwner->push_back(pTag.release());
@@ -55,48 +57,39 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		RefPtr<Tag> pTag;
 		switch (typeId) {
 		case TypeId::BYTE: {
-			pTag.reset((new Tag_BYTE(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_BYTE(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::ASCII: {
-			pTag.reset((new Tag_ASCII(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_ASCII(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::SHORT: {
-			pTag.reset((new Tag_SHORT(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_SHORT(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::LONG: {
 			if (tagId == TagId::JPEGInterchangeFormat) {
-				pTag.reset((new Tag_JPEGInterchangeFormat(tagId, pSymbol, offset))->
-												ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+				pTag.reset((new Tag_JPEGInterchangeFormat(tagId, pSymbol, offset)));
 			} else {
-				pTag.reset((new Tag_LONG(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
+				pTag.reset((new Tag_LONG(tagId, pSymbol, offset)));
 			}
-			if (!pTag) return nullptr;
 			break;
 		}
 		case TypeId::RATIONAL: {
-			pTag.reset((new Tag_RATIONAL(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_RATIONAL(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::UNDEFINED: {
-			pTag.reset((new Tag_UNDEFINED(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_UNDEFINED(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::SLONG: {
-			pTag.reset((new Tag_SLONG(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_SLONG(tagId, pSymbol, offset)));
 			break;
 		}
 		case TypeId::SRATIONAL: {
-			pTag.reset((new Tag_SRATIONAL(tagId, pSymbol, offset))->ReadFromBuff<TypeDef>(buff, bytesBuff, offset));
-			if (!pTag) return nullptr;
+			pTag.reset((new Tag_SRATIONAL(tagId, pSymbol, offset)));
 			break;
 		}
 		default: {
@@ -104,6 +97,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 			return nullptr;
 		}
 		}
+		if (!pTag->ReadFromBuff(buff, bytesBuff, offset, beFlag)) return nullptr;
 		pTagOwner->push_back(pTag.release());
 	}
 	if (pOffsetNext) {
@@ -141,7 +135,8 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(nullptr, pBuff, bytesAvail, offset, &offset));
+				RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_BE>(nullptr, pBuff, bytesAvail,
+														offset, true, &offset));
 				if (!pIFD) return false;
 				_ifdOwner.push_back(pIFD.release());
 			}
@@ -158,7 +153,8 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(nullptr, pBuff, bytesAvail, offset, &offset));
+				RefPtr<IFD> pIFD(AnalyzeIFD<TypeDef_LE>(nullptr, pBuff, bytesAvail,
+														offset, false, &offset));
 				if (!pIFD) return false;
 				_ifdOwner.push_back(pIFD.release());
 			}
