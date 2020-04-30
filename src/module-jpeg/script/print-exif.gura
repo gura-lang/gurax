@@ -4,15 +4,9 @@ import(argopt)
 
 PrintIFD(ifd:jpeg.IFD, indentLevel:Number = 0) = {
 	ifd.tags.Each {|tag|
-		if (tag.offset == tag.offsetToValue) {
-			Printf('%*s%04x:%s(%04x) [%s]: %s\n',
-				indentLevel * 2, '', tag.offset, tag.name, tag.tagId,
-				tag.type.name, tag.value)
-		} else {
-			Printf('%*s%04x:%s(%04x) [%s,%04x]: %s\n',
-				indentLevel * 2, '', tag.offset, tag.name, tag.tagId,
-				tag.type.name, tag.offsetToValue, tag.value)
-		}
+		Printf('%*s%s(%04x) [%s]: %s\n',
+			indentLevel * 2, '', tag.name, tag.tagId,
+			tag.type.name, tag.value)
 		if (tag.type == `IFD) {
 			PrintIFD(tag.value, indentLevel + 1)
 		}
