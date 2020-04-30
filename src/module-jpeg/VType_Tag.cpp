@@ -76,21 +76,6 @@ Gurax_ImplementMethod(Tag, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Tag#count
-Gurax_DeclareProperty_R(Tag, count)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Tag, count)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetTag().GetCount());
-}
-
 // jpeg.Tag#name
 Gurax_DeclareProperty_R(Tag, name)
 {
@@ -225,7 +210,6 @@ void VType_Tag::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Tag, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Tag, count));
 	Assign(Gurax_CreateProperty(Tag, name));
 	Assign(Gurax_CreateProperty(Tag, offset));
 	Assign(Gurax_CreateProperty(Tag, offsetToValue));

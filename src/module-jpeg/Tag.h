@@ -46,7 +46,6 @@ public:
 protected:
 	UInt16 _typeId;
 	UInt16 _tagId;
-	UInt32 _count;
 	const Symbol* _pSymbol;
 	size_t _offset;
 	size_t _offsetToValue;
@@ -56,15 +55,15 @@ protected:
 	RefPtr<Value> _pValueCooked;
 protected:
 	// Constructor
-	Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol,
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol,
 		size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked);
-	Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol,
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol,
 		size_t offset, size_t offsetToValue, Value* pValue) :
-		Tag(typeId, tagId, count, pSymbol, offset, offsetToValue, pValue, pValue->Reference()) {}
-	Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, Value* pValue) :
-		Tag(typeId, tagId, count, pSymbol, offset, offset, pValue, pValue->Reference()) {}
-	Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(typeId, tagId, count, pSymbol, offset, offset, Value::nil(), Value::nil()) {}
+		Tag(typeId, tagId, pSymbol, offset, offsetToValue, pValue, pValue->Reference()) {}
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, size_t offset, Value* pValue) :
+		Tag(typeId, tagId, pSymbol, offset, offset, pValue, pValue->Reference()) {}
+	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(typeId, tagId, pSymbol, offset, offset, Value::nil(), Value::nil()) {}
 	// Copy constructor/operator
 	Tag(const Tag& src) = delete;
 	Tag& operator=(const Tag& src) = delete;
@@ -82,7 +81,6 @@ public:
 			TypeId::LONG : _typeId;
 	}
 	int GetOrderHint() const { return _orderHint; }
-	UInt32 GetCount() const { return _count; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	size_t GetOffset() const { return _offset; }
 	size_t GetOffsetToValue() const { return _offsetToValue; }
@@ -139,8 +137,8 @@ template<typename TypeDef> void Tag::ReplaceLONG(Binary& buff, size_t pos, UInt3
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
-	Tag_BYTE(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::BYTE, tagId, count, pSymbol, offset) {}
+	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::BYTE, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -176,8 +174,8 @@ template<typename TypeDef> Tag* Tag_BYTE::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
-	Tag_ASCII(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::ASCII, tagId, count, pSymbol, offset) {}
+	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::ASCII, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -213,8 +211,8 @@ template<typename TypeDef> Tag* Tag_ASCII::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SHORT : public Tag {
 public:
-	Tag_SHORT(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::SHORT, tagId, count, pSymbol, offset) {}
+	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::SHORT, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -264,8 +262,8 @@ template<typename TypeDef> Tag* Tag_SHORT::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_LONG : public Tag {
 public:
-	Tag_LONG(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::LONG, tagId, count, pSymbol, offset) {}
+	Tag_LONG(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::LONG, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -311,8 +309,8 @@ template<typename TypeDef> Tag* Tag_LONG::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_RATIONAL : public Tag {
 public:
-	Tag_RATIONAL(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::RATIONAL, tagId, count, pSymbol, offset) {}
+	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::RATIONAL, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -361,8 +359,8 @@ template<typename TypeDef> Tag* Tag_RATIONAL::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_UNDEFINED : public Tag {
 public:
-	Tag_UNDEFINED(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::UNDEFINED, tagId, count, pSymbol, offset) {}
+	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::UNDEFINED, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -398,8 +396,8 @@ template<typename TypeDef> Tag* Tag_UNDEFINED::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SLONG : public Tag {
 public:
-	Tag_SLONG(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::SLONG, tagId, count, pSymbol, offset) {}
+	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::SLONG, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -445,8 +443,8 @@ template<typename TypeDef> Tag* Tag_SLONG::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SRATIONAL : public Tag {
 public:
-	Tag_SRATIONAL(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::SRATIONAL, tagId, count, pSymbol, offset) {}
+	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::SRATIONAL, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);
@@ -495,8 +493,8 @@ template<typename TypeDef> Tag* Tag_SRATIONAL::ReadFromBuff(
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_IFD : public Tag {
 public:
-	Tag_IFD(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
-		Tag(TypeId::IFD, tagId, count, pSymbol, offset, pValue) {
+	Tag_IFD(UInt16 tagId, const Symbol* pSymbol, size_t offset, size_t offsetToValue, Value* pValue) :
+		Tag(TypeId::IFD, tagId, pSymbol, offset, pValue) {
 		_orderHint = _offsetToValue = offsetToValue;
 	}
 public:
@@ -512,8 +510,8 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_JPEGInterchangeFormat : public Tag {
 public:
-	Tag_JPEGInterchangeFormat(UInt16 tagId, UInt32 count, const Symbol* pSymbol, size_t offset) :
-		Tag(TypeId::JPEGInterchangeFormat, tagId, count, pSymbol, offset) {}
+	Tag_JPEGInterchangeFormat(UInt16 tagId, const Symbol* pSymbol, size_t offset) :
+		Tag(TypeId::JPEGInterchangeFormat, tagId, pSymbol, offset) {}
 public:
 	template<typename TypeDef> inline Tag* ReadFromBuff(
 		const UInt8* buff, size_t bytesBuff, size_t offset);

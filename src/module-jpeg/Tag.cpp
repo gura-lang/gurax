@@ -8,9 +8,9 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Tag
 //------------------------------------------------------------------------------
-Tag::Tag(UInt16 typeId, UInt16 tagId, UInt32 count, const Symbol* pSymbol,
+Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol,
 	size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked) :
-	_typeId(typeId), _tagId(tagId), _count(count), _pSymbol(pSymbol),
+	_typeId(typeId), _tagId(tagId), _pSymbol(pSymbol),
 	_offset(offset), _offsetToValue(offsetToValue), _posPointer(0), _orderHint(0),
 	_pValue(pValue), _pValueCooked(pValueCooked)
 {
