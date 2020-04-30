@@ -65,7 +65,6 @@ protected:
 protected:
 	~Tag() = default;
 public:
-	void ClearOffset() { _offset = _offsetToValue = 0; }
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
 	UInt16 GetTypeIdRaw() const {
