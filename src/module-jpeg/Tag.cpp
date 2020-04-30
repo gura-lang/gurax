@@ -78,12 +78,12 @@ template<typename TypeDef> bool Tag_BYTE::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(UInt8) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		pBuff = buff + _offsetToValue;
 	}
 	SetValue(new Value_Binary(Binary(pBuff, count)));
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_BYTE::DoSerializePointed(Binary& buff)
@@ -129,12 +129,12 @@ template<typename TypeDef> bool Tag_ASCII::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(char) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		pBuff = reinterpret_cast<const char*>(buff + _offsetToValue);
 	}
 	SetValue(new Value_String(String(pBuff, count)));
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_ASCII::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -205,7 +205,7 @@ template<typename TypeDef> bool Tag_SHORT::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(SHORT_T) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		pValueOwner->reserve(count);
@@ -217,7 +217,7 @@ template<typename TypeDef> bool Tag_SHORT::DoReadFromBuff(
 		}
 		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
 	}
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SHORT::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -300,7 +300,7 @@ template<typename TypeDef> bool Tag_LONG::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(LONG_T) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		pValueOwner->reserve(count);
@@ -312,7 +312,7 @@ template<typename TypeDef> bool Tag_LONG::DoReadFromBuff(
 		}
 		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
 	}
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_LONG::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -388,12 +388,12 @@ template<typename TypeDef> bool Tag_RATIONAL::DoReadFromBuff(
 	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue + count * sizeof(RATIONAL_T) > bytesBuff) {
 		IssueError_InvalidFormat();
-		return nullptr;
+		return false;
 	}
 	if (count == 1) {
 		const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + _offsetToValue);
 		RefPtr<Value> pValue(CreateValueFromRATIONAL(*pRATIONAL));
-		if (!pValue) return nullptr;
+		if (!pValue) return false;
 		SetValue(pValue.release());
 	} else {
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
@@ -402,12 +402,12 @@ template<typename TypeDef> bool Tag_RATIONAL::DoReadFromBuff(
 		for (size_t i = 0; i < count; i++, offset += sizeof(RATIONAL_T)) {
 			const RATIONAL_T* pRATIONAL = reinterpret_cast<const RATIONAL_T*>(buff + offset);
 			RefPtr<Value> pValueElem(CreateValueFromRATIONAL(*pRATIONAL));
-			if (!pValueElem) return nullptr;
+			if (!pValueElem) return false;
 			pValueOwner->push_back(pValueElem.release());
 		}
 		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
 	}
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_RATIONAL::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -480,12 +480,12 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(UInt8) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		pBuff = buff + _offsetToValue;
 	}
 	SetValue(new Value_Binary(Binary(pBuff, count)));
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -549,7 +549,7 @@ template<typename TypeDef> bool Tag_SLONG::DoReadFromBuff(
 		_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		if (_offsetToValue + count * sizeof(SLONG_T) > bytesBuff) {
 			IssueError_InvalidFormat();
-			return nullptr;
+			return false;
 		}
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		pValueOwner->reserve(count);
@@ -561,7 +561,7 @@ template<typename TypeDef> bool Tag_SLONG::DoReadFromBuff(
 		}
 		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
 	}
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SLONG::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -636,12 +636,12 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoReadFromBuff(
 	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue + count * sizeof(SRATIONAL_T) > bytesBuff) {
 		IssueError_InvalidFormat();
-		return nullptr;
+		return false;
 	}
 	if (count == 1) {
 		const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + _offsetToValue);
 		RefPtr<Value> pValue(CreateValueFromSRATIONAL(*pSRATIONAL));
-		if (!pValue) return nullptr;
+		if (!pValue) return false;
 		SetValue(pValue.release());
 	} else {
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
@@ -650,12 +650,12 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoReadFromBuff(
 		for (size_t i = 0; i < count; i++, offset += sizeof(SRATIONAL_T)) {
 			const SRATIONAL_T* pSRATIONAL = reinterpret_cast<const SRATIONAL_T*>(buff + offset);
 			RefPtr<Value> pValueElem(CreateValueFromSRATIONAL(*pSRATIONAL));
-			if (!pValueElem) return nullptr;
+			if (!pValueElem) return false;
 			pValueOwner->push_back(pValueElem.release());
 		}
 		SetValue(new Value_List(VTYPE_Number, pValueOwner.release()));
 	}
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -729,7 +729,7 @@ template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList& tags
 
 bool Tag_IFD::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
 {
-	return nullptr;
+	return false;
 }
 
 bool Tag_IFD::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -764,11 +764,11 @@ template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoReadFromBuff(
 	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 	if (_offsetToValue >= bytesBuff) {
 		IssueError_InvalidFormat();
-		return nullptr;
+		return false;
 	}
 	const UInt8* pBuff = buff + _offsetToValue;
 	SetValue(new Value_Binary(Binary(pBuff, bytesBuff - _offsetToValue)));
-	return this;
+	return true;
 }
 
 template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoSerialize(Binary& buff, TagList& tagsPointed)
