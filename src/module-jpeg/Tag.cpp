@@ -8,11 +8,10 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Tag
 //------------------------------------------------------------------------------
-Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol,
-	size_t offset, size_t offsetToValue, Value* pValue, Value* pValueCooked) :
+Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol, size_t offset) :
 	_typeId(typeId), _tagId(tagId), _pSymbol(pSymbol),
-	_offset(offset), _offsetToValue(offsetToValue), _posPointer(0), _orderHint(0),
-	_pValue(pValue), _pValueCooked(pValueCooked)
+	_offset(offset), _offsetToValue(offset), _posPointer(0), _orderHint(0),
+	_pValue(Value::nil()), _pValueCooked(Value::nil())
 {
 }
 
@@ -68,7 +67,7 @@ template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList& tag
 }
 
 template<typename TypeDef> bool Tag_BYTE::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
@@ -94,10 +93,11 @@ template<typename TypeDef> bool Tag_BYTE::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_BYTE::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_BYTE::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_BYTE::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -119,7 +119,7 @@ bool Tag_ASCII::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_ASCII::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
@@ -163,10 +163,11 @@ template<typename TypeDef> bool Tag_ASCII::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_ASCII::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_ASCII::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_ASCII::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -188,7 +189,7 @@ bool Tag_SHORT::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_SHORT::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	using SHORT_T = typename TypeDef::SHORT;
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
@@ -262,10 +263,11 @@ template<typename TypeDef> bool Tag_SHORT::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SHORT::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_SHORT::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_SHORT::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -287,7 +289,7 @@ bool Tag_LONG::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_LONG::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	using LONG_T = typename TypeDef::LONG;
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
@@ -352,10 +354,11 @@ template<typename TypeDef> bool Tag_LONG::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_LONG::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_LONG::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_LONG::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -379,7 +382,7 @@ bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_RATIONAL::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	using RATIONAL_T = typename TypeDef::RATIONAL;
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
@@ -445,10 +448,11 @@ template<typename TypeDef> bool Tag_RATIONAL::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_RATIONAL::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_RATIONAL::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_RATIONAL::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -470,7 +474,7 @@ bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
@@ -511,10 +515,11 @@ template<typename TypeDef> bool Tag_UNDEFINED::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_UNDEFINED::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_UNDEFINED::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_UNDEFINED::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -536,7 +541,7 @@ bool Tag_SLONG::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_SLONG::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	using SLONG_T = typename TypeDef::SLONG;
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
@@ -600,10 +605,11 @@ template<typename TypeDef> bool Tag_SLONG::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SLONG::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_SLONG::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_SLONG::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -627,7 +633,7 @@ bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	using SRATIONAL_T = typename TypeDef::SRATIONAL;
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
@@ -693,10 +699,11 @@ template<typename TypeDef> bool Tag_SRATIONAL::DoSerializePointed(Binary& buff)
 	return true;
 }
 
-bool Tag_SRATIONAL::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_SRATIONAL::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_SRATIONAL::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -717,6 +724,21 @@ bool Tag_IFD::CheckAcceptableValue(Value& value) const
 	return false;
 }
 
+template<typename TypeDef> bool Tag_IFD::DoReadFromBuff(
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
+{
+	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
+	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+	auto& variable = tagPacked.variable;
+	_orderHint = _offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
+	const Symbol* pSymbolOfIFD = Symbol::Add(tagInfo.nameForIFD);
+	_pSymbol = pSymbolOfIFD;
+	RefPtr<IFD> pIFD(IFD::ReadFromBuff<TypeDef>(buff, bytesBuff, _offsetToValue, pSymbolOfIFD));
+	if (!pIFD) return false;
+	SetValue(new Value_IFD(pIFD.release()));
+	return true;
+}
+
 template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList& tagsPointed)
 {
 	UInt32 count = 1;
@@ -727,9 +749,11 @@ template<typename TypeDef> bool Tag_IFD::DoSerialize(Binary& buff, TagList& tags
 	return true;
 }
 
-bool Tag_IFD::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_IFD::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return false;
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_IFD::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)
@@ -757,7 +781,7 @@ bool Tag_JPEGInterchangeFormat::CheckAcceptableValue(Value& value) const
 }
 
 template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoReadFromBuff(
-	const UInt8* buff, size_t bytesBuff, size_t offset)
+	const UInt8* buff, size_t bytesBuff, size_t offset, const TagInfo& tagInfo)
 {
 	auto& tagPacked = *reinterpret_cast<const typename TypeDef::TagPacked*>(buff + offset);
 	auto& variable = tagPacked.variable;
@@ -811,10 +835,11 @@ template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoSerializePointed(Bi
 	return true;
 }
 
-bool Tag_JPEGInterchangeFormat::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag)
+bool Tag_JPEGInterchangeFormat::ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset,
+	const TagInfo& tagInfo, bool beFlag)
 {
-	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset) :
-					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset);
+	return beFlag? DoReadFromBuff<TypeDef_BE>(buff, bytesBuff, offset, tagInfo) :
+					DoReadFromBuff<TypeDef_LE>(buff, bytesBuff, offset, tagInfo);
 }
 
 bool Tag_JPEGInterchangeFormat::Serialize(Binary& buff, bool beFlag, TagList& tagsPointed)

@@ -296,6 +296,8 @@ struct TagId {
 // TypeDef_BE
 //------------------------------------------------------------------------------
 struct TypeDef_BE {
+	// Constant
+	static const bool beFlag = true;
 	// TIFFHeader
 	struct TIFFHeader {
 		Gurax_PackedUInt16_BE(code);
@@ -355,6 +357,8 @@ struct TypeDef_BE {
 // TypeDef_LE
 //------------------------------------------------------------------------------
 struct TypeDef_LE {
+	// Constant
+	static const bool beFlag = false;
 	// TIFFHeader
 	struct TIFFHeader {
 		Gurax_PackedUInt16_LE(code);
@@ -418,6 +422,12 @@ struct TagInfo {
 	const char* name;
 	UInt16 typeId;
 	const char* nameForIFD;
+public:
+	TagInfo(UInt16 tagId, const char* name, UInt16 typeId, const char* nameForIFD) :
+		tagId(tagId), name(name), typeId(typeId), nameForIFD(nameForIFD) {}
+	TagInfo() : tagId(0), name(""), typeId(0), nameForIFD(nullptr) {}
+public:
+	static const TagInfo Empty;
 public:
 	static void Initialize();
 	static const TagInfo* LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId);

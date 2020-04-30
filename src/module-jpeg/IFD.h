@@ -42,6 +42,9 @@ public:
 	const TagMap& GetTagMap() const { return _tagMap; }
 	size_t GetPosNextIFDOffset() { return _posNextIFDOffset; }
 public:
+	template<typename TypeDef> static inline IFD* ReadFromBuff(const UInt8* buff,
+			size_t bytesBuff, size_t offset, const Symbol* pSymbolOfIFD,
+			size_t* pOffsetNext = nullptr);
 	void PrepareTagMap();
 	bool Serialize(Binary& buff, bool beFlag);
 	void DeleteTag(const Symbol* pSymbol);
@@ -54,6 +57,92 @@ public:
 	bool IsLessThan(const IFD& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+template<typename TypeDef> IFD* IFD::ReadFromBuff(const UInt8* buff, size_t bytesBuff,
+	size_t offset, const Symbol* pSymbolOfIFD, size_t* pOffsetNext)
+{
+	using IFDHeader_T	= typename TypeDef::IFDHeader;
+	using LONG_T		= typename TypeDef::LONG;
+	using Variable_T	= typename TypeDef::Variable;
+	using TagPacked_T	= typename TypeDef::TagPacked;
+	if (pOffsetNext) *pOffsetNext = 0;
+	if (offset + sizeof(IFDHeader_T) > bytesBuff) {
+		IssueError_InvalidFormat();
+		return nullptr;
+	}
+	RefPtr<TagOwner> pTagOwner(new TagOwner());
+	auto& hdr = *reinterpret_cast<const IFDHeader_T*>(buff + offset);
+	size_t tagCount = Gurax_UnpackUInt16(hdr.tagCount);
+	offset += sizeof(IFDHeader_T);
+	if (offset + sizeof(TagPacked_T) * tagCount + sizeof(LONG_T) > bytesBuff) {
+		IssueError_InvalidFormat();
+		return nullptr;
+	}
+	for (size_t iTag = 0; iTag < tagCount; iTag++, offset += sizeof(TagPacked_T)) {
+		auto &tagPacked = *reinterpret_cast<const TagPacked_T*>(buff + offset);
+		UInt16 tagId = Gurax_UnpackUInt16(tagPacked.tagId);
+		UInt16 typeId = Gurax_UnpackUInt16(tagPacked.typeId);
+		UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
+		const Variable_T& variable = tagPacked.variable;
+		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
+		const TagInfo& tagInfo = pTagInfo? *pTagInfo : TagInfo::Empty; 
+		//::printf("[%04x] %s type:%04x, count=%d\n",
+		//		 tagId, (pTagInfo == nullptr)? "(unknown)" : pTagInfo->name, typeId, count);
+		const Symbol* pSymbol = Symbol::Add(tagInfo.name);
+		RefPtr<Tag> pTag;
+		if (tagInfo.nameForIFD) {
+			pTag.reset(new Tag_IFD(tagId, pSymbol, offset));
+		} else if (tagId == TagId::JPEGInterchangeFormat) {
+			pTag.reset(new Tag_JPEGInterchangeFormat(tagId, pSymbol, offset));
+		} else {
+			switch (typeId) {
+			case TypeId::BYTE: {
+				pTag.reset(new Tag_BYTE(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::ASCII: {
+				pTag.reset(new Tag_ASCII(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::SHORT: {
+				pTag.reset(new Tag_SHORT(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::LONG: {
+				pTag.reset(new Tag_LONG(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::RATIONAL: {
+				pTag.reset(new Tag_RATIONAL(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::UNDEFINED: {
+				pTag.reset(new Tag_UNDEFINED(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::SLONG: {
+				pTag.reset(new Tag_SLONG(tagId, pSymbol, offset));
+				break;
+			}
+			case TypeId::SRATIONAL: {
+				pTag.reset(new Tag_SRATIONAL(tagId, pSymbol, offset));
+				break;
+			}
+			default: {
+				IssueError_InvalidFormat();
+				return nullptr;
+			}
+			}
+		}
+		if (!pTag->ReadFromBuff(buff, bytesBuff, offset, tagInfo, TypeDef::beFlag)) return nullptr;
+		pTagOwner->push_back(pTag.release());
+	}
+	if (pOffsetNext) {
+		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
+		*pOffsetNext = Gurax_UnpackUInt32(pLONG->num);
+	}
+	return new IFD(pSymbolOfIFD, pTagOwner.release());
+}
 
 //------------------------------------------------------------------------------
 // IFDList

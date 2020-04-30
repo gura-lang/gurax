@@ -38,10 +38,6 @@ public:
 	bool UpdateBinary();
 public:
 	const IFDOwner& GetIFDOwner() const { return _ifdOwner; }
-protected:
-	template<typename TypeDef> IFD* AnalyzeIFD(
-		const Symbol* pSymbolOfIFD, const UInt8* buff, size_t bytesBuff, size_t offset,
-		bool beFlag, size_t* pOffsetNext = nullptr);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }

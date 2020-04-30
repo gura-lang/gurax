@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // TagInfo
 //------------------------------------------------------------------------------
+const TagInfo TagInfo::Empty;
+
 // 4.6.4 TIFF Rev.6.0 Attribute Information
 static const TagInfo g_tagInfoTbl_TIFF[] = {
 	// A. Tags relating to image data structure
