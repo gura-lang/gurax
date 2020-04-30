@@ -110,7 +110,7 @@ template<typename TypeDef> IFD* Exif::AnalyzeIFD(
 		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
 		*pOffsetNext = Gurax_UnpackUInt32(pLONG->num);
 	}
-	return new IFD(pTagOwner.release());
+	return new IFD(pSymbolOfIFD, pTagOwner.release());
 }
 
 bool Exif::AnalyzeBinary()

@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(jpeg)
 // TagInfo
 //------------------------------------------------------------------------------
 // 4.6.4 TIFF Rev.6.0 Attribute Information
-const TagInfo TagInfo::Tbl_TIFF[] = {
+static const TagInfo g_tagInfoTbl_TIFF[] = {
 	// A. Tags relating to image data structure
 	{ TagId::ImageWidth,					"ImageWidth",					TypeId::LONG,		nullptr,	},
 	{ TagId::ImageLength,					"ImageLength",					TypeId::LONG,		nullptr,	},
@@ -47,11 +47,10 @@ const TagInfo TagInfo::Tbl_TIFF[] = {
 	// Pointers
 	{ TagId::ExifIFDPointer,				"ExifIFDPointer",				TypeId::LONG,		"Exif",		},
 	{ TagId::GPSInfoIFDPointer,				"GPSInfoIFDPointer",			TypeId::LONG,		"GPSInfo",	},
-	{ TagId::invalid,						nullptr,						TypeId::UNDEFINED,	nullptr,	},
 };
 
 // 4.6.5 Exif IFD Attribute Information
-const TagInfo TagInfo::Tbl_Exif[] = {
+static const TagInfo g_tagInfoTbl_Exif[] = {
 	// A. Tags Relating to Version
 	{ TagId::ExifVersion,					"ExifVersion",					TypeId::UNDEFINED,	nullptr,	},
 	{ TagId::FlashPixVersion,				"FlashPixVersion",				TypeId::UNDEFINED,	nullptr,	},
@@ -118,11 +117,10 @@ const TagInfo TagInfo::Tbl_Exif[] = {
 	{ TagId::ImageUniqueID,					"ImageUniqueID",				TypeId::ASCII,		nullptr,	},
 	// Pointers
 	{ TagId::InteroperabilityIFDPointer,	"InteroperabilityIFDPointer",	TypeId::LONG,		"Interoperability"	},
-	{ TagId::invalid,						nullptr,						TypeId::UNDEFINED,	nullptr,	},
 };
 
 // 4.6.6 GPS Attribute Information
-const TagInfo TagInfo::Tbl_GPSInfo[] = {
+static const TagInfo g_tagInfoTbl_GPSInfo[] = {
 	// A. Tags Relating to GPS
 	{ TagId::GPSVersionID,					"GPSVersionID",					TypeId::BYTE,		nullptr,	},
 	{ TagId::GPSLatitudeRef,				"GPSLatitudeRef",				TypeId::ASCII,		nullptr,	},
@@ -155,30 +153,104 @@ const TagInfo TagInfo::Tbl_GPSInfo[] = {
 	{ TagId::GPSAreaInformation,			"GPSAreaInformation",			TypeId::UNDEFINED,	nullptr,	},
 	{ TagId::GPSDateStamp,					"GPSDateStamp",					TypeId::ASCII,		nullptr,	},
 	{ TagId::GPSDifferential,				"GPSDifferential",				TypeId::SHORT,		nullptr,	},
-	{ TagId::invalid,						nullptr,						TypeId::UNDEFINED,	nullptr,	},
 };
 
 // 4.6.7 Interoperability IFD Attribute Information
-const TagInfo TagInfo::Tbl_Interoperability[] = {
+static const TagInfo g_tagInfoTbl_Interoperability[] = {
 	{ TagId::InteroperabilityIndex,			"InteroperabilityIndex",		TypeId::ASCII,		nullptr,	},
 	{ TagId::InteroperabilityVersion,		"InteroperabilityVersion",		TypeId::BYTE,		nullptr,	},
 	{ TagId::RelatedImageWidth,				"RelatedImageWidth",			TypeId::SHORT,		nullptr,	},
 	{ TagId::RelatedImageHeight,			"RelatedImageHeight",			TypeId::SHORT,		nullptr,	},
-	{ TagId::invalid,						nullptr,						TypeId::UNDEFINED,	nullptr,	},
 };
+
+static TagInfoMapByTagId g_tagInfoMapByTagId_TIFF;
+static TagInfoMapByTagId g_tagInfoMapByTagId_Exif;
+static TagInfoMapByTagId g_tagInfoMapByTagId_GPSInfo;
+static TagInfoMapByTagId g_tagInfoMapByTagId_Interoperability;
+
+static TagInfoMapBySymbol g_tagInfoMapBySymbol_TIFF;
+static TagInfoMapBySymbol g_tagInfoMapBySymbol_Exif;
+static TagInfoMapBySymbol g_tagInfoMapBySymbol_GPSInfo;
+static TagInfoMapBySymbol g_tagInfoMapBySymbol_Interoperability;
+
+void TagInfo::Initialize()
+{
+	g_tagInfoMapByTagId_TIFF.Initialize(
+		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapByTagId_Exif.Initialize(
+		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapByTagId_GPSInfo.Initialize(
+		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapByTagId_Interoperability.Initialize(
+		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapBySymbol_TIFF.Initialize(
+		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapBySymbol_Exif.Initialize(
+		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapBySymbol_GPSInfo.Initialize(
+		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapBySymbol_Interoperability.Initialize(
+		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+}
 
 const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 {
-	const TagInfo *pTagInfo =
-		!pSymbolOfIFD? Tbl_TIFF :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))? Tbl_Exif :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))? Tbl_Interoperability :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))? Tbl_GPSInfo : nullptr;
-	if (!pTagInfo) return nullptr;
-	for (int i = 0; pTagInfo->name != nullptr; i++, pTagInfo++) {
-		if (pTagInfo->tagId == tagId) return pTagInfo;
+	return
+		!pSymbolOfIFD?
+			g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
+			g_tagInfoMapByTagId_Exif.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))?
+			g_tagInfoMapByTagId_Interoperability.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))?
+			g_tagInfoMapByTagId_GPSInfo.Lookup(tagId) :
+		nullptr;
+}
+
+const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
+{
+	return
+		!pSymbolOfIFD?
+			g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
+			g_tagInfoMapBySymbol_Exif.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))?
+			g_tagInfoMapBySymbol_Interoperability.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))?
+			g_tagInfoMapBySymbol_GPSInfo.Lookup(pSymbol) :
+		nullptr;
+}
+
+//------------------------------------------------------------------------------
+// TagInfoMapByTagId
+//------------------------------------------------------------------------------
+void TagInfoMapByTagId::Initialize(const TagInfo tagInfoTbl[], size_t n)
+{
+	for (size_t i = 0; i < n; i++) {
+		(*this)[tagInfoTbl[i].tagId] = &tagInfoTbl[i];
 	}
-	return nullptr;
+}
+
+const TagInfo* TagInfoMapByTagId::Lookup(UInt16 tagId) const
+{
+	auto iter = find(tagId);
+	return (iter == end())? nullptr : iter->second;
+}
+
+//------------------------------------------------------------------------------
+// TagInfoMapBySymbol
+//------------------------------------------------------------------------------
+void TagInfoMapBySymbol::Initialize(const TagInfo tagInfoTbl[], size_t n)
+{
+	for (size_t i = 0; i < n; i++) {
+		(*this)[Symbol::Add(tagInfoTbl[i].name)] = &tagInfoTbl[i];
+	}
+}
+
+const TagInfo* TagInfoMapBySymbol::Lookup(const Symbol* pSymbol) const
+{
+	auto iter = find(pSymbol);
+	return (iter == end())? nullptr : iter->second;
 }
 
 Gurax_EndModuleScope(jpeg)

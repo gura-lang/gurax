@@ -16,12 +16,14 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(IFD);
 protected:
+	const Symbol* _pSymbolOfIFD;
 	RefPtr<TagOwner> _pTagOwner;
 	TagMap _tagMap;
 	size_t _posNextIFDOffset;
 public:
 	// Constructor
-	IFD(TagOwner* pTagOwner) : _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
+	IFD(const Symbol* pSymbolOfIFD, TagOwner* pTagOwner) :
+		_pSymbolOfIFD(pSymbolOfIFD), _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
 		PrepareTagMap();
 	}
 	// Copy constructor/operator
@@ -33,6 +35,7 @@ public:
 protected:
 	~IFD() = default;
 public:
+	const Symbol* GetSymbolOfIFD() const { return _pSymbolOfIFD; }
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }
 	TagMap& GetTagMap() { return _tagMap; }

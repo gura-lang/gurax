@@ -67,6 +67,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialization of static data
+	TagInfo::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Content);
 	Assign(VTYPE_Exif);

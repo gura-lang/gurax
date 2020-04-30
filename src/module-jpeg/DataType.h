@@ -419,12 +419,29 @@ struct TagInfo {
 	UInt16 typeId;
 	const char* nameForIFD;
 public:
-	static const TagInfo Tbl_TIFF[];
-	static const TagInfo Tbl_Exif[];
-	static const TagInfo Tbl_GPSInfo[];
-	static const TagInfo Tbl_Interoperability[];
-public:
+	static void Initialize();
 	static const TagInfo* LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId);
+	static const TagInfo* LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol);
+};
+
+//------------------------------------------------------------------------------
+// TagInfoMapByTagId
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TagInfoMapByTagId :
+	public std::unordered_map<UInt16, const TagInfo*> {
+public:
+	void Initialize(const TagInfo tagInfoTbl[], size_t n);
+	const TagInfo* Lookup(UInt16 tagId) const;
+};
+
+//------------------------------------------------------------------------------
+// TagInfoMapBySymbol
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TagInfoMapBySymbol :
+	public std::unordered_map<const Symbol*, const TagInfo*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+public:
+	void Initialize(const TagInfo tagInfoTbl[], size_t n);
+	const TagInfo* Lookup(const Symbol* pSymbol) const;
 };
 
 //------------------------------------------------------------------------------
@@ -432,7 +449,7 @@ public:
 //------------------------------------------------------------------------------
 struct TypeInfo {
 	UInt16 typeId;
-	const char *name;
+	const char*name;
 	size_t unitSize;
 };
 
