@@ -44,8 +44,8 @@ public:
 		}
 	};
 protected:
-	UInt16 _typeId;
 	UInt16 _tagId;
+	UInt16 _typeId;
 	const Symbol* _pSymbol;
 	size_t _posPointer;
 	UInt32 _orderHint;
@@ -53,7 +53,7 @@ protected:
 	RefPtr<Value> _pValueCooked;
 protected:
 	// Constructor
-	Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol);
+	Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol);
 	// Copy constructor/operator
 	Tag(const Tag& src) = delete;
 	Tag& operator=(const Tag& src) = delete;
@@ -63,7 +63,7 @@ protected:
 protected:
 	~Tag() = default;
 public:
-	static Tag* Create(UInt16 typeId, UInt16 tagId, const TagInfo* pTagInfo);
+	static Tag* Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo);
 public:
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
@@ -127,7 +127,7 @@ template<typename TypeDef> void Tag::ReplaceLONG(Binary& buff, size_t pos, UInt3
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
-	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::BYTE, tagId, pSymbol) {}
+	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::BYTE, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -144,7 +144,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
-	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::ASCII, tagId, pSymbol) {}
+	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::ASCII, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -161,7 +161,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SHORT : public Tag {
 public:
-	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::SHORT, tagId, pSymbol) {}
+	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SHORT, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -178,7 +178,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_LONG : public Tag {
 public:
-	Tag_LONG(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::LONG, tagId, pSymbol) {}
+	Tag_LONG(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::LONG, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -195,7 +195,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_RATIONAL : public Tag {
 public:
-	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::RATIONAL, tagId, pSymbol) {}
+	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::RATIONAL, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -212,7 +212,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_UNDEFINED : public Tag {
 public:
-	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::UNDEFINED, tagId, pSymbol) {}
+	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::UNDEFINED, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -229,7 +229,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SLONG : public Tag {
 public:
-	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::SLONG, tagId, pSymbol) {}
+	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SLONG, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -246,7 +246,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_SRATIONAL : public Tag {
 public:
-	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::SRATIONAL, tagId, pSymbol) {}
+	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SRATIONAL, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -263,7 +263,7 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_IFD : public Tag {
 public:
-	Tag_IFD(UInt16 tagId, const Symbol* pSymbol) : Tag(TypeId::IFD, tagId, pSymbol) {}
+	Tag_IFD(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::IFD, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
@@ -279,8 +279,8 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tag_JPEGInterchangeFormat : public Tag {
 public:
-	Tag_JPEGInterchangeFormat(UInt16 tagId, const Symbol* pSymbol) :
-			Tag(TypeId::JPEGInterchangeFormat, tagId, pSymbol) {}
+	Tag_JPEGInterchangeFormat(const Symbol* pSymbol) :
+			Tag(TagId::JPEGInterchangeFormat, TypeId::JPEGInterchangeFormat, pSymbol) {}
 public:
 	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;

@@ -8,20 +8,20 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Tag
 //------------------------------------------------------------------------------
-Tag::Tag(UInt16 typeId, UInt16 tagId, const Symbol* pSymbol) :
-	_typeId(typeId), _tagId(tagId), _pSymbol(pSymbol), _posPointer(0), _orderHint(0),
+Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol) :
+	_tagId(tagId), _typeId(typeId), _pSymbol(pSymbol), _posPointer(0), _orderHint(0),
 	_pValue(Value::nil()), _pValueCooked(Value::nil())
 {
 }
 
-Tag* Tag::Create(UInt16 typeId, UInt16 tagId, const TagInfo* pTagInfo)
+Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo)
 {
 	if (pTagInfo && pTagInfo->nameForIFD) {
 		return new Tag_IFD(tagId, Symbol::Add(pTagInfo->nameForIFD));
 	}
 	const Symbol* pSymbol = pTagInfo? Symbol::Add(pTagInfo->name) : Symbol::Empty;
 	if (tagId == TagId::JPEGInterchangeFormat) {
-		return new Tag_JPEGInterchangeFormat(tagId, pSymbol);
+		return new Tag_JPEGInterchangeFormat(pSymbol);
 	}
 	switch (typeId) {
 	case TypeId::BYTE: return new Tag_BYTE(tagId, pSymbol);

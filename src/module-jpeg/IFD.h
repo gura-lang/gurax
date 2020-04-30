@@ -82,9 +82,8 @@ template<typename TypeDef> IFD* IFD::ReadFromBuff(const UInt8* buff, size_t byte
 		UInt16 tagId = Gurax_UnpackUInt16(tagPacked.tagId);
 		UInt16 typeId = Gurax_UnpackUInt16(tagPacked.typeId);
 		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
-		RefPtr<Tag> pTag(Tag::Create(typeId, tagId, pTagInfo));
-		if (!pTag) return nullptr;
-		if (!pTag->ReadFromBuff(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;
+		RefPtr<Tag> pTag(Tag::Create(tagId, typeId, pTagInfo));
+		if (!pTag || !pTag->ReadFromBuff(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;
 		pTagOwner->push_back(pTag.release());
 	}
 	if (pOffsetNext) {
