@@ -52,13 +52,13 @@ void IFD::DeleteTag(const Symbol* pSymbol)
 	GetTagMap().Erase(pSymbol);
 }
 
-const Value* IFD::GetTagValue(const Symbol* pSymbol)
+const Value* IFD::LookupTagValue(const Symbol* pSymbol)
 {
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
 	return pTag? pTag->GetValue().Reference() : nullptr;
 }
 
-bool IFD::SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
+bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 {
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
 	if (!pTag) {
@@ -71,22 +71,12 @@ bool IFD::SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
 		if (!pTag) return false;
 		pTag->SetOrderHintAsAdded();
-		if (!pTag->CheckAcceptableValue(*pValue)) {
-			Error::Issue(ErrorType::SymbolError, "proerty '%s' can't accept %s value",
-				pSymbol->GetName(), pValue->GetVType().MakeFullName().c_str());
-			return false;
-		}
-		pTag->SetValue(pValue.release());
+		if (!pTag->AssignValue(pValue.release())) return false;
 		AddTag(pTag.release());
 	} else if (pValue->IsNil()) {
 		DeleteTag(pSymbol);
 	} else {
-		if (!pTag->CheckAcceptableValue(*pValue)) {
-			Error::Issue(ErrorType::SymbolError, "proerty '%s' can't accept %s value",
-				pSymbol->GetName(), pValue->GetVType().MakeFullName().c_str());
-			return false;
-		}
-		pTag->SetValue(pValue.release());
+		if (!pTag->AssignValue(pValue.release())) return false;
 	}
 	return true;
 }

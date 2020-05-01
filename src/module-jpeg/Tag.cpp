@@ -69,9 +69,14 @@ String Tag::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Tag_BYTE
 //------------------------------------------------------------------------------
-bool Tag_BYTE::CheckAcceptableValue(Value& value) const
+bool Tag_BYTE::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_Binary);
+	if (!pValue->IsType(VTYPE_Binary)) {
+		Error::Issue(ErrorType::TypeError, "Binary value is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_BYTE::DoSerialize(Binary& buff, TagList& tagsPointed)
@@ -136,9 +141,14 @@ bool Tag_BYTE::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_ASCII
 //------------------------------------------------------------------------------
-bool Tag_ASCII::CheckAcceptableValue(Value& value) const
+bool Tag_ASCII::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_String);
+	if (!pValue->IsType(VTYPE_String)) {
+		Error::Issue(ErrorType::TypeError, "String value is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_ASCII::DoDeserialize(
@@ -206,9 +216,14 @@ bool Tag_ASCII::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SHORT
 //------------------------------------------------------------------------------
-bool Tag_SHORT::CheckAcceptableValue(Value& value) const
+bool Tag_SHORT::AssignValue(RefPtr<Value> pValue)
 {
-	return CheckRangedNumber(value, 0x0000, 0xffff);
+	if (!CheckRangedNumber(*pValue, 0x0000, 0xffff)) {
+		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffff is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SHORT::DoDeserialize(
@@ -306,9 +321,14 @@ bool Tag_SHORT::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_LONG
 //------------------------------------------------------------------------------
-bool Tag_LONG::CheckAcceptableValue(Value& value) const
+bool Tag_LONG::AssignValue(RefPtr<Value> pValue)
 {
-	return CheckRangedNumber(value, 0x00000000, 0xffffffff);
+	if (!CheckRangedNumber(*pValue, 0x00000000, 0xffffffff)) {
+		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffffffff is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_LONG::DoDeserialize(
@@ -397,11 +417,16 @@ bool Tag_LONG::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_RATIONAL
 //------------------------------------------------------------------------------
-bool Tag_RATIONAL::CheckAcceptableValue(Value& value) const
+bool Tag_RATIONAL::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_Rational);
-		(value.IsType(VTYPE_List) &&
-			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
+	if (!(pValue->IsType(VTYPE_Rational) ||
+		(pValue->IsType(VTYPE_List) &&
+			Value_List::GetValueTypedOwner(*pValue).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational)))) {
+		Error::Issue(ErrorType::TypeError, "Rational value is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_RATIONAL::DoDeserialize(
@@ -491,9 +516,14 @@ bool Tag_RATIONAL::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_UNDEFINED
 //------------------------------------------------------------------------------
-bool Tag_UNDEFINED::CheckAcceptableValue(Value& value) const
+bool Tag_UNDEFINED::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_Binary);
+	if (!pValue->IsType(VTYPE_Binary)) {
+		Error::Issue(ErrorType::TypeError, "Binary value is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_UNDEFINED::DoDeserialize(
@@ -558,9 +588,14 @@ bool Tag_UNDEFINED::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SLONG
 //------------------------------------------------------------------------------
-bool Tag_SLONG::CheckAcceptableValue(Value& value) const
+bool Tag_SLONG::AssignValue(RefPtr<Value> pValue)
 {
-	return CheckRangedNumber(value, -0x80000000, 0x7fffffff);
+	if (!CheckRangedNumber(*pValue, -0x80000000, 0x7fffffff)) {
+		Error::Issue(ErrorType::TypeError, "Number value between -0x80000000 and 0x7fffffff is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SLONG::DoDeserialize(
@@ -648,11 +683,16 @@ bool Tag_SLONG::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SRATIONAL
 //------------------------------------------------------------------------------
-bool Tag_SRATIONAL::CheckAcceptableValue(Value& value) const
+bool Tag_SRATIONAL::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_Rational);
-		(value.IsType(VTYPE_List) &&
-			Value_List::GetValueTypedOwner(value).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational));
+	if (!(pValue->IsType(VTYPE_Rational) ||
+		(pValue->IsType(VTYPE_List) &&
+			Value_List::GetValueTypedOwner(*pValue).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational)))) {
+		Error::Issue(ErrorType::TypeError, "Rational value is expected");
+		return false;
+	}
+	SetValue(pValue.release());
+	return true;
 }
 
 template<typename TypeDef> bool Tag_SRATIONAL::DoDeserialize(
@@ -742,9 +782,26 @@ bool Tag_SRATIONAL::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_IFD
 //------------------------------------------------------------------------------
-bool Tag_IFD::CheckAcceptableValue(Value& value) const
+bool Tag_IFD::AssignValue(RefPtr<Value> pValue)
 {
-	return false;
+	if (!pValue->IsList()) return false;
+	RefPtr<TagOwner> pTagOwner(new TagOwner());
+	for (const Value* pValueElem : Value_List::GetValueOwner(*pValue)) {
+		if (!pValueElem->IsList()) return false;
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValueElem);
+		if (valueOwner.size() != 2 || valueOwner.front()->IsType(VTYPE_Symbol)) return false;
+		const Symbol* pSymbol = Value_Symbol::GetSymbol(*valueOwner.front());
+		Value& valueToAssign = *valueOwner.back();
+		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbol, pSymbol);
+		if (!pTagInfo) {
+			Error::Issue(ErrorType::SymbolError, "");
+			return false;
+		}
+		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
+		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
+	}
+	Tag::SetValue(new Value_IFD(new IFD(pTagOwner.release(), _pSymbol)));
+	return true;
 }
 
 template<typename TypeDef> bool Tag_IFD::DoDeserialize(
@@ -796,9 +853,9 @@ bool Tag_IFD::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_JPEGInterchangeFormat
 //------------------------------------------------------------------------------
-bool Tag_JPEGInterchangeFormat::CheckAcceptableValue(Value& value) const
+bool Tag_JPEGInterchangeFormat::AssignValue(RefPtr<Value> pValue)
 {
-	return value.IsType(VTYPE_Binary);
+	return false;
 }
 
 template<typename TypeDef> bool Tag_JPEGInterchangeFormat::DoDeserialize(
