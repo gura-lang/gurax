@@ -42,14 +42,16 @@ public:
 	const TagMap& GetTagMap() const { return _tagMap; }
 	size_t GetPosNextIFDOffset() { return _posNextIFDOffset; }
 public:
-	template<typename TypeDef> static inline IFD* Deserialize(const UInt8* buff,
-			size_t bytesBuff, size_t offset, const Symbol* pSymbolOfIFD,
-			size_t* pOffsetNext = nullptr);
 	void PrepareTagMap();
 	bool Serialize(Binary& buff, bool beFlag);
+	void AddTag(Tag* pTag);
 	void DeleteTag(const Symbol* pSymbol);
 	const Value* GetTagValue(const Symbol* pSymbol);
 	bool SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue);
+public:
+	template<typename TypeDef> static inline IFD* Deserialize(const UInt8* buff,
+			size_t bytesBuff, size_t offset, const Symbol* pSymbolOfIFD,
+			size_t* pOffsetNext = nullptr);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const IFD& other) const { return this == &other; }

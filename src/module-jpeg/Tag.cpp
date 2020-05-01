@@ -754,7 +754,7 @@ template<typename TypeDef> bool Tag_IFD::DoDeserialize(
 	UInt32 count = Gurax_UnpackUInt32(tagPacked.count);
 	auto& variable = tagPacked.variable;
 	UInt32 offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
-	_orderHint = offsetToValue;
+	_orderHint = 0xffffffff;
 	RefPtr<IFD> pIFD(IFD::Deserialize<TypeDef>(buff, bytesBuff, offsetToValue, _pSymbol));
 	if (!pIFD) return false;
 	SetValue(new Value_IFD(pIFD.release()));
@@ -910,6 +910,11 @@ Tag* TagMap::Lookup(const Symbol* pSymbol) const
 {
 	auto iter = find(pSymbol);
 	return (iter == end())? nullptr : iter->second;
+}
+
+void TagMap::Add(const Symbol* pSymbol, Tag* pTag)
+{
+	(*this)[pSymbol] = pTag;
 }
 
 void TagMap::Erase(const Symbol* pSymbol)

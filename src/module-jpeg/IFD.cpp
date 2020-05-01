@@ -40,6 +40,12 @@ void IFD::PrepareTagMap()
 	}
 }
 
+void IFD::AddTag(Tag* pTag)
+{
+	GetTagOwner().push_back(pTag->Reference());
+	GetTagMap().Add(pTag->GetSymbol(), pTag);
+}
+
 void IFD::DeleteTag(const Symbol* pSymbol)
 {
 	GetTagOwner().Erase(pSymbol);
@@ -55,15 +61,23 @@ const Value* IFD::GetTagValue(const Symbol* pSymbol)
 bool IFD::SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 {
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
-	if (!pTag) return false;
-	if (pValue->IsNil()) {
+	if (!pTag) {
+		if (pValue->IsNil()) return true;
+		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbolOfIFD, pSymbol);
+		if (!pTagInfo) return false;
+		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
+		if (!pTag) return false;
+		pTag->SetOrderHintAsAdded();
+		if (!pTag->CheckAcceptableValue(*pValue)) return false;
+		pTag->SetValue(pValue.release());
+		AddTag(pTag.release());
+	} else if (pValue->IsNil()) {
 		DeleteTag(pSymbol);
-		return true;
 	} else {
 		if (!pTag->CheckAcceptableValue(*pValue)) return false;
 		pTag->SetValue(pValue.release());
-		return true;
 	}
+	return true;
 }
 
 String IFD::ToString(const StringStyle& ss) const

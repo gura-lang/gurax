@@ -71,7 +71,8 @@ public:
 		return (_typeId == TypeId::JPEGInterchangeFormat || _typeId == TypeId::IFD)?
 			TypeId::LONG : _typeId;
 	}
-	int GetOrderHint() const { return _orderHint; }
+	void SetOrderHintAsAdded() { _orderHint = 0xfffffff0; }
+	UInt32 GetOrderHint() const { return _orderHint; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	Value& GetValue() { return *_pValue; }
 	const Value& GetValueCooked() const { return *_pValueCooked; }
@@ -323,6 +324,7 @@ public:
 	~TagMap() { Clear(); }
 	void Clear();
 	Tag* Lookup(const Symbol* pSymbol) const;
+	void Add(const Symbol* pSymbol, Tag* pTag);
 	void Erase(const Symbol* pSymbol);
 };
 
