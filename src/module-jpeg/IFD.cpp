@@ -64,17 +64,28 @@ bool IFD::SetTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 	if (!pTag) {
 		if (pValue->IsNil()) return true;
 		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbolOfIFD, pSymbol);
-		if (!pTagInfo) return false;
+		if (!pTagInfo) {
+			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
+			return false;
+		}
 		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
 		if (!pTag) return false;
 		pTag->SetOrderHintAsAdded();
-		if (!pTag->CheckAcceptableValue(*pValue)) return false;
+		if (!pTag->CheckAcceptableValue(*pValue)) {
+			Error::Issue(ErrorType::SymbolError, "proerty '%s' can't accept %s value",
+				pSymbol->GetName(), pValue->GetVType().MakeFullName().c_str());
+			return false;
+		}
 		pTag->SetValue(pValue.release());
 		AddTag(pTag.release());
 	} else if (pValue->IsNil()) {
 		DeleteTag(pSymbol);
 	} else {
-		if (!pTag->CheckAcceptableValue(*pValue)) return false;
+		if (!pTag->CheckAcceptableValue(*pValue)) {
+			Error::Issue(ErrorType::SymbolError, "proerty '%s' can't accept %s value",
+				pSymbol->GetName(), pValue->GetVType().MakeFullName().c_str());
+			return false;
+		}
 		pTag->SetValue(pValue.release());
 	}
 	return true;
