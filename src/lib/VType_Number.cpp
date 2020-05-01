@@ -331,14 +331,6 @@ Gurax_ImplementOpBinary(Or, Number, Number)
 	return new Value_Number(numL | numR);
 }
 
-// Number => Number
-Gurax_ImplementOpBinary(Pair, Number, Number)
-{
-	Double numL = Value_Number::GetNumber<Double>(valueL);
-	Double numR = Value_Number::GetNumber<Double>(valueR);
-	return new Value_Number(numL + numR);
-}
-
 // Number ** Number
 Gurax_ImplementOpBinary(Pow, Number, Number)
 {
@@ -446,7 +438,6 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Mul,			Number, Number);
 	Gurax_AssignOpBinary(Ne,			Number, Number);
 	Gurax_AssignOpBinary(Or,			Number, Number);
-	Gurax_AssignOpBinary(Pair,			Number, Number);
 	Gurax_AssignOpBinary(Pow,			Number, Number);
 	Gurax_AssignOpBinary(Seq,			Number, Number);
 	Gurax_AssignOpBinary(Shl,			Number, Number);

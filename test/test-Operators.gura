@@ -109,3 +109,11 @@ TestCase('Comparison with nil') {
 	Tester(`(nil != 0))
 	Tester(`(0 != nil))
 }
+TestCase('Operator =>') {
+	Tester(`(3 => 4))
+	Tester(`(`hoge => 4))
+	Tester(`('hoge' => 4))
+	Tester(`('hoge' => [3, 4, 5]))
+	Tester(`(['hoge', 'foo', 'bar'] => 4))
+	Tester(`(['hoge', 'foo', 'bar'] => [3, 4, 5]))
+}

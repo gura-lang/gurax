@@ -48,7 +48,7 @@ Operator* Operator::Mul				= new Operator(OpStyle::OpBinary,		"*",			OpType::Mul
 Operator* Operator::Ne				= new Operator(OpStyle::OpBinary,		"!=",			OpType::Ne);
 Operator* Operator::Or				= new Operator(OpStyle::OpBinary,		"|",			OpType::Or);
 Operator* Operator::OrOr			= new Operator_OrOr();
-Operator* Operator::Pair			= new Operator(OpStyle::OpBinary,		"=>",			OpType::Pair);
+Operator* Operator::Pair			= new Operator(OpStyle::OpBinary,		"=>",			OpType::Pair, Operator::Flag::NoMap);
 Operator* Operator::Pow				= new Operator(OpStyle::OpBinary,		"**",			OpType::Pow);
 Operator* Operator::Seq				= new Operator(OpStyle::OpBinary,		"..",			OpType::Seq);
 Operator* Operator::Shl				= new Operator(OpStyle::OpBinary,		"<<",			OpType::Shl);
