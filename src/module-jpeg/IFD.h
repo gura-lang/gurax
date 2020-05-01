@@ -42,7 +42,7 @@ public:
 	const TagMap& GetTagMap() const { return _tagMap; }
 	size_t GetPosNextIFDOffset() { return _posNextIFDOffset; }
 public:
-	template<typename TypeDef> static inline IFD* ReadFromBuff(const UInt8* buff,
+	template<typename TypeDef> static inline IFD* Deserialize(const UInt8* buff,
 			size_t bytesBuff, size_t offset, const Symbol* pSymbolOfIFD,
 			size_t* pOffsetNext = nullptr);
 	void PrepareTagMap();
@@ -58,7 +58,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-template<typename TypeDef> IFD* IFD::ReadFromBuff(const UInt8* buff, size_t bytesBuff,
+template<typename TypeDef> IFD* IFD::Deserialize(const UInt8* buff, size_t bytesBuff,
 	size_t offset, const Symbol* pSymbolOfIFD, size_t* pOffsetNext)
 {
 	using IFDHeader_T	= typename TypeDef::IFDHeader;
@@ -83,7 +83,7 @@ template<typename TypeDef> IFD* IFD::ReadFromBuff(const UInt8* buff, size_t byte
 		UInt16 typeId = Gurax_UnpackUInt16(tagPacked.typeId);
 		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
 		RefPtr<Tag> pTag(Tag::Create(tagId, typeId, pTagInfo));
-		if (!pTag || !pTag->ReadFromBuff(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;
+		if (!pTag || !pTag->Deserialize(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;
 		pTagOwner->push_back(pTag.release());
 	}
 	if (pOffsetNext) {

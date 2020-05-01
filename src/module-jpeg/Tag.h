@@ -82,7 +82,7 @@ public:
 	static UInt32 CalcOffset(const Binary& buff) { return static_cast<UInt32>(buff.size()) - 6; }
 	template<typename TypeDef> static void ReplaceLONG(Binary& buff, size_t pos, UInt32 num);
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) = 0;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) = 0;
 	virtual bool CheckAcceptableValue(Value& value) const = 0;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) = 0;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) = 0;
@@ -129,12 +129,12 @@ class GURAX_DLLDECLARE Tag_BYTE : public Tag {
 public:
 	Tag_BYTE(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::BYTE, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -146,12 +146,12 @@ class GURAX_DLLDECLARE Tag_ASCII : public Tag {
 public:
 	Tag_ASCII(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::ASCII, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -163,12 +163,12 @@ class GURAX_DLLDECLARE Tag_SHORT : public Tag {
 public:
 	Tag_SHORT(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SHORT, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -180,12 +180,12 @@ class GURAX_DLLDECLARE Tag_LONG : public Tag {
 public:
 	Tag_LONG(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::LONG, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -197,12 +197,12 @@ class GURAX_DLLDECLARE Tag_RATIONAL : public Tag {
 public:
 	Tag_RATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::RATIONAL, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -214,12 +214,12 @@ class GURAX_DLLDECLARE Tag_UNDEFINED : public Tag {
 public:
 	Tag_UNDEFINED(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::UNDEFINED, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -231,12 +231,12 @@ class GURAX_DLLDECLARE Tag_SLONG : public Tag {
 public:
 	Tag_SLONG(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SLONG, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -248,12 +248,12 @@ class GURAX_DLLDECLARE Tag_SRATIONAL : public Tag {
 public:
 	Tag_SRATIONAL(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::SRATIONAL, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };
@@ -265,12 +265,12 @@ class GURAX_DLLDECLARE Tag_IFD : public Tag {
 public:
 	Tag_IFD(UInt16 tagId, const Symbol* pSymbol) : Tag(tagId, TypeId::IFD, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 };
 
@@ -282,12 +282,12 @@ public:
 	Tag_JPEGInterchangeFormat(const Symbol* pSymbol) :
 			Tag(TagId::JPEGInterchangeFormat, TypeId::JPEGInterchangeFormat, pSymbol) {}
 public:
-	virtual bool ReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
+	virtual bool Deserialize(const UInt8* buff, size_t bytesBuff, size_t offset, bool beFlag) override;
 	virtual bool CheckAcceptableValue(Value& value) const override;
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) override;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) override;
 protected:
-	template<typename TypeDef> bool DoReadFromBuff(const UInt8* buff, size_t bytesBuff, size_t offset);
+	template<typename TypeDef> bool DoDeserialize(const UInt8* buff, size_t bytesBuff, size_t offset);
 	template<typename TypeDef> bool DoSerialize(Binary& buff, TagList& tagsPointed);
 	template<typename TypeDef> bool DoSerializePointed(Binary& buff);
 };

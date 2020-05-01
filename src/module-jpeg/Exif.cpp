@@ -41,7 +41,7 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(IFD::ReadFromBuff<TypeDef_BE>(
+				RefPtr<IFD> pIFD(IFD::Deserialize<TypeDef_BE>(
 								pBuff, bytesAvail, offset, nullptr, &offset));
 				if (!pIFD) return false;
 				_ifdOwner.push_back(pIFD.release());
@@ -59,7 +59,7 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(IFD::ReadFromBuff<TypeDef_LE>(
+				RefPtr<IFD> pIFD(IFD::Deserialize<TypeDef_LE>(
 								pBuff, bytesAvail, offset, nullptr, &offset));
 				if (!pIFD) return false;
 				_ifdOwner.push_back(pIFD.release());
