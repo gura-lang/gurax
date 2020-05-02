@@ -27,11 +27,13 @@ add_library(jpeg SHARED
 	Content.cpp
 	Exif.cpp
 	IFD.cpp
+	JFIF.cpp
 	Segment.cpp
 	Tag.cpp
 	VType_Content.cpp
 	VType_Exif.cpp
 	VType_IFD.cpp
+	VType_JFIF.cpp
 	VType_Segment.cpp
 	VType_Tag.cpp
 )

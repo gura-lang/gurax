@@ -48,7 +48,9 @@ bool Content::Read(Stream& stream)
 			return false;
 		}
 		RefPtr<Segment> pSegment;
-		if (marker == Marker::APP1) {
+		if (marker == Marker::APP0) {
+			pSegment.reset(new JFIF(pBuff.release()));
+		} else if (marker == Marker::APP1) {
 			pSegment.reset(new Exif(pBuff.release()));
 		} else {
 			pSegment.reset(new Segment(marker, pBuff.release()));

@@ -73,6 +73,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Content);
 	Assign(VTYPE_Exif);
 	Assign(VTYPE_IFD);
+	Assign(VTYPE_JFIF);
 	Assign(VTYPE_Segment);
 	Assign(VTYPE_Tag);
 	// Assignment of function

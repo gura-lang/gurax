@@ -52,6 +52,25 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// jpeg.Content#EachSegment()
+Gurax_DeclareMethod(Content, EachSegment)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that returns each `Segment` instance in the content.");
+}
+
+Gurax_ImplementMethod(Content, EachSegment)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Segment::Iterator_Each(
+						valueThis.GetContent().GetSegmentOwner().Reference()));
+	return new Value_Iterator(pIterator.release());
+}
+
 // jpeg.Content#Write(stream:Stream:w):reduce
 Gurax_DeclareMethod(Content, Write)
 {
@@ -77,23 +96,6 @@ Gurax_ImplementMethod(Content, Write)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// jpeg.Content#segments
-Gurax_DeclareProperty_R(Content, segments)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Content, segments)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Iterator> pIterator(new VType_Segment::Iterator_Each(
-						valueThis.GetContent().GetSegmentOwner().Reference()));
-	return new Value_Iterator(pIterator.release());
-}
-
 // jpeg.Content#exif
 Gurax_DeclareProperty_R(Content, exif)
 {
@@ -123,9 +125,9 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Content));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Content, EachSegment));
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, segments));
 	Assign(Gurax_CreateProperty(Content, exif));
 }
 

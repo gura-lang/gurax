@@ -114,7 +114,9 @@ bool Exif::UpdateBinary()
 
 String Exif::ToString(const StringStyle& ss) const
 {
-	return "jpeg.Exif";
+	String str;
+	str.Printf("<jpeg.Segment:%s(Exif)>", GetMarkerSymbol()->GetName());
+	return str;
 }
 
 Gurax_EndModuleScope(jpeg)
