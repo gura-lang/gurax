@@ -18,8 +18,23 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("jpeg.JFIF");
 public:
+	struct Header {
+		UInt8 identifier[5];
+		Gurax_PackedUInt16_BE(version);
+		UInt8 units;
+		Gurax_PackedUInt16_BE(xDensity);
+		Gurax_PackedUInt16_BE(yDensity);
+		UInt8 xThumbnail;
+		UInt8 yThumbnail;
+	};
+protected:
+	Header _header;
+	Binary _buffRGB;
+public:
 	// Constructor
-	JFIF(BinaryReferable* pBuff) : Segment(Marker::APP0, pBuff) {}
+	JFIF(BinaryReferable* pBuff) : Segment(Marker::APP0, pBuff) {
+		::memset(&_header, 0x00, sizeof(_header));
+	}
 	// Copy constructor/operator
 	JFIF(const JFIF& src) = delete;
 	JFIF& operator=(const JFIF& src) = delete;

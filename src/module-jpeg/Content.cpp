@@ -83,6 +83,14 @@ Exif* Content::FindExif()
 	return nullptr;
 }
 
+JFIF* Content::FindJFIF()
+{
+	for (auto pSegment: GetSegmentOwner()) {
+		if (pSegment->IsJFIF()) return dynamic_cast<JFIF*>(pSegment);
+	}
+	return nullptr;
+}
+
 String Content::ToString(const StringStyle& ss) const
 {
 	return "jpeg.Content";

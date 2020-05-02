@@ -113,6 +113,23 @@ Gurax_ImplementPropertyGetter(Content, exif)
 	return new Value_Exif(pExif->Reference());
 }
 
+// jpeg.Content#jfif
+Gurax_DeclareProperty_R(Content, jfif)
+{
+	Declare(VTYPE_Exif, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `jpeg.JFIF` instance if exists, and `nil` otherwise.");
+}
+
+Gurax_ImplementPropertyGetter(Content, jfif)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	JFIF* pJFIF = valueThis.GetContent().FindJFIF();
+	if (!pJFIF) return Value::nil();
+	return new Value_JFIF(pJFIF->Reference());
+}
+
 //------------------------------------------------------------------------------
 // VType_Content
 //------------------------------------------------------------------------------
@@ -129,6 +146,7 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Content, exif));
+	Assign(Gurax_CreateProperty(Content, jfif));
 }
 
 //------------------------------------------------------------------------------
