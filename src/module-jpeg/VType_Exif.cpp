@@ -49,7 +49,7 @@ Gurax_ImplementMethod(Exif, Test)
 // Implementation of property
 //-----------------------------------------------------------------------------
 // jpeg.Exif#ifd0
-Gurax_DeclareProperty_R(Exif, ifd0)
+Gurax_DeclareProperty_RW(Exif, ifd0)
 {
 	Declare(VTYPE_IFD, Flag::None);
 	AddHelp(
@@ -60,9 +60,15 @@ Gurax_DeclareProperty_R(Exif, ifd0)
 Gurax_ImplementPropertyGetter(Exif, ifd0)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const IFDOwner& ifdOwner = valueThis.GetExif().GetIFDOwner();
-	if (ifdOwner.size() < 1) return Value::nil();
-	return new Value_IFD(ifdOwner[0]->Reference());
+	const IFD* pIFD = valueThis.GetExif().GetIFD0();
+	if (!pIFD) return Value::nil();
+	return new Value_IFD(pIFD->Reference());
+}
+
+Gurax_ImplementPropertySetter(Exif, ifd0)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+
 }
 
 // jpeg.Exif#ifd1
@@ -77,9 +83,9 @@ Gurax_DeclareProperty_R(Exif, ifd1)
 Gurax_ImplementPropertyGetter(Exif, ifd1)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const IFDOwner& ifdOwner = valueThis.GetExif().GetIFDOwner();
-	if (ifdOwner.size() < 2) return Value::nil();
-	return new Value_IFD(ifdOwner[1]->Reference());
+	const IFD* pIFD = valueThis.GetExif().GetIFD1();
+	if (!pIFD) return Value::nil();
+	return new Value_IFD(pIFD->Reference());
 }
 
 //------------------------------------------------------------------------------

@@ -18,7 +18,9 @@ public:
 	Gurax_DeclareReferable(Exif);
 protected:
 	bool _beFlag;
-	IFDOwner _ifdOwner;
+	RefPtr<IFD> _pIFD0;
+	RefPtr<IFD> _pIFD1;
+	//IFDOwner _ifdOwner;
 public:
 	// Constructor
 	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff), _beFlag(false) {}
@@ -37,7 +39,10 @@ public:
 	virtual bool WriteToStream(Stream& stream) override;
 	bool UpdateBinary();
 public:
-	const IFDOwner& GetIFDOwner() const { return _ifdOwner; }
+	void SetIFD0(IFD* pIFD) { _pIFD0.reset(pIFD); }
+	void SetIFD1(IFD* pIFD) { _pIFD1.reset(pIFD); }
+	IFD* GetIFD0() { return _pIFD0.get(); }
+	IFD* GetIFD1() { return _pIFD1.get(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Exif& other) const { return this == &other; }

@@ -40,11 +40,13 @@ bool Exif::AnalyzeBinary()
 				IssueError_InvalidFormat();
 				return false;
 			}
-			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(IFD::Deserialize<TypeDef_BE>(
+			_pIFD0.reset(IFD::Deserialize<TypeDef_BE>(
 								pBuff, bytesAvail, offset, nullptr, &offset));
-				if (!pIFD) return false;
-				_ifdOwner.push_back(pIFD.release());
+			if (!_pIFD0) return false;
+			if (offset != 0) {
+				_pIFD1.reset(IFD::Deserialize<TypeDef_BE>(
+								pBuff, bytesAvail, offset, nullptr, &offset));
+				if (!_pIFD1) return false;
 			}
 		} else if (::memcmp(pBuff, "II", 2) == 0) {
 			size_t bytes = sizeof(TypeDef_LE::TIFFHeader);
@@ -58,11 +60,13 @@ bool Exif::AnalyzeBinary()
 				IssueError_InvalidFormat();
 				return false;
 			}
-			for (int i = 0; i < 2 && offset != 0; i++) {
-				RefPtr<IFD> pIFD(IFD::Deserialize<TypeDef_LE>(
+			_pIFD0.reset(IFD::Deserialize<TypeDef_LE>(
 								pBuff, bytesAvail, offset, nullptr, &offset));
-				if (!pIFD) return false;
-				_ifdOwner.push_back(pIFD.release());
+			if (!_pIFD0) return false;
+			if (offset != 0) {
+				_pIFD1.reset(IFD::Deserialize<TypeDef_LE>(
+								pBuff, bytesAvail, offset, nullptr, &offset));
+				if (!_pIFD1) return false;
 			}
 		} else {
 			IssueError_InvalidFormat();
@@ -97,16 +101,16 @@ bool Exif::UpdateBinary()
 		buff.Append(&hdr, sizeof(hdr));
 	}
 	IFD* pIFDPrev = nullptr;
-	for (IFD* pIFD : GetIFDOwner()) {
-		if (!pIFDPrev) {
-			// nothing to do
-		} else if (_beFlag) {
-			Tag::ReplaceLONG<TypeDef_BE>(buff, pIFDPrev->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
-		} else {
-			Tag::ReplaceLONG<TypeDef_LE>(buff, pIFDPrev->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
+	if (_pIFD0) {
+		if (!_pIFD0->Serialize(buff, _beFlag)) return false;
+		if (_pIFD1) {
+			if (_beFlag) {
+				Tag::ReplaceLONG<TypeDef_BE>(buff, _pIFD0->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
+			} else {
+				Tag::ReplaceLONG<TypeDef_LE>(buff, _pIFD0->GetPosNextIFDOffset(), Tag::CalcOffset(buff));
+			}
+			if (!_pIFD1->Serialize(buff, _beFlag)) return false;
 		}
-		if (!pIFD->Serialize(buff, _beFlag)) return false;
-		pIFDPrev = pIFD;
 	}
 	_pBuff.reset(pBuff.release());
 	return true;
