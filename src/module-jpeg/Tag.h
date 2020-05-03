@@ -89,7 +89,7 @@ public:
 	virtual bool Serialize(Binary& buff, bool beFlag, TagList& tagsPointed) = 0;
 	virtual bool SerializePointed(Binary& buff, bool beFlag) = 0;
 protected:
-	static bool CheckRangedNumber(const Value& value, Double numMin, Double numMax);
+	bool CheckRangedNumber(const Value& value, Double numMin, Double numMax) const;
 public:
 	static UInt16 SymbolToTypeId(const Symbol* pSymbol) {
 		return SymbolAssoc_TypeId::GetInstance().ToAssociated(pSymbol);

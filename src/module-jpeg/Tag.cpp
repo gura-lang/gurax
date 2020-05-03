@@ -38,17 +38,12 @@ Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo)
 	return nullptr;
 }
 
-bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax)
+bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax) const
 {
-	auto CheckSub = [numMin, numMax](const Value& value) {
-		if (!value.IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::ValueError, "number value is expected");
-			return false;
-		}
+	auto CheckSub = [this, numMin, numMax](const Value& value) {
+		if (!value.IsType(VTYPE_Number)) return false;
 		Double num = Value_Number::GetNumber<Double>(value);
-		if (num <= numMin && num <= numMax) return true;
-		Error::Issue(ErrorType::RangeError, "value number is out of range");
-		return false;
+		return num <= numMin && num <= numMax;
 	};
 	if (!value.IsType(VTYPE_List)) return CheckSub(value);
 	for (const Value* pValue : Value_List::GetValueOwner(value)) {
@@ -71,8 +66,9 @@ String Tag::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 bool Tag_BYTE::AssignValue(RefPtr<Value> pValue)
 {
-	if (!pValue->IsType(VTYPE_Binary)) {
-		Error::Issue(ErrorType::TypeError, "Binary value is expected");
+	if (!pValue->IsType(VTYPE_Binary)) {\
+		Error::Issue(ErrorType::TypeError, "Binary value is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -144,7 +140,7 @@ bool Tag_BYTE::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_ASCII::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsType(VTYPE_String)) {
-		Error::Issue(ErrorType::TypeError, "String value is expected");
+		Error::Issue(ErrorType::TypeError, "String value is expected for %s", GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -219,7 +215,8 @@ bool Tag_ASCII::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_SHORT::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, 0x0000, 0xffff)) {
-		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffff is expected");
+		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffff is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -324,7 +321,8 @@ bool Tag_SHORT::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_LONG::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, 0x00000000, 0xffffffff)) {
-		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffffffff is expected");
+		Error::Issue(ErrorType::TypeError, "Number value between 0 and 0xffffffff is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -422,7 +420,7 @@ bool Tag_RATIONAL::AssignValue(RefPtr<Value> pValue)
 	if (!(pValue->IsType(VTYPE_Rational) ||
 		(pValue->IsType(VTYPE_List) &&
 			Value_List::GetValueTypedOwner(*pValue).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational)))) {
-		Error::Issue(ErrorType::TypeError, "Rational value is expected");
+		Error::Issue(ErrorType::TypeError, "Rational value is expected for %s", GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -519,7 +517,8 @@ bool Tag_RATIONAL::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_UNDEFINED::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsType(VTYPE_Binary)) {
-		Error::Issue(ErrorType::TypeError, "Binary value is expected");
+		Error::Issue(ErrorType::TypeError, "Binary value is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -591,7 +590,8 @@ bool Tag_UNDEFINED::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_SLONG::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, -0x80000000, 0x7fffffff)) {
-		Error::Issue(ErrorType::TypeError, "Number value between -0x80000000 and 0x7fffffff is expected");
+		Error::Issue(ErrorType::TypeError, "Number value between -0x80000000 and 0x7fffffff is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -688,7 +688,8 @@ bool Tag_SRATIONAL::AssignValue(RefPtr<Value> pValue)
 	if (!(pValue->IsType(VTYPE_Rational) ||
 		(pValue->IsType(VTYPE_List) &&
 			Value_List::GetValueTypedOwner(*pValue).RefreshVTypeOfElems().IsIdentical(VTYPE_Rational)))) {
-		Error::Issue(ErrorType::TypeError, "Rational value is expected");
+		Error::Issue(ErrorType::TypeError, "Rational value is expected for %s",
+			GetSymbol()->GetName());
 		return false;
 	}
 	SetValue(pValue.release());
@@ -789,18 +790,30 @@ bool Tag_IFD::AssignValue(RefPtr<Value> pValue)
 	for (const Value* pValueElem : Value_List::GetValueOwner(*pValue)) {
 		if (!pValueElem->IsList()) return false;
 		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValueElem);
-		if (valueOwner.size() != 2 || valueOwner.front()->IsType(VTYPE_Symbol)) return false;
-		const Symbol* pSymbol = Value_Symbol::GetSymbol(*valueOwner.front());
+		if (valueOwner.size() != 2) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must be a key-value pair");
+			return false;
+		}
+		if (!valueOwner.front()->IsType(VTYPE_Expr)) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
+			return false;
+		}
+		const Symbol* pSymbol = Value_Expr::GetExpr(*valueOwner.front()).GetPureSymbol();
+		if (!pSymbol) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
+			return false;
+		}
 		Value& valueToAssign = *valueOwner.back();
 		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbol, pSymbol);
 		if (!pTagInfo) {
-			Error::Issue(ErrorType::SymbolError, "");
+			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
 			return false;
 		}
 		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
+		pTagOwner->push_back(pTag.release());
 	}
-	Tag::SetValue(new Value_IFD(new IFD(pTagOwner.release(), _pSymbol)));
+	SetValue(new Value_IFD(new IFD(pTagOwner.release(), _pSymbol)));
 	return true;
 }
 
