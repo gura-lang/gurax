@@ -59,4 +59,7 @@ Gurax_RealizeSymbol(SRATIONAL);
 Gurax_RealizeSymbol(JPEGInterchangeFormat);
 Gurax_RealizeSymbol(IFD);
 
+Gurax_RealizeSymbol(ifd0);
+Gurax_RealizeSymbol(ifd1);
+
 Gurax_EndModuleScope(jpeg)

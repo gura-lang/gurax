@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-IFD* IFD::CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList)
+IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
 {
 	RefPtr<TagOwner> pTagOwner(new TagOwner());
 	for (const Value* pValueElem : valueList) {
@@ -92,6 +92,7 @@ const Value* IFD::LookupTagValue(const Symbol* pSymbol)
 
 bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 {
+	if (pValue->IsType(VTYPE_IFD)) Value_IFD::GetIFD(*pValue).SetSymbolOfIFD(pSymbol);
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
 	if (!pTag) {
 		if (pValue->IsNil()) return true;

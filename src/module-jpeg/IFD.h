@@ -22,7 +22,7 @@ protected:
 	size_t _posNextIFDOffset;
 public:
 	// Constructor
-	IFD(TagOwner* pTagOwner, const Symbol* pSymbolOfIFD = Symbol::Empty) :
+	IFD(TagOwner* pTagOwner, const Symbol* pSymbolOfIFD) :
 		_pTagOwner(pTagOwner), _pSymbolOfIFD(pSymbolOfIFD), _posNextIFDOffset(0) {
 		PrepareTagMap();
 	}
@@ -35,7 +35,10 @@ public:
 protected:
 	~IFD() = default;
 public:
-	static IFD* CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList);
+	static IFD* CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD);
+	void SetSymbolOfIFD(const Symbol* pSymbol) {
+		if (_pSymbolOfIFD->IsEmpty()) _pSymbolOfIFD = pSymbol;
+	}
 	const Symbol* GetSymbolOfIFD() const { return _pSymbolOfIFD; }
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }

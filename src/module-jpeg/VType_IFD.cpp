@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// jpeg.IFD() {block?}
+// jpeg.IFD(init[]) {block?}
 Gurax_DeclareConstructor(IFD)
 {
 	Declare(VTYPE_IFD, Flag::None);
+	DeclareArg("init", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,11 +41,12 @@ Gurax_DeclareConstructor(IFD)
 Gurax_ImplementConstructor(IFD)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const ValueList& valueList = args.PickList();
 	// Function body
-	//RefPtr<IFD> pIFD(new IFD());
-	//return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
-	return Value::nil();
+	RefPtr<IFD> pIFD(IFD::CreateFromList(valueList, Symbol::Empty));
+	if (!pIFD) return Value::nil();
+	return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -73,6 +75,20 @@ Gurax_ImplementMethod(IFD, EachTag)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// jpeg.IFD#symbol
+Gurax_DeclareProperty_R(IFD, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(IFD, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetIFD().GetSymbolOfIFD());
+}
 
 //------------------------------------------------------------------------------
 // VType_IFD
@@ -87,13 +103,15 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(IFD));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(IFD, EachTag));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(IFD, symbol));
 }
 
 Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsList()) {
 		const ValueList& valueList = Value_List::GetValueOwner(value);
-		RefPtr<IFD> pIFD(IFD::CreateFromList(Symbol::Empty, valueList));
+		RefPtr<IFD> pIFD(IFD::CreateFromList(valueList, Symbol::Empty));
 		if (!pIFD) return nullptr;
 		return new Value_IFD(pIFD.release());
 	}
