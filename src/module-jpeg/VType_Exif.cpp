@@ -24,25 +24,26 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// jpeg.Exif#Test()
-Gurax_DeclareMethod(Exif, Test)
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// jpeg.Exif() {block?}
+Gurax_DeclareConstructor(Exif)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Content, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Creates a `jpeg.Exif` instance.");
 }
 
-Gurax_ImplementMethod(Exif, Test)
+Gurax_ImplementConstructor(Exif)
 {
-	// Target
-	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	valueThis.GetExif().UpdateBinary();
-	return Value::nil();
+	ArgPicker args(argument);
+	// Function body
+	RefPtr<Exif> pExif(new Exif());
+	return argument.ReturnValue(processor, new Value_Exif(pExif.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -68,11 +69,11 @@ Gurax_ImplementPropertyGetter(Exif, ifd0)
 Gurax_ImplementPropertySetter(Exif, ifd0)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-
+	valueThis.GetExif().SetIFD0(Value_IFD::GetIFD(value).Reference());
 }
 
 // jpeg.Exif#ifd1
-Gurax_DeclareProperty_R(Exif, ifd1)
+Gurax_DeclareProperty_RW(Exif, ifd1)
 {
 	Declare(VTYPE_IFD, Flag::None);
 	AddHelp(
@@ -88,6 +89,12 @@ Gurax_ImplementPropertyGetter(Exif, ifd1)
 	return new Value_IFD(pIFD->Reference());
 }
 
+Gurax_ImplementPropertySetter(Exif, ifd1)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetExif().SetIFD1(Value_IFD::GetIFD(value).Reference());
+}
+
 //------------------------------------------------------------------------------
 // VType_Exif
 //------------------------------------------------------------------------------
@@ -98,9 +105,7 @@ void VType_Exif::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Segment, Flag::Immutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(Exif, Test));
+	Declare(VTYPE_Segment, Flag::Immutable, Gurax_CreateConstructor(Exif));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Exif, ifd0));
 	Assign(Gurax_CreateProperty(Exif, ifd1));

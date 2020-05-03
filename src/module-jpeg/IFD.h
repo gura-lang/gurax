@@ -35,6 +35,7 @@ public:
 protected:
 	~IFD() = default;
 public:
+	static IFD* CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList);
 	const Symbol* GetSymbolOfIFD() const { return _pSymbolOfIFD; }
 	TagOwner& GetTagOwner() { return *_pTagOwner; }
 	const TagOwner& GetTagOwner() const { return *_pTagOwner; }

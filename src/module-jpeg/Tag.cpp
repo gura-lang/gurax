@@ -786,34 +786,9 @@ bool Tag_SRATIONAL::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_IFD::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsList()) return false;
-	RefPtr<TagOwner> pTagOwner(new TagOwner());
-	for (const Value* pValueElem : Value_List::GetValueOwner(*pValue)) {
-		if (!pValueElem->IsList()) return false;
-		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValueElem);
-		if (valueOwner.size() != 2) {
-			Error::Issue(ErrorType::FormatError, "each element of IFD value must be a key-value pair");
-			return false;
-		}
-		if (!valueOwner.front()->IsType(VTYPE_Expr)) {
-			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
-			return false;
-		}
-		const Symbol* pSymbol = Value_Expr::GetExpr(*valueOwner.front()).GetPureSymbol();
-		if (!pSymbol) {
-			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
-			return false;
-		}
-		Value& valueToAssign = *valueOwner.back();
-		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbol, pSymbol);
-		if (!pTagInfo) {
-			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-			return false;
-		}
-		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
-		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
-		pTagOwner->push_back(pTag.release());
-	}
-	SetValue(new Value_IFD(new IFD(pTagOwner.release(), _pSymbol)));
+	RefPtr<IFD> pIFD(IFD::CreateFromList(_pSymbol, Value_List::GetValueOwner(*pValue)));
+	if (!pIFD) return false;
+	SetValue(new Value_IFD(pIFD.release()));
 	return true;
 }
 

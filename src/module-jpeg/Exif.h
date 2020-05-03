@@ -20,10 +20,10 @@ protected:
 	bool _beFlag;
 	RefPtr<IFD> _pIFD0;
 	RefPtr<IFD> _pIFD1;
-	//IFDOwner _ifdOwner;
 public:
 	// Constructor
 	Exif(BinaryReferable* pBuff) : Segment(Marker::APP1, pBuff), _beFlag(false) {}
+	Exif() : Exif(new BinaryReferable()) {}
 	// Copy constructor/operator
 	Exif(const Exif& src) = delete;
 	Exif& operator=(const Exif& src) = delete;

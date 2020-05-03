@@ -110,6 +110,15 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(IFD, tags));
 }
 
+Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsList()) {
+		const ValueList& valueList = Value_List::GetValueOwner(value);
+		
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_IFD
 //------------------------------------------------------------------------------

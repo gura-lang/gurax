@@ -8,6 +8,38 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
+IFD* IFD::CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList)
+{
+	RefPtr<TagOwner> pTagOwner(new TagOwner());
+	for (const Value* pValueElem : valueList) {
+		if (!pValueElem->IsList()) return false;
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValueElem);
+		if (valueOwner.size() != 2) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must be a key-value pair");
+			return false;
+		}
+		if (!valueOwner.front()->IsType(VTYPE_Expr)) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
+			return false;
+		}
+		const Symbol* pSymbol = Value_Expr::GetExpr(*valueOwner.front()).GetPureSymbol();
+		if (!pSymbol) {
+			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
+			return false;
+		}
+		Value& valueToAssign = *valueOwner.back();
+		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbolOfIFD, pSymbol);
+		if (!pTagInfo) {
+			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
+			return false;
+		}
+		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
+		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
+		pTagOwner->push_back(pTag.release());
+	}
+	return new IFD(pTagOwner.release(), pSymbolOfIFD);
+}
+
 bool IFD::Serialize(Binary& buff, bool beFlag)
 {
 	UInt16 tagCount = static_cast<UInt16>(GetTagOwner().size());
