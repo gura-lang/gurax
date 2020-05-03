@@ -47,8 +47,8 @@ static const TagInfo g_tagInfoTbl_TIFF[] = {
 	{ TagId::Artist,						"Artist",						TypeId::ASCII,		nullptr,	},
 	{ TagId::Copyright,						"Copyright",					TypeId::ASCII,		nullptr,	},
 	// Pointers
-	{ TagId::ExifIFDPointer,				"ExifIFDPointer",				TypeId::LONG,		"Exif",		},
-	{ TagId::GPSInfoIFDPointer,				"GPSInfoIFDPointer",			TypeId::LONG,		"GPSInfo",	},
+	{ TagId::ExifIFDPointer,				"Exif",							TypeId::LONG,		"Exif",		},
+	{ TagId::GPSInfoIFDPointer,				"GPSInfo",						TypeId::LONG,		"GPSInfo",	},
 };
 
 // 4.6.5 Exif IFD Attribute Information
@@ -118,7 +118,7 @@ static const TagInfo g_tagInfoTbl_Exif[] = {
 	// H. Other Tags
 	{ TagId::ImageUniqueID,					"ImageUniqueID",				TypeId::ASCII,		nullptr,	},
 	// Pointers
-	{ TagId::InteroperabilityIFDPointer,	"InteroperabilityIFDPointer",	TypeId::LONG,		"Interoperability"	},
+	{ TagId::InteroperabilityIFDPointer,	"Interoperability",				TypeId::LONG,		"Interoperability"	},
 };
 
 // 4.6.6 GPS Attribute Information

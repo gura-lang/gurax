@@ -43,7 +43,7 @@ bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax) co
 	auto CheckSub = [this, numMin, numMax](const Value& value) {
 		if (!value.IsType(VTYPE_Number)) return false;
 		Double num = Value_Number::GetNumber<Double>(value);
-		return num <= numMin && num <= numMax;
+		return numMin <= num && num <= numMax;
 	};
 	if (!value.IsType(VTYPE_List)) return CheckSub(value);
 	for (const Value* pValue : Value_List::GetValueOwner(value)) {

@@ -50,10 +50,11 @@ Gurax_ImplementConstructor(IFD)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// jpeg.IFD#EachTag()
+// jpeg.IFD#EachTag() {block?}
 Gurax_DeclareMethod(IFD, EachTag)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -66,7 +67,7 @@ Gurax_ImplementMethod(IFD, EachTag)
 	// Function body
 	const IFD& ifd = valueThis.GetIFD();
 	RefPtr<Iterator> pIterator(new VType_Tag::Iterator_Each(ifd.GetTagOwner().Reference()));
-	return new Value_Iterator(pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
