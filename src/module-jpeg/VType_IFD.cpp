@@ -50,34 +50,8 @@ Gurax_ImplementConstructor(IFD)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// jpeg.IFD#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(IFD, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(IFD, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// jpeg.IFD#tags
-Gurax_DeclareProperty_R(IFD, tags)
+// jpeg.IFD#EachTag()
+Gurax_DeclareMethod(IFD, EachTag)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
@@ -85,13 +59,19 @@ Gurax_DeclareProperty_R(IFD, tags)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(IFD, tags)
+Gurax_ImplementMethod(IFD, EachTag)
 {
-	auto& valueThis = GetValueThis(valueTarget);
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
 	const IFD& ifd = valueThis.GetIFD();
 	RefPtr<Iterator> pIterator(new VType_Tag::Iterator_Each(ifd.GetTagOwner().Reference()));
 	return new Value_Iterator(pIterator.release());
 }
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // VType_IFD
@@ -105,16 +85,16 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(IFD));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(IFD, MethodSkeleton));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(IFD, tags));
+	Assign(Gurax_CreateMethod(IFD, EachTag));
 }
 
 Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsList()) {
 		const ValueList& valueList = Value_List::GetValueOwner(value);
-		
+		RefPtr<IFD> pIFD(IFD::CreateFromList(Symbol::Empty, valueList));
+		if (!pIFD) return nullptr;
+		return new Value_IFD(pIFD.release());
 	}
 	return nullptr;
 }

@@ -41,11 +41,11 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			_pIFD0.reset(IFD::Deserialize<TypeDef_BE>(
-								pBuff, bytesAvail, offset, nullptr, &offset));
+							pBuff, bytesAvail, offset, Symbol::Empty, &offset));
 			if (!_pIFD0) return false;
 			if (offset != 0) {
 				_pIFD1.reset(IFD::Deserialize<TypeDef_BE>(
-								pBuff, bytesAvail, offset, nullptr, &offset));
+							pBuff, bytesAvail, offset, Symbol::Empty, &offset));
 				if (!_pIFD1) return false;
 			}
 		} else if (::memcmp(pBuff, "II", 2) == 0) {
@@ -61,11 +61,11 @@ bool Exif::AnalyzeBinary()
 				return false;
 			}
 			_pIFD0.reset(IFD::Deserialize<TypeDef_LE>(
-								pBuff, bytesAvail, offset, nullptr, &offset));
+								pBuff, bytesAvail, offset, Symbol::Empty, &offset));
 			if (!_pIFD0) return false;
 			if (offset != 0) {
 				_pIFD1.reset(IFD::Deserialize<TypeDef_LE>(
-								pBuff, bytesAvail, offset, nullptr, &offset));
+								pBuff, bytesAvail, offset, Symbol::Empty, &offset));
 				if (!_pIFD1) return false;
 			}
 		} else {
@@ -100,7 +100,6 @@ bool Exif::UpdateBinary()
 		Gurax_PackUInt32(hdr.offset0thIFD, offset0thIFD);
 		buff.Append(&hdr, sizeof(hdr));
 	}
-	IFD* pIFDPrev = nullptr;
 	if (_pIFD0) {
 		if (!_pIFD0->Serialize(buff, _beFlag)) return false;
 		if (_pIFD1) {
