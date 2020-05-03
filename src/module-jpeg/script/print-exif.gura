@@ -3,7 +3,7 @@ import(jpeg)
 import(argopt)
 
 PrintIFD(ifd:jpeg.IFD, indentLevel:Number = 0) = {
-	ifd.tags.Each {|tag|
+	ifd.EachTag {|tag|
 		Printf('%*s%s(%04x) [%s]: %s\n',
 			indentLevel * 2, '', tag.name, tag.tagId,
 			tag.type.name, tag.value)
