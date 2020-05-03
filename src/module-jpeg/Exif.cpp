@@ -115,6 +115,18 @@ bool Exif::UpdateBinary()
 	return true;
 }
 
+void Exif::SetIFD0(IFD* pIFD)
+{
+	if (pIFD) pIFD->SetSymbolOfIFD(Gurax_Symbol(ifd0));
+	_pIFD0.reset(pIFD);
+}
+
+void Exif::SetIFD1(IFD* pIFD)
+{
+	if (pIFD) pIFD->SetSymbolOfIFD(Gurax_Symbol(ifd1));
+	_pIFD1.reset(pIFD);
+}
+
 String Exif::ToString(const StringStyle& ss) const
 {
 	String str;

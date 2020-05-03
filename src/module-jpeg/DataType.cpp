@@ -198,7 +198,9 @@ void TagInfo::Initialize()
 const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 {
 	return
-		pSymbolOfIFD->IsEmpty()?
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))?
+			g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))?
 			g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
 		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
 			g_tagInfoMapByTagId_Exif.Lookup(tagId) :
@@ -212,7 +214,9 @@ const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
 {
 	return
-		pSymbolOfIFD->IsEmpty()?
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))?
+			g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))?
 			g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
 		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
 			g_tagInfoMapBySymbol_Exif.Lookup(pSymbol) :

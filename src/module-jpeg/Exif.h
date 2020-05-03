@@ -39,8 +39,8 @@ public:
 	virtual bool WriteToStream(Stream& stream) override;
 	bool UpdateBinary();
 public:
-	void SetIFD0(IFD* pIFD) { _pIFD0.reset(pIFD); }
-	void SetIFD1(IFD* pIFD) { _pIFD1.reset(pIFD); }
+	void SetIFD0(IFD* pIFD);
+	void SetIFD1(IFD* pIFD);
 	IFD* GetIFD0() { return _pIFD0.get(); }
 	IFD* GetIFD1() { return _pIFD1.get(); }
 public:
