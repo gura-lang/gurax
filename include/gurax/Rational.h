@@ -44,8 +44,17 @@ public:
 	Int64 GetNumer() const { return _numer; }
 	Int64 GetDenom() const { return _denom; }
 public:
-	Rational Reduce() const;
+	Rational Regulate() const;
+	static void Regulate(Int64* pNumer, Int64* pDenom);
+	static Rational MakeRegulated(Int64 numer, Int64 denom);
 	static Rational MakeFromDouble(Double num);
+public:
+	Rational operator+() const;
+	Rational operator-() const;
+	Rational& operator+=(const Rational& r);
+	Rational& operator-=(const Rational& r);
+	Rational& operator*=(const Rational& r);
+	Rational& operator/=(const Rational& r);
 public:
 	static void IssueError_DenominatorZero();
 public:
@@ -55,6 +64,11 @@ public:
 	bool IsLessThan(const Rational& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+Rational operator+(const Rational& a, const Rational& b) { return Rational(a) += b; }
+Rational operator-(const Rational& a, const Rational& b) { return Rational(a) -= b; }
+Rational operator*(const Rational& a, const Rational& b) { return Rational(a) *= b; }
+Rational operator/(const Rational& a, const Rational& b) { return Rational(a) /= b; }
 
 }
 
