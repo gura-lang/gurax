@@ -65,21 +65,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-Rational operator+(const Rational& ratA, const Rational& ratB) { return Rational(ratA) += ratB; }
-Rational operator-(const Rational& ratA, const Rational& ratB) { return Rational(ratA) -= ratB; }
-Rational operator*(const Rational& ratA, const Rational& ratB) { return Rational(ratA) *= ratB; }
-Rational operator/(const Rational& ratA, const Rational& ratB) { return Rational(ratA) /= ratB; }
+Rational operator+(const Rational& ratL, const Rational& ratR) { return Rational(ratL) += ratR; }
+Rational operator-(const Rational& ratL, const Rational& ratR) { return Rational(ratL) -= ratR; }
+Rational operator*(const Rational& ratL, const Rational& ratR) { return Rational(ratL) *= ratR; }
+Rational operator/(const Rational& ratL, const Rational& ratR) { return Rational(ratL) /= ratR; }
 
-bool operator==(const Rational& ratA, const Rational& ratB) {
-	return ratA.GetNumer() * ratB.GetDenom() == ratA.GetDenom() * ratB.GetNumer();
+bool operator==(const Rational& ratL, const Rational& ratR) {
+	return ratL.GetNumer() * ratR.GetDenom() == ratL.GetDenom() * ratR.GetNumer();
 }
-bool operator<(const Rational& ratA, const Rational& ratB) {
-	return ratA.GetNumer() * ratB.GetDenom() < ratA.GetDenom() * ratB.GetNumer();
+bool operator<(const Rational& ratL, const Rational& ratR) {
+	return ratL.GetNumer() * ratR.GetDenom() < ratL.GetDenom() * ratR.GetNumer();
 }
-bool operator!=(const Rational& ratA, const Rational& ratB) { return !operator==(ratA, ratB); }
-bool operator>(const Rational& ratA, const Rational& ratB) { return operator<(ratB, ratA); }
-bool operator<=(const Rational& ratA, const Rational& ratB) { return !operator>(ratA, ratB); }
-bool operator>=(const Rational& ratA, const Rational& ratB) { return !operator<(ratA, ratB); }
+bool operator!=(const Rational& ratL, const Rational& ratR) { return !operator==(ratL, ratR); }
+bool operator>(const Rational& ratL, const Rational& ratR) { return operator<(ratR, ratL); }
+bool operator<=(const Rational& ratL, const Rational& ratR) { return !operator>(ratL, ratR); }
+bool operator>=(const Rational& ratL, const Rational& ratR) { return !operator<(ratL, ratR); }
 
 }
 

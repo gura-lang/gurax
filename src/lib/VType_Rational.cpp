@@ -123,6 +123,15 @@ Gurax_ImplementOpUnary(Pos, Rational)
 	return new Value_Rational(+rat);
 }
 
+// Rational + Rational
+Gurax_ImplementOpBinary(Add, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	//return new Value_Rational(ratL + ratR);
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
 //------------------------------------------------------------------------------
@@ -156,8 +165,8 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg,	Rational);
 	Gurax_AssignOpUnary(Pos,	Rational);
+	Gurax_AssignOpBinary(Add,	Rational, Rational);
 #if 0
-	Gurax_AssignOpBinary(Add,	Complex, Complex);
 	Gurax_AssignOpBinary(Add,	Complex, Number);
 	Gurax_AssignOpBinary(Add,	Number, Complex);
 	Gurax_AssignOpBinary(Div,	Complex, Complex);

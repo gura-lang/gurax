@@ -70,16 +70,16 @@ Rational Rational::operator-() const
 
 Rational& Rational::operator+=(const Rational& rat)
 {
-	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
-	if (denomA == 0 || denomB == 0) {
+	Int64 numerL = GetNumer(), denomL = GetDenom();
+	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
-	} else if (denomA == denomB) {
-		_numer = numerA + numerB;
+	} else if (denomL == denomR) {
+		_numer = numerL + numerR;
 		Regulate(&_numer, &_denom);
 	} else {
-		_numer = numerA * denomB + numerB * denomA;
-		_denom = denomA * denomB;
+		_numer = numerL * denomR + numerR * denomL;
+		_denom = denomL * denomR;
 		Regulate(&_numer, &_denom);
 	}
 	return *this;
@@ -87,16 +87,16 @@ Rational& Rational::operator+=(const Rational& rat)
 
 Rational& Rational::operator-=(const Rational& rat)
 {
-	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
-	if (denomA == 0 || denomB == 0) {
+	Int64 numerL = GetNumer(), denomL = GetDenom();
+	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
-	} else if (denomA == denomB) {
-		_numer = numerA - numerB;
+	} else if (denomL == denomR) {
+		_numer = numerL - numerR;
 		Regulate(&_numer, &_denom);
 	} else {
-		_numer = numerA * denomB - numerB * denomA;
-		_denom = denomA * denomB;
+		_numer = numerL * denomR - numerR * denomL;
+		_denom = denomL * denomR;
 		Regulate(&_numer, &_denom);
 	}
 	return *this;
@@ -104,13 +104,13 @@ Rational& Rational::operator-=(const Rational& rat)
 
 Rational& Rational::operator*=(const Rational& rat)
 {
-	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
-	if (denomA == 0 || denomB == 0) {
+	Int64 numerL = GetNumer(), denomL = GetDenom();
+	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
 	} else {
-		_numer = numerA * numerB;
-		_denom = denomA * denomB;
+		_numer = numerL * numerR;
+		_denom = denomL * denomR;
 		Regulate(&_numer, &_denom);
 	}
 	return *this;
@@ -118,13 +118,13 @@ Rational& Rational::operator*=(const Rational& rat)
 
 Rational& Rational::operator/=(const Rational& rat)
 {
-	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
-	if (denomA == 0 || numerB == 0) {
+	Int64 numerL = GetNumer(), denomL = GetDenom();
+	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	if (denomL == 0 || numerR == 0) {
 		_numer = 0, _denom = 1;
 	} else {
-		_numer = numerA * denomB;
-		_denom = denomA * numerB;
+		_numer = numerL * denomR;
+		_denom = denomL * numerR;
 		Regulate(&_numer, &_denom);
 	}
 	return *this;
