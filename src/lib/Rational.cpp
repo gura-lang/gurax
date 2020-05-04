@@ -49,13 +49,18 @@ Rational Rational::MakeFromDouble(Double num)
 	return Rational();
 }
 
-void Rational::IssueError_DenominatorZero()
+void Rational::IssueError_DenomZero()
 {
+	Error::Issue(ErrorType::DividedByZero, "denominator can't be zero");
 }
 
 String Rational::ToString(const StringStyle& ss) const
 {
-	return "Rational";
+	String str;
+	str.Printf("%d", GetNumer());
+	if (GetDenom() != 1) str.Printf("/%d", GetDenom());
+	str += "r";
+	return str;
 }
 
 Rational Rational::operator+() const
@@ -128,6 +133,39 @@ Rational& Rational::operator/=(const Rational& rat)
 		Regulate(&_numer, &_denom);
 	}
 	return *this;
+}
+
+Rational& Rational::operator/=(Double num)
+{
+	Int64 numCasted = static_cast<Int64>(num);
+	if (num != numCasted) return operator/=(MakeFromDouble(num));
+	Int64 numerL = GetNumer(), denomL = GetDenom();
+	Int64 numerR = numCasted;
+	if (denomL == 0 || numerR == 0) {
+		_numer = 0, _denom = 1;
+	} else {
+		_numer = numerL;
+		_denom = denomL * numerR;
+		Regulate(&_numer, &_denom);
+	}
+	return *this;
+}
+
+Rational operator/(Double numL, const Rational& ratR)
+{
+	Int64 numCastedL = static_cast<Int64>(numL);
+	if (numL != numCastedL) return operator/(Rational::MakeFromDouble(numL), ratR);
+	// assumes that numL is an integer number
+	Int64 numerL = numCastedL;
+	Int64 numerR = ratR.GetNumer(), denomR = ratR.GetDenom();
+	Int64 numer = 0, denom = 1;
+	if (numerR != 0) {
+		numer = numerL * denomR;
+		denom = numerR;
+		Rational::Regulate(&numer, &denom);
+	}
+	return Rational(numer, denom);
+
 }
 
 }

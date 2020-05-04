@@ -43,6 +43,8 @@ public:
 	void SetDenom(Int64 denom) { _denom = denom; }
 	Int64 GetNumer() const { return _numer; }
 	Int64 GetDenom() const { return _denom; }
+	bool IsInteger() const { return _denom == 1; }
+	bool IsZero() const { return _numer == 0; }
 public:
 	Rational Regulate() const;
 	static void Regulate(Int64* pNumer, Int64* pDenom);
@@ -55,8 +57,9 @@ public:
 	Rational& operator-=(const Rational& rat);
 	Rational& operator*=(const Rational& rat);
 	Rational& operator/=(const Rational& rat);
+	Rational& operator/=(Double num);
 public:
-	static void IssueError_DenominatorZero();
+	static void IssueError_DenomZero();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Rational& other) const { return this == &other; }
@@ -65,21 +68,23 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-Rational operator+(const Rational& ratL, const Rational& ratR) { return Rational(ratL) += ratR; }
-Rational operator-(const Rational& ratL, const Rational& ratR) { return Rational(ratL) -= ratR; }
-Rational operator*(const Rational& ratL, const Rational& ratR) { return Rational(ratL) *= ratR; }
-Rational operator/(const Rational& ratL, const Rational& ratR) { return Rational(ratL) /= ratR; }
+inline Rational operator+(const Rational& ratL, const Rational& ratR) { return Rational(ratL) += ratR; }
+inline Rational operator-(const Rational& ratL, const Rational& ratR) { return Rational(ratL) -= ratR; }
+inline Rational operator*(const Rational& ratL, const Rational& ratR) { return Rational(ratL) *= ratR; }
+inline Rational operator/(const Rational& ratL, const Rational& ratR) { return Rational(ratL) /= ratR; }
+inline Rational operator/(const Rational& ratL, const Double numR) { return Rational(ratL) /= numR; }
+GURAX_DLLDECLARE Rational operator/(Double numL, const Rational& ratR);
 
-bool operator==(const Rational& ratL, const Rational& ratR) {
+inline bool operator==(const Rational& ratL, const Rational& ratR) {
 	return ratL.GetNumer() * ratR.GetDenom() == ratL.GetDenom() * ratR.GetNumer();
 }
-bool operator<(const Rational& ratL, const Rational& ratR) {
+inline bool operator<(const Rational& ratL, const Rational& ratR) {
 	return ratL.GetNumer() * ratR.GetDenom() < ratL.GetDenom() * ratR.GetNumer();
 }
-bool operator!=(const Rational& ratL, const Rational& ratR) { return !operator==(ratL, ratR); }
-bool operator>(const Rational& ratL, const Rational& ratR) { return operator<(ratR, ratL); }
-bool operator<=(const Rational& ratL, const Rational& ratR) { return !operator>(ratL, ratR); }
-bool operator>=(const Rational& ratL, const Rational& ratR) { return !operator<(ratL, ratR); }
+inline bool operator!=(const Rational& ratL, const Rational& ratR) { return !operator==(ratL, ratR); }
+inline bool operator>(const Rational& ratL, const Rational& ratR) { return operator<(ratR, ratL); }
+inline bool operator<=(const Rational& ratL, const Rational& ratR) { return !operator>(ratL, ratR); }
+inline bool operator>=(const Rational& ratL, const Rational& ratR) { return !operator<(ratL, ratR); }
 
 }
 

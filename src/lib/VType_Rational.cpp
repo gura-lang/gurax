@@ -113,14 +113,18 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 Gurax_ImplementOpUnary(Neg, Rational)
 {
 	const Rational& rat = Value_Rational::GetRational(value);
-	return new Value_Rational(-rat);
+	Rational ratRtn = -rat;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
 }
 
 // +Rational
 Gurax_ImplementOpUnary(Pos, Rational)
 {
 	const Rational& rat = Value_Rational::GetRational(value);
-	return new Value_Rational(+rat);
+	Rational ratRtn = +rat;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
 }
 
 // Rational + Rational
@@ -128,8 +132,119 @@ Gurax_ImplementOpBinary(Add, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	//return new Value_Rational(ratL + ratR);
-	return Value::nil();
+	Rational ratRtn = ratL + ratR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational - Rational
+Gurax_ImplementOpBinary(Sub, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	Rational ratRtn = ratL - ratR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational * Rational
+Gurax_ImplementOpBinary(Mul, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	Rational ratRtn = ratL * ratR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational / Rational
+Gurax_ImplementOpBinary(Div, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	if (ratR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	Rational ratRtn = ratL / ratR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational / Number
+Gurax_ImplementOpBinary(Div, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	if (numR == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	Rational ratRtn = ratL / numR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Number / Rational
+Gurax_ImplementOpBinary(Div, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	if (ratR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	Rational ratRtn = numL / ratR;
+	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational == Rational
+Gurax_ImplementOpBinary(Eq, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL == ratR);
+}
+
+// Rational != Rational
+Gurax_ImplementOpBinary(Ne, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL != ratR);
+}
+
+// Rational < Rational
+Gurax_ImplementOpBinary(Lt, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL < ratR);
+}
+
+// Rational > Rational
+Gurax_ImplementOpBinary(Gt, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL > ratR);
+}
+
+// Rational <= Rational
+Gurax_ImplementOpBinary(Le, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL <= ratR);
+}
+
+// Rational >= Rational
+Gurax_ImplementOpBinary(Ge, Rational, Rational)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Rational(ratL >= ratR);
 }
 
 //------------------------------------------------------------------------------
@@ -166,25 +281,17 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpUnary(Neg,	Rational);
 	Gurax_AssignOpUnary(Pos,	Rational);
 	Gurax_AssignOpBinary(Add,	Rational, Rational);
-#if 0
-	Gurax_AssignOpBinary(Add,	Complex, Number);
-	Gurax_AssignOpBinary(Add,	Number, Complex);
-	Gurax_AssignOpBinary(Div,	Complex, Complex);
-	Gurax_AssignOpBinary(Div,	Complex, Number);
-	Gurax_AssignOpBinary(Div,	Number, Complex);
-	Gurax_AssignOpBinary(Eq,	Complex, Complex);
-	Gurax_AssignOpBinary(Eq,	Complex, Number);
-	Gurax_AssignOpBinary(Eq,	Number, Complex);
-	Gurax_AssignOpBinary(Mul,	Complex, Complex);
-	Gurax_AssignOpBinary(Mul,	Complex, Number);
-	Gurax_AssignOpBinary(Mul,	Number, Complex);
-	Gurax_AssignOpBinary(Ne,	Complex, Complex);
-	Gurax_AssignOpBinary(Ne,	Complex, Number);
-	Gurax_AssignOpBinary(Ne,	Number, Complex);
-	Gurax_AssignOpBinary(Sub,	Complex, Complex);
-	Gurax_AssignOpBinary(Sub,	Complex, Number);
-	Gurax_AssignOpBinary(Sub,	Number, Complex);
-#endif
+	Gurax_AssignOpBinary(Sub,	Rational, Rational);
+	Gurax_AssignOpBinary(Mul,	Rational, Rational);
+	Gurax_AssignOpBinary(Div,	Rational, Rational);
+	Gurax_AssignOpBinary(Div,	Rational, Number);
+	Gurax_AssignOpBinary(Div,	Number, Rational);
+	Gurax_AssignOpBinary(Eq,	Rational, Rational);
+	Gurax_AssignOpBinary(Ne,	Rational, Rational);
+	Gurax_AssignOpBinary(Lt,	Rational, Rational);
+	Gurax_AssignOpBinary(Gt,	Rational, Rational);
+	Gurax_AssignOpBinary(Le,	Rational, Rational);
+	Gurax_AssignOpBinary(Ge,	Rational, Rational);
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Number, r);
 }
