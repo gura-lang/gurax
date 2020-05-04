@@ -68,10 +68,10 @@ Rational Rational::operator-() const
 	return Rational::MakeRegulated(-_numer, _denom);
 }
 
-Rational& Rational::operator+=(const Rational& r)
+Rational& Rational::operator+=(const Rational& rat)
 {
 	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = r.GetNumer(), denomB = r.GetDenom();
+	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
 	if (denomA == 0 || denomB == 0) {
 		_numer = 0, _denom = 1;
 	} else if (denomA == denomB) {
@@ -85,10 +85,10 @@ Rational& Rational::operator+=(const Rational& r)
 	return *this;
 }
 
-Rational& Rational::operator-=(const Rational& r)
+Rational& Rational::operator-=(const Rational& rat)
 {
 	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = r.GetNumer(), denomB = r.GetDenom();
+	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
 	if (denomA == 0 || denomB == 0) {
 		_numer = 0, _denom = 1;
 	} else if (denomA == denomB) {
@@ -102,10 +102,10 @@ Rational& Rational::operator-=(const Rational& r)
 	return *this;
 }
 
-Rational& Rational::operator*=(const Rational& r)
+Rational& Rational::operator*=(const Rational& rat)
 {
 	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = r.GetNumer(), denomB = r.GetDenom();
+	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
 	if (denomA == 0 || denomB == 0) {
 		_numer = 0, _denom = 1;
 	} else {
@@ -116,10 +116,10 @@ Rational& Rational::operator*=(const Rational& r)
 	return *this;
 }
 
-Rational& Rational::operator/=(const Rational& r)
+Rational& Rational::operator/=(const Rational& rat)
 {
 	Int64 numerA = GetNumer(), denomA = GetDenom();
-	Int64 numerB = r.GetNumer(), denomB = r.GetDenom();
+	Int64 numerB = rat.GetNumer(), denomB = rat.GetDenom();
 	if (denomA == 0 || numerB == 0) {
 		_numer = 0, _denom = 1;
 	} else {
@@ -129,43 +129,5 @@ Rational& Rational::operator/=(const Rational& r)
 	}
 	return *this;
 }
-
-#if 0
-bool operator==(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax == bx;
-}
-
-bool operator!=(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax != bx;
-}
-
-bool operator<(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax < bx;
-}
-
-bool operator>(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax > bx;
-}
-
-bool operator<=(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax <= bx;
-}
-
-bool operator>=(const Rational& a, const Rational& b)
-{
-	int ax = a.GetNumer() * b.GetDenom(), bx = b.GetNumer() * a.GetDenom();
-	return ax >=  bx;
-}
-#endif
 
 }

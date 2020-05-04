@@ -51,10 +51,10 @@ public:
 public:
 	Rational operator+() const;
 	Rational operator-() const;
-	Rational& operator+=(const Rational& r);
-	Rational& operator-=(const Rational& r);
-	Rational& operator*=(const Rational& r);
-	Rational& operator/=(const Rational& r);
+	Rational& operator+=(const Rational& rat);
+	Rational& operator-=(const Rational& rat);
+	Rational& operator*=(const Rational& rat);
+	Rational& operator/=(const Rational& rat);
 public:
 	static void IssueError_DenominatorZero();
 public:
@@ -65,10 +65,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-Rational operator+(const Rational& a, const Rational& b) { return Rational(a) += b; }
-Rational operator-(const Rational& a, const Rational& b) { return Rational(a) -= b; }
-Rational operator*(const Rational& a, const Rational& b) { return Rational(a) *= b; }
-Rational operator/(const Rational& a, const Rational& b) { return Rational(a) /= b; }
+Rational operator+(const Rational& ratA, const Rational& ratB) { return Rational(ratA) += ratB; }
+Rational operator-(const Rational& ratA, const Rational& ratB) { return Rational(ratA) -= ratB; }
+Rational operator*(const Rational& ratA, const Rational& ratB) { return Rational(ratA) *= ratB; }
+Rational operator/(const Rational& ratA, const Rational& ratB) { return Rational(ratA) /= ratB; }
+
+bool operator==(const Rational& ratA, const Rational& ratB) {
+	return ratA.GetNumer() * ratB.GetDenom() == ratA.GetDenom() * ratB.GetNumer();
+}
+bool operator<(const Rational& ratA, const Rational& ratB) {
+	return ratA.GetNumer() * ratB.GetDenom() < ratA.GetDenom() * ratB.GetNumer();
+}
+bool operator!=(const Rational& ratA, const Rational& ratB) { return !operator==(ratA, ratB); }
+bool operator>(const Rational& ratA, const Rational& ratB) { return operator<(ratB, ratA); }
+bool operator<=(const Rational& ratA, const Rational& ratB) { return !operator>(ratA, ratB); }
+bool operator>=(const Rational& ratA, const Rational& ratB) { return !operator<(ratA, ratB); }
 
 }
 

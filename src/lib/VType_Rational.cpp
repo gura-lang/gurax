@@ -109,6 +109,19 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
+// -Rational
+Gurax_ImplementOpUnary(Neg, Rational)
+{
+	const Rational& rat = Value_Rational::GetRational(value);
+	return new Value_Rational(-rat);
+}
+
+// +Rational
+Gurax_ImplementOpUnary(Pos, Rational)
+{
+	const Rational& rat = Value_Rational::GetRational(value);
+	return new Value_Rational(+rat);
+}
 
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
@@ -140,6 +153,29 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));
+	// Assignment of operator
+	Gurax_AssignOpUnary(Neg,	Rational);
+	Gurax_AssignOpUnary(Pos,	Rational);
+#if 0
+	Gurax_AssignOpBinary(Add,	Complex, Complex);
+	Gurax_AssignOpBinary(Add,	Complex, Number);
+	Gurax_AssignOpBinary(Add,	Number, Complex);
+	Gurax_AssignOpBinary(Div,	Complex, Complex);
+	Gurax_AssignOpBinary(Div,	Complex, Number);
+	Gurax_AssignOpBinary(Div,	Number, Complex);
+	Gurax_AssignOpBinary(Eq,	Complex, Complex);
+	Gurax_AssignOpBinary(Eq,	Complex, Number);
+	Gurax_AssignOpBinary(Eq,	Number, Complex);
+	Gurax_AssignOpBinary(Mul,	Complex, Complex);
+	Gurax_AssignOpBinary(Mul,	Complex, Number);
+	Gurax_AssignOpBinary(Mul,	Number, Complex);
+	Gurax_AssignOpBinary(Ne,	Complex, Complex);
+	Gurax_AssignOpBinary(Ne,	Complex, Number);
+	Gurax_AssignOpBinary(Ne,	Number, Complex);
+	Gurax_AssignOpBinary(Sub,	Complex, Complex);
+	Gurax_AssignOpBinary(Sub,	Complex, Number);
+	Gurax_AssignOpBinary(Sub,	Number, Complex);
+#endif
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Number, r);
 }
