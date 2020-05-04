@@ -15,13 +15,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Rational");
 protected:
-	int _numer;
-	int _denom;
+	Int64 _numer;
+	Int64 _denom;
+public:
+	static const Rational Zero;
 public:
 	// Constructor
 	Rational() : _numer(0), _denom(1) {}
-	Rational(int numer) : _numer(numer), _denom(1) {}
-	Rational(int numer, int denom) : _numer(numer), _denom(denom) {}
+	Rational(Int64 numer) : _numer(numer), _denom(1) {}
+	Rational(Int64 numer, Int64 denom) : _numer(numer), _denom(denom) {}
 	// Copy constructor/operator
 	Rational(const Rational& src) : _numer(src._numer), _denom(src._denom) {}
 	Rational& operator=(const Rational& src) {
@@ -37,13 +39,13 @@ public:
 public:
 	~Rational() = default;
 public:
-	void SetNumer(int numer) { _numer = numer; }
-	void SetDenom(int denom) { _denom = denom; }
-	int GetNumer() const { return _numer; }
-	int GetDenom() const { return _denom; }
+	void SetNumer(Int64 numer) { _numer = numer; }
+	void SetDenom(Int64 denom) { _denom = denom; }
+	Int64 GetNumer() const { return _numer; }
+	Int64 GetDenom() const { return _denom; }
 public:
 	Rational Reduce() const;
-	static Rational MakeFromFP(Double num);
+	static Rational MakeFromDouble(Double num);
 public:
 	static void IssueError_DenominatorZero();
 public:

@@ -9,12 +9,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Rational
 //------------------------------------------------------------------------------
+const Rational Rational::Zero;
+
 Rational Rational::Reduce() const
 {
 	return Rational();
 }
 
-Rational Rational::MakeFromFP(Double num)
+Rational Rational::MakeFromDouble(Double num)
 {
 	return Rational();
 }

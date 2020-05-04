@@ -531,7 +531,7 @@ String String::UnescapeHTML(const char* str)
 	return strRtn;
 }
 
-Double String::ToNumber(const char* str, bool* pSuccessFlag)
+Double String::ToDouble(const char* str, bool* pSuccessFlag)
 {
 	Double num;
 	char* next = nullptr;
@@ -542,6 +542,14 @@ Double String::ToNumber(const char* str, bool* pSuccessFlag)
 	} else {
 		num = ::strtod(str, &next);
 	}
+	if (pSuccessFlag) *pSuccessFlag = (*next == '\0');
+	return num;
+}
+
+Int64 String::ToInt64(const char* str, bool* pSuccessFlag)
+{
+	char* next = nullptr;
+	Int64 num = ::strtoull(str, &next, 0);
 	if (pSuccessFlag) *pSuccessFlag = (*next == '\0');
 	return num;
 }

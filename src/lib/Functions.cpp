@@ -254,7 +254,7 @@ Gurax_ImplementFunction(Int)
 		return new Value_Number(Value_Number::GetNumber<Int64>(value));
 	} else if (value.IsType(VTYPE_String)) {
 		bool successFlag;
-		Double num = Value_String::GetStringSTL(value).ToNumber(&successFlag);
+		Double num = Value_String::GetStringSTL(value).ToDouble(&successFlag);
 		if (!successFlag) {
 			Error::Issue(ErrorType::ValueError, "failed to convert to a number");
 			return Value::nil();
@@ -493,7 +493,7 @@ Gurax_ImplementFunction(tonumber)
 	Signal &sig = env.GetSignal();
 	bool allowPartFlag = !arg.IsSet(Gurax_Symbol(strict));
 	bool successFlag;
-	Number num = arg.GetValue(0).ToNumber(allowPartFlag, successFlag);
+	Number num = arg.GetValue(0).ToDouble(allowPartFlag, successFlag);
 	if (successFlag) {
 		return Value(num);
 	} else if (arg.IsSet(Gurax_Symbol(raise))) {

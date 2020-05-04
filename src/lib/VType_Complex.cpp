@@ -305,7 +305,7 @@ Gurax_ImplementOpBinary(Sub, Number, Complex)
 Gurax_ImplementSuffixMgr_Compose(Number, j)
 {
 	bool successFlag = false;
-	Double num = strRef.GetStringSTL().ToNumber(&successFlag);
+	Double num = strRef.GetStringSTL().ToDouble(&successFlag);
 	if (!successFlag) {
 		String::IssueError_InvalidFormatOfNumber();
 		return;

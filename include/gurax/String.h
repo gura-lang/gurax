@@ -177,8 +177,10 @@ public:
 	static String UnescapeHTML(const char* str);
 	String UnescapeHTML() const { return UnescapeHTML(c_str()); }
 public:
-	static Double ToNumber(const char* str, bool* pSuccessFlag = nullptr);
-	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
+	static Double ToDouble(const char* str, bool* pSuccessFlag = nullptr);
+	Double ToDouble(bool* pSuccessFlag = nullptr) const { return ToDouble(c_str(), pSuccessFlag); }
+	static Int64 ToInt64(const char* str, bool* pSuccessFlag = nullptr);
+	Double ToInt64(bool* pSuccessFlag = nullptr) const { return ToInt64(c_str(), pSuccessFlag); }
 public:
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);

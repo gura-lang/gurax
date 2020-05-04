@@ -159,7 +159,7 @@ bool Parser::ReduceOneToken()
 	if (pToken->IsType(TokenType::Number)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Number\n"));
 		bool successFlag = false;
-		Double num = String::ToNumber(pToken->GetSegment(), &successFlag);
+		Double num = String::ToDouble(pToken->GetSegment(), &successFlag);
 		if (!successFlag) {
 			String::IssueError_InvalidFormatOfNumber();
 			return false;

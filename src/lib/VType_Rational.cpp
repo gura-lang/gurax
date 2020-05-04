@@ -107,6 +107,24 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Compose(Number, r)
+{
+	bool successFlag = false;
+	Int64 numer = strRef.GetStringSTL().ToInt64(&successFlag);
+	if (!successFlag) {
+		String::IssueError_InvalidFormatOfNumber();
+		return;
+	}
+	composer.Add_Value(new Value_Rational(Rational(numer, 1)), pExpr);	// [Value]
+}
+
+//------------------------------------------------------------------------------
 // VType_Rational
 //------------------------------------------------------------------------------
 VType_Rational VTYPE_Rational("Rational");
@@ -122,6 +140,8 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Number, r);
 }
 
 //------------------------------------------------------------------------------
