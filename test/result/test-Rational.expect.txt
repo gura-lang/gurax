@@ -1,0 +1,13 @@
+======== Property ========
+Rational
+  #denom            Number       R
+  #numer            Number       R
+======== Constructor ========
+Rational() .. 0r
+Rational(3) .. 3r
+Rational(-3) .. -3r
+Rational(3, 4) .. 3/4r
+Rational(-3, 4) .. -3/4r
+Rational(3, -4) .. -3/4r
+Rational(-3, -4) .. 3/4r
+Rational(12, 8) .. 3/2r

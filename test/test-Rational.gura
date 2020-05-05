@@ -8,24 +8,21 @@ TestCase('Property') {
 TestCase('Constructor') {
 	Tester(`Rational())
 	Tester(`Rational(3))
+	Tester(`Rational(-3))
 	Tester(`Rational(3, 4))
+	Tester(`Rational(-3, 4))
+	Tester(`Rational(3, -4))
+	Tester(`Rational(-3, -4))
 	Tester(`Rational(12, 8))
 }
 
-/*
-testcase {
-	[
-		[3, 4]
-		[-3, 4]
-		[3, -4]
-		[-3, -4]
-	].each {|test|
-		x = rational(test*)
-		printf('%s .. numer=%d denom=%d\n', x, x.numer, x.denom)
-	}
-	tester(`rational(3, 12).reduce())
-	tester(`rational(-3, 12).reduce())
+TestCase('Property access') {
+	rat = Rational(3, 4)
+	Tester(`rat.numer)
+	Tester(`rat.denom)
 }
+
+/*
 testcase {
 	[
 		`(4 / 7r + 3 / 10r)
