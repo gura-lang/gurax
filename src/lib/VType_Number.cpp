@@ -447,6 +447,14 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Xor,			Number, Number);
 }
 
+Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Rational)) {
+		return new Value_Number(Value_Rational::GetRational(value).ToDouble());
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_Number
 //------------------------------------------------------------------------------

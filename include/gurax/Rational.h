@@ -43,8 +43,13 @@ public:
 	void SetDenom(Int64 denom) { _denom = denom; }
 	Int64 GetNumer() const { return _numer; }
 	Int64 GetDenom() const { return _denom; }
+	Double ToDouble() const { return static_cast<Double>(_numer) / _denom; }
 	bool IsInteger() const { return _denom == 1; }
 	bool IsZero() const { return _numer == 0; }
+	bool IsPos() const { return _numer > 0; }
+	bool IsNeg() const { return _numer < 0; }
+	bool IsNonPos() const { return _numer <= 0; }
+	bool IsNonNeg() const { return _numer >= 0; }
 public:
 	Rational Regulate() const;
 	static void Regulate(Int64* pNumer, Int64* pDenom);

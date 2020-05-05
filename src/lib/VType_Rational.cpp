@@ -28,10 +28,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Rational() {block?}
+// Rational(numer?:Number, denom?:Number) {block?}
 Gurax_DeclareConstructor(Rational)
 {
 	Declare(VTYPE_Rational, Flag::None);
+	DeclareArg("numer", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("denom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -41,36 +43,117 @@ Gurax_DeclareConstructor(Rational)
 Gurax_ImplementConstructor(Rational)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Int64 numer = args.IsValid()? args.PickNumber<Int64>() : 0;
+	Int64 denom = args.IsValid()? args.PickNumber<Int64>() : 1;
 	// Function body
-	Rational rational;
-	return argument.ReturnValue(processor, new Value_Rational(rational));
+	Rational rat = Rational::MakeRegulated(numer, denom);
+	return argument.ReturnValue(processor, new Value_Rational(rat));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Rational#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Rational, MethodSkeleton)
+// Rational#IsZero()
+Gurax_DeclareMethod(Rational, IsZero)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Returns `true` if the target rational equals to zero.\n");
 }
 
-Gurax_ImplementMethod(Rational, MethodSkeleton)
+Gurax_ImplementMethod(Rational, IsZero)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_Bool(valueThis.GetRational().IsZero());
+}
+
+// Rational#IsPos()
+Gurax_DeclareMethod(Rational, IsPos)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the target rational is greater than zero.\n");
+}
+
+Gurax_ImplementMethod(Rational, IsPos)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetRational().IsPos());
+}
+
+// Rational#IsNeg()
+Gurax_DeclareMethod(Rational, IsNeg)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the target rational is less than zero.\n");
+}
+
+Gurax_ImplementMethod(Rational, IsNeg)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetRational().IsNeg());
+}
+
+// Rational#IsNonPos()
+Gurax_DeclareMethod(Rational, IsNonPos)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the target rational is less than or equals to zero.\n");
+}
+
+Gurax_ImplementMethod(Rational, IsNonPos)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetRational().IsNonPos());
+}
+
+// Rational#IsNonNeg()
+Gurax_DeclareMethod(Rational, IsNonNeg)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the target rational is greater than or equal to zero.\n");
+}
+
+Gurax_ImplementMethod(Rational, IsNonNeg)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetRational().IsNonNeg());
+}
+
+// Rational#Regulate()
+Gurax_DeclareMethod(Rational, Regulate)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `Rational` instance that has been regulated from the target.\n");
+}
+
+Gurax_ImplementMethod(Rational, Regulate)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Rational(valueThis.GetRational().Regulate());
 }
 
 //-----------------------------------------------------------------------------
@@ -114,7 +197,6 @@ Gurax_ImplementOpUnary(Neg, Rational)
 {
 	const Rational& rat = Value_Rational::GetRational(value);
 	Rational ratRtn = -rat;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
 	return new Value_Rational(ratRtn);
 }
 
@@ -123,7 +205,6 @@ Gurax_ImplementOpUnary(Pos, Rational)
 {
 	const Rational& rat = Value_Rational::GetRational(value);
 	Rational ratRtn = +rat;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
 	return new Value_Rational(ratRtn);
 }
 
@@ -133,7 +214,24 @@ Gurax_ImplementOpBinary(Add, Rational, Rational)
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
 	Rational ratRtn = ratL + ratR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational + Number
+Gurax_ImplementOpBinary(Add, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	Rational ratRtn = ratL + numR;
+	return new Value_Rational(ratRtn);
+}
+
+// Number + Rational
+Gurax_ImplementOpBinary(Add, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	Rational ratRtn = numL + ratR;
 	return new Value_Rational(ratRtn);
 }
 
@@ -143,7 +241,24 @@ Gurax_ImplementOpBinary(Sub, Rational, Rational)
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
 	Rational ratRtn = ratL - ratR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational - Number
+Gurax_ImplementOpBinary(Sub, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	Rational ratRtn = ratL - numR;
+	return new Value_Rational(ratRtn);
+}
+
+// Number - Rational
+Gurax_ImplementOpBinary(Sub, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	Rational ratRtn = numL - ratR;
 	return new Value_Rational(ratRtn);
 }
 
@@ -153,7 +268,24 @@ Gurax_ImplementOpBinary(Mul, Rational, Rational)
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
 	Rational ratRtn = ratL * ratR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
+	return new Value_Rational(ratRtn);
+}
+
+// Rational * Number
+Gurax_ImplementOpBinary(Mul, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	Rational ratRtn = ratL * numR;
+	return new Value_Rational(ratRtn);
+}
+
+// Number * Rational
+Gurax_ImplementOpBinary(Mul, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	Rational ratRtn = numL * ratR;
 	return new Value_Rational(ratRtn);
 }
 
@@ -167,7 +299,6 @@ Gurax_ImplementOpBinary(Div, Rational, Rational)
 		return Value::nil();
 	}
 	Rational ratRtn = ratL / ratR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
 	return new Value_Rational(ratRtn);
 }
 
@@ -181,7 +312,6 @@ Gurax_ImplementOpBinary(Div, Rational, Number)
 		return Value::nil();
 	}
 	Rational ratRtn = ratL / numR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
 	return new Value_Rational(ratRtn);
 }
 
@@ -195,7 +325,6 @@ Gurax_ImplementOpBinary(Div, Number, Rational)
 		return Value::nil();
 	}
 	Rational ratRtn = numL / ratR;
-	if (ratRtn.IsInteger()) return new Value_Number(ratRtn.GetNumer());
 	return new Value_Rational(ratRtn);
 }
 
@@ -204,7 +333,23 @@ Gurax_ImplementOpBinary(Eq, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL == ratR);
+	return new Value_Bool(ratL == ratR);
+}
+
+// Rational == Number
+Gurax_ImplementOpBinary(Eq, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL == Rational::MakeFromDouble(numR));
+}
+
+// Number == Rational
+Gurax_ImplementOpBinary(Eq, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) == ratR);
 }
 
 // Rational != Rational
@@ -212,7 +357,23 @@ Gurax_ImplementOpBinary(Ne, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL != ratR);
+	return new Value_Bool(ratL != ratR);
+}
+
+// Rational != Number
+Gurax_ImplementOpBinary(Ne, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL != Rational::MakeFromDouble(numR));
+}
+
+// Number != Rational
+Gurax_ImplementOpBinary(Ne, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) != ratR);
 }
 
 // Rational < Rational
@@ -220,7 +381,23 @@ Gurax_ImplementOpBinary(Lt, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL < ratR);
+	return new Value_Bool(ratL < ratR);
+}
+
+// Rational < Number
+Gurax_ImplementOpBinary(Lt, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL < Rational::MakeFromDouble(numR));
+}
+
+// Number < Rational
+Gurax_ImplementOpBinary(Lt, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) < ratR);
 }
 
 // Rational > Rational
@@ -228,7 +405,23 @@ Gurax_ImplementOpBinary(Gt, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL > ratR);
+	return new Value_Bool(ratL > ratR);
+}
+
+// Rational > Number
+Gurax_ImplementOpBinary(Gt, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL > Rational::MakeFromDouble(numR));
+}
+
+// Number > Rational
+Gurax_ImplementOpBinary(Gt, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) > ratR);
 }
 
 // Rational <= Rational
@@ -236,7 +429,23 @@ Gurax_ImplementOpBinary(Le, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL <= ratR);
+	return new Value_Bool(ratL <= ratR);
+}
+
+// Rational <= Number
+Gurax_ImplementOpBinary(Le, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL <= Rational::MakeFromDouble(numR));
+}
+
+// Number <= Rational
+Gurax_ImplementOpBinary(Le, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) <= ratR);
 }
 
 // Rational >= Rational
@@ -244,7 +453,23 @@ Gurax_ImplementOpBinary(Ge, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
-	return new Value_Rational(ratL >= ratR);
+	return new Value_Bool(ratL >= ratR);
+}
+
+// Rational >= Number
+Gurax_ImplementOpBinary(Ge, Rational, Number)
+{
+	const Rational& ratL = Value_Rational::GetRational(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(ratL >= Rational::MakeFromDouble(numR));
+}
+
+// Number >= Rational
+Gurax_ImplementOpBinary(Ge, Number, Rational)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Rational& ratR = Value_Rational::GetRational(valueR);
+	return new Value_Bool(Rational::MakeFromDouble(numL) >= ratR);
 }
 
 //------------------------------------------------------------------------------
@@ -273,7 +498,12 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Rational));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Rational, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Rational, IsZero));
+	Assign(Gurax_CreateMethod(Rational, IsPos));
+	Assign(Gurax_CreateMethod(Rational, IsNeg));
+	Assign(Gurax_CreateMethod(Rational, IsNonPos));
+	Assign(Gurax_CreateMethod(Rational, IsNonNeg));
+	Assign(Gurax_CreateMethod(Rational, Regulate));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));
@@ -281,19 +511,45 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpUnary(Neg,	Rational);
 	Gurax_AssignOpUnary(Pos,	Rational);
 	Gurax_AssignOpBinary(Add,	Rational, Rational);
+	Gurax_AssignOpBinary(Add,	Rational, Number);
+	Gurax_AssignOpBinary(Add,	Number, Rational);
 	Gurax_AssignOpBinary(Sub,	Rational, Rational);
+	Gurax_AssignOpBinary(Sub,	Rational, Number);
+	Gurax_AssignOpBinary(Sub,	Number, Rational);
 	Gurax_AssignOpBinary(Mul,	Rational, Rational);
+	Gurax_AssignOpBinary(Mul,	Rational, Number);
+	Gurax_AssignOpBinary(Mul,	Number, Rational);
 	Gurax_AssignOpBinary(Div,	Rational, Rational);
 	Gurax_AssignOpBinary(Div,	Rational, Number);
 	Gurax_AssignOpBinary(Div,	Number, Rational);
 	Gurax_AssignOpBinary(Eq,	Rational, Rational);
+	Gurax_AssignOpBinary(Eq,	Rational, Number);
+	Gurax_AssignOpBinary(Eq,	Number, Rational);
 	Gurax_AssignOpBinary(Ne,	Rational, Rational);
+	Gurax_AssignOpBinary(Ne,	Rational, Number);
+	Gurax_AssignOpBinary(Ne,	Number, Rational);
 	Gurax_AssignOpBinary(Lt,	Rational, Rational);
+	Gurax_AssignOpBinary(Lt,	Rational, Number);
+	Gurax_AssignOpBinary(Lt,	Number, Rational);
 	Gurax_AssignOpBinary(Gt,	Rational, Rational);
+	Gurax_AssignOpBinary(Gt,	Rational, Number);
+	Gurax_AssignOpBinary(Gt,	Number, Rational);
 	Gurax_AssignOpBinary(Le,	Rational, Rational);
+	Gurax_AssignOpBinary(Le,	Rational, Number);
+	Gurax_AssignOpBinary(Le,	Number, Rational);
 	Gurax_AssignOpBinary(Ge,	Rational, Rational);
+	Gurax_AssignOpBinary(Ge,	Rational, Number);
+	Gurax_AssignOpBinary(Ge,	Number, Rational);
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Number, r);
+}
+
+Value* VType_Rational::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Number)) {
+		return new Value_Rational(Rational::MakeFromDouble(Value_Number::GetNumber<Double>(value)));
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------
