@@ -11,7 +11,10 @@ namespace Gurax {
 bool Formatter::Format(const char* format, Source&& source)
 {
 	enum class Stat {
-		Start, FlagsPre, Flags, FlagsAfterWhite, FlagsAfterZ, PrecisionPre, Precision, Padding,
+		Start,
+		FlagsPre, Flags,
+		FlagsAfterWhite, FlagsAfterL, FlagsAfterLL, FlagsAfterZ,
+		PrecisionPre, Precision, Padding,
 	};
 	bool eatNextFlag;
 	FormatterFlags formatterFlags;
@@ -84,7 +87,7 @@ bool Formatter::Format(const char* format, Source&& source)
 			} else if (ch == '.') {
 				stat = Stat::PrecisionPre;
 			} else if (ch == 'l') {
-				// just ignore it
+				stat = Stat::FlagsAfterL;
 			} else if (ch == 'z') {
 				stat = Stat::FlagsAfterZ;
 			} else if (ch == 'd' || ch == 'i') {
@@ -148,6 +151,43 @@ bool Formatter::Format(const char* format, Source&& source)
 			} else {
 				eatNextFlag = false;
 				stat = Stat::Flags;
+			}
+			break;
+		}
+		case Stat::FlagsAfterL: {
+			if (ch == 'l') {
+				stat = Stat::FlagsAfterLL;
+			} else {
+				eatNextFlag = false;
+				stat = Stat::Flags;
+			}
+			break;
+		}
+		case Stat::FlagsAfterLL: {
+			if (ch == 'd' || ch == 'i') {
+				RefPtr<Value> pValue(source.FetchInt64());
+				if (!pValue->Format_d(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'u') {
+				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue->Format_u(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'b') {
+				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue->Format_b(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'o') {
+				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue->Format_o(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'x' || ch == 'X') {
+				RefPtr<Value> pValue(source.FetchUInt64());
+				formatterFlags.upperCaseFlag = (ch == 'X');
+				if (!pValue->Format_x(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else {
+				IssueError_WrongFormat();
+				return false;
 			}
 			break;
 		}

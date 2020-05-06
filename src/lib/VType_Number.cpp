@@ -116,12 +116,12 @@ Gurax_DeclareClassProperty_RW(Number, format)
 
 Gurax_ImplementClassPropertyGetter(Number, format)
 {
-	return new Value_String(Basement::Inst.GetFormatForNumber());
+	return new Value_String(NumberBase::GetFormatterFormat());
 }
 
 Gurax_ImplementClassPropertySetter(Number, format)
 {
-	Basement::Inst.SetFormatForNumber(Value_String::GetString(value));
+	NumberBase::SetFormatterFormat(Value_String::GetStringSTL(value));
 }
 
 //------------------------------------------------------------------------------

@@ -16,8 +16,9 @@ TestCase('Constructor') {
 	Tester(`Rational(12, 8))
 	Tester(`Rational(10000, 10000))
 	Tester(`Rational(10000, 10001))
-	Tester(`Rational(0x10000000, 0x10000000))
-	Tester(`Rational(0x100000000, 0x10000000))
+	Tester(`Rational(1, 0x1_0000_0000))
+	Tester(`Rational(0x1_0000_0000, 0x1000_0000))
+	Tester(`Rational(0x1_0000_0000, 0x1000_0000))
 	Tester(`Rational(0x100000000, 0x100000000))
 	Tester(`Rational(0x100000000, 0x100000000))
 }

@@ -53,6 +53,8 @@ public:
 		virtual bool IsEnd() = 0;
 		virtual Value* FetchInt() = 0;
 		virtual Value* FetchUInt() = 0;
+		virtual Value* FetchInt64() = 0;
+		virtual Value* FetchUInt64() = 0;
 		virtual Value* FetchSizeT() = 0;
 		virtual Value* FetchDouble() = 0;
 		virtual Value* FetchString() = 0;
@@ -68,6 +70,8 @@ public:
 		virtual bool IsEnd() override { return _ppValue == _valueList.end(); }
 		virtual Value* FetchInt() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchUInt() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchInt64() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchUInt64() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchSizeT() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchDouble() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchString() override { return (*_ppValue++)->Reference(); }
@@ -89,6 +93,14 @@ public:
 		virtual Value* FetchUInt() override {
 			UInt num = va_arg(_ap, UInt);
 			return new Value_Number(static_cast<UInt>(num));
+		}
+		virtual Value* FetchInt64() override {
+			Int64 num = va_arg(_ap, Int64);
+			return new Value_Number(static_cast<Int64>(num));
+		}
+		virtual Value* FetchUInt64() override {
+			UInt64 num = va_arg(_ap, UInt64);
+			return new Value_Number(static_cast<UInt64>(num));
 		}
 		virtual Value* FetchSizeT() override {
 			size_t num = va_arg(_ap, size_t);

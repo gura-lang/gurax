@@ -8,10 +8,21 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// NumberBase
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE NumberBase {
+protected:
+	static String _formatterFormat;
+public:
+	static void SetFormatterFormat(String formatterFormat) { _formatterFormat = formatterFormat; }
+	static const char* GetFormatterFormat() { return _formatterFormat.c_str(); }
+};
+
+//------------------------------------------------------------------------------
 // Number
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class Number {
+class Number : public NumberBase {
 public:
 	struct LessThan {
 		bool operator()(T_Num num1, T_Num num2) const { return num1 < num2; }

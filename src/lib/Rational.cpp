@@ -57,8 +57,8 @@ void Rational::IssueError_DenomZero()
 String Rational::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%d", GetNumer());
-	if (GetDenom() != 1) str.Printf("/%d", GetDenom());
+	str.Printf("%lld", GetNumer());
+	if (GetDenom() != 1) str.Printf("/%lld", GetDenom());
 	str += "r";
 	return str;
 }
