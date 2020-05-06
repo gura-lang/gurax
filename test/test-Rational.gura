@@ -14,12 +14,31 @@ TestCase('Constructor') {
 	Tester(`Rational(3, -4))
 	Tester(`Rational(-3, -4))
 	Tester(`Rational(12, 8))
+	Tester(`Rational(10000, 10000))
+	Tester(`Rational(10000, 10001))
+	Tester(`Rational(0x10000000, 0x10000000))
+	Tester(`Rational(0x100000000, 0x10000000))
+	Tester(`Rational(0x100000000, 0x100000000))
+	Tester(`Rational(0x100000000, 0x100000000))
 }
 
 TestCase('Property access') {
-	rat = Rational(3, 4)
-	Tester(`rat.numer)
-	Tester(`rat.denom)
+	Tester(`Rational(3, 4)) {|rat|
+		Tester(`rat.numer)
+		Tester(`rat.denom)
+	}
+	Tester(`Rational(-3, 4)) {|rat|
+		Tester(`rat.numer)
+		Tester(`rat.denom)
+	}
+	Tester(`Rational(3, -4)) {|rat|
+		Tester(`rat.numer)
+		Tester(`rat.denom)
+	}
+	Tester(`Rational(-3, -4)) {|rat|
+		Tester(`rat.numer)
+		Tester(`rat.denom)
+	}
 }
 
 /*

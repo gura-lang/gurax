@@ -1,9 +1,17 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('Prefix') {
+TestCase('String prefix') {
 	Tester(`Expr.Parse("b'abcdefg'"))
 	Tester(`Expr.Parse("e'${foo}abcdefg'"))
 	Tester(`Expr.Parse("t'${foo}abcdefg'"))
 	Tester(`Expr.Parse("be'${foo}abcdefg'"))
+}
+
+TestCase('Under score in number literal') {
+	Tester(`Format('%d', 999_99_9_99__99))
+	Tester(`Format('%b', 0b111_11_1_11__11))
+	Tester(`Format('%o', 0777_77_7_77__77))
+	Tester(`Format('%o', 0_777_77_7_77__77))
+	Tester(`Format('%x', 0xfff_ff_f_ff__ff))
 }

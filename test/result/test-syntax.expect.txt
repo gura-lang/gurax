@@ -1,5 +1,11 @@
-======== Prefix ========
+======== String prefix ========
 Expr.Parse("b'abcdefg'") .. b'abcdefg'
 Expr.Parse("e'${foo}abcdefg'") .. e'${foo}abcdefg'
 Expr.Parse("t'${foo}abcdefg'") .. t'${foo}abcdefg'
 Expr.Parse("be'${foo}abcdefg'") .. invalid format of prefix
+======== Under score in number literal ========
+Format('%d', 9999999999) .. 9999999999
+Format('%b', 0b1111111111) .. 1111111111
+Format('%o', 07777777777) .. 7777777777
+Format('%o', 07777777777) .. 7777777777
+Format('%x', 0xffffffffff) .. ffffffffff

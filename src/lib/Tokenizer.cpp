@@ -503,6 +503,8 @@ void Tokenizer::FeedChar(char ch)
 		} else if(String::IsOctDigit(ch)) {
 			_segment.push_back(ch);
 			_stat = Stat::NumberOct;
+		} else if (ch == '_') {
+			_stat = Stat::NumberOct;
 		} else {
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Number;
@@ -512,6 +514,8 @@ void Tokenizer::FeedChar(char ch)
 	case Stat::NumberHex: {
 		if (String::IsHexDigit(ch)) {
 			_segment.push_back(ch);
+		} else if (ch == '_') {
+			_stat = Stat::NumberHexUBar;
 		} else if (_segment.size() <= 2) {
 			IssueError(ErrorType::SyntaxError, "wrong format of hexadecimal number");
 			Gurax_PushbackEx(ch);
@@ -528,9 +532,24 @@ void Tokenizer::FeedChar(char ch)
 		}
 		break;
 	}
+	case Stat::NumberHexUBar: {
+		if (String::IsHexDigit(ch)) {
+			Gurax_PushbackEx(ch);
+			_stat = Stat::NumberHex;
+		} else if (ch == '_') {
+			// nothing to do
+		} else {
+			IssueError(ErrorType::SyntaxError, "wrong format of hexadecimal number");
+			Gurax_PushbackEx(ch);
+			_stat = Stat::Error;
+		}
+		break;
+	}
 	case Stat::NumberOct: {
 		if (String::IsOctDigit(ch)) {
 			_segment.push_back(ch);
+		} else if (ch == '_') {
+			_stat = Stat::NumberOctUBar;
 		} else if (String::IsSymbolFirst(ch)) {
 			_suffix.clear();
 			_suffix.push_back(ch);
@@ -543,9 +562,24 @@ void Tokenizer::FeedChar(char ch)
 		}
 		break;
 	}
+	case Stat::NumberOctUBar: {
+		if (String::IsOctDigit(ch)) {
+			Gurax_PushbackEx(ch);
+			_stat = Stat::NumberOct;
+		} else if (ch == '_') {
+			// nothing to do
+		} else {
+			IssueError(ErrorType::SyntaxError, "wrong format of octal number");
+			Gurax_PushbackEx(ch);
+			_stat = Stat::Error;
+		}
+		break;
+	}
 	case Stat::NumberBin: {
 		if (String::IsBinDigit(ch)) {
 			_segment.push_back(ch);
+		} else if (ch == '_') {
+			_stat = Stat::NumberBinUBar;
 		} else if (_segment.size() <= 2) {
 			IssueError(ErrorType::SyntaxError, "wrong format of binary number");
 			Gurax_PushbackEx(ch);
@@ -562,31 +596,24 @@ void Tokenizer::FeedChar(char ch)
 		}
 		break;
 	}
-	case Stat::NumberAfterPeriod: {
-		if (ch == '.') {
-			if (GetTokenStack().back()->IsType(TokenType::Quote)) {
-				int lineNo = GetLineNo();
-				_segment.push_back(ch);
-				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, _lineNoTop, lineNo, _segment));
-			} else {
-				int lineNo = GetLineNo();
-				_tokenWatcher.FeedToken(new Token(TokenType::Seq, _lineNoTop, lineNo));
-			}
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
-		} else if (String::IsDigit(ch)) {
-			_segment.push_back(ch);
-			_stat = Stat::Number;
-		} else {
-			int lineNo = GetLineNo();
-			_tokenWatcher.FeedToken(new Token(TokenType::Period, _lineNoTop, lineNo));
+	case Stat::NumberBinUBar: {
+		if (String::IsBinDigit(ch)) {
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = Stat::NumberBin;
+		} else if (ch == '_') {
+			// nothing to do
+		} else {
+			IssueError(ErrorType::SyntaxError, "wrong format of binary number");
+			Gurax_PushbackEx(ch);
+			_stat = Stat::Error;
 		}
 		break;
 	}
 	case Stat::Number: {
 		if (String::IsDigit(ch)) {
 			_segment.push_back(ch);
+		} else if (ch == '_') {
+			_stat = Stat::NumberUBar;
 		} else if (ch == '.') {
 			size_t pos = _segment.find('.');
 			if (pos == _segment.length() - 1) {
@@ -613,6 +640,41 @@ void Tokenizer::FeedChar(char ch)
 		} else {
 			int lineNo = GetLineNo();
 			_tokenWatcher.FeedToken(new Token(TokenType::Number, _lineNoTop, lineNo, _segment));
+			Gurax_PushbackEx(ch);
+			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+		}
+		break;
+	}
+	case Stat::NumberUBar: {
+		if (String::IsDigit(ch)) {
+			Gurax_PushbackEx(ch);
+			_stat = Stat::Number;
+		} else if (ch == '_') {
+			// nothing to do
+		} else {
+			IssueError(ErrorType::SyntaxError, "wrong format of number");
+			Gurax_PushbackEx(ch);
+			_stat = Stat::Error;
+		}
+		break;
+	}
+	case Stat::NumberAfterPeriod: {
+		if (ch == '.') {
+			if (GetTokenStack().back()->IsType(TokenType::Quote)) {
+				int lineNo = GetLineNo();
+				_segment.push_back(ch);
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, _lineNoTop, lineNo, _segment));
+			} else {
+				int lineNo = GetLineNo();
+				_tokenWatcher.FeedToken(new Token(TokenType::Seq, _lineNoTop, lineNo));
+			}
+			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+		} else if (String::IsDigit(ch)) {
+			_segment.push_back(ch);
+			_stat = Stat::Number;
+		} else {
+			int lineNo = GetLineNo();
+			_tokenWatcher.FeedToken(new Token(TokenType::Period, _lineNoTop, lineNo));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
