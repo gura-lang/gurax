@@ -2,10 +2,31 @@
 import(util.tester) {*}
 
 TestCase('%d specifier') {
-	Tester(`Format('%d', 0x7fffffff))
-	Tester(`Format('%d', 0x80000000))
-	Tester(`Format('%d', -0x7fffffff))
-	Tester(`Format('%d', -0x80000000))
+	Tester(`Format('%d', 0))
+	Tester(`Format('%d', 0x0010_0000_0000_0000))
+	Tester(`Format('%d', 0x001f_ffff_ffff_fffe))
+	Tester(`Format('%d', 0x001f_ffff_ffff_ffff))
+	Tester(`Format('%d', 0x0020_0000_0000_0000))
+	Tester(`Format('%d', 0x0020_0000_0000_0001))
+	Tester(`Format('%d', -0x0010_0000_0000_0000))
+	Tester(`Format('%d', -0x001f_ffff_ffff_fffe))
+	Tester(`Format('%d', -0x001f_ffff_ffff_ffff))
+	Tester(`Format('%d', -0x0020_0000_0000_0000))
+	Tester(`Format('%d', -0x0020_0000_0000_0001))
+}
+
+TestCase('%x specifier') {
+	Tester(`Format('%016x', 0))
+	Tester(`Format('%016x', 0x0010_0000_0000_0000))
+	Tester(`Format('%016x', 0x001f_ffff_ffff_fffe))
+	Tester(`Format('%016x', 0x001f_ffff_ffff_ffff))
+	Tester(`Format('%016x', 0x0020_0000_0000_0000))
+	Tester(`Format('%016x', 0x0020_0000_0000_0001))
+	Tester(`Format('%016x', -0x0010_0000_0000_0000))
+	Tester(`Format('%016x', -0x001f_ffff_ffff_fffe))
+	Tester(`Format('%016x', -0x001f_ffff_ffff_ffff))
+	Tester(`Format('%016x', -0x0020_0000_0000_0000))
+	Tester(`Format('%016x', -0x0020_0000_0000_0001))
 }
 
 TestCase('%d specifier for Bool') {

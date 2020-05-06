@@ -17,6 +17,8 @@ public:
 protected:
 	Int64 _numer;
 	Int64 _denom;
+protected:
+	static String _formatterFormat;
 public:
 	static const Rational Zero;
 public:
@@ -50,6 +52,9 @@ public:
 	bool IsNeg() const { return _numer < 0; }
 	bool IsNonPos() const { return _numer <= 0; }
 	bool IsNonNeg() const { return _numer >= 0; }
+public:
+	static void SetFormatterFormat(String formatterFormat) { _formatterFormat = formatterFormat; }
+	static const char* GetFormatterFormat() { return _formatterFormat.c_str(); }
 public:
 	Rational Regulate() const;
 	static void Regulate(Int64* pNumer, Int64* pDenom);
