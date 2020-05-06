@@ -430,7 +430,9 @@ public:
 	static const TagInfo Empty;
 public:
 	static void Initialize();
+	static const TagInfo* LookupByTagId(UInt16 tagId);
 	static const TagInfo* LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId);
+	static const TagInfo* LookupBySymbol(const Symbol* pSymbol);
 	static const TagInfo* LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol);
 };
 
@@ -440,7 +442,7 @@ public:
 class GURAX_DLLDECLARE TagInfoMapByTagId :
 	public std::unordered_map<UInt16, const TagInfo*> {
 public:
-	void Initialize(const TagInfo tagInfoTbl[], size_t n);
+	void Register(const TagInfo tagInfoTbl[], size_t n);
 	const TagInfo* Lookup(UInt16 tagId) const;
 };
 
@@ -450,7 +452,7 @@ public:
 class GURAX_DLLDECLARE TagInfoMapBySymbol :
 	public std::unordered_map<const Symbol*, const TagInfo*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
-	void Initialize(const TagInfo tagInfoTbl[], size_t n);
+	void Register(const TagInfo tagInfoTbl[], size_t n);
 	const TagInfo* Lookup(const Symbol* pSymbol) const;
 };
 

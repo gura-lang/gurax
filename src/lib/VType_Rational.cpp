@@ -47,7 +47,7 @@ Gurax_ImplementConstructor(Rational)
 	Int64 numer = args.IsValid()? args.PickNumber<Int64>() : 0;
 	Int64 denom = args.IsValid()? args.PickNumber<Int64>() : 1;
 	// Function body
-	Rational rat = Rational::MakeRegulated(numer, denom);
+	Rational rat = Rational::MakeRegulatedQuick(numer, denom);
 	return argument.ReturnValue(processor, new Value_Rational(rat));
 }
 

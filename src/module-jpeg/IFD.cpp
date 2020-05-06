@@ -28,7 +28,7 @@ IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
 			return false;
 		}
 		Value& valueToAssign = *valueOwner.back();
-		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbolOfIFD, pSymbol);
+		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbol);
 		if (!pTagInfo) {
 			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
 			return false;

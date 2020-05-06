@@ -165,11 +165,13 @@ static const TagInfo g_tagInfoTbl_Interoperability[] = {
 	{ TagId::RelatedImageHeight,			"RelatedImageHeight",			TypeId::SHORT,		nullptr,	},
 };
 
+static TagInfoMapByTagId g_tagInfoMapByTagId;
 static TagInfoMapByTagId g_tagInfoMapByTagId_TIFF;
 static TagInfoMapByTagId g_tagInfoMapByTagId_Exif;
 static TagInfoMapByTagId g_tagInfoMapByTagId_GPSInfo;
 static TagInfoMapByTagId g_tagInfoMapByTagId_Interoperability;
 
+static TagInfoMapBySymbol g_tagInfoMapBySymbol;
 static TagInfoMapBySymbol g_tagInfoMapBySymbol_TIFF;
 static TagInfoMapBySymbol g_tagInfoMapBySymbol_Exif;
 static TagInfoMapBySymbol g_tagInfoMapBySymbol_GPSInfo;
@@ -177,22 +179,43 @@ static TagInfoMapBySymbol g_tagInfoMapBySymbol_Interoperability;
 
 void TagInfo::Initialize()
 {
-	g_tagInfoMapByTagId_TIFF.Initialize(
+	g_tagInfoMapByTagId.Register(
 		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapByTagId_Exif.Initialize(
+	g_tagInfoMapByTagId.Register(
 		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapByTagId_GPSInfo.Initialize(
+	g_tagInfoMapByTagId.Register(
 		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapByTagId_Interoperability.Initialize(
+	g_tagInfoMapByTagId.Register(
 		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
-	g_tagInfoMapBySymbol_TIFF.Initialize(
+	g_tagInfoMapByTagId_TIFF.Register(
 		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapBySymbol_Exif.Initialize(
+	g_tagInfoMapByTagId_Exif.Register(
 		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapBySymbol_GPSInfo.Initialize(
+	g_tagInfoMapByTagId_GPSInfo.Register(
 		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapBySymbol_Interoperability.Initialize(
+	g_tagInfoMapByTagId_Interoperability.Register(
 		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapBySymbol.Register(
+		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapBySymbol.Register(
+		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapBySymbol.Register(
+		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapBySymbol.Register(
+		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapBySymbol_TIFF.Register(
+		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapBySymbol_Exif.Register(
+		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapBySymbol_GPSInfo.Register(
+		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapBySymbol_Interoperability.Register(
+		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+}
+
+const TagInfo* TagInfo::LookupByTagId(UInt16 tagId)
+{
+	return g_tagInfoMapByTagId.Lookup(tagId);
 }
 
 const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
@@ -209,6 +232,11 @@ const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))?
 			g_tagInfoMapByTagId_GPSInfo.Lookup(tagId) :
 		nullptr;
+}
+
+const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbol)
+{
+	return g_tagInfoMapBySymbol.Lookup(pSymbol);
 }
 
 const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
@@ -230,7 +258,7 @@ const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol*
 //------------------------------------------------------------------------------
 // TagInfoMapByTagId
 //------------------------------------------------------------------------------
-void TagInfoMapByTagId::Initialize(const TagInfo tagInfoTbl[], size_t n)
+void TagInfoMapByTagId::Register(const TagInfo tagInfoTbl[], size_t n)
 {
 	for (size_t i = 0; i < n; i++) {
 		(*this)[tagInfoTbl[i].tagId] = &tagInfoTbl[i];
@@ -246,7 +274,7 @@ const TagInfo* TagInfoMapByTagId::Lookup(UInt16 tagId) const
 //------------------------------------------------------------------------------
 // TagInfoMapBySymbol
 //------------------------------------------------------------------------------
-void TagInfoMapBySymbol::Initialize(const TagInfo tagInfoTbl[], size_t n)
+void TagInfoMapBySymbol::Register(const TagInfo tagInfoTbl[], size_t n)
 {
 	for (size_t i = 0; i < n; i++) {
 		(*this)[Symbol::Add(tagInfoTbl[i].name)] = &tagInfoTbl[i];

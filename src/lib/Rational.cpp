@@ -19,6 +19,13 @@ Rational Rational::Regulate() const
 	return Rational(numer, denom);
 }
 
+Rational Rational::RegulateQuick() const
+{
+	Int64 numer = _numer, denom = _denom;
+	RegulateQuick(&numer, &denom);
+	return Rational(numer, denom);
+}
+
 void Rational::Regulate(Int64* pNumer, Int64* pDenom)
 {
 	Int64& numer = *pNumer;
@@ -39,9 +46,28 @@ void Rational::Regulate(Int64* pNumer, Int64* pDenom)
 	}
 }
 
+void Rational::RegulateQuick(Int64* pNumer, Int64* pDenom)
+{
+	Int64& numer = *pNumer;
+	Int64& denom = *pDenom;
+	if (denom == 0) {
+		numer = 0;
+		denom = 1;
+	} else if (denom < 0) {
+		numer = -numer;
+		denom = -denom;
+	}
+}
+
 Rational Rational::MakeRegulated(Int64 numer, Int64 denom)
 {
 	Regulate(&numer, &denom);
+	return Rational(numer, denom);
+}
+
+Rational Rational::MakeRegulatedQuick(Int64 numer, Int64 denom)
+{
+	RegulateQuick(&numer, &denom);
 	return Rational(numer, denom);
 }
 
