@@ -47,7 +47,7 @@ Rational Rational::MakeRegulated(Int64 numer, Int64 denom)
 
 Rational Rational::MakeFromDouble(Double num)
 {
-	return Rational();
+	return Rational(static_cast<Int64>(num));
 }
 
 void Rational::IssueError_DenomZero()
