@@ -335,7 +335,7 @@ Gurax_DeclareMethod(String, Enquote)
 		"what character is used as the mark:\n"
 		"\n"
 		"- `` `auto`` .. double-quote character if the string contains any single-quote and no double-quote characters,\n"
-		"                or single-quote otherwise.\n"
+		"                or single-quote character otherwise.\n"
 		"- `` `q`` .. single-quote character\n"
 		"- `` `qq`` .. double-quote character\n");
 }
@@ -346,14 +346,10 @@ Gurax_ImplementMethod(String, Enquote)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-	char chQuote = '\'';
-	if (argument.IsSet(Gurax_Symbol(auto_))) {
-		chQuote = (::strchr(str.c_str(), '\'') && !::strchr(str.c_str(), '"'))? '"' : '\'';
-	} else if (argument.IsSet(Gurax_Symbol(q))) {
-		chQuote = '\'';
-	} else if (argument.IsSet(Gurax_Symbol(qq))) {
-		chQuote = '"';
-	}
+	char chQuote =
+		argument.IsSet(Gurax_Symbol(auto_))? str.DetermineQuote() :
+		argument.IsSet(Gurax_Symbol(q))? '\'' :
+		argument.IsSet(Gurax_Symbol(qq))? '"' : '\'';
 	return new Value_String(str.Enquote(chQuote));
 }
 
@@ -1567,7 +1563,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetStringSTL().Enquote();
+	str += GetStringSTL().EnquoteAuto();
 	str += ">";
 	return str;
 }
@@ -1575,7 +1571,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 String Value_String::ToStringDetail(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
-	if (!ss.IsAsValue()) str = str.Enquote();
+	if (!ss.IsAsValue()) str = str.EnquoteAuto();
 	return str;
 }
 

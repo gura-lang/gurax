@@ -373,10 +373,20 @@ String& String::PrintFmt(const char* format, const ValueList& valueList)
 	return *this;
 }
 
+char String::DetermineQuote(const char* str)
+{
+	char chQuote = '\'';
+	for (const char* p = str; *p != '\0'; p++) {
+		char ch = *p;
+		if (ch == '"') return '\'';
+		if (ch == '\'') chQuote = '\"';
+	}
+	return chQuote;
+}
+
 String String::Enquote(const char* str, char chQuote)
 {
 	String strRtn;
-	//char chQuote = (::strchr(str, '\'') && !::strchr(str, '"'))? '"' : '\'';
 	strRtn += chQuote;
 	for (const char* p = str; *p != '\0'; p++) {
 		char ch = *p;

@@ -541,10 +541,7 @@ void Expr_String::Compose(Composer& composer)
 String Expr_String::ToString(const StringStyle& ss) const
 {
 	String str = GetSegmentSTL();
-	if (!ss.IsAsValue()) {
-		char chQuote = (::strchr(str.c_str(), '\'') && !::strchr(str.c_str(), '"'))? '"' : '\'';
-		str = str.Enquote(chQuote);
-	}
+	if (!ss.IsAsValue()) str = str.EnquoteAuto();
 	return str;
 }
 
@@ -566,7 +563,8 @@ void Expr_Suffixed::Compose(Composer& composer)
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += (GetTarget() == SuffixMgr::Target::Number)? GetSegmentSTL() : GetSegmentSTL().Enquote();
+	str += (GetTarget() == SuffixMgr::Target::Number)?
+				GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
 	str += GetSymbolSuffix()->GetName();
 	return str;
 }

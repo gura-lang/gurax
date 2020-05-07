@@ -164,8 +164,12 @@ public:
 	String& Printf(const char* format, ...);
 	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
+	static char DetermineQuote(const char* str);
+	char DetermineQuote() const { return DetermineQuote(c_str()); }
 	static String Enquote(const char* str, char chQuote = '\'');
 	String Enquote(char chQuote = '\'') const { return Enquote(c_str(), chQuote); }
+	static String EnquoteAuto(const char* str) { return Enquote(str, DetermineQuote(str)); }
+	String EnquoteAuto() const { return EnquoteAuto(c_str()); }
 public:
 	static String EncodeURI(const char* str);
 	String EncodeURI() const { return EncodeURI(c_str()); }
