@@ -373,7 +373,7 @@ String& String::PrintFmt(const char* format, const ValueList& valueList)
 	return *this;
 }
 
-String String::MakeQuoted(const char* str, bool surroundFlag)
+String String::Enquote(const char* str, bool surroundFlag)
 {
 	String strRtn;
 	char chQuote = (::strchr(str, '\'') && !::strchr(str, '"'))? '"' : '\'';

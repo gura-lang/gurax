@@ -342,7 +342,7 @@ Gurax_ImplementMethod(String, Escape)
 	bool surroundFlag = argument.IsSet(Gurax_Symbol(surround));
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-	return new Value_String(str.MakeQuoted(surroundFlag));
+	return new Value_String(str.Enquote(surroundFlag));
 }
 
 // String#EscapeHTML():String:[quote]
@@ -1555,7 +1555,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetStringSTL().MakeQuoted(true);
+	str += GetStringSTL().Enquote(true);
 	str += ">";
 	return str;
 }
@@ -1563,7 +1563,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 String Value_String::ToStringDetail(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
-	if (!ss.IsAsValue()) str = str.MakeQuoted(true);
+	if (!ss.IsAsValue()) str = str.Enquote(true);
 	return str;
 }
 

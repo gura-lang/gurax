@@ -45,7 +45,7 @@ size_t Binary::CalcHash(const UInt8* binary, size_t len)
 	return hash;
 }
 
-String Binary::MakeQuoted(bool surroundFlag) const
+String Binary::Enquote(bool surroundFlag) const
 {
 	String strRtn;
 	char chQuote = '\'';

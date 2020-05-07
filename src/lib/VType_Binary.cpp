@@ -271,7 +271,7 @@ String Value_Binary::ToStringDetail(const StringStyle& ss) const
 {
 	const Binary& binary = _pBinary->GetBinary();
 	String str = binary.IsWritable()? "B" : "b";
-	str += binary.MakeQuoted(true);
+	str += binary.Enquote(true);
 	return str;
 }
 
