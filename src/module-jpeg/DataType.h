@@ -413,6 +413,14 @@ struct TypeDef_LE {
 		Variable variable;
 	};
 };
+//------------------------------------------------------------------------------
+// Count
+//------------------------------------------------------------------------------
+struct Count {
+	static const UInt32 Any		= 0;
+	static const UInt32 S		= -1;
+	static const UInt32 E2_3_4	= -2;
+};
 
 //------------------------------------------------------------------------------
 // TagInfo
@@ -421,9 +429,10 @@ struct TagInfo {
 	UInt16 tagId;
 	const char* name;
 	UInt16 typeId;
+	UInt32 count;
 public:
-	TagInfo(UInt16 tagId, const char* name, UInt16 typeId) :
-		tagId(tagId), name(name), typeId(typeId) {}
+	TagInfo(UInt16 tagId, const char* name, UInt16 typeId, UInt32 count) :
+		tagId(tagId), name(name), typeId(typeId), count(count) {}
 	TagInfo() : tagId(0), name(""), typeId(0) {}
 public:
 	static const TagInfo Empty;
