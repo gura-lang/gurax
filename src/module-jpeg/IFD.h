@@ -88,7 +88,14 @@ template<typename TypeDef> IFD* IFD::Deserialize(const UInt8* buff, size_t bytes
 		UInt16 tagId = Gurax_UnpackUInt16(tagPacked.tagId);
 		UInt16 typeId = Gurax_UnpackUInt16(tagPacked.typeId);
 		const TagInfo* pTagInfo = TagInfo::LookupByTagId(pSymbolOfIFD, tagId);
-		RefPtr<Tag> pTag(Tag::Create(tagId, typeId, pTagInfo));
+		const Symbol* pSymbol = nullptr;
+		if (pTagInfo) {
+			typeId = pTagInfo->typeId;
+			pSymbol = Symbol::Add(pTagInfo->name);
+		} else {
+			pSymbol = Symbol::Add(String().Printf("Tag%04x", tagId));
+		}
+		RefPtr<Tag> pTag(Tag::Create(tagId, typeId, pSymbol));
 		if (!pTag || !pTag->Deserialize(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;
 		pTagOwner->push_back(pTag.release());
 	}

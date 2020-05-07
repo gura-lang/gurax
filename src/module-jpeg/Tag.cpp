@@ -14,8 +14,9 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol) :
 {
 }
 
-Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo)
+Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol)
 {
+#if 0
 	if (pTagInfo && pTagInfo->nameForIFD) {
 		return new Tag_IFD(tagId, Symbol::Add(pTagInfo->nameForIFD));
 	}
@@ -23,6 +24,7 @@ Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo)
 	if (tagId == TagId::JPEGInterchangeFormat) {
 		return new Tag_JPEGInterchangeFormat(pSymbol);
 	}
+#endif
 	switch (typeId) {
 	case TypeId::BYTE: return new Tag_BYTE(tagId, pSymbol);
 	case TypeId::ASCII: return new Tag_ASCII(tagId, pSymbol);
@@ -32,6 +34,8 @@ Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo)
 	case TypeId::UNDEFINED: return new Tag_UNDEFINED(tagId, pSymbol);
 	case TypeId::SLONG: return new Tag_SLONG(tagId, pSymbol);
 	case TypeId::SRATIONAL: return new Tag_SRATIONAL(tagId, pSymbol);
+	case TypeId::JPEGInterchangeFormat: return new Tag_JPEGInterchangeFormat(pSymbol);
+	case TypeId::IFD: return new Tag_IFD(tagId, pSymbol);
 	default: break;
 	}
 	IssueError_InvalidFormat();

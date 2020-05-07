@@ -33,7 +33,7 @@ IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
 			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
 			return false;
 		}
-		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
+		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
 		pTagOwner->push_back(pTag.release());
 	}
@@ -101,7 +101,7 @@ bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
 			return false;
 		}
-		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pTagInfo));
+		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
 		if (!pTag) return false;
 		pTag->SetOrderHintAsAdded();
 		if (!pTag->AssignValue(pValue.release())) return false;

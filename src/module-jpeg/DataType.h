@@ -421,11 +421,10 @@ struct TagInfo {
 	UInt16 tagId;
 	const char* name;
 	UInt16 typeId;
-	const char* nameForIFD;
 public:
-	TagInfo(UInt16 tagId, const char* name, UInt16 typeId, const char* nameForIFD) :
-		tagId(tagId), name(name), typeId(typeId), nameForIFD(nameForIFD) {}
-	TagInfo() : tagId(0), name(""), typeId(0), nameForIFD(nullptr) {}
+	TagInfo(UInt16 tagId, const char* name, UInt16 typeId) :
+		tagId(tagId), name(name), typeId(typeId) {}
+	TagInfo() : tagId(0), name(""), typeId(0) {}
 public:
 	static const TagInfo Empty;
 public:

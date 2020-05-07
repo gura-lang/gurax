@@ -63,7 +63,7 @@ protected:
 protected:
 	~Tag() = default;
 public:
-	static Tag* Create(UInt16 tagId, UInt16 typeId, const TagInfo* pTagInfo);
+	static Tag* Create(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol);
 public:
 	UInt16 GetTagId() const { return _tagId; }
 	UInt16 GetTypeId() const { return _typeId; }
