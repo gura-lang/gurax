@@ -122,7 +122,22 @@ TestCase('String#StartsWith(), String#EndsWith()') {
 	Tester(exprs)
 }
 
-TestCase('String#Escape()') {
+TestCase('String#Enquote()') {
+	Tester(`''.Enquote())
+	Tester(`'\''.Enquote())
+	Tester(`'\''.Enquote():q)
+	Tester(`'\''.Enquote():qq)
+	Tester(`'\''.Enquote():auto)
+	Tester(`'"'.Enquote())
+	Tester(`'"'.Enquote():q)
+	Tester(`'"'.Enquote():qq)
+	Tester(`'"'.Enquote():auto)
+	Tester(`'\'"'.Enquote())
+	Tester(`'\'"'.Enquote():q)
+	Tester(`'\'"'.Enquote():qq)
+	Tester(`'\'"'.Enquote():auto)
+	Tester(`'say "hello"'.Enquote():auto)
+	Tester(`'say \'hello\''.Enquote():auto)
 }
 
 TestCase('String#EscapeHTML()') {

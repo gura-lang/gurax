@@ -179,7 +179,22 @@ str.EndsWith('KLMN'):rest .. <Nil>
 str.EndsWith('KLMN'):rest:icase .. klmn
 str.StartsWith('defg', 3):rest .. hijklmn
 str.EndsWith('ghij', 10):rest .. ghijklmn
-======== String#Escape() ========
+======== String#Enquote() ========
+''.Enquote() .. ''
+"'".Enquote() .. '\''
+"'".Enquote():q .. '\''
+"'".Enquote():qq .. "'"
+"'".Enquote():auto .. "'"
+'"'.Enquote() .. '"'
+'"'.Enquote():q .. '"'
+'"'.Enquote():qq .. "\""
+'"'.Enquote():auto .. '"'
+'\'"'.Enquote() .. '\'"'
+'\'"'.Enquote():q .. '\'"'
+'\'"'.Enquote():qq .. "'\""
+'\'"'.Enquote():auto .. '\'"'
+'say "hello"'.Enquote():auto .. 'say "hello"'
+"say 'hello'".Enquote():auto .. "say 'hello'"
 ======== String#EscapeHTML() ========
 ======== String#Find() ========
 str .. abcdefghijklmn
