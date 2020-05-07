@@ -164,8 +164,8 @@ public:
 	String& Printf(const char* format, ...);
 	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
-	static String Enquote(const char* str, bool surroundFlag);
-	String Enquote(bool surroundFlag) const { return Enquote(c_str(), surroundFlag); }
+	static String Enquote(const char* str, char chQuote = '\'');
+	String Enquote(char chQuote = '\'') const { return Enquote(c_str(), chQuote); }
 public:
 	static String EncodeURI(const char* str);
 	String EncodeURI() const { return EncodeURI(c_str()); }

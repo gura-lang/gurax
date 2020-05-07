@@ -321,28 +321,40 @@ Gurax_ImplementMethod(String, EndsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
-// String#Escape():String:[surround] {block?}
-Gurax_DeclareMethod(String, Escape)
+// String#Enquote():String:[auto,q,qq] {block?}
+Gurax_DeclareMethod(String, Enquote)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(surround));
+	DeclareAttrOpt(Gurax_Symbol(auto_));
+	DeclareAttrOpt(Gurax_Symbol(q));
+	DeclareAttrOpt(Gurax_Symbol(qq));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Applies backslash escaping on characters in the string.\n"
-		"If attribute `:surround` is specified, the result contains a pair of single- or double-\n"
-		"quotation characters surrounding the string.\n");
+		"Surrounds the given string with quotation marks. Following attributes control\n"
+		"what character is used as the mark:\n"
+		"\n"
+		"- `` `auto`` .. double-quote character if the string contains any single-quote and no double-quote characters,\n"
+		"                or single-quote otherwise.\n"
+		"- `` `q`` .. single-quote character\n"
+		"- `` `qq`` .. double-quote character\n");
 }
 
-Gurax_ImplementMethod(String, Escape)
+Gurax_ImplementMethod(String, Enquote)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	bool surroundFlag = argument.IsSet(Gurax_Symbol(surround));
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-	return new Value_String(str.Enquote(surroundFlag));
+	char chQuote = '\'';
+	if (argument.IsSet(Gurax_Symbol(auto_))) {
+		chQuote = (::strchr(str.c_str(), '\'') && !::strchr(str.c_str(), '"'))? '"' : '\'';
+	} else if (argument.IsSet(Gurax_Symbol(q))) {
+		chQuote = '\'';
+	} else if (argument.IsSet(Gurax_Symbol(qq))) {
+		chQuote = '"';
+	}
+	return new Value_String(str.Enquote(chQuote));
 }
 
 // String#EscapeHTML():String:[quote]
@@ -1352,7 +1364,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Encode));
 	Assign(Gurax_CreateMethod(String, EncodeURI));
 	Assign(Gurax_CreateMethod(String, EndsWith));
-	Assign(Gurax_CreateMethod(String, Escape));
+	Assign(Gurax_CreateMethod(String, Enquote));
 	Assign(Gurax_CreateMethod(String, EscapeHTML));
 	Assign(Gurax_CreateMethod(String, Find));
 	Assign(Gurax_CreateMethod(String, Fold));
@@ -1555,7 +1567,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetStringSTL().Enquote(true);
+	str += GetStringSTL().Enquote();
 	str += ">";
 	return str;
 }
@@ -1563,7 +1575,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 String Value_String::ToStringDetail(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
-	if (!ss.IsAsValue()) str = str.Enquote(true);
+	if (!ss.IsAsValue()) str = str.Enquote();
 	return str;
 }
 

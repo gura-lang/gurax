@@ -45,13 +45,15 @@ size_t Binary::CalcHash(const UInt8* binary, size_t len)
 	return hash;
 }
 
-String Binary::Enquote(bool surroundFlag) const
+String Binary::Enquote(char chQuote) const
 {
 	String strRtn;
-	char chQuote = '\'';
-	if (surroundFlag) strRtn += chQuote;
+	strRtn += chQuote;
 	for (char ch : *this) {
-		if (String::IsPrint(ch)) {
+		if (ch == chQuote) {
+			strRtn += '\\';
+			strRtn += ch;
+		} else if (String::IsPrint(ch)) {
 			strRtn += ch;
 		} else {
 			char tmp[16];
@@ -59,7 +61,7 @@ String Binary::Enquote(bool surroundFlag) const
 			strRtn += tmp;
 		}
 	}
-	if (surroundFlag) strRtn += chQuote;
+	strRtn += chQuote;
 	return strRtn;
 }
 

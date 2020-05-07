@@ -484,7 +484,7 @@ void Expr_TmplString::Compose(Composer& composer)
 String Expr_TmplString::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%sT", GetStringSTL().Enquote(true).c_str());
+	str.Printf("%sT", GetStringSTL().Enquote().c_str());
 	return str;
 }
 
@@ -557,7 +557,7 @@ String Expr_Template::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += _embedFlag? 'e' : 't';
-	str += GetStringSTL().Enquote(true);
+	str += GetStringSTL().Enquote();
 	return str;
 }
 

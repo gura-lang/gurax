@@ -373,11 +373,11 @@ String& String::PrintFmt(const char* format, const ValueList& valueList)
 	return *this;
 }
 
-String String::Enquote(const char* str, bool surroundFlag)
+String String::Enquote(const char* str, char chQuote)
 {
 	String strRtn;
-	char chQuote = (::strchr(str, '\'') && !::strchr(str, '"'))? '"' : '\'';
-	if (surroundFlag) strRtn += chQuote;
+	//char chQuote = (::strchr(str, '\'') && !::strchr(str, '"'))? '"' : '\'';
+	strRtn += chQuote;
 	for (const char* p = str; *p != '\0'; p++) {
 		char ch = *p;
 		if (ch == '\a') {
@@ -409,7 +409,7 @@ String String::Enquote(const char* str, bool surroundFlag)
 			strRtn += ch;
 		}
 	}
-	if (surroundFlag) strRtn += chQuote;
+	strRtn += chQuote;
 	return strRtn;
 }
 

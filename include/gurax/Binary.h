@@ -61,7 +61,7 @@ public:
 	void SetWritableFlag(bool writableFlag) { _writableFlag = writableFlag; }
 	bool IsWritable() const { return _writableFlag; }
 	String ConvertToString() { return String(reinterpret_cast<const char*>(data()), size()); }
-	String Enquote(bool surroundFlag = false) const;
+	String Enquote(char chQuote = '\'') const;
 	bool CheckWritable() const;
 	void Dump(Stream& stream, const StringStyle& ss = StringStyle::Empty) const;
 public:
