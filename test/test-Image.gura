@@ -100,15 +100,15 @@ TestCase('Image#Rotate()') {
 TestCase('Image#Scan()') {
 	img = Image.Blank(5, 3)
 	f(pixel:Pixel):map = Format('%d-%d', pixel.x, pixel.y)
-	Tester(`f(img.Scan()).Join(' '))
-	Tester(`f(img.Scan(scanDir = `left_top_horz)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `left_top_vert)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `left_bottom_horz)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `left_bottom_vert)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `right_top_horz)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `right_top_vert)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `right_bottom_horz)).Join(' '))
-	Tester(`f(img.Scan(scanDir = `right_bottom_vert)).Join(' '))
+	Tester(`f(img.Scan():pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_top_horz):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_top_vert):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_bottom_horz):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `left_bottom_vert):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_top_horz):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_top_vert):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_bottom_horz):pixel).Join(' '))
+	Tester(`f(img.Scan(scanDir = `right_bottom_vert):pixel).Join(' '))
 }
 
 TestCase('Image#Write()') {

@@ -603,7 +603,7 @@ Gurax_ImplementMethod(Image, Rotate)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#Scan(x:Number, y:Number, width:Number, height:Numbrer, scanDir?:Symbol) {block?}
+// Image#Scan(x:Number, y:Number, width:Number, height:Numbrer, scanDir?:Symbol):[pixel] {block?}
 Gurax_DeclareMethod(Image, Scan)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -612,9 +612,23 @@ Gurax_DeclareMethod(Image, Scan)
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("scanDir", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(pixel));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an iterator that returns each pixel data in the image.\n");
+		"Creates an iterator that returns `Color` instance including RGB color data in the image.\n"
+		"When the attribute `:pixel` is speicified, the iterator returns `Pixel` instance\n"
+		"that contains position information as well as color data.\n"
+		"\n"
+		"The arguments `x`, `y`, `width` and `height` specify the area in which the scanning is performed.\n"
+		"If either of the argumens `x` or `y` is omitted,\n"
+		"the scan covers to the left- or top-end of the image.\n"
+		"If either of the arguments `width` or `height` is omitted,\n"
+		"the scan covers to the right- or bottom-end of the image.\n"
+		"\n"
+		"The argument `scanDir` specifies the direction of the scanning, which takes one of the symbols:\n"
+		"\n"
+		"- \n"
+		"- \n");
 }
 
 Gurax_ImplementMethod(Image, Scan)
@@ -633,10 +647,16 @@ Gurax_ImplementMethod(Image, Scan)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for scanDir");
 		return Value::nil();
 	}
+	bool pixelFlag = argument.IsSet(Gurax_Symbol(pixel));
 	// Function body
 	if (!image.CheckArea(x, y, width, height)) return Value::nil();
 	Image::Scanner scanner(Image::Scanner::CreateByDir(image, x, y, width, height, scanDir));
-	RefPtr<Iterator> pIterator(new VType_Image::Iterator_Scan(image.Reference(), scanner));
+	RefPtr<Iterator> pIterator;
+	if (pixelFlag) {
+		pIterator.reset(new VType_Image::Iterator_ScanPixel(image.Reference(), scanner));
+	} else {
+		pIterator.reset(new VType_Image::Iterator_ScanColor(image.Reference(), scanner));
+	}
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -880,19 +900,36 @@ Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 }
 
 //------------------------------------------------------------------------------
-// VType_Image::Iterator_Scan
+// VType_Image::Iterator_ScanColor
 //------------------------------------------------------------------------------
-Value* VType_Image::Iterator_Scan::DoNextValue()
+Value* VType_Image::Iterator_ScanColor::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	RefPtr<Pixel> pPixel(new Pixel(_scanner.GetColor(), _scanner.GetX(), _scanner.GetY()));
+	RefPtr<Value> pValue(new Value_Color(_scanner.GetColor()));
 	_doneFlag = !_scanner.Next();
-	return new Value_Pixel(pPixel.release());
+	return pValue.release();
 }
 
-String VType_Image::Iterator_Scan::ToString(const StringStyle& ss) const
+String VType_Image::Iterator_ScanColor::ToString(const StringStyle& ss) const
 {
-	return "Image.Scan";
+	return "Image.ScanColor";
+}
+
+//------------------------------------------------------------------------------
+// VType_Image::Iterator_ScanPixel
+//------------------------------------------------------------------------------
+Value* VType_Image::Iterator_ScanPixel::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(new Value_Pixel(
+			new Pixel(_scanner.GetColor(), _scanner.GetX(), _scanner.GetY())));
+	_doneFlag = !_scanner.Next();
+	return pValue.release();
+}
+
+String VType_Image::Iterator_ScanPixel::ToString(const StringStyle& ss) const
+{
+	return "Image.ScanPixel";
 }
 
 //------------------------------------------------------------------------------
