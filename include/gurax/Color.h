@@ -52,11 +52,12 @@ protected:
 	static const NamedEntry _namedEntries[];
 public:
 	// Constructor
-	Color() : _packed(0) {}
+	constexpr Color() : _packed(0) {}
 	explicit constexpr Color(Elem elem) : _elem(elem) {}
 	explicit constexpr Color(UInt32 packed) : _packed(packed) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b) : _elem(r, g, b, 0xff) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}
+	Color(UInt32 packed, UInt8 a) : _packed(packed) { SetA(a); }
 	// Copy constructor/operator
 	Color(const Color& src) : _packed(src._packed) {}
 	Color& operator=(const Color& src) { _packed = src._packed; return *this; }
@@ -67,6 +68,8 @@ public:
 	~Color() = default;
 public:
 	static void Bootup();
+public:
+	static Color* CreateFromString(const char* str, UInt8 alpha);
 public:
 	UInt32 GetPacked() const { return _packed; }
 	void SetPacked(UInt32 packed) { _packed = packed; }

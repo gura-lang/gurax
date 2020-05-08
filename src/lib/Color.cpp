@@ -8,6 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Color
 //------------------------------------------------------------------------------
+// These Color names come from: https://www.w3.org/TR/css-color-3/
 const Color Color::zero		(  0,   0,   0,   0);
 const Color Color::black	(  0,   0,   0, 255);
 const Color Color::silver	(192, 192, 192, 255);
@@ -26,7 +27,6 @@ const Color Color::blue		(  0,   0, 255, 255);
 const Color Color::teal		(  0, 128, 128, 255);
 const Color Color::aqua		(  0, 255, 255, 255);
 
-// https://www.w3.org/TR/css-color-3/
 const Color::NamedEntry Color::_namedEntries[] = {
 	{ "aliceblue",			PackRGBA(240, 248, 255, 255) },
 	{ "antiquewhite",		PackRGBA(250, 235, 215, 255) },
@@ -184,6 +184,41 @@ void Color::Bootup()
 		Color color(namedEntry.packed);
 		ColorStringMap::Instance[namedEntry.name] = color;
 		ColorSymbolMap::Instance[Symbol::Add(namedEntry.name)] = color;
+	}
+}
+
+Color* Color::CreateFromString(const char* str, UInt8 alpha)
+{
+	auto HexToUInt8 = [](const char* str, UInt8* pNum) {
+		int nibbleH = String::ConvHexDigit(*str);
+		int nibbleL = String::ConvHexDigit(*(str + 1));
+		if (nibbleH < 0 || nibbleL < 0) {
+			Error::Issue(ErrorType::ValueError, "invalid format of color name");
+			return false;
+		}
+		*pNum = static_cast<UInt8>((nibbleH << 4) | nibbleL);
+		return true;
+	};
+	if (*str == '#') {
+		UInt8 r = 0, g = 0, b =0;
+		str++;
+		size_t len = ::strlen(str);
+		if (len == 6) {
+			if (!HexToUInt8(str, &r) || !HexToUInt8(str + 2, &g) || !HexToUInt8(str + 4, &b)) {
+				return nullptr;
+			}
+		} else {
+			Error::Issue(ErrorType::FormatError, "invalid format of color name");
+			return nullptr;
+		}
+		return new Color(r, g, b, alpha);
+	} else {
+		const Color* pColor = Lookup(str);
+	if (!pColor) {
+			Error::Issue(ErrorType::KeyError, "unknown color name");
+			return nullptr;
+		}
+		return new Color(pColor->GetPacked(), alpha);
 	}
 }
 

@@ -22,6 +22,11 @@ of red, blue, green and alpha elements.
 
 # Cast Operation
 
+The following value types are casted to `Color` instance.
+
+- `String` ... Regarded as a color name.
+- `Expr` ... If the expression is a pure symbol, it's regarded as a color name.
+
 # Constructor
 
 # Method
@@ -39,7 +44,7 @@ Gurax_DeclareConstructor(Color)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Color` instance by looking up a registered table by a name.\n"
+		"Creates a `Color` instance from a name defined by W3C (www.w3.org).\n"
 		"The argument `alpha` specifies the alpha value of the created color\n"
 		"and takes 255 if omitted.\n");
 }
@@ -49,18 +54,12 @@ Gurax_ImplementConstructor(Color)
 	// Arguments
 	ArgPicker args(argument);
 	const char* name = args.PickString();
-	bool validFlag_alpha = false;
-	UInt8 alpha = (validFlag_alpha = args.IsValid())? args.PickNumberRanged<UInt8>(0, 255) : 255;
+	UInt8 alpha = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 255;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	const Color* pColor = Color::Lookup(name);
-	if (!pColor) {
-		Error::Issue(ErrorType::KeyError, "unknown color name");
-		return Value::nil();
-	}
-	Color color(*pColor);
-	if (validFlag_alpha) color.SetA(alpha);
-	return argument.ReturnValue(processor, new Value_Color(color));
+	std::unique_ptr<Color> pColor(Color::CreateFromString(name, alpha));
+	if (!pColor) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Color(*pColor));
 }
 
 //------------------------------------------------------------------------------
@@ -282,11 +281,8 @@ Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(value);
-		const Color* pColor = Color::Lookup(name);
-		if (!pColor) {
-			Error::Issue(ErrorType::KeyError, "unknown color name");
-			return nullptr;
-		}
+		std::unique_ptr<Color> pColor(Color::CreateFromString(name, 255));
+		if (!pColor) return nullptr;
 		return new Value_Color(*pColor);
 	} else if (value.IsType(VTYPE_Expr)) {
 		const Symbol* pSymbol = Value_Expr::GetExpr(value).GetPureSymbol();

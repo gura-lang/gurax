@@ -93,11 +93,11 @@ void String::Bootup()
 			ctypes |= CType::Print;
 		}
 		_ctypesTbl[ch] = ctypes;
-		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : 0;
-		_convOctDigitTbl[ch] = ('0' <= ch && ch <= '7')? ch - '0' : 0;
+		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : -1;
+		_convOctDigitTbl[ch] = ('0' <= ch && ch <= '7')? ch - '0' : -1;
 		_convHexDigitTbl[ch] =
 			('0' <= ch && ch <= '9')? ch - '0' :
-			('A' <= ch && ch <= 'F')? ch - 'A' + 10 : ('a' <= ch && ch <= 'f')? ch - 'a' + 10 : 0;
+			('A' <= ch && ch <= 'F')? ch - 'A' + 10 : ('a' <= ch && ch <= 'f')? ch - 'a' + 10 : -1;
 		_toUpperTbl[ch] = ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch;
 		_toLowerTbl[ch] = ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch;
 		_toEscapedTbl[ch] =
