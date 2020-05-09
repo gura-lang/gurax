@@ -74,6 +74,30 @@ public:
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
+//------------------------------------------------------------------------------
+// Stream_Base64Reader
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Stream_Base64Reader : public Stream {
+private:
+	RefPtr<Stream> _pStreamSrc;
+	int _nChars;
+	int _nInvalid;
+	UInt32 _accum;
+	size_t _iBuffWork;
+	UInt8 _buffWork[8];
+public:
+	Stream_Base64Reader(Stream* pStreamSrc);
+	virtual const char* GetName() const override { return _pStreamSrc->GetName(); }
+	const char* GetIdentifier() const override { return _pStreamSrc->GetIdentifier(); }
+	virtual bool DoClose() override { return true; }
+	//virtual int DoGetChar() override;
+	//virtual bool DoPutChar(char ch) override;
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
+	virtual bool DoFlush() override { return true; }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override { return false; }
+};
+
 #if 0
 //------------------------------------------------------------------------------
 // Stream_Pointer
