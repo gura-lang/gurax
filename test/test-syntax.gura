@@ -1,6 +1,14 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Concatenation') {
+	Tester(`Expr.Parse("'abcdefg' 'hijklmn' 'opqrstu' 'vwxyz'"))
+	Tester(`Expr.Parse("b'abcdefg' b'hijklmn' b'opqrstu' b'vwxyz'"))
+	Tester(`Expr.Parse("t'abcdefg' t'hijklmn' t'opqrstu' t'vwxyz'"))
+	Tester(`Expr.Parse("e'abcdefg' e'hijklmn' e'opqrstu' e'vwxyz'"))
+	Tester(`Expr.Parse("b'abcdefg' 'hijklmn' b'opqrstu' b'vwxyz'"))
+}
+
 TestCase('String prefix') {
 	Tester(`Expr.Parse("b'abcdefg'"))
 	Tester(`Expr.Parse("e'${foo}abcdefg'"))

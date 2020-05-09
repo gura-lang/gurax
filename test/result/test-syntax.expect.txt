@@ -1,3 +1,9 @@
+======== Concatenation ========
+Expr.Parse("'abcdefg' 'hijklmn' 'opqrstu' 'vwxyz'") .. 'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("b'abcdefg' b'hijklmn' b'opqrstu' b'vwxyz'") .. b'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("t'abcdefg' t'hijklmn' t'opqrstu' t'vwxyz'") .. t'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("e'abcdefg' e'hijklmn' e'opqrstu' e'vwxyz'") .. e'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("b'abcdefg' 'hijklmn' b'opqrstu' b'vwxyz'") .. syntax error (335)
 ======== String prefix ========
 Expr.Parse("b'abcdefg'") .. b'abcdefg'
 Expr.Parse("e'${foo}abcdefg'") .. e'${foo}abcdefg'

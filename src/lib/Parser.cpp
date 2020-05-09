@@ -87,11 +87,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
 				RefPtr<Token> pTokenPrev(tokenStack.Pop());
 				RefPtr<Expr> pExpr(pTokenPrev->GetExpr()->Reference());
-#if 0
-				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
-
-				}
-#endif
+				//if (_enablePreparatorFlag && !pExpr->Prepare(env)) {}
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
 				GetExprRoot().AddExprElem(pExpr.release());
 			} else {
@@ -105,7 +101,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			if (pTokenLast->IsType(TokenType::String) && pToken->IsType(TokenType::String)) {
 				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else if (pTokenLast->IsType(TokenType::Binary) && pToken->IsType(TokenType::Binary)) {
-				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
+				pTokenLast->AppendBinary(pToken->GetBinary());
 			} else if (pTokenLast->IsType(TokenType::Template) && pToken->IsType(TokenType::Template)) {
 				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else if (pTokenLast->IsType(TokenType::TmplEmbedded) && pToken->IsType(TokenType::TmplEmbedded)) {

@@ -216,6 +216,7 @@ public:
 	const StringReferable& GetSourceReferable() const { return *_pSource; }
 	void AppendSegment(const char* segment) { _pSegment->GetStringSTL().append(segment); }
 	void AppendSegment(const String& segment) { _pSegment->GetStringSTL().append(segment); }
+	void AppendBinary(const Binary& binary) { _pBinary->GetBinary().append(binary); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	void SetExprLink(ExprLink* pExprLink) { _pExprLink.reset(pExprLink); }
 	void SetExprLinkEx(ExprLink* pExprLinkEx) { _pExprLinkEx.reset(pExprLinkEx); }
