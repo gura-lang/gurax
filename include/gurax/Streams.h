@@ -75,9 +75,9 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Stream_Base64Reader
+// Stream_ReaderBase64
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stream_Base64Reader : public Stream {
+class GURAX_DLLDECLARE Stream_ReaderBase64 : public Stream {
 private:
 	RefPtr<Stream> _pStreamSrc;
 	int _nChars;
@@ -86,7 +86,7 @@ private:
 	size_t _iBuffWork;
 	UInt8 _buffWork[8];
 public:
-	Stream_Base64Reader(Stream* pStreamSrc);
+	Stream_ReaderBase64(Stream* pStreamSrc);
 	virtual const char* GetName() const override { return _pStreamSrc->GetName(); }
 	const char* GetIdentifier() const override { return _pStreamSrc->GetIdentifier(); }
 	virtual bool DoClose() override { return true; }
@@ -95,6 +95,30 @@ public:
 	virtual size_t DoRead(void* buff, size_t len) override;
 	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
 	virtual bool DoFlush() override { return true; }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override { return false; }
+};
+
+//------------------------------------------------------------------------------
+// Stream_WriterBase64
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Stream_WriterBase64 : public Stream {
+private:
+	RefPtr<Stream> _pStreamDst;
+	int _nCharsPerLine;
+	int _nChars;
+	size_t _iBuffWork;
+	UChar _buffWork[8];
+	static const char _chars[];
+public:
+	Stream_WriterBase64(Stream* pStreamDst, int nCharsPerLine);
+	virtual const char* GetName() const override { return _pStreamDst->GetName(); }
+	const char* GetIdentifier() const override { return _pStreamDst->GetIdentifier(); }
+	virtual bool DoClose() override { return DoClose(); }
+	//virtual int DoGetChar() override;
+	//virtual bool DoPutChar(char ch) override;
+	virtual size_t DoRead(void* buff, size_t len) override { return 0; }
+	virtual bool DoWrite(const void* buff, size_t len) override;
+	virtual bool DoFlush() override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override { return false; }
 };
 

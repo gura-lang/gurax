@@ -85,15 +85,15 @@ bool Stream_Binary::DoSeek(size_t offset, size_t offsetPrev)
 }
 
 //------------------------------------------------------------------------------
-// Stream_Base64Reader
+// Stream_ReaderBase64
 //------------------------------------------------------------------------------
-Stream_Base64Reader::Stream_Base64Reader(Stream* pStreamSrc) :
+Stream_ReaderBase64::Stream_ReaderBase64(Stream* pStreamSrc) :
 	Stream(Flag::Readable), _pStreamSrc(pStreamSrc),
 	_nChars(0), _nInvalid(0), _accum(0), _iBuffWork(0)
 {
 }
 
-size_t Stream_Base64Reader::DoRead(void* buff, size_t len)
+size_t Stream_ReaderBase64::DoRead(void* buff, size_t len)
 {
 	UInt8* buffp = reinterpret_cast<UInt8*>(buff);
 	size_t lenRead = 0;
@@ -150,51 +150,23 @@ size_t Stream_Base64Reader::DoRead(void* buff, size_t len)
 	return lenRead;
 }
 
-#if 0
 //------------------------------------------------------------------------------
-// Stream_Base64Writer
+// Stream_WriterBase64
 //------------------------------------------------------------------------------
-const char Stream_Base64Writer::_chars[] =
+const char Stream_WriterBase64::_chars[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-Stream_Base64Writer::Stream_Base64Writer(Environment &env, Stream *pStreamDst, int nCharsPerLine) :
-			Stream(env, ATTR_Writable), _pStreamDst(pStreamDst),
-			_nCharsPerLine(nCharsPerLine), _nChars(0), _iBuffWork(0)
+Stream_WriterBase64::Stream_WriterBase64(Stream* pStreamDst, int nCharsPerLine) :
+	Stream(Flag::Writable), _pStreamDst(pStreamDst),
+	_nCharsPerLine((nCharsPerLine + 3) / 4 * 4), _nChars(0), _iBuffWork(0)
 {
-	CopyCodec(pStreamDst);
-	_nCharsPerLine = (_nCharsPerLine + 3) / 4 * 4;
 }
 
-const char *Stream_Base64Writer::GetName() const
+bool Stream_WriterBase64::DoWrite(const void* buff, size_t len)
 {
-	return _pStreamDst->GetName();
-}
-
-const char *Stream_Base64Writer::GetIdentifier() const
-{
-	return _pStreamDst->GetIdentifier();
-}
-
-bool Stream_Base64Writer::GetAttribute(Attribute &attr)
-{
-	return _pStreamDst->GetAttribute(attr);
-}
-
-bool Stream_Base64Writer::SetAttribute(const Attribute &attr)
-{
-	return _pStreamDst->SetAttribute(attr);
-}
-
-size_t Stream_Base64Writer::DoRead(Signal &sig, void *buff, size_t len)
-{
-	return 0;
-}
-
-size_t Stream_Base64Writer::DoWrite(Signal &sig, const void *buff, size_t len)
-{
-	const UInt8 *buffp = reinterpret_cast<const UInt8 *>(buff);
+	const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
 	size_t lenWritten = 0;
-	bool addcrFlag = _pStreamDst->GetCodec()->GetEncoder()->GetAddcrFlag();
+	bool addcrFlag = _pStreamDst->GetCodec().GetEncoder().GetAddcrFlag();
 	for ( ; lenWritten < len; lenWritten++) {
 		_buffWork[_iBuffWork++] = buffp[lenWritten];
 		if (_iBuffWork < 3) continue;
@@ -203,93 +175,68 @@ size_t Stream_Base64Writer::DoWrite(Signal &sig, const void *buff, size_t len)
 			(static_cast<UInt32>(_buffWork[1]) << 8) |
 			(static_cast<UInt32>(_buffWork[2]) << 0);
 		char buffDst[8];
-		buffDst[0] = _chars[(accum >> 18) & 0x3f];
-		buffDst[1] = _chars[(accum >> 12) & 0x3f];
-		buffDst[2] = _chars[(accum >> 6) & 0x3f];
-		buffDst[3] = _chars[(accum >> 0) & 0x3f];
+		char* pBuffDst = buffDst;
+		*pBuffDst++ = _chars[(accum >> 18) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 12) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 6) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 0) & 0x3f];
 		_nChars += 4;
 		if (_nCharsPerLine > 0 && _nChars >= _nCharsPerLine) {
-			size_t bytes = 4;
-			if (addcrFlag) buffDst[bytes++] = '\r';
-			buffDst[bytes++] = '\n';
-			_pStreamDst->Write(sig, buffDst, bytes);
+			if (addcrFlag) *pBuffDst++ = '\r';
+			*pBuffDst++ = '\n';
 			_nChars = 0;
-		} else {
-			_pStreamDst->Write(sig, buffDst, 4);
 		}
-		if (sig.IsSignalled()) return 0;
+		if (!_pStreamDst->Write(buffDst, pBuffDst - buffDst)) return false;
 		_iBuffWork = 0;
 	}
-	return lenWritten;
+	return true;
 }
 
-bool Stream_Base64Writer::DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode)
+bool Stream_WriterBase64::DoFlush()
 {
-	return false;
-}
-
-bool Stream_Base64Writer::DoFlush(Signal &sig)
-{
-	char buffDst[8];
-	bool addcrFlag = _pStreamDst->GetCodec()->GetEncoder()->GetAddcrFlag();
+		char buffDst[8];
+	char* pBuffDst = buffDst;
+	bool addcrFlag = _pStreamDst->GetCodec().GetEncoder().GetAddcrFlag();
 	if (_iBuffWork == 0) {
 		if (_nChars > 0 && _nCharsPerLine > 0) {
-			size_t bytes = 0;
-			if (addcrFlag) buffDst[bytes++] = '\r';
-			buffDst[bytes++] = '\n';
-			_pStreamDst->Write(sig, buffDst, bytes);
+			if (addcrFlag) *pBuffDst++ = '\r';
+			*pBuffDst++ = '\n';
+			if (!_pStreamDst->Write(buffDst, pBuffDst - buffDst)) return false;
 		}
 		_nChars = 0;
 		_iBuffWork = 0;
-		return !sig.IsSignalled();
 	} else if (_iBuffWork == 1) {
 		UInt32 accum = static_cast<UInt32>(_buffWork[0]) << 16;
-		buffDst[0] = _chars[(accum >> 18) & 0x3f];
-		buffDst[1] = _chars[(accum >> 12) & 0x3f];
-		buffDst[2] = '=';
-		buffDst[3] = '=';
+		*pBuffDst++ = _chars[(accum >> 18) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 12) & 0x3f];
+		*pBuffDst++ = '=';
+		*pBuffDst++ = '=';
 	} else if (_iBuffWork == 2) {
 		UInt32 accum =
 			(static_cast<UInt32>(_buffWork[0]) << 16) |
 			(static_cast<UInt32>(_buffWork[1]) << 8);
-		buffDst[0] = _chars[(accum >> 18) & 0x3f];
-		buffDst[1] = _chars[(accum >> 12) & 0x3f];
-		buffDst[2] = _chars[(accum >> 6) & 0x3f];
-		buffDst[3] = '=';
+		*pBuffDst++ = _chars[(accum >> 18) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 12) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 6) & 0x3f];
+		*pBuffDst++ = '=';
 	} else { // _iBuffWork == 3
 		UInt32 accum =
 			(static_cast<UInt32>(_buffWork[0]) << 16) |
 			(static_cast<UInt32>(_buffWork[1]) << 8) |
 			(static_cast<UInt32>(_buffWork[2]) << 0);
-		buffDst[0] = _chars[(accum >> 18) & 0x3f];
-		buffDst[1] = _chars[(accum >> 12) & 0x3f];
-		buffDst[2] = _chars[(accum >> 6) & 0x3f];
-		buffDst[3] = _chars[(accum >> 0) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 18) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 12) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 6) & 0x3f];
+		*pBuffDst++ = _chars[(accum >> 0) & 0x3f];
 	}
 	if (_nCharsPerLine > 0) {
-		size_t bytes = 4;
-		if (addcrFlag) buffDst[bytes++] = '\r';
-		buffDst[bytes++] = '\n';
-		_pStreamDst->Write(sig, buffDst, bytes);
-	} else {
-		_pStreamDst->Write(sig, buffDst, 4);
+		if (addcrFlag) *pBuffDst++ = '\r';
+		*pBuffDst++ = '\n';
 	}
+	if (!_pStreamDst->Write(buffDst, pBuffDst - buffDst)) return false;
 	_nChars = 0;
 	_iBuffWork = 0;
-	return !sig.IsSignalled();
-}
-
-bool Stream_Base64Writer::DoClose(Signal &sig)
-{
-	if (!DoFlush(sig)) return false;
-	return Stream::DoClose(sig);
-}
-
-size_t Stream_Base64Writer::DoGetSize()
-{
-	return 0;
-}
-#endif
+	return true;
 
 #if 0
 //------------------------------------------------------------------------------
@@ -367,5 +314,7 @@ bool Stream_Pointer::DoSeek(size_t offset, size_t offsetPrev)
 	return true;
 }
 #endif
+
+}
 
 }
