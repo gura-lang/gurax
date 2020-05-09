@@ -627,7 +627,6 @@ Gurax_DeclareMethod(Image, Scan)
 		"\n"
 		"The argument `scanDir` specifies the direction of the scanning, which takes one of the symbols:\n"
 		"\n"
-		"- \n"
 		"- \n");
 }
 

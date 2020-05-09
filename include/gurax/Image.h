@@ -48,14 +48,14 @@ public:
 	class GURAX_DLLDECLARE SymbolAssoc_ScanDir : public SymbolAssoc<ScanDir, ScanDir::None> {
 	public:
 		SymbolAssoc_ScanDir() {
-			Assoc(Gurax_Symbol(left_top_horz),		ScanDir::LeftTopHorz);
-			Assoc(Gurax_Symbol(left_top_vert),		ScanDir::LeftTopVert);
-			Assoc(Gurax_Symbol(left_bottom_horz),	ScanDir::LeftBottomHorz);
-			Assoc(Gurax_Symbol(left_bottom_vert),	ScanDir::LeftBottomVert);
-			Assoc(Gurax_Symbol(right_top_horz),		ScanDir::RightTopHorz);
-			Assoc(Gurax_Symbol(right_top_vert),		ScanDir::RightTopVert);
-			Assoc(Gurax_Symbol(right_bottom_horz),	ScanDir::RightBottomHorz);
-			Assoc(Gurax_Symbol(right_bottom_vert),	ScanDir::RightBottomVert);
+			Assoc(Gurax_Symbol(LeftTopHorz),		ScanDir::LeftTopHorz);
+			Assoc(Gurax_Symbol(LeftTopVert),		ScanDir::LeftTopVert);
+			Assoc(Gurax_Symbol(LeftBottomHorz),		ScanDir::LeftBottomHorz);
+			Assoc(Gurax_Symbol(LeftBottomVert),		ScanDir::LeftBottomVert);
+			Assoc(Gurax_Symbol(RightTopHorz),		ScanDir::RightTopHorz);
+			Assoc(Gurax_Symbol(RightTopVert),		ScanDir::RightTopVert);
+			Assoc(Gurax_Symbol(RightBottomHorz),	ScanDir::RightBottomHorz);
+			Assoc(Gurax_Symbol(RightBottomVert),	ScanDir::RightBottomVert);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
