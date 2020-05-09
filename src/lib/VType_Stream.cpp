@@ -240,6 +240,38 @@ Gurax_ImplementMethod(Stream, Read)
 	return _pValue.release();
 }
 
+// Stream#ReaderBase64() {block?}
+Gurax_DeclareMethod(Stream, ReaderBase64)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Stream, ReaderBase64)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int nCharsPerLine = args.IsValid()? args.PickNumber<Int>() : 76;
+	if (nCharsPerLine < 4) {
+		Error::Issue(ErrorType::RangeError,
+			"number of characters per line can not be less than 4");
+		return Value::nil();
+	}
+	// Function body
+	Stream& stream = valueThis.GetStream();
+	if (stream.IsReadable()) {
+		Error::Issue(ErrorType::StreamError, "the stream must be readable");
+		return Value::nil();
+	}
+	RefPtr<Stream> pStream(new Stream_ReaderBase64(stream.Reference()));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
 // Stream#ReadLine():[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLine)
 {
@@ -411,6 +443,39 @@ Gurax_ImplementMethod(Stream, WriteFromStream)
 	return valueThis.Reference();
 }
 
+// Stream#WriterBase64(nCharsPerLine?:Number)
+Gurax_DeclareMethod(Stream, WriterBase64)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("nCharsPerLine", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Stream, WriterBase64)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int nCharsPerLine = args.IsValid()? args.PickNumber<Int>() : 76;
+	if (nCharsPerLine < 4) {
+		Error::Issue(ErrorType::RangeError,
+			"number of characters per line can not be less than 4");
+		return Value::nil();
+	}
+	// Function body
+	Stream& stream = valueThis.GetStream();
+	if (stream.IsWritable()) {
+		Error::Issue(ErrorType::StreamError, "the stream must be writable");
+		return Value::nil();
+	}
+	RefPtr<Stream> pStream(new Stream_WriterBase64(stream.Reference(), nCharsPerLine));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
@@ -493,12 +558,14 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Printf));
 	Assign(Gurax_CreateMethod(Stream, Println));
 	Assign(Gurax_CreateMethod(Stream, Read));
+	Assign(Gurax_CreateMethod(Stream, ReaderBase64));
 	Assign(Gurax_CreateMethod(Stream, ReadLine));
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
 	Assign(Gurax_CreateMethod(Stream, ReadToStream));
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	Assign(Gurax_CreateMethod(Stream, WriteFromStream));
+	Assign(Gurax_CreateMethod(Stream, WriterBase64));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator
