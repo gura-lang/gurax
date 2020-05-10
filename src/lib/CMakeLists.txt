@@ -142,14 +142,14 @@ target_sources(guraxcore PRIVATE
 target_precompile_headers(guraxcore PRIVATE stdafx.h)
 target_include_directories(guraxcore PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
 target_compile_options(guraxcore PRIVATE
-	$<$<PLATFORM_ID:Windows>: -bigobj>)
+	$<$<PLATFORM_ID:Windows>:-bigobj>)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-# target_link_libraries(guraxcore PRIVATE
-# 	$<$<PLATFORM_ID:Linux>: dl pthread>
-# 	$<$<PLATFORM_ID:Darwin>: dl pthread>)
-if (${PLATFORM_ID} MATCHES Darwin)
+if (${PLATFORM_ID} MATCHES Linux)
+	target_link_libraries(guraxcore PRIVATE dl pthread)
+elseif (${PLATFORM_ID} MATCHES Darwin)
+	target_link_libraries(guraxcore PRIVATE dl pthread)
 	set_target_properties(guraxcore PROPERTIES
 		VERSION						${GURAX_VERSION}
 		SOVERSION					${GURAX_SOVERSION}
