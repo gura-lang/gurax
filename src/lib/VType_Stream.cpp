@@ -254,17 +254,9 @@ Gurax_ImplementMethod(Stream, ReaderBase64)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Int nCharsPerLine = args.IsValid()? args.PickNumber<Int>() : 76;
-	if (nCharsPerLine < 4) {
-		Error::Issue(ErrorType::RangeError,
-			"number of characters per line can not be less than 4");
-		return Value::nil();
-	}
 	// Function body
 	Stream& stream = valueThis.GetStream();
-	if (stream.IsReadable()) {
+	if (!stream.IsReadable()) {
 		Error::Issue(ErrorType::StreamError, "the stream must be readable");
 		return Value::nil();
 	}
@@ -443,11 +435,11 @@ Gurax_ImplementMethod(Stream, WriteFromStream)
 	return valueThis.Reference();
 }
 
-// Stream#WriterBase64(nCharsPerLine?:Number)
+// Stream#WriterBase64(lineLen?:Number)
 Gurax_DeclareMethod(Stream, WriterBase64)
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("nCharsPerLine", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -460,19 +452,19 @@ Gurax_ImplementMethod(Stream, WriterBase64)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int nCharsPerLine = args.IsValid()? args.PickNumber<Int>() : 76;
-	if (nCharsPerLine < 4) {
+	Int lineLen = args.IsValid()? args.PickNumber<Int>() : 76;
+	if (lineLen < 4) {
 		Error::Issue(ErrorType::RangeError,
-			"number of characters per line can not be less than 4");
+			"line length can not be less than 4");
 		return Value::nil();
 	}
 	// Function body
 	Stream& stream = valueThis.GetStream();
-	if (stream.IsWritable()) {
+	if (!stream.IsWritable()) {
 		Error::Issue(ErrorType::StreamError, "the stream must be writable");
 		return Value::nil();
 	}
-	RefPtr<Stream> pStream(new Stream_WriterBase64(stream.Reference(), nCharsPerLine));
+	RefPtr<Stream> pStream(new Stream_WriterBase64(stream.Reference(), lineLen));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
