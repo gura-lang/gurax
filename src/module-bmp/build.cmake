@@ -1,9 +1,0 @@
-set(fileNamesSrc
-	module-bmp.cpp
-	ImageExtension.cpp
-	Util.cpp
-	Content.cpp
-	VType_Content.cpp
-	VType_BitmapFileHeader.cpp
-	VType_BitmapInfoHeader.cpp
-)

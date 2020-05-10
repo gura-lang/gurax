@@ -5,29 +5,20 @@ cmake_minimum_required(VERSION 3.16)
 project(guraxcore)
 
 add_library(guraxcore SHARED)
+
 add_subdirectory(../module-base64 module-base64)
+add_subdirectory(../module-bmp module-bmp)
+add_subdirectory(../module-codecs module-codecs)
+add_subdirectory(../module-codecs_basic module-codecs_basic)
+add_subdirectory(../module-codecs_chinese module-codecs_chinese)
+add_subdirectory(../module-codecs_iso8859 module-codecs_iso8859)
+add_subdirectory(../module-codecs_japanese module-codecs_japanese)
+add_subdirectory(../module-fs module-fs)
+add_subdirectory(../module-math module-math)
+add_subdirectory(../module-os module-os)
+add_subdirectory(../module-path module-path)
+add_subdirectory(../module-sys module-sys)
 
-set(moduleNames
-	bmp
-	codecs
-	codecs_basic
-	codecs_chinese
-	codecs_iso8859
-	codecs_japanese
-	fs
-	math
-	os
-	path
-	sys
-)
-
-foreach(moduleName IN ITEMS ${moduleNames})
-	set(dirName ${GURAX_SRCDIR_ROOT}/module-${moduleName})
-	include(${dirName}/build.cmake)
-	foreach(fileName IN ITEMS ${fileNamesSrc})
-		list(APPEND fileNamesModule ${dirName}/${fileName})
-	endforeach()
-endforeach()
 target_sources(guraxcore PRIVATE
 	guraxcore.cpp
 	ArgFeeder.cpp
