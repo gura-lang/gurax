@@ -1,6 +1,12 @@
 #===============================================================================
 # CMakeLists for guraxcore library
 #===============================================================================
+cmake_minimum_required(VERSION 3.16)
+project(guraxcore)
+
+add_library(guraxcore SHARED)
+add_subdirectory(../module-base64 module-base64)
+
 set(moduleNames
 	bmp
 	codecs
@@ -22,8 +28,7 @@ foreach(moduleName IN ITEMS ${moduleNames})
 		list(APPEND fileNamesModule ${dirName}/${fileName})
 	endforeach()
 endforeach()
-
-add_library(guraxcore SHARED
+target_sources(guraxcore PRIVATE
 	guraxcore.cpp
 	ArgFeeder.cpp
 	ArgPicker.cpp
@@ -156,8 +161,9 @@ add_library(guraxcore SHARED
 	${fileNamesModule}
 )
 
+include_directories(${PROJECT_SOURCE_DIR}/../../include)
+
 if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
-	target_link_libraries(guraxcore)
 	target_compile_options(guraxcore PUBLIC -bigobj)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES Linux)
 	target_link_libraries(guraxcore dl pthread)
