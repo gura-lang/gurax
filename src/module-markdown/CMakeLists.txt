@@ -4,10 +4,11 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_markdown)
 
-include_directories(${PROJECT_SOURCE_DIR}/../../include)
-link_directories(${PROJECT_SOURCE_DIR}/../../lib)
-include_directories(md5 sha1)
-add_library(markdown SHARED
+add_library(markdown SHARED)
+#-------------------------------------------------------------------------------
+# Compile
+#-------------------------------------------------------------------------------
+target_sources(markdown PRIVATE
     module-markdown.cpp
     Util.cpp
     Document.cpp
@@ -15,11 +16,19 @@ add_library(markdown SHARED
     VType_Document.cpp
     VType_Item.cpp
 )
-target_link_libraries(markdown guraxcore)
-add_definitions(-DGURAX_MODULE_SEPARATED)
+target_precompile_headers(markdown PRIVATE stdafx.h)
+target_compile_definitions(markdown PRIVATE GURAX_MODULE_SEPARATED)
+target_include_directories(markdown PRIVATE ${GURAX_BASEDIR}/include)
+#-------------------------------------------------------------------------------
+# Link
+#-------------------------------------------------------------------------------
+target_link_directories(markdown PRIVATE ${GURAX_BASEDIR}/lib)
+target_link_libraries(markdown PRIVATE guraxcore)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
-target_precompile_headers(markdown PUBLIC stdafx.h)
+#-------------------------------------------------------------------------------
+# Install
+#-------------------------------------------------------------------------------
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 install(TARGETS markdown RUNTIME DESTINATION module/site)
 install(PROGRAMS
     script-module/markdown.composer.gura
