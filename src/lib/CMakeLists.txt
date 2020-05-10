@@ -6,8 +6,17 @@ project(guraxcore)
 
 add_library(guraxcore SHARED)
 #-------------------------------------------------------------------------------
+# Directory Information
+#-------------------------------------------------------------------------------
+target_include_directories(guraxcore PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
+target_link_directories(guraxcore PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+#-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
+target_precompile_headers(guraxcore PRIVATE stdafx.h)
+target_compile_options(guraxcore PRIVATE
+	$<$<PLATFORM_ID:Windows>:-bigobj>)
 target_sources(guraxcore PRIVATE
 	guraxcore.cpp
 	ArgFeeder.cpp
@@ -139,10 +148,6 @@ target_sources(guraxcore PRIVATE
 	VType_Undefined.cpp
 	VType_VType.cpp
 )
-target_precompile_headers(guraxcore PRIVATE stdafx.h)
-target_include_directories(guraxcore PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
-target_compile_options(guraxcore PRIVATE
-	$<$<PLATFORM_ID:Windows>:-bigobj>)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
@@ -164,7 +169,7 @@ install(TARGETS guraxcore
 	ARCHIVE DESTINATION lib
 )
 #-------------------------------------------------------------------------------
-# Built-in modules
+# Built-in Module
 #-------------------------------------------------------------------------------
 add_subdirectory(../module-base64 module-base64)
 add_subdirectory(../module-bmp module-bmp)

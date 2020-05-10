@@ -1,6 +1,9 @@
 //==============================================================================
 // unittest.h
 //==============================================================================
+#ifndef UNITTEST_H
+#define UNITTEST_H
+
 #include <gurax.h>
 #include "SampleRecord.h"
 
@@ -37,3 +40,5 @@ int Main(int argc, char* argv[]);
 void PrintTitle(const char* title);
 
 }
+
+#endif

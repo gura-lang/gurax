@@ -1,7 +1,22 @@
 #===============================================================================
 # CMakeLists for unittest executable
 #===============================================================================
-add_executable(unittest
+cmake_minimum_required(VERSION 3.16)
+project(unittest)
+
+add_executable(unittest)
+#-------------------------------------------------------------------------------
+# Directory Information
+#-------------------------------------------------------------------------------
+target_include_directories(unittest PRIVATE
+	${PROJECT_SOURCE_DIR}/../../include ${PROJECT_SOURCE_DIR})
+target_link_directories(unittest PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+#-------------------------------------------------------------------------------
+# Compile
+#-------------------------------------------------------------------------------
+target_precompile_headers(unittest PRIVATE stdafx.h)
+target_sources(unittest PRIVATE
 	unittest.cpp
 	SampleRecord.cpp
 	test-Argument.cpp
@@ -30,5 +45,11 @@ add_executable(unittest
 	test-Tokenizer.cpp
 	test-Value.cpp
 )
-target_link_libraries(unittest guraxcore) # ${LIBREADLINE}
+#-------------------------------------------------------------------------------
+# Link
+#-------------------------------------------------------------------------------
+target_link_libraries(unittest guraxcore)
+#-------------------------------------------------------------------------------
+# Install
+#-------------------------------------------------------------------------------
 install(TARGETS unittest RUNTIME DESTINATION bin)
