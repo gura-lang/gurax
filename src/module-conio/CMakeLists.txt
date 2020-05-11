@@ -4,15 +4,28 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_conio)
 
-include_directories(${PROJECT_SOURCE_DIR}/../../include)
-link_directories(${PROJECT_SOURCE_DIR}/../../lib)
-add_library(conio SHARED
-    module-conio.cpp
-    Util.cpp
-)
-target_link_libraries(conio guraxcore)
-add_definitions(-DGURAX_MODULE_SEPARATED)
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+add_library(conio SHARED)
+#-------------------------------------------------------------------------------
+# Directory Information
+#-------------------------------------------------------------------------------
+target_include_directories(conio PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
+target_link_directories(conio PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
-target_precompile_headers(conio PUBLIC stdafx.h)
+#-------------------------------------------------------------------------------
+# Compile
+#-------------------------------------------------------------------------------
+target_precompile_headers(conio PRIVATE stdafx.h)
+target_compile_definitions(conio PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(conio PRIVATE
+	module-conio.cpp
+	Util.cpp
+)
+#-------------------------------------------------------------------------------
+# Link
+#-------------------------------------------------------------------------------
+set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+target_link_libraries(conio PRIVATE guraxcore)
+#-------------------------------------------------------------------------------
+# Install
+#-------------------------------------------------------------------------------
 install(TARGETS conio RUNTIME DESTINATION module/site)
