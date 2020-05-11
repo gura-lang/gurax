@@ -10,10 +10,10 @@ add_library(bzip2 SHARED)
 #-------------------------------------------------------------------------------
 target_include_directories(bzip2 PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
-	${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8)
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>)
 target_link_directories(bzip2 PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
-	${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8)
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
