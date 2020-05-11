@@ -51,42 +51,42 @@ Gurax_TesterEntry(CommandLine)
 		.OptMultiString("mstr_j", 'j');
 	do {
 		const char* argv[] = {"gurax"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--flag_a"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "-a"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--str_d=value"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "-dvalue", "-e", "value2"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--int_g=123"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "-g123", "-h", "456"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--flag_a", "--str_d=value", "--int_g=1234"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
@@ -96,32 +96,32 @@ Gurax_TesterEntry(CommandLine)
 			"--str_d=value1", "--str_e=value2", "--str_f=value3",
 			"--int_g=123", "--int_h=456", "--int_i=789",
 		};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--mstr_j=aaa", "--mstr_j=bbb", "-jccc", "-j", "ddd"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--hoge"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--str_d=aaa", "--str_d=bbb"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "-daaa", "-dbbb"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
 		const char* argv[] = {"gurax", "--int_g=a123"};
-		int argc = ArraySizeOf(argv);
+		int argc = Gurax_ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);
 }

@@ -235,7 +235,7 @@ Gurax_TesterEntry(Parser)
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};
-	for (size_t i = 0; i < ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
+	for (size_t i = 0; i < Gurax_ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
 }
 
 }

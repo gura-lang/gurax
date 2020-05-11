@@ -3,8 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 Gurax_BeginModuleScope(codecs_japanese)
 
 namespace CP932 {
@@ -1226,13 +1224,13 @@ const Codec::CodeRow codeRows[] = {
 
 UInt16 CP932ToUTF16(UInt16 codeCP932)
 {
-	return Codec::DBCSToUTF16(CP932::codeRows, ArraySizeOf(CP932::codeRows), codeCP932);
+	return Codec::DBCSToUTF16(CP932::codeRows, Gurax_ArraySizeOf(CP932::codeRows), codeCP932);
 }
 
 UInt16 UTF16ToCP932(UInt16 codeUTF16)
 {
 	static Codec::Map *pMap = nullptr;
-	return Codec::UTF16ToDBCS(CP932::codeRows, ArraySizeOf(CP932::codeRows), codeUTF16, &pMap);
+	return Codec::UTF16ToDBCS(CP932::codeRows, Gurax_ArraySizeOf(CP932::codeRows), codeUTF16, &pMap);
 }
 
 UInt16 CP932ToJIS(UInt16 codeCP932)

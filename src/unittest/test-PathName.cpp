@@ -98,7 +98,7 @@ static const char* pathNames[] = {
 static void Test_Regulate()
 {
 	PrintTitle("Regulate");
-	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(pathNames); ++i) {
 		const char* pathName = pathNames[i];
 		::printf("'%s' .. '%s'\n", pathName, PathName(pathName).Regulate().c_str());
 		String pathNameMod = String::Replace<CharCase>(pathName, "/", "\\");
@@ -110,7 +110,7 @@ static void Test_SplitFileName()
 {
 	PrintTitle("SplitFileName");
 	String dirName, fileName;
-	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(pathNames); ++i) {
 		const char* pathName = pathNames[i];
 		PathName(pathName).SplitFileName(&dirName, &fileName);
 		::printf("'%s' .. '%s', '%s'\n", pathName, dirName.c_str(), fileName.c_str());
@@ -121,7 +121,7 @@ static void Test_SplitBottomName()
 {
 	PrintTitle("SplitBottomName");
 	String headName, bottomName;
-	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(pathNames); ++i) {
 		const char* pathName = pathNames[i];
 		PathName(pathName).SplitBottomName(&headName, &bottomName);
 		::printf("'%s' .. '%s', '%s'\n", pathName, headName.c_str(), bottomName.c_str());
@@ -132,7 +132,7 @@ static void Test_SplitExtName()
 {
 	PrintTitle("SplitExtName");
 	String baseName, extName;
-	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(pathNames); ++i) {
 		const char* pathName = pathNames[i];
 		PathName(pathName).SplitExtName(&baseName, &extName);
 		::printf("'%s' .. '%s', '%s'\n", pathName, baseName.c_str(), extName.c_str());
@@ -159,7 +159,7 @@ void Test_DoesMatch()
 		{ "abcdefg",	"A*",			false },
 		{ "bcdefg",		"a*",			true },
 	};
-	for (size_t i = 0; i < ArraySizeOf(infoTbl); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(infoTbl); ++i) {
 		const Info& info = infoTbl[i];
 		bool rtn = PathName(info.pathName).SetCaseFlag(info.caseFlag).DoesMatchPattern(info.pattern);
 		::printf("%-16s %-16s %s .. %s\n", info.pathName, info.pattern,
@@ -186,7 +186,7 @@ void Test_Join()
 		{ "",			"bbb"		},
 		{ "",			"/bbb"		},
 	};
-	for (size_t i = 0; i < ArraySizeOf(infoTbl); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(infoTbl); ++i) {
 		const Info& info = infoTbl[i];
 		String rtn1 = PathName(info.pathName1).JoinAfter(info.pathName2);
 		::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn1.c_str());
@@ -198,7 +198,7 @@ void Test_Join()
 void Test_IsAbsName()
 {
 	PrintTitle("IsAbsName");
-	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(pathNames); ++i) {
 		const char* pathName = pathNames[i];
 		::printf("%-40s .. %s\n", pathName,
 				 PathName(pathName).IsAbsName()? "absolute" : "relative");

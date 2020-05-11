@@ -7,8 +7,6 @@
 #include <gurax.h>
 #include "SampleRecord.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 #define Gurax_TesterEntry(testerName) \
 class Tester_##testerName : public Tester { \
 public: \

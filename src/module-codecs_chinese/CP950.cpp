@@ -3,8 +3,6 @@
 //=============================================================================
 #include "stdafx.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 Gurax_BeginModuleScope(codecs_chinese)
 
 namespace CP950 {
@@ -2345,13 +2343,13 @@ const Codec::CodeRow codeRows[] = {
 
 UInt16 CP950ToUTF16(UInt16 codeCP950)
 {
-	return Codec::DBCSToUTF16(CP950::codeRows, ArraySizeOf(CP950::codeRows), codeCP950);
+	return Codec::DBCSToUTF16(CP950::codeRows, Gurax_ArraySizeOf(CP950::codeRows), codeCP950);
 }
 
 UInt16 UTF16ToCP950(UInt16 codeUTF16)
 {
 	static Codec::Map *pMap = nullptr;
-	return Codec::UTF16ToDBCS(CP950::codeRows, ArraySizeOf(CP950::codeRows), codeUTF16, &pMap);
+	return Codec::UTF16ToDBCS(CP950::codeRows, Gurax_ArraySizeOf(CP950::codeRows), codeUTF16, &pMap);
 }
 
 Gurax_EndModuleScope(codecs_chinese)

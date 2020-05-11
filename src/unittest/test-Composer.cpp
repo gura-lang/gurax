@@ -55,7 +55,7 @@ Gurax_TesterEntry(Composer)
 		//composer.PrintPUnit();
 		PUnit::Print(pExprOfRoot->GetPUnitFirst(), composer.PeekPUnitCont());
 	};
-	for (size_t i = 0; i < ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
+	for (size_t i = 0; i < Gurax_ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
 }
 
 }

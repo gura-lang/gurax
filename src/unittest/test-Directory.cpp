@@ -3,8 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 namespace Gurax {
 
 void PrintDirectory(Directory& directory, int indentLevel)
@@ -45,7 +43,7 @@ Gurax_TesterEntry(Directory)
 			"dir5/dir5-1/dir5-1-1/dir5-1-1-1",
 			"dir5/dir5-1/dir5-1-1/dir5-1-1-1/",
 		};
-		for (int i = 0; i < ArraySizeOf(pathNames); i++) {
+		for (int i = 0; i < Gurax_ArraySizeOf(pathNames); i++) {
 			const char* pathName = pathNames[i];
 			const char* p = pathName;
 			Directory* pDirectoryFound = pDirectory->SearchInTree(&p);

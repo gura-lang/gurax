@@ -5,8 +5,6 @@
 #define GURAX_MODULE_MARKDOWN_UTIL_H
 #include <gurax.h>
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 Gurax_BeginModuleScope(markdown)
 
 //------------------------------------------------------------------------------
