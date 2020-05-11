@@ -28,6 +28,8 @@ target_sources(bzip2 PRIVATE
 # Link
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+target_link_options(bzip2 PRIVATE
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:MSVCRT>)
 target_link_libraries(bzip2 PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libbz2>
 	$<$<PLATFORM_ID:Linx>:bz2>
