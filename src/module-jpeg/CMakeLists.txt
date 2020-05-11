@@ -12,12 +12,12 @@ target_include_directories(jpeg PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/jpeg-9d>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/guest/include/libjpeg>
-	$<$<PLATFORM_ID:Darwing>:${PROJECT_SOURCE_DIR}/guest/include/libjpeg>)
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/guest/include/libjpeg>)
 target_link_directories(jpeg PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/jpeg-9d>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/guest/lib>
-	$<$<PLATFORM_ID:Darwing>:${PROJECT_SOURCE_DIR}/guest/lib>)
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/guest/lib>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
