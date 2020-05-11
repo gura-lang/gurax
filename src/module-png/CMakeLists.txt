@@ -36,7 +36,7 @@ target_sources(png PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
 target_link_options(png PRIVATE
-	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG>)
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG -INCREMENTAL:NO>)
 target_link_libraries(png PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libpng16>
 	$<$<PLATFORM_ID:Windows>:zlib>
