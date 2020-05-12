@@ -5,19 +5,9 @@
 
 Gurax_BeginModuleScope(base64)
 
-class GURAX_DLLDECLARE Decoder {
-private:
-	RefPtr<Stream> _pStreamOut;
-	int _nCharsAccum;
-	int _nBars;
-	UInt32 _accum;
-	size_t _iBuffWork;
-public:
-	Decoder(Stream* pStreamOut);
-public:
-	bool Decode(const void* buff, size_t bytes);
-};
-
+//------------------------------------------------------------------------------
+// Decoder
+//------------------------------------------------------------------------------
 Decoder::Decoder(Stream* pStreamOut) :
 	_pStreamOut(pStreamOut), _nCharsAccum(0), _nBars(0), _accum(0)
 {
@@ -63,21 +53,16 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 	return true;
 }
 
-class GURAX_DLLDECLARE Encoder {
-private:
-	RefPtr<Stream> _pStreamOut;
-	size_t _nCharsPerLine;
-	size_t _nCharsOut;
-	size_t _bytesAccum;
-	UInt32 _accum;
-private:
-	static const UInt8 _charTbl[];
-public:
-	Encoder(Stream* pStreamOut, int nCharsPerLine);
-public:
-	bool Encode(const void* buff, size_t bytes);
-	bool Finish();
-};
+bool Decoder::DecodeStream(Stream& streamSrc)
+{
+	return true;
+}
+
+//------------------------------------------------------------------------------
+// Encoder
+//------------------------------------------------------------------------------
+const char Encoder::_charTbl[] =
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine) :
 	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
@@ -85,12 +70,8 @@ Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine) :
 {
 }
 
-const UInt8 Encoder::_charTbl[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
 bool Encoder::Encode(const void* buff, size_t bytes)
 {
-	const bool addcrFlag = true;
 	const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
 	const UInt8* buffpEnd = buffp + bytes;
 	for ( ; buffp != buffpEnd; buffp++) {
@@ -98,7 +79,7 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 		_bytesAccum++;
 		if (_bytesAccum == 3) {
 			// 00000000 aaaaaabb bbbbcccc ccdddddd
-			UInt8 buffOut[8];
+			char buffOut[8];
 			size_t bytesOut = 0;
 			buffOut[bytesOut++] = _charTbl[(_accum >> 18) & 0x3f];
 			buffOut[bytesOut++] = _charTbl[(_accum >> 12) & 0x3f];
@@ -106,7 +87,7 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 			buffOut[bytesOut++] = _charTbl[(_accum >> 0) & 0x3f];
 			_nCharsOut += 4;
 			if (_nCharsPerLine > 0 && _nCharsOut >= _nCharsPerLine) {
-				if (addcrFlag) buffOut[bytesOut++] = '\r';
+				if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
 				buffOut[bytesOut++] = '\n';
 				_nCharsOut = 0;
 			}
@@ -117,9 +98,13 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 	return true;
 }
 
+bool Encoder::EncodeStream(Stream& streamSrc)
+{
+	return true;
+}
+
 bool Encoder::Finish()
 {
-	const bool addcrFlag = true;
 	UInt8 buffOut[8];
 	size_t bytesOut = 0;
 	if (_bytesAccum == 0) {
@@ -149,7 +134,7 @@ bool Encoder::Finish()
 		_nCharsOut += 4;
 	}
 	if (_nCharsPerLine > 0 && _nCharsOut > 0) {
-		if (addcrFlag) buffOut[bytesOut++] = '\r';
+		if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
 		buffOut[bytesOut++] = '\n';
 		_nCharsOut = 0;
 	}

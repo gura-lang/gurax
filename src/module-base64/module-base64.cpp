@@ -14,6 +14,7 @@ Gurax_DeclareFunction(Encode)
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Applies base64-encode on data from the stream `src`\n"
@@ -27,14 +28,18 @@ Gurax_ImplementFunction(Encode)
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Stream> pStream(new Stream_ReaderBase64(streamSrc.Reference()));
 	if (pStreamDst) {
-		pStream->ReadToStream(*pStreamDst);
+		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
+		pEncoder->EncodeStream(streamSrc);
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-		if (!pStream->ReadToBinary(pBuff->GetBinary())) return Value::nil();
+		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
+		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
+		if (!pEncoder->EncodeStream(streamSrc)) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
 }
