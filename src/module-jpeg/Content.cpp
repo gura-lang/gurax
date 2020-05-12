@@ -59,7 +59,7 @@ bool Content::Read(Stream& stream)
 		GetSegmentOwner().push_back(pSegment.release());
 	}
 	_pBuffImage.reset(new BinaryReferable());
-	stream.ReadToEnd(_pBuffImage->GetBinary());
+	if (!stream.ReadToBinary(_pBuffImage->GetBinary())) return false;
 	PrepareSegmentMap();
 	return true;
 }

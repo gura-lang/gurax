@@ -8,25 +8,35 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// base64.Test()
-Gurax_DeclareFunction(Test)
+// base64.Encode(src:Stream, dst?:Stream:w)
+Gurax_DeclareFunction(Encode)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Binary, Flag::None);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"Applies base64-encode on data from the stream `src`\n"
+		"and puts the result out to the stream `dst`.\n"
+		"If `dst` is omitted, the result will be returned as `Binary` value.\n");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunction(Encode)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	Stream& streamSrc = args.PickStream();
+	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+	RefPtr<Stream> pStream(new Stream_ReaderBase64(streamSrc.Reference()));
+	if (pStreamDst) {
+		pStream->ReadToStream(*pStreamDst);
+		return Value::nil();
+	} else {
+		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
+		if (!pStream->ReadToBinary(pBuff->GetBinary())) return Value::nil();
+		return new Value_Binary(pBuff.release());
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -40,7 +50,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(Encode));
 	return true;
 }
 

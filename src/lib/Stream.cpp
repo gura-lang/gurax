@@ -211,25 +211,6 @@ BinaryReferable* Stream::ReadAsReferable(size_t len)
 	return pBuff.release();
 }
 
-Stream& Stream::ReadToEnd(Binary& buff)
-{
-	const int bytesWork = 65536;
-	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
-	UInt8* buffWork = pMemory->GetPointer<UInt8>();
-	size_t bytesRead;
-	while ((bytesRead = Read(buffWork, bytesWork)) > 0) {
-		buff.append(buffWork, bytesRead);
-	}
-	return *this;
-}
-
-Binary Stream::ReadToEnd()
-{
-	Binary buff;
-	ReadToEnd(buff);
-	return buff;
-}
-
 Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 {
 	const char* p = mode;
@@ -262,8 +243,7 @@ Stream* Stream::CreateBwdSeekable()
 {
 	if (IsBwdSeekable()) return Reference();
 	RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-	ReadToEnd(pBuff->GetBinary());
-	if (Error::IsIssued()) return nullptr;
+	if (!ReadToBinary(pBuff->GetBinary())) return nullptr;
 	return new Stream_Binary(Stream::Flag::Readable, pBuff.release());
 }
 
@@ -328,15 +308,24 @@ bool Stream::SetOffset(size_t offset)
 	return true;
 }
 
+bool Stream::ReadToBinary(Binary& buff, size_t bytesUnit)
+{
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
+	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	size_t bytesRead;
+	while ((bytesRead = Read(buffWork, bytesUnit)) > 0) {
+		buff.append(buffWork, bytesRead);
+	}
+	return !Error::IsIssued();
+}
+
 bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
 {
-	if (!CheckReadable() || !streamDst.CheckWritable()) return false;
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	char* buff = pMemory->GetPointer<char>();
-	for (;;) {
-		size_t bytesRead = Read(buff, bytesUnit);
-		if (bytesRead == 0) break;
-		if (!streamDst.Write(buff, bytesRead)) break;
+	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	size_t bytesRead;
+	while ((bytesRead = Read(buffWork, bytesUnit)) > 0) {
+		if (!streamDst.Write(buffWork, bytesRead)) break;
 	}
 	return !Error::IsIssued();
 }

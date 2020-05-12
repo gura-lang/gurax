@@ -1,5 +1,6 @@
 #!/usr/bin/env gurax
 import(argopt)
+import(conio)
 
 //------------------------------------------------------------------------------
 // Template of CMakeLists.txt
@@ -11,17 +12,30 @@ tmpl_cmake = tR'''
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_${ubarModuleName})
 
-include_directories($\{PROJECT_SOURCE_DIR}/../../include)
-link_directories($\{PROJECT_SOURCE_DIR}/../../lib)
-add_library(${ubarModuleName} SHARED
-    module-${ubarModuleName}.cpp
-    Util.cpp
-)
-target_link_libraries(${ubarModuleName} guraxcore)
-add_definitions(-DGURAX_MODULE_SEPARATED)
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+add_library(${ubarModuleName} SHARED)
+#-------------------------------------------------------------------------------
+# Directory Information
+#-------------------------------------------------------------------------------
+target_include_directories(${ubarModuleName} PRIVATE $\{PROJECT_SOURCE_DIR}/../../include)
+target_link_directories(${ubarModuleName} PRIVATE $\{PROJECT_SOURCE_DIR}/../../lib)
 set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
-target_precompile_headers(${ubarModuleName} PUBLIC stdafx.h)
+#-------------------------------------------------------------------------------
+# Compile
+#-------------------------------------------------------------------------------
+target_precompile_headers(${ubarModuleName} PRIVATE stdafx.h)
+target_compile_definitions(${ubarModuleName} PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(${ubarModuleName} PRIVATE
+	module-${ubarModuleName}.cpp
+	Util.cpp
+)
+#-------------------------------------------------------------------------------
+# Link
+#-------------------------------------------------------------------------------
+target_link_libraries(${ubarModuleName} guraxcore)
+set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+#-------------------------------------------------------------------------------
+# Install
+#-------------------------------------------------------------------------------
 install(TARGETS ${ubarModuleName} RUNTIME DESTINATION module/site)
 '''
 
@@ -204,8 +218,10 @@ main() = {
 	if (!opt['force'] && \
 		fs.Exists([pathName_cmake, pathName_test, pathName_stdafx,
 			pathName_mainHdr, pathName_mainSrc, pathName_utilHdr, pathName_utilSrc]).Or()) {
-		sys.cerr.Println('file already exists')
-		sys.Exit(1)
+		sys.cerr.Print('Files already exist. Overwrite? [y/N]')
+		keyCode = conio.WaitKey()
+		Println()
+		(keyCode != Ord('y')) && sys.Exit(0)
 	}
 	tmpl_cmake.Render(Open(pathName_cmake, 'w'))
 	tmpl_test.Render(Open(pathName_test, 'w'))
@@ -217,16 +233,17 @@ main() = {
 	fs.ChangeMode(pathName_cmake, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
 	tR'''
-	To configure the project:
-	  $ cmake -B build
-	To clean generated files:
+	module-${ubarModuleName} was created.
+	- To configure the project:
+	  $ cmake -B build -G Ninja
+	- To clean generated files:
 	  $ cmake --build build -t clean
-	To build and install a Debug edition:
-	  $ cmake --build build --config Debug
-	  $ cmake --install build . --config Debug
-	To build and install a Release edition:
-	  $ cmake --build build . --config Release
-	  $ cmake --install build . --config Release
+	- To build and install a Debug edition:
+	  $ cmake --build build
+	  $ cmake --install build
+	- To build and install a Release edition:
+	  $ cmake --build build --config Release
+	  $ cmake --install build --config Release
 	'''.Render(sys.cout)
 }
 

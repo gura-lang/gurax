@@ -108,8 +108,6 @@ public:
 	Iterator* ReadLines(bool includeEOLFlag);
 	Binary Read(size_t len);
 	BinaryReferable* ReadAsReferable(size_t len);
-	Stream& ReadToEnd(Binary& buff);
-	Binary ReadToEnd();
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	Stream* CreateBwdSeekable();
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
@@ -125,6 +123,7 @@ public:
 	bool Flush() { return DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
 	bool SetOffset(size_t offset);
+	bool ReadToBinary(Binary& buff, size_t bytesUnit = 65536);
 	bool ReadToStream(Stream& streamDst, size_t bytesUnit = 65536);
 	bool WriteFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
 		return streamSrc.ReadToStream(*this, bytesUnit);
