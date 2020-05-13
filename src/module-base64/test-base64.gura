@@ -15,5 +15,10 @@ TestEncDec(buffSrc:Binary) = {
 TestCase('Basic test') {
 	TestEncDec(b'')
 	TestEncDec(b'f')
+	TestEncDec(b'fo')
+	TestEncDec(b'foo')
+	TestEncDec(b'foob')
+	TestEncDec(b'fooba')
+	TestEncDec(b'foobar')
 	TestEncDec(b'abcdefghijklmnopqrstuvwxyz')
 }

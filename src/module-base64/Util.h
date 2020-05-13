@@ -18,7 +18,7 @@ private:
 	RefPtr<Stream> _pStreamOut;
 	int _nCharsAccum;
 	int _nPads;
-	UInt32 _accum;
+	UInt64 _accum;
 	size_t _iBuffWork;
 public:
 	// Constructor
@@ -33,8 +33,10 @@ protected:
 	// Destructor
 	virtual ~Decoder() = default;
 public:
-	bool Decode(const void* buff, size_t bytes);
-	bool DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+	bool Base64Decode(const void* buff, size_t bytes);
+	bool Base32Decode(const void* buff, size_t bytes);
+	bool Base64DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+	bool Base32DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 };
 
 //------------------------------------------------------------------------------
@@ -49,7 +51,7 @@ private:
 	size_t _nCharsPerLine;
 	size_t _nCharsOut;
 	size_t _bytesAccum;
-	UInt32 _accum;
+	UInt64 _accum;
 private:
 	static const char _charTbl[];
 public:
@@ -65,8 +67,8 @@ protected:
 	// Destructor
 	virtual ~Encoder() = default;
 public:
-	bool Encode(const void* buff, size_t bytes);
-	bool EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+	bool Base64Encode(const void* buff, size_t bytes);
+	bool Base64EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 	bool Finish();
 };
 

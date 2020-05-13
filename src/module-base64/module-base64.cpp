@@ -33,14 +33,14 @@ Gurax_ImplementFunction(Encode)
 	// Function body
 	if (pStreamDst) {
 		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
-		pEncoder->EncodeStream(streamSrc);
+		pEncoder->Base64EncodeStream(streamSrc);
 		pEncoder->Finish();
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
 		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
-		if (!pEncoder->EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
+		if (!pEncoder->Base64EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
 }
@@ -69,13 +69,13 @@ Gurax_ImplementFunction(Decode)
 	// Function body
 	if (pStreamDst) {
 		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference()));
-		pDecoder->DecodeStream(streamSrc);
+		pDecoder->Base64DecodeStream(streamSrc);
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
 		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference()));
-		if (!pDecoder->DecodeStream(streamSrc)) return Value::nil();
+		if (!pDecoder->Base64DecodeStream(streamSrc)) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
 }
