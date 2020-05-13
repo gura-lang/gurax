@@ -17,7 +17,7 @@ public:
 private:
 	RefPtr<Stream> _pStreamOut;
 	int _nCharsAccum;
-	int _nBars;
+	int _nPads;
 	UInt32 _accum;
 	size_t _iBuffWork;
 public:

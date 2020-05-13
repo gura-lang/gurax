@@ -1,0 +1,21 @@
+#!/usr/bin/env gurax
+tbl = repeat (256):list {|ch|
+	if (Ord('A') <= ch && ch <= Ord('Z')) {
+		Format('%3d', ch - Ord('A'))
+	} elsif (Ord('a') <= ch && ch <= Ord('z')) {
+		Format('%3d', ch - Ord('a') + 26)
+	} elsif (Ord('0') <= ch && ch <= Ord('9')) {
+		Format('%3d', ch - Ord('0') + 52)
+	} elsif (ch == Ord('+') || ch == Ord('-')) {
+		Format('%3d', 62)
+	} elsif (ch == Ord('/') || ch == Ord('_')) {
+		Format('%3d', 63)
+	} elsif (ch == Ord('=')) {
+		'PAD'
+	} elsif (ch == 0x20 || ch == 0x0a || ch == 0x0d || ch == 0x09) {
+		'SPC'
+	} else {
+		'ERR'
+	}
+}
+tbl.Fold(16) {|items| Println(items.Join(','), ',')}

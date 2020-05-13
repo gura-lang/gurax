@@ -9,45 +9,57 @@ Gurax_BeginModuleScope(base64)
 // Decoder
 //------------------------------------------------------------------------------
 Decoder::Decoder(Stream* pStreamOut) :
-	_pStreamOut(pStreamOut), _nCharsAccum(0), _nBars(0), _accum(0)
+	_pStreamOut(pStreamOut), _nCharsAccum(0), _nPads(0), _accum(0)
 {
 }
 
 bool Decoder::Decode(const void* buff, size_t bytes)
 {
-	const char* buffp = reinterpret_cast<const char*>(buff);
-	const char* buffpEnd = buffp + bytes;
+	constexpr int SPC = -1;
+	constexpr int PAD = -2;
+	constexpr int ERR = -3;
+	static const int tbl[] = {
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,SPC,SPC,ERR,ERR,SPC,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		SPC,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR, 62,ERR, 62,ERR, 63,
+		52, 53, 54, 55, 56, 57, 58, 59, 60, 61,ERR,ERR,ERR,PAD,ERR,ERR,
+		ERR,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+		15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,ERR,ERR,ERR,ERR, 63,
+		ERR, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+		41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
+	};
+	const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
+	const UInt8* buffpEnd = buffp + bytes;
 	for ( ; buffp != buffpEnd; buffp++) {
-		char ch = *buffp;
-		if (String::IsUpper(ch)) {
-			_accum = (_accum << 6) + (ch - 'A');
-		} else if (String::IsLower(ch)) {
-			_accum = (_accum << 6) + (ch - 'a') + 26;
-		} else if (String::IsDigit(ch)) {
-			_accum = (_accum << 6) + (ch - '0') + 52;
-		} else if (ch == '+') {
-			_accum = (_accum << 6) + 62;
-		} else if (ch == '/') {
-			_accum = (_accum << 6) + 63;
-		} else if (ch == '=') {
-			_nBars++;
-			_accum = (_accum << 6);
-		} else if (String::IsSpace(ch)) {
+		int num = tbl[*buffp];
+		if (num >= 0) {
+			_accum = (_accum << 6) + num;
+		} else if (num == SPC) {
 			continue;
-		} else {
+		} else if (num == PAD) {
+			_accum = (_accum << 6);
+			_nPads++;
+		} else if (num == ERR) {
 			Error::Issue(ErrorType::FormatError, "invalid base64 format");
 			return false;
 		}
 		_nCharsAccum++;
 		if (_nCharsAccum == 4) {
 			UInt8 buffOut[4];
-			size_t bytesOut = 3 - _nBars;
-			//_accum >>= 8 * _nBars;
+			size_t bytesOut = 3 - _nPads;
 			buffOut[0] = static_cast<UInt8>((_accum >> 16) & 0xff);
 			buffOut[1] = static_cast<UInt8>((_accum >> 8) & 0xff);
 			buffOut[2] = static_cast<UInt8>((_accum >> 0) & 0xff);
-			if (bytesOut > 0 && !_pStreamOut->Write(buffOut, 3 - _nBars)) return false;
-			_nCharsAccum = 0, _nBars = 0, _accum = 0;
+			if (bytesOut > 0 && !_pStreamOut->Write(buffOut, bytesOut)) return false;
+			_nCharsAccum = 0, _nPads = 0, _accum = 0;
 		}
 	}
 	return true;
