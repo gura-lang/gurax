@@ -42,10 +42,10 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 		if (_nCharsAccum == 4) {
 			UInt8 buffOut[4];
 			size_t bytesOut = 3 - _nBars;
-			_accum >>= 8 * _nBars;
-			buffOut[0] = static_cast<UInt8>((_accum >> 0) & 0xff);
+			//_accum >>= 8 * _nBars;
+			buffOut[0] = static_cast<UInt8>((_accum >> 16) & 0xff);
 			buffOut[1] = static_cast<UInt8>((_accum >> 8) & 0xff);
-			buffOut[2] = static_cast<UInt8>((_accum >> 16) & 0xff);
+			buffOut[2] = static_cast<UInt8>((_accum >> 0) & 0xff);
 			if (bytesOut > 0 && !_pStreamOut->Write(buffOut, 3 - _nBars)) return false;
 			_nCharsAccum = 0, _nBars = 0, _accum = 0;
 		}

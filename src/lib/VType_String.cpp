@@ -25,6 +25,31 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// String(src?) {block?}
+Gurax_DeclareConstructor(String)
+{
+	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareArg("src", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `String` instance.");
+}
+
+Gurax_ImplementConstructor(String)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Value* pValue = args.IsValid()? &args.PickValue() : nullptr;
+	// Function body
+	String str;
+	if (pValue) str = pValue->ToString(StringStyle::AsValue);
+	return argument.ReturnValue(processor, new Value_String(str));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // String#Align(width:Number, align:Symbol, padding?:String):String:map
@@ -1348,7 +1373,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(String));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(String, Align));
 	Assign(Gurax_CreateMethod(String, Capitalize));
