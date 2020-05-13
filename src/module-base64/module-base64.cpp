@@ -33,14 +33,14 @@ Gurax_ImplementFunction(Encode)
 	// Function body
 	if (pStreamDst) {
 		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
-		pEncoder->Base64EncodeStream(streamSrc);
+		pEncoder->EncodeStream(streamSrc);
 		pEncoder->Finish();
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
 		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine));
-		if (!pEncoder->Base64EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
+		if (!pEncoder->EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
 }

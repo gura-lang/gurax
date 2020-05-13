@@ -19,9 +19,9 @@ public:
 		const char* name;
 		const int numTbl[256];
 		const size_t bytesOutTbl[10];
-		size_t nBytesPerGroup;
+		size_t bytesPerGroup;
 		size_t nCharsPerGroup;
-		size_t nBitsPerChar;
+		size_t bitsPerChar;
 	};
 private:
 	RefPtr<Stream> _pStreamOut;
@@ -83,8 +83,8 @@ protected:
 	// Destructor
 	virtual ~Encoder() = default;
 public:
-	bool Base64Encode(const void* buff, size_t bytes);
-	bool Base64EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+	bool Encode(const void* buff, size_t bytes);
+	bool EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 	bool Finish();
 };
 
