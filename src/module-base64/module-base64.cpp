@@ -45,12 +45,16 @@ Gurax_ImplementFunction(Encode)
 	}
 }
 
-// base64.Decode(src:Stream, dst?:Stream:w)
+// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64]
 Gurax_DeclareFunction(Decode)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(base16));
+	DeclareAttrOpt(Gurax_Symbol(base32));
+	DeclareAttrOpt(Gurax_Symbol(base32hex));
+	DeclareAttrOpt(Gurax_Symbol(base64));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Applies base64-decode on data from the stream `src`\n"
@@ -65,17 +69,22 @@ Gurax_ImplementFunction(Decode)
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
 	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
+	const Decoder::Info& info =
+		argument.IsSet(Gurax_Symbol(base16))? Decoder::info_Base16 : 
+		argument.IsSet(Gurax_Symbol(base32))? Decoder::info_Base32 : 
+		argument.IsSet(Gurax_Symbol(base32hex))? Decoder::info_Base32hex : 
+		Decoder::info_Base64; 
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (pStreamDst) {
-		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference()));
-		pDecoder->Base64DecodeStream(streamSrc);
+		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
+		pDecoder->DecodeStream(streamSrc);
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
-		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference()));
-		if (!pDecoder->Base64DecodeStream(streamSrc)) return Value::nil();
+		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
+		if (!pDecoder->DecodeStream(streamSrc)) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
 }

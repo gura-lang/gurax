@@ -14,15 +14,33 @@ class GURAX_DLLDECLARE Decoder : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Decoder);
+public:
+	struct Info {
+		const char* name;
+		const int numTbl[256];
+		const size_t bytesOutTbl[10];
+		size_t nBytesPerGroup;
+		size_t nCharsPerGroup;
+		size_t nBitsPerChar;
+	};
 private:
 	RefPtr<Stream> _pStreamOut;
 	int _nCharsAccum;
 	int _nPads;
 	UInt64 _accum;
 	size_t _iBuffWork;
+	const Info& _info;
+public:
+	static const int SPC = -1;
+	static const int PAD = -2;
+	static const int ERR = -3;
+	static const Info info_Base16;
+	static const Info info_Base32;
+	static const Info info_Base32hex;
+	static const Info info_Base64;
 public:
 	// Constructor
-	Decoder(Stream* pStreamOut);
+	Decoder(Stream* pStreamOut, const Info& info);
 	// Copy constructor/operator
 	Decoder(const Decoder& src) = delete;
 	Decoder& operator=(const Decoder& src) = delete;
@@ -33,10 +51,8 @@ protected:
 	// Destructor
 	virtual ~Decoder() = default;
 public:
-	bool Base64Decode(const void* buff, size_t bytes);
-	bool Base32Decode(const void* buff, size_t bytes);
-	bool Base64DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
-	bool Base32DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+	bool Decode(const void* buff, size_t bytes);
+	bool DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 };
 
 //------------------------------------------------------------------------------
