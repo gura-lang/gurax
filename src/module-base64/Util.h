@@ -34,7 +34,7 @@ protected:
 	virtual ~Decoder() = default;
 public:
 	bool Decode(const void* buff, size_t bytes);
-	bool DecodeStream(Stream& streamSrc);
+	bool DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 };
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ protected:
 	virtual ~Encoder() = default;
 public:
 	bool Encode(const void* buff, size_t bytes);
-	bool EncodeStream(Stream& streamSrc);
+	bool EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 	bool Finish();
 };
 

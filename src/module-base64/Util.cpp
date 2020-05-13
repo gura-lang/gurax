@@ -53,9 +53,15 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 	return true;
 }
 
-bool Decoder::DecodeStream(Stream& streamSrc)
+bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 {
-	return true;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
+	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	size_t bytesRead;
+	while ((bytesRead = streamSrc.Read(buffWork, bytesUnit)) > 0) {
+		if (!Decode(buffWork, bytesRead)) break;
+	}
+	return !Error::IsIssued();
 }
 
 //------------------------------------------------------------------------------
@@ -98,9 +104,15 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 	return true;
 }
 
-bool Encoder::EncodeStream(Stream& streamSrc)
+bool Encoder::EncodeStream(Stream& streamSrc, size_t bytesUnit)
 {
-	return true;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
+	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	size_t bytesRead;
+	while ((bytesRead = streamSrc.Read(buffWork, bytesUnit)) > 0) {
+		if (!Encode(buffWork, bytesRead)) break;
+	}
+	return !Error::IsIssued();
 }
 
 bool Encoder::Finish()
