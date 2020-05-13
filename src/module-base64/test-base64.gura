@@ -3,8 +3,16 @@
 // test-base64.gura
 //==============================================================================
 import(util.tester) {*}
-import(base64)
+
+TestEncDec(buffSrc:Binary) = {
+	buffEnc = base64.Encode(buffSrc)
+	buffDec = base64.Decode(buffEnc)
+	Printf('Source:  %s\n', buffSrc)
+	//Println('Dec:', buffDec)
+	Printf('Encoded: %s .. %s\n', buffEnc, cond(buffSrc == buffDec, 'OK', '**NG**'))
+}
 
 TestCase('Basic test') {
-	Println(base64.Test('hello', 4))
+	TestEncDec(b'')
+	TestEncDec(b'abcdefghijklmnopqrstuvwxyz')
 }

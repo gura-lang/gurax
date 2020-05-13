@@ -119,4 +119,8 @@ TestCase('Operator') {
 	Tester(`(b'abc\x00defg' + b'hij\x00klmn'))
 	Tester(`(b'abcdefg' * 3))
 	Tester(`(b'abc\x00defg' * 3))
+	Tester(`(b'abc\x00defg' == b'abc\x00defg'))
+	Tester(`(b'abc\x00def' == b'abc\x00defg'))
+	Tester(`(b'abc\x00defg' != b'abc\x00defg'))
+	Tester(`(b'abc\x00def' != b'abc\x00defg'))
 }

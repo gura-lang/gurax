@@ -139,3 +139,7 @@ b'abcdefg' + b'hijklmn' .. b'abcdefghijklmn'
 b'abc\x00defg' + b'hij\x00klmn' .. b'abc\x00defghij\x00klmn'
 b'abcdefg' * 3 .. B'abcdefgabcdefgabcdefg'
 b'abc\x00defg' * 3 .. B'abc\x00defgabc\x00defgabc\x00defg'
+b'abc\x00defg' == b'abc\x00defg' .. true
+b'abc\x00def' == b'abc\x00defg' .. false
+b'abc\x00defg' != b'abc\x00defg' .. false
+b'abc\x00def' != b'abc\x00defg' .. true

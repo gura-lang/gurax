@@ -227,6 +227,22 @@ Gurax_ImplementOpBinary(Mul, Binary, Number)
 	return new Value_Binary(binaryL.Repeat(true, numR));
 }
 
+// Binary == Binary
+Gurax_ImplementOpBinary(Eq, Binary, Binary)
+{
+	const Binary& binaryL = Value_Binary::GetBinary(valueL);
+	const Binary& binaryR = Value_Binary::GetBinary(valueR);
+	return new Value_Bool(binaryL == binaryR);
+}
+
+// Binary != Binary
+Gurax_ImplementOpBinary(Ne, Binary, Binary)
+{
+	const Binary& binaryL = Value_Binary::GetBinary(valueL);
+	const Binary& binaryR = Value_Binary::GetBinary(valueR);
+	return new Value_Bool(binaryL != binaryR);
+}
+
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
@@ -250,6 +266,8 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, Binary, Binary);
 	Gurax_AssignOpBinary(Mul, Binary, Number);
+	Gurax_AssignOpBinary(Eq, Binary, Binary);
+	Gurax_AssignOpBinary(Ne, Binary, Binary);
 }
 
 //------------------------------------------------------------------------------
