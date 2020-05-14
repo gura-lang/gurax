@@ -22,9 +22,21 @@ Gurax_DeclareFunction(Encode)
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Applies base64-encode on data from the stream `src`\n"
-		"and puts the result out to the stream `dst`.\n"
-		"If `dst` is omitted, the result will be returned as `Binary` value.\n");
+		"Reads data from stream `src` and encodes it in a base-n format into the stream `dst`.\n"
+		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
+		"\n"
+		"In default, base64 format is applied. The following attributes can specify the format:\n"
+		"\n"
+		"- `:base16` .. Base16 format\n"
+		"- `:base32` .. Base32 format\n"
+		"- `:base32hex` .. Base32hex format\n"
+		"- `:base64` .. Base64 format. Default.\n"
+		"\n"
+		"In default, output characters are folded by the length specified by `lineLen`.\n"
+		"If the argument is omitted, pre-defined length for each format is applied:\n"
+		"64 characters for base32 and base32hex and 76 for base16 and base64.\n"
+		"\n"
+		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n");
 }
 
 Gurax_ImplementFunction(Encode)
@@ -52,7 +64,8 @@ Gurax_ImplementFunction(Encode)
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
-		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine, info));
+		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(),
+								singleLineFlag? 0 : nCharsPerLine, info));
 		if (!pEncoder->EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
 		return new Value_Binary(pBuff.release());
 	}
@@ -70,9 +83,15 @@ Gurax_DeclareFunction(Decode)
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Applies base64-decode on data from the stream `src`\n"
-		"and puts the result out to the stream `dst`.\n"
-		"If `dst` is omitted, the result will be returned as `Binary` value.\n");
+		"Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.\n"
+		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
+		"\n"
+		"In default, base64 format is applied. The following attributes can specify the format:\n"
+		"\n"
+		"- `:base16` .. Base16 format\n"
+		"- `:base32` .. Base32 format\n"
+		"- `:base32hex` .. Base32hex format\n"
+		"- `:base64` .. Base64 format. Default.\n");
 }
 
 Gurax_ImplementFunction(Decode)

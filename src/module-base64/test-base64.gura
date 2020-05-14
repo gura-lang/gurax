@@ -4,25 +4,71 @@
 //==============================================================================
 import(util.tester) {*}
 
-TestEncDec(buffSrc:Binary) = {
-	buffEnc = base64.Encode(buffSrc):base32hex
-	//Printf('%s -> %s\n', buffSrc, buffEnc)
-	buffDec = base64.Decode(buffEnc):base32hex
-	Printf('Source:  %s\n', buffSrc)
+TesterCommon(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
+	dumpFlag = (buffSrc.bytes < 80)
+	Printf('Source:  %s\n', cond(dumpFlag, buffSrc, Format('(%dbytes)', buffSrc.bytes)))
 	if (buffSrc == buffDec) {
-		Printf('Encoded: %s .. OK\n', buffEnc)
+		Printf('Encoded: %s .. OK\n', cond(dumpFlag, buffEnc, Format('(%dbytes)', buffEnc.bytes)))
 	} else {
 		Printf('Encoded: %s .. **NG** %s\n', buffEnc, buffDec)
 	}
 }
 
+TesterBase16(buffSrc:Binary):void:map = {
+	buffEnc = base64.Encode(buffSrc):base16:singleLine
+	buffDec = base64.Decode(buffEnc):base16
+	TesterCommon(buffSrc, buffEnc, buffDec)
+}
+TesterBase32(buffSrc:Binary):void:map = {
+	buffEnc = base64.Encode(buffSrc):base32:singleLine
+	buffDec = base64.Decode(buffEnc):base32
+	TesterCommon(buffSrc, buffEnc, buffDec)
+}
+
+TesterBase32hex(buffSrc:Binary):void:map = {
+	buffEnc = base64.Encode(buffSrc):base32hex:singleLine
+	buffDec = base64.Decode(buffEnc):base32hex
+	TesterCommon(buffSrc, buffEnc, buffDec)
+}
+
+TesterBase64(buffSrc:Binary):void:map = {
+	buffEnc = base64.Encode(buffSrc):base64:singleLine
+	buffDec = base64.Decode(buffEnc):base64
+	TesterCommon(buffSrc, buffEnc, buffDec)
+}
+
 TestCase('Basic test') {
-	TestEncDec(b'')
-	TestEncDec(b'f')
-	TestEncDec(b'fo')
-	TestEncDec(b'foo')
-	TestEncDec(b'foob')
-	TestEncDec(b'fooba')
-	TestEncDec(b'foobar')
-	TestEncDec(b'abcdefghijklmnopqrstuvwxyz')
+	testCases = [
+		b''
+		b'f'
+		b'fo'
+		b'foo'
+		b'foob'
+		b'fooba'
+		b'foobar'
+		b'abcdefghijklmnopqrstuvwxyz'
+		Binary {|buff| buff.p.Put(`uint8, 0..1024), buff} 
+	]
+	Println('----------------------------------------------------------')
+	Println('Base16')
+	TesterBase16(testCases)
+	Println('----------------------------------------------------------')
+	Println('Base32')
+	TesterBase32(testCases)
+	Println('----------------------------------------------------------')
+	Println('Base32hex')
+	TesterBase32hex(testCases)
+	Println('----------------------------------------------------------')
+	Println('Base64')
+	TesterBase64(testCases)
+}
+
+TestCase('Line Length') {
+	Binary {|buff|
+		buff.p.Put(`uint8, 0..255)
+		base64.Encode(buff, sys.cout):base16
+		base64.Encode(buff, sys.cout):base32
+		base64.Encode(buff, sys.cout):base32hex
+		base64.Encode(buff, sys.cout)
+	}
 }
