@@ -1,5 +1,6 @@
 //==============================================================================
 // Util.cpp
+// Specification: https://tools.ietf.org/html/rfc4648
 //==============================================================================
 #include "stdafx.h"
 
@@ -10,18 +11,16 @@ Gurax_BeginModuleScope(base64)
 //------------------------------------------------------------------------------
 const Info Info::Base16 = {
 	"base16",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	"0123456789ABCDEF", // charTbl
 	{
-	},	// bytesOutTbl
+		1	// nPaddings = 0
+	},		// bytesOutTbl
 	{
-		0,	// bytesAccum = 0 (invalid)
-		2,	// bytesAccum = 1
-		1,	// bytesAccum = 2
-		0,	// bytesAccum = 3
-	},	// nPaddingsTbl
-	1,	// bytesPerGroup
-	2,	// nCharsPerGroup
-	4,	// bitsPerChar
+		1	// bytesAccum = 0
+	},		// nPaddingsTbl
+	1,		// bytesPerGroup
+	2,		// nCharsPerGroup
+	4,		// bitsPerChar
 };
 
 const Info Info::Base32 = {
@@ -37,7 +36,7 @@ const Info Info::Base32 = {
 		1,	// nPaddings = 6
 		0,	// nPaddings = 7 (invalid)
 		0,	// nPaddings = 8 (invalid)
-	},	// bytesOutTbl
+	},		// bytesOutTbl
 	{
 		0,	// bytesAccum = 0 (invalid)
 		6,	// bytesAccum = 1
@@ -45,15 +44,15 @@ const Info Info::Base32 = {
 		3,	// bytesAccum = 3
 		1,	// bytesAccum = 4
 		0,	// bytesAccum = 5
-	},	// nPaddingsTbl
-	5,	// bytesPerGroup
-	8,	// nCharsPerGroup
-	5,	// bitsPerChar
+	},		// nPaddingsTbl
+	5,		// bytesPerGroup
+	8,		// nCharsPerGroup
+	5,		// bitsPerChar
 };
 
 const Info Info::Base32hex = {
 	"base32hex",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", // charTbl
+	"0123456789ABCDEFGHIJKLMNOPQRSTUV", // charTbl
 	{
 		5,	// nPaddings = 0
 		4,	// nPaddings = 1
@@ -64,7 +63,7 @@ const Info Info::Base32hex = {
 		1,	// nPaddings = 6
 		0,	// nPaddings = 7 (invalid)
 		0,	// nPaddings = 8 (invalid)
-	},	// bytesOutTbl
+	},		// bytesOutTbl
 	{
 		0,	// bytesAccum = 0 (invalid)
 		6,	// bytesAccum = 1
@@ -72,10 +71,10 @@ const Info Info::Base32hex = {
 		3,	// bytesAccum = 3
 		1,	// bytesAccum = 4
 		0,	// bytesAccum = 5
-	},	// nPaddingsTbl
-	5,	// bytesPerGroup
-	8,	// nCharsPerGroup
-	5,	// bitsPerChar
+	},		// nPaddingsTbl
+	5,		// bytesPerGroup
+	8,		// nCharsPerGroup
+	5,		// bitsPerChar
 };
 
 const Info Info::Base64 = {
@@ -86,16 +85,16 @@ const Info Info::Base64 = {
 		2,	// nPaddings = 1
 		1,	// nPaddings = 2
 		0,	// nPaddings = 3 (invalid)
-	},	// bytesOutTbl
+	},		// bytesOutTbl
 	{
 		0,	// bytesAccum = 0 (invalid)
 		2,	// bytesAccum = 1
 		1,	// bytesAccum = 2
 		0,	// bytesAccum = 3
-	},	// nPaddingsTbl
-	3,	// bytesPerGroup
-	4,	// nCharsPerGroup
-	6,	// bitsPerChar
+	},		// nPaddingsTbl
+	3,		// bytesPerGroup
+	4,		// nCharsPerGroup
+	6,		// bitsPerChar
 };
 
 //------------------------------------------------------------------------------
