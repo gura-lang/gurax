@@ -97,11 +97,11 @@ TestCase('nil attribute') {
 	Tester(`g(nil))
 }
 
-TestCase('dynamic_scope') {
+TestCase('dynamicScope') {
 	f_static() = Println('[static]  a = ', a)
-	f_dynamic():dynamic_scope = Println('[dynamic] a = ', a)
+	f_dynamic():dynamicScope = Println('[dynamic] a = ', a)
 	g_static() {`block} = block.Eval()
-	g_dynamic():dynamic_scope {`block} = block.Eval()
+	g_dynamic():dynamicScope {`block} = block.Eval()
 	a = 'external'
 	f_static()
 	f_dynamic()

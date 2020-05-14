@@ -123,12 +123,12 @@ scope {
 					PrintFormatted('yellow')
 				}
 				PrintFormatted('green again')
-				conio.SetColor(`bright_red, bg)
-				PrintFormatted('bright_red')
-				conio.SetColor(`bright_blue, bg)
-				PrintFormatted('bright_blue')
-				conio.SetColor(`bright_green, bg)
-				PrintFormatted('bright_green')
+				conio.SetColor(`brightRed, bg)
+				PrintFormatted('brightRed')
+				conio.SetColor(`brightBlue, bg)
+				PrintFormatted('brightBlue')
+				conio.SetColor(`brightGreen, bg)
+				PrintFormatted('brightGreen')
 			}
 			PrintFormatted('blue again')
 		}
@@ -202,8 +202,8 @@ scope {
 	conio.Clear()
 	colors = [
 		`black, `blue, `green, `cyan, `red, `magenta, `yellow, `white
-		`gray, `bright_blue, `bright_green, `bright_cyan,
-		`bright_red, `bright_magenta, `bright_yellow, `bright_white
+		`gray, `brightBlue, `brightGreen, `brightCyan,
+		`brightRed, `brightMagenta, `brightYellow, `brightWhite
 	]
 	for (fg in colors) {
 		for (bg in colors) {

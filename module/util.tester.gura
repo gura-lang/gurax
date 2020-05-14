@@ -12,7 +12,7 @@ PrintTitle(title:String) = {
 	Printf('======== %s ========\n', title)
 }
 
-Tester(expr:Expr, arg%%):void:dynamic_scope:map:[quote] {block?} = {
+Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval()

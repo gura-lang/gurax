@@ -199,7 +199,7 @@ f .. f(a:Number)
 g .. g(a:Number:nil)
 f(nil) .. can't accept nil value
 g(nil) .. <Nil>
-======== dynamic_scope ========
+======== dynamicScope ========
 [static]  a = external
 [dynamic] a = external
 [static, block]  a = external
@@ -248,7 +248,7 @@ f .. f() {block}
 g .. g() {`block}
 f {}.type .. `function
 g {}.type .. `Block
-f {|v1, v2| func(a, b, c)} .. block(v1, v2):cut_extra_args
+f {|v1, v2| func(a, b, c)} .. block(v1, v2):cutExtraArgs
 g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
 ======== Property ========
 Fact.expr .. if (n <= 1) {1} else {n * Fact(n - 1)}

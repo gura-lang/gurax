@@ -167,7 +167,7 @@ Gurax_ImplementStatement(else_)
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
-// end ():trailer:end_marker
+// end ():trailer:endMarker
 Gurax_DeclareStatement(end)
 {
 	Declare(VTYPE_Any, Flag::Trailer | Flag::EndMarker);

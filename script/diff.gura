@@ -25,7 +25,7 @@ d.EachHunk {|hunk|
 		if (edit.type == `common) {
 			Println(' ', edit.source)
 		} else {
-			clr = cond(edit.type == `add, `bright_green, `bright_red)
+			clr = cond(edit.type == `add, `brightGreen, `brightRed)
 			conio.SetColor(`white, clr) { Print(edit.mark) }
 			conio.SetColor(clr) { Println(edit.source) }
 		}

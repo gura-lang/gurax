@@ -29,15 +29,15 @@ public:
 		Assoc(Gurax_Symbol(yellow),			6);
 		Assoc(Gurax_Symbol(white),			7);
 		Assoc(Gurax_Symbol(gray),			8 + 0);
-		Assoc(Gurax_Symbol(bright_blue),	8 + 1);
-		Assoc(Gurax_Symbol(bright_green),	8 + 2);
-		Assoc(Gurax_Symbol(bright_aqua),	8 + 3);
-		Assoc(Gurax_Symbol(bright_cyan),	8 + 3);
-		Assoc(Gurax_Symbol(bright_red),		8 + 4);
-		Assoc(Gurax_Symbol(bright_purple),	8 + 5);
-		Assoc(Gurax_Symbol(bright_magenta),	8 + 5);
-		Assoc(Gurax_Symbol(bright_yellow),	8 + 6);
-		Assoc(Gurax_Symbol(bright_white),	8 + 7);
+		Assoc(Gurax_Symbol(brightBlue),	8 + 1);
+		Assoc(Gurax_Symbol(brightGreen),	8 + 2);
+		Assoc(Gurax_Symbol(brightAqua),	8 + 3);
+		Assoc(Gurax_Symbol(brightCyan),	8 + 3);
+		Assoc(Gurax_Symbol(brightRed),		8 + 4);
+		Assoc(Gurax_Symbol(brightPurple),	8 + 5);
+		Assoc(Gurax_Symbol(brightMagenta),	8 + 5);
+		Assoc(Gurax_Symbol(brightYellow),	8 + 6);
+		Assoc(Gurax_Symbol(brightWhite),	8 + 7);
 #elif defined(GURAX_ON_LINUX) || defined(GURAX_ON_DARWIN)
 		Assoc(Gurax_Symbol(black),			0);
 		Assoc(Gurax_Symbol(red),			1);
@@ -50,15 +50,15 @@ public:
 		Assoc(Gurax_Symbol(cyan),			6);
 		Assoc(Gurax_Symbol(white),			7);
 		Assoc(Gurax_Symbol(gray),			8 + 0);
-		Assoc(Gurax_Symbol(bright_red),		8 + 1);
-		Assoc(Gurax_Symbol(bright_green),	8 + 2);
-		Assoc(Gurax_Symbol(bright_yellow),	8 + 3);
-		Assoc(Gurax_Symbol(bright_blue),	8 + 4);
-		Assoc(Gurax_Symbol(bright_purple),	8 + 5);
-		Assoc(Gurax_Symbol(bright_magenta),	8 + 5);
-		Assoc(Gurax_Symbol(bright_aqua),	8 + 6);
-		Assoc(Gurax_Symbol(bright_cyan),	8 + 6);
-		Assoc(Gurax_Symbol(bright_white),	8 + 7);
+		Assoc(Gurax_Symbol(brightRed),		8 + 1);
+		Assoc(Gurax_Symbol(brightGreen),	8 + 2);
+		Assoc(Gurax_Symbol(brightYellow),	8 + 3);
+		Assoc(Gurax_Symbol(brightBlue),	8 + 4);
+		Assoc(Gurax_Symbol(brightPurple),	8 + 5);
+		Assoc(Gurax_Symbol(brightMagenta),	8 + 5);
+		Assoc(Gurax_Symbol(brightAqua),	8 + 6);
+		Assoc(Gurax_Symbol(brightCyan),	8 + 6);
+		Assoc(Gurax_Symbol(brightWhite),	8 + 7);
 #endif
 	}
 	static const SymbolAssoc& GetInstance() {
