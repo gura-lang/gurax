@@ -5,10 +5,10 @@
 import(util.tester) {*}
 
 TestEncDec(buffSrc:Binary) = {
-	buffEnc = base64.Encode(buffSrc)
-	buffDec = base64.Decode(buffEnc)
+	buffEnc = base64.Encode(buffSrc):base32
+	//Printf('%s -> %s\n', buffSrc, buffEnc)
+	buffDec = base64.Decode(buffEnc):base32
 	Printf('Source:  %s\n', buffSrc)
-	//Println('Dec:', buffDec)
 	Printf('Encoded: %s .. %s\n', buffEnc, cond(buffSrc == buffDec, 'OK', '**NG**'))
 }
 

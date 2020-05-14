@@ -204,16 +204,18 @@ const Encoder::Info Encoder::info_Base16 = {
 
 const Encoder::Info Encoder::info_Base32 = {
 	"base32",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", // charTbl
 	{
 		0,	// bytesAccum = 0 (invalid)
-		2,	// bytesAccum = 1
-		1,	// bytesAccum = 2
-		0,	// bytesAccum = 3
+		6,	// bytesAccum = 1
+		4,	// bytesAccum = 2
+		3,	// bytesAccum = 3
+		1,	// bytesAccum = 4
+		0,	// bytesAccum = 5
 	},	// nPaddingsTbl
-	3,	// bytesPerGroup
-	4,	// nCharsPerGroup
-	6,	// bitsPerChar
+	5,	// bytesPerGroup
+	8,	// nCharsPerGroup
+	5,	// bitsPerChar
 };
 
 const Encoder::Info Encoder::info_Base32hex = {
