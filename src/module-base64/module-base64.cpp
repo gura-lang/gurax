@@ -33,11 +33,11 @@ Gurax_ImplementFunction(Encode)
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
 	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
-	const Encoder::Info& info =
-		argument.IsSet(Gurax_Symbol(base16))? Encoder::info_Base16 : 
-		argument.IsSet(Gurax_Symbol(base32))? Encoder::info_Base32 : 
-		argument.IsSet(Gurax_Symbol(base32hex))? Encoder::info_Base32hex : 
-		Encoder::info_Base64; 
+	const Info& info =
+		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
+		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
+		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
+		Info::Base64; 
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (pStreamDst) {
@@ -78,11 +78,11 @@ Gurax_ImplementFunction(Decode)
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
 	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
-	const Decoder::Info& info =
-		argument.IsSet(Gurax_Symbol(base16))? Decoder::info_Base16 : 
-		argument.IsSet(Gurax_Symbol(base32))? Decoder::info_Base32 : 
-		argument.IsSet(Gurax_Symbol(base32hex))? Decoder::info_Base32hex : 
-		Decoder::info_Base64; 
+	const Info& info =
+		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
+		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
+		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
+		Info::Base64; 
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (pStreamDst) {

@@ -8,6 +8,24 @@
 Gurax_BeginModuleScope(base64)
 
 //------------------------------------------------------------------------------
+// Info
+//------------------------------------------------------------------------------
+struct Info {
+	const char* name;
+	const char* charTbl;
+	const size_t bytesOutTbl[16];
+	const int nPaddingsTbl[16];
+	size_t bytesPerGroup;
+	size_t nCharsPerGroup;
+	size_t bitsPerChar;
+public:
+	static const Info Base16;
+	static const Info Base32;
+	static const Info Base32hex;
+	static const Info Base64;
+};
+
+//------------------------------------------------------------------------------
 // Decoder
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Decoder : public Referable {
@@ -15,13 +33,10 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Decoder);
 public:
-	struct Info {
-		const char* name;
-		const int numTbl[256];
-		const size_t bytesOutTbl[16];
-		size_t bytesPerGroup;
-		size_t nCharsPerGroup;
-		size_t bitsPerChar;
+	struct Code {
+		static const int Space = -1;
+		static const int Padding = -2;
+		static const int Error = -3;
 	};
 private:
 	RefPtr<Stream> _pStreamOut;
@@ -29,15 +44,8 @@ private:
 	int _nPaddings;
 	UInt64 _accum;
 	size_t _iBuffWork;
+	int _numTbl[256];
 	const Info& _info;
-public:
-	static const int SPC = -1;
-	static const int PAD = -2;
-	static const int ERR = -3;
-	static const Info info_Base16;
-	static const Info info_Base32;
-	static const Info info_Base32hex;
-	static const Info info_Base64;
 public:
 	// Constructor
 	Decoder(Stream* pStreamOut, const Info& info);
@@ -62,15 +70,6 @@ class GURAX_DLLDECLARE Encoder : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Encoder);
-public:
-	struct Info {
-		const char* name;
-		const char* charTbl;
-		const int nPaddingsTbl[16];
-		size_t bytesPerGroup;
-		size_t nCharsPerGroup;
-		size_t bitsPerChar;
-	};
 private:
 	RefPtr<Stream> _pStreamOut;
 	size_t _nCharsPerLine;
@@ -78,11 +77,6 @@ private:
 	size_t _bytesAccum;
 	UInt64 _accum;
 	const Info& _info;
-public:
-	static const Info info_Base16;
-	static const Info info_Base32;
-	static const Info info_Base32hex;
-	static const Info info_Base64;
 public:
 	// Constructor
 	Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info);

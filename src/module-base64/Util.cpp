@@ -6,55 +6,27 @@
 Gurax_BeginModuleScope(base64)
 
 //------------------------------------------------------------------------------
-// Decoder
+// Info
 //------------------------------------------------------------------------------
-const Decoder::Info Decoder::info_Base16 = {
+const Info Info::Base16 = {
 	"base16",
-	{
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,SPC,SPC,ERR,ERR,SPC,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		SPC,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR, 26, 27, 28, 29, 30, 31,ERR,ERR,ERR,ERR,ERR,PAD,ERR,ERR,
-		ERR,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
-		15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-	},	// numTbl
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
 	{
 	},	// bytesOutTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
 	1,	// bytesPerGroup
 	2,	// nCharsPerGroup
 	4,	// bitsPerChar
 };
 
-const Decoder::Info Decoder::info_Base32 = {
+const Info Info::Base32 = {
 	"base32",
-	{
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,SPC,SPC,ERR,ERR,SPC,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		SPC,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR, 26, 27, 28, 29, 30, 31,ERR,ERR,ERR,ERR,ERR,PAD,ERR,ERR,
-		ERR,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
-		15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-	},	// numTbl
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", // charTbl
 	{
 		5,	// nPaddings = 0
 		4,	// nPaddings = 1
@@ -66,31 +38,22 @@ const Decoder::Info Decoder::info_Base32 = {
 		0,	// nPaddings = 7 (invalid)
 		0,	// nPaddings = 8 (invalid)
 	},	// bytesOutTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		6,	// bytesAccum = 1
+		4,	// bytesAccum = 2
+		3,	// bytesAccum = 3
+		1,	// bytesAccum = 4
+		0,	// bytesAccum = 5
+	},	// nPaddingsTbl
 	5,	// bytesPerGroup
 	8,	// nCharsPerGroup
 	5,	// bitsPerChar
 };
 
-const Decoder::Info Decoder::info_Base32hex = {
+const Info Info::Base32hex = {
 	"base32hex",
-	{
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,SPC,SPC,ERR,ERR,SPC,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		SPC,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR, 26, 27, 28, 29, 30, 31,ERR,ERR,ERR,ERR,ERR,PAD,ERR,ERR,
-		ERR,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
-		15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-	},	// numTbl
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", // charTbl
 	{
 		5,	// nPaddings = 0
 		4,	// nPaddings = 1
@@ -102,45 +65,52 @@ const Decoder::Info Decoder::info_Base32hex = {
 		0,	// nPaddings = 7 (invalid)
 		0,	// nPaddings = 8 (invalid)
 	},	// bytesOutTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		6,	// bytesAccum = 1
+		4,	// bytesAccum = 2
+		3,	// bytesAccum = 3
+		1,	// bytesAccum = 4
+		0,	// bytesAccum = 5
+	},	// nPaddingsTbl
 	5,	// bytesPerGroup
 	8,	// nCharsPerGroup
 	5,	// bitsPerChar
 };
 
-const Decoder::Info Decoder::info_Base64 = {
+const Info Info::Base64 = {
 	"base64",
-	{
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,SPC,SPC,ERR,ERR,SPC,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		SPC,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR, 62,ERR, 62,ERR, 63,
-		52, 53, 54, 55, 56, 57, 58, 59, 60, 61,ERR,ERR,ERR,PAD,ERR,ERR,
-		ERR,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
-		15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,ERR,ERR,ERR,ERR, 63,
-		ERR, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-		41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
-	},	// numTbl
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
 	{
 		3,	// nPaddings = 0
 		2,	// nPaddings = 1
 		1,	// nPaddings = 2
 		0,	// nPaddings = 3 (invalid)
 	},	// bytesOutTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
 	3,	// bytesPerGroup
 	4,	// nCharsPerGroup
 	6,	// bitsPerChar
 };
 
+//------------------------------------------------------------------------------
+// Decoder
+//------------------------------------------------------------------------------
 Decoder::Decoder(Stream* pStreamOut, const Info& info) :
 	_pStreamOut(pStreamOut), _nCharsAccum(0), _nPaddings(0), _accum(0), _info(info)
 {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(_numTbl); i++) _numTbl[i] = Code::Error;
+	int num = 0;
+	for (const UInt8* p = reinterpret_cast<const UInt8*>(_info.charTbl); *p; p++, num++) {
+		_numTbl[*p] = num;
+	}
+	_numTbl['\n'] = _numTbl['\r'] = _numTbl['\t'] = _numTbl[' '] = Code::Space;
+	_numTbl['='] = Code::Padding;
 }
 
 bool Decoder::Decode(const void* buff, size_t bytes)
@@ -148,15 +118,15 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 	const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
 	const UInt8* buffpEnd = buffp + bytes;
 	for ( ; buffp != buffpEnd; buffp++) {
-		int num = _info.numTbl[*buffp];
+		int num = _numTbl[*buffp];
 		if (num >= 0) {
 			_accum = (_accum << _info.bitsPerChar) + num;
-		} else if (num == SPC) {
+		} else if (num == Code::Space) {
 			continue;
-		} else if (num == PAD) {
+		} else if (num == Code::Padding) {
 			_accum = (_accum << _info.bitsPerChar);
 			_nPaddings++;
-		} else if (num == ERR) {
+		} else if (num == Code::Error) {
 			Error::Issue(ErrorType::FormatError, "invalid %s format", _info.name);
 			return false;
 		}
@@ -188,64 +158,6 @@ bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 //------------------------------------------------------------------------------
 // Encoder
 //------------------------------------------------------------------------------
-const Encoder::Info Encoder::info_Base16 = {
-	"base16",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
-	{
-		0,	// bytesAccum = 0 (invalid)
-		2,	// bytesAccum = 1
-		1,	// bytesAccum = 2
-		0,	// bytesAccum = 3
-	},	// nPaddingsTbl
-	3,	// bytesPerGroup
-	4,	// nCharsPerGroup
-	6,	// bitsPerChar
-};
-
-const Encoder::Info Encoder::info_Base32 = {
-	"base32",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", // charTbl
-	{
-		0,	// bytesAccum = 0 (invalid)
-		6,	// bytesAccum = 1
-		4,	// bytesAccum = 2
-		3,	// bytesAccum = 3
-		1,	// bytesAccum = 4
-		0,	// bytesAccum = 5
-	},	// nPaddingsTbl
-	5,	// bytesPerGroup
-	8,	// nCharsPerGroup
-	5,	// bitsPerChar
-};
-
-const Encoder::Info Encoder::info_Base32hex = {
-	"base32",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
-	{
-		0,	// bytesAccum = 0 (invalid)
-		2,	// bytesAccum = 1
-		1,	// bytesAccum = 2
-		0,	// bytesAccum = 3
-	},	// nPaddingsTbl
-	3,	// bytesPerGroup
-	4,	// nCharsPerGroup
-	6,	// bitsPerChar
-};
-
-const Encoder::Info Encoder::info_Base64 = {
-	"base64",
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
-	{
-		0,	// bytesAccum = 0 (invalid)
-		2,	// bytesAccum = 1
-		1,	// bytesAccum = 2
-		0,	// bytesAccum = 3
-	},	// nPaddingsTbl
-	3,	// bytesPerGroup
-	4,	// nCharsPerGroup
-	6,	// bitsPerChar
-};
-
 Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info) :
 	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
 	_column(0), _bytesAccum(0), _accum(0), _info(info)
