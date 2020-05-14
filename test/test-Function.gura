@@ -132,8 +132,8 @@ TestCase('Named argument') {
 }
 
 TestCase('Cast of List Value') {
-	f(a[]:Number) = Println(a):nomap
-	g(a[]:String) = Println(a):nomap
+	f(a[]:Number) = Println(a):noMap
+	g(a[]:String) = Println(a):noMap
 	f([1, 2, 3])
 	g([1, 2, 3])
 }

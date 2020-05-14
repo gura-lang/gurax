@@ -21,6 +21,7 @@ const Info Info::Base16 = {
 	1,		// bytesPerGroup
 	2,		// nCharsPerGroup
 	4,		// bitsPerChar
+	76,		// nCharsPerLineDefault
 };
 
 const Info Info::Base32 = {
@@ -48,6 +49,7 @@ const Info Info::Base32 = {
 	5,		// bytesPerGroup
 	8,		// nCharsPerGroup
 	5,		// bitsPerChar
+	64,		// nCharsPerLineDefault
 };
 
 const Info Info::Base32hex = {
@@ -75,6 +77,7 @@ const Info Info::Base32hex = {
 	5,		// bytesPerGroup
 	8,		// nCharsPerGroup
 	5,		// bitsPerChar
+	64,		// nCharsPerLineDefault
 };
 
 const Info Info::Base64 = {
@@ -95,6 +98,7 @@ const Info Info::Base64 = {
 	3,		// bytesPerGroup
 	4,		// nCharsPerGroup
 	6,		// bitsPerChar
+	76,		// nCharsPerLineDefault
 };
 
 //------------------------------------------------------------------------------
@@ -158,8 +162,8 @@ bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 // Encoder
 //------------------------------------------------------------------------------
 Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info) :
-	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
-	_column(0), _bytesAccum(0), _accum(0), _info(info)
+	_pStreamOut(pStreamOut), _nCharsPerLine(CalcAlign(nCharsPerLine, info.nCharsPerGroup)),
+	_iCol(0), _bytesAccum(0), _accum(0), _info(info)
 {
 }
 
@@ -177,12 +181,12 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 				buffOut[_info.nCharsPerGroup - i - 1] = _info.charTbl[_accum & mask];
 				_accum >>= _info.bitsPerChar;
 			}
-			_column += _info.nCharsPerGroup;
+			_iCol += _info.nCharsPerGroup;
 			size_t bytesOut = _info.nCharsPerGroup;
-			if (_nCharsPerLine > 0 && _column >= _nCharsPerLine) {
+			if (_nCharsPerLine > 0 && _iCol >= _nCharsPerLine) {
 				if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
 				buffOut[bytesOut++] = '\n';
-				_column = 0;
+				_iCol = 0;
 			}
 			if (!_pStreamOut->Write(buffOut, bytesOut)) return false;
 			_bytesAccum = 0, _accum = 0;
@@ -218,15 +222,15 @@ bool Encoder::Finish()
 			buffOut[_info.nCharsPerGroup - i - 1] = _info.charTbl[_accum & mask];
 		}
 		nCharsOut = _info.nCharsPerGroup;
-		_column += nCharsOut;
+		_iCol += nCharsOut;
 	}
-	if (_nCharsPerLine > 0 && _column > 0) {
+	if (_nCharsPerLine > 0 && _iCol > 0) {
 		if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[nCharsOut++] = '\r';
 		buffOut[nCharsOut++] = '\n';
-		_column = 0;
+		_iCol = 0;
 	}
 	if (nCharsOut > 0 && !_pStreamOut->Write(buffOut, nCharsOut)) return false;
-	_column = 0, _bytesAccum = 0, _accum = 0;
+	_iCol = 0, _bytesAccum = 0, _accum = 0;
 	return true;
 }
 

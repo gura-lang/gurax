@@ -27,13 +27,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// re.Pattern(pattern:String):map:[icase,multiline] {block?}
+// re.Pattern(pattern:String):map:[icase,multiLine] {block?}
 Gurax_DeclareConstructor(Pattern)
 {
 	Declare(VTYPE_Pattern, Flag::Map);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	DeclareAttrOpt(Gurax_Symbol(multiline));
+	DeclareAttrOpt(Gurax_Symbol(multiLine));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,7 +42,7 @@ Gurax_DeclareConstructor(Pattern)
 		"Following attributes would customize some traits of the pattern:\n"
 		"\n"
 		"- `:icase` .. Ignores character cases.\n"
-		"- `:multiline` .. Matches \"`.`\" with a line break.\n");
+		"- `:multiLine` .. Matches \"`.`\" with a line break.\n");
 }
 
 Gurax_ImplementConstructor(Pattern)
@@ -51,10 +51,10 @@ Gurax_ImplementConstructor(Pattern)
 	ArgPicker args(argument);
 	const char* pattern = args.PickString();
 	bool icaseFlag = argument.IsSet(Gurax_Symbol(icase));
-	bool multilineFlag = argument.IsSet(Gurax_Symbol(multiline));
+	bool multiLineFlag = argument.IsSet(Gurax_Symbol(multiLine));
 	// Function body
 	RefPtr<Pattern> pPattern(new Pattern());
-	if (!pPattern->Prepare(pattern, icaseFlag, multilineFlag)) return Value::nil();
+	if (!pPattern->Prepare(pattern, icaseFlag, multiLineFlag)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Pattern(pPattern.release()));
 }
 

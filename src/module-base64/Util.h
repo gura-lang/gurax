@@ -18,6 +18,7 @@ struct Info {
 	size_t bytesPerGroup;
 	size_t nCharsPerGroup;
 	size_t bitsPerChar;
+	size_t nCharsPerLineDefault;
 public:
 	static const Info Base16;
 	static const Info Base32;
@@ -73,7 +74,7 @@ public:
 private:
 	RefPtr<Stream> _pStreamOut;
 	size_t _nCharsPerLine;
-	size_t _column;
+	size_t _iCol;
 	size_t _bytesAccum;
 	UInt64 _accum;
 	const Info& _info;
@@ -93,6 +94,10 @@ public:
 	bool Encode(const void* buff, size_t bytes);
 	bool EncodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
 	bool Finish();
+public:
+	static size_t CalcAlign(size_t n, size_t align) {
+		return (align <= 1)? n : (n + align - 1) / align * align;
+	}
 };
 
 Gurax_EndModuleScope(base64)

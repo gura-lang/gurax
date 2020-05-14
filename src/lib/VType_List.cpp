@@ -253,7 +253,7 @@ Gurax_ImplementMethod(List, IsEmpty)
 	return new Value_Bool(valueThis.GetValueOwner().empty());
 }
 
-// List#Put(pos:Number, value:nomap):reduce:map
+// List#Put(pos:Number, value:noMap):reduce:map
 Gurax_DeclareMethod(List, Put)
 {
 	Declare(VTYPE_List, Flag::Reduce | Flag::Map);

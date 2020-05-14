@@ -18,10 +18,10 @@ TestCase('PUnit') {
 TestCase('Create list') {
 	n = 10
 	x = while (n > 0):list {|i| n -= 1 }
-	Println(x):nomap
+	Println(x):noMap
 	n = 10
 	x = while (n > 0):list { n -= 1 }
-	Println(x):nomap
+	Println(x):noMap
 	//x = while (n > 0):list {|i| n -= 1 }
 }
 

@@ -20,10 +20,10 @@ Tester(argv[]:String) = {
 	try {
 		[argvRest, opt] = p.Parse([''] |+| argv)
 	} catch {|e|
-		Printf('%s -> ** %s **\n', argv, e.text):nomap
+		Printf('%s -> ** %s **\n', argv, e.text):noMap
 		return
 	}
-	Printf('%s -> %s, %s\n', argv, argvRest, opt):nomap
+	Printf('%s -> %s, %s\n', argv, argvRest, opt):noMap
 }
 
 Tester([''])

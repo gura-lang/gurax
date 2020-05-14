@@ -8,7 +8,7 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// base64.Encode(src:Stream, dst?:Stream:w):[base16,base32,base32hex,base64]
+// base64.Encode(src:Stream, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine]
 Gurax_DeclareFunction(Encode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -19,6 +19,7 @@ Gurax_DeclareFunction(Encode)
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Applies base64-encode on data from the stream `src`\n"
@@ -32,16 +33,19 @@ Gurax_ImplementFunction(Encode)
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
-	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
 	const Info& info =
 		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
 		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
 		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
 		Info::Base64; 
+	size_t nCharsPerLine = args.IsValid()?
+		args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
 	if (Error::IsIssued()) return Value::nil();
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
 	// Function body
 	if (pStreamDst) {
-		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(), nCharsPerLine, info));
+		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(),
+								singleLineFlag? 0 : nCharsPerLine, info));
 		pEncoder->EncodeStream(streamSrc);
 		pEncoder->Finish();
 		return Value::nil();

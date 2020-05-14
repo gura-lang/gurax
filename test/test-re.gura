@@ -134,18 +134,18 @@ hoge
 
 TestCase('') {
 	ms = re.scan(r'\[([^]]+)\]', 'jkfdjf[hoge]kdsaa[foo]kfjdkjfkd[bar]saajkjkjfdsfdaaa');
-	Println(ms:*group(1)::string):nomap
+	Println(ms:*group(1)::string):noMap
 	ms = re.pattern(r'\[([^]]+)\]').scan('jkfdjf[hoge]kdsaa[foo]kfjdkjfkd[bar]saajkjkjfdsfdaaa');
-	Println(ms:*group(1)::string):nomap
+	Println(ms:*group(1)::string):noMap
 	text = 'fjdkjf[0]jfkdjk[100]fdfdsfjdsfjdkshe[300]llofkdjsk[999]fjdsfjdshello[9999]'
 	Println(re.scan(r'\[(\d+)\]', text):*group(1):*string)
 }
 
 TestCase('') {
 	fields = [re.split('a+', 'aaaaaaabbbbbbaaacccccDDa')];
-	Println(fields):nomap
+	Println(fields):noMap
 	fields = [re.pattern('a+').split('aaaaaaabbbbbbaaacccccDDa')];
-	Println(fields):nomap
+	Println(fields):noMap
 }
 
 // match with pattern object
@@ -264,9 +264,9 @@ TestCase('named capturing group') {
 	Println(m['sec'])
 }
 
-TestCase('')('test of :multiline') {
+TestCase('')('test of :multiLine') {
 	Tester(`re.pattern('foo.bar').match('foo\nbar'))
-	Tester(`(re.pattern('foo.bar'):multiline).match('foo\nbar'))
+	Tester(`(re.pattern('foo.bar'):multiLine).match('foo\nbar'))
 }
 
 TestCase('longest/shortest matching') {

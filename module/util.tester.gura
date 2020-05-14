@@ -18,7 +18,7 @@ Tester(expr:Expr, arg%%):void:dynamic_scope:map:[quote] {block?} = {
 		rtn = expr.Eval()
 		rtnStr = rtn.ToString()
 		if (arg.IsSet(`quote)) { rtnStr = rtnStr.Enquote():auto }
-		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):nomap
+		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):noMap
 		block && block(rtn)
 	} catch {|e|
 		Printf(' %s\n', e.text)

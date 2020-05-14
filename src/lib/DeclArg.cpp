@@ -147,7 +147,7 @@ bool DeclArg::CheckFlagConfliction(Flags flags)
 {
 	if ((flags & Flag::Map) != 0 && (flags & Flag::NoMap) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :map and :nomap can not be specified together");
+					 "attribute :map and :noMap can not be specified together");
 		return false;
 	}
 	if ((flags & Flag::Public) != 0 && (flags & Flag::Private) != 0) {

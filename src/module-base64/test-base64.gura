@@ -5,9 +5,9 @@
 import(util.tester) {*}
 
 TestEncDec(buffSrc:Binary) = {
-	buffEnc = base64.Encode(buffSrc):base16
+	buffEnc = base64.Encode(buffSrc):base32hex
 	//Printf('%s -> %s\n', buffSrc, buffEnc)
-	buffDec = base64.Decode(buffEnc):base16
+	buffDec = base64.Decode(buffEnc):base32hex
 	Printf('Source:  %s\n', buffSrc)
 	if (buffSrc == buffDec) {
 		Printf('Encoded: %s .. OK\n', buffEnc)

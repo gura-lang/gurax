@@ -26,7 +26,7 @@ public:
 	struct GURAX_DLLDECLARE Flag {
 		static const Flags None				= 0;
 		static const Flags Map				= 1 << 0;	// :map .. must be here
-		static const Flags NoMap			= 1 << 1;	// :nomap .. must be here
+		static const Flags NoMap			= 1 << 1;	// :noMap .. must be here
 		static const Flags OfClass			= 1 << 2;	// :static
 		static const Flags OfInstance		= 1 << 3;	// :instance
 		static const Flags Closure			= 1 << 4;	// :closure
@@ -39,7 +39,7 @@ public:
 		static const Flags Leader			= 1 << 11;	// :leader
 		static const Flags Trailer			= 1 << 12;	// :trailer
 		static const Flags SymbolFunc		= 1 << 13;	// :symbol_func
-		static const Flags NoNamed			= 1 << 14;	// :nonamed
+		static const Flags NoNamed			= 1 << 14;	// :noNamed
 		static const Flags Public			= 1 << 15;	// :public
 		static const Flags Private			= 1 << 16;	// :private
 		static const Flags Privileged		= 1 << 17;	// :privileged
@@ -54,7 +54,7 @@ public:
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(map),			Flag::Map);
-			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
+			Assoc(Gurax_Symbol(noMap),			Flag::NoMap);
 			Assoc(Gurax_Symbol(static_),		Flag::OfClass);
 			//Assoc(Gurax_Symbol(instance),		Flag::OfInstance);
 			Assoc(Gurax_Symbol(closure),		Flag::Closure);
@@ -67,7 +67,7 @@ public:
 			Assoc(Gurax_Symbol(leader),			Flag::Leader);
 			Assoc(Gurax_Symbol(trailer),		Flag::Trailer);
 			Assoc(Gurax_Symbol(symbol_func),	Flag::SymbolFunc);
-			Assoc(Gurax_Symbol(nonamed),		Flag::NoNamed);
+			Assoc(Gurax_Symbol(noNamed),		Flag::NoNamed);
 			Assoc(Gurax_Symbol(public_),		Flag::Public);
 			Assoc(Gurax_Symbol(private_),		Flag::Private);
 			Assoc(Gurax_Symbol(privileged),		Flag::Privileged);

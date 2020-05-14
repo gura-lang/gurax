@@ -27,8 +27,8 @@ public:
 		static const Flags StreamR		= 1 << 2;	// :r
 		static const Flags StreamW		= 1 << 3;	// :w
 		static const Flags Map			= 1 << 4;	// :map
-		static const Flags NoMap		= 1 << 5;	// :nomap
-		static const Flags NoCast		= 1 << 6;	// :nocast
+		static const Flags NoMap		= 1 << 5;	// :noMap
+		static const Flags NoCast		= 1 << 6;	// :noCast
 		static const Flags OfClass		= 1 << 7;	// :static
 		static const Flags OfInstance	= 1 << 8;	// :instance
 		static const Flags Public		= 1 << 9;	// :public
@@ -76,8 +76,8 @@ public:
 			Assoc(Gurax_Symbol(r),			Flag::StreamR);
 			Assoc(Gurax_Symbol(w),			Flag::StreamW);
 			Assoc(Gurax_Symbol(map),		Flag::Map);
-			Assoc(Gurax_Symbol(nomap),		Flag::NoMap);
-			Assoc(Gurax_Symbol(nocast),		Flag::NoCast);
+			Assoc(Gurax_Symbol(noMap),		Flag::NoMap);
+			Assoc(Gurax_Symbol(noCast),		Flag::NoCast);
 			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
 			//Assoc(Gurax_Symbol(instance),	Flag::OfInstance);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);

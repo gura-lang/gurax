@@ -168,7 +168,7 @@ Gurax_ImplementMethod(Dict, Erase)
 	return argument.GetValueThis().Reference();
 }
 
-// Dict#Get(key, default?:nomap):map:[raise]
+// Dict#Get(key, default?:noMap):map:[raise]
 Gurax_DeclareMethod(Dict, Get)
 {
 	Declare(VTYPE_Any, Flag::Map);

@@ -31,7 +31,7 @@ protected:
 	virtual ~Pattern();
 public:
 	OnigRegex GetRegex() { return _regex; }
-	bool Prepare(const char* pattern, bool icaseFlag, bool multilineFlag);
+	bool Prepare(const char* pattern, bool icaseFlag, bool multiLineFlag);
 	Match* CreateMatch(const char* str, int pos = 0, int posEnd = -1);
 	String ReplaceByString(const char* str, const char* replace, int cnt, int& nReplaced);
 	String ReplaceByFunction(const char* str, Processor& processor, const Function& func, int cnt, int& nReplaced);
