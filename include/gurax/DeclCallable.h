@@ -38,7 +38,7 @@ public:
 		static const Flags Finalizer		= 1 << 10;	// :finalizer
 		static const Flags Leader			= 1 << 11;	// :leader
 		static const Flags Trailer			= 1 << 12;	// :trailer
-		static const Flags SymbolFunc		= 1 << 13;	// :symbol_func
+		static const Flags SymbolFunc		= 1 << 13;	// :symbolFunc
 		static const Flags NoNamed			= 1 << 14;	// :noNamed
 		static const Flags Public			= 1 << 15;	// :public
 		static const Flags Private			= 1 << 16;	// :private
@@ -66,7 +66,7 @@ public:
 			Assoc(Gurax_Symbol(finalizer),		Flag::Finalizer);
 			Assoc(Gurax_Symbol(leader),			Flag::Leader);
 			Assoc(Gurax_Symbol(trailer),		Flag::Trailer);
-			Assoc(Gurax_Symbol(symbol_func),	Flag::SymbolFunc);
+			Assoc(Gurax_Symbol(symbolFunc),	Flag::SymbolFunc);
 			Assoc(Gurax_Symbol(noNamed),		Flag::NoNamed);
 			Assoc(Gurax_Symbol(public_),		Flag::Public);
 			Assoc(Gurax_Symbol(private_),		Flag::Private);

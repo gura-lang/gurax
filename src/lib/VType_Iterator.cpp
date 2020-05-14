@@ -161,11 +161,11 @@ Gurax_ImplementMethod(Iterator, And)
 	return iteratorThis.And();
 }
 
-// Iterator#ArgMax():[last_index,indices]
+// Iterator#ArgMax():[lastIndex,indices]
 Gurax_DeclareMethod(Iterator, ArgMax)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -183,7 +183,7 @@ Gurax_ImplementMethod(Iterator, ArgMax)
 
 Value* VType_Iterator::Method_ArgMax(Argument& argument, Iterator& iteratorThis)
 {
-	if (argument.IsSet(Gurax_Symbol(last_index))) {
+	if (argument.IsSet(Gurax_Symbol(lastIndex))) {
 		Int idxFound = 0;
 		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThanOrEqualTo>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
@@ -199,11 +199,11 @@ Value* VType_Iterator::Method_ArgMax(Argument& argument, Iterator& iteratorThis)
 	}
 }
 
-// Iterator#ArgMin():[last_index,indices]
+// Iterator#ArgMin():[lastIndex,indices]
 Gurax_DeclareMethod(Iterator, ArgMin)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -221,7 +221,7 @@ Gurax_ImplementMethod(Iterator, ArgMin)
 
 Value* VType_Iterator::Method_ArgMin(Argument& argument, Iterator& iteratorThis)
 {
-	if (argument.IsSet(Gurax_Symbol(last_index))) {
+	if (argument.IsSet(Gurax_Symbol(lastIndex))) {
 		Int idxFound = 0;
 		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThanOrEqualTo>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
@@ -574,14 +574,14 @@ Value* VType_Iterator::Method_Flatten(Processor& processor, Argument& argument, 
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}
+// Iterator#Fold(size:number, advance?:number):map:[iterItem,neat] {block?}
 Gurax_DeclareMethod(Iterator, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("advance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	DeclareAttrOpt(Gurax_Symbol(iteritem));
+	DeclareAttrOpt(Gurax_Symbol(iterItem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -605,7 +605,7 @@ Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Ite
 	size_t nSize = args.PickNumberPos<size_t>();
 	size_t nAdvance = args.IsValid()? args.PickNumberPos<size_t>() : nSize;
 	if (Error::IsIssued()) return Value::nil();
-	bool itemAsIterFlag = argument.IsSet(Gurax_Symbol(iteritem));
+	bool itemAsIterFlag = argument.IsSet(Gurax_Symbol(iterItem));
 	bool neatFlag = argument.IsSet(Gurax_Symbol(neat));
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Fold(

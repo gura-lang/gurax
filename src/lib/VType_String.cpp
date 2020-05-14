@@ -1022,12 +1022,12 @@ Gurax_ImplementMethod(String, StripRight)
 	return new Value_String(str.Strip(false, true));
 }
 
-// String#Template():Template:[noIndent,lasteol] {block?}
+// String#Template():Template:[noIndent,lastEol] {block?}
 Gurax_DeclareMethod(String, Template)
 {
 	//Declare(VTYPE_Template, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
-	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	DeclareAttrOpt(Gurax_Symbol(lastEol));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -1041,7 +1041,7 @@ Gurax_ImplementMethod(String, Template)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
 	const char* str = valueThis.GetString();
 	RefPtr<Template> pTmpl(new Template());

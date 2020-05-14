@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Template(src?:Stream:r):map:[lasteol,noIndent] {block}
+// Template(src?:Stream:r):map:[lastEol,noIndent] {block}
 Gurax_DeclareConstructor(Template)
 {
 	Declare(VTYPE_Template, Flag::Map);
@@ -42,7 +42,7 @@ Gurax_DeclareConstructor(Template)
 		"\n"
 		"Following attributes would customize the parser's behavior:\n"
 		"\n"
-		"- `:lasteol`\n"
+		"- `:lastEol`\n"
 		"- `:noIndent`\n");
 }
 
@@ -52,7 +52,7 @@ Gurax_ImplementConstructor(Template)
 	ArgPicker args(argument);
 	Stream* pStreamSrc = args.IsValid()? &args.PickStream() : nullptr;
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
 	RefPtr<Template> pTmpl(new Template());
 	if (pStreamSrc &&
@@ -84,20 +84,20 @@ Gurax_ImplementMethod(Template, Eval)
 	return new Value_String(strDst);
 }
 
-// Template#Parse(str:String):reduce:[lasteol,noIndent]
+// Template#Parse(str:String):reduce:[lastEol,noIndent]
 Gurax_DeclareMethod(Template, Parse)
 {
 	Declare(VTYPE_Template, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
-	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	DeclareAttrOpt(Gurax_Symbol(lastEol));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `template` instance by parsing a script-embedded text in a string.\n"
 		"\n"
 		"Following attributes would customize the parser's behavior:\n"
 		"\n"
-		"- `:lasteol`\n"
+		"- `:lastEol`\n"
 		"- `:noIndent`\n");
 }
 
@@ -110,27 +110,27 @@ Gurax_ImplementMethod(Template, Parse)
 	ArgPicker args(argument);
 	const char* str = args.PickString();
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
 	if (!tmpl.ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
 		!tmpl.PrepareAndCompose()) return Value::nil();
 	return valueThis.Reference();
 }
 
-// Template#Read(src:Stream:r):reduce:[lasteol,noIndent]
+// Template#Read(src:Stream:r):reduce:[lastEol,noIndent]
 Gurax_DeclareMethod(Template, Read)
 {
 	Declare(VTYPE_Template, Flag::Reduce);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
-	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	DeclareAttrOpt(Gurax_Symbol(lastEol));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `template` instance by parsing a script-embedded text from a stream.\n"
 		"\n"
 		"Following attributes would customize the parser's behavior:\n"
 		"\n"
-		"- `:lasteol`\n"
+		"- `:lastEol`\n"
 		"- `:noIndent`\n");
 }
 
@@ -143,7 +143,7 @@ Gurax_ImplementMethod(Template, Read)
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
 	if (!tmpl.ParseStream_(streamSrc, autoIndentFlag, appendLastEOLFlag) ||
 		!tmpl.PrepareAndCompose()) return Value::nil();

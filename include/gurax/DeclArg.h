@@ -22,7 +22,7 @@ public:
 	using Flags = UInt32;
 	struct GURAX_DLLDECLARE Flag {
 		static const Flags None			= 0;
-		static const Flags ListVar		= 1 << 0;	// :listvar
+		static const Flags ListVar		= 1 << 0;	// :listVar
 		static const Flags Nil			= 1 << 1;	// :nil
 		static const Flags StreamR		= 1 << 2;	// :r
 		static const Flags StreamW		= 1 << 3;	// :w
@@ -71,7 +71,7 @@ public:
 	class GURAX_DLLDECLARE SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
-			Assoc(Gurax_Symbol(listvar),	Flag::ListVar);
+			Assoc(Gurax_Symbol(listVar),	Flag::ListVar);
 			Assoc(Gurax_Symbol(nil),		Flag::Nil);
 			Assoc(Gurax_Symbol(r),			Flag::StreamR);
 			Assoc(Gurax_Symbol(w),			Flag::StreamW);

@@ -389,11 +389,11 @@ Gurax_ImplementMethod(List, And)
 	return pIteratorThis->And();
 }
 
-// List#ArgMax():[last_index,indices]
+// List#ArgMax():[lastIndex,indices]
 Gurax_DeclareMethod(List, ArgMax)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
@@ -407,11 +407,11 @@ Gurax_ImplementMethod(List, ArgMax)
 	return VType_Iterator::Method_ArgMax(argument, *pIteratorThis);
 }
 
-// List#ArgMin():[last_index,indices]
+// List#ArgMin():[lastIndex,indices]
 Gurax_DeclareMethod(List, ArgMin)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
@@ -660,14 +660,14 @@ Gurax_ImplementMethod(List, Flatten)
 	return VType_Iterator::Method_Flatten(processor, argument, *pIteratorSrc);
 }
 
-// List#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}
+// List#Fold(size:number, advance?:number):map:[iterItem,neat] {block?}
 Gurax_DeclareMethod(List, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("sizen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("advance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	DeclareAttrOpt(Gurax_Symbol(iteritem));
+	DeclareAttrOpt(Gurax_Symbol(iterItem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 

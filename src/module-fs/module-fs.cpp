@@ -50,13 +50,13 @@ Gurax_ImplementFunction(ChangeDir)
 	}
 }
 
-// fs.ChangeMode(pathname:String, mode):map:void:[follow_link]
+// fs.ChangeMode(pathname:String, mode):map:void:[followLink]
 Gurax_DeclareFunction(ChangeMode)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(follow_link));
+	DeclareAttrOpt(Gurax_Symbol(followLink));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Changes the access mode of a file specified by `pathname`.\n"
@@ -95,9 +95,9 @@ Gurax_DeclareFunction(ChangeMode)
 		"If the modification target is a link file, each platform would have different result:\n"
 		"\n"
 		"- Linux .. Modifies permissions of the link file itself.\n"
-		"           Specifying `:follow_link` attribute would modify permsisions of the target file\n instead.\n"
-		"- MacOS .. Modifies permissions of the target file. Attribute `:follow_link` has no effect.\n"
-		"- Windows .. Modifies permissions of the link file. Attribute `:follow_link` has no effect.\n");
+		"           Specifying `:followLink` attribute would modify permsisions of the target file\n instead.\n"
+		"- MacOS .. Modifies permissions of the target file. Attribute `:followLink` has no effect.\n"
+		"- Windows .. Modifies permissions of the link file. Attribute `:followLink` has no effect.\n");
 }
 
 Gurax_ImplementFunction(ChangeMode)
@@ -106,7 +106,7 @@ Gurax_ImplementFunction(ChangeMode)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	const Value& valueMode = args.PickValue();
-	bool followLinkFlag = argument.IsSet(Gurax_Symbol(follow_link));
+	bool followLinkFlag = argument.IsSet(Gurax_Symbol(followLink));
 	// Function body
 	bool rtn = false;
 	if (valueMode.IsType(VTYPE_String)) {
@@ -133,7 +133,7 @@ Gurax_DeclareFunction(Copy)
 	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
-	//DeclareAttrOpt(Gurax_Symbol(follow_link));
+	//DeclareAttrOpt(Gurax_Symbol(followLink));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Copies a file.\n"
@@ -154,7 +154,7 @@ Gurax_ImplementFunction(Copy)
 	const char* pathNameSrc = args.PickString();
 	const char* pathNameDst = args.PickString();
 	bool failIfExistsFlag = !argument.IsSet(Gurax_Symbol(overwrite));
-	bool followLinkFlag = argument.IsSet(Gurax_Symbol(follow_link));
+	bool followLinkFlag = argument.IsSet(Gurax_Symbol(followLink));
 	// Function body
 	if (!OAL::Copy(pathNameSrc, pathNameDst, failIfExistsFlag, followLinkFlag)) {
 		Error::Issue(ErrorType::IOError, "failed to copy a file");

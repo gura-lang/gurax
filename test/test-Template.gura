@@ -277,11 +277,11 @@ TestCase('Auto indentation') {
 	Println('** auto-indent **')
 	tmpl.Template().Render(sys.cout)
 	Println('** append last-eol **')
-	(tmpl.Template():lasteol).Render(sys.cout)
+	(tmpl.Template():lastEol).Render(sys.cout)
 	Println('** no-indent **')
 	(tmpl.Template():noIndent).Render(sys.cout)
 	Println('** no-indent, append last-eol **')
-	(tmpl.Template():noIndent:lasteol).Render(sys.cout)
+	(tmpl.Template():noIndent:lastEol).Render(sys.cout)
 	x = 'single string'
 	tmpl.Template().Render(sys.cout)
 }
