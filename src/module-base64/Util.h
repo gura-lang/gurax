@@ -62,17 +62,30 @@ class GURAX_DLLDECLARE Encoder : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Encoder);
+public:
+	struct Info {
+		const char* name;
+		const char* charTbl;
+		const int nPaddingsTbl[16];
+		size_t bytesPerGroup;
+		size_t nCharsPerGroup;
+		size_t bitsPerChar;
+	};
 private:
 	RefPtr<Stream> _pStreamOut;
 	size_t _nCharsPerLine;
 	size_t _column;
 	size_t _bytesAccum;
 	UInt64 _accum;
-private:
-	static const char _charTbl[];
+	const Info& _info;
+public:
+	static const Info info_Base16;
+	static const Info info_Base32;
+	static const Info info_Base32hex;
+	static const Info info_Base64;
 public:
 	// Constructor
-	Encoder(Stream* pStreamOut, int nCharsPerLine);
+	Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info);
 	// Copy constructor/operator
 	Encoder(const Encoder& src)	= delete;
 	Encoder& operator=(const Encoder& src) = delete;

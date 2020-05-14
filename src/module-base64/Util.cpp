@@ -188,22 +188,49 @@ bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 //------------------------------------------------------------------------------
 // Encoder
 //------------------------------------------------------------------------------
-Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine) :
-	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
-	_column(0), _bytesAccum(0), _accum(0)
-{
-}
-
-struct Info {
-	const char* name;
-	const char* charTbl;
-	const int nPaddingsTbl[16];
-	size_t bytesPerGroup;
-	size_t nCharsPerGroup;
-	size_t bitsPerChar;
+const Encoder::Info Encoder::info_Base16 = {
+	"base16",
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
+	3,	// bytesPerGroup
+	4,	// nCharsPerGroup
+	6,	// bitsPerChar
 };
 
-const Info _info = {
+const Encoder::Info Encoder::info_Base32 = {
+	"base32",
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
+	3,	// bytesPerGroup
+	4,	// nCharsPerGroup
+	6,	// bitsPerChar
+};
+
+const Encoder::Info Encoder::info_Base32hex = {
+	"base32",
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
+	3,	// bytesPerGroup
+	4,	// nCharsPerGroup
+	6,	// bitsPerChar
+};
+
+const Encoder::Info Encoder::info_Base64 = {
 	"base64",
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
 	{
@@ -216,6 +243,12 @@ const Info _info = {
 	4,	// nCharsPerGroup
 	6,	// bitsPerChar
 };
+
+Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info) :
+	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
+	_column(0), _bytesAccum(0), _accum(0), _info(info)
+{
+}
 
 bool Encoder::Encode(const void* buff, size_t bytes)
 {
