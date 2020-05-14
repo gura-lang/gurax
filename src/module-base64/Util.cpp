@@ -56,15 +56,15 @@ const Decoder::Info Decoder::info_Base32 = {
 		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
 	},	// numTbl
 	{
-		5,	// padding = 0
-		4,	// padding = 1
-		0,	// padding = 2 (invalid)
-		3,	// padding = 3
-		2,	// padding = 4
-		0,	// padding = 5 (invalid)
-		1,	// padding = 6
-		0,	// padding = 7 (invalid)
-		0,	// padding = 8 (invalid)
+		5,	// nPaddings = 0
+		4,	// nPaddings = 1
+		0,	// nPaddings = 2 (invalid)
+		3,	// nPaddings = 3
+		2,	// nPaddings = 4
+		0,	// nPaddings = 5 (invalid)
+		1,	// nPaddings = 6
+		0,	// nPaddings = 7 (invalid)
+		0,	// nPaddings = 8 (invalid)
 	},	// bytesOutTbl
 	5,	// bytesPerGroup
 	8,	// nCharsPerGroup
@@ -92,15 +92,15 @@ const Decoder::Info Decoder::info_Base32hex = {
 		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
 	},	// numTbl
 	{
-		5,	// padding = 0
-		4,	// padding = 1
-		0,	// padding = 2 (invalid)
-		3,	// padding = 3
-		2,	// padding = 4
-		0,	// padding = 5 (invalid)
-		1,	// padding = 6
-		0,	// padding = 7 (invalid)
-		0,	// padding = 8 (invalid)
+		5,	// nPaddings = 0
+		4,	// nPaddings = 1
+		0,	// nPaddings = 2 (invalid)
+		3,	// nPaddings = 3
+		2,	// nPaddings = 4
+		0,	// nPaddings = 5 (invalid)
+		1,	// nPaddings = 6
+		0,	// nPaddings = 7 (invalid)
+		0,	// nPaddings = 8 (invalid)
 	},	// bytesOutTbl
 	5,	// bytesPerGroup
 	8,	// nCharsPerGroup
@@ -128,10 +128,10 @@ const Decoder::Info Decoder::info_Base64 = {
 		ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,ERR,
 	},	// numTbl
 	{
-		3,	// padding = 0
-		2,	// padding = 1
-		1,	// padding = 2
-		0,	// padding = 3 (invalid)
+		3,	// nPaddings = 0
+		2,	// nPaddings = 1
+		1,	// nPaddings = 2
+		0,	// nPaddings = 3 (invalid)
 	},	// bytesOutTbl
 	3,	// bytesPerGroup
 	4,	// nCharsPerGroup
@@ -139,7 +139,7 @@ const Decoder::Info Decoder::info_Base64 = {
 };
 
 Decoder::Decoder(Stream* pStreamOut, const Info& info) :
-	_pStreamOut(pStreamOut), _nCharsAccum(0), _nPads(0), _accum(0), _info(info)
+	_pStreamOut(pStreamOut), _nCharsAccum(0), _nPaddings(0), _accum(0), _info(info)
 {
 }
 
@@ -155,7 +155,7 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 			continue;
 		} else if (num == PAD) {
 			_accum = (_accum << _info.bitsPerChar);
-			_nPads++;
+			_nPaddings++;
 		} else if (num == ERR) {
 			Error::Issue(ErrorType::FormatError, "invalid %s format", _info.name);
 			return false;
@@ -163,12 +163,12 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 		_nCharsAccum++;
 		if (_nCharsAccum == _info.nCharsPerGroup) {
 			UInt8 buffOut[8];
-			size_t bytesOut = _info.bytesOutTbl[_nPads];
+			size_t bytesOut = _info.bytesOutTbl[_nPaddings];
 			for (size_t i = 0; i < _info.bytesPerGroup; i++, _accum >>= 8) {
 				buffOut[_info.bytesPerGroup - i - 1] = static_cast<UInt8>(_accum & 0xff);
 			}
 			if (bytesOut > 0 && !_pStreamOut->Write(buffOut, bytesOut)) return false;
-			_nCharsAccum = 0, _nPads = 0, _accum = 0;
+			_nCharsAccum = 0, _nPaddings = 0, _accum = 0;
 		}
 	}
 	return true;
@@ -188,50 +188,55 @@ bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 //------------------------------------------------------------------------------
 // Encoder
 //------------------------------------------------------------------------------
-const char Encoder::_charTbl[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
 Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine) :
 	_pStreamOut(pStreamOut), _nCharsPerLine((nCharsPerLine + 3) / 4 * 4),
-	_nCharsOut(0), _bytesAccum(0), _accum(0)
+	_column(0), _bytesAccum(0), _accum(0)
 {
 }
 
-const int bytesOutTbl[] = {
-	3,	// padding = 0
-	2,	// padding = 1
-	1,	// padding = 2
-	0,	// padding = 3 (invalid)
-};	// bytesOutTbl
-size_t bytesPerGroup = 3;	// bytesPerGroup
-size_t nCharsPerGroup = 4;	// nCharsPerGroup
-size_t bitsPerChar = 6;		// bitsPerChar
-UInt8 mask = 0x3f;
+struct Info {
+	const char* name;
+	const char* charTbl;
+	const int nPaddingsTbl[16];
+	size_t bytesPerGroup;
+	size_t nCharsPerGroup;
+	size_t bitsPerChar;
+};
+
+const Info _info = {
+	"base64",
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", // charTbl
+	{
+		0,	// bytesAccum = 0 (invalid)
+		2,	// bytesAccum = 1
+		1,	// bytesAccum = 2
+		0,	// bytesAccum = 3
+	},	// nPaddingsTbl
+	3,	// bytesPerGroup
+	4,	// nCharsPerGroup
+	6,	// bitsPerChar
+};
 
 bool Encoder::Encode(const void* buff, size_t bytes)
 {
+	UInt8 mask = (1 << _info.bitsPerChar) - 1;
 	const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
 	const UInt8* buffpEnd = buffp + bytes;
 	for ( ; buffp != buffpEnd; buffp++) {
 		_accum = (_accum << 8) + *buffp;
 		_bytesAccum++;
-		if (_bytesAccum == bytesPerGroup) {
-			// 00000000 aaaaaabb bbbbcccc ccdddddd
+		if (_bytesAccum == _info.bytesPerGroup) {
 			char buffOut[16];
-			for (size_t i = 0; i < nCharsPerGroup; i++) {
-				buffOut[nCharsPerGroup - i - 1] = _charTbl[_accum & mask];
-				_accum >>= bitsPerChar;
+			for (size_t i = 0; i < _info.nCharsPerGroup; i++) {
+				buffOut[_info.nCharsPerGroup - i - 1] = _info.charTbl[_accum & mask];
+				_accum >>= _info.bitsPerChar;
 			}
-			// buffOut[bytesOut++] = _charTbl[(_accum >> 18) & 0x3f];
-			// buffOut[bytesOut++] = _charTbl[(_accum >> 12) & 0x3f];
-			// buffOut[bytesOut++] = _charTbl[(_accum >> 6) & 0x3f];
-			// buffOut[bytesOut++] = _charTbl[(_accum >> 0) & 0x3f];
-			_nCharsOut += nCharsPerGroup;
-			size_t bytesOut = nCharsPerGroup;
-			if (_nCharsPerLine > 0 && _nCharsOut >= _nCharsPerLine) {
+			_column += _info.nCharsPerGroup;
+			size_t bytesOut = _info.nCharsPerGroup;
+			if (_nCharsPerLine > 0 && _column >= _nCharsPerLine) {
 				if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
 				buffOut[bytesOut++] = '\n';
-				_nCharsOut = 0;
+				_column = 0;
 			}
 			if (!_pStreamOut->Write(buffOut, bytesOut)) return false;
 			_bytesAccum = 0, _accum = 0;
@@ -253,44 +258,29 @@ bool Encoder::EncodeStream(Stream& streamSrc, size_t bytesUnit)
 
 bool Encoder::Finish()
 {
-	UInt8 buffOut[8];
-	size_t bytesOut = 0;
-#if 0
-	size_t bytesOut = bytesOutTbl[_bytesAccum];
-#endif	
-	if (_bytesAccum == 0) {
-		// nothing to do
-	} else if (_bytesAccum == 1) {
-		// 00000000 aaaaaabb 00000000 00000000
-		_accum <<= 16;
-		buffOut[bytesOut++] = _charTbl[(_accum >> 18) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 12) & 0x3f];
-		buffOut[bytesOut++] = '=';
-		buffOut[bytesOut++] = '=';
-		_nCharsOut += 4;
-	} else if (_bytesAccum == 2) {
-		// 00000000 aaaaaabb bbbbcccc 00000000
-		_accum <<= 8;
-		buffOut[bytesOut++] = _charTbl[(_accum >> 18) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 12) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 6) & 0x3f];
-		buffOut[bytesOut++] = '=';
-		_nCharsOut += 4;
-	} else if (_bytesAccum == 3) {
-		// 00000000 aaaaaabb bbbbcccc ccdddddd
-		buffOut[bytesOut++] = _charTbl[(_accum >> 18) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 12) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 6) & 0x3f];
-		buffOut[bytesOut++] = _charTbl[(_accum >> 0) & 0x3f];
-		_nCharsOut += 4;
+	UInt8 mask = (1 << _info.bitsPerChar) - 1;
+	char buffOut[16];
+	size_t nCharsOut = 0;
+	if (_bytesAccum > 0) {
+		size_t nPaddings = _info.nPaddingsTbl[_bytesAccum];
+		_accum <<= 8 * (_info.bytesPerGroup - _bytesAccum);
+		size_t i = 0;
+		for ( ; i < nPaddings; i++, _accum >>= _info.bitsPerChar) {
+			buffOut[_info.nCharsPerGroup - i - 1] = '=';
+		}
+		for ( ; i < _info.nCharsPerGroup; i++, _accum >>= _info.bitsPerChar) {
+			buffOut[_info.nCharsPerGroup - i - 1] = _info.charTbl[_accum & mask];
+		}
+		nCharsOut = _info.nCharsPerGroup;
+		_column += nCharsOut;
 	}
-	if (_nCharsPerLine > 0 && _nCharsOut > 0) {
-		if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
-		buffOut[bytesOut++] = '\n';
-		_nCharsOut = 0;
+	if (_nCharsPerLine > 0 && _column > 0) {
+		if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[nCharsOut++] = '\r';
+		buffOut[nCharsOut++] = '\n';
+		_column = 0;
 	}
-	if (bytesOut > 0 && !_pStreamOut->Write(buffOut, bytesOut)) return false;
-	_nCharsOut = 0, _bytesAccum = 0, _accum = 0;
+	if (nCharsOut > 0 && !_pStreamOut->Write(buffOut, nCharsOut)) return false;
+	_column = 0, _bytesAccum = 0, _accum = 0;
 	return true;
 }
 

@@ -18,7 +18,7 @@ public:
 	struct Info {
 		const char* name;
 		const int numTbl[256];
-		const size_t bytesOutTbl[10];
+		const size_t bytesOutTbl[16];
 		size_t bytesPerGroup;
 		size_t nCharsPerGroup;
 		size_t bitsPerChar;
@@ -26,7 +26,7 @@ public:
 private:
 	RefPtr<Stream> _pStreamOut;
 	int _nCharsAccum;
-	int _nPads;
+	int _nPaddings;
 	UInt64 _accum;
 	size_t _iBuffWork;
 	const Info& _info;
@@ -65,7 +65,7 @@ public:
 private:
 	RefPtr<Stream> _pStreamOut;
 	size_t _nCharsPerLine;
-	size_t _nCharsOut;
+	size_t _column;
 	size_t _bytesAccum;
 	UInt64 _accum;
 private:
