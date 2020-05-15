@@ -88,6 +88,7 @@ public:
 	static const TokenType String;
 	static const TokenType StringSuffixed;
 	static const TokenType Binary;
+	static const TokenType BinarySuffixed;
 	static const TokenType Template;
 	static const TokenType TmplEmbedded;
 	static const TokenType Symbol;
@@ -126,10 +127,10 @@ private:
 	int _lineNoBtm;
 	RefPtr<StringReferable> _pSegment;	// for Symbol, Space, Escape, Number, NumberSuffixed,
 										//     Template, TmplEmbedded, CommentLine, CommentBlock,
-										//     String and StringSuffixed
+										//     String, StringSuffixed and BinarySuffixed
 	RefPtr<BinaryReferable> _pBinary;	// for Binary
-	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed
-	RefPtr<StringReferable> _pSource;	// for NumberSuffixed, StringSuffixed
+	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed and BinarySuffixed
+	RefPtr<StringReferable> _pSource;	// for NumberSuffixed, StringSuffixed and BinarySuffixed
 	RefPtr<Expr> _pExpr;				// for Expr
 	RefPtr<ExprLink> _pExprLink;		// for LBrace, LBlockParam, LBracket and LParenthesis
 	RefPtr<ExprLink> _pExprLinkEx;		// for LBrace

@@ -8,7 +8,7 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// base64.Encode(src:Stream, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine]
+// base64.Encode(src:Stream, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
 Gurax_DeclareFunction(Encode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -20,6 +20,7 @@ Gurax_DeclareFunction(Encode)
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from stream `src` and encodes it in a base-n format into the stream `dst`.\n"
@@ -67,11 +68,11 @@ Gurax_ImplementFunction(Encode)
 		RefPtr<Encoder> pEncoder(new Encoder(pStreamDst->Reference(),
 								singleLineFlag? 0 : nCharsPerLine, info));
 		if (!pEncoder->EncodeStream(streamSrc) || !pEncoder->Finish()) return Value::nil();
-		return new Value_Binary(pBuff.release());
+		return argument.ReturnValue(processor, new Value_Binary(pBuff.release()));
 	}
 }
 
-// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64]
+// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
 Gurax_DeclareFunction(Decode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -81,6 +82,7 @@ Gurax_DeclareFunction(Decode)
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.\n"
@@ -117,8 +119,24 @@ Gurax_ImplementFunction(Decode)
 		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
 		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
 		if (!pDecoder->DecodeStream(streamSrc)) return Value::nil();
-		return new Value_Binary(pBuff.release());
+		return argument.ReturnValue(processor, new Value_Binary(pBuff.release()));
 	}
+}
+
+//------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Compose(Binary, base64)
+{
+#if 0
+	bool successFlag = false;
+	Double num = strRef.GetStringSTL().ToDouble(&successFlag);
+	if (!successFlag) {
+		String::IssueError_InvalidFormatOfNumber();
+		return;
+	}
+	composer.Add_Value(new Value_Complex(Complex(0, num)), pExpr);	// [Value]
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -134,6 +152,8 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Encode));
 	Assign(Gurax_CreateFunction(Decode));
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Binary, base64);
 	return true;
 }
 

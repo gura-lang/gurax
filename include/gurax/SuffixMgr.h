@@ -39,7 +39,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(SuffixMgr);
 public:
-	enum class Target { Number, String };
+	enum class Target { Number, String, Binary };
 private:
 	Target _target;
 	const Symbol* _pSymbol;
@@ -80,6 +80,7 @@ public:
 private:
 	Map _mapForNumber;
 	Map _mapForString;
+	Map _mapForBinary;
 public:
 	SuffixMgrMap() {}
 protected:
@@ -87,10 +88,13 @@ protected:
 public:
 	void Clear();
 	Map& GetMap(SuffixMgr::Target target) {
-		return (target == SuffixMgr::Target::Number)? _mapForNumber : _mapForString;
+		return
+			(target == SuffixMgr::Target::Number)? _mapForNumber :
+			(target == SuffixMgr::Target::String)? _mapForString :
+			_mapForBinary;	// target == SuffixMgr::Target::Binary
 	}
 	const Map& GetMap(SuffixMgr::Target target) const {
-		return (target == SuffixMgr::Target::Number)? _mapForNumber : _mapForString;
+		return const_cast<SuffixMgrMap*>(this)->GetMap(target);
 	}
 	void Assign(SuffixMgr* pSuffixMgr);
 	SuffixMgr* Lookup(SuffixMgr::Target target, const Symbol* pSymbol) const;

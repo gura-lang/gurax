@@ -1156,8 +1156,11 @@ void Tokenizer::FeedChar(char ch)
 			if (_verboseFlag) _source.push_back(ch);
 			_suffix.push_back(ch);
 		} else if (_stringInfo.type == StringType::Binary) {
-			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
-			_stat = Stat::Error;
+			int lineNo = GetLineNo();
+			_tokenWatcher.FeedToken(new Token(TokenType::BinarySuffixed, _lineNoTop, lineNo,
+											  _segment, _suffix, _source));
+			Gurax_PushbackEx(ch);
+			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else if (_stringInfo.type == StringType::BinaryWritable) {
 			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
 			_stat = Stat::Error;

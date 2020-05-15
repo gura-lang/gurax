@@ -4,6 +4,8 @@
 //==============================================================================
 import(util.tester) {*}
 
+PrintSep() = Println('----------------------------------------------------------')
+
 TesterCommon(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
 	dumpFlag = (buffSrc.bytes < 80)
 	Printf('Source:  %s\n', cond(dumpFlag, buffSrc, Format('(%dbytes)', buffSrc.bytes)))
@@ -19,6 +21,7 @@ TesterBase16(buffSrc:Binary):void:map = {
 	buffDec = base64.Decode(buffEnc):base16
 	TesterCommon(buffSrc, buffEnc, buffDec)
 }
+
 TesterBase32(buffSrc:Binary):void:map = {
 	buffEnc = base64.Encode(buffSrc):base32:singleLine
 	buffDec = base64.Decode(buffEnc):base32
@@ -49,32 +52,56 @@ TestCase('Basic test') {
 		b'abcdefghijklmnopqrstuvwxyz'
 		Binary {|buff| buff.p.Put(`uint8, 0..1024), buff} 
 	]
-	Println('----------------------------------------------------------')
+	PrintSep()
 	Println('Base16')
 	TesterBase16(testCases)
-	Println('----------------------------------------------------------')
+	PrintSep()
 	Println('Base32')
 	TesterBase32(testCases)
-	Println('----------------------------------------------------------')
+	PrintSep()
 	Println('Base32hex')
 	TesterBase32hex(testCases)
-	Println('----------------------------------------------------------')
+	PrintSep()
 	Println('Base64')
 	TesterBase64(testCases)
 }
 
 TestCase('Line Length') {
-	Binary {|buff|
-		buff.p.Put(`uint8, 0..255)
-		Println('Encode():base16')
-		base64.Encode(buff, sys.cout):base16
-		Println('Encode():base32')
-		base64.Encode(buff, sys.cout):base32
-		Println('Encode():base32hex')
-		base64.Encode(buff, sys.cout):base32hex
-		Println('Encode()')
-		base64.Encode(buff, sys.cout)
-		Println('Encode()')
-		base64.Encode(buff, sys.cout)
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	PrintSep()
+	Println('Encode():base16')
+	base64.Encode(buffSrc):base16 {|buffResult|
+		Stream.Pipe(buffResult, sys.cout)
+		Printf('%s\n', cond(base64.Decode(buffResult):base16 == buffSrc, 'OK', 'NG'))
+	}
+	PrintSep()
+	Println('Encode():base32')
+	base64.Encode(buffSrc):base32 {|buffResult|
+		Stream.Pipe(buffResult, sys.cout)
+		Printf('%s\n', cond(base64.Decode(buffResult):base32 == buffSrc, 'OK', 'NG'))
+	}
+	PrintSep()
+	Println('Encode():base32hex')
+	base64.Encode(buffSrc):base32hex {|buffResult|
+		Stream.Pipe(buffResult, sys.cout)
+		Printf('%s\n', cond(base64.Decode(buffResult):base32hex == buffSrc, 'OK', 'NG'))
+	}
+	PrintSep()
+	Println('Encode():base64')
+	base64.Encode(buffSrc):base64 {|buffResult|
+		Stream.Pipe(buffResult, sys.cout)
+		Printf('%s\n', cond(base64.Decode(buffResult):base64 == buffSrc, 'OK', 'NG'))
+	}
+	PrintSep()
+	Println('Encode(lineLen = 32):base64')
+	base64.Encode(buffSrc, lineLen = 32):base64 {|buffResult|
+		Stream.Pipe(buffResult, sys.cout)
+		Printf('%s\n', cond(base64.Decode(buffResult):base64 == buffSrc, 'OK', 'NG'))
+	}
+	PrintSep()
+	Println('Encode(lineLen = 0):base64')
+	base64.Encode(buffSrc, lineLen = 0):base64 {|buffResult|
+		Stream.Pipe(buffResult, sys.cout), Println()
+		Printf('%s\n', cond(base64.Decode(buffResult):base64 == buffSrc, 'OK', 'NG'))
 	}
 }

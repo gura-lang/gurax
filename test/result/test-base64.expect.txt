@@ -1,0 +1,138 @@
+======== Basic test ========
+----------------------------------------------------------
+Base16
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'66' .. OK
+Source:  b'fo'
+Encoded: B'666F' .. OK
+Source:  b'foo'
+Encoded: B'666F6F' .. OK
+Source:  b'foob'
+Encoded: B'666F6F62' .. OK
+Source:  b'fooba'
+Encoded: B'666F6F6261' .. OK
+Source:  b'foobar'
+Encoded: B'666F6F626172' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'6162636465666768696A6B6C6D6E6F707172737475767778797A' .. OK
+Source:  (1025bytes)
+Encoded: (2050bytes) .. OK
+----------------------------------------------------------
+Base32
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'MY======' .. OK
+Source:  b'fo'
+Encoded: B'MZXQ====' .. OK
+Source:  b'foo'
+Encoded: B'MZXW6===' .. OK
+Source:  b'foob'
+Encoded: B'MZXW6YQ=' .. OK
+Source:  b'fooba'
+Encoded: B'MZXW6YTB' .. OK
+Source:  b'foobar'
+Encoded: B'MZXW6YTBOI======' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'MFRGGZDFMZTWQ2LKNNWG23TPOBYXE43UOV3HO6DZPI======' .. OK
+Source:  (1025bytes)
+Encoded: (1640bytes) .. OK
+----------------------------------------------------------
+Base32hex
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'CO======' .. OK
+Source:  b'fo'
+Encoded: B'CPNG====' .. OK
+Source:  b'foo'
+Encoded: B'CPNMU===' .. OK
+Source:  b'foob'
+Encoded: B'CPNMUOG=' .. OK
+Source:  b'fooba'
+Encoded: B'CPNMUOJ1' .. OK
+Source:  b'foobar'
+Encoded: B'CPNMUOJ1E8======' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'C5H66P35CPJMGQBADDM6QRJFE1ON4SRKELR7EU3PF8======' .. OK
+Source:  (1025bytes)
+Encoded: (1640bytes) .. OK
+----------------------------------------------------------
+Base64
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'Zg==' .. OK
+Source:  b'fo'
+Encoded: B'Zm8=' .. OK
+Source:  b'foo'
+Encoded: B'Zm9v' .. OK
+Source:  b'foob'
+Encoded: B'Zm9vYg==' .. OK
+Source:  b'fooba'
+Encoded: B'Zm9vYmE=' .. OK
+Source:  b'foobar'
+Encoded: B'Zm9vYmFy' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=' .. OK
+Source:  (1025bytes)
+Encoded: (1368bytes) .. OK
+======== Line Length ========
+----------------------------------------------------------
+Encode():base16
+000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425
+262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F404142434445464748494A4B
+4C4D4E4F505152535455565758595A5B5C5D5E5F606162636465666768696A6B6C6D6E6F7071
+72737475767778797A7B7C7D7E7F808182838485868788898A8B8C8D8E8F9091929394959697
+98999A9B9C9D9E9FA0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBD
+BEBFC0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDFE0E1E2E3
+E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF
+OK
+----------------------------------------------------------
+Encode():base32
+AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYPSAIJCEMSCKJRH
+FAUSUKZMFUXC6MBRGIZTINJWG44DSOR3HQ6T4P2AIFBEGRCFIZDUQSKKJNGE2TSP
+KBIVEU2UKVLFOWCZLJNVYXK6L5QGCYTDMRSWMZ3INFVGW3DNNZXXA4LSON2HK5TX
+PB4XU634PV7H7AEBQKBYJBMGQ6EITCULRSGY5D4QSGJJHFEVS2LZRGM2TOOJ3HU7
+UCQ2FI5EUWTKPKFJVKV2ZLNOV6YLDMVTWS23NN5YXG5LXPF5X274BQOCYPCMLRWH
+ZDE4VS6MZXHM7UGR2LJ5JVOW27MNTWW33TO55X7A4HROHZHF43T6R2PK5PWO33XP
+6DY7F47U6X3PP6HZ7L57Z7P674======
+OK
+----------------------------------------------------------
+Encode():base32hex
+000G40O40K30E209185GO38E1S8124GJ2GAHC5OO34D1M70T3OFI08924CI2A9H7
+50KIKAPC5KN2UC1H68PJ8D9M6SS3IEHR7GUJSFQ085146H258P3KGIAA9D64QJIF
+A18L4KQKALB5EM2PB9DLONAUBTG62OJ3CHIMCPR8D5L6MR3DDPNN0SBIEDQ7ATJN
+F1SNKURSFLV7V041GA1O91C6GU48J2KBHI6OT3SGI699754LIQBPH6CQJEE9R7KV
+K2GQ58T4KMJAFA59LALQPBDELUOB3CLJMIQRDDTON6TBNF5TNQVS1GE2OF2CBHM7
+P34SLIUCPN7CVK6HQB9T9LEMQVCDJMMRRJETTNV0S7HE7P75SRJUHQFATFMERRNF
+U3OV5SVKUNRFFU7PVBTVPVFUVS======
+OK
+----------------------------------------------------------
+Encode():base64
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4
+OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx
+cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq
+q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj
+5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==
+OK
+----------------------------------------------------------
+Encode(lineLen = 32):base64
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYX
+GBkaGxwdHh8gISIjJCUmJygpKissLS4v
+MDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZH
+SElKS0xNTk9QUVJTVFVWV1hZWltcXV5f
+YGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3
+eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6P
+kJGSk5SVlpeYmZqbnJ2en6ChoqOkpaan
+qKmqq6ytrq+wsbKztLW2t7i5uru8vb6/
+wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX
+2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v
+8PHy8/T19vf4+fr7/P3+/w==
+OK
+----------------------------------------------------------
+Encode(lineLen = 0):base64
+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==
+OK

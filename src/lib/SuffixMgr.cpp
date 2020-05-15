@@ -30,8 +30,10 @@ void SuffixMgrMap::Clear()
 {
 	for (auto& pair : _mapForNumber) SuffixMgr::Delete(pair.second);
 	for (auto& pair : _mapForString) SuffixMgr::Delete(pair.second);
+	for (auto& pair : _mapForBinary) SuffixMgr::Delete(pair.second);
 	_mapForNumber.clear();
 	_mapForString.clear();
+	_mapForBinary.clear();
 }
 
 void SuffixMgrMap::Assign(SuffixMgr* pSuffixMgr)

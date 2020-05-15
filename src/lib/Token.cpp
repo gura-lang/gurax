@@ -80,6 +80,7 @@ const TokenType TokenType::NumberSuffixed	{ 28, "NumberSuffixed",	"[NmS]",	OpTyp
 const TokenType TokenType::String			{ 28, "String",			"[Str]",	OpType::None	};
 const TokenType TokenType::StringSuffixed	{ 28, "StringSuffixed",	"[StS]",	OpType::None	};
 const TokenType TokenType::Binary			{ 28, "Binary",			"[Bin]",	OpType::None	};
+const TokenType TokenType::BinarySuffixed	{ 28, "BinarySuffixed",	"[BiS]",	OpType::None	};
 const TokenType TokenType::Template			{ 28, "Template",		"[TpS]",	OpType::None	};
 const TokenType TokenType::TmplEmbedded		{ 28, "TmplEmbedded",	"[EmS]",	OpType::None	};
 const TokenType TokenType::Symbol			{ 29, "Symbol",			"[Sym]",	OpType::None	};	// S
