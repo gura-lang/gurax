@@ -126,17 +126,36 @@ Gurax_ImplementFunction(Decode)
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
 //------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Compose(Binary, base16)
+{
+	const String& buff = strRef.GetStringSTL();
+	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
+	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base16)) return;
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+}
+
+Gurax_ImplementSuffixMgr_Compose(Binary, base32)
+{
+	const String& buff = strRef.GetStringSTL();
+	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
+	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base32)) return;
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+}
+
+Gurax_ImplementSuffixMgr_Compose(Binary, base32hex)
+{
+	const String& buff = strRef.GetStringSTL();
+	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
+	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base32hex)) return;
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+}
+
 Gurax_ImplementSuffixMgr_Compose(Binary, base64)
 {
-#if 0
-	bool successFlag = false;
-	Double num = strRef.GetStringSTL().ToDouble(&successFlag);
-	if (!successFlag) {
-		String::IssueError_InvalidFormatOfNumber();
-		return;
-	}
-	composer.Add_Value(new Value_Complex(Complex(0, num)), pExpr);	// [Value]
-#endif
+	const String& buff = strRef.GetStringSTL();
+	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
+	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base64)) return;
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
 }
 
 //------------------------------------------------------------------------------
@@ -153,6 +172,9 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Encode));
 	Assign(Gurax_CreateFunction(Decode));
 	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Binary, base16);
+	Gurax_AssignSuffixMgr(Binary, base32);
+	Gurax_AssignSuffixMgr(Binary, base32hex);
 	Gurax_AssignSuffixMgr(Binary, base64);
 	return true;
 }

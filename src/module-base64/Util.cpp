@@ -158,6 +158,13 @@ bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 	return !Error::IsIssued();
 }
 
+bool Decoder::Decode(BinaryReferable& buffDst, const void* buff, size_t bytes, const Info& info)
+{
+	RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, buffDst.Reference()));
+	RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
+	return pDecoder->Decode(buff, bytes);
+}
+
 //------------------------------------------------------------------------------
 // Encoder
 //------------------------------------------------------------------------------

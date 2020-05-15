@@ -62,6 +62,13 @@ protected:
 public:
 	bool Decode(const void* buff, size_t bytes);
 	bool DecodeStream(Stream& streamSrc, size_t bytesUnit = 65536);
+public:
+	static bool Decode(BinaryReferable& buffDst,
+						const void* buff, size_t bytes, const Info& info);
+	static bool Decode(BinaryReferable& buffDst,
+						const Binary& buffSrc, const Info& info) {
+		return Decode(buffDst, buffSrc.data(), buffSrc.size(), info);
+	}
 };
 
 //------------------------------------------------------------------------------
