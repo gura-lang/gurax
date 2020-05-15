@@ -22,6 +22,31 @@ TestCase('Stream#Delcr()') {
 TestCase('Stream#Flush()') {
 }
 
+TestCase('Stream.Pipe()') {
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	Stream.Pipe(buffSrc, buffDst)
+	buffDst.Dump()
+}
+
+TestCase('Stream#PipeFromStream()') {
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	buffDst.Writer {|streamDst|
+		streamDst.PipeFromStream(buffSrc)
+	}
+	buffDst.Dump()
+}
+
+TestCase('Stream#PipeToStream()') {
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	buffSrc.Reader {|streamSrc|
+		streamSrc.PipeToStream(buffDst)
+	}
+	buffDst.Dump()
+}
+
 TestCase('Stream#Print()') {
 }
 
@@ -50,56 +75,47 @@ TestCase('Stream#ReadLines()') {
 	}
 }
 
-TestCase('Stream#PipeToStream()') {
-}
-
 TestCase('Stream#Seek()') {
 }
 
 TestCase('Stream#Write()') {
 }
 
-TestCase('Stream#PipeFromStream()') {
-}
-
 TestCase('Stream << Binary') {
-	buff = B''
-	buff.Writer {|out|
-		buffSrc = B''
-		buffSrc.p.Put(`uint8, 0..255)
-		out << buffSrc
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	buffDst.Writer {|streamDst|
+		streamDst << buffSrc
 	}
-	buff.Dump()
+	buffDst.Dump()
 }
 
 TestCase('Stream << Pointer') {
-	buff = B''
-	buff.Writer {|out|
-		buffSrc = B''
-		buffSrc.p.Put(`uint8, 0..255)
-		out << buffSrc.p
-		out << buffSrc.p + 128
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	buffDst.Writer {|streamDst|
+		streamDst << buffSrc.p
+		streamDst << buffSrc.p + 128
 	}
-	buff.Dump()
+	buffDst.Dump()
 }
 
 TestCase('Stream << Stream') {
-	buff = B''
-	buff.Writer {|out|
-		buffSrc = B''
-		buffSrc.p.Put(`uint8, 0..255)
-		out << buffSrc.Reader()
+	(buffSrc = B'').p.Put(`uint8, Range(256))
+	buffDst = B''
+	buffDst.Writer {|streamDst|
+		streamDst << buffSrc.Reader()
 	}
-	buff.Dump()
+	buffDst.Dump()
 }
 
 TestCase('Stream << String') {
-	buff = B''
-	buff.Writer {|out|
+	buffDst = B''
+	buffDst.Writer {|streamDst|
 		strSrc = Chr(0x20..0x7f).Join()
-		out << strSrc
+		streamDst << strSrc
 	}
-	buff.Dump()
+	buffDst.Dump()
 }
 
 TestCase('ReadLines()') {
