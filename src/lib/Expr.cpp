@@ -19,6 +19,7 @@ void Expr::ComposeOrNil(Composer& composer)
 {
 	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	Compose(composer);
+	if (Error::IsIssued()) return;
 	if (pPUnitMarked == composer.PeekPUnitCont()) { // when nothing has been yielded
 		composer.Add_Value(Value::nil(), this);
 	}
@@ -115,11 +116,13 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	if (pExpr) {
 		pExpr->Compose(composer);
+		if (Error::IsIssued()) return;
 		pExpr = pExpr->GetExprNext();
 	}
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.FlushDiscard();
 		pExpr->Compose(composer);
+		if (Error::IsIssued()) return;
 	}
 	if (pPUnitMarked == composer.PeekPUnitCont()) { // when nothing has been yielded
 		composer.Add_Value(Value::nil(), this);
@@ -160,6 +163,7 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_BeginArgSlot(this);								// [Argument]
 	Compose(composer);												// [Argument Any]
+	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlot(this);									// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
@@ -204,6 +208,7 @@ void ExprList::Compose(Composer& composer)
 		Expr* pExpr = *ppExpr++;
 		composer.FlushDiscard();
 		pExpr->Compose(composer);
+		if (Error::IsIssued()) return;
 	}
 	// [Value]
 }

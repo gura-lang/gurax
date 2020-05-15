@@ -44,9 +44,9 @@ exif.ifd0 = [
 		`PixelYDimension			=> 480
 		`Interoperability			=> [
 			`InteroperabilityIndex		=> 'R98'
-			`InteroperabilityVersion	=> b'0100'
-			`RelatedImageWidth			=> 640
-			`RelatedImageHeight			=> 480
+			//`InteroperabilityVersion	=> b'0100'
+			//`RelatedImageWidth			=> 640
+			//`RelatedImageHeight			=> 480
 		]
 		`FocalPlaneXResolution		=> Rational(640000, 206)
 		`FocalPlaneYResolution		=> Rational(480000, 155)
