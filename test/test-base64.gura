@@ -105,3 +105,10 @@ TestCase('Line Length') {
 		Printf('%s\n', cond(base64.Decode(buffResult):base64 == buffSrc, 'OK', 'NG'))
 	}
 }
+
+TestCase('Suffix') {
+	Tester(`b'666F6F626172'base16)
+	Tester(`b'MZXW6YTBOI======'base32)
+	Tester(`b'CPNMUOJ1E8======'base32hex)
+	Tester(`b'Zm9vYmFy'base64)
+}
