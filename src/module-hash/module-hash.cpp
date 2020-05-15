@@ -26,7 +26,7 @@ Gurax_ImplementFunction(CRC32)
 	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
 	RefPtr<Accumulator> pAccumulator(new Accumulator_CRC32());
-	if (pStream && !pAccumulator->WriteFromStream(*pStream)) return Value::nil();
+	if (pStream && !pAccumulator->PipeFromStream(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
 }
 
@@ -48,7 +48,7 @@ Gurax_ImplementFunction(MD5)
 	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
 	RefPtr<Accumulator> pAccumulator(new Accumulator_MD5());
-	if (pStream && !pAccumulator->WriteFromStream(*pStream)) return Value::nil();
+	if (pStream && !pAccumulator->PipeFromStream(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
 }
 
@@ -70,7 +70,7 @@ Gurax_ImplementFunction(SHA1)
 	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
 	RefPtr<Accumulator> pAccumulator(new Accumulator_SHA1());
-	if (pStream && !pAccumulator->WriteFromStream(*pStream)) return Value::nil();
+	if (pStream && !pAccumulator->PipeFromStream(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
 }
 

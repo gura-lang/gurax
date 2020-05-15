@@ -124,9 +124,9 @@ public:
 	bool Seek(long offsetRel, SeekMode seekMode);
 	bool SetOffset(size_t offset);
 	bool ReadToBinary(Binary& buff, size_t bytesUnit = 65536);
-	bool ReadToStream(Stream& streamDst, size_t bytesUnit = 65536);
-	bool WriteFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
-		return streamSrc.ReadToStream(*this, bytesUnit);
+	bool PipeToStream(Stream& streamDst, size_t bytesUnit = 65536);
+	bool PipeFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
+		return streamSrc.PipeToStream(*this, bytesUnit);
 	}
 public:
 	virtual bool IsDumb() const { return false; }

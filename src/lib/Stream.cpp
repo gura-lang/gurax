@@ -319,7 +319,7 @@ bool Stream::ReadToBinary(Binary& buff, size_t bytesUnit)
 	return !Error::IsIssued();
 }
 
-bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
+bool Stream::PipeToStream(Stream& streamDst, size_t bytesUnit)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
 	UInt8* buffWork = pMemory->GetPointer<UInt8>();

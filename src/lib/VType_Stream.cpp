@@ -61,6 +61,36 @@ Gurax_ImplementConstructor(Stream)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// Stream.Pipe(streamSrc:Stream:r, streamDst:Stream:w):void
+Gurax_DeclareClassMethod(Stream, Pipe)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data from the `streamSrc` and writes it into `streamDst`.");
+}
+
+Gurax_ImplementClassMethod(Stream, Pipe)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamSrc = args.PickStream();
+	Stream& streamDst = args.PickStream();
+	// Function body
+	if (streamSrc.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	}
+	if (!streamSrc.PipeToStream(streamDst)) return Value::nil();
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Stream#Addcr(flag:Bool):reduce
@@ -287,8 +317,8 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
-// Stream#ReadToStream(streamDst:Stream:w):Stream:reduce
-Gurax_DeclareMethod(Stream, ReadToStream)
+// Stream#PipeToStream(streamDst:Stream:w):Stream:reduce
+Gurax_DeclareMethod(Stream, PipeToStream)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
@@ -297,7 +327,7 @@ Gurax_DeclareMethod(Stream, ReadToStream)
 		"Reads data from the target `Stream` instance and writes it into `streamDst`.");
 }
 
-Gurax_ImplementMethod(Stream, ReadToStream)
+Gurax_ImplementMethod(Stream, PipeToStream)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -311,7 +341,7 @@ Gurax_ImplementMethod(Stream, ReadToStream)
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
-	if (!stream.ReadToStream(streamDst)) return Value::nil();
+	if (!stream.PipeToStream(streamDst)) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -384,8 +414,8 @@ Gurax_ImplementMethod(Stream, Write)
 	return valueThis.Reference();
 }
 
-// Stream#WriteFromStream(streamSrc:Stream):Stream:reduce
-Gurax_DeclareMethod(Stream, WriteFromStream)
+// Stream#PipeFromStream(streamSrc:Stream):Stream:reduce
+Gurax_DeclareMethod(Stream, PipeFromStream)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
@@ -394,7 +424,7 @@ Gurax_DeclareMethod(Stream, WriteFromStream)
 		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");
 }
 
-Gurax_ImplementMethod(Stream, WriteFromStream)
+Gurax_ImplementMethod(Stream, PipeFromStream)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -408,7 +438,7 @@ Gurax_ImplementMethod(Stream, WriteFromStream)
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
-	if (!stream.WriteFromStream(streamSrc)) return Value::nil();
+	if (!stream.PipeFromStream(streamSrc)) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -460,7 +490,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Stream)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Stream& streamSrc = Value_Stream::GetStream(valueR);
-	if (!stream.WriteFromStream(streamSrc)) return Value::nil();
+	if (!stream.PipeFromStream(streamSrc)) return Value::nil();
 	return valueL.Reference();
 }
 
@@ -486,6 +516,8 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stream));
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateConstructorAlias(Stream, "Open"));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Stream, Pipe));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
@@ -496,10 +528,10 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Read));
 	Assign(Gurax_CreateMethod(Stream, ReadLine));
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
-	Assign(Gurax_CreateMethod(Stream, ReadToStream));
+	Assign(Gurax_CreateMethod(Stream, PipeToStream));
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
-	Assign(Gurax_CreateMethod(Stream, WriteFromStream));
+	Assign(Gurax_CreateMethod(Stream, PipeFromStream));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator

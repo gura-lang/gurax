@@ -37,7 +37,7 @@ TestCase('MD5') {
 		Println(record.expected)
 		Println(md5.Initialize().Write(record.data).digestHex)
 		Println(hash.MD5(record.data).digestHex)
-		Println(hash.MD5().WriteFromStream(record.data).digestHex)
+		Println(hash.MD5().PipeFromStream(record.data).digestHex)
 	}
 }
 
@@ -64,6 +64,6 @@ TestCase('SHA1') {
 			Println(sha1.digestHex)
 		}
 		Println(hash.SHA1(record.data * record.cnt).digestHex)
-		Println(hash.SHA1().WriteFromStream(record.data * record.cnt).digestHex)
+		Println(hash.SHA1().PipeFromStream(record.data * record.cnt).digestHex)
 	}
 }

@@ -66,9 +66,15 @@ TestCase('Basic test') {
 TestCase('Line Length') {
 	Binary {|buff|
 		buff.p.Put(`uint8, 0..255)
+		Println('Encode():base16')
 		base64.Encode(buff, sys.cout):base16
+		Println('Encode():base32')
 		base64.Encode(buff, sys.cout):base32
+		Println('Encode():base32hex')
 		base64.Encode(buff, sys.cout):base32hex
+		Println('Encode()')
+		base64.Encode(buff, sys.cout)
+		Println('Encode()')
 		base64.Encode(buff, sys.cout)
 	}
 }

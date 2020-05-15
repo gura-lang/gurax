@@ -38,7 +38,7 @@ TestCase('Stream#ReadLines()') {
 	}
 }
 
-TestCase('Stream#ReadToStream()') {
+TestCase('Stream#PipeToStream()') {
 }
 
 TestCase('Stream#Seek()') {
@@ -47,7 +47,7 @@ TestCase('Stream#Seek()') {
 TestCase('Stream#Write()') {
 }
 
-TestCase('Stream#WriteFromStream()') {
+TestCase('Stream#PipeFromStream()') {
 }
 
 TestCase('Stream << Binary') {
