@@ -1,6 +1,18 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	PrintPropSlots(Stream)
+}
+
+TestCase('Cast') {
+	f(s:Stream) = {s}
+	g(s:Stream:w) = {s}
+	Tester(`f(b''))
+	Tester(`g(B''))
+	Tester(`g(b''))
+}
+
 TestCase('Stream#Addcr()') {
 }
 

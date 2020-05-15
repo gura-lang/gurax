@@ -555,6 +555,10 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 		size_t offset = 0;
 		Stream::Flags flagsStream = Stream::Flag::Readable;
 		if (flags & DeclArg::Flag::StreamW) {
+			if (!binary.GetBinary().IsWritable()) {
+				Error::Issue(ErrorType::StreamError, "the binary is not writable");
+				return nullptr;
+			}
 			offset = binary.GetBinary().size();
 			flagsStream = Stream::Flag::Writable;
 		}
