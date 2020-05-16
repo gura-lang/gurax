@@ -92,89 +92,21 @@ Gurax_ImplementMethod(Expr, Eval)
 	return expr.Eval(processor);
 }
 
-// Expr#IsValue
-Gurax_DeclareMethod(Expr, IsValue)
+// Expr#IsAssign
+Gurax_DeclareMethod(Expr, IsAssign)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Value");
+		"Returns `true` if the expression is Assign");
 }
 
-Gurax_ImplementMethod(Expr, IsValue)
+Gurax_ImplementMethod(Expr, IsAssign)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Value>());
-}
-
-// Expr#IsIdentifier
-Gurax_DeclareMethod(Expr, IsIdentifier)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Identifier");
-}
-
-Gurax_ImplementMethod(Expr, IsIdentifier)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Identifier>());
-}
-
-// Expr#IsSuffixed
-Gurax_DeclareMethod(Expr, IsSuffixed)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Suffixed");
-}
-
-Gurax_ImplementMethod(Expr, IsSuffixed)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Suffixed>());
-}
-
-// Expr#IsMember
-Gurax_DeclareMethod(Expr, IsMember)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Member");
-}
-
-Gurax_ImplementMethod(Expr, IsMember)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Member>());
-}
-
-// Expr#IsUnaryOp
-Gurax_DeclareMethod(Expr, IsUnaryOp)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is UnaryOp");
-}
-
-Gurax_ImplementMethod(Expr, IsUnaryOp)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_UnaryOp>());
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Assign>());
 }
 
 // Expr#IsBinaryOp
@@ -194,40 +126,6 @@ Gurax_ImplementMethod(Expr, IsBinaryOp)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_BinaryOp>());
 }
 
-// Expr#IsAssign
-Gurax_DeclareMethod(Expr, IsAssign)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Assign");
-}
-
-Gurax_ImplementMethod(Expr, IsAssign)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Assign>());
-}
-
-// Expr#IsRoot
-Gurax_DeclareMethod(Expr, IsRoot)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Root");
-}
-
-Gurax_ImplementMethod(Expr, IsRoot)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Root>());
-}
-
 // Expr#IsBlock
 Gurax_DeclareMethod(Expr, IsBlock)
 {
@@ -245,38 +143,38 @@ Gurax_ImplementMethod(Expr, IsBlock)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Block>());
 }
 
-// Expr#IsLister
-Gurax_DeclareMethod(Expr, IsLister)
+// Expr#IsCaller
+Gurax_DeclareMethod(Expr, IsCaller)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Lister");
+		"Returns `true` if the expression is Caller");
 }
 
-Gurax_ImplementMethod(Expr, IsLister)
+Gurax_ImplementMethod(Expr, IsCaller)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Lister>());
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Caller>());
 }
 
-// Expr#IsIterer
-Gurax_DeclareMethod(Expr, IsIterer)
+// Expr#IsIdentifier
+Gurax_DeclareMethod(Expr, IsIdentifier)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Iterer");
+		"Returns `true` if the expression is Identifier");
 }
 
-Gurax_ImplementMethod(Expr, IsIterer)
+Gurax_ImplementMethod(Expr, IsIdentifier)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Iterer>());
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Identifier>());
 }
 
 // Expr#IsIndexer
@@ -296,21 +194,123 @@ Gurax_ImplementMethod(Expr, IsIndexer)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Indexer>());
 }
 
-// Expr#IsCaller
-Gurax_DeclareMethod(Expr, IsCaller)
+// Expr#IsIterer
+Gurax_DeclareMethod(Expr, IsIterer)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Caller");
+		"Returns `true` if the expression is Iterer");
 }
 
-Gurax_ImplementMethod(Expr, IsCaller)
+Gurax_ImplementMethod(Expr, IsIterer)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Caller>());
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Iterer>());
+}
+
+// Expr#IsLister
+Gurax_DeclareMethod(Expr, IsLister)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Lister");
+}
+
+Gurax_ImplementMethod(Expr, IsLister)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Lister>());
+}
+
+// Expr#IsMember
+Gurax_DeclareMethod(Expr, IsMember)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Member");
+}
+
+Gurax_ImplementMethod(Expr, IsMember)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Member>());
+}
+
+// Expr#IsRoot
+Gurax_DeclareMethod(Expr, IsRoot)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Root");
+}
+
+Gurax_ImplementMethod(Expr, IsRoot)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Root>());
+}
+
+// Expr#IsSuffixed
+Gurax_DeclareMethod(Expr, IsSuffixed)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Suffixed");
+}
+
+Gurax_ImplementMethod(Expr, IsSuffixed)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Suffixed>());
+}
+
+// Expr#IsUnaryOp
+Gurax_DeclareMethod(Expr, IsUnaryOp)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is UnaryOp");
+}
+
+Gurax_ImplementMethod(Expr, IsUnaryOp)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_UnaryOp>());
+}
+
+// Expr#IsValue
+Gurax_DeclareMethod(Expr, IsValue)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Value");
+}
+
+Gurax_ImplementMethod(Expr, IsValue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Value>());
 }
 
 // Expr.Parse(str:String):map {block?}
@@ -341,53 +341,19 @@ Gurax_ImplementClassMethod(Expr, Parse)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Expr#child
-Gurax_DeclareProperty_R(Expr, child)
+// Expr#block
+Gurax_DeclareProperty_R(Expr, block)
 {
 	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"An `Expr` instance of the child element.\n");
+		"An `Expr` instance of the block element.\n");
 }
 
-Gurax_ImplementPropertyGetter(Expr, child)
+Gurax_ImplementPropertyGetter(Expr, block)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectChild();
-	if (!pExpr) return Value::nil();
-	return new Value_Expr(pExpr->Reference());
-}
-
-// Expr#left
-Gurax_DeclareProperty_R(Expr, left)
-{
-	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the left element.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, left)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectLeft();
-	if (!pExpr) return Value::nil();
-	return new Value_Expr(pExpr->Reference());
-}
-
-// Expr#right
-Gurax_DeclareProperty_R(Expr, right)
-{
-	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the right element.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, right)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectRight();
+	const Expr* pExpr = valueThis.GetExpr().InspectBlock();
 	if (!pExpr) return Value::nil();
 	return new Value_Expr(pExpr->Reference());
 }
@@ -409,57 +375,6 @@ Gurax_ImplementPropertyGetter(Expr, car)
 	return new Value_Expr(pExpr->Reference());
 }
 
-// Expr#target
-Gurax_DeclareProperty_R(Expr, target)
-{
-	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the target element.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, target)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectTarget();
-	if (!pExpr) return Value::nil();
-	return new Value_Expr(pExpr->Reference());
-}
-
-// Expr#block
-Gurax_DeclareProperty_R(Expr, block)
-{
-	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the block element.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, block)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectBlock();
-	if (!pExpr) return Value::nil();
-	return new Value_Expr(pExpr->Reference());
-}
-
-// Expr#trailer
-Gurax_DeclareProperty_R(Expr, trailer)
-{
-	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the trailer element.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, trailer)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetExpr().InspectTrailer();
-	if (!pExpr) return Value::nil();
-	return new Value_Expr(pExpr->Reference());
-}
-
 // Expr#cdrs
 Gurax_DeclareProperty_R(Expr, cdrs)
 {
@@ -475,6 +390,23 @@ Gurax_ImplementPropertyGetter(Expr, cdrs)
 	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachCdr());
 	if (!pIterator) return Value::nil();
 	return new Value_Iterator(pIterator.release());
+}
+
+// Expr#child
+Gurax_DeclareProperty_R(Expr, child)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance of the child element.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, child)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetExpr().InspectChild();
+	if (!pExpr) return Value::nil();
+	return new Value_Expr(pExpr->Reference());
 }
 
 // Expr#children
@@ -494,6 +426,23 @@ Gurax_ImplementPropertyGetter(Expr, children)
 	return new Value_Iterator(pIterator.release());
 }
 
+// Expr#left
+Gurax_DeclareProperty_R(Expr, left)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance of the left element.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, left)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetExpr().InspectLeft();
+	if (!pExpr) return Value::nil();
+	return new Value_Expr(pExpr->Reference());
+}
+
 // Expr#params
 Gurax_DeclareProperty_R(Expr, params)
 {
@@ -509,6 +458,23 @@ Gurax_ImplementPropertyGetter(Expr, params)
 	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachParam());
 	if (!pIterator) return Value::nil();
 	return new Value_Iterator(pIterator.release());
+}
+
+// Expr#right
+Gurax_DeclareProperty_R(Expr, right)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance of the right element.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, right)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetExpr().InspectRight();
+	if (!pExpr) return Value::nil();
+	return new Value_Expr(pExpr->Reference());
 }
 
 // Expr#symbolName
@@ -530,6 +496,40 @@ Gurax_ImplementPropertyGetter(Expr, symbolName)
 		return Value::nil();
 	}
 	return new Value_String(pSymbol->GetName());
+}
+
+// Expr#target
+Gurax_DeclareProperty_R(Expr, target)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance of the target element.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, target)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetExpr().InspectTarget();
+	if (!pExpr) return Value::nil();
+	return new Value_Expr(pExpr->Reference());
+}
+
+// Expr#trailer
+Gurax_DeclareProperty_R(Expr, trailer)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance of the trailer element.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, trailer)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetExpr().InspectTrailer();
+	if (!pExpr) return Value::nil();
+	return new Value_Expr(pExpr->Reference());
 }
 
 // Expr#type
@@ -612,19 +612,19 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
-	Assign(Gurax_CreateMethod(Expr, IsValue));
-	Assign(Gurax_CreateMethod(Expr, IsIdentifier));
-	Assign(Gurax_CreateMethod(Expr, IsSuffixed));
-	Assign(Gurax_CreateMethod(Expr, IsMember));
-	Assign(Gurax_CreateMethod(Expr, IsUnaryOp));
-	Assign(Gurax_CreateMethod(Expr, IsBinaryOp));
 	Assign(Gurax_CreateMethod(Expr, IsAssign));
-	Assign(Gurax_CreateMethod(Expr, IsRoot));
+	Assign(Gurax_CreateMethod(Expr, IsBinaryOp));
 	Assign(Gurax_CreateMethod(Expr, IsBlock));
-	Assign(Gurax_CreateMethod(Expr, IsLister));
-	Assign(Gurax_CreateMethod(Expr, IsIterer));
-	Assign(Gurax_CreateMethod(Expr, IsIndexer));
 	Assign(Gurax_CreateMethod(Expr, IsCaller));
+	Assign(Gurax_CreateMethod(Expr, IsIdentifier));
+	Assign(Gurax_CreateMethod(Expr, IsIndexer));
+	Assign(Gurax_CreateMethod(Expr, IsIterer));
+	Assign(Gurax_CreateMethod(Expr, IsLister));
+	Assign(Gurax_CreateMethod(Expr, IsMember));
+	Assign(Gurax_CreateMethod(Expr, IsRoot));
+	Assign(Gurax_CreateMethod(Expr, IsSuffixed));
+	Assign(Gurax_CreateMethod(Expr, IsUnaryOp));
+	Assign(Gurax_CreateMethod(Expr, IsValue));
 	Assign(Gurax_CreateMethod(Expr, Parse));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Expr, block));
