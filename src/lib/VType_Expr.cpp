@@ -513,18 +513,14 @@ Gurax_DeclareProperty_R(Expr, symbolName)
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The name of the symbol if the expression is a pure symbol.\n"
-		"Otherwise, access to this property raises an error.\n");
+		"The name of the symbol if the expression is a pure symbol.\n");
 }
 
 Gurax_ImplementPropertyGetter(Expr, symbolName)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	const Symbol* pSymbol = valueThis.GetExpr().GetPureSymbol();
-	if (!pSymbol) {
-		Error::Issue(ErrorType::TypeError, "the expression is not a pure symbol");
-		return Value::nil();
-	}
+	if (!pSymbol) return Value::nil();
 	return new Value_String(pSymbol->GetName());
 }
 
