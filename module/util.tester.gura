@@ -44,13 +44,13 @@ PrintPUnitWithLabel(expr:Expr):void:map = {
 
 PrintPropSlots(vtype:VType) = {
 	propSlots = vtype.__EachPropSlot__():list
-	maxLenSymbolName = [propSlots:*symbol:*name:*len*, 16].Max()
+	maxLenSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
 	maxLenVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
 	Printf('%s\n', vtype.__fullName__)
 	propSlots.Each {|propSlot|
 		Printf('  %s%-*s %-*s %s%s\n',
 			cond(propSlot.isOfClass, '.', '#'),
-			maxLenSymbolName, propSlot.symbol.name,
+			maxLenSymbolName, propSlot.symbol.symbolName,
 			maxLenVTypeFullName, propSlot.vtype.__fullName__,
 			['', 'R', 'W', 'R/W'][cond(propSlot.IsSet(`R), 1, 0) + cond(propSlot.IsSet(`W), 2, 0)],
 			cond(propSlot.IsSet(`nil), ',nil', ''))

@@ -1,3 +1,6 @@
+======== Property ========
+Symbol
+  #symbolName       String       R
 ======== Operator == ========
 <VType:Expr(stream:Stream):map{block?}>
 (`a) == (`a) .. true

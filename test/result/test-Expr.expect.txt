@@ -40,22 +40,10 @@ Expr
   #cdrs             Iterator     R
   #child            Expr         R
   #children         Iterator     R
-  #isAssign         Bool         R
-  #isBinaryOp       Bool         R
-  #isBlock          Bool         R
-  #isCaller         Bool         R
-  #isIdentifier     Bool         R
-  #isIndexer        Bool         R
-  #isIterer         Bool         R
-  #isLister         Bool         R
-  #isMember         Bool         R
-  #isRoot           Bool         R
-  #isSuffixed       Bool         R
-  #isUnaryOp        Bool         R
-  #isValue          Bool         R
   #left             Expr         R
   #params           Iterator     R
   #right            Expr         R
+  #symbolName       String       R
   #target           Expr         R
   #trailer          Expr         R
   #type             Symbol       R

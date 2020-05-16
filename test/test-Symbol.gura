@@ -1,6 +1,10 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	PrintPropSlots(Symbol)
+}
+
 TestCase('Operator ==') {
 	x = `a
 	Println(x.__vtype__)
