@@ -366,9 +366,11 @@ Gurax_DeclareFunction(Range)
 		Gurax_Symbol(en),
 		"Creates an iterator that generates a sequence of number that increases or decreases by a specified step.\n"
 		"\n"
-		"- `Range(num:Number)`\n"
-		"- `Range(num:Number, numEnd:Number)`\n"
-		"- `Range(num:Number, numEnd:Number, step:Number)`\n");
+		"- `Range(num:Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`\n"
+		"- `Range(num:Number, numEnd:Number)` .. finite sequence of n where `num <= n < numEnd` or `numEnd < n <= num`\n"
+		"- `Range(num:Number, numEnd:Number, step:Number)` .. finite sequence of n\n"
+		"   where `num <= n < numEnd` or `numEnd < n <= num` with an increment of `step`\n"
+		"- `Range(num:Number, nil, step:Number)` .. infinite sequence that starts at `num` with an increment of `step`\n");
 }
 
 Gurax_ImplementFunction(Range)
@@ -390,9 +392,7 @@ Gurax_ImplementFunction(Range)
 			Error::Issue(ErrorType::RangeError, "step must not be zero");
 			return Value::nil();
 		}
-		numEnd = num / step * step;
-		if (numEnd * step < 0) numEnd = 0;
-		pIterator.reset(new Iterator_Range(0, numEnd, step));
+		pIterator.reset(new Iterator_Counter(num, step));
 	} else { // validFlag_numEnd && validFlag_step
 		if (step == 0) {
 			Error::Issue(ErrorType::RangeError, "step must not be zero");

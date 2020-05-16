@@ -182,7 +182,7 @@ public:
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeForClass(Composer& composer, bool publicFlag);
-	virtual void ComposeForList(Composer& composer);
+	virtual void ComposeForLister(Composer& composer);
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOp);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOp);
@@ -635,7 +635,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool IsUnaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeForList(Composer& composer) override;
+	virtual void ComposeForLister(Composer& composer) override;
 	virtual void ComposeForArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -662,7 +662,7 @@ public:
 		return GetOperator()->IsType(OpType::AndAnd) || GetOperator()->IsType(OpType::OrOr);
 	}
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeForList(Composer& composer) override;
+	virtual void ComposeForLister(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -757,7 +757,7 @@ public:
 	}
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeForList(Composer& composer) override;
+	virtual void ComposeForLister(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting

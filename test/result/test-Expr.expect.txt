@@ -41,6 +41,8 @@ Expr
   #child            Expr         R
   #children         Iterator     R
   #left             Expr         R
+  #lineNoBtm        Number       R
+  #lineNoTop        Number       R
   #params           Iterator     R
   #right            Expr         R
   #symbolName       String       R

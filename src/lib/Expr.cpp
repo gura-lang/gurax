@@ -135,7 +135,7 @@ void Expr::ComposeForClass(Composer& composer, bool publicFlag)
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
 
-void Expr::ComposeForList(Composer& composer)
+void Expr::ComposeForLister(Composer& composer)
 {
 	ComposeOrNil(composer);											// [List Any]
 	composer.Add_ListElem(0, false, false, this);					// [List]
@@ -589,14 +589,14 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	}
 }
 
-void Expr_UnaryOp::ComposeForList(Composer& composer)
+void Expr_UnaryOp::ComposeForLister(Composer& composer)
 {
-	if (!GetOperator()->IsType(OpType::PostMul)) {
-		Expr_Unary::ComposeForList(composer);							// [List]
-		return;
+	if (GetOperator()->IsType(OpType::PostMul)) {
+		GetExprChild().ComposeOrNil(composer);							// [List Any]
+		composer.Add_ListElem(0, false, true, this);					// [List]
+	} else {
+		Expr_Unary::ComposeForLister(composer);							// [List]
 	}
-	GetExprChild().ComposeOrNil(composer);								// [List Any]
-	composer.Add_ListElem(0, false, true, this);						// [List]
 }
 
 void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
@@ -671,7 +671,7 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	}
 }
 
-void Expr_BinaryOp::ComposeForList(Composer& composer)
+void Expr_BinaryOp::ComposeForLister(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::Seq)) {
 		GetExprLeft().ComposeOrNil(composer);							// [List Left]
@@ -679,7 +679,7 @@ void Expr_BinaryOp::ComposeForList(Composer& composer)
 		composer.Add_BinaryOp(GetOperator(), this);						// [List Result]
 		composer.Add_ListElem(0, false, true, this);					// [List]
 	} else {
-		Expr_Binary::ComposeForList(composer);							// [List]
+		Expr_Binary::ComposeForLister(composer);							// [List]
 	}
 }
 
@@ -850,12 +850,12 @@ void Expr_Block::Compose(Composer& composer)
 	ComposeSequence(composer, GetExprElemFirst());				// [Any]
 }
 
-void Expr_Block::ComposeForList(Composer& composer)
+void Expr_Block::ComposeForLister(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForList(composer);						// [List List]
+		pExpr->ComposeForLister(composer);						// [List List]
 	}	
 	composer.Add_ListElem(0, false, false, this);				// [List]
 }
@@ -1003,8 +1003,8 @@ void Expr_Lister::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForList(composer);						// [List]
-	}	
+		pExpr->ComposeForLister(composer);						// [List]
+	}
 }
 
 void Expr_Lister::ComposeForAssignment(

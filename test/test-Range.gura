@@ -41,6 +41,15 @@ TestCase('Range(num, numEnd, step)') {
 	Tester(`Range(0, -10, -2):list)
 }
 
+TestCase('Range(num, step = step)') {
+	Tester(`Range(0, step = 2).Head(10):list)
+	Tester(`Range(3, step = 2).Head(10):list)
+	Tester(`Range(-8, step = 2).Head(10):list)
+	Tester(`Range(0, step = -2).Head(10):list)
+	Tester(`Range(3, step = -2).Head(10):list)
+	Tester(`Range(-8, step = -2).Head(10):list)
+}
+
 TestCase('Block') {
 	Tester(`Range(10):list {|n| n * n})
 	Tester(`{accum = 0, Range(11) {|n| accum += n}})
