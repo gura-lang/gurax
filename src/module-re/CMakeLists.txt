@@ -11,13 +11,13 @@ add_library(re SHARED)
 target_include_directories(re PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/onigmo-6.2.0>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/guest/include/onigmo>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/guest/include/onigmo>)
+	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/include/onigmo>
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/include/onigmo>)
 target_link_directories(re PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/onigmo-6.2.0/build_x86>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/guest/lib>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/guest/lib>)
+	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/lib>
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/lib>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
