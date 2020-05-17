@@ -1,0 +1,26 @@
+======== %d specifier ========
+Format('%d', 0) .. 0
+Format('%d', 0x0010000000000000) .. 4503599627370496
+Format('%d', 0x001ffffffffffffe) .. 9007199254740990
+Format('%d', 0x001fffffffffffff) .. 9007199254740991
+Format('%d', 0x0020000000000000) .. 9007199254740992
+Format('%d', 0x0020000000000001) .. 9007199254740992
+Format('%d', -0x0010000000000000) .. -4503599627370496
+Format('%d', -0x001ffffffffffffe) .. -9007199254740990
+Format('%d', -0x001fffffffffffff) .. -9007199254740991
+Format('%d', -0x0020000000000000) .. -9007199254740992
+Format('%d', -0x0020000000000001) .. -9007199254740992
+======== %x specifier ========
+Format('%016x', 0) .. 0000000000000000
+Format('%016x', 0x0010000000000000) .. 0010000000000000
+Format('%016x', 0x001ffffffffffffe) .. 001ffffffffffffe
+Format('%016x', 0x001fffffffffffff) .. 001fffffffffffff
+Format('%016x', 0x0020000000000000) .. 0020000000000000
+Format('%016x', 0x0020000000000001) .. 0020000000000000
+Format('%016x', -0x0010000000000000) .. fff0000000000000
+Format('%016x', -0x001ffffffffffffe) .. ffe0000000000002
+Format('%016x', -0x001fffffffffffff) .. ffe0000000000001
+Format('%016x', -0x0020000000000000) .. ffe0000000000000
+Format('%016x', -0x0020000000000001) .. ffe0000000000000
+======== %d specifier for Bool ========
+Format('%d %d', true, false) .. 1 0
