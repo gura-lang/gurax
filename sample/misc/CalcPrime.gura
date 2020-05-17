@@ -1,0 +1,13 @@
+#!/usr/bin/env gurax
+
+CalcPrime() = {
+	p = [2]
+	for (n in Range(3, nil, 2)):xiter {
+		if (!(n % p.While(p.Each() * p <= n) == 0).Or()) {
+			p.Add(n)
+			n
+		}
+	}
+}
+
+Printf('#%d %d\n', 1.., CalcPrime().Head(100))
