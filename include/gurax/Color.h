@@ -109,6 +109,10 @@ public:
 		UInt8 gray = CalcGray(r, g, b);
 		return Color(gray, gray, gray, a);
 	}
+	UInt8 CalcGray() const { return CalcGray(*this); }
+	static UInt8 CalcGray(const Color& color) {
+		return CalcGray(color.GetR(), color.GetG(), color.GetB());
+	}
 	static UInt8 CalcGray(UInt8 r, UInt8 g, UInt8 b) {
 		return static_cast<UInt8>(
 			(static_cast<UInt32>(r) * 299 + static_cast<UInt32>(g) * 587 +

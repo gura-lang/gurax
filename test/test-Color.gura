@@ -230,3 +230,25 @@ TestCase('Color#GrayScale()') {
 	Tester(`Color('red', 128).GrayScale())
 	Tester(`Color('red', 255).GrayScale())
 }
+
+TestCase('Color#grayScale') {
+	Tester(`Color('black').grayScale)
+	Tester(`Color('silver').grayScale)
+	Tester(`Color('gray').grayScale)
+	Tester(`Color('white').grayScale)
+	Tester(`Color('maroon').grayScale)
+	Tester(`Color('red').grayScale)
+	Tester(`Color('purple').grayScale)
+	Tester(`Color('fuchsia').grayScale)
+	Tester(`Color('green').grayScale)
+	Tester(`Color('lime').grayScale)
+	Tester(`Color('olive').grayScale)
+	Tester(`Color('yellow').grayScale)
+	Tester(`Color('navy').grayScale)
+	Tester(`Color('blue').grayScale)
+	Tester(`Color('teal').grayScale)
+	Tester(`Color('aqua').grayScale)
+	Tester(`Color('red', 0).grayScale)
+	Tester(`Color('red', 128).grayScale)
+	Tester(`Color('red', 255).grayScale)
+}

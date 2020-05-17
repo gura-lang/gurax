@@ -3,6 +3,7 @@ Color
   #a                Number       R/W
   #b                Number       R/W
   #g                Number       R/W
+  #grayScale        Number       R
   #r                Number       R/W
 ======== Constructor ========
 Color('aliceblue') .. Color:#f0f8ff,ff
@@ -217,3 +218,23 @@ Color('aqua').GrayScale() .. Color:#b2b2b2,ff
 Color('red', 0).GrayScale() .. Color:#4c4c4c,00
 Color('red', 128).GrayScale() .. Color:#4c4c4c,80
 Color('red', 255).GrayScale() .. Color:#4c4c4c,ff
+======== Color#grayScale ========
+Color('black').grayScale .. 0
+Color('silver').grayScale .. 192
+Color('gray').grayScale .. 128
+Color('white').grayScale .. 255
+Color('maroon').grayScale .. 38
+Color('red').grayScale .. 76
+Color('purple').grayScale .. 52
+Color('fuchsia').grayScale .. 105
+Color('green').grayScale .. 75
+Color('lime').grayScale .. 149
+Color('olive').grayScale .. 113
+Color('yellow').grayScale .. 225
+Color('navy').grayScale .. 14
+Color('blue').grayScale .. 29
+Color('teal').grayScale .. 89
+Color('aqua').grayScale .. 178
+Color('red', 0).grayScale .. 76
+Color('red', 128).grayScale .. 76
+Color('red', 255).grayScale .. 76

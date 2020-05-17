@@ -236,6 +236,23 @@ Gurax_ImplementPropertySetter(Color, a)
 	valueThis.GetColor().SetA(a);
 }
 
+// Color#grayScale
+Gurax_DeclareProperty_R(Color, grayScale)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Gray-scale value calculated from RGB.\n");
+}
+
+Gurax_ImplementPropertyGetter(Color, grayScale)
+{
+	// Target
+	auto& valueThis = GetValueThis(valueTarget);
+	// Function body
+	return new Value_Number(valueThis.GetColor().CalcGray());
+}
+
 //------------------------------------------------------------------------------
 // VType_Color
 //------------------------------------------------------------------------------
@@ -275,6 +292,7 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Color, g));
 	Assign(Gurax_CreateProperty(Color, b));
 	Assign(Gurax_CreateProperty(Color, a));
+	Assign(Gurax_CreateProperty(Color, grayScale));
 }
 
 Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
