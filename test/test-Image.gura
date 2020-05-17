@@ -1,5 +1,29 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
+import(png)
+
+img_Midori = Image(bR'''
+iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAJQSURBVDhPlZPBa9NQHMd/f0V510ERCioWFJqD
+xQV6sFiEMC9VD5pdSk5SdhjFgy54KkO64qGGjQ1aaCGjCC1MSJkM0oGSepAgDJLDDu9QaA475OAh
+/pKXZIndRL/09F4+732/3/crLCJ5juP88v5LMUy1TQIPFStcR+kyXC2hR9kXEXy2L0JenrpslclF
+L39q1FiGj9/cJrWRg8BJg7spjeZsd1m+nUuYfm6UHldKUOnaiBpyAbhtg+3RnhAaTStxs33UuAvw
+qIVpjW0uFfsK38u2v3fWMkBWeY5U/fv/prTtIPKCjut5INWBZbTK3Gvdvb7qWPI0gmcf1/i3yHje
+fCQRrjlzzImmxb9BgwcQPyRWJpo59+CnNuzvrN+DTG6Vz5HwVNY8nRph/vMuVsd3ojYudHXsO4ej
+jcyN+8Xig2f1WhlPb080Y9IuQ1mZ6X7zzE4Aw5NukNXVNggUZP0iso3yphhT1v1tqo8Nf1RtZIj0
+yQlhPPHMs3pVEvXqw6d79a29U5fB56qYFdVoSKyOIB5YbgDn7+TztbqY5eNBRNjuv4Ti+1l0s6O+
+uHwMX7ZFA1jeVcogKIm3RPh46xZIhzS2bR0IEBTmeY65K67gzA8UH566xjuOpWWCxbdWEdb7diLz
+V3ml0DaoJlewfU7qmcw2Piz2jC2S54oZnA2znRI83bdThbnWocRhQQVJZSZjGGWPpAJAVmieUKA/
+hsMvNN22h+UJr1QLC3csPRqSEEY5Znezed1TJaXL/uSQXKVppP7svhLw3NQmLMu/yfN+A8LBMXwK
+9jLTAAAAAElFTkSuQmCC
+'''base64, 'png')
+
+PutImageWithAscii(img:Image, scanDir = `LeftTopHorz) = {
+	charTbl = ['@', '*', '.', ' ']
+	img.Scan(scanDir = scanDir).Fold(img.width) {|colorsRow|
+		Println((charTbl.Get(colorsRow:*grayScale / 64)).Join())
+	}
+}
 
 TestCase('Property') {
 	PrintPropSlots(Image)
@@ -35,6 +59,9 @@ TestCase('Image#FillRect()') {
 }
 
 TestCase('Image#Flip()') {
+	PutImageWithAscii(img_Midori.Flip(`horz))
+	PutImageWithAscii(img_Midori.Flip(`vert))
+	PutImageWithAscii(img_Midori.Flip(`both))
 }
 
 TestCase('Image#GetPixel()') {
@@ -95,6 +122,11 @@ TestCase('Image#ResizePaste()') {
 }
 
 TestCase('Image#Rotate()') {
+	PutImageWithAscii(img_Midori.Rotate(30, `white))
+	PutImageWithAscii(img_Midori.Rotate(-30, `white))
+	PutImageWithAscii(img_Midori.Rotate(120, `white))
+	PutImageWithAscii(img_Midori.Rotate(-120, `white))
+	PutImageWithAscii(img_Midori.Rotate(180, `white))
 }
 
 TestCase('Image#Scan()') {
@@ -109,6 +141,11 @@ TestCase('Image#Scan()') {
 	Tester(`f(img.Scan(scanDir = `RightTopVert):pixel).Join(' '))
 	Tester(`f(img.Scan(scanDir = `RightBottomHorz):pixel).Join(' '))
 	Tester(`f(img.Scan(scanDir = `RightBottomVert):pixel).Join(' '))
+	[`LeftTopHorz, `LeftTopVert, `RightTopHorz, `RightTopVert,
+	 `LeftBottomHorz, `LeftBottomVert, `RightBottomHorz, `RightBottomVert].Each {|scanDir|
+		Println(scanDir.symbolName)
+		PutImageWithAscii(img_Midori, scanDir)
+	}
 }
 
 TestCase('Image#Write()') {
