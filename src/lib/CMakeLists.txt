@@ -151,15 +151,18 @@ target_sources(guraxcore PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-if (${PLATFORM_ID} MATCHES Linux)
-	target_link_libraries(guraxcore PRIVATE dl pthread)
-elseif (${PLATFORM_ID} MATCHES Darwin)
-	target_link_libraries(guraxcore PRIVATE dl pthread)
+target_link_libraries(guraxcore PRIVATE
+	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Linux>:dl>
+	$<$<PLATFORM_ID:Linux>:pthread>
+	$<$<PLATFORM_ID:Darwin>:dl>
+	$<$<PLATFORM_ID:Darwin>:pthread>)
+if (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
 	set_target_properties(guraxcore PROPERTIES
-		VERSION						${GURAX_VERSION}
-		SOVERSION					${GURAX_SOVERSION}
+		VERSION				${GURAX_VERSION}
+		SOVERSION			${GURAX_SOVERSION}
 		BUILD_WITH_INSTALL_NAME_DIR	1
-		INSTALL_NAME_DIR			"@executable_path/../lib")
+		INSTALL_NAME_DIR	"@executable_path/../lib")
 endif ()
 #-------------------------------------------------------------------------------
 # Install
