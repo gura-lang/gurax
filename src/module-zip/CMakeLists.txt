@@ -4,16 +4,16 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_zip)
 
-add_library(zip SHARED)
+add_library(zip.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(zip PRIVATE
+target_include_directories(zip.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:
 		${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11
 		${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>)
-target_link_directories(zip PRIVATE
+target_link_directories(zip.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:
 		${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11
@@ -22,9 +22,9 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(zip PRIVATE stdafx.h)
-target_compile_definitions(zip PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(zip PRIVATE
+target_precompile_headers(zip.gurd PRIVATE stdafx.h)
+target_compile_definitions(zip.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(zip.gurd PRIVATE
 	module-zip.cpp
 	Util.cpp
 	ZIPFormat.cpp
@@ -38,10 +38,11 @@ target_sources(zip PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_options(zip PRIVATE
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(zip.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:MSVCRT>)
-target_link_libraries(zip PRIVATE guraxcore
+target_link_libraries(zip.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:zlib>
 	$<$<PLATFORM_ID:Windows>:libbz2>
 	$<$<PLATFORM_ID:Linx>:z>
@@ -51,4 +52,4 @@ target_link_libraries(zip PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS zip RUNTIME DESTINATION module/site)
+install(TARGETS zip.gurd RUNTIME DESTINATION module/site)

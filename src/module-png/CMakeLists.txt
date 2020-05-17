@@ -4,16 +4,16 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_png)
 
-add_library(png SHARED)
+add_library(png.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(png PRIVATE
+target_include_directories(png.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/include/libpng>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/include/libpng>)
-target_link_directories(png PRIVATE
+target_link_directories(png.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/libpng-1.6.37/projects/vstudio/x64/Release\ Library>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/lib>
@@ -22,9 +22,9 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(png PRIVATE stdafx.h)
-target_compile_definitions(png PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(png PRIVATE
+target_precompile_headers(png.gurd PRIVATE stdafx.h)
+target_compile_definitions(png.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(png.gurd PRIVATE
 	module-png.cpp
 	Util.cpp
 	ImageExtension.cpp
@@ -34,10 +34,11 @@ target_sources(png PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_options(png PRIVATE
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(png.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG -INCREMENTAL:NO>)
-target_link_libraries(png PRIVATE guraxcore
+target_link_libraries(png.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libpng16>
 	$<$<PLATFORM_ID:Windows>:zlib>
 	$<$<PLATFORM_ID:Linx>:png16>
@@ -47,4 +48,4 @@ target_link_libraries(png PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS png RUNTIME DESTINATION module/site)
+install(TARGETS png.gurd RUNTIME DESTINATION module/site)

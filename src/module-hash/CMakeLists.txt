@@ -4,23 +4,23 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_hash)
 
-add_library(hash SHARED)
+add_library(hash.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(hash PRIVATE
+target_include_directories(hash.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	${PROJECT_SOURCE_DIR}/guest/md5
 	${PROJECT_SOURCE_DIR}/guest/sha1)
-target_link_directories(hash PRIVATE
+target_link_directories(hash.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(hash PRIVATE stdafx.h)
-target_compile_definitions(hash PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(hash PRIVATE
+target_precompile_headers(hash.gurd PRIVATE stdafx.h)
+target_compile_definitions(hash.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(hash.gurd PRIVATE
 	module-hash.cpp
 	Util.cpp
 	Accumulator.cpp
@@ -29,12 +29,13 @@ target_sources(hash PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_libraries(hash guraxcore guest)
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_libraries(hash.gurd PRIVATE guraxcore guest)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS hash RUNTIME DESTINATION module/site)
+install(TARGETS hash.gurd RUNTIME DESTINATION module/site)
 #-------------------------------------------------------------------------------
 # Dependency
 #-------------------------------------------------------------------------------

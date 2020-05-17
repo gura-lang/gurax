@@ -4,37 +4,38 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_bzip2)
 
-add_library(bzip2 SHARED)
+add_library(bzip2.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(bzip2 PRIVATE
+target_include_directories(bzip2.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>)
-target_link_directories(bzip2 PRIVATE
+target_link_directories(bzip2.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(bzip2 PRIVATE stdafx.h)
-target_compile_definitions(bzip2 PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(bzip2 PRIVATE
+target_precompile_headers(bzip2.gurd PRIVATE stdafx.h)
+target_compile_definitions(bzip2.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(bzip2.gurd PRIVATE
 	module-bzip2.cpp
 	Util.cpp
 )
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_options(bzip2 PRIVATE
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(bzip2.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:MSVCRT>)
-target_link_libraries(bzip2 PRIVATE guraxcore
+target_link_libraries(bzip2.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libbz2>
 	$<$<PLATFORM_ID:Linx>:bz2>
 	$<$<PLATFORM_ID:Darwin>:bz2>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS bzip2 RUNTIME DESTINATION module/site)
+install(TARGETS bzip2.gurd RUNTIME DESTINATION module/site)

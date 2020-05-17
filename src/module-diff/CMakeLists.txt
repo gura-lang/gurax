@@ -4,21 +4,21 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_diff)
 
-add_library(diff SHARED)
+add_library(diff.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(diff PRIVATE
+target_include_directories(diff.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	${PROJECT_SOURCE_DIR}/dtl-1.19-gurax)
-target_link_directories(diff PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
+target_link_directories(diff.gurd PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(diff PRIVATE stdafx.h)
-target_compile_definitions(diff PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(diff PRIVATE
+target_precompile_headers(diff.gurd PRIVATE stdafx.h)
+target_compile_definitions(diff.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(diff.gurd PRIVATE
 	module-diff.cpp
 	Util.cpp
 	Diff.cpp
@@ -30,9 +30,10 @@ target_sources(diff PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_libraries(diff guraxcore)
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_libraries(diff.gurd guraxcore)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS diff RUNTIME DESTINATION module/site)
+install(TARGETS diff.gurd RUNTIME DESTINATION module/site)
