@@ -32,7 +32,7 @@ target_sources(diff.gurd PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
-target_link_libraries(diff.gurd guraxcore)
+target_link_libraries(diff.gurd PRIVATE guraxcore)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------

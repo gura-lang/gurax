@@ -12,16 +12,16 @@ tmpl_CMakeLists = tR'''
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_${ubarModuleName})
 
-add_library(${ubarModuleName} SHARED)
+add_library(${fileName_gurd} SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(${ubarModuleName} PRIVATE
+target_include_directories(${fileName_gurd} PRIVATE
 	$\{PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:$\{PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Linux>:$\{PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:$\{PROJECT_SOURCE_DIR}/../../guest>)
-target_link_directories(${ubarModuleName} PRIVATE
+target_link_directories(${fileName_gurd} PRIVATE
 	$\{PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:$\{PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Linux>:$\{PROJECT_SOURCE_DIR}/../../guest>
@@ -30,24 +30,24 @@ set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
-target_precompile_headers(${ubarModuleName} PRIVATE stdafx.h)
-target_compile_definitions(${ubarModuleName} PRIVATE GURAX_MODULE_SEPARATED)
-target_sources(${ubarModuleName} PRIVATE
-	module-${ubarModuleName}.cpp
-	Util.cpp
-)
+target_precompile_headers(${fileName_gurd} PRIVATE stdafx.h)
+target_compile_definitions(${fileName_gurd} PRIVATE GURAX_MODULE_SEPARATED)
+target_sources(${fileName_gurd} PRIVATE
+	${fileName_mainSrc}
+	${fileName_utilSrc})
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
-target_link_libraries(${ubarModuleName} guraxcore
+set(CMAKE_SHARED_LIBRARY_PREFIX)
+set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_libraries(${fileName_gurd} PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS ${ubarModuleName} RUNTIME DESTINATION module/site)
+install(TARGETS ${fileName_gurd} RUNTIME DESTINATION module/site)
 '''
 
 //------------------------------------------------------------------------------
@@ -212,6 +212,7 @@ main() = {
 		!fs.Exists(dirNameOut) && fs.CreateDir(dirNameOut)
 	}
 	fileName_CMakeLists = 'CMakeLists.txt'
+	fileName_gurd = ubarModuleName + '.gurd'
 	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_mainHdr = 'module-' + ubarModuleName + '.h'
