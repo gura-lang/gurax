@@ -5,7 +5,7 @@ import(conio)
 //------------------------------------------------------------------------------
 // Template of CMakeLists.txt
 //------------------------------------------------------------------------------
-tmpl_cmake = tR'''
+tmpl_CMakeLists = tR'''
 #===============================================================================
 # CMakeLists for module: ${dotModuleName}
 #===============================================================================
@@ -16,8 +16,16 @@ add_library(${ubarModuleName} SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(${ubarModuleName} PRIVATE $\{PROJECT_SOURCE_DIR}/../../include)
-target_link_directories(${ubarModuleName} PRIVATE $\{PROJECT_SOURCE_DIR}/../../lib)
+target_include_directories(${ubarModuleName} PRIVATE
+	$\{PROJECT_SOURCE_DIR}/../../include
+	$<$<PLATFORM_ID:Windows>:$\{PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Linux>:$\{PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Darwin>:$\{PROJECT_SOURCE_DIR}/../../guest>)
+target_link_directories(${ubarModuleName} PRIVATE
+	$\{PROJECT_SOURCE_DIR}/../../lib
+	$<$<PLATFORM_ID:Windows>:$\{PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Linux>:$\{PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Darwin>:$\{PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
@@ -31,8 +39,11 @@ target_sources(${ubarModuleName} PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-target_link_libraries(${ubarModuleName} guraxcore)
 set(CMAKE_SHARED_LIBRARY_SUFFIX .gurd)
+target_link_libraries(${ubarModuleName} guraxcore
+	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Linux>:>
+	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
@@ -200,7 +211,7 @@ main() = {
 		dirNameOut = cond(opt['here'], '', 'module-' + ubarModuleName)
 		!fs.Exists(dirNameOut) && fs.CreateDir(dirNameOut)
 	}
-	fileName_cmake = 'CMakeLists.txt'
+	fileName_CMakeLists = 'CMakeLists.txt'
 	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_mainHdr = 'module-' + ubarModuleName + '.h'
@@ -208,7 +219,7 @@ main() = {
 	fileName_utilHdr = 'Util.h'
 	fileName_utilSrc = 'Util.cpp'
 	dirNameBuild = path.Join(dirNameOut, 'build')
-	pathName_cmake = path.Join(dirNameOut, fileName_cmake)
+	pathName_CMakeLists = path.Join(dirNameOut, fileName_CMakeLists)
 	pathName_test = path.Join(dirNameOut, fileName_test)
 	pathName_stdafx = path.Join(dirNameOut, fileName_stdafx)
 	pathName_mainHdr = path.Join(dirNameOut, fileName_mainHdr)
@@ -216,21 +227,21 @@ main() = {
 	pathName_utilHdr = path.Join(dirNameOut, fileName_utilHdr)
 	pathName_utilSrc = path.Join(dirNameOut, fileName_utilSrc)
 	if (!opt['force'] && \
-		fs.Exists([pathName_cmake, pathName_test, pathName_stdafx,
+		fs.Exists([pathName_CMakeLists, pathName_test, pathName_stdafx,
 			pathName_mainHdr, pathName_mainSrc, pathName_utilHdr, pathName_utilSrc]).Or()) {
 		sys.cerr.Print('Files already exist. Overwrite? [y/N]')
 		keyCode = conio.WaitKey()
 		Println()
 		(keyCode != Ord('y')) && sys.Exit(0)
 	}
-	tmpl_cmake.Render(Open(pathName_cmake, 'w'))
+	tmpl_CMakeLists.Render(Open(pathName_CMakeLists, 'w'))
 	tmpl_test.Render(Open(pathName_test, 'w'))
 	tmpl_stdafx.Render(Open(pathName_stdafx, 'w'))
 	tmpl_mainHdr.Render(Open(pathName_mainHdr, 'w'))
 	tmpl_mainSrc.Render(Open(pathName_mainSrc, 'w'))
 	tmpl_utilHdr.Render(Open(pathName_utilHdr, 'w'))
 	tmpl_utilSrc.Render(Open(pathName_utilSrc, 'w'))
-	fs.ChangeMode(pathName_cmake, 'a+x')
+	fs.ChangeMode(pathName_CMakeLists, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
 	tR'''
 	module-${ubarModuleName} was created.

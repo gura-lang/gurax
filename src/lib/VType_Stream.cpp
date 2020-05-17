@@ -264,8 +264,7 @@ Gurax_ImplementMethod(Stream, Read)
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-		if (stream.ReadToBinary(pBuff->GetBinary())) return Value::nil();
-		if (pBuff->GetBinary().empty()) return Value::nil();
+		if (!stream.ReadToBinary(pBuff->GetBinary())) return Value::nil();
 		_pValue.reset(new Value_Binary(pBuff.release()));
 	}
 	return _pValue.release();
