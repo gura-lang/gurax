@@ -8,6 +8,97 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
+Gurax_DeclareFunction(Decode)
+{
+	Declare(VTYPE_Binary, Flag::None);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(base16));
+	DeclareAttrOpt(Gurax_Symbol(base32));
+	DeclareAttrOpt(Gurax_Symbol(base32hex));
+	DeclareAttrOpt(Gurax_Symbol(base64));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.\n"
+		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
+		"\n"
+		"In default, base64 format is applied. The following attributes can specify the format:\n"
+		"\n"
+		"- `:base16` .. Base16 format\n"
+		"- `:base32` .. Base32 format\n"
+		"- `:base32hex` .. Base32hex format\n"
+		"- `:base64` .. Base64 format. Default.\n");
+}
+
+Gurax_ImplementFunction(Decode)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamSrc = args.PickStream();
+	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
+	const Info& info =
+		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
+		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
+		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
+		Info::Base64; 
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (pStreamDst) {
+		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
+		pDecoder->DecodeStream(streamSrc);
+		return Value::nil();
+	} else {
+		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
+		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
+		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
+		if (!pDecoder->DecodeStream(streamSrc)) return Value::nil();
+		return argument.ReturnValue(processor, new Value_Binary(pBuff.release()));
+	}
+}
+
+// base64.Decoder(dst:Stream:w):[base16,base32,base32hex,base64] {block?}
+Gurax_DeclareFunction(Decoder)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(base16));
+	DeclareAttrOpt(Gurax_Symbol(base32));
+	DeclareAttrOpt(Gurax_Symbol(base32hex));
+	DeclareAttrOpt(Gurax_Symbol(base64));
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a writable `Stream` instance that decodes a sequence of base-n format.\n"
+		"The result is emitted to the stream `dst`.\n"
+		"\n"
+		"In default, base64 format is applied. The following attributes can specify the format:\n"
+		"\n"
+		"- `:base16` .. Base16 format\n"
+		"- `:base32` .. Base32 format\n"
+		"- `:base32hex` .. Base32hex format\n"
+		"- `:base64` .. Base64 format. Default.\n");
+}
+
+Gurax_ImplementFunction(Decoder)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamDst = args.PickStream();
+	const Info& info =
+		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
+		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
+		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
+		Info::Base64; 
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Decoder(new Decoder(streamDst.Reference(), info)));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
 // base64.Encode(src:Stream, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
 Gurax_DeclareFunction(Encode)
 {
@@ -72,55 +163,55 @@ Gurax_ImplementFunction(Encode)
 	}
 }
 
-// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
-Gurax_DeclareFunction(Decode)
+// base64.Encoder(dst:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
+Gurax_DeclareFunction(Encoder)
 {
-	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(base16));
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.\n"
-		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
+		"Creates a writable `Stream` instance that encodes written data into base-n format.\n"
+		"The result is emitted to the stream `dst`.\n"
 		"\n"
 		"In default, base64 format is applied. The following attributes can specify the format:\n"
 		"\n"
 		"- `:base16` .. Base16 format\n"
 		"- `:base32` .. Base32 format\n"
 		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n");
+		"- `:base64` .. Base64 format. Default.\n"
+		"\n"
+		"In default, output characters are folded by the length specified by `lineLen`.\n"
+		"If the argument is omitted, pre-defined length for each format is applied:\n"
+		"64 characters for base32 and base32hex and 76 for base16 and base64.\n"
+		"\n"
+		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n");
 }
 
-Gurax_ImplementFunction(Decode)
+Gurax_ImplementFunction(Encoder)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamSrc = args.PickStream();
-	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
-	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
+	Stream& streamDst = args.PickStream();
 	const Info& info =
 		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
 		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
 		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
 		Info::Base64; 
+	size_t nCharsPerLine = args.IsValid()?
+		args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
 	if (Error::IsIssued()) return Value::nil();
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
 	// Function body
-	if (pStreamDst) {
-		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
-		pDecoder->DecodeStream(streamSrc);
-		return Value::nil();
-	} else {
-		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
-		RefPtr<Stream> pStreamDst(new Stream_Binary(Stream::Flag::Writable, pBuff->Reference()));
-		RefPtr<Decoder> pDecoder(new Decoder(pStreamDst->Reference(), info));
-		if (!pDecoder->DecodeStream(streamSrc)) return Value::nil();
-		return argument.ReturnValue(processor, new Value_Binary(pBuff.release()));
-	}
+	RefPtr<Stream> pStream(new Stream_Encoder(new Encoder(streamDst.Reference(),
+							singleLineFlag? 0 : nCharsPerLine, info)));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -169,8 +260,10 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Encode));
 	Assign(Gurax_CreateFunction(Decode));
+	Assign(Gurax_CreateFunction(Decoder));
+	Assign(Gurax_CreateFunction(Encode));
+	Assign(Gurax_CreateFunction(Encoder));
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Binary, base16);
 	Gurax_AssignSuffixMgr(Binary, base32);

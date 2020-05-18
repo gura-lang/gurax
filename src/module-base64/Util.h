@@ -107,6 +107,50 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
+// Stream_Decoder
+//------------------------------------------------------------------------------
+class Stream_Decoder : public Stream {
+protected:
+	RefPtr<Decoder> _pDecoder;
+public:
+	Stream_Decoder(Decoder* pDecoder) : Stream(Flag::Writable), _pDecoder(pDecoder) {}
+	~Stream_Decoder() { Close(); }
+public:
+	virtual const char* GetName() const override { return "base64.Decoder"; };
+	virtual const char* GetIdentifier() const override { return "base64.Decoder"; }
+	virtual bool DoClose() override { return true; }
+	virtual int DoGetChar() override { return 0; }
+	virtual bool DoPutChar(char ch) override { return _pDecoder->Decode(&ch, 1); }
+	virtual size_t DoRead(void* buff, size_t bytes) override { return 0; }
+	virtual bool DoWrite(const void* buff, size_t bytes) override {
+		return _pDecoder->Decode(buff, bytes);
+	}
+	virtual bool DoFlush() override { return true; }
+};
+
+//------------------------------------------------------------------------------
+// Stream_Encoder
+//------------------------------------------------------------------------------
+class Stream_Encoder : public Stream {
+protected:
+	RefPtr<Encoder> _pEncoder;
+public:
+	Stream_Encoder(Encoder* pEncoder) : Stream(Flag::Writable), _pEncoder(pEncoder) {}
+	~Stream_Encoder() { Close(); }
+public:
+	virtual const char* GetName() const override { return "base64.Encoder"; };
+	virtual const char* GetIdentifier() const override { return "base64.Encoder"; }
+	virtual bool DoClose() override { return _pEncoder->Finish(); }
+	virtual int DoGetChar() override { return 0; }
+	virtual bool DoPutChar(char ch) override { return _pEncoder->Encode(&ch, 1); }
+	virtual size_t DoRead(void* buff, size_t bytes) override { return 0; }
+	virtual bool DoWrite(const void* buff, size_t bytes) override {
+		return _pEncoder->Encode(buff, bytes);
+	}
+	virtual bool DoFlush() override { return true; }
+};
+
 Gurax_EndModuleScope(base64)
 
 #endif
