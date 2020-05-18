@@ -90,10 +90,10 @@ Directory* Directory::SearchInTree(const char** pPathName)
 	return pDirectory.release();
 }
 
-Value* Directory::DoCreateStatValue()
+Value_Stat* Directory::DoCreateStatValue()
 {
 	Error::Issue(ErrorType::PropertyError, "no status value available");
-	return Value::nil();
+	return nullptr;
 }
 
 String Directory::ToString(const StringStyle& ss) const

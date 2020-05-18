@@ -177,7 +177,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
 }
 
-Value* DirectoryEx::DoCreateStatValue()
+Value_Stat* DirectoryEx::DoCreateStatValue()
 {
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
@@ -268,7 +268,7 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 	return bytesRead;
 }
 
-Value* Stream_Reader::DoCreateStatValue()
+Value_Stat* Stream_Reader::DoCreateStatValue()
 {
 	return new Value_StatEx(_pStatEx->Reference());
 }

@@ -456,7 +456,7 @@ Gurax_DeclareProperty_R(Stream, stat)
 Gurax_ImplementPropertyGetter(Stream, stat)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Value> pValue(valueThis.GetStream().CreateStatValue());
+	RefPtr<Value_Stat> pValue(valueThis.GetStream().CreateStatValue());
 	if (!pValue) return Value::nil();
 	return pValue.release();
 }

@@ -55,7 +55,7 @@ protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoCreateStatValue() override;
+	virtual Value_Stat* DoCreateStatValue() override;
 };
 
 //------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ public:
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
 	virtual size_t DoGetBytes() override;
 	virtual Stat* DoCreateStat() override;
-	virtual Value* DoCreateStatValue() override;
+	virtual Value_Stat* DoCreateStatValue() override;
 	virtual bool DoClose() override { return ::fclose(_fp) == 0; }
 	virtual int DoGetChar() override { _offset++; return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { _offset++; ::fputc(ch, _fp); return true; }

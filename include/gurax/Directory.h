@@ -8,6 +8,8 @@
 
 namespace Gurax {
 
+class Value_Stat;
+
 //------------------------------------------------------------------------------
 // Directory
 //
@@ -112,7 +114,7 @@ public:
 	void RewindChild() { return DoRewindChild(); }
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
-	Value* CreateStatValue() { return DoCreateStatValue(); }
+	Value_Stat* CreateStatValue() { return DoCreateStatValue(); }
 	const char* GetName() const { return _pCore->GetName(); }
 	char GetSep() const { return _pCore->GetSep(); }
 	bool GetCaseFlag() const { return _pCore->GetCaseFlag(); }
@@ -139,7 +141,7 @@ protected:
 	virtual void DoRewindChild() {}
 	virtual Directory* DoNextChild() { return nullptr; }
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) { return nullptr; }
-	virtual Value* DoCreateStatValue();
+	virtual Value_Stat* DoCreateStatValue();
 public:
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);

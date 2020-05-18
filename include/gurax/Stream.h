@@ -13,6 +13,7 @@
 namespace Gurax {
 
 class Stat;
+class Value_Stat;
 
 //------------------------------------------------------------------------------
 // Stream
@@ -114,7 +115,7 @@ public:
 public:
 	size_t GetBytes() { return DoGetBytes(); }
 	Stat* CreateStat() { return DoCreateStat(); }
-	Value* CreateStatValue() { return DoCreateStatValue(); }
+	Value_Stat* CreateStatValue() { return DoCreateStatValue(); }
 	bool Close() { return DoClose(); }
 	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
 	bool Write(const void* buff, size_t len) { return DoWrite(buff, len); }
@@ -134,7 +135,7 @@ public:
 	virtual const char* GetIdentifier() const = 0;
 	virtual size_t DoGetBytes() { return 0; }
 	virtual Stat* DoCreateStat() { return nullptr; }
-	virtual Value* DoCreateStatValue() { return nullptr; }
+	virtual Value_Stat* DoCreateStatValue() { return nullptr; }
 	virtual bool DoClose() = 0;
 	virtual size_t DoRead(void* buff, size_t len) = 0;
 	virtual bool DoWrite(const void* buff, size_t len) = 0;

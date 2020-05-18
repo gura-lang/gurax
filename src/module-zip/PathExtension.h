@@ -91,7 +91,7 @@ protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoCreateStatValue() override;
+	virtual Value_Stat* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ public:
 	virtual bool DoFlush() override { return false; }
 	virtual bool DoClose() override { return true; }
 	virtual size_t DoGetBytes() override { return _bytesUncompressed; }
-	virtual Value* DoCreateStatValue() override;
+	virtual Value_Stat* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------

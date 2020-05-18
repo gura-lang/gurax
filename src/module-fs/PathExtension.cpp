@@ -287,13 +287,13 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 	return new StreamEx(flags, fp, pathName);
 }
 
-Value* DirectoryEx::DoCreateStatValue()
+Value_Stat* DirectoryEx::DoCreateStatValue()
 {
 	if (!_pStatEx) {
 		_pStatEx.reset(StatEx::Create(MakeFullPathName(false).c_str()));
 		if (!_pStatEx) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
-			return Value::nil();
+			return nullptr;
 		}
 	}
 	return new Value_Stat(_pStatEx->Reference());
@@ -318,7 +318,7 @@ Stat* StreamEx::DoCreateStat()
 	return StatEx::Create(_pathName.c_str());
 }
 
-Value* StreamEx::DoCreateStatValue()
+Value_Stat* StreamEx::DoCreateStatValue()
 {
 	//struct stat sb;
 	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
