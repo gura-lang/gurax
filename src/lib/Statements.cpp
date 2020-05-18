@@ -20,7 +20,7 @@ Gurax_DeclareStatement(cond)
 		"Evaluates `exprTrue` and returns its result if `cond` is determined as `true`, and does `exprFalse` otherwise.\n"
 		"If `exprFalse` is omitted, it returns `nil` when `cond` turns out to be `false`.\n"
 		"\n"
-		"This statement behaves the same as `if` being used like below:\n"
+		"This statement has the same behavior as `if` being used like below:\n"
 		"\n"
 		"    if (cond) {exprTrue) else {exprFalse}\n");
 }
@@ -173,10 +173,20 @@ Gurax_DeclareStatement(end)
 	Declare(VTYPE_Any, Flag::Trailer | Flag::EndMarker);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Specify an end of a sequence.\n"
+		"Specify an end of a block sequence like a closing brace bracket.\n"
 		"\n"
-		"This function is supposed to be used as a block terminator\n"
-		"in an embedded script of a template.\n");
+		"This function is supposed to be used in a template\n"
+		"with functions or statements that takes a block.\n"
+		"\n"
+		"Example:\n"
+		"\n"
+		"    ${for (i in 0..10)}\n"
+		"      ${if (i % 2 == 0)}\n"
+		"        ${i} is even\n"
+		"      ${else}\n"
+		"        ${i} is odd\n"
+		"      ${end}\n"
+		"    ${end}\n");
 }
 
 Gurax_ImplementStatement(end)
@@ -188,6 +198,10 @@ Gurax_DeclareStatementAlias(try_, "try")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies a range of code in which exceptions could be caught\n"
+		"by following `catch` statement.\n");
 }
 
 Gurax_ImplementStatement(try_)
@@ -237,6 +251,12 @@ Gurax_DeclareStatementAlias(catch_, "catch")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Executes the block when an exception that matches specified `errorType` occurs\n"
+		"in the preceding `try` statement.\n"
+		"If `errorType` is omitted, all exceptions that are not caught until here\n"
+		"will be handled.\n");
 }
 
 Gurax_ImplementStatement(catch_)
@@ -312,6 +332,9 @@ Gurax_DeclareStatement(finally)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(finally)
@@ -324,6 +347,30 @@ Gurax_DeclareStatementAlias(for_, "for")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Repeats evaluating `block` while all of the specified `cond` provide items.\n"
+		"The expression of `cond` is like `a in A` where `a` represents a variable name\n"
+		"and A a list or an iterator that provides one value at each loop.\n"
+		"\n"
+		"Example:\n"
+		"\n"
+		"    for (fruit in ['apple', 'grape', 'banana']) {\n"
+		"        Println(fruit)\n"
+		"    }\n"
+		"\n"
+		"Two or more expressions of `cond` can also be specified:\n"
+		"\n"
+		"    for (fruit in ['apple', 'grape', 'banana'], person in ['Thomas', 'Jane', 'Adam']) {\n"
+		"        Println(fruit, ' for ', person)\n"
+		"    }\n"
+		"\n"
+		"The repetition continues until the shortest list or iterator expires.\n"
+		"The following example evaluates the loop twice:\n"
+		"\n"
+		"    for (fruit in ['apple', 'grape', 'banana'], person in ['Thomas', 'Jane']) {\n"
+		"        Println(fruit, ' for ', person)\n"
+		"    }\n");
 }
 
 Gurax_ImplementStatement(for_)
@@ -457,6 +504,17 @@ Gurax_DeclareStatementAlias(while_, "while")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Repeats evaluating `block` while the result of `cond` is judged as `true`.\n"
+		"\n"
+		"Example:\n"
+		"\n"
+		"    n = 0\n"
+		"    while (n < 10) {\n"
+		"        Println(n)\n"
+		"        n += 1\n"
+		"    }\n");
 }
 
 Gurax_ImplementStatement(while_)
@@ -576,6 +634,9 @@ Gurax_DeclareStatement(repeat)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Repeats evaluating `block` for `cnt` times.\n");
 }
 
 Gurax_ImplementStatement(repeat)
@@ -707,6 +768,9 @@ Gurax_ImplementStatement(repeat)
 Gurax_DeclareStatementAlias(break_, "break")
 {
 	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Exits the most inside loop such as `for`, `while` and `repeat`.\n");
 }
 
 Gurax_ImplementStatement(break_)
@@ -747,6 +811,9 @@ Gurax_DeclareStatementAlias(continue_, "continue")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(continue_)
@@ -780,6 +847,9 @@ Gurax_DeclareStatementAlias(return_, "return")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(return_)
@@ -801,6 +871,9 @@ Gurax_DeclareStatement(import)
 	DeclareAttrOpt(Gurax_Symbol(binary));
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareBlock(BlkOccur::ZeroOrOnce, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(import)
@@ -876,6 +949,9 @@ Gurax_DeclareStatementAlias(class_, "class")
 	Declare(VTYPE_VType, Flag::None);
 	DeclareArg("parent", VTYPE_VType, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(class_)
@@ -896,6 +972,9 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 {
 	Declare(VTYPE_VType, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementStatement(struct_)
