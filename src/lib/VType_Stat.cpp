@@ -11,7 +11,8 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
+The `Stat` class provides information such as file name, size and creation time of a file.
+`This is a base class from which `fs.Stat` and `zip.Stat` inherit.\n"
 
 # Property
 
@@ -23,6 +24,33 @@ static const char* g_docHelp_en = u8R"**(
 
 # Method
 )**";
+
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Stat(pathName:String):map {block?}
+Gurax_DeclareConstructor(Stat)
+{
+	Declare(VTYPE_Stat, Flag::Map);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Stat` instance from the specified path name.\n");
+}
+
+Gurax_ImplementConstructor(Stat)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	// Function body
+	RefPtr<Directory> pDirectory(PathMgr::OpenDirectory(pathName));
+	if (!pDirectory) return Value::nil();
+	RefPtr<Value_Stat> pValue(pDirectory->CreateStatValue());
+	if (!pValue) return Value::nil();
+	return argument.ReturnValue(processor, pValue.release());
+}
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -307,7 +335,7 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stat, pathName));
 	Assign(Gurax_CreateProperty(Stat, dirName));
