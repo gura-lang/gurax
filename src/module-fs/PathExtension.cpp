@@ -311,19 +311,11 @@ size_t StreamEx::DoGetBytes()
 
 Stat* StreamEx::DoCreateStat()
 {
-	//struct stat sb;
-	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	//return pStatEx.release();
 	return StatEx::Create(_pathName.c_str());
 }
 
 Value_Stat* StreamEx::DoCreateStatValue()
 {
-	//struct stat sb;
-	//if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	//RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	//return new Value_StatEx(pStatEx.release());
 	return new Value_StatEx(StatEx::Create(_pathName.c_str()));
 }
 

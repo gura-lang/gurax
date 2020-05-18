@@ -186,7 +186,7 @@ public:
 			_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
 		_pCodec.reset(pStreamSrc->GetCodec().Duplicate());
 	}
-	~Stream_Reader() { DoClose(); }
+	~Stream_Reader() { Close(); }
 	bool Initialize(int windowBits = 15) {
 		::memset(&_zstrm, 0x00, sizeof(_zstrm));
 		_zstrm.zalloc = Z_NULL;
@@ -295,7 +295,7 @@ public:
 			_bytesBuff(bytesBuff), _buffOut(nullptr), _buffIn(nullptr) {
 		_pCodec.reset(pStreamDst->GetCodec().Duplicate());
 	}
-	~Stream_Writer() { DoClose(); }
+	~Stream_Writer() { Close(); }
 	bool Initialize(int level, int windowBits, int memLevel, int strategy) {
 		::memset(&_zstrm, 0x00, sizeof(_zstrm));
 		_zstrm.zalloc = Z_NULL;

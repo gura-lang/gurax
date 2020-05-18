@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // fs.Stat(pathName:String):map {block?}
 Gurax_DeclareConstructor(Stat)
 {
-	Declare(VTYPE_DateTime, Flag::Map);
+	Declare(VTYPE_StatEx, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(

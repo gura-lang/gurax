@@ -67,7 +67,7 @@ private:
 	String _pathName;
 public:
 	StreamEx(Flags flags, FILE* fp, String pathName) : Stream(flags), _fp(fp), _pathName(pathName) {}
-	virtual ~StreamEx() { ::fclose(_fp); }
+	virtual ~StreamEx() { Close(); }
 public:
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
