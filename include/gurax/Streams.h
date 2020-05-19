@@ -16,7 +16,7 @@ public:
 public:
 	virtual bool IsDumb() const override { return true; }
 	virtual const char* GetName() const override { return "dumb"; };
-	virtual const char* GetIdentifier() const override { return "dumb"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return true; }
@@ -36,7 +36,7 @@ public:
 	Stream_Console(Flags flags, FILE* fp, String name) : Stream(flags),  _fp(fp), _name(name) {}
 public:
 	virtual const char* GetName() const override { return _name.c_str(); };
-	virtual const char* GetIdentifier() const override { return _name.c_str(); }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return ::fclose(_fp) == 0; }
 	virtual int DoGetChar() override { return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
@@ -63,7 +63,7 @@ public:
 	BinaryReferable& GetBuffReferable() { return *_pBuff; }
 public:
 	virtual const char* GetName() const override { return "binary"; };
-	virtual const char* GetIdentifier() const override { return "binary"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual size_t DoGetBytes() override;
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override;
@@ -87,7 +87,7 @@ public:
 	Pointer& GetPointer() { return *_pPointer; }
 public:
 	virtual const char* GetName() const override { return "pointer"; };
-	virtual const char* GetIdentifier() const override { return "pointer"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual size_t DoGetBytes() override { return GetPointer().GetBytesEntire(); }
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override;

@@ -52,7 +52,7 @@ public:
 		return _pStream? _pStream->GetName() : "(invalid)";
 	}
 	virtual const char* GetIdentifier() const override {
-		return _pStream? _pStream->GetIdentifier() : nullptr;
+		return _pStream? _pStream->GetIdentifier() : "";
 	}
 	virtual bool DoClose() override { return true; }
 	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
@@ -160,7 +160,7 @@ public:
 		return _pStream? _pStream->GetName() : "(invalid)";
 	}
 	virtual const char* GetIdentifier() const override {
-		return _pStream? _pStream->GetIdentifier() : nullptr;
+		return _pStream? _pStream->GetIdentifier() : "";
 	}
 	virtual bool DoWrite(const void* buff, size_t len) override {
 		if (!_pStream) return false;

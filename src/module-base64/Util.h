@@ -118,7 +118,7 @@ public:
 	~Stream_Decoder() { Close(); }
 public:
 	virtual const char* GetName() const override { return "base64.Decoder"; };
-	virtual const char* GetIdentifier() const override { return "base64.Decoder"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return _pDecoder->Decode(&ch, 1); }
@@ -140,7 +140,7 @@ public:
 	~Stream_Encoder() { Close(); }
 public:
 	virtual const char* GetName() const override { return "base64.Encoder"; };
-	virtual const char* GetIdentifier() const override { return "base64.Encoder"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return _pEncoder->Finish(); }
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return _pEncoder->Encode(&ch, 1); }

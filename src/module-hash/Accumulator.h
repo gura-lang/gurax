@@ -21,7 +21,7 @@ public:
 	Accumulator() : Stream(Flag::Writable) {}
 public:
 	virtual const char* GetName() const override { return "accumulator"; };
-	virtual const char* GetIdentifier() const override { return "accumulator"; }
+	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return true; }
