@@ -8,7 +8,7 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// base64.Decode(src:Stream, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
+// base64.Decode(src:Stream:r, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
 Gurax_DeclareFunction(Decode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -29,7 +29,12 @@ Gurax_DeclareFunction(Decode)
 		"- `:base16` .. Base16 format\n"
 		"- `:base32` .. Base32 format\n"
 		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n");
+		"- `:base64` .. Base64 format. Default.\n"
+		"\n"
+		"The following two lines have the same effect:\n"
+		"\n"
+		"    base64.Decode(src, dst)\n"
+		"    Stream.Pipe(src, base64.Decoder(dst))\n");
 }
 
 Gurax_ImplementFunction(Decode)
@@ -68,7 +73,6 @@ Gurax_DeclareFunction(Decoder)
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
-	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -93,13 +97,13 @@ Gurax_ImplementFunction(Decoder)
 		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
 		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
 		Info::Base64; 
-	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
 	// Function body
-	RefPtr<Stream> pStream(new Stream_Decoder(new Decoder(streamDst.Reference(), info)));
+	RefPtr<Decoder> pDecoder(new Decoder(streamDst.Reference(), info));
+	RefPtr<Stream> pStream(new Stream_Decoder(pDecoder.release()));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
-// base64.Encode(src:Stream, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
+// base64.Encode(src:Stream:r, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
 Gurax_DeclareFunction(Encode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -128,7 +132,12 @@ Gurax_DeclareFunction(Encode)
 		"If the argument is omitted, pre-defined length for each format is applied:\n"
 		"64 characters for base32 and base32hex and 76 for base16 and base64.\n"
 		"\n"
-		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n");
+		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n"
+		"\n"
+		"The following two lines have the same effect:\n"
+		"\n"
+		"    base64.Encode(src, dst)\n"
+		"    Stream.Pipe(src, base64.Encoder(dst))\n");
 }
 
 Gurax_ImplementFunction(Encode)
@@ -209,8 +218,9 @@ Gurax_ImplementFunction(Encoder)
 	if (Error::IsIssued()) return Value::nil();
 	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
 	// Function body
-	RefPtr<Stream> pStream(new Stream_Encoder(new Encoder(streamDst.Reference(),
-							singleLineFlag? 0 : nCharsPerLine, info)));
+	RefPtr<Encoder> pEncoder(new Encoder(streamDst.Reference(),
+							singleLineFlag? 0 : nCharsPerLine, info));
+	RefPtr<Stream> pStream(new Stream_Encoder(pEncoder.release()));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
