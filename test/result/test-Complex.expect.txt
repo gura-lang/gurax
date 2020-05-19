@@ -12,7 +12,7 @@ a.arg .. 0
 a.imag .. 0
 a.norm .. 9
 a.real .. 3
-a .. <Complex:0+3j>
+a .. <Complex:3j>
 a.abs .. 3
 a.arg .. 1.5708
 a.imag .. 3

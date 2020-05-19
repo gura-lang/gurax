@@ -373,19 +373,15 @@ String Value_Complex::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	const Complex& num = GetComplex();
-	if (num.imag() > 0) {
-		str.Printf(":%g+%gj>", num.real(), num.imag());
-	} else if (num.imag() < 0) {
-		str.Printf(":%g%gj>", num.real(), num.imag());
-	} else {
-		str.Printf(":%g>", num.real());
-	}
+	str += ":";
+	str += GetComplex().ToString(ss);
+	str += ">";
 	return str;
 }
 
 String Value_Complex::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ss.IsAsValue()? GetComplex().ToString(ss) : ToStringDigest(ss);
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
