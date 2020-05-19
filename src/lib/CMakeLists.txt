@@ -159,8 +159,8 @@ target_link_libraries(guraxcore PRIVATE
 	$<$<PLATFORM_ID:Darwin>:pthread>)
 if (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
 	set_target_properties(guraxcore PROPERTIES
-		VERSION				${GURAX_VERSION}
-		SOVERSION			${GURAX_SOVERSION}
+		VERSION				${PROJECT_VERSION}
+		SOVERSION			${PROJECT_VERSION}
 		BUILD_WITH_INSTALL_NAME_DIR	1
 		INSTALL_NAME_DIR	"@executable_path/../lib")
 endif ()
