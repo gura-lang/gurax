@@ -23,6 +23,7 @@ const char* g_strHelp =
 	"-i module[,..]   imports module(s) before evaluating scripts\n"
 	"-I dir           specifies a directory to search for modules\n"
 	"-c cmd           executes a script from command line\n"
+	"-p cmd           executes a script from command line and prints the last result\n"
 	"-q               suppresses version banner at the beginning of interactive mode\n"
 	"-T template[,..] evaluates script code embedded in template\n"
 	"-C dir           changes directory before executing scripts\n"

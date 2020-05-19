@@ -95,7 +95,7 @@ public:
 		Present(processor, new Value_String(pStr));
 	}
 public:
-	static bool ExecCommand(Processor& processor, const char* cmd);
+	static bool ExecCommand(Processor& processor, const char* cmd, bool printFlag);
 };
 
 }

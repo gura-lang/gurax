@@ -22,6 +22,7 @@ bool Basement::Initialize(int argc, char** argv)
 	_cmdLine
 		.OptMultiString	("import",			'i')
 		.OptMultiString	("command",			'c')
+		.OptMultiString	("command-p",		'p')
 		.OptMultiString	("module-path",		'I')
 		.OptBool		("debug",			'g')
 		.OptBool		("naked");
@@ -43,7 +44,11 @@ bool Basement::Initialize(int argc, char** argv)
 	}
 	if (!Module::ImportByNameList(processor, _cmdLine.GetStringList("import"))) return false;
 	for (const String& cmd : _cmdLine.GetStringList("command")) {
-		if (!ExecCommand(processor, cmd.c_str())) return false;
+		if (!ExecCommand(processor, cmd.c_str(), false)) return false;
+		_commandDoneFlag = true;
+	}
+	for (const String& cmd : _cmdLine.GetStringList("command-p")) {
+		if (!ExecCommand(processor, cmd.c_str(), true)) return false;
 		_commandDoneFlag = true;
 	}
 	return true;
@@ -155,14 +160,17 @@ void Basement::Present(Processor& processor, RefPtr<Value> pValue)
 	if (_pFuncPresenter) Value::Delete(_pFuncPresenter->EvalEasy(processor, pValue.release()));
 }
 
-bool Basement::ExecCommand(Processor& processor, const char* cmd)
+bool Basement::ExecCommand(Processor& processor, const char* cmd, bool printFlag)
 {
 	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseString(cmd));
 	if (!pExprOfRoot) return false;
 	Composer composer;
 	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) return false;
-	Value::Delete(pExprOfRoot->Eval(processor));
+	RefPtr<Value> pValue(pExprOfRoot->Eval(processor));
+	if (printFlag && pValue->IsValid()) {
+		Stream::COut->Printf("%s\n", pValue->ToString(StringStyle::AsValue).c_str());
+	}
 	return !Error::IsIssued();
 }
 
