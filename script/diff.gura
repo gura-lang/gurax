@@ -4,7 +4,6 @@ import(conio)
 import(argopt)
 
 argopt.Parser {|p|
-	[opt, argv] = p.Parse(sys.argv)
 	errorFlag = false
 	try {
 		[argv, cfg] = p.Parse(sys.argv)

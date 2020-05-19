@@ -1,6 +1,6 @@
-======== Basic test ========
+======== base64.Encode() and base64.Decode() ========
 ----------------------------------------------------------
-Base16
+[Base16]
 Source:  b''
 Encoded: B'' .. OK
 Source:  b'f'
@@ -17,10 +17,20 @@ Source:  b'foobar'
 Encoded: B'666F6F626172' .. OK
 Source:  b'abcdefghijklmnopqrstuvwxyz'
 Encoded: B'6162636465666768696A6B6C6D6E6F707172737475767778797A' .. OK
+Source:  (1024bytes)
+Encoded: (2048bytes) .. OK
 Source:  (1025bytes)
 Encoded: (2050bytes) .. OK
+Source:  (1026bytes)
+Encoded: (2052bytes) .. OK
+Source:  (1027bytes)
+Encoded: (2054bytes) .. OK
+Source:  (1028bytes)
+Encoded: (2056bytes) .. OK
+Source:  (1029bytes)
+Encoded: (2058bytes) .. OK
 ----------------------------------------------------------
-Base32
+[Base32]
 Source:  b''
 Encoded: B'' .. OK
 Source:  b'f'
@@ -37,10 +47,20 @@ Source:  b'foobar'
 Encoded: B'MZXW6YTBOI======' .. OK
 Source:  b'abcdefghijklmnopqrstuvwxyz'
 Encoded: B'MFRGGZDFMZTWQ2LKNNWG23TPOBYXE43UOV3HO6DZPI======' .. OK
+Source:  (1024bytes)
+Encoded: (1640bytes) .. OK
 Source:  (1025bytes)
 Encoded: (1640bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1648bytes) .. OK
 ----------------------------------------------------------
-Base32hex
+[Base32hex]
 Source:  b''
 Encoded: B'' .. OK
 Source:  b'f'
@@ -57,10 +77,20 @@ Source:  b'foobar'
 Encoded: B'CPNMUOJ1E8======' .. OK
 Source:  b'abcdefghijklmnopqrstuvwxyz'
 Encoded: B'C5H66P35CPJMGQBADDM6QRJFE1ON4SRKELR7EU3PF8======' .. OK
+Source:  (1024bytes)
+Encoded: (1640bytes) .. OK
 Source:  (1025bytes)
 Encoded: (1640bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1648bytes) .. OK
 ----------------------------------------------------------
-Base64
+[Base64]
 Source:  b''
 Encoded: B'' .. OK
 Source:  b'f'
@@ -77,8 +107,139 @@ Source:  b'foobar'
 Encoded: B'Zm9vYmFy' .. OK
 Source:  b'abcdefghijklmnopqrstuvwxyz'
 Encoded: B'YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=' .. OK
+Source:  (1024bytes)
+Encoded: (1368bytes) .. OK
 Source:  (1025bytes)
 Encoded: (1368bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1368bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1372bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1372bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1372bytes) .. OK
+======== base64.Encoder() and base64.Decoder() ========
+----------------------------------------------------------
+[Base16]
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'66' .. OK
+Source:  b'fo'
+Encoded: B'666F' .. OK
+Source:  b'foo'
+Encoded: B'666F6F' .. OK
+Source:  b'foob'
+Encoded: B'666F6F62' .. OK
+Source:  b'fooba'
+Encoded: B'666F6F6261' .. OK
+Source:  b'foobar'
+Encoded: B'666F6F626172' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'6162636465666768696A6B6C6D6E6F707172737475767778797A' .. OK
+Source:  (1024bytes)
+Encoded: (2048bytes) .. OK
+Source:  (1025bytes)
+Encoded: (2050bytes) .. OK
+Source:  (1026bytes)
+Encoded: (2052bytes) .. OK
+Source:  (1027bytes)
+Encoded: (2054bytes) .. OK
+Source:  (1028bytes)
+Encoded: (2056bytes) .. OK
+Source:  (1029bytes)
+Encoded: (2058bytes) .. OK
+----------------------------------------------------------
+[Base32]
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'MY======' .. OK
+Source:  b'fo'
+Encoded: B'MZXQ====' .. OK
+Source:  b'foo'
+Encoded: B'MZXW6===' .. OK
+Source:  b'foob'
+Encoded: B'MZXW6YQ=' .. OK
+Source:  b'fooba'
+Encoded: B'MZXW6YTB' .. OK
+Source:  b'foobar'
+Encoded: B'MZXW6YTBOI======' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'MFRGGZDFMZTWQ2LKNNWG23TPOBYXE43UOV3HO6DZPI======' .. OK
+Source:  (1024bytes)
+Encoded: (1640bytes) .. OK
+Source:  (1025bytes)
+Encoded: (1640bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1648bytes) .. OK
+----------------------------------------------------------
+[Base32hex]
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'CO======' .. OK
+Source:  b'fo'
+Encoded: B'CPNG====' .. OK
+Source:  b'foo'
+Encoded: B'CPNMU===' .. OK
+Source:  b'foob'
+Encoded: B'CPNMUOG=' .. OK
+Source:  b'fooba'
+Encoded: B'CPNMUOJ1' .. OK
+Source:  b'foobar'
+Encoded: B'CPNMUOJ1E8======' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'C5H66P35CPJMGQBADDM6QRJFE1ON4SRKELR7EU3PF8======' .. OK
+Source:  (1024bytes)
+Encoded: (1640bytes) .. OK
+Source:  (1025bytes)
+Encoded: (1640bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1648bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1648bytes) .. OK
+----------------------------------------------------------
+[Base64]
+Source:  b''
+Encoded: B'' .. OK
+Source:  b'f'
+Encoded: B'Zg==' .. OK
+Source:  b'fo'
+Encoded: B'Zm8=' .. OK
+Source:  b'foo'
+Encoded: B'Zm9v' .. OK
+Source:  b'foob'
+Encoded: B'Zm9vYg==' .. OK
+Source:  b'fooba'
+Encoded: B'Zm9vYmE=' .. OK
+Source:  b'foobar'
+Encoded: B'Zm9vYmFy' .. OK
+Source:  b'abcdefghijklmnopqrstuvwxyz'
+Encoded: B'YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=' .. OK
+Source:  (1024bytes)
+Encoded: (1368bytes) .. OK
+Source:  (1025bytes)
+Encoded: (1368bytes) .. OK
+Source:  (1026bytes)
+Encoded: (1368bytes) .. OK
+Source:  (1027bytes)
+Encoded: (1372bytes) .. OK
+Source:  (1028bytes)
+Encoded: (1372bytes) .. OK
+Source:  (1029bytes)
+Encoded: (1372bytes) .. OK
 ======== Line Length ========
 ----------------------------------------------------------
 Encode():base16

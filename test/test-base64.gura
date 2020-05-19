@@ -6,7 +6,7 @@ import(util.tester) {*}
 
 PrintSep() = Println('----------------------------------------------------------')
 
-TesterCommon(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
+PrintBuff(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
 	dumpFlag = (buffSrc.bytes < 80)
 	Printf('Source:  %s\n', cond(dumpFlag, buffSrc, Format('(%dbytes)', buffSrc.bytes)))
 	if (buffSrc == buffDec) {
@@ -16,32 +16,8 @@ TesterCommon(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
 	}
 }
 
-TesterBase16(buffSrc:Binary):void:map = {
-	buffEnc = base64.Encode(buffSrc):base16:singleLine
-	buffDec = base64.Decode(buffEnc):base16
-	TesterCommon(buffSrc, buffEnc, buffDec)
-}
-
-TesterBase32(buffSrc:Binary):void:map = {
-	buffEnc = base64.Encode(buffSrc):base32:singleLine
-	buffDec = base64.Decode(buffEnc):base32
-	TesterCommon(buffSrc, buffEnc, buffDec)
-}
-
-TesterBase32hex(buffSrc:Binary):void:map = {
-	buffEnc = base64.Encode(buffSrc):base32hex:singleLine
-	buffDec = base64.Decode(buffEnc):base32hex
-	TesterCommon(buffSrc, buffEnc, buffDec)
-}
-
-TesterBase64(buffSrc:Binary):void:map = {
-	buffEnc = base64.Encode(buffSrc):base64:singleLine
-	buffDec = base64.Decode(buffEnc):base64
-	TesterCommon(buffSrc, buffEnc, buffDec)
-}
-
-TestCase('Basic test') {
-	testCases = [
+TestCase('base64.Encode() and base64.Decode()') {
+	buffSrcTbl = [
 		b''
 		b'f'
 		b'fo'
@@ -50,20 +26,92 @@ TestCase('Basic test') {
 		b'fooba'
 		b'foobar'
 		b'abcdefghijklmnopqrstuvwxyz'
-		Binary {|buff| buff.p.Put(`uint8, 0..1024), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1024)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1025)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1026)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1027)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1028)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1029)), buff} 
 	]
 	PrintSep()
-	Println('Base16')
-	TesterBase16(testCases)
+	Println('[Base16]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = base64.Encode(buffSrc):base16:singleLine
+		buffDec = base64.Decode(buffEnc):base16
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
 	PrintSep()
-	Println('Base32')
-	TesterBase32(testCases)
+	Println('[Base32]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = base64.Encode(buffSrc):base32:singleLine
+		buffDec = base64.Decode(buffEnc):base32
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
 	PrintSep()
-	Println('Base32hex')
-	TesterBase32hex(testCases)
+	Println('[Base32hex]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = base64.Encode(buffSrc):base32hex:singleLine
+		buffDec = base64.Decode(buffEnc):base32hex
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
 	PrintSep()
-	Println('Base64')
-	TesterBase64(testCases)
+	Println('[Base64]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = base64.Encode(buffSrc):base64:singleLine
+		buffDec = base64.Decode(buffEnc):base64
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
+}
+
+TestCase('base64.Encoder() and base64.Decoder()') {
+	buffSrcTbl = [
+		b''
+		b'f'
+		b'fo'
+		b'foo'
+		b'foob'
+		b'fooba'
+		b'foobar'
+		b'abcdefghijklmnopqrstuvwxyz'
+		Binary {|buff| buff.p.Put(`uint8, Range(1024)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1025)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1026)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1027)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1028)), buff} 
+		Binary {|buff| buff.p.Put(`uint8, Range(1029)), buff} 
+	]
+	PrintSep()
+	Println('[Base16]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = Binary(), buffDec = Binary()
+		(base64.Encoder(buffEnc):base16:singleLine).Write(buffSrc)
+		(base64.Decoder(buffDec):base16).Write(buffEnc)
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
+	PrintSep()
+	Println('[Base32]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = Binary(), buffDec = Binary()
+		(base64.Encoder(buffEnc):base32:singleLine).Write(buffSrc)
+		(base64.Decoder(buffDec):base32).Write(buffEnc)
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
+	PrintSep()
+	Println('[Base32hex]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = Binary(), buffDec = Binary()
+		(base64.Encoder(buffEnc):base32hex:singleLine).Write(buffSrc)
+		(base64.Decoder(buffDec):base32hex).Write(buffEnc)
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
+	PrintSep()
+	Println('[Base64]')
+	buffSrcTbl.Each {|buffSrc|
+		buffEnc = Binary(), buffDec = Binary()
+		(base64.Encoder(buffEnc):base64:singleLine).Write(buffSrc)
+		(base64.Decoder(buffDec):base64).Write(buffEnc)
+		PrintBuff(buffSrc, buffEnc, buffDec)
+	}
 }
 
 TestCase('Line Length') {

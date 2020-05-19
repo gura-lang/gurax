@@ -1,0 +1,13 @@
+#!/usr/bin/env gurax
+import(argopt)
+argopt.Parser {|p|
+	[argv, opt] = p.Parse(sys.argv)
+}
+if (argv.len == 1) { 
+	base64.Encode(argv[0], sys.cout)
+} elsif (argv.len == 2) { 
+	base64.Encode(argv[0], argv[1])
+} else {
+	sys.cerr.Println('usage: base64encode src [dst]')
+	sys.Exit(1)
+}
