@@ -16,6 +16,12 @@ add_library(${fileName_gurd} SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+${if (portableFlag)}
+execute_process(COMMAND gurax -p "sys.dirInclude" OUTPUT_VARIABLE dirInclude)
+execute_process(COMMAND gurax -p "sys.dirLib" OUTPUT_VARIABLE dirLib)
+target_include_directories(${fileName_gurd} PRIVATE $\{dirInclude})
+target_link_directories(${fileName_gurd} PRIVATE $\{dirLib})
+${else}
 target_include_directories(${fileName_gurd} PRIVATE
 	$\{PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:$\{PROJECT_SOURCE_DIR}/../../guest>
@@ -27,6 +33,7 @@ target_link_directories(${fileName_gurd} PRIVATE
 	$<$<PLATFORM_ID:Linux>:$\{PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:$\{PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX $\{PROJECT_SOURCE_DIR}/../..)
+${end}
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
@@ -193,6 +200,7 @@ options:
 //------------------------------------------------------------------------------
 main() = {
 	argopt.Parser {|p|
+		p.AddFlag('portable', 'p', 'creates a portable build environment')
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
 		p.AddFlag('here', 'h', 'create files in the current directory')
 		[argv, opt] = p.Parse(sys.argv)
@@ -205,6 +213,7 @@ main() = {
 	dotModuleName = fields.Join('.')
 	ubarModuleName = fields.Join('_')
 	baseName = fields[-1]
+	portableFlag = opt['portable']
 	if (opt['here']) {
 		dirNameOut = ''
 	} else {
