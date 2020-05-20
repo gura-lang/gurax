@@ -14,7 +14,7 @@ Gurax_BeginModuleScope(png)
 class GURAX_DLLDECLARE ImageMgrEx : public ImageMgr {
 public:
 public:
-	ImageMgrEx() : ImageMgr("png") {}
+	ImageMgrEx() : ImageMgr("png", "Portable Network Graphics") {}
 public:
 	virtual bool IsResponsible(Stream& stream) const override;
 	virtual bool IsResponsibleExtName(const char* extName) const override;

@@ -16,7 +16,7 @@ uHwMX7ZFA1jeVcogKIm3RPh46xZIhzS2bR0IEBTmeY65K67gzA8UH566xjuOpWWCxbdWEdb7diLz
 V3ml0DaoJlewfU7qmcw2Piz2jC2S54oZnA2znRI83bdThbnWocRhQQVJZSZjGGWPpAJAVmieUKA/
 hsMvNN22h+UJr1QLC3csPRqSEEY5Znezed1TJaXL/uSQXKVppP7svhLw3NQmLMu/yfN+A8LBMXwK
 9jLTAAAAAElFTkSuQmCC
-'''base64, 'png')
+'''base64)
 
 PutImageWithAscii(img:Image, scanDir = `LeftTopHorz) = {
 	charTbl = ['@', '*', '.', ' ']

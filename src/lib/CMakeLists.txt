@@ -121,6 +121,7 @@ target_sources(guraxcore PRIVATE
 	VType_Function.cpp
 	VType_Help.cpp
 	VType_Image.cpp
+	VType_ImageMgr.cpp
 	VType_Index.cpp
 	VType_Iterator.cpp
 	VType_KeyValuePair.cpp

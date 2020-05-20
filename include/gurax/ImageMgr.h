@@ -19,9 +19,11 @@ public:
 	Gurax_DeclareReferable(ImageMgr);
 protected:
 	String _imgTypeName;
+	String _description;
 public:
 	// Constructor
-	ImageMgr(String imgTypeName) : _imgTypeName(imgTypeName) {}
+	ImageMgr(String imgTypeName, String description) :
+			_imgTypeName(imgTypeName), _description(description) {}
 	// Copy constructor/operator
 	ImageMgr(const ImageMgr& src) = delete;
 	ImageMgr& operator=(const ImageMgr& src) = delete;
@@ -32,6 +34,7 @@ protected:
 	virtual ~ImageMgr() = default;
 public:
 	const char* GetImgTypeName() const { return _imgTypeName.c_str(); }
+	const char* GetDescription() const { return _description.c_str(); }
 public:
 	virtual bool IsResponsible(Stream& stream) const = 0;
 	virtual bool IsResponsibleExtName(const char* extName) const = 0;
@@ -39,6 +42,12 @@ public:
 	virtual bool Write(Stream& stream, const Image& image) const = 0;
 public:
 	static void Assign(ImageMgr* pImageMgr);
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ImageMgr& imageMgr) const { return this == &imageMgr; }
+	bool IsEqualTo(const ImageMgr& imageMgr) const { return IsIdentical(imageMgr); }
+	bool IsLessThan(const ImageMgr& imageMgr) const { return this < &imageMgr; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------

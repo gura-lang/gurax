@@ -14,6 +14,11 @@ void ImageMgr::Assign(ImageMgr* pImageMgr)
 	imageMgrOwner.push_back(pImageMgr);
 }
 
+String ImageMgr::ToString(const StringStyle& ss) const
+{
+	return "ImageMgr";
+}
+
 //------------------------------------------------------------------------------
 // ImageMgrList
 //------------------------------------------------------------------------------

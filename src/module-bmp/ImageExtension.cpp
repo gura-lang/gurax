@@ -12,7 +12,7 @@ bool ImageMgrEx::IsResponsible(Stream& stream) const
 {
 	BitmapFileHeader bfh;
 	return stream.Read(&bfh, BitmapFileHeader::bytes) == BitmapFileHeader::bytes &&
-		Gurax_UnpackUInt16(bfh.bfType) != 0x4d42;
+		Gurax_UnpackUInt16(bfh.bfType) == 0x4d42;
 }
 
 bool ImageMgrEx::IsResponsibleExtName(const char* extName) const
