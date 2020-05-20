@@ -85,7 +85,7 @@ TestCase('base64.Encoder() and base64.Decoder()') {
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
 		(base64.Encoder(buffEnc):base16:singleLine).Write(buffSrc)
-		(base64.Decoder(buffDec):base16).Write(buffEnc)
+		buffDec = (base64.Decoder(buffEnc):base16).Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
@@ -93,7 +93,7 @@ TestCase('base64.Encoder() and base64.Decoder()') {
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
 		(base64.Encoder(buffEnc):base32:singleLine).Write(buffSrc)
-		(base64.Decoder(buffDec):base32).Write(buffEnc)
+		buffDec = (base64.Decoder(buffEnc):base32).Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
@@ -101,7 +101,7 @@ TestCase('base64.Encoder() and base64.Decoder()') {
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
 		(base64.Encoder(buffEnc):base32hex:singleLine).Write(buffSrc)
-		(base64.Decoder(buffDec):base32hex).Write(buffEnc)
+		buffDec = (base64.Decoder(buffEnc):base32hex).Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
@@ -109,7 +109,7 @@ TestCase('base64.Encoder() and base64.Decoder()') {
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
 		(base64.Encoder(buffEnc):base64:singleLine).Write(buffSrc)
-		(base64.Decoder(buffDec):base64).Write(buffEnc)
+		buffDec = (base64.Decoder(buffEnc):base64).Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 }

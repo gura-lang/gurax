@@ -115,7 +115,7 @@ protected:
 	RefPtr<Stream> _pStreamSrc;
 	RefPtr<Stream_Binary> _pStreamMid;
 	RefPtr<Decoder> _pDecoder;
-	size_t _offset;
+	size_t _offsetMid;
 public:
 	Stream_Decoder(Stream* pStreamSrc, const Info& info);
 	~Stream_Decoder() { Close(); }

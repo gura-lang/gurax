@@ -68,7 +68,7 @@ Gurax_ImplementFunction(Decode)
 Gurax_DeclareFunction(Decoder)
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(base16));
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));

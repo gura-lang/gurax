@@ -61,6 +61,7 @@ public:
 public:
 	Binary& GetBuff() { return _pBuff->GetBinary(); }
 	BinaryReferable& GetBuffReferable() { return *_pBuff; }
+	void ClearBuff() { GetBuff().clear(); _offset = 0; }
 public:
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return ""; }

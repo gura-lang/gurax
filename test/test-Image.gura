@@ -19,7 +19,7 @@ hsMvNN22h+UJr1QLC3csPRqSEEY5Znezed1TJaXL/uSQXKVppP7svhLw3NQmLMu/yfN+A8LBMXwK
 9jLTAAAAAElFTkSuQmCC
 '''base64)
 
-img_Midori.Write(base64.Encoder(sys.cout), 'jpeg')
+//img_Midori.Write(base64.Encoder(sys.cout), 'jpeg')
 
 PutImageWithAscii(img:Image, scanDir = `LeftTopHorz) = {
 	charTbl = ['@', '*', '.', ' ']
