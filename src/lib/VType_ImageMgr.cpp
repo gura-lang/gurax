@@ -25,47 +25,60 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
+// Implementation of class method
 //-----------------------------------------------------------------------------
-// ImageMgr#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(ImageMgr, MethodSkeleton)
+// ImageMgr.Dir()
+Gurax_DeclareClassMethod(ImageMgr, Dir)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_List, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Returns a list of `ImageMgr` instances that represent registered image managers.\n");
 }
 
-Gurax_ImplementMethod(ImageMgr, MethodSkeleton)
+Gurax_ImplementClassMethod(ImageMgr, Dir)
 {
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(imageMgrList.size());
+	for (const ImageMgr* pImageMgr : imageMgrList) {
+		pValueOwner->push_back(new Value_ImageMgr(pImageMgr->Reference()));
+	}
+	return new Value_List(pValueOwner.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ImageMgr#propSkeleton
-Gurax_DeclareProperty_R(ImageMgr, propSkeleton)
+// ImageMgr#description
+Gurax_DeclareProperty_R(ImageMgr, description)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Description for this manager.");
 }
 
-Gurax_ImplementPropertyGetter(ImageMgr, propSkeleton)
+Gurax_ImplementPropertyGetter(ImageMgr, description)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetImageMgr().GetDescription());
+}
+
+// ImageMgr#imgTypeName
+Gurax_DeclareProperty_R(ImageMgr, imgTypeName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Name of the image type for which this manager is responsible.");
+}
+
+Gurax_ImplementPropertyGetter(ImageMgr, imgTypeName)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetImageMgr().GetImgTypeName());
 }
 
 //------------------------------------------------------------------------------
@@ -79,10 +92,11 @@ void VType_ImageMgr::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(ImageMgr, MethodSkeleton));
+	// Assignment of class method
+	Assign(Gurax_CreateMethod(ImageMgr, Dir));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageMgr, propSkeleton));
+	Assign(Gurax_CreateProperty(ImageMgr, description));
+	Assign(Gurax_CreateProperty(ImageMgr, imgTypeName));
 }
 
 //------------------------------------------------------------------------------
