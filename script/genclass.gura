@@ -3,9 +3,23 @@ import(re)
 import(argopt)
 
 //------------------------------------------------------------------------------
+// Info
+//------------------------------------------------------------------------------
+Info = struct {
+	fileName:String
+	tmpl:Template
+	Render():dynamicScope:void = this.tmpl.Render(Open(this.fileName, 'w'))
+}
+
+info_Header = Info()
+info_Source = Info()
+info_VTypeHeader = Info()
+info_VTypeSource = Info()
+
+//------------------------------------------------------------------------------
 // Template of ${className}.h
 //------------------------------------------------------------------------------
-tmpl_Header = tR'''
+info_Header.tmpl = tR'''
 //==============================================================================
 // ${className}.h
 //==============================================================================
@@ -63,7 +77,7 @@ ${end}
 //------------------------------------------------------------------------------
 // Template of ${className}.cpp
 //------------------------------------------------------------------------------
-tmpl_Source = tR'''
+info_Source.tmpl = tR'''
 //==============================================================================
 // ${className}.cpp
 //==============================================================================
@@ -93,7 +107,7 @@ ${end}
 //------------------------------------------------------------------------------
 // Template of VType_${className}.h
 //------------------------------------------------------------------------------
-tmpl_VTypeHeader = tR'''
+info_VTypeHeader.tmpl = tR'''
 //==============================================================================
 // VType_${className}.h
 //==============================================================================
@@ -194,7 +208,7 @@ ${end}
 //------------------------------------------------------------------------------
 // Template of VType_${className}.cpp
 //------------------------------------------------------------------------------
-tmpl_VTypeSource = tR'''
+info_VTypeSource.tmpl = tR'''
 //==============================================================================
 // VType_${className}.cpp
 //==============================================================================
@@ -331,6 +345,8 @@ options:
 //------------------------------------------------------------------------------
 main() = {
 	argopt.Parser {|p|
+		p.AddFlag('entity', 'e', 'generates entity class')
+		p.AddFlag('vtype', 'v', 'generates VType')
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
 		[argv, opt] = p.Parse(sys.argv)
 		if (argv.len < 1) {
@@ -361,25 +377,26 @@ main() = {
 	}
 	className = fields[-1]
 	entityName = className
-	fileName_Header = className + '.h'
-	fileName_Source = className + '.cpp'
-	fileName_VTypeHeader = 'VType_' + className + '.h'
-	fileName_VTypeSource = 'VType_' + className + '.cpp'
+	info_Header.fileName = className + '.h'
+	info_Source.fileName = className + '.cpp'
+	info_VTypeHeader.fileName = 'VType_' + className + '.h'
+	info_VTypeSource.fileName = 'VType_' + className + '.cpp'
+	infoTbl = if (opt['entity'] && !opt['vtype']) {
+		[info_Header, info_Source]
+	} elsif (!opt['entity'] && opt['vtype']) {
+		[info_VTypeHeader, info_VTypeSource]
+	} else {
+		[info_Header, info_Source, info_VTypeHeader, info_VTypeSource]
+	}
 	if (!opt['force'] && \
-		fs.Exists([fileName_Header, fileName_Source, fileName_VTypeHeader, fileName_VTypeSource]).Or()) {
+		fs.Exists(infoTbl:*fileName).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
-	tmpl_Header.Render(Open(fileName_Header, 'w'))
-	tmpl_Source.Render(Open(fileName_Source, 'w'))
-	tmpl_VTypeHeader.Render(Open(fileName_VTypeHeader, 'w'))
-	tmpl_VTypeSource.Render(Open(fileName_VTypeSource, 'w'))
+	infoTbl::Render()
 	tR'''
 	Following files were generated for the ${dotClassName} class.
-	  ${fileName_Header}
-	  ${fileName_Source}
-	  ${fileName_VTypeHeader}
-	  ${fileName_VTypeSource}
+	  ${infoTbl:*fileName + '\n'}
 	'''.Render(sys.cout)
 }
 
