@@ -14,7 +14,7 @@ Gurax_BeginModuleScope(bmp)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ImageMgrEx : public ImageMgr {
 public:
-	ImageMgrEx() : ImageMgr("bmp", "Microsoft Windows Bitmap Image") {}
+	ImageMgrEx() : ImageMgr("bmp", "BMP (Microsoft Windows Bitmap Image)") {}
 public:
 	virtual bool IsResponsible(Stream& stream) const override;
 	virtual bool IsResponsibleExtName(const char* extName) const override;

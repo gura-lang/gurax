@@ -241,4 +241,35 @@ bool Encoder::Finish()
 	return true;
 }
 
+//------------------------------------------------------------------------------
+// Stream_Decoder
+//------------------------------------------------------------------------------
+Stream_Decoder::Stream_Decoder(Stream* pStreamSrc, const Info& info) :
+		Stream(Flag::Readable), _pStreamSrc(pStreamSrc),
+		_pStreamMid(new Stream_Binary(Stream::Flag::Writable)),
+		_pDecoder(new Decoder(_pStreamMid->Reference(), info)), _offset(0)
+{
+}
+
+size_t Stream_Decoder::DoRead(void* buff, size_t bytes)
+{
+	UInt8 buffRead[1024];
+	UInt8* pBuff = reinterpret_cast<UInt8*>(buff);
+	size_t bytesOut = 0;
+	Binary& buffMid = _pStreamMid->GetBuff();
+	for (size_t bytesOut = 0; bytesOut < bytes; ) {
+		if (_offset >= buffMid.size()) {
+			size_t bytesRead = _pStreamSrc->Read(buffRead, sizeof(buffRead));
+			buffMid.clear();
+			_offset = 0;
+			if (!_pDecoder->Decode(buffRead, bytesRead) || buffMid.empty()) break;
+		}
+		size_t bytesCopy = std::min(buffMid.size() - _offset, bytes - bytesOut);
+		::memcpy(pBuff + bytesOut, buffMid.data() + _offset, bytesCopy);
+		bytesOut += bytesCopy;
+		_offset += bytesCopy;
+	}
+	return bytesOut;
+}
+
 Gurax_EndModuleScope(base64)

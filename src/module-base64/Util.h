@@ -112,9 +112,12 @@ public:
 //------------------------------------------------------------------------------
 class Stream_Decoder : public Stream {
 protected:
+	RefPtr<Stream> _pStreamSrc;
+	RefPtr<Stream_Binary> _pStreamMid;
 	RefPtr<Decoder> _pDecoder;
+	size_t _offset;
 public:
-	Stream_Decoder(Decoder* pDecoder) : Stream(Flag::Writable), _pDecoder(pDecoder) {}
+	Stream_Decoder(Stream* pStreamSrc, const Info& info);
 	~Stream_Decoder() { Close(); }
 public:
 	virtual const char* GetName() const override { return "base64.Decoder"; };
@@ -122,10 +125,8 @@ public:
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return _pDecoder->Decode(&ch, 1); }
-	virtual size_t DoRead(void* buff, size_t bytes) override { return 0; }
-	virtual bool DoWrite(const void* buff, size_t bytes) override {
-		return _pDecoder->Decode(buff, bytes);
-	}
+	virtual size_t DoRead(void* buff, size_t bytes) override;
+	virtual bool DoWrite(const void* buff, size_t bytes) override { return false; }
 	virtual bool DoFlush() override { return true; }
 };
 

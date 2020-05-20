@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ImageMgrEx : public ImageMgr {
 public:
-	ImageMgrEx() : ImageMgr("jpeg", "Joint Photographic Experts Group") {}
+	ImageMgrEx() : ImageMgr("jpeg", "JPEG (Joint Photographic Experts Group)") {}
 public:
 	virtual bool IsResponsible(Stream& stream) const override;
 	virtual bool IsResponsibleExtName(const char* extName) const override;

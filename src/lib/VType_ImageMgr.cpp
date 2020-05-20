@@ -48,6 +48,55 @@ Gurax_ImplementClassMethod(ImageMgr, Dir)
 	return new Value_List(pValueOwner.release());
 }
 
+// ImageMgr.Lookup(imgTypeName:String)
+Gurax_DeclareClassMethod(ImageMgr, Lookup)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("imgTypeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Looks up an `ImageMgr` instances that matches the specified `imgTypeName`.\n");
+}
+
+Gurax_ImplementClassMethod(ImageMgr, Lookup)
+{
+	// Argument
+	ArgPicker args(argument);
+	const char* imgTypeName = args.PickString();
+	// Function body
+	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
+	const ImageMgr* pImageMgr = imageMgrList.FindByImgTypeName(imgTypeName);
+	if (!pImageMgr) {
+		Error::Issue(ErrorType::KeyError, "can't find an image manager of the specified image type");
+		return Value::nil();
+	}
+	return new Value_ImageMgr(pImageMgr->Reference());
+}
+
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// module.ImageMgr#IsResponsible(stream:Stream:r)
+Gurax_DeclareMethod(ImageMgr, IsResponsible)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the data from the stream should be handled by this manager.");
+}
+
+Gurax_ImplementMethod(ImageMgr, IsResponsible)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	return new Value_Bool(valueThis.GetImageMgr().IsResponsible(stream));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -94,6 +143,9 @@ void VType_ImageMgr::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of class method
 	Assign(Gurax_CreateMethod(ImageMgr, Dir));
+	Assign(Gurax_CreateMethod(ImageMgr, Lookup));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(ImageMgr, IsResponsible));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(ImageMgr, description));
 	Assign(Gurax_CreateProperty(ImageMgr, imgTypeName));

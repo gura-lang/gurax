@@ -64,11 +64,11 @@ Gurax_ImplementFunction(Decode)
 	}
 }
 
-// base64.Decoder(dst:Stream:w):[base16,base32,base32hex,base64] {block?}
+// base64.Decoder(src:Stream:r):[base16,base32,base32hex,base64] {block?}
 Gurax_DeclareFunction(Decoder)
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(base16));
 	DeclareAttrOpt(Gurax_Symbol(base32));
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
@@ -76,8 +76,8 @@ Gurax_DeclareFunction(Decoder)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a writable `Stream` instance that decodes a sequence of base-n format.\n"
-		"The result is emitted to the stream `dst`.\n"
+		"Creates a readable `Stream` instance that decodes a sequence of base-n format\n"
+		"from the stream `src`.\n"
 		"\n"
 		"In default, base64 format is applied. The following attributes can specify the format:\n"
 		"\n"
@@ -91,15 +91,14 @@ Gurax_ImplementFunction(Decoder)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamDst = args.PickStream();
+	Stream& streamSrc = args.PickStream();
 	const Info& info =
 		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
 		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
 		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
 		Info::Base64; 
 	// Function body
-	RefPtr<Decoder> pDecoder(new Decoder(streamDst.Reference(), info));
-	RefPtr<Stream> pStream(new Stream_Decoder(pDecoder.release()));
+	RefPtr<Stream> pStream(new Stream_Decoder(streamSrc.Reference(), info));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
@@ -176,7 +175,7 @@ Gurax_ImplementFunction(Encode)
 Gurax_DeclareFunction(Encoder)
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("dst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(base16));
 	DeclareAttrOpt(Gurax_Symbol(base32));
