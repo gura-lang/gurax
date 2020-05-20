@@ -108,19 +108,19 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Stream_Decoder
+// Stream_Reader
 //------------------------------------------------------------------------------
-class Stream_Decoder : public Stream {
+class Stream_Reader : public Stream {
 protected:
 	RefPtr<Stream> _pStreamSrc;
 	RefPtr<Stream_Binary> _pStreamMid;
 	RefPtr<Decoder> _pDecoder;
 	size_t _offsetMid;
 public:
-	Stream_Decoder(Stream* pStreamSrc, const Info& info);
-	~Stream_Decoder() { Close(); }
+	Stream_Reader(Stream* pStreamSrc, const Info& info);
+	~Stream_Reader() { Close(); }
 public:
-	virtual const char* GetName() const override { return "base64.Decoder"; };
+	virtual const char* GetName() const override { return "base64.Reader"; };
 	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return true; }
 	virtual int DoGetChar() override { return 0; }
@@ -131,16 +131,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Stream_Encoder
+// Stream_Writer
 //------------------------------------------------------------------------------
-class Stream_Encoder : public Stream {
+class Stream_Writer : public Stream {
 protected:
 	RefPtr<Encoder> _pEncoder;
 public:
-	Stream_Encoder(Encoder* pEncoder) : Stream(Flag::Writable), _pEncoder(pEncoder) {}
-	~Stream_Encoder() { Close(); }
+	Stream_Writer(Stream* pStreamDst, size_t nCharsPerLine, const Info& info);
+	~Stream_Writer() { Close(); }
 public:
-	virtual const char* GetName() const override { return "base64.Encoder"; };
+	virtual const char* GetName() const override { return "base64.Writer"; };
 	virtual const char* GetIdentifier() const override { return ""; }
 	virtual bool DoClose() override { return _pEncoder->Finish(); }
 	virtual int DoGetChar() override { return 0; }
