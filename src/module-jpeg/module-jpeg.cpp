@@ -12,7 +12,7 @@ Gurax_BeginModule(jpeg)
 Gurax_DeclareFunction(Read)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -38,7 +38,7 @@ Gurax_ImplementFunction(Read)
 Gurax_DeclareFunction(Write)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(

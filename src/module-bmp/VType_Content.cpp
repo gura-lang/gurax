@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareConstructor(Content)
 {
 	Declare(VTYPE_Content, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),

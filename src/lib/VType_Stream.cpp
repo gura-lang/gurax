@@ -417,7 +417,7 @@ Gurax_ImplementMethod(Stream, Write)
 Gurax_DeclareMethod(Stream, PipeFromStream)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
-	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");

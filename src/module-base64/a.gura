@@ -1,0 +1,2 @@
+(buff = B'').p.Put(`uint8, Range(1024))
+base64.Decoder(base64.Encode(buff)).Read().Dump():addr

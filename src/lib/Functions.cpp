@@ -409,7 +409,7 @@ Gurax_ImplementFunction(Range)
 Gurax_DeclareFunction(ReadLines)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(

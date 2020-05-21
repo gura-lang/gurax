@@ -1,0 +1,29 @@
+#!/usr/bin/env gurax
+import(jpeg)
+
+//Image('test.jpg').Write('test2.jpg')
+c = jpeg.Content('test.jpg')
+c.exif.ifd0.Print()
+/*
+//c.exif.ifd0.Exif = [
+//	`DateTimeOriginal => '2020:04:30 00:00:00'
+//	`DateTimeDigitized => '2020:04:30 00:00:00'
+//]
+//Println(c.EachSegment())
+//Println(c.APP0)
+c.exif.ifd0.Print()
+c.exif.ifd0.XResolution = 180r
+//c.exif.ifd0.Copyright = 'hoge hoge'
+/*
+c.exif.ifd0.Make = 'hoge maker'
+c.exif.ifd0.Model = 'hoge hoge model'
+c.exif.ifd0.DateTime = '2020:04:30 00:00:00'
+c.exif.ifd0.Exif.DateTimeOriginal = '2020:04:30 00:00:00'
+c.exif.ifd0.Exif.DateTimeDigitized = '2020:04:30 00:00:00'
+*/
+//c.exif.ifd0.Orientation = 0
+//PrintIFD(c.exif.ifd0)
+c.Write('test-mod.jpg')
+Open('test.jpg').Read().Dump('test.jpg.txt')
+Open('test-mod.jpg').Read().Dump('test-mod.jpg.txt')
+*/

@@ -12,7 +12,7 @@ Gurax_BeginModule(zip)
 Gurax_DeclareFunction(Directory)
 {
 	Declare(VTYPE_Directory, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -35,7 +35,7 @@ Gurax_ImplementFunction(Directory)
 Gurax_DeclareFunction(Inspect)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
