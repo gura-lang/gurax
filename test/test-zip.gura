@@ -20,9 +20,9 @@ TestCase('zip.Writer()') {
 	r = Random(0)
 	buffZip = Binary()
 	zip.Writer(buffZip) {|writer|
-		r.IntM(3000, 30) {|n, i|
+		r.IntSeq(3000, 30) {|n, i|
 			bytes = 1000 + n
-			(buff = Binary()).p.Put(`uint8, r.IntM(256, bytes))
+			(buff = Binary()).p.Put(`uint8, r.IntSeq(256, bytes))
 			writer.Add(Format('entry%02d.bin', i), buff)
 		}
 		writer.Close()

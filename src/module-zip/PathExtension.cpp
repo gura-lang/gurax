@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return pDirectoryParent && !pDirectoryParent->IsFolder() &&
+	return pDirectoryParent && //!pDirectoryParent->IsFolder() &&
 		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".zip") ||
 		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
 		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
