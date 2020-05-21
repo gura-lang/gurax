@@ -34,7 +34,7 @@ Gurax_DeclareFunction(Decode)
 		"The following two lines have the same effect:\n"
 		"\n"
 		"    base64.Decode(src, dst)\n"
-		"    Stream.Pipe(src, base64.Decoder(dst))\n");
+		"    Stream.Pipe(base64.Reader(src), dst)\n");
 }
 
 Gurax_ImplementFunction(Decode)
@@ -98,7 +98,7 @@ Gurax_DeclareFunction(Encode)
 		"The following two lines have the same effect:\n"
 		"\n"
 		"    base64.Encode(src, dst)\n"
-		"    Stream.Pipe(src, base64.Encoder(dst))\n");
+		"    Stream.Pipe(src, base64.Writer(dst))\n");
 }
 
 Gurax_ImplementFunction(Encode)

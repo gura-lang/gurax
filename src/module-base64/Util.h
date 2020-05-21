@@ -40,7 +40,7 @@ public:
 		static const int Error = -3;
 	};
 private:
-	RefPtr<Stream> _pStreamOut;
+	RefPtr<Stream> _pStreamDst;
 	int _nCharsAccum;
 	int _nPaddings;
 	UInt64 _accum;
@@ -49,7 +49,7 @@ private:
 	const Info& _info;
 public:
 	// Constructor
-	Decoder(Stream* pStreamOut, const Info& info);
+	Decoder(Stream* pStreamDst, const Info& info);
 	// Copy constructor/operator
 	Decoder(const Decoder& src) = delete;
 	Decoder& operator=(const Decoder& src) = delete;
@@ -79,7 +79,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Encoder);
 private:
-	RefPtr<Stream> _pStreamOut;
+	RefPtr<Stream> _pStreamDst;
 	size_t _nCharsPerLine;
 	size_t _iCol;
 	size_t _bytesAccum;
@@ -87,7 +87,7 @@ private:
 	const Info& _info;
 public:
 	// Constructor
-	Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info);
+	Encoder(Stream* pStreamDst, int nCharsPerLine, const Info& info);
 	// Copy constructor/operator
 	Encoder(const Encoder& src)	= delete;
 	Encoder& operator=(const Encoder& src) = delete;

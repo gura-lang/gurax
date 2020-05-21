@@ -104,8 +104,8 @@ const Info Info::Base64 = {
 //------------------------------------------------------------------------------
 // Decoder
 //------------------------------------------------------------------------------
-Decoder::Decoder(Stream* pStreamOut, const Info& info) :
-	_pStreamOut(pStreamOut), _nCharsAccum(0), _nPaddings(0), _accum(0), _info(info)
+Decoder::Decoder(Stream* pStreamDst, const Info& info) :
+	_pStreamDst(pStreamDst), _nCharsAccum(0), _nPaddings(0), _accum(0), _info(info)
 {
 	for (size_t i = 0; i < Gurax_ArraySizeOf(_numTbl); i++) _numTbl[i] = Code::Error;
 	int num = 0;
@@ -140,7 +140,7 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 			for (size_t i = 0; i < _info.bytesPerGroup; i++, _accum >>= 8) {
 				buffOut[_info.bytesPerGroup - i - 1] = static_cast<UInt8>(_accum & 0xff);
 			}
-			if (bytesOut > 0 && !_pStreamOut->Write(buffOut, bytesOut)) return false;
+			if (bytesOut > 0 && !_pStreamDst->Write(buffOut, bytesOut)) return false;
 			_nCharsAccum = 0, _nPaddings = 0, _accum = 0;
 		}
 	}
@@ -168,8 +168,8 @@ bool Decoder::Decode(BinaryReferable& buffDst, const void* buff, size_t bytes, c
 //------------------------------------------------------------------------------
 // Encoder
 //------------------------------------------------------------------------------
-Encoder::Encoder(Stream* pStreamOut, int nCharsPerLine, const Info& info) :
-	_pStreamOut(pStreamOut), _nCharsPerLine(CalcAlign(nCharsPerLine, info.nCharsPerGroup)),
+Encoder::Encoder(Stream* pStreamDst, int nCharsPerLine, const Info& info) :
+	_pStreamDst(pStreamDst), _nCharsPerLine(CalcAlign(nCharsPerLine, info.nCharsPerGroup)),
 	_iCol(0), _bytesAccum(0), _accum(0), _info(info)
 {
 }
@@ -191,11 +191,11 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 			_iCol += _info.nCharsPerGroup;
 			size_t bytesOut = _info.nCharsPerGroup;
 			if (_nCharsPerLine > 0 && _iCol >= _nCharsPerLine) {
-				if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
+				if (_pStreamDst->GetCodec().GetAddcrFlag()) buffOut[bytesOut++] = '\r';
 				buffOut[bytesOut++] = '\n';
 				_iCol = 0;
 			}
-			if (!_pStreamOut->Write(buffOut, bytesOut)) return false;
+			if (!_pStreamDst->Write(buffOut, bytesOut)) return false;
 			_bytesAccum = 0, _accum = 0;
 		}
 	}
@@ -232,11 +232,11 @@ bool Encoder::Finish()
 		_iCol += nCharsOut;
 	}
 	if (_nCharsPerLine > 0 && _iCol > 0) {
-		if (_pStreamOut->GetCodec().GetAddcrFlag()) buffOut[nCharsOut++] = '\r';
+		if (_pStreamDst->GetCodec().GetAddcrFlag()) buffOut[nCharsOut++] = '\r';
 		buffOut[nCharsOut++] = '\n';
 		_iCol = 0;
 	}
-	if (nCharsOut > 0 && !_pStreamOut->Write(buffOut, nCharsOut)) return false;
+	if (nCharsOut > 0 && !_pStreamDst->Write(buffOut, nCharsOut)) return false;
 	_iCol = 0, _bytesAccum = 0, _accum = 0;
 	return true;
 }
@@ -245,9 +245,9 @@ bool Encoder::Finish()
 // Stream_Reader
 //------------------------------------------------------------------------------
 Stream_Reader::Stream_Reader(Stream* pStreamSrc, const Info& info) :
-		Stream(Flag::Readable), _pStreamSrc(pStreamSrc),
-		_pStreamMid(new Stream_Binary(Stream::Flag::Writable)),
-		_pDecoder(new Decoder(_pStreamMid->Reference(), info)), _offsetMid(0)
+	Stream(Flag::Readable), _pStreamSrc(pStreamSrc),
+	_pStreamMid(new Stream_Binary(Stream::Flag::Writable)),
+	_pDecoder(new Decoder(_pStreamMid->Reference(), info)), _offsetMid(0)
 {
 }
 
