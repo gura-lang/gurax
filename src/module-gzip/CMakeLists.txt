@@ -36,8 +36,8 @@ target_sources(gzip.gurd PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
-target_link_options(gzip.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:MSVCRT>)
+#target_link_options(gzip.gurd PRIVATE
+#	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:MSVCRT>)
 target_link_libraries(gzip.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:zlib>
 	$<$<PLATFORM_ID:Linx>:z>
