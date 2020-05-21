@@ -74,18 +74,18 @@ Gurax_ImplementHybridMethod(Random, Float)
 	return new Value_Number(random.GenFloat<Double>());
 }
 
-// Random##FloatM(cnt?:Number) {block?}
-Gurax_DeclareHybridMethod(Random, FloatM)
+// Random##FloatSeq(cnt?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, FloatSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates a real number in the range of `[0, 1)`");
+		"Creates an iterator that randomly generates real numbers in the range of `[0, 1)`");
 }
 
-Gurax_ImplementHybridMethod(Random, FloatM)
+Gurax_ImplementHybridMethod(Random, FloatSeq)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -124,8 +124,8 @@ Gurax_ImplementHybridMethod(Random, Int)
 	return new Value_Number(random.GenInt<Int>(range));
 }
 
-// Random##IntM(range:Number, cnt?:Number) {block?}
-Gurax_DeclareHybridMethod(Random, IntM)
+// Random##IntSeq(range:Number, cnt?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, IntSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -133,10 +133,10 @@ Gurax_DeclareHybridMethod(Random, IntM)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates an integer number within the range of `[0, range)`");
+		"Creates an iterator that randomly generates integer numbers within the range of `[0, range)`");
 }
 
-Gurax_ImplementHybridMethod(Random, IntM)
+Gurax_ImplementHybridMethod(Random, IntSeq)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -160,7 +160,8 @@ Gurax_DeclareHybridMethod(Random, Normal)
 	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
+		"Randomly generates a real number based on uniform distribution\n"
+		"with specified mean and standard deviation values.\n"
 		"In default, the value of `mean` is `0` and `stddev` is `1`.");
 }
 
@@ -178,8 +179,8 @@ Gurax_ImplementHybridMethod(Random, Normal)
 	return new Value_Number(random.GenNormal<Double>(mean, stddev));
 }
 
-// Random##NormalM(mean?:Number, stddev?:Number, cnt?:Number) {block?}
-Gurax_DeclareHybridMethod(Random, NormalM)
+// Random##NormalSeq(mean?:Number, stddev?:Number, cnt?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, NormalSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -188,11 +189,12 @@ Gurax_DeclareHybridMethod(Random, NormalM)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
+		"Creates an iterator that randomly generates real numbers based\n"
+		"on uniform distribution with specified mean and standard deviation values.\n"
 		"In default, the value of `mean` is `0` and `stddev` is `1`.");
 }
 
-Gurax_ImplementHybridMethod(Random, NormalM)
+Gurax_ImplementHybridMethod(Random, NormalSeq)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -268,11 +270,11 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Random, Float));
-	Assign(Gurax_CreateMethod(Random, FloatM));
+	Assign(Gurax_CreateMethod(Random, FloatSeq));
 	Assign(Gurax_CreateMethod(Random, Int));
-	Assign(Gurax_CreateMethod(Random, IntM));
+	Assign(Gurax_CreateMethod(Random, IntSeq));
 	Assign(Gurax_CreateMethod(Random, Normal));
-	Assign(Gurax_CreateMethod(Random, NormalM));
+	Assign(Gurax_CreateMethod(Random, NormalSeq));
 	Assign(Gurax_CreateMethod(Random, Reset));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Random, seed));
