@@ -22,7 +22,14 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 target_precompile_headers(jpeg.gurd PRIVATE stdafx.h)
+target_compile_options(jpeg.gurd PRIVATE
+	$<$<PLATFORM_ID:Windows>:-W3>
+	$<$<PLATFORM_ID:Linux>:-Wall -O2>
+	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
 target_compile_definitions(jpeg.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(jpeg.gurd PRIVATE
 	module-jpeg.cpp

@@ -14,9 +14,14 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 target_precompile_headers(guraxcore PRIVATE stdafx.h)
 target_compile_options(guraxcore PRIVATE
-	$<$<PLATFORM_ID:Windows>:-bigobj>)
+	$<$<PLATFORM_ID:Windows>:-W3 -bigobj>
+	$<$<PLATFORM_ID:Linux>:-Wall -O2>
+	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
 target_sources(guraxcore PRIVATE
 	guraxcore.cpp
 	ArgFeeder.cpp
@@ -160,10 +165,10 @@ target_link_libraries(guraxcore PRIVATE
 	$<$<PLATFORM_ID:Darwin>:pthread>)
 if (${CMAKE_SYSTEM_NAME} MATCHES Darwin)
 	set_target_properties(guraxcore PROPERTIES
-		VERSION				${PROJECT_VERSION}
-		SOVERSION			${PROJECT_VERSION}
+		VERSION ${PROJECT_VERSION}
+		SOVERSION ${PROJECT_VERSION}
 		BUILD_WITH_INSTALL_NAME_DIR	1
-		INSTALL_NAME_DIR	"@executable_path/../lib")
+		INSTALL_NAME_DIR "@executable_path/../lib")
 endif ()
 #-------------------------------------------------------------------------------
 # Install
