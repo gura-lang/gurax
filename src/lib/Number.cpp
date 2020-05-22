@@ -8,7 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // NumberBase
 //------------------------------------------------------------------------------
-String NumberBase::_formatterFormat("%g");
+String NumberBase::_formatterFormat_Int("%lld");
+String NumberBase::_formatterFormat_Float("%g");
 
 //------------------------------------------------------------------------------
 // Number

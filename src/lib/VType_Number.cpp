@@ -105,23 +105,42 @@ Gurax_ImplementPropertyGetter(Number, real)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Number.format:String
-Gurax_DeclareClassProperty_RW(Number, format)
+// Number.formatFloat:String
+Gurax_DeclareClassProperty_RW(Number, formatFloat)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Format string used to convert a number into a string.");
+		"Format string used to convert a floating number into a string.");
 }
 
-Gurax_ImplementClassPropertyGetter(Number, format)
+Gurax_ImplementClassPropertyGetter(Number, formatFloat)
 {
-	return new Value_String(NumberBase::GetFormatterFormat());
+	return new Value_String(NumberBase::GetFormatterFormat_Float());
 }
 
-Gurax_ImplementClassPropertySetter(Number, format)
+Gurax_ImplementClassPropertySetter(Number, formatFloat)
 {
-	NumberBase::SetFormatterFormat(Value_String::GetStringSTL(value));
+	NumberBase::SetFormatterFormat_Float(Value_String::GetStringSTL(value));
+}
+
+// Number.formatInt:String
+Gurax_DeclareClassProperty_RW(Number, formatInt)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert an integer number into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, formatInt)
+{
+	return new Value_String(NumberBase::GetFormatterFormat_Int());
+}
+
+Gurax_ImplementClassPropertySetter(Number, formatInt)
+{
+	NumberBase::SetFormatterFormat_Int(Value_String::GetStringSTL(value));
 }
 
 //------------------------------------------------------------------------------
@@ -411,7 +430,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Number, norm));
 	Assign(Gurax_CreateProperty(Number, real));
 	// Assignment of class property
-	Assign(Gurax_CreateClassProperty(Number, format));
+	Assign(Gurax_CreateClassProperty(Number, formatFloat));
+	Assign(Gurax_CreateClassProperty(Number, formatInt));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Inv,			Number);
 	Gurax_AssignOpUnary(Neg,			Number);

@@ -1,18 +1,17 @@
-//=============================================================================
+//==============================================================================
 // Formatter
-//=============================================================================
+//==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Formatter
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool Formatter::Format(const char* format, Source&& source)
 {
 	enum class Stat {
-		Start,
-		FlagsPre, Flags,
+		Start, FlagsPre, Flags,
 		FlagsAfterWhite, FlagsAfterL, FlagsAfterLL, FlagsAfterZ,
 		PrecisionPre, Precision, Padding,
 	};
@@ -68,6 +67,7 @@ bool Formatter::Format(const char* format, Source&& source)
 				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
 				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue) return false;
 				if (!pValue->IsType(VTYPE_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
@@ -92,50 +92,61 @@ bool Formatter::Format(const char* format, Source&& source)
 				stat = Stat::FlagsAfterZ;
 			} else if (ch == 'd' || ch == 'i') {
 				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue) return false;
 				if (!pValue->Format_d(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'u') {
 				RefPtr<Value> pValue(source.FetchUInt());
+				if (!pValue) return false;
 				if (!pValue->Format_u(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'b') {
 				RefPtr<Value> pValue(source.FetchUInt());
+				if (!pValue) return false;
 				if (!pValue->Format_b(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'o') {
 				RefPtr<Value> pValue(source.FetchUInt());
+				if (!pValue) return false;
 				if (!pValue->Format_o(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Value> pValue(source.FetchUInt());
+				if (!pValue) return false;
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'p') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				if (!PutString("0x")) return false;
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'e' || ch == 'E') {
 				RefPtr<Value> pValue(source.FetchDouble());
+				if (!pValue) return false;
 				formatterFlags.upperCaseFlag = (ch == 'E');
 				if (!pValue->Format_e(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'f' || ch == 'F') {
 				RefPtr<Value> pValue(source.FetchDouble());
+				if (!pValue) return false;
 				if (!pValue->Format_f(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'g' || ch == 'G') {
 				RefPtr<Value> pValue(source.FetchDouble());
+				if (!pValue) return false;
 				formatterFlags.upperCaseFlag = (ch == 'G');
 				if (!pValue->Format_g(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 's') {
 				RefPtr<Value> pValue(source.FetchString());
+				if (!pValue) return false;
 				if (!pValue->Format_s(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'c') {
 				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue) return false;
 				if (!pValue->Format_c(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else {
@@ -166,22 +177,27 @@ bool Formatter::Format(const char* format, Source&& source)
 		case Stat::FlagsAfterLL: {
 			if (ch == 'd' || ch == 'i') {
 				RefPtr<Value> pValue(source.FetchInt64());
+				if (!pValue) return false;
 				if (!pValue->Format_d(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'u') {
 				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue) return false;
 				if (!pValue->Format_u(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'b') {
 				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue) return false;
 				if (!pValue->Format_b(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'o') {
 				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue) return false;
 				if (!pValue->Format_o(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Value> pValue(source.FetchUInt64());
+				if (!pValue) return false;
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
@@ -194,22 +210,27 @@ bool Formatter::Format(const char* format, Source&& source)
 		case Stat::FlagsAfterZ: {
 			if (ch == 'd' || ch == 'i') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				if (!pValue->Format_d(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'u') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				if (!pValue->Format_u(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'b') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				if (!pValue->Format_b(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'o') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				if (!pValue->Format_o(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue) return false;
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
@@ -231,6 +252,7 @@ bool Formatter::Format(const char* format, Source&& source)
 		case Stat::PrecisionPre: {
 			if (ch == '*') {
 				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue) return false;
 				if (!pValue->IsType(VTYPE_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
@@ -345,9 +367,99 @@ char* Formatter::CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt
 	return dstp;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// Formatter::Source_ValueList
+//------------------------------------------------------------------------------
+Formatter::Source_ValueList::Source_ValueList(const ValueList& valueList) :
+				_valueList(valueList), _ppValue(valueList.begin())
+{
+}
+
+//------------------------------------------------------------------------------
+// Formatter::Source_va_list
+//------------------------------------------------------------------------------
+Formatter::Source_va_list::Source_va_list(va_list ap)
+{
+#if defined(va_copy)
+	va_copy(_ap, ap);
+#else
+	_ap = ap;
+#endif
+}
+
+Value* Formatter::Source_va_list::FetchInt()
+{
+	Int num = va_arg(_ap, Int);
+	return new Value_Number(static_cast<Int>(num));
+}
+
+Value* Formatter::Source_va_list::FetchUInt()
+{
+	UInt num = va_arg(_ap, UInt);
+	return new Value_Number(static_cast<UInt>(num));
+}
+
+Value* Formatter::Source_va_list::FetchInt64()
+{
+	Int64 num = va_arg(_ap, Int64);
+	return new Value_Number(static_cast<Int64>(num));
+}
+
+Value* Formatter::Source_va_list::FetchUInt64()
+{
+	UInt64 num = va_arg(_ap, UInt64);
+	return new Value_Number(static_cast<UInt64>(num));
+}
+
+Value* Formatter::Source_va_list::FetchSizeT()
+{
+	size_t num = va_arg(_ap, size_t);
+	return new Value_Number(num);
+}
+
+Value* Formatter::Source_va_list::FetchDouble()
+{
+	Double num = va_arg(_ap, Double);
+	return new Value_Number(num);
+}
+
+Value* Formatter::Source_va_list::FetchString()
+{
+	char* str = va_arg(_ap, char*);
+	return new Value_StringPtr(str);
+}
+
+//------------------------------------------------------------------------------
+// Formatter::Source_Verifier
+//------------------------------------------------------------------------------
+Value* Formatter::Source_Verifier::Fetch_Valid()
+{
+	_nArgs++;
+	if (_nArgs > 1) {
+		Error::Issue(ErrorType::TypeError, "too many format specifier");
+		return nullptr;
+	}
+	return Value::Zero();
+}
+
+Value* Formatter::Source_Verifier::Fetch_Invalid()
+{
+	_nArgs++;
+	Error::Issue(ErrorType::TypeError, "invalid format specifier");
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// Formatter::Source_VerifierInt64
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Formatter::Source_VerifierFloat
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
 // FormatterFlags
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void FormatterFlags::Initialize()
 {
 	upperCaseFlag = false;

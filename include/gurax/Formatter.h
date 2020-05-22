@@ -1,6 +1,6 @@
-//=============================================================================
+//==============================================================================
 // Formatter
-//=============================================================================
+//==============================================================================
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
 #include "Common.h"
@@ -12,9 +12,9 @@ namespace Gurax {
 
 class IteratorOwner;
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // FormatterFlags
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE FormatterFlags {
 public:
 	enum class PlusMode { None, Space, Plus };
@@ -43,9 +43,9 @@ public:
 	String ToString(const char* qualifier) const;
 };
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Formatter
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Formatter {
 public:
 	class GURAX_DLLDECLARE Source {
@@ -64,9 +64,8 @@ public:
 		const ValueList& _valueList;
 		ValueList::const_iterator _ppValue;
 	public:
-		Source_ValueList(const ValueList& valueList) : _valueList(valueList) {
-			_ppValue = _valueList.begin();
-		}
+		Source_ValueList(const ValueList& valueList);
+	public:
 		virtual bool IsEnd() override { return _ppValue == _valueList.end(); }
 		virtual Value* FetchInt() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchUInt() override { return (*_ppValue++)->Reference(); }
@@ -80,40 +79,51 @@ public:
 	private:
 		va_list _ap;
 	public:
-#if defined(va_copy)
-		Source_va_list(va_list ap) { va_copy(_ap, ap); }
-#else
-		Source_va_list(va_list ap) { _ap = ap; }
-#endif
+		Source_va_list(va_list ap);
+	public:
 		virtual bool IsEnd() override { return false; }
-		virtual Value* FetchInt() override {
-			Int num = va_arg(_ap, Int);
-			return new Value_Number(static_cast<Int>(num));
-		}
-		virtual Value* FetchUInt() override {
-			UInt num = va_arg(_ap, UInt);
-			return new Value_Number(static_cast<UInt>(num));
-		}
-		virtual Value* FetchInt64() override {
-			Int64 num = va_arg(_ap, Int64);
-			return new Value_Number(static_cast<Int64>(num));
-		}
-		virtual Value* FetchUInt64() override {
-			UInt64 num = va_arg(_ap, UInt64);
-			return new Value_Number(static_cast<UInt64>(num));
-		}
-		virtual Value* FetchSizeT() override {
-			size_t num = va_arg(_ap, size_t);
-			return new Value_Number(num);
-		}
-		virtual Value* FetchDouble() override {
-			Double num = va_arg(_ap, Double);
-			return new Value_Number(num);
-		}
-		virtual Value* FetchString() override {
-			char* str = va_arg(_ap, char*);
-			return new Value_StringPtr(str);
-		}
+		virtual Value* FetchInt() override;
+		virtual Value* FetchUInt() override;
+		virtual Value* FetchInt64() override;
+		virtual Value* FetchUInt64() override;
+		virtual Value* FetchSizeT() override;
+		virtual Value* FetchDouble() override;
+		virtual Value* FetchString() override;
+	};
+	class GURAX_DLLDECLARE Source_Verifier : public Source {
+	private:
+		size_t _nArgs;
+	public:
+		Source_Verifier() : _nArgs(0) {}
+	public:
+		virtual bool IsEnd() override { return false; }
+	protected:
+		Value* Fetch_Valid();
+		Value* Fetch_Invalid();
+	};
+	class GURAX_DLLDECLARE Source_VerifierInt64 : public Source_Verifier {
+	public:
+		Source_VerifierInt64() {}
+	public:
+		virtual Value* FetchInt() override { return Fetch_Invalid(); }
+		virtual Value* FetchUInt() override { return Fetch_Invalid(); }
+		virtual Value* FetchInt64() override { return Fetch_Valid(); }
+		virtual Value* FetchUInt64() override { return Fetch_Valid(); }
+		virtual Value* FetchSizeT() override { return Fetch_Invalid(); }
+		virtual Value* FetchDouble() override { return Fetch_Invalid(); }
+		virtual Value* FetchString() override { return Fetch_Invalid(); }
+	};
+	class GURAX_DLLDECLARE Source_VerifierFloat : public Source_Verifier {
+	public:
+		Source_VerifierFloat() {}
+	public:
+		virtual Value* FetchInt() override { return Fetch_Invalid(); }
+		virtual Value* FetchUInt() override { return Fetch_Invalid(); }
+		virtual Value* FetchInt64() override { return Fetch_Invalid(); }
+		virtual Value* FetchUInt64() override { return Fetch_Invalid(); }
+		virtual Value* FetchSizeT() override { return Fetch_Invalid(); }
+		virtual Value* FetchDouble() override { return Fetch_Valid(); }
+		virtual Value* FetchString() override { return Fetch_Invalid(); }
 	};
 private:
 	bool _nilVisibleFlag;

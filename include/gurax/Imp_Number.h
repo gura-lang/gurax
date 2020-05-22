@@ -11,7 +11,10 @@ namespace Gurax {
 template<typename T_Num>
 String Number<T_Num>::ToString(T_Num num)
 {
-	return String().Printf(Number::GetFormatterFormat(), static_cast<Double>(num));
+	Int64 numInt = static_cast<Int64>(num);
+	return (num == numInt)?
+		String().Printf(Number::GetFormatterFormat_Int(), numInt) :
+		String().Printf(Number::GetFormatterFormat_Float(), static_cast<Double>(num));
 }
 
 }

@@ -61,7 +61,10 @@ Gurax_DeclareHybridMethod(Random, Float)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates a real number in the range of `[0, 1)`");
+		"Randomly generates a real number in the range of `[0, 1)`.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Float)
@@ -82,7 +85,12 @@ Gurax_DeclareHybridMethod(Random, FloatSeq)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates real numbers in the range of `[0, 1)`");
+		"Creates an iterator that randomly generates real numbers in the range of `[0, 1)`\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, FloatSeq)
@@ -107,7 +115,10 @@ Gurax_DeclareHybridMethod(Random, Int)
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates an integer number within the range of `[0, range)`");
+		"Randomly generates an integer number within the range of `[0, range)`\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Int)
@@ -133,7 +144,12 @@ Gurax_DeclareHybridMethod(Random, IntSeq)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates integer numbers within the range of `[0, range)`");
+		"Creates an iterator that randomly generates integer numbers in the range of `[0, range)`\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, IntSeq)
@@ -162,7 +178,10 @@ Gurax_DeclareHybridMethod(Random, Normal)
 		Gurax_Symbol(en),
 		"Randomly generates a real number based on uniform distribution\n"
 		"with specified mean and standard deviation values.\n"
-		"In default, the value of `mean` is `0` and `stddev` is `1`.");
+		"In default, the value of `mean` is `0` and `stddev` is `1`.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Normal)
@@ -190,8 +209,13 @@ Gurax_DeclareHybridMethod(Random, NormalSeq)
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that randomly generates real numbers based\n"
-		"on uniform distribution with specified mean and standard deviation values.\n"
-		"In default, the value of `mean` is `0` and `stddev` is `1`.");
+		"on uniform distribution with specified mean and standard deviation values\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"In default, the value of `mean` is `0` and `stddev` is `1`.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, NormalSeq)
@@ -217,7 +241,10 @@ Gurax_DeclareHybridMethod(Random, Reset)
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Reset the seed of the random generator.");
+		"Reset the seed of the random generator.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Reset)
