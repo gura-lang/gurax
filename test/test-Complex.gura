@@ -41,3 +41,29 @@ TestCase('Operator') {
 	Tester(`((3 + 2j) - 5))
 	Tester(`(3 - (5 + 4j)))
 }
+
+TestCase('Complex.format / formatReal / formatImag') {
+	format = Complex.format
+	formatReal = Complex.formatReal
+	formatImag = Complex.formatImag
+	Tester(`(Complex.format = 'Complex(%g,%g)'))
+	Tester(`(1234+5679j))
+	Tester(`(Complex.formatReal = 'Complex(%g)'))
+	Tester(`(1234 + 5679j - 5679j))
+	Tester(`(Complex.formatImag = 'Complex(0,%g)'))
+	Tester(`(5679j))
+	Tester(`(Complex.format = '%d%+d'))
+	Tester(`(Complex.format = ''))
+	Tester(`(Complex.format = '%g'))
+	Tester(`(Complex.format = '%g%+gj'))
+	Tester(`(Complex.format = '%g%+gj%+gj'))
+	Tester(`(Complex.formatReal = ''))
+	Tester(`(Complex.formatReal = '%g'))
+	Tester(`(Complex.formatReal = '%g%+gj'))
+	Tester(`(Complex.formatImag = ''))
+	Tester(`(Complex.formatImag = '%g'))
+	Tester(`(Complex.formatImag = '%g%+gj'))
+	Complex.format = format
+	Complex.formatReal = formatReal
+	Complex.formatImag = formatImag
+}

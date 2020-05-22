@@ -49,6 +49,76 @@ Gurax_ImplementConstructor(Complex)
 	return argument.ReturnValue(processor, new Value_Complex(Complex(real, imag)));
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of class property
+//-----------------------------------------------------------------------------
+// Complex.format:String
+Gurax_DeclareClassProperty_RW(Complex, format)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert a complex number into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Complex, format)
+{
+	return new Value_String(Complex::GetFormatterFormat());
+}
+
+Gurax_ImplementClassPropertySetter(Complex, format)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Float, Formatter::VaType::Float,
+			Formatter::VaType::None)) return;
+	Complex::SetFormatterFormat(format);
+}
+
+// Complex.formatImag:String
+Gurax_DeclareClassProperty_RW(Complex, formatImag)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert the Imag part of a complex number into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Complex, formatImag)
+{
+	return new Value_String(Complex::GetFormatterFormat_Imag());
+}
+
+Gurax_ImplementClassPropertySetter(Complex, formatImag)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Float, Formatter::VaType::None)) return;
+	Complex::SetFormatterFormat_Imag(format);
+}
+
+// Complex.formatReal:String
+Gurax_DeclareClassProperty_RW(Complex, formatReal)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert the real part of a complex number into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Complex, formatReal)
+{
+	return new Value_String(Complex::GetFormatterFormat_Real());
+}
+
+Gurax_ImplementClassPropertySetter(Complex, formatReal)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Float, Formatter::VaType::None)) return;
+	Complex::SetFormatterFormat_Real(format);
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -324,6 +394,10 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Complex));
+	// Assignment of class property
+	Assign(Gurax_CreateProperty(Complex, format));
+	Assign(Gurax_CreateProperty(Complex, formatImag));
+	Assign(Gurax_CreateProperty(Complex, formatReal));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Complex, abs));
 	Assign(Gurax_CreateProperty(Complex, arg));
