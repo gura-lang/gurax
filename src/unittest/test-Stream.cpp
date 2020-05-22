@@ -13,7 +13,7 @@ Gurax_TesterEntry(Stream)
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	pValueOwner->push_back(new Value_String(str));
 	pValueOwner->push_back(new Value_Number(n));
-	Stream::COut->PrintFmt("Hello %s World %d\n", *pValueOwner);
+	Stream::COut->PrintValueList("Hello %s World %d\n", *pValueOwner);
 }
 
 }

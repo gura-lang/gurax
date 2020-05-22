@@ -224,7 +224,7 @@ Gurax_ImplementFunction(Format)
 	const ValueList& values = args.PickList();
 	// Function body
 	String str;
-	str.PrintFmt(format, values);
+	str.FormatValueList(format, values);
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_String(str);
 }
@@ -329,7 +329,7 @@ Gurax_ImplementFunction(Printf)
 	const ValueList& values = args.PickList();
 	// Function body
 	Stream& stream = *Stream::COut;
-	stream.PrintFmt(format, values);
+	stream.PrintValueList(format, values);
 	return Value::nil();
 }
 

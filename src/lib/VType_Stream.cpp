@@ -205,7 +205,7 @@ Gurax_ImplementMethod(Stream, Printf)
 	const char* format = args.PickString();
 	const ValueList& values = args.PickList();
 	// Function body
-	stream.PrintFmt(format, values);
+	stream.PrintValueList(format, values);
 	return Value::nil();
 }
 

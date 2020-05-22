@@ -162,7 +162,7 @@ public:
 public:
 	String& FormatV(const char* format, va_list ap);
 	String& Format(const char* format, ...);
-	String& PrintFmt(const char* format, const ValueList& valueList);
+	String& FormatValueList(const char* format, const ValueList& valueList);
 public:
 	static char DetermineQuote(const char* str);
 	char DetermineQuote() const { return DetermineQuote(c_str()); }

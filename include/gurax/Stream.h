@@ -103,8 +103,10 @@ public:
 	Stream& PrintfV(const String& format, va_list ap) { return PrintfV(format.c_str(), ap); }
 	Stream& Printf(const char* format, ...);
 	Stream& Printf(const String& format, ...);
-	Stream& PrintFmt(const char* format, const ValueList& valueList);
-	Stream& PrintFmt(const String& format, const ValueList& valueList) { return PrintFmt(format.c_str(), valueList); }
+	Stream& PrintValueList(const char* format, const ValueList& valueList);
+	Stream& PrintValueList(const String& format, const ValueList& valueList) {
+		return PrintValueList(format.c_str(), valueList);
+	}
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
 	Binary Read(size_t len);

@@ -367,7 +367,7 @@ String& String::Format(const char* format, ...)
 	return FormatV(format, ap);
 }
 
-String& String::PrintFmt(const char* format, const ValueList& valueList)
+String& String::FormatValueList(const char* format, const ValueList& valueList)
 {
 	Formatter_String(*this).Format(format, valueList);
 	return *this;

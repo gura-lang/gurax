@@ -169,7 +169,7 @@ Stream& Stream::Printf(const String& format, ...)
 	return PrintfV(format, ap);
 }
 
-Stream& Stream::PrintFmt(const char* format, const ValueList& valueList)
+Stream& Stream::PrintValueList(const char* format, const ValueList& valueList)
 {
 	FormatterEx(*this).Format(format, valueList);
 	return *this;

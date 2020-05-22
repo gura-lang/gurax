@@ -519,7 +519,7 @@ Gurax_ImplementMethod(String, Format)
 	const ValueList& values = args.PickList();
 	// Function body
 	String str;
-	str.PrintFmt(valueThis.GetString(), values);
+	str.FormatValueList(valueThis.GetString(), values);
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_String(str);
 }

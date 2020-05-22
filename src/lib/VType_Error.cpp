@@ -59,7 +59,7 @@ Gurax_ImplementClassMethod(Error, Raise)
 	const ValueList& values = args.PickList();
 	// Function body
 	String str;
-	str.PrintFmt(format, values);
+	str.FormatValueList(format, values);
 	if (Error::IsIssued()) return Value::nil();
 	Error::Issue(errorType, "%s", str.c_str());
 	return Value::nil();
