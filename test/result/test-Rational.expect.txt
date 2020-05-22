@@ -1,6 +1,7 @@
 ======== Property ========
 Rational
   #denom            Number       R
+  .format           String       R/W
   #numer            Number       R
 ======== Constructor ========
 Rational() .. 0r

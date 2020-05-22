@@ -157,6 +157,31 @@ Gurax_ImplementMethod(Rational, Regulate)
 }
 
 //-----------------------------------------------------------------------------
+// Implementation of class property
+//-----------------------------------------------------------------------------
+// Rational.format:String
+Gurax_DeclareClassProperty_RW(Rational, format)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert a rational into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Rational, format)
+{
+	return new Value_String(Rational::GetFormatterFormat());
+}
+
+Gurax_ImplementClassPropertySetter(Rational, format)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+	Rational::SetFormatterFormat(format);
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // Rational#denom
@@ -504,6 +529,8 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Rational, IsNonPos));
 	Assign(Gurax_CreateMethod(Rational, IsNonNeg));
 	Assign(Gurax_CreateMethod(Rational, Regulate));
+	// Assignment of class property
+	Assign(Gurax_CreateProperty(Rational, format));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));

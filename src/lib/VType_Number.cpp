@@ -121,7 +121,10 @@ Gurax_ImplementClassPropertyGetter(Number, formatFloat)
 
 Gurax_ImplementClassPropertySetter(Number, formatFloat)
 {
-	NumberBase::SetFormatterFormat_Float(Value_String::GetStringSTL(value));
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Float, Formatter::VaType::None)) return;
+	NumberBase::SetFormatterFormat_Float(format);
 }
 
 // Number.formatInt:String
@@ -140,7 +143,10 @@ Gurax_ImplementClassPropertyGetter(Number, formatInt)
 
 Gurax_ImplementClassPropertySetter(Number, formatInt)
 {
-	NumberBase::SetFormatterFormat_Int(Value_String::GetStringSTL(value));
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+	NumberBase::SetFormatterFormat_Int(format);
 }
 
 //------------------------------------------------------------------------------

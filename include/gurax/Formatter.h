@@ -48,6 +48,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Formatter {
 public:
+	enum class VaType { None, Int, Int64, SizeT, Float, Pointer, };
 	class GURAX_DLLDECLARE Source {
 	public:
 		virtual bool IsEnd() = 0;
@@ -58,6 +59,7 @@ public:
 		virtual Value* FetchSizeT() = 0;
 		virtual Value* FetchDouble() = 0;
 		virtual Value* FetchString() = 0;
+		virtual bool Finish() { return true; }
 	};
 	class GURAX_DLLDECLARE Source_ValueList : public Source {
 	private:
@@ -92,50 +94,31 @@ public:
 	};
 	class GURAX_DLLDECLARE Source_Verifier : public Source {
 	private:
-		size_t _nArgs;
+		va_list _ap;
 	public:
-		Source_Verifier() : _nArgs(0) {}
+		Source_Verifier(va_list ap);
 	public:
 		virtual bool IsEnd() override { return false; }
+		virtual Value* FetchInt() override { return Fetch(VaType::Int); }
+		virtual Value* FetchUInt() override { return Fetch(VaType::Int); }
+		virtual Value* FetchInt64() override { return Fetch(VaType::Int64); }
+		virtual Value* FetchUInt64() override { return Fetch(VaType::Int64); }
+		virtual Value* FetchSizeT() override { return Fetch(VaType::SizeT); }
+		virtual Value* FetchDouble() override { return Fetch(VaType::Float); }
+		virtual Value* FetchString() override { return Fetch(VaType::Pointer); }
+		virtual bool Finish() override;
 	protected:
-		Value* Fetch_Valid();
-		Value* Fetch_Invalid();
-	};
-	class GURAX_DLLDECLARE Source_VerifierInt64 : public Source_Verifier {
-	public:
-		Source_VerifierInt64() {}
-	public:
-		virtual Value* FetchInt() override { return Fetch_Invalid(); }
-		virtual Value* FetchUInt() override { return Fetch_Invalid(); }
-		virtual Value* FetchInt64() override { return Fetch_Valid(); }
-		virtual Value* FetchUInt64() override { return Fetch_Valid(); }
-		virtual Value* FetchSizeT() override { return Fetch_Invalid(); }
-		virtual Value* FetchDouble() override { return Fetch_Invalid(); }
-		virtual Value* FetchString() override { return Fetch_Invalid(); }
-	};
-	class GURAX_DLLDECLARE Source_VerifierFloat : public Source_Verifier {
-	public:
-		Source_VerifierFloat() {}
-	public:
-		virtual Value* FetchInt() override { return Fetch_Invalid(); }
-		virtual Value* FetchUInt() override { return Fetch_Invalid(); }
-		virtual Value* FetchInt64() override { return Fetch_Invalid(); }
-		virtual Value* FetchUInt64() override { return Fetch_Invalid(); }
-		virtual Value* FetchSizeT() override { return Fetch_Invalid(); }
-		virtual Value* FetchDouble() override { return Fetch_Valid(); }
-		virtual Value* FetchString() override { return Fetch_Invalid(); }
+		Value* Fetch(VaType vaType);
 	};
 private:
 	bool _nilVisibleFlag;
 	const char* _lineSep;
 public:
 	Formatter(bool nilVisibleFlag = true) : _nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
-	bool Format(const char* format, const ValueList& valueList) {
-		return Format(format, Source_ValueList(valueList));
-	}
-	bool Format(const char* format, va_list ap) {
-		return Format(format, Source_va_list(ap));
-	}
+	bool Format(const char* format, const ValueList& valueList);
+	bool FormatV(const char* format, va_list ap);
+	bool VerifyFormatV(const char* format, va_list ap);
+	bool VerifyFormat(const char* format, ...);
 	bool Format(const char* format, Source&& source);
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
@@ -156,7 +139,7 @@ private:
 	}
 public:
 	// Virtual functions
-	virtual bool PutChar(char ch) = 0;
+	virtual bool PutChar(char ch) { return true; }
 };
 
 }

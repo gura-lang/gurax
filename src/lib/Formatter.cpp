@@ -3,11 +3,37 @@
 //==============================================================================
 #include "stdafx.h"
 
+#if !defined(va_copy)
+#define va_copy(apDst, apSrc) (apDst = apSrc)
+#endif
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
 // Formatter
 //------------------------------------------------------------------------------
+bool Formatter::Format(const char* format, const ValueList& valueList)
+{
+	return Format(format, Source_ValueList(valueList));
+}
+
+bool Formatter::FormatV(const char* format, va_list ap)
+{
+	return Format(format, Source_va_list(ap));
+}
+
+bool Formatter::VerifyFormatV(const char* format, va_list ap)
+{
+	return Format(format, Source_Verifier(ap));
+}
+
+bool Formatter::VerifyFormat(const char* format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	return VerifyFormatV(format, ap);
+}
+
 bool Formatter::Format(const char* format, Source&& source)
 {
 	enum class Stat {
@@ -289,7 +315,7 @@ bool Formatter::Format(const char* format, Source&& source)
 		}
 		if (eatNextFlag) formatp++;
 	}
-	return true;
+	return source.Finish();
 }
 
 bool Formatter::PutString(const char* p)
@@ -380,11 +406,7 @@ Formatter::Source_ValueList::Source_ValueList(const ValueList& valueList) :
 //------------------------------------------------------------------------------
 Formatter::Source_va_list::Source_va_list(va_list ap)
 {
-#if defined(va_copy)
 	va_copy(_ap, ap);
-#else
-	_ap = ap;
-#endif
 }
 
 Value* Formatter::Source_va_list::FetchInt()
@@ -432,30 +454,31 @@ Value* Formatter::Source_va_list::FetchString()
 //------------------------------------------------------------------------------
 // Formatter::Source_Verifier
 //------------------------------------------------------------------------------
-Value* Formatter::Source_Verifier::Fetch_Valid()
+Formatter::Source_Verifier::Source_Verifier(va_list ap)
 {
-	_nArgs++;
-	if (_nArgs > 1) {
-		Error::Issue(ErrorType::TypeError, "too many format specifier");
+	va_copy(_ap, ap);
+}
+
+Value* Formatter::Source_Verifier::Fetch(VaType vaType)
+{
+	VaType vaTypeExpected = va_arg(_ap, VaType);
+	if (vaTypeExpected == VaType::None) {
+		Error::Issue(ErrorType::ValueError, "too many format specifiers");
+		return nullptr;
+	} else if (vaTypeExpected != vaType) {
+		Error::Issue(ErrorType::ValueError, "invalid format specifier");
 		return nullptr;
 	}
 	return Value::Zero();
 }
 
-Value* Formatter::Source_Verifier::Fetch_Invalid()
+bool Formatter::Source_Verifier::Finish()
 {
-	_nArgs++;
-	Error::Issue(ErrorType::TypeError, "invalid format specifier");
-	return nullptr;
+	VaType vaTypeExpected = va_arg(_ap, VaType);
+	if (vaTypeExpected == VaType::None) return true;
+	Error::Issue(ErrorType::ValueError, "too few format specifiers");
+	return false;
 }
-
-//------------------------------------------------------------------------------
-// Formatter::Source_VerifierInt64
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-// Formatter::Source_VerifierFloat
-//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // FormatterFlags

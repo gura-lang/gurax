@@ -356,7 +356,7 @@ String& String::AppendUTF32(UInt32 codeUTF32)
 
 String& String::PrintfV(const char* format, va_list ap)
 {
-	Formatter_String(*this).Format(format, ap);
+	Formatter_String(*this).FormatV(format, ap);
 	return *this;
 }
 

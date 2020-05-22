@@ -2,7 +2,8 @@
 Number
   #abs              Number       R
   #arg              Number       R
-  .format           String       R/W
+  .formatFloat      String       R/W
+  .formatInt        String       R/W
   #imag             Number       R
   #norm             Number       R
   #real             Number       R

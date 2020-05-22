@@ -151,7 +151,7 @@ Stream& Stream::Println(StringPicker&& strPicker)
 
 Stream& Stream::PrintfV(const char* format, va_list ap)
 {
-	FormatterEx(*this).Format(format, ap);
+	FormatterEx(*this).FormatV(format, ap);
 	return *this;
 }
 
