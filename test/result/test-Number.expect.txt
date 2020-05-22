@@ -42,3 +42,21 @@ a.real .. 3
 5 < 3 .. false
 3 * 5 .. 15
 3 - 5 .. -2
+======== Number.formatInt / Number.formatFloat ========
+Number.formatInt = '%lld' .. %lld
+1234567891234 .. 1234567891234
+Number.formatFloat = '%g' .. %g
+123456789.123456789 .. 1.23457e+08
+Number.formatInt = '%llx' .. %llx
+1234567891234 .. 11f71fb0922
+Number.formatFloat = '%f' .. %f
+123456789.123456789 .. 123456789.123457
+Number.formatFloat = '%.3f' .. %.3f
+123456789.123456789 .. 123456789.123
+Number.formatInt = '%d' .. invalid format specifier
+Number.formatInt = '%f' .. invalid format specifier
+Number.formatFloat = '%d' .. invalid format specifier
+Number.formatInt = '' .. too few format specifiers
+Number.formatFloat = '' .. too few format specifiers
+Number.formatInt = '%lld %lld' .. too many format specifiers
+Number.formatFloat = '%f %f' .. too many format specifiers

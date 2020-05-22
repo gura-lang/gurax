@@ -195,6 +195,10 @@ Rational.format = '%lld/%lld' .. %lld/%lld
 1234 / 5679r .. 1234/5679
 Rational.formatInt = '%lld' .. %lld
 1234r .. 1234
+Rational.format = 'Rational(%lld,%lld)' .. Rational(%lld,%lld)
+1234 / 5679r .. Rational(1234,5679)
+Rational.formatInt = 'Rational(%lld)' .. Rational(%lld)
+1234r .. Rational(1234)
 Rational.format = '0x%08llx/0x%08llx' .. 0x%08llx/0x%08llx
 1234 / 5679r .. 0x000004d2/0x0000162f
 Rational.formatInt = '0x%08llx' .. 0x%08llx
