@@ -10,7 +10,8 @@ namespace Gurax {
 // Rational
 //------------------------------------------------------------------------------
 const Rational Rational::Zero;
-String Rational::_formatterFormat("%lld");
+String Rational::_formatterFormat("%lld/%lldr");
+String Rational::_formatterFormat_Int("%lldr");
 
 Rational Rational::Regulate() const
 {
@@ -83,14 +84,9 @@ void Rational::IssueError_DenomZero()
 
 String Rational::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Printf(GetFormatterFormat(), GetNumer());
-	if (GetDenom() != 1) {
-		str += "/";
-		str.Printf(GetFormatterFormat(), GetDenom());
-	}
-	str += "r";
-	return str;
+	return (GetDenom() == 1)?
+		String().Format(GetFormatterFormat_Int(), GetNumer()) :
+		String().Format(GetFormatterFormat(), GetNumer(), GetDenom());
 }
 
 Rational Rational::operator+() const
