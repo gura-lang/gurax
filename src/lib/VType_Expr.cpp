@@ -706,7 +706,7 @@ String Value_Expr::ToStringDigest(const StringStyle& ss) const
 	str += GetExpr().ToString(StringStyle().SetCram());
 	str += ")";
 	if (GetExpr().GetPUnitFirst()) {
-		str.Printf(":PUnit#%zu", GetExpr().GetPUnitFirst()->GetSeqId());
+		str.Format(":PUnit#%zu", GetExpr().GetPUnitFirst()->GetSeqId());
 	}
 	str += ">";
 	return str;

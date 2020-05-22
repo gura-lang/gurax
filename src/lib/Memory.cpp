@@ -11,7 +11,7 @@ namespace Gurax {
 String Memory::MakeId() const
 {
 	String str;
-	str.Printf("%p", _buff);
+	str.Format("%p", _buff);
 	return str;
 }
 

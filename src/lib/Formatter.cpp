@@ -707,11 +707,11 @@ String FormatterFlags::ToString(const char* qualifier) const
 	} else if (plusMode == PlusMode::Plus) {
 		fmt += "+";
 	}
-	if (fieldMinWidth > 0) fmt.Printf("%d", fieldMinWidth);
+	if (fieldMinWidth > 0) fmt.Format("%d", fieldMinWidth);
 	if (precision == Prec::Null) {
 		fmt += '.';
 	} else if (precision >= 0) {
-		fmt.Printf(".%d", precision);
+		fmt.Format(".%d", precision);
 	}
 	fmt += qualifier;
 	return fmt;

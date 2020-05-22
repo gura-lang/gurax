@@ -53,7 +53,7 @@ String Value_Bool::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s>", _flag? "true" : "false");
+	str.Format(":%s>", _flag? "true" : "false");
 	return str;
 }
 

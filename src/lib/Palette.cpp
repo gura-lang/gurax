@@ -618,7 +618,7 @@ size_t Palette::NextBlankIndex() const
 
 String Palette::ToString(const StringStyle& ss) const
 {
-	return String().Printf("Palette:%dentries", _n);
+	return String().Format("Palette:%dentries", _n);
 }
 
 //------------------------------------------------------------------------------

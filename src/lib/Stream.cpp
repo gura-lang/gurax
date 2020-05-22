@@ -252,7 +252,7 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 	if (bytes == 0) return;
 	const int nCols = 16;
 	int iCol = 0;
-	size_t nDigitsAddr = (String().Printf("%x", bytes - 1).size() + 1) / 2 * 2;
+	size_t nDigitsAddr = (String().Format("%x", bytes - 1).size() + 1) / 2 * 2;
 	String strLine, strASCII;
 	const UInt8* p = reinterpret_cast<const UInt8*>(buff);
 	for (size_t i = 0; i < bytes; ++i, ++p) {
@@ -260,9 +260,9 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 		if (iCol > 0) {
 			strLine += ' ';
 		} else if (ss.IsAddressInfo()) {
-			strLine.Printf("%0*x  ", nDigitsAddr, i);
+			strLine.Format("%0*x  ", nDigitsAddr, i);
 		}
-		strLine.Printf(ss.IsUpperCase()? "%02X" : "%02x", data);
+		strLine.Format(ss.IsUpperCase()? "%02X" : "%02x", data);
 		strASCII += (0x20 <= data && data < 0x7f)? data : '.';
 		iCol++;
 		if (iCol == nCols) {
@@ -353,7 +353,7 @@ String Stream::ToString(const StringStyle& ss) const
 	str += GetName();
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";
-	str.Printf(":encoding=%s", GetCodec().GetEncoding());
+	str.Format(":encoding=%s", GetCodec().GetEncoding());
 	if (GetCodec().GetAddcrFlag()) str += ":addcr";
 	if (GetCodec().GetDelcrFlag()) str += ":delcr";
 	return str;

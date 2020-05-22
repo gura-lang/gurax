@@ -81,7 +81,7 @@ String Value_Module::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s:%s>",
+	str.Format(":%s:%s>",
 			   GetModule().GetDottedSymbol().ToString().c_str(),
 			   GetModule().GetPathName());
 	return str;

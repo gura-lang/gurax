@@ -188,11 +188,11 @@ String Operator::ToString(const VType& vtype) const
 {
 	String str;
 	if (IsOpPreUnary()) {
-		str.Printf("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
+		str.Format("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
 	} else if (IsOpPostUnary()) {
-		str.Printf("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
+		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
 	} else if (IsMathUnary()) {
-		str.Printf("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
+		str.Format("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
 	}
 	return str;
 }
@@ -201,9 +201,9 @@ String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
 {
 	String str;
 	if (IsOpBinary()) {
-		str.Printf("%s %s %s", vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
+		str.Format("%s %s %s", vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
 	} else if (IsMathBinary()) {
-		str.Printf("math.%s(%s, %s)", GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
+		str.Format("math.%s(%s, %s)", GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
 	}
 	return str;
 }

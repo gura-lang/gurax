@@ -244,15 +244,15 @@ String Value_Error::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s", GetError().GetErrorType().GetName());
+	str.Format(":%s", GetError().GetErrorType().GetName());
 	if (GetError().HasFileName()) {
-		str.Printf(":%s", PathName(GetError().GetFileName()).ExtractFileName().c_str());
+		str.Format(":%s", PathName(GetError().GetFileName()).ExtractFileName().c_str());
 		int lineNoTop = GetError().GetLineNoTop();
 		int lineNoBtm = GetError().GetLineNoBtm();
 		if (lineNoTop == lineNoBtm) {
-			str.Printf(":%d", lineNoTop);
+			str.Format(":%d", lineNoTop);
 		} else {
-			str.Printf(":%d:%d", lineNoTop, lineNoBtm);
+			str.Format(":%d:%d", lineNoTop, lineNoBtm);
 		}
 	}
 	str += ">";

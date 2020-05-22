@@ -50,7 +50,7 @@ String Match::GetGroupString(int iGroup) const
 String Match::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("re.Match:%d-%d", GetPosBegin(), GetPosEnd());
+	str.Format("re.Match:%d-%d", GetPosBegin(), GetPosEnd());
 	return str;
 }
 

@@ -163,7 +163,7 @@ String Value_Function::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s>", GetFunction().MakeFullName().c_str());
+	str.Format(":%s>", GetFunction().MakeFullName().c_str());
 	return str;
 }
 

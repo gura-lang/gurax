@@ -397,7 +397,7 @@ String Value_Dict::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%zuitems>", GetValueDict().size());
+	str.Format(":%zuitems>", GetValueDict().size());
 	return str;
 }
 

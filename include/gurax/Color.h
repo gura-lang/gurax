@@ -143,7 +143,7 @@ public:
 	static int CalcDistSqu(UInt32 packed1, UInt32 packed2) { return Color(packed1).CalcDistSqu(packed2); }
 public:
 	String MakeHTML() const { return MakeHTML(GetR(), GetG(), GetB()); }
-	static String MakeHTML(UInt8 r, UInt8 g, UInt8 b) { return String().Printf("#%02x%02x%02x", r, g, b); }
+	static String MakeHTML(UInt8 r, UInt8 g, UInt8 b) { return String().Format("#%02x%02x%02x", r, g, b); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Color& color) const { return this == &color; }

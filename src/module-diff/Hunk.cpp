@@ -16,10 +16,10 @@ Hunk::Hunk(Diff* pDiff, size_t iSesElemBegin, size_t iSesElemEnd,
 String Hunk::MakeRangeString() const
 {
 	String str;
-	str.Printf("-%lu", _lineNoOrg);
-	if (_nLinesOrg > 1) str.Printf(",%lu", _nLinesOrg);
-	str.Printf(" +%lu", _lineNoNew);
-	if (_nLinesNew > 1) str.Printf(",%lu", _nLinesNew);
+	str.Format("-%lu", _lineNoOrg);
+	if (_nLinesOrg > 1) str.Format(",%lu", _nLinesOrg);
+	str.Format(" +%lu", _lineNoNew);
+	if (_nLinesNew > 1) str.Format(",%lu", _nLinesNew);
 	return str;
 }
 

@@ -366,7 +366,7 @@ String Value_Stat::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s>", GetStat().ToString(ss).c_str());
+	str.Format(":%s>", GetStat().ToString(ss).c_str());
 	return str;
 }
 

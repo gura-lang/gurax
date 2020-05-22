@@ -56,7 +56,7 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 {
 	str += "<";
 	str += GetVType().MakeFullName();
-	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
+	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Format(":%p", this);
 }
 
 void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const

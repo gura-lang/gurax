@@ -130,7 +130,7 @@ void Exif::SetIFD1(IFD* pIFD)
 String Exif::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("<jpeg.Segment:%s(Exif)>", GetMarkerSymbol()->GetName());
+	str.Format("<jpeg.Segment:%s(Exif)>", GetMarkerSymbol()->GetName());
 	return str;
 }
 

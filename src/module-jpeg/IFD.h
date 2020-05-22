@@ -93,7 +93,7 @@ template<typename TypeDef> IFD* IFD::Deserialize(const UInt8* buff, size_t bytes
 			typeId = pTagInfo->typeId;
 			pSymbol = Symbol::Add(pTagInfo->name);
 		} else {
-			pSymbol = Symbol::Add(String().Printf("Tag%04x", tagId));
+			pSymbol = Symbol::Add(String().Format("Tag%04x", tagId));
 		}
 		RefPtr<Tag> pTag(Tag::Create(tagId, typeId, pSymbol));
 		if (!pTag || !pTag->Deserialize(buff, bytesBuff, offset, TypeDef::beFlag)) return nullptr;

@@ -48,7 +48,7 @@ bool JFIF::WriteToStream(Stream& stream)
 String JFIF::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("<jpeg.Segment:%s(JFIF)>", GetMarkerSymbol()->GetName());
+	str.Format("<jpeg.Segment:%s(JFIF)>", GetMarkerSymbol()->GetName());
 	return str;
 }
 

@@ -133,16 +133,16 @@ public:
 	template<typename... Args>
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
-		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
-		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueIfFirst(const ErrorType& errorType, const char* const format, const Args&... args) {
 		if (_errorIssuedFlag || _pErrorOwnerGlobal->GetSuppressFlag()) return;
-		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
-		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
@@ -150,18 +150,18 @@ public:
 	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
 						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
-		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
 		_pErrorOwnerGlobal->push_back(
-			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Printf(format, args...)));
+			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueWith(const ErrorType& errorType, const Expr& expr, const char* format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
-		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
 		_pErrorOwnerGlobal->push_back(
-			new Error(errorType, expr.Reference(), String().Printf(format, args...)));
+			new Error(errorType, expr.Reference(), String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}

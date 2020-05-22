@@ -160,8 +160,8 @@ public:
 	String& AppendUTF8(UInt64 codeUTF8);
 	String& AppendUTF32(UInt32 codeUTF32);
 public:
-	String& PrintfV(const char* format, va_list ap);
-	String& Printf(const char* format, ...);
+	String& FormatV(const char* format, va_list ap);
+	String& Format(const char* format, ...);
 	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
 	static char DetermineQuote(const char* str);

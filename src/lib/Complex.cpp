@@ -12,11 +12,11 @@ String Complex::ToString(const StringStyle& ss) const
 {
 	String str;
 	if (imag() == 0) {
-		str.Printf("%g", real());
+		str.Format("%g", real());
 	} else if (real() == 0) {
-		str.Printf("%gj", imag());
+		str.Format("%gj", imag());
 	} else {
-		str.Printf("%g%+gj", real(), imag());
+		str.Format("%g%+gj", real(), imag());
 	}
 	return str;
 }

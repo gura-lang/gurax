@@ -32,7 +32,7 @@ Help::~Help()
 String Help::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Help:%s", GetLangCode()->GetName());
+	str.Format("Help:%s", GetLangCode()->GetName());
 	return str;
 }
 

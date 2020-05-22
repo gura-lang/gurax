@@ -226,3 +226,33 @@ TestCase('Operator a >= b') {
 	Tester(`(3 >= (6 / 2r)))
 	Tester(`(3 >= (7 / 2r)))
 }
+
+TestCase('Rational.format') {
+	format = Rational.format
+	formatInt = Rational.formatInt
+	Tester(`(Rational.format = '%lld/%lld'))
+	Tester(`(1234/5679r))
+	Tester(`(Rational.formatInt = '%lld'))
+	Tester(`(1234r))
+	Tester(`(Rational.format = 'Rational(%lld,%lld)'))
+	Tester(`(1234/5679r))
+	Tester(`(Rational.formatInt = 'Rational(%lld)'))
+	Tester(`(1234r))
+	Tester(`(Rational.format = '0x%08llx/0x%08llx'))
+	Tester(`(1234/5679r))
+	Tester(`(Rational.formatInt = '0x%08llx'))
+	Tester(`(1234r))
+	Tester(`(Rational.format = '%d/%d'))
+	Tester(`(Rational.format = '%f/%f'))
+	Tester(`(Rational.formatInt = '%d'))
+	Tester(`(Rational.formatInt = '%f'))
+	Tester(`(Rational.format = ''))
+	Tester(`(Rational.format = '%lld'))
+	Tester(`(Rational.format = '%lld/%lld'))
+	Tester(`(Rational.format = '%lld/%lld/%lld'))
+	Tester(`(Rational.formatInt = ''))
+	Tester(`(Rational.formatInt = '%lld'))
+	Tester(`(Rational.formatInt = '%lld/%lld'))
+	Rational.format = format
+	Rational.formatInt = formatInt
+}

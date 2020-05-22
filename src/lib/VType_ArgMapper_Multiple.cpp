@@ -46,7 +46,7 @@ String Value_ArgMapper_Multiple::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%zuitems>", GetValueOwner().size());
+	str.Format(":%zuitems>", GetValueOwner().size());
 	return str;
 }
 

@@ -699,7 +699,7 @@ const Symbol* Image::FormatToSymbol(const Format& format)
 String Image::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Image:%s:%zux%zu", FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
+	str.Format("Image:%s:%zux%zu", FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
 	return str;
 }
 

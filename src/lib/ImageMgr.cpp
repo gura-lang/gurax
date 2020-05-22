@@ -16,7 +16,7 @@ void ImageMgr::Assign(ImageMgr* pImageMgr)
 
 String ImageMgr::ToString(const StringStyle& ss) const
 {
-	return String().Printf("<ImageMgr:%s>", GetImgTypeName());
+	return String().Format("<ImageMgr:%s>", GetImgTypeName());
 }
 
 //------------------------------------------------------------------------------

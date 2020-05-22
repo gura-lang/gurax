@@ -235,7 +235,7 @@ const Color* Color::Lookup(const Symbol* pSymbol)
 String Color::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Color:#%02x%02x%02x,%02x", GetR(), GetG(), GetB(), GetA());
+	str.Format("Color:#%02x%02x%02x,%02x", GetR(), GetG(), GetB(), GetA());
 	return str;
 }
 

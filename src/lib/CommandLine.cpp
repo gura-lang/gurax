@@ -38,7 +38,7 @@ bool CommandLine::Parse(int _argc, const char* _argv[])
 			char* p;
 			::strtol(value, &p, 0);
 			if (p == value || *p != '\0') {
-				_strErr.Printf("option %s expects an integer number", pOpt->MakeKeyArg(longFlag).c_str());
+				_strErr.Format("option %s expects an integer number", pOpt->MakeKeyArg(longFlag).c_str());
 				return false;
 			}
 		}
@@ -50,7 +50,7 @@ bool CommandLine::Parse(int _argc, const char* _argv[])
 		} else if (pOpt->IsMulti()) {
 			pStrList = iter->second;
 		} else {
-			_strErr.Printf("option %s cannot accept multiple values", pOpt->MakeKeyArg(longFlag).c_str());
+			_strErr.Format("option %s cannot accept multiple values", pOpt->MakeKeyArg(longFlag).c_str());
 			return false;
 		}
 		pStrList->push_back(value);
@@ -82,14 +82,14 @@ bool CommandLine::Parse(int _argc, const char* _argv[])
 				auto iter = _optMapByKeyLong.find(keyLong);
 				pOpt = (iter == _optMapByKeyLong.end())? nullptr : iter->second;
 				if (pOpt == nullptr) {
-					_strErr.Printf("unknown option --%s", keyLong.c_str());
+					_strErr.Format("unknown option --%s", keyLong.c_str());
 					return false;
 				}
 				if (pOpt->IsTypeBool()) {
 					SetBool(pOpt->GetKeyLong());
 				} else if (pOpt->IsTypeString() || pOpt->IsTypeInt()) {
 					if (!value) {
-						_strErr.Printf("option --%s requires a value", keyLong.c_str());;
+						_strErr.Format("option --%s requires a value", keyLong.c_str());;
 						return false;
 					} else if (!FeedValue(pOpt, value, true)) return false;
 				}
@@ -99,13 +99,13 @@ bool CommandLine::Parse(int _argc, const char* _argv[])
 				auto iter = _optMapByKeyShort.find(keyShort);
 				pOpt = (iter == _optMapByKeyShort.end())? nullptr : iter->second;
 				if (pOpt == nullptr) {
-					_strErr.Printf("unknown option -%c", keyShort);
+					_strErr.Format("unknown option -%c", keyShort);
 					return false;
 				}
 				const char* value = &arg[2];
 				if (pOpt->IsTypeBool()) {
 					if (*value != '\0') {
-						_strErr.Printf("unknown option -%c", keyShort);;
+						_strErr.Format("unknown option -%c", keyShort);;
 						return false;
 					}
 					SetBool(pOpt->GetKeyLong());
@@ -123,7 +123,7 @@ bool CommandLine::Parse(int _argc, const char* _argv[])
 		}
 	}
 	if (stat == Stat::Value) {
-		_strErr.Printf("option -%c requires a value", pOpt->GetKeyShort());
+		_strErr.Format("option -%c requires a value", pOpt->GetKeyShort());
 		return false;
 	}
 	return true;

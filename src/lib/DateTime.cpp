@@ -184,7 +184,7 @@ String DateTime::GetTZOffsetStr(bool colonFlag) const
 	} else {
 		str += "+";
 	}
-	str.Printf(colonFlag? "%02d:%02d" : "%02d%02d", minsOffset / 60, minsOffset % 60);
+	str.Format(colonFlag? "%02d:%02d" : "%02d%02d", minsOffset / 60, minsOffset % 60);
 	return str;
 }
 
@@ -203,9 +203,9 @@ Int DateTime::Compare(const DateTime& dt1, const DateTime& dt2)
 String DateTime::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%04d-%02d-%02d %02d:%02d:%02d.%03d",
+	str.Format("%04d-%02d-%02d %02d:%02d:%02d.%03d",
 			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec(), GetMSec());
-	if (Int16 usec = GetUSec()) str.Printf("%03d", usec);
+	if (Int16 usec = GetUSec()) str.Format("%03d", usec);
 	str += GetTZOffsetStr(true);
 	return str;
 }

@@ -279,7 +279,7 @@ String Value_Binary::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%dbytes", _pBinary->GetBinary().size());
+	str.Format(":%dbytes", _pBinary->GetBinary().size());
 	str += _pBinary->GetBinary().IsWritable()? "writrable" : "constant";
 	str += ">";
 	return str;

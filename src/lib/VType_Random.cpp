@@ -316,7 +316,7 @@ String Value_Random::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":seed=0x%08x>", GetRandom().GetSeed());
+	str.Format(":seed=0x%08x>", GetRandom().GetSeed());
 	return str;
 }
 

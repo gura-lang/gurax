@@ -39,7 +39,7 @@ bool Segment::WriteToStream(Stream& stream)
 String Segment::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("<jpeg.Segment:%s>", GetMarkerSymbol()->GetName());
+	str.Format("<jpeg.Segment:%s>", GetMarkerSymbol()->GetName());
 	return str;
 }
 

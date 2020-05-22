@@ -354,17 +354,17 @@ String& String::AppendUTF32(UInt32 codeUTF32)
 	return *this;
 }
 
-String& String::PrintfV(const char* format, va_list ap)
+String& String::FormatV(const char* format, va_list ap)
 {
 	Formatter_String(*this).FormatV(format, ap);
 	return *this;
 }
 
-String& String::Printf(const char* format, ...)
+String& String::Format(const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	return PrintfV(format, ap);
+	return FormatV(format, ap);
 }
 
 String& String::PrintFmt(const char* format, const ValueList& valueList)

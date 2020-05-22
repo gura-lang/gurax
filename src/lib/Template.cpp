@@ -484,7 +484,7 @@ void Expr_TmplString::Compose(Composer& composer)
 String Expr_TmplString::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%sT", GetStringSTL().EnquoteAuto().c_str());
+	str.Format("%sT", GetStringSTL().EnquoteAuto().c_str());
 	return str;
 }
 
@@ -579,7 +579,7 @@ template<int nExprSrc, bool discardValueFlag>
 String PUnit_TmplString<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("TmplString()");
+	str.Format("TmplString()");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -697,7 +697,7 @@ template<int nExprSrc, bool discardValueFlag>
 String PUnit_TmplScript<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("TmplScript()");
+	str.Format("TmplScript()");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -742,7 +742,7 @@ template<int nExprSrc, bool discardValueFlag>
 String PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("TmplEmbedded()");
+	str.Format("TmplEmbedded()");
 	AppendInfoToString(str, ss);
 	return str;
 }

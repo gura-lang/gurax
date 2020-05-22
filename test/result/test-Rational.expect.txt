@@ -2,6 +2,7 @@
 Rational
   #denom            Number       R
   .format           String       R/W
+  .formatInt        String       R/W
   #numer            Number       R
 ======== Constructor ========
 Rational() .. 0r
@@ -189,3 +190,23 @@ rat.denom .. 4
 3 >= (5 / 2r) .. true
 3 >= (6 / 2r) .. true
 3 >= (7 / 2r) .. false
+======== Rational.format ========
+Rational.format = '%lld/%lld' .. %lld/%lld
+1234 / 5679r .. 1234/5679
+Rational.formatInt = '%lld' .. %lld
+1234r .. 1234
+Rational.format = '0x%08llx/0x%08llx' .. 0x%08llx/0x%08llx
+1234 / 5679r .. 0x000004d2/0x0000162f
+Rational.formatInt = '0x%08llx' .. 0x%08llx
+1234r .. 0x000004d2
+Rational.format = '%d/%d' .. invalid format specifier
+Rational.format = '%f/%f' .. invalid format specifier
+Rational.formatInt = '%d' .. invalid format specifier
+Rational.formatInt = '%f' .. invalid format specifier
+Rational.format = '' .. too few format specifiers
+Rational.format = '%lld' .. too few format specifiers
+Rational.format = '%lld/%lld' .. %lld/%lld
+Rational.format = '%lld/%lld/%lld' .. too many format specifiers
+Rational.formatInt = '' .. too few format specifiers
+Rational.formatInt = '%lld' .. %lld
+Rational.formatInt = '%lld/%lld' .. too many format specifiers

@@ -19,7 +19,7 @@ String Accumulator::GetDigestHex(bool upperFlag)
 	String str;
 	const char* format = upperFlag? "%02X" : "%02x";
 	const Binary& digest = GetDigest();
-	for (UInt8 ch : digest) str.Printf(format, ch);
+	for (UInt8 ch : digest) str.Format(format, ch);
 	return str;
 }
 

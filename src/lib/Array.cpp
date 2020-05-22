@@ -15,7 +15,7 @@ Array::Array(ElemType elemType, Memory* pMemory) : _elemType(elemType), _pMemory
 
 String Array::ToString(const StringStyle& ss) const
 {
-	return String().Printf("Array:%s", ElemTypeToSymbol(_elemType)->GetName());
+	return String().Format("Array:%s", ElemTypeToSymbol(_elemType)->GetName());
 }
 
 }

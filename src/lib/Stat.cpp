@@ -11,7 +11,7 @@ namespace Gurax {
 String Stat::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%s:%dbytes", GetPathName(), GetBytes());
+	str.Format("%s:%dbytes", GetPathName(), GetBytes());
 	return str;
 }
 

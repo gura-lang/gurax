@@ -123,7 +123,7 @@ UInt32 MemoryPool::ChunkPUnit::CalcSeqId(const PUnit* pPUnit) const
 String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
+	str.Format("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
 	return str;
 }
 
@@ -191,7 +191,7 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
+	str.Format("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
 	if (!ss.IsDigest()) {
 		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		str += "\n";

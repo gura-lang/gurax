@@ -75,9 +75,9 @@ String Error::MakeMessage() const
 		if (_lineNoTop == 0) {
 			str += ": ";
 		} else if (_lineNoTop == _lineNoBtm) {
-			str.Printf(":%d: ", _lineNoTop);
+			str.Format(":%d: ", _lineNoTop);
 		} else {
-			str.Printf(":%d:%d: ", _lineNoTop, _lineNoBtm);
+			str.Format(":%d:%d: ", _lineNoTop, _lineNoBtm);
 		}
 	}
 	str += _errorType.GetDispName();
