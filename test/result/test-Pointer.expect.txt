@@ -15,152 +15,152 @@ Pointer
   #uint8            Number       R/W
 ======== Basic test of pack/unpack ========
 ---
-buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12) .. <Pointer:4/4>
-buff.p.Pack(strPre + 'b', -0x81) .. the number must be between -128 and 127
-buff.p.Pack(strPre + 'b', 0x80) .. the number must be between -128 and 127
+buff.p.Pack('bbbb', 0, -128, 127, 18)
 00 80 7f 12                                      ....
+buff.p.Pack('b', -129) .. the number must be between -128 and 127
+buff.p.Pack('b', 128) .. the number must be between -128 and 127
 Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
 ---
-buff.p.Pack(strPre + 'BBB', 0x00, 0xff, 0x12) .. <Pointer:3/3>
-buff.p.Pack(strPre + 'B', -1) .. the number must be between 0 and 255
-buff.p.Pack(strPre + 'B', 0x100) .. the number must be between 0 and 255
+buff.p.Pack('BBB', 0, 255, 18)
 00 ff 12                                         ...
+buff.p.Pack('B', -1) .. the number must be between 0 and 255
+buff.p.Pack('B', 256) .. the number must be between 0 and 255
 Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
 ---
-buff.p.Pack(strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'h', -0x8001) .. the number must be between -32768 and 32767
-buff.p.Pack(strPre + 'h', 0x8000) .. the number must be between -32768 and 32767
+buff.p.Pack('hhhh', 0, -32768, 32767, 4660)
 00 00 00 80 ff 7f 34 12                          ......4.
+buff.p.Pack('h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('h', 32768) .. the number must be between -32768 and 32767
 Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
 ---
-buff.p.Pack(strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'H', -1) .. the number must be between 0 and 65535
-buff.p.Pack(strPre + 'H', 0x10000) .. the number must be between 0 and 65535
+buff.p.Pack('HHHH', 0, 32768, 65535, 4660)
 00 00 00 80 ff ff 34 12                          ......4.
+buff.p.Pack('H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('H', 65536) .. the number must be between 0 and 65535
 Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
 ---
-buff.p.Pack(strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678) .. <Pointer:16/16>
-buff.p.Pack(strPre + 'i', -0x80000001) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack(strPre + 'i', 0x80000000) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('iiii', 0, -2147483648, 2147483647, 305419896)
 00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
+buff.p.Pack('i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('i', 2147483648) .. the number must be between -2147483648 and 2147483647
 Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
 ---
-buff.p.Pack(strPre + 'III', 0x00000000, 0xffffffff, 0x12345678) .. <Pointer:12/12>
-buff.p.Pack(strPre + 'I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack(strPre + 'I', 0x100000000) .. the number must be between 0 and 4294967295
+buff.p.Pack('III', 0, 4294967295, 305419896)
 00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
+buff.p.Pack('I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('I', 4294967296) .. the number must be between 0 and 4294967295
 Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
 ---
-buff.p.Pack(strPre + 'fff', 0, 1., .5) .. <Pointer:12/12>
+buff.p.Pack('fff', 0, 1, 0.5)
 00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
 Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + 'ddd', 0, 1., .5) .. <Pointer:24/24>
+buff.p.Pack('ddd', 0, 1, 0.5)
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
 00 00 00 00 00 00 e0 3f                          .......?
 Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + '20s', 'Hello World') .. <Pointer:20/20>
+buff.p.Pack('20s', Hello World)
 48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
 00 00 00 00                                      ....
 Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
 ---
-buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12) .. <Pointer:4/4>
-buff.p.Pack(strPre + 'b', -0x81) .. the number must be between -128 and 127
-buff.p.Pack(strPre + 'b', 0x80) .. the number must be between -128 and 127
+buff.p.Pack('>bbbb', 0, -128, 127, 18)
 00 80 7f 12                                      ....
+buff.p.Pack('>b', -129) .. the number must be between -128 and 127
+buff.p.Pack('>b', 128) .. the number must be between -128 and 127
 Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
 ---
-buff.p.Pack(strPre + 'BBB', 0x00, 0xff, 0x12) .. <Pointer:3/3>
-buff.p.Pack(strPre + 'B', -1) .. the number must be between 0 and 255
-buff.p.Pack(strPre + 'B', 0x100) .. the number must be between 0 and 255
+buff.p.Pack('>BBB', 0, 255, 18)
 00 ff 12                                         ...
+buff.p.Pack('>B', -1) .. the number must be between 0 and 255
+buff.p.Pack('>B', 256) .. the number must be between 0 and 255
 Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
 ---
-buff.p.Pack(strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'h', -0x8001) .. the number must be between -32768 and 32767
-buff.p.Pack(strPre + 'h', 0x8000) .. the number must be between -32768 and 32767
+buff.p.Pack('>hhhh', 0, -32768, 32767, 4660)
 00 00 80 00 7f ff 12 34                          .......4
+buff.p.Pack('>h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('>h', 32768) .. the number must be between -32768 and 32767
 Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
 ---
-buff.p.Pack(strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'H', -1) .. the number must be between 0 and 65535
-buff.p.Pack(strPre + 'H', 0x10000) .. the number must be between 0 and 65535
+buff.p.Pack('>HHHH', 0, 32768, 65535, 4660)
 00 00 80 00 ff ff 12 34                          .......4
+buff.p.Pack('>H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('>H', 65536) .. the number must be between 0 and 65535
 Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
 ---
-buff.p.Pack(strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678) .. <Pointer:16/16>
-buff.p.Pack(strPre + 'i', -0x80000001) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack(strPre + 'i', 0x80000000) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('>iiii', 0, -2147483648, 2147483647, 305419896)
 00 00 00 00 80 00 00 00 7f ff ff ff 12 34 56 78  .............4Vx
+buff.p.Pack('>i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('>i', 2147483648) .. the number must be between -2147483648 and 2147483647
 Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
 ---
-buff.p.Pack(strPre + 'III', 0x00000000, 0xffffffff, 0x12345678) .. <Pointer:12/12>
-buff.p.Pack(strPre + 'I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack(strPre + 'I', 0x100000000) .. the number must be between 0 and 4294967295
+buff.p.Pack('>III', 0, 4294967295, 305419896)
 00 00 00 00 ff ff ff ff 12 34 56 78              .........4Vx
+buff.p.Pack('>I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('>I', 4294967296) .. the number must be between 0 and 4294967295
 Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
 ---
-buff.p.Pack(strPre + 'fff', 0, 1., .5) .. <Pointer:12/12>
+buff.p.Pack('>fff', 0, 1, 0.5)
 00 00 00 00 3f 80 00 00 3f 00 00 00              ....?...?...
 Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + 'ddd', 0, 1., .5) .. <Pointer:24/24>
+buff.p.Pack('>ddd', 0, 1, 0.5)
 00 00 00 00 00 00 00 00 3f f0 00 00 00 00 00 00  ........?.......
 3f e0 00 00 00 00 00 00                          ?.......
 Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + '20s', 'Hello World') .. <Pointer:20/20>
+buff.p.Pack('>20s', Hello World)
 48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
 00 00 00 00                                      ....
 Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
 ---
-buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12) .. <Pointer:4/4>
-buff.p.Pack(strPre + 'b', -0x81) .. the number must be between -128 and 127
-buff.p.Pack(strPre + 'b', 0x80) .. the number must be between -128 and 127
+buff.p.Pack('<bbbb', 0, -128, 127, 18)
 00 80 7f 12                                      ....
+buff.p.Pack('<b', -129) .. the number must be between -128 and 127
+buff.p.Pack('<b', 128) .. the number must be between -128 and 127
 Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
 ---
-buff.p.Pack(strPre + 'BBB', 0x00, 0xff, 0x12) .. <Pointer:3/3>
-buff.p.Pack(strPre + 'B', -1) .. the number must be between 0 and 255
-buff.p.Pack(strPre + 'B', 0x100) .. the number must be between 0 and 255
+buff.p.Pack('<BBB', 0, 255, 18)
 00 ff 12                                         ...
+buff.p.Pack('<B', -1) .. the number must be between 0 and 255
+buff.p.Pack('<B', 256) .. the number must be between 0 and 255
 Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
 ---
-buff.p.Pack(strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'h', -0x8001) .. the number must be between -32768 and 32767
-buff.p.Pack(strPre + 'h', 0x8000) .. the number must be between -32768 and 32767
+buff.p.Pack('<hhhh', 0, -32768, 32767, 4660)
 00 00 00 80 ff 7f 34 12                          ......4.
+buff.p.Pack('<h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('<h', 32768) .. the number must be between -32768 and 32767
 Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
 ---
-buff.p.Pack(strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234) .. <Pointer:8/8>
-buff.p.Pack(strPre + 'H', -1) .. the number must be between 0 and 65535
-buff.p.Pack(strPre + 'H', 0x10000) .. the number must be between 0 and 65535
+buff.p.Pack('<HHHH', 0, 32768, 65535, 4660)
 00 00 00 80 ff ff 34 12                          ......4.
+buff.p.Pack('<H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('<H', 65536) .. the number must be between 0 and 65535
 Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
 ---
-buff.p.Pack(strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678) .. <Pointer:16/16>
-buff.p.Pack(strPre + 'i', -0x80000001) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack(strPre + 'i', 0x80000000) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('<iiii', 0, -2147483648, 2147483647, 305419896)
 00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
+buff.p.Pack('<i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('<i', 2147483648) .. the number must be between -2147483648 and 2147483647
 Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
 ---
-buff.p.Pack(strPre + 'III', 0x00000000, 0xffffffff, 0x12345678) .. <Pointer:12/12>
-buff.p.Pack(strPre + 'I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack(strPre + 'I', 0x100000000) .. the number must be between 0 and 4294967295
+buff.p.Pack('<III', 0, 4294967295, 305419896)
 00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
+buff.p.Pack('<I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('<I', 4294967296) .. the number must be between 0 and 4294967295
 Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
 ---
-buff.p.Pack(strPre + 'fff', 0, 1., .5) .. <Pointer:12/12>
+buff.p.Pack('<fff', 0, 1, 0.5)
 00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
 Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + 'ddd', 0, 1., .5) .. <Pointer:24/24>
+buff.p.Pack('<ddd', 0, 1, 0.5)
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
 00 00 00 00 00 00 e0 3f                          .......?
 Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
 ---
-buff.p.Pack(strPre + '20s', 'Hello World') .. <Pointer:20/20>
+buff.p.Pack('<20s', Hello World)
 48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
 00 00 00 00                                      ....
 Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']

@@ -6,79 +6,89 @@ TestCase('Property') {
 }
 
 TestCase('Basic test of pack/unpack') {
+	PackTester(buff:Binary, format:String, args*) = {
+		Printf('buff.p.Pack(%s, %s)', format.Enquote(), args.Join(', ')) 
+		try {
+			buff.p.Pack(format, args*)
+		} catch {|e|
+			Print(' .. ', e.text)
+		}
+		Println()
+	}
 	f(strPre:String) = {
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12))
-			Tester(`buff.p.Pack(strPre + 'b', -0x81))
-			Tester(`buff.p.Pack(strPre + 'b', 0x80))
+			PackTester(buff, strPre + 'bbbb', 0, -0x80, 0x7f, 0x12)
+			//PackTester(buff, strPre + 'bbbb', 0, -0x80, 0x7f, 0x12)
 			buff.Dump()
+			PackTester(buff, strPre + 'b', -0x81)
+			PackTester(buff, strPre + 'b', 0x80)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'bbbb')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'BBB', 0x00, 0xff, 0x12))
-			Tester(`buff.p.Pack(strPre + 'B', -1))
-			Tester(`buff.p.Pack(strPre + 'B', 0x100))
+			PackTester(buff, strPre + 'BBB', 0x00, 0xff, 0x12)
 			buff.Dump()
+			PackTester(buff, strPre + 'B', -1)
+			PackTester(buff, strPre + 'B', 0x100)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'BBB')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234))
-			Tester(`buff.p.Pack(strPre + 'h', -0x8001))
-			Tester(`buff.p.Pack(strPre + 'h', 0x8000))
+			PackTester(buff, strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234)
 			buff.Dump()
+			PackTester(buff, strPre + 'h', -0x8001)
+			PackTester(buff, strPre + 'h', 0x8000)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'hhhh')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234))
-			Tester(`buff.p.Pack(strPre + 'H', -1))
-			Tester(`buff.p.Pack(strPre + 'H', 0x10000))
+			PackTester(buff, strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234)
 			buff.Dump()
+			PackTester(buff, strPre + 'H', -1)
+			PackTester(buff, strPre + 'H', 0x10000)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'HHHH')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678))
-			Tester(`buff.p.Pack(strPre + 'i', -0x80000001))
-			Tester(`buff.p.Pack(strPre + 'i', 0x80000000))
+			PackTester(buff, strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678)
 			buff.Dump()
+			PackTester(buff, strPre + 'i', -0x80000001)
+			PackTester(buff, strPre + 'i', 0x80000000)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'iiii')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'III', 0x00000000, 0xffffffff, 0x12345678))
-			Tester(`buff.p.Pack(strPre + 'I', -1))
-			Tester(`buff.p.Pack(strPre + 'I', 0x100000000))
+			PackTester(buff, strPre + 'III', 0x00000000, 0xffffffff, 0x12345678)
 			buff.Dump()
+			PackTester(buff, strPre + 'I', -1)
+			PackTester(buff, strPre + 'I', 0x100000000)
 			Tester(`Format('%d', buff.p.Unpack(strPre + 'III')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'fff', 0, 1., .5))
+			PackTester(buff, strPre + 'fff', 0, 1., .5)
 			buff.Dump()
 			Tester(`Format('%f', buff.p.Unpack(strPre + 'fff')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + 'ddd', 0, 1., .5))
+			PackTester(buff, strPre + 'ddd', 0, 1., .5)
 			buff.Dump()
 			Tester(`Format('%f', buff.p.Unpack(strPre + 'ddd')))
 		}
 		scope {
 			Println('---')
 			buff = B''
-			Tester(`buff.p.Pack(strPre + '20s', 'Hello World'))
+			PackTester(buff, strPre + '20s', 'Hello World')
 			buff.Dump()
 			Tester(`Format('%s', buff.p.Unpack(strPre + '20s')))
 		}
