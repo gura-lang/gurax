@@ -171,6 +171,7 @@ public:
 	virtual bool IsEmpty() const { return false; }
 	virtual bool IsSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsPureSymbol(const Symbol* pSymbol) const { return false; }
+	virtual bool IsStatement(const Symbol* pSymbol) const { return false; }
 	virtual bool IsCollector() const { return false; }
 	virtual bool IsUnaryOp(OpType opType) const { return false; }
 	virtual bool IsBinaryOp(OpType opType) const { return false; }
@@ -864,6 +865,9 @@ public:
 	Function* GenerateFunction(Composer& composer, DeclCallable::Type type, Expr& exprAssigned);
 public:
 	// Virtual functions of Expr
+	virtual bool IsStatement(const Symbol* pSymbol) const override {
+		return GetExprCar().IsPureSymbol(pSymbol);
+	}
 	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;

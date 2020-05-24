@@ -68,6 +68,24 @@ Gurax_DeclareStatementAlias(if_, "if")
 
 Gurax_ImplementStatement(if_)
 {
+	for (const Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr; ) {
+		const Expr_Caller* pExprNext = pExpr->GetExprTrailer();
+		if (pExpr->IsStatement(Gurax_Symbol(elsif))) {
+			// nothing to do
+		} else if (pExpr->IsStatement(Gurax_Symbol(else_))) {
+			if (pExprNext) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"else statement must be at the last of if-elsif-else sequence");
+				return;
+			}
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+						"invalid format of if-elsif-else sequence");
+			return;
+		}
+		pExpr = pExprNext;
+	}
+#if 0
 	SymbolList symbols;
 	if (const Expr* pExprError = exprCaller.GetTrailerSymbols(symbols)) {
 		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
@@ -91,6 +109,7 @@ Gurax_ImplementStatement(if_)
 			return;
 		}
 	}
+#endif
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
@@ -233,13 +252,16 @@ Gurax_ImplementStatement(try_)
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
 		composer.Add_BeginTryBlock(&exprCaller);						// [Any]
+
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_EndTryBlock(&exprCaller);							// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_NoOperation(&exprCaller);							// [Any]
+
 	} else {
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 	}
