@@ -245,6 +245,127 @@ Gurax_ImplementStatement(try_)
 	}
 }
 
+#if 0
+Gurax_ImplementStatement(try_)
+{
+	using ExprsCatch = std::vector<Expr_Caller*>;
+	using PUnitsOfBranch = std::vector<PUnit*>;
+	ExprsCatch exprsCatch;
+	Expr_Caller* pExprCatchAny = nullptr;
+	Expr_Caller* pExprElse = nullptr;
+	Expr_Caller* pExprFinally = nullptr;
+	for (Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr; ) {
+		Expr_Caller* pExprNext = pExpr->GetExprTrailer();
+		if (pExpr->IsStatement(Gurax_Symbol(catch_))) {
+			if (pExpr->GetExprCdrFirst()) {
+				exprsCatch.push_back(pExpr);
+			} else if (pExprCatchAny) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"catch-any statement can appear once in try-catch-else-finally sequence");
+				return;
+			}
+		} else if (pExpr->IsStatement(Gurax_Symbol(else_))) {
+			if (pExprElse) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"else statement can appear once in try-catch-else-finally sequence");
+				return;
+			}
+			pExprElse = pExpr;
+		} else if (pExpr->IsStatement(Gurax_Symbol(finally))) {
+			if (pExprFinally) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"finally statement can appear once in try-catch-else-finally sequence");
+				return;
+			}
+			pExprFinally = pExpr;
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+						"invalid format of try-catch-else-finally sequence");
+			return;
+		}
+		pExpr = pExprNext;
+	}
+	if (!exprCaller.HasExprTrailer()) {
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		return;
+	}
+	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
+	composer.Add_BeginTryBlock(&exprCaller);							// [Any]
+	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+	if (pExprElse) composer.FlushDiscard();								// [Any] or []
+	PUnit* pPUnitOfBranch_NoError = composer.PeekPUnitCont();
+	composer.Add_EndTryBlock(&exprCaller);								// [Any] or []
+	pPUnitOfBranch_Catch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	PUnitsOfBranch punitsOfBranch_Catched;
+	for (Expr_Caller* pExprCatch : exprsCatch) {
+		const DeclArgOwner& declArgsOfBlock =
+				pExprCatch->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+		if (declArgsOfBlock.size() > 1) {
+			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
+			return;
+		}
+		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
+		pExprCatch->GetExprCdrFirst()->ComposeOrNil(composer);			// [Any]
+		composer.Add_Cast(VTYPE_ErrorType, pExprCatch);					// [ErrorType]
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		composer.Add_JumpIfNoCatch(pExprCatch);							// [Error] or []
+		if (pDeclArg) {
+			composer.Add_PushFrame<Frame_Block>(pExprCatch);
+			composer.Add_AssignToDeclArg(pDeclArg->Reference(), pExprCatch);
+			composer.FlushDiscard();									// []
+			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
+			composer.Add_PopFrame(pExprCatch);
+		} else {
+			composer.FlushDiscard();
+			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
+		}
+		punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
+		composer.Add_Jump(&exprCaller);									// [Any]
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	}
+#if 0	
+	if (pExprElse) {
+		pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pExprElse->ComposeOrNil(composer);								// [Any]
+	} else {
+		pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_NoOperation(&exprCaller);							// [Any]
+	}
+#endif
+	if (pExprCatchAny) {
+		const DeclArgOwner& declArgsOfBlock =
+				pExprCatchAny->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+		if (declArgsOfBlock.size() > 1) {
+			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
+			return;
+		}
+		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		composer.Add_JumpIfNoCatchAny(pExprCatchAny);					// [Error] or []
+		if (pDeclArg) {
+			composer.Add_PushFrame<Frame_Block>(pExprCatchAny);
+			composer.Add_AssignToDeclArg(pDeclArg->Reference(), pExprCatchAny);
+			composer.FlushDiscard();									// []
+			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);	// [Any]
+			composer.Add_PopFrame(pExprCatchAny);
+		} else {
+			composer.FlushDiscard();
+			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);	// [Any]
+		}
+		punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
+		composer.Add_Jump(&exprCaller);									// [Any]
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	} else {
+	 	composer.Add_Miscatch(Value::nil(), &exprCaller);				// [nil]
+	}
+	pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
+	for (PUnit* pPUnitOfBranch : punitsOfBranch_Catched) {
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	}
+	composer.Add_NoOperation(&exprCaller);								// [Any]
+}
+#endif
+
 // catch(errorType?:ErrorType) {`block}
 Gurax_DeclareStatementAlias(catch_, "catch")
 {
