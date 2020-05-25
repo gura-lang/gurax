@@ -40,11 +40,8 @@ public:
 		~ExceptionInfoStack() { Clear(); }
 		void Clear();
 		ExceptionInfo* Peek(int offset) { return *(rbegin() + offset); }
-		void Push(ExceptionInfo* pExceptionInfo) { push_back(pExceptionInfo); }
-		ExceptionInfo* Pop() {
-			if (empty()) return nullptr;
-			ExceptionInfo* pExceptionInfo = back(); pop_back(); return pExceptionInfo;
-		}
+		void Push(ExceptionInfo* pExceptionInfo);
+		ExceptionInfo* Pop();
 		void Shrink(size_t cnt);
 		void ShrinkUntilNull();
 		void Print() const;

@@ -115,8 +115,22 @@ void Processor::ExceptionInfoStack::Clear()
 	clear();
 }
 
+void Processor::ExceptionInfoStack::Push(ExceptionInfo* pExceptionInfo)
+{
+	push_back(pExceptionInfo);
+}
+
+Processor::ExceptionInfo* Processor::ExceptionInfoStack::Pop()
+{
+	if (empty()) return nullptr;
+	ExceptionInfo* pExceptionInfo = back();
+	pop_back();
+	return pExceptionInfo;
+}
+
 void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 {
+	//::printf("**ExceptionInfoStack::Shrink()***\n");
 	if (cnt >= size()) return;
 	auto ppExceptionInfoEnd = rbegin() + size() - cnt;
 	for (auto ppExceptionInfo = rbegin(); ppExceptionInfo != ppExceptionInfoEnd; ppExceptionInfo++) {
@@ -127,7 +141,7 @@ void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 
 void Processor::ExceptionInfoStack::ShrinkUntilNull()
 {
-	//while (!empty()) {
+	//::printf("**ExceptionInfoStack::ShrinkUntilNull()***\n");
 	for (;;) {
 		std::unique_ptr<ExceptionInfo> pExceptionInfo(Pop());
 		if (!pExceptionInfo) break;
