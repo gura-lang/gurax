@@ -1392,20 +1392,6 @@ Expr_Caller& Expr_Caller::GetExprTrailerLast()
 	return *pExpr;
 }
 
-const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
-{
-	for (const Expr* pExpr = GetExprTrailer(); pExpr; ) {
-		if (!pExpr->IsType<Expr_Caller>()) return pExpr;
-		const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-		const Expr& exprCar = pExprEx->GetExprCar();
-		if (!exprCar.IsType<Expr_Identifier>()) return &exprCar;
-		const Expr_Identifier& exprCarEx = dynamic_cast<const Expr_Identifier&>(exprCar);
-		symbols.push_back(exprCarEx.GetSymbol());
-		pExpr = pExprEx->GetExprTrailer();
-	}
-	return nullptr;
-}
-
 //------------------------------------------------------------------------------
 // Iterator_ExprLink
 //------------------------------------------------------------------------------

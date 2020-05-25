@@ -85,31 +85,6 @@ Gurax_ImplementStatement(if_)
 		}
 		pExpr = pExprNext;
 	}
-#if 0
-	SymbolList symbols;
-	if (const Expr* pExprError = exprCaller.GetTrailerSymbols(symbols)) {
-		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
-						 "invalid format of if-elsif-else sequence");
-		return;
-	}
-	if (!symbols.empty()) {
-		auto ppSymbol = symbols.begin();
-		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
-			const Symbol* pSymbol = *ppSymbol;
-			if (!pSymbol->IsIdentical(Gurax_Symbol(elsif))) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "invalid format of if-elsif-else sequence");
-				return;
-			}
-		}
-		const Symbol* pSymbol = *ppSymbol;
-		if (!(pSymbol->IsIdentical(Gurax_Symbol(elsif)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
-			Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-							 "invalid format of if-elsif-else sequence");
-			return;
-		}
-	}
-#endif
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
@@ -225,29 +200,32 @@ Gurax_DeclareStatementAlias(try_, "try")
 
 Gurax_ImplementStatement(try_)
 {
-	SymbolList symbols;
-	if (const Expr* pExprError = exprCaller.GetTrailerSymbols(symbols)) {
-		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
-						 "invalid format of try-catch-else-finally sequence");
-		return;
-	}
-	if (!symbols.empty()) {
-		auto ppSymbol = symbols.begin();
-		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
-			const Symbol* pSymbol = *ppSymbol;
-			if (!(pSymbol->IsIdentical(Gurax_Symbol(catch_)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "invalid format of try-catch-else-finally sequence");
+	const Expr_Caller* pExpr_else = nullptr;
+	const Expr_Caller* pExpr_finally = nullptr;
+	for (const Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr; ) {
+		const Expr_Caller* pExprNext = pExpr->GetExprTrailer();
+		if (pExpr->IsStatement(Gurax_Symbol(catch_))) {
+			// nothing to do
+		} else if (pExpr->IsStatement(Gurax_Symbol(else_))) {
+			if (pExpr_else) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"else statement can appear once in try-catch-else-finally sequence");
 				return;
 			}
-		}
-		const Symbol* pSymbol = *ppSymbol;
-		if (!(pSymbol->IsIdentical(Gurax_Symbol(catch_)) || pSymbol->IsIdentical(Gurax_Symbol(else_)) ||
-			  pSymbol->IsIdentical(Gurax_Symbol(finally)))) {
-			Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-							 "invalid format of try-catch-else-finally sequence");
+			pExpr_else = pExpr;
+		} else if (pExpr->IsStatement(Gurax_Symbol(finally))) {
+			if (pExpr_finally) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"finally statement can appear once in try-catch-else-finally sequence");
+				return;
+			}
+			pExpr_finally = pExpr;
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+						"invalid format of try-catch-else-finally sequence");
 			return;
 		}
+		pExpr = pExprNext;
 	}
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
