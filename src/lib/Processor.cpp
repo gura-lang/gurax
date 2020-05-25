@@ -117,11 +117,13 @@ void Processor::ExceptionInfoStack::Clear()
 
 void Processor::ExceptionInfoStack::Push(ExceptionInfo* pExceptionInfo)
 {
+	//::printf("**ExceptionInfoStack::Push()***\n");
 	push_back(pExceptionInfo);
 }
 
 Processor::ExceptionInfo* Processor::ExceptionInfoStack::Pop()
 {
+	//::printf("**ExceptionInfoStack::Pop()***\n");
 	if (empty()) return nullptr;
 	ExceptionInfo* pExceptionInfo = back();
 	pop_back();
