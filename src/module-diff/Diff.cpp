@@ -24,6 +24,10 @@ bool Diff::FeedValue(Sequence& seq, Value& value)
 		FeedString(seq, Value_String::GetString(value));
 	} else if (value.IsType(VTYPE_Stream)) {
 		rtn = FeedStream(seq, Value_Stream::GetStream(value));
+	} else if (value.IsType(VTYPE_Binary)) {
+		RefPtr<Stream> pStream(new Stream_Binary(
+			Stream::Flag::Readable, Value_Binary::GetBinaryReferable(value).Reference()));
+		rtn = FeedStream(seq, *pStream);
 	} else if (value.IsType(VTYPE_Iterator)) {
 		rtn = FeedIterator(seq, Value_Iterator::GetIterator(value));
 	} else if (value.IsType(VTYPE_List)) {

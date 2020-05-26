@@ -37,7 +37,16 @@ Gurax_DeclareConstructor(Diff)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `diff.Diff` instance.");
+		"Creates a `diff.Diff` instance that includes difference information\n"
+		"between two sources `src1` and `src2`. The source is one of the followings:\n"
+		"\n"
+		"- `String` of a whole text.\n"
+		"- `Binary` of a whole text.\n"
+		"- `Stream` of a whole text.\n"
+		"- `Iterator` that returns `String` of each line of a text.\n"
+		"- `List` that contains `String` of each line of a text.\n"
+		"\n"
+		"Specifying `:icase` indicates the comparator to ignore character case.\n");
 }
 
 Gurax_ImplementConstructor(Diff)
@@ -108,7 +117,7 @@ Gurax_DeclareProperty_R(Diff, distance)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Difference distance.");
 }
 
 Gurax_ImplementPropertyGetter(Diff, distance)

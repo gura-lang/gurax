@@ -196,6 +196,8 @@ TestCase('diff.Diff') {
 	Tester(`diff.Diff(src_ABC.old, src_ABC.new).distance)
 	Println('Feed stream')
 	Tester(`diff.Diff(src_ABC_Binary.old.Reader(), src_ABC_Binary.new.Reader()).distance)
+	Println('Feed binary')
+	Tester(`diff.Diff(src_ABC_Binary.old, src_ABC_Binary.new).distance)
 	Println('Feed iterator')
 	Tester(`diff.Diff(src_ABC.old.EachLine(), src_ABC.new.EachLine()).distance)
 	Println('Feed list')
@@ -221,7 +223,7 @@ TestCase('diff.Hunk') {
 	}
 }
 
-TestCase('diff.Diff#PrintHunks') {
-	diff.Diff(src_ABC.old, src_ABC.new).PrintHunks()
-	diff.Diff(src_Message.old, src_Message.new).PrintHunks()
-}
+//TestCase('diff.Diff#PrintHunks') {
+//	diff.Diff(src_ABC.old, src_ABC.new).PrintHunks()
+//	diff.Diff(src_Message.old, src_Message.new).PrintHunks()
+//}
