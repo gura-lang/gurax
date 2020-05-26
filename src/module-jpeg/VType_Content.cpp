@@ -52,10 +52,11 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// jpeg.Content#EachSegment()
+// jpeg.Content#EachSegment() {block?}
 Gurax_DeclareMethod(Content, EachSegment)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that returns each `Segment` instance in the content.");
@@ -68,7 +69,7 @@ Gurax_ImplementMethod(Content, EachSegment)
 	// Function body
 	RefPtr<Iterator> pIterator(new VType_Segment::Iterator_Each(
 						valueThis.GetContent().GetSegmentOwner().Reference()));
-	return new Value_Iterator(pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // jpeg.Content#Write(stream:Stream:w):reduce

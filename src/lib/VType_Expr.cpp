@@ -55,10 +55,11 @@ Gurax_ImplementConstructor(Expr)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Expr#EachPUnit()
+// Expr#EachPUnit() {block?}
 Gurax_DeclareMethod(Expr, EachPUnit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.\n");
@@ -71,7 +72,7 @@ Gurax_ImplementMethod(Expr, EachPUnit)
 	const Expr& expr = valueThis.GetExpr();
 	// Function body
 	RefPtr<Iterator> pIterator(expr.EachPUnit());
-	return new Value_Iterator(pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Expr#Eval()

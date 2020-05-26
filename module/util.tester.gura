@@ -26,14 +26,10 @@ Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 }
 
 PrintPUnit(expr:Expr):void:map = {
-	seqIdOffset = 0
-	punits = expr.EachPUnit()
-	punit = punits.NextValue()
-	!punit && return
-	seqIdOffset = punit.seqId
-	while (punit) {
+	seqIdOffset = nil
+	expr.EachPUnit {|punit|
+		seqIdOffset = seqIdOffset || punit.seqId
 		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
-		punit = punits.NextValue()
 	}
 }
 
