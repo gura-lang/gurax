@@ -304,9 +304,14 @@ Gurax_ImplementStatement(try2)
 	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
 	composer.Add_BeginTryBlock(&exprCaller);							// [Any]
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
-	if (pExprElse) composer.FlushDiscard();								// [Any] or []
 	PUnit* pPUnitOfBranch_NoError = composer.PeekPUnitCont();
 	composer.Add_EndTryBlock(&exprCaller);								// [Any] or []
+	if (pExprElse) {
+		composer.FlushDiscard();										// []
+		pExprElse->ComposeOrNil(composer);								// [Any]
+		pPUnitOfBranch_NoError = composer.PeekPUnitCont();
+		composer.Add_Jump(&exprCaller);									// [Any]
+	}
 	pPUnitOfBranch_Catch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	PUnitsOfBranch punitsOfBranch_Catched;
 	for (Expr_Caller* pExprCatch : exprsCatch) {
