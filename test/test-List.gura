@@ -24,11 +24,11 @@ TestCase('PUnit') {
 		`(foo[0, 2])
 		`(foo[0, 2, 6])
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Property') {
-	PrintPropSlots(List):noMap
+	List.PrintPropSlots()
 }
 
 TestCase('Initializer') {

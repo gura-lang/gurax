@@ -17,7 +17,7 @@ TestCase('PUnit') {
 		`(1,)
 		`(1, 2, 3)
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Iterator#IsFinite() and Iterator#IsInfinite()') {

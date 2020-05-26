@@ -8,7 +8,7 @@ TestCase('PUnit') {
 		`import(a) {*}
 		`import(a) {sym1, sym2, sym3, sym4}
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Basic Test') {

@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(Complex)
+	Complex.PrintPropSlots()
 }
 
 TestCase('Property Access') {

@@ -2,5 +2,5 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(Error)
+	Error.PrintPropSlots()
 }

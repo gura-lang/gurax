@@ -27,7 +27,7 @@ PutImageWithAscii(img:Image, scanDir = `LeftTopHorz) = {
 }
 
 TestCase('Property') {
-	PrintPropSlots(Image)
+	Image.PrintPropSlots()
 }
 
 TestCase('Property Test') {

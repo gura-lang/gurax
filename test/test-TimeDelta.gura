@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(TimeDelta)
+	TimeDelta.PrintPropSlots()
 }
 
 TestCase('Constructor') {

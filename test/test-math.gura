@@ -34,7 +34,7 @@ TestCase('PUnit') {
 		`math.Tanh(n)
 		`math.Unitstep(n)
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Constant') {

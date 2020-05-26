@@ -3,8 +3,8 @@ import(util.tester) {*}
 import(re)
 
 TestCase('Property') {
-	PrintPropSlots(re.Match)
-	PrintPropSlots(re.Group)
+	re.Match.PrintPropSlots()
+	re.Group.PrintPropSlots()
 }
 
 TestCase('String#Sub(), Pattern#Sub()') {

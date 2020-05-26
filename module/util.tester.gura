@@ -24,9 +24,3 @@ Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 		Printf(' %s\n', e.text)
 	}
 }
-
-PrintPUnit(expr:Expr):void:map = expr.PrintPUnit()
-
-PrintPUnitWithLabel(expr:Expr):void:map = expr.PrintPUnitWithLabel()
-
-PrintPropSlots(vtype:VType):void:map = vtype.PrintPropSlots()

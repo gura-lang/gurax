@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(DateTime)
+	DateTime.PrintPropSlots()
 }
 
 TestCase('Constructor') {

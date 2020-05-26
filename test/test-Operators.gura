@@ -52,7 +52,7 @@ TestCase('PUnit') {
 		`(a || (b || c))
 		`(false && false)
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Error Message') {

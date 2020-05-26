@@ -5,7 +5,7 @@ TestCase('PUnit') {
 	f(`expr) = {
 		Println('--------')
 		Printf('f(`(%s))\n', expr)
-		PrintPUnit(expr)
+		expr.PrintPUnit()
 	}
 	f(a)
 	f({a = 3})
@@ -33,12 +33,12 @@ TestCase('PUnit') {
 	exprs.Each {|expr|
 		Println('--------')
 		Printf('`%s\n', expr)
-		PrintPUnit(expr)
+		expr.PrintPUnit()
 	}
 }
 
 TestCase('Property') {
-	PrintPropSlots(Expr)
+	Expr.PrintPropSlots()
 }
 
 TestCase('Assignment') {

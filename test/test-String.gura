@@ -20,7 +20,7 @@ words100 = [
 ]
 
 TestCase('Property') {
-	PrintPropSlots(String)
+	String.PrintPropSlots()
 }
 
 TestCase('String#Align()') {

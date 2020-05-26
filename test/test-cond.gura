@@ -8,7 +8,7 @@ TestCase('PUnit') {
 		`cond(a, f(v1, v2, v3))
 		`cond(a, f(v1, v2, v3), g(v1, v2, v3))
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Basic Test') {

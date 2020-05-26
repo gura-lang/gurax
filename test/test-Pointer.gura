@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(Pointer)
+	Pointer.PrintPropSlots()
 }
 
 TestCase('Basic test of pack/unpack') {

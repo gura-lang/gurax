@@ -6,7 +6,7 @@ import(util.tester) {*}
 import(png)
 
 TestCase('Property') {
-	PrintPropSlots(png.Content)
+	png.Content.PrintPropSlots()
 }
 
 TestCase('png.Content') {

@@ -8,7 +8,7 @@ TestCase('PUnit') {
 		`try { f() } catch {|e| g() }
 		`try { f() } catch(Error.SyntaxError) {|e| g() }
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 try {

@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	PrintPropSlots(Symbol)
+	Symbol.PrintPropSlots()
 }
 
 TestCase('Operator ==') {

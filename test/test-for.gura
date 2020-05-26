@@ -23,7 +23,7 @@ TestCase('PUnit') {
 		`for (v in tbl) { break, 1 }
 		`for (v in tbl):list { break, 1 }
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Statement') {

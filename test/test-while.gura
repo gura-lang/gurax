@@ -12,7 +12,7 @@ TestCase('PUnit') {
 		`while (a < 3) {}
 		`while (a < 3) {|i| f(i)}
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Create list') {

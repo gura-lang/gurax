@@ -25,7 +25,7 @@ TestCase('PUnit') {
 		`repeat (3):xiter {|n| nil}
 		`repeat (3) {|i| f(i)}
 	]
-	PrintPUnitWithLabel(exprs)
+	exprs::PrintPUnitWithLabel()
 }
 
 TestCase('Simple') {

@@ -39,7 +39,7 @@ TestCase('Default Value for Property') {
 		Format() = Format('%s, %s, %s, %s', this.p1, this.p2, this.p3, this.p4):noMap
 	}
 	Println(A)
-	PrintPropSlots(A)
+	A.PrintPropSlots()
 	Tester(`A().Format())
 	Tester(`A('P1-mod').Format())
 	Tester(`A('P1-mod', 'P2-mod').Format())
