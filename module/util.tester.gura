@@ -25,30 +25,8 @@ Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 	}
 }
 
-PrintPUnit(expr:Expr):void:map = {
-	seqIdOffset = nil
-	expr.EachPUnit {|punit|
-		seqIdOffset = seqIdOffset || punit.seqId
-		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
-	}
-}
+PrintPUnit(expr:Expr):void:map = expr.PrintPUnit()
 
-PrintPUnitWithLabel(expr:Expr):void:map = {
-	Printf('%s\n', expr)
-	PrintPUnit(expr)
-}
+PrintPUnitWithLabel(expr:Expr):void:map = expr.PrintPUnitWithLabel()
 
-PrintPropSlots(vtype:VType) = {
-	propSlots = vtype.__EachPropSlot__():list
-	maxLenSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
-	maxLenVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
-	Printf('%s\n', vtype.__fullName__)
-	propSlots.Each {|propSlot|
-		Printf('  %s%-*s %-*s %s%s\n',
-			cond(propSlot.isOfClass, '.', '#'),
-			maxLenSymbolName, propSlot.symbol.symbolName,
-			maxLenVTypeFullName, propSlot.vtype.__fullName__,
-			['', 'R', 'W', 'R/W'][cond(propSlot.IsSet(`R), 1, 0) + cond(propSlot.IsSet(`W), 2, 0)],
-			cond(propSlot.IsSet(`nil), ',nil', ''))
-	}
-}
+PrintPropSlots(vtype:VType):void:map = vtype.PrintPropSlots()
