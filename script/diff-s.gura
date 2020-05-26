@@ -1,0 +1,18 @@
+#!/usr/bin/env gurax
+import(diff)
+import(argopt)
+
+argopt.Parser {|p|
+	errorFlag = false
+	try {
+		[argv, cfg] = p.Parse(sys.argv)
+	} catch {|e|
+		errorFlag = true
+	}
+	if (errorFlag || argv.len < 2) {
+		sys.cerr.Println('usage: diff-s.gura file1 file2')
+		sys.Exit(1)
+	}
+}
+[fileName1, fileName2] = argv[0, 1]
+diff.Diff(Stream(fileName1), Stream(fileName2)).Print()
