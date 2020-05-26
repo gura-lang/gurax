@@ -123,8 +123,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Break_);
 	using PUnit_Continue_ = PUnit_Continue<false>;
 	PrintSizeOf(PUnit_Continue_);
-	using PUnit_Miscatch_ = PUnit_Miscatch<false>;
-	PrintSizeOf(PUnit_Miscatch_);
+	using PUnit_FailCatch_ = PUnit_FailCatch<false>;
+	PrintSizeOf(PUnit_FailCatch_);
 	using PUnit_Return_ = PUnit_Return<false>;
 	PrintSizeOf(PUnit_Return_);
 	using PUnit_PushFrame_ = PUnit_PushFrame<false, Frame_Block>;

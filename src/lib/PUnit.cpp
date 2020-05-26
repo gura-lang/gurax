@@ -3796,12 +3796,12 @@ PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Miscatch
+// PUnit_FailCatch
 // Stack View: [] -> [Any] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_Miscatch<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_FailCatch<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
@@ -3809,27 +3809,27 @@ void PUnit_Miscatch<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_FailCatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Miscatch(%s)", GetValue()->ToString(StringStyle().SetDigest()).c_str());
+	str.Format("FailCatch(%s)", GetValue()->ToString(StringStyle().SetDigest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
+PUnit* PUnitFactory_FailCatch::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Miscatch<true>(_pValue.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_FailCatch<true>(_pValue.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Miscatch<false>(_pValue.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_FailCatch<false>(_pValue.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Miscatch<true>(_pValue.release(), nullptr);
+			_pPUnitCreated = new PUnit_FailCatch<true>(_pValue.release(), nullptr);
 		} else {
-			_pPUnitCreated = new PUnit_Miscatch<false>(_pValue.release(), nullptr);
+			_pPUnitCreated = new PUnit_FailCatch<false>(_pValue.release(), nullptr);
 		}
 	}
 	return _pPUnitCreated;

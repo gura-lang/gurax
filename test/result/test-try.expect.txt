@@ -45,7 +45,7 @@ try {f()} catch(Error.SyntaxError) {|e| g()}
   ##13 Call(cont=##14)
   ##14 PopFrame()
   ##15 Jump(cont=##17)
-  ##16 Miscatch(<Nil>)
+  ##16 FailCatch(<Nil>)
   ##17 NoOperation()
 <Error:SyntaxError:test-try.gura:15>
 <Error:SyntaxError:test-try.gura:23>

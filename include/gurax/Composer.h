@@ -320,8 +320,8 @@ public:
 	void Add_Continue(const PUnit* pPUnitOfLoop, const Expr* pExprSrc) {
 		SetFactory(new PUnitFactory_Continue(pPUnitOfLoop, Expr::Reference(pExprSrc)));
 	}
-	void Add_Miscatch(Value* pValue, const Expr* pExprSrc) {
-		SetFactory(new PUnitFactory_Miscatch(pValue, Expr::Reference(pExprSrc)));
+	void Add_FailCatch(Value* pValue, const Expr* pExprSrc) {
+		SetFactory(new PUnitFactory_FailCatch(pValue, Expr::Reference(pExprSrc)));
 	}
 	void Add_Return(const Expr* pExprSrc) {
 		SetFactory(new PUnitFactory_Return(Expr::Reference(pExprSrc)));

@@ -3080,10 +3080,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Miscatch
+// PUnit_FailCatch
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Miscatch : public PUnit {
+class GURAX_DLLDECLARE PUnit_FailCatch : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -3092,7 +3092,7 @@ private:
 	Expr* _pExprSrc;
 public:
 	// Constructor
-	PUnit_Miscatch(Value* pValue, Expr* pExpr) : _pValue(pValue), _pExprSrc(pExpr) {}
+	PUnit_FailCatch(Value* pValue, Expr* pExpr) : _pValue(pValue), _pExprSrc(pExpr) {}
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
@@ -3107,16 +3107,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_Miscatch : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_FailCatch : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Miscatch");
+	Gurax_MemoryPoolAllocator("PUnitFactory_FailCatch");
 private:
 	RefPtr<Value> _pValue;
 public:
-	PUnitFactory_Miscatch(Value* pValue, Expr* pExprSrc) :
+	PUnitFactory_FailCatch(Value* pValue, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pValue(pValue) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_Miscatch<false>);
+		return sizeof(PUnit_FailCatch<false>);
 
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;

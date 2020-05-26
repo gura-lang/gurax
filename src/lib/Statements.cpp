@@ -353,7 +353,7 @@ Gurax_ImplementStatement(try2)
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatchAny(pExprCatchAny);					// [Error] or []
+		composer.Add_NilJumpIfNoCatchAny(pExprCatchAny);				// [Error] or [nil]
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(pExprCatchAny);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), pExprCatchAny);
@@ -364,11 +364,9 @@ Gurax_ImplementStatement(try2)
 			composer.FlushDiscard();
 			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);	// [Any]
 		}
-		//punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
-		//composer.Add_Jump(&exprCaller);									// [Any]
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
-	 	composer.Add_Miscatch(Value::nil(), &exprCaller);				// [nil]
+		composer.Add_FailCatch(Value::nil(), &exprCaller);				// [nil]
 	}
 	pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
 	for (PUnit* pPUnitOfBranch : punitsOfBranch_Catched) {
@@ -421,7 +419,7 @@ Gurax_ImplementStatement(catch_)
 		if (exprCaller.HasExprTrailer()) {
 			exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		} else {
-			composer.Add_Miscatch(Value::nil(), &exprCaller);				// [nil]
+			composer.Add_FailCatch(Value::nil(), &exprCaller);				// [nil]
 		}
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else if (exprCaller.HasExprTrailer()) {
