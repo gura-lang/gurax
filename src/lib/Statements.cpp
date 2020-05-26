@@ -340,15 +340,6 @@ Gurax_ImplementStatement(try2)
 		composer.Add_Jump(&exprCaller);									// [Any]
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
-#if 0	
-	if (pExprElse) {
-		pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
-		pExprElse->ComposeOrNil(composer);								// [Any]
-	} else {
-		pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
-		composer.Add_NoOperation(&exprCaller);							// [Any]
-	}
-#endif
 	if (pExprCatchAny) {
 		const DeclArgOwner& declArgsOfBlock =
 				pExprCatchAny->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();

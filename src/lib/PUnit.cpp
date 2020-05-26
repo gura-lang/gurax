@@ -3298,6 +3298,7 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 {
+#if 1
 	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
@@ -3309,6 +3310,33 @@ void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 	} else {
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
+#else
+	processor.SetExprCur(_pExprSrc);
+	const Error* pError = Error::GetLastError();
+	if (!pError) {
+		for (;;) {
+			RefPtr<Value> pValue(processor.PopValue());
+			if (!pValue->IsValid()) break;
+		}
+		processor.SetPUnitNext(GetPUnitBranchDest());
+		return;
+	}
+	for (;;) {
+		RefPtr<Value> pValue(processor.PopValue());
+		if (!pValue->IsValid()) break;
+		const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
+		if (pError->GetErrorType().IsIdentical(errorType)) {
+			for (;;) {
+				RefPtr<Value> pValue(processor.PopValue());
+				if (!pValue->IsValid()) break;
+			}
+			if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
+			Error::Clear();
+			processor.SetPUnitNext(_GetPUnitCont());
+			return;
+		}
+	}
+#endif
 }
 
 template<bool discardValueFlag>
