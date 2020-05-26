@@ -1,0 +1,25 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// diff.gura
+//==============================================================================
+import(conio)
+import(diff):binary {*}
+
+Diff.Print() = {
+	this.EachHunk()::Print()
+}
+
+Hunk.Print() = {
+	Printf('@@ %s @@\n', this.range)
+	this.EachEdit()::Print()
+}
+
+Edit.Print() = {
+	if (this.type == `common) {
+		Println(' ', this.source)
+	} else {
+		clr = cond(this.type == `add, `brightGreen, `brightRed)
+		conio.SetColor(`white, clr) { Print(this.mark) }
+		conio.SetColor(clr) { Println(this.source) }
+	}
+}

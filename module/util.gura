@@ -2,26 +2,26 @@
 //==============================================================================
 // util.gura
 //==============================================================================
-Expr.PrintPUnit():void = {
+Expr.PrintPUnit(stream:Stream = sys.cout):void = {
 	seqIdOffset = nil
 	this.EachPUnit {|punit|
 		seqIdOffset = seqIdOffset || punit.seqId
-		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
+		stream.Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
 	}
 }
 
-Expr.PrintPUnitWithLabel():void = {
+Expr.PrintPUnitWithLabel(stream:Stream = sys.cout):void = {
 	Printf('%s\n', this)
-	this.PrintPUnit()
+	this.PrintPUnit(stream)
 }
 
-VType.PrintPropSlots():void:static  = {
+VType.PrintPropSlots(stream:Stream = sys.cout):void:static  = {
 	propSlots = this.__EachPropSlot__():list
 	maxLenSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
 	maxLenVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
-	Printf('%s\n', this.__fullName__)
+	stream.Printf('%s\n', this.__fullName__)
 	propSlots.Each {|propSlot|
-		Printf('  %s%-*s %-*s %s%s\n',
+		stream.Printf('  %s%-*s %-*s %s%s\n',
 			cond(propSlot.isOfClass, '.', '#'),
 			maxLenSymbolName, propSlot.symbol.symbolName,
 			maxLenVTypeFullName, propSlot.vtype.__fullName__,

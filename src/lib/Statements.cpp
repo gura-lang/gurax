@@ -245,8 +245,18 @@ Gurax_ImplementStatement(try_)
 	}
 }
 
-#if 0
-Gurax_ImplementStatement(try_)
+// try2 {`block}
+Gurax_DeclareStatement(try2)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies a range of code in which exceptions could be caught\n"
+		"by following `catch` statement.\n");
+}
+
+Gurax_ImplementStatement(try2)
 {
 	using ExprsCatch = std::vector<Expr_Caller*>;
 	using PUnitsOfBranch = std::vector<PUnit*>;
@@ -263,6 +273,8 @@ Gurax_ImplementStatement(try_)
 				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
 					"catch-any statement can appear once in try-catch-else-finally sequence");
 				return;
+			} else {
+				pExprCatchAny = pExpr;
 			}
 		} else if (pExpr->IsStatement(Gurax_Symbol(else_))) {
 			if (pExprElse) {
@@ -352,8 +364,8 @@ Gurax_ImplementStatement(try_)
 			composer.FlushDiscard();
 			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);	// [Any]
 		}
-		punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
-		composer.Add_Jump(&exprCaller);									// [Any]
+		//punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
+		//composer.Add_Jump(&exprCaller);									// [Any]
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 	 	composer.Add_Miscatch(Value::nil(), &exprCaller);				// [nil]
@@ -364,7 +376,6 @@ Gurax_ImplementStatement(try_)
 	}
 	composer.Add_NoOperation(&exprCaller);								// [Any]
 }
-#endif
 
 // catch(errorType?:ErrorType) {`block}
 Gurax_DeclareStatementAlias(catch_, "catch")
@@ -1113,6 +1124,7 @@ void Statements::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(else_));
 	frame.Assign(Gurax_CreateStatement(end));
 	frame.Assign(Gurax_CreateStatement(try_));
+	frame.Assign(Gurax_CreateStatement(try2));
 	frame.Assign(Gurax_CreateStatement(catch_));
 	frame.Assign(Gurax_CreateStatement(finally));
 	frame.Assign(Gurax_CreateStatement(for_));

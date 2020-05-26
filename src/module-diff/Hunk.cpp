@@ -23,20 +23,6 @@ String Hunk::MakeRangeString() const
 	return str;
 }
 
-void Hunk::Print(Stream& stream) const
-{
-	stream.Printf("@@ %s @@\n", MakeRangeString().c_str());
-	const Diff::SesElemVec& sesElems = _pDiff->GetSesElems();
-	for (size_t iSesElem = _iSesElemBegin; iSesElem != _iSesElemEnd; iSesElem++) {
-		const Diff::SesElem& sesElem = sesElems[iSesElem];
-		stream.Printf("%s%s\n",
-			(sesElem.second.type == dtl::SES_ADD)? SES_MARK_ADD :
-			(sesElem.second.type == dtl::SES_DELETE)? SES_MARK_DELETE :
-			(sesElem.second.type == dtl::SES_COMMON)? SES_MARK_COMMON : " ",
-			sesElem.first.c_str());
-	}
-}
-
 String Hunk::ToString(const StringStyle& ss) const
 {
 	return "diff.Hunk";

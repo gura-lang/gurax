@@ -47,28 +47,6 @@ Gurax_ImplementMethod(Hunk, EachEdit)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// diff.Hunk#Print(stream?:Stream:w):void
-Gurax_DeclareMethod(Hunk, Print)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints the unified hunk.\n");
-}
-
-Gurax_ImplementMethod(Hunk, Print)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	// Function body
-	valueThis.GetHunk().Print(stream);
-	return Value::nil();
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -160,7 +138,6 @@ void VType_Hunk::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Hunk, EachEdit));
-	Assign(Gurax_CreateMethod(Hunk, Print));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Hunk, lineNoOrg));
 	Assign(Gurax_CreateProperty(Hunk, lineNoNew));

@@ -56,7 +56,6 @@ public:
 	size_t GetNLinesOrg() const { return _nLinesOrg; }
 	size_t GetNLinesNew() const { return _nLinesNew; }
 	String MakeRangeString() const;
-	void Print(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Hunk& other) const { return this == &other; }

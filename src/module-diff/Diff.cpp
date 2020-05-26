@@ -17,16 +17,6 @@ bool Diff::Compose(Value& value1, Value& value2)
 	return true;
 }
 
-void Diff::PrintHunks(Stream& stream, size_t nLinesCommon) const
-{
-	Hunk::Picker picker(Reference(), nLinesCommon);
-	for (;;) {
-		RefPtr<Hunk> pHunk(picker.NextHunk());
-		if (!pHunk) break;
-		pHunk->Print(stream);
-	}
-}
-
 bool Diff::FeedValue(Sequence& seq, Value& value)
 {
 	bool rtn = true;

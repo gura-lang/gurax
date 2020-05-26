@@ -44,3 +44,6 @@ target_link_libraries(diff.gurd PRIVATE guraxcore)
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS diff.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS
+    script/diff.gura
+    DESTINATION module/site)

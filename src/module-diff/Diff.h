@@ -55,7 +55,6 @@ public:
 	SesElemVec& GetSesElems() { return GetSes().sequence; }
 	bool Compose(Value& value1, Value& value2);
 public:
-	void PrintHunks(Stream& stream, size_t nLinesCommon) const;
 	static bool FeedValue(Sequence& seq, Value& value);
 	static void FeedString(Sequence& seq, const char* src);
 	static bool FeedStream(Sequence& seq, Stream& src);
