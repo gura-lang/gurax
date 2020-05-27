@@ -103,9 +103,9 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_BeginTryBlock_);
 	using PUnit_EndTryBlock_ = PUnit_EndTryBlock<false>;
 	PrintSizeOf(PUnit_EndTryBlock_);
-	using PUnit_JumpIfNoCatch_ = PUnit_JumpIfNoCatch<false>;
+	using PUnit_JumpIfNoCatch_ = PUnit_JumpIfNoCatch<false, PUnit::BranchMode::Empty>;
 	PrintSizeOf(PUnit_JumpIfNoCatch_);
-	using PUnit_JumpIfNoCatchAny_ = PUnit_JumpIfNoCatchAny<false>;
+	using PUnit_JumpIfNoCatchAny_ = PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Empty>;
 	PrintSizeOf(PUnit_JumpIfNoCatchAny_);
 	using PUnit_NilJumpIfNoCatch_ = PUnit_NilJumpIfNoCatch<false>;
 	PrintSizeOf(PUnit_NilJumpIfNoCatch_);

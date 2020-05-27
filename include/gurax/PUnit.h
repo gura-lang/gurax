@@ -2625,7 +2625,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatch
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
 class GURAX_DLLDECLARE PUnit_JumpIfNoCatch : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -2652,12 +2652,12 @@ class GURAX_DLLDECLARE PUnitFactory_JumpIfNoCatch : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatch");
 private:
+	PUnit::BranchMode _branchMode;
 public:
-	PUnitFactory_JumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
+	PUnitFactory_JumpIfNoCatch(const PUnit* pPUnitBranchDest, PUnit::BranchMode branchMode, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _branchMode(branchMode) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_JumpIfNoCatch<false>);
-
+		return sizeof(PUnit_JumpIfNoCatch<false, PUnit::BranchMode::Empty>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -2665,7 +2665,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatchAny
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
 class GURAX_DLLDECLARE PUnit_JumpIfNoCatchAny : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -2692,12 +2692,12 @@ class GURAX_DLLDECLARE PUnitFactory_JumpIfNoCatchAny : public PUnitFactory_Branc
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatchAny");
 private:
+	PUnit::BranchMode _branchMode;
 public:
-	PUnitFactory_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
+	PUnitFactory_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest, PUnit::BranchMode branchMode, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _branchMode(branchMode) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_JumpIfNoCatchAny<false>);
-
+		return sizeof(PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Empty>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

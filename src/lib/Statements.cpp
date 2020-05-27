@@ -325,7 +325,7 @@ Gurax_ImplementStatement(try2)
 		pExprCatch->GetExprCdrFirst()->ComposeOrNil(composer);			// [Any]
 		composer.Add_Cast(VTYPE_ErrorType, pExprCatch);					// [ErrorType]
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatch(pExprCatch);							// [Error] or []
+		composer.Add_JumpIfNoCatch(PUnit::BranchMode::Empty, pExprCatch); // [Error] or []
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(pExprCatch);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), pExprCatch);
@@ -398,7 +398,7 @@ Gurax_ImplementStatement(catch_)
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Any]
 		composer.Add_Cast(VTYPE_ErrorType, &exprCaller);					// [ErrorType]
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatch(&exprCaller);							// [Error] or []
+		composer.Add_JumpIfNoCatch(PUnit::BranchMode::Empty, &exprCaller);	// [Error] or []
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(&exprCaller);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), &exprCaller);
@@ -420,7 +420,7 @@ Gurax_ImplementStatement(catch_)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatchAny(&exprCaller);							// [Error] or []
+		composer.Add_JumpIfNoCatchAny(PUnit::BranchMode::Empty, &exprCaller); // [Error] or []
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(&exprCaller);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), &exprCaller);

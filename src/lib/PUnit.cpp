@@ -2788,9 +2788,10 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 // Stack View: [ErrorType] -> [Error] (continue)
 //                         -> []      (discard)
 //                         -> []      (branch)
+//                         -> [Nil]   (branch, nil)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
+void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
 #if 1
 	processor.SetExprCur(_pExprSrc);
@@ -2833,11 +2834,12 @@ void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 #endif
 }
 
-template<bool discardValueFlag>
-String PUnit_JumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
+String PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNoCatch(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("JumpIfNoCatch(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2845,9 +2847,29 @@ String PUnit_JumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss, in
 PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNoCatch<true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		switch (_branchMode) {
+		case PUnit::BranchMode::Empty:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<true, PUnit::BranchMode::Empty>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		case PUnit::BranchMode::Nil:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<true, PUnit::BranchMode::Nil>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		default: // PUnit::BranchMode::Keep:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<true, PUnit::BranchMode::Keep>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		}
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNoCatch<false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		switch (_branchMode) {
+		case PUnit::BranchMode::Empty:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<false, PUnit::BranchMode::Empty>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		case PUnit::BranchMode::Nil:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<false, PUnit::BranchMode::Nil>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		default: // PUnit::BranchMode::Keep:
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<false, PUnit::BranchMode::Keep>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		}
 	}
 	return _pPUnitCreated;
 }
@@ -2857,9 +2879,10 @@ PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 // Stack View: [] -> [Error] (continue)
 //                -> []      (discard)
 //                -> []      (branch)
+//                -> [Nil]   (branch, nil)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
+void PUnit_JumpIfNoCatchAny<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	const Error* pError = Error::GetLastError();
@@ -2872,11 +2895,12 @@ void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 	}
 }
 
-template<bool discardValueFlag>
-String PUnit_JumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
+String PUnit_JumpIfNoCatchAny<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNoCatchAny(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("JumpIfNoCatchAny(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2884,9 +2908,29 @@ String PUnit_JumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& ss,
 PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		switch (_branchMode) {
+		case PUnit::BranchMode::Empty:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true, PUnit::BranchMode::Empty>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		case PUnit::BranchMode::Nil:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true, PUnit::BranchMode::Nil>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		default: // PUnit::BranchMode::Keep:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true, PUnit::BranchMode::Keep>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		}
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		switch (_branchMode) {
+		case PUnit::BranchMode::Empty:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Empty>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		case PUnit::BranchMode::Nil:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Nil>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		default: // PUnit::BranchMode::Keep:
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Keep>(_pPUnitBranchDest, _pExprSrc.Reference());
+			break;
+		}
 	}
 	return _pPUnitCreated;
 }
