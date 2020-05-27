@@ -2655,29 +2655,30 @@ void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processo
 #else
 	processor.SetExprCur(_pExprSrc);
 	const Error* pError = Error::GetLastError();
-	if (!pError) {
+	if (pError) {
+		for (;;) {
+			RefPtr<Value> pValue(processor.PopValue());
+			if (!pValue->IsValid()) break;
+			const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
+			if (pError->GetErrorType().IsIdentical(errorType)) {
+				for (;;) {
+					RefPtr<Value> pValue(processor.PopValue());
+					if (!pValue->IsValid()) break;
+				}
+				if constexpr (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
+				Error::Clear();
+				processor.SetPUnitNext(_GetPUnitCont());
+				return;
+			}
+		}
+	} else {
 		for (;;) {
 			RefPtr<Value> pValue(processor.PopValue());
 			if (!pValue->IsValid()) break;
 		}
-		processor.SetPUnitNext(GetPUnitBranchDest());
-		return;
 	}
-	for (;;) {
-		RefPtr<Value> pValue(processor.PopValue());
-		if (!pValue->IsValid()) break;
-		const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
-		if (pError->GetErrorType().IsIdentical(errorType)) {
-			for (;;) {
-				RefPtr<Value> pValue(processor.PopValue());
-				if (!pValue->IsValid()) break;
-			}
-			if constexpr (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
-			Error::Clear();
-			processor.SetPUnitNext(_GetPUnitCont());
-			return;
-		}
-	}
+	if constexpr (branchMode == BranchMode::Nil) processor.PushValue(Value::nil());
+	processor.SetPUnitNext(GetPUnitBranchDest());
 #endif
 }
 
