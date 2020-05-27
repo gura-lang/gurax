@@ -2431,7 +2431,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 void PUnit_JumpIf<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
-	if (branchMode == BranchMode::Keep) {
+	if constexpr (branchMode == BranchMode::Keep) {
 		if (processor.PeekValue(0).GetBool()) {
 			processor.SetPUnitNext(GetPUnitBranchDest());
 		} else {
@@ -2503,7 +2503,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 void PUnit_JumpIfNot<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
-	if (branchMode == BranchMode::Keep) {
+	if constexpr (branchMode == BranchMode::Keep) {
 		if (processor.PeekValue(0).GetBool()) {
 			processor.DiscardValue();
 			if constexpr (discardValueFlag) processor.DiscardValue();
