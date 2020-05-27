@@ -16,6 +16,7 @@ class Processor;
 class GURAX_DLLDECLARE PUnit {
 public:
 	using SeqId = UInt32;
+	enum class BranchMode { Empty, Nil, Keep };
 public:
 	// Constructor
 	PUnit();
@@ -2300,7 +2301,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
-template<bool discardValueFlag, bool nilAtBranchFlag>
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -2327,12 +2328,12 @@ class GURAX_DLLDECLARE PUnitFactory_JumpIf : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIf");
 private:
-	bool _nilAtBranchFlag;
+	PUnit::BranchMode _branchMode;
 public:
-	PUnitFactory_JumpIf(const PUnit* pPUnitBranchDest, bool nilAtBranchFlag, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _nilAtBranchFlag(nilAtBranchFlag) {}
+	PUnitFactory_JumpIf(const PUnit* pPUnitBranchDest, PUnit::BranchMode branchMode, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _branchMode(branchMode) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_JumpIf<false, false>);
+		return sizeof(PUnit_JumpIf<false, PUnit::BranchMode::Empty>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -2340,7 +2341,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNot
 //------------------------------------------------------------------------------
-template<bool discardValueFlag, bool nilAtBranchFlag>
+template<bool discardValueFlag, PUnit::BranchMode branchMode>
 class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -2367,12 +2368,12 @@ class GURAX_DLLDECLARE PUnitFactory_JumpIfNot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNot");
 private:
-	bool _nilAtBranchFlag;
+	PUnit::BranchMode _branchMode;
 public:
-	PUnitFactory_JumpIfNot(const PUnit* pPUnitBranchDest, bool nilAtBranchFlag, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _nilAtBranchFlag(nilAtBranchFlag) {}
+	PUnitFactory_JumpIfNot(const PUnit* pPUnitBranchDest, PUnit::BranchMode branchMode, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _branchMode(branchMode) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_JumpIfNot<false, false>);
+		return sizeof(PUnit_JumpIfNot<false, PUnit::BranchMode::Empty>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
