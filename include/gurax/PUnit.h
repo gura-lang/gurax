@@ -2300,7 +2300,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, bool nilAtBranchFlag>
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -2327,12 +2327,12 @@ class GURAX_DLLDECLARE PUnitFactory_JumpIf : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIf");
 private:
+	bool _nilAtBranchFlag;
 public:
-	PUnitFactory_JumpIf(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
+	PUnitFactory_JumpIf(const PUnit* pPUnitBranchDest, bool nilAtBranchFlag, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _nilAtBranchFlag(nilAtBranchFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_JumpIf<false>);
-
+		return sizeof(PUnit_JumpIf<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

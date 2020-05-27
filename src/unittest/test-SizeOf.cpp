@@ -87,7 +87,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Call_);
 	using PUnit_Jump_ = PUnit_Jump<false>;
 	PrintSizeOf(PUnit_Jump_);
-	using PUnit_JumpIf_ = PUnit_JumpIf<false>;
+	using PUnit_JumpIf_ = PUnit_JumpIf<false, false>;
 	PrintSizeOf(PUnit_JumpIf_);
 	using PUnit_JumpIfNot_ = PUnit_JumpIfNot<false>;
 	PrintSizeOf(PUnit_JumpIfNot_);

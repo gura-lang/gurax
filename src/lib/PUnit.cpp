@@ -2425,8 +2425,8 @@ PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 //                         -> []     (discard)
 //                         -> [Prev] (branch)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_JumpIf<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool nilAtBranchFlag>
+void PUnit_JumpIf<discardValueFlag, nilAtBranchFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
@@ -2438,11 +2438,12 @@ void PUnit_JumpIf<discardValueFlag>::Exec(Processor& processor) const
 	}
 }
 
-template<bool discardValueFlag>
-String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool nilAtBranchFlag>
+String PUnit_JumpIf<discardValueFlag, nilAtBranchFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIf(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("JumpIf(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+										nilAtBranchFlag? ",nilAtBranch" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2450,9 +2451,17 @@ String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIf<true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		if (_nilAtBranchFlag) {
+			_pPUnitCreated = new PUnit_JumpIf<true, true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_JumpIf<true, false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		}
 	} else {
-		_pPUnitCreated = new PUnit_JumpIf<false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		if (_nilAtBranchFlag) {
+			_pPUnitCreated = new PUnit_JumpIf<false, true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_JumpIf<false, false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		}
 	}
 	return _pPUnitCreated;
 }

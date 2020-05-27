@@ -250,9 +250,9 @@ public:
 	void Add_Jump(const PUnit* pPUnitCont, const Expr* pExprSrc) {
 		SetFactory(new PUnitFactory_Jump(pPUnitCont, Expr::Reference(pExprSrc)));
 	}
-	void Add_JumpIf(const Expr* pExprSrc) {
+	void Add_JumpIf(bool nilAtBranchFlag, const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_JumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+		SetFactory(new PUnitFactory_JumpIf(pPUnitBranchDest, nilAtBranchFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_JumpIfNot(const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
