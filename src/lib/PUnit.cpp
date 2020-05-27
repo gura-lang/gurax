@@ -2631,15 +2631,15 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatch
-// Stack View: [ErrorType] -> [Error] (continue)
-//                         -> []      (discard)
-//                         -> []      (branch)
-//                         -> [Nil]   (branch, nil)
+// Stack View: [nil .. ErrorType] -> [Error] (continue)
+//                                -> []      (discard)
+//                                -> []      (branch)
+//                                -> [Nil]   (branch, nil)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, PUnit::BranchMode branchMode>
 void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
-#if 1
+#if 0
 	processor.SetExprCur(_pExprSrc);
 	const Error* pError = Error::GetLastError();
 	RefPtr<Value> pValue(processor.PopValue());

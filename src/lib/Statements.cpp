@@ -187,6 +187,7 @@ Gurax_ImplementStatement(end)
 {
 }
 
+#if 0
 // try {`block}
 Gurax_DeclareStatementAlias(try_, "try")
 {
@@ -244,9 +245,10 @@ Gurax_ImplementStatement(try_)
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 	}
 }
+#endif
 
-// try2 {`block}
-Gurax_DeclareStatement(try2)
+// try {`block}
+Gurax_DeclareStatementAlias(try_, "try")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
@@ -256,7 +258,7 @@ Gurax_DeclareStatement(try2)
 		"by following `catch` statement.\n");
 }
 
-Gurax_ImplementStatement(try2)
+Gurax_ImplementStatement(try_)
 {
 	using ExprsCatch = std::vector<Expr_Caller*>;
 	using PUnitsOfBranch = std::vector<PUnit*>;
@@ -313,7 +315,7 @@ Gurax_ImplementStatement(try2)
 		composer.Add_Jump(&exprCaller);									// [Any]
 	}
 	pPUnitOfBranch_Catch->SetPUnitBranchDest(composer.PeekPUnitCont());
-	PUnitsOfBranch punitsOfBranch_Catched;
+	PUnitsOfBranch punitsOfBranch_Caught;
 	for (Expr_Caller* pExprCatch : exprsCatch) {
 		const DeclArgOwner& declArgsOfBlock =
 				pExprCatch->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
@@ -322,11 +324,11 @@ Gurax_ImplementStatement(try2)
 			return;
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
-
+		composer.Add_Value(Value::nil(), &exprCaller);					// [nil]
 		Expr* pExprCdr = pExprCatch->GetExprCdrFirst();
 		for ( ; pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-			pExprCdr->ComposeOrNil(composer);							// [Any]
-			composer.Add_Cast(VTYPE_ErrorType, pExprCatch);				// [ErrorType]
+			pExprCdr->ComposeOrNil(composer);							// [nil .. Any]
+			composer.Add_Cast(VTYPE_ErrorType, pExprCatch);				// [nil .. ErrorType]
 		}
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatch(PUnit::BranchMode::Empty, pExprCatch); // [Error] or []
@@ -340,7 +342,7 @@ Gurax_ImplementStatement(try2)
 			composer.FlushDiscard();
 			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
 		}
-		punitsOfBranch_Catched.push_back(composer.PeekPUnitCont());
+		punitsOfBranch_Caught.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(&exprCaller);									// [Any]
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
@@ -369,7 +371,7 @@ Gurax_ImplementStatement(try2)
 		composer.Add_FailCatch(Value::nil(), &exprCaller);				// [nil]
 	}
 	pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
-	for (PUnit* pPUnitOfBranch : punitsOfBranch_Catched) {
+	for (PUnit* pPUnitOfBranch : punitsOfBranch_Caught) {
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
 	composer.Add_NoOperation(&exprCaller);								// [Any]
@@ -400,10 +402,10 @@ Gurax_ImplementStatement(catch_)
 	const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
-		
+		composer.Add_Value(Value::nil(), &exprCaller);						// [nil]
 		for ( ; pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(VTYPE_ErrorType, &exprCaller);				// [ErrorType]
+			pExprCdr->ComposeOrNil(composer);								// [nil .. Any]
+			composer.Add_Cast(VTYPE_ErrorType, &exprCaller);				// [nil .. ErrorType]
 		}
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatch(PUnit::BranchMode::Empty, &exprCaller);	// [Error] or []
@@ -1126,7 +1128,6 @@ void Statements::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(else_));
 	frame.Assign(Gurax_CreateStatement(end));
 	frame.Assign(Gurax_CreateStatement(try_));
-	frame.Assign(Gurax_CreateStatement(try2));
 	frame.Assign(Gurax_CreateStatement(catch_));
 	frame.Assign(Gurax_CreateStatement(finally));
 	frame.Assign(Gurax_CreateStatement(for_));
