@@ -42,7 +42,7 @@ Gurax_ImplementStatement(cond)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {			// cond (cond, exprTrue)
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNot(&exprCaller);							// [] or [nil]
+		composer.Add_JumpIfNot(PUnit::BranchMode::Nil, &exprCaller);	// [] or [nil]
 		pExprTrue->ComposeOrNil(composer);								// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
@@ -97,7 +97,7 @@ Gurax_ImplementStatement(if_)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNot(&exprCaller);							// [] or [nil]
+		composer.Add_JumpIfNot(PUnit::BranchMode::Nil, &exprCaller);	// [] or [nil]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
@@ -135,7 +135,7 @@ Gurax_ImplementStatement(elsif)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNot(&exprCaller);							// [] or [nil]
+		composer.Add_JumpIfNot(PUnit::BranchMode::Nil, &exprCaller);	// [] or [nil]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
@@ -349,7 +349,7 @@ Gurax_ImplementStatement(try2)
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNoCatchAny(pExprCatchAny);				// [Error] or [nil]
+		composer.Add_JumpIfNoCatchAny(PUnit::BranchMode::Nil, pExprCatchAny); // [Error] or [nil]
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(pExprCatchAny);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), pExprCatchAny);
@@ -438,7 +438,7 @@ Gurax_ImplementStatement(catch_)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNoCatchAny(&exprCaller);						// [Error] or [nil]
+		composer.Add_JumpIfNoCatchAny(PUnit::BranchMode::Nil, &exprCaller);	// [Error] or [nil]
 		if (pDeclArg) {
 			composer.Add_PushFrame<Frame_Block>(&exprCaller);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), &exprCaller);

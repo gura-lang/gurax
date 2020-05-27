@@ -229,7 +229,7 @@ void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);						// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_KeepJumpIfNot(&expr);
+	composer.Add_JumpIfNot(PUnit::BranchMode::Keep, &expr);
 	expr.GetExprRight().ComposeOrNil(composer);					// [Bool]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	composer.Add_NoOperation(&expr);
@@ -242,7 +242,7 @@ void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);						// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_KeepJumpIf(&expr);
+	composer.Add_JumpIf(PUnit::BranchMode::Keep, &expr);
 	expr.GetExprRight().ComposeOrNil(composer);					// [Bool]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	composer.Add_NoOperation(&expr);
