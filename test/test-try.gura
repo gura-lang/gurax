@@ -1,4 +1,5 @@
 #!/usr/bin/env gurax
+import(diff)
 import(util.tester) {*}
 
 TestCase('PUnit') {
@@ -6,66 +7,101 @@ TestCase('PUnit') {
 		`try { f() }
 		`try { f() } catch { g() }
 		`try { f() } catch {|e| g() }
-		`try { f() } catch(Error.SyntaxError) {|e| g() }
+		`try { f() } catch (Error.SyntaxError) {|e| g() }
+		`try { f() } catch (Error.SyntaxError) { g() } catch (Error.KeyError) { h() }
+		`try { f() } catch (Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } catch { f3() } 
+		`try { f() } catch { f3() } catch(Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } 
+		`try { f() } catch (Error.SyntaxError, Error.KeyError) { f1() } catch { f3() } 
+		`try { f() } catch (Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } catch { f3() } else { f4() }
 	]
 	exprs::PrintPUnitWithLabel()
 }
 
+TestCase('Catch-any may be placed anywhere') {
+	expr1 = `try {
+		nil
+	} catch (a) {|e|
+		nil
+	} catch (b) {|e|
+		nil
+	} catch (c) {|e|
+		nil
+	} catch {
+		nil
+	}
+	expr2 = `try {
+		nil
+	} catch {
+		nil
+	} catch (a) {|e|
+		nil
+	} catch (b) {|e|
+		nil
+	} catch (c) {|e|
+		nil
+	}
+	buff1 = B''
+	expr1.PrintPUnit(buff1)
+	buff2 = B''
+	expr2.PrintPUnit(buff2)
+	diff.Diff(buff1, buff2).Print()
+}
+
 try {
-	Error.Raise(Error.SyntaxError, 'message')
+	Error.Raise(Error.SyntaxError, 'MESSAGE')
 	Println('*skipped*')
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	try {
-		Error.Raise(Error.SyntaxError, 'message')
+		Error.Raise(Error.SyntaxError, 'MESSAGE')
 	} catch(Error.ValueError) {|e|
-		Println(e)
+		Println(e.errorType.name, ' ', e.text)
 	}
 	Println('*skipped*')
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	try {
 		try {
-			Error.Raise(Error.SyntaxError, 'message')
+			Error.Raise(Error.SyntaxError, 'MESSAGE')
 		} catch(Error.ValueError) {|e|
-			Println(e)
+			Println(e.errorType.name, ' ', e.text)
 		}
 		Println('*skipped*')
 	} catch(Error.TypeError) {|e|
-		Println(e)
+		Println(e.errorType.name, ' ', e.text)
 	}
 	Println('*skipped*')
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	scope {
-		Error.Raise(Error.SyntaxError, 'message')
+		Error.Raise(Error.SyntaxError, 'MESSAGE')
 	}
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	scope {
 		scope {
 			scope {
-				Error.Raise(Error.SyntaxError, 'message')
+				Error.Raise(Error.SyntaxError, 'MESSAGE')
 			}
 		}
 	}
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
-f1() = Error.Raise(Error.SyntaxError, 'message')
+f1() = Error.Raise(Error.SyntaxError, 'MESSAGE')
 f2() = f1()
 f3() = f2()
 f4() = f3()
@@ -73,23 +109,23 @@ f4() = f3()
 try {
 	f1()
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	f2()
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	f3()
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }
 
 try {
 	f4()
 } catch {|e|
-	Println(e)
+	Println(e.errorType.name, ' ', e.text)
 }

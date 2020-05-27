@@ -25,8 +25,22 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
-// Implementation of method
+// Implementation of property
 //------------------------------------------------------------------------------
+// module.ErrorType#name
+Gurax_DeclareProperty_R(ErrorType, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ErrorType, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetErrorType().GetName());
+}
 
 //------------------------------------------------------------------------------
 // VType_ErrorType
@@ -39,6 +53,8 @@ void VType_ErrorType::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of property
+	Assign(Gurax_CreateProperty(ErrorType, name));
 }
 
 //------------------------------------------------------------------------------

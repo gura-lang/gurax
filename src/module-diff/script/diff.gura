@@ -5,6 +5,25 @@
 import(conio)
 import(diff):binary {*}
 
+Diff.Present() = {
+	this.EachHunk()::Present()
+}
+
+Hunk.Present() = {
+	Printf('@@ %s @@\n', this.range)
+	this.EachEdit()::Present()
+}
+
+Edit.Present() = {
+	if (this.type == `common) {
+		Println(' ', this.source)
+	} else {
+		clr = cond(this.type == `add, `brightGreen, `brightRed)
+		conio.SetColor(`white, clr) { Print(this.mark) }
+		conio.SetColor(clr) { Println(this.source) }
+	}
+}
+
 Diff.Print() = {
 	this.EachHunk()::Print()
 }
@@ -15,11 +34,5 @@ Hunk.Print() = {
 }
 
 Edit.Print() = {
-	if (this.type == `common) {
-		Println(' ', this.source)
-	} else {
-		clr = cond(this.type == `add, `brightGreen, `brightRed)
-		conio.SetColor(`white, clr) { Print(this.mark) }
-		conio.SetColor(clr) { Println(this.source) }
-	}
+	Println(this.mark, this.source)
 }
