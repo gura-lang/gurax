@@ -93,18 +93,10 @@ String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 
 PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 {
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Value<true>(_pValue.release(), _pExprSrc.Reference());
-		} else {
-			_pPUnitCreated = new PUnit_Value<false>(_pValue.release(), _pExprSrc.Reference());
-		}
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Value<true>(_pValue.release(), _pExprSrc.Reference());
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Value<true>(_pValue.release(), nullptr);
-		} else {
-			_pPUnitCreated = new PUnit_Value<false>(_pValue.release(), nullptr);
-		}
+		_pPUnitCreated = new PUnit_Value<false>(_pValue.release(), _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }
@@ -3300,9 +3292,9 @@ void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 {
 #if 1
 	processor.SetExprCur(_pExprSrc);
+	const Error* pError = Error::GetLastError();
 	RefPtr<Value> pValue(processor.PopValue());
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
-	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
 		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
@@ -3423,9 +3415,9 @@ template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
+	const Error* pError = Error::GetLastError();
 	RefPtr<Value> pValue(processor.PopValue());
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
-	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
 		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
