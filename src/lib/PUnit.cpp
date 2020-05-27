@@ -2421,9 +2421,10 @@ PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
-// Stack View: [Prev Bool] -> [Prev] (continue)
-//                         -> []     (discard)
-//                         -> [Prev] (branch)
+// Stack View: [Prev Bool] -> [Prev]     (continue)
+//                         -> []         (discard)
+//                         -> [Prev]     (branch)
+//                         -> [Prev Nil] (branch, nil)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, bool nilAtBranchFlag>
 void PUnit_JumpIf<discardValueFlag, nilAtBranchFlag>::Exec(Processor& processor) const
@@ -2431,6 +2432,7 @@ void PUnit_JumpIf<discardValueFlag, nilAtBranchFlag>::Exec(Processor& processor)
 	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
+		if (nilAtBranchFlag) processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	} else {
 		if (discardValueFlag) processor.DiscardValue();
@@ -2468,12 +2470,13 @@ PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNot
-// Stack View: [Prev Bool] -> [Prev]  (continue)
-//                         -> []      (discard)
-//                         -> [Prev]  (branch)
+// Stack View: [Prev Bool] -> [Prev]     (continue)
+//                         -> []         (discard)
+//                         -> [Prev]     (branch)
+//                         -> [Prev Nil] (branch, nil)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_JumpIfNot<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool nilAtBranchFlag>
+void PUnit_JumpIfNot<discardValueFlag, nilAtBranchFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
@@ -2481,15 +2484,17 @@ void PUnit_JumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
+		if (nilAtBranchFlag) processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
 }
 
-template<bool discardValueFlag>
-String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool nilAtBranchFlag>
+String PUnit_JumpIfNot<discardValueFlag, nilAtBranchFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNot(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("JumpIfNot(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+										nilAtBranchFlag? ",nilAtBranch" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2497,9 +2502,17 @@ String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int se
 PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNot<true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		if (_nilAtBranchFlag) {
+			_pPUnitCreated = new PUnit_JumpIfNot<true, true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_JumpIfNot<true, false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		}
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNot<false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		if (_nilAtBranchFlag) {
+			_pPUnitCreated = new PUnit_JumpIfNot<false, true>(_pPUnitBranchDest, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_JumpIfNot<false, false>(_pPUnitBranchDest, _pExprSrc.Reference());
+		}
 	}
 	return _pPUnitCreated;
 }

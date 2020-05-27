@@ -254,9 +254,9 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_JumpIf(pPUnitBranchDest, nilAtBranchFlag, Expr::Reference(pExprSrc)));
 	}
-	void Add_JumpIfNot(const Expr* pExprSrc) {
+	void Add_JumpIfNot(bool nilAtBranchFlag, const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_JumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+		SetFactory(new PUnitFactory_JumpIfNot(pPUnitBranchDest, nilAtBranchFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_NilJumpIf(const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
