@@ -2803,6 +2803,7 @@ void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processo
 		Error::Clear();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
+		if constexpr (branchMode == BranchMode::Nil) processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
 #else
@@ -2891,6 +2892,7 @@ void PUnit_JumpIfNoCatchAny<discardValueFlag, branchMode>::Exec(Processor& proce
 		Error::Clear();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
+		if constexpr (branchMode == BranchMode::Nil) processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
 }
