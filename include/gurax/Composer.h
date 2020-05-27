@@ -258,24 +258,6 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_JumpIfNot(pPUnitBranchDest, branchMode, Expr::Reference(pExprSrc)));
 	}
-#if 1
-	void Add_NilJumpIf(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_NilJumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
-	}
-	void Add_NilJumpIfNot(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_NilJumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
-	}
-#endif
-	void Add_KeepJumpIf(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_KeepJumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
-	}
-	void Add_KeepJumpIfNot(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_KeepJumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
-	}
 	void Add_BeginTryBlock(const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_BeginTryBlock(pPUnitBranchDest, Expr::Reference(pExprSrc)));
@@ -291,14 +273,6 @@ public:
 	void Add_JumpIfNoCatchAny(PUnit::BranchMode branchMode, const Expr* pExprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_JumpIfNoCatchAny(pPUnitBranchDest, branchMode, Expr::Reference(pExprSrc)));
-	}
-	void Add_NilJumpIfNoCatch(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_NilJumpIfNoCatch(pPUnitBranchDest, Expr::Reference(pExprSrc)));
-	}
-	void Add_NilJumpIfNoCatchAny(const Expr* pExprSrc) {
-		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_NilJumpIfNoCatchAny(pPUnitBranchDest, Expr::Reference(pExprSrc)));
 	}
 	void Add_BeginSequence(const Expr* pExprSrc) {
 		const PUnit* pPUnitSentinel = nullptr;

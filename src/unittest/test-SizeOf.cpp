@@ -91,14 +91,6 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_JumpIf_);
 	using PUnit_JumpIfNot_ = PUnit_JumpIfNot<false, PUnit::BranchMode::Empty>;
 	PrintSizeOf(PUnit_JumpIfNot_);
-	using PUnit_NilJumpIf_ = PUnit_NilJumpIf<false>;
-	PrintSizeOf(PUnit_NilJumpIf_);
-	using PUnit_NilJumpIfNot_ = PUnit_NilJumpIfNot<false>;
-	PrintSizeOf(PUnit_NilJumpIfNot_);
-	using PUnit_KeepJumpIf_ = PUnit_KeepJumpIf<false>;
-	PrintSizeOf(PUnit_KeepJumpIf_);
-	using PUnit_KeepJumpIfNot_ = PUnit_KeepJumpIfNot<false>;
-	PrintSizeOf(PUnit_KeepJumpIfNot_);
 	using PUnit_BeginTryBlock_ = PUnit_BeginTryBlock<false>;
 	PrintSizeOf(PUnit_BeginTryBlock_);
 	using PUnit_EndTryBlock_ = PUnit_EndTryBlock<false>;
@@ -107,10 +99,6 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_JumpIfNoCatch_);
 	using PUnit_JumpIfNoCatchAny_ = PUnit_JumpIfNoCatchAny<false, PUnit::BranchMode::Empty>;
 	PrintSizeOf(PUnit_JumpIfNoCatchAny_);
-	using PUnit_NilJumpIfNoCatch_ = PUnit_NilJumpIfNoCatch<false>;
-	PrintSizeOf(PUnit_NilJumpIfNoCatch_);
-	using PUnit_NilJumpIfNoCatchAny_ = PUnit_NilJumpIfNoCatchAny<false>;
-	PrintSizeOf(PUnit_NilJumpIfNoCatchAny_);
 	using PUnit_BeginSequence_ = PUnit_BeginSequence<false>;
 	PrintSizeOf(PUnit_BeginSequence_);
 	using PUnit_EndSequence_ = PUnit_EndSequence<false>;
