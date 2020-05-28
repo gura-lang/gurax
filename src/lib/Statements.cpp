@@ -96,7 +96,69 @@ Gurax_ImplementStatement(if_)
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);											// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		
 		exprCaller.GetExprTrailer()->ComposeOrNil(composer);					// [Any]
+		
+		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+	} else {
+		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		composer.Add_JumpIfNot(PUnit::BranchMode::Nil, exprCaller);				// [] or [nil]
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+	}
+	composer.Add_NoOperation(exprCaller);										// [Any]
+}
+
+// if2 (`cond) {`block}
+Gurax_DeclareStatementAlias(if2_, "if2")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies an \"if\" block within a sequence of `if-elsif-else`.\n"
+		"\n"
+		"If the result of `cond` is determined as `true`, the block would be executed,\n"
+		"and its evaluation result would become the returned value of the statement.\n"
+		"\n"
+		"Otherwise, if the statement is followed by a trailer such as `elsif` and `else`, that would be evaluated.\n"
+		"If no trailer exists, the satement returns `nil` value.\n");
+}
+
+Gurax_ImplementStatement(if2_)
+{
+	using ExprsElsif = std::vector<Expr_Caller*>;
+	ExprsElsif exprsElsif;
+	Expr_Caller* pExprElse = nullptr;
+	for (Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr;
+										pExpr = pExpr->GetExprTrailer()) {
+		if (pExpr->IsStatement(Gurax_Symbol(elsif))) {
+			exprsElsif.push_back(pExpr);
+		} else if (pExpr->IsStatement(Gurax_Symbol(else_))) {
+			if (pExprElse) {
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+					"else statement can appear once in try-catch-else-finally sequence");
+				return;
+			}
+			pExprElse = pExpr;
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr,
+				"invalid format of if-elsif-else sequence");
+			return;
+		}
+	}
+	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);						// [Bool]
+	if (exprCaller.HasExprTrailer()) {
+		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);			// []
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
+		composer.Add_Jump(exprCaller);											// [Any]
+		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		
+		exprCaller.GetExprTrailer()->ComposeOrNil(composer);					// [Any]
+		
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
@@ -998,6 +1060,7 @@ void Statements::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(cond));
 	frame.Assign(Gurax_CreateStatement(if_));
+	frame.Assign(Gurax_CreateStatement(if2_));
 	frame.Assign(Gurax_CreateStatement(elsif));
 	frame.Assign(Gurax_CreateStatement(else_));
 	frame.Assign(Gurax_CreateStatement(end));
