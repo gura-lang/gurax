@@ -137,8 +137,8 @@ void Expr::ComposeForClass(Composer& composer, bool publicFlag)
 
 void Expr::ComposeForLister(Composer& composer)
 {
-	ComposeOrNil(composer);											// [List Any]
-	composer.Add_ListElem(0, false, false, *this);					// [List]
+	ComposeOrNil(composer);														// [List Any]
+	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
 void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
@@ -161,11 +161,11 @@ void Expr::ComposeForAssignmentInClass(
 void Expr::ComposeForArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-	composer.Add_BeginArgSlot(*this);								// [Argument]
-	Compose(composer);												// [Argument Any]
+	composer.Add_BeginArgSlot(*this);											// [Argument]
+	Compose(composer);															// [Argument Any]
 	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlot(*this);									// [Argument]
+	composer.Add_EndArgSlot(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitFirst(pPUnitOfArgSlot);
 }
@@ -314,23 +314,23 @@ void Expr_Member::Compose(Composer& composer)
 	GetExprTarget().ComposeOrNil(composer);										// [Target]
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: {
-		composer.Add_MemberGet_Normal(GetSymbol(),
-									  GetAttr().Reference(), *this);			// [Member] or [Prop]
+		composer.Add_MemberGet_Normal(
+					GetSymbol(), GetAttr().Reference(), *this);					// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapAlong: {
-		composer.Add_MemberGet_MapAlong(GetSymbol(),
-										GetAttr().Reference(), *this);			// [Member] or [Prop]
+		composer.Add_MemberGet_MapAlong(
+					GetSymbol(), GetAttr().Reference(), *this);					// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapToList: {
-		composer.Add_MemberGet_MapToList(GetSymbol(),
-										 GetAttr().Reference(), *this);			// [Member] or [Prop]
+		composer.Add_MemberGet_MapToList(
+					GetSymbol(), GetAttr().Reference(), *this);					// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapToIter: {
-		composer.Add_MemberGet_MapToIter(GetSymbol(),
-										 GetAttr().Reference(), *this);			// [Member] or [Prop]
+		composer.Add_MemberGet_MapToIter(
+					GetSymbol(), GetAttr().Reference(), *this);					// [Member] or [Prop]
 		break;
 	}
 	default: {
@@ -371,11 +371,11 @@ void Expr_Member::ComposeForAssignment(
 	case MemberMode::Normal: {
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			composer.Add_MemberOpApply_Normal(GetSymbol(), GetAttr().Reference(), pOp,
-								 false, *this);									// [Assigned]
+			composer.Add_MemberOpApply_Normal(
+				GetSymbol(), GetAttr().Reference(), pOp, false, *this);			// [Assigned]
 		} else {
-			composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(),
-								 false, *this);									// [Assigned]
+			composer.Add_MemberSet_Normal(
+				GetSymbol(), GetAttr().Reference(), false, *this);				// [Assigned]
 		}
 		break;
 	}
@@ -384,11 +384,11 @@ void Expr_Member::ComposeForAssignment(
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
 			Error::Issue_UnimplementedOperation();
-			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
-			//					 mapAssignedFlag, false, *this);				// [Assigned]
+			//composer.Add_MemberOpApply_Map(GetSymbol(),
+			//	GetAttr().Reference(), pOp, mapAssignedFlag, false, *this);		// [Assigned]
 		} else {
-			composer.Add_MemberSet_Map(GetSymbol(), GetAttr().Reference(),
-									   mapAssignedFlag, false, *this);			// [Assigned]
+			composer.Add_MemberSet_Map(GetSymbol(),
+				GetAttr().Reference(), mapAssignedFlag, false, *this);			// [Assigned]
 		}
 		break;
 	}
@@ -397,11 +397,11 @@ void Expr_Member::ComposeForAssignment(
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
 			Error::Issue_UnimplementedOperation();
-			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
-			//					 mapAssignedFlag, false, *this);				// [Assigned]
+			//composer.Add_MemberOpApply_Map(GetSymbol(),
+			//	GetAttr().Reference(), pOp, mapAssignedFlag, false, *this);		// [Assigned]
 		} else {
-			composer.Add_MemberSet_Map(GetSymbol(), GetAttr().Reference(),
-									   mapAssignedFlag, false, *this);			// [Assigned]
+			composer.Add_MemberSet_Map(GetSymbol(),
+				GetAttr().Reference(), mapAssignedFlag, false, *this);			// [Assigned]
 		}
 		break;
 	}
@@ -428,7 +428,7 @@ const Expr::TypeInfo Expr_Value::typeInfo("Value");
 
 void Expr_Value::Compose(Composer& composer)
 {
-	composer.Add_Value(GetValue()->Reference(), *this);	// [Value]
+	composer.Add_Value(GetValue()->Reference(), *this);							// [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -468,7 +468,7 @@ void Expr_Identifier::Compose(Composer& composer)
 				}
 			}
 		}
-		composer.Add_Lookup(pSymbol, *this);					// [Value]
+		composer.Add_Lookup(pSymbol, *this);									// [Value]
 	}
 }
 
@@ -479,7 +479,7 @@ void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operat
 						 "operator can not be applied in lister assigment");
 		return;
 	}
-	composer.Add_AssignToSymbol(GetSymbol(), *this);			// [Assigned]
+	composer.Add_AssignToSymbol(GetSymbol(), *this);							// [Assigned]
 	composer.FlushDiscard();
 }
 
@@ -487,20 +487,20 @@ void Expr_Identifier::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	if (pOp) {
-		composer.Add_Lookup(GetSymbol(), *this);			// [Any]
-		exprAssigned.ComposeOrNil(composer);				// [Any Right]
-		composer.Add_BinaryOp(pOp, *this);				// [Assigned]
+		composer.Add_Lookup(GetSymbol(), *this);								// [Any]
+		exprAssigned.ComposeOrNil(composer);									// [Any Right]
+		composer.Add_BinaryOp(pOp, *this);										// [Assigned]
 	} else {
-		exprAssigned.ComposeOrNil(composer);				// [Assigned]
+		exprAssigned.ComposeOrNil(composer);									// [Assigned]
 	}
-	composer.Add_AssignToSymbol(GetSymbol(), *this);			// [Assigned]
+	composer.Add_AssignToSymbol(GetSymbol(), *this);							// [Assigned]
 }
 
 void Expr_Identifier::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
 	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), true, *this);
-	composer.FlushDiscard();										// [VType]
+	composer.FlushDiscard();													// [VType]
 }
 	
 void Expr_Identifier::ComposeForAssignmentInClass(
@@ -512,9 +512,9 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 		return;
 	}
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
-	exprAssigned.ComposeOrNil(composer);							// [VType Value]
+	exprAssigned.ComposeOrNil(composer);										// [VType Value]
 	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), false, *this);
-	composer.FlushDiscard();										// [VType]
+	composer.FlushDiscard();													// [VType]
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -540,7 +540,8 @@ const Expr::TypeInfo Expr_String::typeInfo("String");
 
 void Expr_String::Compose(Composer& composer)
 {
-	composer.Add_Value(new Value_String(GetSegmentReferable().Reference()), *this);	// [Value]
+	composer.Add_Value(new Value_String(
+					GetSegmentReferable().Reference()), *this);					// [Value]
 }
 
 String Expr_String::ToString(const StringStyle& ss) const
@@ -582,20 +583,20 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo("UnaryOp");
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		GetOperator()->ComposeUnary(composer, *this);					// [Result]
+		GetOperator()->ComposeUnary(composer, *this);							// [Result]
 	} else {
-		GetExprChild().ComposeOrNil(composer);							// [Any]
-		composer.Add_UnaryOp(GetOperator(), *this);						// [Result]
+		GetExprChild().ComposeOrNil(composer);									// [Any]
+		composer.Add_UnaryOp(GetOperator(), *this);								// [Result]
 	}
 }
 
 void Expr_UnaryOp::ComposeForLister(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
-		GetExprChild().ComposeOrNil(composer);							// [List Any]
-		composer.Add_ListElem(0, false, true, *this);					// [List]
+		GetExprChild().ComposeOrNil(composer);									// [List Any]
+		composer.Add_ListElem(0, false, true, *this);							// [List]
 	} else {
-		Expr_Unary::ComposeForLister(composer);							// [List]
+		Expr_Unary::ComposeForLister(composer);									// [List]
 	}
 }
 
@@ -603,10 +604,10 @@ void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
 		PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-		composer.Add_BeginArgSlot(*this);								// [Argument]
-		GetExprChild().ComposeOrNil(composer);							// [Argument Any]
+		composer.Add_BeginArgSlot(*this);										// [Argument]
+		GetExprChild().ComposeOrNil(composer);									// [Argument Any]
 		pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_EndArgSlotExpand(*this);							// [Argument]
+		composer.Add_EndArgSlotExpand(*this);									// [Argument]
 		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 		SetPUnitFirst(pPUnitOfArgSlot);
 	} else {
@@ -665,21 +666,21 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeBinary(composer, *this);
 	} else {
-		GetExprLeft().ComposeOrNil(composer);							// [Left]
-		GetExprRight().ComposeOrNil(composer);							// [Left Right]
-		composer.Add_BinaryOp(GetOperator(), *this);						// [Result]
+		GetExprLeft().ComposeOrNil(composer);									// [Left]
+		GetExprRight().ComposeOrNil(composer);									// [Left Right]
+		composer.Add_BinaryOp(GetOperator(), *this);							// [Result]
 	}
 }
 
 void Expr_BinaryOp::ComposeForLister(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::Seq)) {
-		GetExprLeft().ComposeOrNil(composer);							// [List Left]
-		GetExprRight().ComposeOrNil(composer);							// [List Left Right]
-		composer.Add_BinaryOp(GetOperator(), *this);					// [List Result]
-		composer.Add_ListElem(0, false, true, *this);					// [List]
+		GetExprLeft().ComposeOrNil(composer);									// [List Left]
+		GetExprRight().ComposeOrNil(composer);									// [List Left Right]
+		composer.Add_BinaryOp(GetOperator(), *this);							// [List Result]
+		composer.Add_ListElem(0, false, true, *this);							// [List]
 	} else {
-		Expr_Binary::ComposeForLister(composer);							// [List]
+		Expr_Binary::ComposeForLister(composer);								// [List]
 	}
 }
 
@@ -764,10 +765,10 @@ void Expr_Assign::ComposeForArgSlot(Composer& composer)
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprLeft()).GetSymbol();
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_BeginArgSlotNamed(
-		pSymbol, GetExprRight().Reference(), *this);				// [Argument ArgSlot]
-	GetExprRight().ComposeOrNil(composer);							// [Argument ArgSlot Assigned]
+				pSymbol, GetExprRight().Reference(), *this);					// [Argument ArgSlot]
+	GetExprRight().ComposeOrNil(composer);										// [Argument ArgSlot Assigned]
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlotNamed(*this);							// [Argument]
+	composer.Add_EndArgSlotNamed(*this);										// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 }
@@ -793,8 +794,8 @@ void Expr_Root::Compose(Composer& composer)
 {
 	SetPUnitFirst(composer.PeekPUnitCont());
 	//PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	//Add_BeginSequence(expr);											// []
-	ComposeSequence(composer, GetExprElemFirst());						// [Any]
+	//Add_BeginSequence(expr);													// []
+	ComposeSequence(composer, GetExprElemFirst());								// [Any]
 	//pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
 	composer.Add_Return(*this);
 	composer.Add_Terminate();
@@ -847,17 +848,17 @@ void Expr_Block::Compose(Composer& composer)
 		composer.Add_Return(*this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
-	ComposeSequence(composer, GetExprElemFirst());				// [Any]
+	ComposeSequence(composer, GetExprElemFirst());								// [Any]
 }
 
 void Expr_Block::ComposeForLister(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(nExprs, *this);						// [List List]
+	composer.Add_CreateList(nExprs, *this);										// [List List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForLister(composer);						// [List List]
+		pExpr->ComposeForLister(composer);										// [List List]
 	}	
-	composer.Add_ListElem(0, false, false, *this);				// [List]
+	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
 bool Expr_Block::HasCallerAsParent() const
@@ -950,12 +951,12 @@ const Expr::TypeInfo Expr_Iterer::typeInfo("Iterer");
 void Expr_Iterer::Compose(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(nExprs, *this);						// [List]
+	composer.Add_CreateList(nExprs, *this);										// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);							// [List Elem]
-		composer.Add_ListElem(0, false, false, *this);			// [List]
+		pExpr->ComposeOrNil(composer);											// [List Elem]
+		composer.Add_ListElem(0, false, false, *this);							// [List]
 	}	
-	composer.Add_GenIterator(*this);								// [Iterator]
+	composer.Add_GenIterator(*this);											// [Iterator]
 }
 
 String Expr_Iterer::ToString(const StringStyle& ss) const
@@ -1001,23 +1002,23 @@ const Expr::TypeInfo Expr_Lister::typeInfo("Lister");
 void Expr_Lister::Compose(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(nExprs, *this);						// [List]
+	composer.Add_CreateList(nExprs, *this);										// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForLister(composer);						// [List]
+		pExpr->ComposeForLister(composer);										// [List]
 	}
 }
 
 void Expr_Lister::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
-	exprAssigned.ComposeOrNil(composer);						// [Assigned]
-	composer.Add_GenIterator_ForLister(*this);					// [Assigned Iterator]
+	exprAssigned.ComposeOrNil(composer);										// [Assigned]
+	composer.Add_GenIterator_ForLister(*this);									// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		composer.Add_EvalIterator(0, true, *this);				// [Assigned Iterator Value]
-		pExpr->ComposeForValueAssignment(composer, pOp);		// [Assigned Iterator]
+		composer.Add_EvalIterator(0, true, *this);								// [Assigned Iterator Value]
+		pExpr->ComposeForValueAssignment(composer, pOp);						// [Assigned Iterator]
 		if (Error::IsIssued()) return;
 	}
-	composer.Add_DiscardValue(*this);							// [Assigned]
+	composer.Add_DiscardValue(*this);											// [Assigned]
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const
@@ -1058,31 +1059,31 @@ const Expr::TypeInfo Expr_Indexer::typeInfo("Indexer");
 
 void Expr_Indexer::Compose(Composer& composer)
 {
-	GetExprCar().ComposeOrNil(composer);						// [Car]
+	GetExprCar().ComposeOrNil(composer);										// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
-	composer.Add_Index(GetAttr().Reference(), nExprs, *this);	// [Index(Car)]
-	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);							// [Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExpr);							// [Index(Car)]
+	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
+	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
+		pExprCdr->ComposeOrNil(composer);											// [Index(Car) Cdr]
+		composer.Add_FeedIndex(*pExprCdr);											// [Index(Car)]
 	}
-	composer.Add_IndexGet(*this);								// [Elems]
+	composer.Add_IndexGet(*this);												// [Elems]
 }
 
 void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
 {
-	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
+	GetExprCar().ComposeOrNil(composer);										// [Elems Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
-	composer.Add_Index(GetAttr().Reference(), nExprs, *this);	// [Elems Index(Car)]
-	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);							// [Elems Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExpr);							// [Elems Index(Car)]
+	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Elems Index(Car)]
+	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
+		pExprCdr->ComposeOrNil(composer);										// [Elems Index(Car) Cdr]
+		composer.Add_FeedIndex(*pExprCdr);										// [Elems Index(Car)]
 	}
 	if (pOp) {
 		Error::Issue_UnimplementedOperation();
 		return;
-		//composer.Add_IndexOpApply(pOp, true, *this);		// [Rtn]
+		//composer.Add_IndexOpApply(pOp, true, *this);							// [Rtn]
 	} else {
-		composer.Add_IndexSet(true, *this);						// [Elems]
+		composer.Add_IndexSet(true, *this);										// [Elems]
 	}
 	composer.FlushDiscard();
 }
@@ -1090,18 +1091,18 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 void Expr_Indexer::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
-	GetExprCar().ComposeOrNil(composer);						// [Car]
+	GetExprCar().ComposeOrNil(composer);										// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
-	composer.Add_Index(GetAttr().Reference(), nExprs, *this);	// [Index(Car)]
-	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);							// [Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExpr);							// [Index(Car)]
+	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
+	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
+		pExprCdr->ComposeOrNil(composer);										// [Index(Car) Cdr]
+		composer.Add_FeedIndex(*pExprCdr);										// [Index(Car)]
 	}
-	exprAssigned.ComposeOrNil(composer);						// [Index(Car) Elems]
+	exprAssigned.ComposeOrNil(composer);										// [Index(Car) Elems]
 	if (pOp) {
-		composer.Add_IndexOpApply(pOp, false, *this);		// [Rtn]
+		composer.Add_IndexOpApply(pOp, false, *this);							// [Rtn]
 	} else {
-		composer.Add_IndexSet(false, *this);						// [Elems]
+		composer.Add_IndexSet(false, *this);									// [Elems]
 	}
 }
 
@@ -1143,13 +1144,13 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 	String str;
 	str += _pExprCar->ToString(ss);
 	str += '[';
-	const Expr* pExprFirst = GetExprCdrFirst();
-	for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
-		if (pExpr != pExprFirst) {
+	const Expr* pExprCdrFirst = GetExprCdrFirst();
+	for (const Expr* pExprCdr = pExprCdrFirst; pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
+		if (pExprCdr != pExprCdrFirst) {
 			str += ',';
 			if (!ss.IsCram()) str += ' ';
 		}
-		str += pExpr->ToString(ss);
+		str += pExprCdr->ToString(ss);
 	}
 	str += ']';
 	str += strInsert;
@@ -1170,12 +1171,12 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = Value_Function::GetFunction(*pValue);
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, *this);								// [Result]
+				func.Compose(composer, *this);									// [Result]
 				return;
 			}
 		}
 	}
-	GetExprCar().ComposeOrNil(composer);									// [Car]
+	GetExprCar().ComposeOrNil(composer);										// [Car]
 	Expr_Block* pExprOfBlock = GetExprOfBlock();
 	if (pExprOfBlock) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -1185,18 +1186,18 @@ void Expr_Caller::Compose(Composer& composer)
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprOfBlock->IsDelegation()) {
 			// Block-delegation format: f() {|block|}
-			pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);		// [Any]
-			composer.Add_ArgumentDelegation(GetAttr().Reference(), *this);	// [Argument]
+			pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);			// [Any]
+			composer.Add_ArgumentDelegation(GetAttr().Reference(), *this);		// [Argument]
 		} else {
 			composer.Add_Argument(GetAttr().Reference(),
-								  pExprOfBlock->Reference(), false, *this);	// [Argument]
+								  pExprOfBlock->Reference(), false, *this);		// [Argument]
 		}
 	} else {
-		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);// [Argument]
+		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);	// [Argument]
 	}
-	GetExprLinkCdr().ComposeForArgSlot(composer);							// [Argument]
+	GetExprLinkCdr().ComposeForArgSlot(composer);								// [Argument]
 	if (Error::IsIssued()) return;
-	composer.Add_Call(*this);												// [Result]
+	composer.Add_Call(*this);													// [Result]
 }
 
 void Expr_Caller::ComposeForClass(Composer& composer, bool publicFlag)
@@ -1231,13 +1232,13 @@ void Expr_Caller::ComposeForAssignment(
 			Error::IssueWith(ErrorType::SyntaxError, *this, "invalid method assignment");
 			return;
 		}
-		exprCarEx.GetExprTarget().ComposeOrNil(composer);				// [Target]
-		composer.Add_AssignMethod(pFunction.release(), false, *this);	// [Value]
+		exprCarEx.GetExprTarget().ComposeOrNil(composer);						// [Target]
+		composer.Add_AssignMethod(pFunction.release(), false, *this);			// [Value]
 	} else {
 		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Function, exprAssigned));
 		if (!pFunction) return;
 		pFunction->SetType(Function::Type::Function);
-		composer.Add_AssignFunction(pFunction.release(), *this);		// [Value]
+		composer.Add_AssignFunction(pFunction.release(), *this);				// [Value]
 	}
 }
 
@@ -1251,8 +1252,8 @@ void Expr_Caller::ComposeForAssignmentInClass(
 	}
 	RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned));
 	if (!pFunction) return;
-	composer.Add_AssignMethod(pFunction.release(), true, *this);		// [VType]
-	composer.FlushDiscard();											// [VType]
+	composer.Add_AssignMethod(pFunction.release(), true, *this);				// [VType]
+	composer.FlushDiscard();													// [VType]
 }
 
 Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type type, Expr& exprAssigned)

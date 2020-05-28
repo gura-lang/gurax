@@ -495,7 +495,7 @@ const Expr::TypeInfo Expr_TmplScript::typeInfo("TmplScript");
 
 void Expr_TmplScript::Compose(Composer& composer)
 {
-	ComposeSequence(composer, GetExprElemFirst());						// [Any]
+	ComposeSequence(composer, GetExprElemFirst());								// [Any]
 	composer.Add_TmplScript(Reference(), *this);
 }
 
