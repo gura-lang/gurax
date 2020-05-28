@@ -49,6 +49,7 @@ Gurax_ImplementStatement(cond)
 	composer.Add_NoOperation(exprCaller);										// [Any]
 }
 
+#if 0
 // if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
@@ -108,9 +109,10 @@ Gurax_ImplementStatement(if_)
 	}
 	composer.Add_NoOperation(exprCaller);										// [Any]
 }
+#endif
 
-// if2 (`cond) {`block}
-Gurax_DeclareStatementAlias(if2_, "if2")
+// if (`cond) {`block}
+Gurax_DeclareStatementAlias(if_, "if")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
@@ -126,7 +128,7 @@ Gurax_DeclareStatementAlias(if2_, "if2")
 		"If no trailer exists, the satement returns `nil` value.\n");
 }
 
-Gurax_ImplementStatement(if2_)
+Gurax_ImplementStatement(if_)
 {
 	using ExprsElsif = std::vector<Expr_Caller*>;
 	using PUnitsOfBranch = std::vector<PUnit*>;
@@ -1082,7 +1084,6 @@ void Statements::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(cond));
 	frame.Assign(Gurax_CreateStatement(if_));
-	frame.Assign(Gurax_CreateStatement(if2_));
 	frame.Assign(Gurax_CreateStatement(elsif));
 	frame.Assign(Gurax_CreateStatement(else_));
 	frame.Assign(Gurax_CreateStatement(end));

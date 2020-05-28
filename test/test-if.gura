@@ -1,40 +1,28 @@
 #!/usr/bin/env gurax
-import(util.tester)
-/*
-a = 5
-if (a == 0) {
-	b = 2
-} elsif (a == 1) {
-	b = 3
-} else {
-}
-*/
+import(util.tester) {*}
 
-a = 0
-if (a == 0) {
-	b = 2
-}
-if (a == 0) {
-	b = 2
-}
-if (a == 0) {
-	b = 2
-}
-if (a == 0) {
-	b = 2
-}
-if (a == 0) {
-	b = 2
+TestCase('PUnit') {
+	exprs = [
+		`if (a) {'if (a)'}
+		`if (a) {'if (a)'} else {'else'}
+		`if (a) {'if (a)'} elsif (b) {'elsif (b)'}
+		`if (a) {'if (a)'} elsif (b) {'elsif (b)'} else {'else'}
+		`if (a) {'if (a)'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'} else {'else'}
+		//`if (a) {'if (a)'} else {'else'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'}
+	]
+	exprs::PrintPUnitWithLabel()
 }
 
-repeat (6) {|a|
-	if (a == 0) {
-		Println('zero')
-	} elsif (a == 1) {
-		Println('one')
-	} elsif (a == 2) {
-		Println('two')
-	} else {
-		Println('other')
+TestCase('if-statement in repeat') {
+	repeat (6) {|a|
+		if (a == 0) {
+			Println('zero')
+		} elsif (a == 1) {
+			Println('one')
+		} elsif (a == 2) {
+			Println('two')
+		} else {
+			Println('other')
+		}
 	}
 }

@@ -1,3 +1,56 @@
+======== PUnit ========
+if (a) {'if (a)'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##3,nil)
+  ##2 Value(<String:'if (a)'>)
+  ##3 NoOperation()
+if (a) {'if (a)'} else {'else'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##4)
+  ##2 Value(<String:'if (a)'>)
+  ##3 Jump(cont=##5)
+  ##4 Value(<String:'else'>)
+  ##5 NoOperation()
+if (a) {'if (a)'} elsif (b) {'elsif (b)'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##4)
+  ##2 Value(<String:'if (a)'>)
+  ##3 Jump(cont=##7)
+  ##4 Lookup(`b)
+  ##5 JumpIfNot(branchDest=##7,nil)
+  ##6 Value(<String:'elsif (b)'>)
+  ##7 NoOperation()
+if (a) {'if (a)'} elsif (b) {'elsif (b)'} else {'else'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##4)
+  ##2 Value(<String:'if (a)'>)
+  ##3 Jump(cont=##9)
+  ##4 Lookup(`b)
+  ##5 JumpIfNot(branchDest=##8)
+  ##6 Value(<String:'elsif (b)'>)
+  ##7 Jump(cont=##9)
+  ##8 Value(<String:'else'>)
+  ##9 NoOperation()
+if (a) {'if (a)'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'} else {'else'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##4)
+  ##2 Value(<String:'if (a)'>)
+  ##3 Jump(cont=##17)
+  ##4 Lookup(`b)
+  ##5 JumpIfNot(branchDest=##8)
+  ##6 Value(<String:'elsif (b)'>)
+  ##7 Jump(cont=##17)
+  ##8 Lookup(`c)
+  ##9 JumpIfNot(branchDest=##12)
+  ##10 Value(<String:'elsif (c)'>)
+  ##11 Jump(cont=##17)
+  ##12 Lookup(`d)
+  ##13 JumpIfNot(branchDest=##16)
+  ##14 Value(<String:'elsif (d)'>)
+  ##15 Jump(cont=##17)
+  ##16 Value(<String:'else'>)
+  ##17 NoOperation()
+======== if-statement in repeat ========
 zero
 one
 two
