@@ -48,7 +48,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 {
 	expr.SetPUnitFirst(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	Add_BeginSequence(&expr);								// [Any]
+	Add_BeginSequence(expr);								// [Any]
 	BeginRepeaterBlock(nullptr, nullptr, nullptr);
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
@@ -72,7 +72,7 @@ Iterator* Composer::EachPUnit() const
 }
 
 void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
-									 const Attribute& attr, bool initByNilFlag, const Expr* pExprSrc)
+									 const Attribute& attr, bool initByNilFlag, const Expr& exprSrc)
 {
 	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
 	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
@@ -88,7 +88,7 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 			if (pSymbol->IsIdentical(Gurax_Symbol(const_))) {
 				flags &= ~PropSlot::Flag::Writable;
 			} else if (ppSymbol != symbols.begin()) {
-				Error::IssueWith(ErrorType::SyntaxError, *pExprSrc, "unknown attribute: %s", pSymbol->GetName());
+				Error::IssueWith(ErrorType::SyntaxError, exprSrc, "unknown attribute: %s", pSymbol->GetName());
 				return;
 			}
 		} else {
@@ -96,7 +96,7 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 		}
 	}
 	SetFactory(new PUnitFactory_AssignPropSlot(
-				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, Expr::Reference(pExprSrc)));
+				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, exprSrc.Reference()));
 }
 
 //------------------------------------------------------------------------------

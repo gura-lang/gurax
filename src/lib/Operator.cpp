@@ -215,11 +215,11 @@ void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 {
 	Expr& exprChild = expr.GetExprChild();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_Jump(&expr);
+	composer.Add_Jump(expr);
 	composer.ComposeAsSequence(exprChild);
-	composer.Add_Return(&exprChild);
+	composer.Add_Return(exprChild);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	composer.Add_Value(new Value_Expr(exprChild.Reference()), &expr);				// [Result]
+	composer.Add_Value(new Value_Expr(exprChild.Reference()), expr);				// [Result]
 }
 
 //------------------------------------------------------------------------------
@@ -229,10 +229,10 @@ void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);						// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_JumpIfNot(PUnit::BranchMode::Keep, &expr);
+	composer.Add_JumpIfNot(PUnit::BranchMode::Keep, expr);
 	expr.GetExprRight().ComposeOrNil(composer);					// [Bool]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-	composer.Add_NoOperation(&expr);
+	composer.Add_NoOperation(expr);
 }
 
 //------------------------------------------------------------------------------
@@ -242,10 +242,10 @@ void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);						// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_JumpIf(PUnit::BranchMode::Keep, &expr);
+	composer.Add_JumpIf(PUnit::BranchMode::Keep, expr);
 	expr.GetExprRight().ComposeOrNil(composer);					// [Bool]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-	composer.Add_NoOperation(&expr);
+	composer.Add_NoOperation(expr);
 }
 
 //------------------------------------------------------------------------------

@@ -230,7 +230,7 @@ Gurax_ImplementSuffixMgr_Compose(Binary, base16)
 	const String& buff = strRef.GetStringSTL();
 	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
 	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base16)) return;
-	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), *pExpr);			// [Value]
 }
 
 Gurax_ImplementSuffixMgr_Compose(Binary, base32)
@@ -238,7 +238,7 @@ Gurax_ImplementSuffixMgr_Compose(Binary, base32)
 	const String& buff = strRef.GetStringSTL();
 	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
 	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base32)) return;
-	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), *pExpr);			// [Value]
 }
 
 Gurax_ImplementSuffixMgr_Compose(Binary, base32hex)
@@ -246,7 +246,7 @@ Gurax_ImplementSuffixMgr_Compose(Binary, base32hex)
 	const String& buff = strRef.GetStringSTL();
 	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
 	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base32hex)) return;
-	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), *pExpr);			// [Value]
 }
 
 Gurax_ImplementSuffixMgr_Compose(Binary, base64)
@@ -254,7 +254,7 @@ Gurax_ImplementSuffixMgr_Compose(Binary, base64)
 	const String& buff = strRef.GetStringSTL();
 	RefPtr<BinaryReferable> pBuffDst(new BinaryReferable());
 	if (!Decoder::Decode(*pBuffDst, buff.data(), buff.size(), Info::Base64)) return;
-	composer.Add_Value(new Value_Binary(pBuffDst.release()), pExpr);	// [Value]
+	composer.Add_Value(new Value_Binary(pBuffDst.release()), *pExpr);			// [Value]
 }
 
 //------------------------------------------------------------------------------

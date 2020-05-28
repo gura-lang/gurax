@@ -42,12 +42,12 @@ Gurax_ImplementStatement(_create_list_)
 {
 	ExprLink& exprLinkElem = exprCaller.GetExprOfBlock()->GetExprLinkElem();
 	size_t nExprs = exprLinkElem.CountSequence();
-	composer.Add_CreateList(nExprs, &exprCaller);				// [List]
+	composer.Add_CreateList(nExprs, exprCaller);								// [List]
 	if (exprCaller.GetExprCdrFirst()) {
-		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);	// [List Car]
+		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);					// [List Car]
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
-								  true, &exprCaller);			// [List Car Argument]
+								  true, exprCaller);							// [List Car Argument]
 			if (pExpr->IsType<Expr_Block>()) {
 				// @{ .. {args*} .. }
 				dynamic_cast<Expr_Block*>(pExpr)->GetExprLinkElem().ComposeForArgSlot(composer);
@@ -56,13 +56,13 @@ Gurax_ImplementStatement(_create_list_)
 				pExpr->ComposeForArgSlot(composer);
 			}
 			if (Error::IsIssued()) return;
-			composer.Add_Call(&exprCaller);						// [List Car Result]
-			composer.Add_ListElem(1, false, false, &exprCaller);// [List Car]
+			composer.Add_Call(exprCaller);										// [List Car Result]
+			composer.Add_ListElem(1, false, false, exprCaller);					// [List Car]
 		}
-		composer.Add_DiscardValue(&exprCaller);					// [List]
+		composer.Add_DiscardValue(exprCaller);									// [List]
 	} else {
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ComposeForLister(composer);					// [List]
+			pExpr->ComposeForLister(composer);									// [List]
 		}
 	}
 }

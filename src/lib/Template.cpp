@@ -75,7 +75,7 @@ bool Template::PrepareAndCompose(Composer& composer)
 		if (Error::IsIssued()) return false;
 		expr.SetPUnitFirst(composer.PeekPUnitCont());
 		expr.ComposeOrNil(composer);
-		composer.Add_Return(&expr);
+		composer.Add_Return(expr);
 		return !Error::IsIssued();
 	};
 	return Sub(composer, GetExprForInit()) && Sub(composer, GetExprForBody());
@@ -478,7 +478,7 @@ const Expr::TypeInfo Expr_TmplString::typeInfo("TmplString");
 
 void Expr_TmplString::Compose(Composer& composer)
 {
-	composer.Add_TmplString(GetTemplate().Reference(), GetStringSTL(), this);
+	composer.Add_TmplString(GetTemplate().Reference(), GetStringSTL(), *this);
 }
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
@@ -496,7 +496,7 @@ const Expr::TypeInfo Expr_TmplScript::typeInfo("TmplScript");
 void Expr_TmplScript::Compose(Composer& composer)
 {
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
-	composer.Add_TmplScript(Reference(), this);
+	composer.Add_TmplScript(Reference(), *this);
 }
 
 String Expr_TmplScript::ToString(const StringStyle& ss) const
@@ -541,15 +541,15 @@ void Expr_Template::Compose(Composer& composer)
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = false;
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_Jump(this);
+	composer.Add_Jump(*this);
 	RefPtr<Template> pTmpl(new Template());
 	if (!pTmpl->ParseString_(GetString(), autoIndentFlag, appendLastEOLFlag) ||
 		!pTmpl->PrepareAndCompose(composer)) return;
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	if (_embedFlag) {
-		composer.Add_TmplEmbedded(pTmpl.release(), this);
+		composer.Add_TmplEmbedded(pTmpl.release(), *this);
 	} else {
-		composer.Add_Value(new Value_Template(pTmpl.release()), this);
+		composer.Add_Value(new Value_Template(pTmpl.release()), *this);
 	}
 }
 

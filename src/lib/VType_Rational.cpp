@@ -531,7 +531,7 @@ Gurax_ImplementSuffixMgr_Compose(Number, r)
 		String::IssueError_InvalidFormatOfNumber();
 		return;
 	}
-	composer.Add_Value(new Value_Rational(Rational(numer, 1)), pExpr);	// [Value]
+	composer.Add_Value(new Value_Rational(Rational(numer, 1)), *pExpr);			// [Value]
 }
 
 //------------------------------------------------------------------------------

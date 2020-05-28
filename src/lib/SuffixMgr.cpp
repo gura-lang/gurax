@@ -20,7 +20,7 @@ Value* SuffixMgr::Eval(Processor& processor, const char* str) const
 
 void SuffixMgr::Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const
 {
-	composer.Add_Suffixed(strRef.Reference(), GetTarget(), GetSymbol(), pExpr);
+	composer.Add_Suffixed(strRef.Reference(), GetTarget(), GetSymbol(), *pExpr);
 }
 
 //------------------------------------------------------------------------------

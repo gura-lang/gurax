@@ -380,7 +380,7 @@ Gurax_ImplementSuffixMgr_Compose(Number, j)
 		String::IssueError_InvalidFormatOfNumber();
 		return;
 	}
-	composer.Add_Value(new Value_Complex(Complex(0, num)), pExpr);	// [Value]
+	composer.Add_Value(new Value_Complex(Complex(0, num)), *pExpr);				// [Value]
 }
 
 //------------------------------------------------------------------------------
