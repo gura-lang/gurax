@@ -129,8 +129,10 @@ Gurax_DeclareStatementAlias(if2_, "if2")
 Gurax_ImplementStatement(if2_)
 {
 	using ExprsElsif = std::vector<Expr_Caller*>;
+	using PUnitsOfBranch = std::vector<PUnit*>;
 	ExprsElsif exprsElsif;
 	Expr_Caller* pExprElse = nullptr;
+	PUnitsOfBranch punitsOfBranch;
 	for (Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr;
 										pExpr = pExpr->GetExprTrailer()) {
 		if (pExpr->IsStatement(Gurax_Symbol(elsif))) {
@@ -150,21 +152,41 @@ Gurax_ImplementStatement(if2_)
 	}
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);						// [Bool]
 	if (exprCaller.HasExprTrailer()) {
-		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);			// []
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
+		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(exprCaller);											// [Any]
-		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
-		
-		exprCaller.GetExprTrailer()->ComposeOrNil(composer);					// [Any]
-		
-		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		for (auto ppExprElsif = exprsElsif.begin();
+							ppExprElsif != exprsElsif.end(); ppExprElsif++) {
+			Expr_Caller* pExprElsif = *ppExprElsif;
+			pExprElsif->GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
+			if (pExprElse || ppExprElsif + 1 != exprsElsif.end()) {
+				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, *pExprElsif);	// []
+				pExprElsif->GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+				punitsOfBranch.push_back(composer.PeekPUnitCont());
+				composer.Add_Jump(*pExprElsif);									// [Any]
+				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+			} else {
+				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+				composer.Add_JumpIfNot(PUnit::BranchMode::Nil, *pExprElsif);	// [] or [nil]
+				pExprElsif->GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+			}
+		}
+		if (pExprElse) {
+			pExprElse->GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+		}
+		for (PUnit* pPUnitOfBranch : punitsOfBranch) {
+			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		}
 	} else {
-		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNot(PUnit::BranchMode::Nil, exprCaller);				// [] or [nil]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
 	composer.Add_NoOperation(exprCaller);										// [Any]
 }

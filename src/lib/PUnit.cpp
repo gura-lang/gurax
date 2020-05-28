@@ -742,7 +742,7 @@ template<bool discardValueFlag>
 String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("EvalIterator(offsetToIterator=%zu,branchdest=%s)", GetOffset(),
+	str.Format("EvalIterator(offsetToIterator=%zu,branchDest=%s)", GetOffset(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -785,7 +785,7 @@ template<bool discardValueFlag>
 String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("ForEach(offsetToIterator=%zu,branchdest=%s, decls=[%s])", GetOffset(),
+	str.Format("ForEach(offsetToIterator=%zu,branchDest=%s, decls=[%s])", GetOffset(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			   GetDeclArgOwner().ToString(StringStyle().SetDigest().SetCram()).c_str());
 	AppendInfoToString(str, ss);
@@ -2101,7 +2101,7 @@ String PUnit_BeginArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int
 	if (GetExprSrc().GetPUnitFirst()) {
 		str.Format(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
-	str.Format(",sentinel=%s,branchdest=%s)",
+	str.Format(",sentinel=%s,branchDest=%s)",
 			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
@@ -2292,7 +2292,7 @@ template<bool discardValueFlag>
 String PUnit_BeginArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("BeginArgSlotNamed(`%s,symbol=%s,sentinel=%s,branchdest=%s)",
+	str.Format("BeginArgSlotNamed(`%s,symbol=%s,sentinel=%s,branchDest=%s)",
 			   GetExprSrc().ToString(StringStyle().SetCram()).c_str(), GetSymbol()->GetName(),
 			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
@@ -2455,7 +2455,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 String PUnit_JumpIf<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIf(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+	str.Format("JumpIf(branchDest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
@@ -2527,7 +2527,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 String PUnit_JumpIfNot<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNot(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+	str.Format("JumpIfNot(branchDest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
@@ -2581,7 +2581,7 @@ template<bool discardValueFlag>
 String PUnit_BeginTryBlock<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("BeginTryBlock(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("BeginTryBlock(branchDest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2686,7 +2686,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 String PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNoCatch(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+	str.Format("JumpIfNoCatch(branchDest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
@@ -2748,7 +2748,7 @@ template<bool discardValueFlag, PUnit::BranchMode branchMode>
 String PUnit_JumpIfNoCatchAny<discardValueFlag, branchMode>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("JumpIfNoCatchAny(branchdest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+	str.Format("JumpIfNoCatchAny(branchDest=%s%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			(branchMode == BranchMode::Nil)? ",nil" : (branchMode == BranchMode::Keep)? ",keep" : "");
 	AppendInfoToString(str, ss);
 	return str;
