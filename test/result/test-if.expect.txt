@@ -50,6 +50,25 @@ if (a) {'if (a)'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'el
   ##15 Jump(cont=##17)
   ##16 Value(<String:'else'>)
   ##17 NoOperation()
+if (a) {'if (a)'} else {'else'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'}
+  ##0 Lookup(`a)
+  ##1 JumpIfNot(branchDest=##4)
+  ##2 Value(<String:'if (a)'>)
+  ##3 Jump(cont=##17)
+  ##4 Lookup(`b)
+  ##5 JumpIfNot(branchDest=##8)
+  ##6 Value(<String:'elsif (b)'>)
+  ##7 Jump(cont=##17)
+  ##8 Lookup(`c)
+  ##9 JumpIfNot(branchDest=##12)
+  ##10 Value(<String:'elsif (c)'>)
+  ##11 Jump(cont=##17)
+  ##12 Lookup(`d)
+  ##13 JumpIfNot(branchDest=##16)
+  ##14 Value(<String:'elsif (d)'>)
+  ##15 Jump(cont=##17)
+  ##16 Value(<String:'else'>)
+  ##17 NoOperation()
 ======== if-statement in repeat ========
 zero
 one

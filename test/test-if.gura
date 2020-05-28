@@ -8,7 +8,7 @@ TestCase('PUnit') {
 		`if (a) {'if (a)'} elsif (b) {'elsif (b)'}
 		`if (a) {'if (a)'} elsif (b) {'elsif (b)'} else {'else'}
 		`if (a) {'if (a)'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'} else {'else'}
-		//`if (a) {'if (a)'} else {'else'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'}
+		`if (a) {'if (a)'} else {'else'} elsif (b) {'elsif (b)'} elsif (c) {'elsif (c)'} elsif (d) {'elsif (d)'}
 	]
 	exprs::PrintPUnitWithLabel()
 }
