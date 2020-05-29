@@ -189,11 +189,51 @@ try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3
   ##30 Call(cont=##31)
   ##31 NoOperation()
 ======== Catch-any may be placed anywhere ========
+  ##0 BeginTryBlock(branchDest=##3)
+  ##1 Lookup(`nil)
+  ##2 EndTryBlock(cont=##32)
+  ##3 Value(<Nil>)
+  ##4 Lookup(`a)
+  ##5 Cast(ErrorType)
+  ##6 JumpIfNoCatch(branchDest=##12)
+  ##7 PushFrame<Block>()
+  ##8 AssignToDeclArg(`e), DiscardValue()
+  ##9 Lookup(`nil)
+  ##10 PopFrame()
+  ##11 Jump(cont=##32)
+  ##12 Value(<Nil>)
+  ##13 Lookup(`b)
+  ##14 Cast(ErrorType)
+  ##15 JumpIfNoCatch(branchDest=##21)
+  ##16 PushFrame<Block>()
+  ##17 AssignToDeclArg(`e), DiscardValue()
+  ##18 Lookup(`nil)
+  ##19 PopFrame()
+  ##20 Jump(cont=##32)
+  ##21 Value(<Nil>)
+  ##22 Lookup(`c)
+  ##23 Cast(ErrorType)
+  ##24 JumpIfNoCatch(branchDest=##30)
+  ##25 PushFrame<Block>()
+  ##26 AssignToDeclArg(`e), DiscardValue()
+  ##27 Lookup(`nil)
+  ##28 PopFrame()
+  ##29 Jump(cont=##32)
+  ##30 JumpIfNoCatchAny(branchDest=##32,nil), DiscardValue()
+  ##31 Lookup(`nil)
+  ##32 NoOperation()
+OK
+======== Simple ========
 SyntaxError MESSAGE
+======== Error from nested try ========
 SyntaxError MESSAGE
+======== Error from double-nested try ========
 SyntaxError MESSAGE
+======== Error from scope ========
 SyntaxError MESSAGE
+======== Error from triple-nested scope ========
 SyntaxError MESSAGE
+======== Error from function ========
 SyntaxError MESSAGE
 SyntaxError MESSAGE
 SyntaxError MESSAGE

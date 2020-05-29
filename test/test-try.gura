@@ -39,33 +39,25 @@ TestCase('Catch-any may be placed anywhere') {
 		nil
 	} catch (c) {|e|
 		nil
-	}
+	}	
 	buff1 = B''
 	expr1.PrintPUnit(buff1)
 	buff2 = B''
 	expr2.PrintPUnit(buff2)
-	diff.Diff(buff1, buff2).Print()
+	sys.cout.Write(buff1)
+	Printf('%s\n', cond(diff.Diff(buff1, buff2).distance == 0, 'OK', '*NG*'))
 }
 
-try {
-	Error.Raise(Error.SyntaxError, 'MESSAGE')
-	Println('*skipped*')
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
-}
-
-try {
+TestCase('Simple') {
 	try {
 		Error.Raise(Error.SyntaxError, 'MESSAGE')
-	} catch(Error.ValueError) {|e|
+		Println('*skipped*')
+	} catch {|e|
 		Println(e.errorType.name, ' ', e.text)
 	}
-	Println('*skipped*')
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
 }
 
-try {
+TestCase('Error from nested try') {
 	try {
 		try {
 			Error.Raise(Error.SyntaxError, 'MESSAGE')
@@ -73,59 +65,76 @@ try {
 			Println(e.errorType.name, ' ', e.text)
 		}
 		Println('*skipped*')
-	} catch(Error.TypeError) {|e|
+	} catch {|e|
 		Println(e.errorType.name, ' ', e.text)
 	}
-	Println('*skipped*')
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
 }
 
-try {
-	scope {
-		Error.Raise(Error.SyntaxError, 'MESSAGE')
+TestCase('Error from double-nested try') {
+	try {
+		try {
+			try {
+				Error.Raise(Error.SyntaxError, 'MESSAGE')
+			} catch(Error.ValueError) {|e|
+				Println(e.errorType.name, ' ', e.text)
+			}
+			Println('*skipped*')
+		} catch(Error.TypeError) {|e|
+			Println(e.errorType.name, ' ', e.text)
+		}
+		Println('*skipped*')
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
 	}
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
 }
 
-try {
-	scope {
+TestCase('Error from scope') {
+	try {
+		scope {
+			Error.Raise(Error.SyntaxError, 'MESSAGE')
+		}
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
+	}
+}
+
+TestCase('Error from triple-nested scope') {
+	try {
 		scope {
 			scope {
-				Error.Raise(Error.SyntaxError, 'MESSAGE')
+				scope {
+					Error.Raise(Error.SyntaxError, 'MESSAGE')
+				}
 			}
 		}
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
 	}
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
 }
 
-f1() = Error.Raise(Error.SyntaxError, 'MESSAGE')
-f2() = f1()
-f3() = f2()
-f4() = f3()
-
-try {
-	f1()
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
-}
-
-try {
-	f2()
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
-}
-
-try {
-	f3()
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
-}
-
-try {
-	f4()
-} catch {|e|
-	Println(e.errorType.name, ' ', e.text)
+TestCase('Error from function') {
+	f1() = Error.Raise(Error.SyntaxError, 'MESSAGE')
+	f2() = f1()
+	f3() = f2()
+	f4() = f3()
+	try {
+		f1()
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
+	}
+	try {
+		f2()
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
+	}
+	try {
+		f3()
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
+	}
+	try {
+		f4()
+	} catch {|e|
+		Println(e.errorType.name, ' ', e.text)
+	}
 }
