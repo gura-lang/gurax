@@ -103,6 +103,10 @@ protected:
 	RefPtr<HelpHolder> _pHelpHolder;
 	RefPtr<PropSlotMap> _pPropSlotMap;
 	String _pathName;
+public:
+	static const char* ExtName_Script;
+	static const char* ExtName_Compressed;
+	static const char* ExtName_Binary;
 private:
 	static ModuleMap _moduleMap;
 public:

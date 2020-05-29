@@ -24,6 +24,16 @@ TestCase('Dotted Symbol') {
 	Tester(`dir(foo.sub1.sub2))
 }
 
+TestCase('__name__ variable') {
+	import(foo.sub1.sub2)
+	Tester(`foo.__name__)
+	Tester(`foo.sub1.__name__)
+	Tester(`foo.sub1.sub2.__name__)
+	Tester(`foo.CheckName())
+	Tester(`foo.sub1.CheckName())
+	Tester(`foo.sub1.sub2.CheckName())
+}
+
 TestCase('Error') {
 	Tester(`import(bar))
 	foo = 3

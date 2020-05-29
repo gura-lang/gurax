@@ -9,6 +9,9 @@ namespace Gurax {
 // Module
 //------------------------------------------------------------------------------
 ModuleMap Module::_moduleMap;
+const char* Module::ExtName_Script = ".gura";
+const char* Module::ExtName_Compressed = ".gurc";
+const char* Module::ExtName_Binary = ".gurd";
 
 Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 	_pFrame(new Frame_Module(pFrameOuter, pDottedSymbol->Reference())),
@@ -101,20 +104,20 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 		baseName = PathName(baseName).MakeAbsName();
 		if (!binaryFlag) {
 			pathName = baseName;
-			pathName += ".gura";
+			pathName += ExtName_Script;
 			if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 				type = Type::Script;
 				break;
 			}
 			pathName = baseName;
-			pathName += ".gurc";
+			pathName += ExtName_Compressed;
 			if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 				type = Type::Compressed;
 				break;
 			}
 		}
 		pathName = baseName;
-		pathName += ".gurd";
+		pathName += ExtName_Binary;
 		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 			type = Type::Binary;
 			break;
@@ -135,7 +138,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 		(type == Type::Compressed)?	ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
 		nullptr);
 	if (!pModule) return nullptr;
-	//pModule->AssignToMap();
+	pModule->Assign(Gurax_Symbol(__name__), new Value_String(dottedSymbol.ToString('.')));
 	return pModule.release();
 }
 

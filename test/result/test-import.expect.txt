@@ -6,11 +6,18 @@ import(a) {*}
 import(a) {sym1, sym2, sym3, sym4}
   ##0 Import(`a)
 ======== Basic Test ========
-dir(foo) .. [`Func1, `Func2, `Func3, `Func4, `Func5, `var1, `var2, `var3, `var4, `var5]
+dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__name__, `var1, `var2, `var3, `var4, `var5]
 ======== Dotted Symbol ========
-dir(foo) .. [`Func1, `Func2, `Func3, `Func4, `Func5, `sub1, `var1, `var2, `var3, `var4, `var5]
-dir(foo.sub1) .. [`sub2]
-dir(foo.sub1.sub2) .. []
+dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__name__, `sub1, `var1, `var2, `var3, `var4, `var5]
+dir(foo.sub1) .. [`CheckName, `__name__, `sub2]
+dir(foo.sub1.sub2) .. [`CheckName, `__name__]
+======== __name__ variable ========
+foo.__name__ .. foo
+foo.sub1.__name__ .. foo.sub1
+foo.sub1.sub2.__name__ .. foo.sub1.sub2
+foo.CheckName() .. Am I foo? .. Yes.
+foo.sub1.CheckName() .. Am I foo.sub1? .. Yes.
+foo.sub1.sub2.CheckName() .. Am I foo.sub1.sub2? .. Yes.
 ======== Error ========
 import(bar) .. can't find a module named 'bar'
 import(foo.sub1) .. failed to assign module foo.sub1

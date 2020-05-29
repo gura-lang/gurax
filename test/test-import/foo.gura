@@ -9,3 +9,5 @@ var2 = 'value#2'
 var3 = 'value#3'
 var4 = 'value#4'
 var5 = 'value#5'
+
+CheckName() = Format('Am I foo? .. %s.', cond(__name__ == 'foo', 'Yes', 'No'))

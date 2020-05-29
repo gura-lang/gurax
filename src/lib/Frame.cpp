@@ -189,18 +189,23 @@ bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 		for (auto pair : *_pValueMap) {
 			const Symbol* pSymbol = pair.first;
 			const Value* pValue = pair.second;
-			frameDst.Assign(pSymbol, pValue->Reference());
+			if (!pSymbol->IsIdentical(Gurax_Symbol(__name__))) {
+				frameDst.Assign(pSymbol, pValue->Reference());
+			}
 		}
 	} else {
 		for (auto pair : *_pValueMap) {
 			const Symbol* pSymbol = pair.first;
 			const Value* pValue = pair.second;
-			if (frameDst.LookupLocal(pSymbol)) {
+			if (pSymbol->IsIdentical(Gurax_Symbol(__name__))) {
+				// nothing to do
+			} else if (frameDst.LookupLocal(pSymbol)) {
 				Error::Issue(ErrorType::ValueError,
 							 "can't overwrite the symbol: %s", pSymbol->GetName());
 				return false;
+			} else {
+				frameDst.Assign(pSymbol, pValue->Reference());
 			}
-			frameDst.Assign(pSymbol, pValue->Reference());
 		}
 	}
 	return true;

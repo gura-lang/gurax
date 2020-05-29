@@ -19,6 +19,7 @@ Basement::Basement() :
 
 bool Basement::Initialize(int argc, char** argv)
 {
+	GetFrame().Assign(Gurax_Symbol(__name__), new Value_String("__main__"));
 	_cmdLine
 		.OptMultiString	("import",			'i')
 		.OptMultiString	("command",			'c')

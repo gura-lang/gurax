@@ -14,6 +14,7 @@ Gurax_DeclareSymbol(__del__);
 Gurax_DeclareSymbol(__file__);
 Gurax_DeclareSymbol(__init__);
 Gurax_DeclareSymbol(__line__);
+Gurax_DeclareSymbol(__name__);
 Gurax_DeclareSymbol(a);
 Gurax_DeclareSymbol(A);
 Gurax_DeclareSymbol(abs);

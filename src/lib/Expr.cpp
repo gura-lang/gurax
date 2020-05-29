@@ -842,7 +842,6 @@ void Expr_Block::Compose(Composer& composer)
 		SetPUnitSubFirst(composer.PeekPUnitCont());
 		PUnit* pPUnitSequence = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(*this);
-		//Expr::ComposeForArgSlot(composer, GetExprParamFirst());
 		GetExprLinkParam().ComposeForArgSlot(composer);
 		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(*this);

@@ -1,0 +1,2 @@
+CheckName() = Format('Am I foo.sub1.sub2? .. %s.',
+				cond(__name__ == 'foo.sub1.sub2', 'Yes', 'No'))
