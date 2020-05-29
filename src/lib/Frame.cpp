@@ -185,27 +185,17 @@ Value* Frame_ValueMap::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFram
 
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 {
-	if (overwriteFlag) {
-		for (auto pair : *_pValueMap) {
-			const Symbol* pSymbol = pair.first;
-			const Value* pValue = pair.second;
-			if (!pSymbol->IsIdentical(Gurax_Symbol(__name__))) {
-				frameDst.Assign(pSymbol, pValue->Reference());
-			}
-		}
-	} else {
-		for (auto pair : *_pValueMap) {
-			const Symbol* pSymbol = pair.first;
-			const Value* pValue = pair.second;
-			if (pSymbol->IsIdentical(Gurax_Symbol(__name__))) {
-				// nothing to do
-			} else if (frameDst.LookupLocal(pSymbol)) {
-				Error::Issue(ErrorType::ValueError,
-							 "can't overwrite the symbol: %s", pSymbol->GetName());
-				return false;
-			} else {
-				frameDst.Assign(pSymbol, pValue->Reference());
-			}
+	for (auto pair : *_pValueMap) {
+		const Symbol* pSymbol = pair.first;
+		const Value* pValue = pair.second;
+		if (pSymbol->StartsWith('_')) {
+			// nothing to do
+		} else if (overwriteFlag || !frameDst.LookupLocal(pSymbol)) {
+			frameDst.Assign(pSymbol, pValue->Reference());
+		} else {
+			Error::Issue(ErrorType::ValueError,
+							"can't overwrite the symbol: %s", pSymbol->GetName());
+			return false;
 		}
 	}
 	return true;

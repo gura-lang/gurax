@@ -167,6 +167,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsEmpty() const { return IsIdentical(Empty); }
+	bool StartsWith(char ch) const { return *GetName() == ch; }
 	bool IsFlowControl() const;
 	static void Bootup();
 	static const Symbol* Add(const char* name);
