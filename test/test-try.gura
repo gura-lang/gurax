@@ -17,37 +17,6 @@ TestCase('PUnit') {
 	exprs::PrintPUnitWithLabel()
 }
 
-TestCase('Catch-any may be placed anywhere') {
-	expr1 = `try {
-		nil
-	} catch (a) {|e|
-		nil
-	} catch (b) {|e|
-		nil
-	} catch (c) {|e|
-		nil
-	} catch {
-		nil
-	}
-	expr2 = `try {
-		nil
-	} catch {
-		nil
-	} catch (a) {|e|
-		nil
-	} catch (b) {|e|
-		nil
-	} catch (c) {|e|
-		nil
-	}	
-	buff1 = B''
-	expr1.PrintPUnit(buff1)
-	buff2 = B''
-	expr2.PrintPUnit(buff2)
-	sys.cout.Write(buff1)
-	Printf('%s\n', cond(diff.Diff(buff1, buff2).distance == 0, 'OK', '*NG*'))
-}
-
 TestCase('Simple') {
 	try {
 		Error.Raise(Error.SyntaxError, 'MESSAGE')
@@ -137,4 +106,56 @@ TestCase('Error from function') {
 	} catch {|e|
 		Println(e.errorType.name, ' ', e.text)
 	}
+}
+
+TestCase('Catch-any may be placed anywhere') {
+	expr1 = `try {
+		nil
+	} catch (a) {|e|
+		nil
+	} catch (b) {|e|
+		nil
+	} catch (c) {|e|
+		nil
+	} catch {
+		nil
+	}
+	expr2 = `try {
+		nil
+	} catch {
+		nil
+	} catch (a) {|e|
+		nil
+	} catch (b) {|e|
+		nil
+	} catch (c) {|e|
+		nil
+	}	
+	buff1 = B''
+	expr1.PrintPUnit(buff1)
+	buff2 = B''
+	expr2.PrintPUnit(buff2)
+	sys.cout.Write(buff1)
+	Printf('%s\n', cond(diff.Diff(buff1, buff2).distance == 0, 'OK', '*NG*'))
+}
+
+TestCase('Multiple Errors') {
+	f() {block} = try {
+		block()
+	} catch (Error.SyntaxError) {|e|
+		'1st handler caught ' + e.errorType.name
+	} catch (Error.KeyError, Error.MemoryError, Error.PropertyError) {|e|
+		'2nd handler caught ' + e.errorType.name
+	} catch (Error.StreamError, Error.SymbolError) {|e|
+		'3rd handler caught ' + e.errorType.name
+	} else {
+		'else handler'
+	}
+	Tester(`f {})
+	Tester(`f {Error.Raise(Error.SyntaxError, '')})
+	Tester(`f {Error.Raise(Error.KeyError, '')})
+	Tester(`f {Error.Raise(Error.MemoryError, '')})
+	Tester(`f {Error.Raise(Error.PropertyError, '')})
+	Tester(`f {Error.Raise(Error.StreamError, '')})
+	Tester(`f {Error.Raise(Error.SymbolError, '')})
 }

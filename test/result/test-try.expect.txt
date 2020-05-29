@@ -188,6 +188,21 @@ try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3
   ##29 Argument()
   ##30 Call(cont=##31)
   ##31 NoOperation()
+======== Simple ========
+SyntaxError MESSAGE
+======== Error from nested try ========
+SyntaxError MESSAGE
+======== Error from double-nested try ========
+SyntaxError MESSAGE
+======== Error from scope ========
+SyntaxError MESSAGE
+======== Error from triple-nested scope ========
+SyntaxError MESSAGE
+======== Error from function ========
+SyntaxError MESSAGE
+SyntaxError MESSAGE
+SyntaxError MESSAGE
+SyntaxError MESSAGE
 ======== Catch-any may be placed anywhere ========
   ##0 BeginTryBlock(branchDest=##3)
   ##1 Lookup(`nil)
@@ -223,18 +238,11 @@ try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3
   ##31 Lookup(`nil)
   ##32 NoOperation()
 OK
-======== Simple ========
-SyntaxError MESSAGE
-======== Error from nested try ========
-SyntaxError MESSAGE
-======== Error from double-nested try ========
-SyntaxError MESSAGE
-======== Error from scope ========
-SyntaxError MESSAGE
-======== Error from triple-nested scope ========
-SyntaxError MESSAGE
-======== Error from function ========
-SyntaxError MESSAGE
-SyntaxError MESSAGE
-SyntaxError MESSAGE
-SyntaxError MESSAGE
+======== Multiple Errors ========
+f {} .. else handler
+f {Error.Raise(Error.SyntaxError, '')} .. 1st handler caught SyntaxError
+f {Error.Raise(Error.KeyError, '')} .. 2nd handler caught KeyError
+f {Error.Raise(Error.MemoryError, '')} .. 2nd handler caught MemoryError
+f {Error.Raise(Error.PropertyError, '')} .. 2nd handler caught PropertyError
+f {Error.Raise(Error.StreamError, '')} .. 3rd handler caught StreamError
+f {Error.Raise(Error.SymbolError, '')} .. 3rd handler caught SymbolError
