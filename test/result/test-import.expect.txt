@@ -12,6 +12,7 @@ dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__name__, `sub
 dir(foo.sub1) .. [`CheckName, `__name__, `sub2]
 dir(foo.sub1.sub2) .. [`CheckName, `__name__]
 ======== __name__ variable ========
+__name__ .. __main__
 foo.__name__ .. foo
 foo.sub1.__name__ .. foo.sub1
 foo.sub1.sub2.__name__ .. foo.sub1.sub2

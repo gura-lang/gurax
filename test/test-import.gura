@@ -26,6 +26,7 @@ TestCase('Dotted Symbol') {
 
 TestCase('__name__ variable') {
 	import(foo.sub1.sub2)
+	Tester(`__name__)
 	Tester(`foo.__name__)
 	Tester(`foo.sub1.__name__)
 	Tester(`foo.sub1.sub2.__name__)
