@@ -378,12 +378,24 @@ void PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::Exec(Processor& proc
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
-	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
-		Value_VType::GetVTypeThis(processor.PeekValue(initByNilFlag? 0 : 1)));
-	RefPtr<Value> pValueInit(
-		initByNilFlag? Value::nil() :
-		(discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference()));
-	if (!vtypeCustom.AssignPropSlot(frame, GetSymbol(), GetDottedSymbol(), GetFlags(), pValueInit.release())) {
+	bool rtn;
+	if constexpr (initByNilFlag) {
+		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
+				Value_VType::GetVTypeThis(processor.PeekValue(0)));
+		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+				GetDottedSymbol(), GetFlags(), Value::nil());
+	} else if constexpr (discardValueFlag) {
+		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
+				Value_VType::GetVTypeThis(processor.PeekValue(1)));
+		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+				GetDottedSymbol(), GetFlags(), processor.PopValue());
+	} else {
+		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
+				Value_VType::GetVTypeThis(processor.PeekValue(1)));
+		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+				GetDottedSymbol(), GetFlags(), processor.PeekValue(0).Reference());
+	}
+	if (!rtn) {
 		processor.ErrorDone();
 		return;
 	}		

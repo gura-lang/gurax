@@ -1115,7 +1115,7 @@ void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
 	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), true, *this);
-	composer.FlushDiscard();										// [VType]
+	composer.FlushDiscard();													// [VType]
 }
 
 void Expr_Indexer::ComposeForAssignmentInClass(
@@ -1133,9 +1133,9 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 	}
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
-	exprAssigned.ComposeOrNil(composer);							// [VType Value]
+	exprAssigned.ComposeOrNil(composer);										// [VType Value]
 	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), false, *this);
-	composer.FlushDiscard();										// [VType]
+	composer.FlushDiscard();													// [VType]
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
