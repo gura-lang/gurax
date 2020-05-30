@@ -235,9 +235,13 @@ void PUnit_AssignToDeclArg<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValueAssigned(
-		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	frame.AssignWithCast(*_pDeclArg, *pValueAssigned);
+	if constexpr (discardValueFlag) {
+		RefPtr<Value> pValueAssigned(processor.PopValue());
+		frame.AssignWithCast(*_pDeclArg, *pValueAssigned);
+	} else {
+		Value& valueAssigned = processor.PeekValue(0);
+		frame.AssignWithCast(*_pDeclArg, valueAssigned);
+	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
