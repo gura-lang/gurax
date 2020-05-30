@@ -108,6 +108,7 @@ protected:
 	RefPtr<WeakPtr> _pwExprPrev;
 	RefPtr<WeakPtr> _pwExprParent;
 	const PUnit* _pPUnitFirst;
+	const PUnit* _pPUnitEnd;
 	const PUnit* _pPUnitSubFirst;
 public:
 	static RefPtr<Expr> Empty;
@@ -115,7 +116,7 @@ public:
 	// Constructor
 	Expr(const TypeInfo& typeInfo) :
 		_typeInfo(typeInfo), _pPathNameSrc(StringReferable::Empty->Reference()),
-		_pPUnitFirst(nullptr), _pPUnitSubFirst(nullptr) {}
+		_pPUnitFirst(nullptr), _pPUnitEnd(nullptr), _pPUnitSubFirst(nullptr) {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
 	Expr& operator=(const Expr& src) = delete;
@@ -148,6 +149,8 @@ public:
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	void SetPUnitFirst(const PUnit* pPUnit) { if (!_pPUnitFirst) _pPUnitFirst = pPUnit; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
+	void SetPUnitEnd(const PUnit* pPUnit) { if (!_pPUnitEnd) _pPUnitEnd = pPUnit; }
+	const PUnit* GetPUnitEnd() const { return _pPUnitEnd; }
 	void SetPUnitSubFirst(const PUnit* pPUnit) { if (!_pPUnitSubFirst) _pPUnitSubFirst = pPUnit; }
 	const PUnit* GetPUnitSubFirst() const { return _pPUnitSubFirst; }
 public:

@@ -27,8 +27,8 @@ void Expr::ComposeOrNil(Composer& composer)
 
 Iterator* Expr::EachPUnit() const
 {
-	const PUnit* pPUnitSentinel = nullptr;
 	const PUnit* pPUnit = GetPUnitFirst();
+	const PUnit* pPUnitSentinel = GetPUnitEnd();
 	if (pPUnit && pPUnit->GetPUnitSentinel()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
@@ -168,6 +168,7 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlot(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
 //------------------------------------------------------------------------------
@@ -610,6 +611,7 @@ void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 		pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_EndArgSlotExpand(*this);									// [Argument]
 		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+		SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
 		Expr_Unary::ComposeForArgSlot(composer);
 	}
@@ -771,6 +773,7 @@ void Expr_Assign::ComposeForArgSlot(Composer& composer)
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlotNamed(*this);										// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	GetExprRight().SetPUnitEnd(composer.PeekPUnitCont());
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -799,6 +802,7 @@ void Expr_Root::Compose(Composer& composer)
 	//pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
 	composer.Add_Return(*this);
 	composer.Add_Terminate();
+	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
@@ -1321,8 +1325,10 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 		exprDefaultArg.ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(exprDefaultArg);
+		exprDefaultArg.SetPUnitEnd(composer.PeekPUnitCont());
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	pExprBody->SetPUnitEnd(composer.PeekPUnitCont());
 	return new FunctionCustom(type, pSymbol,
 							  GetDeclCallable().Reference(), pExprBody->Reference(), pHelpHolder.release());
 }

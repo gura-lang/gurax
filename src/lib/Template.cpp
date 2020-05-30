@@ -76,6 +76,7 @@ bool Template::PrepareAndCompose(Composer& composer)
 		expr.SetPUnitFirst(composer.PeekPUnitCont());
 		expr.ComposeOrNil(composer);
 		composer.Add_Return(expr);
+		expr.SetPUnitEnd(composer.PeekPUnitCont());
 		return !Error::IsIssued();
 	};
 	return Sub(composer, GetExprForInit()) && Sub(composer, GetExprForBody());

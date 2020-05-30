@@ -53,6 +53,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 	expr.ComposeOrNil(*this);													// [Any]
 	EndRepeaterBlock();
 	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
+	expr.SetPUnitEnd(PeekPUnitCont());
 }
 
 void Composer::Print() const
