@@ -161,13 +161,13 @@ void Expr::ComposeForAssignmentInClass(
 void Expr::ComposeForArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
 	composer.Add_BeginArgSlot(*this);											// [Argument]
 	Compose(composer);															// [Argument Any]
 	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlot(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 //------------------------------------------------------------------------------
@@ -604,12 +604,12 @@ void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
 		PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+		SetPUnitFirst(pPUnitOfArgSlot);
 		composer.Add_BeginArgSlot(*this);										// [Argument]
 		GetExprChild().ComposeOrNil(composer);									// [Argument Any]
 		pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_EndArgSlotExpand(*this);									// [Argument]
 		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-		SetPUnitFirst(pPUnitOfArgSlot);
 	} else {
 		Expr_Unary::ComposeForArgSlot(composer);
 	}
@@ -764,13 +764,13 @@ void Expr_Assign::ComposeForArgSlot(Composer& composer)
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprLeft()).GetSymbol();
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 	composer.Add_BeginArgSlotNamed(
 				pSymbol, GetExprRight().Reference(), *this);					// [Argument ArgSlot]
 	GetExprRight().ComposeOrNil(composer);										// [Argument ArgSlot Assigned]
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlotNamed(*this);										// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -1316,11 +1316,11 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 		if (!pExprParam->IsDeclArgWithDefault(&pExprParamEx)) continue;
 		Expr& exprDefaultArg = pExprParamEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
+		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
 		composer.Add_BeginSequence(exprDefaultArg);
 		exprDefaultArg.ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(exprDefaultArg);
-		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	return new FunctionCustom(type, pSymbol,
