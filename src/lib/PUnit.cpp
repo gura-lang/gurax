@@ -193,16 +193,27 @@ void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValueAssigned(
-		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	if (pValueAssigned->IsVType()) {
-		VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
-		vtype.PrepareForAssignment(processor, GetSymbol());
-	} else if (pValueAssigned->IsType(VTYPE_Function)) {
-		Function& function = Value_Function::GetFunction(*pValueAssigned);
-		if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
+	if constexpr (discardValueFlag) {
+		RefPtr<Value> pValueAssigned(processor.PopValue());
+		if (pValueAssigned->IsVType()) {
+			VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
+			vtype.PrepareForAssignment(processor, GetSymbol());
+		} else if (pValueAssigned->IsType(VTYPE_Function)) {
+			Function& function = Value_Function::GetFunction(*pValueAssigned);
+			if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
+		}
+		frame.Assign(GetSymbol(), pValueAssigned.release());
+	} else {
+		Value& valueAssigned(processor.PeekValue(0));
+		if (valueAssigned.IsVType()) {
+			VType& vtype = Value_VType::GetVTypeThis(valueAssigned);
+			vtype.PrepareForAssignment(processor, GetSymbol());
+		} else if (valueAssigned.IsType(VTYPE_Function)) {
+			Function& function = Value_Function::GetFunction(valueAssigned);
+			if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
+		}
+		frame.Assign(GetSymbol(), valueAssigned.Reference());
 	}
-	frame.Assign(GetSymbol(), pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
