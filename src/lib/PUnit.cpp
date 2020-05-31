@@ -2096,16 +2096,16 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
-		if (argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
-			// just ignore extra arguments
-			processor.SetPUnitNext(_GetPUnitCont());
-		} else {
+		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
 			processor.ErrorDone();
+			return;
 		}
+		// just ignore extra arguments
 	} else if (!pArgSlot->IsVacant()) {
 		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();
+		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frame = processor.GetFrameCur();
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
@@ -2114,9 +2114,9 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 			return;
 		}
 		processor.SetPUnitNext(GetPUnitBranchDest());
-	} else {
-		processor.SetPUnitNext(_GetPUnitCont());
+		return;
 	}
+	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
