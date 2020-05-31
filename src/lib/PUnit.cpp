@@ -2193,9 +2193,7 @@ void PUnit_EndArgSlotExpand<discardValueFlag>::Exec(Processor& processor) const
 	auto CheckArgSlot = [](Argument& argument) {
 		ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 		if (!pArgSlot) {
-			if (argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
-				// just ignore extra arguments
-			} else {
+			if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 				Error::Issue(ErrorType::ArgumentError, "too many arguments");
 				return false;
 			}
@@ -2666,20 +2664,6 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 template<bool discardValueFlag, PUnit::BranchMode branchMode>
 void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processor) const
 {
-#if 0
-	processor.SetExprCur(_pExprSrc);
-	const Error* pError = Error::GetLastError();
-	RefPtr<Value> pValue(processor.PopValue());
-	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
-	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
-		if constexpr (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
-		Error::Clear();
-		processor.SetPUnitNext(_GetPUnitCont());
-	} else {
-		if constexpr (branchMode == BranchMode::Nil) processor.PushValue(Value::nil());
-		processor.SetPUnitNext(GetPUnitBranchDest());
-	}
-#else
 	processor.SetExprCur(_pExprSrc);
 	const Error* pError = Error::GetLastError();
 	if (pError) {
@@ -2706,7 +2690,6 @@ void PUnit_JumpIfNoCatch<discardValueFlag, branchMode>::Exec(Processor& processo
 	}
 	if constexpr (branchMode == BranchMode::Nil) processor.PushValue(Value::nil());
 	processor.SetPUnitNext(GetPUnitBranchDest());
-#endif
 }
 
 template<bool discardValueFlag, PUnit::BranchMode branchMode>
