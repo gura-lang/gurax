@@ -50,10 +50,10 @@ Gurax_ImplementStatement(_create_list_)
 								  true, exprCaller);							// [List Car Argument]
 			if (pExpr->IsType<Expr_Block>()) {
 				// @{ .. {args*} .. }
-				dynamic_cast<Expr_Block*>(pExpr)->GetExprLinkElem().ComposeForArgSlot(composer);
+				dynamic_cast<Expr_Block*>(pExpr)->GetExprLinkElem().ComposeWithinArgSlot(composer);
 			} else {
 				// @{ .. args .. }
-				pExpr->ComposeForArgSlot(composer);
+				pExpr->ComposeWithinArgSlot(composer);
 			}
 			if (Error::IsIssued()) return;
 			composer.Add_Call(exprCaller);										// [List Car Result]
@@ -62,7 +62,7 @@ Gurax_ImplementStatement(_create_list_)
 		composer.Add_DiscardValue(exprCaller);									// [List]
 	} else {
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ComposeForLister(composer);									// [List]
+			pExpr->ComposeWithinLister(composer);									// [List]
 		}
 	}
 }

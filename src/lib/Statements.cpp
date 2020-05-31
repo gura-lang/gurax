@@ -976,7 +976,7 @@ Gurax_ImplementStatement(class_)
 	} else {
 		composer.Add_CreateVType(false, exprCaller);							// [VType]
 	}
-	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeForClass(composer, false);
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, false);
 }
 
 // struct {`block}
@@ -992,7 +992,7 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 Gurax_ImplementStatement(struct_)
 {
 	composer.Add_CreateVType(false, exprCaller);								// [VType]
-	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeForClass(composer, true);
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, true);
 	composer.Add_CompleteStruct(exprCaller);									// [VType]
 }
 

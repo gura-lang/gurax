@@ -130,35 +130,35 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	// [Value]
 }
 
-void Expr::ComposeForClass(Composer& composer, bool publicFlag)
+void Expr::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
 
-void Expr::ComposeForLister(Composer& composer)
+void Expr::ComposeWithinLister(Composer& composer)
 {
 	ComposeOrNil(composer);														// [List Any]
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
-void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
+void Expr::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
-void Expr::ComposeForAssignment(
+void Expr::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
-void Expr::ComposeForAssignmentInClass(
+void Expr::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
-void Expr::ComposeForArgSlot(Composer& composer)
+void Expr::ComposeWithinArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
@@ -248,19 +248,19 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
-void ExprLink::ComposeForClass(Composer& composer, bool publicFlag) const
+void ExprLink::ComposeWithinClass(Composer& composer, bool publicFlag) const
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForClass(composer, publicFlag);
+		pExpr->ComposeWithinClass(composer, publicFlag);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
 	}
 }
 
-void ExprLink::ComposeForArgSlot(Composer& composer) const
+void ExprLink::ComposeWithinArgSlot(Composer& composer) const
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForArgSlot(composer);
+		pExpr->ComposeWithinArgSlot(composer);
 		if (Error::IsIssued()) return;
 	}
 }
@@ -340,7 +340,7 @@ void Expr_Member::Compose(Composer& composer)
 	}
 }
 
-void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Member::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -364,7 +364,7 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 	}
 }
 
-void Expr_Member::ComposeForAssignment(
+void Expr_Member::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	GetExprTarget().ComposeOrNil(composer);										// [Target]
@@ -473,7 +473,7 @@ void Expr_Identifier::Compose(Composer& composer)
 	}
 }
 
-void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -484,7 +484,7 @@ void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operat
 	composer.FlushDiscard();
 }
 
-void Expr_Identifier::ComposeForAssignment(
+void Expr_Identifier::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	if (pOp) {
@@ -497,14 +497,14 @@ void Expr_Identifier::ComposeForAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), *this);							// [Assigned]
 }
 
-void Expr_Identifier::ComposeForClass(Composer& composer, bool publicFlag)
+void Expr_Identifier::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
 	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), true, *this);
 	composer.FlushDiscard();													// [VType]
 }
 	
-void Expr_Identifier::ComposeForAssignmentInClass(
+void Expr_Identifier::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
@@ -591,17 +591,17 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	}
 }
 
-void Expr_UnaryOp::ComposeForLister(Composer& composer)
+void Expr_UnaryOp::ComposeWithinLister(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
 		GetExprChild().ComposeOrNil(composer);									// [List Any]
 		composer.Add_ListElem(0, false, true, *this);							// [List]
 	} else {
-		Expr_Unary::ComposeForLister(composer);									// [List]
+		Expr_Unary::ComposeWithinLister(composer);									// [List]
 	}
 }
 
-void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
+void Expr_UnaryOp::ComposeWithinArgSlot(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
 		PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
@@ -613,7 +613,7 @@ void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 		SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
-		Expr_Unary::ComposeForArgSlot(composer);
+		Expr_Unary::ComposeWithinArgSlot(composer);
 	}
 }
 
@@ -674,7 +674,7 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	}
 }
 
-void Expr_BinaryOp::ComposeForLister(Composer& composer)
+void Expr_BinaryOp::ComposeWithinLister(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::Seq)) {
 		GetExprLeft().ComposeOrNil(composer);									// [List Left]
@@ -682,7 +682,7 @@ void Expr_BinaryOp::ComposeForLister(Composer& composer)
 		composer.Add_BinaryOp(GetOperator(), *this);							// [List Result]
 		composer.Add_ListElem(0, false, true, *this);							// [List]
 	} else {
-		Expr_Binary::ComposeForLister(composer);								// [List]
+		Expr_Binary::ComposeWithinLister(composer);								// [List]
 	}
 }
 
@@ -749,15 +749,15 @@ bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
 
 void Expr_Assign::Compose(Composer& composer)
 {
-	GetExprLeft().ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
+	GetExprLeft().ComposeWithinAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
-void Expr_Assign::ComposeForClass(Composer& composer, bool publicFlag)
+void Expr_Assign::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
-	GetExprLeft().ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
+	GetExprLeft().ComposeWithinAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
 }
 
-void Expr_Assign::ComposeForArgSlot(Composer& composer)
+void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 {
 	if (GetOperator() || !GetExprLeft().IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::ArgumentError, *this,
@@ -846,7 +846,7 @@ void Expr_Block::Compose(Composer& composer)
 		SetPUnitSubFirst(composer.PeekPUnitCont());
 		PUnit* pPUnitSequence = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(*this);
-		GetExprLinkParam().ComposeForArgSlot(composer);
+		GetExprLinkParam().ComposeWithinArgSlot(composer);
 		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(*this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
@@ -854,12 +854,12 @@ void Expr_Block::Compose(Composer& composer)
 	ComposeSequence(composer, GetExprElemFirst());								// [Any]
 }
 
-void Expr_Block::ComposeForLister(Composer& composer)
+void Expr_Block::ComposeWithinLister(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, *this);										// [List List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForLister(composer);										// [List List]
+		pExpr->ComposeWithinLister(composer);										// [List List]
 	}	
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
@@ -1007,18 +1007,18 @@ void Expr_Lister::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, *this);										// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForLister(composer);										// [List]
+		pExpr->ComposeWithinLister(composer);										// [List]
 	}
 }
 
-void Expr_Lister::ComposeForAssignment(
+void Expr_Lister::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	exprAssigned.ComposeOrNil(composer);										// [Assigned]
 	composer.Add_GenIterator_ForLister(*this);									// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true, *this);								// [Assigned Iterator Value]
-		pExpr->ComposeForValueAssignment(composer, pOp);						// [Assigned Iterator]
+		pExpr->ComposeWithinValueAssignment(composer, pOp);						// [Assigned Iterator]
 		if (Error::IsIssued()) return;
 	}
 	composer.Add_DiscardValue(*this);											// [Assigned]
@@ -1072,7 +1072,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	composer.Add_IndexGet(*this);												// [Elems]
 }
 
-void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Elems Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -1091,7 +1091,7 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 	composer.FlushDiscard();
 }
 
-void Expr_Indexer::ComposeForAssignment(
+void Expr_Indexer::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Car]
@@ -1109,7 +1109,7 @@ void Expr_Indexer::ComposeForAssignment(
 	}
 }
 
-void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
+void Expr_Indexer::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
 	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1122,7 +1122,7 @@ void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
 	composer.FlushDiscard();													// [VType]
 }
 
-void Expr_Indexer::ComposeForAssignmentInClass(
+void Expr_Indexer::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
@@ -1198,12 +1198,12 @@ void Expr_Caller::Compose(Composer& composer)
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);	// [Argument]
 	}
-	GetExprLinkCdr().ComposeForArgSlot(composer);								// [Argument]
+	GetExprLinkCdr().ComposeWithinArgSlot(composer);								// [Argument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(*this);													// [Result]
 }
 
-void Expr_Caller::ComposeForClass(Composer& composer, bool publicFlag)
+void Expr_Caller::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
 	const char* errMsg = "invalid class definition";
 	if (!GetExprCar().IsType<Expr_Identifier>()) {
@@ -1215,10 +1215,10 @@ void Expr_Caller::ComposeForClass(Composer& composer, bool publicFlag)
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	GetExprOfBlock()->GetExprLinkElem().ComposeForClass(composer, true);
+	GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, true);
 }
 
-void Expr_Caller::ComposeForAssignment(
+void Expr_Caller::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	if (pOp) {
@@ -1245,7 +1245,7 @@ void Expr_Caller::ComposeForAssignment(
 	}
 }
 
-void Expr_Caller::ComposeForAssignmentInClass(
+void Expr_Caller::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
