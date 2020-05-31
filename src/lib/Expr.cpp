@@ -432,6 +432,19 @@ void Expr_Value::Compose(Composer& composer)
 	composer.Add_Value(GetValue()->Reference(), *this);							// [Value]
 }
 
+void Expr_Value::ComposeWithinArgSlot(Composer& composer)
+{
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
+	composer.Add_BeginArgSlot(*this);											// [Argument]
+	Compose(composer);															// [Argument Any]
+	if (Error::IsIssued()) return;
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
+	composer.Add_EndArgSlot(*this);												// [Argument]
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
+}
+
 String Expr_Value::ToString(const StringStyle& ss) const
 {
 	return HasSource()? GetSourceSTL() : GetValue()->ToString();
@@ -516,6 +529,19 @@ void Expr_Identifier::ComposeWithinAssignmentInClass(
 	exprAssigned.ComposeOrNil(composer);										// [VType Value]
 	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), false, *this);
 	composer.FlushDiscard();													// [VType]
+}
+
+void Expr_Identifier::ComposeWithinArgSlot(Composer& composer)
+{
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
+	composer.Add_BeginArgSlot(*this);											// [Argument]
+	Compose(composer);															// [Argument Any]
+	if (Error::IsIssued()) return;
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
+	composer.Add_EndArgSlot(*this);												// [Argument]
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const

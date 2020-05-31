@@ -526,6 +526,7 @@ public:
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
 public:
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -565,6 +566,7 @@ public:
 		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag) override;
+	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual bool IsEqualTo(const Expr& expr) const override;
