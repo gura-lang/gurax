@@ -1770,7 +1770,7 @@ template<bool discardValueFlag>
 String PUnit_MemberGet_Normal<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Member_Normal(`%s)", GetSymbol()->GetName());
+	str.Format("MemberGet_Normal(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;

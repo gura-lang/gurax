@@ -27,7 +27,7 @@ f(`(a + b))
 --------
 `{foo.bar}
   ##0 Lookup(`foo)
-  ##1 Member_Normal(`bar)
+  ##1 MemberGet_Normal(`bar)
 --------
 `{foo.bar = 3}
   ##0 Lookup(`foo)
