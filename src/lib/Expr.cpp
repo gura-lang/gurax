@@ -31,7 +31,7 @@ Iterator* Expr::EachPUnit() const
 	const PUnit* pPUnitSentinel = GetPUnitEnd();
 	if (pPUnit && pPUnit->GetPUnitSentinel()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
-		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
+		pPUnit = pPUnit->GetPUnitAdjacent();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 	}
 	return new Iterator_PUnit(pPUnit, pPUnitSentinel);
 }
@@ -434,6 +434,7 @@ void Expr_Value::Compose(Composer& composer)
 
 void Expr_Value::ComposeWithinArgSlot(Composer& composer)
 {
+#if 0
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
 	composer.Add_BeginArgSlot(*this);											// [Argument]
@@ -443,6 +444,15 @@ void Expr_Value::ComposeWithinArgSlot(Composer& composer)
 	composer.Add_EndArgSlot(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitEnd(composer.PeekPUnitCont());
+#else
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
+	composer.Add_ArgSlot_Value(GetValue()->Reference(), *this);					// [Argument]
+	Compose(composer);
+	if (Error::IsIssued()) return;
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
+#endif
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const

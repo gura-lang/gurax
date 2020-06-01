@@ -1982,26 +1982,31 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
+	const PUnit* _pPUnitCont;
 	RefPtr<Value> _pValue;
 	Expr* _pExprSrc;
 public:
 	// Constructor
 	PUnit_ArgSlot_Value(Value* pValue, Expr* pExpr) :
-									_pValue(pValue), _pExprSrc(pExpr) {}
+			_pPUnitCont(this + 1), _pValue(pValue), _pExprSrc(pExpr) {}
 public:
 	const Value& GetValue() const { return *_pValue; }
 public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
+	virtual bool IsBeginSequence() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitCont; }
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
+	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
 class GURAX_DLLDECLARE PUnitFactory_ArgSlot_Value : public PUnitFactory {

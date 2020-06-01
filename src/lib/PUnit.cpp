@@ -2093,9 +2093,25 @@ template<bool discardValueFlag>
 void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
-	Frame& frame = processor.GetFrameCur();
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
-	argument.FeedValue(frame, GetValue().Reference());
+	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	Frame& frame = processor.GetFrameCur();
+	if (!pArgSlot) {
+		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
+			Error::Issue(ErrorType::ArgumentError, "too many arguments");
+			processor.ErrorDone();
+			return;
+		}
+		// just ignore extra arguments
+	} else if (!pArgSlot->IsVacant()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		processor.ErrorDone();
+		return;
+	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
+		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
+	} else {
+		argument.FeedValue(frame, GetValue().Reference());
+	}
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
@@ -2107,7 +2123,15 @@ template<bool discardValueFlag>
 String PUnit_ArgSlot_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("ArgSlot_Value(%s)", GetValue().ToString(StringStyle().SetDigest()).c_str());
+	RefPtr<Expr> pExpr(new Expr_UnaryOp(GetExprSrc().Reference(), Operator::Quote));
+	str.Format("ArgSlot_Value(%s",
+				pExpr->ToString(StringStyle().SetCram()).c_str());
+	if (GetExprSrc().GetPUnitFirst()) {
+		str.Format(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
+	}
+	str.Format(",%s,cont=%s)",
+				GetValue().ToString(StringStyle().SetDigest()).c_str(),
+				MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2133,6 +2157,7 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 	processor.SetExprCur(_pExprSrc);
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	Frame& frame = processor.GetFrameCur();
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2145,7 +2170,6 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		Frame& frame = processor.GetFrameCur();
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
