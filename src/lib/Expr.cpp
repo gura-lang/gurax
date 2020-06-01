@@ -429,35 +429,23 @@ const Expr::TypeInfo Expr_Value::typeInfo("Value");
 
 void Expr_Value::Compose(Composer& composer)
 {
-	composer.Add_Value(GetValue()->Reference(), *this);							// [Value]
+	composer.Add_Value(GetValue().Reference(), *this);							// [Value]
 }
 
 void Expr_Value::ComposeWithinArgSlot(Composer& composer)
 {
-#if 0
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
-	composer.Add_BeginArgSlot(*this);											// [Argument]
-	Compose(composer);															// [Argument Any]
-	if (Error::IsIssued()) return;
-	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlot(*this);												// [Argument]
-	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	SetPUnitEnd(composer.PeekPUnitCont());
-#else
-	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-	SetPUnitFirst(pPUnitOfArgSlot);
-	composer.Add_ArgSlot_Value(GetValue()->Reference(), *this);					// [Argument]
+	composer.Add_ArgSlot_Value(GetValue().Reference(), *this);					// [Argument]
 	Compose(composer);
 	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitEnd(composer.PeekPUnitCont());
-#endif
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
 {
-	return HasSource()? GetSourceSTL() : GetValue()->ToString();
+	return HasSource()? GetSourceSTL() : GetValue().ToString();
 }
 
 //------------------------------------------------------------------------------
@@ -577,8 +565,20 @@ const Expr::TypeInfo Expr_String::typeInfo("String");
 
 void Expr_String::Compose(Composer& composer)
 {
-	composer.Add_Value(new Value_String(
-					GetSegmentReferable().Reference()), *this);					// [Value]
+	RefPtr<Value> pValue(new Value_String(GetSegmentReferable().Reference()));
+	composer.Add_Value(pValue.release(), *this);								// [Value]
+}
+
+void Expr_String::ComposeWithinArgSlot(Composer& composer)
+{
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
+	RefPtr<Value> pValue(new Value_String(GetSegmentReferable().Reference()));
+	composer.Add_ArgSlot_Value(pValue.release(), *this);						// [Argument]
+	Compose(composer);
+	if (Error::IsIssued()) return;
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
 String Expr_String::ToString(const StringStyle& ss) const

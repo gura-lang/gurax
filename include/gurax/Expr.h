@@ -519,8 +519,8 @@ public:
 	Expr_Value(Value* pValue) : Expr_Node(typeInfo), _pValue(pValue) {}
 	Expr_Value(Value* pValue, StringReferable* pStrSource) :
 		Expr_Node(typeInfo), _pValue(pValue), _pStrSource(pStrSource) {}
-	Value* GetValue() { return _pValue.get(); }
-	const Value* GetValue() const { return _pValue.get(); }
+	Value& GetValue() { return *_pValue; }
+	const Value& GetValue() const { return *_pValue; }
 	bool HasSource() const { return _pStrSource.get() != nullptr; }
 	const char* GetSource() const { return _pStrSource->GetString(); }
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
@@ -591,6 +591,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
