@@ -151,7 +151,7 @@ public:
 	// Constructor
 	PUnit_Value(Value* pValue, Expr* pExpr) : _pValue(pValue), _pExprSrc(pExpr) {}
 public:
-	const Value* GetValue() const { return _pValue.get(); }
+	const Value& GetValue() const { return *_pValue; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1988,6 +1988,8 @@ public:
 	// Constructor
 	PUnit_ArgSlot_Value(Value* pValue, Expr* pExpr) :
 									_pValue(pValue), _pExprSrc(pExpr) {}
+public:
+	const Value& GetValue() const { return *_pValue; }
 public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:

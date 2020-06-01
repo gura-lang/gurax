@@ -78,7 +78,7 @@ template<bool discardValueFlag>
 void PUnit_Value<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
-	if constexpr (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+	if constexpr (!discardValueFlag) processor.PushValue(GetValue().Reference());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -86,7 +86,7 @@ template<bool discardValueFlag>
 String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Value(%s)", GetValue()->ToString(StringStyle().SetDigest()).c_str());
+	str.Format("Value(%s)", GetValue().ToString(StringStyle().SetDigest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2092,13 +2092,22 @@ PUnit* PUnitFactory_ArgumentDelegation::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc);
+	Frame& frame = processor.GetFrameCur();
+	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	argument.FeedValue(frame, GetValue().Reference());
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+		return;
+	}
+	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
 String PUnit_ArgSlot_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "ArgSlot_Value()";
+	str.Format("ArgSlot_Value(%s)", GetValue().ToString(StringStyle().SetDigest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
