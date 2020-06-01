@@ -31,7 +31,7 @@ public:
 	Writer(Writer&& src) = delete;
 	Writer& operator=(Writer&& src) noexcept = delete;
 protected:
-	~Writer() = default;
+	~Writer();
 public:
 	UInt16 GetCompressionMethod() { return _compressionMethod; }
 	StatExOwner& GetStatExOwner_Folder() { return _statExOwner_Folder; }

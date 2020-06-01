@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
+Writer::~Writer()
+{
+	Finish();
+}
+
 bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod)
 {
 	//compressionMethod = CompressionMethod::Store;

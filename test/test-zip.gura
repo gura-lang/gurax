@@ -25,7 +25,7 @@ TestCase('zip.Writer()') {
 			(buff = Binary()).p.Put(`uint8, r.IntSeq(256, bytes))
 			writer.Add(Format('entry%02d.bin', i), buff)
 		}
-		writer.Close()
+		//writer.Close()
 	}
 	zip.Reader(buffZip) {|reader|
 		PrintStat(reader.Entries()::stat)
