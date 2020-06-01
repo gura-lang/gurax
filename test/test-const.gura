@@ -1,0 +1,19 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+Println('line.', __line__)
+Println('line.', __line__)
+Println('line.', __line__)
+Println('line.', __line__)
+repeat (3) {
+	Println('line.', __line__)
+}
+if (true) {
+	Println('line.', __line__)
+} else {
+	Println('line.', __line__)
+}
+(`__line__).PrintPUnit()
+Println('----')
+(`f(__line__)).PrintPUnit()
+Println('file: ', path.FileName(__file__))

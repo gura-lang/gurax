@@ -533,6 +533,20 @@ void Expr_Identifier::ComposeWithinArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
+	if (GetSymbol()->IsIdentical(Gurax_Symbol(__file__))) {
+		composer.Add_ArgSlot_Value(new Value_String(GetPathNameSrc()), *this);
+	} else if (GetSymbol()->IsIdentical(Gurax_Symbol(__line__))) {
+		composer.Add_ArgSlot_Value(new Value_Number(GetLineNoTop()), *this);
+	} else {
+		composer.Add_ArgSlot_Lookup(GetSymbol(), *this);						// [Argument]
+	}
+	Compose(composer);
+	if (Error::IsIssued()) return;
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitEnd(composer.PeekPUnitCont());
+#if 0
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	SetPUnitFirst(pPUnitOfArgSlot);
 	composer.Add_BeginArgSlot(*this);											// [Argument]
 	Compose(composer);															// [Argument Any]
 	if (Error::IsIssued()) return;
@@ -540,6 +554,7 @@ void Expr_Identifier::ComposeWithinArgSlot(Composer& composer)
 	composer.Add_EndArgSlot(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitEnd(composer.PeekPUnitCont());
+#endif
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const

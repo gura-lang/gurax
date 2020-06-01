@@ -2147,6 +2147,73 @@ PUnit* PUnitFactory_ArgSlot_Value::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_ArgSlot_Lookup
+// Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
+//                             -> [Argument(Car)] (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
+{
+	processor.SetExprCur(_pExprSrc);
+	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	Frame& frame = processor.GetFrameCur();
+	if (!pArgSlot) {
+		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
+			Error::Issue(ErrorType::ArgumentError, "too many arguments");
+			processor.ErrorDone();
+			return;
+		}
+		// just ignore extra arguments
+	} else if (!pArgSlot->IsVacant()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		processor.ErrorDone();
+		return;
+	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
+		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
+	} else {
+		const Value* pValue = frame.Lookup(GetSymbol());
+		if (!pValue) {
+			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+			processor.ErrorDone();
+			return;
+		}
+		argument.FeedValue(frame, pValue->Reference());
+	}
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+		return;
+	}
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_ArgSlot_Lookup<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	RefPtr<Expr> pExpr(new Expr_UnaryOp(GetExprSrc().Reference(), Operator::Quote));
+	str.Format("ArgSlot_Lookup(%s",
+				pExpr->ToString(StringStyle().SetCram()).c_str());
+	if (GetExprSrc().GetPUnitFirst()) {
+		str.Format(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
+	}
+	str.Format(",%s,cont=%s)", GetSymbol()->GetName(),
+				MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_ArgSlot_Lookup::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_ArgSlot_Lookup<true>(_pSymbol, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_ArgSlot_Lookup<false>(_pSymbol, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlot
 // Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
 //                             -> [Argument(Car)] (branch)

@@ -2024,6 +2024,56 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_ArgSlot_Lookup
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_ArgSlot_Lookup : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitCont;
+	const Symbol* _pSymbol;
+	Expr* _pExprSrc;
+public:
+	// Constructor
+	PUnit_ArgSlot_Lookup(const Symbol* pSymbol, Expr* pExpr) :
+			_pPUnitCont(this + 1), _pSymbol(pSymbol), _pExprSrc(pExpr) {}
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	const Expr& GetExprSrc() const { return *_pExprSrc; }
+public:
+	// Virtual functions of PUnit
+	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitCont; }
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_ArgSlot_Lookup : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgSlot_Lookup");
+private:
+	const Symbol* _pSymbol;
+public:
+	PUnitFactory_ArgSlot_Lookup(const Symbol* pSymbol, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ArgSlot_Lookup<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlot
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

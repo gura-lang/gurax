@@ -225,6 +225,9 @@ public:
 	void Add_ArgSlot_Value(Value* pValue, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_ArgSlot_Value(pValue, exprSrc.Reference()));
 	}
+	void Add_ArgSlot_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_ArgSlot_Lookup(pSymbol, exprSrc.Reference()));
+	}
 	void Add_BeginArgSlot(const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_BeginArgSlot(pPUnitBranchDest, exprSrc.Reference()));

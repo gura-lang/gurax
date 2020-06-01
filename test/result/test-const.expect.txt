@@ -1,0 +1,16 @@
+line.4
+line.5
+line.6
+line.7
+line.9
+line.9
+line.9
+line.12
+  ##0 Value(<Number:16>)
+----
+  ##0 Lookup(`f)
+  ##1 Argument()
+  ##2 ArgSlot_Value(`__line__:##2,<Number:18>,cont=##4)
+  ##3 Value(<Number:18>)
+  ##4 Call(cont=##5)
+file: test-const.gura
