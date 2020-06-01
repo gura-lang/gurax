@@ -2085,6 +2085,35 @@ PUnit* PUnitFactory_ArgumentDelegation::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_ArgSlot_Value
+// Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
+//                             -> [Argument(Car)] (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
+{
+}
+
+template<bool discardValueFlag>
+String PUnit_ArgSlot_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "ArgSlot_Value()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_ArgSlot_Value::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_ArgSlot_Value<true>(_pValue->Reference(), _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_ArgSlot_Value<false>(_pValue->Reference(), _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlot
 // Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
 //                             -> [Argument(Car)] (branch)

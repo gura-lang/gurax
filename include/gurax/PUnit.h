@@ -1974,6 +1974,49 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_ArgSlot_Value
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_ArgSlot_Value : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<Value> _pValue;
+	Expr* _pExprSrc;
+public:
+	// Constructor
+	PUnit_ArgSlot_Value(Value* pValue, Expr* pExpr) :
+									_pValue(pValue), _pExprSrc(pExpr) {}
+public:
+	const Expr& GetExprSrc() const { return *_pExprSrc; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_ArgSlot_Value : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgSlot_Value");
+private:
+	RefPtr<Value> _pValue;
+public:
+	PUnitFactory_ArgSlot_Value(Value* pValue, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pValue(pValue) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ArgSlot_Value<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlot
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
