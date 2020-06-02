@@ -10,7 +10,7 @@
 //-----------------------------------------------------------------------------
 #define Gurax_MemoryPoolAllocator(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().Allocate(bytes, ownerName);	\
+	return MemoryPool::Global().Allocate(bytes, ownerName); \
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p); \
@@ -18,32 +18,32 @@ static void operator delete(void* p) { \
 
 #define Gurax_MemoryPoolAllocator_PUnit() \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().GetChunkPUnit().Allocate(bytes);	\
+	return MemoryPool::Global().GetChunkPUnit().Allocate(bytes); \
 } \
 static void operator delete(void* p) {}
 
 #define Gurax_MemoryPoolAllocator_Small(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().GetChunkSmall().Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkSmall().Allocate(ownerName); \
 } \
 static void operator delete(void* p) { \
-	MemoryPool::Deallocate(p);	\
+	MemoryPool::Deallocate(p); \
 }
 
 #define Gurax_MemoryPoolAllocator_Medium(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().GetChunkMedium().Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkMedium().Allocate(ownerName); \
 } \
 static void operator delete(void* p) { \
-	MemoryPool::Deallocate(p);	\
+	MemoryPool::Deallocate(p); \
 }
 
 #define Gurax_MemoryPoolAllocator_Large(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().GetChunkLarge().Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkLarge().Allocate(ownerName); \
 } \
 static void operator delete(void* p) { \
-	MemoryPool::Deallocate(p);	\
+	MemoryPool::Deallocate(p); \
 }
 
 namespace Gurax {
@@ -85,20 +85,20 @@ public:
 			Pool* pPoolNext;
 			size_t nPUnits;
 			char buff[0];
-			static Pool* Create(size_t bytesPoolBuff);
+			static Pool* Create(size_t bytesPerPool);
 			bool IsWithin(const PUnit* pPUnit) const {
 				const char *p = reinterpret_cast<const char *>(pPUnit);
 				return buff <= p && p - buff < offsetNext;
 			}
 		};
 	protected:
-		size_t _bytesPoolBuff;
+		size_t _bytesPerPool;
 		size_t _bytesMargin;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 		void* _pReserved;
 	public:
-		ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin);
+		ChunkPUnit(size_t bytesPerPool, size_t bytesMargin);
 		size_t CountPools() const;
 		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
@@ -122,24 +122,25 @@ public:
 		struct Pool {
 			Pool* pPoolNext;
 			char buff[0];
-			static Pool* Create(size_t bytesPoolBuff);
+			static Pool* Create(size_t bytesPerPool);
 		};
 	private:
 		size_t _bytesBlock;
 		size_t _bytesFrame;
-		size_t _bytesPoolBuff;
-		size_t _nBlocks;
+		size_t _bytesPerPool;
+		size_t _nBlocksPerPool;
 		size_t _iBlockNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 		Header* _pHeaderVacantFirst;
 	public:
-		ChunkFixed(size_t bytesBlock, size_t nBlocks);
+		ChunkFixed(size_t bytesBlock, size_t nBlocksPerPool);
 	public:
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		size_t CountPools() const;
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
+		size_t CountBlocksAllocated() const;
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
 	class GURAX_DLLDECLARE ChunkVariable : public Chunk {

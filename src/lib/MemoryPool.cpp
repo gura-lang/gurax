@@ -46,9 +46,9 @@ void MemoryPool::Deallocate(void* p)
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkPUnit
 //-----------------------------------------------------------------------------
-MemoryPool::ChunkPUnit::ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin) :
-	_bytesPoolBuff(bytesPoolBuff), _bytesMargin(bytesMargin),
-	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop), _pReserved(nullptr)
+MemoryPool::ChunkPUnit::ChunkPUnit(size_t bytesPerPool, size_t bytesMargin) :
+	_bytesPerPool(bytesPerPool), _bytesMargin(bytesMargin),
+	_pPoolTop(Pool::Create(_bytesPerPool)), _pPoolCur(_pPoolTop), _pReserved(nullptr)
 {}
 
 size_t MemoryPool::ChunkPUnit::CountPools() const
@@ -78,9 +78,9 @@ void* MemoryPool::ChunkPUnit::DoAllocate(size_t bytes)
 	void* pAllocated = PeekPointer();
 	_pPoolCur->nPUnits++;
 	_pPoolCur->offsetNext += bytes;
-	if (_pPoolCur->offsetNext + _bytesMargin > _bytesPoolBuff) {
+	if (_pPoolCur->offsetNext + _bytesMargin > _bytesPerPool) {
 		auto pPUnitBridge = new PUnit_Bridge();
-		Pool* pPool = Pool::Create(_bytesPoolBuff);
+		Pool* pPool = Pool::Create(_bytesPerPool);
 		_pPoolCur->pPoolNext = pPool;
 		_pPoolCur = pPool;
 		pPUnitBridge->SetPUnitCont(reinterpret_cast<const PUnit*>(PeekPointer()));
@@ -124,16 +124,16 @@ UInt32 MemoryPool::ChunkPUnit::CalcSeqId(const PUnit* pPUnit) const
 String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
+	str.Format("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPerPool, CountPools());
 	return str;
 }
 
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkPUnit::Pool
 //-----------------------------------------------------------------------------
-MemoryPool::ChunkPUnit::Pool* MemoryPool::ChunkPUnit::Pool::Create(size_t bytesPoolBuff)
+MemoryPool::ChunkPUnit::Pool* MemoryPool::ChunkPUnit::Pool::Create(size_t bytesPerPool)
 {
-	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPerPool));
 	pPool->offsetNext = 0;
 	pPool->pPoolNext = nullptr;
 	pPool->nPUnits = 0;
@@ -143,11 +143,11 @@ MemoryPool::ChunkPUnit::Pool* MemoryPool::ChunkPUnit::Pool::Create(size_t bytesP
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkFixed
 //-----------------------------------------------------------------------------
-MemoryPool::ChunkFixed::ChunkFixed(size_t bytesBlock, size_t nBlocks) :
+MemoryPool::ChunkFixed::ChunkFixed(size_t bytesBlock, size_t nBlocksPerPool) :
 	_bytesBlock(bytesBlock), _bytesFrame(sizeof(Header) + bytesBlock),
-	_bytesPoolBuff(_bytesFrame * nBlocks),
-	_nBlocks(nBlocks), _iBlockNext(0),
-	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop),
+	_bytesPerPool(_bytesFrame * nBlocksPerPool),
+	_nBlocksPerPool(nBlocksPerPool), _iBlockNext(0),
+	_pPoolTop(Pool::Create(_bytesPerPool)), _pPoolCur(_pPoolTop),
 	_pHeaderVacantFirst(nullptr)
 {}
 
@@ -165,8 +165,8 @@ void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 		pAllocated = reinterpret_cast<char*>(_pHeaderVacantFirst);
 		_pHeaderVacantFirst = _pHeaderVacantFirst->u.pHeaderVacantNext;
 	} else {
-		if (_iBlockNext >= _nBlocks) {
-			Pool* pPool = Pool::Create(_bytesPoolBuff);
+		if (_iBlockNext >= _nBlocksPerPool) {
+			Pool* pPool = Pool::Create(_bytesPerPool);
 			_pPoolCur->pPoolNext = pPool;
 			_iBlockNext = 0;
 			_pPoolCur = pPool;
@@ -189,17 +189,30 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 	_pHeaderVacantFirst = pHeader;
 }
 
+size_t MemoryPool::ChunkFixed::CountBlocksAllocated() const
+{
+	size_t nBlocksAllocated = 0;
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
+		size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocksPerPool;
+		const char* pAllocated = pPool->buff;
+		for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += _bytesFrame) {
+			const Header* pHeader = reinterpret_cast<const Header*>(pAllocated);
+			if (pHeader->ownerName) nBlocksAllocated++;
+		}
+	}
+	return nBlocksAllocated;
+}
+
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
 	if (!ss.IsDigest()) {
-		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		str += "\n";
 		for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
-			size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocks;
+			size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocksPerPool;
 			const char* pAllocated = pPool->buff;
-			for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += bytesFrame) {
+			for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += _bytesFrame) {
 				const Header* pHeader = reinterpret_cast<const Header*>(pAllocated);
 				str += pHeader->ownerName? '*' : '.';
 			}
@@ -212,9 +225,9 @@ String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkFixed::Pool
 //-----------------------------------------------------------------------------
-MemoryPool::ChunkFixed::Pool* MemoryPool::ChunkFixed::Pool::Create(size_t bytesPoolBuff)
+MemoryPool::ChunkFixed::Pool* MemoryPool::ChunkFixed::Pool::Create(size_t bytesPerPool)
 {
-	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPerPool));
 	pPool->pPoolNext = nullptr;
 	return pPool;
 }
