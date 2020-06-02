@@ -12,24 +12,24 @@ f(`(a + b))
   ##1 Lookup(`b)
   ##2 BinaryOp(+)
 --------
-`{foo}
+{foo}
   ##0 Lookup(`foo)
 --------
-`{foo, bar}
+{foo, bar}
   ##0 Lookup(`foo), DiscardValue()
   ##1 Lookup(`bar)
 --------
-`{foo = 2, bar = 'hello'}
+{foo = 2, bar = 'hello'}
   ##0 Value(<Number:2>)
   ##1 AssignToSymbol(`foo), DiscardValue()
   ##2 Value(<String:'hello'>)
   ##3 AssignToSymbol(`bar)
 --------
-`{foo.bar}
+{foo.bar}
   ##0 Lookup(`foo)
   ##1 MemberGet_Normal(`bar)
 --------
-`{foo.bar = 3}
+{foo.bar = 3}
   ##0 Lookup(`foo)
   ##1 Value(<Number:3>)
   ##2 MemberSet_Normal(`bar)

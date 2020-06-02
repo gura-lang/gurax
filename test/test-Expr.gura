@@ -5,7 +5,7 @@ TestCase('PUnit') {
 	f(`expr) = {
 		Println('--------')
 		Printf('f(`(%s))\n', expr)
-		expr.PrintPUnit()
+		expr.PrintPUnit(strIndent = '  ')
 	}
 	f(a)
 	f({a = 3})
@@ -32,8 +32,7 @@ TestCase('PUnit') {
 	]
 	exprs.Each {|expr|
 		Println('--------')
-		Printf('`%s\n', expr)
-		expr.PrintPUnit()
+		expr.PrintPUnitWithLabel()
 	}
 }
 

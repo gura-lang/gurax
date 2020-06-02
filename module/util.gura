@@ -2,29 +2,30 @@
 //==============================================================================
 // util.gura
 //==============================================================================
-Expr.PrintPUnit(stream:Stream = sys.cout):void = {
-	seqIdOffset = nil
-	this.EachPUnit {|punit|
-		seqIdOffset = seqIdOffset || punit.seqId
-		stream.Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
-	}
+Expr.PrintPUnit(stream:Stream = sys.cout, strIndent:String = ''):void = {
+	punits = this.EachPUnit():list
+	punits.IsEmpty() && return
+	seqIdFirst = punits.first.seqId
+	wdSeqId = Format('%d', punits.last.seqId - seqIdFirst).len
+	stream.Printf('%s##%-*d %s\n', strIndent, wdSeqId,
+					punits:*seqId - seqIdFirst, punits:*ToString(seqIdFirst))
 }
 
-Expr.PrintPUnitWithLabel(stream:Stream = sys.cout):void = {
+Expr.PrintPUnitWithLabel(stream:Stream = sys.cout, strIndent:String = '  '):void = {
 	Printf('%s\n', this)
-	this.PrintPUnit(stream)
+	this.PrintPUnit(stream, strIndent)
 }
 
 VType.PrintPropSlots(stream:Stream = sys.cout):void:static  = {
 	propSlots = this.__EachPropSlot__():list
-	maxLenSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
-	maxLenVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
+	wdSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
+	wdVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
 	stream.Printf('%s\n', this.__fullName__)
 	propSlots.Each {|propSlot|
 		stream.Printf('  %s%-*s %-*s %s%s\n',
 			cond(propSlot.isOfClass, '.', '#'),
-			maxLenSymbolName, propSlot.symbol.symbolName,
-			maxLenVTypeFullName, propSlot.vtype.__fullName__,
+			wdSymbolName, propSlot.symbol.symbolName,
+			wdVTypeFullName, propSlot.vtype.__fullName__,
 			['', 'R', 'W', 'R/W'][cond(propSlot.IsSet(`R), 1, 0) + cond(propSlot.IsSet(`W), 2, 0)],
 			cond(propSlot.IsSet(`nil), ',nil', ''))
 	}

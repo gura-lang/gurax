@@ -142,7 +142,7 @@ TestCase('Cast of List Value') {
 TestCase('Quoted Value') {
 	f(`x) = {
 		Println(x)
-		x.PrintPUnit()
+		x.PrintPUnit(strIndent = '  ')
 	}
 	f(3)
 	f('str')
