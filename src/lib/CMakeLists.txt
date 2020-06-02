@@ -131,6 +131,7 @@ target_sources(guraxcore PRIVATE
 	VType_Iterator.cpp
 	VType_KeyValuePair.cpp
 	VType_List.cpp
+	VType_MemoryPool.cpp
 	VType_Module.cpp
 	VType_Nil.cpp
 	VType_Number.cpp

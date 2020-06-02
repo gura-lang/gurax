@@ -183,6 +183,12 @@ public:
 	ChunkFixed& GetChunkMedium() { return _chunkMedium; }
 	ChunkFixed& GetChunkLarge() { return _chunkLarge; }
 	ChunkVariable& GetChunkVariable() { return _chunkVariable; }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const MemoryPool& memoryPool) const { return this == &memoryPool; }
+	bool IsEqualTo(const MemoryPool& memoryPool) const { return IsIdentical(memoryPool); }
+	bool IsLessThan(const MemoryPool& memoryPool) const { return this < &memoryPool; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //-----------------------------------------------------------------------------

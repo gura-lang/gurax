@@ -39,6 +39,11 @@ void MemoryPool::Deallocate(void* p)
 	pHeader->u.pChunk->Deallocate(p);
 }
 
+String MemoryPool::ToString(const StringStyle& ss) const
+{
+	return "MemoryPool";
+}
+
 //-----------------------------------------------------------------------------
 // MemoryPool::Chunk
 //-----------------------------------------------------------------------------

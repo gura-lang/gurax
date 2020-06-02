@@ -87,6 +87,7 @@ void Basement::PrepareVType()
 	VTYPE_KeyValuePair.Prepare(frame);
 	VTYPE_VType.Prepare(frame);
 	VTYPE_List.Prepare(frame);
+	VTYPE_MemoryPool.Prepare(frame);
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);

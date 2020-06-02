@@ -110,6 +110,7 @@
 #include "gurax/VType_Iterator.h"
 #include "gurax/VType_KeyValuePair.h"
 #include "gurax/VType_List.h"
+#include "gurax/VType_MemoryPool.h"
 #include "gurax/VType_Module.h"
 #include "gurax/VType_Nil.h"
 #include "gurax/VType_Number.h"
