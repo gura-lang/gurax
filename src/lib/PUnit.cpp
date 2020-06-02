@@ -1911,16 +1911,20 @@ void PUnit_MemberGet_MapToIter<discardValueFlag>::Exec(Processor& processor) con
 	if (pValueTarget->IsIterable()) {
 		RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapToIter(
-									   processor.Reference(), pIteratorTarget.release(),
-									   GetSymbol(), GetAttr().Reference()));
-		if constexpr (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
+							processor.Reference(), pIteratorTarget.release(),
+							GetSymbol(), GetAttr().Reference()));
+		if constexpr (!discardValueFlag) {
+			processor.PushValue(new Value_Iterator(pIterator.release()));
+		}
 	} else {
 		Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
 		}
-		if constexpr (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
+		if constexpr (!discardValueFlag) {
+			processor.PushValue(pValueProp->AsMember(*pValueTarget));
+		}
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }

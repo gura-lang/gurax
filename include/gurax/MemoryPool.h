@@ -152,7 +152,7 @@ private:
 	static MemoryPool _memoryPoolGlobal;
 public:
 	ChunkPUnit* _pChunkPUnit;
-	ChunkPUnit _chunkPUnitProg;
+	ChunkPUnit _chunkPUnitCode;
 	ChunkPUnit _chunkPUnitREPL;
 	ChunkFixed _chunkSmall;
 	ChunkFixed _chunkMedium;
@@ -174,7 +174,7 @@ public:
 	void* Allocate(size_t bytes, const char* ownerName);
 	static void Deallocate(void* p);
 	void SwitchChunkPUnit(bool replFlag) {
-		_pChunkPUnit = replFlag? &_chunkPUnitREPL : &_chunkPUnitProg;
+		_pChunkPUnit = replFlag? &_chunkPUnitREPL : &_chunkPUnitCode;
 	}
 	void SetChunkPUnit(ChunkPUnit* pChunkPUnit) { _pChunkPUnit = pChunkPUnit; }
 	ChunkPUnit& GetChunkPUnit() { return *_pChunkPUnit; }

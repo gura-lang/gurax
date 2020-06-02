@@ -11,8 +11,9 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	_chunkPUnitProg(64 * 65536, 64 * 2), _chunkPUnitREPL(64 * 256, 64 * 2),
-	_chunkSmall(64, 65536), _chunkMedium(128, 65536), _chunkLarge(192, 65536), _chunkVariable()
+	_chunkPUnitCode(64 * 65536, 64 * 2), _chunkPUnitREPL(64 * 256, 64 * 2),
+	_chunkSmall(64, 65536), _chunkMedium(128, 65536), _chunkLarge(192, 65536),
+	_chunkVariable()
 {
 	SwitchChunkPUnit(false);
 }
