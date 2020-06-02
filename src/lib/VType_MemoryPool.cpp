@@ -27,27 +27,29 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// MemoryPool#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(MemoryPool, MethodSkeleton)
+// MemoryPool##CountBlocksAllocated()
+Gurax_DeclareHybridMethod(MemoryPool, CountBlocksAllocated)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Returns the number of allocated blocks.\n");
 }
 
-Gurax_ImplementMethod(MemoryPool, MethodSkeleton)
+Gurax_ImplementHybridMethod(MemoryPool, CountBlocksAllocated)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	Value& valueThis = argument.GetValueThis();
+	MemoryPool& memoryPool = valueThis.IsInstanceOf(VTYPE_MemoryPool)?
+		dynamic_cast<Value_MemoryPool&>(valueThis).GetMemoryPool() : MemoryPool::Global();
 	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	//ArgPicker args(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	size_t nBlocksAllocated = 0;
+	nBlocksAllocated += memoryPool.GetChunkSmall().CountBlocksAllocated();
+	nBlocksAllocated += memoryPool.GetChunkMedium().CountBlocksAllocated();
+	nBlocksAllocated += memoryPool.GetChunkLarge().CountBlocksAllocated();
+	return new Value_Number(nBlocksAllocated);
 }
 
 //-----------------------------------------------------------------------------
@@ -80,7 +82,7 @@ void VType_MemoryPool::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(MemoryPool, MethodSkeleton));
+	Assign(Gurax_CreateMethod(MemoryPool, CountBlocksAllocated));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(MemoryPool, propSkeleton));
 }
