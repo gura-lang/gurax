@@ -65,7 +65,7 @@ Parser = class {
 				fields = argBody.Split('=', 1):list
 				[longName, value] = cond(fields.len == 1, [fields[0], nil], fields)
 				entry = dictByLongName.Get(longName)
-				!entry && Error.Raise(Error.CommandError, 'unknown option --%s', longName)
+				!entry && Error.Raise(Error.CommandError, 'unknown option: --%s', longName)
 				if (entry.type == `param) {
 					!value && Error.Raise(Error.CommandError, 'value must be specified')
 					opt[entry.longName] = value
@@ -75,7 +75,7 @@ Parser = class {
 				}
 			} elsif (shortName = arg.StartsWith('-'):rest) {
 				entry = dictByShortName.Get(shortName)
-				!entry && Error.Raise(Error.CommandError, 'unknown option -%s', shortName)
+				!entry && Error.Raise(Error.CommandError, 'unknown option: -%s', shortName)
 				if (entry.type == `param) {
 					value = iter.NextValue()
 					!value && Error.Raise(Error.CommandError, 'value must be specified')

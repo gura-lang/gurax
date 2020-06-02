@@ -345,11 +345,13 @@ options:
 //------------------------------------------------------------------------------
 main() = {
 	argopt.Parser {|p|
+		p.AddFlag('help', 'h', 'prints help')
 		p.AddFlag('entity', 'e', 'generates entity class')
 		p.AddFlag('vtype', 'v', 'generates VType')
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
-		[argv, opt] = p.Parse(sys.argv)
-		if (argv.len < 1) {
+		opt = nil
+		try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+		if (!opt || argv.len < 1 || opt['help']) {
 			tmplHelp.Render(sys.cerr)
 			sys.Exit(1)
 		}

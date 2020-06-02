@@ -4,29 +4,27 @@ import(argopt)
 
 //sys.stdout.setcodec(nil)
 
+tmplHelp = tR'''
+usage: grep.gura [options] pattern file ...
+options:
+  ${p.FormatHelp() + '\n'}
+'''
+
 argopt.Parser {|p|
 	p.AddFlag('ignore-case',	'i', 'ignore character cases')
 	p.AddFlag('line-number',	'n', 'print line number with output lines')
 	p.AddFlag('recursive',		'r', 'recursively search sub directories')
 	p.AddParam('level',			'l', 'specify depth-level for recursive search', 'NUM')
-	try {
-		[argv, cfg] = p.Parse(sys.argv)
-	} catch {|e|
-		Println(e.text)
+	opt = nil
+	try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+	if (!opt || argv.len < 1) {
+		tmplHelp.Render(sys.cerr)
 		sys.Exit(1)
 	}
-	if (argv.len < 1) {
-		tR'''
-		usage: grep.gura [options] pattern file ...
-		options:
-		  ${p.FormatHelp() + '\n'}
-		'''.Render(sys.cerr)
-		sys.Exit(1)
-	}
-	pattern = cond(cfg['ignore-case'], re.Pattern(argv[0]):icase, re.Pattern(argv[0]))
+	pattern = cond(opt['ignore-case'], re.Pattern(argv[0]):icase, re.Pattern(argv[0]))
 }
-if (cfg['recursive']) {
-	level = cfg['level']
+if (opt['recursive']) {
+	level = opt['level']
 	fileNames = path.Walk('', level, argv.Offset(1)*):file
 } else {
 	fileNames = path.Glob(argv.Offset(1)):list:file
@@ -34,7 +32,7 @@ if (cfg['recursive']) {
 fileNames.Each {|fileName|
 	try {
 		ReadLines(fileName).Grep(pattern) {|m, iLine|
-			if (cfg['line-number']) {
+			if (opt['line-number']) {
 				Printf('%s:%d:%s', fileName, iLine + 1, m.source)
 			} else {
 				Printf('%s:%s', fileName, m.source)
