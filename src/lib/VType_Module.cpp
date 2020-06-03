@@ -110,7 +110,7 @@ Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, boo
 		return pPropSlot->GetValue(*this, attr);
 	}
 	Value* pValue = GetModule().GetFrame().LookupLocal(pSymbol);
-	if (pValue) return pValue;
+	if (pValue) return pValue->Reference();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
 					 "module '%s' doesn't have a property '%s'",

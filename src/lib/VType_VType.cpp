@@ -206,7 +206,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
 		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
-		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+		return pValue? pValue->Reference() : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
 	if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
