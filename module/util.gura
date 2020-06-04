@@ -30,3 +30,11 @@ VType.PrintPropSlots(stream:Stream = sys.cout):void:static  = {
 			cond(propSlot.IsSet(`nil), ',nil', ''))
 	}
 }
+
+DetectMemoryLeak():dynamicScope {`block} = {
+	nBlocksPrev = MemoryPool.CountBlocksAllocated() + 1
+	block.Eval()
+	nBlocksLeaked = MemoryPool.CountBlocksAllocated() - nBlocksPrev
+	(nBlocksLeaked > 0) && Error.Raise(Error.MemoryError,
+					'failed to release %s blocks', nBlocksLeaked)
+}
