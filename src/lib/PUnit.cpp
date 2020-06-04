@@ -111,13 +111,13 @@ void PUnit_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
-	const Value* pValue = frame.GetValue2(GetSymbol());
+	RefPtr<Value> pValue(frame.GetValue(GetSymbol()));
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		processor.ErrorDone();
 		return;
 	}
-	if constexpr (!discardValueFlag) processor.PushValue(pValue->Reference());
+	if constexpr (!discardValueFlag) processor.PushValue(pValue.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -2176,13 +2176,13 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 	} else {
-		const Value* pValue = frame.GetValue2(GetSymbol());
+		RefPtr<Value> pValue(frame.GetValue(GetSymbol()));
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 			processor.ErrorDone();
 			return;
 		}
-		argument.FeedValue(frame, pValue->Reference());
+		argument.FeedValue(frame, pValue.release());
 	}
 	if (Error::IsIssued()) {
 		processor.ErrorDone();

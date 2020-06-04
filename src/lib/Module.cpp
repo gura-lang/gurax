@@ -201,13 +201,13 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 	Frame& frameCur = processor.GetFrameCur();
 	if (pSymbolList && !pSymbolList->empty()) {
 		for (const Symbol* pSymbol : *pSymbolList) {
-			if (!overwriteFlag && frameCur.GetValue2(pSymbol)) {
+			if (!overwriteFlag && frameCur.IsAssigned(pSymbol)) {
 				Error::Issue(ErrorType::ImportError,
 							 "the symbol '%s' is already assigned in the current frame",
 							 pSymbol->GetName());
 				return false;
 			}
-			Value* pValue = GetFrame().GetValue2(pSymbol);
+			RefPtr<Value> pValue(GetFrame().GetValue(pSymbol));
 			if (!pValue) {
 				Error::Issue(ErrorType::ImportError,
 							 "module %s doesn't have a symbol named '%s'",
@@ -221,7 +221,7 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 	size_t nSymbolsAll = GetDottedSymbol().GetLength();
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
-		if (frameCur.GetValue2(*pDottedSymbol)) continue;
+		if (frameCur.IsAssigned(*pDottedSymbol)) continue;
 		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false, false));
 		if (!pModule) return false;
 		if (!frameCur.Assign(pModule.release())) {

@@ -32,10 +32,10 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const Dott
 	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
 	size_t iProp = valuesProp.size();
 	VType *pVType = &VTYPE_Any;
-	Value* pValue = frame.GetValue2(dottedSymbol);
+	RefPtr<Value> pValue(frame.GetValue(dottedSymbol));
 	if (pValueInit->IsNil()) flags |= PropSlot::Flag::Nil;
 	if (pValue && pValue->IsType(VTYPE_VType)) {
-		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
+		pVType = &dynamic_cast<Value_VType&>(*pValue).GetVTypeThis();
 		if (!pValueInit->IsNil()) {
 			pValueInit.reset(pVType->Cast(*pValueInit, flags));
 			if (!pValueInit) return false;

@@ -116,8 +116,8 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFo
 		}
 		return pPropSlot->GetValue(*this, attr);
 	}
-	Value* pValue = GetVType().GetFrame().GetValue2(pSymbol);
-	if (pValue) return pValue->Reference();
+	RefPtr<Value> pValue(GetVType().GetFrame().GetValue(pSymbol));
+	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
 					 "value type '%s' doesn't have a property '%s'",

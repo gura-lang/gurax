@@ -28,35 +28,35 @@ void FrameMap::Assign(const Symbol* pSymbol, Frame* pFrame)
 //------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
-Value* Frame::GetValue2(const Symbol* pSymbol)
+Value* Frame::GetValue(const Symbol* pSymbol)
 {
 	const Frame* pFrameSrc = nullptr;
-	Value* pValue = DoGetValue2(pSymbol, &pFrameSrc);
+	RefPtr<Value> pValue(DoGetValue(pSymbol, &pFrameSrc));
 	if (pValue) {
 		if (!_pFrameMap) _pFrameMap.reset(new FrameMap());
 		_pFrameMap->Assign(pSymbol, pFrameSrc->Reference());
 	}
-	return pValue;
+	return pValue.release();
 }
 
-Value* Frame::GetValue2(const DottedSymbol& dottedSymbol, size_t nTail)
+Value* Frame::GetValue(const DottedSymbol& dottedSymbol, size_t nTail)
 {
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
 	if (symbolList.size() <= nTail) return nullptr;
 	auto ppSymbol = symbolList.begin();
 	const Symbol* pSymbol = *ppSymbol++;
-	Value* pValue = GetValue2(pSymbol);
+	RefPtr<Value> pValue(GetValue(pSymbol));
 	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
-		pValue = pValue->PropGet(pSymbol, *Attribute::Empty, false);
+		pValue.reset(pValue->PropGet(pSymbol, *Attribute::Empty, false));
 	}
-	return pValue;
+	return pValue.release();
 }
 
-Value* Frame::GetValue2Local(const Symbol* pSymbol)
+Value* Frame::GetValueLocal(const Symbol* pSymbol)
 {
 	const Frame* pFrameSrc = nullptr;
-	return DoGetValue2Local(pSymbol, &pFrameSrc);
+	return DoGetValueLocal(pSymbol, &pFrameSrc);
 }
 
 void Frame::Assign(const Symbol* pSymbol, Value* pValue)
@@ -70,7 +70,7 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 {
 	if (dottedSymbol.IsEmpty()) return false;
 	if (dottedSymbol.IsDotted()) {
-		Value* pValueTarget = GetValue2(dottedSymbol, 1);
+		RefPtr<Value> pValueTarget(GetValue(dottedSymbol, 1));
 		if (!pValueTarget) return false;
 		return pValueTarget->PropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
@@ -168,19 +168,21 @@ void Frame_ValueMap::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-Value* Frame_ValueMap::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_ValueMap::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	Value* pValue = _pValueMap->Lookup(pSymbol);
-	if (pValue) *ppFrameSrc = this;
-	return pValue;
+	if (!pValue) return nullptr;
+	*ppFrameSrc = this;
+	return pValue->Reference();
 }
 
-Value* Frame_ValueMap::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_ValueMap::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
 	Value* pValue = _pValueMap->Lookup(pSymbol);
-	if (pValue) *ppFrameSrc = this;
-	return pValue;
+	if (!pValue) return nullptr;
+	*ppFrameSrc = this;
+	return pValue->Reference();
 }
 
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
@@ -190,7 +192,7 @@ bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 		const Value* pValue = pair.second;
 		if (pSymbol->StartsWith('_')) {
 			// nothing to do
-		} else if (overwriteFlag || !frameDst.GetValue2Local(pSymbol)) {
+		} else if (overwriteFlag || !frameDst.IsAssignedLocal(pSymbol)) {
 			frameDst.Assign(pSymbol, pValue->Reference());
 		} else {
 			Error::Issue(ErrorType::ValueError,
@@ -234,12 +236,12 @@ void Frame_Basement::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	Value::Delete(pValue);
 }
 
-Value* Frame_Basement::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Basement::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	return _pFrameOuter->DoGetValue2(pSymbol, ppFrameSrc);
+	return _pFrameOuter->DoGetValue(pSymbol, ppFrameSrc);
 }
 
-Value* Frame_Basement::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Basement::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
 	return nullptr;
@@ -269,17 +271,17 @@ void Frame_VType::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	Value::Delete(pValue);
 }
 
-Value* Frame_VType::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_VType::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	Value* pValue = _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
-	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	RefPtr<Value> pValue(_pFrameLocal->DoGetValue(pSymbol, ppFrameSrc));
+	if (pValue) return pValue.release();
+	return _pFrameOuter? _pFrameOuter->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
-Value* Frame_VType::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_VType::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
-	return _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
+	return _pFrameLocal->DoGetValue(pSymbol, ppFrameSrc);
 }
 
 void Frame_VType::GatherSymbol(SymbolList& symbolList) const
@@ -309,19 +311,19 @@ void Frame_Module::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-Value* Frame_Module::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Module::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	if (_pFrameLocal) {
-		Value* pValue = _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
-		if (pValue) return pValue;
+		RefPtr<Value> pValue(_pFrameLocal->DoGetValue(pSymbol, ppFrameSrc));
+		if (pValue) return pValue.release();
 	}
-	return _pFrameOuter? _pFrameOuter->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
-Value* Frame_Module::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Module::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
-	return _pFrameLocal? _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	return _pFrameLocal? _pFrameLocal->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_Module::GatherSymbol(SymbolList& symbolList) const
@@ -350,19 +352,19 @@ void Frame_Scope::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-Value* Frame_Scope::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Scope::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	if (_pFrameLocal) {
-		Value* pValue = _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
-		if (pValue) return pValue;
+		RefPtr<Value> pValue(_pFrameLocal->DoGetValue(pSymbol, ppFrameSrc));
+		if (pValue) return pValue.release();
 	}
-	return _pFrameOuter? _pFrameOuter->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
-Value* Frame_Scope::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Scope::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
-	return _pFrameLocal? _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	return _pFrameLocal? _pFrameLocal->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
@@ -391,17 +393,17 @@ void Frame_Block::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameMap->Assign(pSymbol, _pFrameLocal->Reference());
 }
 
-Value* Frame_Block::DoGetValue2(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Block::DoGetValue(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	Value* pValue = _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
-	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->DoGetValue2(pSymbol, ppFrameSrc) : nullptr;
+	RefPtr<Value> pValue(_pFrameLocal->DoGetValue(pSymbol, ppFrameSrc));
+	if (pValue) return pValue.release();
+	return _pFrameOuter? _pFrameOuter->DoGetValue(pSymbol, ppFrameSrc) : nullptr;
 }
 
-Value* Frame_Block::DoGetValue2Local(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+Value* Frame_Block::DoGetValueLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	// Lookup a frame in which DoAssign() assigns values.
-	return _pFrameLocal->DoGetValue2(pSymbol, ppFrameSrc);
+	return _pFrameLocal->DoGetValue(pSymbol, ppFrameSrc);
 }
 
 void Frame_Block::GatherSymbol(SymbolList& symbolList) const
