@@ -182,7 +182,7 @@ public:
 	virtual bool IsShortCircuitOperator() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const Symbol* GetPureSymbol() const { return nullptr; }
-	virtual DeclCallable* LookupDeclCallable2() const { return nullptr; } // used by Template
+	virtual DeclCallable* RetrieveDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag);
@@ -558,7 +558,7 @@ public:
 		return !HasAttr() && _pSymbol->IsIdentical(pSymbol);
 	}
 	virtual const Symbol* GetPureSymbol() const override { return HasAttr()? nullptr : _pSymbol; }
-	virtual DeclCallable* LookupDeclCallable2() const override; // used by Template
+	virtual DeclCallable* RetrieveDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeWithinValueAssignment(Composer& composer, const Operator* pOp) override;
@@ -873,7 +873,7 @@ public:
 	virtual bool IsStatement(const Symbol* pSymbol) const override {
 		return GetExprCar().IsPureSymbol(pSymbol);
 	}
-	virtual DeclCallable* LookupDeclCallable2() const override; // used by Template
+	virtual DeclCallable* RetrieveDeclCallable() const override; // used by Template
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;
 		if (_pExprOfBlock && !_pExprOfBlock->Traverse(visitor)) return false;

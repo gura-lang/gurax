@@ -207,7 +207,7 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 							 pSymbol->GetName());
 				return false;
 			}
-			RefPtr<Value> pValue(GetFrame().GetValue(pSymbol));
+			RefPtr<Value> pValue(GetFrame().Retrieve(pSymbol));
 			if (!pValue) {
 				Error::Issue(ErrorType::ImportError,
 							 "module %s doesn't have a symbol named '%s'",

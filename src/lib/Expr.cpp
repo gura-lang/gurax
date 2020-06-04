@@ -453,9 +453,9 @@ String Expr_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Identifier::typeInfo("Identifier");
 
-DeclCallable* Expr_Identifier::LookupDeclCallable2() const
+DeclCallable* Expr_Identifier::RetrieveDeclCallable() const
 {
-	RefPtr<Value> pValue(Basement::Inst.GetFrame().GetValue(GetSymbol()));
+	RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(GetSymbol()));
 	return pValue? DeclCallable::Reference(pValue->GetDeclCallable()) : nullptr;
 }
 
@@ -467,7 +467,7 @@ void Expr_Identifier::Compose(Composer& composer)
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__line__))) {
 		composer.Add_Value(new Value_Number(GetLineNoTop()), *this);
 	} else {
-		RefPtr<Value> pValue(Basement::Inst.GetFrame().GetValue(pSymbol));
+		RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(pSymbol));
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function&>(*pValue).GetFunction();
 			if (func.IsTypeStatement()) {
@@ -1221,7 +1221,7 @@ void Expr_Caller::Compose(Composer& composer)
 {
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(GetExprCar()));
 	if (pDottedSymbol) {
-		RefPtr<Value> pValue(Basement::Inst.GetFrame().GetValue(*pDottedSymbol));
+		RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(*pDottedSymbol));
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = Value_Function::GetFunction(*pValue);
 			if (func.IsTypeStatement()) {
@@ -1385,18 +1385,18 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 }
 
 // This method is used by Template.
-DeclCallable* Expr_Caller::LookupDeclCallable2() const
+DeclCallable* Expr_Caller::RetrieveDeclCallable() const
 {
 	if (GetExprCar().IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprCar = dynamic_cast<const Expr_Identifier&>(GetExprCar());
-		RefPtr<Value> pValue(Basement::Inst.GetFrame().GetValue(exprCar.GetSymbol()));
+		RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(exprCar.GetSymbol()));
 		return pValue? DeclCallable::Reference(pValue->GetDeclCallable()) : nullptr;
 	} else if (GetExprCar().IsType<Expr_Member>()) {
 		const Expr_Member& exprCar = dynamic_cast<const Expr_Member&>(GetExprCar());
 		if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
 			dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
 				IsIdentical(Gurax_Symbol(this_))) {
-			RefPtr<Value> pValue(VTYPE_Template.GetFrame().GetValue(exprCar.GetSymbol()));
+			RefPtr<Value> pValue(VTYPE_Template.GetFrame().Retrieve(exprCar.GetSymbol()));
 			return pValue? DeclCallable::Reference(pValue->GetDeclCallable()) : nullptr;
 		}
 	}

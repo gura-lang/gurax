@@ -57,7 +57,7 @@ String Function::MakeFullName() const
 
 void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 {
-	RefPtr<Value> pValue(vtype.GetFrame().GetValue(pSymbol));
+	RefPtr<Value> pValue(vtype.GetFrame().Retrieve(pSymbol));
 	if (pValue && pValue->IsType(VTYPE_Function)) {
 		_pHelpHolder.reset(Value_Function::GetFunction(*pValue).GetHelpHolder().Reference());
 	}

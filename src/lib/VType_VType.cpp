@@ -205,7 +205,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
-		RefPtr<Value> pValue(GetVTypeThis().GetFrame().GetValue(pSymbol));
+		RefPtr<Value> pValue(GetVTypeThis().GetFrame().Retrieve(pSymbol));
 		return pValue? pValue.release() : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;

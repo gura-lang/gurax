@@ -111,7 +111,7 @@ void PUnit_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.SetExprCur(_pExprSrc);
 	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValue(frame.GetValue(GetSymbol()));
+	RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		processor.ErrorDone();
@@ -2176,7 +2176,7 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 	} else {
-		RefPtr<Value> pValue(frame.GetValue(GetSymbol()));
+		RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 			processor.ErrorDone();

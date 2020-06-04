@@ -116,7 +116,7 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFo
 		}
 		return pPropSlot->GetValue(*this, attr);
 	}
-	RefPtr<Value> pValue(GetVType().GetFrame().GetValue(pSymbol));
+	RefPtr<Value> pValue(GetVType().GetFrame().Retrieve(pSymbol));
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,

@@ -410,7 +410,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		if (!pExprFirst) {
 			// nothing to do
 		} else {
-			RefPtr<DeclCallable> pDeclCallable(pExprFirst->LookupDeclCallable2());
+			RefPtr<DeclCallable> pDeclCallable(pExprFirst->RetrieveDeclCallable());
 			if (!pDeclCallable) {
 				// nothing to do
 			} else if (pDeclCallable->IsSet(DeclCallable::Flag::EndMarker)) {
@@ -454,7 +454,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			pExprTmplScript->SetStringIndent("");
 			pExprTmplScript->SetStringPost("");
 		} else if (!exprLastCaller.HasExprOfBlock()) {
-			RefPtr<DeclCallable> pDeclCallable(exprLastCaller.LookupDeclCallable2());
+			RefPtr<DeclCallable> pDeclCallable(exprLastCaller.RetrieveDeclCallable());
 			if (pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce()) {
 				exprLastCaller.SetExprOfBlock(new Expr_Block());
 				_exprLeaderStack.push_back(&exprLastCaller);
