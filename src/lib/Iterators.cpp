@@ -196,7 +196,7 @@ Value* Iterator_Member_MapAlong::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	Value* pValueProp = pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true);
+	RefPtr<Value> pValueProp(pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true));
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
@@ -214,7 +214,7 @@ Value* Iterator_Member_MapToIter::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	Value* pValueProp = pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true);
+	RefPtr<Value> pValueProp(pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true));
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
