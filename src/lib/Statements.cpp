@@ -248,10 +248,10 @@ Gurax_ImplementStatement(try_)
 		return;
 	}
 	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
-	composer.Add_BeginTryBlock(exprCaller);										// [Any]
+	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);						// [Any]
 	PUnit* pPUnitOfBranch_NoError = composer.PeekPUnitCont();
-	composer.Add_EndTryBlock(exprCaller);										// [Any] or []
+	composer.Add_TryBlockEnd(exprCaller);										// [Any] or []
 	if (pExprElse) {
 		composer.FlushDiscard();												// []
 		pExprElse->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
@@ -413,7 +413,7 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);
 		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
-		composer.Add_EndSequence(*exprCaller.GetExprOfBlock());
+		composer.Add_SequenceEnd(*exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		composer.Add_GenIterator_for(
 			exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, exprCaller);	// [Iterator]
@@ -539,9 +539,9 @@ Gurax_ImplementStatement(while_)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);
 		composer.ComposeAsSequence(exprCriteria);
-		composer.Add_EndSequence(exprCriteria);
+		composer.Add_SequenceEnd(exprCriteria);
 		composer.ComposeAsSequence(exprOfBlock);
-		composer.Add_EndSequence(exprOfBlock);
+		composer.Add_SequenceEnd(exprOfBlock);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		composer.Add_GenIterator_while(
 			exprCriteria.Reference(), exprOfBlock.Reference(), xiterFlag, exprCaller);	// [Iterator]
@@ -660,7 +660,7 @@ Gurax_ImplementStatement(repeat)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);
 		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
-		composer.Add_EndSequence(*exprCaller.GetExprOfBlock());
+		composer.Add_SequenceEnd(*exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
@@ -747,11 +747,11 @@ Gurax_ImplementStatement(repeat)
 				composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak);
 				exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator List Elem]
 				composer.EndRepeaterBlock();
-				composer.Add_Jump(pPUnitOfLoop, exprCaller);
+				composer.Add_Jump(pPUnitOfLoop, exprCaller);					// [Iterator List]
 				pPUnitOfBreakBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				composer.Add_RemoveValue(1, exprCaller);						// [List]
-				composer.Add_PopFrame(exprCaller);
+				composer.Add_PopFrame(exprCaller);								// [List]
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [Iteartor Last=nil]
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
@@ -763,10 +763,10 @@ Gurax_ImplementStatement(repeat)
 				composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch, nullptr);
 				exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator Last]
 				composer.EndRepeaterBlock();
-				composer.Add_Jump(pPUnitOfLoop, exprCaller);
+				composer.Add_Jump(pPUnitOfLoop, exprCaller);					// [Iterator Last]
 				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				composer.Add_RemoveValue(1, exprCaller);						// [Last]
-				composer.Add_PopFrame(exprCaller);
+				composer.Add_PopFrame(exprCaller);								// [Last]
 			}
 		} else {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller,
@@ -800,21 +800,21 @@ Gurax_ImplementStatement(break_)
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
-		composer.Add_Break(repeaterInfo.GetPUnitOfBreak(), false, exprCaller);
+		composer.Add_Break(repeaterInfo.GetPUnitOfBreak(), false, exprCaller);	// [Any or undefined]
 	} else if (repeaterInfo.GetPUnitOfBranch()) {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
 		}
-		composer.Add_Break(repeaterInfo.GetPUnitOfBranch(), true, exprCaller);
+		composer.Add_Break(repeaterInfo.GetPUnitOfBranch(), true, exprCaller);	// [Any or nil]
 	} else { // both PUnitOfBreak and PUnitOfBranch are nullptr
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
-		composer.Add_Break(nullptr, false, exprCaller);
+		composer.Add_Break(nullptr, false, exprCaller);							// [Any or undefined]
 	}
 }
 
@@ -843,14 +843,14 @@ Gurax_ImplementStatement(continue_)
 		} else {
 			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
 		}
-		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);
+		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);		// [Any or nil]
 	} else {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
-		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);
+		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);		// [Any or undefined]
 	}
 }
 
@@ -945,13 +945,13 @@ Gurax_ImplementStatement(scope)
 	if (pExprCdr) {
 		pExprCdr->ComposeOrNil(composer);										// [Any]
 		composer.Add_Cast(VTYPE_Frame, exprCaller);								// [Frame]
-		composer.Add_PushFrameFromStack(exprCaller);
+		composer.Add_PushFrameFromStack(exprCaller);							// []
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		composer.Add_PopFrame(exprCaller);
+		composer.Add_PopFrame(exprCaller);										// [Any]
 	} else {	
 		composer.Add_PushFrame<Frame_Scope>(exprCaller);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		composer.Add_PopFrame(exprCaller);
+		composer.Add_PopFrame(exprCaller);										// [Any]
 	}
 }
 
@@ -976,7 +976,7 @@ Gurax_ImplementStatement(class_)
 	} else {
 		composer.Add_CreateVType(false, exprCaller);							// [VType]
 	}
-	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, false);
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, false); // [VType]
 }
 
 // struct {`block}
@@ -992,7 +992,7 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 Gurax_ImplementStatement(struct_)
 {
 	composer.Add_CreateVType(false, exprCaller);								// [VType]
-	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, true);
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, true); // [VType]
 	composer.Add_CompleteStruct(exprCaller);									// [VType]
 }
 

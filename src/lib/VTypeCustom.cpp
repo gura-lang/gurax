@@ -142,7 +142,7 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
 	_pConstructorInh(pConstructorInh)
 {
-	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
+	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const

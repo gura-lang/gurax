@@ -47,12 +47,12 @@ void Composer::_Flush(bool discardValueFlag)
 void Composer::ComposeAsSequence(Expr& expr)
 {
 	expr.SetPUnitFirst(PeekPUnitCont());
-	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	Add_BeginSequence(expr);													// [Any]
+	PUnit* pPUnitOfSequenceBegin = PeekPUnitCont();
+	Add_SequenceBegin(expr);													// [Any]
 	BeginRepeaterBlock(nullptr, nullptr, nullptr);
 	expr.ComposeOrNil(*this);													// [Any]
 	EndRepeaterBlock();
-	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
+	pPUnitOfSequenceBegin->SetPUnitSentinel(PeekPUnitCont());
 	expr.SetPUnitEnd(PeekPUnitCont());
 }
 

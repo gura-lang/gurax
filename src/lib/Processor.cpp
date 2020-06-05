@@ -170,10 +170,10 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 	_pPUnitCur = pPUnit;
 	if (!_pPUnitCur) return;
 	PrepareExceptionHandling();
-	if (_pPUnitCur->IsBeginSequence()) {
+	if (_pPUnitCur->IsSequenceBegin()) {
 		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
-		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
-		if (pPUnitSentinel->IsEndSequence()) {
+		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip SequenceBegin/ArgSlot/ArgSlotNamed
+		if (pPUnitSentinel->IsSequenceEnd()) {
 			do {
 				while (_contFlag) {
 					_pPUnitCur->Exec(*this);
@@ -223,10 +223,10 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 				  _nestLevel * 2, "", _pPUnitCur->MakeSeqIdString().c_str());
 	PrepareExceptionHandling();
 	size_t wdSeqId = 0;
-	if (_pPUnitCur->IsBeginSequence()) {
+	if (_pPUnitCur->IsSequenceBegin()) {
 		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
-		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
-		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
+		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip SequenceBegin/ArgSlot/ArgSlotNamed
+		if (pPUnitSentinel->IsSequenceEnd()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitCur);

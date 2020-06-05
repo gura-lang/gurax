@@ -55,14 +55,14 @@ public:
 public:
 	// Virtual functions
 	virtual bool IsBridge() const { return false; }
-	virtual bool IsBeginSequence() const { return false; }
-	virtual bool IsEndSequence() const { return false; }
+	virtual bool IsSequenceBegin() const { return false; }
+	virtual bool IsSequenceEnd() const { return false; }
 	virtual bool IsReturn() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitBranchDest(const PUnit* pPUnit) { /* just ignore it */ }
-	virtual const PUnit* GetPUnitSentinel() const { return nullptr; } // only PUnit_BeginSequence returns a valid value.
+	virtual const PUnit* GetPUnitSentinel() const { return nullptr; } // only PUnit_SequenceBegin returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* GetPUnitAdjacent() const = 0;
@@ -1965,7 +1965,7 @@ public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
-	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool IsSequenceBegin() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitCont; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
@@ -2014,7 +2014,7 @@ public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
-	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool IsSequenceBegin() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitCont; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
@@ -2043,10 +2043,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_BeginArgSlot
+// PUnit_ArgSlotBegin
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_BeginArgSlot : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_ArgSlotBegin : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -2054,14 +2054,14 @@ private:
 	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
-	PUnit_BeginArgSlot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+	PUnit_ArgSlotBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
 		_pPUnitSentinel(this + 1) {}
 public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
-	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool IsSequenceBegin() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
@@ -2074,30 +2074,30 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_BeginArgSlot : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_ArgSlotBegin : public PUnitFactory_Branch {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_BeginArgSlot");
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgSlotBegin");
 public:
-	PUnitFactory_BeginArgSlot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+	PUnitFactory_ArgSlotBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_BeginArgSlot<false>);
+		return sizeof(PUnit_ArgSlotBegin<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EndArgSlot
+// PUnit_ArgSlotEnd
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_EndArgSlot : public PUnit {
+class GURAX_DLLDECLARE PUnit_ArgSlotEnd : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 public:
 	// Constructor
-	explicit PUnit_EndArgSlot(Expr* pExprSrc) : PUnit(pExprSrc) {}
+	explicit PUnit_ArgSlotEnd(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2110,30 +2110,30 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_EndArgSlot : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_ArgSlotEnd : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlot");
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgSlotEnd");
 private:
 public:
-	PUnitFactory_EndArgSlot(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_ArgSlotEnd(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_EndArgSlot<false>);
+		return sizeof(PUnit_ArgSlotEnd<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EndArgSlotExpand
+// PUnit_ArgSlotEnd_Expand
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_EndArgSlotExpand : public PUnit {
+class GURAX_DLLDECLARE PUnit_ArgSlotEnd_Expand : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 public:
 	// Constructor
-	explicit PUnit_EndArgSlotExpand(Expr* pExprSrc) : PUnit(pExprSrc) {}
+	explicit PUnit_ArgSlotEnd_Expand(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2146,23 +2146,23 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_EndArgSlotExpand : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_ArgSlotEnd_Expand : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlotExpand");
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgSlotEnd_Expand");
 private:
 public:
-	PUnitFactory_EndArgSlotExpand(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_ArgSlotEnd_Expand(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_EndArgSlotExpand<false>);
+		return sizeof(PUnit_ArgSlotEnd_Expand<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_BeginArgSlotNamed
+// PUnit_NamedArgSlotBegin
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_BeginArgSlotNamed : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_NamedArgSlotBegin : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -2172,7 +2172,7 @@ private:
 	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
-	PUnit_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+	PUnit_NamedArgSlotBegin(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
 		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSentinel(this + 1) {}
 public:
@@ -2181,7 +2181,7 @@ public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
-	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool IsSequenceBegin() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
@@ -2194,34 +2194,34 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_BeginArgSlotNamed : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_NamedArgSlotBegin : public PUnitFactory_Branch {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_BeginArgSlotNamed");
+	Gurax_MemoryPoolAllocator("PUnitFactory_NamedArgSlotBegin");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
 public:
-	PUnitFactory_BeginArgSlotNamed(const Symbol* pSymbol,
+	PUnitFactory_NamedArgSlotBegin(const Symbol* pSymbol,
 								   Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_BeginArgSlotNamed<false>);
+		return sizeof(PUnit_NamedArgSlotBegin<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EndArgSlotNamed
+// PUnit_NamedArgSlotEnd
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_EndArgSlotNamed : public PUnit {
+class GURAX_DLLDECLARE PUnit_NamedArgSlotEnd : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 public:
 	// Constructor
-	explicit PUnit_EndArgSlotNamed(Expr* pExprSrc) : PUnit(pExprSrc) {}
+	explicit PUnit_NamedArgSlotEnd(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2234,14 +2234,14 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_EndArgSlotNamed : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_NamedArgSlotEnd : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlotNamed");
+	Gurax_MemoryPoolAllocator("PUnitFactory_NamedArgSlotEnd");
 private:
 public:
-	PUnitFactory_EndArgSlotNamed(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_NamedArgSlotEnd(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_EndArgSlotNamed<false>);
+		return sizeof(PUnit_NamedArgSlotEnd<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -2403,17 +2403,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_BeginTryBlock
+// PUnit_TryBlockBegin
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_BeginTryBlock : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_TryBlockBegin : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 public:
 	// Constructor
-	PUnit_BeginTryBlock(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+	PUnit_TryBlockBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc) {}
 public:
 	// Virtual functions of PUnit
@@ -2427,24 +2427,24 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_BeginTryBlock : public PUnitFactory_Branch {
+class GURAX_DLLDECLARE PUnitFactory_TryBlockBegin : public PUnitFactory_Branch {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_BeginTryBlock");
+	Gurax_MemoryPoolAllocator("PUnitFactory_TryBlockBegin");
 private:
 public:
-	PUnitFactory_BeginTryBlock(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+	PUnitFactory_TryBlockBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_BeginTryBlock<false>);
+		return sizeof(PUnit_TryBlockBegin<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EndTryBlock
+// PUnit_TryBlockEnd
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_EndTryBlock : public PUnit {
+class GURAX_DLLDECLARE PUnit_TryBlockEnd : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -2452,7 +2452,7 @@ private:
 	const PUnit* _pPUnitCont;
 public:
 	// Constructor
-	PUnit_EndTryBlock(const PUnit* pPUnitCont, Expr* pExprSrc) :
+	PUnit_TryBlockEnd(const PUnit* pPUnitCont, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pPUnitCont(pPUnitCont ? pPUnitCont : this + 1) {}
 public:
 	// Virtual functions of PUnit
@@ -2468,16 +2468,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_EndTryBlock : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_TryBlockEnd : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_EndTryBlock");
+	Gurax_MemoryPoolAllocator("PUnitFactory_TryBlockEnd");
 private:
 	const PUnit* _pPUnitCont;
 public:
-	PUnitFactory_EndTryBlock(const PUnit* pPUnitCont, Expr* pExprSrc) :
+	PUnitFactory_TryBlockEnd(const PUnit* pPUnitCont, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitCont(pPUnitCont) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_EndTryBlock<false>);
+		return sizeof(PUnit_TryBlockEnd<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -2561,10 +2561,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_BeginSequence
+// PUnit_SequenceBegin
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_BeginSequence : public PUnit {
+class GURAX_DLLDECLARE PUnit_SequenceBegin : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -2572,11 +2572,11 @@ private:
 	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
-	PUnit_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+	PUnit_SequenceBegin(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pPUnitSentinel(pPUnitSentinel) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool IsBeginSequence() const override { return true; }
+	virtual bool IsSequenceBegin() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
@@ -2589,35 +2589,35 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_BeginSequence : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_SequenceBegin : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_BeginSequence");
+	Gurax_MemoryPoolAllocator("PUnitFactory_SequenceBegin");
 private:
 	const PUnit* _pPUnitSentinel;
 public:
-	PUnitFactory_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+	PUnitFactory_SequenceBegin(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_BeginSequence<false>);
+		return sizeof(PUnit_SequenceBegin<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EndSequence
+// PUnit_SequenceEnd
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_EndSequence : public PUnit {
+class GURAX_DLLDECLARE PUnit_SequenceEnd : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 public:
 	// Constructor
-	PUnit_EndSequence(Expr* pExprSrc) : PUnit(pExprSrc) {}
+	PUnit_SequenceEnd(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool IsEndSequence() const override { return true; }
+	virtual bool IsSequenceEnd() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -2628,13 +2628,13 @@ private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_EndSequence : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_SequenceEnd : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_EndSequence");
+	Gurax_MemoryPoolAllocator("PUnitFactory_SequenceEnd");
 public:
-	PUnitFactory_EndSequence(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_SequenceEnd(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_EndSequence<false>);
+		return sizeof(PUnit_SequenceEnd<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

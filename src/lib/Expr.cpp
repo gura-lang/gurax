@@ -31,7 +31,7 @@ Iterator* Expr::EachPUnit() const
 	const PUnit* pPUnitSentinel = GetPUnitEnd();
 	if (pPUnit && pPUnit->GetPUnitSentinel()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
-		pPUnit = pPUnit->GetPUnitAdjacent();	// skip BeginSequence/ArgSlot/ArgSlotNamed
+		pPUnit = pPUnit->GetPUnitAdjacent();	// skip SequenceBegin/ArgSlotBegin/ArgSlotNamed
 	}
 	return new Iterator_PUnit(pPUnit, pPUnitSentinel);
 }
@@ -162,11 +162,11 @@ void Expr::ComposeWithinArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
-	composer.Add_BeginArgSlot(*this);											// [Argument]
+	composer.Add_ArgSlotBegin(*this);											// [Argument]
 	Compose(composer);															// [Argument Any]
 	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlot(*this);												// [Argument]
+	composer.Add_ArgSlotEnd(*this);												// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
@@ -350,8 +350,7 @@ void Expr_Member::ComposeWithinValueAssignment(Composer& composer, const Operato
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: {
 		GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
-		composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(),
-									  true, *this);								// [Assigned]
+		composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(), true, *this); // [Assigned]
 		composer.FlushDiscard();
 		break;
 	}
@@ -463,9 +462,9 @@ void Expr_Identifier::Compose(Composer& composer)
 {
 	const Symbol* pSymbol = GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__file__))) {
-		composer.Add_Value(new Value_String(GetPathNameSrc()), *this);
+		composer.Add_Value(new Value_String(GetPathNameSrc()), *this);			// [Value]
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__line__))) {
-		composer.Add_Value(new Value_Number(GetLineNoTop()), *this);
+		composer.Add_Value(new Value_Number(GetLineNoTop()), *this);			// [Value]
 	} else {
 		RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(pSymbol));
 		if (pValue && pValue->IsType(VTYPE_Function)) {
@@ -534,27 +533,16 @@ void Expr_Identifier::ComposeWithinArgSlot(Composer& composer)
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	SetPUnitFirst(pPUnitOfArgSlot);
 	if (GetSymbol()->IsIdentical(Gurax_Symbol(__file__))) {
-		composer.Add_ArgSlot_Value(new Value_String(GetPathNameSrc()), *this);
+		composer.Add_ArgSlot_Value(new Value_String(GetPathNameSrc()), *this);	// [Argument]
 	} else if (GetSymbol()->IsIdentical(Gurax_Symbol(__line__))) {
-		composer.Add_ArgSlot_Value(new Value_Number(GetLineNoTop()), *this);
+		composer.Add_ArgSlot_Value(new Value_Number(GetLineNoTop()), *this);	// [Argument]
 	} else {
 		composer.Add_ArgSlot_Lookup(GetSymbol(), *this);						// [Argument]
 	}
-	Compose(composer);
+	Compose(composer);															// [Argument]
 	if (Error::IsIssued()) return;
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitEnd(composer.PeekPUnitCont());
-#if 0
-	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-	SetPUnitFirst(pPUnitOfArgSlot);
-	composer.Add_BeginArgSlot(*this);											// [Argument]
-	Compose(composer);															// [Argument Any]
-	if (Error::IsIssued()) return;
-	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlot(*this);												// [Argument]
-	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	SetPUnitEnd(composer.PeekPUnitCont());
-#endif
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -648,7 +636,7 @@ void Expr_UnaryOp::ComposeWithinLister(Composer& composer)
 		GetExprChild().ComposeOrNil(composer);									// [List Any]
 		composer.Add_ListElem(0, false, true, *this);							// [List]
 	} else {
-		Expr_Unary::ComposeWithinLister(composer);									// [List]
+		Expr_Unary::ComposeWithinLister(composer);								// [List]
 	}
 }
 
@@ -657,10 +645,10 @@ void Expr_UnaryOp::ComposeWithinArgSlot(Composer& composer)
 	if (GetOperator()->IsType(OpType::PostMul)) {
 		PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 		SetPUnitFirst(pPUnitOfArgSlot);
-		composer.Add_BeginArgSlot(*this);										// [Argument]
+		composer.Add_ArgSlotBegin(*this);										// [Argument]
 		GetExprChild().ComposeOrNil(composer);									// [Argument Any]
 		pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_EndArgSlotExpand(*this);									// [Argument]
+		composer.Add_ArgSlotEnd_Expand(*this);									// [Argument]
 		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 		SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
@@ -818,11 +806,10 @@ void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprLeft()).GetSymbol();
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
-	composer.Add_BeginArgSlotNamed(
-				pSymbol, GetExprRight().Reference(), *this);					// [Argument ArgSlot]
+	composer.Add_NamedArgSlotBegin(pSymbol, GetExprRight().Reference(), *this);	// [Argument ArgSlot]
 	GetExprRight().ComposeOrNil(composer);										// [Argument ArgSlot Assigned]
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlotNamed(*this);										// [Argument]
+	composer.Add_NamedArgSlotEnd(*this);										// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	GetExprRight().SetPUnitEnd(composer.PeekPUnitCont());
 }
@@ -847,10 +834,10 @@ const Expr::TypeInfo Expr_Root::typeInfo("Root");
 void Expr_Root::Compose(Composer& composer)
 {
 	SetPUnitFirst(composer.PeekPUnitCont());
-	//PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	//Add_BeginSequence(expr);													// []
+	//PUnit* pPUnitOfSequenceBegin = PeekPUnitCont();
+	//Add_SequenceBegin(expr);													// []
 	ComposeSequence(composer, GetExprElemFirst());								// [Any]
-	//pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
+	//pPUnitOfSequenceBegin->SetPUnitSentinel(PeekPUnitCont());
 	composer.Add_Return(*this);
 	composer.Add_Terminate();
 	SetPUnitEnd(composer.PeekPUnitCont());
@@ -896,10 +883,10 @@ void Expr_Block::Compose(Composer& composer)
 		composer.Add_Jump(*this);
 		SetPUnitSubFirst(composer.PeekPUnitCont());
 		PUnit* pPUnitSequence = composer.PeekPUnitCont();
-		composer.Add_BeginSequence(*this);
-		GetExprLinkParam().ComposeWithinArgSlot(composer);
+		composer.Add_SequenceBegin(*this);										// []
+		GetExprLinkParam().ComposeWithinArgSlot(composer);						// []
 		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_Return(*this);
+		composer.Add_Return(*this);												// [Any]
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
 	ComposeSequence(composer, GetExprElemFirst());								// [Any]
@@ -910,7 +897,7 @@ void Expr_Block::ComposeWithinLister(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, *this);										// [List List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeWithinLister(composer);										// [List List]
+		pExpr->ComposeWithinLister(composer);									// [List List]
 	}	
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
@@ -1058,7 +1045,7 @@ void Expr_Lister::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, *this);										// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeWithinLister(composer);										// [List]
+		pExpr->ComposeWithinLister(composer);									// [List]
 	}
 }
 
@@ -1117,8 +1104,8 @@ void Expr_Indexer::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
 	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-		pExprCdr->ComposeOrNil(composer);											// [Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExprCdr);											// [Index(Car)]
+		pExprCdr->ComposeOrNil(composer);										// [Index(Car) Cdr]
+		composer.Add_FeedIndex(*pExprCdr);										// [Index(Car)]
 	}
 	composer.Add_IndexGet(*this);												// [Elems]
 }
@@ -1249,7 +1236,7 @@ void Expr_Caller::Compose(Composer& composer)
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);	// [Argument]
 	}
-	GetExprLinkCdr().ComposeWithinArgSlot(composer);								// [Argument]
+	GetExprLinkCdr().ComposeWithinArgSlot(composer);							// [Argument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(*this);													// [Result]
 }
@@ -1372,7 +1359,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 		Expr& exprDefaultArg = pExprParamEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
 		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
-		composer.Add_BeginSequence(exprDefaultArg);
+		composer.Add_SequenceBegin(exprDefaultArg);
 		exprDefaultArg.ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(exprDefaultArg);

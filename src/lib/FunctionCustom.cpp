@@ -13,7 +13,7 @@ FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* p
 	Function(type, pSymbol, pDeclCallable, pHelpHolder),
 	_pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
-	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
+	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
 void FunctionCustom::DoExec(Processor& processor, Argument& argument) const

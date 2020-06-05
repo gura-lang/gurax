@@ -99,10 +99,10 @@ public:
 public:
 	ExceptionInfoStack& GetExceptionInfoStack() { return _exceptionInfoStack; }
 	const ExceptionInfoStack& GetExceptionInfoStack() const { return _exceptionInfoStack; }
-	void BeginTryBlock(const PUnit* pPUnitCatch) {
+	void TryBlockBegin(const PUnit* pPUnitCatch) {
 		GetExceptionInfoStack().Push(new ExceptionInfo(*this, pPUnitCatch));
 	}
-	ExceptionInfo* EndTryBlock() { return GetExceptionInfoStack().Pop(); }
+	ExceptionInfo* TryBlockEnd() { return GetExceptionInfoStack().Pop(); }
 public:
 	void SetPUnitCur(const PUnit* pPUnitCur) { _pPUnitCur = pPUnitCur; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }

@@ -228,23 +228,23 @@ public:
 	void Add_ArgSlot_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_ArgSlot_Lookup(pSymbol, exprSrc.Reference()));
 	}
-	void Add_BeginArgSlot(const Expr& exprSrc) {
+	void Add_ArgSlotBegin(const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_BeginArgSlot(pPUnitBranchDest, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_ArgSlotBegin(pPUnitBranchDest, exprSrc.Reference()));
 	}
-	void Add_EndArgSlot(const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_EndArgSlot(exprSrc.Reference()));
+	void Add_ArgSlotEnd(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_ArgSlotEnd(exprSrc.Reference()));
 	}
-	void Add_EndArgSlotExpand(const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_EndArgSlotExpand(exprSrc.Reference()));
+	void Add_ArgSlotEnd_Expand(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_ArgSlotEnd_Expand(exprSrc.Reference()));
 	}
-	void Add_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const Expr& exprSrc) {
+	void Add_NamedArgSlotBegin(const Symbol* pSymbol, Expr* pExprAssigned, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_BeginArgSlotNamed(
+		SetFactory(new PUnitFactory_NamedArgSlotBegin(
 					   pSymbol, pExprAssigned, pPUnitBranchDest, exprSrc.Reference()));
 	}
-	void Add_EndArgSlotNamed(const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_EndArgSlotNamed(exprSrc.Reference()));
+	void Add_NamedArgSlotEnd(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_NamedArgSlotEnd(exprSrc.Reference()));
 	}
 	void Add_Call(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Call(exprSrc.Reference()));
@@ -264,13 +264,13 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_JumpIfNot(pPUnitBranchDest, branchMode, exprSrc.Reference()));
 	}
-	void Add_BeginTryBlock(const Expr& exprSrc) {
+	void Add_TryBlockBegin(const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_BeginTryBlock(pPUnitBranchDest, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_TryBlockBegin(pPUnitBranchDest, exprSrc.Reference()));
 	}
-	void Add_EndTryBlock(const Expr& exprSrc) {
+	void Add_TryBlockEnd(const Expr& exprSrc) {
 		const PUnit* pPUnitCont = nullptr;
-		SetFactory(new PUnitFactory_EndTryBlock(pPUnitCont, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_TryBlockEnd(pPUnitCont, exprSrc.Reference()));
 	}
 	void Add_JumpIfNoCatch(PUnit::BranchMode branchMode, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
@@ -280,12 +280,12 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_JumpIfNoCatchAny(pPUnitBranchDest, branchMode, exprSrc.Reference()));
 	}
-	void Add_BeginSequence(const Expr& exprSrc) {
+	void Add_SequenceBegin(const Expr& exprSrc) {
 		const PUnit* pPUnitSentinel = nullptr;
-		SetFactory(new PUnitFactory_BeginSequence(pPUnitSentinel, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_SequenceBegin(pPUnitSentinel, exprSrc.Reference()));
 	}
-	void Add_EndSequence(const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_EndSequence(exprSrc.Reference()));
+	void Add_SequenceEnd(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_SequenceEnd(exprSrc.Reference()));
 	}
 	void Add_DiscardValue(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_DiscardValue(exprSrc.Reference()));
