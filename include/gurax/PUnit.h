@@ -31,6 +31,8 @@ public:
 	// Destructor
 	virtual ~PUnit() = default;
 public:
+	const Expr* GetExprSrc() const { return _pExprSrc; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PUnit* pPUnit) const { return this == pPUnit; }
 	bool IsEqualTo(const PUnit* pPUnit) const { return IsIdentical(pPUnit); }
