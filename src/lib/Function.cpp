@@ -98,7 +98,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 {
 	auto MapToList = [this](Processor& processor, Argument& argument) {
 		Frame& frame = processor.GetFrameCur();
-		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
@@ -119,11 +119,11 @@ void Function::Call(Processor& processor, Argument& argument) const
 			return;
 		}
 		processor.PushValue(pValueRtn.release());
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	};
 	auto MapToXList = [this](Processor& processor, Argument& argument) {
 		Frame& frame = processor.GetFrameCur();
-		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
@@ -144,24 +144,24 @@ void Function::Call(Processor& processor, Argument& argument) const
 			return;
 		}
 		processor.PushValue(pValueRtn.release());
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	};
 	auto MapToIter = [this](Processor& processor, Argument& argument) {
-		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 		RefPtr<Iterator> pIterator(
 			new Iterator_FunctionImpMap<false>(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	};
 	auto MapToXIter = [this](Processor& processor, Argument& argument) {
-		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 		RefPtr<Iterator> pIterator(
 			new Iterator_FunctionImpMap<true>(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	};
 	Frame& frame = processor.GetFrameCur();
-	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	if (argument.IsMapNone()) {
 		Exec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
@@ -172,7 +172,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 			//processor.ErrorDone();
 			return;
 		}
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultVoid()) {
 		while (argument.ReadyToPickValue(frame)) {
 			Value::Delete(Eval(processor, argument));
@@ -182,7 +182,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 			return;
 		}
 		processor.PushValue(Value::nil());
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultReduce()) {
 		RefPtr<Value> pValueRtn(Value::nil());
 		while (argument.ReadyToPickValue(frame)) {
@@ -193,7 +193,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 			return;
 		}
 		processor.PushValue(pValueRtn.release());
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	} else if (argument.IsSet(DeclCallable::Flag::List)) {
 		MapToList(processor, argument);
 	} else if (argument.IsSet(DeclCallable::Flag::XList)) {
@@ -231,10 +231,10 @@ void Function::Compose(Composer& composer, Expr_Caller& exprCaller) const
 
 void Function::DoExec(Processor& processor, Argument& argument) const
 {
-	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	RefPtr<Value> pValue(DoEval(processor, argument));
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
-	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 }
 
 void Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const

@@ -1640,13 +1640,13 @@ const DeclCallable* Value_List::GetDeclCallable()
 
 void Value_List::DoCall(Processor& processor, Argument& argument)
 {
-	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	RefPtr<Value> pValueRtn(Eval(processor, argument));
 	if (Error::IsIssued()) return;
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
 		processor.PushValue(pValueRtn.release());
 	}
-	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 }
 
 // **** must handle attributes: :list, :xlist ****

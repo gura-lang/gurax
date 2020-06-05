@@ -52,7 +52,7 @@ protected:
 	RefPtr<FrameStack> _pFrameStack;
 	ExceptionInfoStack _exceptionInfoStack;
 	const Expr* _pExprCur;
-	const PUnit* _pPUnitNext;
+	const PUnit* _pPUnitCur;
 	bool _contFlag;
 	bool _resumeFlag;
 	Event _event;
@@ -107,13 +107,13 @@ public:
 public:
 	void SetExprCur(const Expr* pExpr) { _pExprCur = pExpr; }
 	const Expr& GetExprCur() const { return *_pExprCur; }
-	void SetPUnitNext(const PUnit* pPUnitNext) { _pPUnitNext = pPUnitNext; }
-	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
-	void ExitRunLoop(const PUnit* pPUnitNext = nullptr) {
-		_pPUnitNext = pPUnitNext; _contFlag = false, _resumeFlag = true;
+	void SetPUnitCur(const PUnit* pPUnitCur) { _pPUnitCur = pPUnitCur; }
+	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
+	void ExitRunLoop(const PUnit* pPUnitCur = nullptr) {
+		_pPUnitCur = pPUnitCur; _contFlag = false, _resumeFlag = true;
 	}
-	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
-	void Terminate() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
+	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
+	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ClearError();
 	void PrepareExceptionHandling();
 	bool DoExceptionHandling();

@@ -573,7 +573,7 @@ void PUnit_TmplString<discardValueFlag>::Exec(Processor& processor) const
 	processor.SetExprCur(_pExprSrc);
 	GetTemplate().Print(GetString());
 	if (!discardValueFlag) processor.PushValue(Value::nil());
-	processor.SetPUnitNext(_GetPUnitCont());
+	processor.SetPUnitCur(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
@@ -664,7 +664,7 @@ void PUnit_TmplScript<discardValueFlag>::Exec(Processor& processor) const
 		return;
 	}
 	if (!discardValueFlag) processor.PushValue(Value::nil());
-	processor.SetPUnitNext(_GetPUnitCont());
+	processor.SetPUnitCur(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
@@ -720,7 +720,7 @@ void PUnit_TmplEmbedded<discardValueFlag>::Exec(Processor& processor) const
 		return;
 	}
 	if (!discardValueFlag) processor.PushValue(new Value_String(strDst));
-	processor.SetPUnitNext(_GetPUnitCont());
+	processor.SetPUnitCur(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>

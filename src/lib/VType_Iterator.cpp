@@ -1689,7 +1689,7 @@ const DeclCallable* Value_Iterator::GetDeclCallable()
 
 void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 {
-	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	if (pPUnitOfCaller->GetDiscardValueFlag()) {
 		if (GetIterator().MustBeFinite()) {
 			for (;;) {
@@ -1703,7 +1703,7 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());
 	}
-	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 }
 
 Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const

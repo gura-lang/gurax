@@ -20,8 +20,8 @@ void FunctionCustom::DoExec(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
-	processor.PushPUnit(processor.GetPUnitNext());
-	processor.SetPUnitNext(GetPUnitBody());
+	processor.PushPUnit(processor.GetPUnitCur());
+	processor.SetPUnitCur(GetPUnitBody());
 	// PUnit_Return will do PopFrame().
 }
 

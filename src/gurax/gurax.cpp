@@ -120,10 +120,10 @@ void RunREPL()
 			if (Error::IsIssued()) break;
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
 			if (!pPUnit && !(pPUnit = composer.GetPUnitFirst())) continue;
-			processor.SetPUnitNext(pPUnit);
+			processor.SetPUnitCur(pPUnit);
 			while (pPUnit != pPUnitSentinel && processor.GetContFlag()) {
 				pPUnit->Exec(processor);
-				pPUnit = processor.GetPUnitNext();
+				pPUnit = processor.GetPUnitCur();
 				if (Error::IsIssued()) break;
 			}
 			if (Error::IsIssued()) break;

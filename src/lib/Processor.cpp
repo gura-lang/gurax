@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Processor::Processor() :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
-	_pExprCur(Expr::Empty.get()), _pPUnitNext(nullptr),
+	_pExprCur(Expr::Empty.get()), _pPUnitCur(nullptr),
 	_contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);
@@ -79,7 +79,7 @@ void Processor::Print() const
 	stream.Printf("PUnitStack: %zupcs\n", GetPUnitStack().size());
 	stream.Printf("ValueStack: %zupcs\n", GetValueStack().size());
 	stream.Printf("FrameStack: %zupcs\n", GetFrameStack().size());
-	stream.Printf("PUnitNext: %s\n", GetPUnitNext()? GetPUnitNext()->ToString().c_str() : "null");
+	stream.Printf("PUnitCur: %s\n", GetPUnitCur()? GetPUnitCur()->ToString().c_str() : "null");
 	stream.Printf("contFlag=%s, resumeFlag=%s, event=%s\n",
 				  GetContFlag()? "true" : "false", GetResumeFlag()? "true" : "false",
 				  IsEventBreak()? "Break" : IsEventContinue()? "Continue" : "None");
@@ -103,7 +103,7 @@ void Processor::ExceptionInfo::UpdateProcessor(Processor& processor)
 	processor.GetPUnitStack().Shrink(_sizePUnitStack);
 	processor.GetValueStack().Shrink(_sizeValueStack);
 	processor.GetFrameStack().Shrink(_sizeFrameStack);
-	processor.SetPUnitNext(_pPUnitCatch);
+	processor.SetPUnitCur(_pPUnitCatch);
 }
 
 //------------------------------------------------------------------------------
@@ -166,32 +166,32 @@ void Processor::ExceptionInfoStack::Print() const
 //------------------------------------------------------------------------------
 void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
-	_pPUnitNext = pPUnit;
-	if (!_pPUnitNext) return;
+	_pPUnitCur = pPUnit;
+	if (!_pPUnitCur) return;
 	PrepareExceptionHandling();
-	if (_pPUnitNext->IsBeginSequence()) {
-		const PUnit* pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
-		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
+	if (_pPUnitCur->IsBeginSequence()) {
+		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
+		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsEndSequence()) {
 			do {
 				while (_contFlag) {
-					_pPUnitNext->Exec(*this);
+					_pPUnitCur->Exec(*this);
 				}
 				if (!DoExceptionHandling()) break;
 			} while (_contFlag);
 		} else {
 			do {
-				while (_contFlag && _pPUnitNext != pPUnitSentinel) {
-					_pPUnitNext->Exec(*this);
+				while (_contFlag && _pPUnitCur != pPUnitSentinel) {
+					_pPUnitCur->Exec(*this);
 				}
 				if (!DoExceptionHandling()) break;
-			} while (_contFlag && _pPUnitNext != pPUnitSentinel);
+			} while (_contFlag && _pPUnitCur != pPUnitSentinel);
 		}
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		do {
 			while (_contFlag) {
-				_pPUnitNext->Exec(*this);
+				_pPUnitCur->Exec(*this);
 			}
 			if (!DoExceptionHandling()) break;
 		} while (_contFlag);
@@ -213,32 +213,32 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		stream.Printf("%*s%*s %s\n", nestLevel * 2, "", wdSeqId, "",
 					  GetValueStack().ToString(StringStyle().SetDigest()).c_str());
 	};
-	_pPUnitNext = pPUnit;
-	if (!_pPUnitNext) return;
+	_pPUnitCur = pPUnit;
+	if (!_pPUnitCur) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
 	_nestLevel++;
 	stream.Printf("%*s---- Processor Begin at %s ----\n",
-				  _nestLevel * 2, "", _pPUnitNext->MakeSeqIdString().c_str());
+				  _nestLevel * 2, "", _pPUnitCur->MakeSeqIdString().c_str());
 	PrepareExceptionHandling();
 	size_t wdSeqId = 0;
-	if (_pPUnitNext->IsBeginSequence()) {
-		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
-		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
+	if (_pPUnitCur->IsBeginSequence()) {
+		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
+		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitNext);
-		_pPUnitNext->Exec(*this);
+		wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitCur);
+		_pPUnitCur->Exec(*this);
 	}
 	do {
-		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
+		while (_contFlag && _pPUnitCur != pPUnitSentinel) {
 			PrintStack(stream, _nestLevel, wdSeqId);
-			wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitNext);
-			_pPUnitNext->Exec(*this);
+			wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitCur);
+			_pPUnitCur->Exec(*this);
 		}
 		if (!DoExceptionHandling()) break;
-	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
+	} while (_contFlag && _pPUnitCur != pPUnitSentinel);
 	_contFlag = _resumeFlag;
 	stream.Printf("%*s---- Processor End ----\n", _nestLevel * 2, "");
 	_nestLevel--;

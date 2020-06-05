@@ -71,9 +71,9 @@ bool Argument::Compensate(Processor& processor)
 
 void Argument::DoCall(Processor& processor)
 {
-	const PUnit* pPUnitNext = processor.GetPUnitNext();
+	const PUnit* pPUnitCur = processor.GetPUnitCur();
 	if (!Compensate(processor)) return;
-	processor.SetPUnitNext(pPUnitNext);
+	processor.SetPUnitCur(pPUnitCur);
 	const DeclBlock& declBlock = _pDeclCallable->GetDeclBlock();
 	if (_pExprOfBlock) {
 		if (declBlock.IsOccurZero()) {
