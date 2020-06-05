@@ -17,7 +17,7 @@ Gurax_TesterEntry(PUnit)
 	const PUnit* pPUnitSentinel = chunkPUnit.PeekPUnitCont();
 	const PUnit* pPUnit = chunkPUnit.GetPUnitFirst();
 	::printf("%s\n", chunkPUnit.ToString().c_str());
-	for ( ; pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitCur()) {
+	for ( ; pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
 		::printf("%s %s\n", pPUnit->MakeSeqIdString().c_str(), pPUnit->ToString().c_str());
 	}
 	MemoryPool::Global().SwitchChunkPUnit(false);

@@ -11,7 +11,7 @@ namespace Gurax {
 String PUnit::MakeSeqIdString(int seqIdOffset) const
 {
 	const PUnit* pPUnit = this;
-	for ( ; pPUnit->IsBridge(); pPUnit = pPUnit->GetPUnitCur()) ;
+	for ( ; pPUnit->IsBridge(); pPUnit = pPUnit->GetPUnitNext()) ;
 	return String().Format((seqIdOffset == 0)? "#%zu" : "##%zu", pPUnit->GetSeqId(seqIdOffset));
 }
 
@@ -32,7 +32,7 @@ void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 
 void PUnit::Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel, const StringStyle& ss, int seqIdOffset)
 {
-	for ( ; pPUnit && pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitCur()) {
+	for ( ; pPUnit && pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
 		pPUnit->Print(ss, seqIdOffset);
 	}
 }

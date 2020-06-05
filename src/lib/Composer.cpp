@@ -62,7 +62,7 @@ void Composer::Print() const
 
 void Composer::PrintPUnit(const StringStyle& ss) const
 {
-	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitCur()) {
+	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
 		if (!pPUnit->IsBridge()) pPUnit->Print(ss);
 	}
 }
