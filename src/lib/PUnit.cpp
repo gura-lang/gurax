@@ -1105,8 +1105,8 @@ String PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::ToString(const S
 {
 	String str;
 	str.Format("ListElem(offsetToList=%zu)", GetOffset());
-	if (xlistFlag) str += ":xlist";
-	if (expandFlag) str += ":expand";
+	if constexpr (xlistFlag) str += ":xlist";
+	if constexpr (expandFlag) str += ":expand";
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1332,7 +1332,7 @@ void PUnit_IndexSet<discardValueFlag, valueFirstFlag>::Exec(Processor& processor
 {
 	RefPtr<Value> pValueElems;
 	RefPtr<Value_Index> pValueIndex;
-	if (valueFirstFlag) {
+	if constexpr (valueFirstFlag) {
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 		pValueElems.reset(processor.PopValue());
 	} else {
@@ -1354,6 +1354,7 @@ String PUnit_IndexSet<discardValueFlag, valueFirstFlag>::ToString(const StringSt
 {
 	String str;
 	str += "IndexSet()";
+	if constexpr (valueFirstFlag) str += ":valueFirst";
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1388,7 +1389,7 @@ void PUnit_IndexOpApply<discardValueFlag, valueFirstFlag>::Exec(Processor& proce
 {
 	RefPtr<Value> pValueElems;
 	RefPtr<Value_Index> pValueIndex;
-	if (valueFirstFlag) {
+	if constexpr (valueFirstFlag) {
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 		pValueElems.reset(processor.PopValue());
 	} else {
@@ -1410,6 +1411,7 @@ String PUnit_IndexOpApply<discardValueFlag, valueFirstFlag>::ToString(const Stri
 {
 	String str;
 	str += "IndexOpApply()";
+	if constexpr (valueFirstFlag) str += ":valueFirst";
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1444,7 +1446,7 @@ void PUnit_MemberSet_Normal<discardValueFlag, valueFirstFlag>::Exec(Processor& p
 {
 	RefPtr<Value> pValueAssigned;
 	RefPtr<Value> pValueTarget;
-	if (valueFirstFlag) {
+	if constexpr (valueFirstFlag) {
 		pValueTarget.reset(processor.PopValue());
 		pValueAssigned.reset(processor.PopValue());
 	} else {
@@ -1561,6 +1563,7 @@ String PUnit_MemberSet_Map<discardValueFlag, valueFirstFlag>::ToString(const Str
 {
 	String str;
 	str.Format("MemberSet_Map(`%s)", GetSymbol()->GetName());
+	if constexpr (valueFirstFlag) str += ":valueFirst";
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
@@ -1596,7 +1599,7 @@ void PUnit_MemberOpApply_Normal<discardValueFlag, valueFirstFlag>::Exec(Processo
 {
 	RefPtr<Value> pValueApplied;
 	RefPtr<Value> pValueTarget;
-	if (valueFirstFlag) {
+	if constexpr (valueFirstFlag) {
 		pValueTarget.reset(processor.PopValue());
 		pValueApplied.reset(processor.PopValue());
 	} else {
@@ -1622,6 +1625,7 @@ String PUnit_MemberOpApply_Normal<discardValueFlag, valueFirstFlag>::ToString(co
 {
 	String str;
 	str.Format("MemberOpApply_Normal(`%s)", GetSymbol()->GetName());
+	if constexpr (valueFirstFlag) str += ":valueFirst";
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
@@ -1657,7 +1661,7 @@ void PUnit_MemberOpApply_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& 
 {
 	RefPtr<Value> pValueApplied;
 	RefPtr<Value> pValueTarget;
-	if (valueFirstFlag) {
+	if constexpr (valueFirstFlag) {
 		pValueTarget.reset(processor.PopValue());
 		pValueApplied.reset(processor.PopValue());
 	} else {
@@ -1683,6 +1687,7 @@ String PUnit_MemberOpApply_Map<discardValueFlag, valueFirstFlag>::ToString(const
 {
 	String str;
 	str.Format("MemberOpApply_Map(`%s)", GetSymbol()->GetName());
+	if constexpr (valueFirstFlag) str += ":valueFirst";
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
@@ -1950,6 +1955,7 @@ String PUnit_Argument<discardValueFlag, keepCarFlag>::ToString(const StringStyle
 	} else {
 		str += "Argument()";
 	}
+	if constexpr (keepCarFlag) str += ":keepCar";
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
@@ -3047,8 +3053,8 @@ template<bool discardValueFlag, bool branchDestFlag>
 String PUnit_Break<discardValueFlag, branchDestFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Break(marked=%s,branchDestFlag=%s)", MakeSeqIdString(GetPUnitMarked(), seqIdOffset).c_str(),
-			   branchDestFlag? "true" : "false");
+	str.Format("Break(marked=%s)", MakeSeqIdString(GetPUnitMarked(), seqIdOffset).c_str());
+	if constexpr (branchDestFlag) str += ":branchDest";
 	AppendInfoToString(str, ss);
 	return str;
 }
