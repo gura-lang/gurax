@@ -570,7 +570,6 @@ String Expr_Template::ToString(const StringStyle& ss) const
 template<bool discardValueFlag>
 void PUnit_TmplString<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.SetExprCur(_pExprSrc);
 	GetTemplate().Print(GetString());
 	if (!discardValueFlag) processor.PushValue(Value::nil());
 	processor.SetPUnitCur(_GetPUnitCont());
@@ -603,7 +602,6 @@ PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_TmplScript<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
 	String strLast;
 	if (!pValue->IsValid()) {
@@ -713,7 +711,6 @@ PUnit* PUnitFactory_TmplScript::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_TmplEmbedded<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.SetExprCur(_pExprSrc);
 	String strDst;
 	if (!GetTemplate().Render(processor, strDst)) {
 		processor.ErrorDone();

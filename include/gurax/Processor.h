@@ -51,7 +51,6 @@ protected:
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<FrameStack> _pFrameStack;
 	ExceptionInfoStack _exceptionInfoStack;
-	const Expr* _pExprCur;
 	const PUnit* _pPUnitCur;
 	bool _contFlag;
 	bool _resumeFlag;
@@ -105,15 +104,13 @@ public:
 	}
 	ExceptionInfo* EndTryBlock() { return GetExceptionInfoStack().Pop(); }
 public:
-	void SetExprCur(const Expr* pExpr) { _pExprCur = pExpr; }
-	const Expr& GetExprCur() const { return *_pExprCur; }
 	void SetPUnitCur(const PUnit* pPUnitCur) { _pPUnitCur = pPUnitCur; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 	void ExitRunLoop(const PUnit* pPUnitCur = nullptr) {
 		_pPUnitCur = pPUnitCur; _contFlag = false, _resumeFlag = true;
 	}
-	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
-	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
+	void ErrorDone() { _contFlag = _resumeFlag = false; }
+	void Terminate() { _contFlag = _resumeFlag = false; }
 	void ClearError();
 	void PrepareExceptionHandling();
 	bool DoExceptionHandling();
