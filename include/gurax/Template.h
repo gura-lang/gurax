@@ -189,7 +189,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_TmplString
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_TmplString : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -197,12 +197,10 @@ public:
 private:
 	RefPtr<Template> _pTmpl;
 	String _str;
-	Expr* _ppExprSrc[1];
 public:
 	// Constructor
-	PUnit_TmplString(Template* pTmpl, String str) : _pTmpl(pTmpl), _str(std::move(str)) {}
-	PUnit_TmplString(Template* pTmpl, String str, Expr* pExpr) :
-		PUnit_TmplString(pTmpl, std::move(str)) { _ppExprSrc[0] = pExpr; }
+	PUnit_TmplString(Template* pTmpl, String str, Expr* pExprSrc) :
+					PUnit(pExprSrc), _pTmpl(pTmpl), _str(std::move(str)) {}
 public:
 	Template& GetTemplate() const { return *_pTmpl; }
 	const char* GetString() const { return _str.c_str(); }
@@ -228,7 +226,7 @@ public:
 	PUnitFactory_TmplString(Template* pTmpl, String str, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pTmpl(pTmpl), _str(std::move(str)) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_TmplString<1, false>) : sizeof(PUnit_TmplString<0, false>);
+		return _pExprSrc? sizeof(PUnit_TmplString<false>) : sizeof(PUnit_TmplString<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -236,20 +234,17 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_TmplScript
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_TmplScript : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Expr_TmplScript> _pExprTmplScript;
-	Expr* _ppExprSrc[1];
 public:
 	// Constructor
-	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript) : _pExprTmplScript(pExprTmplScript) {}
-	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript, Expr* pExpr) : PUnit_TmplScript(pExprTmplScript) {
-		_ppExprSrc[0] = pExpr;
-	}
+	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript, Expr* pExprSrc) :
+						PUnit(pExprSrc), _pExprTmplScript(pExprTmplScript) {}
 public:
 	Template& GetTemplate() const { return _pExprTmplScript->GetTemplate(); }
 	const char* GetStringPost() const { return _pExprTmplScript->GetStringPost(); }
@@ -278,7 +273,7 @@ private:
 public:
 	PUnitFactory_TmplScript(Expr_TmplScript* pExprTmplScript, Expr* pExprSrc) : PUnitFactory(pExprSrc), _pExprTmplScript(pExprTmplScript) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_TmplScript<1, false>) : sizeof(PUnit_TmplScript<0, false>);
+		return sizeof(PUnit_TmplScript<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -286,19 +281,18 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_TmplEmbedded
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_TmplEmbedded : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Template> _pTmpl;
-	Expr* _ppExprSrc[1];
 public:
 	// Constructor
-	PUnit_TmplEmbedded(Template* pTmpl) : _pTmpl(pTmpl) {}
-	PUnit_TmplEmbedded(Template* pTmpl, Expr* pExpr) :
-		PUnit_TmplEmbedded(pTmpl) { _ppExprSrc[0] = pExpr; }
+	//PUnit_TmplEmbedded(Template* pTmpl) : _pTmpl(pTmpl) {}
+	PUnit_TmplEmbedded(Template* pTmpl, Expr* pExprSrc) :
+							PUnit(pExprSrc), _pTmpl(pTmpl) {}
 public:
 	Template& GetTemplate() const { return *_pTmpl; }
 public:
@@ -322,7 +316,7 @@ public:
 	PUnitFactory_TmplEmbedded(Template* pTmpl, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pTmpl(pTmpl) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_TmplEmbedded<1, false>) : sizeof(PUnit_TmplEmbedded<0, false>);
+		return sizeof(PUnit_TmplEmbedded<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

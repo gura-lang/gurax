@@ -567,17 +567,17 @@ String Expr_Template::ToString(const StringStyle& ss) const
 // Stack View: [] -> [nil] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_TmplString<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag>
+void PUnit_TmplString<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	processor.SetExprCur(_pExprSrc);
 	GetTemplate().Print(GetString());
 	if (!discardValueFlag) processor.PushValue(Value::nil());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_TmplString<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_TmplString<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Format("TmplString()");
@@ -587,18 +587,10 @@ String PUnit_TmplString<nExprSrc, discardValueFlag>::ToString(const StringStyle&
 
 PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
 {
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplString<1, true>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
-		} else {
-			_pPUnitCreated = new PUnit_TmplString<1, false>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
-		}
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_TmplString<true>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplString<0, true>(_pTmpl.release(), std::move(_str));
-		} else {
-			_pPUnitCreated = new PUnit_TmplString<0, false>(_pTmpl.release(), std::move(_str));
-		}
+		_pPUnitCreated = new PUnit_TmplString<false>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }
@@ -608,10 +600,10 @@ PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
 // Stack View: [Any] -> [nil] (continue)
 //                   -> []    (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag>
+void PUnit_TmplScript<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	processor.SetExprCur(_pExprSrc);
 	RefPtr<Value> pValue(processor.PopValue());
 	String strLast;
 	if (!pValue->IsValid()) {
@@ -675,8 +667,8 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_TmplScript<nExprSrc, discardValueFlag>::PrintScriptResult(const char* str) const
+template<bool discardValueFlag>
+void PUnit_TmplScript<discardValueFlag>::PrintScriptResult(const char* str) const
 {
 	for (auto p = str; *p; p++) {
 		char ch = *p;
@@ -694,8 +686,8 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::PrintScriptResult(const char*
 	GetTemplate().Print(GetStringPost());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_TmplScript<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_TmplScript<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Format("TmplScript()");
@@ -705,18 +697,10 @@ String PUnit_TmplScript<nExprSrc, discardValueFlag>::ToString(const StringStyle&
 
 PUnit* PUnitFactory_TmplScript::Create(bool discardValueFlag)
 {
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplScript<1, true>(_pExprTmplScript.release(), _pExprSrc.Reference());
-		} else {
-			_pPUnitCreated = new PUnit_TmplScript<1, false>(_pExprTmplScript.release(), _pExprSrc.Reference());
-		}
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_TmplScript<true>(_pExprTmplScript.release(), _pExprSrc.Reference());
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplScript<0, true>(_pExprTmplScript.release());
-		} else {
-			_pPUnitCreated = new PUnit_TmplScript<0, false>(_pExprTmplScript.release());
-		}
+		_pPUnitCreated = new PUnit_TmplScript<false>(_pExprTmplScript.release(), _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }
@@ -726,10 +710,10 @@ PUnit* PUnitFactory_TmplScript::Create(bool discardValueFlag)
 // Stack View: [] -> [Value] (continue)
 //                -> []      (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag>
+void PUnit_TmplEmbedded<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	processor.SetExprCur(_pExprSrc);
 	String strDst;
 	if (!GetTemplate().Render(processor, strDst)) {
 		processor.ErrorDone();
@@ -739,8 +723,8 @@ void PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_TmplEmbedded<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Format("TmplEmbedded()");
@@ -750,18 +734,10 @@ String PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::ToString(const StringStyl
 
 PUnit* PUnitFactory_TmplEmbedded::Create(bool discardValueFlag)
 {
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplEmbedded<1, true>(_pTmpl.release(), _pExprSrc.Reference());
-		} else {
-			_pPUnitCreated = new PUnit_TmplEmbedded<1, false>(_pTmpl.release(), _pExprSrc.Reference());
-		}
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_TmplEmbedded<true>(_pTmpl.release(), _pExprSrc.Reference());
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplEmbedded<0, true>(_pTmpl.release());
-		} else {
-			_pPUnitCreated = new PUnit_TmplEmbedded<0, false>(_pTmpl.release());
-		}
+		_pPUnitCreated = new PUnit_TmplEmbedded<false>(_pTmpl.release(), _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

@@ -8,10 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-PUnit::PUnit()
-{
-}
-
 String PUnit::MakeSeqIdString(int seqIdOffset) const
 {
 	const PUnit* pPUnit = this;
@@ -1957,8 +1953,8 @@ PUnit* PUnitFactory_MemberGet_MapToIter::Create(bool discardValueFlag)
 //                                        -> [Car]               (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, bool keepCarFlag>
-PUnit_Argument<discardValueFlag, keepCarFlag>::PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock, Expr* pExpr) :
-	_pAttr(new Attribute()), _flags(DeclCallable::Flag::None), _pExprOfBlock(pExprOfBlock), _pExprSrc(pExpr)
+PUnit_Argument<discardValueFlag, keepCarFlag>::PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock, Expr* pExprSrc) :
+	PUnit(pExprSrc), _pAttr(new Attribute()), _flags(DeclCallable::Flag::None), _pExprOfBlock(pExprOfBlock)
 {
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		DeclCallable::Flags flag = DeclCallable::SymbolToFlag(pSymbol);
@@ -2024,8 +2020,8 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 //                                             -> []              (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-PUnit_ArgumentDelegation<discardValueFlag>::PUnit_ArgumentDelegation(const Attribute& attr, Expr* pExpr) :
-	_pAttr(new Attribute()), _flags(DeclCallable::Flag::None), _pExprSrc(pExpr)
+PUnit_ArgumentDelegation<discardValueFlag>::PUnit_ArgumentDelegation(const Attribute& attr, Expr* pExprSrc) :
+	PUnit(pExprSrc), _pAttr(new Attribute()), _flags(DeclCallable::Flag::None)
 {
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		DeclCallable::Flags flag = DeclCallable::SymbolToFlag(pSymbol);
