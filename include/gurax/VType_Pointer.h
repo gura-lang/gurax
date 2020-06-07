@@ -73,8 +73,7 @@ public:
 			GetPointer().IsLessThan(Value_Pointer::GetPointer(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

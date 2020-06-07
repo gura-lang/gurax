@@ -693,18 +693,9 @@ Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Pointer::vtype = VTYPE_Pointer;
 
-String Value_Pointer::ToStringFormatter(const StringStyle& ss) const
+String Value_Pointer::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += "<";
-	str += GetPointer().ToString(ss);
-	str += ">";
-	return str;
-}
-
-String Value_Pointer::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetPointer().ToString(ss).c_str());
 }
 
 }

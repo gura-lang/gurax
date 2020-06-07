@@ -196,7 +196,7 @@ public:
 		return ss.IsFormatter()? ToStringFormatter(ss) : ToStringDetail(ss);
 	}
 	virtual String ToStringFormatter(const StringStyle& ss) const;
-	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
+	virtual String ToStringDetail(const StringStyle& ss) const;
 public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const { return nullptr; }

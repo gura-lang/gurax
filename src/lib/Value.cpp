@@ -52,6 +52,11 @@ String Value::ToStringFormatter(const StringStyle& ss) const
 	return str;
 }
 
+String Value::ToStringDetail(const StringStyle& ss) const
+{
+	return String::Empty;
+}
+
 void Value::_ToStringFormatter(String& str, const StringStyle& ss) const
 {
 	str += "<";

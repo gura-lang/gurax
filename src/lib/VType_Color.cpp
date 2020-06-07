@@ -320,4 +320,9 @@ Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Color::vtype = VTYPE_Color;
 
+String Value_Color::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetColor().ToString(ss).c_str());
+}
+
 }
