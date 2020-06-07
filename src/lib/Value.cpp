@@ -208,29 +208,30 @@ bool Value::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 bool Value::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%f qualifier",
-				 GetVType().MakeFullName().c_str());
+				"value type %s can not be formatted with %%f qualifier",
+				GetVType().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%g qualifier",
-				 GetVType().MakeFullName().c_str());
+				"value type %s can not be formatted with %%g qualifier",
+				GetVType().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
-	return formatter.PutAlignedString(formatterFlags, ToString().c_str(), formatterFlags.precision);
+	return formatter.PutAlignedString(formatterFlags,
+			ToString(StringStyle::Formatter).c_str(), formatterFlags.precision);
 }
 
 bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%c qualifier",
-				 GetVType().MakeFullName().c_str());
+				"value type %s can not be formatted with %%c qualifier",
+				GetVType().MakeFullName().c_str());
 	return false;
 }
 

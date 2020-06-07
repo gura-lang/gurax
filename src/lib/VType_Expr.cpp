@@ -701,6 +701,13 @@ bool Value_Expr::IsLessThan(const Value* pValue) const
 
 String Value_Expr::ToStringFormatter(const StringStyle& ss) const
 {
+	return GetExpr().ToString(ss);
+}
+
+String Value_Expr::ToStringDetail(const StringStyle& ss) const
+{
+	return GetExpr().ToString(ss);
+#if 0
 	String str;
 	_ToStringFormatter(str, ss);
 	str += ":`(";
@@ -711,11 +718,7 @@ String Value_Expr::ToStringFormatter(const StringStyle& ss) const
 	}
 	str += ">";
 	return str;
-}
-
-String Value_Expr::ToStringDetail(const StringStyle& ss) const
-{
-	return GetExpr().ToString(ss);
+#endif
 }
 
 }

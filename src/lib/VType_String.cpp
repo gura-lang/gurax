@@ -1585,12 +1585,17 @@ StringList Value_String::GetStringList(const ValueList& values)
 
 String Value_String::ToStringFormatter(const StringStyle& ss) const
 {
+	String str = GetStringSTL();
+	if (!ss.IsAsValue()) str = str.EnquoteAuto();
+	return str;
+#if 0
 	String str;
 	_ToStringFormatter(str, ss);
 	str += ":";
 	str += GetStringSTL().EnquoteAuto();
 	str += ">";
 	return str;
+#endif
 }
 
 String Value_String::ToStringDetail(const StringStyle& ss) const

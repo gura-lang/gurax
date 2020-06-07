@@ -77,6 +77,13 @@ void Binary::Dump(Stream& stream, const StringStyle& ss) const
 	stream.Dump(data(), size(), ss);
 }
 
+String Binary::ToString(const StringStyle& ss) const
+{
+	String str = IsWritable()? "B" : "b";
+	str += Enquote();
+	return str;
+}
+
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------

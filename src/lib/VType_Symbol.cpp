@@ -101,4 +101,14 @@ bool Value_Symbol::IsLessThan(const Value* pValue) const
 		GetVType().IsLessThan(pValue->GetVType());
 }
 
+String Value_Symbol::ToStringFormatter(const StringStyle& ss) const
+{
+	return String("`").append(_pSymbol->GetName());
+}
+
+String Value_Symbol::ToStringDetail(const StringStyle& ss) const
+{
+	return String("`").append(_pSymbol->GetName());
+}
+
 }

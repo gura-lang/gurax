@@ -51,10 +51,13 @@ bool Value_Bool::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) 
 
 String Value_Bool::ToStringFormatter(const StringStyle& ss) const
 {
+	return _flag? "true" : "false";
+#if 0
 	String str;
 	_ToStringFormatter(str, ss);
 	str.Format(":%s>", _flag? "true" : "false");
 	return str;
+#endif
 }
 
 String Value_Bool::ToStringDetail(const StringStyle& ss) const

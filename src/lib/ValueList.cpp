@@ -125,10 +125,12 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;
+	StringStyle ssMod(ss);
+	ssMod.SetFormatter();
 	str += "[";
 	for (auto ppValue = begin(); ppValue != end(); ++ppValue) {
-		if (ppValue != begin()) str += ss.GetComma();
-		str += (*ppValue)->ToString(ss);
+		if (ppValue != begin()) str += ssMod.GetComma();
+		str += (*ppValue)->ToString(ssMod);
 	}
 	str += "]";
 	return str;

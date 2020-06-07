@@ -277,20 +277,20 @@ VType& Value_Binary::vtype = VTYPE_Binary;
 
 String Value_Binary::ToStringFormatter(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%dbytes", _pBinary->GetBinary().size());
-	str += _pBinary->GetBinary().IsWritable()? "writrable" : "constant";
-	str += ">";
-	return str;
+	return _pBinary->GetBinary().ToString(ss);
 }
 
 String Value_Binary::ToStringDetail(const StringStyle& ss) const
 {
-	const Binary& binary = _pBinary->GetBinary();
-	String str = binary.IsWritable()? "B" : "b";
-	str += binary.Enquote();
+	return _pBinary->GetBinary().ToString(ss);
+#if 0
+	String str;
+	_ToStringFormatter(str, ss);
+	str.Format(":%dbytes", _pBinary->GetBinary().size());
+	str += _pBinary->GetBinary().IsWritable()? ":writrable" : ":constant";
+	str += ">";
 	return str;
+#endif
 }
 
 }

@@ -19,7 +19,7 @@ repeat {|n| nil}
   ##8 RemoveValue(offset=1)
   ##9 PopFrame()
 repeat (3) {}
-  ##0 Value(<Number:3>)
+  ##0 Value(3)
   ##1 Cast(Number)
   ##2 GenIterator_Range()
   ##3 Value(<Nil>)
@@ -30,7 +30,7 @@ repeat (3) {}
   ##8 RemoveValue(offset=1)
 repeat (3) {|n| nil}
   ##0  PushFrame<Block>()
-  ##1  Value(<Number:3>)
+  ##1  Value(3)
   ##2  Cast(Number)
   ##3  GenIterator_Range()
   ##4  Value(<Nil>)
@@ -67,7 +67,7 @@ repeat ():list {|n| nil}
   ##11 RemoveValue(offset=1)
   ##12 PopFrame()
 repeat (3):list {}
-  ##0  Value(<Number:3>)
+  ##0  Value(3)
   ##1  Cast(Number)
   ##2  GenIterator_Range()
   ##3  CreateList()
@@ -81,7 +81,7 @@ repeat (3):list {}
   ##11 RemoveValue(offset=1)
 repeat (3):list {|n| nil}
   ##0  PushFrame<Block>()
-  ##1  Value(<Number:3>)
+  ##1  Value(3)
   ##2  Cast(Number)
   ##3  GenIterator_Range()
   ##4  CreateList()
@@ -121,7 +121,7 @@ repeat ():xlist {|n| nil}
   ##11 RemoveValue(offset=1)
   ##12 PopFrame()
 repeat (3):xlist {}
-  ##0  Value(<Number:3>)
+  ##0  Value(3)
   ##1  Cast(Number)
   ##2  GenIterator_Range()
   ##3  CreateList()
@@ -135,7 +135,7 @@ repeat (3):xlist {}
   ##11 RemoveValue(offset=1)
 repeat (3):xlist {|n| nil}
   ##0  PushFrame<Block>()
-  ##1  Value(<Number:3>)
+  ##1  Value(3)
   ##2  Cast(Number)
   ##3  GenIterator_Range()
   ##4  CreateList()
@@ -166,7 +166,7 @@ repeat (3):iter {}
   ##1 SequenceBegin(sentinel=##3)
   ##2 Value(<Nil>)
   ##3 SequenceEnd()
-  ##4 Value(<Number:3>)
+  ##4 Value(3)
   ##5 Cast(Number)
   ##6 GenIterator_repeat()
 repeat (3):iter {|n| nil}
@@ -174,7 +174,7 @@ repeat (3):iter {|n| nil}
   ##1 SequenceBegin(sentinel=##3)
   ##2 Lookup(`nil)
   ##3 SequenceEnd()
-  ##4 Value(<Number:3>)
+  ##4 Value(3)
   ##5 Cast(Number)
   ##6 GenIterator_repeat()
 repeat ():xiter {}
@@ -194,7 +194,7 @@ repeat (3):xiter {}
   ##1 SequenceBegin(sentinel=##3)
   ##2 Value(<Nil>)
   ##3 SequenceEnd()
-  ##4 Value(<Number:3>)
+  ##4 Value(3)
   ##5 Cast(Number)
   ##6 GenIterator_repeat()
 repeat (3):xiter {|n| nil}
@@ -202,12 +202,12 @@ repeat (3):xiter {|n| nil}
   ##1 SequenceBegin(sentinel=##3)
   ##2 Lookup(`nil)
   ##3 SequenceEnd()
-  ##4 Value(<Number:3>)
+  ##4 Value(3)
   ##5 Cast(Number)
   ##6 GenIterator_repeat()
 repeat (3) {|i| f(i)}
   ##0  PushFrame<Block>()
-  ##1  Value(<Number:3>)
+  ##1  Value(3)
   ##2  Cast(Number)
   ##3  GenIterator_Range()
   ##4  Value(<Nil>)

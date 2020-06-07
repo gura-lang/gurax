@@ -488,17 +488,20 @@ VType& Value_Number::vtype = VTYPE_Number;
 
 String Value_Number::ToStringFormatter(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += ToStringDetail(ss);
-	str += ">";
-	return str;
+	return Number<Double>::ToString(GetNumber<Double>());
 }
 
 String Value_Number::ToStringDetail(const StringStyle& ss) const
 {
 	return Number<Double>::ToString(GetNumber<Double>());
+#if 0
+	String str;
+	_ToStringFormatter(str, ss);
+	str += ":";
+	str += Number<Double>::ToString(GetNumber<Double>());
+	str += ">";
+	return str;
+#endif
 }
 
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

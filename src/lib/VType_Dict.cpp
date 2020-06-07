@@ -395,15 +395,18 @@ VType& Value_Dict::vtype = VTYPE_Dict;
 
 String Value_Dict::ToStringFormatter(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%zuitems>", GetValueDict().size());
-	return str;
+	return GetValueDict().ToString(ss);
 }
 
 String Value_Dict::ToStringDetail(const StringStyle& ss) const
 {
 	return GetValueDict().ToString(ss);
+#if 0
+	String str;
+	_ToStringFormatter(str, ss);
+	str.Format(":%zuitems>", GetValueDict().size());
+	return str;
+#endif
 }
 
 Value* Value_Dict::DoIndexGet(const Index& index) const

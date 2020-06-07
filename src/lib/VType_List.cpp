@@ -1609,15 +1609,18 @@ Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 
 String Value_List::ToStringFormatter(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%zuitems>", GetValueOwner().size());
-	return str;
+	return GetValueOwner().ToString(ss);
 }
 
 String Value_List::ToStringDetail(const StringStyle& ss) const
 {
 	return GetValueOwner().ToString(ss);
+#if 0
+	String str;
+	_ToStringFormatter(str, ss);
+	str.Format(":%zuitems>", GetValueOwner().size());
+	return str;
+#endif
 }
 
 bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const

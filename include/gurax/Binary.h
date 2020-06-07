@@ -80,6 +80,7 @@ public:
 	bool IsLessThan(const Binary& binary) const {
 		return ::memcmp(data(), binary.data(), std::min(size(), binary.size())) < 0;
 	}
+	String ToString(const StringStyle& ss) const;
 };
 
 #if 0

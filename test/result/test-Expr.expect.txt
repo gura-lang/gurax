@@ -4,7 +4,7 @@ f(`(a))
   ##0 Lookup(`a)
 --------
 f(`({a = 3}))
-  ##0 Value(<Number:3>)
+  ##0 Value(3)
   ##1 AssignToSymbol(`a)
 --------
 f(`(a + b))
@@ -20,9 +20,9 @@ f(`(a + b))
   ##1 Lookup(`bar)
 --------
 {foo = 2, bar = 'hello'}
-  ##0 Value(<Number:2>)
+  ##0 Value(2)
   ##1 AssignToSymbol(`foo), DiscardValue()
-  ##2 Value(<String:'hello'>)
+  ##2 Value('hello')
   ##3 AssignToSymbol(`bar)
 --------
 {foo.bar}
@@ -31,7 +31,7 @@ f(`(a + b))
 --------
 {foo.bar = 3}
   ##0 Lookup(`foo)
-  ##1 Value(<Number:3>)
+  ##1 Value(3)
   ##2 MemberSet_Normal(`bar)
 ======== Property ========
 Expr

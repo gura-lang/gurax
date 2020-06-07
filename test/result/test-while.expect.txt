@@ -77,7 +77,7 @@ while (true):xlist {|n| nil}
 while (a < 3) {}
   ##0 Value(<Nil>)
   ##1 Lookup(`a)
-  ##2 Value(<Number:3>)
+  ##2 Value(3)
   ##3 BinaryOp(<)
   ##4 JumpIfNot(branchDest=##8)
   ##5 DiscardValue()
@@ -89,7 +89,7 @@ while (a < 3) {|i| f(i)}
   ##1  GenIterator_Counter()
   ##2  Value(<Nil>)
   ##3  Lookup(`a)
-  ##4  Value(<Number:3>)
+  ##4  Value(3)
   ##5  BinaryOp(<)
   ##6  JumpIfNot(branchDest=##16)
   ##7  DiscardValue()
