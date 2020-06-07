@@ -101,7 +101,7 @@ public:
 			GetIterator().IsLessThan(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
 	virtual bool IsIterable() const override { return true; }

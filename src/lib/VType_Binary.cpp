@@ -275,10 +275,10 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Binary::vtype = VTYPE_Binary;
 
-String Value_Binary::ToStringDigest(const StringStyle& ss) const
+String Value_Binary::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%dbytes", _pBinary->GetBinary().size());
 	str += _pBinary->GetBinary().IsWritable()? "writrable" : "constant";
 	str += ">";

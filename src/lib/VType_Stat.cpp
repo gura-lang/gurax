@@ -362,17 +362,17 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Stat::vtype = VTYPE_Stat;
 
-String Value_Stat::ToStringDigest(const StringStyle& ss) const
+String Value_Stat::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%s>", GetStat().ToString(ss).c_str());
 	return str;
 }
 
 String Value_Stat::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

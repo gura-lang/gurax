@@ -1607,10 +1607,10 @@ Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 	return new Value_List(pValueOwner.release());
 }
 
-String Value_List::ToStringDigest(const StringStyle& ss) const
+String Value_List::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%zuitems>", GetValueOwner().size());
 	return str;
 }

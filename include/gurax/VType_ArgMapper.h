@@ -71,7 +71,7 @@ public:
 			GetIterator().IsLessThan(Value_ArgMapper::GetIterator(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual Iterator* DoGenIterator() const override;
 public:

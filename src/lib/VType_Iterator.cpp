@@ -1656,19 +1656,19 @@ Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) cons
 //------------------------------------------------------------------------------
 VType& Value_Iterator::vtype = VTYPE_Iterator;
 
-String Value_Iterator::ToStringDigest(const StringStyle& ss) const
+String Value_Iterator::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
-	str += GetIterator().ToString(StringStyle().SetDigest());
+	str += GetIterator().ToString(StringStyle::Formatter);
 	str += ">";
 	return str;
 }
 
 String Value_Iterator::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 bool Value_Iterator::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const

@@ -77,10 +77,10 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Module::vtype = VTYPE_Module;
 
-String Value_Module::ToStringDigest(const StringStyle& ss) const
+String Value_Module::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%s:%s>",
 			   GetModule().GetDottedSymbol().ToString().c_str(),
 			   GetModule().GetPathName());
@@ -89,7 +89,7 @@ String Value_Module::ToStringDigest(const StringStyle& ss) const
 
 String Value_Module::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) const

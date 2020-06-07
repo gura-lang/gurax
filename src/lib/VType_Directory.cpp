@@ -182,7 +182,7 @@ Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) con
 //------------------------------------------------------------------------------
 VType& Value_Directory::vtype = VTYPE_Directory;
 
-String Value_Directory::ToStringDigest(const StringStyle& ss) const
+String Value_Directory::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
 	str += "<Directory:";
@@ -193,7 +193,7 @@ String Value_Directory::ToStringDigest(const StringStyle& ss) const
 
 String Value_Directory::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

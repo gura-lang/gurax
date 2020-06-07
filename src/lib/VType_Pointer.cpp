@@ -693,7 +693,7 @@ Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Pointer::vtype = VTYPE_Pointer;
 
-String Value_Pointer::ToStringDigest(const StringStyle& ss) const
+String Value_Pointer::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
 	str += "<";
@@ -704,7 +704,7 @@ String Value_Pointer::ToStringDigest(const StringStyle& ss) const
 
 String Value_Pointer::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

@@ -442,10 +442,10 @@ Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Complex::vtype = VTYPE_Complex;
 
-String Value_Complex::ToStringDigest(const StringStyle& ss) const
+String Value_Complex::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	const Complex& num = GetComplex();
 	str += ":";
 	str += GetComplex().ToString(ss);
@@ -455,7 +455,7 @@ String Value_Complex::ToStringDigest(const StringStyle& ss) const
 
 String Value_Complex::ToStringDetail(const StringStyle& ss) const
 {
-	return ss.IsAsValue()? GetComplex().ToString(ss) : ToStringDigest(ss);
+	return ss.IsAsValue()? GetComplex().ToString(ss) : ToStringFormatter(ss);
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const

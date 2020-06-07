@@ -110,7 +110,7 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 

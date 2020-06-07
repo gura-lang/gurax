@@ -1583,10 +1583,10 @@ StringList Value_String::GetStringList(const ValueList& values)
 	return strs;
 }
 
-String Value_String::ToStringDigest(const StringStyle& ss) const
+String Value_String::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
 	str += GetStringSTL().EnquoteAuto();
 	str += ">";

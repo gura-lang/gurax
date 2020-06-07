@@ -145,11 +145,11 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_VType::vtype = VTYPE_VType;
 
-String Value_VType::ToStringDigest(const StringStyle& ss) const
+String Value_VType::ToStringFormatter(const StringStyle& ss) const
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
 	str += constructor.IsEmpty()?
 		GetVTypeThis().MakeFullName() : constructor.ToString(StringStyle().SetCram());
@@ -159,7 +159,7 @@ String Value_VType::ToStringDigest(const StringStyle& ss) const
 
 String Value_VType::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 bool Value_VType::CanEvalAsMethod(const Function& function) const

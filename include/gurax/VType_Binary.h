@@ -85,7 +85,7 @@ public:
 			GetBinary().IsLessThan(dynamic_cast<const Value_Binary*>(pValue)->GetBinary()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 

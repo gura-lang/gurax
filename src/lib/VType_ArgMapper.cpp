@@ -42,19 +42,19 @@ void VType_ArgMapper::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ArgMapper::vtype = VTYPE_ArgMapper;
 
-String Value_ArgMapper::ToStringDigest(const StringStyle& ss) const
+String Value_ArgMapper::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
-	str += GetIterator().ToString(StringStyle().SetDigest());
+	str += GetIterator().ToString(StringStyle::Formatter);
 	str += ">";
 	return str;
 }
 
 String Value_ArgMapper::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 Iterator* Value_ArgMapper::DoGenIterator() const

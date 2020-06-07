@@ -147,7 +147,7 @@ public:
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 	String ToString(const StringStyle& ss) const {
-		return ss.IsDigest()? ToStringDigest(ss) : ToStringDetail(ss);
+		return ss.IsFormatter()? ToStringFormatter(ss) : ToStringDetail(ss);
 	}
 public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
@@ -195,7 +195,7 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
 	virtual bool IsLessThan(const Value* pValue) const = 0;
-	virtual String ToStringDigest(const StringStyle& ss) const;
+	virtual String ToStringFormatter(const StringStyle& ss) const;
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
@@ -248,7 +248,7 @@ public:
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
 protected:
-	void _ToStringDigest(String& str, const StringStyle& ss) const;
+	void _ToStringFormatter(String& str, const StringStyle& ss) const;
 };
 
 }

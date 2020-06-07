@@ -49,10 +49,10 @@ bool Value_Bool::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) 
 		formatterFlags, formatterFlags.FormatNumber_d(static_cast<Int>(GetBool()), buff, sizeof(buff)));
 }
 
-String Value_Bool::ToStringDigest(const StringStyle& ss) const
+String Value_Bool::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%s>", _flag? "true" : "false");
 	return str;
 }

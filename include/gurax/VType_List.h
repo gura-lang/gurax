@@ -90,7 +90,7 @@ public:
 			GetValueOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetValueOwner()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 public:
 	virtual bool IsIterable() const override { return true; }

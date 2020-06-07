@@ -42,10 +42,10 @@ void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ArgMapper_Multiple::vtype = VTYPE_ArgMapper_Multiple;
 
-String Value_ArgMapper_Multiple::ToStringDigest(const StringStyle& ss) const
+String Value_ArgMapper_Multiple::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%zuitems>", GetValueOwner().size());
 	return str;
 }

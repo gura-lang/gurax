@@ -699,10 +699,10 @@ bool Value_Expr::IsLessThan(const Value* pValue) const
 		GetVType().IsLessThan(pValue->GetVType());
 }
 
-String Value_Expr::ToStringDigest(const StringStyle& ss) const
+String Value_Expr::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":`(";
 	str += GetExpr().ToString(StringStyle().SetCram());
 	str += ")";

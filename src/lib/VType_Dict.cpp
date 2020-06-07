@@ -393,10 +393,10 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Dict::vtype = VTYPE_Dict;
 
-String Value_Dict::ToStringDigest(const StringStyle& ss) const
+String Value_Dict::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%zuitems>", GetValueDict().size());
 	return str;
 }

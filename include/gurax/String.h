@@ -408,7 +408,7 @@ public:
 		static const Flags MultiLine	= (1 << 3);
 		static const Flags UpperCase	= (1 << 4);
 		static const Flags Verbose		= (1 << 5);
-		static const Flags Digest		= (1 << 6);
+		static const Flags Formatter	= (1 << 6);
 		static const Flags AddressInfo	= (1 << 7);
 	};
 private:
@@ -421,6 +421,7 @@ private:
 public:
 	static const StringStyle Empty;
 	static const StringStyle AsValue;
+	static const StringStyle Formatter;
 public:
 	// Constructor
 	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :
@@ -450,8 +451,8 @@ public:
 	StringStyle& UnsetUpperCase()		{ _flags &= ~Flag::UpperCase; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	StringStyle& SetDigest()			{ _flags |= Flag::Digest; return *this; }
-	StringStyle& UnsetDigest()			{ _flags &= ~Flag::Digest; return *this; }
+	StringStyle& SetFormatter()			{ _flags |= Flag::Formatter; return *this; }
+	StringStyle& UnsetFormatter()		{ _flags &= ~Flag::Formatter; return *this; }
 	StringStyle& SetAddressInfo()		{ _flags |= Flag::AddressInfo; return *this; }
 	StringStyle& UnsetAddressInfo()		{ _flags &= ~Flag::AddressInfo; return *this; }
 	bool IsAsSource() const				{ return (_flags & Flag::AsSource) != 0; }
@@ -460,7 +461,7 @@ public:
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const			{ return (_flags & Flag::UpperCase) != 0; }
 	bool IsVerbose() const				{ return (_flags & Flag::Verbose) != 0; }
-	bool IsDigest() const				{ return (_flags & Flag::Digest) != 0; }
+	bool IsFormatter() const				{ return (_flags & Flag::Formatter) != 0; }
 	bool IsAddressInfo() const			{ return (_flags & Flag::AddressInfo) != 0; }
 	const char* GetMargin() const		{ return _margin.c_str(); }
 	const char* GetIndentUnit() const	{ return _indentUnit.c_str(); }

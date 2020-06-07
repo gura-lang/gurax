@@ -312,17 +312,17 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Random::vtype = VTYPE_Random;
 
-String Value_Random::ToStringDigest(const StringStyle& ss) const
+String Value_Random::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":seed=0x%08x>", GetRandom().GetSeed());
 	return str;
 }
 
 String Value_Random::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 //------------------------------------------------------------------------------

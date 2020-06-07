@@ -62,10 +62,10 @@ void VType_ErrorType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ErrorType::vtype = VTYPE_ErrorType;
 
-String Value_ErrorType::ToStringDigest(const StringStyle& ss) const
+String Value_ErrorType::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
 	str += GetErrorType().GetName();
 	str += ">";
@@ -74,7 +74,7 @@ String Value_ErrorType::ToStringDigest(const StringStyle& ss) const
 
 String Value_ErrorType::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

@@ -571,10 +571,10 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Stream::vtype = VTYPE_Stream;
 
-String Value_Stream::ToStringDigest(const StringStyle& ss) const
+String Value_Stream::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
 	str += GetStream().ToString(ss);
 	str += ">";
@@ -583,7 +583,7 @@ String Value_Stream::ToStringDigest(const StringStyle& ss) const
 
 String Value_Stream::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

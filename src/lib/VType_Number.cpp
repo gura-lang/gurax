@@ -486,10 +486,10 @@ Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Number::vtype = VTYPE_Number;
 
-String Value_Number::ToStringDigest(const StringStyle& ss) const
+String Value_Number::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ":";
 	str += ToStringDetail(ss);
 	str += ">";

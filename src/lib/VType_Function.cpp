@@ -159,10 +159,10 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Function::vtype = VTYPE_Function;
 
-String Value_Function::ToStringDigest(const StringStyle& ss) const
+String Value_Function::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str.Format(":%s>", GetFunction().MakeFullName().c_str());
 	return str;
 }

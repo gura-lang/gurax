@@ -44,15 +44,15 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
-String Value::ToStringDigest(const StringStyle& ss) const
+String Value::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ">";
 	return str;
 }
 
-void Value::_ToStringDigest(String& str, const StringStyle& ss) const
+void Value::_ToStringFormatter(String& str, const StringStyle& ss) const
 {
 	str += "<";
 	str += GetVType().MakeFullName();

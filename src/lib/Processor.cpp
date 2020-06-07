@@ -212,7 +212,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	};
 	auto PrintStack = [this](Stream& stream, int nestLevel, size_t wdSeqId) {
 		stream.Printf("%*s%*s %s\n", nestLevel * 2, "", wdSeqId, "",
-					  GetValueStack().ToString(StringStyle().SetDigest()).c_str());
+					  GetValueStack().ToString(StringStyle::Formatter).c_str());
 	};
 	_pPUnitCur = pPUnit;
 	if (!_pPUnitCur) return;

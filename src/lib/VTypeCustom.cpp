@@ -255,17 +255,17 @@ void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
 	*ppValue = pValue;
 }
 
-String ValueCustom::ToStringDigest(const StringStyle& ss) const
+String ValueCustom::ToStringFormatter(const StringStyle& ss) const
 {
 	String str;
-	_ToStringDigest(str, ss);
+	_ToStringFormatter(str, ss);
 	str += ">";
 	return str;
 }
 
 String ValueCustom::ToStringDetail(const StringStyle& ss) const
 {
-	return ToStringDigest(ss);
+	return ToStringFormatter(ss);
 }
 
 }

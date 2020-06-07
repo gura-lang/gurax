@@ -72,7 +72,7 @@ public:
 			GetModule().IsLessThan(dynamic_cast<const Value_Module*>(pValue)->GetModule()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process

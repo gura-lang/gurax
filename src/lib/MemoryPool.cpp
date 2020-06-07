@@ -212,7 +212,7 @@ String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
-	if (!ss.IsDigest()) {
+	if (!ss.IsFormatter()) {
 		str += "\n";
 		for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
 			size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocksPerPool;
