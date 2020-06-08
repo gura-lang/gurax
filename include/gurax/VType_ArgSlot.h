@@ -72,9 +72,7 @@ public:
 			GetArgSlot().IsLessThan(Value_ArgSlot::GetArgSlot(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetArgSlot().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

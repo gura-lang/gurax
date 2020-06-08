@@ -72,9 +72,7 @@ public:
 			GetArgument().IsLessThan(Value_Argument::GetArgument(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetArgument().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

@@ -50,9 +50,9 @@ String Value_ArgMapper_Multiple::ToStringFormatter(const StringStyle& ss) const
 	return str;
 }
 
-String Value_ArgMapper_Multiple::ToStringDetail(const StringStyle& ss) const
+String Value_ArgMapper_Multiple::ToString(const StringStyle& ss) const
 {
-	return GetValueOwner().ToString(ss);
+	return String().Format("<ArgMapper_Multiple:%s>", GetValueOwner().ToString(ss).c_str());
 }
 
 bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)

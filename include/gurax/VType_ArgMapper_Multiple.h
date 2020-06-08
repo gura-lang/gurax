@@ -61,7 +61,7 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
 	virtual bool ReadyToPickValue(Frame& frame, DeclArg& declArg) override;

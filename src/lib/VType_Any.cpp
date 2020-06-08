@@ -85,4 +85,9 @@ Value* VType_Any::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Any::vtype = VTYPE_Any;
 
+String Value_Any::ToString(const StringStyle& ss) const
+{
+	return String().Format("<Any>");
+}
+
 }

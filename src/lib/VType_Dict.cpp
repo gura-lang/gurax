@@ -393,12 +393,7 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Dict::vtype = VTYPE_Dict;
 
-String Value_Dict::ToStringFormatter(const StringStyle& ss) const
-{
-	return GetValueDict().ToString(ss);
-}
-
-String Value_Dict::ToStringDetail(const StringStyle& ss) const
+String Value_Dict::ToString(const StringStyle& ss) const
 {
 	return GetValueDict().ToString(ss);
 #if 0

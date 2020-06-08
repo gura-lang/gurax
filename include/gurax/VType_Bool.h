@@ -64,8 +64,7 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const override;
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool GetBool() const override { return GetBool_(); }
 protected:
 	bool GetBool_() const { return _flag; }

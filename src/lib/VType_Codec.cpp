@@ -86,4 +86,10 @@ Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Codec::vtype = VTYPE_Codec;
 
+String Value_Codec::ToString(const StringStyle& ss) const
+{
+	return String().Format("<Codec:%s>", GetCodec().ToString(ss).c_str());
+}
+
+
 }

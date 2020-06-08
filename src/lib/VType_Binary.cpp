@@ -275,12 +275,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Binary::vtype = VTYPE_Binary;
 
-String Value_Binary::ToStringFormatter(const StringStyle& ss) const
-{
-	return _pBinary->GetBinary().ToString(ss);
-}
-
-String Value_Binary::ToStringDetail(const StringStyle& ss) const
+String Value_Binary::ToString(const StringStyle& ss) const
 {
 	return _pBinary->GetBinary().ToString(ss);
 #if 0

@@ -42,4 +42,9 @@ void VType_Attribute::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Attribute::vtype = VTYPE_Attribute;
 
+String Value_Attribute::ToString(const StringStyle& ss) const
+{
+	return String().Format("<Attribute:%s>", GetAttr().ToString(ss).c_str());
+}
+
 }

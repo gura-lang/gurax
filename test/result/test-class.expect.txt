@@ -215,7 +215,7 @@ Derive1(11, 22, 33).Format() .. 11, 22, 33, EXT
 Derive2(22, 33).Format() .. 11, 22, 33, EXT
 Derive3(111).Format() .. 111, 222, 333, EXT
 ======== Post-definition of method ========
-String.Test .. String#Test()
+String.Test .. <CallableMember:String#Test()>
 'Hello'.Test() .. Hello:5
-A.Test .. A#Test()
+A.Test .. <CallableMember:A#Test()>
 a.Test() .. first second third

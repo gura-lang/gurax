@@ -119,4 +119,9 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Array::vtype = VTYPE_Array;
 
+String Value_Array::ToString(const StringStyle& ss) const
+{
+	return String().Format("<Array:%s>", GetArray().ToString(ss).c_str());
+}
+
 }

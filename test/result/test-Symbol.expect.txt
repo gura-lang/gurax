@@ -2,10 +2,10 @@
 Symbol
   #symbolName       String       R
 ======== Operator == ========
-<VType:Expr(stream:Stream:r):map{block?}>
+<CallableMember:<VType:Expr(stream:Stream:r):map{block?}>>
 (`a) == (`a) .. true
 x == (`a) .. true
 ======== Operator != ========
-<VType:Expr(stream:Stream:r):map{block?}>
+<CallableMember:<VType:Expr(stream:Stream:r):map{block?}>>
 (`a) != (`a) .. false
 x != (`a) .. false
