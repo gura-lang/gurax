@@ -72,9 +72,7 @@ public:
 			GetHelp().IsLessThan(Value_Help::GetHelp(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetHelp().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

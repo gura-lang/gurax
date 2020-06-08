@@ -42,4 +42,10 @@ void VType_PathMgr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_PathMgr::vtype = VTYPE_PathMgr;
 
+String Value_PathMgr::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetPathMgr().ToString(ss).c_str());
+}
+
+
 }

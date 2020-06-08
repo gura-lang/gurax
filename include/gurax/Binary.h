@@ -4,6 +4,7 @@
 #ifndef GURAX_BINARY_H
 #define GURAX_BINARY_H
 #include "String.h"
+#include "StringStyle.h"
 
 namespace Gurax {
 

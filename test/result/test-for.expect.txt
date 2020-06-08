@@ -262,7 +262,7 @@ for (v in tbl):list {break, 1}
   ##6  Jump(cont=##13)
   ##7  ListElem(offsetToList=0)
   ##8  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
-  ##9  Value(<Undefined>)
+  ##9  Value()
   ##10 Break(marked=##5), DiscardValue()
   ##11 Value(1)
   ##12 Jump(cont=##7)

@@ -108,6 +108,23 @@ void Error::Print(Stream& stream)
 	}
 }
 
+String Error::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("Error:%s", GetErrorType().GetName());
+	if (HasFileName()) {
+		str.Format(":%s", PathName(GetFileName()).ExtractFileName().c_str());
+		int lineNoTop = GetLineNoTop();
+		int lineNoBtm = GetLineNoBtm();
+		if (lineNoTop == lineNoBtm) {
+			str.Format(":%d", lineNoTop);
+		} else {
+			str.Format(":%d:%d", lineNoTop, lineNoBtm);
+		}
+	}
+	return str;
+}
+
 void Error::Issue_UnimplementedOperation()
 {
 	Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");

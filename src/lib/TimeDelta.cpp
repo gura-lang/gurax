@@ -113,7 +113,7 @@ void TimeDelta::Unpack(Int64 num, Int32* pDays, Int32* pSecsPacked, Int32* pUsec
 String TimeDelta::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("%ddays,%02d:%02d:%02d.%03d",
+	str.Format("TimeDelta:%ddays,%02d:%02d:%02d.%03d",
 		GetDays(), GetHours(), GetMins(), GetSecs(), GetMSecs());
 	if (Int32 usecs = GetUSecs()) str.Format("%03d", usecs);
 	return str;

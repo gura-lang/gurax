@@ -74,9 +74,7 @@ public:
 			GetMatch().IsLessThan(Value_Match::GetMatch(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetMatch().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
 };

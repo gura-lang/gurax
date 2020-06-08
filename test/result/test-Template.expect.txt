@@ -132,8 +132,8 @@ ${end}' -> '    0 is a multiple of two
 '
 
 ======== suffix t ========
-t'' .. (template)
-t'${hoge}' .. (template)
+t'' .. <Template>
+t'${hoge}' .. <Template>
 ======== suffix e ========
 e'' .. 
 e'${hoge}' .. value of hoge

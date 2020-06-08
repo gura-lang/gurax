@@ -362,17 +362,9 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Stat::vtype = VTYPE_Stat;
 
-String Value_Stat::ToStringFormatter(const StringStyle& ss) const
+String Value_Stat::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%s>", GetStat().ToString(ss).c_str());
-	return str;
-}
-
-String Value_Stat::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetStat().ToString(ss).c_str());
 }
 
 }

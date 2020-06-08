@@ -275,4 +275,9 @@ String VType_Palette::Iterator_Each::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 VType& Value_Palette::vtype = VTYPE_Palette;
 
+String Value_Palette::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetPalette().ToString(ss).c_str());
+}
+
 }

@@ -82,6 +82,7 @@ public:
 	const ValueMap& GetValueMap() const { return *_pValueMap; }
 	void SetStreamDst(Stream* pStream) { _pStreamDst.reset(pStream); }
 	Stream& GetStreamDst() { return *_pStreamDst; }
+	const Stream& GetStreamDst() const { return *_pStreamDst; }
 	void ClearLastChar()  { _chLast = '\0'; }
 	char GetLastChar() const { return _chLast; }
 public:
@@ -104,7 +105,7 @@ public:
 	bool IsIdentical(const Template& templ) const { return this == &templ; }
 	bool IsEqualTo(const Template& templ) const { return IsIdentical(templ); }
 	bool IsLessThan(const Template& templ) const { return this < &templ; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(template)"; }
+	String ToString(const StringStyle& ss) const;
 };
 
 //-----------------------------------------------------------------------------

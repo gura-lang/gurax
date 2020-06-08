@@ -1607,14 +1607,9 @@ Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 	return new Value_List(pValueOwner.release());
 }
 
-String Value_List::ToStringFormatter(const StringStyle& ss) const
+String Value_List::ToString(const StringStyle& ss) const
 {
-	return GetValueOwner().ToString(ss);
-}
-
-String Value_List::ToStringDetail(const StringStyle& ss) const
-{
-	return GetValueOwner().ToString(ss);
+	return GetValueOwner().ToString(StringStyle::Formatter_NilVisible);
 #if 0
 	String str;
 	_ToStringFormatter(str, ss);

@@ -17,10 +17,10 @@ void Symbol::Bootup()
 	Empty = Add("");
 }
 
-String Symbol::ToString(const StringStyle& ss) const
+String Symbol::ToString(bool quoteFlag) const
 {
 	String str;
-	if (ss.IsAsSource()) str += '`';
+	if (quoteFlag) str += '`';
 	str += GetName();
 	return str;
 }
@@ -116,12 +116,12 @@ bool SymbolList::IsEqualTo(const SymbolList& symbolList) const
 	return std::equal(begin(), end(), symbolList.begin(), symbolList.end(), Symbol::EqualTo_UniqId());
 }
 
-String SymbolList::ToString(const StringStyle& ss) const
+String SymbolList::ToString(bool quoteFlag) const
 {
 	String str;
 	for (const Symbol* pSymbol : *this) {
-		if (!str.empty()) str += ss.GetComma();
-		str += pSymbol->ToString(ss);
+		if (!str.empty()) str += ","; //ss.GetComma();
+		str += pSymbol->ToString(quoteFlag);
 	}
 	return str;
 }

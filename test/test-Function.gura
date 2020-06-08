@@ -55,7 +55,9 @@ TestCase('Default Value (2)') {
 }
 
 TestCase('Optional Argument') {
-	f(a?, b?, c?) = Format('a=%s, b=%s, c=%s', a, b, c)
+	f(a?, b?, c?) = {
+		Format('a=%s, b=%s, c=%s', cond(a, a, '<Nil>'), cond(b, b, '<Nil>'), cond(c, c, '<Nil>'))
+	}
 	Tester(`f)
 	Tester(`f())
 	Tester(`f(1))

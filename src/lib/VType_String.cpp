@@ -1583,7 +1583,7 @@ StringList Value_String::GetStringList(const ValueList& values)
 	return strs;
 }
 
-String Value_String::ToStringFormatter(const StringStyle& ss) const
+String Value_String::ToString(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
 	if (!ss.IsAsValue()) str = str.EnquoteAuto();
@@ -1596,13 +1596,6 @@ String Value_String::ToStringFormatter(const StringStyle& ss) const
 	str += ">";
 	return str;
 #endif
-}
-
-String Value_String::ToStringDetail(const StringStyle& ss) const
-{
-	String str = GetStringSTL();
-	if (!ss.IsAsValue()) str = str.EnquoteAuto();
-	return str;
 }
 
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

@@ -156,4 +156,9 @@ void VType_ImageMgr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ImageMgr::vtype = VTYPE_ImageMgr;
 
+String Value_ImageMgr::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetImageMgr().ToString(ss));
+}
+
 }

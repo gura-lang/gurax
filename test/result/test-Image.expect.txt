@@ -10,7 +10,7 @@ Image
   #palette          Palette      R/W,nil
   #width            Number       R
 ======== Property Test ========
-Image.Blank(48, 32) .. Image:rgba:48x32
+Image.Blank(48, 32) .. <Image:rgba:48x32>
 img.format .. `rgba
 img.width .. 48
 img.height .. 32
@@ -19,7 +19,7 @@ img.bytesPerLine .. 192
 img.bytesPerPixel .. 4
 img.palette .. <Nil>
 img.p .. <Pointer:0/6144>
-Image.Blank(48, 32):rgb .. Image:rgb:48x32
+Image.Blank(48, 32):rgb .. <Image:rgb:48x32>
 img.format .. `rgb
 img.width .. 48
 img.height .. 32

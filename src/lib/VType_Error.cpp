@@ -240,28 +240,9 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Error::vtype = VTYPE_Error;
 
-String Value_Error::ToStringFormatter(const StringStyle& ss) const
+String Value_Error::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%s", GetError().GetErrorType().GetName());
-	if (GetError().HasFileName()) {
-		str.Format(":%s", PathName(GetError().GetFileName()).ExtractFileName().c_str());
-		int lineNoTop = GetError().GetLineNoTop();
-		int lineNoBtm = GetError().GetLineNoBtm();
-		if (lineNoTop == lineNoBtm) {
-			str.Format(":%d", lineNoTop);
-		} else {
-			str.Format(":%d:%d", lineNoTop, lineNoBtm);
-		}
-	}
-	str += ">";
-	return str;
-}
-
-String Value_Error::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetError().ToString(ss).c_str());
 }
 
 }

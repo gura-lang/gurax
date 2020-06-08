@@ -145,21 +145,9 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_VType::vtype = VTYPE_VType;
 
-String Value_VType::ToStringFormatter(const StringStyle& ss) const
+String Value_VType::ToString(const StringStyle& ss) const
 {
-	const Function& constructor = GetVTypeThis().GetConstructor();
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += constructor.IsEmpty()?
-		GetVTypeThis().MakeFullName() : constructor.ToString(StringStyle().SetCram());
-	str += ">";
-	return str;
-}
-
-String Value_VType::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetVTypeThis().ToString(ss).c_str());
 }
 
 bool Value_VType::CanEvalAsMethod(const Function& function) const

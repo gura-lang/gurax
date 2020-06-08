@@ -154,7 +154,7 @@ String Argument::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += GetValueCar().ToString(StringStyle(ss).SetFormatter());
-	str += '(';
+	str += ":(";
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (pArgSlot != GetArgSlotFirst()) str += ss.GetComma();
 		str += pArgSlot->ToString(StringStyle(ss).SetFormatter());
@@ -165,7 +165,7 @@ String Argument::ToString(const StringStyle& ss) const
 		str += GetValueOfDict()->ToString(StringStyle(ss).SetFormatter());
 		str += ")%";
 	}
-	str += ')';
+	str += ")";
 	str += GetAttr().ToString(ss);
 	str += DeclCallable::FlagsToString(GetFlags());
 	if (GetExprOfBlock()) {

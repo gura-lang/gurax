@@ -4,6 +4,8 @@
 #ifndef GURAX_MEMORYPOOL_H
 #define GURAX_MEMORYPOOL_H
 #include "String.h"
+#include "StringStyle.h"
+
 
 //-----------------------------------------------------------------------------
 // Macros

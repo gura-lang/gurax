@@ -46,6 +46,16 @@ void VType::Prepare(Frame& frameOuter)
 	DoPrepare(frameOuter);
 }
 
+String VType::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "VType:";
+	const Function& constructor = GetConstructor();
+	str += constructor.IsEmpty()?
+			MakeFullName() : constructor.ToString(StringStyle().SetCram());
+	return str;
+}
+
 void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
 {
 	_pVTypeInh = &vtypeInh;

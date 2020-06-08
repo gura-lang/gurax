@@ -5,6 +5,7 @@
 #define GURAX_COMMANDLINE_H
 #include "Referable.h"
 #include "String.h"
+#include "StringStyle.h"
 
 namespace Gurax {
 

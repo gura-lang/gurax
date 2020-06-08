@@ -149,6 +149,12 @@ const Value* Template::LookupValue(const Symbol* pSymbol) const
 	return nullptr;
 }
 
+String Template::ToString(const StringStyle& ss) const
+{
+	return String().Format("Template");
+	//return String().Format("Template:dst=%s", GetStreamDst().ToString(ss).c_str());
+}
+
 //-----------------------------------------------------------------------------
 // Template::Parser
 //-----------------------------------------------------------------------------

@@ -72,8 +72,7 @@ public:
 			GetPropSlot().IsLessThan(Value_PropSlot::GetPropSlot(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const override { return &_pPropSlot->GetHelpHolder(); }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;

@@ -64,9 +64,7 @@ public:
 			GetExpr().IsLessThan(dynamic_cast<const Value_Quote*>(pValue)->GetExpr()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetExpr().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

@@ -140,19 +140,9 @@ void VType_PropSlot::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_PropSlot::vtype = VTYPE_PropSlot;
 
-String Value_PropSlot::ToStringFormatter(const StringStyle& ss) const
+String Value_PropSlot::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += GetPropSlot().ToString(ss);
-	str += ">";
-	return str;
-}
-
-String Value_PropSlot::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetPropSlot().ToString(ss).c_str());
 }
 
 void Value_PropSlot::PresentHelp(Processor& processor, const Symbol* pLangCode) const

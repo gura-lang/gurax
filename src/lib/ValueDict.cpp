@@ -113,9 +113,9 @@ String ValueDict::ToString(const StringStyle& ss) const
 		const Value* pValueKey = *ppValueKey;
 		const Value* pValue = Lookup(*pValueKey);
 		if (ppValueKey != pKeys->begin()) str += ss.GetComma();
-		str += pValueKey->ToString(ss);
+		str += pValueKey->ToString(StringStyle::Formatter_NilVisible);
 		str += strPair;
-		str += pValue->ToString(ss);
+		str += pValue->ToString(StringStyle::Formatter_NilVisible);
 	}
 	str += "}";
 	return str;

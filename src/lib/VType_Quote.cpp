@@ -47,4 +47,9 @@ Value* VType_Quote::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Quote::vtype = VTYPE_Quote;
 
+String Value_Quote::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetExpr().ToString(ss).c_str());
+}
+
 }

@@ -937,4 +937,9 @@ String VType_Image::Iterator_ScanPixel::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 VType& Value_Image::vtype = VTYPE_Image;
 
+String Value_Image::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetImage().ToString(ss).c_str());
+}
+
 }

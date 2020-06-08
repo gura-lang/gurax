@@ -61,8 +61,7 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override;
 	virtual bool IsLessThan(const Value* pValue) const override;
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

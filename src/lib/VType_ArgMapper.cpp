@@ -45,7 +45,7 @@ VType& Value_ArgMapper::vtype = VTYPE_ArgMapper;
 String Value_ArgMapper::ToString(const StringStyle& ss) const
 {
 	return String().Format("<ArgMapper:%s>",
-					GetIterator().ToString(StringStyle::Formatter).c_str());
+					GetIterator().ToString(StringStyle::Formatter_NilVisible).c_str());
 }
 
 Iterator* Value_ArgMapper::DoGenIterator() const

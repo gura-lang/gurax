@@ -77,19 +77,9 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Module::vtype = VTYPE_Module;
 
-String Value_Module::ToStringFormatter(const StringStyle& ss) const
+String Value_Module::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%s:%s>",
-			   GetModule().GetDottedSymbol().ToString().c_str(),
-			   GetModule().GetPathName());
-	return str;
-}
-
-String Value_Module::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetModule().ToString(ss));
 }
 
 void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) const

@@ -62,7 +62,7 @@ void VType_ErrorType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ErrorType::vtype = VTYPE_ErrorType;
 
-String Value_ErrorType::ToStringFormatter(const StringStyle& ss) const
+String Value_ErrorType::ToString(const StringStyle& ss) const
 {
 	String str;
 	_ToStringFormatter(str, ss);
@@ -70,11 +70,6 @@ String Value_ErrorType::ToStringFormatter(const StringStyle& ss) const
 	str += GetErrorType().GetName();
 	str += ">";
 	return str;
-}
-
-String Value_ErrorType::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
 }
 
 }

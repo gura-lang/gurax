@@ -65,6 +65,7 @@
 #include "gurax/Streams.h"
 #include "gurax/String.h"
 #include "gurax/StringPicker.h"
+#include "gurax/StringStyle.h"
 #include "gurax/SuffixMgr.h"
 #include "gurax/Symbol.h"
 #include "gurax/Symbols.h"

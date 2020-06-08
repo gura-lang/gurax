@@ -201,13 +201,13 @@ g(nil) .. <Nil>
 [dynamic, block] a = local
 ======== Named argument ========
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f1>((%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:f1(dict%, arg%%):((%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2>(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:f2(a, b, c, dict%, arg%%):(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2>(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:f2(a, b, c, dict%, arg%%):(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2>(a = 30, b = 10, c = 20, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:f2(a, b, c, dict%, arg%%):(a = 30, b = 10, c = 20, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
 ======== Cast of List Value ========
 [1, 2, 3]
 ['1', '2', '3']

@@ -571,19 +571,9 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Stream::vtype = VTYPE_Stream;
 
-String Value_Stream::ToStringFormatter(const StringStyle& ss) const
+String Value_Stream::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += GetStream().ToString(ss);
-	str += ">";
-	return str;
-}
-
-String Value_Stream::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetStream().ToString(ss).c_str());
 }
 
 }

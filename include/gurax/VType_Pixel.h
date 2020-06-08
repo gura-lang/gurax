@@ -72,9 +72,7 @@ public:
 			GetPixel().IsLessThan(Value_Pixel::GetPixel(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetPixel().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

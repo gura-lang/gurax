@@ -69,7 +69,7 @@ public:
 	bool DoesContain(const Symbol* pSymbol) const {
 		return std::find(begin(), end(), pSymbol) != end();
 	}
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	String ToString(bool quoteFlag = false) const;
 };
 
 template<typename T_Map>
@@ -164,7 +164,7 @@ public:
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
 	//bool IsLessThan_Name(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	String ToString(bool quoteFlag = false) const;
 public:
 	bool IsEmpty() const { return IsIdentical(Empty); }
 	bool StartsWith(char ch) const { return *GetName() == ch; }

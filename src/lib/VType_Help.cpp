@@ -191,4 +191,9 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Help::vtype = VTYPE_Help;
 
+String Value_Help::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetHelp().ToString(ss).c_str());
+}
+
 }

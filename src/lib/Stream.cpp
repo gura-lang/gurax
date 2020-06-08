@@ -350,6 +350,7 @@ bool Stream::DoPutChar(char ch)
 String Stream::ToString(const StringStyle& ss) const
 {
 	String str;
+	str += "Stream:";
 	str += GetName();
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";

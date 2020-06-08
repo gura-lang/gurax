@@ -110,9 +110,7 @@ public:
 			GetImage().IsLessThan(Value_Image::GetImage(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetImage().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

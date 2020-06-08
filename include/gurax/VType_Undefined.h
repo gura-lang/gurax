@@ -50,7 +50,7 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override { return ToStringFormatter(ss); }
+	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
 	virtual bool CanEvalAsMethod(const Function& function) const override { return true; }
 	virtual bool IsValid() const override { return false; }

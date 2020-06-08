@@ -68,9 +68,7 @@ public:
 			GetPUnit()->IsLessThan(dynamic_cast<const Value_PUnit*>(pValue)->GetPUnit()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetPUnit()->ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------

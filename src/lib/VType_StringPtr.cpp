@@ -43,6 +43,11 @@ void VType_StringPtr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_StringPtr::vtype = VTYPE_StringPtr;
 
+String Value_StringPtr::ToString(const StringStyle& ss) const
+{
+	return _str;
+}
+
 bool Value_StringPtr::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);

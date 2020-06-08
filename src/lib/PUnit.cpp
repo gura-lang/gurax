@@ -81,7 +81,7 @@ template<bool discardValueFlag>
 String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Value(%s)", GetValue().ToString(StringStyle::Formatter).c_str());
+	str.Format("Value(%s)", GetValue().ToString(StringStyle::Formatter_NilVisible).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2093,7 +2093,7 @@ String PUnit_ArgSlot_Value<discardValueFlag>::ToString(const StringStyle& ss, in
 		str.Format(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
 	str.Format(",%s,cont=%s)",
-				GetValue().ToString(StringStyle::Formatter).c_str(),
+				GetValue().ToString(StringStyle::Formatter_NilVisible).c_str(),
 				MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -3129,7 +3129,7 @@ template<bool discardValueFlag>
 String PUnit_FailCatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("FailCatch(%s)", GetValue()->ToString(StringStyle::Formatter).c_str());
+	str.Format("FailCatch(%s)", GetValue()->ToString(StringStyle::Formatter_NilVisible).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }

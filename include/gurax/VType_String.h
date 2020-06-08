@@ -186,8 +186,7 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };

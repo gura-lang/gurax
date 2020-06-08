@@ -72,9 +72,7 @@ public:
 			GetImageMgr().IsLessThan(Value_ImageMgr::GetImageMgr(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetImageMgr().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

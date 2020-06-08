@@ -4,6 +4,7 @@
 #ifndef GURAX_COLOR_H
 #define GURAX_COLOR_H
 #include "String.h"
+#include "StringStyle.h"
 
 namespace Gurax {
 

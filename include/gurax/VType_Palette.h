@@ -86,9 +86,7 @@ public:
 			GetPalette().IsLessThan(Value_Palette::GetPalette(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetPalette().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

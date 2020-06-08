@@ -50,9 +50,7 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return "Object";
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

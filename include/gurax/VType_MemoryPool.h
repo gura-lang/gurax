@@ -72,9 +72,7 @@ public:
 			GetMemoryPool().IsLessThan(Value_MemoryPool::GetMemoryPool(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetMemoryPool().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

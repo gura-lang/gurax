@@ -86,6 +86,7 @@ target_sources(guraxcore PRIVATE
 	Streams.cpp
 	String.cpp
 	StringPicker.cpp
+	StringStyle.cpp
 	SuffixMgr.cpp
 	Symbol.cpp
 	Symbols.cpp

@@ -70,9 +70,9 @@ DateTime(nil, nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
 DateTime(nil, nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.000999
 DateTime(nil, nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
 ======== DateTime - DateTime ========
-DateTime(2000, 12, 31) - DateTime(2000, 1, 1) .. 365days,00:00:00.000
-DateTime(2001, 12, 31) - DateTime(2001, 1, 1) .. 364days,00:00:00.000
-DateTime(2010, 12, 31) - DateTime(2010, 1, 1) .. 364days,00:00:00.000
+DateTime(2000, 12, 31) - DateTime(2000, 1, 1) .. <TimeDelta:365days,00:00:00.000>
+DateTime(2001, 12, 31) - DateTime(2001, 1, 1) .. <TimeDelta:364days,00:00:00.000>
+DateTime(2010, 12, 31) - DateTime(2010, 1, 1) .. <TimeDelta:364days,00:00:00.000>
 ======== DateTime + TimeDelta ========
 DateTime(2000, 1, 1) + TimeDelta(365) .. 2000-12-31 00:00:00.000
 DateTime(2000, 1, 1) + TimeDelta(366) .. 2001-01-01 00:00:00.000

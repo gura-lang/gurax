@@ -240,7 +240,8 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 
 String Module::ToString(const StringStyle& ss) const
 {
-	return GetDottedSymbol().ToString(ss);
+	return String().Format("Module:%s:%s",
+				GetDottedSymbol().ToString(ss).c_str(), GetPathName());
 }
 
 //------------------------------------------------------------------------------

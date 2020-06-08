@@ -72,9 +72,7 @@ public:
 			GetIndex().IsLessThan(dynamic_cast<const Value_Index*>(pValue)->GetIndex()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetIndex().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

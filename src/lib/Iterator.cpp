@@ -157,11 +157,13 @@ String Iterator::Join(const char* sep)
 	RefPtr<Value> pValueElem(NextValue());
 	if (!pValueElem) return str;
 	str += pValueElem->ToString(StringStyle::AsValue);
+	//str += pValueElem->ToString(StringStyle::Formatter_NilVisible);
 	for (;;) {
 		pValueElem.reset(NextValue());
 		if (!pValueElem) break;
 		str += sep;
 		str += pValueElem->ToString(StringStyle::AsValue);
+		//str += pValueElem->ToString(StringStyle::Formatter_NilVisible);
 	}
 	return str;
 }

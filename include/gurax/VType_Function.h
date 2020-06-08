@@ -71,8 +71,7 @@ public:
 			GetFunction().IsLessThan(dynamic_cast<const Value_Function*>(pValue)->GetFunction()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const override { return &_pFunction->GetHelpHolder(); }

@@ -3,8 +3,9 @@
 //==============================================================================
 #ifndef GURAX_ERROR_H
 #define GURAX_ERROR_H
-#include "String.h"
 #include "Expr.h"
+#include "String.h"
+#include "StringStyle.h"
 
 namespace Gurax {
 
@@ -167,10 +168,6 @@ public:
 	}
 	static void Print(Stream& stream);
 public:
-	static void Issue_UnimplementedOperation();
-	static void Issue_UnimplementedFunction();
-	static void Issue_UnimplementedMethod();
-public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Error& error) const { return this == &error; }
 	bool IsEqualTo(const Error& error) const {
@@ -182,6 +179,11 @@ public:
 			::strcmp(GetText(), error.GetText()) < 0 :
 			GetErrorType().IsLessThan(error.GetErrorType());
 	}
+	String ToString(const StringStyle& ss) const;
+public:
+	static void Issue_UnimplementedOperation();
+	static void Issue_UnimplementedFunction();
+	static void Issue_UnimplementedMethod();
 };
 
 }

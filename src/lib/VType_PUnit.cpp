@@ -84,6 +84,11 @@ void VType_PUnit::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_PUnit::vtype = VTYPE_PUnit;
 
+String Value_PUnit::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetPUnit()->ToString(ss).c_str());
+}
+
 //------------------------------------------------------------------------------
 // Iterator_PUnit
 //------------------------------------------------------------------------------

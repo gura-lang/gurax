@@ -104,9 +104,11 @@ Gurax_ImplementClassMethod(Object, ToString)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Argument
+	StringStyle::Flags flags = StringStyle::Flag::NilVisible;
 	// Function body
 	if (valueThis.IsInstanceOf(VTYPE_String)) return valueThis.Reference();
-	return new Value_String(valueThis.ToString());
+	return new Value_String(valueThis.ToString(StringStyle(flags)));
 }
 
 //------------------------------------------------------------------------------
@@ -151,5 +153,10 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 // Value_Object
 //------------------------------------------------------------------------------
 VType& Value_Object::vtype = VTYPE_Object;
+
+String Value_Object::ToString(const StringStyle& ss) const
+{
+	return String().Format("Object");
+}
 
 }

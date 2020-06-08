@@ -62,4 +62,9 @@ void VType_Undefined::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Undefined::vtype = VTYPE_Undefined;
 
+String Value_Undefined::ToString(const StringStyle& ss) const
+{
+	return String::Empty;
+}
+
 }

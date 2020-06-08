@@ -486,12 +486,7 @@ Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Number::vtype = VTYPE_Number;
 
-String Value_Number::ToStringFormatter(const StringStyle& ss) const
-{
-	return Number<Double>::ToString(GetNumber<Double>());
-}
-
-String Value_Number::ToStringDetail(const StringStyle& ss) const
+String Value_Number::ToString(const StringStyle& ss) const
 {
 	return Number<Double>::ToString(GetNumber<Double>());
 #if 0

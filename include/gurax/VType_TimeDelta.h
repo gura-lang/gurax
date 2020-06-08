@@ -72,9 +72,7 @@ public:
 			GetTimeDelta().IsLessThan(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetTimeDelta().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

@@ -88,4 +88,9 @@ void VType_Nil::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Nil::vtype = VTYPE_Nil;
 
+String Value_Nil::ToString(const StringStyle& ss) const
+{
+	return ss.IsNilVisible()? "<Nil>" : String::Empty;
+}
+
 }

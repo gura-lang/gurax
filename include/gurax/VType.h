@@ -85,7 +85,6 @@ public:
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value, DeclArg::Flags flags = DeclArg::Flag::None) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
@@ -99,6 +98,7 @@ public:
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
 	void Prepare(Frame& frameOuter);
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
