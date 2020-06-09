@@ -456,6 +456,7 @@ x.Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 1
 ['abc', 'def'].Join(',') .. 'abc,def'
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Join() .. 'abcdefghijklmno'
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Join(',') .. 'abc,def,ghi,jkl,mno'
+['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Join():nilVisible .. 'abcdef<Nil>ghi<Nil>jklmno'
 ======== List#Joinb() ========
 ======== List#Map() ========
 ======== List#Max() ========

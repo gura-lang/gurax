@@ -567,6 +567,7 @@ TestCase('List#Join()') {
 	Tester(`['abc', 'def'].Join(',')):quote
 	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join()):quote
 	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(',')):quote
+	Tester(`['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Join():nilVisible):quote
 }
 
 TestCase('List#Joinb()') {

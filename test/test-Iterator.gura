@@ -360,6 +360,7 @@ TestCase('Iterator#Join()') {
 	Tester(`['abc', 'def'].Each().Join(',')):quote
 	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join()):quote
 	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(',')):quote
+	Tester(`['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Each().Join():nilVisible):quote
 }
 
 TestCase('Iterator#Joinb()') {

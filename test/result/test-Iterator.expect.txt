@@ -292,6 +292,7 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 ['abc', 'def'].Each().Join(',') .. 'abc,def'
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join() .. 'abcdefghijklmno'
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(',') .. 'abc,def,ghi,jkl,mno'
+['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Each().Join():nilVisible .. 'abcdef<Nil>ghi<Nil>jklmno'
 ======== Iterator#Joinb() ========
 ======== Iterator#Map() ========
 ======== Iterator#Max() ========
