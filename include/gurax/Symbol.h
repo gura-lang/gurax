@@ -5,6 +5,7 @@
 #define GURAX_SYMBOL_H
 #include "Referable.h"
 #include "String.h"
+#include "StringStyle.h"
 
 #define Gurax_DeclareSymbol(name) \
 extern GURAX_DLLDECLARE const Symbol* g_pSymbol_##name;
@@ -69,7 +70,7 @@ public:
 	bool DoesContain(const Symbol* pSymbol) const {
 		return std::find(begin(), end(), pSymbol) != end();
 	}
-	String ToString(bool quoteFlag = false) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 template<typename T_Map>
@@ -164,7 +165,7 @@ public:
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
 	//bool IsLessThan_Name(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
-	String ToString(bool quoteFlag = false) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsEmpty() const { return IsIdentical(Empty); }
 	bool StartsWith(char ch) const { return *GetName() == ch; }

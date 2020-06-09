@@ -4,7 +4,6 @@
 #ifndef GURAX_STRINGSTYLE_H
 #define GURAX_STRINGSTYLE_H
 #include "String.h"
-#include "Symbol.h"
 
 namespace Gurax {
 
@@ -25,14 +24,6 @@ public:
 		static const Flags Formatter	= (1 << 6);
 		static const Flags AddrInfo		= (1 << 7);
 		static const Flags NilVisible	= (1 << 8);
-	};
-	class GURAX_DLLDECLARE SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
-	public:
-		SymbolAssoc_Flag();
-		static const SymbolAssoc& GetInstance() {
-			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Flag());
-		}
 	};
 private:
 	Flags _flags;
@@ -95,13 +86,6 @@ public:
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }
 	const char* GetColon() const		{ return _strsColon[static_cast<int>(IsCram())]; }
 	const char* GetSemicolon() const	{ return _strsSemicolon[static_cast<int>(IsCram())]; }
-public:
-	Flags SymbolToFlag(const Symbol* pSymbol) {
-		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
-	}
-	const Symbol* FlagToSymbol(Flags flag) {
-		return SymbolAssoc_Flag::GetInstance().ToSymbol(flag);
-	}
 };
 
 }

@@ -255,17 +255,9 @@ void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
 	*ppValue = pValue;
 }
 
-String ValueCustom::ToStringFormatter(const StringStyle& ss) const
+String ValueCustom::ToString(const StringStyle& ss) const
 {
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ">";
-	return str;
-}
-
-String ValueCustom::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringFormatter(ss);
+	return String().Format("<%s>", GetVType().MakeFullName().c_str());
 }
 
 }

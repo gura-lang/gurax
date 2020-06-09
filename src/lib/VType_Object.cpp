@@ -95,6 +95,15 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 Gurax_DeclareClassMethod(Object, ToString)
 {
 	Declare(VTYPE_String, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(asSource));
+	DeclareAttrOpt(Gurax_Symbol(asValue));
+	DeclareAttrOpt(Gurax_Symbol(cram));
+	DeclareAttrOpt(Gurax_Symbol(multiLine));
+	DeclareAttrOpt(Gurax_Symbol(upperCase));
+	DeclareAttrOpt(Gurax_Symbol(verbose));
+	DeclareAttrOpt(Gurax_Symbol(formatter));
+	DeclareAttrOpt(Gurax_Symbol(addrInfo));
+	DeclareAttrOpt(Gurax_Symbol(nilVisible));
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts the object to a string.\n");
@@ -106,6 +115,15 @@ Gurax_ImplementClassMethod(Object, ToString)
 	auto& valueThis = GetValueThis(argument);
 	// Argument
 	StringStyle::Flags flags = StringStyle::Flag::NilVisible;
+	if (argument.IsSet(Gurax_Symbol(asSource)))		flags |= StringStyle::Flag::AsSource;
+	if (argument.IsSet(Gurax_Symbol(asValue)))		flags |= StringStyle::Flag::AsValue;
+	if (argument.IsSet(Gurax_Symbol(cram)))			flags |= StringStyle::Flag::Cram;
+	if (argument.IsSet(Gurax_Symbol(multiLine)))	flags |= StringStyle::Flag::MultiLine;
+	if (argument.IsSet(Gurax_Symbol(upperCase)))	flags |= StringStyle::Flag::UpperCase;
+	if (argument.IsSet(Gurax_Symbol(verbose)))		flags |= StringStyle::Flag::Verbose;
+	if (argument.IsSet(Gurax_Symbol(formatter)))	flags |= StringStyle::Flag::Formatter;
+	if (argument.IsSet(Gurax_Symbol(addrInfo)))		flags |= StringStyle::Flag::AddrInfo;
+	if (argument.IsSet(Gurax_Symbol(nilVisible)))	flags |= StringStyle::Flag::NilVisible;
 	// Function body
 	if (valueThis.IsInstanceOf(VTYPE_String)) return valueThis.Reference();
 	return new Value_String(valueThis.ToString(StringStyle(flags)));
