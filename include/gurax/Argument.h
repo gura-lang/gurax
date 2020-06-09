@@ -60,10 +60,10 @@ public:
 	DeclCallable::Flags GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(DeclCallable::Flags flags) const { return (GetFlags() & flags) != 0; }
-	bool IsSet(const Symbol* pSymbol) {
+	bool IsSet(const Symbol* pSymbol) const {
 		return GetDeclCallable().IsSet(pSymbol) || GetAttr().IsSet(pSymbol);
 	}
-	bool IsSetOpt(const Symbol* pSymbol) {
+	bool IsSetOpt(const Symbol* pSymbol) const {
 		return GetDeclCallable().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
 	bool HasArgSlot() const { return _pArgSlotFirst? true : false; }

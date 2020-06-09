@@ -667,6 +667,7 @@ Gurax_DeclareMethod(Iterator, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	StringStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -680,8 +681,9 @@ Gurax_ImplementMethod(Iterator, Join)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sep = args.IsValid()? args.PickString() : "";
+	StringStyle ss(StringStyle::ToFlags(argument));
 	// Function body
-	return new Value_String(iteratorThis.Join(sep));
+	return new Value_String(iteratorThis.Join(sep, ss));
 }
 
 // Iterator#Joinb()

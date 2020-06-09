@@ -151,19 +151,19 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	return pValueRtn.release();
 }
 
-String Iterator::Join(const char* sep)
+String Iterator::Join(const char* sep, const StringStyle& ss)
 {
 	String str;
+	StringStyle ssMod(ss);
+	ssMod.SetAsValue();
 	RefPtr<Value> pValueElem(NextValue());
 	if (!pValueElem) return str;
-	str += pValueElem->ToString(StringStyle::AsValue);
-	//str += pValueElem->ToString(StringStyle::Formatter_NilVisible);
+	str += pValueElem->ToString(ssMod);
 	for (;;) {
 		pValueElem.reset(NextValue());
 		if (!pValueElem) break;
 		str += sep;
-		str += pValueElem->ToString(StringStyle::AsValue);
-		//str += pValueElem->ToString(StringStyle::Formatter_NilVisible);
+		str += pValueElem->ToString(ssMod);
 	}
 	return str;
 }

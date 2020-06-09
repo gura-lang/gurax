@@ -7,6 +7,9 @@
 
 namespace Gurax {
 
+class Function;
+class Argument;
+
 //------------------------------------------------------------------------------
 // StringStyle
 //------------------------------------------------------------------------------
@@ -86,6 +89,9 @@ public:
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }
 	const char* GetColon() const		{ return _strsColon[static_cast<int>(IsCram())]; }
 	const char* GetSemicolon() const	{ return _strsSemicolon[static_cast<int>(IsCram())]; }
+public:
+	static void DeclareAttrOpt(Function& func);
+	static Flags ToFlags(const Argument& argument);
 };
 
 }

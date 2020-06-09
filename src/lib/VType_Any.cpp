@@ -31,6 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareClassMethod(Any, ToString)
 {
 	Declare(VTYPE_String, Flag::None);
+	StringStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts the object to a string.\n");
@@ -39,7 +40,7 @@ Gurax_DeclareClassMethod(Any, ToString)
 Gurax_ImplementClassMethod(Any, ToString)
 {
 	// Function body
-	return new Value_String("Any");
+	return new Value_String("<Any>");
 }
 
 //------------------------------------------------------------------------------

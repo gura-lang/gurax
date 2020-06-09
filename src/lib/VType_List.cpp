@@ -734,6 +734,7 @@ Gurax_DeclareMethod(List, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	StringStyle::DeclareAttrOpt(*this);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
@@ -742,12 +743,12 @@ Gurax_ImplementMethod(List, Join)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
-	// Function body
 	// Arguments
 	ArgPicker args(argument);
 	const char* sep = args.IsValid()? args.PickString() : "";
+	StringStyle ss(StringStyle::ToFlags(argument));
 	// Function body
-	return new Value_String(pIteratorThis->Join(sep));
+	return new Value_String(pIteratorThis->Join(sep, ss));
 }
 
 // List#Joinb()

@@ -70,7 +70,7 @@ public:
 	size_t CountTrue();
 	size_t CountIf(Processor& processor, const Function& function);
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
-	String Join(const char* sep);
+	String Join(const char* sep, const StringStyle& ss = StringStyle::Empty);
 	Value* Mean(Processor& processor);
 	Value* Or();
 	Value* Prod(Processor& processor);

@@ -22,8 +22,8 @@ TestCase('Constructor') {
 		p7 = 'P7'
 		p8 = DateTime()
 		Format() = {
-			Format('%s, %s, %s, %s, %s, %s, %s, %s',
-				   this.p1, this.p2, this.p3, this.p4, this.p5, this.p6, this.p7, this.p8):noMap
+			[this.p1, this.p2, this.p3, this.p4,
+			 this.p5, this.p6, this.p7, this.p8].Join(', '):nilVisible
 		}
 	}
 	Println(A)
@@ -36,7 +36,7 @@ TestCase('Default Value for Property') {
 		p2:String
 		p3 = 'P3'
 		p4:String
-		Format() = Format('%s, %s, %s, %s', this.p1, this.p2, this.p3, this.p4):noMap
+		Format() = [this.p1, this.p2, this.p3, this.p4].Join(', '):nilVisible
 	}
 	Println(A)
 	A.PrintPropSlots()
