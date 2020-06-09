@@ -549,9 +549,7 @@ VType& Value_DateTime::vtype = VTYPE_DateTime;
 
 String Value_DateTime::ToString(const StringStyle& ss) const
 {
-	return ss.IsFormatter()?
-		String().Format("<DateTime:%s>", GetDateTime().ToString(ss).c_str()) :
-		GetDateTime().ToString(ss);
+	return GetDateTime().ToString(ss);
 }
 
 }

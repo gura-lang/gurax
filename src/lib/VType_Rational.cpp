@@ -611,9 +611,6 @@ VType& Value_Rational::vtype = VTYPE_Rational;
 String Value_Rational::ToString(const StringStyle& ss) const
 {
 	return GetRational().ToString(ss);
-	//return ss.IsFormatter()?
-	//	GetRational().ToString(ss) :
-	//	String().Format("<Rational:%s>", GetRational().ToString(ss).c_str());
 }
 
 }

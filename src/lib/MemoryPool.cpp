@@ -212,18 +212,18 @@ String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
-	if (!ss.IsFormatter()) {
-		str += "\n";
-		for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
-			size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocksPerPool;
-			const char* pAllocated = pPool->buff;
-			for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += _bytesFrame) {
-				const Header* pHeader = reinterpret_cast<const Header*>(pAllocated);
-				str += pHeader->ownerName? '*' : '.';
-			}
-			str += "\n";
+#if 0
+	str += "\n";
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
+		size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocksPerPool;
+		const char* pAllocated = pPool->buff;
+		for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += _bytesFrame) {
+			const Header* pHeader = reinterpret_cast<const Header*>(pAllocated);
+			str += pHeader->ownerName? '*' : '.';
 		}
+		str += "\n";
 	}
+#endif
 	return str;
 }
 

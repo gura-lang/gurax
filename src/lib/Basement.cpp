@@ -172,7 +172,7 @@ bool Basement::ExecCommand(Processor& processor, const char* cmd, bool printFlag
 	if (Error::IsIssued()) return false;
 	RefPtr<Value> pValue(pExprOfRoot->Eval(processor));
 	if (printFlag && pValue->IsValid()) {
-		Stream::COut->Printf("%s\n", pValue->ToString(StringStyle::AsValue).c_str());
+		Stream::COut->Printf("%s\n", pValue->ToString(StringStyle::StringUnquoted).c_str());
 	}
 	return !Error::IsIssued();
 }

@@ -45,7 +45,7 @@ Gurax_ImplementConstructor(String)
 	const Value* pValue = args.IsValid()? &args.PickValue() : nullptr;
 	// Function body
 	String str;
-	if (pValue) str = pValue->ToString(StringStyle::AsValue);
+	if (pValue) str = pValue->ToString(StringStyle::StringUnquoted);
 	return argument.ReturnValue(processor, new Value_String(str));
 }
 
@@ -1586,7 +1586,7 @@ StringList Value_String::GetStringList(const ValueList& values)
 String Value_String::ToString(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
-	if (!ss.IsAsValue()) str = str.EnquoteAuto();
+	if (!ss.IsStringUnquoted()) str = str.EnquoteAuto();
 	return str;
 }
 

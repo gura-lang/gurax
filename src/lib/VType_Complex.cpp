@@ -444,9 +444,7 @@ VType& Value_Complex::vtype = VTYPE_Complex;
 
 String Value_Complex::ToString(const StringStyle& ss) const
 {
-	return ss.IsAsValue()?
-		GetComplex().ToString(ss) :
-		String().Format("<Complex:%s>", GetComplex().ToString(ss).c_str());
+	return GetComplex().ToString(ss);
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const

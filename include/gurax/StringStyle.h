@@ -17,16 +17,15 @@ class GURAX_DLLDECLARE StringStyle {
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None			= 0;
-		static const Flags AsSource		= (1 << 0);
-		static const Flags AsValue		= (1 << 1);
-		static const Flags Cram			= (1 << 2);
-		static const Flags MultiLine	= (1 << 3);
-		static const Flags UpperCase	= (1 << 4);
-		static const Flags Verbose		= (1 << 5);
-		static const Flags Formatter	= (1 << 6);
-		static const Flags AddrInfo		= (1 << 7);
-		static const Flags NilVisible	= (1 << 8);
+		static const Flags None				= 0;
+		static const Flags StringUnquoted	= (1 << 0);
+		static const Flags SymbolQuoted		= (1 << 1);
+		static const Flags NilVisible		= (1 << 2);
+		static const Flags Cram				= (1 << 3);
+		static const Flags MultiLine		= (1 << 4);
+		static const Flags UpperCase		= (1 << 5);
+		static const Flags Verbose			= (1 << 6);
+		static const Flags AddrInfo			= (1 << 7);
 	};
 private:
 	Flags _flags;
@@ -37,9 +36,9 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
-	static const StringStyle AsValue;
-	static const StringStyle Formatter;
-	static const StringStyle Formatter_NilVisible;
+	static const StringStyle StringUnquoted;
+	static const StringStyle SymbolQuoted;
+	static const StringStyle SymbolQuoted_NilVisible;
 public:
 	// Constructor
 	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :
@@ -57,10 +56,12 @@ public:
 public:	
 	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
-	StringStyle& SetAsSource()			{ _flags |= Flag::AsSource; return *this; }
-	StringStyle& UnsetAsSource()		{ _flags &= ~Flag::AsSource; return *this; }
-	StringStyle& SetAsValue()			{ _flags |= Flag::AsValue; return *this; }
-	StringStyle& UnsetAsValue()			{ _flags &= ~Flag::AsValue; return *this; }
+	StringStyle& SetStringUnquoted()	{ _flags |= Flag::StringUnquoted; return *this; }
+	StringStyle& UnsetStringUnquoted()	{ _flags &= ~Flag::StringUnquoted; return *this; }
+	StringStyle& SetSymbolQuoted()		{ _flags |= Flag::SymbolQuoted; return *this; }
+	StringStyle& UnsetSymbolQuoted()	{ _flags &= ~Flag::SymbolQuoted; return *this; }
+	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
+	StringStyle& UnsetNilVisible()		{ _flags &= ~Flag::NilVisible; return *this; }
 	StringStyle& SetCram()				{ _flags |= Flag::Cram; return *this; }
 	StringStyle& UnsetCram()			{ _flags &= ~Flag::Cram; return *this; }
 	StringStyle& SetMultiLine()			{ _flags |= Flag::MultiLine; return *this; }
@@ -69,21 +70,16 @@ public:
 	StringStyle& UnsetUpperCase()		{ _flags &= ~Flag::UpperCase; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	StringStyle& SetFormatter()			{ _flags |= Flag::Formatter; return *this; }
-	StringStyle& UnsetFormatter()		{ _flags &= ~Flag::Formatter; return *this; }
 	StringStyle& SetAddressInfo()		{ _flags |= Flag::AddrInfo; return *this; }
 	StringStyle& UnsetAddressInfo()		{ _flags &= ~Flag::AddrInfo; return *this; }
-	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
-	StringStyle& UnsetNilVisible()		{ _flags &= ~Flag::NilVisible; return *this; }
-	bool IsAsSource() const				{ return (_flags & Flag::AsSource) != 0; }
-	bool IsAsValue() const				{ return (_flags & Flag::AsValue) != 0; }
+	bool IsStringUnquoted() const		{ return (_flags & Flag::StringUnquoted) != 0; }
+	bool IsSymbolQuoted() const			{ return (_flags & Flag::SymbolQuoted) != 0; }
+	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const			{ return (_flags & Flag::UpperCase) != 0; }
 	bool IsVerbose() const				{ return (_flags & Flag::Verbose) != 0; }
-	bool IsFormatter() const			{ return (_flags & Flag::Formatter) != 0; }
 	bool IsAddressInfo() const			{ return (_flags & Flag::AddrInfo) != 0; }
-	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	const char* GetMargin() const		{ return _margin.c_str(); }
 	const char* GetIndentUnit() const	{ return _indentUnit.c_str(); }
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }
