@@ -201,4 +201,9 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Document::vtype = VTYPE_Document;
 
+String Value_Document::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetDocument().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(markdown)

@@ -136,4 +136,9 @@ bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
 }
 
+String Value_IFD::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetIFD().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(jpeg)

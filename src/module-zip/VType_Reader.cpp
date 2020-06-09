@@ -135,4 +135,9 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Reader::vtype = VTYPE_Reader;
 
+String Value_Reader::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetReader().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(zip)

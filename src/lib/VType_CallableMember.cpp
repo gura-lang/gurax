@@ -45,12 +45,6 @@ VType& Value_CallableMember::vtype = VTYPE_CallableMember;
 String Value_CallableMember::ToString(const StringStyle& ss) const
 {
 	return String().Format("<CallableMember:%s>", GetValueProp().ToString(ss).c_str());
-#if 0
-	//str += GetValueThis<Value>().ToStringDetail(ss);
-	//str += '.';
-	str += GetValueProp().ToStringDetail(ss);
-	return str;
-#endif
 }
 
 void Value_CallableMember::PresentHelp(Processor& processor, const Symbol* pLangCode) const

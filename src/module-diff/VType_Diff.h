@@ -72,9 +72,7 @@ public:
 			GetDiff().IsLessThan(Value_Diff::GetDiff(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetDiff().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(diff)

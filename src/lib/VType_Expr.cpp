@@ -704,8 +704,6 @@ String Value_Expr::ToString(const StringStyle& ss) const
 	return GetExpr().ToString(ss);
 #if 0
 	String str;
-	_ToStringFormatter(str, ss);
-	str += ":`(";
 	str += GetExpr().ToString(StringStyle().SetCram());
 	str += ")";
 	if (GetExpr().GetPUnitFirst()) {

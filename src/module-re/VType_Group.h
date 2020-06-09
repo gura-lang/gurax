@@ -72,9 +72,7 @@ public:
 			GetGroup().IsLessThan(Value_Group::GetGroup(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetGroup().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(re)

@@ -44,26 +44,6 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
-String Value::ToStringFormatter(const StringStyle& ss) const
-{
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ">";
-	return str;
-}
-
-String Value::ToStringDetail(const StringStyle& ss) const
-{
-	return String::Empty;
-}
-
-void Value::_ToStringFormatter(String& str, const StringStyle& ss) const
-{
-	str += "<";
-	str += GetVType().MakeFullName();
-	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Format(":%p", this);
-}
-
 void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	Stream::COut->Println("no help");

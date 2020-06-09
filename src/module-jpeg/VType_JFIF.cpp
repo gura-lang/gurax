@@ -90,4 +90,9 @@ void VType_JFIF::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_JFIF::vtype = VTYPE_JFIF;
 
+String Value_JFIF::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetJFIF().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(jpeg)

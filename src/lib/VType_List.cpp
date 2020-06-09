@@ -1612,10 +1612,7 @@ String Value_List::ToString(const StringStyle& ss) const
 {
 	return GetValueOwner().ToString(StringStyle::Formatter_NilVisible);
 #if 0
-	String str;
-	_ToStringFormatter(str, ss);
 	str.Format(":%zuitems>", GetValueOwner().size());
-	return str;
 #endif
 }
 

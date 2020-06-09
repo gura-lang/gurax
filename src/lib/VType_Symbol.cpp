@@ -103,7 +103,8 @@ bool Value_Symbol::IsLessThan(const Value* pValue) const
 
 String Value_Symbol::ToString(const StringStyle& ss) const
 {
-	return String("`").append(_pSymbol->GetName());
+	//return String("`").append(_pSymbol->GetName());
+	return GetSymbol()->ToString(ss);
 }
 
 }

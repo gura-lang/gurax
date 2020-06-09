@@ -60,7 +60,6 @@ public:
 			GetValueOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetValueOwner()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringFormatter(const StringStyle& ss) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process

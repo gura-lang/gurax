@@ -38,7 +38,12 @@ TestCase('Object#ToString()') {
 	Tester(`true.ToString())
 	Tester(`Printf.ToString())
 	Tester(`%{}.ToString())
+	Tester(`%{`a => 'AAA', `b => 'BBB', `c => 'CCC'}.ToString())
+	Tester(`[].ToString())
+	Tester(`[1, 2, 3, 4, `foo, 'bar'].ToString())
 	Tester(`'hello'.ToString())
+	Tester(`nil.ToString())
+	Tester(`nil.ToString():nilVisible)
 }
 
 TestCase('Object#IsInstanceOf()') {

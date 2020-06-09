@@ -1588,14 +1588,6 @@ String Value_String::ToString(const StringStyle& ss) const
 	String str = GetStringSTL();
 	if (!ss.IsAsValue()) str = str.EnquoteAuto();
 	return str;
-#if 0
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += GetStringSTL().EnquoteAuto();
-	str += ">";
-	return str;
-#endif
 }
 
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

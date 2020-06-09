@@ -20,7 +20,8 @@ void Symbol::Bootup()
 String Symbol::ToString(const StringStyle& ss) const
 {
 	String str;
-	if (ss.IsAsValue()) str += '`';
+	//if (ss.IsAsValue()) str += '`';
+	if (ss.IsFormatter()) str += '`';
 	str += GetName();
 	return str;
 }

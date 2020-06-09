@@ -69,9 +69,7 @@ public:
 			GetExif().IsLessThan(Value_Exif::GetExif(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetExif().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(jpeg)

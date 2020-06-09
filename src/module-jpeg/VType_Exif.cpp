@@ -116,4 +116,9 @@ void VType_Exif::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Exif::vtype = VTYPE_Exif;
 
+String Value_Exif::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetExif().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(jpeg)

@@ -547,18 +547,6 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_DateTime::vtype = VTYPE_DateTime;
 
-#if 0
-String Value_DateTime::ToStringFormatter(const StringStyle& ss) const
-{
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += GetDateTime().ToString(ss);
-	str += ">";
-	return str;
-}
-#endif
-
 String Value_DateTime::ToString(const StringStyle& ss) const
 {
 	return ss.IsFormatter()?

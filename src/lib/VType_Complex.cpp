@@ -442,19 +442,6 @@ Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Complex::vtype = VTYPE_Complex;
 
-#if 0
-String Value_Complex::ToStringFormatter(const StringStyle& ss) const
-{
-	String str;
-	_ToStringFormatter(str, ss);
-	const Complex& num = GetComplex();
-	str += ":";
-	str += GetComplex().ToString(ss);
-	str += ">";
-	return str;
-}
-#endif
-
 String Value_Complex::ToString(const StringStyle& ss) const
 {
 	return ss.IsAsValue()?

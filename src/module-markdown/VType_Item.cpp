@@ -243,4 +243,9 @@ void VType_Item::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Item::vtype = VTYPE_Item;
 
+String Value_Item::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetItem().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(markdown)

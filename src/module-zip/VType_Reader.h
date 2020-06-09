@@ -72,9 +72,7 @@ public:
 			GetReader().IsLessThan(Value_Reader::GetReader(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetReader().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(zip)

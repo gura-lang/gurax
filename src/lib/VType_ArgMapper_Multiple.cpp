@@ -42,17 +42,10 @@ void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ArgMapper_Multiple::vtype = VTYPE_ArgMapper_Multiple;
 
-String Value_ArgMapper_Multiple::ToStringFormatter(const StringStyle& ss) const
-{
-	String str;
-	_ToStringFormatter(str, ss);
-	str.Format(":%zuitems>", GetValueOwner().size());
-	return str;
-}
-
 String Value_ArgMapper_Multiple::ToString(const StringStyle& ss) const
 {
-	return String().Format("<ArgMapper_Multiple:%s>", GetValueOwner().ToString(ss).c_str());
+	return String().Format("<ArgMapper_Multiple:%zuitems:%s>",
+		GetValueOwner().size(), GetValueOwner().ToString(ss).c_str());
 }
 
 bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)

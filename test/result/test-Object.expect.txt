@@ -14,7 +14,12 @@ math.e.ToString() .. 2.71828
 true.ToString() .. true
 Printf.ToString() .. Printf(format:String, values*:Any):map
 % {}.ToString() .. %{}
+% {(`a) => 'AAA', (`b) => 'BBB', (`c) => 'CCC'}.ToString() .. %{a => 'AAA', c => 'CCC', b => 'BBB'}
+[].ToString() .. []
+[1, 2, 3, 4, `foo, 'bar'].ToString() .. [1, 2, 3, 4, foo, 'bar']
 'hello'.ToString() .. hello
+nil.ToString() .. 
+nil.ToString():nilVisible .. <Nil>
 ======== Object#IsInstanceOf() ========
 math.e.IsInstanceOf(Number) .. true
 math.e.IsInstanceOf(Bool) .. false

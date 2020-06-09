@@ -280,7 +280,6 @@ String Value_Binary::ToString(const StringStyle& ss) const
 	return _pBinary->GetBinary().ToString(ss);
 #if 0
 	String str;
-	_ToStringFormatter(str, ss);
 	str.Format(":%dbytes", _pBinary->GetBinary().size());
 	str += _pBinary->GetBinary().IsWritable()? ":writrable" : ":constant";
 	str += ">";

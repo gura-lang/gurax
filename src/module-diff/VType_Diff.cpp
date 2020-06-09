@@ -151,4 +151,9 @@ void VType_Diff::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Diff::vtype = VTYPE_Diff;
 
+String Value_Diff::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetDiff().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(diff)

@@ -72,9 +72,7 @@ public:
 			GetContent().IsLessThan(Value_Content::GetContent(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetContent().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;

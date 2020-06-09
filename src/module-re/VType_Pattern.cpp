@@ -247,4 +247,9 @@ Value* VType_Pattern::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Pattern::vtype = VTYPE_Pattern;
 
+String Value_Pattern::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetPattern().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(re)

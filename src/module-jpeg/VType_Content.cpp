@@ -162,4 +162,9 @@ Value* Value_Content::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bo
 	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 }
 
+String Value_Content::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetContent().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(jpeg)

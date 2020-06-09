@@ -397,10 +397,7 @@ String Value_Dict::ToString(const StringStyle& ss) const
 {
 	return GetValueDict().ToString(ss);
 #if 0
-	String str;
-	_ToStringFormatter(str, ss);
 	str.Format(":%zuitems>", GetValueDict().size());
-	return str;
 #endif
 }
 

@@ -97,4 +97,9 @@ void VType_Group::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Group::vtype = VTYPE_Group;
 
+String Value_Group::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetGroup().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(re)

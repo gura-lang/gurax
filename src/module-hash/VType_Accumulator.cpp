@@ -119,4 +119,9 @@ void VType_Accumulator::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Accumulator::vtype = VTYPE_Accumulator;
 
+String Value_Accumulator::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetAccumulator().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(hash)

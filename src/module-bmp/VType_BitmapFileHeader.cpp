@@ -97,4 +97,9 @@ void VType_BitmapFileHeader::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_BitmapFileHeader::vtype = VTYPE_BitmapFileHeader;
 
+String Value_BitmapFileHeader::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", GetContent().ToString(ss).c_str());
+}
+
 Gurax_EndModuleScope(bmp)

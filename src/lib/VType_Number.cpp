@@ -489,14 +489,6 @@ VType& Value_Number::vtype = VTYPE_Number;
 String Value_Number::ToString(const StringStyle& ss) const
 {
 	return Number<Double>::ToString(GetNumber<Double>());
-#if 0
-	String str;
-	_ToStringFormatter(str, ss);
-	str += ":";
-	str += Number<Double>::ToString(GetNumber<Double>());
-	str += ">";
-	return str;
-#endif
 }
 
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

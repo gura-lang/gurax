@@ -72,9 +72,7 @@ public:
 			GetWriter().IsLessThan(Value_Writer::GetWriter(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetWriter().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(zip)

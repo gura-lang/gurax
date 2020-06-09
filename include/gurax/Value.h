@@ -192,11 +192,7 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
 	virtual bool IsLessThan(const Value* pValue) const = 0;
-	virtual String ToString(const StringStyle& ss) const {
-		return ss.IsFormatter()? ToStringFormatter(ss) : ToStringDetail(ss);
-	}
-	virtual String ToStringFormatter(const StringStyle& ss) const;
-	virtual String ToStringDetail(const StringStyle& ss) const;
+	virtual String ToString(const StringStyle& ss) const = 0;
 public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const { return nullptr; }
@@ -247,8 +243,6 @@ public:
 	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
-protected:
-	void _ToStringFormatter(String& str, const StringStyle& ss) const;
 };
 
 }
