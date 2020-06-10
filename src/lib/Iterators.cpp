@@ -48,9 +48,7 @@ Value* Iterator_Counter::DoNextValue()
 
 String Iterator_Counter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Counter:begin=%d:step=%d", _idxBegin, _idxStep);
-	return str;
+	return String().Format("Counter:begin=%d:step=%d", _idxBegin, _idxStep);
 }
 
 //------------------------------------------------------------------------------
@@ -80,9 +78,7 @@ Value* Iterator_UnaryOpImpMap::DoNextValue()
 
 String Iterator_UnaryOpImpMap::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("UnaryOpImpMap");
-	return str;
+	return String().Format("UnaryOpImpMap");
 }
 
 //------------------------------------------------------------------------------
@@ -118,9 +114,7 @@ Value* Iterator_BinaryOpImpMap::DoNextValue()
 
 String Iterator_BinaryOpImpMap::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("BinaryOpImpMap");
-	return str;
+	return String().Format("BinaryOpImpMap");
 }
 
 //------------------------------------------------------------------------------
@@ -163,9 +157,7 @@ Value* Iterator_FunctionImpMap<skipNilFlag>::DoNextValue()
 template<bool skipNilFlag>
 String Iterator_FunctionImpMap<skipNilFlag>::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("FunctionImpMap");
-	return str;
+	return String().Format("FunctionImpMap");
 }
 
 template class Iterator_FunctionImpMap<true>;
@@ -184,9 +176,7 @@ Value* Iterator_Range::DoNextValue()
 
 String Iterator_Range::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Range:begin=%d:end=%d:step=%d", _idxBegin, _idxEnd, _idxStep);
-	return str;
+	return String().Format("Range:begin=%d:end=%d:step=%d", _idxBegin, _idxEnd, _idxStep);
 }
 
 //------------------------------------------------------------------------------
@@ -202,9 +192,7 @@ Value* Iterator_Member_MapAlong::DoNextValue()
 
 String Iterator_Member_MapAlong::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Member_MapAlong");
-	return str;
+	return String().Format("Member_MapAlong");
 }
 
 //------------------------------------------------------------------------------
@@ -220,9 +208,7 @@ Value* Iterator_Member_MapToIter::DoNextValue()
 
 String Iterator_Member_MapToIter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Member_MapToIter");
-	return str;
+	return String().Format("Member_MapToIter");
 }
 
 //------------------------------------------------------------------------------
@@ -244,9 +230,7 @@ Value* Iterator_IteratorEvaluator::DoNextValue()
 
 String Iterator_IteratorEvaluator::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("IteratorEvaluator:%s", GetArgument().ToString(StringStyle().SetCram()).c_str());
-	return str;
+	return String().Format("IteratorEvaluator:%s", GetArgument().ToString(StringStyle().SetCram()).c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -459,9 +443,7 @@ Value* Iterator_Reverse::DoNextValue()
 
 String Iterator_Reverse::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Reverse:n=%zu", GetValueOwner().size());
-	return str;
+	return String().Format("Reverse:n=%zu", GetValueOwner().size());
 }
 
 //------------------------------------------------------------------------------
@@ -498,11 +480,7 @@ Value* Iterator_Align::DoNextValue()
 
 String Iterator_Align::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Align(";
-	rtn += GetIteratorSrc().ToString(ss);
-	rtn += ")";
-	return rtn;
+	return String().Format("Align(%s)", GetIteratorSrc().ToString(ss).c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -521,9 +499,7 @@ Value* Iterator_Head::DoNextValue()
 
 String Iterator_Head::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Head:n=%zu", _cnt);
-	return str;
+	return String().Format("Head:n=%zu", _cnt);
 }
 
 //------------------------------------------------------------------------------
@@ -551,9 +527,7 @@ Value* Iterator_Offset::DoNextValue()
 
 String Iterator_Offset::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Offset:offset=%d", _offset);
-	return str;
+	return String().Format("Offset:offset=%d", _offset);
 }
 
 //------------------------------------------------------------------------------
@@ -584,9 +558,7 @@ Value* Iterator_PingPong::DoNextValue()
 
 String Iterator_PingPong::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("PingPong:n=%zu", GetValueOwner().size());
-	return str;
+	return String().Format("PingPong:n=%zu", GetValueOwner().size());
 }
 
 //-----------------------------------------------------------------------------
@@ -664,9 +636,7 @@ size_t Iterator_Fold::GetLength() const
 
 String Iterator_Fold::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Fold:%s", GetIteratorSrc().ToString().c_str());
-	return str;
+	return String().Format("Fold:%s", GetIteratorSrc().ToString().c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -705,9 +675,7 @@ Value* Iterator_Flatten::DoNextValue()
 
 String Iterator_Flatten::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Flatten";
-	return rtn;
+	return "Flatten";
 }
 
 //------------------------------------------------------------------------------
@@ -749,9 +717,7 @@ Value* Iterator_SinceWithFunc::DoNextValue()
 
 String Iterator_SinceWithFunc::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("SinceWithFunc");
-	return str;
+	return String().Format("SinceWithFunc");
 }
 
 //------------------------------------------------------------------------------
@@ -788,9 +754,7 @@ Value* Iterator_SinceWithIter::DoNextValue()
 
 String Iterator_SinceWithIter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("SinceWithIter");
-	return str;
+	return String().Format("SinceWithIter");
 }
 
 //------------------------------------------------------------------------------
@@ -830,9 +794,7 @@ Value* Iterator_UntilWithFunc::DoNextValue()
 
 String Iterator_UntilWithFunc::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("UntilWithFunc");
-	return str;
+	return String().Format("UntilWithFunc");
 }
 
 //------------------------------------------------------------------------------
@@ -867,9 +829,7 @@ Value* Iterator_UntilWithIter::DoNextValue()
 
 String Iterator_UntilWithIter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("UntilWithIter");
-	return str;
+	return String().Format("UntilWithIter");
 }
 
 //------------------------------------------------------------------------------
@@ -906,9 +866,7 @@ Value* Iterator_WhileWithFunc::DoNextValue()
 
 String Iterator_WhileWithFunc::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("WhileWithFunc");
-	return str;
+	return String().Format("WhileWithFunc");
 }
 
 //------------------------------------------------------------------------------
@@ -940,9 +898,7 @@ Value* Iterator_WhileWithIter::DoNextValue()
 
 String Iterator_WhileWithIter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("WhileWithIter");
-	return str;
+	return String().Format("WhileWithIter");
 }
 
 //------------------------------------------------------------------------------
@@ -980,9 +936,7 @@ Value* Iterator_FilterWithFunc::DoNextValue()
 
 String Iterator_FilterWithFunc::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("FilterWithFunc");
-	return str;
+	return String().Format("FilterWithFunc");
 }
 
 //------------------------------------------------------------------------------
@@ -1033,9 +987,7 @@ Value* Iterator_Permutation::DoNextValue()
 
 String Iterator_Permutation::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Permutation:n=%zu", GetValueOwner().size());
-	return str;
+	return String().Format("Permutation:n=%zu", GetValueOwner().size());
 }
 
 //------------------------------------------------------------------------------
@@ -1051,9 +1003,7 @@ Value* Iterator_PartialPermutation::DoNextValue()
 
 String Iterator_PartialPermutation::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
-	return str;
+	return String().Format("PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 }
 
 //------------------------------------------------------------------------------
@@ -1069,9 +1019,7 @@ Value* Iterator_Combination::DoNextValue()
 
 String Iterator_Combination::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
-	return str;
+	return String().Format("Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 }
 
 }

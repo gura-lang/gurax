@@ -58,11 +58,7 @@ bool Tag::CheckRangedNumber(const Value& value, Double numMin, Double numMax) co
 
 String Tag::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += _pSymbol->GetName();
-	str += ":";
-	str += _pValue->ToString(ss);
-	return str;
+	return String().Format("jpeg.Tag:%s:%s", _pSymbol->GetName(), _pValue->ToString(ss).c_str());
 }
 
 //------------------------------------------------------------------------------

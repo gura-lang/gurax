@@ -31,9 +31,7 @@ Help::~Help()
 
 String Help::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Help:%s", GetLangCode()->GetName());
-	return str;
+	return String().Format("Help:%s", GetLangCode()->GetName());
 }
 
 //------------------------------------------------------------------------------

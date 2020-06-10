@@ -150,7 +150,7 @@ String Pattern::ReplaceByFunction(const char* str, Processor& processor, const F
 
 String Pattern::ToString(const StringStyle& ss) const
 {
-	return "re.Pattern";
+	return String().Format("re.Pattern");
 }
 
 Gurax_EndModuleScope(re)

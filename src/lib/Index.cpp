@@ -10,9 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Index::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += GetValueCar().ToString(StringStyle(ss).SetSymbolQuoted());
-	return str;
+	return String().Format("Index:%s", GetValueCar().ToString(StringStyle(ss).SetSymbolQuoted()).c_str());
 }
 
 }

@@ -49,9 +49,7 @@ String Match::GetGroupString(int iGroup) const
 
 String Match::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("re.Match:%d-%d", GetPosBegin(), GetPosEnd());
-	return str;
+	return String().Format("re.Match:%d-%d", GetPosBegin(), GetPosEnd());
 }
 
 Gurax_EndModuleScope(re)

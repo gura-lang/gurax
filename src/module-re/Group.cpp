@@ -20,9 +20,7 @@ String Group::GetString() const
 
 String Group::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("re.Group:%d-%d", GetPosBegin(), GetPosEnd());
-	return str;
+	return String().Format("re.Group:%d-%d", GetPosBegin(), GetPosEnd());
 }
 
 Gurax_EndModuleScope(re)

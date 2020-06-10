@@ -37,10 +37,7 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 
 String FunctionCustom::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += MakeFullName();
-	str += GetDeclCallable().ToString(ss);
-	return str;
+	return String().Format("%s%s", MakeFullName().c_str(), GetDeclCallable().ToString(ss).c_str());
 }
 
 }

@@ -698,9 +698,8 @@ const Symbol* Image::FormatToSymbol(const Format& format)
 
 String Image::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Image:%s:%zux%zu", FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
-	return str;
+	return String().Format("Image:%s:%zux%zu",
+			FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
 }
 
 //------------------------------------------------------------------------------

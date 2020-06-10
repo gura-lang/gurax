@@ -79,7 +79,7 @@ VType& Value_Module::vtype = VTYPE_Module;
 
 String Value_Module::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetModule().ToString(ss));
+	return String().Format("<%s>", GetModule().ToString(ss).c_str());
 }
 
 void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) const
