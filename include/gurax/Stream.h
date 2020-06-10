@@ -113,7 +113,7 @@ public:
 	BinaryReferable* ReadAsReferable(size_t len);
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	Stream* CreateBwdSeekable();
-	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
+	void Dump(const void* buff, size_t bytes, const DumpStyle& ds = DumpStyle::Empty);
 public:
 	size_t GetBytes() { return DoGetBytes(); }
 	Stat* CreateStat() { return DoCreateStat(); }

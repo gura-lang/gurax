@@ -247,7 +247,7 @@ Stream* Stream::CreateBwdSeekable()
 	return new Stream_Binary(Stream::Flag::Readable, pBuff.release());
 }
 
-void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
+void Stream::Dump(const void* buff, size_t bytes, const DumpStyle& ds)
 {
 	if (bytes == 0) return;
 	const int nCols = 16;
@@ -259,10 +259,10 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 		UInt8 data = *p;
 		if (iCol > 0) {
 			strLine += ' ';
-		} else if (ss.IsAddressInfo()) {
+		} else if (ds.IsAddrInfo()) {
 			strLine.Format("%0*x  ", nDigitsAddr, i);
 		}
-		strLine.Format(ss.IsUpperCase()? "%02X" : "%02x", data);
+		strLine.Format(ds.IsUpperCase()? "%02X" : "%02x", data);
 		strASCII += (0x20 <= data && data < 0x7f)? data : '.';
 		iCol++;
 		if (iCol == nCols) {

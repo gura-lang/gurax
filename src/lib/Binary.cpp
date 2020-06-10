@@ -72,9 +72,9 @@ bool Binary::CheckWritable() const
 	return false;
 }
 
-void Binary::Dump(Stream& stream, const StringStyle& ss) const
+void Binary::Dump(Stream& stream, const DumpStyle& ds) const
 {
-	stream.Dump(data(), size(), ss);
+	stream.Dump(data(), size(), ds);
 }
 
 String Binary::ToString(const StringStyle& ss) const

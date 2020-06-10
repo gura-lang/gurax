@@ -23,9 +23,7 @@ public:
 		static const Flags NilVisible		= (1 << 2);
 		static const Flags Cram				= (1 << 3);
 		static const Flags MultiLine		= (1 << 4);
-		static const Flags UpperCase		= (1 << 5);
 		static const Flags Verbose			= (1 << 6);
-		static const Flags AddrInfo			= (1 << 7);
 	};
 private:
 	Flags _flags;
@@ -66,20 +64,14 @@ public:
 	StringStyle& UnsetCram()			{ _flags &= ~Flag::Cram; return *this; }
 	StringStyle& SetMultiLine()			{ _flags |= Flag::MultiLine; return *this; }
 	StringStyle& UnsetMultiLine()		{ _flags &= ~Flag::MultiLine; return *this; }
-	StringStyle& SetUpperCase()			{ _flags |= Flag::UpperCase; return *this; }
-	StringStyle& UnsetUpperCase()		{ _flags &= ~Flag::UpperCase; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	StringStyle& SetAddressInfo()		{ _flags |= Flag::AddrInfo; return *this; }
-	StringStyle& UnsetAddressInfo()		{ _flags &= ~Flag::AddrInfo; return *this; }
 	bool IsStringUnquoted() const		{ return (_flags & Flag::StringUnquoted) != 0; }
 	bool IsSymbolQuoted() const			{ return (_flags & Flag::SymbolQuoted) != 0; }
 	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
-	bool IsUpperCase() const			{ return (_flags & Flag::UpperCase) != 0; }
 	bool IsVerbose() const				{ return (_flags & Flag::Verbose) != 0; }
-	bool IsAddressInfo() const			{ return (_flags & Flag::AddrInfo) != 0; }
 	const char* GetMargin() const		{ return _margin.c_str(); }
 	const char* GetIndentUnit() const	{ return _indentUnit.c_str(); }
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }

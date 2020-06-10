@@ -120,6 +120,8 @@ gurax_pushbackLevel--
 
 namespace Gurax {
 
+class Argument;
+class Function;
 class Symbol;
 
 //------------------------------------------------------------------------------
@@ -233,6 +235,35 @@ public:
 	void Update(const void* buff, size_t bytes);
 	UInt32 GetResult() const { return ~_crc32 & 0xffffffff; }
 	size_t GetBytes() const { return _bytes; }
+};
+
+//------------------------------------------------------------------------------
+// DumpStyle
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE DumpStyle {
+public:
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None			= 0;
+		static const Flags UpperCase	= (1 << 0);
+		static const Flags AddrInfo		= (1 << 1);
+	};
+private:
+	Flags _flags;
+public:
+	static const DumpStyle Empty;
+public:
+	explicit DumpStyle(Flags flags = Flag::None) : _flags(flags) {}
+public:
+	DumpStyle& SetUpperCase()	{ _flags |= Flag::UpperCase; return *this; }
+	DumpStyle& UnsetUpperCase()	{ _flags &= ~Flag::UpperCase; return *this; }
+	DumpStyle& SetAddrInfo()	{ _flags |= Flag::AddrInfo; return *this; }
+	DumpStyle& UnsetAddrInfo()	{ _flags &= ~Flag::AddrInfo; return *this; }
+	bool IsUpperCase() const	{ return (_flags & Flag::UpperCase) != 0; }
+	bool IsAddrInfo() const		{ return (_flags & Flag::AddrInfo) != 0; }
+public:
+	static void DeclareAttrOpt(Function& func);
+	static Flags ToFlags(const Argument& argument);
 };
 
 }

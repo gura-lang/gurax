@@ -54,8 +54,7 @@ Gurax_DeclareMethod(Binary, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	DeclareAttrOpt(Gurax_Symbol(addr));
-	DeclareAttrOpt(Gurax_Symbol(upper));
+	DumpStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints a hexadecimal dump of the `Binary` to the standard output.\n"
@@ -81,11 +80,9 @@ Gurax_ImplementMethod(Binary, Dump)
 	// Argument
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	StringStyle ss;
-	if (argument.IsSet(Gurax_Symbol(addr))) ss.SetAddressInfo();
-	if (argument.IsSet(Gurax_Symbol(upper))) ss.SetUpperCase();
+	DumpStyle ds(DumpStyle::ToFlags(argument));
 	// Function body
-	binary.GetBinary().Dump(stream, ss);
+	binary.GetBinary().Dump(stream, ds);
 	return Value::nil();
 }
 

@@ -93,8 +93,7 @@ Gurax_DeclareMethod(Pointer, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	DeclareAttrOpt(Gurax_Symbol(addr));
-	DeclareAttrOpt(Gurax_Symbol(upper));
+	DumpStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints a hexadecimal dump of the `Pointer` to the standard output.\n"
@@ -120,11 +119,9 @@ Gurax_ImplementMethod(Pointer, Dump)
 	// Argument
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	StringStyle ss;
-	if (argument.IsSet(Gurax_Symbol(addr))) ss.SetAddressInfo();
-	if (argument.IsSet(Gurax_Symbol(upper))) ss.SetUpperCase();
+	DumpStyle ds(DumpStyle::ToFlags(argument));
 	// Function body
-	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ss);
+	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ds);
 	return Value::nil();
 }
 

@@ -25,9 +25,7 @@ void StringStyle::DeclareAttrOpt(Function& func)
 	func.DeclareAttrOpt(Gurax_Symbol(nilVisible));
 	//func.DeclareAttrOpt(Gurax_Symbol(cram));
 	//func.DeclareAttrOpt(Gurax_Symbol(multiLine));
-	//func.DeclareAttrOpt(Gurax_Symbol(upperCase));
 	//func.DeclareAttrOpt(Gurax_Symbol(verbose));
-	//func.DeclareAttrOpt(Gurax_Symbol(addrInfo));
 }
 
 StringStyle::Flags StringStyle::ToFlags(const Argument& argument)
@@ -38,9 +36,7 @@ StringStyle::Flags StringStyle::ToFlags(const Argument& argument)
 	if (argument.IsSet(Gurax_Symbol(nilVisible)))		flags |= StringStyle::Flag::NilVisible;
 	if (argument.IsSet(Gurax_Symbol(cram)))				flags |= StringStyle::Flag::Cram;
 	if (argument.IsSet(Gurax_Symbol(multiLine)))		flags |= StringStyle::Flag::MultiLine;
-	if (argument.IsSet(Gurax_Symbol(upperCase)))		flags |= StringStyle::Flag::UpperCase;
 	if (argument.IsSet(Gurax_Symbol(verbose)))			flags |= StringStyle::Flag::Verbose;
-	if (argument.IsSet(Gurax_Symbol(addrInfo)))			flags |= StringStyle::Flag::AddrInfo;
 	return flags;
 }
 
