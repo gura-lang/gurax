@@ -17,13 +17,13 @@ class GURAX_DLLDECLARE StringStyle {
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None				= 0;
-		static const Flags StringUnquoted	= (1 << 0);
-		static const Flags SymbolQuoted		= (1 << 1);
-		static const Flags NilVisible		= (1 << 2);
-		static const Flags Cram				= (1 << 3);
-		static const Flags MultiLine		= (1 << 4);
-		static const Flags Verbose			= (1 << 6);
+		static const Flags None			= 0;
+		static const Flags StringQuoted	= (1 << 0);
+		static const Flags SymbolQuoted	= (1 << 1);
+		static const Flags NilVisible	= (1 << 2);
+		static const Flags Cram			= (1 << 3);
+		static const Flags MultiLine	= (1 << 4);
+		static const Flags Verbose		= (1 << 6);
 	};
 private:
 	Flags _flags;
@@ -34,9 +34,9 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
-	static const StringStyle StringUnquoted;
+	static const StringStyle StringQuoted;
 	static const StringStyle SymbolQuoted;
-	static const StringStyle SymbolQuoted_NilVisible;
+	static const StringStyle Quoted_NilVisible;
 public:
 	// Constructor
 	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :
@@ -54,8 +54,8 @@ public:
 public:	
 	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
-	StringStyle& SetStringUnquoted()	{ _flags |= Flag::StringUnquoted; return *this; }
-	StringStyle& UnsetStringUnquoted()	{ _flags &= ~Flag::StringUnquoted; return *this; }
+	StringStyle& SetStringQuoted()		{ _flags |= Flag::StringQuoted; return *this; }
+	StringStyle& UnsetStringQuoted()	{ _flags &= ~Flag::StringQuoted; return *this; }
 	StringStyle& SetSymbolQuoted()		{ _flags |= Flag::SymbolQuoted; return *this; }
 	StringStyle& UnsetSymbolQuoted()	{ _flags &= ~Flag::SymbolQuoted; return *this; }
 	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
@@ -66,7 +66,7 @@ public:
 	StringStyle& UnsetMultiLine()		{ _flags &= ~Flag::MultiLine; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	bool IsStringUnquoted() const		{ return (_flags & Flag::StringUnquoted) != 0; }
+	bool IsStringQuoted() const			{ return (_flags & Flag::StringQuoted) != 0; }
 	bool IsSymbolQuoted() const			{ return (_flags & Flag::SymbolQuoted) != 0; }
 	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }

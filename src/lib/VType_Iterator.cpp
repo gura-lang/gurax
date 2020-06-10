@@ -1661,7 +1661,7 @@ VType& Value_Iterator::vtype = VTYPE_Iterator;
 String Value_Iterator::ToString(const StringStyle& ss) const
 {
 	return String().Format("<Iterator:%s>",
-				GetIterator().ToString(StringStyle::SymbolQuoted_NilVisible).c_str());
+				GetIterator().ToString(StringStyle::Quoted_NilVisible).c_str());
 }
 
 bool Value_Iterator::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const

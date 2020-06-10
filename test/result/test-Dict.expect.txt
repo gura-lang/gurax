@@ -12,7 +12,7 @@ Dict
 d['key0'] .. value0
 d['key4'] .. value4
 d['key9'] .. value9
-d['key10'] .. the dictionary doesn't have a key ''key10''
+d['key10'] .. the dictionary doesn't have a key 'key10'
 ======== IndexSet ========
 d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2'}
 d['key3'] = 'value3' .. value3
@@ -22,12 +22,12 @@ d .. %{'key0' => 0, 'key1' => 1, 'key2' => 2}
 d['key0'] += 99 .. 99
 d['key1'] += 99 .. 100
 d['key2'] += 99 .. 101
-d['key3'] += 99 .. the dictionary doesn't have a key ''key3''
+d['key3'] += 99 .. the dictionary doesn't have a key 'key3'
 d .. %{'key0' => 99, 'key1' => 100, 'key2' => 101}
 ======== Dict#Append() ========
 d.Append(d2) .. %{'key0' => 'value0-mod', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5-mod', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}
 d.Append(d2):timid .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}
-d.Append(d2):strict .. duplicated key ''key5''
+d.Append(d2):strict .. duplicated key 'key5'
 ======== Dict#Clear() ========
 d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 d.Clear() .. %{}
@@ -40,7 +40,7 @@ d.Get('key0') .. value0
 d.Get('key4') .. value4
 d.Get(['key0', 'key1', 'key2', 'key3']) .. ['value0', 'value1', 'value2', 'value3']
 d.Get('keyA') .. <Nil>
-d.Get('keyA'):raise .. the dictionary doesn't have a key ''keyA''
+d.Get('keyA'):raise .. the dictionary doesn't have a key 'keyA'
 d.Get('keyA', 'hoge') .. hoge
 d.Get('keyA', [1, 2, 3]) .. [1, 2, 3]
 d.Get('keyA', [1, 2, 3]) .. [1, 2, 3]
@@ -59,7 +59,7 @@ d.Put('a', 99):timid .. %{'a' => 3, 'b' => 2, 'c' => 1}
 d.Put('e', 99):timid .. %{'a' => 3, 'b' => 2, 'c' => 1, 'e' => 99}
 d.Put('f', 100).Put('g', 200).Put('h', 300) .. %{'a' => 3, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}
 d.Put('a', 999):overwrite .. %{'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}
-d.Put('a', 888):strict .. duplicated key ''a''
+d.Put('a', 888):strict .. duplicated key 'a'
 d.Put([1, 2, 3], [4, 5, 6]) .. [%{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}, %{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}, %{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}]
 ======== Dict#len and Dict#keys ========
 d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}

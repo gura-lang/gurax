@@ -56,7 +56,7 @@ bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
 			valueOwner.Set(pos, pValue);
 			return true;
 		}
-		valueOwner.IssueError_IndexOutOfRange(valueIndexEx.ToString(StringStyle::SymbolQuoted_NilVisible).c_str());
+		valueOwner.IssueError_IndexOutOfRange(valueIndexEx.ToString(StringStyle::Quoted_NilVisible).c_str());
 	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
 		if (pValue->IsIterable()) {

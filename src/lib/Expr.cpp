@@ -587,7 +587,8 @@ void Expr_String::ComposeWithinArgSlot(Composer& composer)
 String Expr_String::ToString(const StringStyle& ss) const
 {
 	String str = GetSegmentSTL();
-	if (!ss.IsStringUnquoted()) str = str.EnquoteAuto();
+	//if (ss.IsStringQuoted()) str = str.EnquoteAuto();
+	str = str.EnquoteAuto();
 	return str;
 }
 

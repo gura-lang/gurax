@@ -29,7 +29,7 @@ const char* StringPicker_ValueList::Pick()
 	if (pValue->IsInstanceOf(VTYPE_String)) {
 		return dynamic_cast<const Value_String*>(pValue)->GetString();
 	} else {
-		_str = pValue->ToString(StringStyle::SymbolQuoted_NilVisible);
+		_str = pValue->ToString(StringStyle::Quoted_NilVisible);
 		return _str.c_str();
 	}
 }

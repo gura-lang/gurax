@@ -155,7 +155,7 @@ String Iterator::Join(const char* sep, const StringStyle& ss)
 {
 	String str;
 	StringStyle ssMod(ss);
-	ssMod.SetStringUnquoted();
+	//ssMod.UnsetStringQuoted();
 	RefPtr<Value> pValueElem(NextValue());
 	if (!pValueElem) return str;
 	str += pValueElem->ToString(ssMod);

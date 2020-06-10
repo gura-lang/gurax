@@ -70,7 +70,7 @@ bool Diff::FeedIterator(Sequence& seq, Iterator& iter)
 	for (;;) {
 		RefPtr<Value> pValue(iter.NextValue());
 		if (!pValue) break;
-		seq.push_back(pValue->ToString(StringStyle::StringUnquoted));
+		seq.push_back(pValue->ToString());
 	}
 	return !Error::IsIssued();
 }
@@ -78,7 +78,7 @@ bool Diff::FeedIterator(Sequence& seq, Iterator& iter)
 void Diff::FeedList(Sequence& seq, const ValueList& valList)
 {
 	for (const Value* pValue : valList) {
-		seq.push_back(pValue->ToString(StringStyle::StringUnquoted));
+		seq.push_back(pValue->ToString());
 	}
 }
 

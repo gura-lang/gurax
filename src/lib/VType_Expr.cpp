@@ -701,7 +701,8 @@ bool Value_Expr::IsLessThan(const Value* pValue) const
 
 String Value_Expr::ToString(const StringStyle& ss) const
 {
-	return GetExpr().ToString(ss);
+	const Symbol* pSymbol = GetExpr().GetPureSymbol();
+	return pSymbol? pSymbol->ToString(ss) : GetExpr().ToString(ss);
 #if 0
 	String str;
 	str += GetExpr().ToString(StringStyle().SetCram());

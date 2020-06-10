@@ -126,6 +126,7 @@ String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;
 	StringStyle ssMod(ss);
+	ssMod.SetStringQuoted();
 	ssMod.SetSymbolQuoted();
 	str += "[";
 	for (auto ppValue = begin(); ppValue != end(); ++ppValue) {
