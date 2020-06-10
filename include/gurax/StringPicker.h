@@ -45,9 +45,10 @@ class GURAX_DLLDECLARE StringPicker_ValueList : public StringPicker {
 private:
 	String _str;
 	ValueList::const_iterator _ppValue, _ppValueEnd;
+	const StringStyle& _ss;
 public:
-	StringPicker_ValueList(const ValueList& valueList) :
-		_ppValue(valueList.begin()), _ppValueEnd(valueList.end()) {}
+	StringPicker_ValueList(const ValueList& valueList, const StringStyle& ss) :
+		_ppValue(valueList.begin()), _ppValueEnd(valueList.end()), _ss(ss) {}
 	virtual const char* Pick() override;
 };
 

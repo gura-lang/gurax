@@ -180,7 +180,8 @@ public:
 	static int ExecProgram(
 		const char* pathName, const ValueList& args,
 		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
-		return ExecProgram(pathName, StringPicker_ValueList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
+		return ExecProgram(pathName, StringPicker_ValueList(args, StringStyle::Quoted_NilVisible),
+						pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
 	static int ExecProgram(
 		const char* pathName, const StringList& args,

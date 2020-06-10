@@ -177,7 +177,7 @@ Gurax_ImplementMethod(Stream, Print)
 	ArgPicker args(argument);
 	const ValueList& valueList = args.PickList();
 	// Function body
-	stream.Print(valueList);
+	stream.Print(valueList, StringStyle::Empty);
 	return Value::nil();
 }
 
@@ -228,7 +228,7 @@ Gurax_ImplementMethod(Stream, Println)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	stream.Println(values);
+	stream.Println(values, StringStyle::Empty);
 	return Value::nil();
 }
 

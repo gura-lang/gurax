@@ -249,7 +249,7 @@ nil != 0 .. true
 0 != nil .. true
 ======== Operator => ========
 3 => 4 .. [3, 4]
-(`hoge) => 4 .. [hoge, 4]
+(`hoge) => 4 .. [`hoge, 4]
 'hoge' => 4 .. ['hoge', 4]
 'hoge' => [3, 4, 5] .. ['hoge', [3, 4, 5]]
 ['hoge', 'foo', 'bar'] => 4 .. [['hoge', 'foo', 'bar'], 4]

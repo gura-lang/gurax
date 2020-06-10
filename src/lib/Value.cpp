@@ -209,7 +209,7 @@ bool Value::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 bool Value::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags,
-			ToString(StringStyle::SymbolQuoted).c_str(), formatterFlags.precision);
+						ToString().c_str(), formatterFlags.precision);
 }
 
 bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const

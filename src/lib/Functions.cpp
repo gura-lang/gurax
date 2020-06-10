@@ -303,7 +303,7 @@ Gurax_ImplementFunction(Print)
 	const ValueList& valueList = args.PickList();
 	// Function body
 	Stream& stream = *Stream::COut;
-	stream.Print(valueList);
+	stream.Print(valueList, StringStyle::Empty);
 	return Value::nil();
 }
 
@@ -350,7 +350,7 @@ Gurax_ImplementFunction(Println)
 	const ValueList& values = args.PickList();
 	// Function body
 	Stream& stream = *Stream::COut;
-	stream.Println(values);
+	stream.Println(values, StringStyle::Empty);
 	return Value::nil();
 }
 

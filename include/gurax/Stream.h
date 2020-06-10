@@ -9,6 +9,7 @@
 #include "Binary.h"
 #include "Pointer.h"
 #include "StringPicker.h"
+#include "StringStyle.h"
 
 namespace Gurax {
 
@@ -92,12 +93,16 @@ public:
 	Stream& Print(const String& str) { return Print(str.c_str()); }
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }
-	Stream& Print(const ValueList& valueList) { return Print(StringPicker_ValueList(valueList)); }
+	Stream& Print(const ValueList& valueList, const StringStyle& ss) {
+		return Print(StringPicker_ValueList(valueList, ss));
+	}
 	Stream& Println(const char* str);
 	Stream& Println(const String& str) { return Println(str.c_str()); }
 	Stream& Println(StringPicker&& strPicker);
 	Stream& Println(const StringList& strList) { return Println(StringPicker_StringList(strList)); }
-	Stream& Println(const ValueList& valueList) { return Println(StringPicker_ValueList(valueList)); }
+	Stream& Println(const ValueList& valueList, const StringStyle& ss) {
+		return Println(StringPicker_ValueList(valueList, ss));
+	}
 	Stream& Println() { PutChar('\n'); return *this; }
 	Stream& PrintfV(const char* format, va_list ap);
 	Stream& PrintfV(const String& format, va_list ap) { return PrintfV(format.c_str(), ap); }

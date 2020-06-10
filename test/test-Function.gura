@@ -280,5 +280,5 @@ TestCase('Block delegation') {
 
 TestCase('Attribute :void') {
 	f():void = 'hello'
-	Println(f())
+	Println(f().ToString():nilVisible)
 }

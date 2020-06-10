@@ -8,7 +8,7 @@ TestCase(title:String):void:dynamicScope {`block?} = scope {
 }
 
 Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
-	Printf('%s ..', expr.ToString())
+	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval()
 		rtnStr = rtn.ToString():symbolQuoted:nilVisible

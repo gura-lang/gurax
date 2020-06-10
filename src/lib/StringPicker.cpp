@@ -26,10 +26,11 @@ const char* StringPicker_ValueList::Pick()
 {
 	if (_ppValue == _ppValueEnd) return nullptr;
 	const Value* pValue = *(_ppValue++);
-	if (pValue->IsInstanceOf(VTYPE_String)) {
+	if (!_ss.IsStringQuoted() && pValue->IsInstanceOf(VTYPE_String)) {
 		return dynamic_cast<const Value_String*>(pValue)->GetString();
 	} else {
-		_str = pValue->ToString(StringStyle::Quoted_NilVisible);
+		//_str = pValue->ToString(StringStyle::Quoted_NilVisible);
+		_str = pValue->ToString(_ss);
 		return _str.c_str();
 	}
 }

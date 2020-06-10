@@ -14,9 +14,8 @@ math.e.ToString() .. 2.71828
 true.ToString() .. true
 Printf.ToString() .. Printf(format:String, values*:Any):map
 % {}.ToString() .. %{}
-% {(`a) => 'AAA', (`b) => 'BBB', (`c) => 'CCC'}.ToString() .. %{b => 'BBB', c => 'CCC', a => 'AAA'}
 [].ToString() .. []
-[1, 2, 3, 4, `foo, 'bar'].ToString() .. [1, 2, 3, 4, foo, 'bar']
+[1, 2, 3, 4, `foo, 'bar'].ToString() .. [1, 2, 3, 4, `foo, 'bar']
 'hello'.ToString() .. hello
 nil.ToString() .. 
 nil.ToString():nilVisible .. <Nil>
