@@ -94,7 +94,7 @@ ${end}
 //------------------------------------------------------------------------------
 String ${className}::ToString(const StringStyle& ss) const
 {
-	return "${dotClassName}";
+	return String().Format("${dotClassName}");
 }
 
 ${if (ubarModuleName)}
@@ -191,9 +191,7 @@ public:
 			Get${entityName}().IsLessThan(Value_${className}::Get${entityName}(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return Get${entityName}().ToString(ss);
-	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 ${if (ubarModuleName)}
@@ -326,6 +324,11 @@ void VType_${className}::DoPrepare(Frame& frameOuter)
 // Value_${className}
 //------------------------------------------------------------------------------
 VType& Value_${className}::vtype = VTYPE_${className};
+
+String Value_${className}::ToString(const StringStyle& ss) const
+{
+	return String().Format("<%s>", Get${entityName}().ToString(ss).c_str());
+}
 
 ${if (ubarModuleName)}
 Gurax_EndModuleScope(${ubarModuleName})
