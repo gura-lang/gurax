@@ -1,8 +1,8 @@
 //==============================================================================
-// Pointers.h
+// BasicPointer.h
 //==============================================================================
-#ifndef GURAX_POINTERS_H
-#define GURAX_POINTERS_H
+#ifndef GURAX_BASICPOINTER_H
+#define GURAX_BASICPOINTER_H
 #include "VType_Binary.h"
 #include "Pointer.h"
 

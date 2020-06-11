@@ -33,6 +33,7 @@ target_sources(guraxcore PRIVATE
 	Basement.cpp
 	BasicFunction.cpp
 	BasicIterator.cpp
+	BasicPointer.cpp
 	BasicStatement.cpp
 	BasicStream.cpp
 	Binary.cpp
@@ -74,7 +75,6 @@ target_sources(guraxcore PRIVATE
 	PathName.cpp
 	Pixel.cpp
 	Pointer.cpp
-	Pointers.cpp
 	Processor.cpp
 	PropSlot.cpp
 	PropSlotCustom.cpp
