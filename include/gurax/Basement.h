@@ -49,7 +49,6 @@ public:
 	bool Initialize(int argc, char** argv);
 	CommandLine& GetCommandLine() { return _cmdLine; }
 	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
-	void PrepareVType();
 	void PrepareValue();
 	void PreparePathList();
 	void PrepareConsoleStream();
