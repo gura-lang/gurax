@@ -1,8 +1,8 @@
 //==============================================================================
-// Streams.h
+// BasicStream.h
 //==============================================================================
-#ifndef GURAX_STREAMS_H
-#define GURAX_STREAMS_H
+#ifndef GURAX_BASICSTREAM_H
+#define GURAX_BASICSTREAM_H
 #include "Stream.h"
 
 namespace Gurax {

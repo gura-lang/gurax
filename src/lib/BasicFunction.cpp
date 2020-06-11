@@ -1,12 +1,12 @@
 //==============================================================================
-// Functions.cpp
+// BasicFunction.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Functions
+// BasicFunction
 //------------------------------------------------------------------------------
 // Chr(code:number):map
 Gurax_DeclareFunction(Chr)
@@ -538,9 +538,9 @@ Gurax_ImplementFunction(tosymbol)
 #endif
 
 //------------------------------------------------------------------------------
-// Assignment
+// BasicFunction
 //------------------------------------------------------------------------------
-void Functions::AssignToBasement(Frame& frame)
+void BasicFunction::Prepare(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Chr));
 	frame.Assign(Gurax_CreateFunction(Dim));

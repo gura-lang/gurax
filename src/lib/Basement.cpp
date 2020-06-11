@@ -37,8 +37,8 @@ bool Basement::Initialize(int argc, char** argv)
 	PrepareValue();
 	PreparePathList();
 	PrepareConsoleStream();
-	Statements::AssignToBasement(frame);
-	Functions::AssignToBasement(frame);
+	BasicStatement::Prepare(frame);
+	BasicFunction::Prepare(frame);
 	if (!Module::ImportAllBuiltIns(processor)) return false;
 	if (!_cmdLine.GetBool("naked")) {
 		if (!Module::ImportByName(processor, "markdown")) return false;

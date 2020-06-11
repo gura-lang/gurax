@@ -1,12 +1,12 @@
 //==============================================================================
-// Statements.cpp
+// BasicStatement.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Statements
+// BasicStatement
 //------------------------------------------------------------------------------
 // cond (`cond, `exprTrue, `exprFalse?)
 Gurax_DeclareStatement(cond)
@@ -996,7 +996,7 @@ Gurax_ImplementStatement(struct_)
 	composer.Add_CompleteStruct(exprCaller);									// [VType]
 }
 
-void Statements::AssignToBasement(Frame& frame)
+void BasicStatement::Prepare(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(cond));
 	frame.Assign(Gurax_CreateStatement(if_));

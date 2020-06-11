@@ -31,6 +31,10 @@ target_sources(guraxcore PRIVATE
 	Array.cpp
 	Attribute.cpp
 	Basement.cpp
+	BasicFunction.cpp
+	BasicIterator.cpp
+	BasicStatement.cpp
+	BasicStream.cpp
 	Binary.cpp
 	Codec-WidthInfo.cpp
 	Codec.cpp
@@ -51,13 +55,11 @@ target_sources(guraxcore PRIVATE
 	Frame.cpp
 	Function.cpp
 	FunctionCustom.cpp
-	Functions.cpp
 	Help.cpp
 	Image.cpp
 	ImageMgr.cpp
 	Index.cpp
 	Iterator.cpp
-	Iterators.cpp
 	Math.cpp
 	Memory.cpp
 	MemoryPool.cpp
@@ -81,9 +83,7 @@ target_sources(guraxcore PRIVATE
 	Rational.cpp
 	Referable.cpp
 	Stat.cpp
-	Statements.cpp
 	Stream.cpp
-	Streams.cpp
 	String.cpp
 	StringPicker.cpp
 	StringStyle.cpp

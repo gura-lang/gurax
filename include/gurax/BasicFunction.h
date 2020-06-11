@@ -1,8 +1,8 @@
 //==============================================================================
-// Functions.h
+// BasicFunction.h
 //==============================================================================
-#ifndef GURAX_FUNCTIONS_H
-#define GURAX_FUNCTIONS_H
+#ifndef GURAX_BASEFUNCTION_H
+#define GURAX_BASEFUNCTION_H
 #include "Function.h"
 
 namespace Gurax {
@@ -18,11 +18,11 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Functions
+// BasicFunction
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Functions {
+class GURAX_DLLDECLARE BasicFunction {
 public:
-	static void AssignToBasement(Frame& frame);
+	static void Prepare(Frame& frame);
 };
 
 }

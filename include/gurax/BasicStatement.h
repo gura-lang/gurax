@@ -1,15 +1,15 @@
 //==============================================================================
-// Statements.h
+// BasicStatement.h
 //==============================================================================
-#ifndef GURAX_STATEMENTS_H
-#define GURAX_STATEMENTS_H
+#ifndef GURAX_BASESTATEMENT_H
+#define GURAX_BASESTATEMENT_H
 #include "Function.h"
 
 namespace Gurax {
 
-class GURAX_DLLDECLARE Statements {
+class GURAX_DLLDECLARE BasicStatement {
 public:
-	static void AssignToBasement(Frame& frame);
+	static void Prepare(Frame& frame);
 };
 
 }

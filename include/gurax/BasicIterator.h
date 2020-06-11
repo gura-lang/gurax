@@ -1,8 +1,8 @@
 //==============================================================================
-// Iterators.h
+// BasicIterator.h
 //==============================================================================
-#ifndef GURAX_ITERATORS_H
-#define GURAX_ITERATORS_H
+#ifndef GURAX_BASICITERATOR_H
+#define GURAX_BASICITERATOR_H
 #include "Argument.h"
 #include "Iterator.h"
 #include "Processor.h"
