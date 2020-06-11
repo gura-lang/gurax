@@ -142,7 +142,7 @@ VType& Value_PropSlot::vtype = VTYPE_PropSlot;
 
 String Value_PropSlot::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetPropSlot().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetPropSlot().ToString(ss));
 }
 
 void Value_PropSlot::PresentHelp(Processor& processor, const Symbol* pLangCode) const

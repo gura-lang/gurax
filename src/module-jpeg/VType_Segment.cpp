@@ -131,7 +131,7 @@ VType& Value_Segment::vtype = VTYPE_Segment;
 
 String Value_Segment::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetSegment().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetSegment().ToString(ss));
 }
 
 Gurax_EndModuleScope(jpeg)

@@ -414,7 +414,7 @@ VType& Value_TimeDelta::vtype = VTYPE_TimeDelta;
 
 String Value_TimeDelta::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetTimeDelta().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetTimeDelta().ToString(ss));
 }
 
 }

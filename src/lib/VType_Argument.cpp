@@ -70,7 +70,7 @@ VType& Value_Argument::vtype = VTYPE_Argument;
 
 String Value_Argument::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Argument:%s>", GetArgument().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetArgument().ToString(ss));
 }
 
 }

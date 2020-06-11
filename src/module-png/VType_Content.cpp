@@ -453,7 +453,7 @@ VType& Value_Content::vtype = VTYPE_Content;
 
 String Value_Content::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetContent().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetContent().ToString(ss));
 }
 
 Gurax_EndModuleScope(png)

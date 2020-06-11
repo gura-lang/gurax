@@ -44,7 +44,7 @@ VType& Value_Attribute::vtype = VTYPE_Attribute;
 
 String Value_Attribute::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Attribute:%s>", GetAttr().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetAttr().ToString(ss));
 }
 
 }

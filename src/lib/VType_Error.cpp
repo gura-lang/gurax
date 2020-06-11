@@ -242,7 +242,7 @@ VType& Value_Error::vtype = VTYPE_Error;
 
 String Value_Error::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetError().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetError().ToString(ss));
 }
 
 }

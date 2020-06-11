@@ -227,7 +227,7 @@ VType& Value_Tag::vtype = VTYPE_Tag;
 
 String Value_Tag::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetTag().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetTag().ToString(ss));
 }
 
 Gurax_EndModuleScope(jpeg)

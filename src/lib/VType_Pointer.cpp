@@ -692,7 +692,7 @@ VType& Value_Pointer::vtype = VTYPE_Pointer;
 
 String Value_Pointer::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetPointer().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetPointer().ToString(ss));
 }
 
 }

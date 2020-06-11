@@ -44,7 +44,7 @@ VType& Value_Index::vtype = VTYPE_Index;
 
 String Value_Index::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetIndex().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetIndex().ToString(ss));
 }
 
 }

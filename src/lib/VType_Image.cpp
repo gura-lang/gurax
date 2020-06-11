@@ -939,7 +939,7 @@ VType& Value_Image::vtype = VTYPE_Image;
 
 String Value_Image::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetImage().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetImage().ToString(ss));
 }
 
 }

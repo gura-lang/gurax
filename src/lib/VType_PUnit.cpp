@@ -86,7 +86,7 @@ VType& Value_PUnit::vtype = VTYPE_PUnit;
 
 String Value_PUnit::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetPUnit()->ToString(ss).c_str());
+	return ToStringGeneric(ss, GetPUnit()->ToString(ss));
 }
 
 //------------------------------------------------------------------------------

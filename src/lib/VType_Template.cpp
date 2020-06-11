@@ -650,7 +650,7 @@ VType& Value_Template::vtype = VTYPE_Template;
 
 String Value_Template::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetTemplate().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetTemplate().ToString(ss));
 }
 
 }

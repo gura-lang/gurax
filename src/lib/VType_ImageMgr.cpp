@@ -158,7 +158,7 @@ VType& Value_ImageMgr::vtype = VTYPE_ImageMgr;
 
 String Value_ImageMgr::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetImageMgr().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetImageMgr().ToString(ss));
 }
 
 }

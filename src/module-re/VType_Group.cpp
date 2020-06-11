@@ -99,7 +99,7 @@ VType& Value_Group::vtype = VTYPE_Group;
 
 String Value_Group::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetGroup().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetGroup().ToString(ss));
 }
 
 Gurax_EndModuleScope(re)

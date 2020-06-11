@@ -164,7 +164,7 @@ Value* Value_Content::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bo
 
 String Value_Content::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetContent().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetContent().ToString(ss));
 }
 
 Gurax_EndModuleScope(jpeg)

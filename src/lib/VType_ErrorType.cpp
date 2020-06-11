@@ -64,7 +64,7 @@ VType& Value_ErrorType::vtype = VTYPE_ErrorType;
 
 String Value_ErrorType::ToString(const StringStyle& ss) const
 {
-	return String().Format("<ErrorType:%s>", GetErrorType().GetName());
+	return ToStringGeneric(ss, GetErrorType().GetName());
 }
 
 }

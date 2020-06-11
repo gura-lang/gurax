@@ -573,7 +573,7 @@ VType& Value_Stream::vtype = VTYPE_Stream;
 
 String Value_Stream::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetStream().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetStream().ToString(ss));
 }
 
 }

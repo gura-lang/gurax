@@ -92,7 +92,7 @@ VType& Value_JFIF::vtype = VTYPE_JFIF;
 
 String Value_JFIF::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetJFIF().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetJFIF().ToString(ss));
 }
 
 Gurax_EndModuleScope(jpeg)

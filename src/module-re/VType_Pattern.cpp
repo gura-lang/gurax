@@ -249,7 +249,7 @@ VType& Value_Pattern::vtype = VTYPE_Pattern;
 
 String Value_Pattern::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetPattern().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetPattern().ToString(ss));
 }
 
 Gurax_EndModuleScope(re)

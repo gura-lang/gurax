@@ -22,9 +22,7 @@ void Random::Bootup()
 
 String Random::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Random:seed=%08x", GetSeed());
-	return str;
+	return String().Format("Random:seed=0x%08x", GetSeed());
 }
 
 }

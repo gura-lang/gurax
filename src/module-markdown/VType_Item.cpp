@@ -245,7 +245,7 @@ VType& Value_Item::vtype = VTYPE_Item;
 
 String Value_Item::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetItem().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetItem().ToString(ss));
 }
 
 Gurax_EndModuleScope(markdown)

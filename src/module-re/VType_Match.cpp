@@ -254,7 +254,7 @@ Value* Value_Match::GetValueOfGroupString(const Value& valueIndex) const
 
 String Value_Match::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetMatch().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetMatch().ToString(ss));
 }
 
 Gurax_EndModuleScope(re)

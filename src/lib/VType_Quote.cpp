@@ -49,7 +49,7 @@ VType& Value_Quote::vtype = VTYPE_Quote;
 
 String Value_Quote::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetExpr().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetExpr().ToString(ss));
 }
 
 }

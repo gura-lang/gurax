@@ -44,8 +44,7 @@ VType& Value_ArgMapper_Multiple::vtype = VTYPE_ArgMapper_Multiple;
 
 String Value_ArgMapper_Multiple::ToString(const StringStyle& ss) const
 {
-	return String().Format("<ArgMapper_Multiple:%zuitems:%s>",
-		GetValueOwner().size(), GetValueOwner().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetValueOwner().ToString(ss));
 }
 
 bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)

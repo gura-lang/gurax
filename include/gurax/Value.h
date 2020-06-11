@@ -146,6 +146,10 @@ public:
 	Value* AsMember(const Value& valueTarget) const;
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToStringGeneric(const StringStyle& ss, const char* strEntity) const;
+	String ToStringGeneric(const StringStyle& ss, const String& strEntity) const {
+		return ToStringGeneric(ss, strEntity.c_str());
+	}
 public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }

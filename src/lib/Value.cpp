@@ -44,6 +44,19 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
+String Value::ToStringGeneric(const StringStyle& ss, const char* strEntity) const
+{
+	if (ss.IsUnbracket()) return strEntity;
+	String strHeader = GetVType().MakeFullName();
+	if (*strEntity == '\0' || strHeader == strEntity) {
+		return String().Format("<%s>", strHeader.c_str());
+	}
+	strHeader += ":";
+	return String::StartsWith<CharCase>(strEntity, strHeader.c_str())?
+		String().Format("<%s>", strEntity) :
+		String().Format("<%s%s>", strHeader.c_str(), strEntity);
+}
+
 void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	Stream::COut->Println("no help");

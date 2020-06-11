@@ -203,7 +203,7 @@ VType& Value_Document::vtype = VTYPE_Document;
 
 String Value_Document::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetDocument().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetDocument().ToString(ss));
 }
 
 Gurax_EndModuleScope(markdown)

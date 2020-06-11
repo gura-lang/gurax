@@ -322,7 +322,7 @@ VType& Value_Color::vtype = VTYPE_Color;
 
 String Value_Color::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetColor().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetColor().ToString(ss));
 }
 
 }

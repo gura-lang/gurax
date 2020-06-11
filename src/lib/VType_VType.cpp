@@ -147,7 +147,7 @@ VType& Value_VType::vtype = VTYPE_VType;
 
 String Value_VType::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetVTypeThis().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetVTypeThis().ToString(ss));
 }
 
 bool Value_VType::CanEvalAsMethod(const Function& function) const

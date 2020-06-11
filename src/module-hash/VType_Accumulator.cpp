@@ -121,7 +121,7 @@ VType& Value_Accumulator::vtype = VTYPE_Accumulator;
 
 String Value_Accumulator::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetAccumulator().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetAccumulator().ToString(ss));
 }
 
 Gurax_EndModuleScope(hash)

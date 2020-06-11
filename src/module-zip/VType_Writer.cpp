@@ -138,7 +138,7 @@ VType& Value_Writer::vtype = VTYPE_Writer;
 
 String Value_Writer::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetWriter().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetWriter().ToString(ss));
 }
 
 Gurax_EndModuleScope(zip)

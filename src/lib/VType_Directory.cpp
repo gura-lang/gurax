@@ -184,7 +184,7 @@ VType& Value_Directory::vtype = VTYPE_Directory;
 
 String Value_Directory::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Directory:%s>", GetDirectory().ToString(ss).c_str());;
+	return ToStringGeneric(ss, GetDirectory().ToString(ss));;
 }
 
 }

@@ -364,7 +364,7 @@ VType& Value_Stat::vtype = VTYPE_Stat;
 
 String Value_Stat::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetStat().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetStat().ToString(ss));
 }
 
 }

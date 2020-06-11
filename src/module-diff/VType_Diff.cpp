@@ -153,7 +153,7 @@ VType& Value_Diff::vtype = VTYPE_Diff;
 
 String Value_Diff::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetDiff().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetDiff().ToString(ss));
 }
 
 Gurax_EndModuleScope(diff)

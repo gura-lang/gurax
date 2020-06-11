@@ -235,7 +235,7 @@ VType& Value_BitmapInfoHeader::vtype = VTYPE_BitmapInfoHeader;
 
 String Value_BitmapInfoHeader::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetContent().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetContent().ToString(ss));
 }
 
 Gurax_EndModuleScope(bmp)

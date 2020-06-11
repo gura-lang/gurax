@@ -147,7 +147,7 @@ VType& Value_Pixel::vtype = VTYPE_Pixel;
 
 String Value_Pixel::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetPixel().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetPixel().ToString(ss));
 }
 
 }

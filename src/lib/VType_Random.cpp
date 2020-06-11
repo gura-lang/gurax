@@ -314,7 +314,7 @@ VType& Value_Random::vtype = VTYPE_Random;
 
 String Value_Random::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Random:seed=0x%08x>", GetRandom().GetSeed());
+	return ToStringGeneric(ss, GetRandom().ToString(ss));
 }
 
 //------------------------------------------------------------------------------

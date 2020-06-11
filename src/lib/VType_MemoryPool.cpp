@@ -94,7 +94,7 @@ VType& Value_MemoryPool::vtype = VTYPE_MemoryPool;
 
 String Value_MemoryPool::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetMemoryPool().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetMemoryPool().ToString(ss));
 }
 
 }

@@ -88,7 +88,7 @@ VType& Value_Codec::vtype = VTYPE_Codec;
 
 String Value_Codec::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Codec:%s>", GetCodec().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetCodec().ToString(ss));
 }
 
 

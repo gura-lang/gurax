@@ -44,7 +44,7 @@ VType& Value_ArgSlot::vtype = VTYPE_ArgSlot;
 
 String Value_ArgSlot::ToString(const StringStyle& ss) const
 {
-	return String().Format("<ArgSlot:%s>", GetArgSlot().ToString(ss).c_str());
+	return ToStringGeneric(ss, GetArgSlot().ToString(ss));
 }
 
 }
