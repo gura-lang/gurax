@@ -52,7 +52,6 @@ public:
 	void PrepareVType();
 	void PrepareValue();
 	void PreparePathList();
-	void PrepareFunction();
 	void PrepareConsoleStream();
 	void AppendPathList(const String& str);
 	void AppendPathList(const StringList& strs);

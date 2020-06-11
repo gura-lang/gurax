@@ -19,7 +19,7 @@ Basement::Basement() :
 
 bool Basement::Initialize(int argc, char** argv)
 {
-	GetFrame().Assign(Gurax_Symbol(__name__), new Value_String("__main__"));
+	Frame& frame = GetFrame();
 	_cmdLine
 		.OptMultiString	("import",			'i')
 		.OptMultiString	("command",			'c')
@@ -36,8 +36,9 @@ bool Basement::Initialize(int argc, char** argv)
 	PrepareVType();
 	PrepareValue();
 	PreparePathList();
-	PrepareFunction();
 	PrepareConsoleStream();
+	Statements::AssignToBasement(frame);
+	Functions::AssignToBasement(frame);
 	if (!Module::ImportAllBuiltIns(processor)) return false;
 	if (!_cmdLine.GetBool("naked")) {
 		if (!Module::ImportByName(processor, "markdown")) return false;
@@ -114,10 +115,11 @@ void Basement::PrepareValue()
 {
 	Frame& frame = GetFrame();
 	Value::CreateConstant();
-	frame.Assign("-",		Value::nil());
-	frame.Assign("nil",		Value::nil());
-	frame.Assign("false",	Value::false_());
-	frame.Assign("true",	Value::true_());
+	frame.Assign(Gurax_Symbol(__name__),new Value_String("__main__"));
+	frame.Assign(Gurax_SymbolMark(Sub),	Value::nil());
+	frame.Assign(Gurax_Symbol(nil),		Value::nil());
+	frame.Assign(Gurax_Symbol(false_),	Value::false_());
+	frame.Assign(Gurax_Symbol(true_),	Value::true_());
 }
 
 void Basement::PreparePathList()
@@ -127,13 +129,6 @@ void Basement::PreparePathList()
 	AppendPathList(OAL::GetEnv("GURAX_PATH"));
 	AppendPathList(OAL::GetDirName_Module());
 	AppendPathList(PathName(OAL::GetDirName_Module()).JoinAfter("site"));
-}
-
-void Basement::PrepareFunction()
-{
-	Frame& frame = GetFrame();
-	Statements::AssignToBasement(frame);
-	Functions::AssignToBasement(frame);
 }
 
 void Basement::PrepareConsoleStream()
