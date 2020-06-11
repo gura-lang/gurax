@@ -16,6 +16,7 @@
 #include "gurax/BasicPointer.h"
 #include "gurax/BasicStatement.h"
 #include "gurax/BasicStream.h"
+#include "gurax/BasicVType.h"
 #include "gurax/Binary.h"
 #include "gurax/Codec.h"
 #include "gurax/Color.h"

@@ -1,8 +1,8 @@
 //==============================================================================
 // BasicFunction.h
 //==============================================================================
-#ifndef GURAX_BASEFUNCTION_H
-#define GURAX_BASEFUNCTION_H
+#ifndef GURAX_BASICFUNCTION_H
+#define GURAX_BASICFUNCTION_H
 #include "Function.h"
 
 namespace Gurax {

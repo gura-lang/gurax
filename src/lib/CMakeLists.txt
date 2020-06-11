@@ -36,6 +36,7 @@ target_sources(guraxcore PRIVATE
 	BasicPointer.cpp
 	BasicStatement.cpp
 	BasicStream.cpp
+	BasicVType.cpp
 	Binary.cpp
 	Codec-WidthInfo.cpp
 	Codec.cpp
