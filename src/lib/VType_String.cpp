@@ -1586,7 +1586,7 @@ StringList Value_String::GetStringList(const ValueList& values)
 String Value_String::ToString(const StringStyle& ss) const
 {
 	String str = GetStringSTL();
-	if (ss.IsStringQuoted()) str = str.EnquoteAuto();
+	if (ss.IsQuoteString()) str = str.EnquoteAuto();
 	return str;
 }
 

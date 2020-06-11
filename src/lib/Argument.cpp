@@ -153,16 +153,16 @@ Value* Argument::ReturnIterator(Processor& processor, RefPtr<Iterator> pIterator
 String Argument::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetValueCar().ToString(StringStyle(ss).SetSymbolQuoted());
+	str += GetValueCar().ToString(StringStyle(ss).SetQuoteSymbol());
 	str += ":(";
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (pArgSlot != GetArgSlotFirst()) str += ss.GetComma();
-		str += pArgSlot->ToString(StringStyle(ss).SetSymbolQuoted());
+		str += pArgSlot->ToString(StringStyle(ss).SetQuoteSymbol());
 	}
 	if (GetValueOfDict()) {
 		if (GetArgSlotFirst()) str += ss.GetComma();
 		str += "(";
-		str += GetValueOfDict()->ToString(StringStyle(ss).SetSymbolQuoted());
+		str += GetValueOfDict()->ToString(StringStyle(ss).SetQuoteSymbol());
 		str += ")%";
 	}
 	str += ")";

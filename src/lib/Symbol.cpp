@@ -20,7 +20,7 @@ void Symbol::Bootup()
 String Symbol::ToString(const StringStyle& ss) const
 {
 	String str;
-	if (ss.IsSymbolQuoted()) str += '`';
+	if (ss.IsQuoteSymbol()) str += '`';
 	str += GetName();
 	return str;
 }

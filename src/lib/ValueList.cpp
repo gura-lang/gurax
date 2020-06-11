@@ -126,8 +126,8 @@ String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;
 	StringStyle ssMod(ss);
-	ssMod.SetStringQuoted();
-	ssMod.SetSymbolQuoted();
+	ssMod.SetQuoteString();
+	ssMod.SetQuoteSymbol();
 	str += "[";
 	for (auto ppValue = begin(); ppValue != end(); ++ppValue) {
 		if (ppValue != begin()) str += ssMod.GetComma();

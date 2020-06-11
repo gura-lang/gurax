@@ -161,7 +161,8 @@ VType& Value_Function::vtype = VTYPE_Function;
 
 String Value_Function::ToString(const StringStyle& ss) const
 {
-	return GetFunction().ToString(ss);
+	//return String().Format("<Function:%s>", GetFunction().ToString(ss).c_str());
+	return GetFunction().ToString(ss).c_str();
 }
 
 void Value_Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const

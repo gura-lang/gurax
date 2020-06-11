@@ -703,7 +703,7 @@ String Value_Expr::ToString(const StringStyle& ss) const
 {
 #if 0
 	String str;
-	if (ss.IsSymbolQuoted()) str += "`";
+	if (ss.IsQuoteSymbol()) str += "`";
 	str += GetExpr().ToString(ss);
 	return str;
 #endif

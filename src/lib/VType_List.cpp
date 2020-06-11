@@ -1610,7 +1610,7 @@ Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 
 String Value_List::ToString(const StringStyle& ss) const
 {
-	return GetValueOwner().ToString(StringStyle::Quoted_NilVisible);
+	return GetValueOwner().ToString(StringStyle::Quote_NilVisible);
 #if 0
 	str.Format(":%zuitems>", GetValueOwner().size());
 #endif

@@ -18,11 +18,12 @@ public:
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
-		static const Flags StringQuoted	= (1 << 0);
-		static const Flags SymbolQuoted	= (1 << 1);
-		static const Flags NilVisible	= (1 << 2);
-		static const Flags Cram			= (1 << 3);
-		static const Flags MultiLine	= (1 << 4);
+		static const Flags Unbracket	= (1 << 0);
+		static const Flags QuoteString	= (1 << 1);
+		static const Flags QuoteSymbol	= (1 << 2);
+		static const Flags NilVisible	= (1 << 3);
+		static const Flags Cram			= (1 << 4);
+		static const Flags MultiLine	= (1 << 5);
 		static const Flags Verbose		= (1 << 6);
 	};
 private:
@@ -34,9 +35,10 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
-	static const StringStyle StringQuoted;
-	static const StringStyle SymbolQuoted;
-	static const StringStyle Quoted_NilVisible;
+	static const StringStyle Unbracket;
+	static const StringStyle QuoteString;
+	static const StringStyle QuoteSymbol;
+	static const StringStyle Quote_NilVisible;
 public:
 	// Constructor
 	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :
@@ -54,10 +56,12 @@ public:
 public:	
 	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
-	StringStyle& SetStringQuoted()		{ _flags |= Flag::StringQuoted; return *this; }
-	StringStyle& UnsetStringQuoted()	{ _flags &= ~Flag::StringQuoted; return *this; }
-	StringStyle& SetSymbolQuoted()		{ _flags |= Flag::SymbolQuoted; return *this; }
-	StringStyle& UnsetSymbolQuoted()	{ _flags &= ~Flag::SymbolQuoted; return *this; }
+	StringStyle& SetUnbracket()			{ _flags |= Flag::Unbracket; return *this; }
+	StringStyle& UnsetUnbracket()		{ _flags &= ~Flag::Unbracket; return *this; }
+	StringStyle& SetQuoteString()		{ _flags |= Flag::QuoteString; return *this; }
+	StringStyle& UnsetQuoteString()		{ _flags &= ~Flag::QuoteString; return *this; }
+	StringStyle& SetQuoteSymbol()		{ _flags |= Flag::QuoteSymbol; return *this; }
+	StringStyle& UnsetQuoteSymbol()		{ _flags &= ~Flag::QuoteSymbol; return *this; }
 	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
 	StringStyle& UnsetNilVisible()		{ _flags &= ~Flag::NilVisible; return *this; }
 	StringStyle& SetCram()				{ _flags |= Flag::Cram; return *this; }
@@ -66,8 +70,9 @@ public:
 	StringStyle& UnsetMultiLine()		{ _flags &= ~Flag::MultiLine; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
-	bool IsStringQuoted() const			{ return (_flags & Flag::StringQuoted) != 0; }
-	bool IsSymbolQuoted() const			{ return (_flags & Flag::SymbolQuoted) != 0; }
+	bool IsUnbracket() const			{ return (_flags & Flag::Unbracket) != 0; }
+	bool IsQuoteString() const			{ return (_flags & Flag::QuoteString) != 0; }
+	bool IsQuoteSymbol() const			{ return (_flags & Flag::QuoteSymbol) != 0; }
 	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
