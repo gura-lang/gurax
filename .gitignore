@@ -47,6 +47,7 @@ cmake_install.cmake
 
 # Directories
 /bin
+tmp/
 build/
 build-Release/
 .vscode/
