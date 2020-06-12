@@ -211,6 +211,7 @@ Gurax_ImplementStatement(try_)
 	Expr_Caller* pExprCatchAny = nullptr;
 	Expr_Caller* pExprElse = nullptr;
 	Expr_Caller* pExprFinally = nullptr;
+	PUnitsOfBranch punitsOfBranch;
 	for (Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr;
 										pExpr = pExpr->GetExprTrailer()) {
 		if (pExpr->IsStatement(Gurax_Symbol(catch_))) {
@@ -250,16 +251,27 @@ Gurax_ImplementStatement(try_)
 	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);						// [Any]
-	PUnit* pPUnitOfBranch_NoError = composer.PeekPUnitCont();
-	composer.Add_TryBlockEnd(exprCaller);										// [Any] or []
 	if (pExprElse) {
+		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
 		composer.FlushDiscard();												// []
 		pExprElse->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		pPUnitOfBranch_NoError = composer.PeekPUnitCont();
+		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(exprCaller);											// [Any]
+	} else {
+		punitsOfBranch.push_back(composer.PeekPUnitCont());
+		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
+	}
+	if (pExprFinally) {
+		PUnit* pPUnitFinally = composer.PeekPUnitCont();
+		pExprFinally->SetPUnitFirst(pPUnitFinally);
+		composer.Add_SequenceBegin(*pExprFinally);
+		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
+		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
+		punitsOfBranch.push_back(composer.PeekPUnitCont());
+		composer.Add_Jump(*pExprFinally);										// [Any]
 	}
 	pPUnitOfBranch_Catch->SetPUnitBranchDest(composer.PeekPUnitCont());
-	PUnitsOfBranch punitsOfBranch_Caught;
 	for (Expr_Caller* pExprCatch : exprsCatch) {
 		const DeclArgOwner& declArgsOfBlock =
 				pExprCatch->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
@@ -286,7 +298,7 @@ Gurax_ImplementStatement(try_)
 			composer.FlushDiscard();
 			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 		}
-		punitsOfBranch_Caught.push_back(composer.PeekPUnitCont());
+		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(*pExprCatch);											// [Any]
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
@@ -314,8 +326,8 @@ Gurax_ImplementStatement(try_)
 	} else {
 		composer.Add_FailCatch(Value::nil(), exprCaller);						// [nil]
 	}
-	pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
-	for (PUnit* pPUnitOfBranch : punitsOfBranch_Caught) {
+	//pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
+	for (PUnit* pPUnitOfBranch : punitsOfBranch) {
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
 	composer.Add_NoOperation(exprCaller);										// [Any]
@@ -599,7 +611,7 @@ Gurax_ImplementStatement(while_)
 				PUnit* pPUnitOfBreakBranch = composer.PeekPUnitCont();
 				composer.Add_Jump(exprCaller);
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
-				composer.Add_ListElem(0, xlistFlag, false, exprCaller);		// [Iterator List]
+				composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [Iterator List]
 				pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 				exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Iterator List Bool]
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
