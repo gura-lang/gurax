@@ -850,7 +850,7 @@ Gurax_ImplementStatement(continue_)
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
-		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);		// [Any or undefined]
+		composer.Add_Continue(nullptr, exprCaller);								// [Any or undefined]
 	}
 }
 

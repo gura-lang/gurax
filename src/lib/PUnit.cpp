@@ -3153,13 +3153,13 @@ template<bool discardValueFlag>
 void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 {
 	const PUnit* pPUnit = processor.PopPUnit();
-	// Since nullptr means the end of the processor loop, there's no need to
-	// pop frame or value from their stacks.
 	if (pPUnit) {
 		processor.PopFrame();
 		if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
 		processor.SetPUnitCur(pPUnit->GetPUnitCont());
 	} else {
+		// Since nullptr means the end of the processor loop, there's no need to
+		// pop frame or value from their stacks.
 		processor.ExitRunLoop();
 	}
 }
