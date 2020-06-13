@@ -2875,6 +2875,40 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Sequence
+// Stack View: [Prev] -> [Prev] (continue)
+//                       []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_Sequence<discardValueFlag>::Exec(Processor& processor) const
+{
+	// processor
+	if constexpr (discardValueFlag) processor.DiscardValue();
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_Sequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Format("Sequence(cont=%s,sentinel=%s)",
+				MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
+				MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Sequence::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Sequence<true>(_pPUnitSentinel, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_Sequence<false>(_pPUnitSentinel, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_SequenceBegin
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)

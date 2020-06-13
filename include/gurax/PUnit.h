@@ -2564,6 +2564,51 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Sequence
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Sequence : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitCont;
+	const PUnit* _pPUnitSentinel;
+public:
+	// Constructor
+	PUnit_Sequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+		PUnit(pExprSrc), _pPUnitCont(this + 1), _pPUnitSentinel(pPUnitSentinel) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
+	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_Sequence : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Sequence");
+private:
+	const PUnit* _pPUnitSentinel;
+public:
+	PUnitFactory_Sequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pPUnitSentinel(pPUnitSentinel) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Sequence<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_SequenceBegin
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

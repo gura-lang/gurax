@@ -253,7 +253,7 @@ Gurax_ImplementStatement(try_)
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	if (pExprFinally) {
 		pPUnitToFinally = composer.PeekPUnitCont();
-		composer.Add_Jump(exprCaller);											// [Any]
+		composer.Add_Sequence(exprCaller);										// [Any]
 		pPUnitOfBranch_Catch->SetPUnitCont(composer.PeekPUnitCont());
 	}
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);						// [Any]
@@ -329,6 +329,7 @@ Gurax_ImplementStatement(try_)
 		pPUnitToFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitFirst(composer.PeekPUnitCont());
 		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		pPUnitToFinally->SetPUnitSentinel(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
 		composer.Add_NoOperation(exprCaller);									// [Any]

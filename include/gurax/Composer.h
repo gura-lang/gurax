@@ -284,6 +284,10 @@ public:
 		const PUnit* pPUnitSentinel = nullptr;
 		SetFactory(new PUnitFactory_SequenceBegin(pPUnitSentinel, exprSrc.Reference()));
 	}
+	void Add_Sequence(const Expr& exprSrc) {
+		const PUnit* pPUnitSentinel = nullptr;
+		SetFactory(new PUnitFactory_Sequence(pPUnitSentinel, exprSrc.Reference()));
+	}
 	void Add_SequenceEnd(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_SequenceEnd(exprSrc.Reference()));
 	}
