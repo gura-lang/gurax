@@ -828,7 +828,7 @@ private:
 public:
 	// Constructor
 	PUnit_EvalIterator(size_t offset, bool raiseFlag, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
 		_offset(offset), _raiseFlag(raiseFlag) {}
 public:
 	size_t GetOffset() const { return _offset; }
@@ -873,7 +873,7 @@ private:
 public:
 	// Constructor
 	PUnit_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
 		_offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 public:
 	size_t GetOffset() const { return _offset; }
@@ -2055,7 +2055,7 @@ private:
 public:
 	// Constructor
 	PUnit_ArgSlotBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
 		_pPUnitSentinel(this + 1) {}
 public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
@@ -2173,7 +2173,7 @@ private:
 public:
 	// Constructor
 	PUnit_NamedArgSlotBegin(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc),
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
 		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSentinel(this + 1) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -2336,7 +2336,7 @@ private:
 public:
 	// Constructor
 	PUnit_JumpIf(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc) {}
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2411,20 +2411,23 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
+	const PUnit* _pPUnitCont;
 public:
 	// Constructor
 	PUnit_TryBlockBegin(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc) {}
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
+		_pPUnitCont(this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
+	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
 class GURAX_DLLDECLARE PUnitFactory_TryBlockBegin : public PUnitFactory_Branch {
@@ -2453,7 +2456,7 @@ private:
 public:
 	// Constructor
 	PUnit_TryBlockEnd(const PUnit* pPUnitCont, Expr* pExprSrc) :
-		PUnit(pExprSrc), _pPUnitCont(pPUnitCont ? pPUnitCont : this + 1) {}
+		PUnit(pExprSrc), _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2494,7 +2497,7 @@ private:
 public:
 	// Constructor
 	PUnit_JumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc) {}
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2533,7 +2536,7 @@ private:
 public:
 	// Constructor
 	PUnit_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnit_Branch(pPUnitBranchDest ? pPUnitBranchDest : this + 1, pExprSrc) {}
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
