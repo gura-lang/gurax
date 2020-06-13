@@ -32,10 +32,10 @@ Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicSco
 		PushFrame(new Frame_Scope(function.LockFrameOuter()));
 }
 
-Value* Processor::ProcessPUnit(const PUnit* pPUnit)
+Value* Processor::ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 {
 	if (!pPUnit) return Value::nil();
-	RunLoop(pPUnit);
+	RunLoop(pPUnit, pPUnitSentinel);
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 
@@ -165,13 +165,13 @@ void Processor::ExceptionInfoStack::Print() const
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
-void Processor_Normal::RunLoop(const PUnit* pPUnit)
+void Processor_Normal::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 {
 	_pPUnitCur = pPUnit;
 	if (!_pPUnitCur) return;
 	PrepareExceptionHandling();
 	if (_pPUnitCur->IsSequenceBegin()) {
-		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
+		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip SequenceBegin/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsSequenceEnd()) {
 			do {
@@ -203,7 +203,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 // Processor_Debug
 //------------------------------------------------------------------------------
-void Processor_Debug::RunLoop(const PUnit* pPUnit)
+void Processor_Debug::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 {
 	auto PrintPUnit = [](Stream& stream, int nestLevel, const PUnit* pPUnit) {
 		String seqIdStr = pPUnit->MakeSeqIdString();
@@ -217,7 +217,6 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	_pPUnitCur = pPUnit;
 	if (!_pPUnitCur) return;
 	Stream& stream = *Stream::COut;
-	const PUnit* pPUnitSentinel = nullptr;
 	_nestLevel++;
 	stream.Printf("%*s---- Processor Begin at %s ----\n",
 				  _nestLevel * 2, "", _pPUnitCur->MakeSeqIdString().c_str());

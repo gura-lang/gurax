@@ -128,11 +128,11 @@ public:
 	static bool IsEventBreak(Event event) { return event == Event::Break; }
 	static bool IsEventContinue(Event event) { return event == Event::Continue; }
 public:
-	Value* ProcessPUnit(const PUnit* pPUnit);
+	Value* ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel = nullptr);
 public:
 	void Print() const;
 protected:
-	virtual void RunLoop(const PUnit* pPUnit) = 0;
+	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel) = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ protected:
 class GURAX_DLLDECLARE Processor_Normal : public Processor {
 protected:
 	// Virtual function of Processor
-	virtual void RunLoop(const PUnit* pPUnit) override;
+	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPunitSentinel) override;
 };
 
 //------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ public:
 	Processor_Debug() : _nestLevel(-1) {}
 protected:
 	// Virtual function of Processor
-	virtual void RunLoop(const PUnit* pPUnit) override;
+	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPunitSentinel) override;
 };
 
 }
