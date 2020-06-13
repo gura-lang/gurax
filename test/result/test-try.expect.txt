@@ -4,7 +4,7 @@ try {f()}
   ##1 Argument()
   ##2 Call(cont=##3)
 try {f()} catch {g()}
-  ##0 TryBlockBegin(branchDest=##5)
+  ##0 TryBlockBegin(cont=##1,branchDest=##5)
   ##1 Lookup(`f)
   ##2 Argument()
   ##3 Call(cont=##4)
@@ -15,7 +15,7 @@ try {f()} catch {g()}
   ##8 Call(cont=##9)
   ##9 NoOperation()
 try {f()} catch {|e| g()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -29,7 +29,7 @@ try {f()} catch {|e| g()}
   ##11 PopFrame()
   ##12 NoOperation()
 try {f()} catch(Error.SyntaxError) {|e| g()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -49,7 +49,7 @@ try {f()} catch(Error.SyntaxError) {|e| g()}
   ##17 FailCatch(<Nil>)
   ##18 NoOperation()
 try {f()} catch(Error.SyntaxError) {g()} catch(Error.KeyError) {h()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -75,7 +75,7 @@ try {f()} catch(Error.SyntaxError) {g()} catch(Error.KeyError) {h()}
   ##23 FailCatch(<Nil>)
   ##24 NoOperation()
 try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -104,7 +104,7 @@ try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3
   ##26 Call(cont=##27)
   ##27 NoOperation()
 try {f()} catch {f3()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -133,7 +133,7 @@ try {f()} catch {f3()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2
   ##26 Call(cont=##27)
   ##27 NoOperation()
 try {f()} catch(Error.SyntaxError, Error.KeyError) {f1()} catch {f3()}
-  ##0  TryBlockBegin(branchDest=##5)
+  ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -156,7 +156,7 @@ try {f()} catch(Error.SyntaxError, Error.KeyError) {f1()} catch {f3()}
   ##20 Call(cont=##21)
   ##21 NoOperation()
 try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3()} else {f4()}
-  ##0  TryBlockBegin(branchDest=##9)
+  ##0  TryBlockBegin(cont=##1,branchDest=##9)
   ##1  Lookup(`f)
   ##2  Argument()
   ##3  Call(cont=##4)
@@ -204,7 +204,7 @@ SyntaxError MESSAGE
 SyntaxError MESSAGE
 SyntaxError MESSAGE
 ======== Catch-any may be placed anywhere ========
-##0  TryBlockBegin(branchDest=##3)
+##0  TryBlockBegin(cont=##1,branchDest=##3)
 ##1  Lookup(`nil)
 ##2  TryBlockEnd(cont=##32)
 ##3  Value(<Nil>)

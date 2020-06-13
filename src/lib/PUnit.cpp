@@ -2687,7 +2687,9 @@ template<bool discardValueFlag>
 String PUnit_TryBlockBegin<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("TryBlockBegin(branchDest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Format("TryBlockBegin(cont=%s,branchDest=%s)",
+			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }

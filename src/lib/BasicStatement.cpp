@@ -248,8 +248,14 @@ Gurax_ImplementStatement(try_)
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
 		return;
 	}
+	PUnit* pPUnitToFinally = nullptr;
 	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
+	if (pExprFinally) {
+		pPUnitToFinally = composer.PeekPUnitCont();
+		composer.Add_Jump(exprCaller);											// [Any]
+		pPUnitOfBranch_Catch->SetPUnitCont(composer.PeekPUnitCont());
+	}
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);						// [Any]
 	if (pExprElse) {
 		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
@@ -260,16 +266,6 @@ Gurax_ImplementStatement(try_)
 	} else {
 		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
-	}
-	if (pExprFinally) {
-		PUnit* pPUnitFinally = composer.PeekPUnitCont();
-		pExprFinally->SetPUnitFirst(pPUnitFinally);
-		composer.Add_SequenceBegin(*pExprFinally);
-		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
-		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
-		punitsOfBranch.push_back(composer.PeekPUnitCont());
-		composer.Add_Jump(*pExprFinally);										// [Any]
 	}
 	pPUnitOfBranch_Catch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	for (Expr_Caller* pExprCatch : exprsCatch) {
@@ -326,11 +322,17 @@ Gurax_ImplementStatement(try_)
 	} else {
 		composer.Add_FailCatch(Value::nil(), exprCaller);						// [nil]
 	}
-	//pPUnitOfBranch_NoError->SetPUnitBranchDest(composer.PeekPUnitCont());
 	for (PUnit* pPUnitOfBranch : punitsOfBranch) {
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
-	composer.Add_NoOperation(exprCaller);										// [Any]
+	if (pExprFinally) {
+		pPUnitToFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pExprFinally->SetPUnitFirst(composer.PeekPUnitCont());
+		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
+	} else {
+		composer.Add_NoOperation(exprCaller);									// [Any]
+	}
 }
 
 // catch(errorType?:ErrorType) {`block}
