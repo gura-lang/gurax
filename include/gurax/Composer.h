@@ -13,6 +13,31 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Composer {
 public:
+	class GURAX_DLLDECLARE TryInfo {
+	private:
+		const PUnit* _pPUnitOfFinally;
+	public:
+		// Constructor
+		TryInfo() = delete;
+		TryInfo(const PUnit* pPUnitOfFinally) : _pPUnitOfFinally(pPUnitOfFinally) {}
+		// Copy constructor/operator
+		TryInfo(const TryInfo& src) : _pPUnitOfFinally(src._pPUnitOfFinally) {}
+		TryInfo& operator=(const TryInfo& src) = delete;
+		// Move constructor/operator
+		TryInfo(TryInfo&& src) = delete;
+		TryInfo& operator=(TryInfo&& src) noexcept = delete;
+		// Destructor
+		virtual ~TryInfo() = default;
+	public:
+		const PUnit* GetPUnitOfFinally() const { return _pPUnitOfFinally; }
+	};
+	class GURAX_DLLDECLARE TryInfoTbl : public std::vector<TryInfo*> {
+	};
+	class GURAX_DLLDECLARE TryInfoOwner : public TryInfoTbl {
+	public:
+		~TryInfoOwner() { Clear(); }
+		void Clear();
+	};
 	class GURAX_DLLDECLARE RepeaterInfo {
 	private:
 		const PUnit* _pPUnitOfLoop;
@@ -54,6 +79,7 @@ private:
 	PUnitStack _punitStack;
 	RefPtr<PUnitFactory> _pPUnitFactory;
 	RepeaterInfoOwner _repeaterInfoStack;
+	TryInfoOwner _tryInfoStack;
 public:
 	// Constructor
 	Composer(bool replFlag = false);
@@ -81,6 +107,14 @@ public:
 	}
 	void EndRepeaterBlock() {
 		_repeaterInfoStack.pop_back();
+	}
+	bool HasValidTryInfo() const { return !_tryInfoStack.empty(); }
+	const TryInfo& GetTryInfoCur() const { return *_tryInfoStack.back(); }
+	void BeginTryBlock(const PUnit* pPUnitOfFinally) {
+		_tryInfoStack.push_back(new TryInfo(pPUnitOfFinally));
+	}
+	void EndTryBlock() {
+		_tryInfoStack.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void ComposeAsSequence(Expr& expr);

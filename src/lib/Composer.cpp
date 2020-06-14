@@ -109,4 +109,13 @@ void Composer::RepeaterInfoOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// Composer::TryInfoOwner
+//------------------------------------------------------------------------------
+void Composer::TryInfoOwner::Clear()
+{
+	for (TryInfo* pTryInfo : *this) delete pTryInfo;
+	clear();
+}
+
 }
