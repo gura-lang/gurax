@@ -286,9 +286,11 @@ public:
 	void Add_Jump(const Expr& exprSrc) {
 		const PUnit* pPUnitCont = nullptr;
 		SetFactory(new PUnitFactory_Jump(pPUnitCont, exprSrc.Reference()));
+		Flush();
 	}
 	void Add_Jump(const PUnit* pPUnitCont, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Jump(pPUnitCont, exprSrc.Reference()));
+		Flush();
 	}
 	void Add_JumpIf(PUnit::BranchMode branchMode, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
