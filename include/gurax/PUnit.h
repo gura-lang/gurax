@@ -2564,10 +2564,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Sequence
+// PUnit_ProcessSequence
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Sequence : public PUnit {
+class GURAX_DLLDECLARE PUnit_ProcessSequence : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -2576,7 +2576,7 @@ private:
 	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
-	PUnit_Sequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+	PUnit_ProcessSequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pPUnitBranchDest(this + 1), _pPUnitSentinel(pPUnitSentinel) {}
 public:
 	// Virtual functions of PUnit
@@ -2594,16 +2594,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_Sequence : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_ProcessSequence : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Sequence");
+	Gurax_MemoryPoolAllocator("PUnitFactory_ProcessSequence");
 private:
 	const PUnit* _pPUnitSentinel;
 public:
-	PUnitFactory_Sequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
+	PUnitFactory_ProcessSequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_Sequence<false>);
+		return sizeof(PUnit_ProcessSequence<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

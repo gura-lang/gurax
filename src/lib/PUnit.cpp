@@ -2875,12 +2875,12 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Sequence
-// Stack View: [Prev] -> [Prev] (continue)
-//                       []     (discard)
+// PUnit_ProcessSequence
+// Stack View: [] -> [Any] (continue)
+//                   []    (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_Sequence<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_ProcessSequence<discardValueFlag>::Exec(Processor& processor) const
 {
 	// processor
 	if constexpr (discardValueFlag) processor.DiscardValue();
@@ -2888,22 +2888,22 @@ void PUnit_Sequence<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_Sequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_ProcessSequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Sequence(branchDest=%s,sentinel=%s)",
+	str.Format("ProcessSequence(branchDest=%s,sentinel=%s)",
 				MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 				MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Sequence::Create(bool discardValueFlag)
+PUnit* PUnitFactory_ProcessSequence::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Sequence<true>(_pPUnitSentinel, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_ProcessSequence<true>(_pPUnitSentinel, _pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_Sequence<false>(_pPUnitSentinel, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_ProcessSequence<false>(_pPUnitSentinel, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }
