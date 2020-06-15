@@ -331,7 +331,9 @@ Gurax_ImplementStatement(try_)
 	if (pExprFinally) {
 		pPUnitFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitFirst(composer.PeekPUnitCont());
+		composer.BeginTryBlock(nullptr); // prevent inifite loop when "return" appears
 		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		composer.EndTryBlock();
 		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
