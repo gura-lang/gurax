@@ -2515,6 +2515,7 @@ String PUnit_Jump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOf
 {
 	String str;
 	str.Format("Jump(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
 	return str;
 }
 

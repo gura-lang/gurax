@@ -253,8 +253,8 @@ Gurax_ImplementStatement(try_)
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	if (pExprFinally) {
 		pPUnitFinally = composer.PeekPUnitCont();
-		composer.Add_ProcessSequence(exprCaller);								// [Any]
-		composer.FlushDiscard();
+		composer.Add_ProcessSequence(exprCaller);
+		composer.FlushDiscard();												// []
 		composer.Add_Return(exprCaller);										// [Any]
 		pPUnitOfBranch_Catch->SetPUnitCont(composer.PeekPUnitCont());
 	}
@@ -263,7 +263,8 @@ Gurax_ImplementStatement(try_)
 	if (pExprElse) {
 		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
 		composer.FlushDiscard();												// []
-		pExprElse->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
+		pExprElse->GetExprOfBlock()->ComposeOrNil(composer);
+		if (pExprFinally) composer.FlushDiscard();								// [Any] or []
 		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(exprCaller);											// [Any]
 	} else {
@@ -291,11 +292,13 @@ Gurax_ImplementStatement(try_)
 			composer.Add_PushFrame<Frame_Block>(*pExprCatch);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), *pExprCatch);
 			composer.FlushDiscard();											// []
-			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);
+			if (pExprFinally) composer.FlushDiscard();							// [Any] or []
 			composer.Add_PopFrame(*pExprCatch);
 		} else {
 			composer.FlushDiscard();
-			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+			pExprCatch->GetExprOfBlock()->ComposeOrNil(composer);
+			if (pExprFinally) composer.FlushDiscard();							// [Any] or []
 		}
 		punitsOfBranch.push_back(composer.PeekPUnitCont());
 		composer.Add_Jump(*pExprCatch);											// [Any]
@@ -315,11 +318,13 @@ Gurax_ImplementStatement(try_)
 			composer.Add_PushFrame<Frame_Block>(*pExprCatchAny);
 			composer.Add_AssignToDeclArg(pDeclArg->Reference(), *pExprCatchAny);
 			composer.FlushDiscard();											// []
-			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);
+			if (pExprFinally) composer.FlushDiscard();							// [Any] or []
 			composer.Add_PopFrame(*pExprCatchAny);
 		} else {
 			composer.FlushDiscard();
-			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			pExprCatchAny->GetExprOfBlock()->ComposeOrNil(composer);
+			if (pExprFinally) composer.FlushDiscard();							// [Any] or []
 		}
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
