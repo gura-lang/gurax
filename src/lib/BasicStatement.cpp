@@ -892,6 +892,13 @@ Gurax_ImplementStatement(return_)
 	} else {
 		composer.Add_Value(Value::nil(), exprCaller);							// [nil]
 	}
+	if (composer.HasValidTryInfo()) {
+		const Composer::TryInfo& tryInfo = composer.GetTryInfoCur();
+		if (const PUnit* pPUnitOfFinally = tryInfo.GetPUnitOfFinally()) {
+			composer.Add_Jump(pPUnitOfFinally, exprCaller);
+			return;
+		}
+	}
 	composer.Add_Return(exprCaller);
 }
 

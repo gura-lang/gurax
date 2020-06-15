@@ -2882,7 +2882,11 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ProcessSequence<discardValueFlag>::Exec(Processor& processor) const
 {
-	// processor
+	processor.RunLoop(GetPUnitBranchDest(), GetPUnitSentinel());
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+		return;
+	}
 	if constexpr (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitCur(_GetPUnitCont());
 }

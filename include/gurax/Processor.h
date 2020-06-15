@@ -129,10 +129,9 @@ public:
 	static bool IsEventContinue(Event event) { return event == Event::Continue; }
 public:
 	Value* ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel = nullptr);
+	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel) = 0;
 public:
 	void Print() const;
-protected:
-	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel) = 0;
 };
 
 //------------------------------------------------------------------------------

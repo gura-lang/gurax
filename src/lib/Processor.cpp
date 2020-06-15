@@ -170,7 +170,14 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 	_pPUnitCur = pPUnit;
 	if (!_pPUnitCur) return;
 	PrepareExceptionHandling();
-	if (_pPUnitCur->IsSequenceBegin()) {
+	if (pPUnitSentinel) {
+		do {
+			while (_contFlag && _pPUnitCur != pPUnitSentinel) {
+				_pPUnitCur->Exec(*this);
+			}
+			if (!DoExceptionHandling()) break;
+		} while (_contFlag && _pPUnitCur != pPUnitSentinel);
+	} else if (_pPUnitCur->IsSequenceBegin()) {
 		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip SequenceBegin/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsSequenceEnd()) {
@@ -222,7 +229,9 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 				  _nestLevel * 2, "", _pPUnitCur->MakeSeqIdString().c_str());
 	PrepareExceptionHandling();
 	size_t wdSeqId = 0;
-	if (_pPUnitCur->IsSequenceBegin()) {
+	if (pPUnitSentinel) {
+		// nothing to do
+	} else if (_pPUnitCur->IsSequenceBegin()) {
 		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip SequenceBegin/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsSequenceEnd()) pPUnitSentinel = nullptr;
