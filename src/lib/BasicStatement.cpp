@@ -336,9 +336,9 @@ Gurax_ImplementStatement(try_)
 	if (pExprFinally) {
 		pPUnitFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitFirst(composer.PeekPUnitCont());
-		composer.BeginTryBlock(nullptr); // prevent inifite loop when "return" appears
+		composer.BeginFinallyBlock(); // prevent inifite loop when "return" appears
 		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		composer.EndTryBlock();
+		composer.EndFinallyBlock();
 		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
@@ -894,19 +894,39 @@ Gurax_DeclareStatementAlias(return_, "return")
 Gurax_ImplementStatement(return_)
 {
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (pExprCdr) {
-		pExprCdr->ComposeOrNil(composer);										// [Any]
-	} else {
-		composer.Add_Value(Value::nil(), exprCaller);							// [nil]
-	}
 	if (composer.HasValidTryInfo()) {
 		const Composer::TryInfo& tryInfo = composer.GetTryInfoCur();
-		if (const PUnit* pPUnitOfFinally = tryInfo.GetPUnitOfFinally()) {
-			composer.Add_Jump(pPUnitOfFinally, exprCaller);
-			return;
+		if (tryInfo.IsWithinFinally()) {
+			Error::IssueWith(ErrorType::UnimplementedError, exprCaller,
+					"return statement within finally is not allowed");
+#if 0
+			if (pExprCdr) {
+				pExprCdr->ComposeOrNil(composer);								// [Any]
+			} else {
+				composer.Add_Value(Value::nil(), exprCaller);					// [nil]
+			}
+			composer.Add_Return(exprCaller);
+#endif
+		} else {
+			if (pExprCdr) {
+				pExprCdr->ComposeOrNil(composer);								// [Any]
+			} else {
+				composer.Add_Value(Value::nil(), exprCaller);					// [nil]
+			}
+			if (const PUnit* pPUnitOfFinally = tryInfo.GetPUnitOfFinally()) {
+				composer.Add_Jump(pPUnitOfFinally, exprCaller);
+			} else {
+				composer.Add_Return(exprCaller);
+			}
 		}
+	} else {
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);									// [Any]
+		} else {
+			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
+		}
+		composer.Add_Return(exprCaller);
 	}
-	composer.Add_Return(exprCaller);
 }
 
 // import(`name):[binary,overwrite] {`block?}
@@ -936,7 +956,8 @@ Gurax_ImplementStatement(import)
 	}
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprArg));
 	if (!pDottedSymbol) {
-		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
+		Error::IssueWith(ErrorType::SyntaxError, *pExprArg,
+								"invalid format of dotted-symbol");
 		return;
 	}
 	bool binaryFlag = attr.IsSet(Gurax_Symbol(binary));
@@ -947,13 +968,13 @@ Gurax_ImplementStatement(import)
 		const Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 			if (!pExpr->IsType<Expr_Identifier>()) {
-				Error::Issue(ErrorType::ImportError,
+				Error::IssueWith(ErrorType::ImportError, *pExpr,
 							 "the block of import statement must contain symbols");
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol();
 			if (pSymbolList->DoesContain(pSymbol)) {
-				Error::Issue(ErrorType::ImportError,
+				Error::IssueWith(ErrorType::ImportError, *pExpr,
 							 "duplicated symbol in the import's block: %s", pSymbol->GetName());
 				return;
 			}

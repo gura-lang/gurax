@@ -16,12 +16,15 @@ public:
 	class GURAX_DLLDECLARE TryInfo {
 	private:
 		const PUnit* _pPUnitOfFinally;
+		bool _withinFinallyFlag;
 	public:
 		// Constructor
 		TryInfo() = delete;
-		TryInfo(const PUnit* pPUnitOfFinally) : _pPUnitOfFinally(pPUnitOfFinally) {}
+		TryInfo(const PUnit* pPUnitOfFinally, bool withinFinallyFlag) :
+			_pPUnitOfFinally(pPUnitOfFinally), _withinFinallyFlag(withinFinallyFlag) {}
 		// Copy constructor/operator
-		TryInfo(const TryInfo& src) : _pPUnitOfFinally(src._pPUnitOfFinally) {}
+		TryInfo(const TryInfo& src) :
+			_pPUnitOfFinally(src._pPUnitOfFinally), _withinFinallyFlag(src._withinFinallyFlag) {}
 		TryInfo& operator=(const TryInfo& src) = delete;
 		// Move constructor/operator
 		TryInfo(TryInfo&& src) = delete;
@@ -30,6 +33,7 @@ public:
 		virtual ~TryInfo() = default;
 	public:
 		const PUnit* GetPUnitOfFinally() const { return _pPUnitOfFinally; }
+		bool IsWithinFinally() const { return _withinFinallyFlag; }
 	};
 	class GURAX_DLLDECLARE TryInfoTbl : public std::vector<TryInfo*> {
 	};
@@ -111,9 +115,15 @@ public:
 	bool HasValidTryInfo() const { return !_tryInfoStack.empty(); }
 	const TryInfo& GetTryInfoCur() const { return *_tryInfoStack.back(); }
 	void BeginTryBlock(const PUnit* pPUnitOfFinally) {
-		_tryInfoStack.push_back(new TryInfo(pPUnitOfFinally));
+		_tryInfoStack.push_back(new TryInfo(pPUnitOfFinally, false));
 	}
 	void EndTryBlock() {
+		_tryInfoStack.pop_back();
+	}
+	void BeginFinallyBlock() {
+		_tryInfoStack.push_back(new TryInfo(nullptr, true));
+	}
+	void EndFinallyBlock() {
 		_tryInfoStack.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
