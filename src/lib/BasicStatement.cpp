@@ -248,14 +248,17 @@ Gurax_ImplementStatement(try_)
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
 		return;
 	}
-	PUnit* pPUnitToFinally = nullptr;
+	PUnit* pPUnitFinally = nullptr;
 	PUnit* pPUnitOfBranch_Catch = composer.PeekPUnitCont();
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	if (pExprFinally) {
-		pPUnitToFinally = composer.PeekPUnitCont();
+		pPUnitFinally = composer.PeekPUnitCont();
 		composer.Add_Sequence(exprCaller);										// [Any]
+		composer.FlushDiscard();
+		composer.Add_Return(exprCaller);										// [Any]
 		pPUnitOfBranch_Catch->SetPUnitCont(composer.PeekPUnitCont());
 	}
+	composer.BeginTryBlock(pPUnitFinally);
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);						// [Any]
 	if (pExprElse) {
 		composer.Add_TryBlockEnd(exprCaller);									// [Any] or []
@@ -273,7 +276,7 @@ Gurax_ImplementStatement(try_)
 				pExprCatch->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		if (declArgsOfBlock.size() > 1) {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
-			return;
+			goto errorDone;
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 		composer.Add_Value(Value::nil(), exprCaller);							// [nil]
@@ -303,7 +306,7 @@ Gurax_ImplementStatement(try_)
 				pExprCatchAny->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		if (declArgsOfBlock.size() > 1) {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
-			return;
+			goto errorDone;
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -326,14 +329,16 @@ Gurax_ImplementStatement(try_)
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
 	if (pExprFinally) {
-		pPUnitToFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pPUnitFinally->SetPUnitBranchDest(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitFirst(composer.PeekPUnitCont());
 		pExprFinally->GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
-		pPUnitToFinally->SetPUnitSentinel(composer.PeekPUnitCont());
+		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
 	} else {
 		composer.Add_NoOperation(exprCaller);									// [Any]
 	}
+errorDone:
+	composer.EndTryBlock();
 }
 
 // catch(errorType?:ErrorType) {`block}

@@ -2891,8 +2891,8 @@ template<bool discardValueFlag>
 String PUnit_Sequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Sequence(cont=%s,sentinel=%s)",
-				MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
+	str.Format("Sequence(branchDest=%s,sentinel=%s)",
+				MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 				MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
