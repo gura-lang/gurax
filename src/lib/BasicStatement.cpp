@@ -341,9 +341,8 @@ Gurax_ImplementStatement(try_)
 		composer.EndFinallyBlock();
 		pPUnitFinally->SetPUnitSentinel(composer.PeekPUnitCont());
 		pExprFinally->SetPUnitEnd(composer.PeekPUnitCont());
-	} else {
-		composer.Add_NoOperation(exprCaller);									// [Any]
 	}
+	composer.Add_NoOperation(exprCaller);										// [Any]
 errorDone:
 	composer.EndTryBlock();
 }
