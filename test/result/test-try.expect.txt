@@ -3,6 +3,19 @@ try {f()}
   ##0 Lookup(`f)
   ##1 Argument()
   ##2 Call(cont=##3)
+try {f()} finally {h()}
+  ##0  TryBlockBegin(cont=##3,branchDest=##7)
+  ##1  ProcessSequence(branchDest=##8,sentinel=##11), DiscardValue()
+  ##2  Return()
+  ##3  Lookup(`f)
+  ##4  Argument()
+  ##5  Call(cont=##6)
+  ##6  TryBlockEnd(cont=##8)
+  ##7  FailCatch(<Nil>)
+  ##8  Lookup(`h)
+  ##9  Argument()
+  ##10 Call(cont=##11)
+  ##11 NoOperation()
 try {f()} catch {g()}
   ##0 TryBlockBegin(cont=##1,branchDest=##5)
   ##1 Lookup(`f)
@@ -14,6 +27,64 @@ try {f()} catch {g()}
   ##7 Argument()
   ##8 Call(cont=##9)
   ##9 NoOperation()
+try {f()} catch {g()} finally {h()}
+  ##0  TryBlockBegin(cont=##3,branchDest=##7)
+  ##1  ProcessSequence(branchDest=##11,sentinel=##14), DiscardValue()
+  ##2  Return()
+  ##3  Lookup(`f)
+  ##4  Argument()
+  ##5  Call(cont=##6)
+  ##6  TryBlockEnd(cont=##11)
+  ##7  JumpIfNoCatchAny(branchDest=##11,nil), DiscardValue()
+  ##8  Lookup(`g)
+  ##9  Argument()
+  ##10 Call(cont=##11), DiscardValue()
+  ##11 Lookup(`h)
+  ##12 Argument()
+  ##13 Call(cont=##14)
+  ##14 NoOperation()
+try {f()} catch {g(), return} finally {h()}
+  ##0  TryBlockBegin(cont=##3,branchDest=##7)
+  ##1  ProcessSequence(branchDest=##13,sentinel=##16), DiscardValue()
+  ##2  Return()
+  ##3  Lookup(`f)
+  ##4  Argument()
+  ##5  Call(cont=##6)
+  ##6  TryBlockEnd(cont=##13)
+  ##7  JumpIfNoCatchAny(branchDest=##13,nil), DiscardValue()
+  ##8  Lookup(`g)
+  ##9  Argument()
+  ##10 Call(cont=##11), DiscardValue()
+  ##11 Value(<Nil>)
+  ##12 Jump(cont=##1)
+  ##13 Lookup(`h)
+  ##14 Argument()
+  ##15 Call(cont=##16)
+  ##16 NoOperation()
+try {f()} catch {g1(), return} else {g2(), return} finally {h()}
+  ##0  TryBlockBegin(cont=##3,branchDest=##13)
+  ##1  ProcessSequence(branchDest=##19,sentinel=##22), DiscardValue()
+  ##2  Return()
+  ##3  Lookup(`f)
+  ##4  Argument()
+  ##5  Call(cont=##6)
+  ##6  TryBlockEnd(cont=##7), DiscardValue()
+  ##7  Lookup(`g2)
+  ##8  Argument()
+  ##9  Call(cont=##10), DiscardValue()
+  ##10 Value(<Nil>)
+  ##11 Jump(cont=##1)
+  ##12 Jump(cont=##19)
+  ##13 JumpIfNoCatchAny(branchDest=##19,nil), DiscardValue()
+  ##14 Lookup(`g1)
+  ##15 Argument()
+  ##16 Call(cont=##17), DiscardValue()
+  ##17 Value(<Nil>)
+  ##18 Jump(cont=##1)
+  ##19 Lookup(`h)
+  ##20 Argument()
+  ##21 Call(cont=##22)
+  ##22 NoOperation()
 try {f()} catch {|e| g()}
   ##0  TryBlockBegin(cont=##1,branchDest=##5)
   ##1  Lookup(`f)
@@ -188,6 +259,44 @@ try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3
   ##29 Argument()
   ##30 Call(cont=##31)
   ##31 NoOperation()
+try {f()} catch(Error.SyntaxError) {f1()} catch(Error.KeyError) {f2()} catch {f3()} else {f4()} finally {h()}
+  ##0  TryBlockBegin(cont=##3,branchDest=##11)
+  ##1  ProcessSequence(branchDest=##33,sentinel=##36), DiscardValue()
+  ##2  Return()
+  ##3  Lookup(`f)
+  ##4  Argument()
+  ##5  Call(cont=##6)
+  ##6  TryBlockEnd(cont=##7), DiscardValue()
+  ##7  Lookup(`f4)
+  ##8  Argument()
+  ##9  Call(cont=##10), DiscardValue()
+  ##10 Jump(cont=##33)
+  ##11 Value(<Nil>)
+  ##12 Lookup(`Error)
+  ##13 MemberGet_Normal(`SyntaxError)
+  ##14 Cast(ErrorType)
+  ##15 JumpIfNoCatch(branchDest=##20), DiscardValue()
+  ##16 Lookup(`f1)
+  ##17 Argument()
+  ##18 Call(cont=##19), DiscardValue()
+  ##19 Jump(cont=##33)
+  ##20 Value(<Nil>)
+  ##21 Lookup(`Error)
+  ##22 MemberGet_Normal(`KeyError)
+  ##23 Cast(ErrorType)
+  ##24 JumpIfNoCatch(branchDest=##29), DiscardValue()
+  ##25 Lookup(`f2)
+  ##26 Argument()
+  ##27 Call(cont=##28), DiscardValue()
+  ##28 Jump(cont=##33)
+  ##29 JumpIfNoCatchAny(branchDest=##33,nil), DiscardValue()
+  ##30 Lookup(`f3)
+  ##31 Argument()
+  ##32 Call(cont=##33), DiscardValue()
+  ##33 Lookup(`h)
+  ##34 Argument()
+  ##35 Call(cont=##36)
+  ##36 NoOperation()
 ======== Simple ========
 SyntaxError MESSAGE
 ======== Error from nested try ========
@@ -246,3 +355,56 @@ f {Error.Raise(Error.MemoryError, '')} .. 2nd handler caught MemoryError
 f {Error.Raise(Error.PropertyError, '')} .. 2nd handler caught PropertyError
 f {Error.Raise(Error.StreamError, '')} .. 3rd handler caught StreamError
 f {Error.Raise(Error.SymbolError, '')} .. 3rd handler caught SymbolError
+======== finally statement ========
+<Function:f1() {block}>
+----
+raise nothing .. result=end-of-function
+----
+raise SyntaxError .. result=end-of-function
+----
+raise KeyError .. result=end-of-function
+----
+raise IOError .. result=end-of-function
+<Function:f2() {block}>
+----
+raise nothing .. result=else-result
+----
+raise SyntaxError .. result=catch-any-result:SyntaxError
+----
+raise KeyError .. result=catch-any-result:KeyError
+----
+raise IOError .. result=catch-any-result:IOError
+<Function:f3() {block}>
+----
+else
+finally
+raise nothing .. result=else-result
+----
+catch-SyntaxError
+finally
+raise SyntaxError .. result=catch-SyntaxError-result
+----
+catch-KeyError
+finally
+raise KeyError .. result=catch-KeyError-result
+----
+catch-any
+finally
+raise IOError .. result=catch-any-result:IOError
+<Function:f4() {block}>
+----
+else
+finally
+raise nothing .. result=else-result
+----
+catch-SyntaxError
+finally
+raise SyntaxError .. result=catch-SyntaxError-result
+----
+catch-KeyError
+finally
+raise KeyError .. result=catch-KeyError-result
+----
+catch-any
+finally
+raise IOError .. result=catch-any-result:IOError

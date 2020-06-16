@@ -5,7 +5,11 @@ import(util.tester) {*}
 TestCase('PUnit') {
 	exprs = [
 		`try { f() }
+		`try { f() } finally { h() }
 		`try { f() } catch { g() }
+		`try { f() } catch { g() } finally { h() }
+		`try { f() } catch { g(), return } finally { h() }
+		`try { f() } catch { g1(), return } else { g2(), return} finally { h() }
 		`try { f() } catch {|e| g() }
 		`try { f() } catch (Error.SyntaxError) {|e| g() }
 		`try { f() } catch (Error.SyntaxError) { g() } catch (Error.KeyError) { h() }
@@ -13,6 +17,7 @@ TestCase('PUnit') {
 		`try { f() } catch { f3() } catch(Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } 
 		`try { f() } catch (Error.SyntaxError, Error.KeyError) { f1() } catch { f3() } 
 		`try { f() } catch (Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } catch { f3() } else { f4() }
+		`try { f() } catch (Error.SyntaxError) { f1() } catch (Error.KeyError) { f2() } catch { f3() } else { f4() } finally { h() }
 	]
 	exprs::PrintPUnitWithLabel()
 }
@@ -158,4 +163,83 @@ TestCase('Multiple Errors') {
 	Tester(`f {Error.Raise(Error.PropertyError, '')})
 	Tester(`f {Error.Raise(Error.StreamError, '')})
 	Tester(`f {Error.Raise(Error.SymbolError, '')})
+}
+
+TestCase('finally statement') {
+	f1() {block} = {
+		try {
+			block()
+		} else {
+			'else-result'
+		} catch {|e|
+			'catch-any-result:' + e.errorType.name
+		}
+		'end-of-function'
+	}
+	f2() {block} = {
+		try {
+			block()
+		} else {
+			'else-result'
+		} catch {|e|
+			'catch-any-result:' + e.errorType.name
+		}
+	}
+	f3() {block} = {
+		str = ''
+		try {
+			block()
+		} catch (Error.SyntaxError) {
+			Println('catch-SyntaxError')
+			return('catch-SyntaxError-result')
+		} catch (Error.KeyError) {
+			Println('catch-KeyError')
+			return('catch-KeyError-result')
+		} catch {|e|
+			Println('catch-any')
+			return('catch-any-result:' + e.errorType.name)
+		} else {
+			Println('else')
+			return('else-result')
+		} finally {
+			Println('finally')
+		}
+	}
+	f4() {block} = {
+		str = ''
+		try {
+			block()
+		} catch (Error.SyntaxError) {
+			Println('catch-SyntaxError')
+			str = 'catch-SyntaxError-result'
+		} catch (Error.KeyError) {
+			Println('catch-KeyError')
+			str = 'catch-KeyError-result'
+		} catch {|e|
+			Println('catch-any')
+			str = 'catch-any-result:' + e.errorType.name
+		} else {
+			Println('else')
+			str = 'else-result'
+		} finally {
+			Println('finally')
+			//str = 'finally-result'
+		}
+		str
+	}
+	TesterSub(f:Function) = {
+		Println(f)
+		Println('----')
+		Printf('raise nothing .. result=%s\n', f() {})
+		Println('----')
+		Printf('raise SyntaxError .. result=%s\n', f() {Error.Raise(Error.SyntaxError, 'hoge')})
+		Println('----')
+		Printf('raise KeyError .. result=%s\n', f() {Error.Raise(Error.KeyError, 'hoge')})
+		Println('----')
+		Printf('raise IOError .. result=%s\n', f() {Error.Raise(Error.IOError, 'hoge')})
+	}
+	TesterSub(f1)
+	TesterSub(f2)
+	TesterSub(f3)
+	TesterSub(f4)
 }
