@@ -253,9 +253,8 @@ Gurax_ImplementStatement(try_)
 	composer.Add_TryBlockBegin(exprCaller);										// [Any]
 	if (pExprFinally) {
 		pPUnitFinally = composer.PeekPUnitCont();
-		composer.Add_ProcessSequence(exprCaller);
-		composer.FlushDiscard();												// []
-		composer.Add_Return(exprCaller);										// [Any]
+		composer.Add_ProcessSequence(exprCaller);								// [Any]
+		composer.Add_Return(exprCaller);
 		pPUnitOfBranch_Catch->SetPUnitCont(composer.PeekPUnitCont());
 	}
 	composer.BeginTryBlock(pPUnitFinally);
