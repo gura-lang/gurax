@@ -11,22 +11,49 @@ Gurax_BeginModule(glfw)
 // glfw.Test()
 Gurax_DeclareFunction(Test)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"");
 }
 
 Gurax_ImplementFunction(Test)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	//ArgPicker args(argument);
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+    GLFWwindow* window;
+
+    /* Initialize the library */
+    if (!glfwInit())
+        return Value::nil();
+
+    /* Create a windowed mode window and its OpenGL context */
+    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return Value::nil();
+    }
+
+    /* Make the window's context current */
+    glfwMakeContextCurrent(window);
+
+    /* Loop until the user closes the window */
+    while (!glfwWindowShouldClose(window))
+    {
+        /* Render here */
+        //glClear(GL_COLOR_BUFFER_BIT);
+
+        /* Swap front and back buffers */
+        glfwSwapBuffers(window);
+
+        /* Poll for and process events */
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------

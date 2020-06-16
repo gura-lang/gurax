@@ -10,14 +10,14 @@ add_library(glfw.gurd SHARED)
 #-------------------------------------------------------------------------------
 target_include_directories(glfw.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/glfw-3.3.2/include>
+	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/include>
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/include>)
 target_link_directories(glfw.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/glfw-3.3.2/build/src>
+	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/lib>
+	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>/lib)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 # Compile
@@ -40,9 +40,9 @@ target_sources(glfw.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_libraries(glfw.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:>
-	$<$<PLATFORM_ID:Linux>:>
-	$<$<PLATFORM_ID:Darwin>:>)
+	$<$<PLATFORM_ID:Windows>:glfw3>
+	$<$<PLATFORM_ID:Linux>:glfw3>
+	$<$<PLATFORM_ID:Darwin>:glfw3>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
