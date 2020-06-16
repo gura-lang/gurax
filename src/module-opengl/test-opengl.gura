@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-opengl.gura
+//==============================================================================
+import(util.tester) {*}
+import(opengl)
+
+TestCase('Basic test') {
+	Println(opengl.Test('hello', 4))
+}
