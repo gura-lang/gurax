@@ -41,9 +41,15 @@ TestCase('Object#ToString()') {
 	//Tester(`%{`a => 'AAA', `b => 'BBB', `c => 'CCC'}.ToString())
 	Tester(`[].ToString())
 	Tester(`[1, 2, 3, 4, `foo, 'bar'].ToString())
-	Tester(`'hello'.ToString())
+	Tester(`'say \'hello\''.ToString())
+	Tester(`'say \'hello\''.ToString():quoteString)
+	Tester(`'say \"hello\"'.ToString():quoteString)
+	Tester(`(`hello).ToString())
+	Tester(`(`hello).ToString():quoteSymbol)
 	Tester(`nil.ToString())
 	Tester(`nil.ToString():nilVisible)
+	Tester(`Color.black.ToString())
+	Tester(`Color.black.ToString():unbracket)
 }
 
 TestCase('Object#IsInstanceOf()') {

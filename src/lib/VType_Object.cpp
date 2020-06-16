@@ -108,7 +108,6 @@ Gurax_ImplementClassMethod(Object, ToString)
 	// Argument
 	StringStyle::Flags flags = StringStyle::ToFlags(argument);
 	// Function body
-	if (valueThis.IsInstanceOf(VTYPE_String)) return valueThis.Reference();
 	return new Value_String(valueThis.ToString(StringStyle(flags)));
 }
 

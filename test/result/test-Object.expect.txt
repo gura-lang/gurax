@@ -16,9 +16,15 @@ Printf.ToString() .. <Function:Printf(format:String, values*:Any):map>
 % {}.ToString() .. %{}
 [].ToString() .. []
 [1, 2, 3, 4, `foo, 'bar'].ToString() .. [1, 2, 3, 4, `foo, 'bar']
-'hello'.ToString() .. hello
+"say 'hello'".ToString() .. say 'hello'
+"say 'hello'".ToString():quoteString .. "say 'hello'"
+'say "hello"'.ToString():quoteString .. 'say "hello"'
+`hello.ToString() .. hello
+`hello.ToString():quoteSymbol .. `hello
 nil.ToString() .. 
 nil.ToString():nilVisible .. <Nil>
+Color.black.ToString() .. <Color:#000000,ff>
+Color.black.ToString():unbracket .. Color:#000000,ff
 ======== Object#IsInstanceOf() ========
 math.e.IsInstanceOf(Number) .. true
 math.e.IsInstanceOf(Bool) .. false
