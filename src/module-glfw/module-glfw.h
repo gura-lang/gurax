@@ -6,6 +6,8 @@
 #include <gurax.h>
 #include <GLFW/glfw3.h>
 #include "Util.h"
+#include "VType_GLFWmonitor.h"
+#include "VType_GLFWwindow.h"
 
 Gurax_BeginModuleHeader(glfw)
 Gurax_EndModuleHeader(glfw)

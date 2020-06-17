@@ -33,7 +33,9 @@ target_compile_options(glfw.gurd PRIVATE
 target_compile_definitions(glfw.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(glfw.gurd PRIVATE
 	module-glfw.cpp
-	Util.cpp)
+	Util.cpp
+	VType_GLFWmonitor.cpp
+	VType_GLFWwindow.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
