@@ -47,14 +47,14 @@ protected:
 	// Destructor
 	~Value_GLFWwindow() = default;
 public:
-	GLFWwindow* GetGLFWwindow() { return _pGLFWwindow; }
-	const GLFWwindow* GetGLFWwindow() const { return _pGLFWwindow; }
+	GLFWwindow* GetEntity() { return _pGLFWwindow; }
+	const GLFWwindow* GetEntity() const { return _pGLFWwindow; }
 public:
-	static GLFWwindow* GetGLFWwindow(Value& value) {
-		return dynamic_cast<Value_GLFWwindow&>(value).GetGLFWwindow();
+	static GLFWwindow* GetEntity(Value& value) {
+		return dynamic_cast<Value_GLFWwindow&>(value).GetEntity();
 	}
-	static const GLFWwindow* GetGLFWwindow(const Value& value) {
-		return dynamic_cast<const Value_GLFWwindow&>(value).GetGLFWwindow();
+	static const GLFWwindow* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_GLFWwindow&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value
@@ -62,11 +62,11 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetGLFWwindow() == Value_GLFWwindow::GetGLFWwindow(*pValue);
+			GetEntity() == Value_GLFWwindow::GetEntity(*pValue);
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetGLFWwindow() < Value_GLFWwindow::GetGLFWwindow(*pValue) :
+			GetEntity() < Value_GLFWwindow::GetEntity(*pValue) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

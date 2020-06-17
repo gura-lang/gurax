@@ -71,6 +71,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_GLFWwindow);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	AssignFunctions(GetFrame());
 	return true;
 }
 

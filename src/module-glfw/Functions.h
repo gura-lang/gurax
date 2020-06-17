@@ -1,15 +1,14 @@
 //==============================================================================
-// Util.h
+// VType_GLFWwindow.h
 //==============================================================================
-#ifndef GURAX_MODULE_GLFW_UTIL_H
-#define GURAX_MODULE_GLFW_UTIL_H
+#ifndef GURAX_MODULE_GLFW_FUNCTIONS_H
+#define GURAX_MODULE_GLFW_FUNCTIONS_H
 #include <gurax.h>
-
-#define AssignGLFWConst(frame, name) frame.Assign(#name, new Value_Number(name))
+#include <GLFW/glfw3.h>
 
 Gurax_BeginModuleScope(glfw)
 
-void IssueError();
+void AssignFunctions(Frame& frame);
 
 Gurax_EndModuleScope(glfw)
 

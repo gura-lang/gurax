@@ -1,0 +1,16 @@
+import(glfw) {*}
+
+main() = {
+	glfwInit()
+	window = glfwCreateWindow(640, 480, "Hello World", nil, nil)
+	glfwMakeContextCurrent(window);
+	while (!glfwWindowShouldClose(window)) {
+		/* Render here */
+		//glClear(GL_COLOR_BUFFER_BIT);
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+	glfwTerminate();
+}
+
+main()
