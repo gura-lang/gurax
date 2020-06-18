@@ -24,56 +24,79 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// Operator(symbol:Symbol) {block?}
-Gurax_DeclareConstructor(Operator)
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// Operator.Binary(symbol:Symbol)
+Gurax_DeclareClassMethod(Operator, Binary)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Operator` instance.");
+		"Creates an Operator instance of binary one.");
 }
 
-Gurax_ImplementConstructor(Operator)
+Gurax_ImplementClassMethod(Operator, Binary)
 {
 	// Arguments
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	
-	//RefPtr<Operator> pOperator(new Operator());
-	//return argument.ReturnValue(processor, new Value_Operator(pOperator.release()));
-	return Value::nil();
+	Operator* pOp = Operator::LookupBinary(pSymbol);
+	if (!pOp) {
+		Error::Issue(ErrorType::SymbolError, "unknown binary operator: %s", pSymbol->GetName());
+		return Value::nil();
+	}
+	return new Value_Operator(pOp);
 }
 
-//-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// Operator#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Operator, MethodSkeleton)
+// Operator.Math(symbol:Symbol)
+Gurax_DeclareClassMethod(Operator, Math)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Operator, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Creates an Operator instance of mathematical one.");
 }
 
-Gurax_ImplementMethod(Operator, MethodSkeleton)
+Gurax_ImplementClassMethod(Operator, Math)
 {
-	// Target
-	//auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	return new Value_Number(num1 + num2);
+	Operator* pOp = Operator::LookupMath(pSymbol);
+	if (!pOp) {
+		Error::Issue(ErrorType::SymbolError, "unknown mathematical operator: %s", pSymbol->GetName());
+		return Value::nil();
+	}
+	return new Value_Operator(pOp);
+}
+
+// Operator.Unary(symbol:Symbol)
+Gurax_DeclareClassMethod(Operator, Unary)
+{
+	Declare(VTYPE_Operator, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an Operator instance of unary one.");
+}
+
+Gurax_ImplementClassMethod(Operator, Unary)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	Operator* pOp = Operator::LookupPreUnary(pSymbol);
+	if (!pOp) {
+		Error::Issue(ErrorType::SymbolError, "unknown unary operator: %s", pSymbol->GetName());
+		return Value::nil();
+	}
+	return new Value_Operator(pOp);
 }
 
 //-----------------------------------------------------------------------------
@@ -104,9 +127,11 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Operator));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Operator, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Operator, Binary));
+	Assign(Gurax_CreateMethod(Operator, Math));
+	Assign(Gurax_CreateMethod(Operator, Unary));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Operator, propSkeleton));
 }
@@ -118,7 +143,7 @@ VType& Value_Operator::vtype = VTYPE_Operator;
 
 String Value_Operator::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "Operator");
+	return ToStringGeneric(ss, GetOperator().ToString(ss));
 }
 
 }

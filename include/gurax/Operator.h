@@ -224,6 +224,7 @@ private:
 	static OperatorMap _operatorMap_PreUnary;
 	static OperatorMap _operatorMap_PostUnary;
 	static OperatorMap _operatorMap_Binary;
+	static OperatorMap _operatorMap_Math;
 public:
 	// Unary operators
 	static Operator* Inv;
@@ -348,8 +349,9 @@ public:
 public:
 	Value* EvalUnary(Processor& processor, Value& value);
 	Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR);
-	String ToString(const VType& vtype) const;
-	String ToString(const VType& vtypeL, const VType& vtypeR) const;
+	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss, const VType& vtype) const;
+	String ToString(const StringStyle& ss, const VType& vtypeL, const VType& vtypeR) const;
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
 public:
@@ -357,6 +359,7 @@ public:
 	static Operator* LookupPreUnary(const Symbol* pSymbol);
 	static Operator* LookupPostUnary(const Symbol* pSymbol);
 	static Operator* LookupBinary(const Symbol* pSymbol);
+	static Operator* LookupMath(const Symbol* pSymbol);
 };
 
 //------------------------------------------------------------------------------

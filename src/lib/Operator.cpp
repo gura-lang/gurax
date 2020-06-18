@@ -12,6 +12,7 @@ Operator* Operator::_operatorTbl[static_cast<size_t>(OpType::max)] = {};
 OperatorMap Operator::_operatorMap_PreUnary;
 OperatorMap Operator::_operatorMap_PostUnary;
 OperatorMap Operator::_operatorMap_Binary;
+OperatorMap Operator::_operatorMap_Math;
 
 // Unary operators
 Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::Inv);
@@ -107,8 +108,10 @@ void Operator::Bootup()
 			_operatorMap_PreUnary[pSymbol] = pOp;
 		} else if (pOp->IsOpPostUnary()) {
 			_operatorMap_PostUnary[pSymbol] = pOp;
-		} else {
+		} else if (pOp->IsOpBinary()) {
 			_operatorMap_Binary[pSymbol] = pOp;
+		} else if (pOp->IsMathUnary() || pOp->IsMathBinary()) {
+			_operatorMap_Math[pSymbol] = pOp;
 		}
 	}
 }
@@ -125,7 +128,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
 	if ((pOpEntry = LookupEntry(VTYPE_Any))) return pOpEntry;
 	if (vtype.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
-				 IsMathUnary()? "math" : "unary", ToString(vtype).c_str());
+		 IsMathUnary()? "math" : "unary", ToString(StringStyle::Empty, vtype).c_str());
 	return nullptr;
 }
 
@@ -138,7 +141,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 	if ((pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any))) return pOpEntry;
 	if (vtypeL.IsIdentical(VTYPE_Undefined) || vtypeR.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
-				 IsMathBinary()? "math" : "binary", ToString(vtypeL, vtypeR).c_str());
+		 IsMathBinary()? "math" : "binary", ToString(StringStyle::Empty, vtypeL, vtypeR).c_str());
 	return nullptr;
 }
 
@@ -217,7 +220,20 @@ Operator* Operator::LookupBinary(const Symbol* pSymbol)
 	return _operatorMap_Binary.Lookup(pSymbol);
 }
 
-String Operator::ToString(const VType& vtype) const
+Operator* Operator::LookupMath(const Symbol* pSymbol)
+{
+	return _operatorMap_Math.Lookup(pSymbol);
+}
+
+String Operator::ToString(const StringStyle& ss) const
+{
+	return String().Format("Operator:%s:%s",
+		IsOpPreUnary()? "OpPreUnary" : IsOpPostUnary()? "OpPostUnary" :
+		IsOpBinary()? "OpBinary" : IsMathUnary()? "MathUnary" :
+		IsMathBinary()? "MathBinary" : "?", GetSymbol());
+}
+
+String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 {
 	String str;
 	if (IsOpPreUnary()) {
@@ -230,13 +246,15 @@ String Operator::ToString(const VType& vtype) const
 	return str;
 }
 
-String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
+String Operator::ToString(const StringStyle& ss, const VType& vtypeL, const VType& vtypeR) const
 {
 	String str;
 	if (IsOpBinary()) {
-		str.Format("%s %s %s", vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
+		const char* format = ss.IsCram()? "%s%s%s" : "%s %s %s";
+		str.Format(format, vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
 	} else if (IsMathBinary()) {
-		str.Format("math.%s(%s, %s)", GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
+		const char* format = ss.IsCram()? "math.%s(%s,%s)" : "math.%s(%s, %s)";
+		str.Format(format, GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
 	}
 	return str;
 }
