@@ -404,6 +404,23 @@ Gurax_ImplementClassMethod(Expr, Parse)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Expr#attr
+Gurax_DeclareProperty_R(Expr, attr)
+{
+	Declare(VTYPE_Attribute, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The attribute.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, attr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Attribute* pAttr = valueThis.GetExpr().InspectAttr();
+	if (!pAttr) return Value::nil();
+	return new Value_Attribute(pAttr->Reference());
+}
+
 // Expr#block
 Gurax_DeclareProperty_R(Expr, block)
 {
@@ -502,6 +519,24 @@ Gurax_ImplementPropertyGetter(Expr, lineNoTop)
 	return new Value_Number(valueThis.GetExpr().GetLineNoTop());
 }
 
+// Expr#operator
+Gurax_DeclarePropertyAlias_R(Expr, operator_, "operator")
+{
+	Declare(VTYPE_Operator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The operator that is associated with the expr.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, operator_)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Operator* pOp = valueThis.GetExpr().InspectOperator();
+	if (!pOp) return Value::nil();
+	//return new Value_Operator(pOp);
+	return Value::nil();
+}
+
 // Expr#right
 Gurax_DeclareProperty_R(Expr, right)
 {
@@ -517,6 +552,40 @@ Gurax_ImplementPropertyGetter(Expr, right)
 	const Expr* pExpr = valueThis.GetExpr().InspectRight();
 	if (!pExpr) return Value::nil();
 	return new Value_Expr(pExpr->Reference());
+}
+
+// Expr#symbol
+Gurax_DeclareProperty_R(Expr, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The symbol that is associated with identifier or member.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Symbol* pSymbol = valueThis.GetExpr().InspectSymbol();
+	if (!pSymbol) return Value::nil();
+	return new Value_Symbol(pSymbol);
+}
+
+// Expr#symbolSuffix
+Gurax_DeclareProperty_R(Expr, symbolSuffix)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The suffix symbol.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, symbolSuffix)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Symbol* pSymbol = valueThis.GetExpr().InspectSymbolSuffix();
+	if (!pSymbol) return Value::nil();
+	return new Value_Symbol(pSymbol);
 }
 
 // Expr#symbolName
@@ -583,6 +652,23 @@ Gurax_ImplementPropertyGetter(Expr, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Symbol(Symbol::Add(valueThis.GetExpr().GetTypeInfo().GetName()));
+}
+
+// Expr#value
+Gurax_DeclareProperty_R(Expr, value)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The value that is associated with the expr.");
+}
+
+Gurax_ImplementPropertyGetter(Expr, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Value* pValue = valueThis.GetExpr().InspectValue();
+	if (!pValue) return Value::nil();
+	return pValue->Reference();
 }
 
 //------------------------------------------------------------------------------
@@ -668,17 +754,22 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, IsValue));
 	Assign(Gurax_CreateMethod(Expr, Parse));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Expr, attr));
 	Assign(Gurax_CreateProperty(Expr, block));
 	Assign(Gurax_CreateProperty(Expr, car));
 	Assign(Gurax_CreateProperty(Expr, child));
 	Assign(Gurax_CreateProperty(Expr, left));
 	Assign(Gurax_CreateProperty(Expr, lineNoBtm));
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
+	Assign(Gurax_CreateProperty(Expr, operator_));
 	Assign(Gurax_CreateProperty(Expr, right));
+	Assign(Gurax_CreateProperty(Expr, symbol));
+	Assign(Gurax_CreateProperty(Expr, symbolSuffix));
 	Assign(Gurax_CreateProperty(Expr, symbolName));
 	Assign(Gurax_CreateProperty(Expr, target));
 	Assign(Gurax_CreateProperty(Expr, trailer));
 	Assign(Gurax_CreateProperty(Expr, type));
+	Assign(Gurax_CreateProperty(Expr, value));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Eq, Expr, Expr);
 	Gurax_AssignOpBinary(Eq, Symbol, Expr);

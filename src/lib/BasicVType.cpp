@@ -43,6 +43,7 @@ void BasicVType::Prepare(Frame& frame)
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);
+	VTYPE_Operator.Prepare(frame);
 	VTYPE_PathMgr.Prepare(frame);
 	VTYPE_Palette.Prepare(frame);
 	VTYPE_Pixel.Prepare(frame);
