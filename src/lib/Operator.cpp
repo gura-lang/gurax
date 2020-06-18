@@ -9,6 +9,9 @@ namespace Gurax {
 // Operator
 //------------------------------------------------------------------------------
 Operator* Operator::_operatorTbl[static_cast<size_t>(OpType::max)] = {};
+OperatorMap Operator::_operatorMap_PreUnary;
+OperatorMap Operator::_operatorMap_PostUnary;
+OperatorMap Operator::_operatorMap_Binary;
 
 // Unary operators
 Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::Inv);
@@ -93,6 +96,21 @@ Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags fla
 	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;
+}
+
+void Operator::Bootup()
+{
+	for (size_t i = 0; i < static_cast<int>(OpType::max); i++) {
+		Operator* pOp = _operatorTbl[i];
+		const Symbol* pSymbol = Symbol::Add(pOp->GetSymbol());
+		if (pOp->IsOpPreUnary()) {
+			_operatorMap_PreUnary[pSymbol] = pOp;
+		} else if (pOp->IsOpPostUnary()) {
+			_operatorMap_PostUnary[pSymbol] = pOp;
+		} else {
+			_operatorMap_Binary[pSymbol] = pOp;
+		}
+	}
 }
 
 const TokenType& Operator::GetTokenType() const
@@ -184,6 +202,21 @@ Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR)
 	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
+Operator* Operator::LookupPreUnary(const Symbol* pSymbol)
+{
+	return _operatorMap_PreUnary.Lookup(pSymbol);
+}
+
+Operator* Operator::LookupPostUnary(const Symbol* pSymbol)
+{
+	return _operatorMap_PostUnary.Lookup(pSymbol);
+}
+
+Operator* Operator::LookupBinary(const Symbol* pSymbol)
+{
+	return _operatorMap_Binary.Lookup(pSymbol);
+}
+
 String Operator::ToString(const VType& vtype) const
 {
 	String str;
@@ -206,6 +239,15 @@ String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
 		str.Format("math.%s(%s, %s)", GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
 	}
 	return str;
+}
+
+//------------------------------------------------------------------------------
+// OperatorMap
+//------------------------------------------------------------------------------
+Operator* OperatorMap::Lookup(const Symbol* pSymbol) const
+{
+	auto iter = find(pSymbol);
+	return (iter == end())? nullptr : iter->second;
 }
 
 //------------------------------------------------------------------------------

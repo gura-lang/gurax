@@ -20,6 +20,7 @@ bool Initialize(int& argc, char** argv)
 	Expr::Bootup();
 	Function::Bootup();
 	Image::Bootup();
+	Operator::Bootup();
 	Palette::Bootup();
 	Random::Bootup();
 	Stream::Bootup();

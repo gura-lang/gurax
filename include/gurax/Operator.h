@@ -37,6 +37,7 @@ class Expr;
 class Expr_Unary;
 class Expr_Binary;
 class Composer;
+class Operator;
 struct TokenType;
 
 //------------------------------------------------------------------------------
@@ -54,9 +55,9 @@ enum class OpStyle {
 // OpType
 //------------------------------------------------------------------------------
 enum class OpType {
-	None,
+	None = -1,
 	// Pre-unary operators
-	Inv,
+	Inv = 0,
 	Neg,
 	Not,
 	Pos,
@@ -191,6 +192,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// OperatorMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE OperatorMap :
+		public std::unordered_map<const Symbol*, Operator*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+public:
+	Operator* Lookup(const Symbol* pSymbol) const;
+};
+
+//------------------------------------------------------------------------------
 // Operator
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator {
@@ -211,6 +221,9 @@ private:
 	OpEntryMap _opEntryMap;
 private:
 	static Operator* _operatorTbl[static_cast<size_t>(OpType::max)];
+	static OperatorMap _operatorMap_PreUnary;
+	static OperatorMap _operatorMap_PostUnary;
+	static OperatorMap _operatorMap_Binary;
 public:
 	// Unary operators
 	static Operator* Inv;
@@ -301,6 +314,8 @@ public:
 	// Destructor
 	virtual ~Operator() = default;
 public:
+	static void Bootup();
+public:
 	OpStyle GetStyle() const			{ return _opStyle; }
 	const char* GetSymbol() const		{ return _symbol; }
 	OpType GetType() const				{ return _opType; }
@@ -339,6 +354,9 @@ public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
+	static Operator* LookupPreUnary(const Symbol* pSymbol);
+	static Operator* LookupPostUnary(const Symbol* pSymbol);
+	static Operator* LookupBinary(const Symbol* pSymbol);
 };
 
 //------------------------------------------------------------------------------
