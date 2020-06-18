@@ -187,11 +187,11 @@ public:
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag);
 	virtual void ComposeWithinLister(Composer& composer);
-	virtual void ComposeWithinValueAssignment(Composer& composer, const Operator* pOp);
+	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp);
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp);
+		Composer& composer, Expr& exprAssigned, Operator* pOp);
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag);
+		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag);
 	virtual void ComposeWithinArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
@@ -209,7 +209,7 @@ public:
 	virtual const Symbol* InspectSymbolSuffix() const { return nullptr; }
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual const Value* InspectValue() const { return nullptr; }
-	virtual const Operator* InspectOperator() const { return nullptr; }
+	virtual Operator* InspectOperator() const { return nullptr; }
 	virtual Iterator* EachChild() const { return nullptr; }
 	virtual Iterator* EachCdr() const { return nullptr; }
 	virtual Iterator* EachParam() const { return nullptr; }
@@ -501,9 +501,9 @@ public:
 		return true;
 	}
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeWithinValueAssignment(Composer& composer, const Operator* pOp) override;
+	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp) override;
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -573,11 +573,11 @@ public:
 	virtual DeclCallable* RetrieveDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
-	virtual void ComposeWithinValueAssignment(Composer& composer, const Operator* pOp) override;
+	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp) override;
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -660,11 +660,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
-	Expr_UnaryOp(Expr* pExprChild, const Operator* pOp) :
+	Expr_UnaryOp(Expr* pExprChild, Operator* pOp) :
 			Expr_Unary(typeInfo, pExprChild), _pOp(pOp) {}
-	const Operator* GetOperator() const { return _pOp; }
+	Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of Expr
 	virtual bool IsUnaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
@@ -674,7 +674,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const Operator* InspectOperator() const { return GetOperator(); }
+	virtual Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -687,11 +687,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
-	Expr_BinaryOp(Expr* pExprLeft, Expr* pExprRight, const Operator* pOp) :
+	Expr_BinaryOp(Expr* pExprLeft, Expr* pExprRight, Operator* pOp) :
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOp(pOp) {}
-	const Operator* GetOperator() const { return _pOp; }
+	Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of Expr
 	virtual bool IsBinaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
@@ -703,7 +703,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const Operator* InspectOperator() const { return GetOperator(); }
+	virtual Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -716,11 +716,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	const Operator* _pOp;	// this may be nullptr
+	Operator* _pOp;	// this may be nullptr
 public:
-	Expr_Assign(Expr* pExprLeft, Expr* pExprRight, const Operator* pOp) :
+	Expr_Assign(Expr* pExprLeft, Expr* pExprRight, Operator* pOp) :
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOp(pOp) {}
-	const Operator* GetOperator() const { return _pOp; }
+	Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
@@ -731,7 +731,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const Operator* InspectOperator() const { return GetOperator(); }
+	virtual Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -824,7 +824,7 @@ public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -859,12 +859,12 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeWithinValueAssignment(Composer& composer, const Operator* pOp) override;
+	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp) override;
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -919,9 +919,9 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, bool publiclFlag) override;
 	virtual void ComposeWithinAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 public:

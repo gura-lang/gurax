@@ -76,7 +76,7 @@ public:
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
-	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op) override;
+	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op) override;
 };
 
 }

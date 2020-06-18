@@ -531,10 +531,9 @@ Gurax_DeclarePropertyAlias_R(Expr, operator_, "operator")
 Gurax_ImplementPropertyGetter(Expr, operator_)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Operator* pOp = valueThis.GetExpr().InspectOperator();
+	Operator* pOp = valueThis.GetExpr().InspectOperator();
 	if (!pOp) return Value::nil();
-	//return new Value_Operator(pOp);
-	return Value::nil();
+	return new Value_Operator(pOp);
 }
 
 // Expr#right

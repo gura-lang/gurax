@@ -438,7 +438,7 @@ void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	}
 }
 
-Value* Value_Dict::DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op)
+Value* Value_Dict::DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {

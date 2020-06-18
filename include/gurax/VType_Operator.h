@@ -49,12 +49,12 @@ protected:
 	~Value_Operator() = default;
 public:
 	Operator& GetOperator() { return *_pOperator; }
-	const Operator& GetOperator() const { return *_pOperator; }
+	Operator& GetOperator() const { return *_pOperator; }
 public:
 	static Operator& GetOperator(Value& value) {
 		return dynamic_cast<Value_Operator&>(value).GetOperator();
 	}
-	static const Operator& GetOperator(const Value& value) {
+	static Operator& GetOperator(const Value& value) {
 		return dynamic_cast<const Value_Operator&>(value).GetOperator();
 	}
 public:

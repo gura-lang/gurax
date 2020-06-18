@@ -124,7 +124,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 	return nullptr;
 }
 
-Value* Operator::EvalUnary(Processor& processor, Value& value) const
+Value* Operator::EvalUnary(Processor& processor, Value& value)
 {
 	if (GetMapFlag()) {
 		if (value.IsList()) {
@@ -153,7 +153,7 @@ Value* Operator::EvalUnary(Processor& processor, Value& value) const
 	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 }
 
-Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
+Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR)
 {
 	if (GetMapFlag()) {
 		if (valueL.IsIterator() || valueR.IsIterator()) {

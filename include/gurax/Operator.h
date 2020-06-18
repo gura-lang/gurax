@@ -293,8 +293,8 @@ public:
 	// Constructor
 	Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags = Flag::Map);
 	// Copy constructor/operator
-	Operator(const Operator& src) = delete;
-	Operator& operator=(const Operator& src) = delete;
+	Operator(Operator& src) = delete;
+	Operator& operator=(Operator& src) = delete;
 	// Move constructor/operator
 	Operator(Operator&& src) = delete;
 	Operator& operator=(Operator&& src) noexcept = delete;
@@ -331,8 +331,8 @@ public:
 	const OpEntry* FindMatchedEntry(const VType& vtype) const;
 	const OpEntry* FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const;
 public:
-	Value* EvalUnary(Processor& processor, Value& value) const;
-	Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const;
+	Value* EvalUnary(Processor& processor, Value& value);
+	Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR);
 	String ToString(const VType& vtype) const;
 	String ToString(const VType& vtypeL, const VType& vtypeR) const;
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}

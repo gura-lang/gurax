@@ -10,13 +10,13 @@ Gurax_BeginModule(math)
 //------------------------------------------------------------------------------
 class Function_Unary : public Function {
 private:
-	const Operator* _pOperator;
+	Operator* _pOperator;
 public:
-	Function_Unary(const Operator* pOperator);
+	Function_Unary(Operator* pOperator);
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
-Function_Unary::Function_Unary(const Operator* pOperator) :
+Function_Unary::Function_Unary(Operator* pOperator) :
 	Function(Function::Type::Statement, pOperator->GetSymbol(), Flag::None), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -35,13 +35,13 @@ void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) cons
 //------------------------------------------------------------------------------
 class Function_Binary : public Function {
 private:
-	const Operator* _pOperator;
+	Operator* _pOperator;
 public:
-	Function_Binary(const Operator* pOperator);
+	Function_Binary(Operator* pOperator);
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
-Function_Binary::Function_Binary(const Operator* pOperator) :
+Function_Binary::Function_Binary(Operator* pOperator) :
 	Function(Function::Type::Statement, pOperator->GetSymbol(), Flag::None), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);

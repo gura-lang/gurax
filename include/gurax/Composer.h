@@ -191,10 +191,10 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_ForEach(offset, pDeclArgOwner, pPUnitBranchDest, exprSrc.Reference()));
 	}
-	void Add_UnaryOp(const Operator* pOp, const Expr& exprSrc) {
+	void Add_UnaryOp(Operator* pOp, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_UnaryOp(pOp, exprSrc.Reference()));
 	}
-	void Add_BinaryOp(const Operator* pOp, const Expr& exprSrc) {
+	void Add_BinaryOp(Operator* pOp, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_BinaryOp(pOp, exprSrc.Reference()));
 	}
 	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList,
@@ -233,7 +233,7 @@ public:
 	void Add_IndexSet(bool valueFirstFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_IndexSet(valueFirstFlag, exprSrc.Reference()));
 	}
-	void Add_IndexOpApply(const Operator* pOp, bool valueFirstFlag, const Expr& exprSrc) {
+	void Add_IndexOpApply(Operator* pOp, bool valueFirstFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_IndexOpApply(pOp, valueFirstFlag, exprSrc.Reference()));
 	}
 	void Add_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, const Expr& exprSrc) {
@@ -242,10 +242,10 @@ public:
 	void Add_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool mapAssignedFlag, bool valueFirstFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_MemberSet_Map(pSymbol, pAttr, mapAssignedFlag, valueFirstFlag, exprSrc.Reference()));
 	}
-	void Add_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, const Expr& exprSrc) {
+	void Add_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, bool valueFirstFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_MemberOpApply_Normal(pSymbol, pAttr, pOp, valueFirstFlag, exprSrc.Reference()));
 	}
-	void Add_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag, bool valueFirstFlag, const Expr& exprSrc) {
+	void Add_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, bool mapAssignedFlag, bool valueFirstFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_MemberOpApply_Map(pSymbol, pAttr, pOp, mapAssignedFlag, valueFirstFlag, exprSrc.Reference()));
 	}
 	void Add_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr& exprSrc) {

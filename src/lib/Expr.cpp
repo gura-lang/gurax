@@ -141,19 +141,19 @@ void Expr::ComposeWithinLister(Composer& composer)
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
-void Expr::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
+void Expr::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -340,7 +340,7 @@ void Expr_Member::Compose(Composer& composer)
 	}
 }
 
-void Expr_Member::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -364,7 +364,7 @@ void Expr_Member::ComposeWithinValueAssignment(Composer& composer, const Operato
 }
 
 void Expr_Member::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	GetExprTarget().ComposeOrNil(composer);										// [Target]
 	switch (GetMemberMode()) {
@@ -483,7 +483,7 @@ void Expr_Identifier::Compose(Composer& composer)
 	}
 }
 
-void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -495,7 +495,7 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, const Ope
 }
 
 void Expr_Identifier::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	if (pOp) {
 		composer.Add_Lookup(GetSymbol(), *this);								// [Any]
@@ -515,7 +515,7 @@ void Expr_Identifier::ComposeWithinClass(Composer& composer, bool publicFlag)
 }
 	
 void Expr_Identifier::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1051,7 +1051,7 @@ void Expr_Lister::Compose(Composer& composer)
 }
 
 void Expr_Lister::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	exprAssigned.ComposeOrNil(composer);										// [Assigned]
 	composer.Add_GenIterator_ForLister(*this);									// [Assigned Iterator]
@@ -1111,7 +1111,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	composer.Add_IndexGet(*this);												// [Elems]
 }
 
-void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, const Operator* pOp)
+void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Elems Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -1131,7 +1131,7 @@ void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, const Operat
 }
 
 void Expr_Indexer::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -1162,7 +1162,7 @@ void Expr_Indexer::ComposeWithinClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Indexer::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1258,7 +1258,7 @@ void Expr_Caller::ComposeWithinClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Caller::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1285,7 +1285,7 @@ void Expr_Caller::ComposeWithinAssignment(
 }
 
 void Expr_Caller::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,

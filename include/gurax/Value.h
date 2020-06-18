@@ -179,7 +179,7 @@ public:
 	Value* Eval(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
 	Value* IndexGet(const Index& index) const { return DoIndexGet(index); }
 	void IndexSet(const Index& index, Value* pValue) { return DoIndexSet(index, pValue); }
-	Value* IndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op) {
+	Value* IndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op) {
 		return DoIndexOpApply(index, value, processor, op);
 	}
 	Value* PropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
@@ -230,7 +230,7 @@ public:
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue);
-	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op);
+	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);

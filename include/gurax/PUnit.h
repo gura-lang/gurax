@@ -914,12 +914,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
 	// Constructor
-	PUnit_UnaryOp(const Operator* pOp, Expr* pExprSrc) : PUnit(pExprSrc), _pOp(pOp)  {}
+	PUnit_UnaryOp(Operator* pOp, Expr* pExprSrc) : PUnit(pExprSrc), _pOp(pOp)  {}
 public:
-	const Operator* GetOperator() const { return _pOp; }
+	Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -936,9 +936,9 @@ class GURAX_DLLDECLARE PUnitFactory_UnaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_UnaryOp");
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
-	PUnitFactory_UnaryOp(const Operator* pOp, Expr* pExprSrc) :
+	PUnitFactory_UnaryOp(Operator* pOp, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pOp(pOp) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_UnaryOp<false>);
@@ -955,12 +955,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
 	// Constructor
-	PUnit_BinaryOp(const Operator* pOp, Expr* pExprSrc) : PUnit(pExprSrc), _pOp(pOp)  {}
+	PUnit_BinaryOp(Operator* pOp, Expr* pExprSrc) : PUnit(pExprSrc), _pOp(pOp)  {}
 public:
-	const Operator* GetOperator() const { return _pOp; }
+	Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -977,9 +977,9 @@ class GURAX_DLLDECLARE PUnitFactory_BinaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BinaryOp");
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
-	PUnitFactory_BinaryOp(const Operator* pOp, Expr* pExprSrc) :
+	PUnitFactory_BinaryOp(Operator* pOp, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pOp(pOp) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_BinaryOp<false>);
@@ -1444,13 +1444,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
 	// Constructor
-	explicit PUnit_IndexOpApply(const Operator* pOp, Expr* pExprSrc) :
+	explicit PUnit_IndexOpApply(Operator* pOp, Expr* pExprSrc) :
 										PUnit(pExprSrc), _pOp(pOp)  {}
 public:
-	const Operator& GetOperator() { return *_pOp; }
+	Operator& GetOperator() { return *_pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1467,10 +1467,10 @@ class GURAX_DLLDECLARE PUnitFactory_IndexOpApply : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexOpApply");
 private:
-	const Operator* _pOp;
+	Operator* _pOp;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_IndexOpApply(const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+	PUnitFactory_IndexOpApply(Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_IndexOpApply<false, false>);
@@ -1584,15 +1584,15 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOp;
+	Operator* _pOp;
 public:
 	// Constructor
-	PUnit_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExprSrc) :
+	PUnit_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
-	const Operator& GetOperator() const { return *_pOp; }
+	Operator& GetOperator() const { return *_pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1611,10 +1611,10 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOp;
+	Operator* _pOp;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+	PUnitFactory_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_MemberOpApply_Normal<false, false>);
@@ -1633,16 +1633,16 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOp;
+	Operator* _pOp;
 	bool _mapAssignedFlag;
 public:
 	// Constructor
-	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag, Expr* pExprSrc) :
+	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, bool mapAssignedFlag, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _mapAssignedFlag(mapAssignedFlag) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
-	const Operator& GetOperator() const { return *_pOp; }
+	Operator& GetOperator() const { return *_pOp; }
 	bool GetMapAssignedFlag() const { return _mapAssignedFlag; }
 public:
 	// Virtual functions of PUnit
@@ -1662,11 +1662,11 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOp;
+	Operator* _pOp;
 	bool _mapAssignedFlag;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag, bool valueFirstFlag, Expr* pExprSrc) :
+	PUnitFactory_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, Operator* pOp, bool mapAssignedFlag, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _mapAssignedFlag(mapAssignedFlag), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_MemberOpApply_Map<false, false>);

@@ -54,7 +54,7 @@ String Iterator_Counter::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOp, Value* pValue) :
+Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, Operator* pOp, Value* pValue) :
 	_pProcessor(pProcessor), _pOp(pOp), _pOpEntry(&OpEntry::Empty), _pValue(pValue),
 	_pVTypePrev(&VTYPE_Undefined), _flags(Flag::None), _len(0)
 {
@@ -84,7 +84,7 @@ String Iterator_UnaryOpImpMap::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_BinaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOp,
+Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, Operator* pOp,
 												 Value* pValueL, Value* pValueR) :
 	_pProcessor(pProcessor), _pOp(pOp), _pOpEntry(&OpEntry::Empty),
 	_pValueL(pValueL), _pValueR(pValueR), _pVTypePrevL(&VTYPE_Undefined), _pVTypePrevR(&VTYPE_Undefined),
