@@ -28,37 +28,37 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Nil == Nil
-Gurax_ImplementOpBinary(Eq, Nil, Nil)
+Gurax_ImplementBinary(Eq, Nil, Nil)
 {
 	return new Value_Bool(true);
 }
 
 // Any == Nil
-Gurax_ImplementOpBinary(Eq, Any, Nil)
+Gurax_ImplementBinary(Eq, Any, Nil)
 {
 	return new Value_Bool(false);
 }
 
 // Nil == Any
-Gurax_ImplementOpBinary(Eq, Nil, Any)
+Gurax_ImplementBinary(Eq, Nil, Any)
 {
 	return new Value_Bool(false);
 }
 
 // Nil != Nil
-Gurax_ImplementOpBinary(Ne, Nil, Nil)
+Gurax_ImplementBinary(Ne, Nil, Nil)
 {
 	return new Value_Bool(false);
 }
 
 // Any != Nil
-Gurax_ImplementOpBinary(Ne, Any, Nil)
+Gurax_ImplementBinary(Ne, Any, Nil)
 {
 	return new Value_Bool(true);
 }
 
 // Nil != Any
-Gurax_ImplementOpBinary(Ne, Nil, Any)
+Gurax_ImplementBinary(Ne, Nil, Any)
 {
 	return new Value_Bool(true);
 }
@@ -75,12 +75,12 @@ void VType_Nil::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Implementation of operator
-	Gurax_AssignOpBinary(Eq, Nil, Nil);
-	Gurax_AssignOpBinary(Eq, Any, Nil);
-	Gurax_AssignOpBinary(Eq, Nil, Any);
-	Gurax_AssignOpBinary(Ne, Nil, Nil);
-	Gurax_AssignOpBinary(Ne, Any, Nil);
-	Gurax_AssignOpBinary(Ne, Nil, Any);
+	Gurax_AssignBinary(Eq, Nil, Nil);
+	Gurax_AssignBinary(Eq, Any, Nil);
+	Gurax_AssignBinary(Eq, Nil, Any);
+	Gurax_AssignBinary(Ne, Nil, Nil);
+	Gurax_AssignBinary(Ne, Any, Nil);
+	Gurax_AssignBinary(Ne, Nil, Any);
 }
 
 //------------------------------------------------------------------------------

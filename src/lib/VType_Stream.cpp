@@ -465,7 +465,7 @@ Gurax_ImplementPropertyGetter(Stream, stat)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Stream << Binary
-Gurax_ImplementOpBinary(Shl, Stream, Binary)
+Gurax_ImplementBinary(Shl, Stream, Binary)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Binary& binary = Value_Binary::GetBinary(valueR);
@@ -475,7 +475,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Binary)
 }
 
 // Stream << Pointer
-Gurax_ImplementOpBinary(Shl, Stream, Pointer)
+Gurax_ImplementBinary(Shl, Stream, Pointer)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Pointer& ptr = Value_Pointer::GetPointer(valueR);
@@ -485,7 +485,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Pointer)
 }
 
 // Stream << Stream
-Gurax_ImplementOpBinary(Shl, Stream, Stream)
+Gurax_ImplementBinary(Shl, Stream, Stream)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	Stream& streamSrc = Value_Stream::GetStream(valueR);
@@ -494,7 +494,7 @@ Gurax_ImplementOpBinary(Shl, Stream, Stream)
 }
 
 // Stream << String
-Gurax_ImplementOpBinary(Shl, Stream, String)
+Gurax_ImplementBinary(Shl, Stream, String)
 {
 	Stream& stream = Value_Stream::GetStream(valueL);
 	const char* str = Value_String::GetString(valueR);
@@ -534,10 +534,10 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Shl, Stream, Binary);
-	Gurax_AssignOpBinary(Shl, Stream, Pointer);
-	Gurax_AssignOpBinary(Shl, Stream, Stream);
-	Gurax_AssignOpBinary(Shl, Stream, String);
+	Gurax_AssignBinary(Shl, Stream, Binary);
+	Gurax_AssignBinary(Shl, Stream, Pointer);
+	Gurax_AssignBinary(Shl, Stream, Stream);
+	Gurax_AssignBinary(Shl, Stream, String);
 }
 
 Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const

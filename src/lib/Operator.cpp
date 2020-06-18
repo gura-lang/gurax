@@ -15,51 +15,51 @@ OperatorMap Operator::_operatorMap_Binary;
 OperatorMap Operator::_operatorMap_Math;
 
 // Unary operators
-Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::Inv);
-Operator* Operator::Neg				= new Operator(OpStyle::OpPreUnary,		"-",			OpType::Neg);
-Operator* Operator::Not				= new Operator(OpStyle::OpPreUnary,		"!",			OpType::Not);
-Operator* Operator::Pos				= new Operator(OpStyle::OpPreUnary,		"+",			OpType::Pos);
-Operator* Operator::Question		= new Operator(OpStyle::OpPreUnary,		"?",			OpType::Question);
+Operator* Operator::Inv				= new Operator(OpStyle::PreUnary,		"~",			OpType::Inv);
+Operator* Operator::Neg				= new Operator(OpStyle::PreUnary,		"-",			OpType::Neg);
+Operator* Operator::Not				= new Operator(OpStyle::PreUnary,		"!",			OpType::Not);
+Operator* Operator::Pos				= new Operator(OpStyle::PreUnary,		"+",			OpType::Pos);
+Operator* Operator::Question		= new Operator(OpStyle::PreUnary,		"?",			OpType::Question);
 Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
-Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	"%",			OpType::PostMod);
-Operator* Operator::PostModMod		= new Operator(OpStyle::OpPostUnary,	"%%",			OpType::PostModMod);
-Operator* Operator::PostMul			= new Operator(OpStyle::OpPostUnary,	"*",			OpType::PostMul);
-Operator* Operator::PostPos			= new Operator(OpStyle::OpPostUnary,	"+",			OpType::PostPos);
-Operator* Operator::PostQuestion	= new Operator(OpStyle::OpPostUnary,	"?",			OpType::PostQuestion);
-Operator* Operator::PostSeq			= new Operator(OpStyle::OpPostUnary,	"..",			OpType::PostSeq);
+Operator* Operator::PostMod			= new Operator(OpStyle::PostUnary,		"%",			OpType::PostMod);
+Operator* Operator::PostModMod		= new Operator(OpStyle::PostUnary,		"%%",			OpType::PostModMod);
+Operator* Operator::PostMul			= new Operator(OpStyle::PostUnary,		"*",			OpType::PostMul);
+Operator* Operator::PostPos			= new Operator(OpStyle::PostUnary,		"+",			OpType::PostPos);
+Operator* Operator::PostQuestion	= new Operator(OpStyle::PostUnary,		"?",			OpType::PostQuestion);
+Operator* Operator::PostSeq			= new Operator(OpStyle::PostUnary,		"..",			OpType::PostSeq);
 // Binary operators
-Operator* Operator::Add				= new Operator(OpStyle::OpBinary,		"+",			OpType::Add);
-Operator* Operator::And				= new Operator(OpStyle::OpBinary,		"&",			OpType::And);
+Operator* Operator::Add				= new Operator(OpStyle::Binary,			"+",			OpType::Add);
+Operator* Operator::And				= new Operator(OpStyle::Binary,			"&",			OpType::And);
 Operator* Operator::AndAnd			= new Operator_AndAnd();
-Operator* Operator::Cmp				= new Operator(OpStyle::OpBinary,		"<=>",			OpType::Cmp);
-Operator* Operator::Concat			= new Operator(OpStyle::OpBinary,		"|+|",			OpType::Concat, Operator::Flag::NoMap);
-Operator* Operator::Contains		= new Operator(OpStyle::OpBinary,		"in",			OpType::Contains, Operator::Flag::NoMap);
-Operator* Operator::Cross			= new Operator(OpStyle::OpBinary,		"|^|",			OpType::Cross, Operator::Flag::NoMap);
-Operator* Operator::Difference		= new Operator(OpStyle::OpBinary,		"|-|",			OpType::Difference, Operator::Flag::NoMap);
-Operator* Operator::Div				= new Operator(OpStyle::OpBinary,		"/",			OpType::Div);
-Operator* Operator::Dot				= new Operator(OpStyle::OpBinary,		"|.|",			OpType::Dot, Operator::Flag::NoMap);
-Operator* Operator::Eq				= new Operator(OpStyle::OpBinary,		"==",			OpType::Eq);
-Operator* Operator::Gear			= new Operator(OpStyle::OpBinary,		"|*|",			OpType::Gear, Operator::Flag::NoMap);
-Operator* Operator::Ge				= new Operator(OpStyle::OpBinary,		">=",			OpType::Ge);
-Operator* Operator::Gt				= new Operator(OpStyle::OpBinary,		">",			OpType::Gt);
-Operator* Operator::Intersection	= new Operator(OpStyle::OpBinary,		"|&|",			OpType::Intersection, Operator::Flag::NoMap);
-Operator* Operator::Le				= new Operator(OpStyle::OpBinary,		"<=",			OpType::Le);
-Operator* Operator::Lt				= new Operator(OpStyle::OpBinary,		"<",			OpType::Lt);
-Operator* Operator::Mod				= new Operator(OpStyle::OpBinary,		"%",			OpType::Mod);
-Operator* Operator::ModMod			= new Operator(OpStyle::OpBinary,		"%%",			OpType::ModMod);
-Operator* Operator::Mul				= new Operator(OpStyle::OpBinary,		"*",			OpType::Mul);
-Operator* Operator::Ne				= new Operator(OpStyle::OpBinary,		"!=",			OpType::Ne);
-Operator* Operator::Or				= new Operator(OpStyle::OpBinary,		"|",			OpType::Or);
+Operator* Operator::Cmp				= new Operator(OpStyle::Binary,			"<=>",			OpType::Cmp);
+Operator* Operator::Concat			= new Operator(OpStyle::Binary,			"|+|",			OpType::Concat, Operator::Flag::NoMap);
+Operator* Operator::Contains		= new Operator(OpStyle::Binary,			"in",			OpType::Contains, Operator::Flag::NoMap);
+Operator* Operator::Cross			= new Operator(OpStyle::Binary,			"|^|",			OpType::Cross, Operator::Flag::NoMap);
+Operator* Operator::Difference		= new Operator(OpStyle::Binary,			"|-|",			OpType::Difference, Operator::Flag::NoMap);
+Operator* Operator::Div				= new Operator(OpStyle::Binary,			"/",			OpType::Div);
+Operator* Operator::Dot				= new Operator(OpStyle::Binary,			"|.|",			OpType::Dot, Operator::Flag::NoMap);
+Operator* Operator::Eq				= new Operator(OpStyle::Binary,			"==",			OpType::Eq);
+Operator* Operator::Gear			= new Operator(OpStyle::Binary,			"|*|",			OpType::Gear, Operator::Flag::NoMap);
+Operator* Operator::Ge				= new Operator(OpStyle::Binary,			">=",			OpType::Ge);
+Operator* Operator::Gt				= new Operator(OpStyle::Binary,			">",			OpType::Gt);
+Operator* Operator::Intersection	= new Operator(OpStyle::Binary,			"|&|",			OpType::Intersection, Operator::Flag::NoMap);
+Operator* Operator::Le				= new Operator(OpStyle::Binary,			"<=",			OpType::Le);
+Operator* Operator::Lt				= new Operator(OpStyle::Binary,			"<",			OpType::Lt);
+Operator* Operator::Mod				= new Operator(OpStyle::Binary,			"%",			OpType::Mod);
+Operator* Operator::ModMod			= new Operator(OpStyle::Binary,			"%%",			OpType::ModMod);
+Operator* Operator::Mul				= new Operator(OpStyle::Binary,			"*",			OpType::Mul);
+Operator* Operator::Ne				= new Operator(OpStyle::Binary,			"!=",			OpType::Ne);
+Operator* Operator::Or				= new Operator(OpStyle::Binary,			"|",			OpType::Or);
 Operator* Operator::OrOr			= new Operator_OrOr();
-Operator* Operator::Pair			= new Operator(OpStyle::OpBinary,		"=>",			OpType::Pair, Operator::Flag::NoMap);
-Operator* Operator::Pow				= new Operator(OpStyle::OpBinary,		"**",			OpType::Pow);
-Operator* Operator::Seq				= new Operator(OpStyle::OpBinary,		"..",			OpType::Seq);
-Operator* Operator::Shl				= new Operator(OpStyle::OpBinary,		"<<",			OpType::Shl);
-Operator* Operator::Shr				= new Operator(OpStyle::OpBinary,		">>",			OpType::Shr);
-Operator* Operator::Sub				= new Operator(OpStyle::OpBinary,		"-",			OpType::Sub);
-Operator* Operator::Union			= new Operator(OpStyle::OpBinary,		"|||",			OpType::Union, Operator::Flag::NoMap);
-Operator* Operator::Xor				= new Operator(OpStyle::OpBinary,		"^",			OpType::Xor);
+Operator* Operator::Pair			= new Operator(OpStyle::Binary,			"=>",			OpType::Pair, Operator::Flag::NoMap);
+Operator* Operator::Pow				= new Operator(OpStyle::Binary,			"**",			OpType::Pow);
+Operator* Operator::Seq				= new Operator(OpStyle::Binary,			"..",			OpType::Seq);
+Operator* Operator::Shl				= new Operator(OpStyle::Binary,			"<<",			OpType::Shl);
+Operator* Operator::Shr				= new Operator(OpStyle::Binary,			">>",			OpType::Shr);
+Operator* Operator::Sub				= new Operator(OpStyle::Binary,			"-",			OpType::Sub);
+Operator* Operator::Union			= new Operator(OpStyle::Binary,			"|||",			OpType::Union, Operator::Flag::NoMap);
+Operator* Operator::Xor				= new Operator(OpStyle::Binary,			"^",			OpType::Xor);
 // Mathematical functions
 Operator* Operator::math_Abs		= new Operator(OpStyle::MathUnary,		"Abs",			OpType::math_Abs);
 Operator* Operator::math_Acos		= new Operator(OpStyle::MathUnary,		"Acos",			OpType::math_Acos);
@@ -93,8 +93,7 @@ Operator* Operator::math_Tanh		= new Operator(OpStyle::MathUnary,		"Tanh",			OpT
 Operator* Operator::math_Unitstep	= new Operator(OpStyle::MathUnary,		"Unitstep",		OpType::math_Unitstep);
 
 Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags) :
-	_opStyle(opStyle), _symbol(symbol), _opType(opType), _flags(flags),
-	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
+	_opStyle(opStyle), _symbol(symbol), _opType(opType), _flags(flags)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;
 }
@@ -104,11 +103,11 @@ void Operator::Bootup()
 	for (size_t i = 0; i < static_cast<int>(OpType::max); i++) {
 		Operator* pOp = _operatorTbl[i];
 		const Symbol* pSymbol = Symbol::Add(pOp->GetSymbol());
-		if (pOp->IsOpPreUnary()) {
+		if (pOp->IsPreUnary()) {
 			_operatorMap_PreUnary[pSymbol] = pOp;
-		} else if (pOp->IsOpPostUnary()) {
+		} else if (pOp->IsPostUnary()) {
 			_operatorMap_PostUnary[pSymbol] = pOp;
-		} else if (pOp->IsOpBinary()) {
+		} else if (pOp->IsBinary()) {
 			_operatorMap_Binary[pSymbol] = pOp;
 		} else if (pOp->IsMathUnary() || pOp->IsMathBinary()) {
 			_operatorMap_Math[pSymbol] = pOp;
@@ -228,17 +227,17 @@ Operator* Operator::LookupMath(const Symbol* pSymbol)
 String Operator::ToString(const StringStyle& ss) const
 {
 	return String().Format("Operator:%s:%s",
-		IsOpPreUnary()? "OpPreUnary" : IsOpPostUnary()? "OpPostUnary" :
-		IsOpBinary()? "OpBinary" : IsMathUnary()? "MathUnary" :
-		IsMathBinary()? "MathBinary" : "?", GetSymbol());
+		IsPreUnary()? "PreUnary" : IsPostUnary()? "PostUnary" : IsBinary()? "Binary" :
+		IsMathUnary()? "MathUnary" : IsMathBinary()? "MathBinary" : "none",
+		GetSymbol());
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 {
 	String str;
-	if (IsOpPreUnary()) {
+	if (IsPreUnary()) {
 		str.Format("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
-	} else if (IsOpPostUnary()) {
+	} else if (IsPostUnary()) {
 		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
 	} else if (IsMathUnary()) {
 		str.Format("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
@@ -249,7 +248,7 @@ String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 String Operator::ToString(const StringStyle& ss, const VType& vtypeL, const VType& vtypeR) const
 {
 	String str;
-	if (IsOpBinary()) {
+	if (IsBinary()) {
 		const char* format = ss.IsCram()? "%s%s%s" : "%s %s %s";
 		str.Format(format, vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
 	} else if (IsMathBinary()) {

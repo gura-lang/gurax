@@ -1280,7 +1280,7 @@ Gurax_ImplementPropertyGetter(String, width)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // String + String
-Gurax_ImplementOpBinary(Add, String, String)
+Gurax_ImplementBinary(Add, String, String)
 {
 	String strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1289,7 +1289,7 @@ Gurax_ImplementOpBinary(Add, String, String)
 }
 
 // String + Any
-Gurax_ImplementOpBinary(Add, String, Any)
+Gurax_ImplementBinary(Add, String, Any)
 {
 	String strL = Value_String::GetStringSTL(valueL);
 	const String strR = valueR.ToString();
@@ -1298,7 +1298,7 @@ Gurax_ImplementOpBinary(Add, String, Any)
 }
 
 // Any + String
-Gurax_ImplementOpBinary(Add, Any, String)
+Gurax_ImplementBinary(Add, Any, String)
 {
 	String strL = valueL.ToString();
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1307,7 +1307,7 @@ Gurax_ImplementOpBinary(Add, Any, String)
 }
 
 // String == String
-Gurax_ImplementOpBinary(Eq, String, String)
+Gurax_ImplementBinary(Eq, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1315,7 +1315,7 @@ Gurax_ImplementOpBinary(Eq, String, String)
 }
 
 // String >= String
-Gurax_ImplementOpBinary(Ge, String, String)
+Gurax_ImplementBinary(Ge, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1323,7 +1323,7 @@ Gurax_ImplementOpBinary(Ge, String, String)
 }
 
 // String > String
-Gurax_ImplementOpBinary(Gt, String, String)
+Gurax_ImplementBinary(Gt, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1331,7 +1331,7 @@ Gurax_ImplementOpBinary(Gt, String, String)
 }
 
 // String <= String
-Gurax_ImplementOpBinary(Le, String, String)
+Gurax_ImplementBinary(Le, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1339,7 +1339,7 @@ Gurax_ImplementOpBinary(Le, String, String)
 }
 
 // String < String
-Gurax_ImplementOpBinary(Lt, String, String)
+Gurax_ImplementBinary(Lt, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1347,7 +1347,7 @@ Gurax_ImplementOpBinary(Lt, String, String)
 }
 
 // String * Number
-Gurax_ImplementOpBinary(Mul, String, Number)
+Gurax_ImplementBinary(Mul, String, Number)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	size_t numR = Value_Number::GetNumberNonNeg<size_t>(valueR);
@@ -1356,7 +1356,7 @@ Gurax_ImplementOpBinary(Mul, String, Number)
 }
 
 // String != String
-Gurax_ImplementOpBinary(Ne, String, String)
+Gurax_ImplementBinary(Ne, String, String)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	const String& strR = Value_String::GetStringSTL(valueR);
@@ -1424,16 +1424,16 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Add, String, String);
-	Gurax_AssignOpBinary(Add, String, Any);
-	Gurax_AssignOpBinary(Add, Any, String);
-	Gurax_AssignOpBinary(Eq, String, String);
-	Gurax_AssignOpBinary(Ge, String, String);
-	Gurax_AssignOpBinary(Gt, String, String);
-	Gurax_AssignOpBinary(Le, String, String);
-	Gurax_AssignOpBinary(Lt, String, String);
-	Gurax_AssignOpBinary(Mul, String, Number);
-	Gurax_AssignOpBinary(Ne, String, String);
+	Gurax_AssignBinary(Add, String, String);
+	Gurax_AssignBinary(Add, String, Any);
+	Gurax_AssignBinary(Add, Any, String);
+	Gurax_AssignBinary(Eq, String, String);
+	Gurax_AssignBinary(Ge, String, String);
+	Gurax_AssignBinary(Gt, String, String);
+	Gurax_AssignBinary(Le, String, String);
+	Gurax_AssignBinary(Lt, String, String);
+	Gurax_AssignBinary(Mul, String, Number);
+	Gurax_AssignBinary(Ne, String, String);
 }
 
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const

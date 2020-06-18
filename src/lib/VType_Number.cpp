@@ -180,7 +180,7 @@ Gurax_ImplementOpUnary(PostSeq, Number)
 }
 
 // Number + Number
-Gurax_ImplementOpBinary(Add, Number, Number)
+Gurax_ImplementBinary(Add, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -188,7 +188,7 @@ Gurax_ImplementOpBinary(Add, Number, Number)
 }
 
 // Number & Number
-Gurax_ImplementOpBinary(And, Number, Number)
+Gurax_ImplementBinary(And, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -196,7 +196,7 @@ Gurax_ImplementOpBinary(And, Number, Number)
 }
 
 // Number <=> Number
-Gurax_ImplementOpBinary(Cmp, Number, Number)
+Gurax_ImplementBinary(Cmp, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -205,7 +205,7 @@ Gurax_ImplementOpBinary(Cmp, Number, Number)
 }
 
 // Number <+> Number
-Gurax_ImplementOpBinary(Concat, Number, Number)
+Gurax_ImplementBinary(Concat, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -213,7 +213,7 @@ Gurax_ImplementOpBinary(Concat, Number, Number)
 }
 
 // Number in Number
-Gurax_ImplementOpBinary(Contains, Number, Number)
+Gurax_ImplementBinary(Contains, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -221,7 +221,7 @@ Gurax_ImplementOpBinary(Contains, Number, Number)
 }
 
 // Number <^> Number
-Gurax_ImplementOpBinary(Cross, Number, Number)
+Gurax_ImplementBinary(Cross, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -229,7 +229,7 @@ Gurax_ImplementOpBinary(Cross, Number, Number)
 }
 
 // Number <-> Number
-Gurax_ImplementOpBinary(Difference, Number, Number)
+Gurax_ImplementBinary(Difference, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -237,7 +237,7 @@ Gurax_ImplementOpBinary(Difference, Number, Number)
 }
 
 // Number / Number
-Gurax_ImplementOpBinary(Div, Number, Number)
+Gurax_ImplementBinary(Div, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -249,7 +249,7 @@ Gurax_ImplementOpBinary(Div, Number, Number)
 }
 
 // Number <.> Number
-Gurax_ImplementOpBinary(Dot, Number, Number)
+Gurax_ImplementBinary(Dot, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -257,7 +257,7 @@ Gurax_ImplementOpBinary(Dot, Number, Number)
 }
 
 // Number == Number
-Gurax_ImplementOpBinary(Eq, Number, Number)
+Gurax_ImplementBinary(Eq, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -265,7 +265,7 @@ Gurax_ImplementOpBinary(Eq, Number, Number)
 }
 
 // Number <*> Number
-Gurax_ImplementOpBinary(Gear, Number, Number)
+Gurax_ImplementBinary(Gear, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -273,7 +273,7 @@ Gurax_ImplementOpBinary(Gear, Number, Number)
 }
 
 // Number >= Number
-Gurax_ImplementOpBinary(Ge, Number, Number)
+Gurax_ImplementBinary(Ge, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -281,7 +281,7 @@ Gurax_ImplementOpBinary(Ge, Number, Number)
 }
 
 // Number > Number
-Gurax_ImplementOpBinary(Gt, Number, Number)
+Gurax_ImplementBinary(Gt, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -289,7 +289,7 @@ Gurax_ImplementOpBinary(Gt, Number, Number)
 }
 
 // Number <&> Number
-Gurax_ImplementOpBinary(Intersection, Number, Number)
+Gurax_ImplementBinary(Intersection, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -297,7 +297,7 @@ Gurax_ImplementOpBinary(Intersection, Number, Number)
 }
 
 // Number <= Number
-Gurax_ImplementOpBinary(Le, Number, Number)
+Gurax_ImplementBinary(Le, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -305,7 +305,7 @@ Gurax_ImplementOpBinary(Le, Number, Number)
 }
 
 // Number < Number
-Gurax_ImplementOpBinary(Lt, Number, Number)
+Gurax_ImplementBinary(Lt, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -313,7 +313,7 @@ Gurax_ImplementOpBinary(Lt, Number, Number)
 }
 
 // Number % Number
-Gurax_ImplementOpBinary(Mod, Number, Number)
+Gurax_ImplementBinary(Mod, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -325,7 +325,7 @@ Gurax_ImplementOpBinary(Mod, Number, Number)
 }
 
 // Number %% Number
-Gurax_ImplementOpBinary(ModMod, Number, Number)
+Gurax_ImplementBinary(ModMod, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -333,7 +333,7 @@ Gurax_ImplementOpBinary(ModMod, Number, Number)
 }
 
 // Number * Number
-Gurax_ImplementOpBinary(Mul, Number, Number)
+Gurax_ImplementBinary(Mul, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -341,7 +341,7 @@ Gurax_ImplementOpBinary(Mul, Number, Number)
 }
 
 // Number != Number
-Gurax_ImplementOpBinary(Ne, Number, Number)
+Gurax_ImplementBinary(Ne, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -349,7 +349,7 @@ Gurax_ImplementOpBinary(Ne, Number, Number)
 }
 
 // Number | Number
-Gurax_ImplementOpBinary(Or, Number, Number)
+Gurax_ImplementBinary(Or, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -357,7 +357,7 @@ Gurax_ImplementOpBinary(Or, Number, Number)
 }
 
 // Number ** Number
-Gurax_ImplementOpBinary(Pow, Number, Number)
+Gurax_ImplementBinary(Pow, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -365,7 +365,7 @@ Gurax_ImplementOpBinary(Pow, Number, Number)
 }
 
 // Number .. Number
-Gurax_ImplementOpBinary(Seq, Number, Number)
+Gurax_ImplementBinary(Seq, Number, Number)
 {
 	int numL = Value_Number::GetNumber<Int>(valueL);
 	int numR = Value_Number::GetNumber<Int>(valueR);
@@ -379,7 +379,7 @@ Gurax_ImplementOpBinary(Seq, Number, Number)
 }
 
 // Number << Number
-Gurax_ImplementOpBinary(Shl, Number, Number)
+Gurax_ImplementBinary(Shl, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -387,7 +387,7 @@ Gurax_ImplementOpBinary(Shl, Number, Number)
 }
 
 // Number >> Number
-Gurax_ImplementOpBinary(Shr, Number, Number)
+Gurax_ImplementBinary(Shr, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -395,7 +395,7 @@ Gurax_ImplementOpBinary(Shr, Number, Number)
 }
 
 // Number - Number
-Gurax_ImplementOpBinary(Sub, Number, Number)
+Gurax_ImplementBinary(Sub, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -403,7 +403,7 @@ Gurax_ImplementOpBinary(Sub, Number, Number)
 }
 
 // Number ||| Number
-Gurax_ImplementOpBinary(Union, Number, Number)
+Gurax_ImplementBinary(Union, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -411,7 +411,7 @@ Gurax_ImplementOpBinary(Union, Number, Number)
 }
 
 // Number ^ Number
-Gurax_ImplementOpBinary(Xor, Number, Number)
+Gurax_ImplementBinary(Xor, Number, Number)
 {
 	Int numL = Value_Number::GetNumber<Int>(valueL);
 	Int numR = Value_Number::GetNumber<Int>(valueR);
@@ -443,34 +443,34 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpUnary(Neg,			Number);
 	Gurax_AssignOpUnary(Pos,			Number);
 	Gurax_AssignOpUnary(PostSeq,		Number);
-	Gurax_AssignOpBinary(Add,			Number, Number);
-	Gurax_AssignOpBinary(And,			Number, Number);
-	Gurax_AssignOpBinary(Cmp,			Number, Number);
-	Gurax_AssignOpBinary(Concat,		Number, Number);
-	Gurax_AssignOpBinary(Contains,		Number, Number);
-	Gurax_AssignOpBinary(Cross,			Number, Number);
-	Gurax_AssignOpBinary(Difference,	Number, Number);
-	Gurax_AssignOpBinary(Div,			Number, Number);
-	Gurax_AssignOpBinary(Dot,			Number, Number);
-	Gurax_AssignOpBinary(Eq,			Number, Number);
-	Gurax_AssignOpBinary(Gear,			Number, Number);
-	Gurax_AssignOpBinary(Ge,			Number, Number);
-	Gurax_AssignOpBinary(Gt,			Number, Number);
-	Gurax_AssignOpBinary(Intersection,	Number, Number);
-	Gurax_AssignOpBinary(Le,			Number, Number);
-	Gurax_AssignOpBinary(Lt,			Number, Number);
-	Gurax_AssignOpBinary(Mod,			Number, Number);
-	Gurax_AssignOpBinary(ModMod,		Number, Number);
-	Gurax_AssignOpBinary(Mul,			Number, Number);
-	Gurax_AssignOpBinary(Ne,			Number, Number);
-	Gurax_AssignOpBinary(Or,			Number, Number);
-	Gurax_AssignOpBinary(Pow,			Number, Number);
-	Gurax_AssignOpBinary(Seq,			Number, Number);
-	Gurax_AssignOpBinary(Shl,			Number, Number);
-	Gurax_AssignOpBinary(Shr,			Number, Number);
-	Gurax_AssignOpBinary(Sub,			Number, Number);
-	Gurax_AssignOpBinary(Union,			Number, Number);
-	Gurax_AssignOpBinary(Xor,			Number, Number);
+	Gurax_AssignBinary(Add,			Number, Number);
+	Gurax_AssignBinary(And,			Number, Number);
+	Gurax_AssignBinary(Cmp,			Number, Number);
+	Gurax_AssignBinary(Concat,		Number, Number);
+	Gurax_AssignBinary(Contains,		Number, Number);
+	Gurax_AssignBinary(Cross,			Number, Number);
+	Gurax_AssignBinary(Difference,	Number, Number);
+	Gurax_AssignBinary(Div,			Number, Number);
+	Gurax_AssignBinary(Dot,			Number, Number);
+	Gurax_AssignBinary(Eq,			Number, Number);
+	Gurax_AssignBinary(Gear,			Number, Number);
+	Gurax_AssignBinary(Ge,			Number, Number);
+	Gurax_AssignBinary(Gt,			Number, Number);
+	Gurax_AssignBinary(Intersection,	Number, Number);
+	Gurax_AssignBinary(Le,			Number, Number);
+	Gurax_AssignBinary(Lt,			Number, Number);
+	Gurax_AssignBinary(Mod,			Number, Number);
+	Gurax_AssignBinary(ModMod,		Number, Number);
+	Gurax_AssignBinary(Mul,			Number, Number);
+	Gurax_AssignBinary(Ne,			Number, Number);
+	Gurax_AssignBinary(Or,			Number, Number);
+	Gurax_AssignBinary(Pow,			Number, Number);
+	Gurax_AssignBinary(Seq,			Number, Number);
+	Gurax_AssignBinary(Shl,			Number, Number);
+	Gurax_AssignBinary(Shr,			Number, Number);
+	Gurax_AssignBinary(Sub,			Number, Number);
+	Gurax_AssignBinary(Union,			Number, Number);
+	Gurax_AssignBinary(Xor,			Number, Number);
 }
 
 Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const

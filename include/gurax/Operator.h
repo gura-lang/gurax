@@ -21,14 +21,14 @@ Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeNam
 //------------------------------------------------------------------------------
 // Macros to implement binary operators
 //------------------------------------------------------------------------------
-#define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
+#define Gurax_ImplementBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
 	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const; \
 }; \
 Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 
-#define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
+#define Gurax_AssignBinary(opType, typeNameL, typeNameR) \
 Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
 
 namespace Gurax {
@@ -44,9 +44,9 @@ struct TokenType;
 // OpStyle
 //------------------------------------------------------------------------------
 enum class OpStyle {
-	OpPreUnary,
-	OpPostUnary,
-	OpBinary,
+	PreUnary,
+	PostUnary,
+	Binary,
 	MathUnary,
 	MathBinary,
 };
@@ -217,7 +217,6 @@ private:
 	const char* _symbol;
 	OpType _opType;
 	Flags _flags;
-	bool _binaryFlag;
 	OpEntryMap _opEntryMap;
 private:
 	static Operator* _operatorTbl[static_cast<size_t>(OpType::max)];
@@ -323,11 +322,9 @@ public:
 	bool GetRawFlag() const				{ return (_flags & Flag::Raw) != 0; }
 	bool GetMapFlag() const				{ return (_flags & Flag::Map) != 0; }
 	bool IsType(OpType opType) const	{ return _opType == opType; }
-	bool IsUnary() const				{ return !_binaryFlag; }
-	bool IsBinary() const				{ return _binaryFlag; }
-	bool IsOpPreUnary() const			{ return _opStyle == OpStyle::OpPreUnary; }
-	bool IsOpPostUnary() const			{ return _opStyle == OpStyle::OpPostUnary; }
-	bool IsOpBinary() const				{ return _opStyle == OpStyle::OpBinary; }
+	bool IsPreUnary() const				{ return _opStyle == OpStyle::PreUnary; }
+	bool IsPostUnary() const			{ return _opStyle == OpStyle::PostUnary; }
+	bool IsBinary() const				{ return _opStyle == OpStyle::Binary; }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
 	const TokenType& GetTokenType() const;
@@ -367,7 +364,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_Quote : public Operator {
 public:
-	Operator_Quote() : Operator(OpStyle::OpPreUnary, "`", OpType::Quote, Flag::Raw) {}
+	Operator_Quote() : Operator(OpStyle::PreUnary, "`", OpType::Quote, Flag::Raw) {}
 public:
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const override;
 };
@@ -377,7 +374,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
-	Operator_AndAnd() : Operator(OpStyle::OpBinary, "&&", OpType::AndAnd, Flag::Raw) {}
+	Operator_AndAnd() : Operator(OpStyle::Binary, "&&", OpType::AndAnd, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
@@ -387,7 +384,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
-	Operator_OrOr() : Operator(OpStyle::OpBinary, "||", OpType::OrOr, Flag::Raw) {}
+	Operator_OrOr() : Operator(OpStyle::Binary, "||", OpType::OrOr, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };

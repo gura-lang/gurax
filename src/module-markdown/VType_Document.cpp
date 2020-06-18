@@ -166,7 +166,7 @@ Gurax_ImplementPropertyGetter(Document, root)
 // Implementation of operators
 //------------------------------------------------------------------------------
 // operator <<
-Gurax_ImplementOpBinary(Shl, Document, String)
+Gurax_ImplementBinary(Shl, Document, String)
 {
 	Document& document = Value_Document::GetDocument(valueL);
 	const char* str = Value_String::GetString(valueR);
@@ -193,7 +193,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Document, refs));
 	Assign(Gurax_CreateProperty(Document, root));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Shl, Document, String);
+	Gurax_AssignBinary(Shl, Document, String);
 }
 
 //------------------------------------------------------------------------------

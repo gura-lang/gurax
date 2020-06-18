@@ -53,7 +53,7 @@ Gurax_ImplementOpUnary(Not, Any)
 }
 
 // Any => Any
-Gurax_ImplementOpBinary(Pair, Any, Any)
+Gurax_ImplementBinary(Pair, Any, Any)
 {
 	return Value_List::Create(valueL.Reference(), valueR.Reference());
 }
@@ -73,7 +73,7 @@ void VType_Any::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Any, ToString));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Not, Any);
-	Gurax_AssignOpBinary(Pair, Any, Any);
+	Gurax_AssignBinary(Pair, Any, Any);
 }
 
 Value* VType_Any::DoCastFrom(const Value& value, DeclArg::Flags flags) const

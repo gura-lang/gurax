@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(Symbol, symbolName)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Symbol == Symbol
-Gurax_ImplementOpBinary(Eq, Symbol, Symbol)
+Gurax_ImplementBinary(Eq, Symbol, Symbol)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
@@ -67,7 +67,7 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Symbol, symbolName));
 	// Implementation of operator
-	Gurax_AssignOpBinary(Eq, Symbol, Symbol);
+	Gurax_AssignBinary(Eq, Symbol, Symbol);
 }
 
 Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
