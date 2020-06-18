@@ -55,6 +55,68 @@ Gurax_ImplementConstructor(Expr)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Expr#EachCdr() {block?}
+Gurax_DeclareMethod(Expr, EachCdr)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an iterator that returns `Expr` instance of the cdr elements.\n");
+}
+
+Gurax_ImplementMethod(Expr, EachCdr)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Function body
+	RefPtr<Iterator> pIterator(expr.EachCdr());
+	if (!pIterator) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Expr#EachChild() {block?}
+Gurax_DeclareMethod(Expr, EachChild)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an iterator that returns `Expr` instance of the child elements.\n");
+}
+
+Gurax_ImplementMethod(Expr, EachChild)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	//Function body
+	RefPtr<Iterator> pIterator(expr.EachChild());
+	if (!pIterator) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Expr#EachParam() {block?}
+Gurax_DeclareMethod(Expr, EachParam)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An iterator that returns `Expr` instance of the parameter elements.\n");
+}
+
+Gurax_ImplementMethod(Expr, EachParam)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	//Function body
+	RefPtr<Iterator> pIterator(expr.EachParam());
+	if (!pIterator) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Expr#EachPUnit() {block?}
 Gurax_DeclareMethod(Expr, EachPUnit)
 {
@@ -376,23 +438,6 @@ Gurax_ImplementPropertyGetter(Expr, car)
 	return new Value_Expr(pExpr->Reference());
 }
 
-// Expr#cdrs
-Gurax_DeclareProperty_R(Expr, cdrs)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An iterator that returns `Expr` instance of the cdr elements.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, cdrs)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachCdr());
-	if (!pIterator) return Value::nil();
-	return new Value_Iterator(pIterator.release());
-}
-
 // Expr#child
 Gurax_DeclareProperty_R(Expr, child)
 {
@@ -408,23 +453,6 @@ Gurax_ImplementPropertyGetter(Expr, child)
 	const Expr* pExpr = valueThis.GetExpr().InspectChild();
 	if (!pExpr) return Value::nil();
 	return new Value_Expr(pExpr->Reference());
-}
-
-// Expr#children
-Gurax_DeclareProperty_R(Expr, children)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An iterator that returns `Expr` instance of the child elements.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, children)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachChild());
-	if (!pIterator) return Value::nil();
-	return new Value_Iterator(pIterator.release());
 }
 
 // Expr#left
@@ -472,23 +500,6 @@ Gurax_ImplementPropertyGetter(Expr, lineNoTop)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetExpr().GetLineNoTop());
-}
-
-// Expr#params
-Gurax_DeclareProperty_R(Expr, params)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An iterator that returns `Expr` instance of the parameter elements.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, params)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachParam());
-	if (!pIterator) return Value::nil();
-	return new Value_Iterator(pIterator.release());
 }
 
 // Expr#right
@@ -637,6 +648,9 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Expr));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Expr, EachCdr));
+	Assign(Gurax_CreateMethod(Expr, EachChild));
+	Assign(Gurax_CreateMethod(Expr, EachParam));
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
 	Assign(Gurax_CreateMethod(Expr, IsAssign));
@@ -656,13 +670,10 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Expr, block));
 	Assign(Gurax_CreateProperty(Expr, car));
-	Assign(Gurax_CreateProperty(Expr, cdrs));
-	Assign(Gurax_CreateProperty(Expr, children));
 	Assign(Gurax_CreateProperty(Expr, child));
 	Assign(Gurax_CreateProperty(Expr, left));
 	Assign(Gurax_CreateProperty(Expr, lineNoBtm));
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
-	Assign(Gurax_CreateProperty(Expr, params));
 	Assign(Gurax_CreateProperty(Expr, right));
 	Assign(Gurax_CreateProperty(Expr, symbolName));
 	Assign(Gurax_CreateProperty(Expr, target));

@@ -1,0 +1,23 @@
+expr = `{
+glfwWindowHint(hint:int, value:int):void = R'''
+	::glfwWindowHint(hint, value);
+	return Value::nil();
+'''
+
+glfwWinwotHintString(hint:int, value:const_char_p):void = R'''
+	::glfwWindowHintString(hint, value);
+	return Value::nil();
+'''
+
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor, share?:GLFWwindow) = R'''
+	GLFWwindow* window = ::glfwCreateWindow(width, height, title, monitor, share);
+	if (!window) {
+		IssueError();
+		return Value::nil();
+	}
+	return new Value_GLFWwindow(window);
+'''
+}
+expr.children.Each {|child|
+	Println(child.left.car)
+}

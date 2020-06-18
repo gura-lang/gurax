@@ -204,6 +204,12 @@ public:
 	virtual const Expr* InspectTarget() const { return nullptr; }
 	virtual const Expr* InspectBlock() const { return nullptr; }
 	virtual const Expr* InspectTrailer() const { return nullptr; }
+	virtual const StringReferable* InspectSegmentReferable() const { return nullptr; }
+	virtual const Symbol* InspectSymbol() const { return nullptr; }
+	virtual const Symbol* InspectSymbolSuffix() const { return nullptr; }
+	virtual const Attribute* InspectAttr() const { return nullptr; }
+	virtual const Value* InspectValue() const { return nullptr; }
+	virtual const Operator* InspectOperator() const { return nullptr; }
 	virtual Iterator* EachChild() const { return nullptr; }
 	virtual Iterator* EachCdr() const { return nullptr; }
 	virtual Iterator* EachParam() const { return nullptr; }
@@ -459,6 +465,7 @@ public:
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectCar() const override { return &GetExprCar(); }
+	virtual const Attribute* InspectAttr() const override { return &GetAttr(); }
 	virtual Iterator* EachChild() const override { return GetExprLinkCdr().CreateIterator(); }
 };
 
@@ -501,6 +508,8 @@ public:
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectTarget() const override { return &GetExprTarget(); }
+	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
+	virtual const Attribute* InspectAttr() const { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -528,6 +537,9 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Value* InspectValue() const override { return &GetValue(); }
 };
 
 //------------------------------------------------------------------------------
@@ -570,6 +582,10 @@ public:
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual bool IsEqualTo(const Expr& expr) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Symbol* InspectSymbol() const override { return _pSymbol; }
+	virtual const Attribute* InspectAttr() const override { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -593,6 +609,11 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const StringReferable* InspectSegmentReferable() const override {
+		return &GetSegmentReferable();
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -621,6 +642,12 @@ public:
 	virtual bool IsSuffixed(SuffixMgr::Target target) const override { return _target == target; }
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const StringReferable* InspectSegmentReferable() const override {
+		return &GetSegmentReferable();
+	}
+	virtual const Symbol* InspectSymbolSuffix() const override { return _pSymbolSuffix; }
 };
 
 //------------------------------------------------------------------------------
@@ -645,6 +672,9 @@ public:
 	virtual void ComposeWithinLister(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -671,6 +701,9 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -696,6 +729,9 @@ public:
 	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Operator* InspectOperator() const { return GetOperator(); }
 };
 
 //------------------------------------------------------------------------------

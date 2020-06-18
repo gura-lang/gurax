@@ -37,13 +37,10 @@ f(`(a + b))
 Expr
   #block            Expr         R
   #car              Expr         R
-  #cdrs             Iterator     R
   #child            Expr         R
-  #children         Iterator     R
   #left             Expr         R
   #lineNoBtm        Number       R
   #lineNoTop        Number       R
-  #params           Iterator     R
   #right            Expr         R
   #symbolName       String       R
   #target           Expr         R
