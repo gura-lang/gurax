@@ -661,7 +661,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 {
 	String str;
 	switch (GetOperator()->GetStyle()) {
-	case OpStyle::PreUnary: {
+	case OpStyle::Unary: {
 		bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 		str += GetOperator()->GetSymbol();
 		if (requireParFlag) str += '(';
@@ -669,7 +669,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 		if (requireParFlag) str += ')';
 		break;
 	}
-	case OpStyle::PostUnary: {
+	case OpStyle::UnaryPost: {
 		if (GetExprChild().IsType<Expr_Identifier>()) {
 			const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(GetExprChild());
 			str += exprEx.ToString(ss, GetOperator()->GetSymbol());

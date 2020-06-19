@@ -44,8 +44,8 @@ struct TokenType;
 // OpStyle
 //------------------------------------------------------------------------------
 enum class OpStyle {
-	PreUnary,
-	PostUnary,
+	Unary,
+	UnaryPost,
 	Binary,
 	MathUnary,
 	MathBinary,
@@ -214,14 +214,15 @@ public:
 	};
 private:
 	OpStyle _opStyle;
+	const char* _name;
 	const char* _symbol;
 	OpType _opType;
 	Flags _flags;
 	OpEntryMap _opEntryMap;
 private:
 	static Operator* _operatorTbl[static_cast<size_t>(OpType::max)];
-	static OperatorMap _operatorMap_PreUnary;
-	static OperatorMap _operatorMap_PostUnary;
+	static OperatorMap _operatorMap_Unary;
+	static OperatorMap _operatorMap_UnaryPost;
 	static OperatorMap _operatorMap_Binary;
 	static OperatorMap _operatorMap_Math;
 public:
@@ -304,7 +305,7 @@ public:
 	static Operator* math_Unitstep;
 public:
 	// Constructor
-	Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags = Flag::Map);
+	Operator(OpStyle opStyle, const char* name, const char* symbol, OpType opType, Flags flags = Flag::Map);
 	// Copy constructor/operator
 	Operator(Operator& src) = delete;
 	Operator& operator=(Operator& src) = delete;
@@ -317,13 +318,14 @@ public:
 	static void Bootup();
 public:
 	OpStyle GetStyle() const			{ return _opStyle; }
+	const char* GetName() const			{ return _name; }
 	const char* GetSymbol() const		{ return _symbol; }
 	OpType GetType() const				{ return _opType; }
 	bool GetRawFlag() const				{ return (_flags & Flag::Raw) != 0; }
 	bool GetMapFlag() const				{ return (_flags & Flag::Map) != 0; }
 	bool IsType(OpType opType) const	{ return _opType == opType; }
-	bool IsPreUnary() const				{ return _opStyle == OpStyle::PreUnary; }
-	bool IsPostUnary() const			{ return _opStyle == OpStyle::PostUnary; }
+	bool IsUnary() const				{ return _opStyle == OpStyle::Unary; }
+	bool IsUnaryPost() const			{ return _opStyle == OpStyle::UnaryPost; }
 	bool IsBinary() const				{ return _opStyle == OpStyle::Binary; }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
@@ -353,8 +355,8 @@ public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
-	static Operator* LookupPreUnary(const Symbol* pSymbol);
-	static Operator* LookupPostUnary(const Symbol* pSymbol);
+	static Operator* LookupUnary(const Symbol* pSymbol);
+	static Operator* LookupUnaryPost(const Symbol* pSymbol);
 	static Operator* LookupBinary(const Symbol* pSymbol);
 	static Operator* LookupMath(const Symbol* pSymbol);
 };
@@ -364,7 +366,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_Quote : public Operator {
 public:
-	Operator_Quote() : Operator(OpStyle::PreUnary, "`", OpType::Quote, Flag::Raw) {}
+	Operator_Quote() : Operator(OpStyle::Unary, "Quote", "`", OpType::Quote, Flag::Raw) {}
 public:
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const override;
 };
@@ -374,7 +376,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
-	Operator_AndAnd() : Operator(OpStyle::Binary, "&&", OpType::AndAnd, Flag::Raw) {}
+	Operator_AndAnd() : Operator(OpStyle::Binary, "AndAnd", "&&", OpType::AndAnd, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
@@ -384,7 +386,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
-	Operator_OrOr() : Operator(OpStyle::Binary, "||", OpType::OrOr, Flag::Raw) {}
+	Operator_OrOr() : Operator(OpStyle::Binary, "OrOr", "||", OpType::OrOr, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };

@@ -91,7 +91,7 @@ Gurax_ImplementClassMethod(Operator, Unary)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	Operator* pOp = Operator::LookupPreUnary(pSymbol);
+	Operator* pOp = Operator::LookupUnary(pSymbol);
 	if (!pOp) {
 		Error::Issue(ErrorType::SymbolError, "unknown unary operator: %s", pSymbol->GetName());
 		return Value::nil();

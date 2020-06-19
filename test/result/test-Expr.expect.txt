@@ -35,17 +35,22 @@ f(`(a + b))
   ##2 MemberSet_Normal(`bar)
 ======== Property ========
 Expr
+  #attr             Attribute    R
   #block            Expr         R
   #car              Expr         R
   #child            Expr         R
   #left             Expr         R
   #lineNoBtm        Number       R
   #lineNoTop        Number       R
+  #operator         Operator     R
   #right            Expr         R
+  #symbol           Symbol       R
   #symbolName       String       R
+  #symbolSuffix     Symbol       R
   #target           Expr         R
   #trailer          Expr         R
   #type             Symbol       R
+  #value            Any          R
 ======== Assignment ========
 {[x] = [], [x]} .. insufficient number of values
 {[x] = [1], [x]} .. [1]

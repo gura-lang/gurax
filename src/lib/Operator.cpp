@@ -9,91 +9,91 @@ namespace Gurax {
 // Operator
 //------------------------------------------------------------------------------
 Operator* Operator::_operatorTbl[static_cast<size_t>(OpType::max)] = {};
-OperatorMap Operator::_operatorMap_PreUnary;
-OperatorMap Operator::_operatorMap_PostUnary;
+OperatorMap Operator::_operatorMap_Unary;
+OperatorMap Operator::_operatorMap_UnaryPost;
 OperatorMap Operator::_operatorMap_Binary;
 OperatorMap Operator::_operatorMap_Math;
 
 // Unary operators
-Operator* Operator::Inv				= new Operator(OpStyle::PreUnary,		"~",			OpType::Inv);
-Operator* Operator::Neg				= new Operator(OpStyle::PreUnary,		"-",			OpType::Neg);
-Operator* Operator::Not				= new Operator(OpStyle::PreUnary,		"!",			OpType::Not);
-Operator* Operator::Pos				= new Operator(OpStyle::PreUnary,		"+",			OpType::Pos);
-Operator* Operator::Question		= new Operator(OpStyle::PreUnary,		"?",			OpType::Question);
+Operator* Operator::Inv				= new Operator(OpStyle::Unary,			"Inv",			"~",			OpType::Inv);
+Operator* Operator::Neg				= new Operator(OpStyle::Unary,			"Neg",			"-",			OpType::Neg);
+Operator* Operator::Not				= new Operator(OpStyle::Unary,			"Not",			"!",			OpType::Not);
+Operator* Operator::Pos				= new Operator(OpStyle::Unary,			"Pos",			"+",			OpType::Pos);
+Operator* Operator::Question		= new Operator(OpStyle::Unary,			"Question",		"?",			OpType::Question);
 Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
-Operator* Operator::PostMod			= new Operator(OpStyle::PostUnary,		"%",			OpType::PostMod);
-Operator* Operator::PostModMod		= new Operator(OpStyle::PostUnary,		"%%",			OpType::PostModMod);
-Operator* Operator::PostMul			= new Operator(OpStyle::PostUnary,		"*",			OpType::PostMul);
-Operator* Operator::PostPos			= new Operator(OpStyle::PostUnary,		"+",			OpType::PostPos);
-Operator* Operator::PostQuestion	= new Operator(OpStyle::PostUnary,		"?",			OpType::PostQuestion);
-Operator* Operator::PostSeq			= new Operator(OpStyle::PostUnary,		"..",			OpType::PostSeq);
+Operator* Operator::PostMod			= new Operator(OpStyle::UnaryPost,		"PostMod",		"%",			OpType::PostMod);
+Operator* Operator::PostModMod		= new Operator(OpStyle::UnaryPost,		"PostModMod",	"%%",			OpType::PostModMod);
+Operator* Operator::PostMul			= new Operator(OpStyle::UnaryPost,		"PostMul",		"*",			OpType::PostMul);
+Operator* Operator::PostPos			= new Operator(OpStyle::UnaryPost,		"PostPos",		"+",			OpType::PostPos);
+Operator* Operator::PostQuestion	= new Operator(OpStyle::UnaryPost,		"PostQuestion",	"?",			OpType::PostQuestion);
+Operator* Operator::PostSeq			= new Operator(OpStyle::UnaryPost,		"PostSeq",		"..",			OpType::PostSeq);
 // Binary operators
-Operator* Operator::Add				= new Operator(OpStyle::Binary,			"+",			OpType::Add);
-Operator* Operator::And				= new Operator(OpStyle::Binary,			"&",			OpType::And);
+Operator* Operator::Add				= new Operator(OpStyle::Binary,			"Add",			"+",			OpType::Add);
+Operator* Operator::And				= new Operator(OpStyle::Binary,			"And",			"&",			OpType::And);
 Operator* Operator::AndAnd			= new Operator_AndAnd();
-Operator* Operator::Cmp				= new Operator(OpStyle::Binary,			"<=>",			OpType::Cmp);
-Operator* Operator::Concat			= new Operator(OpStyle::Binary,			"|+|",			OpType::Concat, Operator::Flag::NoMap);
-Operator* Operator::Contains		= new Operator(OpStyle::Binary,			"in",			OpType::Contains, Operator::Flag::NoMap);
-Operator* Operator::Cross			= new Operator(OpStyle::Binary,			"|^|",			OpType::Cross, Operator::Flag::NoMap);
-Operator* Operator::Difference		= new Operator(OpStyle::Binary,			"|-|",			OpType::Difference, Operator::Flag::NoMap);
-Operator* Operator::Div				= new Operator(OpStyle::Binary,			"/",			OpType::Div);
-Operator* Operator::Dot				= new Operator(OpStyle::Binary,			"|.|",			OpType::Dot, Operator::Flag::NoMap);
-Operator* Operator::Eq				= new Operator(OpStyle::Binary,			"==",			OpType::Eq);
-Operator* Operator::Gear			= new Operator(OpStyle::Binary,			"|*|",			OpType::Gear, Operator::Flag::NoMap);
-Operator* Operator::Ge				= new Operator(OpStyle::Binary,			">=",			OpType::Ge);
-Operator* Operator::Gt				= new Operator(OpStyle::Binary,			">",			OpType::Gt);
-Operator* Operator::Intersection	= new Operator(OpStyle::Binary,			"|&|",			OpType::Intersection, Operator::Flag::NoMap);
-Operator* Operator::Le				= new Operator(OpStyle::Binary,			"<=",			OpType::Le);
-Operator* Operator::Lt				= new Operator(OpStyle::Binary,			"<",			OpType::Lt);
-Operator* Operator::Mod				= new Operator(OpStyle::Binary,			"%",			OpType::Mod);
-Operator* Operator::ModMod			= new Operator(OpStyle::Binary,			"%%",			OpType::ModMod);
-Operator* Operator::Mul				= new Operator(OpStyle::Binary,			"*",			OpType::Mul);
-Operator* Operator::Ne				= new Operator(OpStyle::Binary,			"!=",			OpType::Ne);
-Operator* Operator::Or				= new Operator(OpStyle::Binary,			"|",			OpType::Or);
+Operator* Operator::Cmp				= new Operator(OpStyle::Binary,			"Cmp",			"<=>",			OpType::Cmp);
+Operator* Operator::Concat			= new Operator(OpStyle::Binary,			"Concat",		"|+|",			OpType::Concat, Operator::Flag::NoMap);
+Operator* Operator::Contains		= new Operator(OpStyle::Binary,			"Contains",		"in",			OpType::Contains, Operator::Flag::NoMap);
+Operator* Operator::Cross			= new Operator(OpStyle::Binary,			"Cross",		"|^|",			OpType::Cross, Operator::Flag::NoMap);
+Operator* Operator::Difference		= new Operator(OpStyle::Binary,			"Difference",	"|-|",			OpType::Difference, Operator::Flag::NoMap);
+Operator* Operator::Div				= new Operator(OpStyle::Binary,			"Div",			"/",			OpType::Div);
+Operator* Operator::Dot				= new Operator(OpStyle::Binary,			"Dot",			"|.|",			OpType::Dot, Operator::Flag::NoMap);
+Operator* Operator::Eq				= new Operator(OpStyle::Binary,			"Eq",			"==",			OpType::Eq);
+Operator* Operator::Gear			= new Operator(OpStyle::Binary,			"Gear",			"|*|",			OpType::Gear, Operator::Flag::NoMap);
+Operator* Operator::Ge				= new Operator(OpStyle::Binary,			"Ge",			">=",			OpType::Ge);
+Operator* Operator::Gt				= new Operator(OpStyle::Binary,			"Gt",			">",			OpType::Gt);
+Operator* Operator::Intersection	= new Operator(OpStyle::Binary,			"Intersection",	"|&|",			OpType::Intersection, Operator::Flag::NoMap);
+Operator* Operator::Le				= new Operator(OpStyle::Binary,			"Le",			"<=",			OpType::Le);
+Operator* Operator::Lt				= new Operator(OpStyle::Binary,			"Lt",			"<",			OpType::Lt);
+Operator* Operator::Mod				= new Operator(OpStyle::Binary,			"Mod",			"%",			OpType::Mod);
+Operator* Operator::ModMod			= new Operator(OpStyle::Binary,			"ModMod",		"%%",			OpType::ModMod);
+Operator* Operator::Mul				= new Operator(OpStyle::Binary,			"Mul",			"*",			OpType::Mul);
+Operator* Operator::Ne				= new Operator(OpStyle::Binary,			"Ne",			"!=",			OpType::Ne);
+Operator* Operator::Or				= new Operator(OpStyle::Binary,			"Or",			"|",			OpType::Or);
 Operator* Operator::OrOr			= new Operator_OrOr();
-Operator* Operator::Pair			= new Operator(OpStyle::Binary,			"=>",			OpType::Pair, Operator::Flag::NoMap);
-Operator* Operator::Pow				= new Operator(OpStyle::Binary,			"**",			OpType::Pow);
-Operator* Operator::Seq				= new Operator(OpStyle::Binary,			"..",			OpType::Seq);
-Operator* Operator::Shl				= new Operator(OpStyle::Binary,			"<<",			OpType::Shl);
-Operator* Operator::Shr				= new Operator(OpStyle::Binary,			">>",			OpType::Shr);
-Operator* Operator::Sub				= new Operator(OpStyle::Binary,			"-",			OpType::Sub);
-Operator* Operator::Union			= new Operator(OpStyle::Binary,			"|||",			OpType::Union, Operator::Flag::NoMap);
-Operator* Operator::Xor				= new Operator(OpStyle::Binary,			"^",			OpType::Xor);
+Operator* Operator::Pair			= new Operator(OpStyle::Binary,			"Pair",			"=>",			OpType::Pair, Operator::Flag::NoMap);
+Operator* Operator::Pow				= new Operator(OpStyle::Binary,			"Pow",			"**",			OpType::Pow);
+Operator* Operator::Seq				= new Operator(OpStyle::Binary,			"Seq",			"..",			OpType::Seq);
+Operator* Operator::Shl				= new Operator(OpStyle::Binary,			"Shl",			"<<",			OpType::Shl);
+Operator* Operator::Shr				= new Operator(OpStyle::Binary,			"Shr",			">>",			OpType::Shr);
+Operator* Operator::Sub				= new Operator(OpStyle::Binary,			"Sub",			"-",			OpType::Sub);
+Operator* Operator::Union			= new Operator(OpStyle::Binary,			"Union",		"|||",			OpType::Union, Operator::Flag::NoMap);
+Operator* Operator::Xor				= new Operator(OpStyle::Binary,			"Xor",			"^",			OpType::Xor);
 // Mathematical functions
-Operator* Operator::math_Abs		= new Operator(OpStyle::MathUnary,		"Abs",			OpType::math_Abs);
-Operator* Operator::math_Acos		= new Operator(OpStyle::MathUnary,		"Acos",			OpType::math_Acos);
-Operator* Operator::math_Arg		= new Operator(OpStyle::MathUnary,		"Arg",			OpType::math_Arg);
-Operator* Operator::math_Asin		= new Operator(OpStyle::MathUnary,		"Asin",			OpType::math_Asin);
-Operator* Operator::math_Atan		= new Operator(OpStyle::MathUnary,		"Atan",			OpType::math_Atan);
-Operator* Operator::math_Atan2		= new Operator(OpStyle::MathBinary,		"Atan2",		OpType::math_Atan2);
-Operator* Operator::math_Ceil		= new Operator(OpStyle::MathUnary,		"Ceil",			OpType::math_Ceil);
-Operator* Operator::math_Conj		= new Operator(OpStyle::MathUnary,		"Conj",			OpType::math_Conj);
-Operator* Operator::math_Cos		= new Operator(OpStyle::MathUnary,		"Cos",			OpType::math_Cos);
-Operator* Operator::math_Cosh		= new Operator(OpStyle::MathUnary,		"Cosh",			OpType::math_Cosh);
-Operator* Operator::math_Covariance = new Operator(OpStyle::MathUnary,		"Covariance",	OpType::math_Covariance);
-Operator* Operator::math_Cross		= new Operator(OpStyle::MathUnary,		"Cross",		OpType::math_Cross);
-Operator* Operator::math_Delta		= new Operator(OpStyle::MathUnary,		"Delta",		OpType::math_Delta);
-Operator* Operator::math_Dot		= new Operator(OpStyle::MathUnary,		"Dot",			OpType::math_Dot);
-Operator* Operator::math_Exp		= new Operator(OpStyle::MathUnary,		"Exp",			OpType::math_Exp);
-Operator* Operator::math_Floor		= new Operator(OpStyle::MathUnary,		"Floor",		OpType::math_Floor);
-Operator* Operator::math_Hypot		= new Operator(OpStyle::MathBinary,		"Hypot",		OpType::math_Hypot);
-Operator* Operator::math_Imag		= new Operator(OpStyle::MathUnary,		"Imag",			OpType::math_Imag);
-Operator* Operator::math_Log		= new Operator(OpStyle::MathUnary,		"Log",			OpType::math_Log);
-Operator* Operator::math_Log10		= new Operator(OpStyle::MathUnary,		"Log10",		OpType::math_Log10);
-Operator* Operator::math_Norm		= new Operator(OpStyle::MathUnary,		"Norm",			OpType::math_Norm);
-Operator* Operator::math_Real		= new Operator(OpStyle::MathUnary,		"Real",			OpType::math_Real);
-Operator* Operator::math_Relu		= new Operator(OpStyle::MathUnary,		"Relu",			OpType::math_Relu);
-Operator* Operator::math_Sigmoid	= new Operator(OpStyle::MathUnary,		"Sigmoid",		OpType::math_Sigmoid);
-Operator* Operator::math_Sin		= new Operator(OpStyle::MathUnary,		"Sin",			OpType::math_Sin);
-Operator* Operator::math_Sinh		= new Operator(OpStyle::MathUnary,		"Sinh",			OpType::math_Sinh);
-Operator* Operator::math_Sqrt		= new Operator(OpStyle::MathUnary,		"Sqrt",			OpType::math_Sqrt);
-Operator* Operator::math_Tan		= new Operator(OpStyle::MathUnary,		"Tan",			OpType::math_Tan);
-Operator* Operator::math_Tanh		= new Operator(OpStyle::MathUnary,		"Tanh",			OpType::math_Tanh);
-Operator* Operator::math_Unitstep	= new Operator(OpStyle::MathUnary,		"Unitstep",		OpType::math_Unitstep);
+Operator* Operator::math_Abs		= new Operator(OpStyle::MathUnary,		"math.Abs",		"Abs",			OpType::math_Abs);
+Operator* Operator::math_Acos		= new Operator(OpStyle::MathUnary,		"math.Acos",	"Acos",			OpType::math_Acos);
+Operator* Operator::math_Arg		= new Operator(OpStyle::MathUnary,		"math.Arg",		"Arg",			OpType::math_Arg);
+Operator* Operator::math_Asin		= new Operator(OpStyle::MathUnary,		"math.Asin",	"Asin",			OpType::math_Asin);
+Operator* Operator::math_Atan		= new Operator(OpStyle::MathUnary,		"math.Atan",	"Atan",			OpType::math_Atan);
+Operator* Operator::math_Atan2		= new Operator(OpStyle::MathBinary,		"math.Atan2",	"Atan2",		OpType::math_Atan2);
+Operator* Operator::math_Ceil		= new Operator(OpStyle::MathUnary,		"math.Ceil",	"Ceil",			OpType::math_Ceil);
+Operator* Operator::math_Conj		= new Operator(OpStyle::MathUnary,		"math.Conj",	"Conj",			OpType::math_Conj);
+Operator* Operator::math_Cos		= new Operator(OpStyle::MathUnary,		"math.Cos",		"Cos",			OpType::math_Cos);
+Operator* Operator::math_Cosh		= new Operator(OpStyle::MathUnary,		"math.Cosh",	"Cosh",			OpType::math_Cosh);
+Operator* Operator::math_Covariance = new Operator(OpStyle::MathUnary,		"math.Covariance", "Covariance",OpType::math_Covariance);
+Operator* Operator::math_Cross		= new Operator(OpStyle::MathUnary,		"math.Cross",	"Cross",		OpType::math_Cross);
+Operator* Operator::math_Delta		= new Operator(OpStyle::MathUnary,		"math.Delta",	"Delta",		OpType::math_Delta);
+Operator* Operator::math_Dot		= new Operator(OpStyle::MathUnary,		"math.Dot",		"Dot",			OpType::math_Dot);
+Operator* Operator::math_Exp		= new Operator(OpStyle::MathUnary,		"math.Exp",		"Exp",			OpType::math_Exp);
+Operator* Operator::math_Floor		= new Operator(OpStyle::MathUnary,		"math.Floor",	"Floor",		OpType::math_Floor);
+Operator* Operator::math_Hypot		= new Operator(OpStyle::MathBinary,		"math.Hypot",	"Hypot",		OpType::math_Hypot);
+Operator* Operator::math_Imag		= new Operator(OpStyle::MathUnary,		"math.Imag",	"Imag",			OpType::math_Imag);
+Operator* Operator::math_Log		= new Operator(OpStyle::MathUnary,		"math.Log",		"Log",			OpType::math_Log);
+Operator* Operator::math_Log10		= new Operator(OpStyle::MathUnary,		"math.Log10",	"Log10",		OpType::math_Log10);
+Operator* Operator::math_Norm		= new Operator(OpStyle::MathUnary,		"math.Norm",	"Norm",			OpType::math_Norm);
+Operator* Operator::math_Real		= new Operator(OpStyle::MathUnary,		"math.Real",	"Real",			OpType::math_Real);
+Operator* Operator::math_Relu		= new Operator(OpStyle::MathUnary,		"math.Relu",	"Relu",			OpType::math_Relu);
+Operator* Operator::math_Sigmoid	= new Operator(OpStyle::MathUnary,		"math.Sigmoid",	"Sigmoid",		OpType::math_Sigmoid);
+Operator* Operator::math_Sin		= new Operator(OpStyle::MathUnary,		"math.Sin",		"Sin",			OpType::math_Sin);
+Operator* Operator::math_Sinh		= new Operator(OpStyle::MathUnary,		"math.Sinh",	"Sinh",			OpType::math_Sinh);
+Operator* Operator::math_Sqrt		= new Operator(OpStyle::MathUnary,		"math.Sqrt",	"Sqrt",			OpType::math_Sqrt);
+Operator* Operator::math_Tan		= new Operator(OpStyle::MathUnary,		"math.Tan",		"Tan",			OpType::math_Tan);
+Operator* Operator::math_Tanh		= new Operator(OpStyle::MathUnary,		"math.Tanh",	"Tanh",			OpType::math_Tanh);
+Operator* Operator::math_Unitstep	= new Operator(OpStyle::MathUnary,		"math.Unitstep","Unitstep",		OpType::math_Unitstep);
 
-Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags) :
-	_opStyle(opStyle), _symbol(symbol), _opType(opType), _flags(flags)
+Operator::Operator(OpStyle opStyle, const char* name, const char* symbol, OpType opType, Flags flags) :
+	_opStyle(opStyle), _name(name), _symbol(symbol), _opType(opType), _flags(flags)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;
 }
@@ -103,10 +103,10 @@ void Operator::Bootup()
 	for (size_t i = 0; i < static_cast<int>(OpType::max); i++) {
 		Operator* pOp = _operatorTbl[i];
 		const Symbol* pSymbol = Symbol::Add(pOp->GetSymbol());
-		if (pOp->IsPreUnary()) {
-			_operatorMap_PreUnary[pSymbol] = pOp;
-		} else if (pOp->IsPostUnary()) {
-			_operatorMap_PostUnary[pSymbol] = pOp;
+		if (pOp->IsUnary()) {
+			_operatorMap_Unary[pSymbol] = pOp;
+		} else if (pOp->IsUnaryPost()) {
+			_operatorMap_UnaryPost[pSymbol] = pOp;
 		} else if (pOp->IsBinary()) {
 			_operatorMap_Binary[pSymbol] = pOp;
 		} else if (pOp->IsMathUnary() || pOp->IsMathBinary()) {
@@ -204,14 +204,14 @@ Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR)
 	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
-Operator* Operator::LookupPreUnary(const Symbol* pSymbol)
+Operator* Operator::LookupUnary(const Symbol* pSymbol)
 {
-	return _operatorMap_PreUnary.Lookup(pSymbol);
+	return _operatorMap_Unary.Lookup(pSymbol);
 }
 
-Operator* Operator::LookupPostUnary(const Symbol* pSymbol)
+Operator* Operator::LookupUnaryPost(const Symbol* pSymbol)
 {
-	return _operatorMap_PostUnary.Lookup(pSymbol);
+	return _operatorMap_UnaryPost.Lookup(pSymbol);
 }
 
 Operator* Operator::LookupBinary(const Symbol* pSymbol)
@@ -226,18 +226,18 @@ Operator* Operator::LookupMath(const Symbol* pSymbol)
 
 String Operator::ToString(const StringStyle& ss) const
 {
-	return String().Format("Operator:%s:%s",
-		IsPreUnary()? "PreUnary" : IsPostUnary()? "PostUnary" : IsBinary()? "Binary" :
+	return String().Format("Operator:%s:%s:%s",
+		IsUnary()? "Unary" : IsUnaryPost()? "UnaryPost" : IsBinary()? "Binary" :
 		IsMathUnary()? "MathUnary" : IsMathBinary()? "MathBinary" : "none",
-		GetSymbol());
+		GetName(), GetSymbol());
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 {
 	String str;
-	if (IsPreUnary()) {
+	if (IsUnary()) {
 		str.Format("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
-	} else if (IsPostUnary()) {
+	} else if (IsUnaryPost()) {
 		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
 	} else if (IsMathUnary()) {
 		str.Format("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
