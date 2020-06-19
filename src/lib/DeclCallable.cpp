@@ -12,19 +12,42 @@ RefPtr<DeclCallable> DeclCallable::Empty;
 RefPtr<DeclCallable> DeclCallable::EmptyWithBlock;
 RefPtr<DeclCallable> DeclCallable::EmptyWithOptionalBlock;
 RefPtr<DeclCallable> DeclCallable::Wildcard;
+RefPtr<DeclCallable> DeclCallable::Unary;
+RefPtr<DeclCallable> DeclCallable::Binary;
 
 void DeclCallable::Bootup()
 {
-	Empty.reset(new DeclCallable());
-	EmptyWithBlock.reset(new DeclCallable());
-	EmptyWithOptionalBlock.reset(new DeclCallable());
-	Wildcard.reset(new DeclCallable());
-	EmptyWithBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
-	EmptyWithOptionalBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
-	Wildcard->GetDeclArgOwner().push_back(
-		new DeclArg(Gurax_Symbol(x), VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr));
-	Wildcard->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
-	Wildcard->SetFlags(Flag::AnyAttr);
+	do {
+		Empty.reset(new DeclCallable());
+	} while (0);
+	do {
+		EmptyWithBlock.reset(new DeclCallable());
+		DeclCallable& dc = *EmptyWithBlock;
+		dc.GetDeclBlock().SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
+	} while (0);
+	do {
+		EmptyWithOptionalBlock.reset(new DeclCallable());
+		DeclCallable& dc = *EmptyWithOptionalBlock;
+		dc.GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
+	} while (0);
+	do {
+		Wildcard.reset(new DeclCallable());
+		DeclCallable& dc = *Wildcard;
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(x), VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr));
+		dc.GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
+		dc.SetFlags(Flag::AnyAttr);
+	} while (0);
+	do {
+		Unary.reset(new DeclCallable());
+		DeclCallable& dc = *Unary;
+
+	} while (0);
+	do {
+		Binary.reset(new DeclCallable());
+		DeclCallable& dc = *Binary;
+		
+	} while (0);
 }
 
 DeclCallable::DeclCallable(Flags flags) :

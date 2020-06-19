@@ -97,6 +97,8 @@ public:
 	static RefPtr<DeclCallable> EmptyWithBlock;
 	static RefPtr<DeclCallable> EmptyWithOptionalBlock;
 	static RefPtr<DeclCallable> Wildcard;
+	static RefPtr<DeclCallable> Unary;
+	static RefPtr<DeclCallable> Binary;
 public:
 	static void Bootup();
 public:

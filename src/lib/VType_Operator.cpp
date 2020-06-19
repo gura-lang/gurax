@@ -187,4 +187,30 @@ String Value_Operator::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetOperator().ToString(ss));
 }
 
+const DeclCallable* Value_Operator::GetDeclCallable()
+{
+	//return &GetFunction().GetDeclCallable();
+	return nullptr;
+}
+
+void Value_Operator::DoCall(Processor& processor, Argument& argument)
+{
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
+	RefPtr<Value> pValueResult(DoEval(processor, argument));
+	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValueResult.release());
+	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
+}
+
+Value* Value_Operator::DoEval(Processor& processor, Argument& argument) const
+{
+	ArgPicker args(argument);
+	Value& value = args.PickValue();
+	if (args.IsValid()) {
+		Value& valueRight = args.PickValue();
+		return GetOperator().EvalBinary(processor, value, valueRight);
+	} else {
+		return GetOperator().EvalUnary(processor, value);
+	}
+}
+
 }

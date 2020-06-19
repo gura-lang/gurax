@@ -73,6 +73,10 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	virtual const DeclCallable* GetDeclCallable() override;
+	virtual void DoCall(Processor& processor, Argument& argument) override;
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 };
 
 }
