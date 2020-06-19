@@ -356,7 +356,7 @@ f {Error.Raise(Error.PropertyError, '')} .. 2nd handler caught PropertyError
 f {Error.Raise(Error.StreamError, '')} .. 3rd handler caught StreamError
 f {Error.Raise(Error.SymbolError, '')} .. 3rd handler caught SymbolError
 ======== finally statement ========
-<Function:f1() {block}>
+<Function:f1(){block}>
 ----
 raise nothing .. result=end-of-function
 ----
@@ -365,7 +365,7 @@ raise SyntaxError .. result=end-of-function
 raise KeyError .. result=end-of-function
 ----
 raise IOError .. result=end-of-function
-<Function:f2() {block}>
+<Function:f2(){block}>
 ----
 raise nothing .. result=else-result
 ----
@@ -374,7 +374,7 @@ raise SyntaxError .. result=catch-any-result:SyntaxError
 raise KeyError .. result=catch-any-result:KeyError
 ----
 raise IOError .. result=catch-any-result:IOError
-<Function:f3() {block}>
+<Function:f3(){block}>
 ----
 else
 finally
@@ -391,7 +391,7 @@ raise KeyError .. result=catch-KeyError-result
 catch-any
 finally
 raise IOError .. result=catch-any-result:IOError
-<Function:f4() {block}>
+<Function:f4(){block}>
 ----
 else
 finally

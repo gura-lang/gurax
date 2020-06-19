@@ -129,10 +129,10 @@ Gurax_ImplementClassMethod(Operator, UnaryPost)
 // Operator#name
 Gurax_DeclareProperty_R(Operator, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Name of the operator.");
 }
 
 Gurax_ImplementPropertyGetter(Operator, name)
@@ -141,13 +141,28 @@ Gurax_ImplementPropertyGetter(Operator, name)
 	return new Value_String(valueThis.GetOperator().GetName());
 }
 
+// Operator#style
+Gurax_DeclareProperty_R(Operator, style)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A symbol of the operator's style.");
+}
+
+Gurax_ImplementPropertyGetter(Operator, style)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetOperator().GetStyleAsSymbol());
+}
+
 // Operator#symbol
 Gurax_DeclareProperty_R(Operator, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Symbol of the operator.");
 }
 
 Gurax_ImplementPropertyGetter(Operator, symbol)
@@ -174,6 +189,7 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Operator, UnaryPost));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Operator, name));
+	Assign(Gurax_CreateProperty(Operator, style));
 	Assign(Gurax_CreateProperty(Operator, symbol));
 }
 

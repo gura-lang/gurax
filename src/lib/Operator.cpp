@@ -115,6 +115,16 @@ void Operator::Bootup()
 	}
 }
 
+const Symbol* Operator::GetStyleAsSymbol() const
+{
+	return
+		IsUnary()? Gurax_Symbol(unary) :
+		IsUnaryPost()? Gurax_Symbol(unaryPost) :
+		IsBinary()? Gurax_Symbol(binary) :
+		IsMathUnary()? Gurax_Symbol(mathUnary) :
+		IsMathBinary()? Gurax_Symbol(mathBinary) : Symbol::Empty;
+}
+
 const TokenType& Operator::GetTokenType() const
 {
 	return TokenType::OpTypeToTokenType(_opType);

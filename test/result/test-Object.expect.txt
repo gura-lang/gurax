@@ -12,7 +12,7 @@ p1=v1-mod p2=44 p3=v3
 ======== Object#ToString() ========
 math.e.ToString() .. 2.71828
 true.ToString() .. true
-Printf.ToString() .. <Function:Printf(format:String, values*:Any):map>
+Printf.ToString() .. <Function:Printf(format:String,values*:Any):map>
 % {}.ToString() .. %{}
 [].ToString() .. []
 [1, 2, 3, 4, `foo, 'bar'].ToString() .. [1, 2, 3, 4, `foo, 'bar']

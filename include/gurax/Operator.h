@@ -329,6 +329,7 @@ public:
 	bool IsBinary() const				{ return _opStyle == OpStyle::Binary; }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
+	const Symbol* GetStyleAsSymbol() const;
 	const TokenType& GetTokenType() const;
 public:
 	void AssignEntry(const VType& vtype, OpEntry* pOpEntry) {

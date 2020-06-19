@@ -70,7 +70,8 @@ VType& Value_Argument::vtype = VTYPE_Argument;
 
 String Value_Argument::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetArgument().ToString(ss));
+	return ToStringGeneric(ss, GetArgument().ToString(
+							ss.IsUnbracket()? ss : StringStyle::Cram));
 }
 
 }

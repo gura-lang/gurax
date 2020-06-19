@@ -146,7 +146,7 @@ Function
   #name             String       R
   #type             Symbol       R
 ======== Default Value (1) ========
-f .. <Function:f(a = 'A', b = 'B', c = 'C', d = 'D', e = 'E')>
+f .. <Function:f(a='A',b='B',c='C',d='D',e='E')>
 f() .. a=A, b=B, c=C, d=D, e=E
 f(a = 'A-mod') .. a=A-mod, b=B, c=C, d=D, e=E
 f(b = 'B-mod') .. a=A, b=B-mod, c=C, d=D, e=E
@@ -156,7 +156,7 @@ f(e = 'E-mod') .. a=A, b=B, c=C, d=D, e=E-mod
 f('A-mod', 'B-mod', 'C-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D, e=E
 f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D-mod, e=E-mod
 ======== Default Value (2) ========
-f .. <Function:f(a = 'A', b = 'B', c, d = 'D', e = 'E')>
+f .. <Function:f(a='A',b='B',c,d='D',e='E')>
 f() .. lacking value for argument 'c'
 f(a = 'A-mod', c = 'C') .. a=A-mod, b=B, c=C, d=D, e=E
 f(b = 'B-mod', c = 'C') .. a=A, b=B-mod, c=C, d=D, e=E
@@ -166,7 +166,7 @@ f(e = 'E-mod', c = 'C') .. a=A, b=B, c=C, d=D, e=E-mod
 f('A-mod', 'B-mod', 'C-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D, e=E
 f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D-mod, e=E-mod
 ======== Optional Argument ========
-f .. <Function:f(a?, b?, c?)>
+f .. <Function:f(a?,b?,c?)>
 f() .. a=<Nil>, b=<Nil>, c=<Nil>
 f(1) .. a=1, b=<Nil>, c=<Nil>
 f(1, 2) .. a=1, b=2, c=<Nil>
@@ -201,13 +201,13 @@ g(nil) .. <Nil>
 [dynamic, block] a = local
 ======== Named argument ========
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f1(dict%, arg%%)>:((%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:<Function:f1(dict%,arg%%)>:((%{`d1=>1,`d2=>2,`d3=>3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2(a, b, c, dict%, arg%%)>:(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:<Function:f2(a,b,c,dict%,arg%%)>:(a=10,b=20,c=30,(%{`d1=>1,`d2=>2,`d3=>3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2(a, b, c, dict%, arg%%)>:(a = 10, b = 20, c = 30, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:<Function:f2(a,b,c,dict%,arg%%)>:(a=10,b=20,c=30,(%{`d1=>1,`d2=>2,`d3=>3})%)>
 %{`d1 => 1, `d2 => 2, `d3 => 3}
-<Argument:<Function:f2(a, b, c, dict%, arg%%)>:(a = 30, b = 10, c = 20, (%{`d1 => 1, `d2 => 2, `d3 => 3})%)>
+<Argument:<Function:f2(a,b,c,dict%,arg%%)>:(a=30,b=10,c=20,(%{`d1=>1,`d2=>2,`d3=>3})%)>
 ======== Cast of List Value ========
 [1, 2, 3]
 ['1', '2', '3']
@@ -232,11 +232,11 @@ g(a, b, c)
   ##7 Lookup(`c)
   ##8 Call(cont=##9)
 ======== block ========
-f .. <Function:f() {block}>
-g .. <Function:g() {`block}>
+f .. <Function:f(){block}>
+g .. <Function:g(){`block}>
 f {}.type .. `function
 g {}.type .. `Block
-f {|v1, v2| func(a, b, c)} .. <Function:block(v1, v2):cutExtraArgs>
+f {|v1, v2| func(a, b, c)} .. <Function:block(v1,v2):cutExtraArgs>
 g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
 ======== Property ========
 Fact.expr .. if (n <= 1) {1} else {n * Fact(n - 1)}
@@ -253,7 +253,7 @@ Fact.type .. `function
 {f = Function(v[]) {}, f} .. <Function:f(v[])>
 {f = Function(v[]) {}, f([1, 2, 3])} .. <Nil>
 {f = Function(v[]) {}, f()} .. lacking value for argument 'v'
-{f = Function(v1, v2, v3, v4, v5, v6) {}, f} .. <Function:f(v1, v2, v3, v4, v5, v6)>
+{f = Function(v1, v2, v3, v4, v5, v6) {}, f} .. <Function:f(v1,v2,v3,v4,v5,v6)>
 {f = Function(v1, v2, v3, v4, v5, v6) {}, f(1, 2, 3, 4, 5, 6)} .. <Nil>
 {f = Function(v1, v2, v3, v4, v5, v6) {g(v1, v2, v3, v4, v5, v6)}, f(1, 2, 3, 4, 5, 6)} .. [1,2,3,4,5,6]
 {f = Function(v1, v2, v3, v4, v5, v6) {}, f(3)} .. lacking value for argument 'v2'
@@ -265,24 +265,24 @@ Fact.type .. `function
 {f = & {$a}, f()} .. lacking value for argument '$a'
 {f = & {$a}, f(3)} .. 3
 {f = & {$a}, f(3, 4)} .. too many arguments
-{f = & {$a + $b}, f} .. <Function:f($a:Any, $b:Any)>
+{f = & {$a + $b}, f} .. <Function:f($a:Any,$b:Any)>
 {f = & {$a + $b}, f(3, 4)} .. 7
-{f = & {((($a + $b) + $c) + $d) + $e}, f} .. <Function:f($a:Any, $b:Any, $c:Any, $d:Any, $e:Any)>
+{f = & {((($a + $b) + $c) + $d) + $e}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any,$e:Any)>
 {f = & {((($a + $b) + $c) + $d) + $e}, f(3, 4, 5, 6, 7)} .. 25
-{f = & {$a + ($b * $c)}, f} .. <Function:f($a:Any, $b:Any, $c:Any)>
+{f = & {$a + ($b * $c)}, f} .. <Function:f($a:Any,$b:Any,$c:Any)>
 {f = & {$a + ($b * $c)}, f(3, 4, 5)} .. 23
-{f = & {($a * $b) + $c}, f} .. <Function:f($a:Any, $b:Any, $c:Any)>
+{f = & {($a * $b) + $c}, f} .. <Function:f($a:Any,$b:Any,$c:Any)>
 {f = & {($a * $b) + $c}, f(3, 4, 5)} .. 17
-{f = & {g($a, $b, $c) + $d}, f} .. <Function:f($a:Any, $b:Any, $c:Any, $d:Any)>
+{f = & {g($a, $b, $c) + $d}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any)>
 {f = & {g($a, $b, $c) + $d}, f(3, 4, 5, 6)} .. 18
-{f = & {$a + g($b, $c, $d)}, f} .. <Function:f($a:Any, $b:Any, $c:Any, $d:Any)>
+{f = & {$a + g($b, $c, $d)}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any)>
 {f = & {$a + g($b, $c, $d)}, f(3, 4, 5, 6)} .. 18
 {f = & {$a + $a}, f} .. <Function:f($a:Any)>
 {f = & {$a + $a}, f(3)} .. 6
 ======== Variable Expansion by Asterisk Operator ========
-f1 .. <Function:f1(a, b*)>
-f2 .. <Function:f2(a, b, c, d, e*)>
-f3 .. <Function:f3(a, b, c, d, e)>
+f1 .. <Function:f1(a,b*)>
+f2 .. <Function:f2(a,b,c,d,e*)>
+f3 .. <Function:f3(a,b,c,d,e)>
 f4 .. <Function:f4(a*)>
 f1(x*) .. lacking value for argument 'a'
 f2(x*) .. lacking value for argument 'a'

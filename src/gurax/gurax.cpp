@@ -83,6 +83,7 @@ bool Main(int argc, char* argv[])
 void RunREPL()
 {
 	const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
+	StringStyle ssResult(StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol);
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer(true);
 	Processor& processor = Basement::Inst.GetProcessor();
@@ -127,8 +128,10 @@ void RunREPL()
 				if (Error::IsIssued()) break;
 			}
 			if (Error::IsIssued()) break;
-			RefPtr<Value> pValue(processor.PopValue());
-			if (pValue->IsValid()) Stream::COut->Printf("%s\n", pValue->ToString().c_str());
+			RefPtr<Value> pValueResult(processor.PopValue());
+			if (pValueResult->IsValid()) {
+				Stream::COut->Printf("%s\n", pValueResult->ToString(ssResult).c_str());
+			}
 		}
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
