@@ -226,36 +226,32 @@ Operator* Operator::LookupMath(const Symbol* pSymbol)
 
 String Operator::ToString(const StringStyle& ss) const
 {
-	return String().Format("Operator:%s:%s:%s",
-		IsUnary()? "Unary" : IsUnaryPost()? "UnaryPost" : IsBinary()? "Binary" :
-		IsMathUnary()? "MathUnary" : IsMathBinary()? "MathBinary" : "none",
-		GetName(), GetSymbol()->GetName());
+	return
+		IsUnary()? String().Format("Operator:Unary:%s:%s", GetName(), GetSymbol()->GetName()) :
+		IsUnaryPost()? String().Format("Operator:UnaryPost:%s:%s", GetName(), GetSymbol()->GetName()) :
+		IsBinary()? String().Format("Operator:Binary:%s:%s", GetName(), GetSymbol()->GetName()) :
+		IsMathUnary()? String().Format("Operator:MathUnary:%s", GetSymbol()->GetName()) :
+		IsMathBinary()? String().Format("Operator:MathBinary:%s", GetSymbol()->GetName()) :
+		String::Empty;
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 {
-	String str;
-	if (IsUnary()) {
-		str.Format("%s%s", GetSymbol()->GetName(), vtype.MakeFullName().c_str());
-	} else if (IsUnaryPost()) {
-		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol()->GetName());
-	} else if (IsMathUnary()) {
-		str.Format("math.%s(%s)", GetSymbol()->GetName(), vtype.MakeFullName().c_str());
-	}
-	return str;
+	return
+		IsUnary()? String().Format("%s%s", GetSymbol()->GetName(), vtype.MakeFullName().c_str()) :
+		IsUnaryPost()? String().Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol()->GetName()) :
+		IsMathUnary()? String().Format("math.%s(%s)", GetSymbol()->GetName(), vtype.MakeFullName().c_str()) :
+		String::Empty;
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtypeL, const VType& vtypeR) const
 {
-	String str;
-	if (IsBinary()) {
-		const char* format = ss.IsCram()? "%s%s%s" : "%s %s %s";
-		str.Format(format, vtypeL.MakeFullName().c_str(), GetSymbol()->GetName(), vtypeR.MakeFullName().c_str());
-	} else if (IsMathBinary()) {
-		const char* format = ss.IsCram()? "math.%s(%s,%s)" : "math.%s(%s, %s)";
-		str.Format(format, GetSymbol()->GetName(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
-	}
-	return str;
+	return
+		IsBinary()? String().Format(ss.IsCram()? "%s%s%s" : "%s %s %s",
+			vtypeL.MakeFullName().c_str(), GetSymbol()->GetName(), vtypeR.MakeFullName().c_str()) :
+		IsMathBinary()? String().Format(ss.IsCram()? "math.%s(%s,%s)" : "math.%s(%s, %s)",
+			GetSymbol()->GetName(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str()) :
+		String::Empty;
 }
 
 //------------------------------------------------------------------------------
