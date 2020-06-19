@@ -144,6 +144,17 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 	return nullptr;
 }
 
+const DeclCallable& Operator::GetDeclCallable() const
+{
+	return
+		IsUnary()? *DeclCallable::Unary :
+		IsUnaryPost()? *DeclCallable::Unary :
+		IsBinary()? (GetMapFlag()? *DeclCallable::Binary : *DeclCallable::Binary_NoMap) :
+		IsMathUnary()? *DeclCallable::Unary :
+		IsMathBinary()? *DeclCallable::Binary :
+		*DeclCallable::Empty;
+}
+
 Value* Operator::EvalUnary(Processor& processor, Value& value)
 {
 	if (GetMapFlag()) {
@@ -226,13 +237,16 @@ Operator* Operator::LookupMath(const Symbol* pSymbol)
 
 String Operator::ToString(const StringStyle& ss) const
 {
-	return
+	String str =
 		IsUnary()? String().Format("Operator:Unary:%s:%s", GetName(), GetSymbol()->GetName()) :
 		IsUnaryPost()? String().Format("Operator:UnaryPost:%s:%s", GetName(), GetSymbol()->GetName()) :
 		IsBinary()? String().Format("Operator:Binary:%s:%s", GetName(), GetSymbol()->GetName()) :
 		IsMathUnary()? String().Format("Operator:MathUnary:%s", GetSymbol()->GetName()) :
 		IsMathBinary()? String().Format("Operator:MathBinary:%s", GetSymbol()->GetName()) :
 		String::Empty;
+	str += ":";
+	str += GetDeclCallable().ToString(ss);
+	return str;
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtype) const

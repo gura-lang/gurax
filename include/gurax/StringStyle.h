@@ -39,6 +39,7 @@ public:
 	static const StringStyle QuoteString;
 	static const StringStyle QuoteSymbol;
 	static const StringStyle Quote_NilVisible;
+	static const StringStyle Cram;
 public:
 	// Constructor
 	explicit StringStyle(Flags flags = Flag::None, const char* indentUnit = "  ") :

@@ -98,7 +98,11 @@ public:
 	static RefPtr<DeclCallable> EmptyWithOptionalBlock;
 	static RefPtr<DeclCallable> Wildcard;
 	static RefPtr<DeclCallable> Unary;
+	static RefPtr<DeclCallable> UnaryPost;
 	static RefPtr<DeclCallable> Binary;
+	static RefPtr<DeclCallable> Binary_NoMap;
+	static RefPtr<DeclCallable> MathUnary;
+	static RefPtr<DeclCallable> MathBinary;
 public:
 	static void Bootup();
 public:

@@ -346,6 +346,7 @@ public:
 	const OpEntry* FindMatchedEntry(const VType& vtype) const;
 	const OpEntry* FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const;
 public:
+	const DeclCallable& GetDeclCallable() const;
 	Value* EvalUnary(Processor& processor, Value& value);
 	Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR);
 	String ToString(const StringStyle& ss) const;

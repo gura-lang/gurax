@@ -13,7 +13,11 @@ RefPtr<DeclCallable> DeclCallable::EmptyWithBlock;
 RefPtr<DeclCallable> DeclCallable::EmptyWithOptionalBlock;
 RefPtr<DeclCallable> DeclCallable::Wildcard;
 RefPtr<DeclCallable> DeclCallable::Unary;
+RefPtr<DeclCallable> DeclCallable::UnaryPost;
 RefPtr<DeclCallable> DeclCallable::Binary;
+RefPtr<DeclCallable> DeclCallable::Binary_NoMap;
+RefPtr<DeclCallable> DeclCallable::MathUnary;
+RefPtr<DeclCallable> DeclCallable::MathBinary;
 
 void DeclCallable::Bootup()
 {
@@ -41,12 +45,49 @@ void DeclCallable::Bootup()
 	do {
 		Unary.reset(new DeclCallable());
 		DeclCallable& dc = *Unary;
-
+		dc.SetFlags(DeclCallable::Flag::Map);
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+	} while (0);
+	do {
+		UnaryPost.reset(new DeclCallable());
+		DeclCallable& dc = *UnaryPost;
+		dc.SetFlags(DeclCallable::Flag::Map);
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		Binary.reset(new DeclCallable());
 		DeclCallable& dc = *Binary;
-		
+		dc.SetFlags(DeclCallable::Flag::Map);
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+	} while (0);
+	do {
+		Binary_NoMap.reset(new DeclCallable());
+		DeclCallable& dc = *Binary_NoMap;
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+	} while (0);
+	do {
+		MathUnary.reset(new DeclCallable());
+		DeclCallable& dc = *MathUnary;
+		dc.SetFlags(DeclCallable::Flag::Map);
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+	} while (0);
+	do {
+		MathBinary.reset(new DeclCallable());
+		DeclCallable& dc = *MathBinary;
+		dc.SetFlags(DeclCallable::Flag::Map);
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+		dc.GetDeclArgOwner().push_back(
+			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 }
 

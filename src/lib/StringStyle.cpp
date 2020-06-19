@@ -15,6 +15,7 @@ const StringStyle StringStyle::QuoteSymbol(StringStyle::Flag::QuoteSymbol);
 const StringStyle StringStyle::Quote_NilVisible(
 	StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol |
 	StringStyle::Flag::NilVisible);
+const StringStyle StringStyle::Cram(StringStyle::Flag::Cram);
 
 const char* StringStyle::_strsComma[2]		{ ", ", "," };
 const char* StringStyle::_strsColon[2]		{ ": ", ":" };
@@ -26,9 +27,9 @@ void StringStyle::DeclareAttrOpt(Function& func)
 	func.DeclareAttrOpt(Gurax_Symbol(quoteString));
 	func.DeclareAttrOpt(Gurax_Symbol(quoteSymbol));
 	func.DeclareAttrOpt(Gurax_Symbol(nilVisible));
-	//func.DeclareAttrOpt(Gurax_Symbol(cram));
-	//func.DeclareAttrOpt(Gurax_Symbol(multiLine));
-	//func.DeclareAttrOpt(Gurax_Symbol(verbose));
+	func.DeclareAttrOpt(Gurax_Symbol(cram));
+	func.DeclareAttrOpt(Gurax_Symbol(multiLine));
+	func.DeclareAttrOpt(Gurax_Symbol(verbose));
 }
 
 StringStyle::Flags StringStyle::ToFlags(const Argument& argument)

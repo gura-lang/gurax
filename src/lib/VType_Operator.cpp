@@ -184,13 +184,12 @@ VType& Value_Operator::vtype = VTYPE_Operator;
 
 String Value_Operator::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetOperator().ToString(ss));
+	return ToStringGeneric(ss, GetOperator().ToString(StringStyle::Cram));
 }
 
 const DeclCallable* Value_Operator::GetDeclCallable()
 {
-	//return &GetFunction().GetDeclCallable();
-	return nullptr;
+	return &GetOperator().GetDeclCallable();
 }
 
 void Value_Operator::DoCall(Processor& processor, Argument& argument)

@@ -161,7 +161,8 @@ VType& Value_Function::vtype = VTYPE_Function;
 
 String Value_Function::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetFunction().ToString(ss));
+	return ToStringGeneric(ss, GetFunction().ToString(
+							ss.IsUnbracket()? ss : StringStyle::Cram));
 }
 
 void Value_Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const
