@@ -663,7 +663,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::Unary: {
 		bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
-		str += GetOperator()->GetSymbol();
+		str += GetOperator()->GetSymbol()->GetName();
 		if (requireParFlag) str += '(';
 		str += GetExprChild().ToString(ss);
 		if (requireParFlag) str += ')';
@@ -672,21 +672,21 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::UnaryPost: {
 		if (GetExprChild().IsType<Expr_Identifier>()) {
 			const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(GetExprChild());
-			str += exprEx.ToString(ss, GetOperator()->GetSymbol());
+			str += exprEx.ToString(ss, GetOperator()->GetSymbol()->GetName());
 		} else if (GetExprChild().IsType<Expr_Indexer>()) {
 			const Expr_Indexer& exprEx = dynamic_cast<const Expr_Indexer&>(GetExprChild());
-			str += exprEx.ToString(ss, GetOperator()->GetSymbol());
+			str += exprEx.ToString(ss, GetOperator()->GetSymbol()->GetName());
 		} else {
 			bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 			if (requireParFlag) str += '(';
 			str += GetExprChild().ToString(ss);
 			if (requireParFlag) str += ')';
-			str += GetOperator()->GetSymbol();
+			str += GetOperator()->GetSymbol()->GetName();
 		}
 		break;
 	}
 	case OpStyle::MathUnary: {
-		str += GetOperator()->GetSymbol();
+		str += GetOperator()->GetSymbol()->GetName();
 		str += '(';
 		str += GetExprChild().ToString(ss);
 		str += ')';
@@ -739,7 +739,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 			if (needParenFlag) str += ')';
 		} while (0);
 		if (!ss.IsCram()) str += ' ';
-		str += GetOperator()->GetSymbol();
+		str += GetOperator()->GetSymbol()->GetName();
 		if (!ss.IsCram()) str += ' ';
 		do {
 			bool needParenFlag =
@@ -751,7 +751,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 		break;
 	}
 	case OpStyle::MathBinary: {
-		str += GetOperator()->GetSymbol();
+		str += GetOperator()->GetSymbol()->GetName();
 		str += '(';
 		str += GetExprLeft().ToString(ss);
 		str += ss.GetComma();
@@ -820,7 +820,7 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 	String str;
 	str += GetExprLeft().ToString(ss);
 	if (!ss.IsCram()) str += ' ';
-	if (GetOperator()) str += GetOperator()->GetSymbol();
+	if (GetOperator()) str += GetOperator()->GetSymbol()->GetName();
 	str += '=';
 	if (!ss.IsCram()) str += ' ';
 	str += GetExprRight().ToString(ss);

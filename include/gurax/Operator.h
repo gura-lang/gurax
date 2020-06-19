@@ -215,7 +215,7 @@ public:
 private:
 	OpStyle _opStyle;
 	const char* _name;
-	const char* _symbol;
+	const Symbol* _pSymbol;
 	OpType _opType;
 	Flags _flags;
 	OpEntryMap _opEntryMap;
@@ -319,7 +319,7 @@ public:
 public:
 	OpStyle GetStyle() const			{ return _opStyle; }
 	const char* GetName() const			{ return _name; }
-	const char* GetSymbol() const		{ return _symbol; }
+	const Symbol* GetSymbol() const		{ return _pSymbol; }
 	OpType GetType() const				{ return _opType; }
 	bool GetRawFlag() const				{ return (_flags & Flag::Raw) != 0; }
 	bool GetMapFlag() const				{ return (_flags & Flag::Map) != 0; }

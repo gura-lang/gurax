@@ -831,7 +831,7 @@ template<bool discardValueFlag>
 String PUnit_UnaryOp<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("UnaryOp(%s)", GetOperator()->GetSymbol());
+	str.Format("UnaryOp(%s)", GetOperator()->GetSymbol()->GetName());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -869,7 +869,7 @@ template<bool discardValueFlag>
 String PUnit_BinaryOp<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("BinaryOp(%s)", GetOperator()->GetSymbol());
+	str.Format("BinaryOp(%s)", GetOperator()->GetSymbol()->GetName());
 	AppendInfoToString(str, ss);
 	return str;
 }

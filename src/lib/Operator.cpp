@@ -93,7 +93,7 @@ Operator* Operator::math_Tanh		= new Operator(OpStyle::MathUnary,		"math.Tanh",	
 Operator* Operator::math_Unitstep	= new Operator(OpStyle::MathUnary,		"math.Unitstep","Unitstep",		OpType::math_Unitstep);
 
 Operator::Operator(OpStyle opStyle, const char* name, const char* symbol, OpType opType, Flags flags) :
-	_opStyle(opStyle), _name(name), _symbol(symbol), _opType(opType), _flags(flags)
+	_opStyle(opStyle), _name(name), _pSymbol(Symbol::Add(symbol)), _opType(opType), _flags(flags)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;
 }
@@ -102,7 +102,7 @@ void Operator::Bootup()
 {
 	for (size_t i = 0; i < static_cast<int>(OpType::max); i++) {
 		Operator* pOp = _operatorTbl[i];
-		const Symbol* pSymbol = Symbol::Add(pOp->GetSymbol());
+		const Symbol* pSymbol = pOp->GetSymbol();
 		if (pOp->IsUnary()) {
 			_operatorMap_Unary[pSymbol] = pOp;
 		} else if (pOp->IsUnaryPost()) {
@@ -229,18 +229,18 @@ String Operator::ToString(const StringStyle& ss) const
 	return String().Format("Operator:%s:%s:%s",
 		IsUnary()? "Unary" : IsUnaryPost()? "UnaryPost" : IsBinary()? "Binary" :
 		IsMathUnary()? "MathUnary" : IsMathBinary()? "MathBinary" : "none",
-		GetName(), GetSymbol());
+		GetName(), GetSymbol()->GetName());
 }
 
 String Operator::ToString(const StringStyle& ss, const VType& vtype) const
 {
 	String str;
 	if (IsUnary()) {
-		str.Format("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
+		str.Format("%s%s", GetSymbol()->GetName(), vtype.MakeFullName().c_str());
 	} else if (IsUnaryPost()) {
-		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
+		str.Format("%s%s", vtype.MakeFullName().c_str(), GetSymbol()->GetName());
 	} else if (IsMathUnary()) {
-		str.Format("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
+		str.Format("math.%s(%s)", GetSymbol()->GetName(), vtype.MakeFullName().c_str());
 	}
 	return str;
 }
@@ -250,10 +250,10 @@ String Operator::ToString(const StringStyle& ss, const VType& vtypeL, const VTyp
 	String str;
 	if (IsBinary()) {
 		const char* format = ss.IsCram()? "%s%s%s" : "%s %s %s";
-		str.Format(format, vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
+		str.Format(format, vtypeL.MakeFullName().c_str(), GetSymbol()->GetName(), vtypeR.MakeFullName().c_str());
 	} else if (IsMathBinary()) {
 		const char* format = ss.IsCram()? "math.%s(%s,%s)" : "math.%s(%s, %s)";
-		str.Format(format, GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
+		str.Format(format, GetSymbol()->GetName(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
 	}
 	return str;
 }

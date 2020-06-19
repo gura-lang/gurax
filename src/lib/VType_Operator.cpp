@@ -99,11 +99,35 @@ Gurax_ImplementClassMethod(Operator, Unary)
 	return new Value_Operator(pOp);
 }
 
+// Operator.UnaryPost(symbol:Symbol)
+Gurax_DeclareClassMethod(Operator, UnaryPost)
+{
+	Declare(VTYPE_Operator, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an Operator instance of unary-post one.");
+}
+
+Gurax_ImplementClassMethod(Operator, UnaryPost)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	Operator* pOp = Operator::LookupUnaryPost(pSymbol);
+	if (!pOp) {
+		Error::Issue(ErrorType::SymbolError, "unknown unary-post operator: %s", pSymbol->GetName());
+		return Value::nil();
+	}
+	return new Value_Operator(pOp);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Operator#propSkeleton
-Gurax_DeclareProperty_R(Operator, propSkeleton)
+// Operator#name
+Gurax_DeclareProperty_R(Operator, name)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -111,10 +135,25 @@ Gurax_DeclareProperty_R(Operator, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Operator, propSkeleton)
+Gurax_ImplementPropertyGetter(Operator, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetOperator().GetName());
+}
+
+// Operator#symbol
+Gurax_DeclareProperty_R(Operator, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Operator, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetOperator().GetSymbol());
 }
 
 //------------------------------------------------------------------------------
@@ -132,8 +171,10 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Operator, Binary));
 	Assign(Gurax_CreateMethod(Operator, Math));
 	Assign(Gurax_CreateMethod(Operator, Unary));
+	Assign(Gurax_CreateMethod(Operator, UnaryPost));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Operator, propSkeleton));
+	Assign(Gurax_CreateProperty(Operator, name));
+	Assign(Gurax_CreateProperty(Operator, symbol));
 }
 
 //------------------------------------------------------------------------------

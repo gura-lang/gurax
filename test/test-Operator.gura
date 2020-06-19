@@ -1,0 +1,16 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Constructor') {
+	Tester(`Operator.Unary(`~))
+	Tester(`Operator.Unary(`-))
+	Tester(`Operator.Unary(`!))
+	Tester(`Operator.Unary(`+))
+	Tester(`Operator.Unary(`?))
+	Tester(`Operator.UnaryPost(`%))
+	Tester(`Operator.UnaryPost(`%%))
+	Tester(`Operator.UnaryPost(`*))
+	Tester(`Operator.UnaryPost(`+))
+	Tester(`Operator.UnaryPost(`?))
+	Tester(`Operator.UnaryPost(`..))
+}
