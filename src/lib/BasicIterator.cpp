@@ -11,10 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Iterator_Const::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += "Const:";
-	str += _pValue->ToString();
-	return str;
+	return String().Format("Const:%s", _pValue->ToString().c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -29,11 +26,7 @@ Value* Iterator_ConstN::DoNextValue()
 
 String Iterator_ConstN::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += "ConstN:";
-	str += _pValue->ToString();
-	str.Format(":n=%zu", _num);
-	return str;
+	return String().Format("ConstN:%s:n=%zu", _pValue->ToString().c_str(), _num);
 }
 
 //------------------------------------------------------------------------------
