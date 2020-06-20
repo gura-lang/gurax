@@ -171,6 +171,11 @@ void Expr::ComposeWithinArgSlot(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
+bool Expr::IsPureAssign() const
+{
+	return IsType<Expr_Assign>() && !InspectOperator();
+}
+
 //------------------------------------------------------------------------------
 // Expr::Visitor_GatherArgSymbols
 //------------------------------------------------------------------------------

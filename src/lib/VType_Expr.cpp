@@ -155,7 +155,7 @@ Gurax_ImplementMethod(Expr, Eval)
 	return expr.Eval(processor);
 }
 
-// Expr#IsAssign
+// Expr#IsAssign()
 Gurax_DeclareMethod(Expr, IsAssign)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -172,10 +172,28 @@ Gurax_ImplementMethod(Expr, IsAssign)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Assign>());
 }
 
-// Expr#IsBinaryOp
+// Expr#IsPureAssign()
+Gurax_DeclareMethod(Expr, IsPureAssign)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Assign without any operation.");
+}
+
+Gurax_ImplementMethod(Expr, IsPureAssign)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsPureAssign());
+}
+
+// Expr#IsBinaryOp(symbol?:Symbol)
 Gurax_DeclareMethod(Expr, IsBinaryOp)
 {
 	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is BinaryOp");
@@ -185,11 +203,17 @@ Gurax_ImplementMethod(Expr, IsBinaryOp)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_BinaryOp>());
+	bool rtn = expr.IsType<Expr_BinaryOp>() &&
+		(!pSymbol || expr.InspectOperator()->GetSymbol()->IsIdentical(pSymbol));
+	return new Value_Bool(rtn);
 }
 
-// Expr#IsBlock
+// Expr#IsBlock()
 Gurax_DeclareMethod(Expr, IsBlock)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -206,7 +230,7 @@ Gurax_ImplementMethod(Expr, IsBlock)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Block>());
 }
 
-// Expr#IsCaller
+// Expr#IsCaller()
 Gurax_DeclareMethod(Expr, IsCaller)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -223,24 +247,32 @@ Gurax_ImplementMethod(Expr, IsCaller)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Caller>());
 }
 
-// Expr#IsIdentifier
+// Expr#IsIdentifier(symbol?:Symbol)
 Gurax_DeclareMethod(Expr, IsIdentifier)
 {
 	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Identifier");
+		"Returns `true` if the expression is Identifier.\n"
+		"If the argument `symbol` is specifieid,\n"
+		"it also checks if the identifier's symbol matches with that.\n");
 }
 
 Gurax_ImplementMethod(Expr, IsIdentifier)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Identifier>());
+	bool rtn = expr.IsType<Expr_Identifier>() && (!pSymbol || expr.IsSymbol(pSymbol));
+	return new Value_Bool(rtn);
 }
 
-// Expr#IsIndexer
+// Expr#IsIndexer()
 Gurax_DeclareMethod(Expr, IsIndexer)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -257,7 +289,7 @@ Gurax_ImplementMethod(Expr, IsIndexer)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Indexer>());
 }
 
-// Expr#IsIterer
+// Expr#IsIterer()
 Gurax_DeclareMethod(Expr, IsIterer)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -274,7 +306,7 @@ Gurax_ImplementMethod(Expr, IsIterer)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Iterer>());
 }
 
-// Expr#IsLister
+// Expr#IsLister()
 Gurax_DeclareMethod(Expr, IsLister)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -291,7 +323,7 @@ Gurax_ImplementMethod(Expr, IsLister)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Lister>());
 }
 
-// Expr#IsMember
+// Expr#IsMember()
 Gurax_DeclareMethod(Expr, IsMember)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -308,7 +340,7 @@ Gurax_ImplementMethod(Expr, IsMember)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Member>());
 }
 
-// Expr#IsRoot
+// Expr#IsRoot()
 Gurax_DeclareMethod(Expr, IsRoot)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -325,7 +357,7 @@ Gurax_ImplementMethod(Expr, IsRoot)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Root>());
 }
 
-// Expr#IsSuffixed
+// Expr#IsSuffixed()
 Gurax_DeclareMethod(Expr, IsSuffixed)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -342,10 +374,11 @@ Gurax_ImplementMethod(Expr, IsSuffixed)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Suffixed>());
 }
 
-// Expr#IsUnaryOp
+// Expr#IsUnaryOp()
 Gurax_DeclareMethod(Expr, IsUnaryOp)
 {
 	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the expression is UnaryOp");
@@ -355,11 +388,17 @@ Gurax_ImplementMethod(Expr, IsUnaryOp)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_UnaryOp>());
+	bool rtn = expr.IsType<Expr_UnaryOp>() &&
+		(!pSymbol || expr.InspectOperator()->GetSymbol()->IsIdentical(pSymbol));
+	return new Value_Bool(rtn);
 }
 
-// Expr#IsValue
+// Expr#IsValue()
 Gurax_DeclareMethod(Expr, IsValue)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -739,6 +778,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
 	Assign(Gurax_CreateMethod(Expr, IsAssign));
+	Assign(Gurax_CreateMethod(Expr, IsPureAssign));
 	Assign(Gurax_CreateMethod(Expr, IsBinaryOp));
 	Assign(Gurax_CreateMethod(Expr, IsBlock));
 	Assign(Gurax_CreateMethod(Expr, IsCaller));

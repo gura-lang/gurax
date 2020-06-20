@@ -13,16 +13,16 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Attribute : public VType {
 public:
-	class GURAX_DLLDECLARE Iterator_EachSymbol : public Iterator {
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	public:
 		// Uses MemoryPool allocator
-		Gurax_MemoryPoolAllocator("Iterator_EachSymbol");
+		Gurax_MemoryPoolAllocator("Iterator_Each");
 	private:
 		RefPtr<Attribute> _pAttr;
 		const SymbolList& _symbolList;
 		size_t _idx;
 	public:
-		Iterator_EachSymbol(Attribute* pAttr, const SymbolList& symbolList) :
+		Iterator_Each(Attribute* pAttr, const SymbolList& symbolList) :
 						_pAttr(pAttr), _symbolList(symbolList), _idx(0) {}
 	public:
 		const SymbolList& GetSymbolList() const { return _symbolList; }

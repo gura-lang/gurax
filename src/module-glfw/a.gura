@@ -18,6 +18,9 @@ glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor
 	return new Value_GLFWwindow(window);
 '''
 }
-expr.children.Each {|child|
-	Println(child.left.car)
+expr.EachChild {|expr|
+	if (expr.IsPureAssign()) {
+		Println(expr.left)
+		
+	}
 }

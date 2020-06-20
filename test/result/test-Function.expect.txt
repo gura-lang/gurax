@@ -237,9 +237,9 @@ g .. <Function:g(){`block}>
 f {}.type .. `function
 g {}.type .. `Block
 f {|v1, v2| func(a, b, c)} .. <Function:block(v1,v2):cutExtraArgs>
-g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
+g {|v1, v2| func(a, b, c)} .. `{|v1, v2| func(a, b, c)}
 ======== Property ========
-Fact.expr .. if (n <= 1) {1} else {n * Fact(n - 1)}
+Fact.expr .. `if (n <= 1) {1} else {n * Fact(n - 1)}
 Fact.name .. Fact
 Fact.type .. `function
 ======== Function() ========

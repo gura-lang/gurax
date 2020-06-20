@@ -1,0 +1,66 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Attribute#Each()') {
+	Tester(`(`id).attr.Each():list)
+	Tester(`(`id:a).attr.Each():list)
+	Tester(`(`id:a:b:c:d:e:f).attr.Each():list)
+	Tester(`(`id:a:b:c:d:e:f:[aa,bb,cc,dd]).attr.Each():list)
+	Tester(`(`id:a:b:c:d:e:f:a).attr.Each():list)
+	Tester(`(`id:map:nomap:list:iter:a:b:c:d:e:f:a).attr.Each():list)
+	Tester(`(`func()).attr.Each():list)
+	Tester(`(`func():a).attr.Each():list)
+	Tester(`(`func():a:b:c:d:e:f).attr.Each():list)
+	Tester(`(`func():a:b:c:d:e:f:[aa,bb,cc,dd]).attr.Each():list)
+	Tester(`(`func():a:b:c:d:e:f:a).attr.Each():list)
+	Tester(`(`func():map:nomap:list:iter:a:b:c:d:e:f:a).attr.Each():list)
+}
+
+TestCase('Attribute#EachOpt()') {
+	Tester(`(`id).attr.EachOpt():list)
+	Tester(`(`id:[a]).attr.EachOpt():list)
+	Tester(`(`id:[a,b,c,d,e,f]).attr.EachOpt():list)
+	Tester(`(`id:[a,b,c,d,e,f]:aa:bb:cc:dd).attr.EachOpt():list)
+	Tester(`(`id:[a,b,c,d,e,f,a]).attr.EachOpt():list)
+	Tester(`(`id:[map,nomap,list,iter,a,b,c,d,e,f,a]).attr.EachOpt():list)
+	Tester(`(`func()).attr.EachOpt():list)
+	Tester(`(`func():[a]).attr.EachOpt():list)
+	Tester(`(`func():[a,b,c,d,e,f]).attr.EachOpt():list)
+	Tester(`(`func():[a,b,c,d,e,f]:aa:bb:cc:dd).attr.EachOpt():list)
+	Tester(`(`func():[a,b,c,d,e,f,a]).attr.EachOpt():list)
+	Tester(`(`func():[map,nomap,list,iter,a,b,c,d,e,f,a]).attr.EachOpt():list)
+}
+
+TestCase('Attribute#IsSet()') {
+	Tester(`(`id).attr.IsSet(`a))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`a))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`b))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`c))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`d))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`e))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSet(`f))
+	Tester(`(`func()).attr.IsSet(`a))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`a))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`b))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`c))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`d))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`e))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSet(`f))
+}
+
+TestCase('Attribute#IsSetOpt()') {
+	Tester(`(`id).attr.IsSetOpt(`a))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`a))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`b))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`c))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`d))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`e))
+	Tester(`(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`f))
+	Tester(`(`func()).attr.IsSetOpt(`a))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`a))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`b))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`c))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`d))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`e))
+	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`f))
+}

@@ -168,6 +168,7 @@ public:
 	Value* Eval(Processor& processor, Argument& argument) const;
 	Value* Eval(Processor& processor, Argument& argument, Event& event) const;
 	static size_t CountSequence(const Expr* pExpr);
+	bool IsPureAssign() const;
 	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
 	// Virtual functions

@@ -4,6 +4,7 @@
 #==============================================================================
 cases=
 cases="$cases Argument"
+cases="$cases Attribute"
 cases="$cases Binary"
 cases="$cases Bool"
 cases="$cases Codec"

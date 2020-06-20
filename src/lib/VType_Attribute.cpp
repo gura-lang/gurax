@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Attribute#EachSymbol() {block?}
-Gurax_DeclareMethod(Attribute, EachSymbol)
+// Attribute#Each() {block?}
+Gurax_DeclareMethod(Attribute, Each)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -37,19 +37,19 @@ Gurax_DeclareMethod(Attribute, EachSymbol)
 		"Creates an iterator that returns each symbol in the attribute.");
 }
 
-Gurax_ImplementMethod(Attribute, EachSymbol)
+Gurax_ImplementMethod(Attribute, Each)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	const Attribute& attr = valueThis.GetAttr();
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Attribute::Iterator_EachSymbol(
-								attr.Reference(), attr.GetSymbols()));
+	RefPtr<Iterator> pIterator(
+		new VType_Attribute::Iterator_Each(attr.Reference(), attr.GetSymbols()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Attribute#EachSymbolOpt() {block?}
-Gurax_DeclareMethod(Attribute, EachSymbolOpt)
+// Attribute#EachOpt() {block?}
+Gurax_DeclareMethod(Attribute, EachOpt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -58,15 +58,61 @@ Gurax_DeclareMethod(Attribute, EachSymbolOpt)
 		"Creates an iterator that returns each optional symbol in the attribute.");
 }
 
-Gurax_ImplementMethod(Attribute, EachSymbolOpt)
+Gurax_ImplementMethod(Attribute, EachOpt)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	const Attribute& attr = valueThis.GetAttr();
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Attribute::Iterator_EachSymbol(
-								attr.Reference(), attr.GetSymbolsOpt()));
+	RefPtr<Iterator> pIterator(
+		new VType_Attribute::Iterator_Each(attr.Reference(), attr.GetSymbolsOpt()));
 	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Attribute#IsSet(symbol:Symbol) {block?}
+Gurax_DeclareMethod(Attribute, IsSet)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the specified symbol is set in the attribute.");
+}
+
+Gurax_ImplementMethod(Attribute, IsSet)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Attribute& attr = valueThis.GetAttr();
+	// Argument
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	return new Value_Bool(attr.IsSet(pSymbol));
+}
+
+// Attribute#IsSetOpt(symbol:Symbol) {block?}
+Gurax_DeclareMethod(Attribute, IsSetOpt)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the specified symbol is set as an optional symbol in the attribute.");
+}
+
+Gurax_ImplementMethod(Attribute, IsSetOpt)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Attribute& attr = valueThis.GetAttr();
+	// Argument
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	return new Value_Bool(attr.IsSetOpt(pSymbol));
 }
 
 //------------------------------------------------------------------------------
@@ -81,24 +127,26 @@ void VType_Attribute::DoPrepare(Frame& frameOuter)
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Attribute, EachSymbol));
-	Assign(Gurax_CreateMethod(Attribute, EachSymbolOpt));
+	Assign(Gurax_CreateMethod(Attribute, Each));
+	Assign(Gurax_CreateMethod(Attribute, EachOpt));
+	Assign(Gurax_CreateMethod(Attribute, IsSet));
+	Assign(Gurax_CreateMethod(Attribute, IsSetOpt));
 }
 
 //------------------------------------------------------------------------------
-// VType_Attribute::Iterator_EachSymbol
+// VType_Attribute::Iterator_Each
 //------------------------------------------------------------------------------
 
-Value* VType_Attribute::Iterator_EachSymbol::DoNextValue()
+Value* VType_Attribute::Iterator_Each::DoNextValue()
 {
 	if (_idx >= GetSymbolList().size()) return nullptr;
 	const Symbol* pSymbol = GetSymbolList()[_idx++];
 	return new Value_Symbol(pSymbol);
 }
 
-String VType_Attribute::Iterator_EachSymbol::ToString(const StringStyle& ss) const
+String VType_Attribute::Iterator_Each::ToString(const StringStyle& ss) const
 {
-	return String().Format("Attribute.EachSymbol:n=%zu", GetSymbolList().size());
+	return String().Format("Attribute.Each:n=%zu", GetSymbolList().size());
 }
 
 //------------------------------------------------------------------------------
