@@ -802,14 +802,12 @@ bool Value_Expr::IsLessThan(const Value* pValue) const
 
 String Value_Expr::ToString(const StringStyle& ss) const
 {
-#if 0
+	const Symbol* pSymbol = GetExpr().GetPureSymbol();
+	if (pSymbol) return pSymbol->ToString(ss);
 	String str;
 	if (ss.IsQuoteSymbol()) str += "`";
 	str += GetExpr().ToString(ss);
 	return str;
-#endif
-	const Symbol* pSymbol = GetExpr().GetPureSymbol();
-	return pSymbol? pSymbol->ToString(ss) : GetExpr().ToString(ss);
 #if 0
 	String str;
 	str += GetExpr().ToString(StringStyle().SetCram());
