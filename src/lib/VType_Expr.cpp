@@ -76,23 +76,23 @@ Gurax_ImplementMethod(Expr, EachCdr)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Expr#EachChild() {block?}
-Gurax_DeclareMethod(Expr, EachChild)
+// Expr#EachElem() {block?}
+Gurax_DeclareMethod(Expr, EachElem)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an iterator that returns `Expr` instance of the child elements.\n");
+		"Returns an iterator that returns `Expr` instance of the contained elements.\n");
 }
 
-Gurax_ImplementMethod(Expr, EachChild)
+Gurax_ImplementMethod(Expr, EachElem)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
 	//Function body
-	RefPtr<Iterator> pIterator(expr.EachChild());
+	RefPtr<Iterator> pIterator(expr.EachElem());
 	if (!pIterator) return Value::nil();
 	return argument.ReturnIterator(processor, pIterator.release());
 }
@@ -773,7 +773,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Expr));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachCdr));
-	Assign(Gurax_CreateMethod(Expr, EachChild));
+	Assign(Gurax_CreateMethod(Expr, EachElem));
 	Assign(Gurax_CreateMethod(Expr, EachParam));
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));

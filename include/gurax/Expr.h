@@ -211,7 +211,7 @@ public:
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual const Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
-	virtual Iterator* EachChild() const { return nullptr; }
+	virtual Iterator* EachElem() const { return nullptr; }
 	virtual Iterator* EachCdr() const { return nullptr; }
 	virtual Iterator* EachParam() const { return nullptr; }
 public:
@@ -421,7 +421,7 @@ public:
 	}
 public:
 	// Virtual functions for structure inspecting
-	virtual Iterator* EachChild() const override { return GetExprLinkElem().CreateIterator(); }
+	virtual Iterator* EachElem() const override { return GetExprLinkElem().CreateIterator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -467,7 +467,7 @@ public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectCar() const override { return &GetExprCar(); }
 	virtual const Attribute* InspectAttr() const override { return &GetAttr(); }
-	virtual Iterator* EachChild() const override { return GetExprLinkCdr().CreateIterator(); }
+	virtual Iterator* EachCdr() const override { return GetExprLinkCdr().CreateIterator(); }
 };
 
 //------------------------------------------------------------------------------

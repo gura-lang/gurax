@@ -21,6 +21,7 @@ glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor
 expr.EachChild {|expr|
 	if (expr.IsPureAssign()) {
 		Println(expr.left)
-		
+		Println(expr.left.car)
+		Println(expr.left.EachCdr():list)
 	}
 }
