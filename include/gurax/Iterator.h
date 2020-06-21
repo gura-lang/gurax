@@ -33,6 +33,8 @@ protected:
 	Int _idxNext;
 	RefPtr<Value> _pValuePeeked;
 public:
+	static RefPtr<Iterator> Empty;
+public:
 	// Constructor
 	Iterator() : _idxCur(-1), _idxNext(0) {}
 	// Copy constructor/operator
@@ -44,6 +46,8 @@ public:
 protected:
 	// Destructor
 	virtual ~Iterator() = default;
+public:
+	static void Bootup();
 public:
 	template<typename T_Compare> Value* FindMinMax();
 	template<typename T_Compare> Value* FindMinMax(Int* pIdxFound);

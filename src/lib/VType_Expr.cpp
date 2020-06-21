@@ -71,9 +71,7 @@ Gurax_ImplementMethod(Expr, EachCdr)
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
 	// Function body
-	RefPtr<Iterator> pIterator(expr.EachCdr());
-	if (!pIterator) return Value::nil();
-	return argument.ReturnIterator(processor, pIterator.release());
+	return argument.ReturnIterator(processor, expr.EachCdr());
 }
 
 // Expr#EachElem() {block?}
@@ -92,9 +90,7 @@ Gurax_ImplementMethod(Expr, EachElem)
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
 	//Function body
-	RefPtr<Iterator> pIterator(expr.EachElem());
-	if (!pIterator) return Value::nil();
-	return argument.ReturnIterator(processor, pIterator.release());
+	return argument.ReturnIterator(processor, expr.EachElem());
 }
 
 // Expr#EachParam() {block?}
@@ -112,9 +108,7 @@ Gurax_ImplementMethod(Expr, EachParam)
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
 	//Function body
-	RefPtr<Iterator> pIterator(expr.EachParam());
-	if (!pIterator) return Value::nil();
-	return argument.ReturnIterator(processor, pIterator.release());
+	return argument.ReturnIterator(processor, expr.EachParam());
 }
 
 // Expr#EachPUnit() {block?}
@@ -558,6 +552,23 @@ Gurax_ImplementPropertyGetter(Expr, lineNoTop)
 	return new Value_Number(valueThis.GetExpr().GetLineNoTop());
 }
 
+// Expr#memberMode
+Gurax_DeclareProperty_R(Expr, memberMode)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The member accessor's mode in symbol.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, memberMode)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Symbol* pSymbol = valueThis.GetExpr().InspectMemberModeAsSymbol();
+	if (!pSymbol) return Value::nil();
+	return new Value_Symbol(pSymbol);
+}
+
 // Expr#operator
 Gurax_DeclarePropertyAlias_R(Expr, operator_, "operator")
 {
@@ -783,6 +794,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, left));
 	Assign(Gurax_CreateProperty(Expr, lineNoBtm));
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
+	Assign(Gurax_CreateProperty(Expr, memberMode));
 	Assign(Gurax_CreateProperty(Expr, operator_));
 	Assign(Gurax_CreateProperty(Expr, right));
 	Assign(Gurax_CreateProperty(Expr, symbol));

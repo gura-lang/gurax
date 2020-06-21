@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
+RefPtr<Iterator> Iterator::Empty;
+
+void Iterator::Bootup()
+{
+	Empty.reset(new Iterator_Empty());
+}
+
 Value* Iterator::And()
 {
 	RefPtr<Value> pValueElem(NextValue());

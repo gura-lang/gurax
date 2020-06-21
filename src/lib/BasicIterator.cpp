@@ -7,6 +7,14 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Iterator_Empty
+//------------------------------------------------------------------------------
+String Iterator_Empty::ToString(const StringStyle& ss) const
+{
+	return String().Format("Empty");
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Const
 //------------------------------------------------------------------------------
 String Iterator_Const::ToString(const StringStyle& ss) const

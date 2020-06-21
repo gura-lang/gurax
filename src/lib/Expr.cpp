@@ -25,6 +25,21 @@ void Expr::ComposeOrNil(Composer& composer)
 	}
 }
 
+Iterator* Expr::EachCdr() const
+{
+	return Iterator::Empty->Reference();
+}
+
+Iterator* Expr::EachElem() const
+{
+	return Iterator::Empty->Reference();
+}
+
+Iterator* Expr::EachParam() const
+{
+	return Iterator::Empty->Reference();
+}
+
 Iterator* Expr::EachPUnit() const
 {
 	const PUnit* pPUnit = GetPUnitFirst();
@@ -413,6 +428,16 @@ void Expr_Member::ComposeWithinAssignment(
 	default:
 		break;
 	}
+}
+
+const Symbol* Expr_Member::GetMemberModeAsSymbol() const
+{
+	return
+		(_memberMode == MemberMode::Normal)? Gurax_Symbol(normal) :
+		(_memberMode == MemberMode::MapAlong)? Gurax_Symbol(mapAlong) :
+		(_memberMode == MemberMode::MapToIter)? Gurax_Symbol(mapToIter) :
+		(_memberMode == MemberMode::MapToList)? Gurax_Symbol(mapToList) :
+		Symbol::Empty;
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const

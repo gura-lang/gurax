@@ -1,64 +1,50 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('Inspection of Value') {
-	x = `3.14
-	Tester(`x)
-	Tester(`x.type)
-	Tester(`x.value)
+InspectExpr(x:Expr) = {
+	Printf('%s: type=%s\n', x.ToString():quoteSymbol, x.type)
+	[`attr, `block, `car, `child, `left, `memberMode, `operator,
+	 `right, `symbol, `target, `trailer, `value].Each {|prop|
+		Printf('  %-10s %s\n', prop, x.__PropGet__(prop).ToString():nilVisible:quote)
+	}
+	Printf('  %-10s %s\n', 'EachCdr', cond(x, x.EachCdr():list).ToString())
+	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
+	Printf('  %-10s %s\n', 'EachParam', cond(x, x.EachParam():list).ToString())
 }
 
-TestCase('Inspection of Identifier') {
-	x = `foo
-	Tester(`x)
-	Tester(`x.type)
-	Tester(`x.symbol)
-	Tester(`x.attr.IsEmpty())
-	x = `foo:a:b:c:[d,e,f]
-	Tester(`x)
-	Tester(`x.type)
-	Tester(`x.symbol)
-	Tester(`x.attr.IsEmpty())
-}
-
-TestCase('Inspection of String') {
-	x = `'hello'
-	Tester(`x)
-	Tester(`x.type)
-	Tester(`x.value)
-}
-
-TestCase('Inspection of Suffixed') {
-}
-
-TestCase('Inspection of Member') {
-}
-
-TestCase('Inspection of UnaryOp') {
-}
-
-TestCase('Inspection of BinaryOp') {
-}
-
-TestCase('Inspection of Assign') {
-}
-
-TestCase('Inspection of Root') {
-}
-
-TestCase('Inspection of Block') {
-}
-
-TestCase('Inspection of Lister') {
-}
-
-TestCase('Inspection of Iterer') {
-}
-
-TestCase('Inspection of Indexer') {
-}
-
-TestCase('Inspection of Caller') {
+TestCase('Inspection') {
+	// Value
+	InspectExpr(`3.14)
+	// Identifier
+	InspectExpr(`foo)
+	InspectExpr(`foo:a:b:c:[d,e,f])
+	// String
+	InspectExpr(`'hello')
+	// Suffixed
+	InspectExpr(`3.14foo)
+	InspectExpr(`'hello'foo)
+	// Member
+	InspectExpr(`aaa.bbb)
+	InspectExpr(`aaa:&bbb)
+	InspectExpr(`aaa:*bbb)
+	InspectExpr(`aaa::bbb)
+	// UnaryOp
+	InspectExpr(`(-a))
+	// BinaryOp
+	InspectExpr(`(a + b))
+	// Assign
+	InspectExpr(`(a = b))
+	// Root
+	// Block
+	InspectExpr(`{})
+	// Lister
+	InspectExpr(`[])
+	// Iter
+	InspectExpr(`())
+	// Indexer
+	InspectExpr(`a[])
+	// Caller
+	InspectExpr(`a())
 }
 
 sys.Exit()

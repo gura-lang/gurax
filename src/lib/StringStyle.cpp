@@ -24,6 +24,7 @@ const char* StringStyle::_strsSemicolon[2]	{ "; ", ";" };
 void StringStyle::DeclareAttrOpt(Function& func)
 {
 	func.DeclareAttrOpt(Gurax_Symbol(unbracket));
+	func.DeclareAttrOpt(Gurax_Symbol(quote));
 	func.DeclareAttrOpt(Gurax_Symbol(quoteString));
 	func.DeclareAttrOpt(Gurax_Symbol(quoteSymbol));
 	func.DeclareAttrOpt(Gurax_Symbol(nilVisible));
@@ -36,6 +37,9 @@ StringStyle::Flags StringStyle::ToFlags(const Argument& argument)
 {
 	StringStyle::Flags flags = StringStyle::Flag::None;
 	if (argument.IsSet(Gurax_Symbol(unbracket)))	flags |= StringStyle::Flag::Unbracket;
+	if (argument.IsSet(Gurax_Symbol(quote))) {
+		flags |= StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol;
+	}
 	if (argument.IsSet(Gurax_Symbol(quoteString)))	flags |= StringStyle::Flag::QuoteString;
 	if (argument.IsSet(Gurax_Symbol(quoteSymbol)))	flags |= StringStyle::Flag::QuoteSymbol;
 	if (argument.IsSet(Gurax_Symbol(nilVisible)))	flags |= StringStyle::Flag::NilVisible;

@@ -12,6 +12,22 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Iterator_Empty
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Empty : public Iterator {
+public:
+	Iterator_Empty() {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return 0; }
+	virtual Value* DoNextValue() override { return nullptr; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Const
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Const : public Iterator {

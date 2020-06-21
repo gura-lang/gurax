@@ -209,9 +209,10 @@ public:
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
-	virtual Iterator* EachElem() const { return nullptr; }
-	virtual Iterator* EachCdr() const { return nullptr; }
-	virtual Iterator* EachParam() const { return nullptr; }
+	virtual const Symbol* InspectMemberModeAsSymbol() const { return nullptr; }
+	virtual Iterator* EachCdr() const;
+	virtual Iterator* EachElem() const;
+	virtual Iterator* EachParam() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -492,6 +493,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	MemberMode GetMemberMode() const { return _memberMode; }
+	const Symbol* GetMemberModeAsSymbol() const;
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
@@ -509,6 +511,7 @@ public:
 	virtual const Expr* InspectTarget() const override { return &GetExprTarget(); }
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
 	virtual const Attribute* InspectAttr() const { return &GetAttr(); }
+	virtual const Symbol* InspectMemberModeAsSymbol() const { return GetMemberModeAsSymbol(); }
 };
 
 //------------------------------------------------------------------------------
@@ -800,7 +803,7 @@ public:
 public:
 	// Virtual functions for structure inspecting
 	virtual Iterator* EachParam() const override {
-		return HasExprParam()? GetExprLinkParam().CreateIterator() : nullptr;
+		return HasExprParam()? GetExprLinkParam().CreateIterator() : Expr::EachParam();
 	}
 };
 
