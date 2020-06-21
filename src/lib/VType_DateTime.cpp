@@ -549,7 +549,9 @@ VType& Value_DateTime::vtype = VTYPE_DateTime;
 
 String Value_DateTime::ToString(const StringStyle& ss) const
 {
-	return GetDateTime().ToString(ss);
+	String strEntity = GetDateTime().ToString(ss);
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 }

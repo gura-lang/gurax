@@ -1585,9 +1585,10 @@ StringList Value_String::GetStringList(const ValueList& values)
 
 String Value_String::ToString(const StringStyle& ss) const
 {
-	String str = GetStringSTL();
-	if (ss.IsQuoteString()) str = str.EnquoteAuto();
-	return str;
+	String strEntity = GetStringSTL();
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity.EnquoteAuto());
+	if (ss.IsQuoteString()) strEntity = strEntity.EnquoteAuto();
+	return strEntity;
 }
 
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

@@ -9,6 +9,7 @@ namespace Gurax {
 // StringStyle
 //------------------------------------------------------------------------------
 const StringStyle StringStyle::Empty;
+const StringStyle StringStyle::Bracket(StringStyle::Flag::Bracket);
 const StringStyle StringStyle::Unbracket(StringStyle::Flag::Unbracket);
 const StringStyle StringStyle::QuoteString(StringStyle::Flag::QuoteString);
 const StringStyle StringStyle::QuoteSymbol(StringStyle::Flag::QuoteSymbol);
@@ -23,6 +24,7 @@ const char* StringStyle::_strsSemicolon[2]	{ "; ", ";" };
 
 void StringStyle::DeclareAttrOpt(Function& func)
 {
+	func.DeclareAttrOpt(Gurax_Symbol(bracket));
 	func.DeclareAttrOpt(Gurax_Symbol(unbracket));
 	func.DeclareAttrOpt(Gurax_Symbol(quote));
 	func.DeclareAttrOpt(Gurax_Symbol(quoteString));
@@ -36,6 +38,7 @@ void StringStyle::DeclareAttrOpt(Function& func)
 StringStyle::Flags StringStyle::ToFlags(const Argument& argument)
 {
 	StringStyle::Flags flags = StringStyle::Flag::None;
+	if (argument.IsSet(Gurax_Symbol(bracket)))		flags |= StringStyle::Flag::Bracket;
 	if (argument.IsSet(Gurax_Symbol(unbracket)))	flags |= StringStyle::Flag::Unbracket;
 	if (argument.IsSet(Gurax_Symbol(quote))) {
 		flags |= StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol;

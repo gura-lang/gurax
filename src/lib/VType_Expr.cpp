@@ -836,22 +836,22 @@ bool Value_Expr::IsLessThan(const Value* pValue) const
 
 String Value_Expr::ToString(const StringStyle& ss) const
 {
-	const Symbol* pSymbol = GetExpr().GetPureSymbol();
-	if (pSymbol) return pSymbol->ToString(ss);
-	String str;
-	if (ss.IsQuoteSymbol()) str += "`";
-	str += GetExpr().ToString(ss);
-	return str;
-#if 0
-	String str;
-	str += GetExpr().ToString(StringStyle().SetCram());
-	str += ")";
-	if (GetExpr().GetPUnitFirst()) {
-		str.Format(":PUnit#%zu", GetExpr().GetPUnitFirst()->GetSeqId());
+	String strEntity;
+	if (const Symbol* pSymbol = GetExpr().GetPureSymbol()) {
+		strEntity = pSymbol->ToString(ss);
+	} else {
+		if (ss.IsQuoteSymbol()) strEntity += "`";
+		strEntity += GetExpr().ToString(ss);
 	}
-	str += ">";
-	return str;
-#endif
+	if (!ss.IsBracket()) {
+		return strEntity;
+	} else if (GetExpr().GetPUnitFirst()) {
+		return ToStringGeneric(ss, String().Format("%s:PUnit#%zu",
+					strEntity.c_str(), GetExpr().GetPUnitFirst()->GetSeqId()));
+	} else {
+		return ToStringGeneric(ss, strEntity);
+	}
+	return strEntity;
 }
 
 }

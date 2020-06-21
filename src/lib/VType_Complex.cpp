@@ -444,7 +444,9 @@ VType& Value_Complex::vtype = VTYPE_Complex;
 
 String Value_Complex::ToString(const StringStyle& ss) const
 {
-	return GetComplex().ToString(ss);
+	String strEntity = GetComplex().ToString(ss);
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const

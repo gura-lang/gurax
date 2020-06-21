@@ -18,13 +18,14 @@ public:
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
-		static const Flags Unbracket	= (1 << 0);
-		static const Flags QuoteString	= (1 << 1);
-		static const Flags QuoteSymbol	= (1 << 2);
-		static const Flags NilVisible	= (1 << 3);
-		static const Flags Cram			= (1 << 4);
-		static const Flags MultiLine	= (1 << 5);
-		static const Flags Verbose		= (1 << 6);
+		static const Flags Bracket		= (1 << 0);
+		static const Flags Unbracket	= (1 << 1);
+		static const Flags QuoteString	= (1 << 2);
+		static const Flags QuoteSymbol	= (1 << 3);
+		static const Flags NilVisible	= (1 << 4);
+		static const Flags Cram			= (1 << 5);
+		static const Flags MultiLine	= (1 << 6);
+		static const Flags Verbose		= (1 << 7);
 	};
 private:
 	Flags _flags;
@@ -35,6 +36,7 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
+	static const StringStyle Bracket;
 	static const StringStyle Unbracket;
 	static const StringStyle QuoteString;
 	static const StringStyle QuoteSymbol;
@@ -57,6 +59,8 @@ public:
 public:	
 	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
+	StringStyle& SetBracket()			{ _flags |= Flag::Bracket; return *this; }
+	StringStyle& UnsetBracket()			{ _flags &= ~Flag::Bracket; return *this; }
 	StringStyle& SetUnbracket()			{ _flags |= Flag::Unbracket; return *this; }
 	StringStyle& UnsetUnbracket()		{ _flags &= ~Flag::Unbracket; return *this; }
 	StringStyle& SetQuoteString()		{ _flags |= Flag::QuoteString; return *this; }
@@ -71,6 +75,7 @@ public:
 	StringStyle& UnsetMultiLine()		{ _flags &= ~Flag::MultiLine; return *this; }
 	StringStyle& SetVerbose()			{ _flags |= Flag::Verbose; return *this; }
 	StringStyle& UnsetVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
+	bool IsBracket() const				{ return (_flags & Flag::Bracket) != 0; }
 	bool IsUnbracket() const			{ return (_flags & Flag::Unbracket) != 0; }
 	bool IsQuoteString() const			{ return (_flags & Flag::QuoteString) != 0; }
 	bool IsQuoteSymbol() const			{ return (_flags & Flag::QuoteSymbol) != 0; }

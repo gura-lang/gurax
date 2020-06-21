@@ -274,14 +274,12 @@ VType& Value_Binary::vtype = VTYPE_Binary;
 
 String Value_Binary::ToString(const StringStyle& ss) const
 {
-	return _pBinary->GetBinary().ToString(ss);
-#if 0
-	String str;
-	str.Format(":%dbytes", _pBinary->GetBinary().size());
-	str += _pBinary->GetBinary().IsWritable()? ":writrable" : ":constant";
-	str += ">";
-	return str;
-#endif
+	const Binary& buff = _pBinary->GetBinary();
+	if (ss.IsBracket()) {
+		return ToStringGeneric(ss, String().Format(":%dbytes:%s",
+				buff.size(), buff.IsWritable()? "writrable" : "constant"));
+	}
+	return buff.ToString(ss);
 }
 
 }

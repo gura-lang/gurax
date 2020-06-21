@@ -1610,10 +1610,10 @@ Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 
 String Value_List::ToString(const StringStyle& ss) const
 {
+	if (ss.IsBracket()) {
+		return ToStringGeneric(ss, String().Format("%zuitems", GetValueOwner().size()));
+	}
 	return GetValueOwner().ToString(StringStyle::Quote_NilVisible);
-#if 0
-	str.Format(":%zuitems>", GetValueOwner().size());
-#endif
 }
 
 bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const

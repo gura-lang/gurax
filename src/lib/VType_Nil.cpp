@@ -90,7 +90,7 @@ VType& Value_Nil::vtype = VTYPE_Nil;
 
 String Value_Nil::ToString(const StringStyle& ss) const
 {
-	return ss.IsNilVisible()? "<Nil>" : String::Empty;
+	return (ss.IsBracket() || ss.IsNilVisible())? "<Nil>" : String::Empty;
 }
 
 }

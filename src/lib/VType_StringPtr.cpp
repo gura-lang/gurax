@@ -45,6 +45,7 @@ VType& Value_StringPtr::vtype = VTYPE_StringPtr;
 
 String Value_StringPtr::ToString(const StringStyle& ss) const
 {
+	if (ss.IsBracket()) return ToStringGeneric(ss, _str);
 	return _str;
 }
 

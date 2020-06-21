@@ -439,24 +439,24 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Number, formatFloat));
 	Assign(Gurax_CreateClassProperty(Number, formatInt));
 	// Assignment of operator
-	Gurax_AssignOpUnary(Inv,			Number);
-	Gurax_AssignOpUnary(Neg,			Number);
-	Gurax_AssignOpUnary(Pos,			Number);
-	Gurax_AssignOpUnary(PostSeq,		Number);
+	Gurax_AssignOpUnary(Inv,		Number);
+	Gurax_AssignOpUnary(Neg,		Number);
+	Gurax_AssignOpUnary(Pos,		Number);
+	Gurax_AssignOpUnary(PostSeq,	Number);
 	Gurax_AssignBinary(Add,			Number, Number);
 	Gurax_AssignBinary(And,			Number, Number);
 	Gurax_AssignBinary(Cmp,			Number, Number);
 	Gurax_AssignBinary(Concat,		Number, Number);
-	Gurax_AssignBinary(Contains,		Number, Number);
-	Gurax_AssignBinary(Cross,			Number, Number);
+	Gurax_AssignBinary(Contains,	Number, Number);
+	Gurax_AssignBinary(Cross,		Number, Number);
 	Gurax_AssignBinary(Difference,	Number, Number);
 	Gurax_AssignBinary(Div,			Number, Number);
 	Gurax_AssignBinary(Dot,			Number, Number);
 	Gurax_AssignBinary(Eq,			Number, Number);
-	Gurax_AssignBinary(Gear,			Number, Number);
+	Gurax_AssignBinary(Gear,		Number, Number);
 	Gurax_AssignBinary(Ge,			Number, Number);
 	Gurax_AssignBinary(Gt,			Number, Number);
-	Gurax_AssignBinary(Intersection,	Number, Number);
+	Gurax_AssignBinary(Intersection,Number, Number);
 	Gurax_AssignBinary(Le,			Number, Number);
 	Gurax_AssignBinary(Lt,			Number, Number);
 	Gurax_AssignBinary(Mod,			Number, Number);
@@ -469,7 +469,7 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignBinary(Shl,			Number, Number);
 	Gurax_AssignBinary(Shr,			Number, Number);
 	Gurax_AssignBinary(Sub,			Number, Number);
-	Gurax_AssignBinary(Union,			Number, Number);
+	Gurax_AssignBinary(Union,		Number, Number);
 	Gurax_AssignBinary(Xor,			Number, Number);
 }
 
@@ -488,7 +488,9 @@ VType& Value_Number::vtype = VTYPE_Number;
 
 String Value_Number::ToString(const StringStyle& ss) const
 {
-	return Number<Double>::ToString(GetNumber<Double>());
+	String strEntity = Number<Double>::ToString(GetNumber<Double>());
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

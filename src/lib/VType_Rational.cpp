@@ -610,7 +610,9 @@ VType& Value_Rational::vtype = VTYPE_Rational;
 
 String Value_Rational::ToString(const StringStyle& ss) const
 {
-	return GetRational().ToString(ss);
+	String strEntity = GetRational().ToString(ss);
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 }

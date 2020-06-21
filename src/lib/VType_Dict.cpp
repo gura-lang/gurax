@@ -395,10 +395,10 @@ VType& Value_Dict::vtype = VTYPE_Dict;
 
 String Value_Dict::ToString(const StringStyle& ss) const
 {
+	if (ss.IsBracket()) {
+		return ToStringGeneric(ss, String().Format("%zuitems", GetValueDict().size()));
+	}
 	return GetValueDict().ToString(ss);
-#if 0
-	str.Format(":%zuitems>", GetValueDict().size());
-#endif
 }
 
 Value* Value_Dict::DoIndexGet(const Index& index) const

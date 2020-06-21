@@ -51,7 +51,9 @@ bool Value_Bool::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) 
 
 String Value_Bool::ToString(const StringStyle& ss) const
 {
-	return _flag? "true" : "false";
+	const char* strEntity = _flag? "true" : "false";
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 }
