@@ -89,7 +89,7 @@ bool Value_Symbol::IsEqualTo(const Value* pValue) const
 	if (IsSameType(pValue)) {
 		return GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
 	} else if (pValue->IsType(VTYPE_Expr)) {
-		return dynamic_cast<const Value_Expr*>(pValue)->GetExpr().IsPureSymbol(GetSymbol());
+		return dynamic_cast<const Value_Expr*>(pValue)->GetExpr().HasPureSymbol(GetSymbol());
 	}
 	return false;
 }

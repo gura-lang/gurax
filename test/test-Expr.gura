@@ -3,13 +3,29 @@ import(util.tester) {*}
 
 TestCase('Inspection of Value') {
 	x = `3.14
+	Tester(`x)
+	Tester(`x.type)
 	Tester(`x.value)
 }
 
 TestCase('Inspection of Identifier') {
+	x = `foo
+	Tester(`x)
+	Tester(`x.type)
+	Tester(`x.symbol)
+	Tester(`x.attr.IsEmpty())
+	x = `foo:a:b:c:[d,e,f]
+	Tester(`x)
+	Tester(`x.type)
+	Tester(`x.symbol)
+	Tester(`x.attr.IsEmpty())
 }
 
 TestCase('Inspection of String') {
+	x = `'hello'
+	Tester(`x)
+	Tester(`x.type)
+	Tester(`x.value)
 }
 
 TestCase('Inspection of Suffixed') {

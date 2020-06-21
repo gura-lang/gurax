@@ -69,12 +69,29 @@ Gurax_ImplementMethod(Attribute, EachOpt)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Attribute#IsSet(symbol:Symbol) {block?}
+// Attribute#IsEmpty()
+Gurax_DeclareMethod(Attribute, IsEmpty)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the attribute is empty.");
+}
+
+Gurax_ImplementMethod(Attribute, IsEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Attribute& attr = valueThis.GetAttr();
+	// Function body
+	return new Value_Bool(attr.IsEmpty());
+}
+
+// Attribute#IsSet(symbol:Symbol)
 Gurax_DeclareMethod(Attribute, IsSet)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the specified symbol is set in the attribute.");
@@ -92,12 +109,11 @@ Gurax_ImplementMethod(Attribute, IsSet)
 	return new Value_Bool(attr.IsSet(pSymbol));
 }
 
-// Attribute#IsSetOpt(symbol:Symbol) {block?}
+// Attribute#IsSetOpt(symbol:Symbol)
 Gurax_DeclareMethod(Attribute, IsSetOpt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the specified symbol is set as an optional symbol in the attribute.");
@@ -129,6 +145,7 @@ void VType_Attribute::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Attribute, Each));
 	Assign(Gurax_CreateMethod(Attribute, EachOpt));
+	Assign(Gurax_CreateMethod(Attribute, IsEmpty));
 	Assign(Gurax_CreateMethod(Attribute, IsSet));
 	Assign(Gurax_CreateMethod(Attribute, IsSetOpt));
 }

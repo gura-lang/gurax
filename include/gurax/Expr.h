@@ -6,7 +6,6 @@
 #include "Attribute.h"
 #include "DeclCallable.h"
 #include "Operator.h"
-#include "Value.h"
 #include "SuffixMgr.h"
 
 namespace Gurax {
@@ -15,6 +14,7 @@ class Composer;
 class Iterator;
 class Processor;
 class PUnit;
+class Value;
 
 //------------------------------------------------------------------------------
 // MemberMode
@@ -172,9 +172,9 @@ public:
 	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
 	// Virtual functions
+	virtual bool HasSymbol(const Symbol* pSymbol) const { return false; }
+	virtual bool HasPureSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsEmpty() const { return false; }
-	virtual bool IsSymbol(const Symbol* pSymbol) const { return false; }
-	virtual bool IsPureSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsStatement(const Symbol* pSymbol) const { return false; }
 	virtual bool IsCollector() const { return false; }
 	virtual bool IsUnaryOp(OpType opType) const { return false; }
@@ -205,10 +205,9 @@ public:
 	virtual const Expr* InspectTarget() const { return nullptr; }
 	virtual const Expr* InspectBlock() const { return nullptr; }
 	virtual const Expr* InspectTrailer() const { return nullptr; }
-	virtual const StringReferable* InspectSegmentReferable() const { return nullptr; }
 	virtual const Symbol* InspectSymbol() const { return nullptr; }
 	virtual const Attribute* InspectAttr() const { return nullptr; }
-	virtual const Value* InspectValue() const { return nullptr; }
+	virtual Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
 	virtual Iterator* EachElem() const { return nullptr; }
 	virtual Iterator* EachCdr() const { return nullptr; }
@@ -539,7 +538,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const Value* InspectValue() const override { return &GetValue(); }
+	virtual Value* InspectValue() const override;
 };
 
 //------------------------------------------------------------------------------
@@ -565,8 +564,8 @@ public:
 	bool HasAttr() const { return !GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
-	virtual bool IsSymbol(const Symbol* pSymbol) const override { return _pSymbol->IsIdentical(pSymbol); }
-	virtual bool IsPureSymbol(const Symbol* pSymbol) const override {
+	virtual bool HasSymbol(const Symbol* pSymbol) const override { return _pSymbol->IsIdentical(pSymbol); }
+	virtual bool HasPureSymbol(const Symbol* pSymbol) const override {
 		return !HasAttr() && _pSymbol->IsIdentical(pSymbol);
 	}
 	virtual const Symbol* GetPureSymbol() const override { return HasAttr()? nullptr : _pSymbol; }
@@ -611,9 +610,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const StringReferable* InspectSegmentReferable() const override {
-		return &GetSegmentReferable();
-	}
+	virtual Value* InspectValue() const override;
 };
 
 //------------------------------------------------------------------------------
@@ -644,9 +641,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual const StringReferable* InspectSegmentReferable() const override {
-		return &GetSegmentReferable();
-	}
+	virtual Value* InspectValue() const override;
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
 };
 
@@ -907,7 +902,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual bool IsStatement(const Symbol* pSymbol) const override {
-		return GetExprCar().IsPureSymbol(pSymbol);
+		return GetExprCar().HasPureSymbol(pSymbol);
 	}
 	virtual DeclCallable* RetrieveDeclCallable() const override; // used by Template
 	virtual bool Traverse(Visitor& visitor) override {

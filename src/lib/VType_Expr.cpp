@@ -172,23 +172,6 @@ Gurax_ImplementMethod(Expr, IsAssign)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Assign>());
 }
 
-// Expr#IsPureAssign()
-Gurax_DeclareMethod(Expr, IsPureAssign)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Assign without any operation.");
-}
-
-Gurax_ImplementMethod(Expr, IsPureAssign)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsPureAssign());
-}
-
 // Expr#IsBinaryOp(symbol?:Symbol)
 Gurax_DeclareMethod(Expr, IsBinaryOp)
 {
@@ -268,7 +251,7 @@ Gurax_ImplementMethod(Expr, IsIdentifier)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	bool rtn = expr.IsType<Expr_Identifier>() && (!pSymbol || expr.IsSymbol(pSymbol));
+	bool rtn = expr.IsType<Expr_Identifier>() && (!pSymbol || expr.HasSymbol(pSymbol));
 	return new Value_Bool(rtn);
 }
 
@@ -338,6 +321,23 @@ Gurax_ImplementMethod(Expr, IsMember)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Member>());
+}
+
+// Expr#IsPureAssign()
+Gurax_DeclareMethod(Expr, IsPureAssign)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is Assign without any operation.");
+}
+
+Gurax_ImplementMethod(Expr, IsPureAssign)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsPureAssign());
 }
 
 // Expr#IsRoot()
@@ -687,9 +687,9 @@ Gurax_DeclareProperty_R(Expr, value)
 Gurax_ImplementPropertyGetter(Expr, value)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Value* pValue = valueThis.GetExpr().InspectValue();
+	RefPtr<Value> pValue(valueThis.GetExpr().InspectValue());
 	if (!pValue) return Value::nil();
-	return pValue->Reference();
+	return pValue.release();
 }
 
 //------------------------------------------------------------------------------
@@ -708,7 +708,7 @@ Gurax_ImplementBinary(Eq, Symbol, Expr)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
-	return new Value_Bool(exprR.IsSymbol(pSymbolL));
+	return new Value_Bool(exprR.HasSymbol(pSymbolL));
 }
 
 // Expr == Symbol
@@ -716,7 +716,7 @@ Gurax_ImplementBinary(Eq, Expr, Symbol)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
-	return new Value_Bool(exprL.IsSymbol(pSymbolR));
+	return new Value_Bool(exprL.HasSymbol(pSymbolR));
 }
 
 // Expr != Expr
@@ -732,7 +732,7 @@ Gurax_ImplementBinary(Ne, Symbol, Expr)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
-	return new Value_Bool(!exprR.IsSymbol(pSymbolL));
+	return new Value_Bool(!exprR.HasSymbol(pSymbolL));
 }
 
 // Expr != Symbol
@@ -740,7 +740,7 @@ Gurax_ImplementBinary(Ne, Expr, Symbol)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
-	return new Value_Bool(!exprL.IsSymbol(pSymbolR));
+	return new Value_Bool(!exprL.HasSymbol(pSymbolR));
 }
 
 //------------------------------------------------------------------------------
@@ -761,7 +761,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
 	Assign(Gurax_CreateMethod(Expr, IsAssign));
-	Assign(Gurax_CreateMethod(Expr, IsPureAssign));
 	Assign(Gurax_CreateMethod(Expr, IsBinaryOp));
 	Assign(Gurax_CreateMethod(Expr, IsBlock));
 	Assign(Gurax_CreateMethod(Expr, IsCaller));
@@ -770,6 +769,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, IsIterer));
 	Assign(Gurax_CreateMethod(Expr, IsLister));
 	Assign(Gurax_CreateMethod(Expr, IsMember));
+	Assign(Gurax_CreateMethod(Expr, IsPureAssign));
 	Assign(Gurax_CreateMethod(Expr, IsRoot));
 	Assign(Gurax_CreateMethod(Expr, IsSuffixed));
 	Assign(Gurax_CreateMethod(Expr, IsUnaryOp));
@@ -810,7 +810,7 @@ bool Value_Expr::IsEqualTo(const Value* pValue) const
 	if (IsSameType(pValue)) {
 		return GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
 	} else if (pValue->IsType(VTYPE_Symbol)) {
-		return GetExpr().IsPureSymbol(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
+		return GetExpr().HasPureSymbol(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
 	}
 	return false;
 }
