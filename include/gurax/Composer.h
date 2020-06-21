@@ -138,9 +138,9 @@ public:
 	void Add_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Lookup(pSymbol, exprSrc.Reference()));
 	}
-	void Add_Suffixed(StringReferable* pStrSegment, SuffixMgr::Target target, const Symbol* pSymbolSuffix,
+	void Add_Suffixed(StringReferable* pStrSegment, SuffixMgr::Target target, const Symbol* pSymbol,
 					  const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_Suffixed(pStrSegment, target, pSymbolSuffix, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_Suffixed(pStrSegment, target, pSymbol, exprSrc.Reference()));
 	}
 	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_AssignToSymbol(pSymbol, exprSrc.Reference()));

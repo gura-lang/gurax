@@ -207,7 +207,6 @@ public:
 	virtual const Expr* InspectTrailer() const { return nullptr; }
 	virtual const StringReferable* InspectSegmentReferable() const { return nullptr; }
 	virtual const Symbol* InspectSymbol() const { return nullptr; }
-	virtual const Symbol* InspectSymbolSuffix() const { return nullptr; }
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual const Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
@@ -628,15 +627,15 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<StringReferable> _pStrSegment;
-	const Symbol* _pSymbolSuffix;
+	const Symbol* _pSymbol;
 	SuffixMgr::Target _target;
 public:
 	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, SuffixMgr::Target target) :
-		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _target(target) {}
+		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbol(pSymbolSuffix), _target(target) {}
 	const StringReferable& GetSegmentReferable() const { return *_pStrSegment; }
 	const char* GetSegment() const { return _pStrSegment->GetString(); }
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
-	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
 	SuffixMgr::Target GetTarget() const { return _target; }
 public:
 	// Virtual functions of Expr
@@ -648,7 +647,7 @@ public:
 	virtual const StringReferable* InspectSegmentReferable() const override {
 		return &GetSegmentReferable();
 	}
-	virtual const Symbol* InspectSymbolSuffix() const override { return _pSymbolSuffix; }
+	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
 };
 
 //------------------------------------------------------------------------------

@@ -604,11 +604,11 @@ const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
-	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbolSuffix());
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbol());
 	if (pSuffixMgr) {
 		pSuffixMgr->Compose(composer, GetSegmentReferable(), this);
 	} else {
-		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetTarget(), GetSymbolSuffix(), *this);
+		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetTarget(), GetSymbol(), *this);
 	}
 }
 
@@ -617,7 +617,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 	String str;
 	str += (GetTarget() == SuffixMgr::Target::Number)?
 				GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
-	str += GetSymbolSuffix()->GetName();
+	str += GetSymbol()->GetName();
 	return str;
 }
 
@@ -1338,7 +1338,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
 			} else if (pExpr->IsSuffixed(SuffixMgr::Target::String)) {
 				Expr_Suffixed& exprEx = dynamic_cast<Expr_Suffixed&>(*pExpr);
-				pHelpHolder->AddHelp(exprEx.GetSymbolSuffix(), exprEx.GetSegmentReferable().Reference());
+				pHelpHolder->AddHelp(exprEx.GetSymbol(), exprEx.GetSegmentReferable().Reference());
 			} else if (pExprBody) {
 				Error::IssueWith(ErrorType::SyntaxError, *this, "duplicated function body");
 				return nullptr;

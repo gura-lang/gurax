@@ -142,14 +142,14 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Suffixed<discardValueFlag>::Exec(Processor& processor) const
 {
-	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbolSuffix());
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbol());
 	RefPtr<Value> pValueResult;
 	if (pSuffixMgr) {
 		pValueResult.reset(pSuffixMgr->Eval(processor, GetString()));
-	} else if (::strlen(GetSymbolSuffix()->GetName()) == 2) {
-		pValueResult.reset(new Value_Help(new Help(GetSymbolSuffix(), GetStringReferable().Reference())));
+	} else if (::strlen(GetSymbol()->GetName()) == 2) {
+		pValueResult.reset(new Value_Help(new Help(GetSymbol(), GetStringReferable().Reference())));
 	} else {
-		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbolSuffix()->GetName());
+		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbol()->GetName());
 		processor.ErrorDone();
 		return;
 	}
@@ -161,7 +161,7 @@ template<bool discardValueFlag>
 String PUnit_Suffixed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Suffixed(`%s)", GetSymbolSuffix()->GetName());
+	str.Format("Suffixed(`%s)", GetSymbol()->GetName());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -169,9 +169,9 @@ String PUnit_Suffixed<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Suffixed<true>(_pStr.Reference(), _target, _pSymbolSuffix, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Suffixed<true>(_pStr.Reference(), _target, _pSymbol, _pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_Suffixed<false>(_pStr.Reference(), _target, _pSymbolSuffix, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Suffixed<false>(_pStr.Reference(), _target, _pSymbol, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

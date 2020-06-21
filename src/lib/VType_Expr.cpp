@@ -609,23 +609,6 @@ Gurax_ImplementPropertyGetter(Expr, symbol)
 	return new Value_Symbol(pSymbol);
 }
 
-// Expr#symbolSuffix
-Gurax_DeclareProperty_R(Expr, symbolSuffix)
-{
-	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The suffix symbol.\n");
-}
-
-Gurax_ImplementPropertyGetter(Expr, symbolSuffix)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Symbol* pSymbol = valueThis.GetExpr().InspectSymbolSuffix();
-	if (!pSymbol) return Value::nil();
-	return new Value_Symbol(pSymbol);
-}
-
 // Expr#symbolName
 Gurax_DeclareProperty_R(Expr, symbolName)
 {
@@ -803,7 +786,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, operator_));
 	Assign(Gurax_CreateProperty(Expr, right));
 	Assign(Gurax_CreateProperty(Expr, symbol));
-	Assign(Gurax_CreateProperty(Expr, symbolSuffix));
 	Assign(Gurax_CreateProperty(Expr, symbolName));
 	Assign(Gurax_CreateProperty(Expr, target));
 	Assign(Gurax_CreateProperty(Expr, trailer));

@@ -1,11 +1,9 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-/*
 TestCase('Inspection of Value') {
-	Tester(`3.14) {|expr|
-		aa
-	}
+	x = `3.14
+	Tester(`x.value)
 }
 
 TestCase('Inspection of Identifier') {
@@ -48,7 +46,6 @@ TestCase('Inspection of Caller') {
 }
 
 sys.Exit()
-*/
 
 TestCase('PUnit') {
 	f(`expr) = {

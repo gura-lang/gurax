@@ -233,17 +233,17 @@ public:
 private:
 	RefPtr<StringReferable> _pStr;
 	SuffixMgr::Target _target;
-	const Symbol* _pSymbolSuffix;
+	const Symbol* _pSymbol;
 public:
 	// Constructor
 	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
-		PUnit(pExprSrc), _pStr(pStr), _target(target), _pSymbolSuffix(pSymbolSuffix) {}
+		PUnit(pExprSrc), _pStr(pStr), _target(target), _pSymbol(pSymbolSuffix) {}
 public:
 	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 	SuffixMgr::Target GetTarget() const { return _target; }
-	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -262,10 +262,10 @@ public:
 private:
 	RefPtr<StringReferable> _pStr;
 	SuffixMgr::Target _target;
-	const Symbol* _pSymbolSuffix;
+	const Symbol* _pSymbol;
 public:
 	PUnitFactory_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pStr(pStr), _target(target), _pSymbolSuffix(pSymbolSuffix) {}
+		PUnitFactory(pExprSrc), _pStr(pStr), _target(target), _pSymbol(pSymbolSuffix) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Suffixed<false>);
 	}
