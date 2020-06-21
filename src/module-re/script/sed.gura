@@ -21,13 +21,13 @@ Exec(pathName:String, silentFlag:Bool) {block} = {
 Glob(pattern:String, arg%%):[silent] {`block} = {
 	silentFlag = arg.IsSet(`silent)
 	path.Glob(pattern):file {|pathName|
-		Exec(pathName, silentFlag) {|block|}
+		Exec(pathName, silentFlag) {{block}}
 	}
 }
 
 Walk(directory?:Directory, maxDepth?:Number, pattern*:String, arg%%):[silent] {`block} = {
 	silentFlag = arg.IsSet(`silent)
 	path.Walk(directory, maxDepth, pattern*):file {|pathName|
-		Exec(pathName, silentFlag) {|block|}
+		Exec(pathName, silentFlag) {{block}}
 	}
 }
