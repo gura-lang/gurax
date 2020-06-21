@@ -269,9 +269,9 @@ TestCase('Variable Expansion by Asterisk Operator') {
 
 TestCase('Block delegation') {
 	f() {block?} = { if (block) {block(block.type)} else {'(no block)'} }
-	g1() {`block?} = { f {|block|} }
-	g2() {block} = { f {|block|} }
-	g3() = { block = `(a = 3), f {|block|} }
+	g1() {`block?} = { f {{block}} }
+	g2() {block} = { f {{block}} }
+	g3() = { block = `(a = 3), f {{block}} }
 	Tester(`g1 {|str| Format('type = %s', str) })
 	Tester(`g1())
 	Tester(`g2 {|str| Format('type = %s', str) })

@@ -1,6 +1,55 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+/*
+TestCase('Inspection of Value') {
+	Tester(`3.14) {|expr|
+		aa
+	}
+}
+
+TestCase('Inspection of Identifier') {
+}
+
+TestCase('Inspection of String') {
+}
+
+TestCase('Inspection of Suffixed') {
+}
+
+TestCase('Inspection of Member') {
+}
+
+TestCase('Inspection of UnaryOp') {
+}
+
+TestCase('Inspection of BinaryOp') {
+}
+
+TestCase('Inspection of Assign') {
+}
+
+TestCase('Inspection of Root') {
+}
+
+TestCase('Inspection of Block') {
+}
+
+TestCase('Inspection of Lister') {
+}
+
+TestCase('Inspection of Iterer') {
+}
+
+TestCase('Inspection of Indexer') {
+}
+
+TestCase('Inspection of Caller') {
+}
+
+sys.Exit()
+*/
+
 TestCase('PUnit') {
 	f(`expr) = {
 		Println('--------')

@@ -787,9 +787,9 @@ public:
 	}
 	bool HasCallerAsParent() const;
 	bool IsDelegation() const {
-		return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
+		//return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
+		return !HasExprParam() && HasSingleExprElem() && GetExprElemFirst()->IsType<Expr_Block>(); 
 	}
-	//Value* DoEval(Processor& processor) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
 public:

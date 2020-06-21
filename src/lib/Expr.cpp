@@ -1232,8 +1232,9 @@ void Expr_Caller::Compose(Composer& composer)
 		composer.Add_Return(*pExprOfBlock);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprOfBlock->IsDelegation()) {
-			// Block-delegation format: f() {|block|}
-			pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);			// [Any]
+			// Block-delegation format: f() {{block}}
+			//pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);		// [Any]
+			pExprOfBlock->GetExprElemFirst()->ComposeOrNil(composer);			// [Any]
 			composer.Add_ArgumentDelegation(GetAttr().Reference(), *this);		// [Argument]
 		} else {
 			composer.Add_Argument(GetAttr().Reference(),
