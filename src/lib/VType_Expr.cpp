@@ -703,6 +703,23 @@ Gurax_ImplementPropertyGetter(Expr, type)
 	return new Value_Symbol(Symbol::Add(valueThis.GetExpr().GetTypeInfo().GetName()));
 }
 
+// Expr#value
+Gurax_DeclareProperty_R(Expr, value)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The value that is associated with the expr.");
+}
+
+Gurax_ImplementPropertyGetter(Expr, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Value> pValue(valueThis.GetExpr().InspectValue());
+	if (!pValue) return Value::nil();
+	return pValue.release();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
@@ -803,6 +820,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, target));
 	Assign(Gurax_CreateProperty(Expr, trailer));
 	Assign(Gurax_CreateProperty(Expr, type));
+	Assign(Gurax_CreateProperty(Expr, value));
 	// Assignment of operator
 	Gurax_AssignBinary(Eq, Expr, Expr);
 	Gurax_AssignBinary(Eq, Symbol, Expr);
