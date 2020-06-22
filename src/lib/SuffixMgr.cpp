@@ -8,6 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // SuffixMgr
 //------------------------------------------------------------------------------
+const Symbol* SuffixMgr::ModeToSymbol(Mode mode)
+{
+	return
+		(mode == SuffixMgr::Mode::Number)? Gurax_Symbol(number) :
+		(mode == SuffixMgr::Mode::String)? Gurax_Symbol(string) :
+		(mode == SuffixMgr::Mode::Binary)? Gurax_Symbol(binary) : Symbol::Empty;
+}
+
 String SuffixMgr::ToString(const StringStyle& ss) const
 {
 	return "SuffixMgr";

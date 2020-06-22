@@ -640,8 +640,8 @@ void Expr_Suffixed::Compose(Composer& composer)
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += (GetMode() == SuffixMgr::Mode::Number)?
-				GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
+	if (GetMode() == SuffixMgr::Mode::Binary) str += "b";
+	str += (GetMode() == SuffixMgr::Mode::Number)? GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
 	str += GetSymbol()->GetName();
 	return str;
 }

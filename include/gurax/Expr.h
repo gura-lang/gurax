@@ -639,6 +639,7 @@ public:
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	SuffixMgr::Mode GetMode() const { return _mode; }
+	const Symbol* GetModeAsSymbol() const { return SuffixMgr::ModeToSymbol(_mode); }
 public:
 	// Virtual functions of Expr
 	virtual bool IsSuffixed(SuffixMgr::Mode mode) const override { return _mode == mode; }
@@ -650,7 +651,7 @@ public:
 		return _pStrSegment.Reference();
 	}
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
-	//virtual const Symbol* InspectModeAsSymbol() const { return GetMemberModeAsSymbol(); }
+	virtual const Symbol* InspectModeAsSymbol() const { return GetModeAsSymbol(); }
 };
 
 //------------------------------------------------------------------------------

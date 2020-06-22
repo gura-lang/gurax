@@ -59,6 +59,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	virtual Value* Eval(Processor& processor, const char* str) const;
 	virtual void Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const;
+	static const Symbol* ModeToSymbol(Mode mode);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const SuffixMgr& suffixMgr) const { return this == &suffixMgr; }

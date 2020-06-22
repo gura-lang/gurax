@@ -42,11 +42,12 @@ Expr
   #left             Expr         R
   #lineNoBtm        Number       R
   #lineNoTop        Number       R
+  #mode             Symbol       R
   #operator         Operator     R
   #right            Expr         R
+  #string           String       R
   #symbol           Symbol       R
   #symbolName       String       R
-  #symbolSuffix     Symbol       R
   #target           Expr         R
   #trailer          Expr         R
   #type             Symbol       R
@@ -69,3 +70,884 @@ Expr
 {[x[0], x[1], x[2]] = [1, 2], x} .. insufficient number of values
 {[x[0], x[1], x[2]] = [1, 2, 3], x} .. [1, 2, 3]
 {[x[0], x[1], x[2]] = [1, 2, 3, 4], x} .. [1, 2, 3]
+======== Inspection ========
+`3.14 .. Value
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        3.14
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`foo .. Identifier
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `foo
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`foo:a:b:c:[d,e,f] .. Identifier
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `foo
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c:[d,e,f])>
+  EachParam  []
+  EachElem   []
+`'hello' .. String
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     'hello'
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`3.14foo .. Suffixed
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     '3.14'
+  symbol     Symbol     `foo
+  mode       Symbol     `number
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`'hello'foo .. Suffixed
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     'hello'
+  symbol     Symbol     `foo
+  mode       Symbol     `string
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`b'abcdef'foo .. Suffixed
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     'abcdef'
+  symbol     Symbol     `foo
+  mode       Symbol     `binary
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`aaa.bbb .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `normal
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`aaa:&bbb .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapAlong
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`aaa:*bbb .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapToIter
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`aaa::bbb .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapToList
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`aaa.bbb:a:b:c .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `normal
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`aaa:&bbb:a:b:c .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapAlong
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`aaa:*bbb:a:b:c .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapToIter
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`aaa::bbb:a:b:c .. Member
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       `aaa
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     `bbb
+  mode       Symbol     `mapToList
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`-a .. UnaryOp
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       `a
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Operator:Unary:Neg:-:(a:Any):map>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`a + b .. BinaryOp
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       `a
+  right      Expr       `b
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Operator:Binary:Add:+:(a:Any,b:Any):map>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`a = b .. Assign
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       `a
+  right      Expr       `b
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`a += b .. Assign
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       `a
+  right      Expr       `b
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Operator:Binary:Add:+:(a:Any,b:Any):map>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`{} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`{a} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a]
+`{a, b} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b]
+`{a, b, c} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b, `c]
+`{|p1|} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1]
+  EachElem   []
+`{|p1, p2|} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1, `p2]
+  EachElem   []
+`{|p1, p2, p3|} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1, `p2, `p3]
+  EachElem   []
+`{|p1| a, b, c} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1]
+  EachElem   [`a, `b, `c]
+`{|p1, p2| a, b, c} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1, `p2]
+  EachElem   [`a, `b, `c]
+`{|p1, p2, p3| a, b, c} .. Block
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  [`p1, `p2, `p3]
+  EachElem   [`a, `b, `c]
+`[] .. Lister
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`[a] .. Lister
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a]
+`[a, b] .. Lister
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b]
+`[a, b, c] .. Lister
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b, `c]
+`() .. Iterer
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   []
+`(a,) .. Iterer
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a]
+`(a, b) .. Iterer
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b]
+`(a, b, c) .. Iterer
+  block      Expr       <Nil>
+  car        Expr       <Nil>
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Nil>
+  EachParam  []
+  EachElem   [`a, `b, `c]
+`a[] .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`a[2] .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2]
+  EachElem   []
+`a[2, 3, 4] .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a[]:a:b:c .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`a[2]:a:b:c .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  [`2]
+  EachElem   []
+`a[2, 3, 4]:a:b:c .. Indexer
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a() .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`a(2) .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2]
+  EachElem   []
+`a(2, 3, 4) .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a():a:b:c .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  []
+  EachElem   []
+`a(2):a:b:c .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  [`2]
+  EachElem   []
+`a(2, 3, 4):a:b:c .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a.b.c() .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a.b.c
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`a.b.c(2) .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a.b.c
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2]
+  EachElem   []
+`a.b.c(2, 3, 4) .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a.b.c
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a(2, 3, 4) b() c() .. Caller
+  block      Expr       <Nil>
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       `b() c()
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  [`2, `3, `4]
+  EachElem   []
+`a {block} .. Caller
+  block      Expr       `{block}
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:()>
+  EachParam  []
+  EachElem   []
+`a(v1:aa:bb, v2:cc:dd, v3:ee:ff):a:b:c {|p1, p2| block} .. Caller
+  block      Expr       `{|p1, p2| block}
+  car        Expr       `a
+  target     Expr       <Nil>
+  child      Expr       <Nil>
+  left       Expr       <Nil>
+  right      Expr       <Nil>
+  trailer    Expr       <Nil>
+  value      Any        <Nil>
+  string     String     <Nil>
+  symbol     Symbol     <Nil>
+  mode       Symbol     <Nil>
+  operator   Operator   <Nil>
+  attr       Attribute  <Attribute:(:a:b:c)>
+  EachParam  [`v1:aa:bb, `v2:cc:dd, `v3:ee:ff]
+  EachElem   []

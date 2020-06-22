@@ -13,78 +13,6 @@ InspectExpr(x:Expr) = {
 	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
 }
 
-TestCase('Inspection') {
-	// Value
-	InspectExpr(`3.14)
-	// Identifier
-	InspectExpr(`foo)
-	InspectExpr(`foo:a:b:c:[d,e,f])
-	// String
-	InspectExpr(`'hello')
-	// Suffixed
-	InspectExpr(`3.14foo)
-	InspectExpr(`'hello'foo)
-	// Member
-	InspectExpr(`aaa.bbb)
-	InspectExpr(`aaa:&bbb)
-	InspectExpr(`aaa:*bbb)
-	InspectExpr(`aaa::bbb)
-	InspectExpr(`aaa.bbb:a:b:c)
-	InspectExpr(`aaa:&bbb:a:b:c)
-	InspectExpr(`aaa:*bbb:a:b:c)
-	InspectExpr(`aaa::bbb:a:b:c)
-	// UnaryOp
-	InspectExpr(`(-a))
-	// BinaryOp
-	InspectExpr(`(a + b))
-	// Assign
-	InspectExpr(`(a = b))
-	InspectExpr(`(a += b))
-	// Block
-	InspectExpr(`{})
-	InspectExpr(`{a})
-	InspectExpr(`{a, b})
-	InspectExpr(`{a, b, c})
-	InspectExpr(`{|p1|})
-	InspectExpr(`{|p1, p2|})
-	InspectExpr(`{|p1, p2, p3|})
-	InspectExpr(`{|p1| a, b, c})
-	InspectExpr(`{|p1, p2| a, b, c})
-	InspectExpr(`{|p1, p2, p3| a, b, c})
-	// Lister
-	InspectExpr(`[])
-	InspectExpr(`[a])
-	InspectExpr(`[a, b])
-	InspectExpr(`[a, b, c])
-	// Iter
-	InspectExpr(`())
-	InspectExpr(`(a,))
-	InspectExpr(`(a, b))
-	InspectExpr(`(a, b, c))
-	// Indexer
-	InspectExpr(`a[])
-	InspectExpr(`a[2])
-	InspectExpr(`a[2, 3, 4])
-	InspectExpr(`a[]:a:b:c)
-	InspectExpr(`a[2]:a:b:c)
-	InspectExpr(`a[2, 3, 4,]:a:b:c)
-	// Caller
-	InspectExpr(`a())
-	InspectExpr(`a(2))
-	InspectExpr(`a(2, 3, 4))
-	InspectExpr(`a():a:b:c)
-	InspectExpr(`a(2):a:b:c)
-	InspectExpr(`a(2, 3, 4):a:b:c)
-	InspectExpr(`a.b.c())
-	InspectExpr(`a.b.c(2))
-	InspectExpr(`a.b.c(2, 3, 4))
-	InspectExpr(`a(2, 3, 4) b() c())
-	InspectExpr(`a() {block})
-	InspectExpr(`a(v1:aa:bb, v2:cc:dd, v3:ee:ff):a:b:c {|p1, p2| block})
-}
-
-sys.Exit()
-
 TestCase('PUnit') {
 	f(`expr) = {
 		Println('--------')
@@ -145,4 +73,75 @@ TestCase('Assignment') {
 	Tester(`{[x[0], x[1], x[2]] = [1, 2], x})
 	Tester(`{[x[0], x[1], x[2]] = [1, 2, 3], x})
 	Tester(`{[x[0], x[1], x[2]] = [1, 2, 3, 4], x})
+}
+
+TestCase('Inspection') {
+	// Value
+	InspectExpr(`3.14)
+	// Identifier
+	InspectExpr(`foo)
+	InspectExpr(`foo:a:b:c:[d,e,f])
+	// String
+	InspectExpr(`'hello')
+	// Suffixed
+	InspectExpr(`3.14foo)
+	InspectExpr(`'hello'foo)
+	InspectExpr(`b'abcdef'foo)
+	// Member
+	InspectExpr(`aaa.bbb)
+	InspectExpr(`aaa:&bbb)
+	InspectExpr(`aaa:*bbb)
+	InspectExpr(`aaa::bbb)
+	InspectExpr(`aaa.bbb:a:b:c)
+	InspectExpr(`aaa:&bbb:a:b:c)
+	InspectExpr(`aaa:*bbb:a:b:c)
+	InspectExpr(`aaa::bbb:a:b:c)
+	// UnaryOp
+	InspectExpr(`(-a))
+	// BinaryOp
+	InspectExpr(`(a + b))
+	// Assign
+	InspectExpr(`(a = b))
+	InspectExpr(`(a += b))
+	// Block
+	InspectExpr(`{})
+	InspectExpr(`{a})
+	InspectExpr(`{a, b})
+	InspectExpr(`{a, b, c})
+	InspectExpr(`{|p1|})
+	InspectExpr(`{|p1, p2|})
+	InspectExpr(`{|p1, p2, p3|})
+	InspectExpr(`{|p1| a, b, c})
+	InspectExpr(`{|p1, p2| a, b, c})
+	InspectExpr(`{|p1, p2, p3| a, b, c})
+	// Lister
+	InspectExpr(`[])
+	InspectExpr(`[a])
+	InspectExpr(`[a, b])
+	InspectExpr(`[a, b, c])
+	// Iter
+	InspectExpr(`())
+	InspectExpr(`(a,))
+	InspectExpr(`(a, b))
+	InspectExpr(`(a, b, c))
+	// Indexer
+	InspectExpr(`a[])
+	InspectExpr(`a[2])
+	InspectExpr(`a[2, 3, 4])
+	InspectExpr(`a[]:a:b:c)
+	InspectExpr(`a[2]:a:b:c)
+	InspectExpr(`a[2, 3, 4,]:a:b:c)
+	// Caller
+	InspectExpr(`a())
+	InspectExpr(`a(2))
+	InspectExpr(`a(2, 3, 4))
+	InspectExpr(`a():a:b:c)
+	InspectExpr(`a(2):a:b:c)
+	InspectExpr(`a(2, 3, 4):a:b:c)
+	InspectExpr(`a.b.c())
+	InspectExpr(`a.b.c(2))
+	InspectExpr(`a.b.c(2, 3, 4))
+	InspectExpr(`a(2, 3, 4) b() c())
+	InspectExpr(`a() {block})
+	InspectExpr(`a(v1:aa:bb, v2:cc:dd, v3:ee:ff):a:b:c {|p1, p2| block})
 }
