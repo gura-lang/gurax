@@ -84,14 +84,14 @@ Value* Value_CallableMember::DoIndexOpApply(const Index& index, Value& value, Pr
 	return GetValueProp().IndexOpApply(index, value, processor, op);
 }
 
-Value* Value_CallableMember::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_CallableMember::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	return GetValueProp().PropGet(pSymbol, attr, notFoundErrorFlag);
+	return GetValueProp().GetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
-bool Value_CallableMember::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_CallableMember::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	return GetValueProp().PropSet(pSymbol, pValue.release(), attr);
+	return GetValueProp().SetProperty(pSymbol, pValue.release(), attr);
 }
 
 }

@@ -103,7 +103,7 @@ Value* Value::DoIndexOpApply(const Index& index, Value& value, Processor& proces
 	return Value::undefined();
 }
 
-Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropSlot* pPropSlot = GetVType().LookupPropSlot(pSymbol);
 	if (pPropSlot) {
@@ -124,7 +124,7 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFo
 	return nullptr;
 }
 
-bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropSlot* pPropSlot = GetVType().LookupPropSlot(pSymbol);
 	if (pPropSlot) {

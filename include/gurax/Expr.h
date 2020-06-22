@@ -205,6 +205,7 @@ public:
 	virtual const Expr* InspectTarget() const { return nullptr; }
 	virtual const Expr* InspectBlock() const { return nullptr; }
 	virtual const Expr* InspectTrailer() const { return nullptr; }
+	virtual StringReferable* InspectStringReferable() const { return nullptr; }
 	virtual const Symbol* InspectSymbol() const { return nullptr; }
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual Value* InspectValue() const { return nullptr; }
@@ -613,7 +614,9 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual Value* InspectValue() const override;
+	virtual StringReferable* InspectStringReferable() const override {
+		return _pStrSegment.Reference();
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -644,7 +647,9 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
-	virtual Value* InspectValue() const override;
+	virtual StringReferable* InspectStringReferable() const override {
+		return _pStrSegment.Reference();
+	}
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
 };
 

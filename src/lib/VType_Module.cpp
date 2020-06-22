@@ -88,7 +88,7 @@ void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) co
 	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 
-Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_Module::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropSlot* pPropSlot = GetModule().LookupPropSlot(pSymbol);
 	if (pPropSlot) {
@@ -109,7 +109,7 @@ Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, boo
 	return nullptr;
 }
 
-bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Module::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropSlot* pPropSlot = GetModule().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {

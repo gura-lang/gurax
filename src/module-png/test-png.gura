@@ -12,7 +12,7 @@ TestCase('Property') {
 TestCase('png.Content') {
 	png.Content('test.png') {|c|
 		png.Content.__EachPropSlot__ {|prop|
-			value = c.__PropGet__(prop.symbol)
+			value = c.__GetProp__(prop.symbol)
 			Printf('%-20s .. %d\n', prop.symbol.name, value)
 		}
 	}

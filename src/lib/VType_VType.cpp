@@ -189,12 +189,12 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 	constructor.Call(processor, argument);
 }
 
-Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_VType::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
 		RefPtr<Value> pValue(GetVTypeThis().GetFrame().Retrieve(pSymbol));
-		return pValue? pValue.release() : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+		return pValue? pValue.release() : Value::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
 	if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
@@ -210,7 +210,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 	return pPropSlot->GetValue(*this, attr);
 }
 
-bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {

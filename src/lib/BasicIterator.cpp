@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include "../boost/combination.hpp"
 
+#undef GetProp
+#undef SetProp
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -187,7 +190,7 @@ Value* Iterator_Member_MapAlong::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	RefPtr<Value> pValueProp(pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true));
+	RefPtr<Value> pValueProp(pValueTargetElem->GetProperty(GetSymbol(), GetAttr(), true));
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
@@ -203,7 +206,7 @@ Value* Iterator_Member_MapToIter::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	RefPtr<Value> pValueProp(pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true));
+	RefPtr<Value> pValueProp(pValueTargetElem->GetProperty(GetSymbol(), GetAttr(), true));
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 

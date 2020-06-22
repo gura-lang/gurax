@@ -627,11 +627,6 @@ String Expr_String::ToString(const StringStyle& ss) const
 	return str;
 }
 
-Value* Expr_String::InspectValue() const
-{
-	return new Value_String(GetSegmentReferable().Reference());
-}
-
 //------------------------------------------------------------------------------
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
@@ -654,11 +649,6 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 				GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
 	str += GetSymbol()->GetName();
 	return str;
-}
-
-Value* Expr_Suffixed::InspectValue() const
-{
-	return new Value_String(GetSegmentReferable().Reference());
 }
 
 //------------------------------------------------------------------------------

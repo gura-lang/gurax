@@ -3,6 +3,9 @@
 //==============================================================================
 #include "stdafx.h"
 
+#undef SetProp
+#undef GetProp
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -48,7 +51,7 @@ Value* Frame::Retrieve(const DottedSymbol& dottedSymbol, size_t nTail)
 	RefPtr<Value> pValue(Retrieve(pSymbol));
 	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
-		pValue.reset(pValue->PropGet(pSymbol, *Attribute::Empty, false));
+		pValue.reset(pValue->GetProperty(pSymbol, *Attribute::Empty, false));
 	}
 	return pValue.release();
 }
@@ -72,7 +75,7 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 	if (dottedSymbol.IsDotted()) {
 		RefPtr<Value> pValueTarget(Retrieve(dottedSymbol, 1));
 		if (!pValueTarget) return false;
-		return pValueTarget->PropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
+		return pValueTarget->SetProperty(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
 		Assign(dottedSymbol.GetSymbolLast(), pValue);
 		return true;

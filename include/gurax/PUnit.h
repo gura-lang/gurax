@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_PUNIT_H
 #define GURAX_PUNIT_H
+#include "Common.h"
 #include "Expr.h"
 #include "Error.h"
 

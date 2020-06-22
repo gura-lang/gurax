@@ -2,10 +2,11 @@
 import(util.tester) {*}
 
 InspectExpr(x:Expr) = {
-	Printf('%s: type=%s\n', x.ToString():quoteSymbol, x.type)
+	Printf('%s .. %s\n', x.ToString():quoteSymbol, x.type)
 	[`attr, `block, `car, `child, `left, `memberMode, `operator,
-	 `right, `symbol, `target, `trailer, `value].Each {|prop|
-		Printf('  %-10s %s\n', prop, x.__PropGet__(prop).ToString():nilVisible:quote)
+	 `right, `string, `symbol, `target, `trailer, `value].Each {|prop|
+		Printf('  %-10s %s\n', prop,
+				x.__GetProp__(prop).ToString():nilVisible:quote)
 	}
 	Printf('  %-10s %s\n', 'EachCdr', cond(x, x.EachCdr():list).ToString())
 	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
@@ -13,11 +14,13 @@ InspectExpr(x:Expr) = {
 }
 
 TestCase('Inspection') {
+	/*
 	// Value
 	InspectExpr(`3.14)
 	// Identifier
 	InspectExpr(`foo)
 	InspectExpr(`foo:a:b:c:[d,e,f])
+	*/
 	// String
 	InspectExpr(`'hello')
 	// Suffixed

@@ -182,11 +182,11 @@ public:
 	Value* IndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op) {
 		return DoIndexOpApply(index, value, processor, op);
 	}
-	Value* PropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
-		return DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	Value* GetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
+		return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 	}
-	bool PropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {
-		return DoPropSet(pSymbol, pValue, attr);
+	bool SetProperty(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {
+		return DoSetProperty(pSymbol, pValue, attr);
 	}
 	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
 	Iterator* GenIterator() const { return DoGenIterator(); }
@@ -231,8 +231,8 @@ public:
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue);
 	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op);
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
-	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 	virtual Iterator* DoGenIterator() const;
 public:

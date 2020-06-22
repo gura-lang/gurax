@@ -155,11 +155,11 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Content::vtype = VTYPE_Content;
 
-Value* Value_Content::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_Content::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	Segment* pSegment = GetContent().GetSegmentMap().Lookup(pSymbol);
 	if (pSegment) return pSegment->CreateValue();
-	return Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	return Value_Object::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
 String Value_Content::ToString(const StringStyle& ss) const

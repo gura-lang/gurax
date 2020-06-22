@@ -75,7 +75,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 };
 
 Gurax_EndModuleScope(jpeg)

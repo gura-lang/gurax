@@ -123,17 +123,17 @@ Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_IFD::vtype = VTYPE_IFD;
 
-Value* Value_IFD::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_IFD::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const Value* pValue = GetIFD().LookupTagValue(pSymbol);
-	return pValue? pValue->Reference() : Value_Object::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	return pValue? pValue->Reference() : Value_Object::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
-bool Value_IFD::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_IFD::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	if (GetIFD().AssignTagValue(pSymbol, pValue.Reference())) return true;
 	if (Error::IsIssued()) return false;
-	return Value_Object::DoPropSet(pSymbol, pValue.release(), attr);
+	return Value_Object::DoSetProperty(pSymbol, pValue.release(), attr);
 }
 
 String Value_IFD::ToString(const StringStyle& ss) const

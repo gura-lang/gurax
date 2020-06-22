@@ -1453,7 +1453,7 @@ void PUnit_MemberSet_Normal<discardValueFlag, valueFirstFlag>::Exec(Processor& p
 		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1526,7 +1526,7 @@ void PUnit_MemberSet_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& proc
 			if (!pValueTargetEach) break;
 			RefPtr<Value> pValueAssignedEach(pIteratorAssigned->NextValue());
 			if (!pValueAssignedEach) break;
-			if (!pValueTargetEach->PropSet(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
+			if (!pValueTargetEach->SetProperty(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1544,7 +1544,7 @@ void PUnit_MemberSet_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& proc
 		for (;;) {
 			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
 			if (!pValueTargetEach) break;
-			if (!pValueTargetEach->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+			if (!pValueTargetEach->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1606,13 +1606,13 @@ void PUnit_MemberOpApply_Normal<discardValueFlag, valueFirstFlag>::Exec(Processo
 		pValueApplied.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+	RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1668,13 +1668,13 @@ void PUnit_MemberOpApply_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& 
 		pValueApplied.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+	RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1721,7 +1721,7 @@ template<bool discardValueFlag>
 void PUnit_MemberGet_Normal<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+	RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
@@ -1767,7 +1767,7 @@ void PUnit_MemberGet_MapAlong<discardValueFlag>::Exec(Processor& processor) cons
 									   GetSymbol(), GetAttr().Reference()));
 		if constexpr (!discardValueFlag) processor.PushValue(new Value_ArgMapper(pIterator.release()));
 	} else {
-		RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+		RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
@@ -1813,7 +1813,7 @@ void PUnit_MemberGet_MapToList<discardValueFlag>::Exec(Processor& processor) con
 		for (;;) {
 			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
 			if (!pValueTargetEach) break;
-			RefPtr<Value> pValueProp(pValueTargetEach->PropGet(GetSymbol(), GetAttr(), true));
+			RefPtr<Value> pValueProp(pValueTargetEach->GetProperty(GetSymbol(), GetAttr(), true));
 			if (!pValueProp) {
 				processor.ErrorDone();
 				return;
@@ -1829,7 +1829,7 @@ void PUnit_MemberGet_MapToList<discardValueFlag>::Exec(Processor& processor) con
 			processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 		}
 	} else {
-		RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+		RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
@@ -1878,7 +1878,7 @@ void PUnit_MemberGet_MapToIter<discardValueFlag>::Exec(Processor& processor) con
 			processor.PushValue(new Value_Iterator(pIterator.release()));
 		}
 	} else {
-		RefPtr<Value> pValueProp(pValueTarget->PropGet(GetSymbol(), GetAttr(), true));
+		RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;

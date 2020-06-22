@@ -603,6 +603,23 @@ Gurax_ImplementPropertyGetter(Expr, right)
 	return new Value_Expr(pExpr->Reference());
 }
 
+// Expr#string
+Gurax_DeclareProperty_R(Expr, string)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The string that is associated with the expr.");
+}
+
+Gurax_ImplementPropertyGetter(Expr, string)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<StringReferable> pStr(valueThis.GetExpr().InspectStringReferable());
+	if (!pStr) return Value::nil();
+	return new Value_String(pStr.release());
+}
+
 // Expr#symbol
 Gurax_DeclareProperty_R(Expr, symbol)
 {
@@ -684,23 +701,6 @@ Gurax_ImplementPropertyGetter(Expr, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Symbol(Symbol::Add(valueThis.GetExpr().GetTypeInfo().GetName()));
-}
-
-// Expr#value
-Gurax_DeclareProperty_R(Expr, value)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value that is associated with the expr.");
-}
-
-Gurax_ImplementPropertyGetter(Expr, value)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<Value> pValue(valueThis.GetExpr().InspectValue());
-	if (!pValue) return Value::nil();
-	return pValue.release();
 }
 
 //------------------------------------------------------------------------------
@@ -797,12 +797,12 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, memberMode));
 	Assign(Gurax_CreateProperty(Expr, operator_));
 	Assign(Gurax_CreateProperty(Expr, right));
+	Assign(Gurax_CreateProperty(Expr, string));
 	Assign(Gurax_CreateProperty(Expr, symbol));
 	Assign(Gurax_CreateProperty(Expr, symbolName));
 	Assign(Gurax_CreateProperty(Expr, target));
 	Assign(Gurax_CreateProperty(Expr, trailer));
 	Assign(Gurax_CreateProperty(Expr, type));
-	Assign(Gurax_CreateProperty(Expr, value));
 	// Assignment of operator
 	Gurax_AssignBinary(Eq, Expr, Expr);
 	Gurax_AssignBinary(Eq, Symbol, Expr);

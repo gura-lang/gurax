@@ -21,6 +21,12 @@
 #include <utility>
 #include <vector>
 
+#undef min
+#undef max
+#undef SetProp
+#undef GetProp
+#undef GetObject
+
 //------------------------------------------------------------------------------
 // Macros to handler platform differences
 //------------------------------------------------------------------------------
@@ -48,11 +54,6 @@
 #endif
 
 #if defined(GURAX_ON_MSWIN)
-#undef min
-#undef max
-#undef SetProp
-#undef GetProp
-#undef GetObject
 #pragma warning(disable:4018)
 #pragma warning(disable:4146)
 #pragma warning(disable:4200)
