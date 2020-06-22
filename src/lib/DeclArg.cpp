@@ -75,7 +75,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	}
 	if (pExpr->IsType<Expr_Indexer>()) {
 		const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(pExpr);
-		if (!pExprEx->GetExprLinkCdr().IsEmpty()) {
+		if (!pExprEx->GetExprLinkParam().IsEmpty()) {
 			Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
 			return nullptr;
 		}

@@ -9,9 +9,8 @@ InspectExpr(x:Expr) = {
 				Expr.__GetPropSlot__(prop).vtype.__fullName__,
 				x.__GetProp__(prop).ToString():nilVisible:quote)
 	}
-	Printf('  %-10s %s\n', 'EachCdr', cond(x, x.EachCdr():list).ToString())
-	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
 	Printf('  %-10s %s\n', 'EachParam', cond(x, x.EachParam():list).ToString())
+	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
 }
 
 TestCase('Inspection') {
@@ -21,7 +20,6 @@ TestCase('Inspection') {
 	// Identifier
 	InspectExpr(`foo)
 	InspectExpr(`foo:a:b:c:[d,e,f])
-	*/
 	// String
 	InspectExpr(`'hello')
 	// Suffixed
@@ -32,14 +30,29 @@ TestCase('Inspection') {
 	InspectExpr(`aaa:&bbb)
 	InspectExpr(`aaa:*bbb)
 	InspectExpr(`aaa::bbb)
+	InspectExpr(`aaa.bbb:a:b:c)
+	InspectExpr(`aaa:&bbb:a:b:c)
+	InspectExpr(`aaa:*bbb:a:b:c)
+	InspectExpr(`aaa::bbb:a:b:c)
 	// UnaryOp
 	InspectExpr(`(-a))
 	// BinaryOp
 	InspectExpr(`(a + b))
 	// Assign
 	InspectExpr(`(a = b))
+	InspectExpr(`(a += b))
+	*/
 	// Block
 	InspectExpr(`{})
+	InspectExpr(`{a})
+	InspectExpr(`{a, b})
+	InspectExpr(`{a, b, c})
+	InspectExpr(`{|p1|})
+	InspectExpr(`{|p1, p2|})
+	InspectExpr(`{|p1, p2, p3|})
+	InspectExpr(`{|p1| a, b, c})
+	InspectExpr(`{|p1, p2| a, b, c})
+	InspectExpr(`{|p1, p2, p3| a, b, c})
 	// Lister
 	InspectExpr(`[])
 	// Iter

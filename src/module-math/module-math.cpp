@@ -25,8 +25,8 @@ Function_Unary::Function_Unary(Operator* pOperator) :
 
 void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	pExprCdr->ComposeOrNil(composer);											// [Any]
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
+	pExprParam->ComposeOrNil(composer);											// [Any]
 	composer.Add_UnaryOp(_pOperator, exprCaller);
 }
 
@@ -51,10 +51,10 @@ Function_Binary::Function_Binary(Operator* pOperator) :
 
 void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	pExprCdr->ComposeOrNil(composer);											// [Any]
-	pExprCdr = pExprCdr->GetExprNext();
-	pExprCdr->ComposeOrNil(composer);											// [Any]
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
+	pExprParam->ComposeOrNil(composer);											// [Any]
+	pExprParam = pExprParam->GetExprNext();
+	pExprParam->ComposeOrNil(composer);											// [Any]
 	composer.Add_BinaryOp(_pOperator, exprCaller);
 }
 

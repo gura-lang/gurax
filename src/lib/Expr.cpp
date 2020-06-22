@@ -25,17 +25,12 @@ void Expr::ComposeOrNil(Composer& composer)
 	}
 }
 
-Iterator* Expr::EachCdr() const
+Iterator* Expr::EachParam() const
 {
 	return Iterator::Empty->Reference();
 }
 
 Iterator* Expr::EachElem() const
-{
-	return Iterator::Empty->Reference();
-}
-
-Iterator* Expr::EachParam() const
 {
 	return Iterator::Empty->Reference();
 }
@@ -319,10 +314,10 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
-void Expr_Composite::AddExprCdr(Expr* pExprCdr)
+void Expr_Composite::AddExprParam(Expr* pExprParam)
 {
-	pExprCdr->SetExprParent(this);
-	_pExprLinkCdr->AddExpr(pExprCdr);
+	pExprParam->SetExprParent(this);
+	_pExprLinkParam->AddExpr(pExprParam);
 }
 
 //------------------------------------------------------------------------------
@@ -1137,11 +1132,11 @@ const Expr::TypeInfo Expr_Indexer::typeInfo("Indexer");
 void Expr_Indexer::Compose(Composer& composer)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Car]
-	size_t nExprs = GetExprLinkCdr().CountSequence();
+	size_t nExprs = GetExprLinkParam().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
-	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-		pExprCdr->ComposeOrNil(composer);										// [Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExprCdr);										// [Index(Car)]
+	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
+		pExprParam->ComposeOrNil(composer);										// [Index(Car) Param]
+		composer.Add_FeedIndex(*pExprParam);										// [Index(Car)]
 	}
 	composer.Add_IndexGet(*this);												// [Elems]
 }
@@ -1149,11 +1144,11 @@ void Expr_Indexer::Compose(Composer& composer)
 void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Elems Car]
-	size_t nExprs = GetExprLinkCdr().CountSequence();
+	size_t nExprs = GetExprLinkParam().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Elems Index(Car)]
-	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-		pExprCdr->ComposeOrNil(composer);										// [Elems Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExprCdr);										// [Elems Index(Car)]
+	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
+		pExprParam->ComposeOrNil(composer);										// [Elems Index(Car) Param]
+		composer.Add_FeedIndex(*pExprParam);										// [Elems Index(Car)]
 	}
 	if (pOp) {
 		Error::Issue_UnimplementedOperation();
@@ -1169,11 +1164,11 @@ void Expr_Indexer::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Car]
-	size_t nExprs = GetExprLinkCdr().CountSequence();
+	size_t nExprs = GetExprLinkParam().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
-	for (Expr* pExprCdr = GetExprCdrFirst(); pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-		pExprCdr->ComposeOrNil(composer);										// [Index(Car) Cdr]
-		composer.Add_FeedIndex(*pExprCdr);										// [Index(Car)]
+	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
+		pExprParam->ComposeOrNil(composer);										// [Index(Car) Param]
+		composer.Add_FeedIndex(*pExprParam);										// [Index(Car)]
 	}
 	exprAssigned.ComposeOrNil(composer);										// [Index(Car) Elems]
 	if (pOp) {
@@ -1185,7 +1180,7 @@ void Expr_Indexer::ComposeWithinAssignment(
 
 void Expr_Indexer::ComposeWithinClass(Composer& composer, bool publicFlag)
 {
-	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
+	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "invalid format of property declaration");
 		return;
@@ -1204,7 +1199,7 @@ void Expr_Indexer::ComposeWithinAssignmentInClass(
 						 "operator can not be applied in property assigment");
 		return;
 	}
-	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
+	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "invalid format of property declaration");
 		return;
@@ -1221,13 +1216,13 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 	String str;
 	str += _pExprCar->ToString(ss);
 	str += '[';
-	const Expr* pExprCdrFirst = GetExprCdrFirst();
-	for (const Expr* pExprCdr = pExprCdrFirst; pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-		if (pExprCdr != pExprCdrFirst) {
+	const Expr* pExprParamFirst = GetExprParamFirst();
+	for (const Expr* pExprParam = pExprParamFirst; pExprParam; pExprParam = pExprParam->GetExprNext()) {
+		if (pExprParam != pExprParamFirst) {
 			str += ',';
 			if (!ss.IsCram()) str += ' ';
 		}
-		str += pExprCdr->ToString(ss);
+		str += pExprParam->ToString(ss);
 	}
 	str += ']';
 	str += strInsert;
@@ -1273,7 +1268,7 @@ void Expr_Caller::Compose(Composer& composer)
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);	// [Argument]
 	}
-	GetExprLinkCdr().ComposeWithinArgSlot(composer);							// [Argument]
+	GetExprLinkParam().ComposeWithinArgSlot(composer);							// [Argument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(*this);													// [Result]
 }
@@ -1286,7 +1281,7 @@ void Expr_Caller::ComposeWithinClass(Composer& composer, bool publicFlag)
 		return;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol();
-	if (!pSymbol->IsIdentical(Gurax_Symbol(public_)) || HasExprCdr()) {
+	if (!pSymbol->IsIdentical(Gurax_Symbol(public_)) || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
@@ -1390,7 +1385,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 		composer.Add_Value(Value::nil(), *this);
 	}
 	composer.Add_Return(*this);
-	for (Expr* pExprParam = GetExprCdrFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
+	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
 		Expr_Binary* pExprParamEx = nullptr;
 		if (!pExprParam->IsDeclArgWithDefault(&pExprParamEx)) continue;
 		Expr& exprDefaultArg = pExprParamEx->GetExprRight();
@@ -1429,7 +1424,7 @@ DeclCallable* Expr_Caller::RetrieveDeclCallable() const
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
-	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprOfBlock();
+	bool argListFlag = HasExprParam() || !GetAttr().IsEmpty() || !HasExprOfBlock();
 	String str;
 	str += _pExprCar->ToString(ss);
 	if (argListFlag) {
@@ -1438,7 +1433,7 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 			str += ' ';
 		}
 		str += '(';
-		const Expr* pExprFirst = GetExprCdrFirst();
+		const Expr* pExprFirst = GetExprParamFirst();
 		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
 			if (pExpr != pExprFirst) {
 				str += ',';

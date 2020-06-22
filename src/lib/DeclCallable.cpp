@@ -102,10 +102,10 @@ bool DeclCallable::IsNaked() const
 	return GetDeclArgOwner().empty();
 }
 
-bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock)
+bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
-	GetDeclArgOwner().reserve(exprLinkCdr.CountSequence());
-	for (const Expr* pExpr = exprLinkCdr.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+	GetDeclArgOwner().reserve(exprLinkParam.CountSequence());
+	for (const Expr* pExpr = exprLinkParam.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::PostMod)) {

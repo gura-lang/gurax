@@ -120,7 +120,7 @@ protected:
 	~DeclCallable() = default;
 public:
 	bool IsNaked() const;
-	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock);
+	bool Prepare(const ExprLink& exprLinkParam, const Attribute& attr, const Expr_Block* pExprOfBlock);
 	void Clear();
 	DeclArgOwner& GetDeclArgOwner() { return *_pDeclArgOwner; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }

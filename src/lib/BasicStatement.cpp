@@ -27,7 +27,7 @@ Gurax_DeclareStatement(cond)
 
 Gurax_ImplementStatement(cond)
 {
-	Expr* pExprCond = exprCaller.GetExprCdrFirst();
+	Expr* pExprCond = exprCaller.GetExprParamFirst();
 	Expr* pExprTrue = pExprCond->GetExprNext();
 	Expr* pExprFalse = pExprTrue->GetExprNext();
 	pExprCond->ComposeOrNil(composer);											// [Bool]
@@ -90,7 +90,7 @@ Gurax_ImplementStatement(if_)
 			return;
 		}
 	}
-	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);						// [Bool]
+	exprCaller.GetExprParamFirst()->ComposeOrNil(composer);						// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);			// []
@@ -101,7 +101,7 @@ Gurax_ImplementStatement(if_)
 		for (auto ppExprElsif = exprsElsif.begin();
 							ppExprElsif != exprsElsif.end(); ppExprElsif++) {
 			Expr_Caller* pExprElsif = *ppExprElsif;
-			pExprElsif->GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
+			pExprElsif->GetExprParamFirst()->ComposeOrNil(composer);				// [Bool]
 			if (pExprElse || ppExprElsif + 1 != exprsElsif.end()) {
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, *pExprElsif);	// []
@@ -215,7 +215,7 @@ Gurax_ImplementStatement(try_)
 	for (Expr_Caller* pExpr = exprCaller.GetExprTrailer(); pExpr;
 										pExpr = pExpr->GetExprTrailer()) {
 		if (pExpr->IsStatement(Gurax_Symbol(catch_))) {
-			if (pExpr->HasExprCdr()) {
+			if (pExpr->HasExprParam()) {
 				exprsCatch.push_back(pExpr);
 			} else if (pExprCatchAny) {
 				Error::IssueWith(ErrorType::SyntaxError, *pExpr,
@@ -281,10 +281,10 @@ Gurax_ImplementStatement(try_)
 		}
 		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 		composer.Add_Value(Value::nil(), exprCaller);							// [nil]
-		Expr* pExprCdr = pExprCatch->GetExprCdrFirst();
-		for ( ; pExprCdr; pExprCdr = pExprCdr->GetExprNext()) {
-			pExprCdr->ComposeOrNil(composer);									// [nil .. Any]
-			composer.Add_Cast(VTYPE_ErrorType, *pExprCdr);						// [nil .. ErrorType]
+		Expr* pExprParam = pExprCatch->GetExprParamFirst();
+		for ( ; pExprParam; pExprParam = pExprParam->GetExprNext()) {
+			pExprParam->ComposeOrNil(composer);									// [nil .. Any]
+			composer.Add_Cast(VTYPE_ErrorType, *pExprParam);						// [nil .. ErrorType]
 		}
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatch(PUnit::BranchMode::Empty, *pExprCatch);		// [Error] or []
@@ -414,7 +414,7 @@ Gurax_DeclareStatementAlias(for_, "for")
 Gurax_ImplementStatement(for_)
 {
 	RefPtr<DeclArgOwner> pDeclArgOwner(new DeclArgOwner());
-	for (Expr* pExpr = exprCaller.GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (Expr* pExpr = exprCaller.GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
 							 "invalid argument for for-statement");
@@ -560,7 +560,7 @@ Gurax_ImplementStatement(while_)
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
-		Expr& exprCriteria = *exprCaller.GetExprCdrFirst();
+		Expr& exprCriteria = *exprCaller.GetExprParamFirst();
 		Expr_Block& exprOfBlock = *exprCaller.GetExprOfBlock();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);
@@ -588,7 +588,7 @@ Gurax_ImplementStatement(while_)
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 				composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [List]
 				pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
-				exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [List Bool]
+				exprCaller.GetExprParamFirst()->ComposeOrNil(composer);			// [List Bool]
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);	// [List]
 				composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak);
@@ -601,7 +601,7 @@ Gurax_ImplementStatement(while_)
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [Last=nil]
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
-				exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Last Bool]
+				exprCaller.GetExprParamFirst()->ComposeOrNil(composer);			// [Last Bool]
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);	// [Last]
 				composer.Add_DiscardValue(exprCaller);							// []
@@ -627,7 +627,7 @@ Gurax_ImplementStatement(while_)
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 				composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [Iterator List]
 				pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
-				exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Iterator List Bool]
+				exprCaller.GetExprParamFirst()->ComposeOrNil(composer);			// [Iterator List Bool]
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);	// [Iterator List]
 				composer.Add_EvalIterator(1, false, exprCaller);				// [Iterator List Idx]
@@ -643,7 +643,7 @@ Gurax_ImplementStatement(while_)
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [Iterator Last=nil]
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
-				exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Iterator Last Bool]
+				exprCaller.GetExprParamFirst()->ComposeOrNil(composer);			// [Iterator Last Bool]
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 				composer.Add_JumpIfNot(PUnit::BranchMode::Empty, exprCaller);	// [Iterator Last]
 				composer.Add_DiscardValue(exprCaller);							// [Iterator]
@@ -679,7 +679,7 @@ Gurax_DeclareStatement(repeat)
 
 Gurax_ImplementStatement(repeat)
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
@@ -688,8 +688,8 @@ Gurax_ImplementStatement(repeat)
 		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
 		composer.Add_SequenceEnd(*exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 			composer.Add_Cast(VTYPE_Number, exprCaller);						// [Number]
 			composer.Add_GenIterator_repeat(
 				exprCaller.GetExprOfBlock()->Reference(), true, xiterFlag, exprCaller);	// [Iterator]
@@ -703,8 +703,8 @@ Gurax_ImplementStatement(repeat)
 		bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 		bool createListFlag = listFlag || xlistFlag;
 		if (declArgsOfBlock.empty()) {
-			if (pExprCdr) {
-				pExprCdr->ComposeOrNil(composer);								// [Any]
+			if (pExprParam) {
+				pExprParam->ComposeOrNil(composer);								// [Any]
 				composer.Add_Cast(VTYPE_Number, exprCaller);					// [Number]
 				composer.Add_GenIterator_Range(exprCaller);						// [Iterator]
 			} else {
@@ -748,8 +748,8 @@ Gurax_ImplementStatement(repeat)
 		} else if (declArgsOfBlock.size() == 1) {
 			DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
 			composer.Add_PushFrame<Frame_Block>(exprCaller);
-			if (pExprCdr) {
-				pExprCdr->ComposeOrNil(composer);								// [Any]
+			if (pExprParam) {
+				pExprParam->ComposeOrNil(composer);								// [Any]
 				composer.Add_Cast(VTYPE_Number, exprCaller);					// [Number]
 				composer.Add_GenIterator_Range(exprCaller);						// [Iterator]
 			} else {
@@ -819,24 +819,24 @@ Gurax_ImplementStatement(break_)
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
 	if (repeaterInfo.GetPUnitOfBreak()) {
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
 		composer.Add_Break(repeaterInfo.GetPUnitOfBreak(), false, exprCaller);	// [Any or undefined]
 	} else if (repeaterInfo.GetPUnitOfBranch()) {
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
 		}
 		composer.Add_Break(repeaterInfo.GetPUnitOfBranch(), true, exprCaller);	// [Any or nil]
 	} else { // both PUnitOfBreak and PUnitOfBranch are nullptr
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
@@ -862,17 +862,17 @@ Gurax_ImplementStatement(continue_)
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
 	if (repeaterInfo.GetPUnitOfLoop()) {
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
 		}
 		composer.Add_Continue(repeaterInfo.GetPUnitOfLoop(), exprCaller);		// [Any or nil]
 	} else {
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::undefined(), exprCaller);					// [undefined]
 		}
@@ -892,23 +892,23 @@ Gurax_DeclareStatementAlias(return_, "return")
 
 Gurax_ImplementStatement(return_)
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
 	if (composer.HasValidTryInfo()) {
 		const Composer::TryInfo& tryInfo = composer.GetTryInfoCur();
 		if (tryInfo.IsWithinFinally()) {
 			Error::IssueWith(ErrorType::UnimplementedError, exprCaller,
 					"return statement within finally is not allowed");
 #if 0
-			if (pExprCdr) {
-				pExprCdr->ComposeOrNil(composer);								// [Any]
+			if (pExprParam) {
+				pExprParam->ComposeOrNil(composer);								// [Any]
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [nil]
 			}
 			composer.Add_Return(exprCaller);
 #endif
 		} else {
-			if (pExprCdr) {
-				pExprCdr->ComposeOrNil(composer);								// [Any]
+			if (pExprParam) {
+				pExprParam->ComposeOrNil(composer);								// [Any]
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [nil]
 			}
@@ -919,8 +919,8 @@ Gurax_ImplementStatement(return_)
 			}
 		}
 	} else {
-		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);									// [Any]
+		if (pExprParam) {
+			pExprParam->ComposeOrNil(composer);									// [Any]
 		} else {
 			composer.Add_Value(Value::nil(), exprCaller);						// [nil]
 		}
@@ -943,7 +943,7 @@ Gurax_DeclareStatement(import)
 
 Gurax_ImplementStatement(import)
 {
-	Expr* pExprArg = exprCaller.GetExprCdrFirst();
+	Expr* pExprArg = exprCaller.GetExprParamFirst();
 	const Attribute& attr = exprCaller.GetAttr();
 	bool symbolForModuleFlag = true;
 	if (pExprArg->IsType<Expr_UnaryOp>()) {
@@ -995,9 +995,9 @@ Gurax_DeclareStatement(scope)
 
 Gurax_ImplementStatement(scope)
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (pExprCdr) {
-		pExprCdr->ComposeOrNil(composer);										// [Any]
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
+	if (pExprParam) {
+		pExprParam->ComposeOrNil(composer);										// [Any]
 		composer.Add_Cast(VTYPE_Frame, exprCaller);								// [Frame]
 		composer.Add_PushFrameFromStack(exprCaller);							// []
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
@@ -1022,9 +1022,9 @@ Gurax_DeclareStatementAlias(class_, "class")
 
 Gurax_ImplementStatement(class_)
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (pExprCdr) {
-		pExprCdr->ComposeOrNil(composer);										// [Any]
+	Expr* pExprParam = exprCaller.GetExprParamFirst();
+	if (pExprParam) {
+		pExprParam->ComposeOrNil(composer);										// [Any]
 		composer.Add_Cast(VTYPE_VType, exprCaller);								// [VTypeInh]
 		composer.Add_CreateVType(true, exprCaller);								// [VType]
 	} else {

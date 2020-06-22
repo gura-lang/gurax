@@ -211,9 +211,8 @@ public:
 	virtual Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
 	virtual const Symbol* InspectMemberModeAsSymbol() const { return nullptr; }
-	virtual Iterator* EachCdr() const;
-	virtual Iterator* EachElem() const;
 	virtual Iterator* EachParam() const;
+	virtual Iterator* EachElem() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -430,28 +429,28 @@ public:
 class GURAX_DLLDECLARE Expr_Composite : public Expr {
 protected:
 	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprLink> _pExprLinkCdr;
+	RefPtr<ExprLink> _pExprLinkParam;
 	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Composite(const TypeInfo& typeInfo) :
-		Expr(typeInfo), _pExprLinkCdr(new ExprLink()), _pAttr(new Attribute()) {}
+		Expr(typeInfo), _pExprLinkParam(new ExprLink()), _pAttr(new Attribute()) {}
 	void SetExprCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
 	}
 	Expr& GetExprCar() { return *_pExprCar; }
 	const Expr& GetExprCar() const { return *_pExprCar; }
-	void SetExprLinkCdr(ExprLink* pExprLinkCdr) {
-		_pExprLinkCdr.reset(pExprLinkCdr);
-		_pExprLinkCdr->SetExprParent(this);
+	void SetExprLinkParam(ExprLink* pExprLinkParam) {
+		_pExprLinkParam.reset(pExprLinkParam);
+		_pExprLinkParam->SetExprParent(this);
 	}
-	ExprLink& GetExprLinkCdr() { return *_pExprLinkCdr; }
-	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
-	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
-	Expr* GetExprCdrFirst() { return _pExprLinkCdr->GetExprFirst(); }
-	const Expr* GetExprCdrFirst() const { return _pExprLinkCdr->GetExprFirst(); }
-	size_t CountExprCdr() const { return GetExprLinkCdr().CountSequence(); }
-	void AddExprCdr(Expr* pExprCdr);
+	ExprLink& GetExprLinkParam() { return *_pExprLinkParam; }
+	const ExprLink& GetExprLinkParam() const { return *_pExprLinkParam; }
+	bool HasExprParam() const { return !_pExprLinkParam->IsEmpty(); }
+	Expr* GetExprParamFirst() { return _pExprLinkParam->GetExprFirst(); }
+	const Expr* GetExprParamFirst() const { return _pExprLinkParam->GetExprFirst(); }
+	size_t CountExprParam() const { return GetExprLinkParam().CountSequence(); }
+	void AddExprParam(Expr* pExprParam);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
@@ -459,7 +458,7 @@ public:
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (_pExprCar && !_pExprCar->Traverse(visitor)) return false;
-		if (!_pExprLinkCdr->Traverse(visitor)) return false;
+		if (!_pExprLinkParam->Traverse(visitor)) return false;
 		return true;
 	}
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -467,7 +466,7 @@ public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectCar() const override { return &GetExprCar(); }
 	virtual const Attribute* InspectAttr() const override { return &GetAttr(); }
-	virtual Iterator* EachCdr() const override { return GetExprLinkCdr().CreateIterator(); }
+	virtual Iterator* EachParam() const override { return GetExprLinkParam().CreateIterator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -890,7 +889,7 @@ public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCallable(new DeclCallable()) {}
 public:
 	bool PrepareDeclCallable() {
-		return _pDeclCallable->Prepare(GetExprLinkCdr(), GetAttr(), GetExprOfBlock());
+		return _pDeclCallable->Prepare(GetExprLinkParam(), GetAttr(), GetExprOfBlock());
 	}
 	void SetExprOfBlock(Expr_Block* pExprOfBlock) {
 		_pExprOfBlock.reset(pExprOfBlock);

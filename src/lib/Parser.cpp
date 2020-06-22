@@ -650,7 +650,7 @@ bool Parser::ReduceThreeTokens()
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '(' ')'\n"));
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
-			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->SetExprLinkParam(exprLink.Reference());
 			pExprGen.reset(pExprCaller.release());
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' EndOfLine\n"));
@@ -691,7 +691,7 @@ bool Parser::ReduceThreeTokens()
 			DBGPARSER(::printf("Reduce: Expr(Indexer) -> Expr '[' ']'\n"));
 			RefPtr<Expr_Indexer> pExprIndexer(new Expr_Indexer());
 			pExprIndexer->SetExprCar(pToken1->GetExpr()->Reference());
-			pExprIndexer->SetExprLinkCdr(exprLink.Reference());
+			pExprIndexer->SetExprLinkParam(exprLink.Reference());
 			pExprGen.reset(pExprIndexer.release());
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' EndOfLine\n"));
@@ -773,7 +773,7 @@ bool Parser::ReduceFourTokens()
 			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
-			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->SetExprLinkParam(exprLink.Reference());
 			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
@@ -825,7 +825,7 @@ bool Parser::ReduceFourTokens()
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '(' Expr ')'\n"));
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
-			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->SetExprLinkParam(exprLink.Reference());
 			pExprGen.reset(pExprCaller.release());
 		} else if (pToken4->IsType(TokenType::Comma) || pToken4->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' Expr ','\n"));
@@ -869,7 +869,7 @@ bool Parser::ReduceFourTokens()
 			DBGPARSER(::printf("Reduce: Expr(Indexer) -> Expr '[' Expr ']'\n"));
 			RefPtr<Expr_Indexer> pExprIndexer(new Expr_Indexer());
 			pExprIndexer->SetExprCar(pToken1->GetExpr()->Reference());
-			pExprIndexer->SetExprLinkCdr(exprLink.Reference());
+			pExprIndexer->SetExprLinkParam(exprLink.Reference());
 			pExprGen.reset(pExprIndexer.release());
 		} else if (pToken4->IsType(TokenType::Comma) || pToken4->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' Expr ','\n"));
@@ -910,7 +910,7 @@ bool Parser::ReduceFiveTokens()
 			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller*>(pToken1->GetExpr());
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
-			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->SetExprLinkParam(exprLink.Reference());
 			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;

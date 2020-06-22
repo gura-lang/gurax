@@ -211,7 +211,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 
 void Function::Compose(Composer& composer, Expr_Caller& exprCaller) const
 {
-	if (!GetDeclCallable().GetDeclArgOwner().IsValidArgNum(exprCaller.CountExprCdr())) {
+	if (!GetDeclCallable().GetDeclArgOwner().IsValidArgNum(exprCaller.CountExprParam())) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of arguments for %s-statement", MakeFullName().c_str());
 		return;

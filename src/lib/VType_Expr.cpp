@@ -55,25 +55,6 @@ Gurax_ImplementConstructor(Expr)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Expr#EachCdr() {block?}
-Gurax_DeclareMethod(Expr, EachCdr)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns an iterator that returns `Expr` instance of the cdr elements.\n");
-}
-
-Gurax_ImplementMethod(Expr, EachCdr)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	const Expr& expr = valueThis.GetExpr();
-	// Function body
-	return argument.ReturnIterator(processor, expr.EachCdr());
-}
-
 // Expr#EachElem() {block?}
 Gurax_DeclareMethod(Expr, EachElem)
 {
@@ -783,7 +764,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Expr));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Expr, EachCdr));
 	Assign(Gurax_CreateMethod(Expr, EachElem));
 	Assign(Gurax_CreateMethod(Expr, EachParam));
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
