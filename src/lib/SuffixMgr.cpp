@@ -20,7 +20,7 @@ Value* SuffixMgr::Eval(Processor& processor, const char* str) const
 
 void SuffixMgr::Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const
 {
-	composer.Add_Suffixed(strRef.Reference(), GetTarget(), GetSymbol(), *pExpr);
+	composer.Add_Suffixed(strRef.Reference(), GetMode(), GetSymbol(), *pExpr);
 }
 
 //------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ void SuffixMgrMap::Clear()
 
 void SuffixMgrMap::Assign(SuffixMgr* pSuffixMgr)
 {
-	Map& map = GetMap(pSuffixMgr->GetTarget());
+	Map& map = GetMap(pSuffixMgr->GetMode());
 	const Symbol* pSymbol = pSuffixMgr->GetSymbol();
 	auto pPair = map.find(pSymbol);
 	if (pPair == map.end()) {
@@ -49,16 +49,16 @@ void SuffixMgrMap::Assign(SuffixMgr* pSuffixMgr)
 	}
 }
 
-SuffixMgr* SuffixMgrMap::Lookup(SuffixMgr::Target target, const Symbol* pSymbol) const
+SuffixMgr* SuffixMgrMap::Lookup(SuffixMgr::Mode mode, const Symbol* pSymbol) const
 {
-	const Map& map = GetMap(target);
+	const Map& map = GetMap(mode);
 	auto pPair = map.find(pSymbol);
 	return (pPair == map.end())? nullptr : pPair->second;
 }
 
-bool SuffixMgrMap::DoesExist(SuffixMgr::Target target, const Symbol* pSymbol) const
+bool SuffixMgrMap::DoesExist(SuffixMgr::Mode mode, const Symbol* pSymbol) const
 {
-	const Map& map = GetMap(target);
+	const Map& map = GetMap(mode);
 	return map.find(pSymbol) != map.end();
 }
 

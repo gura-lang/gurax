@@ -533,8 +533,8 @@ Gurax_ImplementPropertyGetter(Expr, lineNoTop)
 	return new Value_Number(valueThis.GetExpr().GetLineNoTop());
 }
 
-// Expr#memberMode
-Gurax_DeclareProperty_R(Expr, memberMode)
+// Expr#mode
+Gurax_DeclareProperty_R(Expr, mode)
 {
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
@@ -542,10 +542,10 @@ Gurax_DeclareProperty_R(Expr, memberMode)
 		"The member accessor's mode in symbol.\n");
 }
 
-Gurax_ImplementPropertyGetter(Expr, memberMode)
+Gurax_ImplementPropertyGetter(Expr, mode)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Symbol* pSymbol = valueThis.GetExpr().InspectMemberModeAsSymbol();
+	const Symbol* pSymbol = valueThis.GetExpr().InspectModeAsSymbol();
 	if (!pSymbol) return Value::nil();
 	return new Value_Symbol(pSymbol);
 }
@@ -791,7 +791,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, left));
 	Assign(Gurax_CreateProperty(Expr, lineNoBtm));
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
-	Assign(Gurax_CreateProperty(Expr, memberMode));
+	Assign(Gurax_CreateProperty(Expr, mode));
 	Assign(Gurax_CreateProperty(Expr, operator_));
 	Assign(Gurax_CreateProperty(Expr, right));
 	Assign(Gurax_CreateProperty(Expr, string));

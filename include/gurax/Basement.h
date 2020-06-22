@@ -66,8 +66,8 @@ public:
 	SuffixMgrMap& GetSuffixMgrMap() { return *_pSuffixMgrMap; }
 	const SuffixMgrMap& GetSuffixMgrMap() const { return *_pSuffixMgrMap; }
 	void AssignSuffixMgr(SuffixMgr* pSuffixMgr) { GetSuffixMgrMap().Assign(pSuffixMgr); }
-	const SuffixMgr* LookupSuffixMgr(SuffixMgr::Target target, const Symbol* pSymbolSuffix) const {
-		return GetSuffixMgrMap().Lookup(target, pSymbolSuffix);
+	const SuffixMgr* LookupSuffixMgr(SuffixMgr::Mode mode, const Symbol* pSymbolSuffix) const {
+		return GetSuffixMgrMap().Lookup(mode, pSymbolSuffix);
 	}
 public:
 	PathMgrOwner& GetPathMgrOwner() { return _pathMgrOwner; }

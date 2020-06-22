@@ -142,7 +142,7 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Suffixed<discardValueFlag>::Exec(Processor& processor) const
 {
-	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbol());
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetMode(), GetSymbol());
 	RefPtr<Value> pValueResult;
 	if (pSuffixMgr) {
 		pValueResult.reset(pSuffixMgr->Eval(processor, GetString()));
@@ -169,9 +169,9 @@ String PUnit_Suffixed<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Suffixed<true>(_pStr.Reference(), _target, _pSymbol, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Suffixed<true>(_pStr.Reference(), _mode, _pSymbol, _pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_Suffixed<false>(_pStr.Reference(), _target, _pSymbol, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Suffixed<false>(_pStr.Reference(), _mode, _pSymbol, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

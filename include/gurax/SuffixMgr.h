@@ -8,24 +8,24 @@
 //------------------------------------------------------------------------------
 // Macros to implement suffix managers
 //------------------------------------------------------------------------------
-#define Gurax_ImplementSuffixMgr_Eval(target, symbol) \
-class SuffixMgr_##target##_##symbol : public SuffixMgr { \
+#define Gurax_ImplementSuffixMgr_Eval(mode, symbol) \
+class SuffixMgr_##mode##_##symbol : public SuffixMgr { \
 public: \
-	SuffixMgr_##target##_##symbol() : SuffixMgr(SuffixMgr::Target::target, Symbol::Add(#symbol)) {} \
+	SuffixMgr_##mode##_##symbol() : SuffixMgr(SuffixMgr::Mode::mode, Symbol::Add(#symbol)) {} \
 	virtual Value* Eval(Processor& processor, const char* str) const override; \
 }; \
-Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
+Value* SuffixMgr_##mode##_##symbol::Eval(Processor& processor, const char* str) const
 
-#define Gurax_ImplementSuffixMgr_Compose(target, symbol) \
-class SuffixMgr_##target##_##symbol : public SuffixMgr { \
+#define Gurax_ImplementSuffixMgr_Compose(mode, symbol) \
+class SuffixMgr_##mode##_##symbol : public SuffixMgr { \
 public: \
-	SuffixMgr_##target##_##symbol() : SuffixMgr(SuffixMgr::Target::target, Symbol::Add(#symbol)) {} \
+	SuffixMgr_##mode##_##symbol() : SuffixMgr(SuffixMgr::Mode::mode, Symbol::Add(#symbol)) {} \
 	virtual void Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const override; \
 }; \
-void SuffixMgr_##target##_##symbol::Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const
+void SuffixMgr_##mode##_##symbol::Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const
 
-#define Gurax_AssignSuffixMgr(target, symbol) \
-Basement::Inst.AssignSuffixMgr(new SuffixMgr_##target##_##symbol())
+#define Gurax_AssignSuffixMgr(mode, symbol) \
+Basement::Inst.AssignSuffixMgr(new SuffixMgr_##mode##_##symbol())
 
 namespace Gurax {
 
@@ -39,13 +39,13 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(SuffixMgr);
 public:
-	enum class Target { Number, String, Binary };
+	enum class Mode { Number, String, Binary };
 private:
-	Target _target;
+	Mode _mode;
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	SuffixMgr(Target target, const Symbol* pSymbol) : _target(target), _pSymbol(pSymbol) {}
+	SuffixMgr(Mode mode, const Symbol* pSymbol) : _mode(mode), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
 	SuffixMgr(const SuffixMgr& src) = delete;
 	SuffixMgr& operator=(const SuffixMgr& src) = delete;
@@ -55,7 +55,7 @@ public:
 protected:
 	virtual ~SuffixMgr() = default;
 public:
-	Target GetTarget() const { return _target; }
+	Mode GetMode() const { return _mode; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	virtual Value* Eval(Processor& processor, const char* str) const;
 	virtual void Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const;
@@ -87,18 +87,18 @@ protected:
 	~SuffixMgrMap() { Clear(); }
 public:
 	void Clear();
-	Map& GetMap(SuffixMgr::Target target) {
+	Map& GetMap(SuffixMgr::Mode mode) {
 		return
-			(target == SuffixMgr::Target::Number)? _mapForNumber :
-			(target == SuffixMgr::Target::String)? _mapForString :
-			_mapForBinary;	// target == SuffixMgr::Target::Binary
+			(mode == SuffixMgr::Mode::Number)? _mapForNumber :
+			(mode == SuffixMgr::Mode::String)? _mapForString :
+			_mapForBinary;	// mode == SuffixMgr::Mode::Binary
 	}
-	const Map& GetMap(SuffixMgr::Target target) const {
-		return const_cast<SuffixMgrMap*>(this)->GetMap(target);
+	const Map& GetMap(SuffixMgr::Mode mode) const {
+		return const_cast<SuffixMgrMap*>(this)->GetMap(mode);
 	}
 	void Assign(SuffixMgr* pSuffixMgr);
-	SuffixMgr* Lookup(SuffixMgr::Target target, const Symbol* pSymbol) const;
-	bool DoesExist(SuffixMgr::Target target, const Symbol* pSymbol) const;
+	SuffixMgr* Lookup(SuffixMgr::Mode mode, const Symbol* pSymbol) const;
+	bool DoesExist(SuffixMgr::Mode mode, const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

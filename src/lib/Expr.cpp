@@ -629,18 +629,18 @@ const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
-	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbol());
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetMode(), GetSymbol());
 	if (pSuffixMgr) {
 		pSuffixMgr->Compose(composer, GetSegmentReferable(), this);
 	} else {
-		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetTarget(), GetSymbol(), *this);
+		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetMode(), GetSymbol(), *this);
 	}
 }
 
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += (GetTarget() == SuffixMgr::Target::Number)?
+	str += (GetMode() == SuffixMgr::Mode::Number)?
 				GetSegmentSTL() : GetSegmentSTL().EnquoteAuto();
 	str += GetSymbol()->GetName();
 	return str;
@@ -1361,7 +1361,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 			if (pExpr->IsType<Expr_String>()) {
 				Expr_String& exprEx = dynamic_cast<Expr_String&>(*pExpr);
 				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
-			} else if (pExpr->IsSuffixed(SuffixMgr::Target::String)) {
+			} else if (pExpr->IsSuffixed(SuffixMgr::Mode::String)) {
 				Expr_Suffixed& exprEx = dynamic_cast<Expr_Suffixed&>(*pExpr);
 				pHelpHolder->AddHelp(exprEx.GetSymbol(), exprEx.GetSegmentReferable().Reference());
 			} else if (pExprBody) {

@@ -233,17 +233,17 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<StringReferable> _pStr;
-	SuffixMgr::Target _target;
+	SuffixMgr::Mode _mode;
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
-		PUnit(pExprSrc), _pStr(pStr), _target(target), _pSymbol(pSymbolSuffix) {}
+	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Mode mode, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
+		PUnit(pExprSrc), _pStr(pStr), _mode(mode), _pSymbol(pSymbolSuffix) {}
 public:
 	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
-	SuffixMgr::Target GetTarget() const { return _target; }
+	SuffixMgr::Mode GetMode() const { return _mode; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
@@ -262,11 +262,11 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Suffixed");
 private:
 	RefPtr<StringReferable> _pStr;
-	SuffixMgr::Target _target;
+	SuffixMgr::Mode _mode;
 	const Symbol* _pSymbol;
 public:
-	PUnitFactory_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pStr(pStr), _target(target), _pSymbol(pSymbolSuffix) {}
+	PUnitFactory_Suffixed(StringReferable* pStr, SuffixMgr::Mode mode, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pStr(pStr), _mode(mode), _pSymbol(pSymbolSuffix) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Suffixed<false>);
 	}

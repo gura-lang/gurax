@@ -179,7 +179,7 @@ public:
 	virtual bool IsCollector() const { return false; }
 	virtual bool IsUnaryOp(OpType opType) const { return false; }
 	virtual bool IsBinaryOp(OpType opType) const { return false; }
-	virtual bool IsSuffixed(SuffixMgr::Target target) const { return false; }
+	virtual bool IsSuffixed(SuffixMgr::Mode mode) const { return false; }
 	virtual bool IsShortCircuitOperator() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const Symbol* GetPureSymbol() const { return nullptr; }
@@ -210,7 +210,7 @@ public:
 	virtual const Attribute* InspectAttr() const { return nullptr; }
 	virtual Value* InspectValue() const { return nullptr; }
 	virtual Operator* InspectOperator() const { return nullptr; }
-	virtual const Symbol* InspectMemberModeAsSymbol() const { return nullptr; }
+	virtual const Symbol* InspectModeAsSymbol() const { return nullptr; }
 	virtual Iterator* EachParam() const;
 	virtual Iterator* EachElem() const;
 public:
@@ -511,7 +511,7 @@ public:
 	virtual const Expr* InspectTarget() const override { return &GetExprTarget(); }
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
 	virtual const Attribute* InspectAttr() const { return &GetAttr(); }
-	virtual const Symbol* InspectMemberModeAsSymbol() const { return GetMemberModeAsSymbol(); }
+	virtual const Symbol* InspectModeAsSymbol() const { return GetMemberModeAsSymbol(); }
 };
 
 //------------------------------------------------------------------------------
@@ -630,18 +630,18 @@ public:
 protected:
 	RefPtr<StringReferable> _pStrSegment;
 	const Symbol* _pSymbol;
-	SuffixMgr::Target _target;
+	SuffixMgr::Mode _mode;
 public:
-	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, SuffixMgr::Target target) :
-		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbol(pSymbolSuffix), _target(target) {}
+	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, SuffixMgr::Mode mode) :
+		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbol(pSymbolSuffix), _mode(mode) {}
 	const StringReferable& GetSegmentReferable() const { return *_pStrSegment; }
 	const char* GetSegment() const { return _pStrSegment->GetString(); }
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	SuffixMgr::Target GetTarget() const { return _target; }
+	SuffixMgr::Mode GetMode() const { return _mode; }
 public:
 	// Virtual functions of Expr
-	virtual bool IsSuffixed(SuffixMgr::Target target) const override { return _target == target; }
+	virtual bool IsSuffixed(SuffixMgr::Mode mode) const override { return _mode == mode; }
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
@@ -650,6 +650,7 @@ public:
 		return _pStrSegment.Reference();
 	}
 	virtual const Symbol* InspectSymbol() const override { return GetSymbol(); }
+	//virtual const Symbol* InspectModeAsSymbol() const { return GetMemberModeAsSymbol(); }
 };
 
 //------------------------------------------------------------------------------
