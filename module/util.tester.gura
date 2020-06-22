@@ -11,8 +11,9 @@ Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval()
-		rtnStr = rtn.ToString():quoteSymbol:nilVisible
-		if (arg.IsSet(`quote)) { rtnStr = rtnStr.Enquote():auto }
+		rtnStr = cond(arg.IsSet(`quote),
+					rtn.ToString():quote:nilVisible
+					rtn.ToString():quoteSymbol:nilVisible)
 		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):noMap
 		block && block(rtn)
 	} catch {|e|
