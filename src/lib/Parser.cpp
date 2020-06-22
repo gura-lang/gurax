@@ -531,9 +531,8 @@ bool Parser::ReduceThreeTokens()
 			}
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr(Identifier)\n"));
 			RefPtr<Expr_Identifier> pExprEx(dynamic_cast<Expr_Identifier *>(pExprRight.release()));
-			pExprGen.reset(new Expr_Member(
-							   pExprLeft.release(), pExprEx->GetSymbol(), pExprEx->GetAttr().Reference(),
-							   memberMode));
+			pExprGen.reset(new Expr_Member(pExprLeft.release(), pExprEx->GetSymbol(),
+											pExprEx->GetAttr().Reference(), memberMode));
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
@@ -559,7 +558,7 @@ bool Parser::ReduceThreeTokens()
 							   "attribute can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
-				if (pAttrDst->IsDottedSymbolSet()) {
+				if (pAttrDst->HasDottedSymbol()) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							"dotted-symbol must be specified as a first attribute");
 					return false;

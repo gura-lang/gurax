@@ -141,7 +141,7 @@ Gurax_ImplementMethod(Color, GrayScale)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of properties
+// Implementation of property
 //-----------------------------------------------------------------------------
 // Color#r
 Gurax_DeclareProperty_RW(Color, r)

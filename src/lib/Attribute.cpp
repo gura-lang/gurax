@@ -17,7 +17,7 @@ void Attribute::Bootup()
 
 void Attribute::AddAttribute(const Attribute& attr)
 {
-	if (!IsDottedSymbolSet() && attr.IsDottedSymbolSet()) {
+	if (!HasDottedSymbol() && attr.HasDottedSymbol()) {
 		SetDottedSymbol(attr.GetDottedSymbol().Reference());
 	}
 	AddSymbols(attr.GetSymbols());

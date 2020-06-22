@@ -81,6 +81,20 @@ bool DottedSymbol::AppendFromExpr(const Expr& expr)
 	return true;
 }
 
+Expr* DottedSymbol::ToExpr() const
+{
+	SymbolList::const_iterator ppSymbol = _symbolList.begin();
+	if (ppSymbol == _symbolList.end()) return nullptr;
+	const Symbol* pSymbol = *ppSymbol++;
+	RefPtr<Expr> pExpr(new Expr_Identifier(pSymbol));
+	for ( ; ppSymbol != _symbolList.end(); ppSymbol++) {
+		const Symbol* pSymbol = *ppSymbol;
+		pExpr.reset(new Expr_Member(pExpr.release(), pSymbol,
+						Attribute::Empty->Reference(), MemberMode::Normal));
+	}
+	return pExpr.release();
+}
+
 String DottedSymbol::ToString(char separator, const StringStyle& ss) const
 {
 	String str;

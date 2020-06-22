@@ -42,7 +42,7 @@ public:
 	const DottedSymbol& GetDottedSymbol() const {
 		return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
 	}
-	bool IsDottedSymbolSet() const { return _pDottedSymbol.get() != nullptr; }
+	bool HasDottedSymbol() const { return _pDottedSymbol.get() != nullptr; }
 	const SymbolList& GetSymbols() const { return _symbolList; }
 	const SymbolList& GetSymbolsOpt() const { return _symbolListOpt; }
 	const SymbolSet& GetSymbolSet() const { return _symbolSet; }
@@ -59,7 +59,7 @@ public:
 	void AddSymbolsOpt(const SymbolList& symbolList) {
 		for (const Symbol* pSymbol : symbolList) AddSymbolOpt(pSymbol);
 	}
-	bool IsEmpty() const { return !IsDottedSymbolSet() && GetSymbols().empty() && GetSymbolsOpt().empty(); }
+	bool IsEmpty() const { return !HasDottedSymbol() && GetSymbols().empty() && GetSymbolsOpt().empty(); }
 	bool IsSet(const Symbol* pSymbol) const { return GetSymbolSet().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetSymbolSetOpt().IsSet(pSymbol); }
 public:

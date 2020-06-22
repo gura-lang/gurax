@@ -43,8 +43,22 @@ TestCase('Inspection') {
 	InspectExpr(`())
 	// Indexer
 	InspectExpr(`a[])
+	InspectExpr(`a[2])
+	InspectExpr(`a[2, 3, 4])
+	InspectExpr(`a[]:a:b:c)
+	InspectExpr(`a[2]:a:b:c)
+	InspectExpr(`a[2, 3, 4,]:a:b:c)
 	// Caller
 	InspectExpr(`a())
+	InspectExpr(`a(2))
+	InspectExpr(`a(2, 3, 4))
+	InspectExpr(`a():a:b:c)
+	InspectExpr(`a(2):a:b:c)
+	InspectExpr(`a(2, 3, 4):a:b:c)
+	InspectExpr(`a.b.c())
+	InspectExpr(`a.b.c(2))
+	InspectExpr(`a.b.c(2, 3, 4))
+	InspectExpr(`a(2, 3, 4) b() c())
 }
 
 sys.Exit()

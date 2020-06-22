@@ -64,3 +64,41 @@ TestCase('Attribute#IsSetOpt()') {
 	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`e))
 	Tester(`(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`f))
 }
+
+TestCase('Attribute#dottedExpr') {
+	Tester(`(`id).attr.dottedExpr)
+	Tester(`(`id).attr.Each():list)
+	Tester(`(`id:a).attr.dottedExpr)
+	Tester(`(`id:a).attr.Each():list)
+	Tester(`(`id:a.b).attr.dottedExpr)
+	Tester(`(`id:a.b).attr.Each():list)
+	Tester(`(`id:a.b.c).attr.dottedExpr)
+	Tester(`(`id:a.b.c).attr.Each():list)
+	Tester(`(`func()).attr.dottedExpr)
+	Tester(`(`func()).attr.Each():list)
+	Tester(`(`func():a).attr.dottedExpr)
+	Tester(`(`func():a).attr.Each():list)
+	Tester(`(`func():a.b).attr.dottedExpr)
+	Tester(`(`func():a.b).attr.Each():list)
+	Tester(`(`func():a.b.c).attr.dottedExpr)
+	Tester(`(`func():a.b.c).attr.Each():list)
+}
+
+TestCase('Attribute#dottedName') {
+	Tester(`(`id).attr.dottedName):quote
+	Tester(`(`id).attr.Each():list)
+	Tester(`(`id:a).attr.dottedName):quote
+	Tester(`(`id:a).attr.Each():list)
+	Tester(`(`id:a.b).attr.dottedName):quote
+	Tester(`(`id:a.b).attr.Each():list)
+	Tester(`(`id:a.b.c).attr.dottedName):quote
+	Tester(`(`id:a.b.c).attr.Each():list)
+	Tester(`(`func()).attr.dottedName):quote
+	Tester(`(`func()).attr.Each():list)
+	Tester(`(`func():a).attr.dottedName):quote
+	Tester(`(`func():a).attr.Each():list)
+	Tester(`(`func():a.b).attr.dottedName):quote
+	Tester(`(`func():a.b).attr.Each():list)
+	Tester(`(`func():a.b.c).attr.dottedName):quote
+	Tester(`(`func():a.b.c).attr.Each():list)
+}

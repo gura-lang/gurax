@@ -106,6 +106,7 @@ public:
 	bool AppendFromExprList(const ExprList& exprList);
 	bool AppendFromString(const char* str, char separator = '.');
 	bool AppendFromExpr(const Expr& expr);
+	Expr* ToExpr() const;
 	String ToString(char separator, const StringStyle& ss = StringStyle::Empty) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return ToString('.', ss); }
 	size_t GetLength() const { return _symbolList.size(); }
