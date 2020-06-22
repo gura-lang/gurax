@@ -50,6 +50,15 @@ TestCase('Object#ToString()') {
 	Tester(`nil.ToString():nilVisible)
 	Tester(`Color.black.ToString())
 	Tester(`Color.black.ToString():unbracket)
+	Tester(`(3.14).ToString():bracket)
+	Tester(`'hello'.ToString():bracket)
+	Tester(`[1, 2, 3, 4].ToString():bracket)
+	Tester(`%{`a => 1, `b => 2, `c => 3}.ToString():bracket)
+	//Tester(`(`hello).ToString():bracket)
+	Tester(`(true).ToString():bracket)
+	Tester(`nil.ToString():bracket)
+	Tester(`(2/3r).ToString():bracket)
+	Tester(`(2+3j).ToString():bracket)
 }
 
 TestCase('Object#IsInstanceOf()') {

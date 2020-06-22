@@ -25,6 +25,14 @@ nil.ToString() ..
 nil.ToString():nilVisible .. <Nil>
 Color.black.ToString() .. <Color:#000000,ff>
 Color.black.ToString():unbracket .. Color:#000000,ff
+3.14.ToString():bracket .. <Number:3.14>
+'hello'.ToString():bracket .. <String:'hello'>
+[1, 2, 3, 4].ToString():bracket .. <List:4items>
+% {(`a) => 1, (`b) => 2, (`c) => 3}.ToString():bracket .. <Dict:3items>
+true.ToString():bracket .. <Bool:true>
+nil.ToString():bracket .. <Nil>
+2 / 3r.ToString():bracket .. <Rational:2/3r>
+2 + 3j.ToString():bracket .. <Complex:2+3j>
 ======== Object#IsInstanceOf() ========
 math.e.IsInstanceOf(Number) .. true
 math.e.IsInstanceOf(Bool) .. false
