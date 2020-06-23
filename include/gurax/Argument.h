@@ -69,8 +69,6 @@ public:
 	bool HasArgSlot() const { return _pArgSlotFirst? true : false; }
 	ArgSlot* GetArgSlotFirst() { return _pArgSlotFirst.get(); }
 	const ArgSlot* GetArgSlotFirst() const { return _pArgSlotFirst.get(); }
-	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
-	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
 	const Value& GetValueThis() const { return *_pValueThis; }
 	bool HasExprOfBlock() const { return _pExprOfBlock.get() != nullptr; }
@@ -79,10 +77,14 @@ public:
 	bool HasValueOfDict() const { return _pValueOfDict.get() != nullptr; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
-	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
 	bool IsMapNone() const { return _mapMode == MapMode::None; }
 	bool IsMapToList() const { return _mapMode == MapMode::ToList; }
 	bool IsMapToIter() const { return _mapMode == MapMode::ToIter; }
+public:
+	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
+	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
+	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
+public:
 	void ResetAllValues();
 	void FeedValue(Frame& frame, Value* pValue) {
 		if (!_pArgSlotToFeed) return;
