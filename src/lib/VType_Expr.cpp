@@ -624,13 +624,13 @@ Gurax_DeclareProperty_R(Expr, symbolName)
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The name of the symbol if the expression is a pure symbol.\n");
+		"The name of the symbol that is associated with identifier or member.\n");
 }
 
 Gurax_ImplementPropertyGetter(Expr, symbolName)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Symbol* pSymbol = valueThis.GetExpr().GetPureSymbol();
+	const Symbol* pSymbol = valueThis.GetExpr().InspectSymbol();
 	if (!pSymbol) return Value::nil();
 	return new Value_String(pSymbol->GetName());
 }

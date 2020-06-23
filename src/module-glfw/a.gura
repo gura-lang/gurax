@@ -18,10 +18,19 @@ glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor
 	return new Value_GLFWwindow(window);
 '''
 }
-expr.EachChild {|expr|
+ErrorDone(msg:String) = {
+	sys.cerr.Println(msg)
+	sys.Exit(1)
+}
+expr.EachElem {|expr|
 	if (expr.IsPureAssign()) {
-		Println(expr.left)
-		Println(expr.left.car)
-		Println(expr.left.EachCdr():list)
+		!expr.left.IsCaller() && ErrorDone('Caller is expected')
+		exprCaller = expr.left
+		!exprCaller.car.IsIdentifier() && ErrorDone('Identifier is expected')
+		funcName = exprCaller.car.symbol.symbolName
+		Println(funcName)
+		Println(exprCaller.EachParam():list)
+		Println(exprCaller.attr)
+		//Println(expr.right)
 	}
 }
