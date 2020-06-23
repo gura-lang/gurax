@@ -31,7 +31,7 @@ expr.EachElem {|expr|
 		Println(funcName)
 		exprCaller.EachParam {|exprParam|
 			!exprParam.IsIdentifier() && ErrorDone('Identifier is expected in parameter list')
-			Println(exprParam.symbolName)
+			Println(exprParam.symbolName, ' ', exprParam.attr)
 		}
 		Println(exprCaller.attr)
 		//Println(expr.right)
