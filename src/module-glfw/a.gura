@@ -1,5 +1,22 @@
 import(cbridge)
 
+@(cbridge.TypeInfo) {
+	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
+		'args.Pick<Value_GLFWmonitor>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWmonitor(rtn)', nil }
+	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
+		'args.Pick<Value_GLFWwindow>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWwindow(rtn)', nil }
+}
+
 cbridge.Render() {
 	glfwWindowHint(hint:int, value:int):void
 	glfwWindowHintString(hint:int, value:const_char_p):void

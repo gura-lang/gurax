@@ -35,20 +35,6 @@ TypeInfo = class {
 	{ 'const_char_p', 'const char*', 'String',
 		'args.PickString()',
 		nil, 'Value_String(rtn)', nil }
-	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
-		'args.Pick<Value_GLFWmonitor>().GetEntity()',
-		R'''
-		if (!rtn) {
-			IssueError();
-			return Value::nil();
-		}''', 'Value_GLFWmonitor(rtn)', nil }
-	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
-		'args.Pick<Value_GLFWwindow>().GetEntity()',
-		R'''
-		if (!rtn) {
-			IssueError();
-			return Value::nil();
-		}''', 'Value_GLFWwindow(rtn)', nil }
 }
 
 //------------------------------------------------------------------------------
