@@ -9,7 +9,7 @@ glfwWinwotHintString(hint:int, value:const_char_p):void = R'''
 	return Value::nil();
 '''
 
-glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor, share?:GLFWwindow) = R'''
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p = R'''
 	GLFWwindow* window = ::glfwCreateWindow(width, height, title, monitor, share);
 	if (!window) {
 		IssueError();
@@ -23,18 +23,69 @@ ErrorDone(expr:Expr, msg:String) = {
 	sys.Exit(1)
 }
 
-ArgInfo = struct {
+//------------------------------------------------------------------------------
+// TypeInfo
+//------------------------------------------------------------------------------
+TypeInfo = class {
+	decl:String
+	cType:String
+	vtype:String
+	codeToPick:String
+	codeToRtn:String
+	map:static = %{}
+	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeToRtn:String = '') = {
+		this.decl = decl, this.cType = cType, this.vtype = vtype, this.codeToPick = codeToPick
+		this.map[this.decl] = this
+	}
+}
+
+@(TypeInfo) {
+	{ 'int', 'int', 'Number', 'args.PickNumber<int>()' }
+	{ 'const_char_p', 'const char*', 'String', 'args.PickString()' }
+	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'String', 'args.Pick<Value_GLFWmonitor>().GetEntity()' }
+	{ 'GLFWwindow_p', 'GLFWwindow*', 'String', 'args.Pick<Value_GLFWwindow>().GetEntity()' }
+}
+
+//------------------------------------------------------------------------------
+// ArgInfo
+//------------------------------------------------------------------------------
+ArgInfo = class {
 	name:String
 	type:String
 	optionFlag:Bool
+	typeInfo:TypeInfo
+	tmplDeclaration:Template:static
+	tmplImplementation:Template:static
+	__init__(name:String, type:String, optionFlag:Bool) = {
+		this.name = name, this.type = type, this.optionFlag = optionFlag
+		this.typeInfo = TypeInfo.map[type]
+	}
+	ComposeDeclaration() = this.tmplDeclaration.Eval()
+	ComposeImplementation() = this.tmplImplementation.Eval()
 }
 
-FuncInfo = struct {
+ArgInfo.tmplDeclaration = tR'''
+DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::None);
+'''
+
+ArgInfo.tmplImplementation = tR'''
+${this.typeInfo.cType} ${this.name} = ${this.typeInfo.codeToPick};
+'''
+
+//------------------------------------------------------------------------------
+// FuncInfo
+//------------------------------------------------------------------------------
+FuncInfo = class {
 	name:String
 	type:String
+	typeInfo:TypeInfo
 	argInfoTbl[]:ArgInfo = []
 	tmplImplementation:Template:static
-	RenderImplementation(stream:Stream = sys.cout) = this.tmplImplementation.Render(stream)
+	ComposeImplementation() = this.tmplImplementation.Eval()
+	__init__(name:String, type:String) = {
+		this.name = name, this.type = type
+		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
+	}
 }
 
 FuncInfo.tmplImplementation = tR'''
@@ -42,7 +93,7 @@ FuncInfo.tmplImplementation = tR'''
 Gurax_DeclareFunction(${this.name})
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	${this.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -52,9 +103,15 @@ Gurax_ImplementFunction(${this.name})
 {
 	// Arguments
 	ArgPicker args(argument);
-	Int num = args.PickNumber<Int>();
+	${this.argInfoTbl::ComposeImplementation()}
 	// Function body
+	${if (this.typeInfo)}
+	${this.typeInfo.cType} rtn = ${this.name}(${this.argInfoTbl:*name.Join(', ')});
 	return new Value_Number(num * 3);
+	${else}
+	${this.name}(${this.argInfoTbl:*name.Join(', ')});
+	return Value::nil();
+	${end}
 }
 '''
 
@@ -64,7 +121,7 @@ expr.EachElem {|expr|
 		!expr.left.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		exprCaller = expr.left
 		!exprCaller.car.IsIdentifier() && ErrorDone(exprCaller, 'Identifier is expected')
-		funcInfo = FuncInfo(exprCaller.car.symbolName)
+		funcInfo = FuncInfo(exprCaller.car.symbolName, exprCaller.attr.dottedName)
 		funcInfoTbl.Add(funcInfo)
 		exprCaller.EachParam {|exprParam|
 			//Println(exprParam)
@@ -87,7 +144,7 @@ expr.EachElem {|expr|
 	}
 }
 funcInfoTbl.Each {|funcInfo|
-	funcInfo.RenderImplementation(sys.cout)
+	Print(funcInfo.ComposeImplementation())
 	//Println(funcInfo.name)
 	//Println(funcInfo.argInfoTbl:*name.Join(', '))
 }
