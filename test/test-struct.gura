@@ -51,3 +51,23 @@ TestCase('Default Value for Property') {
 	Tester(`A(p4 = 'P4-mod').Format())
 	Tester(`A(nil, nil, nil, nil).Format())
 }
+
+TestCase('Class property') {
+	A = struct { a, b, c:static, d, e:static }
+	Tester(`A)
+	a1 = A()
+	a2 = A()
+	a3 = A()
+	a1.c = 'set by a1'
+	Tester(`a1.c)
+	Tester(`a2.c)
+	Tester(`a3.c)
+	a2.c = 'set by a2'
+	Tester(`a1.c)
+	Tester(`a2.c)
+	Tester(`a3.c)
+	A.c = 'set by A'
+	Tester(`a1.c)
+	Tester(`a2.c)
+	Tester(`a3.c)
+}

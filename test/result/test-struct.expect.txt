@@ -22,3 +22,14 @@ A(p2 = 'P2-mod').Format() .. P1, P2-mod, P3, <Nil>
 A(p3 = 'P3-mod').Format() .. P1, <Nil>, P3-mod, <Nil>
 A(p4 = 'P4-mod').Format() .. P1, <Nil>, P3, P4-mod
 A(nil, nil, nil, nil).Format() .. P1, <Nil>, P3, <Nil>
+======== Class property ========
+A .. <VType:A(a?:Any,b?:Any,d?:Any){block?}>
+a1.c .. set by a1
+a2.c .. set by a1
+a3.c .. set by a1
+a1.c .. set by a2
+a2.c .. set by a2
+a3.c .. set by a2
+a1.c .. set by A
+a2.c .. set by A
+a3.c .. set by A

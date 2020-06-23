@@ -22,16 +22,42 @@ ErrorDone(expr:Expr, msg:String) = {
 	sys.cerr.Printf('line.%d: %s\n', expr.lineNoTop, msg)
 	sys.Exit(1)
 }
+
 ArgInfo = struct {
 	name:String
 	type:String
 	optionFlag:Bool
 }
+
 FuncInfo = struct {
 	name:String
 	type:String
 	argInfoTbl[]:ArgInfo = []
+	tmplImplementation:Template:static
+	RenderImplementation(stream:Stream = sys.cout) = this.tmplImplementation.Render(stream)
 }
+
+FuncInfo.tmplImplementation = tR'''
+// ${this.name}()
+Gurax_DeclareFunction(${this.name})
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(${this.name})
+{
+	// Arguments
+	ArgPicker args(argument);
+	Int num = args.PickNumber<Int>();
+	// Function body
+	return new Value_Number(num * 3);
+}
+'''
+
 funcInfoTbl = []
 expr.EachElem {|expr|
 	if (expr.IsPureAssign()) {
@@ -61,6 +87,7 @@ expr.EachElem {|expr|
 	}
 }
 funcInfoTbl.Each {|funcInfo|
-	Println(funcInfo.name)
-	Println(funcInfo.argInfoTbl:*name.Join(', '))
+	funcInfo.RenderImplementation(sys.cout)
+	//Println(funcInfo.name)
+	//Println(funcInfo.argInfoTbl:*name.Join(', '))
 }
