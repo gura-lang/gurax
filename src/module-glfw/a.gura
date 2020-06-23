@@ -18,23 +18,49 @@ glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor
 	return new Value_GLFWwindow(window);
 '''
 }
-ErrorDone(msg:String) = {
-	sys.cerr.Println(msg)
+ErrorDone(expr:Expr, msg:String) = {
+	sys.cerr.Printf('line.%d: %s\n', expr.lineNoTop, msg)
 	sys.Exit(1)
 }
+ArgInfo = struct {
+	name:String
+	type:String
+	optionFlag:Bool
+}
+FuncInfo = struct {
+	name:String
+	type:String
+	argInfoTbl[]:ArgInfo = []
+}
+funcInfoTbl = []
 expr.EachElem {|expr|
 	if (expr.IsPureAssign()) {
-		!expr.left.IsCaller() && ErrorDone('Caller is expected')
+		!expr.left.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		exprCaller = expr.left
-		!exprCaller.car.IsIdentifier() && ErrorDone('Identifier is expected')
-		funcName = exprCaller.car.symbolName
-		Println(funcName)
+		!exprCaller.car.IsIdentifier() && ErrorDone(exprCaller, 'Identifier is expected')
+		funcInfo = FuncInfo(exprCaller.car.symbolName)
+		funcInfoTbl.Add(funcInfo)
 		exprCaller.EachParam {|exprParam|
-			!exprParam.IsIdentifier() && ErrorDone('Identifier is expected in parameter list')
-			Println(exprParam.symbolName, ' ', exprParam.attr)
+			//Println(exprParam)
+			optionFlag = false
+			if (exprParam.IsUnaryOp()) {
+				if (exprParam.operator.symbol == `?) {
+					optionFlag = true
+				} else {
+					ErrorDOne(exprParam, 'invalid format of parameter')
+				}
+				exprParam = exprParam.child
+			}
+			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
+			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, optionFlag)
+			funcInfo.argInfoTbl.Add(argInfo)
 		}
-		Println(exprCaller.attr)
+		//Println(exprCaller.attr)
 		//Println(expr.right)
-		Println()
+		//Println()
 	}
+}
+funcInfoTbl.Each {|funcInfo|
+	Println(funcInfo.name)
+	Println(funcInfo.argInfoTbl:*name.Join(', '))
 }

@@ -327,6 +327,7 @@ public:
 	bool IsUnary() const				{ return _opStyle == OpStyle::Unary; }
 	bool IsUnaryPost() const			{ return _opStyle == OpStyle::UnaryPost; }
 	bool IsBinary() const				{ return _opStyle == OpStyle::Binary; }
+	bool IsMath() const					{ return IsMathUnary() || IsMathBinary(); }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
 	const Symbol* GetStyleAsSymbol() const;

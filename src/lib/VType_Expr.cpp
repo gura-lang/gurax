@@ -350,7 +350,7 @@ Gurax_ImplementMethod(Expr, IsSuffixed)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Suffixed>());
 }
 
-// Expr#IsUnaryOp()
+// Expr#IsUnaryOp(symbol?:Symbol)
 Gurax_DeclareMethod(Expr, IsUnaryOp)
 {
 	Declare(VTYPE_Bool, Flag::None);

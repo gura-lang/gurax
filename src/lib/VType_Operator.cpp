@@ -25,7 +25,7 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
+// Implementation of class method
 //-----------------------------------------------------------------------------
 // Operator.Binary(symbol:Symbol)
 Gurax_DeclareClassMethod(Operator, Binary)
@@ -124,6 +124,81 @@ Gurax_ImplementClassMethod(Operator, UnaryPost)
 }
 
 //-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// Operator#IsBinary()
+Gurax_DeclareMethod(Operator, IsBinary)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the operator is a binary one.");
+}
+
+Gurax_ImplementMethod(Operator, IsBinary)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Operator& op = valueThis.GetOperator();
+	// Function body
+	return new Value_Bool(op.IsBinary());
+}
+
+// Operator#IsUnary()
+Gurax_DeclareMethod(Operator, IsUnary)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the operator is a unary one.");
+}
+
+Gurax_ImplementMethod(Operator, IsUnary)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Operator& op = valueThis.GetOperator();
+	// Function body
+	return new Value_Bool(op.IsUnary());
+}
+
+// Operator#IsUnaryPost()
+Gurax_DeclareMethod(Operator, IsUnaryPost)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the operator is a unary-post one.");
+}
+
+Gurax_ImplementMethod(Operator, IsUnaryPost)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Operator& op = valueThis.GetOperator();
+	// Function body
+	return new Value_Bool(op.IsUnaryPost());
+}
+
+// Operator#IsMath()
+Gurax_DeclareMethod(Operator, IsMath)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the operator is a mathematics one.");
+}
+
+Gurax_ImplementMethod(Operator, IsMath)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Operator& op = valueThis.GetOperator();
+	// Function body
+	return new Value_Bool(op.IsMath());
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // Operator#name
@@ -182,11 +257,16 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
-	// Assignment of method
+	// Assignment of class method
 	Assign(Gurax_CreateMethod(Operator, Binary));
 	Assign(Gurax_CreateMethod(Operator, Math));
 	Assign(Gurax_CreateMethod(Operator, Unary));
 	Assign(Gurax_CreateMethod(Operator, UnaryPost));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Operator, IsBinary));
+	Assign(Gurax_CreateMethod(Operator, IsMath));
+	Assign(Gurax_CreateMethod(Operator, IsUnary));
+	Assign(Gurax_CreateMethod(Operator, IsUnaryPost));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Operator, name));
 	Assign(Gurax_CreateProperty(Operator, style));
