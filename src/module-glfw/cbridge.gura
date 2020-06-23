@@ -1,0 +1,168 @@
+#!/usr/bin/env gurax
+
+//------------------------------------------------------------------------------
+// ErrorDone
+//------------------------------------------------------------------------------
+ErrorDone(expr:Expr, msg:String) = {
+	sys.cerr.Printf('line.%d: %s\n', expr.lineNoTop, msg)
+	sys.Exit(1)
+}
+
+//------------------------------------------------------------------------------
+// TypeInfo
+//------------------------------------------------------------------------------
+TypeInfo = class {
+	decl:String
+	cType:String
+	vtype:String
+	codeToPick:String
+	codeToCheck:String
+	codeToRtn:String
+	codeToRtnDelete:String
+	map:static = %{}
+	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeToCheck:String:nil, codeToRtn:String, codeToRtnDelete:String:nil) = {
+		this.decl = decl, this.cType = cType, this.vtype = vtype
+		this.codeToPick = codeToPick, this.codeToCheck = codeToCheck
+		this.codeToRtn = codeToRtn, this.codeToRtnDelete = codeToRtnDelete
+		this.map[this.decl] = this
+	}
+}
+
+@(TypeInfo) {
+	{ 'int', 'int', 'Number',
+		'args.PickNumber<int>()',
+		nil, 'Value_Number(rtn)', nil }
+	{ 'const_char_p', 'const char*', 'String',
+		'args.PickString()',
+		nil, 'Value_String(rtn)', nil }
+	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
+		'args.Pick<Value_GLFWmonitor>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWmonitor(rtn)', nil }
+	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
+		'args.Pick<Value_GLFWwindow>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWwindow(rtn)', nil }
+}
+
+//------------------------------------------------------------------------------
+// ArgInfo
+//------------------------------------------------------------------------------
+ArgInfo = class {
+	name:String
+	type:String
+	optionFlag:Bool
+	typeInfo:TypeInfo
+	tmplDeclaration:Template:static
+	tmplImplementation:Template:static
+	__init__(name:String, type:String, optionFlag:Bool) = {
+		this.name = name, this.type = type, this.optionFlag = optionFlag
+		this.typeInfo = TypeInfo.map[type]
+	}
+	ComposeDeclaration() = this.tmplDeclaration.Eval()
+	ComposeImplementation() = this.tmplImplementation.Eval()
+}
+
+ArgInfo.tmplDeclaration = tR'''
+DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::None);
+'''
+
+ArgInfo.tmplImplementation = tR'''
+${this.typeInfo.cType} ${this.name} = ${this.typeInfo.codeToPick};
+'''
+
+//------------------------------------------------------------------------------
+// FuncInfo
+//------------------------------------------------------------------------------
+FuncInfo = class {
+	name:String
+	type:String
+	typeInfo:TypeInfo
+	argInfoTbl[]:ArgInfo = []
+	tmplImplementation:Template:static
+	tmplAssignment:Template:static
+	ComposeImplementation() = this.tmplImplementation.Eval()
+	__init__(name:String, type:String) = {
+		this.name = name, this.type = type
+		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
+	}
+}
+
+FuncInfo.tmplImplementation = tR'''
+// ${this.name}()
+Gurax_DeclareFunction(${this.name})
+{
+	Declare(VTYPE_Any, Flag::None);
+	${this.argInfoTbl::ComposeDeclaration()}
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(${this.name})
+{
+	// Arguments
+	ArgPicker args(argument);
+	${this.argInfoTbl::ComposeImplementation()}
+	// Function body
+	${if (this.typeInfo)}
+	${this.typeInfo.cType} rtn = ${this.name}(${this.argInfoTbl:*name.Join(', ')});
+	${this.typeInfo.codeToCheck}
+	RefPtr<Value> pValue(new ${this.typeInfo.codeToRtn});
+	${cond(this.typeInfo.codeToRtnDelete, this.typeInfo.codeToRtnDelete + ';')}
+	return pValue.release();
+	${else}
+	${this.name}(${this.argInfoTbl:*name.Join(', ')});
+	return Value::nil();
+	${end}
+}
+'''
+
+//------------------------------------------------------------------------------
+// FuncInfo
+//------------------------------------------------------------------------------
+Render(stream:Stream:w = sys.cout) {`block} = {
+	funcInfoTbl = []
+	block.EachElem {|exprElem|
+		if (exprElem.IsAssign()) {
+			exprElem = exprElem.left
+		}
+		!exprElem.IsCaller() && ErrorDone(expr, 'Caller is expected')
+		!exprElem.car.IsIdentifier() && ErrorDone(exprElem, 'Identifier is expected')
+		funcInfo = FuncInfo(exprElem.car.symbolName, exprElem.attr.dottedName)
+		funcInfoTbl.Add(funcInfo)
+		exprElem.EachParam {|exprParam|
+			//Println(exprParam)
+			optionFlag = false
+			if (exprParam.IsUnaryOp()) {
+				if (exprParam.operator.symbol == `?) {
+					optionFlag = true
+				} else {
+					ErrorDone(exprParam, 'invalid format of parameter')
+				}
+				exprParam = exprParam.child
+			}
+			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
+			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, optionFlag)
+			funcInfo.argInfoTbl.Add(argInfo)
+		}
+	}
+	tmplFile.Render(stream)
+}
+
+tmplFile = tR'''
+${funcInfoTbl:*ComposeImplementation().Join('\n')}
+
+void Prepare(Frame& frameOuter)
+{
+	${funcInfoTbl.Each {|funcInfo|}}
+	frameOuter.Assign(Gurax_CreateFunction(${funcInfo.name}))
+	${end}
+}
+'''
