@@ -27,10 +27,14 @@ expr.EachElem {|expr|
 		!expr.left.IsCaller() && ErrorDone('Caller is expected')
 		exprCaller = expr.left
 		!exprCaller.car.IsIdentifier() && ErrorDone('Identifier is expected')
-		funcName = exprCaller.car.symbol.symbolName
+		funcName = exprCaller.car.symbolName
 		Println(funcName)
-		Println(exprCaller.EachParam():list)
+		exprCaller.EachParam {|exprParam|
+			!exprParam.IsIdentifier() && ErrorDone('Identifier is expected in parameter list')
+			Println(exprParam.symbolName)
+		}
 		Println(exprCaller.attr)
 		//Println(expr.right)
+		Println()
 	}
 }

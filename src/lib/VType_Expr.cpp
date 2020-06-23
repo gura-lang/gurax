@@ -78,6 +78,7 @@ Gurax_ImplementMethod(Expr, EachElem)
 Gurax_DeclareMethod(Expr, EachParam)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An iterator that returns `Expr` instance of the parameter elements.\n");
