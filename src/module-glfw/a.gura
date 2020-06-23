@@ -1,22 +1,7 @@
 expr = `{
-glfwWindowHint(hint:int, value:int):void = R'''
-	::glfwWindowHint(hint, value);
-	return Value::nil();
-'''
-
-glfwWinwotHintString(hint:int, value:const_char_p):void = R'''
-	::glfwWindowHintString(hint, value);
-	return Value::nil();
-'''
-
-glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p = R'''
-	GLFWwindow* window = ::glfwCreateWindow(width, height, title, monitor, share);
-	if (!window) {
-		IssueError();
-		return Value::nil();
-	}
-	return new Value_GLFWwindow(window);
-'''
+glfwWindowHint(hint:int, value:int):void
+glfwWindowHintString(hint:int, value:const_char_p):void
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
 }
 ErrorDone(expr:Expr, msg:String) = {
 	sys.cerr.Printf('line.%d: %s\n', expr.lineNoTop, msg)
@@ -31,19 +16,39 @@ TypeInfo = class {
 	cType:String
 	vtype:String
 	codeToPick:String
+	codeToCheck:String
 	codeToRtn:String
+	codeToRtnDelete:String
 	map:static = %{}
-	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeToRtn:String = '') = {
-		this.decl = decl, this.cType = cType, this.vtype = vtype, this.codeToPick = codeToPick
+	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeToCheck:String:nil, codeToRtn:String, codeToRtnDelete:String:nil) = {
+		this.decl = decl, this.cType = cType, this.vtype = vtype
+		this.codeToPick = codeToPick, this.codeToCheck = codeToCheck
+		this.codeToRtn = codeToRtn, this.codeToRtnDelete = codeToRtnDelete
 		this.map[this.decl] = this
 	}
 }
 
 @(TypeInfo) {
-	{ 'int', 'int', 'Number', 'args.PickNumber<int>()' }
-	{ 'const_char_p', 'const char*', 'String', 'args.PickString()' }
-	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'String', 'args.Pick<Value_GLFWmonitor>().GetEntity()' }
-	{ 'GLFWwindow_p', 'GLFWwindow*', 'String', 'args.Pick<Value_GLFWwindow>().GetEntity()' }
+	{ 'int', 'int', 'Number',
+		'args.PickNumber<int>()',
+		nil, 'Value_Number(rtn)', nil }
+	{ 'const_char_p', 'const char*', 'String',
+		'args.PickString()',
+		nil, 'Value_String(rtn)', nil }
+	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
+		'args.Pick<Value_GLFWmonitor>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWmonitor(rtn)', nil }
+	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
+		'args.Pick<Value_GLFWwindow>().GetEntity()',
+		R'''
+		if (!rtn) {
+			IssueError();
+			return Value::nil();
+		}''', 'Value_GLFWwindow(rtn)', nil }
 }
 
 //------------------------------------------------------------------------------
@@ -81,6 +86,7 @@ FuncInfo = class {
 	typeInfo:TypeInfo
 	argInfoTbl[]:ArgInfo = []
 	tmplImplementation:Template:static
+	tmplAssignment:Template:static
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	__init__(name:String, type:String) = {
 		this.name = name, this.type = type
@@ -107,7 +113,10 @@ Gurax_ImplementFunction(${this.name})
 	// Function body
 	${if (this.typeInfo)}
 	${this.typeInfo.cType} rtn = ${this.name}(${this.argInfoTbl:*name.Join(', ')});
-	return new Value_Number(num * 3);
+	${this.typeInfo.codeToCheck}
+	RefPtr<Value> pValue(new ${this.typeInfo.codeToRtn});
+	${cond(this.typeInfo.codeToRtnDelete, this.typeInfo.codeToRtnDelete + ';')}
+	return pValue.release();
 	${else}
 	${this.name}(${this.argInfoTbl:*name.Join(', ')});
 	return Value::nil();
@@ -116,35 +125,38 @@ Gurax_ImplementFunction(${this.name})
 '''
 
 funcInfoTbl = []
-expr.EachElem {|expr|
-	if (expr.IsPureAssign()) {
-		!expr.left.IsCaller() && ErrorDone(expr, 'Caller is expected')
-		exprCaller = expr.left
-		!exprCaller.car.IsIdentifier() && ErrorDone(exprCaller, 'Identifier is expected')
-		funcInfo = FuncInfo(exprCaller.car.symbolName, exprCaller.attr.dottedName)
-		funcInfoTbl.Add(funcInfo)
-		exprCaller.EachParam {|exprParam|
-			//Println(exprParam)
-			optionFlag = false
-			if (exprParam.IsUnaryOp()) {
-				if (exprParam.operator.symbol == `?) {
-					optionFlag = true
-				} else {
-					ErrorDOne(exprParam, 'invalid format of parameter')
-				}
-				exprParam = exprParam.child
+expr.EachElem {|exprElem|
+	if (exprElem.IsAssign()) {
+		exprElem = exprElem.left
+	}
+	!exprElem.IsCaller() && ErrorDone(expr, 'Caller is expected')
+	!exprElem.car.IsIdentifier() && ErrorDone(exprElem, 'Identifier is expected')
+	funcInfo = FuncInfo(exprElem.car.symbolName, exprElem.attr.dottedName)
+	funcInfoTbl.Add(funcInfo)
+	exprElem.EachParam {|exprParam|
+		//Println(exprParam)
+		optionFlag = false
+		if (exprParam.IsUnaryOp()) {
+			if (exprParam.operator.symbol == `?) {
+				optionFlag = true
+			} else {
+				ErrorDOne(exprParam, 'invalid format of parameter')
 			}
-			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, optionFlag)
-			funcInfo.argInfoTbl.Add(argInfo)
+			exprParam = exprParam.child
 		}
-		//Println(exprCaller.attr)
-		//Println(expr.right)
-		//Println()
+		!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
+		argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, optionFlag)
+		funcInfo.argInfoTbl.Add(argInfo)
 	}
 }
-funcInfoTbl.Each {|funcInfo|
-	Print(funcInfo.ComposeImplementation())
-	//Println(funcInfo.name)
-	//Println(funcInfo.argInfoTbl:*name.Join(', '))
+
+tR'''
+${funcInfoTbl:*ComposeImplementation().Join('\n')}
+
+void Prepare(Frame& frameOuter)
+{
+	${funcInfoTbl.Each {|funcInfo|}}
+	frameOuter.Assign(Gurax_CreateFunction(${funcInfo.name}))
+	${end}
 }
+'''.Render(sys.cout)
