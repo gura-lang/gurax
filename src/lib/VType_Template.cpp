@@ -56,7 +56,7 @@ Gurax_ImplementConstructor(Template)
 	// Function body
 	RefPtr<Template> pTmpl(new Template());
 	if (pStreamSrc &&
-		(!pTmpl->ParseStream_(*pStreamSrc, autoIndentFlag, appendLastEOLFlag) ||
+		(!pTmpl->ParseStream(*pStreamSrc, autoIndentFlag, appendLastEOLFlag) ||
 		 !pTmpl->PrepareAndCompose())) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Template(pTmpl.release()));
 }
@@ -112,7 +112,7 @@ Gurax_ImplementMethod(Template, Parse)
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
-	if (!tmpl.ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+	if (!tmpl.ParseString(str, autoIndentFlag, appendLastEOLFlag) ||
 		!tmpl.PrepareAndCompose()) return Value::nil();
 	return valueThis.Reference();
 }
@@ -145,7 +145,7 @@ Gurax_ImplementMethod(Template, Read)
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noIndent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lastEol));
 	// Function body
-	if (!tmpl.ParseStream_(streamSrc, autoIndentFlag, appendLastEOLFlag) ||
+	if (!tmpl.ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag) ||
 		!tmpl.PrepareAndCompose()) return Value::nil();
 	return valueThis.Reference();
 }
@@ -641,6 +641,18 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Template, expr));
 	Assign(Gurax_CreateProperty(Template, exprForInit));
+}
+
+Value* VType_Template::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	if (!pValueCasted) return nullptr;
+	RefPtr<Template> pTmpl(new Template());
+	bool autoIndentFlag = true;
+	bool appendLastEOLFlag = false;
+	if ((!pTmpl->ParseStream(pValueCasted->GetStream(), autoIndentFlag, appendLastEOLFlag) ||
+		 !pTmpl->PrepareAndCompose())) return Value::nil();
+	return new Value_Template(pTmpl.release());
 }
 
 //------------------------------------------------------------------------------

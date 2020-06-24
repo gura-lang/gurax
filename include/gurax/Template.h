@@ -86,11 +86,11 @@ public:
 	void ClearLastChar()  { _chLast = '\0'; }
 	char GetLastChar() const { return _chLast; }
 public:
-	bool ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString_(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+	bool ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString_(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString_(const char* strSrc, const char* strSrcEnd,
+	bool ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString(const char* strSrc, const char* strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
 	bool PrepareAndCompose();
 	bool PrepareAndCompose(Composer& composer);

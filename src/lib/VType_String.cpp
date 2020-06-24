@@ -1045,7 +1045,7 @@ Gurax_ImplementMethod(String, Template)
 	// Function body
 	const char* str = valueThis.GetString();
 	RefPtr<Template> pTmpl(new Template());
-	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+	if (!pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag) ||
 		!pTmpl->PrepareAndCompose()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Template(pTmpl.release()));
 }

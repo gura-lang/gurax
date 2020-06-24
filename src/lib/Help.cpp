@@ -82,7 +82,7 @@ void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 	RefPtr<Template> pTmpl(new Template());
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = true;
-	if (pTmpl->ParseString_(doc, autoIndentFlag, appendLastEOLFlag)) {
+	if (pTmpl->ParseString(doc, autoIndentFlag, appendLastEOLFlag)) {
 		AddHelp(new Help(pLangCode, pTmpl.release()));
 		return;
 	}

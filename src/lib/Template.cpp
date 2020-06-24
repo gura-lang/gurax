@@ -18,7 +18,7 @@ Template::Template() :
 {
 }
 
-bool Template::ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, streamSrc.GetName(), autoIndentFlag, appendLastEOLFlag);
 	for (;;) {
@@ -30,7 +30,7 @@ bool Template::ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendL
 	return parser.Flush();
 }
 
-bool Template::ParseString_(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
@@ -40,7 +40,7 @@ bool Template::ParseString_(String::const_iterator strSrc, String::const_iterato
 	return parser.Flush();
 }
 
-bool Template::ParseString_(const char* strSrc, const char* strSrcEnd,
+bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
@@ -50,7 +50,7 @@ bool Template::ParseString_(const char* strSrc, const char* strSrcEnd,
 	return parser.Flush();
 }
 
-bool Template::ParseString_(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
 	for (const char* p = strSrc; *p; p++) {
@@ -550,7 +550,7 @@ void Expr_Template::Compose(Composer& composer)
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(*this);
 	RefPtr<Template> pTmpl(new Template());
-	if (!pTmpl->ParseString_(GetString(), autoIndentFlag, appendLastEOLFlag) ||
+	if (!pTmpl->ParseString(GetString(), autoIndentFlag, appendLastEOLFlag) ||
 		!pTmpl->PrepareAndCompose(composer)) return;
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	if (_embedFlag) {
