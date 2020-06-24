@@ -391,6 +391,23 @@ Gurax_ImplementMethod(Expr, IsValue)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Value>());
 }
 
+// Expr#IsString()
+Gurax_DeclareMethod(Expr, IsString)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the expression is String");
+}
+
+Gurax_ImplementMethod(Expr, IsString)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_String>());
+}
+
 // Expr.Parse(str:String):map {block?}
 Gurax_DeclareClassMethod(Expr, Parse)
 {
@@ -783,6 +800,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, IsSuffixed));
 	Assign(Gurax_CreateMethod(Expr, IsUnaryOp));
 	Assign(Gurax_CreateMethod(Expr, IsValue));
+	Assign(Gurax_CreateMethod(Expr, IsString));
 	Assign(Gurax_CreateMethod(Expr, Parse));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Expr, attr));

@@ -3,29 +3,61 @@ import(cbridge)
 
 @(cbridge.TypeInfo) {
 	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
-		'args.Pick<Value_GLFWmonitor>().GetEntity()',
 		R'''
-		GLFWmonitor* rtn = ${caller};
-		if (!rtn) {
-			IssueError();
-			return Value::nil();
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity()
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
 		}
-		return new Value_GLFWmonitor(rtn);
+		IssueError();
+		return Value::nil();
 		''' }
 	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
-		'args.Pick<Value_GLFWwindow>().GetEntity()',
 		R'''
-		GLFWwindow* rtn = ${caller}
-		if (!rtn) {
-			IssueError();
-			return Value::nil();
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
 		}
-		return new Value_GLFWwindow(rtn);
+		IssueError();
+		return Value::nil();
+		''' }
+	{ 'const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage',
+		R'''
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		IssueError();
+		return Value::nil();
 		''' }
 }
 
 cbridge.Render() {
-	glfwWindowHint(hint:int, value:int):void
-	glfwWindowHintString(hint:int, value:const_char_p):void
-	glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
+
+glfwDefaultWindowHints():void
+
+glfwWindowHint(hint:int, value:int):void
+
+glfwWindowHintString(hint:int, value:const_char_p):void
+
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
+
+glfwDestroyWindow(window:GLFWwindow_p):void
+
+glfwWindowShouldClose(window:GLFWwindow_p):bool
+
+glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
+
+glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
+
+glfwSetWindowIcon(window:GLFWwindow_p, count:int, images:const_GLFWimage_p):bool
+
+glfwGetWindowPos(window:GLFWwindow_p):bool = R'''
+int xpos, ypos;
+glfwGetWindowPos(window, &xpos, &ypos);
+return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+'''
+
 }

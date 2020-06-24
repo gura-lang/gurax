@@ -15,30 +15,54 @@ TypeInfo = class {
 	decl:String
 	cType:String
 	vtype:String
-	codeToPick:String
+	tmplPicker:Template
 	tmplFunctionBody:Template
 	map:static = %{}
-	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeFunctionBody:String) = {
+	__init__(decl:String, cType:String, vtype:String, codePicker:String, codeFunctionBody:String) = {
 		this.decl = decl, this.cType = cType, this.vtype = vtype
-		this.codeToPick = codeToPick
+		this.tmplPicker = Template().Parse(codePicker)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.map[this.decl] = this
 	}
+	ComposePicker(varName:String) = this.tmplPicker.Eval()
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 }
 
+TypeInfo_Number(decl:String, cType:String) = TypeInfo(decl, cType, 'Number',
+R'''
+${this.cType} ${varName} = args.PickNumber<${this.cType}>();
+''', R'''
+${this.cType} rtn = ${caller};
+return new Value_${this.vtype}(rtn);
+''')
+
+TypeInfo_Number('char', 'char')
+TypeInfo_Number('short', 'short')
+TypeInfo_Number('long', 'long')
+TypeInfo_Number('int', 'int')
+TypeInfo_Number('long_long', 'long long')
+TypeInfo_Number('unsigned_char', 'unsigned char')
+TypeInfo_Number('unsigned_short', 'unsigned short')
+TypeInfo_Number('unsigned_long', 'unsigned long')
+TypeInfo_Number('unsigned_int', 'unsigned int')
+TypeInfo_Number('unsigned_long_long', 'unsigned long long')
+
 @(TypeInfo) {
-	{ 'int', 'int', 'Number',
-		'args.PickNumber<int>()',
+	{ 'bool', 'bool', 'Bool',
 		R'''
-		int rtn = ${caller};
-		return new Value_Number(rtn);
+		${this.cType} ${varName} = args.PickBool();
+		''', R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
 		''' }
 	{ 'const_char_p', 'const char*', 'String',
-		'args.PickString()',
 		R'''
-		const char* rtn = ${caller}
-		return new Value_String(rtn);
+		${this.cType} ${varName} = args.PickString();
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		return Value::nil();
 		''' }
 }
 
@@ -57,15 +81,11 @@ ArgInfo = class {
 		this.typeInfo = TypeInfo.map[type]
 	}
 	ComposeDeclaration() = this.tmplDeclaration.Eval()
-	ComposeImplementation() = this.tmplImplementation.Eval()
+	ComposeImplementation() = this.typeInfo.ComposePicker(this.name)
 }
 
 ArgInfo.tmplDeclaration = tR'''
 DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::None);
-'''
-
-ArgInfo.tmplImplementation = tR'''
-${this.typeInfo.cType} ${this.name} = ${this.typeInfo.codeToPick};
 '''
 
 //------------------------------------------------------------------------------
@@ -76,12 +96,14 @@ FuncInfo = class {
 	type:String
 	typeInfo:TypeInfo
 	argInfoTbl[]:ArgInfo = []
+	tmplFunctionBody:Template
 	tmplImplementation:Template:static
 	tmplAssignment:Template:static
 	ComposeImplementation() = this.tmplImplementation.Eval()
-	__init__(name:String, type:String) = {
+	__init__(name:String, type:String, codeFunctionBody:String:nil) = {
 		this.name = name, this.type = type
 		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
+		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
 		Format('%s(%s)', this.name, this.argInfoTbl:*name.Join(', ')) 
@@ -105,7 +127,9 @@ Gurax_ImplementFunction(${this.name})
 	ArgPicker args(argument);
 	${this.argInfoTbl::ComposeImplementation()}
 	// Function body
-	${if (this.typeInfo)}
+	${if (this.tmplFunctionBody)}
+	${this.tmplFunctionBody.Eval()}
+	${elsif (this.typeInfo)}
 	${this.typeInfo.ComposeFunctionBody(this.ComposeCaller())}
 	${else}
 	${this.ComposeCaller()};
@@ -120,12 +144,15 @@ Gurax_ImplementFunction(${this.name})
 Render(stream:Stream:w = sys.cout) {`block} = {
 	funcInfoTbl = []
 	block.EachElem {|exprElem|
+		codeFunctionBody = nil
 		if (exprElem.IsAssign()) {
+			!exprElem.right.IsString() && ErrorDone(exprElem, 'assigned value must be a string')
+			codeFunctionBody = exprElem.right.string
 			exprElem = exprElem.left
 		}
 		!exprElem.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!exprElem.car.IsIdentifier() && ErrorDone(exprElem, 'Identifier is expected')
-		funcInfo = FuncInfo(exprElem.car.symbolName, exprElem.attr.dottedName)
+		funcInfo = FuncInfo(exprElem.car.symbolName, exprElem.attr.dottedName, codeFunctionBody)
 		funcInfoTbl.Add(funcInfo)
 		exprElem.EachParam {|exprParam|
 			//Println(exprParam)
