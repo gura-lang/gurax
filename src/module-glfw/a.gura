@@ -1,20 +1,27 @@
+#!/usr/bin/env gurax
 import(cbridge)
 
 @(cbridge.TypeInfo) {
 	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
 		'args.Pick<Value_GLFWmonitor>().GetEntity()',
 		R'''
+		GLFWmonitor* rtn = ${caller};
 		if (!rtn) {
 			IssueError();
 			return Value::nil();
-		}''', 'Value_GLFWmonitor(rtn)', nil }
+		}
+		return new Value_GLFWmonitor(rtn);
+		''' }
 	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
 		'args.Pick<Value_GLFWwindow>().GetEntity()',
 		R'''
+		GLFWwindow* rtn = ${caller}
 		if (!rtn) {
 			IssueError();
 			return Value::nil();
-		}''', 'Value_GLFWwindow(rtn)', nil }
+		}
+		return new Value_GLFWwindow(rtn);
+		''' }
 }
 
 cbridge.Render() {

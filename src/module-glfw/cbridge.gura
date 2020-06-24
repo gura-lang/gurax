@@ -16,25 +16,30 @@ TypeInfo = class {
 	cType:String
 	vtype:String
 	codeToPick:String
-	codeToCheck:String
-	codeToRtn:String
-	codeToRtnDelete:String
+	tmplFunctionBody:Template
 	map:static = %{}
-	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeToCheck:String:nil, codeToRtn:String, codeToRtnDelete:String:nil) = {
+	__init__(decl:String, cType:String, vtype:String, codeToPick:String, codeFunctionBody:String) = {
 		this.decl = decl, this.cType = cType, this.vtype = vtype
-		this.codeToPick = codeToPick, this.codeToCheck = codeToCheck
-		this.codeToRtn = codeToRtn, this.codeToRtnDelete = codeToRtnDelete
+		this.codeToPick = codeToPick
+		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.map[this.decl] = this
 	}
+	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 }
 
 @(TypeInfo) {
 	{ 'int', 'int', 'Number',
 		'args.PickNumber<int>()',
-		nil, 'Value_Number(rtn)', nil }
+		R'''
+		int rtn = ${caller};
+		return new Value_Number(rtn);
+		''' }
 	{ 'const_char_p', 'const char*', 'String',
 		'args.PickString()',
-		nil, 'Value_String(rtn)', nil }
+		R'''
+		const char* rtn = ${caller}
+		return new Value_String(rtn);
+		''' }
 }
 
 //------------------------------------------------------------------------------
@@ -78,6 +83,9 @@ FuncInfo = class {
 		this.name = name, this.type = type
 		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
 	}
+	ComposeCaller() = {
+		Format('%s(%s)', this.name, this.argInfoTbl:*name.Join(', ')) 
+	}
 }
 
 FuncInfo.tmplImplementation = tR'''
@@ -98,13 +106,9 @@ Gurax_ImplementFunction(${this.name})
 	${this.argInfoTbl::ComposeImplementation()}
 	// Function body
 	${if (this.typeInfo)}
-	${this.typeInfo.cType} rtn = ${this.name}(${this.argInfoTbl:*name.Join(', ')});
-	${this.typeInfo.codeToCheck}
-	RefPtr<Value> pValue(new ${this.typeInfo.codeToRtn});
-	${cond(this.typeInfo.codeToRtnDelete, this.typeInfo.codeToRtnDelete + ';')}
-	return pValue.release();
+	${this.typeInfo.ComposeFunctionBody(this.ComposeCaller())}
 	${else}
-	${this.name}(${this.argInfoTbl:*name.Join(', ')});
+	${this.ComposeCaller()};
 	return Value::nil();
 	${end}
 }
