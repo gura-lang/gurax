@@ -87,7 +87,7 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 	Template* pTmplTop = this;
 	for (Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
 		Frame& frame = processor.PushFrame<Frame_Scope>();
-		frame.Assign(Gurax_Symbol(__thisT__), new Value_Template(pTmpl->Reference()));
+		frame.Assign(Gurax_Symbol(__tmpl__), new Value_Template(pTmpl->Reference()));
 		pTmpl->SetStreamDst(streamDst.Reference());
 		pTmpl->GetValueMap().Clear();
 		Value::Delete(pTmpl->GetExprForInit().Eval(processor));
@@ -97,7 +97,7 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 	}
 	if (!Error::IsIssued()) {
 		Frame& frame = processor.PushFrame<Frame_Scope>();
-		frame.Assign(Gurax_Symbol(__thisT__), new Value_Template(Reference()));
+		frame.Assign(Gurax_Symbol(__tmpl__), new Value_Template(Reference()));
 		Value::Delete(pTmplTop->GetExprForBody().Eval(processor));
 		processor.PopFrame();
 	}
@@ -388,9 +388,9 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		do {
 			RefPtr<Gurax::Parser> pParser(
 				new Gurax::Parser(_pSourceName->Reference(), _tmpl.GetExprForInit().Reference()));
-			// Appends "__thisT__.init_" before the script string while parsing
-			// so that it generates an expression "__thisT__.init_foo()" from the directive "${=foo()}".
-			if (!pParser->FeedString("__thisT__.init_") || !pParser->FeedString(pStrTmplScript) ||
+			// Appends "__tmpl__.init_" before the script string while parsing
+			// so that it generates an expression "__tmpl__.init_foo()" from the directive "${=foo()}".
+			if (!pParser->FeedString("__tmpl__.init_") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 			//if (!_tmpl.GetExprForInit().HasSingleExprElem()) {
 			//	Error::Issue(ErrorType::SyntaxError, "template directive must be a single expression");
@@ -400,9 +400,9 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		} while (0);
 		do {
 			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
-			// Appends "__thisT__." before the script string while parsing
-			// so that it generates an expression "__thisT__.foo()" from the directive "${=foo()}".
-			if (!pParser->FeedString("__thisT__.") || !pParser->FeedString(pStrTmplScript) ||
+			// Appends "__tmpl__." before the script string while parsing
+			// so that it generates an expression "__tmpl__.foo()" from the directive "${=foo()}".
+			if (!pParser->FeedString("__tmpl__.") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
 		if (pExprTmplScript->HasExprElem()) {

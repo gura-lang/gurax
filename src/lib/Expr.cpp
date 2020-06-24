@@ -1414,7 +1414,7 @@ DeclCallable* Expr_Caller::RetrieveDeclCallable() const
 		const Expr_Member& exprCar = dynamic_cast<const Expr_Member&>(GetExprCar());
 		if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
 			dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
-				IsIdentical(Gurax_Symbol(__thisT__))) {
+				IsIdentical(Gurax_Symbol(__tmpl__))) {
 			RefPtr<Value> pValue(VTYPE_Template.GetFrame().Retrieve(exprCar.GetSymbol()));
 			return pValue? DeclCallable::Reference(pValue->GetDeclCallable()) : nullptr;
 		}
