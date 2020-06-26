@@ -41,10 +41,10 @@ template<typename T_Num>
 NumList<T_Num> Value_Number::GetNumList(const ValueList& values)
 {
 	NumList<T_Num> nums;
-	nums.reserve(values.size());
+	nums.v.reserve(values.size());
 	for (Value* pValue : values) {
 		Double numRaw = GetNumberRaw(*pValue);
-		nums.push_back(static_cast<T_Num>(numRaw));
+		nums.v.push_back(static_cast<T_Num>(numRaw));
 	}
 	return nums;
 }
@@ -92,14 +92,14 @@ NumList<T_Num> Value_Number::GetNumListPos(const ValueList& values)
 {
 	NumList<T_Num> nums;
 	if (Error::IsIssued()) return nums;
-	nums.reserve(values.size());
+	nums.v.reserve(values.size());
 	for (Value* pValue : values) {
 		Double numRaw = Value_Number::GetNumberRaw(*pValue);
 		if (numRaw < 0 || static_cast<T_Num>(numRaw) == 0) {
 			Error::Issue(ErrorType::RangeError, "must be positive value");
 			break;
 		}
-		nums.push_back(static_cast<T_Num>(numRaw));
+		nums.v.push_back(static_cast<T_Num>(numRaw));
 	}
 	return nums;
 }

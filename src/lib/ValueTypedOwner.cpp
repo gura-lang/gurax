@@ -288,7 +288,7 @@ bool ValueTypedOwner::Erase(Int pos)
 bool ValueTypedOwner::Erase(const NumList<Int>& posList)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	for (Int pos : posList) {
+	for (Int pos : posList.v) {
 		if (!valueOwner.CheckPosition(pos)) return false;
 		ValueOwner::iterator ppValue = valueOwner.begin() + pos;
 		Value::Delete(*ppValue);

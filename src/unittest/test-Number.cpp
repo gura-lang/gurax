@@ -16,15 +16,15 @@ Gurax_TesterEntry(Number)
 	};
 	::printf("----\n");
 	nums.Sort();
-	for (Int num : nums) ::printf(" %d", num);
+	for (Int num : nums.v) ::printf(" %d", num);
 	::printf("\n");
 	::printf("----\n");
 	nums.Sort(SortOrder::Descend);
-	for (Int num : nums) ::printf(" %d", num);
+	for (Int num : nums.v) ::printf(" %d", num);
 	::printf("\n");
 	::printf("----\n");
 	nums.Unique();
-	for (Int num : nums) ::printf(" %d", num);
+	for (Int num : nums.v) ::printf(" %d", num);
 	::printf("\n");
 }
 

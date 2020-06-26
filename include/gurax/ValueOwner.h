@@ -55,8 +55,8 @@ template<typename T_Num>
 ValueOwner* ValueOwner::Extract(NumList<T_Num>& indices) const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(indices.size());
-	for (T_Num idx : indices) pValueOwner->push_back((*this)[idx]->Reference());
+	pValueOwner->reserve(indices.v.size());
+	for (T_Num idx : indices.v) pValueOwner->push_back((*this)[idx]->Reference());
 	return pValueOwner.release();
 }
 
@@ -64,8 +64,8 @@ template<typename T_Num>
 ValueOwner* ValueOwner::Extract(NumList<T_Num>& indices, size_t n) const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(indices.size());
-	for (auto pIdx = indices.begin(); pIdx != indices.begin() + n; pIdx++) {
+	pValueOwner->reserve(indices.v.size());
+	for (auto pIdx = indices.v.begin(); pIdx != indices.v.begin() + n; pIdx++) {
 		pValueOwner->push_back((*this)[*pIdx]->Reference());
 	}
 	return pValueOwner.release();
@@ -75,8 +75,8 @@ template<typename T_Num>
 ValueOwner* ValueOwner::CreateFromNumList(const NumList<T_Num>& nums)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(nums.size());
-	for (T_Num num : nums) pValueOwner->push_back(new Value_Number(num));
+	pValueOwner->reserve(nums.v.size());
+	for (T_Num num : nums.v) pValueOwner->push_back(new Value_Number(num));
 	return pValueOwner.release();
 }
 

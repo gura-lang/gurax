@@ -985,7 +985,7 @@ Value* Iterator_Permutation::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
 	RefPtr<Value> pValue(new Value_List(GetValueOwner().Extract<size_t>(_indices)));
-	_doneFlag = !std::next_permutation(_indices.begin(), _indices.end());
+	_doneFlag = !std::next_permutation(_indices.v.begin(), _indices.v.end());
 	return pValue.release();
 }
 
@@ -1001,7 +1001,7 @@ Value* Iterator_PartialPermutation::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
 	RefPtr<Value> pValue(new Value_List(GetValueOwner().Extract(_indices, _nExtract)));
-	_doneFlag = !boost::next_partial_permutation(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
+	_doneFlag = !boost::next_partial_permutation(_indices.v.begin(), _indices.v.begin() + _nExtract, _indices.v.end());
 	return pValue.release();
 }
 
@@ -1017,7 +1017,7 @@ Value* Iterator_Combination::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
 	RefPtr<Value> pValue(new Value_List(GetValueOwner().Extract(_indices, _nExtract)));
-	_doneFlag = !boost::next_combination(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
+	_doneFlag = !boost::next_combination(_indices.v.begin(), _indices.v.begin() + _nExtract, _indices.v.end());
 	return pValue.release();
 }
 

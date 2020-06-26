@@ -840,7 +840,7 @@ const StringList StringList::Empty;
 
 StringList& StringList::Sort(SortOrder sortOrder)
 {
-	SortListByOrder<StringList, String::LessThan, String::GreaterThan>(*this, sortOrder);
+	SortCollectionByOrder<StringList, String::LessThan, String::GreaterThan>(*this, sortOrder);
 	return *this;
 }
 

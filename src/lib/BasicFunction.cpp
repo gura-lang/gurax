@@ -67,12 +67,12 @@ Gurax_DeclareFunction(Dim)
 		"    // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]\n");
 }
 
-ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
-				   NumList<Int>& idxList, NumList<Int>::iterator pIdx,
+ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::V::iterator pCnt,
+				   NumList<Int>& idxList, NumList<Int>::V::iterator pIdx,
 				   const Expr_Block* pExprOfBlock, Argument* pArgSub)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	if (pCnt + 1 != cntList.end()) {
+	if (pCnt + 1 != cntList.v.end()) {
 		for (*pIdx = 0; *pIdx < *pCnt; (*pIdx)++) {
 			RefPtr<ValueTypedOwner> pValueTypedOwnerSub(
 				DimSub(processor, cntList, pCnt + 1, idxList, pIdx + 1, pExprOfBlock, pArgSub));
@@ -85,7 +85,7 @@ ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int
 		for (*pIdx = 0; *pIdx < *pCnt; (*pIdx)++) {
 			pArgSub->ResetAllValues();
 			ArgFeeder args(*pArgSub);
-			for (Int idx : idxList) {
+			for (Int idx : idxList.v) {
 				if (!args.FeedValue(frame, new Value_Number(idx))) return nullptr;
 			}
 			RefPtr<Value> pValue(pExprOfBlock->Eval(processor, *pArgSub));
@@ -109,9 +109,9 @@ Gurax_ImplementFunction(Dim)
 	if (Error::IsIssued()) return Value::nil();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
-	NumList<Int> idxList(cntList.size(), 0);
-	auto pCnt = cntList.begin();
-	auto pIdx = idxList.begin();
+	NumList<Int> idxList(cntList.v.size(), 0);
+	auto pCnt = cntList.v.begin();
+	auto pIdx = idxList.v.begin();
 	RefPtr<Argument> pArgSub(pExprOfBlock? Argument::CreateForBlockCall(*pExprOfBlock) : nullptr);
 	RefPtr<ValueTypedOwner> pValueTypedOwner(
 		DimSub(processor, cntList, pCnt, idxList, pIdx, pExprOfBlock, pArgSub.get()));

@@ -85,14 +85,14 @@ String PropSlot::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 PropSlotList& PropSlotList::SortBySeqId(SortOrder sortOrder)
 {
-	SortListByOrder<PropSlotList, PropSlot::LessThan_SeqId, PropSlot::GreaterThan_SeqId>
+	SortCollectionByOrder<PropSlotList, PropSlot::LessThan_SeqId, PropSlot::GreaterThan_SeqId>
 		(*this, sortOrder);
 	return *this;
 }
 
 PropSlotList& PropSlotList::SortBySymbolName(SortOrder sortOrder)
 {
-	SortListByOrder<PropSlotList, PropSlot::LessThan_SymbolName, PropSlot::GreaterThan_SymbolName>
+	SortCollectionByOrder<PropSlotList, PropSlot::LessThan_SymbolName, PropSlot::GreaterThan_SymbolName>
 		(*this, sortOrder);
 	return *this;
 }

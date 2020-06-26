@@ -135,7 +135,7 @@ enum class SortOrder {
 };
 
 template<typename T_List, typename T_LessThan, typename T_GreaterThan>
-void SortListByOrder(T_List& list, SortOrder sortOrder)
+void SortCollectionByOrder(T_List& list, SortOrder sortOrder)
 {
 	if (sortOrder == SortOrder::Ascend) {
 		std::sort(list.begin(), list.end(), T_LessThan());

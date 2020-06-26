@@ -42,15 +42,15 @@ template<typename T_Compare> Value* Iterator::FindMinMax(NumList<Int>& idxFoundL
 {
 	RefPtr<Value> pValueFound(NextValue());
 	if (!pValueFound) return nullptr;
-	idxFoundList.push_back(0);
+	idxFoundList.v.push_back(0);
 	for (Int idx = 1; ; idx++) {
 		RefPtr<Value> pValue(NextValue());
 		if (!pValue) break;
 		if (pValueFound->IsEqualTo(pValue.get())) {
-			idxFoundList.push_back(idx);
+			idxFoundList.v.push_back(idx);
 		} else if (T_Compare()(pValueFound.get(), pValue.get())) {
-			idxFoundList.clear();
-			idxFoundList.push_back(idx);
+			idxFoundList.v.clear();
+			idxFoundList.v.push_back(idx);
 			pValueFound.reset(pValue.release());
 		}
 	}

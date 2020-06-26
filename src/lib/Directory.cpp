@@ -353,16 +353,16 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 				return nullptr;
 			}
 			_pDirectoryCur.reset(_directoryDeque.front());
-			_depth = _depthDeque.front();
+			_depth = _depthDeque.d.front();
 			_directoryDeque.pop_front();
-			_depthDeque.pop_front();
+			_depthDeque.d.pop_front();
 		}
 		if (!pDirectoryChild) return nullptr;
 		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(_patternSegs[_depth].c_str())) {
 			if (_depth + 1 < _patternSegs.size()) {
 				if (pDirectoryChild->IsLikeFolder()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
-					_depthDeque.push_back(static_cast<UInt>(_depth + 1));
+					_depthDeque.d.push_back(static_cast<UInt>(_depth + 1));
 				}
 			} else if ((pDirectoryChild->IsLikeFolder() && _dirFlag) ||
 					   (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {

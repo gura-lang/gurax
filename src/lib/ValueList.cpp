@@ -12,7 +12,7 @@ const ValueList ValueList::Empty;
 
 ValueList& ValueList::Sort(SortOrder sortOrder)
 {
-	SortListByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
+	SortCollectionByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
 	return *this;
 }
 

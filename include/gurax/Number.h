@@ -52,30 +52,35 @@ public:
 // NumList
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class NumList : public std::vector<T_Num>
-{
+class NumList {
 public:
-	using std::vector<T_Num>::vector;
+	using V = std::vector<T_Num>;
+	V v;
 public:
-	NumList& Sort() { std::sort(this->begin(), this->end()); return *this; }
+	NumList() {}
+	NumList(size_t n) : v(n) {}
+	NumList(size_t n, T_Num num) : v(n, num) {}
+	NumList(std::initializer_list<T_Num> initList) : v(initList) {}
+public:
+	NumList& Sort() { std::sort(v.begin(), v.end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);
-	NumList& Unique() { this->erase(std::unique(this->begin(), this->end()), this->end()); return *this; }
+	NumList& Unique() { v.erase(std::unique(v.begin(), v.end()), v.end()); return *this; }
 	NumList& FillSeq(size_t n);
 };
 
 template<typename T_Num>
 NumList<T_Num>& NumList<T_Num>::Sort(SortOrder sortOrder)
 {
-	SortListByOrder<NumList, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
-		*this, sortOrder);
+	SortCollectionByOrder<NumList::V, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
+		v, sortOrder);
 	return *this;
 }
 
 template<typename T_Num>
 NumList<T_Num>& NumList<T_Num>::FillSeq(size_t n)
 {
-	this->reserve(n);
-	for (size_t i = 0; i < n ; i++) this->push_back(static_cast<T_Num>(i));
+	v.reserve(n);
+	for (size_t i = 0; i < n ; i++) v.push_back(static_cast<T_Num>(i));
 	return *this;
 }
 
@@ -83,10 +88,10 @@ NumList<T_Num>& NumList<T_Num>::FillSeq(size_t n)
 // NumDeque
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class NumDeque : public std::deque<T_Num>
-{
+class NumDeque {
 public:
-	using std::deque<T_Num>::deque;
+	using D = std::deque<T_Num>;
+	D d;
 };
 
 }
