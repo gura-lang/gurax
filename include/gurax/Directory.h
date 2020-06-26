@@ -160,13 +160,14 @@ public:
 //------------------------------------------------------------------------------
 // DirectoryList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryList : public std::vector<Directory*> {
+class GURAX_DLLDECLARE DirectoryList {
 public:
-	using std::vector<Directory*>::vector;
+	using V = std::vector<Directory*>;
+	V v;
 public:
 	Directory* FindByName(const char* name) const;
-	iterator FindIteratorByName(const char* name);
-	const_iterator FindIteratorByName(const char* name) const;
+	V::iterator FindIteratorByName(const char* name);
+	V::const_iterator FindIteratorByName(const char* name) const;
 };
 
 //------------------------------------------------------------------------------

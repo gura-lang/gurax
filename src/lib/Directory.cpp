@@ -186,26 +186,26 @@ void Directory::Core::Print(Stream& stream, int indentLevel) const
 //------------------------------------------------------------------------------
 Directory* DirectoryList::FindByName(const char* name) const
 {
-	for (Directory* pDirectory : *this) {
+	for (Directory* pDirectory : v) {
 		if (::strcmp(pDirectory->GetName(), name) == 0) return pDirectory;
 	}
 	return nullptr;
 }
 
-DirectoryList::iterator DirectoryList::FindIteratorByName(const char* name)
+DirectoryList::V::iterator DirectoryList::FindIteratorByName(const char* name)
 {
-	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
+	for (auto ppDirectory = v.begin(); ppDirectory != v.end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
 	}
-	return end();
+	return v.end();
 }
 
-DirectoryList::const_iterator DirectoryList::FindIteratorByName(const char* name) const
+DirectoryList::V::const_iterator DirectoryList::FindIteratorByName(const char* name) const
 {
-	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
+	for (auto ppDirectory = v.begin(); ppDirectory != v.end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
 	}
-	return end();
+	return v.end();
 }
 
 //------------------------------------------------------------------------------
@@ -213,8 +213,8 @@ DirectoryList::const_iterator DirectoryList::FindIteratorByName(const char* name
 //------------------------------------------------------------------------------
 void DirectoryOwner::Clear()
 {
-	for (Directory* pDirectory : *this) Directory::Delete(pDirectory);
-	clear();
+	for (Directory* pDirectory : v) Directory::Delete(pDirectory);
+	v.clear();
 }
 
 //------------------------------------------------------------------------------

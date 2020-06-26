@@ -40,15 +40,42 @@ TypeInfo_Number('char', 'char')
 TypeInfo_Number('short', 'short')
 TypeInfo_Number('long', 'long')
 TypeInfo_Number('int', 'int')
+TypeInfo_Number('float', 'float')
+TypeInfo_Number('double', 'double')
 TypeInfo_Number('long_long', 'long long')
 TypeInfo_Number('unsigned_char', 'unsigned char')
 TypeInfo_Number('unsigned_short', 'unsigned short')
 TypeInfo_Number('unsigned_long', 'unsigned long')
 TypeInfo_Number('unsigned_int', 'unsigned int')
 TypeInfo_Number('unsigned_long_long', 'unsigned long long')
+TypeInfo_Number('Char', 'Char')
+TypeInfo_Number('UChar', 'UChar')
+TypeInfo_Number('Short', 'Short')
+TypeInfo_Number('UShort', 'UShort')
+TypeInfo_Number('Int', 'Int')
+TypeInfo_Number('UInt', 'UInt')
+TypeInfo_Number('Long', 'Long')
+TypeInfo_Number('ULong', 'ULong')
+TypeInfo_Number('Int8', 'Int8')
+TypeInfo_Number('UInt8', 'UInt8')
+TypeInfo_Number('Int16', 'Int16')
+TypeInfo_Number('UInt16', 'UInt16')
+TypeInfo_Number('Int32', 'Int32')
+TypeInfo_Number('UInt32', 'UInt32')
+TypeInfo_Number('Int64', 'Int64')
+TypeInfo_Number('UInt64', 'UInt64')
+TypeInfo_Number('Float', 'Float')
+TypeInfo_Number('Double', 'Double')
 
 @(TypeInfo) {
 	{ 'bool', 'bool', 'Bool',
+		R'''
+		${this.cType} ${varName} = args.PickBool();
+		''', R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''' }
+	{ 'Bool', 'Bool', 'Bool',
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
@@ -179,7 +206,7 @@ ${funcInfoTbl:*ComposeImplementation().Join('\n')}
 void Prepare(Frame& frameOuter)
 {
 	${funcInfoTbl.Each {|funcInfo|}}
-	frameOuter.Assign(Gurax_CreateFunction(${funcInfo.name}))
+	frameOuter.Assign(Gurax_CreateFunction(${funcInfo.name}));
 	${end}
 }
 '''
