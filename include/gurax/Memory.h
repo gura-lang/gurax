@@ -41,7 +41,10 @@ public:
 //------------------------------------------------------------------------------
 // MemoryList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE MemoryList : public std::vector<Memory*> {
+class GURAX_DLLDECLARE MemoryList {
+public:
+	using V = std::vector<Memory*>;
+	V v;
 };
 
 //------------------------------------------------------------------------------

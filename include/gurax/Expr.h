@@ -225,7 +225,10 @@ public:
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
+class GURAX_DLLDECLARE ExprList {
+public:
+	using V = std::vector<Expr*>;
+	V v;
 public:
 	static const ExprList Empty;
 public:
@@ -245,8 +248,8 @@ protected:
 	~ExprOwner() { Clear(); }
 public:
 	void Clear() {
-		for (Expr* pExpr : *this) Expr::Delete(pExpr);
-		clear();
+		for (Expr* pExpr : v) Expr::Delete(pExpr);
+		v.clear();
 	}
 };
 

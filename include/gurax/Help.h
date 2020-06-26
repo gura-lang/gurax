@@ -14,7 +14,10 @@ class Template;
 //------------------------------------------------------------------------------
 // HelpList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE HelpList : public std::vector<Help*> {
+class GURAX_DLLDECLARE HelpList {
+public:
+	using V = std::vector<Help*>;
+	V v;
 public:
 	const Help* Lookup(const Symbol* pLangCode) const;
 };
@@ -55,7 +58,7 @@ public:
 		AddHelp(pLangCode, new StringReferable(doc));
 	}
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc);
-	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
+	const Help* GetDefault() const { return _helpOwner.v.empty()? nullptr : _helpOwner.v.front(); }
 	const Help* Lookup(const Symbol* pLangCode) const { return _helpOwner.Lookup(pLangCode); }
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }
 };

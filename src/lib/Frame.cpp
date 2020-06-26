@@ -130,8 +130,8 @@ String Frame::MakeFullName(const Frame* pFrame, const char* name)
 //------------------------------------------------------------------------------
 void FrameOwner::Clear()
 {
-	for (Frame* pFrame : *this) Frame::Delete(pFrame);
-	clear();
+	for (Frame* pFrame : v) Frame::Delete(pFrame);
+	v.clear();
 }
 
 //------------------------------------------------------------------------------
@@ -139,12 +139,12 @@ void FrameOwner::Clear()
 //------------------------------------------------------------------------------
 void FrameStack::Shrink(size_t cnt)
 {
-	if (cnt >= size()) return;
-	auto ppFrameEnd = rbegin() + size() - cnt;
-	for (auto ppFrame = rbegin(); ppFrame != ppFrameEnd; ppFrame++) {
+	if (cnt >= v.size()) return;
+	auto ppFrameEnd = v.rbegin() + v.size() - cnt;
+	for (auto ppFrame = v.rbegin(); ppFrame != ppFrameEnd; ppFrame++) {
 		Frame::Delete(*ppFrame);
 	}
-	erase(begin() + cnt, end());
+	v.erase(v.begin() + cnt, v.end());
 }
 
 //------------------------------------------------------------------------------

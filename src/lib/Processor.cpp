@@ -14,7 +14,7 @@ Processor::Processor() :
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
-	GetFrameStack().reserve(1024);
+	GetFrameStack().v.reserve(1024);
 	PushFrame(Basement::Inst.GetFrame().Reference());
 }
 
@@ -79,7 +79,7 @@ void Processor::Print() const
 	Stream& stream = *Stream::COut;
 	stream.Printf("PUnitStack: %zupcs\n", GetPUnitStack().size());
 	stream.Printf("ValueStack: %zupcs\n", GetValueStack().size());
-	stream.Printf("FrameStack: %zupcs\n", GetFrameStack().size());
+	stream.Printf("FrameStack: %zupcs\n", GetFrameStack().v.size());
 	stream.Printf("PUnitCur: %s\n", GetPUnitCur()? GetPUnitCur()->ToString().c_str() : "null");
 	stream.Printf("contFlag=%s, resumeFlag=%s, event=%s\n",
 				  GetContFlag()? "true" : "false", GetResumeFlag()? "true" : "false",
@@ -92,7 +92,7 @@ void Processor::Print() const
 Processor::ExceptionInfo::ExceptionInfo(const Processor& processor, const PUnit* pPUnitCatch) :
 	_sizePUnitStack(processor.GetPUnitStack().size()),
 	_sizeValueStack(processor.GetValueStack().size()),
-	_sizeFrameStack(processor.GetFrameStack().size()),
+	_sizeFrameStack(processor.GetFrameStack().v.size()),
 	_pPUnitCatch(pPUnitCatch)
 {}
 

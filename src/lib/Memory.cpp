@@ -10,9 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Memory::MakeId() const
 {
-	String str;
-	str.Format("%p", _buff);
-	return str;
+	return String().Format("%p", _buff);
 }
 
 //------------------------------------------------------------------------------
@@ -25,8 +23,8 @@ MemoryOwner::~MemoryOwner()
 
 void MemoryOwner::Clear()
 {
-	for (Memory* pMemory : *this) Memory::Delete(pMemory);
-	clear();
+	for (Memory* pMemory : v) Memory::Delete(pMemory);
+	v.clear();
 }
 
 #if defined(GURAX_ON_MSWIN)

@@ -13,8 +13,8 @@ const DottedSymbol DottedSymbol::Empty;
 // Append symbols from a list of Exprs.
 bool DottedSymbol::AppendFromExprList(const ExprList& exprList)
 {
-	_symbolList.reserve(exprList.size());
-	for (const Expr* pExpr : exprList) {
+	_symbolList.reserve(exprList.v.size());
+	for (const Expr* pExpr : exprList.v) {
 		if (!pExpr->IsType<Expr_Identifier>()) return false;
 		Append(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
 	}

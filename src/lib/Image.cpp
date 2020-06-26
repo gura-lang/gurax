@@ -711,8 +711,8 @@ String Image::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void ImageOwner::Clear()
 {
-	for (Image* pImage : *this) Image::Delete(pImage);
-	clear();
+	for (Image* pImage : v) Image::Delete(pImage);
+	v.clear();
 }
 
 }

@@ -612,7 +612,7 @@ void PUnit_GenIterator_for<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
 	for (size_t i = 0; i < GetDeclArgOwner().v.size(); i++) {
 		RefPtr<Value> pValue(processor.PopValue());
-		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
+		pIteratorOwner->v.push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
 	RefPtr<Iterator> pIterator(
 		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),

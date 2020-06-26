@@ -295,8 +295,8 @@ String Iterator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void IteratorOwner::Clear()
 {
-	for (Iterator* pIterator : *this) Iterator::Delete(pIterator);
-	clear();
+	for (Iterator* pIterator : v) Iterator::Delete(pIterator);
+	v.clear();
 }
 
 //------------------------------------------------------------------------------

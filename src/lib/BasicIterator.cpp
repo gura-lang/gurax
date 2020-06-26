@@ -246,8 +246,8 @@ Value* Iterator_for::DoNextValue()
 	GetProcessor().PushFrame(GetFrame().Reference());
 	while (_contFlag) {
 		auto ppDeclArg = GetDeclArgOwner().v.begin();
-		auto ppIterator = GetIteratorOwner().rbegin();
-		for ( ; ppDeclArg != GetDeclArgOwner().v.end() && ppIterator != GetIteratorOwner().rend();
+		auto ppIterator = GetIteratorOwner().v.rbegin();
+		for ( ; ppDeclArg != GetDeclArgOwner().v.end() && ppIterator != GetIteratorOwner().v.rend();
 			  ppDeclArg++, ppIterator++) {
 			DeclArg& declArg = **ppDeclArg;
 			Iterator& iterator = **ppIterator;

@@ -534,9 +534,10 @@ template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGBA>(const UInt8*
 //------------------------------------------------------------------------------
 // ImageList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ImageList : public std::vector<Image*> {
+class GURAX_DLLDECLARE ImageList {
 public:
-	using std::vector<Image*>::vector;
+	using V = std::vector<Image*>;
+	V v;
 };
 
 //------------------------------------------------------------------------------
