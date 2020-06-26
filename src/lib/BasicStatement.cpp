@@ -275,11 +275,11 @@ Gurax_ImplementStatement(try_)
 	for (Expr_Caller* pExprCatch : exprsCatch) {
 		const DeclArgOwner& declArgsOfBlock =
 				pExprCatch->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-		if (declArgsOfBlock.size() > 1) {
+		if (declArgsOfBlock.v.size() > 1) {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
 			goto errorDone;
 		}
-		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
+		const DeclArg* pDeclArg = declArgsOfBlock.v.empty()? nullptr : declArgsOfBlock.v.front();
 		composer.Add_Value(Value::nil(), exprCaller);							// [nil]
 		Expr* pExprParam = pExprCatch->GetExprParamFirst();
 		for ( ; pExprParam; pExprParam = pExprParam->GetExprNext()) {
@@ -307,11 +307,11 @@ Gurax_ImplementStatement(try_)
 	if (pExprCatchAny) {
 		const DeclArgOwner& declArgsOfBlock =
 				pExprCatchAny->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-		if (declArgsOfBlock.size() > 1) {
+		if (declArgsOfBlock.v.size() > 1) {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
 			goto errorDone;
 		}
-		const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
+		const DeclArg* pDeclArg = declArgsOfBlock.v.empty()? nullptr : declArgsOfBlock.v.front();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatchAny(PUnit::BranchMode::Nil, *pExprCatchAny);	// [Error] or [nil]
 		if (pDeclArg) {
@@ -428,11 +428,11 @@ Gurax_ImplementStatement(for_)
 		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExprEx->GetExprLeft()));
 		if (!pDeclArg) return;
-		pDeclArgOwner->push_back(pDeclArg.release());
+		pDeclArgOwner->v.push_back(pDeclArg.release());
 		pExprEx->GetExprRight().ComposeOrNil(composer);							// [Any]
 		composer.Add_GenIterator(exprCaller);									// [Iterator]
 	}
-	size_t nIterators = pDeclArgOwner->size();
+	size_t nIterators = pDeclArgOwner->v.size();
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
@@ -448,7 +448,7 @@ Gurax_ImplementStatement(for_)
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
 		bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 		bool createListFlag = listFlag || xlistFlag;
-		if (declArgsOfBlock.empty()) {
+		if (declArgsOfBlock.v.empty()) {
 			composer.Add_PushFrame<Frame_Block>(exprCaller);
 			if (createListFlag) {
 				composer.Add_CreateList(32, exprCaller);						// [Iterator1..n List=[]]
@@ -484,8 +484,8 @@ Gurax_ImplementStatement(for_)
 				composer.Add_RemoveValues(1, nIterators, exprCaller);			// [Last]
 			}
 			composer.Add_PopFrame(exprCaller);
-		} else if (declArgsOfBlock.size() == 1) {
-			DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		} else if (declArgsOfBlock.v.size() == 1) {
+			auto ppDeclArg = declArgsOfBlock.v.begin();
 			composer.Add_PushFrame<Frame_Block>(exprCaller);
 			composer.Add_GenIterator_Counter(exprCaller);						// [Iterator1..n Iterator]
 			if (createListFlag) {
@@ -576,7 +576,7 @@ Gurax_ImplementStatement(while_)
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
 		bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 		bool createListFlag = listFlag || xlistFlag;
-		if (declArgsOfBlock.empty()) {
+		if (declArgsOfBlock.v.empty()) {
 			if (createListFlag) {
 				composer.Add_CreateList(32, exprCaller);						// [List=[]]
 				PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
@@ -612,8 +612,8 @@ Gurax_ImplementStatement(while_)
 				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				composer.Add_NoOperation(exprCaller);
 			}
-		} else if (declArgsOfBlock.size() == 1) {
-			DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		} else if (declArgsOfBlock.v.size() == 1) {
+			auto ppDeclArg = declArgsOfBlock.v.begin();
 			composer.Add_PushFrame<Frame_Block>(exprCaller);
 			composer.Add_GenIterator_Counter(exprCaller);						// [Iterator]
 			if (createListFlag) {
@@ -702,7 +702,7 @@ Gurax_ImplementStatement(repeat)
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
 		bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 		bool createListFlag = listFlag || xlistFlag;
-		if (declArgsOfBlock.empty()) {
+		if (declArgsOfBlock.v.empty()) {
 			if (pExprParam) {
 				pExprParam->ComposeOrNil(composer);								// [Any]
 				composer.Add_Cast(VTYPE_Number, exprCaller);					// [Number]
@@ -745,8 +745,8 @@ Gurax_ImplementStatement(repeat)
 				pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				composer.Add_RemoveValue(1, exprCaller);						// [Last]
 			}
-		} else if (declArgsOfBlock.size() == 1) {
-			DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		} else if (declArgsOfBlock.v.size() == 1) {
+			auto ppDeclArg = declArgsOfBlock.v.begin();
 			composer.Add_PushFrame<Frame_Block>(exprCaller);
 			if (pExprParam) {
 				pExprParam->ComposeOrNil(composer);								// [Any]

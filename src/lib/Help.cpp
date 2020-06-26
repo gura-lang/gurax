@@ -87,7 +87,7 @@ void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 		return;
 	}
 	String str;
-	for (Error* pError : Error::GetErrorOwner()) {
+	for (Error* pError : Error::GetErrorOwner().v) {
 		str += pError->MakeMessage();
 		str += "\n";
 	}

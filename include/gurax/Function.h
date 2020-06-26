@@ -198,7 +198,7 @@ public:
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		GetDeclCallable().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
+		GetDeclCallable().GetDeclArgOwner().v.push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
 	}
 	void DeclareArg(const char* name, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,

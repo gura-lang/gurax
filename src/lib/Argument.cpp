@@ -15,12 +15,12 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_mapMode(MapMode::None)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
-	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
-	if (ppDeclArg != declArgOwner.end()) {
+	DeclArgOwner::V::const_iterator ppDeclArg = declArgOwner.v.begin();
+	if (ppDeclArg != declArgOwner.v.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
 		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
 		ArgSlot* pArgSlotLast = _pArgSlotFirst.get();
-		while (ppDeclArg != declArgOwner.end()) {
+		while (ppDeclArg != declArgOwner.v.end()) {
 			DeclArg* pDeclArg = *ppDeclArg++;
 			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference());
 			pArgSlotLast->SetNext(pArgSlot);

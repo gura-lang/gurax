@@ -211,7 +211,7 @@ const DeclArg::Occur DeclArg::Occur::OnceOrMore	("+",	ArgSlot_OnceOrMore::factor
 bool DeclArgList::IsValidArgNum(size_t nArgs) const
 {
 	size_t nMin = 0;
-	for (const DeclArg* pDeclArg : *this) {
+	for (const DeclArg* pDeclArg : v) {
 		if (pDeclArg->IsOccurOnce() || pDeclArg->IsOccurOnceOrMore()) {
 			nMin++;
 		} else {
@@ -219,17 +219,17 @@ bool DeclArgList::IsValidArgNum(size_t nArgs) const
 		}
 	}
 	if (nArgs < nMin) return false;
-	if (!empty()) {
-		const DeclArg* pDeclArg = back();
+	if (!v.empty()) {
+		const DeclArg* pDeclArg = v.back();
 		if (!(pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore() || 
-			  nArgs <= size())) return false;
+			  nArgs <= v.size())) return false;
 	}
 	return true;
 }
 
 DeclArg* DeclArgList::FindBySymbol(const Symbol* pSymbol) const
 {
-	for (DeclArg* pDeclArg : *this) {
+	for (DeclArg* pDeclArg : v) {
 		if (pDeclArg->GetSymbol()->IsIdentical(pSymbol)) return pDeclArg;
 	}
 	return nullptr;
@@ -238,9 +238,9 @@ DeclArg* DeclArgList::FindBySymbol(const Symbol* pSymbol) const
 String DeclArgList::ToString(const StringStyle& ss) const
 {
 	String str;
-	for (auto ppDeclArg = begin(); ppDeclArg != end(); ppDeclArg++) {
+	for (auto ppDeclArg = v.begin(); ppDeclArg != v.end(); ppDeclArg++) {
 		const DeclArg* pDeclArg = *ppDeclArg;
-		if (ppDeclArg != begin()) str += ss.GetComma();
+		if (ppDeclArg != v.begin()) str += ss.GetComma();
 		str += pDeclArg->ToString(ss);
 	}
 	return str;

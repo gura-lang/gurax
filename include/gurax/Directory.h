@@ -41,10 +41,13 @@ public:
 	};
 public:
 	class Core;
-	class GURAX_DLLDECLARE CoreList : public std::vector<Core*> {
+	class GURAX_DLLDECLARE CoreList {
+	public:
+		using V = std::vector<Core*>;
+		V v;
 	public:
 		Core* FindByName(const char* name) const;
-		iterator FindIteratorByName(const char* name);
+		V::iterator FindIteratorByName(const char* name);
 	};
 	class GURAX_DLLDECLARE CoreOwner : public CoreList, public Referable {
 	public:

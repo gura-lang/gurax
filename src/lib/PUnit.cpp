@@ -610,7 +610,7 @@ template<bool discardValueFlag>
 void PUnit_GenIterator_for<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
-	for (size_t i = 0; i < GetDeclArgOwner().size(); i++) {
+	for (size_t i = 0; i < GetDeclArgOwner().v.size(); i++) {
 		RefPtr<Value> pValue(processor.PopValue());
 		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
@@ -772,8 +772,8 @@ template<bool discardValueFlag>
 void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
-	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
-	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
+	size_t offset = GetOffset() + GetDeclArgOwner().v.size() - 1;
+	for (DeclArg* pDeclArg : GetDeclArgOwner().v) {
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (!pValueElem) {
@@ -1002,7 +1002,7 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
 		flags &= ~(PropSlot::Flag::Nil | PropSlot::Flag::OfClass | PropSlot::Flag::OfInstance |
 				   PropSlot::Flag::Public | PropSlot::Flag::Readable | PropSlot::Flag::Writable);
-		pDeclCallable->GetDeclArgOwner().push_back(
+		pDeclCallable->GetDeclArgOwner().v.push_back(
 			new DeclArg(pPropSlot->GetSymbol(), pPropSlot->GetVType(), occur, flags, nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(

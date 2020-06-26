@@ -106,19 +106,19 @@ String Directory::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Directory::Core* Directory::CoreList::FindByName(const char* name) const
 {
-	for (Core* pCore : *this) {
+	for (Core* pCore : v) {
 		if (pCore->DoesMatch(name)) return pCore;
 	}
 	return nullptr;
 }
 
-Directory::CoreList::iterator Directory::CoreList::FindIteratorByName(const char* name)
+Directory::CoreList::V::iterator Directory::CoreList::FindIteratorByName(const char* name)
 {
-	for (auto ppCore = begin(); ppCore != end(); ppCore++) {
+	for (auto ppCore = v.begin(); ppCore != v.end(); ppCore++) {
 		Core* pCore = *ppCore;
 		if (pCore->DoesMatch(name)) return ppCore;
 	}
-	return end();
+	return v.end();
 }
 
 //------------------------------------------------------------------------------
@@ -128,8 +128,8 @@ RefPtr<Directory::CoreOwner> Directory::CoreOwner::Empty;
 
 void Directory::CoreOwner::Clear()
 {
-	for (Core* pCore : *this) Core::Delete(pCore);
-	clear();
+	for (Core* pCore : v) Core::Delete(pCore);
+	v.clear();
 }
 
 //------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
 		if (!pCore) {
 			Core* pCoreNew = new Core(Type::Folder, field, GetSep(), GetCaseFlag(), new CoreOwner());
-			pCoreParent->GetCoreOwner().push_back(pCoreNew);
+			pCoreParent->GetCoreOwner().v.push_back(pCoreNew);
 			pCoreParent = pCoreNew;
 		} else {
 			pCoreParent = pCore;
@@ -162,8 +162,8 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 	pCoreChild->SetName(field);
 	CoreOwner& factoryOwner = pCoreParent->GetCoreOwner();
 	auto ppCoreFound = factoryOwner.FindIteratorByName(field.c_str());
-	if (ppCoreFound == factoryOwner.end()) {
-		factoryOwner.push_back(pCoreChild.release());
+	if (ppCoreFound == factoryOwner.v.end()) {
+		factoryOwner.v.push_back(pCoreChild.release());
 	} else {
 		pCoreChild->SetCoreOwner((*ppCoreFound)->GetCoreOwner().Reference());
 		Core::Delete(*ppCoreFound);
@@ -176,7 +176,7 @@ void Directory::Core::Print(Stream& stream, int indentLevel) const
 {
 	stream.Printf("%*s%s%s\n", indentLevel * 2, "", GetName(),
 				  (_type == Type::Folder)? "/" : (_type == Type::Boundary)? "%" : "");
-	for (const Core* pCore : GetCoreOwner()) {
+	for (const Core* pCore : GetCoreOwner().v) {
 		pCore->Print(stream, indentLevel + 1);
 	}
 }

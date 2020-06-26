@@ -35,7 +35,10 @@ public:
 		const PUnit* GetPUnitOfFinally() const { return _pPUnitOfFinally; }
 		bool IsWithinFinally() const { return _withinFinallyFlag; }
 	};
-	class GURAX_DLLDECLARE TryInfoTbl : public std::vector<TryInfo*> {
+	class GURAX_DLLDECLARE TryInfoTbl {
+	public:
+		using V = std::vector<TryInfo*>;
+		V v;
 	};
 	class GURAX_DLLDECLARE TryInfoOwner : public TryInfoTbl {
 	public:
@@ -69,7 +72,10 @@ public:
 		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
 		const PUnit* GetPUnitOfBreak() const { return _pPUnitOfBreak; }
 	};
-	class GURAX_DLLDECLARE RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
+	class GURAX_DLLDECLARE RepeaterInfoTbl {
+	public:
+		using V = std::vector<RepeaterInfo*>;
+		V v;
 	};
 	class GURAX_DLLDECLARE RepeaterInfoOwner : public RepeaterInfoTbl {
 	public:
@@ -104,27 +110,27 @@ public:
 	void SetFactory(PUnitFactory* pPUnitFactory);
 	void Flush() { _Flush(false); }
 	void FlushDiscard() { _Flush(true); }
-	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
-	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
+	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.v.empty(); }
+	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.v.back(); }
 	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, const PUnit* pPUnitOfBreak) {
-		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak));
+		_repeaterInfoStack.v.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak));
 	}
 	void EndRepeaterBlock() {
-		_repeaterInfoStack.pop_back();
+		_repeaterInfoStack.v.pop_back();
 	}
-	bool HasValidTryInfo() const { return !_tryInfoStack.empty(); }
-	const TryInfo& GetTryInfoCur() const { return *_tryInfoStack.back(); }
+	bool HasValidTryInfo() const { return !_tryInfoStack.v.empty(); }
+	const TryInfo& GetTryInfoCur() const { return *_tryInfoStack.v.back(); }
 	void BeginTryBlock(const PUnit* pPUnitOfFinally) {
-		_tryInfoStack.push_back(new TryInfo(pPUnitOfFinally, false));
+		_tryInfoStack.v.push_back(new TryInfo(pPUnitOfFinally, false));
 	}
 	void EndTryBlock() {
-		_tryInfoStack.pop_back();
+		_tryInfoStack.v.pop_back();
 	}
 	void BeginFinallyBlock() {
-		_tryInfoStack.push_back(new TryInfo(nullptr, true));
+		_tryInfoStack.v.push_back(new TryInfo(nullptr, true));
 	}
 	void EndFinallyBlock() {
-		_tryInfoStack.pop_back();
+		_tryInfoStack.v.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void ComposeAsSequence(Expr& expr);

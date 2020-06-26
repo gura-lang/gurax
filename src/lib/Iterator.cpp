@@ -91,7 +91,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 {
 	RefPtr<Value> pValueRtn(Value::nil());
 	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
-	if (declArgOwner.size() > 2) {
+	if (declArgOwner.v.size() > 2) {
 		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
 		return Value::nil();
 	}
@@ -101,7 +101,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 									   processor.Reference(), exprOfBlock.Reference(), Reference(), skipNilFlag));
 		pValueRtn.reset(new Value_Iterator(pIterator.release()));
 	} else {
-		size_t nArgs = declArgOwner.size();
+		size_t nArgs = declArgOwner.v.size();
 		bool contFlag = true;
 		size_t idx = 0;
 		Frame& frame = processor.PushFrame<Frame_Block>();
@@ -111,10 +111,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
+					if (!frame.AssignWithCast(*declArgOwner.v[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
+						if (!frame.AssignWithCast(*declArgOwner.v[1], *pValueIdx)) break;
 					}
 				}
 				idx++;
@@ -138,10 +138,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
+					if (!frame.AssignWithCast(*declArgOwner.v[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
+						if (!frame.AssignWithCast(*declArgOwner.v[1], *pValueIdx)) break;
 					}
 				}
 				idx++;

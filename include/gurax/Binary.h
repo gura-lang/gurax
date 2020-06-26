@@ -93,7 +93,10 @@ inline String operator+(const String& v1, const String& v2) {
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE BinaryList : public std::vector<Binary> {
+class GURAX_DLLDECLARE BinaryList {
+public:
+	using V = std::vector<Binary>;
+	V v;
 };
 
 //------------------------------------------------------------------------------

@@ -19,7 +19,7 @@ CommandLine::~CommandLine()
 
 CommandLine& CommandLine::AddOpt(Opt* pOpt)
 {
-	_optOwner.push_back(pOpt);
+	_optOwner.v.push_back(pOpt);
 	_optMapByKeyLong[pOpt->GetKeyLong()] = pOpt;
 	if (pOpt->GetKeyShort()) _optMapByKeyShort[pOpt->GetKeyShort()] = pOpt;
 	return *this;

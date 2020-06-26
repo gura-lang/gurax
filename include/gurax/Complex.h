@@ -46,10 +46,10 @@ public:
 //------------------------------------------------------------------------------
 // ComplexList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ComplexList : public std::vector<Complex>
-{
+class GURAX_DLLDECLARE ComplexList {
 public:
-	using std::vector<Complex>::vector;
+	using V = std::vector<Complex>;
+	V v;
 };
 
 }
