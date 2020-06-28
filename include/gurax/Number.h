@@ -62,6 +62,9 @@ public:
 	NumList(size_t n, T_Num num) : v(n, num) {}
 	NumList(std::initializer_list<T_Num> initList) : v(initList) {}
 public:
+	const T_Num* data() const { return v.data(); }
+	size_t size() const { return v.size(); }
+public:
 	NumList& Sort() { std::sort(v.begin(), v.end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);
 	NumList& Unique() { v.erase(std::unique(v.begin(), v.end()), v.end()); return *this; }
