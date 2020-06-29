@@ -350,19 +350,24 @@ class GURAX_DLLDECLARE StringList {
 public:
 	using V = std::vector<String>;
 	V v;
+	using pointer = V::pointer;
+	using const_pointer = V::const_pointer;
+	using reference = V::reference;
+	using const_reference = V::const_reference;
+	using value_type = V::value_type;
 	using iterator = V::iterator;
 	using const_iterator = V::const_iterator;
 	using reverse_iterator = V::reverse_iterator;
 	using const_reverse_iterator = V::const_reverse_iterator;
-	V::reference operator[](size_t pos) { return v[pos]; }
+	reference operator[](size_t pos) { return v[pos]; }
 	bool empty() const { return v.empty(); }
 	size_t size() const { return v.size(); }
 	void clear() { v.clear(); }
 	void reserve(size_t size) { v.reserve(size); }
-	V::const_reference front() const { return v.front(); }
-	V::const_reference back() const { return v.back(); }
-	V::reference front() { return v.front(); }
-	V::reference back() { return v.back(); }
+	const_reference front() const { return v.front(); }
+	const_reference back() const { return v.back(); }
+	reference front() { return v.front(); }
+	reference back() { return v.back(); }
 	iterator begin() { return v.begin(); }
 	iterator end() { return v.end(); }
 	const_iterator begin() const { return v.begin(); }
