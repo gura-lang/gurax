@@ -52,7 +52,11 @@ glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
 
 glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
 
-glfwSetWindowIcon(window:GLFWwindow_p, count:int, images:const_GLFWimage_p):bool
+glfwSetWindowIcon(window:GLFWwindow_p, count:int, images:const_GLFWimage_p):void = R'''
+if (glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data())) return Value::nil();
+IssueError();
+return Value::nil();
+'''
 
 glfwGetWindowPos(window:GLFWwindow_p):bool = R'''
 int xpos, ypos;
