@@ -39,8 +39,8 @@ String Help::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Help* HelpList::Lookup(const Symbol* pLangCode) const
 {
-	if (!pLangCode) return v.empty()? nullptr : v.front();
-	for (const Help* pHelp : v) {
+	if (!pLangCode) return empty()? nullptr : front();
+	for (const Help* pHelp : *this) {
 		if (pHelp->GetLangCode()->IsIdentical(pLangCode)) return pHelp;
 	}
 	return nullptr;
@@ -51,8 +51,8 @@ const Help* HelpList::Lookup(const Symbol* pLangCode) const
 //------------------------------------------------------------------------------
 void HelpOwner::Clear()
 {
-	for (Help* pHelp : v) Help::Delete(pHelp);
-	v.clear();
+	for (Help* pHelp : *this) Help::Delete(pHelp);
+	clear();
 }
 
 //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void HelpOwner::Clear()
 void HelpHolder::AddHelp(Help* pHelp)
 {
 	pHelp->SetHelpHolder(GetWeakPtr());
-	for (auto ppHelpIter = _helpOwner.v.begin(); ppHelpIter != _helpOwner.v.end(); ppHelpIter++) {
+	for (auto ppHelpIter = _helpOwner.begin(); ppHelpIter != _helpOwner.end(); ppHelpIter++) {
 		Help* pHelpIter = *ppHelpIter;
 		if (pHelpIter->GetLangCode()->IsIdentical(pHelp->GetLangCode())) {
 			Help::Delete(pHelpIter);
@@ -69,7 +69,7 @@ void HelpHolder::AddHelp(Help* pHelp)
 			return;
  		}
 	}
-	_helpOwner.v.push_back(pHelp);
+	_helpOwner.push_back(pHelp);
 }
 
 void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
@@ -87,7 +87,7 @@ void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 		return;
 	}
 	String str;
-	for (Error* pError : Error::GetErrorOwner().v) {
+	for (Error* pError : Error::GetErrorOwner()) {
 		str += pError->MakeMessage();
 		str += "\n";
 	}

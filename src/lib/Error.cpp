@@ -103,7 +103,7 @@ void Error::Clear()
 
 void Error::Print(Stream& stream)
 {
-	for (Error* pError : GetErrorOwner().v) {
+	for (Error* pError : GetErrorOwner()) {
 		stream.Printf("%s\n", pError->MakeMessage().c_str());
 	}
 }
@@ -145,7 +145,7 @@ void Error::Issue_UnimplementedMethod()
 //------------------------------------------------------------------------------
 void ErrorList::SetExpr(const Expr& expr)
 {
-	for (Error* pError : v) {
+	for (Error* pError : *this) {
 		if (pError->GetExpr().IsType<Expr_Empty>()) pError->SetExpr(expr);
 	}
 }
@@ -155,8 +155,8 @@ void ErrorList::SetExpr(const Expr& expr)
 //------------------------------------------------------------------------------
 void ErrorOwner::Clear()
 {
-	for (Error* pError : v) Error::Delete(pError);
-	v.clear();
+	for (Error* pError : *this) Error::Delete(pError);
+	clear();
 }
 
 }

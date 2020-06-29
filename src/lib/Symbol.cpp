@@ -81,7 +81,7 @@ const SymbolList SymbolList::Empty;
 
 bool SymbolList::AddFromExprList(const ExprList& exprList)
 {
-	for (const Expr* pExpr : exprList.v) {
+	for (const Expr* pExpr : exprList) {
 		if (!pExpr->IsType<Expr_Identifier>()) {
 			return false;
 		}

@@ -61,10 +61,7 @@ public:
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ErrorList {
-public:
-	using V = std::vector<Error*>;
-	V v;
+class GURAX_DLLDECLARE ErrorList : public ListBase<Error*> {
 public:
 	void SetExpr(const Expr& expr);
 };
@@ -127,7 +124,7 @@ public:
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	const char* GetText() const { return _text.c_str(); }
 	static const Error* GetLastError() {
-		return _pErrorOwnerGlobal->v.empty()? nullptr : _pErrorOwnerGlobal->v.back();
+		return _pErrorOwnerGlobal->empty()? nullptr : _pErrorOwnerGlobal->back();
 	}
 	static ErrorOwner& GetErrorOwner() { return *_pErrorOwnerGlobal; }
 	static bool IsIssued() { return _errorIssuedFlag; }
@@ -138,7 +135,7 @@ public:
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
 		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
-		_pErrorOwnerGlobal->v.push_back(new Error(errorType, String().Format(format, args...)));
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
@@ -146,7 +143,7 @@ public:
 	static void IssueIfFirst(const ErrorType& errorType, const char* const format, const Args&... args) {
 		if (_errorIssuedFlag || _pErrorOwnerGlobal->GetSuppressFlag()) return;
 		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
-		_pErrorOwnerGlobal->v.push_back(new Error(errorType, String().Format(format, args...)));
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
@@ -155,7 +152,7 @@ public:
 						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
 		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
-		_pErrorOwnerGlobal->v.push_back(
+		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
@@ -164,7 +161,7 @@ public:
 	static void IssueWith(const ErrorType& errorType, const Expr& expr, const char* format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
 		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
-		_pErrorOwnerGlobal->v.push_back(
+		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, expr.Reference(), String().Format(format, args...)));
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;

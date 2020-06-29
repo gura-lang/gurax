@@ -207,7 +207,7 @@ const ExprList ExprList::Empty;
 
 bool ExprList::Traverse(Expr::Visitor& visitor)
 {
-	for (Expr* pExpr : v) {
+	for (Expr* pExpr : *this) {
 		if (!pExpr->Traverse(visitor)) return false;
 	}
 	return true;
@@ -215,12 +215,12 @@ bool ExprList::Traverse(Expr::Visitor& visitor)
 
 void ExprList::Compose(Composer& composer)
 {
-	auto ppExpr = v.begin();
-	if (ppExpr != v.end()) {
+	auto ppExpr = begin();
+	if (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
 		pExpr->Compose(composer);
 	}
-	while (ppExpr != v.end()) {
+	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
 		composer.FlushDiscard();
 		pExpr->Compose(composer);
@@ -231,7 +231,7 @@ void ExprList::Compose(Composer& composer)
 
 void ExprList::SetExprParent(const Expr* pExprParent)
 {
-	for (Expr* pExpr : v) pExpr->SetExprParent(pExprParent);
+	for (Expr* pExpr : *this) pExpr->SetExprParent(pExprParent);
 }
 
 //------------------------------------------------------------------------------
@@ -1347,17 +1347,17 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 		Expr* pExpr = &exprAssigned;
 		while (pExpr->IsBinaryOp(OpType::ModMod)) {
 			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			exprs.v.push_back(&pExprEx->GetExprLeft());
+			exprs.push_back(&pExprEx->GetExprLeft());
 			pExpr = &pExprEx->GetExprRight();
 		}
-		exprs.v.push_back(pExpr);
+		exprs.push_back(pExpr);
 	} while (0);
 	Expr* pExprBody = nullptr;
 	RefPtr<HelpHolder> pHelpHolder(new HelpHolder());
-	if (exprs.v.size() == 1) {
-		pExprBody = exprs.v.front();
+	if (exprs.size() == 1) {
+		pExprBody = exprs.front();
 	} else {
-		for (Expr* pExpr : exprs.v) {
+		for (Expr* pExpr : exprs) {
 			if (pExpr->IsType<Expr_String>()) {
 				Expr_String& exprEx = dynamic_cast<Expr_String&>(*pExpr);
 				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
