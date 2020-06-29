@@ -160,13 +160,13 @@ Iterator_PropSlot::Iterator_PropSlot(PropSlotOwner* pPropSlotOwner) :
 
 size_t Iterator_PropSlot::GetLength() const
 {
-	return GetPropSlotOwner().size();
+	return GetPropSlotOwner().v.size();
 }
 
 Value* Iterator_PropSlot::DoNextValue()
 {
-	if (_idx >= GetPropSlotOwner().size()) return nullptr;
-	const PropSlot* pPropSlot = GetPropSlotOwner()[_idx++];
+	if (_idx >= GetPropSlotOwner().v.size()) return nullptr;
+	const PropSlot* pPropSlot = GetPropSlotOwner().v[_idx++];
 	return new Value_PropSlot(pPropSlot->Reference());
 }
 

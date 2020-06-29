@@ -11,7 +11,7 @@ namespace Gurax {
 void PathMgr::Assign(PathMgr* pPathMgr)
 {
 	PathMgrOwner& pathMgrOwner = Basement::Inst.GetPathMgrOwner();
-	pathMgrOwner.push_back(pPathMgr);
+	pathMgrOwner.v.push_back(pPathMgr);
 }
 
 PathMgr* PathMgr::FindResponsible(const char* pathName)
@@ -67,7 +67,7 @@ String PathMgr::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 PathMgr* PathMgrList::FindResponsible(Directory* pDirectoryParent, const char* pathName) const
 {
-	for (auto ppPathMgr = rbegin(); ppPathMgr != rend(); ppPathMgr++) {
+	for (auto ppPathMgr = v.rbegin(); ppPathMgr != v.rend(); ppPathMgr++) {
 		PathMgr* pPathMgr = *ppPathMgr;
 		if (pPathMgr->IsResponsible(pDirectoryParent, pathName)) return pPathMgr;
 	}
@@ -79,8 +79,8 @@ PathMgr* PathMgrList::FindResponsible(Directory* pDirectoryParent, const char* p
 //------------------------------------------------------------------------------
 void PathMgrOwner::Clear()
 {
-	for (PathMgr* pPathMgr : *this) PathMgr::Delete(pPathMgr);
-	clear();
+	for (PathMgr* pPathMgr : v) PathMgr::Delete(pPathMgr);
+	v.clear();
 }
 
 }

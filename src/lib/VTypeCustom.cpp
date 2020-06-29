@@ -199,7 +199,7 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return Value::nil();
 	ArgPicker args(argument);
-	for (PropSlot* pPropSlot : GetPropSlotOwner()) {
+	for (PropSlot* pPropSlot : GetPropSlotOwner().v) {
 		if (args.IsUndefined()) {
 			args.Next();
 			continue;

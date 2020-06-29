@@ -997,7 +997,7 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 	pPropSlotOwner->SortBySeqId();
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
-	for (PropSlot* pPropSlot : *pPropSlotOwner) {
+	for (PropSlot* pPropSlot : pPropSlotOwner->v) {
 		PropSlot::Flags flags = pPropSlot->GetFlags();
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
 		flags &= ~(PropSlot::Flag::Nil | PropSlot::Flag::OfClass | PropSlot::Flag::OfInstance |

@@ -55,9 +55,10 @@ public:
 //------------------------------------------------------------------------------
 // PathMgrList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PathMgrList : public std::vector<PathMgr*> {
+class GURAX_DLLDECLARE PathMgrList {
 public:
-	using std::vector<PathMgr*>::vector;
+	using V = std::vector<PathMgr*>;
+	V v;
 public:
 	PathMgr* FindResponsible(Directory* pDirectoryParent, const char* pathName) const;
 };

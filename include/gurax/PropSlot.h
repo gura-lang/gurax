@@ -285,9 +285,10 @@ public:
 //------------------------------------------------------------------------------
 // PropSlotList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PropSlotList : public std::vector<PropSlot*> {
+class GURAX_DLLDECLARE PropSlotList {
 public:
-	using std::vector<PropSlot*>::vector;
+	using V = std::vector<PropSlot*>;
+	V v;
 public:
 	PropSlotList& SortBySeqId(SortOrder sortOrder = SortOrder::Ascend);
 	PropSlotList& SortBySymbolName(SortOrder sortOrder = SortOrder::Ascend);

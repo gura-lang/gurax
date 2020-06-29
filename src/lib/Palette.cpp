@@ -630,8 +630,8 @@ String Palette::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PaletteOwner::Clear()
 {
-	for (Palette* pPalette : *this) Palette::Delete(pPalette);
-	clear();
+	for (Palette* pPalette : v) Palette::Delete(pPalette);
+	v.clear();
 }
 
 }
