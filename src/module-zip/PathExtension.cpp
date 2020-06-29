@@ -164,8 +164,8 @@ void DirectoryEx::DoRewindChild()
 Directory* DirectoryEx::DoNextChild()
 {
 	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
-	if (_idxChild >= coreOwner.v.size()) return nullptr;
-	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner.v[_idxChild++]->Reference())));
+	if (_idxChild >= coreOwner.size()) return nullptr;
+	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
 }

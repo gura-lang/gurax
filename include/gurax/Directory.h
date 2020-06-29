@@ -41,10 +41,7 @@ public:
 	};
 public:
 	class Core;
-	class GURAX_DLLDECLARE CoreList {
-	public:
-		using V = std::vector<Core*>;
-		V v;
+	class GURAX_DLLDECLARE CoreList : public ListBase<Core*> {
 	public:
 		Core* FindByName(const char* name) const;
 		V::iterator FindIteratorByName(const char* name);
@@ -163,10 +160,7 @@ public:
 //------------------------------------------------------------------------------
 // DirectoryList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryList {
-public:
-	using V = std::vector<Directory*>;
-	V v;
+class GURAX_DLLDECLARE DirectoryList : public ListBase<Directory*> {
 public:
 	Directory* FindByName(const char* name) const;
 	V::iterator FindIteratorByName(const char* name);

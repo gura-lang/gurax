@@ -106,7 +106,7 @@ String Directory::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Directory::Core* Directory::CoreList::FindByName(const char* name) const
 {
-	for (Core* pCore : v) {
+	for (Core* pCore : *this) {
 		if (pCore->DoesMatch(name)) return pCore;
 	}
 	return nullptr;
@@ -114,11 +114,11 @@ Directory::Core* Directory::CoreList::FindByName(const char* name) const
 
 Directory::CoreList::V::iterator Directory::CoreList::FindIteratorByName(const char* name)
 {
-	for (auto ppCore = v.begin(); ppCore != v.end(); ppCore++) {
+	for (auto ppCore = begin(); ppCore != end(); ppCore++) {
 		Core* pCore = *ppCore;
 		if (pCore->DoesMatch(name)) return ppCore;
 	}
-	return v.end();
+	return end();
 }
 
 //------------------------------------------------------------------------------
@@ -128,8 +128,8 @@ RefPtr<Directory::CoreOwner> Directory::CoreOwner::Empty;
 
 void Directory::CoreOwner::Clear()
 {
-	for (Core* pCore : v) Core::Delete(pCore);
-	v.clear();
+	for (Core* pCore : *this) Core::Delete(pCore);
+	clear();
 }
 
 //------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
 		if (!pCore) {
 			Core* pCoreNew = new Core(Type::Folder, field, GetSep(), GetCaseFlag(), new CoreOwner());
-			pCoreParent->GetCoreOwner().v.push_back(pCoreNew);
+			pCoreParent->GetCoreOwner().push_back(pCoreNew);
 			pCoreParent = pCoreNew;
 		} else {
 			pCoreParent = pCore;
@@ -162,8 +162,8 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 	pCoreChild->SetName(field);
 	CoreOwner& factoryOwner = pCoreParent->GetCoreOwner();
 	auto ppCoreFound = factoryOwner.FindIteratorByName(field.c_str());
-	if (ppCoreFound == factoryOwner.v.end()) {
-		factoryOwner.v.push_back(pCoreChild.release());
+	if (ppCoreFound == factoryOwner.end()) {
+		factoryOwner.push_back(pCoreChild.release());
 	} else {
 		pCoreChild->SetCoreOwner((*ppCoreFound)->GetCoreOwner().Reference());
 		Core::Delete(*ppCoreFound);
@@ -176,7 +176,7 @@ void Directory::Core::Print(Stream& stream, int indentLevel) const
 {
 	stream.Printf("%*s%s%s\n", indentLevel * 2, "", GetName(),
 				  (_type == Type::Folder)? "/" : (_type == Type::Boundary)? "%" : "");
-	for (const Core* pCore : GetCoreOwner().v) {
+	for (const Core* pCore : GetCoreOwner()) {
 		pCore->Print(stream, indentLevel + 1);
 	}
 }
@@ -186,7 +186,7 @@ void Directory::Core::Print(Stream& stream, int indentLevel) const
 //------------------------------------------------------------------------------
 Directory* DirectoryList::FindByName(const char* name) const
 {
-	for (Directory* pDirectory : v) {
+	for (Directory* pDirectory : *this) {
 		if (::strcmp(pDirectory->GetName(), name) == 0) return pDirectory;
 	}
 	return nullptr;
@@ -194,18 +194,18 @@ Directory* DirectoryList::FindByName(const char* name) const
 
 DirectoryList::V::iterator DirectoryList::FindIteratorByName(const char* name)
 {
-	for (auto ppDirectory = v.begin(); ppDirectory != v.end(); ppDirectory++) {
+	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
 	}
-	return v.end();
+	return end();
 }
 
 DirectoryList::V::const_iterator DirectoryList::FindIteratorByName(const char* name) const
 {
-	for (auto ppDirectory = v.begin(); ppDirectory != v.end(); ppDirectory++) {
+	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
 	}
-	return v.end();
+	return end();
 }
 
 //------------------------------------------------------------------------------
@@ -213,8 +213,8 @@ DirectoryList::V::const_iterator DirectoryList::FindIteratorByName(const char* n
 //------------------------------------------------------------------------------
 void DirectoryOwner::Clear()
 {
-	for (Directory* pDirectory : v) Directory::Delete(pDirectory);
-	v.clear();
+	for (Directory* pDirectory : *this) Directory::Delete(pDirectory);
+	clear();
 }
 
 //------------------------------------------------------------------------------
