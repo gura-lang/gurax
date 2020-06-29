@@ -85,15 +85,13 @@ String PropSlot::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 PropSlotList& PropSlotList::SortBySeqId(SortOrder sortOrder)
 {
-	SortCollectionByOrder<PropSlotList::V, PropSlot::LessThan_SeqId, PropSlot::GreaterThan_SeqId>
-		(v, sortOrder);
+	SortByOrder<PropSlot::LessThan_SeqId, PropSlot::GreaterThan_SeqId>(sortOrder);
 	return *this;
 }
 
 PropSlotList& PropSlotList::SortBySymbolName(SortOrder sortOrder)
 {
-	SortCollectionByOrder<PropSlotList::V, PropSlot::LessThan_SymbolName, PropSlot::GreaterThan_SymbolName>
-		(v, sortOrder);
+	SortByOrder<PropSlot::LessThan_SymbolName, PropSlot::GreaterThan_SymbolName>(sortOrder);
 	return *this;
 }
 
@@ -107,8 +105,8 @@ String PropSlotList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PropSlotOwner::Clear()
 {
-	for (PropSlot* pPropSlot : v) PropSlot::Delete(pPropSlot);
-	v.clear();
+	for (PropSlot* pPropSlot : *this) PropSlot::Delete(pPropSlot);
+	clear();
 }
 
 //------------------------------------------------------------------------------
@@ -136,7 +134,7 @@ void PropSlotMap::Assign(PropSlot* pPropSlot)
 PropSlotOwner* PropSlotMap::CreatePropSlotOwner() const
 {
 	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
-	for (auto iter : *this) pPropSlotOwner->v.push_back(iter.second->Reference());
+	for (auto iter : *this) pPropSlotOwner->push_back(iter.second->Reference());
 	return pPropSlotOwner.release();
 }
 

@@ -155,10 +155,7 @@ public:
 //------------------------------------------------------------------------------
 // DeclArgList
 //------------------------------------------------------------------------------
-class DeclArgList {
-public:
-	using V = std::vector<DeclArg*>;
-	V v;
+class DeclArgList : public ListBase<DeclArg*> {
 public:
 	bool IsValidArgNum(size_t nArgs) const;
 	DeclArg* FindBySymbol(const Symbol* pSymbol) const;
@@ -176,8 +173,8 @@ protected:
 	~DeclArgOwner() { Clear(); }
 public:
 	void Clear() {
-		for (DeclArg* pDeclArg : v) DeclArg::Delete(pDeclArg);
-		v.clear();
+		for (DeclArg* pDeclArg : *this) DeclArg::Delete(pDeclArg);
+		clear();
 	}
 };
 

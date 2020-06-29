@@ -494,9 +494,9 @@ bool Value_Complex::Format_g(Formatter& formatter, FormatterFlags& formatterFlag
 ComplexList Value_Complex::GetComplexList(const ValueList& values)
 {
 	ComplexList nums;
-	nums.v.reserve(values.size());
+	nums.reserve(values.size());
 	for (Value* pValue : values) {
-		nums.v.push_back(GetComplex(*pValue));
+		nums.push_back(GetComplex(*pValue));
 	}
 	return nums;
 }

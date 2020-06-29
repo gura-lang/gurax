@@ -103,10 +103,7 @@ public:
 //------------------------------------------------------------------------------
 // IteratorList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE IteratorList {
-public:
-	using V = std::vector<Iterator*>;
-	V v;
+class GURAX_DLLDECLARE IteratorList : public ListBase<Iterator*> {
 };
 
 //------------------------------------------------------------------------------

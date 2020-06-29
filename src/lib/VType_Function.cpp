@@ -47,7 +47,7 @@ Gurax_ImplementFunction(_function_)
 	for (const Symbol* pSymbol : symbolList) {
 		RefPtr<DeclArg> pDeclArg(
 			new DeclArg(pSymbol, VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
-		pDeclCallable->GetDeclArgOwner().v.push_back(pDeclArg.release());
+		pDeclCallable->GetDeclArgOwner().push_back(pDeclArg.release());
 	}
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(

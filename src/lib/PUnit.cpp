@@ -610,9 +610,9 @@ template<bool discardValueFlag>
 void PUnit_GenIterator_for<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
-	for (size_t i = 0; i < GetDeclArgOwner().v.size(); i++) {
+	for (size_t i = 0; i < GetDeclArgOwner().size(); i++) {
 		RefPtr<Value> pValue(processor.PopValue());
-		pIteratorOwner->v.push_back(Value_Iterator::GetIterator(*pValue).Reference());
+		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
 	RefPtr<Iterator> pIterator(
 		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
@@ -772,8 +772,8 @@ template<bool discardValueFlag>
 void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
-	size_t offset = GetOffset() + GetDeclArgOwner().v.size() - 1;
-	for (DeclArg* pDeclArg : GetDeclArgOwner().v) {
+	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
+	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (!pValueElem) {
@@ -997,12 +997,12 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 	pPropSlotOwner->SortBySeqId();
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
-	for (PropSlot* pPropSlot : pPropSlotOwner->v) {
+	for (PropSlot* pPropSlot : *pPropSlotOwner) {
 		PropSlot::Flags flags = pPropSlot->GetFlags();
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
 		flags &= ~(PropSlot::Flag::Nil | PropSlot::Flag::OfClass | PropSlot::Flag::OfInstance |
 				   PropSlot::Flag::Public | PropSlot::Flag::Readable | PropSlot::Flag::Writable);
-		pDeclCallable->GetDeclArgOwner().v.push_back(
+		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropSlot->GetSymbol(), pPropSlot->GetVType(), occur, flags, nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(

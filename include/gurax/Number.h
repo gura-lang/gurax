@@ -52,38 +52,31 @@ public:
 // NumList
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class NumList {
-public:
-	using V = std::vector<T_Num>;
-	V v;
+class NumList : public ListBase<T_Num> {
 public:
 	NumList() {}
-	NumList(size_t n) : v(n) {}
-	NumList(size_t n, T_Num num) : v(n, num) {}
-	NumList(std::initializer_list<T_Num> initList) : v(initList) {}
+	NumList(size_t n) : ListBase(n) {}
+	NumList(size_t n, T_Num num) : ListBase(n, num) {}
+	NumList(std::initializer_list<T_Num> initList) : ListBase(initList) {}
 public:
-	const T_Num* data() const { return v.data(); }
-	size_t size() const { return v.size(); }
-public:
-	NumList& Sort() { std::sort(v.begin(), v.end()); return *this; }
+	NumList& Sort() { std::sort(begin(), end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);
-	NumList& Unique() { v.erase(std::unique(v.begin(), v.end()), v.end()); return *this; }
+	NumList& Unique() { erase(std::unique(begin(), end()), end()); return *this; }
 	NumList& FillSeq(size_t n);
 };
 
 template<typename T_Num>
 NumList<T_Num>& NumList<T_Num>::Sort(SortOrder sortOrder)
 {
-	SortCollectionByOrder<NumList::V, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
-		v, sortOrder);
+	SortByOrder<typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(sortOrder);
 	return *this;
 }
 
 template<typename T_Num>
 NumList<T_Num>& NumList<T_Num>::FillSeq(size_t n)
 {
-	v.reserve(n);
-	for (size_t i = 0; i < n ; i++) v.push_back(static_cast<T_Num>(i));
+	reserve(n);
+	for (size_t i = 0; i < n ; i++) push_back(static_cast<T_Num>(i));
 	return *this;
 }
 

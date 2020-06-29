@@ -105,8 +105,8 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 //------------------------------------------------------------------------------
 void Composer::RepeaterInfoOwner::Clear()
 {
-	for (RepeaterInfo* pRepeaterInfo : v) delete pRepeaterInfo;
-	v.clear();
+	for (RepeaterInfo* pRepeaterInfo : *this) delete pRepeaterInfo;
+	clear();
 }
 
 //------------------------------------------------------------------------------
@@ -114,8 +114,8 @@ void Composer::RepeaterInfoOwner::Clear()
 //------------------------------------------------------------------------------
 void Composer::TryInfoOwner::Clear()
 {
-	for (TryInfo* pTryInfo : v) delete pTryInfo;
-	v.clear();
+	for (TryInfo* pTryInfo : *this) delete pTryInfo;
+	clear();
 }
 
 }

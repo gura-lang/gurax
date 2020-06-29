@@ -12,7 +12,7 @@ const ValueList ValueList::Empty;
 
 ValueList& ValueList::Sort(SortOrder sortOrder)
 {
-	SortCollectionByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
+	SortByOrder<Value::KeyLessThan, Value::KeyGreaterThan>(sortOrder);
 	return *this;
 }
 
@@ -25,7 +25,7 @@ ValueList& ValueList::Sort(Processor& processor, const Function& function)
 
 ValueList& ValueList::StableSort(SortOrder sortOrder)
 {
-	StableSortListByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
+	StableSortByOrder<Value::KeyLessThan, Value::KeyGreaterThan>(sortOrder);
 	return *this;
 }
 

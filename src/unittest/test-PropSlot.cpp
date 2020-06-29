@@ -16,16 +16,16 @@ protected:
 Gurax_TesterEntry(PropSlot)
 {
 	auto PrintList = [](const PropSlotList& propSlotList) {
-		for (PropSlot* pPropSlot : propSlotList.v) {
+		for (PropSlot* pPropSlot : propSlotList) {
 			::printf("%s\n", pPropSlot->GetSymbol()->GetName());
 		}
 	};
 	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
-	pPropSlotOwner->v.push_back(new PropSlotTmp(Symbol::Add("grape")));
-	pPropSlotOwner->v.push_back(new PropSlotTmp(Symbol::Add("orange")));
-	pPropSlotOwner->v.push_back(new PropSlotTmp(Symbol::Add("apple")));
-	pPropSlotOwner->v.push_back(new PropSlotTmp(Symbol::Add("banana")));
-	pPropSlotOwner->v.push_back(new PropSlotTmp(Symbol::Add("pineapple")));
+	pPropSlotOwner->push_back(new PropSlotTmp(Symbol::Add("grape")));
+	pPropSlotOwner->push_back(new PropSlotTmp(Symbol::Add("orange")));
+	pPropSlotOwner->push_back(new PropSlotTmp(Symbol::Add("apple")));
+	pPropSlotOwner->push_back(new PropSlotTmp(Symbol::Add("banana")));
+	pPropSlotOwner->push_back(new PropSlotTmp(Symbol::Add("pineapple")));
 	PrintList(*pPropSlotOwner);
 	pPropSlotOwner->SortBySymbolName();
 	::printf("----\n");

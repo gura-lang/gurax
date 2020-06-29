@@ -37,7 +37,7 @@ void DeclCallable::Bootup()
 	do {
 		Wildcard.reset(new DeclCallable());
 		DeclCallable& dc = *Wildcard;
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(x), VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr));
 		dc.GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
 		dc.SetFlags(Flag::AnyAttr);
@@ -46,47 +46,47 @@ void DeclCallable::Bootup()
 		Unary.reset(new DeclCallable());
 		DeclCallable& dc = *Unary;
 		dc.SetFlags(DeclCallable::Flag::Map);
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		UnaryPost.reset(new DeclCallable());
 		DeclCallable& dc = *UnaryPost;
 		dc.SetFlags(DeclCallable::Flag::Map);
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		Binary.reset(new DeclCallable());
 		DeclCallable& dc = *Binary;
 		dc.SetFlags(DeclCallable::Flag::Map);
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		Binary_NoMap.reset(new DeclCallable());
 		DeclCallable& dc = *Binary_NoMap;
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		MathUnary.reset(new DeclCallable());
 		DeclCallable& dc = *MathUnary;
 		dc.SetFlags(DeclCallable::Flag::Map);
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 	do {
 		MathBinary.reset(new DeclCallable());
 		DeclCallable& dc = *MathBinary;
 		dc.SetFlags(DeclCallable::Flag::Map);
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(a), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
-		dc.GetDeclArgOwner().v.push_back(
+		dc.GetDeclArgOwner().push_back(
 			new DeclArg(Gurax_Symbol(b), VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
 	} while (0);
 }
@@ -99,12 +99,12 @@ DeclCallable::DeclCallable(Flags flags) :
 
 bool DeclCallable::IsNaked() const
 {
-	return GetDeclArgOwner().v.empty();
+	return GetDeclArgOwner().empty();
 }
 
 bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
-	GetDeclArgOwner().v.reserve(exprLinkParam.CountSequence());
+	GetDeclArgOwner().reserve(exprLinkParam.CountSequence());
 	for (const Expr* pExpr = exprLinkParam.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
@@ -170,7 +170,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr,
 			return false;
 		}
 		if (!DeclArg::CheckFlagConfliction(pDeclArg->GetFlags())) return false;
-		GetDeclArgOwner().v.push_back(pDeclArg.release());
+		GetDeclArgOwner().push_back(pDeclArg.release());
 	}
 	if (attr.IsSet(Gurax_Symbol(void_))) SetVTypeResult(VTYPE_Nil);
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
@@ -287,12 +287,12 @@ String DeclCallable::ToString(const StringStyle& ss) const
 	str += "(";
 	str += GetDeclArgOwner().ToString(ss);
 	if (!GetSymbolOfDict()->IsEmpty()) {
-		if (!GetDeclArgOwner().v.empty()) str += ss.GetComma();
+		if (!GetDeclArgOwner().empty()) str += ss.GetComma();
 		str += GetSymbolOfDict()->GetName();
 		str += "%";
 	}
 	if (!GetSymbolOfAccessor()->IsEmpty()) {
-		if (!GetDeclArgOwner().v.empty() || !GetSymbolOfDict()->IsEmpty()) {
+		if (!GetDeclArgOwner().empty() || !GetSymbolOfDict()->IsEmpty()) {
 			str += ss.GetComma();
 		}
 		str += GetSymbolOfAccessor()->GetName();

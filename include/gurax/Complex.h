@@ -46,10 +46,7 @@ public:
 //------------------------------------------------------------------------------
 // ComplexList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ComplexList {
-public:
-	using V = std::vector<Complex>;
-	V v;
+class GURAX_DLLDECLARE ComplexList : public ListBase<Complex> {
 };
 
 }

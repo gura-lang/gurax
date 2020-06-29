@@ -177,7 +177,7 @@ Gurax_ImplementMethod(List, Erase)
 	ArgPicker args(argument);
 	NumList<Int> posList = Value_Number::GetNumList<Int>(args.PickList());
 	// Function body
-	for (auto pPos = posList.v.begin(); pPos != posList.v.end(); pPos++) {
+	for (auto pPos = posList.begin(); pPos != posList.end(); pPos++) {
 		if (*pPos < 0) *pPos += valueTypedOwner.GetSize();
 	}
 	posList.Sort(SortOrder::Descend).Unique();

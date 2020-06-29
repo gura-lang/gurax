@@ -189,7 +189,7 @@ Value* VType_Iterator::Method_ArgMax(Argument& argument, Iterator& iteratorThis)
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	} else if (argument.IsSet(Gurax_Symbol(indices))) {
 		NumList<Int> idxFoundList;
-		idxFoundList.v.reserve(16);
+		idxFoundList.reserve(16);
 		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThan>(idxFoundList));
 		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
 	} else {
@@ -227,7 +227,7 @@ Value* VType_Iterator::Method_ArgMin(Argument& argument, Iterator& iteratorThis)
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	} else if (argument.IsSet(Gurax_Symbol(indices))) {
 		NumList<Int> idxFoundList;
-		idxFoundList.v.reserve(16);
+		idxFoundList.reserve(16);
 		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThan>(idxFoundList));
 		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
 	} else {

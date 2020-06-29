@@ -45,17 +45,14 @@ public:
 		bool IsMulti() const { return _type == Type::MultiString || _type == Type::MultiInt; }
 		String MakeKeyArg(bool longFlag) const;
 	};
-	class OptList {
-	public:
-		using V = std::vector<Opt*>;
-		V v;
+	class OptList : public ListBase<Opt*> {
 	};
 	class OptOwner : public OptList {
 	public:
 		~OptOwner() { Clear(); }
 		void Clear() {
-			for (auto pOpt : v) Opt::Delete(pOpt);
-			v.clear();
+			for (auto pOpt : *this) Opt::Delete(pOpt);
+			clear();
 		}
 	};
 	using OptMapByKeyLong = std::map<String, const Opt*>;
