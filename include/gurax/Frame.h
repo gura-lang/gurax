@@ -106,10 +106,7 @@ public:
 //------------------------------------------------------------------------------
 // FrameList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FrameList {
-public:
-	using V = std::vector<Frame*>;
-	V v;
+class GURAX_DLLDECLARE FrameList : public ListBase<Frame*> {
 };
 
 //------------------------------------------------------------------------------
@@ -130,9 +127,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE FrameStack : public FrameOwner {
 public:
-	Frame* GetCur() { return v.back(); }
-	void Push(Frame* pFrame) { v.push_back(pFrame); }
-	void Pop() { Frame::Delete(v.back()); v.pop_back(); }
+	Frame* GetCur() { return back(); }
+	void Push(Frame* pFrame) { push_back(pFrame); }
+	void Pop() { Frame::Delete(back()); pop_back(); }
 	void Shrink(size_t cnt);
 };
 
