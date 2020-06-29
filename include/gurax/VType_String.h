@@ -171,6 +171,7 @@ public:
 		return dynamic_cast<const Value_String&>(value).GetStringSTL();
 	}
 	static StringList GetStringList(const ValueList& values);
+	static const char* GetEntityPtr(const Value& value) { return GetString(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

@@ -56,6 +56,8 @@ public:
 	static const Color& GetColor(const Value& value) {
 		return dynamic_cast<const Value_Color&>(value).GetColor();
 	}
+	static Color* GetEntityPtr(Value& value) { return &GetColor(value); }
+	static const Color* GetEntityPtr(const Value& value) { return &GetColor(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
