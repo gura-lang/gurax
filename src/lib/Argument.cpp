@@ -15,7 +15,7 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_mapMode(MapMode::None)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
-	DeclArgOwner::V::const_iterator ppDeclArg = declArgOwner.begin();
+	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 	if (ppDeclArg != declArgOwner.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
 		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));

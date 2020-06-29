@@ -112,34 +112,34 @@ void Processor::ExceptionInfo::UpdateProcessor(Processor& processor)
 //------------------------------------------------------------------------------
 void Processor::ExceptionInfoStack::Clear()
 {
-	for (ExceptionInfo* pExceptionInfo : v) delete pExceptionInfo;
-	v.clear();
+	for (ExceptionInfo* pExceptionInfo : *this) delete pExceptionInfo;
+	clear();
 }
 
 void Processor::ExceptionInfoStack::Push(ExceptionInfo* pExceptionInfo)
 {
 	//::printf("**ExceptionInfoStack::Push()***\n");
-	v.push_back(pExceptionInfo);
+	push_back(pExceptionInfo);
 }
 
 Processor::ExceptionInfo* Processor::ExceptionInfoStack::Pop()
 {
 	//::printf("**ExceptionInfoStack::Pop()***\n");
-	if (v.empty()) return nullptr;
-	ExceptionInfo* pExceptionInfo = v.back();
-	v.pop_back();
+	if (empty()) return nullptr;
+	ExceptionInfo* pExceptionInfo = back();
+	pop_back();
 	return pExceptionInfo;
 }
 
 void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 {
 	//::printf("**ExceptionInfoStack::Shrink()***\n");
-	if (cnt >= v.size()) return;
-	auto ppExceptionInfoEnd = v.rbegin() + v.size() - cnt;
-	for (auto ppExceptionInfo = v.rbegin(); ppExceptionInfo != ppExceptionInfoEnd; ppExceptionInfo++) {
+	if (cnt >= size()) return;
+	auto ppExceptionInfoEnd = rbegin() + size() - cnt;
+	for (auto ppExceptionInfo = rbegin(); ppExceptionInfo != ppExceptionInfoEnd; ppExceptionInfo++) {
 		delete *ppExceptionInfo;
 	}
-	v.erase(v.begin() + cnt, v.end());
+	erase(begin() + cnt, end());
 }
 
 void Processor::ExceptionInfoStack::ShrinkUntilNull()
@@ -155,8 +155,8 @@ void Processor::ExceptionInfoStack::Print() const
 {
 	Stream& stream = *Stream::COut;
 	stream.Printf("[");
-	for (auto ppExceptionInfo = v.begin(); ppExceptionInfo != v.end(); ppExceptionInfo++) {
-		if (ppExceptionInfo != v.begin()) stream.Printf(", ");
+	for (auto ppExceptionInfo = begin(); ppExceptionInfo != end(); ppExceptionInfo++) {
+		if (ppExceptionInfo != begin()) stream.Printf(", ");
 		stream.Printf("%p", *ppExceptionInfo);
 	}
 	stream.Printf("]\n");

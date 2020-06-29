@@ -174,10 +174,7 @@ public:
 //------------------------------------------------------------------------------
 // ModuleBuiltInFactoryList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ModuleBuiltInFactoryList {
-public:
-	using V = std::vector<const ModuleBuiltInFactory*>;
-	V v;
+class GURAX_DLLDECLARE ModuleBuiltInFactoryList : public ListBase<const ModuleBuiltInFactory*> {
 public:
 	ModuleBuiltInFactoryList& SortByName();
 };
@@ -197,7 +194,7 @@ public:
 private:
 	String _name;
 public:
-	ModuleBuiltInFactory(String name) : _name(name) { list.v.push_back(this); }
+	ModuleBuiltInFactory(String name) : _name(name) { list.push_back(this); }
 	const char* GetName() const { return _name.c_str(); }
 	bool Import(Frame& frame) const;
 	virtual Module* DoCreate(Frame* pFrame) const = 0;

@@ -112,7 +112,7 @@ Directory::Core* Directory::CoreList::FindByName(const char* name) const
 	return nullptr;
 }
 
-Directory::CoreList::V::iterator Directory::CoreList::FindIteratorByName(const char* name)
+Directory::CoreList::iterator Directory::CoreList::FindIteratorByName(const char* name)
 {
 	for (auto ppCore = begin(); ppCore != end(); ppCore++) {
 		Core* pCore = *ppCore;
@@ -192,7 +192,7 @@ Directory* DirectoryList::FindByName(const char* name) const
 	return nullptr;
 }
 
-DirectoryList::V::iterator DirectoryList::FindIteratorByName(const char* name)
+DirectoryList::iterator DirectoryList::FindIteratorByName(const char* name)
 {
 	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
@@ -200,7 +200,7 @@ DirectoryList::V::iterator DirectoryList::FindIteratorByName(const char* name)
 	return end();
 }
 
-DirectoryList::V::const_iterator DirectoryList::FindIteratorByName(const char* name) const
+DirectoryList::const_iterator DirectoryList::FindIteratorByName(const char* name) const
 {
 	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
 		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;

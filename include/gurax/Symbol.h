@@ -35,16 +35,16 @@ class ExprLink;
 //------------------------------------------------------------------------------
 // SymbolList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
+class GURAX_DLLDECLARE SymbolList : public ListBase<const Symbol*> {
 public:
 	static const SymbolList Empty;
 public:
 	// Constructor
 	SymbolList() = default;
 	explicit SymbolList(std::initializer_list<const Symbol*> initList) :
-		std::vector<const Symbol*>(initList) {}
+		ListBase(initList) {}
 	SymbolList(const_iterator ppSymbolBegin, const_iterator ppSymbolEnd) :
-		std::vector<const Symbol*>(ppSymbolBegin, ppSymbolEnd) {}
+		ListBase(ppSymbolBegin, ppSymbolEnd) {}
 	// Copy constructor/operator
 	SymbolList(const SymbolList& src) = default;
 	SymbolList& operator=(const SymbolList& src) = default;

@@ -109,7 +109,7 @@ template<typename TypeDef> IFD* IFD::Deserialize(const UInt8* buff, size_t bytes
 //------------------------------------------------------------------------------
 // IFDList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE IFDList : public std::vector<IFD*> {
+class GURAX_DLLDECLARE IFDList : public ListBase<IFD*> {
 };
 
 //------------------------------------------------------------------------------

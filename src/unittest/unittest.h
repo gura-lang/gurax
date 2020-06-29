@@ -19,7 +19,7 @@ namespace Gurax {
 
 class Tester;
 
-class TesterList : public std::vector<Tester*> {
+class TesterList : public ListBase<Tester*> {
 };
 
 class Tester {

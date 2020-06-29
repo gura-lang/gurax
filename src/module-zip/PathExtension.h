@@ -40,7 +40,7 @@ public:
 //-----------------------------------------------------------------------------
 // StatExList
 //-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatExList : public std::vector<StatEx*> {
+class GURAX_DLLDECLARE StatExList : public ListBase<StatEx*> {
 public:
 	StatEx* FindByName(const char* fileName) const;
 	bool Write(Stream& streamDst) const;

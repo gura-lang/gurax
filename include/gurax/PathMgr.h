@@ -55,10 +55,7 @@ public:
 //------------------------------------------------------------------------------
 // PathMgrList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PathMgrList {
-public:
-	using V = std::vector<PathMgr*>;
-	V v;
+class GURAX_DLLDECLARE PathMgrList :public ListBase<PathMgr*> {
 public:
 	PathMgr* FindResponsible(Directory* pDirectoryParent, const char* pathName) const;
 };

@@ -771,7 +771,7 @@ public:
 //-----------------------------------------------------------------------------
 // CentralFileHeaderList
 //-----------------------------------------------------------------------------
-class CentralFileHeaderList : public std::vector<CentralFileHeader*> {
+class CentralFileHeaderList : public ListBase<CentralFileHeader*> {
 };
 
 //-----------------------------------------------------------------------------

@@ -73,10 +73,7 @@ public:
 //------------------------------------------------------------------------------
 // PaletteList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PaletteList {
-public:
-	using V = std::vector<Palette*>;
-	V v;
+class GURAX_DLLDECLARE PaletteList : public ListBase<Palette*> {
 };
 
 //------------------------------------------------------------------------------

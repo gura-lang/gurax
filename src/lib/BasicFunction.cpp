@@ -67,8 +67,8 @@ Gurax_DeclareFunction(Dim)
 		"    // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]\n");
 }
 
-ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::V::iterator pCnt,
-				   NumList<Int>& idxList, NumList<Int>::V::iterator pIdx,
+ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
+				   NumList<Int>& idxList, NumList<Int>::iterator pIdx,
 				   const Expr_Block* pExprOfBlock, Argument* pArgSub)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());

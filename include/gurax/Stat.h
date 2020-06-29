@@ -80,7 +80,7 @@ public:
 //------------------------------------------------------------------------------
 // StatList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatList : public std::vector<Stat*> {
+class GURAX_DLLDECLARE StatList : public ListBase<Stat*> {
 public:
 	Stat* FindByName(const char* fileName) const;
 };

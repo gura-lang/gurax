@@ -19,7 +19,7 @@ public:
 	const char* GetName() const { return _name; }
 };
 
-class FooList : public std::vector<Foo *> {
+class FooList : public ListBase<Foo *> {
 };
 
 class FooOwner : public FooList {

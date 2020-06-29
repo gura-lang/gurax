@@ -44,7 +44,7 @@ public:
 	class GURAX_DLLDECLARE CoreList : public ListBase<Core*> {
 	public:
 		Core* FindByName(const char* name) const;
-		V::iterator FindIteratorByName(const char* name);
+		iterator FindIteratorByName(const char* name);
 	};
 	class GURAX_DLLDECLARE CoreOwner : public CoreList, public Referable {
 	public:
@@ -163,8 +163,8 @@ public:
 class GURAX_DLLDECLARE DirectoryList : public ListBase<Directory*> {
 public:
 	Directory* FindByName(const char* name) const;
-	V::iterator FindIteratorByName(const char* name);
-	V::const_iterator FindIteratorByName(const char* name) const;
+	iterator FindIteratorByName(const char* name);
+	const_iterator FindIteratorByName(const char* name) const;
 };
 
 //------------------------------------------------------------------------------

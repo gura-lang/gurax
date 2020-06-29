@@ -134,28 +134,6 @@ enum class SortOrder {
 	Descend,
 };
 
-#if 0
-template<typename T_List, typename T_LessThan, typename T_GreaterThan>
-void SortCollectionByOrder(T_List& list, SortOrder sortOrder)
-{
-	if (sortOrder == SortOrder::Ascend) {
-		std::sort(list.begin(), list.end(), T_LessThan());
-	} else if (sortOrder == SortOrder::Descend) {
-		std::sort(list.begin(), list.end(), T_GreaterThan());
-	}
-}
-
-template<typename T_List, typename T_LessThan, typename T_GreaterThan>
-void StableSortListByOrder(T_List& list, SortOrder sortOrder)
-{
-	if (sortOrder == SortOrder::Ascend) {
-		std::stable_sort(list.begin(), list.end(), T_LessThan());
-	} else if (sortOrder == SortOrder::Descend) {
-		std::stable_sort(list.begin(), list.end(), T_GreaterThan());
-	}
-}
-#endif
-
 //------------------------------------------------------------------------------
 // Event
 //------------------------------------------------------------------------------
@@ -274,67 +252,67 @@ public:
 //------------------------------------------------------------------------------
 template<typename T> class ListBase {
 public:
-	using V = std::vector<T>;
+	using Container = std::vector<T>;
 protected:
-	V _v;
+	Container _container;
 public:
-	using pointer = typename V::pointer;
-	using const_pointer = typename V::const_pointer;
-	using reference = typename V::reference;
-	using const_reference = typename V::const_reference;
-	using value_type = typename V::value_type;
-	using iterator = typename V::iterator;
-	using const_iterator = typename V::const_iterator;
-	using reverse_iterator = typename V::reverse_iterator;
-	using const_reverse_iterator = typename V::const_reverse_iterator;
+	using pointer = typename Container::pointer;
+	using const_pointer = typename Container::const_pointer;
+	using reference = typename Container::reference;
+	using const_reference = typename Container::const_reference;
+	using value_type = typename Container::value_type;
+	using iterator = typename Container::iterator;
+	using const_iterator = typename Container::const_iterator;
+	using reverse_iterator = typename Container::reverse_iterator;
+	using const_reverse_iterator = typename Container::const_reverse_iterator;
 public:
 	ListBase() {}
-	ListBase(size_t n) : _v(n) {}
-	ListBase(size_t n, T elem) : _v(n, elem) {}
-	ListBase(const_iterator first, const_iterator last) : _v(first, last) {}
-	ListBase(std::initializer_list<T> initList) : _v(initList) {}
+	ListBase(size_t n) : _container(n) {}
+	ListBase(size_t n, T elem) : _container(n, elem) {}
+	ListBase(const_iterator first, const_iterator last) : _container(first, last) {}
+	ListBase(std::initializer_list<T> initList) : _container(initList) {}
 public:
-	reference operator[](size_t pos) { return _v[pos]; }
-	const_reference operator[](size_t pos) const { return _v[pos]; }
-	bool empty() const { return _v.empty(); }
-	size_t size() const { return _v.size(); }
-	void clear() { _v.clear(); }
-	void reserve(size_t size) { _v.reserve(size); }
-	const_reference front() const { return _v.front(); }
-	const_reference back() const { return _v.back(); }
-	reference front() { return _v.front(); }
-	reference back() { return _v.back(); }
-	iterator begin() { return _v.begin(); }
-	iterator end() { return _v.end(); }
-	const_iterator begin() const { return _v.begin(); }
-	const_iterator end() const { return _v.end(); }
-	reverse_iterator rbegin() { return _v.rbegin(); }
-	reverse_iterator rend() { return _v.rend(); }
-	const_reverse_iterator rbegin() const { return _v.rbegin(); }
-	const_reverse_iterator rend() const { return _v.rend(); }
-	reference at(size_t pos) { return _v.at(pos); }
-	const_reference at(size_t pos) const { return _v.at(pos); }
-	void push_back(const_reference elem) { _v.push_back(elem); }
-	void pop_back() { _v.pop_back(); }
-	void insert(const_iterator pos, const_reference elem) { _v.insert(pos, elem); }
-	void insert(const_iterator pos, const_iterator first, const_iterator last) { _v.insert(pos, first, last); }
-	void erase(const_iterator pos) { _v.erase(pos); }
-	void erase(const_iterator first, const_iterator last) { _v.erase(first, last); }
+	reference operator[](size_t pos) { return _container[pos]; }
+	const_reference operator[](size_t pos) const { return _container[pos]; }
+	bool empty() const { return _container.empty(); }
+	size_t size() const { return _container.size(); }
+	void clear() { _container.clear(); }
+	void reserve(size_t size) { _container.reserve(size); }
+	const_reference front() const { return _container.front(); }
+	const_reference back() const { return _container.back(); }
+	reference front() { return _container.front(); }
+	reference back() { return _container.back(); }
+	iterator begin() { return _container.begin(); }
+	iterator end() { return _container.end(); }
+	const_iterator begin() const { return _container.begin(); }
+	const_iterator end() const { return _container.end(); }
+	reverse_iterator rbegin() { return _container.rbegin(); }
+	reverse_iterator rend() { return _container.rend(); }
+	const_reverse_iterator rbegin() const { return _container.rbegin(); }
+	const_reverse_iterator rend() const { return _container.rend(); }
+	reference at(size_t pos) { return _container.at(pos); }
+	const_reference at(size_t pos) const { return _container.at(pos); }
+	void push_back(const_reference elem) { _container.push_back(elem); }
+	void pop_back() { _container.pop_back(); }
+	void insert(const_iterator pos, const_reference elem) { _container.insert(pos, elem); }
+	void insert(const_iterator pos, const_iterator first, const_iterator last) { _container.insert(pos, first, last); }
+	void erase(const_iterator pos) { _container.erase(pos); }
+	void erase(const_iterator first, const_iterator last) { _container.erase(first, last); }
 public:
 	template<typename T_LessThan, typename T_GreaterThan>
 	void SortByOrder(SortOrder sortOrder) {
 		if (sortOrder == SortOrder::Ascend) {
-			std::sort(_v.begin(), _v.end(), T_LessThan());
+			std::sort(_container.begin(), _container.end(), T_LessThan());
 		} else if (sortOrder == SortOrder::Descend) {
-			std::sort(_v.begin(), _v.end(), T_GreaterThan());
+			std::sort(_container.begin(), _container.end(), T_GreaterThan());
 		}
 	}
 	template<typename T_LessThan, typename T_GreaterThan>
 	void StableSortByOrder(SortOrder sortOrder) {
 		if (sortOrder == SortOrder::Ascend) {
-			std::stable_sort(_v.begin(), _v.end(), T_LessThan());
+			std::stable_sort(_container.begin(), _container.end(), T_LessThan());
 		} else if (sortOrder == SortOrder::Descend) {
-			std::stable_sort(_v.begin(), _v.end(), T_GreaterThan());
+			std::stable_sort(_container.begin(), _container.end(), T_GreaterThan());
 		}
 	}
 };

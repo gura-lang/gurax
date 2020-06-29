@@ -297,7 +297,7 @@ protected:
 //------------------------------------------------------------------------------
 // TagList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TagList : public std::vector<Tag*> {
+class GURAX_DLLDECLARE TagList : public ListBase<Tag*> {
 public:
 	void SortByOrderHint() { std::stable_sort(begin(), end(), Tag::OrderHintCompare()); }
 };

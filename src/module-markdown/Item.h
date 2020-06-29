@@ -13,7 +13,7 @@ class Item;
 //------------------------------------------------------------------------------
 // ItemList
 //------------------------------------------------------------------------------
-class ItemList : public std::vector<Item*> {
+class ItemList : public ListBase<Item*> {
 public:
 	Item* FindByRefId(const char* refId) const;
 	//size_t CountByType(Item::Type type, bool recursiveFlag) const;
@@ -189,7 +189,7 @@ public:
 //------------------------------------------------------------------------------
 // ItemOwnerStack
 //------------------------------------------------------------------------------
-class ItemOwnerStack : public std::vector<ItemOwner*> {
+class ItemOwnerStack : public ListBase<ItemOwner*> {
 public:
 	~ItemOwnerStack() { Clear(); }
 	void Clear();

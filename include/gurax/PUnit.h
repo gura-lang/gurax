@@ -102,7 +102,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnitList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnitList : public std::vector<const PUnit*> {
+class GURAX_DLLDECLARE PUnitList : public ListBase<const PUnit*> {
 public:
 	void Print() const;
 };

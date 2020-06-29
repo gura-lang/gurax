@@ -48,7 +48,7 @@ bool Module::ImportAllBuiltIns(Processor& processor)
 {
 	Frame& frame = processor.GetFrameCur();
 	ModuleBuiltInFactory::list.SortByName();
-	for (const ModuleBuiltInFactory* pFactory : ModuleBuiltInFactory::list.v) {
+	for (const ModuleBuiltInFactory* pFactory : ModuleBuiltInFactory::list) {
 		if (!pFactory->Import(frame)) return false;
 	}
 	return true;
@@ -270,7 +270,7 @@ void ModuleMap::Assign(Module* pModule)
 //------------------------------------------------------------------------------
 ModuleBuiltInFactoryList& ModuleBuiltInFactoryList::SortByName()
 {
-	std::sort(v.begin(), v.end(), ModuleBuiltInFactory::LessThan_Name());
+	std::sort(begin(), end(), ModuleBuiltInFactory::LessThan_Name());
 	return *this;
 }
 

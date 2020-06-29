@@ -116,7 +116,7 @@ public:
 		Escape,
 		EscapeInLink,
 	};
-	class StatStack : public std::vector<Stat> {
+	class StatStack : public ListBase<Stat> {
 	public:
 		void Push(Stat stat) { push_back(stat); }
 		Stat Pop() {

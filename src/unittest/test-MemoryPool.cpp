@@ -22,7 +22,7 @@ public:
 	int Get() const { return _x; }
 };
 
-class AList : public std::vector<A*> {
+class AList : public ListBase<A*> {
 public:
 	void Delete(size_t idx) {
 		iterator pp = begin() + idx;

@@ -35,14 +35,11 @@ public:
 	public:
 		void UpdateProcessor(Processor& processor);
 	};
-	class ExceptionInfoStack {
-	public:
-		using V = std::vector<ExceptionInfo*>;
-		V v;
+	class ExceptionInfoStack : public ListBase<ExceptionInfo*> {
 	public:
 		~ExceptionInfoStack() { Clear(); }
 		void Clear();
-		ExceptionInfo* Peek(int offset) { return *(v.rbegin() + offset); }
+		ExceptionInfo* Peek(int offset) { return *(rbegin() + offset); }
 		void Push(ExceptionInfo* pExceptionInfo);
 		ExceptionInfo* Pop();
 		void Shrink(size_t cnt);
