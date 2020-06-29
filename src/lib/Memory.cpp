@@ -23,8 +23,8 @@ MemoryOwner::~MemoryOwner()
 
 void MemoryOwner::Clear()
 {
-	for (Memory* pMemory : v) Memory::Delete(pMemory);
-	v.clear();
+	for (Memory* pMemory : *this) Memory::Delete(pMemory);
+	clear();
 }
 
 #if defined(GURAX_ON_MSWIN)

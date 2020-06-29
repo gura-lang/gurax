@@ -53,10 +53,7 @@ public:
 //------------------------------------------------------------------------------
 // ImageMgrList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ImageMgrList {
-public:
-	using V = std::vector<ImageMgr*>;
-	V v;
+class GURAX_DLLDECLARE ImageMgrList : public ListBase<ImageMgr*> {
 public:
 	const ImageMgr* FindResponsible(Stream& stream) const;
 	const ImageMgr* FindByImgTypeName(const char* imgTypeName) const;

@@ -41,8 +41,8 @@ Gurax_ImplementClassMethod(ImageMgr, Dir)
 	// Function body
 	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(imageMgrList.v.size());
-	for (const ImageMgr* pImageMgr : imageMgrList.v) {
+	pValueOwner->reserve(imageMgrList.size());
+	for (const ImageMgr* pImageMgr : imageMgrList) {
 		pValueOwner->push_back(new Value_ImageMgr(pImageMgr->Reference()));
 	}
 	return new Value_List(pValueOwner.release());
