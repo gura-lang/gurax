@@ -6,7 +6,7 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity()
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
@@ -18,7 +18,7 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
@@ -30,7 +30,7 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);

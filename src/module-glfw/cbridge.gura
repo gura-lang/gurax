@@ -16,19 +16,20 @@ TypeInfo = class {
 	cType:String
 	vtype:String
 	tmplPicker:Template
-	tmplPickerVec:Template
+	tmplPickerListVar:Template
 	tmplFunctionBody:Template
 	map:static = %{}
 	__init__(decl:String, cType:String, vtype:String,
 			codePicker:String, codePickerVec:String, codeFunctionBody:String) = {
 		this.decl = decl, this.cType = cType, this.vtype = vtype
 		this.tmplPicker = Template().Parse(codePicker)
-		this.tmplPickerVec = Template().Parse(codePickerVec)
+		this.tmplPickerListVar = Template().Parse(codePickerVec)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.map[this.decl] = this
 	}
-	ComposePicker(varName:String) = this.tmplPicker.Eval()
-	ComposePickerVec(varName:String) = this.tmplPickerVec.Eval()
+	ComposePicker(varName:String, listVarFlag:Bool) = {
+		cond(listVarFlag, this.tmplPickerListVar, this.tmplPicker).Eval()
+	}
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 }
 
@@ -36,7 +37,7 @@ TypeInfo_Number(decl:String, cType:String) = TypeInfo(decl, cType, 'Number',
 R'''
 ${this.cType} ${varName} = args.PickNumber<${this.cType}>();
 ''', R'''
-auto ${varName} = args.PickVector<${this.cType}>();
+auto ${varName} = args.PickNumList<${this.cType}>();
 ''', R'''
 ${this.cType} rtn = ${caller};
 return new Value_${this.vtype}(rtn);
@@ -78,7 +79,7 @@ TypeInfo_Number('Double', 'Double')
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
@@ -87,7 +88,7 @@ TypeInfo_Number('Double', 'Double')
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
@@ -96,7 +97,7 @@ TypeInfo_Number('Double', 'Double')
 		R'''
 		${this.cType} ${varName} = args.PickString();
 		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>();
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
@@ -111,20 +112,27 @@ TypeInfo_Number('Double', 'Double')
 ArgInfo = class {
 	name:String
 	type:String
+	listVarFlag:Bool
 	optionFlag:Bool
 	typeInfo:TypeInfo
 	tmplDeclaration:Template:static
+	tmplDeclarationListVar:Template:static
 	tmplImplementation:Template:static
-	__init__(name:String, type:String, optionFlag:Bool) = {
-		this.name = name, this.type = type, this.optionFlag = optionFlag
+	__init__(name:String, type:String, listVarFlag:Bool, optionFlag:Bool) = {
+		this.name = name, this.type = type
+		this.listVarFlag = listVarFlag, this.optionFlag = optionFlag
 		this.typeInfo = TypeInfo.map[type]
 	}
 	ComposeDeclaration() = this.tmplDeclaration.Eval()
-	ComposeImplementation() = this.typeInfo.ComposePicker(this.name)
+	ComposeImplementation() = this.typeInfo.ComposePicker(this.name, this.listVarFlag)
 }
 
 ArgInfo.tmplDeclaration = tR'''
 DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::None);
+'''
+
+ArgInfo.tmplDeclarationListVar = tR'''
+DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::ListVar);
 '''
 
 //------------------------------------------------------------------------------
@@ -195,6 +203,7 @@ Render(stream:Stream:w = sys.cout) {`block} = {
 		funcInfoTbl.Add(funcInfo)
 		exprElem.EachParam {|exprParam|
 			//Println(exprParam)
+			listVarFlag = false
 			optionFlag = false
 			if (exprParam.IsUnaryOp()) {
 				if (exprParam.operator.symbol == `?) {
@@ -204,8 +213,12 @@ Render(stream:Stream:w = sys.cout) {`block} = {
 				}
 				exprParam = exprParam.child
 			}
+			if (exprParam.IsIndexer()) {
+				listVarFlag = true
+				exprParam = exprParam.car
+			}
 			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, optionFlag)
+			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, listVarFlag, optionFlag)
 			funcInfo.argInfoTbl.Add(argInfo)
 		}
 	}
