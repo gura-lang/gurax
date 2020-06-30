@@ -35,6 +35,7 @@ target_sources(glfw.gurd PRIVATE
 	module-glfw.cpp
 	Util.cpp
 	Functions.cpp
+	VType_GLFWcursor.cpp
 	VType_GLFWimage.cpp
 	VType_GLFWmonitor.cpp
 	VType_GLFWwindow.cpp)

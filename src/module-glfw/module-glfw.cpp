@@ -67,6 +67,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
+	Assign(VTYPE_GLFWcursor);
 	Assign(VTYPE_GLFWimage);
 	Assign(VTYPE_GLFWmonitor);
 	Assign(VTYPE_GLFWwindow);
