@@ -84,7 +84,7 @@ public:
 	template<typename T_Num>
 	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
 	template<typename T>
-	std::vector<T> PickVector(std::function<T(const Value& value)> fn) {
+	std::vector<T> PickVector(std::function<T(Value& value)> fn) {
 		const ValueList& valList = PickList();
 		std::vector<T> vec;
 		vec.reserve(valList.size());

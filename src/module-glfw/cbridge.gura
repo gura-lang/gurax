@@ -213,12 +213,13 @@ Render(stream:Stream:w = sys.cout) {`block} = {
 				}
 				exprParam = exprParam.child
 			}
+			attr = exprParam.attr
 			if (exprParam.IsIndexer()) {
 				listVarFlag = true
 				exprParam = exprParam.car
 			}
 			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(exprParam.symbolName, exprParam.attr.dottedName, listVarFlag, optionFlag)
+			argInfo = ArgInfo(exprParam.symbolName, attr.dottedName, listVarFlag, optionFlag)
 			funcInfo.argInfoTbl.Add(argInfo)
 		}
 	}

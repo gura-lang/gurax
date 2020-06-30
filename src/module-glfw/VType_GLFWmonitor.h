@@ -57,7 +57,6 @@ public:
 		return dynamic_cast<const Value_GLFWmonitor&>(value).GetEntity();
 	}
 	static GLFWmonitor* ValueForVector(Value& value) { return GetEntity(value); }
-	static const GLFWmonitor* ValueForVector(const Value& value) { return GetEntity(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

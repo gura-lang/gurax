@@ -57,7 +57,6 @@ public:
 		return dynamic_cast<const Value_Color&>(value).GetColor();
 	}
 	static Color* ValueForVector(Value& value) { return &GetColor(value); }
-	static const Color* ValueForVector(const Value& value) { return &GetColor(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

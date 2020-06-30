@@ -40,6 +40,26 @@ Gurax_ImplementFunction(glfwTerminate)
 	return Value::nil();
 }
 
+// f()
+Gurax_DeclareFunction(f)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("windows", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto windows = args.PickVector<GLFWwindow*>(Value_GLFWwindow::ValueForVector);
+	// Function body
+	//f(windows);
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // 
 //------------------------------------------------------------------------------

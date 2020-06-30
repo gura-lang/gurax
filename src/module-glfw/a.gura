@@ -40,8 +40,13 @@ import(cbridge)
 		''' }
 }
 
-cbridge.Render() {
 
+cbridge.Render {
+	f(windows[]:GLFWwindow_p):void
+}
+
+/*
+cbridge.Render {
 glfwDefaultWindowHints():void
 
 glfwWindowHint(hint:int, value:int):void
@@ -58,7 +63,7 @@ glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
 
 glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
 
-glfwSetWindowIcon(window:GLFWwindow_p, count:int, images:const_GLFWimage_p):void = R'''
+glfwSetWindowIcon(window:GLFWwindow_p, count:int, images[]:const_GLFWimage_p):void = R'''
 if (glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data())) return Value::nil();
 IssueError();
 return Value::nil();
@@ -69,5 +74,5 @@ int xpos, ypos;
 glfwGetWindowPos(window, &xpos, &ypos);
 return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 '''
-
 }
+*/
