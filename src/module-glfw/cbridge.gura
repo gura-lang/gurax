@@ -33,6 +33,16 @@ TypeInfo = class {
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 }
 
+TypeInfo('any', '', 'Any', '', '', '')
+
+TypeInfo('void', 'void', 'Nil', '', '',
+R'''
+${caller};
+return Value::nil();
+''')
+
+TypeInfo('String', '', 'String', '', '', '')
+
 TypeInfo_Number(decl:String, cType:String) = TypeInfo(decl, cType, 'Number',
 R'''
 ${this.cType} ${varName} = args.PickNumber<${this.cType}>();
@@ -99,6 +109,11 @@ TypeInfo_Number('Double', 'Double')
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''' }
+	{ 'const_char_p_NilIfNull', 'const char*', 'String', '', '',
+		R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
@@ -152,7 +167,7 @@ FuncInfo = class {
 	ComposeAssignment() = this.tmplAssignment.Eval()
 	__init__(name:String, type:String, codeFunctionBody:String:nil) = {
 		this.name = name, this.type = type
-		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
+		this.typeInfo = TypeInfo.map[type]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
@@ -164,7 +179,7 @@ FuncInfo.tmplImplementation = tR'''
 // ${this.name}()
 Gurax_DeclareFunction(${this.name})
 {
-	Declare(${cond(this.type == 'void', 'VTYPE_Nil', 'VTYPE_Any')}, Flag::None);
+	Declare(VTYPE_${this.typeInfo.vtype}, Flag::None);
 	${this.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -181,11 +196,8 @@ Gurax_ImplementFunction(${this.name})
 	// Function body
 	${if (this.tmplFunctionBody)}
 	${this.tmplFunctionBody.Eval()}
-	${elsif (this.typeInfo)}
-	${this.typeInfo.ComposeFunctionBody(this.ComposeCaller())}
 	${else}
-	${this.ComposeCaller()};
-	return Value::nil();
+	${this.typeInfo.ComposeFunctionBody(this.ComposeCaller())}
 	${end}
 }
 '''

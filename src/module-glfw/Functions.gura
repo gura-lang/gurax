@@ -2,10 +2,15 @@
 import(cbridge)
 
 @(cbridge.TypeInfo) {
-	{ 'int_ErrorIfFalse', 'int', '', '', '',
+	{ 'int_ErrorIfFalse', 'int', 'Nil', '', '',
 		R'''
 		if (${caller} != GLFW_TRUE) IssueError();
 		return Value::nil();
+		''' }
+	{ 'int_Bool', 'int', 'Bool', '', '',
+		R'''
+		bool rtn = (${caller} == GLFW_TRUE);
+		return new Value_Bool(rtn);
 		''' }
 	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
 		R'''
@@ -52,6 +57,24 @@ glfwInit():int_ErrorIfFalse
 //------------------------------------------------------------------------------
 glfwTerminate():void
 //------------------------------------------------------------------------------
+glfwInitHint(hint:int, value:int):void
+//------------------------------------------------------------------------------
+glfwGetVersion():any = R'''
+int major, minor, rev;
+glfwGetVersion(&major, &minor, &rev);
+return Value_List::Create(new Value_Number(major), new Value_Number(minor), new Value_Number(rev));
+'''
+//------------------------------------------------------------------------------
+glfwGetVersionString():const_char_p
+//------------------------------------------------------------------------------
+glfwGetError():String = R'''
+const char* description;
+glfwGetError(&description);
+return description? new Value_String(description) : Value::nil();
+'''
+//------------------------------------------------------------------------------
+//glfwSetErrorCallback()
+//------------------------------------------------------------------------------
 glfwDefaultWindowHints():void
 //------------------------------------------------------------------------------
 glfwWindowHint(hint:int, value:int):void
@@ -78,6 +101,28 @@ int xpos, ypos;
 glfwGetWindowPos(window, &xpos, &ypos);
 return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 '''
+//------------------------------------------------------------------------------
+glfwGetInputMode(window:GLFWwindow_p, mode:int):int
+//------------------------------------------------------------------------------
+glfwSetInputMode(window:GLFWwindow_p, mode:int, value:int):void
+//------------------------------------------------------------------------------
+glfwRawMouseMotionSupported():int_Bool
+//------------------------------------------------------------------------------
+glfwGetKeyName(key:int, scancode:int):const_char_p_NilIfNull
+//------------------------------------------------------------------------------
+glfwGetKeyScancode(key:int):int
+//------------------------------------------------------------------------------
+glfwGetKey(window:GLFWwindow_p, key:int):int
+//------------------------------------------------------------------------------
+glfwGetMouseButton(window:GLFWwindow_p, button:int):int
+//------------------------------------------------------------------------------
+glfwGetCursorPos(window:GLFWwindow_p):any = R'''
+double xpos, ypos;
+glfwGetCursorPos(window, &xpos, &ypos);
+return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+'''
+//------------------------------------------------------------------------------
+glfwSetCursorPos(window:GLFWwindow_p, xpos:double, ypos:double):void
 }
 
 tR'''
