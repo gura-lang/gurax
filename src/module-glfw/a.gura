@@ -2,10 +2,8 @@
 import(cbridge)
 
 @(cbridge.TypeInfo) {
-	{ 'int_ErrorIfFalse', 'int', '',
+	{ 'int_ErrorIfFalse', 'int', '', '', '',
 		R'''
-		''', R'''
-		''', R'''
 		if (${caller} != GLFW_TRUE) IssueError();
 		return Value::nil();
 		''' }
