@@ -24,6 +24,18 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
+	{ 'const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage',
+		R'''
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		IssueError();
+		return Value::nil();
+		''' }
 	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
@@ -123,6 +135,8 @@ return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 '''
 //------------------------------------------------------------------------------
 glfwSetCursorPos(window:GLFWwindow_p, xpos:double, ypos:double):void
+//------------------------------------------------------------------------------
+//glfwCreateCursor(image:const_GLFWimage_p, xhot:int, yhot:int):glfwCursor_p
 }
 
 tR'''
