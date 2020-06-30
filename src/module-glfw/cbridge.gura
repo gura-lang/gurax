@@ -16,21 +16,27 @@ TypeInfo = class {
 	cType:String
 	vtype:String
 	tmplPicker:Template
+	tmplPickerVec:Template
 	tmplFunctionBody:Template
 	map:static = %{}
-	__init__(decl:String, cType:String, vtype:String, codePicker:String, codeFunctionBody:String) = {
+	__init__(decl:String, cType:String, vtype:String,
+			codePicker:String, codePickerVec:String, codeFunctionBody:String) = {
 		this.decl = decl, this.cType = cType, this.vtype = vtype
 		this.tmplPicker = Template().Parse(codePicker)
+		this.tmplPickerVec = Template().Parse(codePickerVec)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.map[this.decl] = this
 	}
 	ComposePicker(varName:String) = this.tmplPicker.Eval()
+	ComposePickerVec(varName:String) = this.tmplPickerVec.Eval()
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 }
 
 TypeInfo_Number(decl:String, cType:String) = TypeInfo(decl, cType, 'Number',
 R'''
 ${this.cType} ${varName} = args.PickNumber<${this.cType}>();
+''', R'''
+auto ${varName} = args.PickVector<${this.cType}>();
 ''', R'''
 ${this.cType} rtn = ${caller};
 return new Value_${this.vtype}(rtn);
@@ -72,6 +78,8 @@ TypeInfo_Number('Double', 'Double')
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
+		''', R'''
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''' }
@@ -79,12 +87,16 @@ TypeInfo_Number('Double', 'Double')
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
+		''', R'''
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''' }
 	{ 'const_char_p', 'const char*', 'String',
 		R'''
 		${this.cType} ${varName} = args.PickString();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);

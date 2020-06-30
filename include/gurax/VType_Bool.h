@@ -48,7 +48,8 @@ protected:
 	// Destructor
 	~Value_Bool() = default;
 public:
-	static size_t GetBool(const Value& value) { return dynamic_cast<const Value_Bool&>(value).GetBool_(); }
+	static bool GetBool(const Value& value) { return dynamic_cast<const Value_Bool&>(value).GetBool_(); }
+	static bool ValueForVector(const Value& value) { return GetBool(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

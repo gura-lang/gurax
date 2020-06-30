@@ -82,9 +82,7 @@ public:
 		return Pick<Value_Number>().GetNumberPos<T_Num>();
 	}
 	template<typename T_Num>
-	NumList<T_Num> PickNumList() {
-		return Value_Number::GetNumList<T_Num>(Pick<Value_List>().GetValueOwner());
-	}
+	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
 	template<typename T>
 	std::vector<T> PickVector(std::function<T(const Value& value)> fn) {
 		const ValueList& valList = PickList();

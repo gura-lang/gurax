@@ -6,6 +6,8 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity()
 		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
+		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
@@ -16,6 +18,8 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
+		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
@@ -25,6 +29,8 @@ import(cbridge)
 	{ 'const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>();
 		''', R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);

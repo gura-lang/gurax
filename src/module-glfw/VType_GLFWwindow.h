@@ -56,8 +56,8 @@ public:
 	static const GLFWwindow* GetEntity(const Value& value) {
 		return dynamic_cast<const Value_GLFWwindow&>(value).GetEntity();
 	}
-	static GLFWwindow* GetEntityPtr(Value& value) { return GetEntity(value); }
-	static const GLFWwindow* GetEntityPtr(const Value& value) { return GetEntity(value); }
+	static GLFWwindow* ValueForVector(Value& value) { return GetEntity(value); }
+	static const GLFWwindow* ValueForVector(const Value& value) { return GetEntity(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
