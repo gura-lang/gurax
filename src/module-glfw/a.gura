@@ -40,41 +40,35 @@ import(cbridge)
 		''' }
 }
 
-
-cbridge.Render {
-glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = R'''
-glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
-return Value::nil();
-'''
-}
-
-/*
-cbridge.Render {
+r = cbridge.Renderer()
+r.Register {
+//------------------------------------------------------------------------------
 glfwDefaultWindowHints():void
-
+//------------------------------------------------------------------------------
 glfwWindowHint(hint:int, value:int):void
-
+//------------------------------------------------------------------------------
 glfwWindowHintString(hint:int, value:const_char_p):void
-
+//------------------------------------------------------------------------------
 glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
-
+//------------------------------------------------------------------------------
 glfwDestroyWindow(window:GLFWwindow_p):void
-
+//------------------------------------------------------------------------------
 glfwWindowShouldClose(window:GLFWwindow_p):bool
-
+//------------------------------------------------------------------------------
 glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
-
+//------------------------------------------------------------------------------
 glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
-
+//------------------------------------------------------------------------------
 glfwSetWindowIcon(window:GLFWwindow_p, count:int, images[]:GLFWimage):void = R'''
 glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 return Value::nil();
 '''
-
+//------------------------------------------------------------------------------
 glfwGetWindowPos(window:GLFWwindow_p):bool = R'''
 int xpos, ypos;
 glfwGetWindowPos(window, &xpos, &ypos);
 return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 '''
 }
-*/
+
+Print(r.ComposeImplementation())

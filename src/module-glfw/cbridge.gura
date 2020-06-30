@@ -188,22 +188,25 @@ Gurax_ImplementFunction(${this.name})
 '''
 
 //------------------------------------------------------------------------------
-// FuncInfo
+// Renderer
 //------------------------------------------------------------------------------
-Render(stream:Stream:w = sys.cout) {`block} = {
+Renderer = class {
 	funcInfoTbl = []
-	block.EachElem {|exprElem|
+	Register() {`block} = {
+		this.RegisterExpr(block.EachElem())
+	}
+	RegisterExpr(expr:Expr):map:void = {
 		codeFunctionBody = nil
-		if (exprElem.IsAssign()) {
-			!exprElem.right.IsString() && ErrorDone(exprElem, 'assigned value must be a string')
-			codeFunctionBody = exprElem.right.string
-			exprElem = exprElem.left
+		if (expr.IsAssign()) {
+			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
+			codeFunctionBody = expr.right.string
+			expr = expr.left
 		}
-		!exprElem.IsCaller() && ErrorDone(expr, 'Caller is expected')
-		!exprElem.car.IsIdentifier() && ErrorDone(exprElem, 'Identifier is expected')
-		funcInfo = FuncInfo(exprElem.car.symbolName, exprElem.attr.dottedName, codeFunctionBody)
-		funcInfoTbl.Add(funcInfo)
-		exprElem.EachParam {|exprParam|
+		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
+		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		funcInfo = FuncInfo(expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
+		this.funcInfoTbl.Add(funcInfo)
+		expr.EachParam {|exprParam|
 			//Println(exprParam)
 			listVarFlag = false
 			optionFlag = false
@@ -225,12 +228,10 @@ Render(stream:Stream:w = sys.cout) {`block} = {
 			funcInfo.argInfoTbl.Add(argInfo)
 		}
 	}
-	tmplFile.Render(stream)
+	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
 }
 
 tmplFile = tR'''
-${funcInfoTbl:*ComposeImplementation().Join('\n')}
-
 void Prepare(Frame& frameOuter)
 {
 	${funcInfoTbl.Each {|funcInfo|}}
