@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 #include "Util.h"
 #include "Functions.h"
+#include "VType_GLFWimage.h"
 #include "VType_GLFWmonitor.h"
 #include "VType_GLFWwindow.h"
 

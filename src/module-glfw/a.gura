@@ -2,6 +2,18 @@
 import(cbridge)
 
 @(cbridge.TypeInfo) {
+	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
+		R'''
+		${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		''', R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		IssueError();
+		return Value::nil();
+		''' }
 	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity()
@@ -26,23 +38,14 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
 }
 
 
 cbridge.Render {
-	f(windows[]:GLFWwindow_p):void
+glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = R'''
+glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
+return Value::nil();
+'''
 }
 
 /*
@@ -63,9 +66,8 @@ glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
 
 glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
 
-glfwSetWindowIcon(window:GLFWwindow_p, count:int, images[]:const_GLFWimage_p):void = R'''
-if (glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data())) return Value::nil();
-IssueError();
+glfwSetWindowIcon(window:GLFWwindow_p, count:int, images[]:GLFWimage):void = R'''
+glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 return Value::nil();
 '''
 

@@ -40,23 +40,25 @@ Gurax_ImplementFunction(glfwTerminate)
 	return Value::nil();
 }
 
-// f()
-Gurax_DeclareFunction(f)
+// glfwSetWindowIcon()
+Gurax_DeclareFunction(glfwSetWindowIcon)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("windows", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("images", VTYPE_GLFWimage, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementFunction(f)
+Gurax_ImplementFunction(glfwSetWindowIcon)
 {
 	// Arguments
 	ArgPicker args(argument);
-	auto windows = args.PickVector<GLFWwindow*>(Value_GLFWwindow::ValueForVector);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	auto images = args.PickVector<GLFWimage>(Value_GLFWimage::ValueForVector);
 	// Function body
-	//f(windows);
+	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 	return Value::nil();
 }
 
@@ -68,6 +70,7 @@ void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(glfwInit));
 	frame.Assign(Gurax_CreateFunction(glfwTerminate));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowIcon));
 }
 
 Gurax_EndModuleScope(glfw)

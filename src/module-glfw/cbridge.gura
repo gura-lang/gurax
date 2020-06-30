@@ -123,7 +123,9 @@ ArgInfo = class {
 		this.listVarFlag = listVarFlag, this.optionFlag = optionFlag
 		this.typeInfo = TypeInfo.map[type]
 	}
-	ComposeDeclaration() = this.tmplDeclaration.Eval()
+	ComposeDeclaration() = {
+		cond(this.listVarFlag, this.tmplDeclarationListVar, this.tmplDeclaration).Eval()
+	}
 	ComposeImplementation() = this.typeInfo.ComposePicker(this.name, this.listVarFlag)
 }
 
