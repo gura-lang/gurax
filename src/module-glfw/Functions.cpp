@@ -522,6 +522,98 @@ Gurax_ImplementFunction(glfwSetCursorPos)
 	return Value::nil();
 }
 
+// glfwCreateCursor()
+Gurax_DeclareFunction(glfwCreateCursor)
+{
+	Declare(VTYPE_GLFWcursor, Flag::None);
+	DeclareArg("image", VTYPE_GLFWimage, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xhot", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yhot", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwCreateCursor)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const GLFWimage* image = args.Pick<Value_GLFWimage>().GetEntity();
+	int xhot = args.PickNumber<int>();
+	int yhot = args.PickNumber<int>();
+	// Function body
+	if (GLFWcursor* rtn = glfwCreateCursor(image, xhot, yhot)) {
+		return new Value_GLFWcursor(rtn);
+	}
+	IssueError();
+	return Value::nil();
+}
+
+// glfwCreateStandardCursor()
+Gurax_DeclareFunction(glfwCreateStandardCursor)
+{
+	Declare(VTYPE_GLFWcursor, Flag::None);
+	DeclareArg("shape", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwCreateStandardCursor)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int shape = args.PickNumber<int>();
+	// Function body
+	if (GLFWcursor* rtn = glfwCreateStandardCursor(shape)) {
+		return new Value_GLFWcursor(rtn);
+	}
+	IssueError();
+	return Value::nil();
+}
+
+// glfwDestroyCursor()
+Gurax_DeclareFunction(glfwDestroyCursor)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cursor", VTYPE_GLFWcursor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwDestroyCursor)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWcursor* cursor = args.Pick<Value_GLFWcursor>().GetEntity();
+	// Function body
+	glfwDestroyCursor(cursor);
+	return Value::nil();
+}
+
+// glfwSetCursor()
+Gurax_DeclareFunction(glfwSetCursor)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cursor", VTYPE_GLFWcursor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetCursor)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	GLFWcursor* cursor = args.Pick<Value_GLFWcursor>().GetEntity();
+	// Function body
+	glfwSetCursor(window, cursor);
+	return Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(glfwInit));
@@ -549,6 +641,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwGetMouseButton));
 	frame.Assign(Gurax_CreateFunction(glfwGetCursorPos));
 	frame.Assign(Gurax_CreateFunction(glfwSetCursorPos));
+	frame.Assign(Gurax_CreateFunction(glfwCreateCursor));
+	frame.Assign(Gurax_CreateFunction(glfwCreateStandardCursor));
+	frame.Assign(Gurax_CreateFunction(glfwDestroyCursor));
+	frame.Assign(Gurax_CreateFunction(glfwSetCursor));
 }
 
 Gurax_EndModuleScope(glfw)
