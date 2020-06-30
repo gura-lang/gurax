@@ -2,6 +2,13 @@
 import(cbridge)
 
 @(cbridge.TypeInfo) {
+	{ 'int_ErrorIfFalse', 'int', '',
+		R'''
+		''', R'''
+		''', R'''
+		if (${caller} != GLFW_TRUE) IssueError();
+		return Value::nil();
+		''' }
 	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
 		R'''
 		${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
@@ -16,7 +23,7 @@ import(cbridge)
 		''' }
 	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
 		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity()
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
@@ -43,6 +50,10 @@ import(cbridge)
 r = cbridge.Renderer()
 r.Register {
 //------------------------------------------------------------------------------
+glfwInit():int_ErrorIfFalse
+//------------------------------------------------------------------------------
+glfwTerminate():void
+//------------------------------------------------------------------------------
 glfwDefaultWindowHints():void
 //------------------------------------------------------------------------------
 glfwWindowHint(hint:int, value:int):void
@@ -57,9 +68,9 @@ glfwWindowShouldClose(window:GLFWwindow_p):bool
 //------------------------------------------------------------------------------
 glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
 //------------------------------------------------------------------------------
-glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):bool
+glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):void
 //------------------------------------------------------------------------------
-glfwSetWindowIcon(window:GLFWwindow_p, count:int, images[]:GLFWimage):void = R'''
+glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = R'''
 glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 return Value::nil();
 '''
@@ -71,4 +82,20 @@ return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 '''
 }
 
-Print(r.ComposeImplementation())
+tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(glfw)
+
+${r.ComposeImplementation()}
+
+void AssignFunctions(Frame& frame)
+{
+	${r.ComposeAssignment('frame.')}
+}
+
+Gurax_EndModuleScope(glfw)
+'''.Render('Functions.cpp')

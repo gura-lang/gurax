@@ -149,6 +149,7 @@ FuncInfo = class {
 	tmplImplementation:Template:static
 	tmplAssignment:Template:static
 	ComposeImplementation() = this.tmplImplementation.Eval()
+	ComposeAssignment() = this.tmplAssignment.Eval()
 	__init__(name:String, type:String, codeFunctionBody:String:nil) = {
 		this.name = name, this.type = type
 		if (type != 'void') { this.typeInfo = TypeInfo.map[type] }
@@ -163,7 +164,7 @@ FuncInfo.tmplImplementation = tR'''
 // ${this.name}()
 Gurax_DeclareFunction(${this.name})
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(${cond(this.type == 'void', 'VTYPE_Nil', 'VTYPE_Any')}, Flag::None);
 	${this.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -172,9 +173,11 @@ Gurax_DeclareFunction(${this.name})
 
 Gurax_ImplementFunction(${this.name})
 {
+	${if (!this.argInfoTbl.IsEmpty())}
 	// Arguments
 	ArgPicker args(argument);
 	${this.argInfoTbl::ComposeImplementation()}
+	${end}
 	// Function body
 	${if (this.tmplFunctionBody)}
 	${this.tmplFunctionBody.Eval()}
@@ -186,6 +189,8 @@ Gurax_ImplementFunction(${this.name})
 	${end}
 }
 '''
+
+FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}));'
 
 //------------------------------------------------------------------------------
 // Renderer
@@ -229,13 +234,5 @@ Renderer = class {
 		}
 	}
 	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
+	ComposeAssignment(codePrefix:String) = (codePrefix + this.funcInfoTbl:*ComposeAssignment()).Join('\n')
 }
-
-tmplFile = tR'''
-void Prepare(Frame& frameOuter)
-{
-	${funcInfoTbl.Each {|funcInfo|}}
-	frameOuter.Assign(Gurax_CreateFunction(${funcInfo.name}));
-	${end}
-}
-'''

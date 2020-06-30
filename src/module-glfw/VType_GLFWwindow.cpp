@@ -51,6 +51,7 @@ Gurax_ImplementConstructor(GLFWwindow)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+#if 0
 // glfw.glfwCreateWindow(width:Number, height:Number, title:String,
 //                       monitor?:glfw.GLFWmonitor, share?:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwCreateWindow)
@@ -83,6 +84,7 @@ Gurax_ImplementFunction(glfwCreateWindow)
 	}
 	return new Value_GLFWwindow(rtn);
 }
+#endif
 
 // glfw.glfwMakeContextCurrent(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwMakeContextCurrent)
@@ -124,6 +126,7 @@ Gurax_ImplementFunction(glfwSwapBuffers)
 	return Value::nil();
 }
 
+#if 0
 // glfw.glfwWindowShouldClose(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwWindowShouldClose)
 {
@@ -142,6 +145,7 @@ Gurax_ImplementFunction(glfwWindowShouldClose)
 	// Function body
 	return new Value_Bool(::glfwWindowShouldClose(window) == GLFW_TRUE);
 }
+#endif
 
 // glfw.glfwPollEvents()
 Gurax_DeclareFunction(glfwPollEvents)
@@ -262,10 +266,10 @@ void VType_GLFWwindow::DoPrepare(Frame& frameOuter)
 	AssignGLFWConst(frameOuter, GLFW_X11_CLASS_NAME);
 	AssignGLFWConst(frameOuter, GLFW_X11_INSTANCE_NAME);
 	// Assignment of function
-	frameOuter.Assign(Gurax_CreateFunction(glfwCreateWindow));
+	//frameOuter.Assign(Gurax_CreateFunction(glfwCreateWindow));
 	frameOuter.Assign(Gurax_CreateFunction(glfwMakeContextCurrent));
 	frameOuter.Assign(Gurax_CreateFunction(glfwSwapBuffers));
-	frameOuter.Assign(Gurax_CreateFunction(glfwWindowShouldClose));
+	//frameOuter.Assign(Gurax_CreateFunction(glfwWindowShouldClose));
 	frameOuter.Assign(Gurax_CreateFunction(glfwPollEvents));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(GLFWwindow, MethodSkeleton));
