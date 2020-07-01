@@ -614,6 +614,313 @@ Gurax_ImplementFunction(glfwSetCursor)
 	return Value::nil();
 }
 
+// glfwJoystickPresent()
+Gurax_DeclareFunction(glfwJoystickPresent)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwJoystickPresent)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	int rtn = glfwJoystickPresent(jid);
+	return new Value_Number(rtn);
+}
+
+// glfwGetJoystickAxes()
+Gurax_DeclareFunction(glfwGetJoystickAxes)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetJoystickAxes)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	int count;
+	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
+		return Value_List::Create(rtn, count);
+	}
+	return Value::nil();
+}
+
+// glfwGetJoystickButtons()
+Gurax_DeclareFunction(glfwGetJoystickButtons)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetJoystickButtons)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	int count;
+	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
+		return Value_List::Create(rtn, count);
+	}
+	return Value::nil();
+}
+
+// glfwGetJoystickHats()
+Gurax_DeclareFunction(glfwGetJoystickHats)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetJoystickHats)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	int count;
+	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
+		return Value_List::Create(rtn, count);
+	}
+	return Value::nil();
+}
+
+// glfwGetJoystickName()
+Gurax_DeclareFunction(glfwGetJoystickName)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetJoystickName)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	if (const char* rtn = glfwGetJoystickName(jid)) {
+		return new Value_String(rtn);
+	}
+	return Value::nil();
+}
+
+// glfwGetJoystickGUID()
+Gurax_DeclareFunction(glfwGetJoystickGUID)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetJoystickGUID)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	if (const char* rtn = glfwGetJoystickGUID(jid)) {
+		return new Value_String(rtn);
+	}
+	return Value::nil();
+}
+
+// glfwJoystickIsGamepad()
+Gurax_DeclareFunction(glfwJoystickIsGamepad)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwJoystickIsGamepad)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	bool rtn = (glfwJoystickIsGamepad(jid) == GLFW_TRUE);
+	return new Value_Bool(rtn);
+}
+
+// glfwUpdateGamepadMappings()
+Gurax_DeclareFunction(glfwUpdateGamepadMappings)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwUpdateGamepadMappings)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* string = args.PickString();
+	// Function body
+	if (glfwUpdateGamepadMappings(string) != GLFW_TRUE) IssueError();
+	return Value::nil();
+}
+
+// glfwGetGamepadName()
+Gurax_DeclareFunction(glfwGetGamepadName)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetGamepadName)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	// Function body
+	if (const char* rtn = glfwGetGamepadName(jid)) {
+		return new Value_String(rtn);
+	}
+	return Value::nil();
+}
+
+// glfwSetClipboardString()
+Gurax_DeclareFunction(glfwSetClipboardString)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetClipboardString)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	const char* string = args.PickString();
+	// Function body
+	glfwSetClipboardString(window, string);
+	return Value::nil();
+}
+
+// glfwGetClipboardString()
+Gurax_DeclareFunction(glfwGetClipboardString)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetClipboardString)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	// Function body
+	if (const char* rtn = glfwGetClipboardString(window)) {
+		return new Value_String(rtn);
+	}
+	return Value::nil();
+}
+
+// glfwGetTime()
+Gurax_DeclareFunction(glfwGetTime)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetTime)
+{
+	// Function body
+	double rtn = glfwGetTime();
+	return new Value_Number(rtn);
+}
+
+// glfwSetTime()
+Gurax_DeclareFunction(glfwSetTime)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("time", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetTime)
+{
+	// Arguments
+	ArgPicker args(argument);
+	double time = args.PickNumber<double>();
+	// Function body
+	glfwSetTime(time);
+	return Value::nil();
+}
+
+// glfwGetTimerValue()
+Gurax_DeclareFunction(glfwGetTimerValue)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetTimerValue)
+{
+	// Function body
+	uint64_t rtn = glfwGetTimerValue();
+	return new Value_Number(rtn);
+}
+
+// glfwGetTimerFrequency()
+Gurax_DeclareFunction(glfwGetTimerFrequency)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetTimerFrequency)
+{
+	// Function body
+	uint64_t rtn = glfwGetTimerFrequency();
+	return new Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(glfwInit));
@@ -645,6 +952,21 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwCreateStandardCursor));
 	frame.Assign(Gurax_CreateFunction(glfwDestroyCursor));
 	frame.Assign(Gurax_CreateFunction(glfwSetCursor));
+	frame.Assign(Gurax_CreateFunction(glfwJoystickPresent));
+	frame.Assign(Gurax_CreateFunction(glfwGetJoystickAxes));
+	frame.Assign(Gurax_CreateFunction(glfwGetJoystickButtons));
+	frame.Assign(Gurax_CreateFunction(glfwGetJoystickHats));
+	frame.Assign(Gurax_CreateFunction(glfwGetJoystickName));
+	frame.Assign(Gurax_CreateFunction(glfwGetJoystickGUID));
+	frame.Assign(Gurax_CreateFunction(glfwJoystickIsGamepad));
+	frame.Assign(Gurax_CreateFunction(glfwUpdateGamepadMappings));
+	frame.Assign(Gurax_CreateFunction(glfwGetGamepadName));
+	frame.Assign(Gurax_CreateFunction(glfwSetClipboardString));
+	frame.Assign(Gurax_CreateFunction(glfwGetClipboardString));
+	frame.Assign(Gurax_CreateFunction(glfwGetTime));
+	frame.Assign(Gurax_CreateFunction(glfwSetTime));
+	frame.Assign(Gurax_CreateFunction(glfwGetTimerValue));
+	frame.Assign(Gurax_CreateFunction(glfwGetTimerFrequency));
 }
 
 Gurax_EndModuleScope(glfw)
