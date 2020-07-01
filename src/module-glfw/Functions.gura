@@ -5,12 +5,12 @@ import(cbridge)
 // Type Information
 //------------------------------------------------------------------------------
 @(cbridge.TypeInfo) {
-	{ 'int_ErrorIfFalse', 'int', 'Nil', '', '',
+	{ 'int_ErrorIfFalse', 'int', 'Nil', '', '', '',
 		R'''
-		if(${caller} != GLFW_TRUE) IssueError();
+		if (${caller} != GLFW_TRUE) IssueError();
 		return Value::nil();
 		''' }
-	{ 'int_Bool', 'int', 'Bool', '', '',
+	{ 'int_Bool', 'int', 'Bool', '', '', '',
 		R'''
 		bool rtn =(${caller} == GLFW_TRUE);
 		return new Value_Bool(rtn);
@@ -18,10 +18,10 @@ import(cbridge)
 	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
 		R'''
 		${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
+		''', '', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -31,9 +31,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -43,9 +45,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -55,9 +59,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -67,9 +73,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -79,9 +87,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -91,9 +101,11 @@ import(cbridge)
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if(${this.cType} rtn = ${caller}) {
+		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -208,7 +220,7 @@ glfwJoystickPresent(jid:int):int
 glfwGetJoystickAxes(jid:int):any = \
 	R'''
 	int count;
-	if(const float* rtn = glfwGetJoystickAxes(jid, &count)) {
+	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -217,7 +229,7 @@ glfwGetJoystickAxes(jid:int):any = \
 glfwGetJoystickButtons(jid:int):any = \
 	R'''
 	int count;
-	if(const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
+	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -226,7 +238,7 @@ glfwGetJoystickButtons(jid:int):any = \
 glfwGetJoystickHats(jid:int):any = \
 	R'''
 	int count;
-	if(const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
+	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();

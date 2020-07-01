@@ -37,7 +37,7 @@ Gurax_DeclareFunction(glfwGetCurrentContext)
 Gurax_ImplementFunction(glfwGetCurrentContext)
 {
 	// Function body
-	if(GLFWwindow* rtn = glfwGetCurrentContext()) {
+	if (GLFWwindow* rtn = glfwGetCurrentContext()) {
 		return new Value_GLFWwindow(rtn);
 	}
 	IssueError();
@@ -96,7 +96,7 @@ Gurax_DeclareFunction(glfwInit)
 Gurax_ImplementFunction(glfwInit)
 {
 	// Function body
-	if(glfwInit() != GLFW_TRUE) IssueError();
+	if (glfwInit() != GLFW_TRUE) IssueError();
 	return Value::nil();
 }
 
@@ -403,7 +403,7 @@ Gurax_ImplementFunction(glfwCreateCursor)
 	int xhot = args.PickNumber<int>();
 	int yhot = args.PickNumber<int>();
 	// Function body
-	if(GLFWcursor* rtn = glfwCreateCursor(image, xhot, yhot)) {
+	if (GLFWcursor* rtn = glfwCreateCursor(image, xhot, yhot)) {
 		return new Value_GLFWcursor(rtn);
 	}
 	IssueError();
@@ -426,7 +426,7 @@ Gurax_ImplementFunction(glfwCreateStandardCursor)
 	ArgPicker args(argument);
 	int shape = args.PickNumber<int>();
 	// Function body
-	if(GLFWcursor* rtn = glfwCreateStandardCursor(shape)) {
+	if (GLFWcursor* rtn = glfwCreateStandardCursor(shape)) {
 		return new Value_GLFWcursor(rtn);
 	}
 	IssueError();
@@ -512,7 +512,7 @@ Gurax_ImplementFunction(glfwGetJoystickAxes)
 	int jid = args.PickNumber<int>();
 	// Function body
 	int count;
-	if(const float* rtn = glfwGetJoystickAxes(jid, &count)) {
+	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -535,7 +535,7 @@ Gurax_ImplementFunction(glfwGetJoystickButtons)
 	int jid = args.PickNumber<int>();
 	// Function body
 	int count;
-	if(const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
+	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -558,7 +558,7 @@ Gurax_ImplementFunction(glfwGetJoystickHats)
 	int jid = args.PickNumber<int>();
 	// Function body
 	int count;
-	if(const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
+	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -644,7 +644,7 @@ Gurax_ImplementFunction(glfwUpdateGamepadMappings)
 	ArgPicker args(argument);
 	const char* string = args.PickString();
 	// Function body
-	if(glfwUpdateGamepadMappings(string) != GLFW_TRUE) IssueError();
+	if (glfwUpdateGamepadMappings(string) != GLFW_TRUE) IssueError();
 	return Value::nil();
 }
 
@@ -816,7 +816,7 @@ Gurax_DeclareFunction(glfwGetPrimaryMonitor)
 Gurax_ImplementFunction(glfwGetPrimaryMonitor)
 {
 	// Function body
-	if(GLFWmonitor* rtn = glfwGetPrimaryMonitor()) {
+	if (GLFWmonitor* rtn = glfwGetPrimaryMonitor()) {
 		return new Value_GLFWmonitor(rtn);
 	}
 	IssueError();
@@ -971,7 +971,7 @@ Gurax_ImplementFunction(glfwGetVideoMode)
 	ArgPicker args(argument);
 	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
-	if(const GLFWvidmode* rtn = glfwGetVideoMode(monitor)) {
+	if (const GLFWvidmode* rtn = glfwGetVideoMode(monitor)) {
 		return new Value_GLFWvidmode(rtn);
 	}
 	IssueError();
@@ -1016,7 +1016,7 @@ Gurax_ImplementFunction(glfwGetGammaRamp)
 	ArgPicker args(argument);
 	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
-	if(const GLFWgammaramp* rtn = glfwGetGammaRamp(monitor)) {
+	if (const GLFWgammaramp* rtn = glfwGetGammaRamp(monitor)) {
 		return new Value_GLFWgammaramp(rtn);
 	}
 	IssueError();
@@ -1165,10 +1165,10 @@ Gurax_ImplementFunction(glfwCreateWindow)
 	int width = args.PickNumber<int>();
 	int height = args.PickNumber<int>();
 	const char* title = args.PickString();
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
-	GLFWwindow* share = args.Pick<Value_GLFWwindow>().GetEntity();
+	GLFWmonitor* monitor = args.IsValid()? args.Pick<Value_GLFWmonitor>().GetEntity() : nullptr;
+	GLFWwindow* share = args.IsValid()? args.Pick<Value_GLFWwindow>().GetEntity() : nullptr;
 	// Function body
-	if(GLFWwindow* rtn = glfwCreateWindow(width, height, title, monitor, share)) {
+	if (GLFWwindow* rtn = glfwCreateWindow(width, height, title, monitor, share)) {
 		return new Value_GLFWwindow(rtn);
 	}
 	IssueError();
@@ -1685,7 +1685,7 @@ Gurax_ImplementFunction(glfwGetWindowMonitor)
 	ArgPicker args(argument);
 	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
-	if(GLFWmonitor* rtn = glfwGetWindowMonitor(window)) {
+	if (GLFWmonitor* rtn = glfwGetWindowMonitor(window)) {
 		return new Value_GLFWmonitor(rtn);
 	}
 	IssueError();
