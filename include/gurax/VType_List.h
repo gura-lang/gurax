@@ -61,6 +61,13 @@ public:
 	static Value_List* Create(Value* pValue1, Value* pValue2);
 	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3);
 	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
+	template<typename T>
+	static Value_List* Create(const T* tbl, size_t n) {
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		pValueOwner->reserve(n);
+		for (size_t i = 0; i < n; i++) pValueOwner->push_back(new Value_Number(tbl[i]));
+		return new Value_List(pValueOwner.release());
+	}
 public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
