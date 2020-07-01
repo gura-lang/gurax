@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <GLFW/glfw3.h>
 #include "Util.h"
+#include "Consts.h"
 #include "Functions.h"
 #include "VType_GLFWcursor.h"
 #include "VType_GLFWgammaramp.h"

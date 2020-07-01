@@ -344,6 +344,41 @@ glfwSetGammaRamp(monitor:GLFWmonitor_p, ramp:const_GLFWgammaramp_p):void
 }
 
 //------------------------------------------------------------------------------
+// Function Registration: Native Access
+//------------------------------------------------------------------------------
+r.Register {
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: Vulkan
+//------------------------------------------------------------------------------
+r.Register {
+
+glfwVulkanSupported():int_Bool
+ 
+glfwGetRequiredInstanceExtensions():any = \
+	R'''
+	uint32_t count;
+	const char** rtn = glfwGetRequiredInstanceExtensions(&count);
+	if (!rtn) return Value::nil();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(count);
+	for (uint32_t i = 0; i < count; i++) {
+		pValueOwner->push_back(new Value_String(rtn[i]));
+	}
+	return new Value_List(pValueOwner.release());
+	'''
+ 
+//glfwGetInstanceProcAddress(instance:VkInstance, procname:const_char_p):GLFWvkproc
+ 
+//glfwGetPhysicalDevicePresentationSupport(instance:VkInstance, device:VkPhysicalDevice, queuefamily:uint32_t):int_Bool
+ 
+//glfwCreateWindowSurface(instance:VkInstance, window:GLFWwindow_p, allocator:const_VkAllocationCallbacks_p, surface:VkSurfaceKHR_p):VkResult
+
+}
+
+
+//------------------------------------------------------------------------------
 // Function Registration: Window
 //------------------------------------------------------------------------------
 r.Register {

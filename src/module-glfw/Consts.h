@@ -1,13 +1,13 @@
 //==============================================================================
-// Functions.h
+// VType_Consts.h
 //==============================================================================
-#ifndef GURAX_MODULE_GLFW_FUNCTIONS_H
-#define GURAX_MODULE_GLFW_FUNCTIONS_H
+#ifndef GURAX_MODULE_GLFW_CONSTS_H
+#define GURAX_MODULE_GLFW_CONSTS_H
 #include <gurax.h>
 
 Gurax_BeginModuleScope(glfw)
 
-void AssignFunctions(Frame& frame);
+void AssignConsts(Frame& frame);
 
 Gurax_EndModuleScope(glfw)
 

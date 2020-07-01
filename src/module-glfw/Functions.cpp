@@ -1045,6 +1045,45 @@ Gurax_ImplementFunction(glfwSetGammaRamp)
 	return Value::nil();
 }
 
+// glfwVulkanSupported()
+Gurax_DeclareFunction(glfwVulkanSupported)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwVulkanSupported)
+{
+	// Function body
+	bool rtn =(glfwVulkanSupported() == GLFW_TRUE);
+	return new Value_Bool(rtn);
+}
+
+// glfwGetRequiredInstanceExtensions()
+Gurax_DeclareFunction(glfwGetRequiredInstanceExtensions)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwGetRequiredInstanceExtensions)
+{
+	// Function body
+	uint32_t count;
+	const char** rtn = glfwGetRequiredInstanceExtensions(&count);
+	if (!rtn) return Value::nil();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(count);
+	for (uint32_t i = 0; i < count; i++) {
+		pValueOwner->push_back(new Value_String(rtn[i]));
+	}
+	return new Value_List(pValueOwner.release());
+}
+
 // glfwDefaultWindowHints()
 Gurax_DeclareFunction(glfwDefaultWindowHints)
 {
@@ -1871,6 +1910,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwSetGamma));
 	frame.Assign(Gurax_CreateFunction(glfwGetGammaRamp));
 	frame.Assign(Gurax_CreateFunction(glfwSetGammaRamp));
+	frame.Assign(Gurax_CreateFunction(glfwVulkanSupported));
+	frame.Assign(Gurax_CreateFunction(glfwGetRequiredInstanceExtensions));
 	frame.Assign(Gurax_CreateFunction(glfwDefaultWindowHints));
 	frame.Assign(Gurax_CreateFunction(glfwWindowHint));
 	frame.Assign(Gurax_CreateFunction(glfwWindowHintString));
