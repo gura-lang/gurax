@@ -68,8 +68,10 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_GLFWcursor);
+	Assign(VTYPE_GLFWgammaramp);
 	Assign(VTYPE_GLFWimage);
 	Assign(VTYPE_GLFWmonitor);
+	Assign(VTYPE_GLFWvidmode);
 	Assign(VTYPE_GLFWwindow);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));

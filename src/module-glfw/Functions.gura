@@ -1,15 +1,18 @@
 #!/usr/bin/env gurax
 import(cbridge)
 
+//------------------------------------------------------------------------------
+// Type Information
+//------------------------------------------------------------------------------
 @(cbridge.TypeInfo) {
 	{ 'int_ErrorIfFalse', 'int', 'Nil', '', '',
 		R'''
-		if (${caller} != GLFW_TRUE) IssueError();
+		if(${caller} != GLFW_TRUE) IssueError();
 		return Value::nil();
 		''' }
 	{ 'int_Bool', 'int', 'Bool', '', '',
 		R'''
-		bool rtn = (${caller} == GLFW_TRUE);
+		bool rtn =(${caller} == GLFW_TRUE);
 		return new Value_Bool(rtn);
 		''' }
 	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
@@ -18,7 +21,7 @@ import(cbridge)
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if (${this.cType} rtn = ${caller}) {
+		if(${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -30,7 +33,7 @@ import(cbridge)
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if (${this.cType} rtn = ${caller}) {
+		if(${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -42,7 +45,31 @@ import(cbridge)
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if (${this.cType} rtn = ${caller}) {
+		if(${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		IssueError();
+		return Value::nil();
+		''' }
+	{ 'const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp',
+		R'''
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		''', R'''
+		if(${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		IssueError();
+		return Value::nil();
+		''' }
+	{ 'const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode',
+		R'''
+		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+		''', R'''
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		''', R'''
+		if(${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -54,7 +81,7 @@ import(cbridge)
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if (${this.cType} rtn = ${caller}) {
+		if(${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -66,7 +93,7 @@ import(cbridge)
 		''', R'''
 		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		''', R'''
-		if (${this.cType} rtn = ${caller}) {
+		if(${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
 		}
 		IssueError();
@@ -75,10 +102,29 @@ import(cbridge)
 }
 
 r = cbridge.Renderer()
+
 //------------------------------------------------------------------------------
-// Initialization, version and error
+// Function Registration: Context
 //------------------------------------------------------------------------------
 r.Register {
+
+glfwMakeContextCurrent(window:GLFWwindow_p):void
+ 
+glfwGetCurrentContext():GLFWwindow_p
+ 
+glfwSwapInterval(interval:int):void
+ 
+glfwExtensionSupported(extension:const_char_p):int_Bool
+ 
+//glfwGetProcAddress(procname:const_char_p):GLFWglproc
+ 
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: Initialization, version and error
+//------------------------------------------------------------------------------
+r.Register {
+
 glfwInit():int_ErrorIfFalse
 
 glfwTerminate():void
@@ -103,38 +149,10 @@ glfwGetError():String = \
 
 //glfwSetErrorCallback()
 
-glfwDefaultWindowHints():void
-
-glfwWindowHint(hint:int, value:int):void
-
-glfwWindowHintString(hint:int, value:const_char_p):void
-
-glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
-
-glfwDestroyWindow(window:GLFWwindow_p):void
-
-glfwWindowShouldClose(window:GLFWwindow_p):bool
-
-glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
-
-glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):void
-
-glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = \
-	R'''
-	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
-	return Value::nil();
-	'''
-
-glfwGetWindowPos(window:GLFWwindow_p):bool = \
-	R'''
-	int xpos, ypos;
-	glfwGetWindowPos(window, &xpos, &ypos);
-	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
-	'''
 }
 
 //------------------------------------------------------------------------------
-// Input
+// Function Registration: Input
 //------------------------------------------------------------------------------
 r.Register {
 
@@ -190,7 +208,7 @@ glfwJoystickPresent(jid:int):int
 glfwGetJoystickAxes(jid:int):any = \
 	R'''
 	int count;
-	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
+	if(const float* rtn = glfwGetJoystickAxes(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -199,7 +217,7 @@ glfwGetJoystickAxes(jid:int):any = \
 glfwGetJoystickButtons(jid:int):any = \
 	R'''
 	int count;
-	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
+	if(const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -208,7 +226,7 @@ glfwGetJoystickButtons(jid:int):any = \
 glfwGetJoystickHats(jid:int):any = \
 	R'''
 	int count;
-	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
+	if(const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
 		return Value_List::Create(rtn, count);
 	}
 	return Value::nil();
@@ -243,6 +261,216 @@ glfwSetTime(time:double):void
 glfwGetTimerValue():uint64_t
 
 glfwGetTimerFrequency():uint64_t
+
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: Monitor
+//------------------------------------------------------------------------------
+r.Register {
+
+glfwGetMonitors():any = \
+	R'''
+	int count;
+	GLFWmonitor** rtn = glfwGetMonitors(&count);
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(count);
+	for (int i = 0; i < count; i++) {
+		pValueOwner->push_back(new Value_GLFWmonitor(rtn[i]));
+	}
+	return new Value_List(pValueOwner.release());
+	'''
+
+glfwGetPrimaryMonitor():GLFWmonitor_p
+ 
+glfwGetMonitorPos(monitor:GLFWmonitor_p):any = \
+	R'''
+	int xpos, ypos;
+	glfwGetMonitorPos(monitor, &xpos, &ypos);
+	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+	'''
+ 
+glfwGetMonitorWorkarea(monitor:GLFWmonitor_p):any = \
+	R'''
+	int xpos, ypos, width, height;
+	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &width, &height);
+	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos),
+						new Value_Number(width), new Value_Number(height));
+	'''
+ 
+glfwGetMonitorPhysicalSize(monitor:GLFWmonitor_p):any = \
+	R'''
+	int widthMM, heightMM;
+	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
+	return Value_List::Create(new Value_Number(widthMM), new Value_Number(heightMM));
+	'''
+ 
+glfwGetMonitorContentScale(monitor:GLFWmonitor_p):any = \
+	R'''
+	float xscale, yscale;
+	glfwGetMonitorContentScale(monitor, &xscale, &yscale);
+	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
+	'''
+ 
+glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
+ 
+//glfwSetMonitorUserPointer(monitor:GLFWmonitor_p, pointer:void_p)
+ 
+//glfwGetMonitorUserPointer(monitor:GLFWmonitor_p):void_p
+ 
+//glfwSetMonitorCallback(callback:GLFWmonitorfun):GLFWmonitorfun
+ 
+glfwGetVideoModes(monitor:GLFWmonitor_p):any = \
+	R'''
+	int count;
+	const GLFWvidmode* rtn = glfwGetVideoModes(monitor, &count);
+	if (!rtn) return Value::nil();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(count);
+	for (int i = 0; i < count; i++) {
+		pValueOwner->push_back(new Value_GLFWvidmode(&rtn[i]));
+	}
+	return new Value_List(pValueOwner.release());
+	'''
+ 
+glfwGetVideoMode(monitor:GLFWmonitor_p):const_GLFWvidmode_p
+ 
+glfwSetGamma(monitor:GLFWmonitor_p, gamma:float):void
+ 
+glfwGetGammaRamp(monitor:GLFWmonitor_p):const_GLFWgammaramp_p
+ 
+glfwSetGammaRamp(monitor:GLFWmonitor_p, ramp:const_GLFWgammaramp_p):void
+
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: Window
+//------------------------------------------------------------------------------
+r.Register {
+
+glfwDefaultWindowHints():void
+
+glfwWindowHint(hint:int, value:int):void
+
+glfwWindowHintString(hint:int, value:const_char_p):void
+
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
+
+glfwDestroyWindow(window:GLFWwindow_p):void
+
+glfwWindowShouldClose(window:GLFWwindow_p):bool
+
+glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
+
+glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):void
+
+glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = \
+	R'''
+	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
+	return Value::nil();
+	'''
+
+glfwGetWindowPos(window:GLFWwindow_p):any = \
+	R'''
+	int xpos, ypos;
+	glfwGetWindowPos(window, &xpos, &ypos);
+	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+	'''
+
+glfwSetWindowPos(window:GLFWwindow_p, xpos:int, ypos:int):void
+
+glfwGetWindowSize(window:GLFWwindow_p):any = \
+	R'''
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+	'''
+
+glfwSetWindowSizeLimits(window:GLFWwindow_p, minwidth:int, minheight:int, maxwidth:int, maxheight:int):void
+
+glfwSetWindowAspectRatio(window:GLFWwindow_p, numer:int, denom:int):void
+
+glfwSetWindowSize(window:GLFWwindow_p, width:int, height:int):void
+
+glfwGetFramebufferSize(window:GLFWwindow_p):any = \
+	R'''
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+	'''
+
+glfwGetWindowFrameSize(window:GLFWwindow_p):any = \
+	R'''
+	int left, top, right, bottom;
+	glfwGetWindowFrameSize(window, &left, &top, &right, &bottom);
+	return Value_List::Create(new Value_Number(left), new Value_Number(top),
+							new Value_Number(right), new Value_Number(bottom));
+	'''
+
+glfwGetWindowContentScale(window:GLFWwindow_p):any = \
+	R'''
+	float xscale, yscale;
+	glfwGetWindowContentScale(window, &xscale, &yscale);
+	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
+	'''
+
+glfwGetWindowOpacity(window:GLFWwindow_p):float
+
+glfwSetWindowOpacity(window:GLFWwindow_p, opacity:float):void
+
+glfwIconifyWindow(window:GLFWwindow_p):void
+
+glfwRestoreWindow(window:GLFWwindow_p):void
+ 
+glfwMaximizeWindow(window:GLFWwindow_p):void
+ 
+glfwShowWindow(window:GLFWwindow_p):void
+ 
+glfwHideWindow(window:GLFWwindow_p):void
+ 
+glfwFocusWindow(window:GLFWwindow_p):void
+ 
+glfwRequestWindowAttention(window:GLFWwindow_p):void
+ 
+glfwGetWindowMonitor(window:GLFWwindow_p):GLFWmonitor_p
+ 
+glfwSetWindowMonitor(window:GLFWwindow_p, monitor:GLFWmonitor_p, xpos:int, ypos:int, width:int, height:int, refreshRate:int):void
+ 
+glfwGetWindowAttrib(window:GLFWwindow_p, attrib:int):int
+ 
+glfwSetWindowAttrib(window:GLFWwindow_p, attrib:int, value:int):void
+ 
+//glfwSetWindowUserPointer(window:GLFWwindow_p, pointer:void_p):void
+ 
+//glfwGetWindowUserPointer(window:GLFWwindow_p):void_p
+ 
+//glfwSetWindowPosCallback(window:GLFWwindow_p, callback:GLFWwindowposfun):GLFWwindowposfun
+ 
+//glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:GLFWwindowsizefun):GLFWwindowsizefun
+ 
+//glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:GLFWwindowclosefun):GLFWwindowclosefun
+ 
+//glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:GLFWwindowrefreshfun):GLFWwindowrefreshfun
+ 
+//glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:GLFWwindowfocusfun):GLwindowfocusfun
+ 
+//glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:GLFWwindowiconifyfun):GLFWwindowiconifyfun
+ 
+//glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:GLFWwindowmaximizefun):GLFWwindowmaximizefun
+ 
+//glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:GLFWframebuffersizefun):GLFWframebuffersizefun
+ 
+//glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:GLFWwindowcontentscalefun):GLFWwindowcontentscalefun
+ 
+glfwPollEvents():void
+ 
+glfwWaitEvents():void
+ 
+glfwWaitEventsTimeout(timeout:double):void
+ 
+glfwPostEmptyEvent():void
+ 
+glfwSwapBuffers(window:GLFWwindow_p):void
 
 }
 

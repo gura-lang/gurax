@@ -8,8 +8,10 @@
 #include "Util.h"
 #include "Functions.h"
 #include "VType_GLFWcursor.h"
+#include "VType_GLFWgammaramp.h"
 #include "VType_GLFWimage.h"
 #include "VType_GLFWmonitor.h"
+#include "VType_GLFWvidmode.h"
 #include "VType_GLFWwindow.h"
 
 Gurax_BeginModuleHeader(glfw)

@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_GLFWmonitor.cpp
+// VType_GLFWvidmode.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -25,11 +25,11 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
-// VType_GLFWmonitor
+// VType_GLFWvidmode
 //------------------------------------------------------------------------------
-VType_GLFWmonitor VTYPE_GLFWmonitor("GLFWmonitor");
+VType_GLFWvidmode VTYPE_GLFWvidmode("GLFWvidmode");
 
-void VType_GLFWmonitor::DoPrepare(Frame& frameOuter)
+void VType_GLFWvidmode::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -38,13 +38,13 @@ void VType_GLFWmonitor::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_GLFWmonitor
+// Value_GLFWvidmode
 //------------------------------------------------------------------------------
-VType& Value_GLFWmonitor::vtype = VTYPE_GLFWmonitor;
+VType& Value_GLFWvidmode::vtype = VTYPE_GLFWvidmode;
 
-String Value_GLFWmonitor::ToString(const StringStyle& ss) const
+String Value_GLFWvidmode::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "GLFWmonitor");
+	return ToStringGeneric(ss, "GLFWvidmode");
 }
 
 Gurax_EndModuleScope(glfw)

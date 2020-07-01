@@ -36,8 +36,10 @@ target_sources(glfw.gurd PRIVATE
 	Util.cpp
 	Functions.cpp
 	VType_GLFWcursor.cpp
+	VType_GLFWgammaramp.cpp
 	VType_GLFWimage.cpp
 	VType_GLFWmonitor.cpp
+	VType_GLFWvidmode.cpp
 	VType_GLFWwindow.cpp)
 #-------------------------------------------------------------------------------
 # Link
