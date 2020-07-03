@@ -1,0 +1,7 @@
+#!/usr/bin/env
+import(glfw):binary {*}
+
+GLFWwindow.DestroyWindow() = glfwDestroyWindow(this)
+GLFWwindow.WindowShouldClose() = glfwWindowShouldClose(this)
+GLFWwindow.SetWindowShouldClose(value:Bool) = glfwSetWindowShouldClose(this, value)
+GLFWwindow.SetWindowTitle(title:String) = glfwSetWindowTitle(this, title)

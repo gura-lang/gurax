@@ -55,3 +55,6 @@ target_link_libraries(glfw.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS glfw.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS
+	script/glfw.gura
+	DESTINATION module/site)
