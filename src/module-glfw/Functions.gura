@@ -29,91 +29,29 @@ moduleName = 'glfw'
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-	{ 'const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-	{ 'const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-	{ 'const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-	{ 'GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-	{ 'GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow',
-		R'''
-		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
 }
+
+TypeInfo_Entity(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
+	R'''
+	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+	''', R'''
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	''', R'''
+	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	''', R'''
+	if (${this.cType} rtn = ${caller}) {
+		return new Value_${this.vtype}(rtn);
+	}
+	IssueError();
+	return Value::nil();
+	''')
+
+TypeInfo_Entity('GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor')
+TypeInfo_Entity('const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage')
+TypeInfo_Entity('const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp')
+TypeInfo_Entity('const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode')
+TypeInfo_Entity('GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor')
+TypeInfo_Entity('GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow')
 
 r = cbridge.Renderer()
 

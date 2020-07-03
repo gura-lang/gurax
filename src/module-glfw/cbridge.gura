@@ -41,24 +41,24 @@ TypeInfo = class {
 TypeInfo('any', '', '', 'Any', '', '', '', '')
 
 TypeInfo('void', '', 'void', 'Nil', '', '', '',
-R'''
-${caller};
-return Value::nil();
-''')
+	R'''
+	${caller};
+	return Value::nil();
+	''')
 
 TypeInfo('String', '', '', 'String', '', '', '', '')
 
 TypeInfo_Number(decl:String, moduleName:String, cType:String) = TypeInfo(decl, moduleName, cType, 'Number',
-R'''
-${this.cType} ${varName} = args.PickNumber<${this.cType}>();
-''', R'''
-${this.cType} ${varName} = args.IsValid()? args.PickNumber<${this.cType}>() : 0;
-''', R'''
-auto ${varName} = args.PickNumList<${this.cType}>();
-''', R'''
-${this.cType} rtn = ${caller};
-return new Value_${this.vtype}(rtn);
-''')
+	R'''
+	${this.cType} ${varName} = args.PickNumber<${this.cType}>();
+	''', R'''
+	${this.cType} ${varName} = args.IsValid()? args.PickNumber<${this.cType}>() : 0;
+	''', R'''
+	auto ${varName} = args.PickNumList<${this.cType}>();
+	''', R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(rtn);
+	''')
 
 TypeInfo_Number('char', '', 'char')
 TypeInfo_Number('short', '', 'short')
