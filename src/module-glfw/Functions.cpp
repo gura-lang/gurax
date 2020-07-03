@@ -5,7 +5,7 @@
 
 Gurax_BeginModuleScope(glfw)
 
-// glfwMakeContextCurrent()
+// glfw.glfwMakeContextCurrent(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwMakeContextCurrent)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25,7 +25,7 @@ Gurax_ImplementFunction(glfwMakeContextCurrent)
 	return Value::nil();
 }
 
-// glfwGetCurrentContext()
+// glfw.glfwGetCurrentContext()
 Gurax_DeclareFunction(glfwGetCurrentContext)
 {
 	Declare(VTYPE_GLFWwindow, Flag::None);
@@ -44,7 +44,7 @@ Gurax_ImplementFunction(glfwGetCurrentContext)
 	return Value::nil();
 }
 
-// glfwSwapInterval()
+// glfw.glfwSwapInterval(interval:Number)
 Gurax_DeclareFunction(glfwSwapInterval)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -64,7 +64,7 @@ Gurax_ImplementFunction(glfwSwapInterval)
 	return Value::nil();
 }
 
-// glfwExtensionSupported()
+// glfw.glfwExtensionSupported(extension:String)
 Gurax_DeclareFunction(glfwExtensionSupported)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -84,7 +84,7 @@ Gurax_ImplementFunction(glfwExtensionSupported)
 	return new Value_Bool(rtn);
 }
 
-// glfwInit()
+// glfw.glfwInit()
 Gurax_DeclareFunction(glfwInit)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -100,7 +100,7 @@ Gurax_ImplementFunction(glfwInit)
 	return Value::nil();
 }
 
-// glfwTerminate()
+// glfw.glfwTerminate()
 Gurax_DeclareFunction(glfwTerminate)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -116,7 +116,7 @@ Gurax_ImplementFunction(glfwTerminate)
 	return Value::nil();
 }
 
-// glfwInitHint()
+// glfw.glfwInitHint(hint:Number, value:Number)
 Gurax_DeclareFunction(glfwInitHint)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -138,7 +138,7 @@ Gurax_ImplementFunction(glfwInitHint)
 	return Value::nil();
 }
 
-// glfwGetVersion()
+// glfw.glfwGetVersion()
 Gurax_DeclareFunction(glfwGetVersion)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -155,7 +155,7 @@ Gurax_ImplementFunction(glfwGetVersion)
 	return Value_List::Create(new Value_Number(major), new Value_Number(minor), new Value_Number(rev));
 }
 
-// glfwGetVersionString()
+// glfw.glfwGetVersionString()
 Gurax_DeclareFunction(glfwGetVersionString)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -171,7 +171,7 @@ Gurax_ImplementFunction(glfwGetVersionString)
 	return new Value_String(rtn);
 }
 
-// glfwGetError()
+// glfw.glfwGetError()
 Gurax_DeclareFunction(glfwGetError)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -188,7 +188,7 @@ Gurax_ImplementFunction(glfwGetError)
 	return description? new Value_String(description) : Value::nil();
 }
 
-// glfwGetInputMode()
+// glfw.glfwGetInputMode(window:glfw.GLFWwindow, mode:Number)
 Gurax_DeclareFunction(glfwGetInputMode)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -210,7 +210,7 @@ Gurax_ImplementFunction(glfwGetInputMode)
 	return new Value_Number(rtn);
 }
 
-// glfwSetInputMode()
+// glfw.glfwSetInputMode(window:glfw.GLFWwindow, mode:Number, value:Number)
 Gurax_DeclareFunction(glfwSetInputMode)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -234,7 +234,7 @@ Gurax_ImplementFunction(glfwSetInputMode)
 	return Value::nil();
 }
 
-// glfwRawMouseMotionSupported()
+// glfw.glfwRawMouseMotionSupported()
 Gurax_DeclareFunction(glfwRawMouseMotionSupported)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -250,7 +250,7 @@ Gurax_ImplementFunction(glfwRawMouseMotionSupported)
 	return new Value_Bool(rtn);
 }
 
-// glfwGetKeyName()
+// glfw.glfwGetKeyName(key:Number, scancode:Number)
 Gurax_DeclareFunction(glfwGetKeyName)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -274,7 +274,7 @@ Gurax_ImplementFunction(glfwGetKeyName)
 	return Value::nil();
 }
 
-// glfwGetKeyScancode()
+// glfw.glfwGetKeyScancode(key:Number)
 Gurax_DeclareFunction(glfwGetKeyScancode)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -294,7 +294,7 @@ Gurax_ImplementFunction(glfwGetKeyScancode)
 	return new Value_Number(rtn);
 }
 
-// glfwGetKey()
+// glfw.glfwGetKey(window:glfw.GLFWwindow, key:Number)
 Gurax_DeclareFunction(glfwGetKey)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -316,7 +316,7 @@ Gurax_ImplementFunction(glfwGetKey)
 	return new Value_Number(rtn);
 }
 
-// glfwGetMouseButton()
+// glfw.glfwGetMouseButton(window:glfw.GLFWwindow, button:Number)
 Gurax_DeclareFunction(glfwGetMouseButton)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -338,7 +338,7 @@ Gurax_ImplementFunction(glfwGetMouseButton)
 	return new Value_Number(rtn);
 }
 
-// glfwGetCursorPos()
+// glfw.glfwGetCursorPos(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetCursorPos)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -359,7 +359,7 @@ Gurax_ImplementFunction(glfwGetCursorPos)
 	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
-// glfwSetCursorPos()
+// glfw.glfwSetCursorPos(window:glfw.GLFWwindow, xpos:Number, ypos:Number)
 Gurax_DeclareFunction(glfwSetCursorPos)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -383,7 +383,7 @@ Gurax_ImplementFunction(glfwSetCursorPos)
 	return Value::nil();
 }
 
-// glfwCreateCursor()
+// glfw.glfwCreateCursor(image:glfw.GLFWimage, xhot:Number, yhot:Number)
 Gurax_DeclareFunction(glfwCreateCursor)
 {
 	Declare(VTYPE_GLFWcursor, Flag::None);
@@ -410,7 +410,7 @@ Gurax_ImplementFunction(glfwCreateCursor)
 	return Value::nil();
 }
 
-// glfwCreateStandardCursor()
+// glfw.glfwCreateStandardCursor(shape:Number)
 Gurax_DeclareFunction(glfwCreateStandardCursor)
 {
 	Declare(VTYPE_GLFWcursor, Flag::None);
@@ -433,7 +433,7 @@ Gurax_ImplementFunction(glfwCreateStandardCursor)
 	return Value::nil();
 }
 
-// glfwDestroyCursor()
+// glfw.glfwDestroyCursor(cursor:glfw.GLFWcursor)
 Gurax_DeclareFunction(glfwDestroyCursor)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -453,7 +453,7 @@ Gurax_ImplementFunction(glfwDestroyCursor)
 	return Value::nil();
 }
 
-// glfwSetCursor()
+// glfw.glfwSetCursor(window:glfw.GLFWwindow, cursor:glfw.GLFWcursor)
 Gurax_DeclareFunction(glfwSetCursor)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -475,7 +475,7 @@ Gurax_ImplementFunction(glfwSetCursor)
 	return Value::nil();
 }
 
-// glfwJoystickPresent()
+// glfw.glfwJoystickPresent(jid:Number)
 Gurax_DeclareFunction(glfwJoystickPresent)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -495,7 +495,7 @@ Gurax_ImplementFunction(glfwJoystickPresent)
 	return new Value_Number(rtn);
 }
 
-// glfwGetJoystickAxes()
+// glfw.glfwGetJoystickAxes(jid:Number)
 Gurax_DeclareFunction(glfwGetJoystickAxes)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -518,7 +518,7 @@ Gurax_ImplementFunction(glfwGetJoystickAxes)
 	return Value::nil();
 }
 
-// glfwGetJoystickButtons()
+// glfw.glfwGetJoystickButtons(jid:Number)
 Gurax_DeclareFunction(glfwGetJoystickButtons)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -541,7 +541,7 @@ Gurax_ImplementFunction(glfwGetJoystickButtons)
 	return Value::nil();
 }
 
-// glfwGetJoystickHats()
+// glfw.glfwGetJoystickHats(jid:Number)
 Gurax_DeclareFunction(glfwGetJoystickHats)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -564,7 +564,7 @@ Gurax_ImplementFunction(glfwGetJoystickHats)
 	return Value::nil();
 }
 
-// glfwGetJoystickName()
+// glfw.glfwGetJoystickName(jid:Number)
 Gurax_DeclareFunction(glfwGetJoystickName)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -586,7 +586,7 @@ Gurax_ImplementFunction(glfwGetJoystickName)
 	return Value::nil();
 }
 
-// glfwGetJoystickGUID()
+// glfw.glfwGetJoystickGUID(jid:Number)
 Gurax_DeclareFunction(glfwGetJoystickGUID)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -608,7 +608,7 @@ Gurax_ImplementFunction(glfwGetJoystickGUID)
 	return Value::nil();
 }
 
-// glfwJoystickIsGamepad()
+// glfw.glfwJoystickIsGamepad(jid:Number)
 Gurax_DeclareFunction(glfwJoystickIsGamepad)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -628,7 +628,7 @@ Gurax_ImplementFunction(glfwJoystickIsGamepad)
 	return new Value_Bool(rtn);
 }
 
-// glfwUpdateGamepadMappings()
+// glfw.glfwUpdateGamepadMappings(string:String)
 Gurax_DeclareFunction(glfwUpdateGamepadMappings)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -648,7 +648,7 @@ Gurax_ImplementFunction(glfwUpdateGamepadMappings)
 	return Value::nil();
 }
 
-// glfwGetGamepadName()
+// glfw.glfwGetGamepadName(jid:Number)
 Gurax_DeclareFunction(glfwGetGamepadName)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -670,7 +670,7 @@ Gurax_ImplementFunction(glfwGetGamepadName)
 	return Value::nil();
 }
 
-// glfwSetClipboardString()
+// glfw.glfwSetClipboardString(window:glfw.GLFWwindow, string:String)
 Gurax_DeclareFunction(glfwSetClipboardString)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -692,7 +692,7 @@ Gurax_ImplementFunction(glfwSetClipboardString)
 	return Value::nil();
 }
 
-// glfwGetClipboardString()
+// glfw.glfwGetClipboardString(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetClipboardString)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -714,7 +714,7 @@ Gurax_ImplementFunction(glfwGetClipboardString)
 	return Value::nil();
 }
 
-// glfwGetTime()
+// glfw.glfwGetTime()
 Gurax_DeclareFunction(glfwGetTime)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -730,7 +730,7 @@ Gurax_ImplementFunction(glfwGetTime)
 	return new Value_Number(rtn);
 }
 
-// glfwSetTime()
+// glfw.glfwSetTime(time:Number)
 Gurax_DeclareFunction(glfwSetTime)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -750,7 +750,7 @@ Gurax_ImplementFunction(glfwSetTime)
 	return Value::nil();
 }
 
-// glfwGetTimerValue()
+// glfw.glfwGetTimerValue()
 Gurax_DeclareFunction(glfwGetTimerValue)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -766,7 +766,7 @@ Gurax_ImplementFunction(glfwGetTimerValue)
 	return new Value_Number(rtn);
 }
 
-// glfwGetTimerFrequency()
+// glfw.glfwGetTimerFrequency()
 Gurax_DeclareFunction(glfwGetTimerFrequency)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -782,7 +782,7 @@ Gurax_ImplementFunction(glfwGetTimerFrequency)
 	return new Value_Number(rtn);
 }
 
-// glfwGetMonitors()
+// glfw.glfwGetMonitors()
 Gurax_DeclareFunction(glfwGetMonitors)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -804,7 +804,7 @@ Gurax_ImplementFunction(glfwGetMonitors)
 	return new Value_List(pValueOwner.release());
 }
 
-// glfwGetPrimaryMonitor()
+// glfw.glfwGetPrimaryMonitor()
 Gurax_DeclareFunction(glfwGetPrimaryMonitor)
 {
 	Declare(VTYPE_GLFWmonitor, Flag::None);
@@ -823,7 +823,7 @@ Gurax_ImplementFunction(glfwGetPrimaryMonitor)
 	return Value::nil();
 }
 
-// glfwGetMonitorPos()
+// glfw.glfwGetMonitorPos(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetMonitorPos)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -844,7 +844,7 @@ Gurax_ImplementFunction(glfwGetMonitorPos)
 	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
-// glfwGetMonitorWorkarea()
+// glfw.glfwGetMonitorWorkarea(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetMonitorWorkarea)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -866,7 +866,7 @@ Gurax_ImplementFunction(glfwGetMonitorWorkarea)
 						new Value_Number(width), new Value_Number(height));
 }
 
-// glfwGetMonitorPhysicalSize()
+// glfw.glfwGetMonitorPhysicalSize(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetMonitorPhysicalSize)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -887,7 +887,7 @@ Gurax_ImplementFunction(glfwGetMonitorPhysicalSize)
 	return Value_List::Create(new Value_Number(widthMM), new Value_Number(heightMM));
 }
 
-// glfwGetMonitorContentScale()
+// glfw.glfwGetMonitorContentScale(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetMonitorContentScale)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -908,7 +908,7 @@ Gurax_ImplementFunction(glfwGetMonitorContentScale)
 	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
 }
 
-// glfwGetMonitorName()
+// glfw.glfwGetMonitorName(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetMonitorName)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -928,7 +928,7 @@ Gurax_ImplementFunction(glfwGetMonitorName)
 	return new Value_String(rtn);
 }
 
-// glfwGetVideoModes()
+// glfw.glfwGetVideoModes(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetVideoModes)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -955,7 +955,7 @@ Gurax_ImplementFunction(glfwGetVideoModes)
 	return new Value_List(pValueOwner.release());
 }
 
-// glfwGetVideoMode()
+// glfw.glfwGetVideoMode(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetVideoMode)
 {
 	Declare(VTYPE_GLFWvidmode, Flag::None);
@@ -978,7 +978,7 @@ Gurax_ImplementFunction(glfwGetVideoMode)
 	return Value::nil();
 }
 
-// glfwSetGamma()
+// glfw.glfwSetGamma(monitor:glfw.GLFWmonitor, gamma:Number)
 Gurax_DeclareFunction(glfwSetGamma)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1000,7 +1000,7 @@ Gurax_ImplementFunction(glfwSetGamma)
 	return Value::nil();
 }
 
-// glfwGetGammaRamp()
+// glfw.glfwGetGammaRamp(monitor:glfw.GLFWmonitor)
 Gurax_DeclareFunction(glfwGetGammaRamp)
 {
 	Declare(VTYPE_GLFWgammaramp, Flag::None);
@@ -1023,7 +1023,7 @@ Gurax_ImplementFunction(glfwGetGammaRamp)
 	return Value::nil();
 }
 
-// glfwSetGammaRamp()
+// glfw.glfwSetGammaRamp(monitor:glfw.GLFWmonitor, ramp:glfw.GLFWgammaramp)
 Gurax_DeclareFunction(glfwSetGammaRamp)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1045,7 +1045,7 @@ Gurax_ImplementFunction(glfwSetGammaRamp)
 	return Value::nil();
 }
 
-// glfwVulkanSupported()
+// glfw.glfwVulkanSupported()
 Gurax_DeclareFunction(glfwVulkanSupported)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1061,7 +1061,7 @@ Gurax_ImplementFunction(glfwVulkanSupported)
 	return new Value_Bool(rtn);
 }
 
-// glfwGetRequiredInstanceExtensions()
+// glfw.glfwGetRequiredInstanceExtensions()
 Gurax_DeclareFunction(glfwGetRequiredInstanceExtensions)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1084,7 +1084,7 @@ Gurax_ImplementFunction(glfwGetRequiredInstanceExtensions)
 	return new Value_List(pValueOwner.release());
 }
 
-// glfwDefaultWindowHints()
+// glfw.glfwDefaultWindowHints()
 Gurax_DeclareFunction(glfwDefaultWindowHints)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1100,7 +1100,7 @@ Gurax_ImplementFunction(glfwDefaultWindowHints)
 	return Value::nil();
 }
 
-// glfwWindowHint()
+// glfw.glfwWindowHint(hint:Number, value:Number)
 Gurax_DeclareFunction(glfwWindowHint)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1122,7 +1122,7 @@ Gurax_ImplementFunction(glfwWindowHint)
 	return Value::nil();
 }
 
-// glfwWindowHintString()
+// glfw.glfwWindowHintString(hint:Number, value:String)
 Gurax_DeclareFunction(glfwWindowHintString)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1144,7 +1144,7 @@ Gurax_ImplementFunction(glfwWindowHintString)
 	return Value::nil();
 }
 
-// glfwCreateWindow()
+// glfw.glfwCreateWindow(width:Number, height:Number, title:String, monitor?:glfw.GLFWmonitor, share?:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwCreateWindow)
 {
 	Declare(VTYPE_GLFWwindow, Flag::None);
@@ -1175,7 +1175,7 @@ Gurax_ImplementFunction(glfwCreateWindow)
 	return Value::nil();
 }
 
-// glfwDestroyWindow()
+// glfw.glfwDestroyWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwDestroyWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1195,7 +1195,7 @@ Gurax_ImplementFunction(glfwDestroyWindow)
 	return Value::nil();
 }
 
-// glfwWindowShouldClose()
+// glfw.glfwWindowShouldClose(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwWindowShouldClose)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1215,7 +1215,7 @@ Gurax_ImplementFunction(glfwWindowShouldClose)
 	return new Value_Bool(rtn);
 }
 
-// glfwSetWindowShouldClose()
+// glfw.glfwSetWindowShouldClose(window:glfw.GLFWwindow, value:Bool)
 Gurax_DeclareFunction(glfwSetWindowShouldClose)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1237,7 +1237,7 @@ Gurax_ImplementFunction(glfwSetWindowShouldClose)
 	return Value::nil();
 }
 
-// glfwSetWindowTitle()
+// glfw.glfwSetWindowTitle(window:glfw.GLFWwindow, title:String)
 Gurax_DeclareFunction(glfwSetWindowTitle)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1259,7 +1259,7 @@ Gurax_ImplementFunction(glfwSetWindowTitle)
 	return Value::nil();
 }
 
-// glfwSetWindowIcon()
+// glfw.glfwSetWindowIcon(window:glfw.GLFWwindow, images[]:glfw.GLFWimage)
 Gurax_DeclareFunction(glfwSetWindowIcon)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1281,7 +1281,7 @@ Gurax_ImplementFunction(glfwSetWindowIcon)
 	return Value::nil();
 }
 
-// glfwGetWindowPos()
+// glfw.glfwGetWindowPos(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowPos)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1302,7 +1302,7 @@ Gurax_ImplementFunction(glfwGetWindowPos)
 	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
-// glfwSetWindowPos()
+// glfw.glfwSetWindowPos(window:glfw.GLFWwindow, xpos:Number, ypos:Number)
 Gurax_DeclareFunction(glfwSetWindowPos)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1326,7 +1326,7 @@ Gurax_ImplementFunction(glfwSetWindowPos)
 	return Value::nil();
 }
 
-// glfwGetWindowSize()
+// glfw.glfwGetWindowSize(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowSize)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1347,7 +1347,7 @@ Gurax_ImplementFunction(glfwGetWindowSize)
 	return Value_List::Create(new Value_Number(width), new Value_Number(height));
 }
 
-// glfwSetWindowSizeLimits()
+// glfw.glfwSetWindowSizeLimits(window:glfw.GLFWwindow, minwidth:Number, minheight:Number, maxwidth:Number, maxheight:Number)
 Gurax_DeclareFunction(glfwSetWindowSizeLimits)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1375,7 +1375,7 @@ Gurax_ImplementFunction(glfwSetWindowSizeLimits)
 	return Value::nil();
 }
 
-// glfwSetWindowAspectRatio()
+// glfw.glfwSetWindowAspectRatio(window:glfw.GLFWwindow, numer:Number, denom:Number)
 Gurax_DeclareFunction(glfwSetWindowAspectRatio)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1399,7 +1399,7 @@ Gurax_ImplementFunction(glfwSetWindowAspectRatio)
 	return Value::nil();
 }
 
-// glfwSetWindowSize()
+// glfw.glfwSetWindowSize(window:glfw.GLFWwindow, width:Number, height:Number)
 Gurax_DeclareFunction(glfwSetWindowSize)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1423,7 +1423,7 @@ Gurax_ImplementFunction(glfwSetWindowSize)
 	return Value::nil();
 }
 
-// glfwGetFramebufferSize()
+// glfw.glfwGetFramebufferSize(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetFramebufferSize)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1444,7 +1444,7 @@ Gurax_ImplementFunction(glfwGetFramebufferSize)
 	return Value_List::Create(new Value_Number(width), new Value_Number(height));
 }
 
-// glfwGetWindowFrameSize()
+// glfw.glfwGetWindowFrameSize(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowFrameSize)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1466,7 +1466,7 @@ Gurax_ImplementFunction(glfwGetWindowFrameSize)
 							new Value_Number(right), new Value_Number(bottom));
 }
 
-// glfwGetWindowContentScale()
+// glfw.glfwGetWindowContentScale(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowContentScale)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1487,7 +1487,7 @@ Gurax_ImplementFunction(glfwGetWindowContentScale)
 	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
 }
 
-// glfwGetWindowOpacity()
+// glfw.glfwGetWindowOpacity(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowOpacity)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1507,7 +1507,7 @@ Gurax_ImplementFunction(glfwGetWindowOpacity)
 	return new Value_Number(rtn);
 }
 
-// glfwSetWindowOpacity()
+// glfw.glfwSetWindowOpacity(window:glfw.GLFWwindow, opacity:Number)
 Gurax_DeclareFunction(glfwSetWindowOpacity)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1529,7 +1529,7 @@ Gurax_ImplementFunction(glfwSetWindowOpacity)
 	return Value::nil();
 }
 
-// glfwIconifyWindow()
+// glfw.glfwIconifyWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwIconifyWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1549,7 +1549,7 @@ Gurax_ImplementFunction(glfwIconifyWindow)
 	return Value::nil();
 }
 
-// glfwRestoreWindow()
+// glfw.glfwRestoreWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwRestoreWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1569,7 +1569,7 @@ Gurax_ImplementFunction(glfwRestoreWindow)
 	return Value::nil();
 }
 
-// glfwMaximizeWindow()
+// glfw.glfwMaximizeWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwMaximizeWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1589,7 +1589,7 @@ Gurax_ImplementFunction(glfwMaximizeWindow)
 	return Value::nil();
 }
 
-// glfwShowWindow()
+// glfw.glfwShowWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwShowWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1609,7 +1609,7 @@ Gurax_ImplementFunction(glfwShowWindow)
 	return Value::nil();
 }
 
-// glfwHideWindow()
+// glfw.glfwHideWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwHideWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1629,7 +1629,7 @@ Gurax_ImplementFunction(glfwHideWindow)
 	return Value::nil();
 }
 
-// glfwFocusWindow()
+// glfw.glfwFocusWindow(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwFocusWindow)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1649,7 +1649,7 @@ Gurax_ImplementFunction(glfwFocusWindow)
 	return Value::nil();
 }
 
-// glfwRequestWindowAttention()
+// glfw.glfwRequestWindowAttention(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwRequestWindowAttention)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1669,7 +1669,7 @@ Gurax_ImplementFunction(glfwRequestWindowAttention)
 	return Value::nil();
 }
 
-// glfwGetWindowMonitor()
+// glfw.glfwGetWindowMonitor(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwGetWindowMonitor)
 {
 	Declare(VTYPE_GLFWmonitor, Flag::None);
@@ -1692,7 +1692,7 @@ Gurax_ImplementFunction(glfwGetWindowMonitor)
 	return Value::nil();
 }
 
-// glfwSetWindowMonitor()
+// glfw.glfwSetWindowMonitor(window:glfw.GLFWwindow, monitor:glfw.GLFWmonitor, xpos:Number, ypos:Number, width:Number, height:Number, refreshRate:Number)
 Gurax_DeclareFunction(glfwSetWindowMonitor)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1724,7 +1724,7 @@ Gurax_ImplementFunction(glfwSetWindowMonitor)
 	return Value::nil();
 }
 
-// glfwGetWindowAttrib()
+// glfw.glfwGetWindowAttrib(window:glfw.GLFWwindow, attrib:Number)
 Gurax_DeclareFunction(glfwGetWindowAttrib)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1746,7 +1746,7 @@ Gurax_ImplementFunction(glfwGetWindowAttrib)
 	return new Value_Number(rtn);
 }
 
-// glfwSetWindowAttrib()
+// glfw.glfwSetWindowAttrib(window:glfw.GLFWwindow, attrib:Number, value:Number)
 Gurax_DeclareFunction(glfwSetWindowAttrib)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1770,7 +1770,7 @@ Gurax_ImplementFunction(glfwSetWindowAttrib)
 	return Value::nil();
 }
 
-// glfwPollEvents()
+// glfw.glfwPollEvents()
 Gurax_DeclareFunction(glfwPollEvents)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1786,7 +1786,7 @@ Gurax_ImplementFunction(glfwPollEvents)
 	return Value::nil();
 }
 
-// glfwWaitEvents()
+// glfw.glfwWaitEvents()
 Gurax_DeclareFunction(glfwWaitEvents)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1802,7 +1802,7 @@ Gurax_ImplementFunction(glfwWaitEvents)
 	return Value::nil();
 }
 
-// glfwWaitEventsTimeout()
+// glfw.glfwWaitEventsTimeout(timeout:Number)
 Gurax_DeclareFunction(glfwWaitEventsTimeout)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1822,7 +1822,7 @@ Gurax_ImplementFunction(glfwWaitEventsTimeout)
 	return Value::nil();
 }
 
-// glfwPostEmptyEvent()
+// glfw.glfwPostEmptyEvent()
 Gurax_DeclareFunction(glfwPostEmptyEvent)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1838,7 +1838,7 @@ Gurax_ImplementFunction(glfwPostEmptyEvent)
 	return Value::nil();
 }
 
-// glfwSwapBuffers()
+// glfw.glfwSwapBuffers(window:glfw.GLFWwindow)
 Gurax_DeclareFunction(glfwSwapBuffers)
 {
 	Declare(VTYPE_Nil, Flag::None);

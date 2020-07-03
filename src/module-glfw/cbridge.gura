@@ -13,6 +13,7 @@ ErrorDone(expr:Expr, msg:String) = {
 //------------------------------------------------------------------------------
 TypeInfo = class {
 	decl:String
+	moduleName:String
 	cType:String
 	vtype:String
 	tmplPicker:Template
@@ -20,10 +21,10 @@ TypeInfo = class {
 	tmplPickerListVar:Template
 	tmplFunctionBody:Template
 	map:static = %{}
-	__init__(decl:String, cType:String, vtype:String,
+	__init__(decl:String, moduleName, cType:String, vtype:String,
 			codePicker:String, codePickerOpt:String,
 			codePickerVec:String, codeFunctionBody:String) = {
-		this.decl = decl, this.cType = cType, this.vtype = vtype
+		this.decl = decl, this.moduleName = moduleName, this.cType = cType, this.vtype = vtype
 		this.tmplPicker = Template().Parse(codePicker)
 		this.tmplPickerOpt = Template().Parse(codePickerOpt)
 		this.tmplPickerListVar = Template().Parse(codePickerVec)
@@ -34,19 +35,20 @@ TypeInfo = class {
 		cond(listVarFlag, this.tmplPickerListVar, cond(optionFlag, this.tmplPickerOpt, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
+	MakeFullTypeName() = cond(this.moduleName.IsEmpty(), this.vtype, this.moduleName + '.' + this.vtype)
 }
 
-TypeInfo('any', '', 'Any', '', '', '', '')
+TypeInfo('any', '', '', 'Any', '', '', '', '')
 
-TypeInfo('void', 'void', 'Nil', '', '', '',
+TypeInfo('void', '', 'void', 'Nil', '', '', '',
 R'''
 ${caller};
 return Value::nil();
 ''')
 
-TypeInfo('String', '', 'String', '', '', '', '')
+TypeInfo('String', '', '', 'String', '', '', '', '')
 
-TypeInfo_Number(decl:String, cType:String) = TypeInfo(decl, cType, 'Number',
+TypeInfo_Number(decl:String, moduleName:String, cType:String) = TypeInfo(decl, moduleName, cType, 'Number',
 R'''
 ${this.cType} ${varName} = args.PickNumber<${this.cType}>();
 ''', R'''
@@ -58,47 +60,47 @@ ${this.cType} rtn = ${caller};
 return new Value_${this.vtype}(rtn);
 ''')
 
-TypeInfo_Number('char', 'char')
-TypeInfo_Number('short', 'short')
-TypeInfo_Number('long', 'long')
-TypeInfo_Number('int', 'int')
-TypeInfo_Number('long_long', 'long long')
-TypeInfo_Number('float', 'float')
-TypeInfo_Number('double', 'double')
-TypeInfo_Number('unsigned_char', 'unsigned char')
-TypeInfo_Number('unsigned_short', 'unsigned short')
-TypeInfo_Number('unsigned_long', 'unsigned long')
-TypeInfo_Number('unsigned_int', 'unsigned int')
-TypeInfo_Number('unsigned_long_long', 'unsigned long long')
-TypeInfo_Number('int8_t', 'int8_t')
-TypeInfo_Number('int16_t', 'int16_t')
-TypeInfo_Number('int32_t', 'int32_t')
-TypeInfo_Number('int64_t', 'int64_t')
-TypeInfo_Number('uint8_t', 'uint8_t')
-TypeInfo_Number('uint16_t', 'uint16_t')
-TypeInfo_Number('uint32_t', 'uint32_t')
-TypeInfo_Number('uint64_t', 'uint64_t')
-TypeInfo_Number('Char', 'Char')
-TypeInfo_Number('UChar', 'UChar')
-TypeInfo_Number('Short', 'Short')
-TypeInfo_Number('UShort', 'UShort')
-TypeInfo_Number('Int', 'Int')
-TypeInfo_Number('UInt', 'UInt')
-TypeInfo_Number('Long', 'Long')
-TypeInfo_Number('ULong', 'ULong')
-TypeInfo_Number('Int8', 'Int8')
-TypeInfo_Number('UInt8', 'UInt8')
-TypeInfo_Number('Int16', 'Int16')
-TypeInfo_Number('UInt16', 'UInt16')
-TypeInfo_Number('Int32', 'Int32')
-TypeInfo_Number('UInt32', 'UInt32')
-TypeInfo_Number('Int64', 'Int64')
-TypeInfo_Number('UInt64', 'UInt64')
-TypeInfo_Number('Float', 'Float')
-TypeInfo_Number('Double', 'Double')
+TypeInfo_Number('char', '', 'char')
+TypeInfo_Number('short', '', 'short')
+TypeInfo_Number('long', '', 'long')
+TypeInfo_Number('int', '', 'int')
+TypeInfo_Number('long_long', '', 'long long')
+TypeInfo_Number('float', '', 'float')
+TypeInfo_Number('double', '', 'double')
+TypeInfo_Number('unsigned_char', '', 'unsigned char')
+TypeInfo_Number('unsigned_short', '', 'unsigned short')
+TypeInfo_Number('unsigned_long', '', 'unsigned long')
+TypeInfo_Number('unsigned_int', '', 'unsigned int')
+TypeInfo_Number('unsigned_long_long', '', 'unsigned long long')
+TypeInfo_Number('int8_t', '', 'int8_t')
+TypeInfo_Number('int16_t', '', 'int16_t')
+TypeInfo_Number('int32_t', '', 'int32_t')
+TypeInfo_Number('int64_t', '', 'int64_t')
+TypeInfo_Number('uint8_t', '', 'uint8_t')
+TypeInfo_Number('uint16_t', '', 'uint16_t')
+TypeInfo_Number('uint32_t', '', 'uint32_t')
+TypeInfo_Number('uint64_t', '', 'uint64_t')
+TypeInfo_Number('Char', '', 'Char')
+TypeInfo_Number('UChar', '', 'UChar')
+TypeInfo_Number('Short', '', 'Short')
+TypeInfo_Number('UShort', '', 'UShort')
+TypeInfo_Number('Int', '', 'Int')
+TypeInfo_Number('UInt', '', 'UInt')
+TypeInfo_Number('Long', '', 'Long')
+TypeInfo_Number('ULong', '', 'ULong')
+TypeInfo_Number('Int8', '', 'Int8')
+TypeInfo_Number('UInt8', '', 'UInt8')
+TypeInfo_Number('Int16', '', 'Int16')
+TypeInfo_Number('UInt16', '', 'UInt16')
+TypeInfo_Number('Int32', '', 'Int32')
+TypeInfo_Number('UInt32', '', 'UInt32')
+TypeInfo_Number('Int64', '', 'Int64')
+TypeInfo_Number('UInt64', '', 'UInt64')
+TypeInfo_Number('Float', '', 'Float')
+TypeInfo_Number('Double', '', 'Double')
 
 @(TypeInfo) {
-	{ 'bool', 'bool', 'Bool',
+	{ 'bool', '', 'bool', 'Bool',
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
@@ -109,7 +111,7 @@ TypeInfo_Number('Double', 'Double')
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''' }
-	{ 'Bool', 'Bool', 'Bool',
+	{ 'Bool', '', 'Bool', 'Bool',
 		R'''
 		${this.cType} ${varName} = args.PickBool();
 		''', R'''
@@ -120,7 +122,7 @@ TypeInfo_Number('Double', 'Double')
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''' }
-	{ 'const_char_p', 'const char*', 'String',
+	{ 'const_char_p', '', 'const char*', 'String',
 		R'''
 		${this.cType} ${varName} = args.PickString();
 		''', R'''
@@ -131,7 +133,7 @@ TypeInfo_Number('Double', 'Double')
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''' }
-	{ 'const_char_p_NilIfNull', 'const char*', 'String', '', '', '',
+	{ 'const_char_p_NilIfNull', '', 'const char*', 'String', '', '', '',
 		R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);
@@ -161,6 +163,8 @@ ArgInfo = class {
 		cond(this.listVarFlag, this.tmplDeclarationListVar, this.tmplDeclaration).Eval()
 	}
 	ComposeImplementation() = this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag)
+	ToString() = Format('%s%s%s:%s', this.name, cond(this.listVarFlag, '[]', ''),
+			cond(this.optionFlag, '?', ''), this.typeInfo.MakeFullTypeName())
 }
 
 ArgInfo.tmplDeclaration = tR'''
@@ -175,6 +179,7 @@ DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.o
 // FuncInfo
 //------------------------------------------------------------------------------
 FuncInfo = class {
+	moduleName:String
 	name:String
 	type:String
 	typeInfo:TypeInfo
@@ -184,18 +189,19 @@ FuncInfo = class {
 	tmplAssignment:Template:static
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
-	__init__(name:String, type:String, codeFunctionBody:String:nil) = {
-		this.name = name, this.type = type
+	__init__(moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
+		this.moduleName = moduleName, this.name = name, this.type = type
 		this.typeInfo = TypeInfo.map[type]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
 		Format('%s(%s)', this.name, this.argInfoTbl:*name.Join(', ')) 
 	}
+	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
 
 FuncInfo.tmplImplementation = tR'''
-// ${this.name}()
+// ${this.ToString()}
 Gurax_DeclareFunction(${this.name})
 {
 	Declare(VTYPE_${this.typeInfo.vtype}, Flag::None);
@@ -228,10 +234,8 @@ FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}));'
 //------------------------------------------------------------------------------
 Renderer = class {
 	funcInfoTbl = []
-	Register() {`block} = {
-		this.RegisterExpr(block.EachElem())
-	}
-	RegisterExpr(expr:Expr):map:void = {
+	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
+	RegisterExpr(moduleName:String, expr:Expr):map:void = {
 		codeFunctionBody = nil
 		if (expr.IsAssign()) {
 			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
@@ -240,7 +244,7 @@ Renderer = class {
 		}
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
-		funcInfo = FuncInfo(expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
+		funcInfo = FuncInfo(moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
 		this.funcInfoTbl.Add(funcInfo)
 		expr.EachParam {|exprParam|
 			//Println(exprParam)

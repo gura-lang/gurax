@@ -4,18 +4,20 @@ import(cbridge)
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
+moduleName = 'glfw'
+
 @(cbridge.TypeInfo) {
-	{ 'int_ErrorIfFalse', 'int', 'Nil', '', '', '',
+	{ 'int_ErrorIfFalse', moduleName, 'int', 'Nil', '', '', '',
 		R'''
 		if (${caller} != GLFW_TRUE) IssueError();
 		return Value::nil();
 		''' }
-	{ 'int_Bool', 'int', 'Bool', '', '', '',
+	{ 'int_Bool', moduleName, 'int', 'Bool', '', '', '',
 		R'''
 		bool rtn =(${caller} == GLFW_TRUE);
 		return new Value_Bool(rtn);
 		''' }
-	{ 'GLFWimage', 'GLFWimage', 'GLFWimage',
+	{ 'GLFWimage', moduleName, 'GLFWimage', 'GLFWimage',
 		R'''
 		${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
 		''', '', R'''
@@ -27,7 +29,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'GLFWcursor_p', 'GLFWcursor*', 'GLFWcursor',
+	{ 'GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -41,7 +43,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage',
+	{ 'const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -55,7 +57,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp',
+	{ 'const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -69,7 +71,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode',
+	{ 'const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -83,7 +85,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor',
+	{ 'GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -97,7 +99,7 @@ import(cbridge)
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow',
+	{ 'GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow',
 		R'''
 		${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 		''', R'''
@@ -118,7 +120,7 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Function Registration: Context
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwMakeContextCurrent(window:GLFWwindow_p):void
  
@@ -135,7 +137,7 @@ glfwExtensionSupported(extension:const_char_p):int_Bool
 //------------------------------------------------------------------------------
 // Function Registration: Initialization, version and error
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwInit():int_ErrorIfFalse
 
@@ -166,7 +168,7 @@ glfwGetError():String = \
 //------------------------------------------------------------------------------
 // Function Registration: Input
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwGetInputMode(window:GLFWwindow_p, mode:int):int
 
@@ -279,7 +281,7 @@ glfwGetTimerFrequency():uint64_t
 //------------------------------------------------------------------------------
 // Function Registration: Monitor
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwGetMonitors():any = \
 	R'''
@@ -358,13 +360,13 @@ glfwSetGammaRamp(monitor:GLFWmonitor_p, ramp:const_GLFWgammaramp_p):void
 //------------------------------------------------------------------------------
 // Function Registration: Native Access
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 }
 
 //------------------------------------------------------------------------------
 // Function Registration: Vulkan
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwVulkanSupported():int_Bool
  
@@ -393,7 +395,7 @@ glfwGetRequiredInstanceExtensions():any = \
 //------------------------------------------------------------------------------
 // Function Registration: Window
 //------------------------------------------------------------------------------
-r.Register {
+r.Register('glfw') {
 
 glfwDefaultWindowHints():void
 
