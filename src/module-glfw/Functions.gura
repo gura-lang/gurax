@@ -139,21 +139,21 @@ glfwDestroyCursor(cursor:GLFWcursor_p):void
 
 glfwSetCursor(window:GLFWwindow_p, cursor:GLFWcursor_p):void
 
-//glfwSetKeyCallback(window:GLFWwindow_p, cursor:GLFWkeyfun):GLFWkeyfun
+//glfwSetKeyCallback(window:GLFWwindow_p, callback:GLFWkeyfun):GLFWkeyfun
 
-//glfwSetCharCallback(window:GLFWwindow_p, cursor:GLFWcharfun):GLFWcharfun
+//glfwSetCharCallback(window:GLFWwindow_p, callback:GLFWcharfun):GLFWcharfun
 
-//glfwSetCharModsCallback(window:GLFWwindow_p, cursor:GLFWcharmodsfun):GLFWcharmodsfun
+//glfwSetCharModsCallback(window:GLFWwindow_p, callback:GLFWcharmodsfun):GLFWcharmodsfun
 
-//glfwSetMouseButtonCallback(window:GLFWwindow_p, cursor:GLFWmousebuttonfun):GLFWmousebuttonfun
+//glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:GLFWmousebuttonfun):GLFWmousebuttonfun
 
-//glfwSetCursorPosCallback(window:GLFWwindow_p, cursor:GLFWcursorposfun):GLFWcursorposfun
+//glfwSetCursorPosCallback(window:GLFWwindow_p, callback:GLFWcursorposfun):GLFWcursorposfun
 
-//glfwSetCursorEnterCallback(window:GLFWwindow_p, cursor:GLFWcursorenterfun):GLFWcursorenterfun
+//glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:GLFWcursorenterfun):GLFWcursorenterfun
 
-//glfwSetScrollCallback(window:GLFWwindow_p, cursor:GLFWscrollfun):GLFWscrollfun
+//glfwSetScrollCallback(window:GLFWwindow_p, callback:GLFWscrollfun):GLFWscrollfun
 
-//glfwSetDropCallback(window:GLFWwindow_p, cursor:GLFWdropfun):GLFWdropfun
+//glfwSetDropCallback(window:GLFWwindow_p, callback:GLFWdropfun):GLFWdropfun
 
 glfwJoystickPresent(jid:int):int
 

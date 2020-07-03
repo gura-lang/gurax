@@ -71,6 +71,19 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Input
+	//static void callback_(GLFWwindow* window);
+	// Window
+	static void callback_mousebuttonfun(GLFWwindow* window, int button, int action, int mods);
+	static void callback_cursorposfun(GLFWwindow* window, double xpos, double ypos);
+	static void callback_cursorenterfun(GLFWwindow* window, int entered);
+	static void callback_scrollfun(GLFWwindow* window, double xoffset, double yoffset);
+	static void callback_keyfun(GLFWwindow* window, int key, int scancode, int action);
+	static void callback_charfun(GLFWwindow* window, unsigned int codepoint);
+	static void callback_charmodsfun(GLFWwindow* window, unsigned int codepoint, int mods);
+	static void callback_dropfun(GLFWwindow* window, int path_count, const char* paths[]);
+	static void callback_joystick(int jid, int event);
 };
 
 Gurax_EndModuleScope(glfw)
