@@ -85,10 +85,12 @@ public:
 	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
 	template<typename T>
 	std::vector<T> PickVector(std::function<T(Value& value)> fn) {
-		const ValueList& valList = PickList();
 		std::vector<T> vec;
-		vec.reserve(valList.size());
-		for (Value* pValue : valList) vec.push_back(fn(*pValue));
+		if (IsValid()) {
+			const ValueList& valList = PickList();
+			vec.reserve(valList.size());
+			for (Value* pValue : valList) vec.push_back(fn(*pValue));
+		}
 		return vec;
 	}
 	Codec& PickCodec()				{ return Pick<Value_Codec>().GetCodec(); }
