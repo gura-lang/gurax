@@ -29,9 +29,16 @@ moduleName = 'glfw'
 		IssueError();
 		return Value::nil();
 		''' }
+	{ 'GLFWwindowposfun', moduleName, 'GLFWwindowposfun', 'Function',
+		R'''
+		Function* ${varName} = &args.PickFunction();
+		''',
+		R'''
+		Function* ${varName} = args.IsValid()? &args.PickFunction() : nullptr;
+		''', '', '' }
 }
 
-TypeInfo_Entity(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
+TypeInfo_Entity1(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
 	R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 	''', R'''
@@ -46,12 +53,27 @@ TypeInfo_Entity(decl:String, moduleName:String, cType:String, vtype:String) = cb
 	return Value::nil();
 	''')
 
-TypeInfo_Entity('GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor')
-TypeInfo_Entity('const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage')
-TypeInfo_Entity('const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp')
-TypeInfo_Entity('const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode')
-TypeInfo_Entity('GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor')
-TypeInfo_Entity('GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow')
+TypeInfo_Entity2(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
+	R'''
+	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+	''', R'''
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	''', R'''
+	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	''', R'''
+	if (${this.cType} rtn = ${caller}) {
+		return new Value_${this.vtype}(rtn, processor.Reference());
+	}
+	IssueError();
+	return Value::nil();
+	''')
+
+TypeInfo_Entity1('GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor')
+TypeInfo_Entity1('const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage')
+TypeInfo_Entity1('const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp')
+TypeInfo_Entity1('const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode')
+TypeInfo_Entity1('GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor')
+TypeInfo_Entity2('GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow')
 
 r = cbridge.Renderer()
 
@@ -431,7 +453,17 @@ glfwSetWindowAttrib(window:GLFWwindow_p, attrib:int, value:int):void
  
 //glfwGetWindowUserPointer(window:GLFWwindow_p):void_p
  
-//glfwSetWindowPosCallback(window:GLFWwindow_p, callback:GLFWwindowposfun):GLFWwindowposfun
+glfwSetWindowPosCallback(window:GLFWwindow_p, callback?:GLFWwindowposfun):void = \
+	R'''
+	Value_GLFWwindow* pValueThis = Value_GLFWwindow::GetValue(window);
+	if (callback) {
+		pValueThis->SetFunc_windowposfun(callback->Reference());
+		glfwSetWindowPosCallback(pValueThis->GetEntity(), Value_GLFWwindow::callback_windowposfun);
+	} else {
+		pValueThis->SetFunc_windowposfun(nullptr);
+		glfwSetWindowPosCallback(pValueThis->GetEntity(), nullptr);
+	}
+	'''
  
 //glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:GLFWwindowsizefun):GLFWwindowsizefun
  

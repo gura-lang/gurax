@@ -30,13 +30,32 @@ public:
 	Gurax_MemoryPoolAllocator("Value_GLFWwindow");
 protected:
 	GLFWwindow* _pGLFWwindow;
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunc_windowposfun;
+	RefPtr<Function> _pFunc_windowsizefun;
+	RefPtr<Function> _pFunc_windowclosefun;
+	RefPtr<Function> _pFunc_windowrefreshfun;
+	RefPtr<Function> _pFunc_windowfocusfun;
+	RefPtr<Function> _pFunc_windowiconifyfun;
+	RefPtr<Function> _pFunc_windowmaximizefun;
+	RefPtr<Function> _pFunc_framebuffersizefun;
+	RefPtr<Function> _pFunc_windowcontentscalefun;
+	RefPtr<Function> _pFunc_mousebuttonfun;
+	RefPtr<Function> _pFunc_cursorposfun;
+	RefPtr<Function> _pFunc_cursorenterfun;
+	RefPtr<Function> _pFunc_scrollfun;
+	RefPtr<Function> _pFunc_keyfun;
+	RefPtr<Function> _pFunc_charfun;
+	RefPtr<Function> _pFunc_charmodsfun;
+	RefPtr<Function> _pFunc_dropfun;
+	RefPtr<Function> _pFunc_monitorfun;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_GLFWwindow() = delete;
-	explicit Value_GLFWwindow(GLFWwindow* pGLFWwindow, VType& vtype = VTYPE_GLFWwindow) :
-		Value_Object(vtype), _pGLFWwindow(pGLFWwindow) {
+	explicit Value_GLFWwindow(GLFWwindow* pGLFWwindow, Processor* pProcessor, VType& vtype = VTYPE_GLFWwindow) :
+		Value_Object(vtype), _pGLFWwindow(pGLFWwindow), _pProcessor(pProcessor) {
 		glfwSetWindowUserPointer(pGLFWwindow, this);
 	}
 	// Copy constructor/operator
@@ -51,6 +70,7 @@ protected:
 public:
 	GLFWwindow* GetEntity() { return _pGLFWwindow; }
 	const GLFWwindow* GetEntity() const { return _pGLFWwindow; }
+	Processor& GetProcessor() { return *_pProcessor; }
 public:
 	static GLFWwindow* GetEntity(Value& value) {
 		return dynamic_cast<Value_GLFWwindow&>(value).GetEntity();
@@ -63,6 +83,43 @@ public:
 	static Value_GLFWwindow* GetValue(GLFWwindow* pGLFWwindow) {
 		return reinterpret_cast<Value_GLFWwindow*>(glfwGetWindowUserPointer(pGLFWwindow));
 	}
+public:
+	void SetFunc_windowposfun(Function* pFunc) { _pFunc_windowposfun.reset(pFunc); }
+	void SetFunc_windowsizefun(Function* pFunc) { _pFunc_windowsizefun.reset(pFunc); }
+	void SetFunc_windowclosefun(Function* pFunc) { _pFunc_windowclosefun.reset(pFunc); }
+	void SetFunc_windowrefreshfun(Function* pFunc) { _pFunc_windowrefreshfun.reset(pFunc); }
+	void SetFunc_windowfocusfun(Function* pFunc) { _pFunc_windowfocusfun.reset(pFunc); }
+	void SetFunc_windowiconifyfun(Function* pFunc) { _pFunc_windowiconifyfun.reset(pFunc); }
+	void SetFunc_windowmaximizefun(Function* pFunc) { _pFunc_windowmaximizefun.reset(pFunc); }
+	void SetFunc_framebuffersizefun(Function* pFunc) { _pFunc_framebuffersizefun.reset(pFunc); }
+	void SetFunc_windowcontentscalefun(Function* pFunc) { _pFunc_windowcontentscalefun.reset(pFunc); }
+	void SetFunc_mousebuttonfun(Function* pFunc) { _pFunc_mousebuttonfun.reset(pFunc); }
+	void SetFunc_cursorposfun(Function* pFunc) { _pFunc_cursorposfun.reset(pFunc); }
+	void SetFunc_cursorenterfun(Function* pFunc) { _pFunc_cursorenterfun.reset(pFunc); }
+	void SetFunc_scrollfun(Function* pFunc) { _pFunc_scrollfun.reset(pFunc); }
+	void SetFunc_keyfun(Function* pFunc) { _pFunc_keyfun.reset(pFunc); }
+	void SetFunc_charfun(Function* pFunc) { _pFunc_charfun.reset(pFunc); }
+	void SetFunc_charmodsfun(Function* pFunc) { _pFunc_charmodsfun.reset(pFunc); }
+	void SetFunc_dropfun(Function* pFunc) { _pFunc_dropfun.reset(pFunc); }
+	void SetFunc_monitorfun(Function* pFunc) { _pFunc_monitorfun.reset(pFunc); }
+	Function* GetFunc_windowposfun() { return _pFunc_windowposfun.get(); }
+	Function* GetFunc_windowsizefun() { return _pFunc_windowsizefun.get(); }
+	Function* GetFunc_windowclosefun() { return _pFunc_windowclosefun.get(); }
+	Function* GetFunc_windowrefreshfun() { return _pFunc_windowrefreshfun.get(); }
+	Function* GetFunc_windowfocusfun() { return _pFunc_windowfocusfun.get(); }
+	Function* GetFunc_windowiconifyfun() { return _pFunc_windowiconifyfun.get(); }
+	Function* GetFunc_windowmaximizefun() { return _pFunc_windowmaximizefun.get(); }
+	Function* GetFunc_framebuffersizefun() { return _pFunc_framebuffersizefun.get(); }
+	Function* GetFunc_windowcontentscalefun() { return _pFunc_windowcontentscalefun.get(); }
+	Function* GetFunc_mousebuttonfun() { return _pFunc_mousebuttonfun.get(); }
+	Function* GetFunc_cursorposfun() { return _pFunc_cursorposfun.get(); }
+	Function* GetFunc_cursorenterfun() { return _pFunc_cursorenterfun.get(); }
+	Function* GetFunc_scrollfun() { return _pFunc_scrollfun.get(); }
+	Function* GetFunc_keyfun() { return _pFunc_keyfun.get(); }
+	Function* GetFunc_charfun() { return _pFunc_charfun.get(); }
+	Function* GetFunc_charmodsfun() { return _pFunc_charmodsfun.get(); }
+	Function* GetFunc_dropfun() { return _pFunc_dropfun.get(); }
+	Function* GetFunc_monitorfun() { return _pFunc_monitorfun.get(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

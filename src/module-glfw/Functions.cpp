@@ -38,7 +38,7 @@ Gurax_ImplementFunction(glfwGetCurrentContext)
 {
 	// Function body
 	if (GLFWwindow* rtn = glfwGetCurrentContext()) {
-		return new Value_GLFWwindow(rtn);
+		return new Value_GLFWwindow(rtn, processor.Reference());
 	}
 	IssueError();
 	return Value::nil();
@@ -1169,7 +1169,7 @@ Gurax_ImplementFunction(glfwCreateWindow)
 	GLFWwindow* share = args.IsValid()? args.Pick<Value_GLFWwindow>().GetEntity() : nullptr;
 	// Function body
 	if (GLFWwindow* rtn = glfwCreateWindow(width, height, title, monitor, share)) {
-		return new Value_GLFWwindow(rtn);
+		return new Value_GLFWwindow(rtn, processor.Reference());
 	}
 	IssueError();
 	return Value::nil();
@@ -1770,6 +1770,35 @@ Gurax_ImplementFunction(glfwSetWindowAttrib)
 	return Value::nil();
 }
 
+// glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback?:glfw.Function)
+Gurax_DeclareFunction(glfwSetWindowPosCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowPosCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Function* callback = args.IsValid()? &args.PickFunction() : nullptr;
+	// Function body
+	Value_GLFWwindow* pValueThis = Value_GLFWwindow::GetValue(window);
+	if (callback) {
+		pValueThis->SetFunc_windowposfun(callback->Reference());
+		glfwSetWindowPosCallback(pValueThis->GetEntity(), Value_GLFWwindow::callback_windowposfun);
+	} else {
+		pValueThis->SetFunc_windowposfun(nullptr);
+		glfwSetWindowPosCallback(pValueThis->GetEntity(), nullptr);
+	}
+	return Value::nil();
+}
+
 // glfw.glfwPollEvents()
 Gurax_DeclareFunction(glfwPollEvents)
 {
@@ -1943,6 +1972,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwSetWindowMonitor));
 	frame.Assign(Gurax_CreateFunction(glfwGetWindowAttrib));
 	frame.Assign(Gurax_CreateFunction(glfwSetWindowAttrib));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowPosCallback));
 	frame.Assign(Gurax_CreateFunction(glfwPollEvents));
 	frame.Assign(Gurax_CreateFunction(glfwWaitEvents));
 	frame.Assign(Gurax_CreateFunction(glfwWaitEventsTimeout));

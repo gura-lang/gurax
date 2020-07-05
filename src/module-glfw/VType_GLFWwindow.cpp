@@ -56,15 +56,16 @@ void Value_GLFWwindow::callback_errorfun(int error_code, const char* description
 
 void Value_GLFWwindow::callback_windowposfun(GLFWwindow* window, int xpos, int ypos)
 {
-	Value_GLFWwindow* pThis = GetValue(window);
-	const Function* pFunc = nullptr;
-	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
-	RefPtr<Argument> pArgument(new Argument(*pFunc));
-	ArgFeeder args(*pArgument);
-	args.FeedValue(*pFrame, new Value_Number(xpos));
-	args.FeedValue(*pFrame, new Value_Number(ypos));
-	if (Error::IsIssued()) return;
-	//pFunc->Eval(processor, *pArgument);
+	Value_GLFWwindow* pValueThis = GetValue(window);
+	if (const Function* pFunc = pValueThis->GetFunc_windowposfun()) {
+		RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
+		RefPtr<Argument> pArgument(new Argument(*pFunc));
+		ArgFeeder args(*pArgument);
+		args.FeedValue(*pFrame, new Value_Number(xpos));
+		args.FeedValue(*pFrame, new Value_Number(ypos));
+		if (Error::IsIssued()) return;
+		Value::Delete(pFunc->Eval(pValueThis->GetProcessor(), *pArgument));
+	}
 }
 
 void Value_GLFWwindow::callback_windowsizefun(GLFWwindow* window, int width, int height)
