@@ -36,7 +36,9 @@ public:
 	// Constructor
 	Value_GLFWmonitor() = delete;
 	explicit Value_GLFWmonitor(GLFWmonitor* pGLFWmonitor, VType& vtype = VTYPE_GLFWmonitor) :
-		Value_Object(vtype), _pGLFWmonitor(pGLFWmonitor) {}
+		Value_Object(vtype), _pGLFWmonitor(pGLFWmonitor) {
+		glfwSetMonitorUserPointer(pGLFWmonitor, this);
+	}
 	// Copy constructor/operator
 	Value_GLFWmonitor(const Value_GLFWmonitor& src) = delete;
 	Value_GLFWmonitor& operator=(const Value_GLFWmonitor& src) = delete;
@@ -57,6 +59,10 @@ public:
 		return dynamic_cast<const Value_GLFWmonitor&>(value).GetEntity();
 	}
 	static GLFWmonitor* ValueForVector(Value& value) { return GetEntity(value); }
+public:
+	static Value_GLFWmonitor* GetValue(GLFWmonitor* pGLFWmonitor) {
+		return reinterpret_cast<Value_GLFWmonitor*>(glfwGetMonitorUserPointer(pGLFWmonitor));
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
