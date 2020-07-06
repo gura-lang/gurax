@@ -362,7 +362,7 @@ glfwWindowHint(hint:int, value:int):void
 
 glfwWindowHintString(hint:int, value:const_char_p):void
 
-glfwCreateWindow(width:int, height:int, title:const_char_p, monitor?:GLFWmonitor_p, share?:GLFWwindow_p):GLFWwindow_p
+glfwCreateWindow(width:int, height:int, title:const_char_p, monitor:GLFWmonitor_p:nil, share:GLFWwindow_p:nil):GLFWwindow_p
 
 glfwDestroyWindow(window:GLFWwindow_p):void
 

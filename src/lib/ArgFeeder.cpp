@@ -10,6 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 bool ArgFeeder::FeedValue(Frame& frame, Value* pValue)
 {
+	if (Error::IsIssued()) return false;
 	if (!_pArgSlot) {
 		if (_argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			// just ignore extra arguments

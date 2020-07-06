@@ -1144,15 +1144,15 @@ Gurax_ImplementFunction(glfwWindowHintString)
 	return Value::nil();
 }
 
-// glfw.glfwCreateWindow(width:Number, height:Number, title:String, monitor?:glfw.GLFWmonitor, share?:glfw.GLFWwindow)
+// glfw.glfwCreateWindow(width:Number, height:Number, title:String, monitor:glfw.GLFWmonitor:nil, share:glfw.GLFWwindow:nil)
 Gurax_DeclareFunction(glfwCreateWindow)
 {
 	Declare(VTYPE_GLFWwindow, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("monitor", VTYPE_GLFWmonitor, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("share", VTYPE_GLFWwindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("monitor", VTYPE_GLFWmonitor, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("share", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1786,7 +1786,7 @@ Gurax_ImplementFunction(glfwSetWindowPosCallback)
 	// Arguments
 	ArgPicker args(argument);
 	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.PickFunction().Reference());
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowPosCallback(valueThis.GetEntity(),

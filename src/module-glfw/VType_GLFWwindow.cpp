@@ -60,7 +60,7 @@ void Value_GLFWwindow::callback_WindowPosCallback(GLFWwindow* window, int xpos, 
 	const Function* pFunc = valueThis.GetFunc_WindowPosCallback();
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
-	RefPtr<Argument> pArgument(new Argument(*pFunc));
+	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
 	ArgFeeder args(*pArgument);
 	args.FeedValue(*pFrame, new Value_Number(xpos));
 	args.FeedValue(*pFrame, new Value_Number(ypos));
