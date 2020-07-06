@@ -70,88 +70,137 @@ void callback_WindowTwoArgs(GLFWwindow* window, Value* pValue1, Value* pValue2)
 }
 #endif
 
-template<typename... T_Args> void callback_Window(GLFWwindow* window, T_Args... pValues)
+template<typename... T_Args> void callback_Window(Processor& processor, const Function* pFunc, T_Args... pValues)
 {
-	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	const Function* pFunc = valueThis.GetFunc_WindowPosCallback();
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
 	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
 	ArgFeeder args(*pArgument);
 	args.FeedValues(*pFrame, pValues...);
 	if (Error::IsIssued()) return;
-	Value::Delete(pFunc->Eval(valueThis.GetProcessor(), *pArgument));
+	Value::Delete(pFunc->Eval(processor, *pArgument));
 }
 
 void Value_GLFWwindow::callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos)
 {
-	callback_Window(window, new Value_Number(xpos), new Value_Number(ypos));
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowPosCallback(),
+			new Value_Number(xpos), new Value_Number(ypos));
 }
 
 void Value_GLFWwindow::callback_WindowSizeCallback(GLFWwindow* window, int width, int height)
 {
-	callback_Window(window, new Value_Number(width), new Value_Number(height));
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowSizeCallback(),
+			new Value_Number(width), new Value_Number(height));
 }
 
 void Value_GLFWwindow::callback_WindowCloseCallback(GLFWwindow* window)
 {
-	callback_Window(window);
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowCloseCallback());
 }
 
 void Value_GLFWwindow::callback_WindowRefreshCallback(GLFWwindow* window)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowRefreshCallback());
 }
 
 void Value_GLFWwindow::callback_WindowFocusCallback(GLFWwindow* window, int focused)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowFocusCallback(),
+			new Value_Number(focused));
 }
 
 void Value_GLFWwindow::callback_WindowIconifyCallback(GLFWwindow* window, int iconified)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowIconifyCallback(),
+			new Value_Bool(iconified != 0));
 }
 
 void Value_GLFWwindow::callback_WindowMaximizeCallback(GLFWwindow* window, int maximized)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowMaximizeCallback(),
+			new Value_Bool(maximized != 0));
 }
 
 void Value_GLFWwindow::callback_FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_FramebufferSizeCallback(),
+			new Value_Number(width), new Value_Number(height));
 }
 
 void Value_GLFWwindow::callback_WindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_WindowContentScaleCallback(),
+			new Value_Number(xscale), new Value_Number(yscale));
 }
 
 void Value_GLFWwindow::callback_MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_MouseButtonCallback(),
+			new Value_Number(button), new Value_Number(action), new Value_Number(mods));
 }
 
 void Value_GLFWwindow::callback_CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_CursorPosCallback(),
+			new Value_Number(xpos), new Value_Number(ypos));
 }
 
 void Value_GLFWwindow::callback_CursorEnterCallback(GLFWwindow* window, int entered)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_CursorEnterCallback(),
+			new Value_Bool(entered != 0));
 }
 
 void Value_GLFWwindow::callback_ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_ScrollCallback(),
+			new Value_Number(xoffset), new Value_Number(yoffset));
 }
 
 void Value_GLFWwindow::callback_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_KeyCallback(),
+			new Value_Number(key), new Value_Number(scancode), new Value_Number(action), new Value_Number(mods));
 }
 
 void Value_GLFWwindow::callback_CharCallback(GLFWwindow* window, unsigned int codepoint)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_CharCallback(),
+			new Value_Number(codepoint));
 }
 
 void Value_GLFWwindow::callback_CharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods)
 {
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_CharModsCallback(),
+			new Value_Number(codepoint), new Value_Number(mods));
 }
 
 void Value_GLFWwindow::callback_DropCallback(GLFWwindow* window, int path_count, const char* paths[])
 {
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(path_count);
+	for (int i = 0; i < path_count; i++) {
+		pValueOwner->push_back(new Value_String(paths[i]));
+	}
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	callback_Window(valueThis.GetProcessor(), valueThis.GetFunc_DropCallback(),
+			new Value_List(pValueOwner.release()));
 }
 
 void Value_GLFWwindow::callback_MonitorCallback(GLFWmonitor* monitor, int event)

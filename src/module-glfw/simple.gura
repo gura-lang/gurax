@@ -5,7 +5,9 @@ main() = {
 	window = glfwCreateWindow(640, 480, "Hello World", nil, nil)
 	glfwMakeContextCurrent(window);
 	//glfwSetWindowPosCallback(window, &{Printf('%d, %d\n', $xpos, $ypos)})
-	glfwSetWindowPosCallback(window, &{Println('Pos')})
+	//glfwSetWindowPosCallback(window, &{Println('Pos')})
+	glfwSetWindowSizeCallback(window, &{Println('Size')})
+	glfwSetWindowCloseCallback(window, &{Println('Close')})
 	//while (!glfwWindowShouldClose(window)) {
 	while (!window.WindowShouldClose()) {
 		/* Render here */
