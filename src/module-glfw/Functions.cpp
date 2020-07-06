@@ -1770,7 +1770,7 @@ Gurax_ImplementFunction(glfwSetWindowAttrib)
 	return Value::nil();
 }
 
-// glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback:glfw.Function:nil)
+// glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback:Function:nil)
 Gurax_DeclareFunction(glfwSetWindowPosCallback)
 {
 	Declare(VTYPE_Nil, Flag::None);

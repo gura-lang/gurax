@@ -29,15 +29,9 @@ moduleName = 'glfw'
 		IssueError();
 		return Value::nil();
 		''' }
-	{ 'GLFWwindowposfun', moduleName, 'GLFWwindowposfun', 'Function',
-		R'''
-		RefPtr<Function> ${varName}(args.PickFunction().Reference());
-		''', R'''
-		RefPtr<Function> ${varName}(args.IsValid()? args.PickFunction().Reference() : nullptr);
-		''', '', '' }
 }
 
-TypeInfo_Entity(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
+TypeInfo_Entity(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
 	R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 	''', R'''
@@ -52,7 +46,7 @@ TypeInfo_Entity(decl:String, moduleName:String, cType:String, vtype:String) = cb
 	return Value::nil();
 	''')
 
-TypeInfo_EntityEx(decl:String, moduleName:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
+TypeInfo_EntityEx(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
 	R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 	''', R'''
@@ -67,12 +61,12 @@ TypeInfo_EntityEx(decl:String, moduleName:String, cType:String, vtype:String) = 
 	return Value::nil();
 	''')
 
-TypeInfo_Entity('GLFWcursor_p', moduleName, 'GLFWcursor*', 'GLFWcursor')
-TypeInfo_Entity('const_GLFWimage_p', moduleName, 'const GLFWimage*', 'GLFWimage')
-TypeInfo_Entity('const_GLFWgammaramp_p', moduleName, 'const GLFWgammaramp*', 'GLFWgammaramp')
-TypeInfo_Entity('const_GLFWvidmode_p', moduleName, 'const GLFWvidmode*', 'GLFWvidmode')
-TypeInfo_Entity('GLFWmonitor_p', moduleName, 'GLFWmonitor*', 'GLFWmonitor')
-TypeInfo_EntityEx('GLFWwindow_p', moduleName, 'GLFWwindow*', 'GLFWwindow')
+TypeInfo_Entity('GLFWcursor_p', 'GLFWcursor*', 'GLFWcursor')
+TypeInfo_Entity('const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage')
+TypeInfo_Entity('const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp')
+TypeInfo_Entity('const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode')
+TypeInfo_Entity('GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor')
+TypeInfo_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow')
 
 r = cbridge.Renderer()
 
@@ -160,21 +154,21 @@ glfwDestroyCursor(cursor:GLFWcursor_p):void
 
 glfwSetCursor(window:GLFWwindow_p, cursor:GLFWcursor_p):void
 
-//glfwSetKeyCallback(window:GLFWwindow_p, callback:GLFWkeyfun):GLFWkeyfun
+//glfwSetKeyCallback(window:GLFWwindow_p, callback:Function):GLFWkeyfun
 
-//glfwSetCharCallback(window:GLFWwindow_p, callback:GLFWcharfun):GLFWcharfun
+//glfwSetCharCallback(window:GLFWwindow_p, callback:Function):GLFWcharfun
 
-//glfwSetCharModsCallback(window:GLFWwindow_p, callback:GLFWcharmodsfun):GLFWcharmodsfun
+//glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function):GLFWcharmodsfun
 
-//glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:GLFWmousebuttonfun):GLFWmousebuttonfun
+//glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function):GLFWmousebuttonfun
 
-//glfwSetCursorPosCallback(window:GLFWwindow_p, callback:GLFWcursorposfun):GLFWcursorposfun
+//glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function):GLFWcursorposfun
 
-//glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:GLFWcursorenterfun):GLFWcursorenterfun
+//glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function):GLFWcursorenterfun
 
-//glfwSetScrollCallback(window:GLFWwindow_p, callback:GLFWscrollfun):GLFWscrollfun
+//glfwSetScrollCallback(window:GLFWwindow_p, callback:Function):GLFWscrollfun
 
-//glfwSetDropCallback(window:GLFWwindow_p, callback:GLFWdropfun):GLFWdropfun
+//glfwSetDropCallback(window:GLFWwindow_p, callback:Function):GLFWdropfun
 
 glfwJoystickPresent(jid:int):int
 
@@ -215,7 +209,7 @@ glfwGetJoystickGUID(jid:int):const_char_p_NilIfNull
 
 glfwJoystickIsGamepad(jid:int):int_Bool
 
-//glfwSetJoystickCallback(callback:GLFWjoystickfun):GLFWjoystickfun
+//glfwSetJoystickCallback(callback:Function):GLFWjoystickfun
 
 glfwUpdateGamepadMappings(string:const_char_p):int_ErrorIfFalse
 
@@ -291,7 +285,7 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
  
 //glfwGetMonitorUserPointer(monitor:GLFWmonitor_p):void_p
  
-//glfwSetMonitorCallback(callback:GLFWmonitorfun):GLFWmonitorfun
+//glfwSetMonitorCallback(callback:Function):GLFWmonitorfun
  
 glfwGetVideoModes(monitor:GLFWmonitor_p):any = \
 	R'''
@@ -452,7 +446,7 @@ glfwSetWindowAttrib(window:GLFWwindow_p, attrib:int, value:int):void
  
 //glfwGetWindowUserPointer(window:GLFWwindow_p):void_p
  
-glfwSetWindowPosCallback(window:GLFWwindow_p, callback:GLFWwindowposfun:nil):void = \
+glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowPosCallback(valueThis.GetEntity(),
@@ -461,21 +455,21 @@ glfwSetWindowPosCallback(window:GLFWwindow_p, callback:GLFWwindowposfun:nil):voi
 	return Value::nil();
 	'''
  
-//glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:GLFWwindowsizefun):GLFWwindowsizefun
+//glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function):GLFWwindowsizefun
  
-//glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:GLFWwindowclosefun):GLFWwindowclosefun
+//glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function):GLFWwindowclosefun
  
-//glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:GLFWwindowrefreshfun):GLFWwindowrefreshfun
+//glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function):GLFWwindowrefreshfun
  
-//glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:GLFWwindowfocusfun):GLwindowfocusfun
+//glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function):GLwindowfocusfun
  
-//glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:GLFWwindowiconifyfun):GLFWwindowiconifyfun
+//glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function):GLFWwindowiconifyfun
  
-//glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:GLFWwindowmaximizefun):GLFWwindowmaximizefun
+//glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function):GLFWwindowmaximizefun
  
-//glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:GLFWframebuffersizefun):GLFWframebuffersizefun
+//glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function):GLFWframebuffersizefun
  
-//glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:GLFWwindowcontentscalefun):GLFWwindowcontentscalefun
+//glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function):GLFWwindowcontentscalefun
  
 glfwPollEvents():void
  

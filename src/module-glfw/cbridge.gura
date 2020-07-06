@@ -48,6 +48,13 @@ TypeInfo('void', '', 'void', 'Nil', '', '', '',
 
 TypeInfo('String', '', '', 'String', '', '', '', '')
 
+TypeInfo('Function', '', '', 'Function',
+	R'''
+	RefPtr<Function> ${varName}(args.PickFunction().Reference());
+	''', R'''
+	RefPtr<Function> ${varName}(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	''', '', '')
+
 TypeInfo_Number(decl:String, moduleName:String, cType:String) = TypeInfo(decl, moduleName, cType, 'Number',
 	R'''
 	${this.cType} ${varName} = args.PickNumber<${this.cType}>();
