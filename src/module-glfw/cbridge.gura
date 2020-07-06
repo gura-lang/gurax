@@ -150,29 +150,35 @@ ArgInfo = class {
 	type:String
 	listVarFlag:Bool
 	optionFlag:Bool
+	nilFlag:Bool
 	typeInfo:TypeInfo
 	tmplDeclaration:Template:static
-	tmplDeclarationListVar:Template:static
 	tmplImplementation:Template:static
-	__init__(name:String, type:String, listVarFlag:Bool, optionFlag:Bool) = {
-		this.name = name, this.type = type
-		this.listVarFlag = listVarFlag, this.optionFlag = optionFlag
-		this.typeInfo = TypeInfo.map[type]
+	__init__(name:String, attr:Attribute, listVarFlag:Bool, optionFlag:Bool) = {
+		this.name = name
+		this.type = attr.dottedName
+		this.listVarFlag = listVarFlag
+		this.optionFlag = optionFlag
+		this.nilFlag = attr.IsSet(`nil)
+		this.typeInfo = TypeInfo.map[this.type]
 	}
 	ComposeDeclaration() = {
-		cond(this.listVarFlag, this.tmplDeclarationListVar, this.tmplDeclaration).Eval()
+		strArgOccur = 'ArgOccur::' + cond(this.optionFlag, 'ZeroOrOnce', 'Once')
+		argFlags = []
+		this.listVarFlag && argFlags.Add('ListVar')
+		this.nilFlag && argFlags.Add('Nil')
+		argFlags.IsEmpty() && argFlags.Add('None')
+		strArgFlags = ('ArgFlag::' + argFlags).Join(' | ')
+		this.tmplDeclaration.Eval()
 	}
 	ComposeImplementation() = this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag)
-	ToString() = Format('%s%s%s:%s', this.name, cond(this.listVarFlag, '[]', ''),
-			cond(this.optionFlag, '?', ''), this.typeInfo.MakeFullTypeName())
+	ToString() = Format('%s%s%s:%s%s', this.name, cond(this.listVarFlag, '[]', ''),
+			cond(this.optionFlag, '?', ''), this.typeInfo.MakeFullTypeName(),
+			cond(this.nilFlag, ':nil', ''))
 }
 
 ArgInfo.tmplDeclaration = tR'''
-DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::None);
-'''
-
-ArgInfo.tmplDeclarationListVar = tR'''
-DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ArgOccur::${cond(this.optionFlag, 'ZeroOrOnce', 'Once')}, ArgFlag::ListVar);
+DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ${strArgOccur}, ${strArgFlags});
 '''
 
 //------------------------------------------------------------------------------
@@ -264,7 +270,7 @@ Renderer = class {
 				exprParam = exprParam.car
 			}
 			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(exprParam.symbolName, attr.dottedName, listVarFlag, optionFlag)
+			argInfo = ArgInfo(exprParam.symbolName, attr, listVarFlag, optionFlag)
 			funcInfo.argInfoTbl.Add(argInfo)
 		}
 	}

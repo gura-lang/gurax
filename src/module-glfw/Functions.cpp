@@ -1770,12 +1770,12 @@ Gurax_ImplementFunction(glfwSetWindowAttrib)
 	return Value::nil();
 }
 
-// glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback?:glfw.Function)
+// glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback:glfw.Function:nil)
 Gurax_DeclareFunction(glfwSetWindowPosCallback)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("callback", VTYPE_Function, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1786,16 +1786,12 @@ Gurax_ImplementFunction(glfwSetWindowPosCallback)
 	// Arguments
 	ArgPicker args(argument);
 	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	Function* callback = args.IsValid()? &args.PickFunction() : nullptr;
+	RefPtr<Function> callback(args.PickFunction().Reference());
 	// Function body
 	Value_GLFWwindow* pValueThis = Value_GLFWwindow::GetValue(window);
-	if (callback) {
-		pValueThis->SetFunc_windowposfun(callback->Reference());
-		glfwSetWindowPosCallback(pValueThis->GetEntity(), Value_GLFWwindow::callback_windowposfun);
-	} else {
-		pValueThis->SetFunc_windowposfun(nullptr);
-		glfwSetWindowPosCallback(pValueThis->GetEntity(), nullptr);
-	}
+	glfwSetWindowPosCallback(pValueThis->GetEntity(),
+			callback? Value_GLFWwindow::callback_windowposfun : nullptr);
+	pValueThis->SetFunc_windowposfun(callback.release());
 	return Value::nil();
 }
 
