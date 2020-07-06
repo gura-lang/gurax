@@ -117,7 +117,7 @@ glfwGetError():String = \
 glfwSetErrorCallback():void = \
 	R'''
 	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
+	//glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
 	//valueThis.SetFunc_ErrorCallback(callback.release());
 	return Value::nil();
 	'''
@@ -273,8 +273,8 @@ glfwJoystickIsGamepad(jid:int):int_Bool
 
 glfwSetJoystickCallback(jid:int, callback:Function:nil):void = \
 	R'''
-	glfwSetJoystickCallback(jid,
-			callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
+	//glfwSetJoystickCallback(jid,
+	//		callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
 	//valueThis.SetFunc_JoystickCallback(callback.release());
 	return Value::nil();
 	'''

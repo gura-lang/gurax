@@ -54,6 +54,22 @@ void Value_GLFWwindow::callback_ErrorCallback(int error_code, const char* descri
 {
 }
 
+#if 0
+void callback_WindowTwoArgs(GLFWwindow* window, Value* pValue1, Value* pValue2)
+{
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	const Function* pFunc = valueThis.GetFunc_WindowPosCallback();
+	if (!pFunc) return;
+	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
+	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
+	ArgFeeder args(*pArgument);
+	args.FeedValue(*pFrame, pValue1);
+	args.FeedValue(*pFrame, pValue2);
+	if (Error::IsIssued()) return;
+	Value::Delete(pFunc->Eval(valueThis.GetProcessor(), *pArgument));
+}
+#endif
+
 void Value_GLFWwindow::callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos)
 {
 	Value_GLFWwindow& valueThis = GetValue(window);
