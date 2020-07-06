@@ -32,6 +32,11 @@ public:
 public:
 	bool FeedValue(Frame& frame, Value* pValue);
 	bool FeedValues(Frame& frame, const ValueList& values);
+	bool FeedValues(Frame& frame) { return true; }
+	template<typename T_Head, typename... T_Tail>
+	bool FeedValues(Frame& frame, T_Head pValue, T_Tail... pValueTail) {
+		return FeedValue(frame, pValue) && FeedValues(frame, pValueTail...);
+	}
 };
 
 }

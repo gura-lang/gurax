@@ -70,26 +70,32 @@ void callback_WindowTwoArgs(GLFWwindow* window, Value* pValue1, Value* pValue2)
 }
 #endif
 
-void Value_GLFWwindow::callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos)
+template<typename... T_Args> void callback_Window(GLFWwindow* window, T_Args... pValues)
 {
-	Value_GLFWwindow& valueThis = GetValue(window);
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	const Function* pFunc = valueThis.GetFunc_WindowPosCallback();
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
 	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
 	ArgFeeder args(*pArgument);
-	args.FeedValue(*pFrame, new Value_Number(xpos));
-	args.FeedValue(*pFrame, new Value_Number(ypos));
+	args.FeedValues(*pFrame, pValues...);
 	if (Error::IsIssued()) return;
 	Value::Delete(pFunc->Eval(valueThis.GetProcessor(), *pArgument));
 }
 
+void Value_GLFWwindow::callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos)
+{
+	callback_Window(window, new Value_Number(xpos), new Value_Number(ypos));
+}
+
 void Value_GLFWwindow::callback_WindowSizeCallback(GLFWwindow* window, int width, int height)
 {
+	callback_Window(window, new Value_Number(width), new Value_Number(height));
 }
 
 void Value_GLFWwindow::callback_WindowCloseCallback(GLFWwindow* window)
 {
+	callback_Window(window);
 }
 
 void Value_GLFWwindow::callback_WindowRefreshCallback(GLFWwindow* window)
