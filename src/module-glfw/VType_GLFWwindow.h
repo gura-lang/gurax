@@ -38,7 +38,7 @@ protected:
 	RefPtr<Function> _pFunc_WindowFocusCallback;
 	RefPtr<Function> _pFunc_WindowIconifyCallback;
 	RefPtr<Function> _pFunc_WindowMaximizeCallabck;
-	RefPtr<Function> _pFunc_FrameBufferSizeCallback;
+	RefPtr<Function> _pFunc_FramebufferSizeCallback;
 	RefPtr<Function> _pFunc_WindowContentScaleCallback;
 	RefPtr<Function> _pFunc_MouseButtonCallback;
 	RefPtr<Function> _pFunc_CursorPosCallback;
@@ -90,8 +90,8 @@ public:
 	void SetFunc_WindowRefreshCallback(Function* pFunc) { _pFunc_WindowRefreshCallback.reset(pFunc); }
 	void SetFunc_WindowFocusCallback(Function* pFunc) { _pFunc_WindowFocusCallback.reset(pFunc); }
 	void SetFunc_WindowIconifyCallback(Function* pFunc) { _pFunc_WindowIconifyCallback.reset(pFunc); }
-	void SetFunc_WindowMaximizeCallabck(Function* pFunc) { _pFunc_WindowMaximizeCallabck.reset(pFunc); }
-	void SetFunc_FrameBufferSizeCallback(Function* pFunc) { _pFunc_FrameBufferSizeCallback.reset(pFunc); }
+	void SetFunc_WindowMaximizeCallback(Function* pFunc) { _pFunc_WindowMaximizeCallabck.reset(pFunc); }
+	void SetFunc_FramebufferSizeCallback(Function* pFunc) { _pFunc_FramebufferSizeCallback.reset(pFunc); }
 	void SetFunc_WindowContentScaleCallback(Function* pFunc) { _pFunc_WindowContentScaleCallback.reset(pFunc); }
 	void SetFunc_MouseButtonCallback(Function* pFunc) { _pFunc_MouseButtonCallback.reset(pFunc); }
 	void SetFunc_CursorPosCallback(Function* pFunc) { _pFunc_CursorPosCallback.reset(pFunc); }
@@ -109,7 +109,7 @@ public:
 	Function* GetFunc_WindowFocusCallback() { return _pFunc_WindowFocusCallback.get(); }
 	Function* GetFunc_WindowIconifyCallback() { return _pFunc_WindowIconifyCallback.get(); }
 	Function* GetFunc_WindowMaximizeCallabck() { return _pFunc_WindowMaximizeCallabck.get(); }
-	Function* GetFunc_FrameBufferSizeCallback() { return _pFunc_FrameBufferSizeCallback.get(); }
+	Function* GetFunc_FramebufferSizeCallback() { return _pFunc_FramebufferSizeCallback.get(); }
 	Function* GetFunc_WindowContentScaleCallback() { return _pFunc_WindowContentScaleCallback.get(); }
 	Function* GetFunc_MouseButtonCallback() { return _pFunc_MouseButtonCallback.get(); }
 	Function* GetFunc_CursorPosCallback() { return _pFunc_CursorPosCallback.get(); }
@@ -144,7 +144,7 @@ public:
 	static void callback_WindowFocusCallback(GLFWwindow* window, int focused);
 	static void callback_WindowIconifyCallback(GLFWwindow* window, int iconified);
 	static void callback_WindowMaximizeCallback(GLFWwindow* window, int maximized);
-	static void callback_FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
+	static void callback_FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 	static void callback_WindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale);
 	static void callback_MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	static void callback_CursorPosCallback(GLFWwindow* window, double xpos, double ypos);

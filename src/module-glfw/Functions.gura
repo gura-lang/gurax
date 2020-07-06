@@ -355,10 +355,10 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
  
 glfwSetMonitorCallback(callback:Function:nil):void = \
 	R'''
-	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	glfwSetMonitorCallback(valueThis.GetEntity(),
-			callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
-	valueThis.SetFunc_MonitorCallback(callback.release());
+	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	//glfwSetMonitorCallback(valueThis.GetEntity(),
+	//		callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
+	//valueThis.SetFunc_MonitorCallback(callback.release());
 	return Value::nil();
 	'''
  

@@ -108,7 +108,7 @@ void Value_GLFWwindow::callback_WindowMaximizeCallback(GLFWwindow* window, int m
 {
 }
 
-void Value_GLFWwindow::callback_FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
+void Value_GLFWwindow::callback_FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 }
 

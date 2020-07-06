@@ -201,7 +201,7 @@ Gurax_ImplementFunction(glfwSetErrorCallback)
 {
 	// Function body
 	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
+	//glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
 	//valueThis.SetFunc_ErrorCallback(callback.release());
 	return Value::nil();
 }
@@ -864,8 +864,8 @@ Gurax_ImplementFunction(glfwSetJoystickCallback)
 	int jid = args.PickNumber<int>();
 	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
 	// Function body
-	glfwSetJoystickCallback(jid,
-			callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
+	//glfwSetJoystickCallback(jid,
+	//		callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
 	//valueThis.SetFunc_JoystickCallback(callback.release());
 	return Value::nil();
 }
@@ -1186,10 +1186,10 @@ Gurax_ImplementFunction(glfwSetMonitorCallback)
 	ArgPicker args(argument);
 	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
 	// Function body
-	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	glfwSetMonitorCallback(valueThis.GetEntity(),
-			callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
-	valueThis.SetFunc_MonitorCallback(callback.release());
+	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	//glfwSetMonitorCallback(valueThis.GetEntity(),
+	//		callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
+	//valueThis.SetFunc_MonitorCallback(callback.release());
 	return Value::nil();
 }
 
