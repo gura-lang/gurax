@@ -31,24 +31,24 @@ public:
 protected:
 	GLFWwindow* _pGLFWwindow;
 	RefPtr<Processor> _pProcessor;
-	RefPtr<Function> _pFunc_windowposfun;
-	RefPtr<Function> _pFunc_windowsizefun;
-	RefPtr<Function> _pFunc_windowclosefun;
-	RefPtr<Function> _pFunc_windowrefreshfun;
-	RefPtr<Function> _pFunc_windowfocusfun;
-	RefPtr<Function> _pFunc_windowiconifyfun;
-	RefPtr<Function> _pFunc_windowmaximizefun;
-	RefPtr<Function> _pFunc_framebuffersizefun;
-	RefPtr<Function> _pFunc_windowcontentscalefun;
-	RefPtr<Function> _pFunc_mousebuttonfun;
-	RefPtr<Function> _pFunc_cursorposfun;
-	RefPtr<Function> _pFunc_cursorenterfun;
-	RefPtr<Function> _pFunc_scrollfun;
-	RefPtr<Function> _pFunc_keyfun;
-	RefPtr<Function> _pFunc_charfun;
-	RefPtr<Function> _pFunc_charmodsfun;
-	RefPtr<Function> _pFunc_dropfun;
-	RefPtr<Function> _pFunc_monitorfun;
+	RefPtr<Function> _pFunc_WindowPosCallback;
+	RefPtr<Function> _pFunc_WindowSizeCallback;
+	RefPtr<Function> _pFunc_WindowCloseCallback;
+	RefPtr<Function> _pFunc_WindowRefreshCallback;
+	RefPtr<Function> _pFunc_WindowFocusCallback;
+	RefPtr<Function> _pFunc_WindowIconifyCallback;
+	RefPtr<Function> _pFunc_WindowMaximizeCallabck;
+	RefPtr<Function> _pFunc_FrameBufferSizeCallback;
+	RefPtr<Function> _pFunc_WindowContentScaleCallback;
+	RefPtr<Function> _pFunc_MouseButtonCallback;
+	RefPtr<Function> _pFunc_CursorPosCallback;
+	RefPtr<Function> _pFunc_CursorEnterCallback;
+	RefPtr<Function> _pFunc_ScrollCallback;
+	RefPtr<Function> _pFunc_KeyCallback;
+	RefPtr<Function> _pFunc_CharCallback;
+	RefPtr<Function> _pFunc_CharModsCallback;
+	RefPtr<Function> _pFunc_DropCallback;
+	RefPtr<Function> _pFunc_MonitorCallback;
 public:
 	static VType& vtype;
 public:
@@ -80,46 +80,46 @@ public:
 	}
 	static GLFWwindow* ValueForVector(const Value& value) { return GetEntity(const_cast<Value&>(value)); }
 public:
-	static Value_GLFWwindow* GetValue(GLFWwindow* pGLFWwindow) {
-		return reinterpret_cast<Value_GLFWwindow*>(glfwGetWindowUserPointer(pGLFWwindow));
+	static Value_GLFWwindow& GetValue(GLFWwindow* pGLFWwindow) {
+		return *reinterpret_cast<Value_GLFWwindow*>(glfwGetWindowUserPointer(pGLFWwindow));
 	}
 public:
-	void SetFunc_windowposfun(Function* pFunc) { _pFunc_windowposfun.reset(pFunc); }
-	void SetFunc_windowsizefun(Function* pFunc) { _pFunc_windowsizefun.reset(pFunc); }
-	void SetFunc_windowclosefun(Function* pFunc) { _pFunc_windowclosefun.reset(pFunc); }
-	void SetFunc_windowrefreshfun(Function* pFunc) { _pFunc_windowrefreshfun.reset(pFunc); }
-	void SetFunc_windowfocusfun(Function* pFunc) { _pFunc_windowfocusfun.reset(pFunc); }
-	void SetFunc_windowiconifyfun(Function* pFunc) { _pFunc_windowiconifyfun.reset(pFunc); }
-	void SetFunc_windowmaximizefun(Function* pFunc) { _pFunc_windowmaximizefun.reset(pFunc); }
-	void SetFunc_framebuffersizefun(Function* pFunc) { _pFunc_framebuffersizefun.reset(pFunc); }
-	void SetFunc_windowcontentscalefun(Function* pFunc) { _pFunc_windowcontentscalefun.reset(pFunc); }
-	void SetFunc_mousebuttonfun(Function* pFunc) { _pFunc_mousebuttonfun.reset(pFunc); }
-	void SetFunc_cursorposfun(Function* pFunc) { _pFunc_cursorposfun.reset(pFunc); }
-	void SetFunc_cursorenterfun(Function* pFunc) { _pFunc_cursorenterfun.reset(pFunc); }
-	void SetFunc_scrollfun(Function* pFunc) { _pFunc_scrollfun.reset(pFunc); }
-	void SetFunc_keyfun(Function* pFunc) { _pFunc_keyfun.reset(pFunc); }
-	void SetFunc_charfun(Function* pFunc) { _pFunc_charfun.reset(pFunc); }
-	void SetFunc_charmodsfun(Function* pFunc) { _pFunc_charmodsfun.reset(pFunc); }
-	void SetFunc_dropfun(Function* pFunc) { _pFunc_dropfun.reset(pFunc); }
-	void SetFunc_monitorfun(Function* pFunc) { _pFunc_monitorfun.reset(pFunc); }
-	Function* GetFunc_windowposfun() { return _pFunc_windowposfun.get(); }
-	Function* GetFunc_windowsizefun() { return _pFunc_windowsizefun.get(); }
-	Function* GetFunc_windowclosefun() { return _pFunc_windowclosefun.get(); }
-	Function* GetFunc_windowrefreshfun() { return _pFunc_windowrefreshfun.get(); }
-	Function* GetFunc_windowfocusfun() { return _pFunc_windowfocusfun.get(); }
-	Function* GetFunc_windowiconifyfun() { return _pFunc_windowiconifyfun.get(); }
-	Function* GetFunc_windowmaximizefun() { return _pFunc_windowmaximizefun.get(); }
-	Function* GetFunc_framebuffersizefun() { return _pFunc_framebuffersizefun.get(); }
-	Function* GetFunc_windowcontentscalefun() { return _pFunc_windowcontentscalefun.get(); }
-	Function* GetFunc_mousebuttonfun() { return _pFunc_mousebuttonfun.get(); }
-	Function* GetFunc_cursorposfun() { return _pFunc_cursorposfun.get(); }
-	Function* GetFunc_cursorenterfun() { return _pFunc_cursorenterfun.get(); }
-	Function* GetFunc_scrollfun() { return _pFunc_scrollfun.get(); }
-	Function* GetFunc_keyfun() { return _pFunc_keyfun.get(); }
-	Function* GetFunc_charfun() { return _pFunc_charfun.get(); }
-	Function* GetFunc_charmodsfun() { return _pFunc_charmodsfun.get(); }
-	Function* GetFunc_dropfun() { return _pFunc_dropfun.get(); }
-	Function* GetFunc_monitorfun() { return _pFunc_monitorfun.get(); }
+	void SetFunc_WindowPosCallback(Function* pFunc) { _pFunc_WindowPosCallback.reset(pFunc); }
+	void SetFunc_WindowSizeCallback(Function* pFunc) { _pFunc_WindowSizeCallback.reset(pFunc); }
+	void SetFunc_WindowCloseCallback(Function* pFunc) { _pFunc_WindowCloseCallback.reset(pFunc); }
+	void SetFunc_WindowRefreshCallback(Function* pFunc) { _pFunc_WindowRefreshCallback.reset(pFunc); }
+	void SetFunc_WindowFocusCallback(Function* pFunc) { _pFunc_WindowFocusCallback.reset(pFunc); }
+	void SetFunc_WindowIconifyCallback(Function* pFunc) { _pFunc_WindowIconifyCallback.reset(pFunc); }
+	void SetFunc_WindowMaximizeCallabck(Function* pFunc) { _pFunc_WindowMaximizeCallabck.reset(pFunc); }
+	void SetFunc_FrameBufferSizeCallback(Function* pFunc) { _pFunc_FrameBufferSizeCallback.reset(pFunc); }
+	void SetFunc_WindowContentScaleCallback(Function* pFunc) { _pFunc_WindowContentScaleCallback.reset(pFunc); }
+	void SetFunc_MouseButtonCallback(Function* pFunc) { _pFunc_MouseButtonCallback.reset(pFunc); }
+	void SetFunc_CursorPosCallback(Function* pFunc) { _pFunc_CursorPosCallback.reset(pFunc); }
+	void SetFunc_CursorEnterCallback(Function* pFunc) { _pFunc_CursorEnterCallback.reset(pFunc); }
+	void SetFunc_ScrollCallback(Function* pFunc) { _pFunc_ScrollCallback.reset(pFunc); }
+	void SetFunc_KeyCallback(Function* pFunc) { _pFunc_KeyCallback.reset(pFunc); }
+	void SetFunc_CharCallback(Function* pFunc) { _pFunc_CharCallback.reset(pFunc); }
+	void SetFunc_CharModsCallback(Function* pFunc) { _pFunc_CharModsCallback.reset(pFunc); }
+	void SetFunc_DropCallback(Function* pFunc) { _pFunc_DropCallback.reset(pFunc); }
+	void SetFunc_MonitorCallback(Function* pFunc) { _pFunc_MonitorCallback.reset(pFunc); }
+	Function* GetFunc_WindowPosCallback() { return _pFunc_WindowPosCallback.get(); }
+	Function* GetFunc_WindowSizeCallback() { return _pFunc_WindowSizeCallback.get(); }
+	Function* GetFunc_WindowCloseCallback() { return _pFunc_WindowCloseCallback.get(); }
+	Function* GetFunc_WindowRefreshCallback() { return _pFunc_WindowRefreshCallback.get(); }
+	Function* GetFunc_WindowFocusCallback() { return _pFunc_WindowFocusCallback.get(); }
+	Function* GetFunc_WindowIconifyCallback() { return _pFunc_WindowIconifyCallback.get(); }
+	Function* GetFunc_WindowMaximizeCallabck() { return _pFunc_WindowMaximizeCallabck.get(); }
+	Function* GetFunc_FrameBufferSizeCallback() { return _pFunc_FrameBufferSizeCallback.get(); }
+	Function* GetFunc_WindowContentScaleCallback() { return _pFunc_WindowContentScaleCallback.get(); }
+	Function* GetFunc_MouseButtonCallback() { return _pFunc_MouseButtonCallback.get(); }
+	Function* GetFunc_CursorPosCallback() { return _pFunc_CursorPosCallback.get(); }
+	Function* GetFunc_CursorEnterCallback() { return _pFunc_CursorEnterCallback.get(); }
+	Function* GetFunc_ScrollCallback() { return _pFunc_ScrollCallback.get(); }
+	Function* GetFunc_KeyCallback() { return _pFunc_KeyCallback.get(); }
+	Function* GetFunc_CharCallback() { return _pFunc_CharCallback.get(); }
+	Function* GetFunc_CharModsCallback() { return _pFunc_CharModsCallback.get(); }
+	Function* GetFunc_DropCallback() { return _pFunc_DropCallback.get(); }
+	Function* GetFunc_MonitorCallback() { return _pFunc_MonitorCallback.get(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -136,26 +136,26 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Callback Function
-	static void callback_errorfun(int error_code, const char* description);
-	static void callback_windowposfun(GLFWwindow* window, int xpos, int ypos);
-	static void callback_windowsizefun(GLFWwindow* window, int width, int height);
-	static void callback_windowclosefun(GLFWwindow* window);
-	static void callback_windowrefreshfun(GLFWwindow* window);
-	static void callback_windowfocusfun(GLFWwindow* window, int focused);
-	static void callback_windowiconifyfun(GLFWwindow* window, int iconified);
-	static void callback_windowmaximizefun(GLFWwindow* window, int maximized);
-	static void callback_framebuffersizefun(GLFWwindow* window, int width, int height);
-	static void callback_windowcontentscalefun(GLFWwindow* window, float xscale, float yscale);
-	static void callback_mousebuttonfun(GLFWwindow* window, int button, int action, int mods);
-	static void callback_cursorposfun(GLFWwindow* window, double xpos, double ypos);
-	static void callback_cursorenterfun(GLFWwindow* window, int entered);
-	static void callback_scrollfun(GLFWwindow* window, double xoffset, double yoffset);
-	static void callback_keyfun(GLFWwindow* window, int key, int scancode, int action, int mods);
-	static void callback_charfun(GLFWwindow* window, unsigned int codepoint);
-	static void callback_charmodsfun(GLFWwindow* window, unsigned int codepoint, int mods);
-	static void callback_dropfun(GLFWwindow* window, int path_count, const char* paths[]);
-	static void callback_monitorfun(GLFWmonitor* monitor, int event);
-	static void callback_joystickfun(int jid, int event);
+	static void callback_ErrorCallback(int error_code, const char* description);
+	static void callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos);
+	static void callback_WindowSizeCallback(GLFWwindow* window, int width, int height);
+	static void callback_WindowCloseCallback(GLFWwindow* window);
+	static void callback_WindowRefreshCallback(GLFWwindow* window);
+	static void callback_WindowFocusCallback(GLFWwindow* window, int focused);
+	static void callback_WindowIconifyCallback(GLFWwindow* window, int iconified);
+	static void callback_WindowMaximizeCallback(GLFWwindow* window, int maximized);
+	static void callback_FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
+	static void callback_WindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale);
+	static void callback_MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	static void callback_CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+	static void callback_CursorEnterCallback(GLFWwindow* window, int entered);
+	static void callback_ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	static void callback_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void callback_CharCallback(GLFWwindow* window, unsigned int codepoint);
+	static void callback_CharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods);
+	static void callback_DropCallback(GLFWwindow* window, int path_count, const char* paths[]);
+	static void callback_MonitorCallback(GLFWmonitor* monitor, int event);
+	static void callback_JoystickCallback(int jid, int event);
 };
 
 Gurax_EndModuleScope(glfw)

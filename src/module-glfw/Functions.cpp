@@ -1788,10 +1788,10 @@ Gurax_ImplementFunction(glfwSetWindowPosCallback)
 	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
 	RefPtr<Function> callback(args.PickFunction().Reference());
 	// Function body
-	Value_GLFWwindow* pValueThis = Value_GLFWwindow::GetValue(window);
-	glfwSetWindowPosCallback(pValueThis->GetEntity(),
-			callback? Value_GLFWwindow::callback_windowposfun : nullptr);
-	pValueThis->SetFunc_windowposfun(callback.release());
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowPosCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowPosCallback : nullptr);
+	valueThis.SetFunc_WindowPosCallback(callback.release());
 	return Value::nil();
 }
 
