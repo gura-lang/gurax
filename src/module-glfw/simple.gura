@@ -7,8 +7,8 @@ main() = {
 	glfwSetWindowPosCallback(window, &{Printf('WindowPos(%d, %d)\n', $xpos, $ypos)})
 	glfwSetWindowSizeCallback(window, &{Printf('WindowSize(%d, %d)\n', $width, $height)})
 	glfwSetWindowCloseCallback(window, &{Printf('WindowClose()\n')})
-	//while (!glfwWindowShouldClose(window)) {
-	while (!window.WindowShouldClose()) {
+	while (!glfwWindowShouldClose(window)) {
+	//while (!window.WindowShouldClose()) {
 		/* Render here */
 		//glClear(GL_COLOR_BUFFER_BIT);
 		glfwSwapBuffers(window);

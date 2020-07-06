@@ -1,6 +1,12 @@
 #!/usr/bin/env
 import(glfw):binary {*}
 
+GLFWwindow.MakeContextCurrent():void = glfwMakeContextCurrent(this)
+GLFWwindow.GetInputMode(mode:Number) = glfwGetInputMode(this, mode)
+GLFWwindow.SetInputMode(mode:Number, value:Number):void = glfwSetInputMode(this, mode, value)
+
+GLFWwindow.SetWindowPosCallback(callback:Function:nil) = glfwSetWindowPosCallback(this, callback)
+
 GLFWwindow.DestroyWindow() = glfwDestroyWindow(this)
 GLFWwindow.WindowShouldClose() = glfwWindowShouldClose(this)
 GLFWwindow.SetWindowShouldClose(value:Bool) = glfwSetWindowShouldClose(this, value)
