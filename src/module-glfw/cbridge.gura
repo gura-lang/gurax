@@ -258,6 +258,7 @@ Renderer = class {
 		}
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		Println(expr.car.symbolName)
 		funcInfo = FuncInfo(moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
 		this.funcInfoTbl.Add(funcInfo)
 		expr.EachParam {|exprParam|

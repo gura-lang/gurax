@@ -188,6 +188,24 @@ Gurax_ImplementFunction(glfwGetError)
 	return description? new Value_String(description) : Value::nil();
 }
 
+// glfw.glfwSetErrorCallback()
+Gurax_DeclareFunction(glfwSetErrorCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetErrorCallback)
+{
+	// Function body
+	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
+	//valueThis.SetFunc_ErrorCallback(callback.release());
+	return Value::nil();
+}
+
 // glfw.glfwGetInputMode(window:glfw.GLFWwindow, mode:Number)
 Gurax_DeclareFunction(glfwGetInputMode)
 {
@@ -475,6 +493,206 @@ Gurax_ImplementFunction(glfwSetCursor)
 	return Value::nil();
 }
 
+// glfw.glfwSetKeyCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetKeyCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetKeyCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetKeyCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_KeyCallback : nullptr);
+	valueThis.SetFunc_KeyCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetCharCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetCharCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetCharCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCharCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CharCallback : nullptr);
+	valueThis.SetFunc_CharCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetCharModsCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetCharModsCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetCharModsCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCharModsCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CharModsCallback : nullptr);
+	valueThis.SetFunc_CharModsCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetMouseButtonCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetMouseButtonCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetMouseButtonCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetMouseButtonCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_MouseButtonCallback : nullptr);
+	valueThis.SetFunc_MouseButtonCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetCursorPosCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetCursorPosCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetCursorPosCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCursorPosCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CursorPosCallback : nullptr);
+	valueThis.SetFunc_CursorPosCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetCursorEnterCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetCursorEnterCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetCursorEnterCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCursorEnterCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CursorEnterCallback : nullptr);
+	valueThis.SetFunc_CursorEnterCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetScrollCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetScrollCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetScrollCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetScrollCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_ScrollCallback : nullptr);
+	valueThis.SetFunc_ScrollCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetDropCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetDropCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetDropCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetDropCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_DropCallback : nullptr);
+	valueThis.SetFunc_DropCallback(callback.release());
+	return Value::nil();
+}
+
 // glfw.glfwJoystickPresent(jid:Number)
 Gurax_DeclareFunction(glfwJoystickPresent)
 {
@@ -626,6 +844,30 @@ Gurax_ImplementFunction(glfwJoystickIsGamepad)
 	// Function body
 	bool rtn =(glfwJoystickIsGamepad(jid) == GLFW_TRUE);
 	return new Value_Bool(rtn);
+}
+
+// glfw.glfwSetJoystickCallback(jid:Number, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetJoystickCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("jid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetJoystickCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int jid = args.PickNumber<int>();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	glfwSetJoystickCallback(jid,
+			callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
+	//valueThis.SetFunc_JoystickCallback(callback.release());
+	return Value::nil();
 }
 
 // glfw.glfwUpdateGamepadMappings(string:String)
@@ -926,6 +1168,29 @@ Gurax_ImplementFunction(glfwGetMonitorName)
 	// Function body
 	const char* rtn = glfwGetMonitorName(monitor);
 	return new Value_String(rtn);
+}
+
+// glfw.glfwSetMonitorCallback(callback:Function:nil)
+Gurax_DeclareFunction(glfwSetMonitorCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetMonitorCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetMonitorCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
+	valueThis.SetFunc_MonitorCallback(callback.release());
+	return Value::nil();
 }
 
 // glfw.glfwGetVideoModes(monitor:glfw.GLFWmonitor)
@@ -1795,6 +2060,206 @@ Gurax_ImplementFunction(glfwSetWindowPosCallback)
 	return Value::nil();
 }
 
+// glfw.glfwSetWindowSizeCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowSizeCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowSizeCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowSizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowSizeCallback : nullptr);
+	valueThis.SetFunc_WindowSizeCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowCloseCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowCloseCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowCloseCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowCloseCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowCloseCallback : nullptr);
+	valueThis.SetFunc_WindowCloseCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowRefreshCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowRefreshCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowRefreshCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowRefreshCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowRefreshCallback : nullptr);
+	valueThis.SetFunc_WindowRefreshCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowFocusCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowFocusCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowFocusCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowFocusCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowFocusCallback : nullptr);
+	valueThis.SetFunc_WindowFocusCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowIconifyCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowIconifyCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowIconifyCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowIconifyCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowIconifyCallback : nullptr);
+	valueThis.SetFunc_WindowIconifyCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowMaximizeCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowMaximizeCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowMaximizeCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowMaximizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowMaximizeCallback : nullptr);
+	valueThis.SetFunc_WindowMaximizeCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetFramebufferSizeCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetFramebufferSizeCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetFramebufferSizeCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetFramebufferSizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_FramebufferSizeCallback : nullptr);
+	valueThis.SetFunc_FramebufferSizeCallback(callback.release());
+	return Value::nil();
+}
+
+// glfw.glfwSetWindowContentScaleCallback(window:glfw.GLFWwindow, callback:Function:nil)
+Gurax_DeclareFunction(glfwSetWindowContentScaleCallback)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_GLFWwindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glfwSetWindowContentScaleCallback)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowContentScaleCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowContentScaleCallback : nullptr);
+	valueThis.SetFunc_WindowContentScaleCallback(callback.release());
+	return Value::nil();
+}
+
 // glfw.glfwPollEvents()
 Gurax_DeclareFunction(glfwPollEvents)
 {
@@ -1895,6 +2360,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwGetVersion));
 	frame.Assign(Gurax_CreateFunction(glfwGetVersionString));
 	frame.Assign(Gurax_CreateFunction(glfwGetError));
+	frame.Assign(Gurax_CreateFunction(glfwSetErrorCallback));
 	frame.Assign(Gurax_CreateFunction(glfwGetInputMode));
 	frame.Assign(Gurax_CreateFunction(glfwSetInputMode));
 	frame.Assign(Gurax_CreateFunction(glfwRawMouseMotionSupported));
@@ -1908,6 +2374,14 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwCreateStandardCursor));
 	frame.Assign(Gurax_CreateFunction(glfwDestroyCursor));
 	frame.Assign(Gurax_CreateFunction(glfwSetCursor));
+	frame.Assign(Gurax_CreateFunction(glfwSetKeyCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetCharCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetCharModsCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetMouseButtonCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetCursorPosCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetCursorEnterCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetScrollCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetDropCallback));
 	frame.Assign(Gurax_CreateFunction(glfwJoystickPresent));
 	frame.Assign(Gurax_CreateFunction(glfwGetJoystickAxes));
 	frame.Assign(Gurax_CreateFunction(glfwGetJoystickButtons));
@@ -1915,6 +2389,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwGetJoystickName));
 	frame.Assign(Gurax_CreateFunction(glfwGetJoystickGUID));
 	frame.Assign(Gurax_CreateFunction(glfwJoystickIsGamepad));
+	frame.Assign(Gurax_CreateFunction(glfwSetJoystickCallback));
 	frame.Assign(Gurax_CreateFunction(glfwUpdateGamepadMappings));
 	frame.Assign(Gurax_CreateFunction(glfwGetGamepadName));
 	frame.Assign(Gurax_CreateFunction(glfwSetClipboardString));
@@ -1930,6 +2405,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwGetMonitorPhysicalSize));
 	frame.Assign(Gurax_CreateFunction(glfwGetMonitorContentScale));
 	frame.Assign(Gurax_CreateFunction(glfwGetMonitorName));
+	frame.Assign(Gurax_CreateFunction(glfwSetMonitorCallback));
 	frame.Assign(Gurax_CreateFunction(glfwGetVideoModes));
 	frame.Assign(Gurax_CreateFunction(glfwGetVideoMode));
 	frame.Assign(Gurax_CreateFunction(glfwSetGamma));
@@ -1969,6 +2445,14 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glfwGetWindowAttrib));
 	frame.Assign(Gurax_CreateFunction(glfwSetWindowAttrib));
 	frame.Assign(Gurax_CreateFunction(glfwSetWindowPosCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowSizeCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowCloseCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowRefreshCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowFocusCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowIconifyCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowMaximizeCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetFramebufferSizeCallback));
+	frame.Assign(Gurax_CreateFunction(glfwSetWindowContentScaleCallback));
 	frame.Assign(Gurax_CreateFunction(glfwPollEvents));
 	frame.Assign(Gurax_CreateFunction(glfwWaitEvents));
 	frame.Assign(Gurax_CreateFunction(glfwWaitEventsTimeout));

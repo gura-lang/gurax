@@ -114,7 +114,13 @@ glfwGetError():String = \
 	return description? new Value_String(description) : Value::nil();
 	'''
 
-//glfwSetErrorCallback()
+glfwSetErrorCallback():void = \
+	R'''
+	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
+	//valueThis.SetFunc_ErrorCallback(callback.release());
+	return Value::nil();
+	'''
 
 }
 
@@ -154,21 +160,77 @@ glfwDestroyCursor(cursor:GLFWcursor_p):void
 
 glfwSetCursor(window:GLFWwindow_p, cursor:GLFWcursor_p):void
 
-//glfwSetKeyCallback(window:GLFWwindow_p, callback:Function):GLFWkeyfun
+glfwSetKeyCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetKeyCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_KeyCallback : nullptr);
+	valueThis.SetFunc_KeyCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetCharCallback(window:GLFWwindow_p, callback:Function):GLFWcharfun
+glfwSetCharCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCharCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CharCallback : nullptr);
+	valueThis.SetFunc_CharCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function):GLFWcharmodsfun
+glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCharModsCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CharModsCallback : nullptr);
+	valueThis.SetFunc_CharModsCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function):GLFWmousebuttonfun
+glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetMouseButtonCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_MouseButtonCallback : nullptr);
+	valueThis.SetFunc_MouseButtonCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function):GLFWcursorposfun
+glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCursorPosCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CursorPosCallback : nullptr);
+	valueThis.SetFunc_CursorPosCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function):GLFWcursorenterfun
+glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetCursorEnterCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_CursorEnterCallback : nullptr);
+	valueThis.SetFunc_CursorEnterCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetScrollCallback(window:GLFWwindow_p, callback:Function):GLFWscrollfun
+glfwSetScrollCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetScrollCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_ScrollCallback : nullptr);
+	valueThis.SetFunc_ScrollCallback(callback.release());
+	return Value::nil();
+	'''
 
-//glfwSetDropCallback(window:GLFWwindow_p, callback:Function):GLFWdropfun
+glfwSetDropCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetDropCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_DropCallback : nullptr);
+	valueThis.SetFunc_DropCallback(callback.release());
+	return Value::nil();
+	'''
 
 glfwJoystickPresent(jid:int):int
 
@@ -209,7 +271,13 @@ glfwGetJoystickGUID(jid:int):const_char_p_NilIfNull
 
 glfwJoystickIsGamepad(jid:int):int_Bool
 
-//glfwSetJoystickCallback(callback:Function):GLFWjoystickfun
+glfwSetJoystickCallback(jid:int, callback:Function:nil):void = \
+	R'''
+	glfwSetJoystickCallback(jid,
+			callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
+	//valueThis.SetFunc_JoystickCallback(callback.release());
+	return Value::nil();
+	'''
 
 glfwUpdateGamepadMappings(string:const_char_p):int_ErrorIfFalse
 
@@ -285,7 +353,14 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
  
 //glfwGetMonitorUserPointer(monitor:GLFWmonitor_p):void_p
  
-//glfwSetMonitorCallback(callback:Function):GLFWmonitorfun
+glfwSetMonitorCallback(callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetMonitorCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
+	valueThis.SetFunc_MonitorCallback(callback.release());
+	return Value::nil();
+	'''
  
 glfwGetVideoModes(monitor:GLFWmonitor_p):any = \
 	R'''
@@ -455,21 +530,77 @@ glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
  
-//glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function):GLFWwindowsizefun
+glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowSizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowSizeCallback : nullptr);
+	valueThis.SetFunc_WindowSizeCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function):GLFWwindowclosefun
+glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowCloseCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowCloseCallback : nullptr);
+	valueThis.SetFunc_WindowCloseCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function):GLFWwindowrefreshfun
+glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowRefreshCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowRefreshCallback : nullptr);
+	valueThis.SetFunc_WindowRefreshCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function):GLwindowfocusfun
+glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowFocusCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowFocusCallback : nullptr);
+	valueThis.SetFunc_WindowFocusCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function):GLFWwindowiconifyfun
+glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowIconifyCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowIconifyCallback : nullptr);
+	valueThis.SetFunc_WindowIconifyCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function):GLFWwindowmaximizefun
+glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowMaximizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowMaximizeCallback : nullptr);
+	valueThis.SetFunc_WindowMaximizeCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function):GLFWframebuffersizefun
+glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetFramebufferSizeCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_FramebufferSizeCallback : nullptr);
+	valueThis.SetFunc_FramebufferSizeCallback(callback.release());
+	return Value::nil();
+	'''
  
-//glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function):GLFWwindowcontentscalefun
+glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+	R'''
+	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
+	glfwSetWindowContentScaleCallback(valueThis.GetEntity(),
+			callback? Value_GLFWwindow::callback_WindowContentScaleCallback : nullptr);
+	valueThis.SetFunc_WindowContentScaleCallback(callback.release());
+	return Value::nil();
+	'''
  
 glfwPollEvents():void
  
