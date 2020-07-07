@@ -4,6 +4,8 @@
 #ifndef GURAX_MODULE_OPENGL_H
 #define GURAX_MODULE_OPENGL_H
 #include <gurax.h>
+#define GLEW_STATIC
+#include <GL/glew.h>
 #include "Util.h"
 
 Gurax_BeginModuleHeader(opengl)

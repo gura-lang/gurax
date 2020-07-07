@@ -10,12 +10,12 @@ add_library(opengl.gurd SHARED)
 #-------------------------------------------------------------------------------
 target_include_directories(opengl.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/glew-2.1.0/include>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(opengl.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/glew-2.1.0/build_work/lib>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
@@ -40,7 +40,7 @@ target_sources(opengl.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_libraries(opengl.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Windows>:libglew32.lib>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

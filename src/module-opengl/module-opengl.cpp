@@ -21,6 +21,7 @@ Gurax_DeclareFunction(Test)
 
 Gurax_ImplementFunction(Test)
 {
+	glClearColor(0, 0, 0, 0);
 	// Arguments
 	ArgPicker args(argument);
 	const char* str = args.PickString();

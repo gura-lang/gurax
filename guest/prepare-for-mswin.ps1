@@ -183,6 +183,22 @@ class Package_dtl {
 $packages += [Package_dtl]::new()
 
 #---------------------------------------------------------------------------------
+# Package: glew
+#---------------------------------------------------------------------------------
+class Package_glew {
+	[String] $name = "glew"
+	[String] $ver = "2.1.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		cmake -B build_work build/cmake -G Ninja
+		ExecCommand ninja "-C build_work glew_s"
+	}
+}
+$packages += [Package_glew]::new()
+
+#---------------------------------------------------------------------------------
 # Package: glfw
 #---------------------------------------------------------------------------------
 class Package_glfw {
