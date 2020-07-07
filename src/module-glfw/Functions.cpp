@@ -1190,10 +1190,9 @@ Gurax_ImplementFunction(glfwSetMonitorCallback)
 	ArgPicker args(argument);
 	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
 	// Function body
-	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	//glfwSetMonitorCallback(valueThis.GetEntity(),
-	//		callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
-	//valueThis.SetFunc_MonitorCallback(callback.release());
+	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
+	g_pProcessor_MonitorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pFunc_MonitorCallback.reset(callback.release());
 	return Value::nil();
 }
 

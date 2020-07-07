@@ -48,7 +48,6 @@ protected:
 	RefPtr<Function> _pFunc_CharCallback;
 	RefPtr<Function> _pFunc_CharModsCallback;
 	RefPtr<Function> _pFunc_DropCallback;
-	RefPtr<Function> _pFunc_MonitorCallback;
 public:
 	static VType& vtype;
 public:
@@ -101,7 +100,6 @@ public:
 	void SetFunc_CharCallback(Function* pFunc) { _pFunc_CharCallback.reset(pFunc); }
 	void SetFunc_CharModsCallback(Function* pFunc) { _pFunc_CharModsCallback.reset(pFunc); }
 	void SetFunc_DropCallback(Function* pFunc) { _pFunc_DropCallback.reset(pFunc); }
-	void SetFunc_MonitorCallback(Function* pFunc) { _pFunc_MonitorCallback.reset(pFunc); }
 	Function* GetFunc_WindowPosCallback() { return _pFunc_WindowPosCallback.get(); }
 	Function* GetFunc_WindowSizeCallback() { return _pFunc_WindowSizeCallback.get(); }
 	Function* GetFunc_WindowCloseCallback() { return _pFunc_WindowCloseCallback.get(); }
@@ -119,25 +117,8 @@ public:
 	Function* GetFunc_CharCallback() { return _pFunc_CharCallback.get(); }
 	Function* GetFunc_CharModsCallback() { return _pFunc_CharModsCallback.get(); }
 	Function* GetFunc_DropCallback() { return _pFunc_DropCallback.get(); }
-	Function* GetFunc_MonitorCallback() { return _pFunc_MonitorCallback.get(); }
-public:
-	// Virtual functions of Value
-	virtual Value* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetEntity() == Value_GLFWwindow::GetEntity(*pValue);
-	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetEntity() < Value_GLFWwindow::GetEntity(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
-	}
-	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Callback Function
-	static void callback_ErrorCallback(int error_code, const char* description);
-
 	static void callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos);
 	static void callback_WindowSizeCallback(GLFWwindow* window, int width, int height);
 	static void callback_WindowCloseCallback(GLFWwindow* window);
@@ -156,8 +137,21 @@ public:
 	static void callback_CharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods);
 	static void callback_DropCallback(GLFWwindow* window, int path_count, const char* paths[]);
 
-	static void callback_MonitorCallback(GLFWmonitor* monitor, int event);
 	static void callback_JoystickCallback(int jid, int event);
+public:
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override { return 0; }
+	virtual bool IsEqualTo(const Value* pValue) const override {
+		return IsSameType(pValue) &&
+			GetEntity() == Value_GLFWwindow::GetEntity(*pValue);
+	}
+	virtual bool IsLessThan(const Value* pValue) const override {
+		return IsSameType(pValue)?
+			GetEntity() < Value_GLFWwindow::GetEntity(*pValue) :
+			GetVType().IsLessThan(pValue->GetVType());
+	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(glfw)

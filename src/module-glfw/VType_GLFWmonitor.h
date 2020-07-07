@@ -60,8 +60,8 @@ public:
 	}
 	static GLFWmonitor* ValueForVector(Value& value) { return GetEntity(value); }
 public:
-	static Value_GLFWmonitor* GetValue(GLFWmonitor* pGLFWmonitor) {
-		return reinterpret_cast<Value_GLFWmonitor*>(glfwGetMonitorUserPointer(pGLFWmonitor));
+	static Value_GLFWmonitor& GetValue(GLFWmonitor* pGLFWmonitor) {
+		return *reinterpret_cast<Value_GLFWmonitor*>(glfwGetMonitorUserPointer(pGLFWmonitor));
 	}
 public:
 	// Virtual functions of Value

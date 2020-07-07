@@ -183,10 +183,6 @@ void Value_GLFWwindow::callback_DropCallback(GLFWwindow* window, int path_count,
 			new Value_List(pValueOwner.release()));
 }
 
-void Value_GLFWwindow::callback_MonitorCallback(GLFWmonitor* monitor, int event)
-{
-}
-
 void Value_GLFWwindow::callback_JoystickCallback(int jid, int event)
 {
 }

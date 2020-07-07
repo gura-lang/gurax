@@ -21,6 +21,10 @@ extern RefPtr<Processor> g_pProcessor_ErrorCallback;
 extern RefPtr<Function> g_pFunc_ErrorCallback;
 void callback_ErrorCallback(int error_code, const char* description);
 
+extern RefPtr<Processor> g_pProcessor_MonitorCallback;
+extern RefPtr<Function> g_pFunc_MonitorCallback;
+void callback_MonitorCallback(GLFWmonitor* monitor, int event);
+
 Gurax_EndModuleHeader(glfw)
 
 #endif

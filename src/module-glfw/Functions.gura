@@ -116,7 +116,7 @@ glfwGetError():String = \
 
 glfwSetErrorCallback(callback:Function:nil):void = \
 	R'''
-	glfwSetErrorCallabck(callback? callback_ErrorCallback : nullptr);
+	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
 	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
 	g_pFunc_ErrorCallback.reset(callback.release());
 	return Value::nil();
@@ -354,10 +354,9 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
  
 glfwSetMonitorCallback(callback:Function:nil):void = \
 	R'''
-	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	//glfwSetMonitorCallback(valueThis.GetEntity(),
-	//		callback? Value_GLFWwindow::callback_MonitorCallback : nullptr);
-	//valueThis.SetFunc_MonitorCallback(callback.release());
+	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
+	g_pProcessor_MonitorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pFunc_MonitorCallback.reset(callback.release());
 	return Value::nil();
 	'''
  
