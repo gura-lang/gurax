@@ -16,6 +16,11 @@
 #include "VType_GLFWwindow.h"
 
 Gurax_BeginModuleHeader(glfw)
+
+extern RefPtr<Processor> g_pProcessor_ErrorCallback;
+extern RefPtr<Function> g_pFunc_ErrorCallback;
+void callback_ErrorCallback(int error_code, const char* description);
+
 Gurax_EndModuleHeader(glfw)
 
 #endif

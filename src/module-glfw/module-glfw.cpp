@@ -57,6 +57,24 @@ Gurax_ImplementFunction(Test)
 }
 
 //------------------------------------------------------------------------------
+// Callback function
+//------------------------------------------------------------------------------
+RefPtr<Processor> g_pProcessor_ErrorCallback;
+RefPtr<Function> g_pFunc_ErrorCallback;
+
+void callback_ErrorCallback(int error_code, const char* description)
+{
+	Function* pFunc = g_pFunc_ErrorCallback.get();
+	if (!pFunc) return;
+	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
+	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
+	ArgFeeder args(*pArgument);
+	args.FeedValues(*pFrame, new Value_Number(error_code), new Value_String(description));
+	if (Error::IsIssued()) return;
+	Value::Delete(pFunc->Eval(*g_pProcessor_ErrorCallback, *pArgument));
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()

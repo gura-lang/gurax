@@ -137,6 +137,7 @@ public:
 public:
 	// Callback Function
 	static void callback_ErrorCallback(int error_code, const char* description);
+
 	static void callback_WindowPosCallback(GLFWwindow* window, int xpos, int ypos);
 	static void callback_WindowSizeCallback(GLFWwindow* window, int width, int height);
 	static void callback_WindowCloseCallback(GLFWwindow* window);
@@ -154,6 +155,7 @@ public:
 	static void callback_CharCallback(GLFWwindow* window, unsigned int codepoint);
 	static void callback_CharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods);
 	static void callback_DropCallback(GLFWwindow* window, int path_count, const char* paths[]);
+
 	static void callback_MonitorCallback(GLFWmonitor* monitor, int event);
 	static void callback_JoystickCallback(int jid, int event);
 };

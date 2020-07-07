@@ -188,10 +188,11 @@ Gurax_ImplementFunction(glfwGetError)
 	return description? new Value_String(description) : Value::nil();
 }
 
-// glfw.glfwSetErrorCallback()
+// glfw.glfwSetErrorCallback(callback:Function:nil)
 Gurax_DeclareFunction(glfwSetErrorCallback)
 {
 	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("callback", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -199,10 +200,13 @@ Gurax_DeclareFunction(glfwSetErrorCallback)
 
 Gurax_ImplementFunction(glfwSetErrorCallback)
 {
+	// Arguments
+	ArgPicker args(argument);
+	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
 	// Function body
-	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	//glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
-	//valueThis.SetFunc_ErrorCallback(callback.release());
+	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
+	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pFunc_ErrorCallback.reset(callback.release());
 	return Value::nil();
 }
 

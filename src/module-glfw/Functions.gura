@@ -114,14 +114,13 @@ glfwGetError():String = \
 	return description? new Value_String(description) : Value::nil();
 	'''
 
-glfwSetErrorCallback():void = \
+glfwSetErrorCallback(callback:Function:nil):void = \
 	R'''
-	//Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	//glfwSetErrorCallback(callback? Value_GLFWwindow::callback_ErrorCallback : nullptr);
-	//valueThis.SetFunc_ErrorCallback(callback.release());
+	glfwSetErrorCallabck(callback? callback_ErrorCallback : nullptr);
+	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pFunc_ErrorCallback.reset(callback.release());
 	return Value::nil();
 	'''
-
 }
 
 //------------------------------------------------------------------------------

@@ -48,28 +48,8 @@ String Value_GLFWwindow::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Callback Function
+// Callback function
 //------------------------------------------------------------------------------
-void Value_GLFWwindow::callback_ErrorCallback(int error_code, const char* description)
-{
-}
-
-#if 0
-void callback_WindowTwoArgs(GLFWwindow* window, Value* pValue1, Value* pValue2)
-{
-	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
-	const Function* pFunc = valueThis.GetFunc_WindowPosCallback();
-	if (!pFunc) return;
-	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
-	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
-	ArgFeeder args(*pArgument);
-	args.FeedValue(*pFrame, pValue1);
-	args.FeedValue(*pFrame, pValue2);
-	if (Error::IsIssued()) return;
-	Value::Delete(pFunc->Eval(valueThis.GetProcessor(), *pArgument));
-}
-#endif
-
 template<typename... T_Args> void callback_Window(Processor& processor, const Function* pFunc, T_Args... pValues)
 {
 	if (!pFunc) return;
