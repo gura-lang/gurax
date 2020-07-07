@@ -142,14 +142,17 @@ Renderer = class {
 		this.typeInfoMap[decl] = TypeInfo(decl, moduleName, cType, vtype,
 				codePicker, codePickerValidation, codePickerVec, codeFunctionBody)
 	}
-	DeclareTypeInfo_Number(decl:String, cType:String) = this.DeclareTypeInfo(decl, '', cType, 'Number',
-		R'''
+	DeclareTypeInfo_Number(decl:String, cType?:String) = this.DeclareTypeInfo(decl, '', cType || decl, 'Number',
+		codePicker = R'''
 		${this.cType} ${varName} = args.PickNumber<${this.cType}>();
-		''', R'''
+		'''
+		codePickerValidation = R'''
 		${this.cType} ${varName} = args.IsValid()? args.PickNumber<${this.cType}>() : 0;
-		''', R'''
+		'''
+		codePickerVec = R'''
 		auto ${varName} = args.PickNumList<${this.cType}>();
-		''', R'''
+		'''
+		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''')
@@ -209,44 +212,44 @@ Renderer.__init__() = {
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')
-	this.DeclareTypeInfo_Number('char', 'char')
-	this.DeclareTypeInfo_Number('short', 'short')
-	this.DeclareTypeInfo_Number('long', 'long')
-	this.DeclareTypeInfo_Number('int', 'int')
+	this.DeclareTypeInfo_Number('char')
+	this.DeclareTypeInfo_Number('short')
+	this.DeclareTypeInfo_Number('long')
+	this.DeclareTypeInfo_Number('int')
 	this.DeclareTypeInfo_Number('long_long', 'long long')
-	this.DeclareTypeInfo_Number('float', 'float')
-	this.DeclareTypeInfo_Number('double', 'double')
+	this.DeclareTypeInfo_Number('float')
+	this.DeclareTypeInfo_Number('double')
 	this.DeclareTypeInfo_Number('unsigned_char', 'unsigned char')
 	this.DeclareTypeInfo_Number('unsigned_short', 'unsigned short')
 	this.DeclareTypeInfo_Number('unsigned_long', 'unsigned long')
 	this.DeclareTypeInfo_Number('unsigned_int', 'unsigned int')
 	this.DeclareTypeInfo_Number('unsigned_long_long', 'unsigned long long')
-	this.DeclareTypeInfo_Number('int8_t', 'int8_t')
-	this.DeclareTypeInfo_Number('int16_t', 'int16_t')
-	this.DeclareTypeInfo_Number('int32_t', 'int32_t')
-	this.DeclareTypeInfo_Number('int64_t', 'int64_t')
-	this.DeclareTypeInfo_Number('uint8_t', 'uint8_t')
-	this.DeclareTypeInfo_Number('uint16_t', 'uint16_t')
-	this.DeclareTypeInfo_Number('uint32_t', 'uint32_t')
-	this.DeclareTypeInfo_Number('uint64_t', 'uint64_t')
-	this.DeclareTypeInfo_Number('Char', 'Char')
-	this.DeclareTypeInfo_Number('UChar', 'UChar')
-	this.DeclareTypeInfo_Number('Short', 'Short')
-	this.DeclareTypeInfo_Number('UShort', 'UShort')
-	this.DeclareTypeInfo_Number('Int', 'Int')
-	this.DeclareTypeInfo_Number('UInt', 'UInt')
-	this.DeclareTypeInfo_Number('Long', 'Long')
-	this.DeclareTypeInfo_Number('ULong', 'ULong')
-	this.DeclareTypeInfo_Number('Int8', 'Int8')
-	this.DeclareTypeInfo_Number('UInt8', 'UInt8')
-	this.DeclareTypeInfo_Number('Int16', 'Int16')
-	this.DeclareTypeInfo_Number('UInt16', 'UInt16')
-	this.DeclareTypeInfo_Number('Int32', 'Int32')
-	this.DeclareTypeInfo_Number('UInt32', 'UInt32')
-	this.DeclareTypeInfo_Number('Int64', 'Int64')
-	this.DeclareTypeInfo_Number('UInt64', 'UInt64')
-	this.DeclareTypeInfo_Number('Float', 'Float')
-	this.DeclareTypeInfo_Number('Double', 'Double')
+	this.DeclareTypeInfo_Number('int8_t')
+	this.DeclareTypeInfo_Number('int16_t')
+	this.DeclareTypeInfo_Number('int32_t')
+	this.DeclareTypeInfo_Number('int64_t')
+	this.DeclareTypeInfo_Number('uint8_t')
+	this.DeclareTypeInfo_Number('uint16_t')
+	this.DeclareTypeInfo_Number('uint32_t')
+	this.DeclareTypeInfo_Number('uint64_t')
+	this.DeclareTypeInfo_Number('Char')
+	this.DeclareTypeInfo_Number('UChar')
+	this.DeclareTypeInfo_Number('Short')
+	this.DeclareTypeInfo_Number('UShort')
+	this.DeclareTypeInfo_Number('Int')
+	this.DeclareTypeInfo_Number('UInt')
+	this.DeclareTypeInfo_Number('Long')
+	this.DeclareTypeInfo_Number('ULong')
+	this.DeclareTypeInfo_Number('Int8')
+	this.DeclareTypeInfo_Number('UInt8')
+	this.DeclareTypeInfo_Number('Int16')
+	this.DeclareTypeInfo_Number('UInt16')
+	this.DeclareTypeInfo_Number('Int32')
+	this.DeclareTypeInfo_Number('UInt32')
+	this.DeclareTypeInfo_Number('Int64')
+	this.DeclareTypeInfo_Number('UInt64')
+	this.DeclareTypeInfo_Number('Float')
+	this.DeclareTypeInfo_Number('Double')
 	this.DeclareTypeInfo('bool', '', 'bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickBool();
