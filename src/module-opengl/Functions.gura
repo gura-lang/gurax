@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+import(cbridge)
+
+//------------------------------------------------------------------------------
+// Type Information
+//------------------------------------------------------------------------------
+
+r = cbridge.Renderer()
+
+//------------------------------------------------------------------------------
+// Function Registration: Context
+//------------------------------------------------------------------------------
+r.Register('opengl') {
+
+glewInit():void
+
+}
+
+tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(opengl)
+
+${r.ComposeImplementation()}
+
+void AssignFunctions(Frame& frame)
+{
+	${r.ComposeAssignment('frame.')}
+}
+
+Gurax_EndModuleScope(opengl)
+'''.Render('Functions.cpp')

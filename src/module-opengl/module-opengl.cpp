@@ -21,6 +21,7 @@ Gurax_DeclareFunction(Test)
 
 Gurax_ImplementFunction(Test)
 {
+	glewInit();
 	glClearColor(0, 0, 0, 0);
 	// Arguments
 	ArgPicker args(argument);
@@ -42,6 +43,7 @@ Gurax_ModulePrepare()
 {
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	AssignFunctions(GetFrame());
 	return true;
 }
 

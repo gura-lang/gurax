@@ -7,6 +7,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include "Util.h"
+#include "Functions.h"
 
 Gurax_BeginModuleHeader(opengl)
 Gurax_EndModuleHeader(opengl)

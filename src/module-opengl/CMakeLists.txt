@@ -33,7 +33,8 @@ target_compile_options(opengl.gurd PRIVATE
 target_compile_definitions(opengl.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(opengl.gurd PRIVATE
 	module-opengl.cpp
-	Util.cpp)
+	Util.cpp
+	Functions.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_libraries(opengl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libglew32.lib>
+	$<$<PLATFORM_ID:Windows>:opengl32.lib>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------
