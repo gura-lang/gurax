@@ -1,18 +1,19 @@
 #!/usr/bin/env gurax
 import(cbridge)
 
+r = cbridge.Renderer()
+
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
-
-r = cbridge.Renderer()
+r.DeclareTypeInfo_Number('GLenum')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
 //------------------------------------------------------------------------------
 r.Register('opengl') {
 
-glewInit():void
+glewInit():GLenum
 
 }
 

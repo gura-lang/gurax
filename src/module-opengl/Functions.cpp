@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(opengl)
 // opengl.glewInit()
 Gurax_DeclareFunction(glewInit)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -17,8 +17,8 @@ Gurax_DeclareFunction(glewInit)
 Gurax_ImplementFunction(glewInit)
 {
 	// Function body
-	glewInit();
-	return Value::nil();
+	GLenum rtn = glewInit();
+	return new Value_Number(rtn);
 }
 
 void AssignFunctions(Frame& frame)
