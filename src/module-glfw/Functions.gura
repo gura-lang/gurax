@@ -1,44 +1,34 @@
 #!/usr/bin/env gurax
 import(cbridge)
 
+r = cbridge.Renderer()
+
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
 moduleName = 'glfw'
 
-@(cbridge.TypeInfo) {
-	{ 'int_ErrorIfFalse', moduleName, 'int', 'Nil', '', '', '',
-		R'''
-		if (${caller} != GLFW_TRUE) IssueError();
-		return Value::nil();
-		''' }
-	{ 'int_Bool', moduleName, 'int', 'Bool', '', '', '',
-		R'''
-		bool rtn =(${caller} == GLFW_TRUE);
-		return new Value_Bool(rtn);
-		''' }
-	{ 'GLFWimage', moduleName, 'GLFWimage', 'GLFWimage',
-		R'''
-		${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
-		''', '', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		IssueError();
-		return Value::nil();
-		''' }
-}
+r.DeclareTypeInfo('int_ErrorIfFalse', moduleName, 'int', 'Nil', '', '', '',
+	codeFunctionBody = R'''
+	if (${caller} != GLFW_TRUE) IssueError();
+	return Value::nil();
+	''')
 
-TypeInfo_Entity(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
-	R'''
-	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-	''', R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-	''', R'''
+r.DeclareTypeInfo('int_Bool', moduleName, 'int', 'Bool', '', '', '',
+	codeFunctionBody = R'''
+	bool rtn =(${caller} == GLFW_TRUE);
+	return new Value_Bool(rtn);
+	''')
+
+r.DeclareTypeInfo('GLFWimage', moduleName, 'GLFWimage', 'GLFWimage',
+	codePicker = R'''
+	${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
+	'''
+	codePickerValidation = ''
+	codePickerVec = R'''
 	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-	''', R'''
+	'''
+	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
 		return new Value_${this.vtype}(rtn);
 	}
@@ -46,14 +36,35 @@ TypeInfo_Entity(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(decl
 	return Value::nil();
 	''')
 
-TypeInfo_EntityEx(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(decl, moduleName, cType, vtype,
-	R'''
+cbridge.Renderer.DeclareTypeInfo_Entity(decl:String, cType:String, vtype:String) = this.DeclareTypeInfo(decl, moduleName, cType, vtype,
+	codePicker = R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
-	''', R'''
+	'''
+	codePickerValidation = R'''
 	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
-	''', R'''
+	'''
+	codePickerVec = R'''
 	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-	''', R'''
+	'''
+	codeFunctionBody = R'''
+	if (${this.cType} rtn = ${caller}) {
+		return new Value_${this.vtype}(rtn);
+	}
+	IssueError();
+	return Value::nil();
+	''')
+
+cbridge.Renderer.DeclareTypeInfo_EntityEx(decl:String, cType:String, vtype:String) = this.DeclareTypeInfo(decl, moduleName, cType, vtype,
+	codePicker = R'''
+	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
 		return new Value_${this.vtype}(rtn, processor.Reference());
 	}
@@ -61,14 +72,12 @@ TypeInfo_EntityEx(decl:String, cType:String, vtype:String) = cbridge.TypeInfo(de
 	return Value::nil();
 	''')
 
-TypeInfo_Entity('GLFWcursor_p', 'GLFWcursor*', 'GLFWcursor')
-TypeInfo_Entity('const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage')
-TypeInfo_Entity('const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp')
-TypeInfo_Entity('const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode')
-TypeInfo_Entity('GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor')
-TypeInfo_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow')
-
-r = cbridge.Renderer()
+r.DeclareTypeInfo_Entity('GLFWcursor_p', 'GLFWcursor*', 'GLFWcursor')
+r.DeclareTypeInfo_Entity('const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage')
+r.DeclareTypeInfo_Entity('const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp')
+r.DeclareTypeInfo_Entity('const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode')
+r.DeclareTypeInfo_Entity('GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor')
+r.DeclareTypeInfo_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context

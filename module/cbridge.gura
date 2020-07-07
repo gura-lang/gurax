@@ -20,8 +20,7 @@ TypeInfo = class {
 	tmplPickerValidation:Template
 	tmplPickerListVar:Template
 	tmplFunctionBody:Template
-	map:static = %{}
-	__init__(decl:String, moduleName, cType:String, vtype:String,
+	__init__(decl:String, moduleName:String, cType:String, vtype:String,
 			codePicker:String, codePickerValidation:String,
 			codePickerVec:String, codeFunctionBody:String) = {
 		this.decl = decl, this.moduleName = moduleName, this.cType = cType, this.vtype = vtype
@@ -29,124 +28,12 @@ TypeInfo = class {
 		this.tmplPickerValidation = Template().Parse(codePickerValidation)
 		this.tmplPickerListVar = Template().Parse(codePickerVec)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
-		this.map[this.decl] = this
 	}
 	ComposePicker(varName:String, listVarFlag:Bool, validationFlag:Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
 	MakeFullTypeName() = cond(this.moduleName.IsEmpty(), this.vtype, this.moduleName + '.' + this.vtype)
-}
-
-TypeInfo('any', '', '', 'Any', '', '', '', '')
-
-TypeInfo('void', '', 'void', 'Nil', '', '', '',
-	R'''
-	${caller};
-	return Value::nil();
-	''')
-
-TypeInfo('String', '', '', 'String', '', '', '', '')
-
-TypeInfo('Function', '', '', 'Function',
-	R'''
-	RefPtr<Function> ${varName}(args.PickFunction().Reference());
-	''', R'''
-	RefPtr<Function> ${varName}(args.IsValid()? args.PickFunction().Reference() : nullptr);
-	''', '', '')
-
-TypeInfo_Number(decl:String, moduleName:String, cType:String) = TypeInfo(decl, moduleName, cType, 'Number',
-	R'''
-	${this.cType} ${varName} = args.PickNumber<${this.cType}>();
-	''', R'''
-	${this.cType} ${varName} = args.IsValid()? args.PickNumber<${this.cType}>() : 0;
-	''', R'''
-	auto ${varName} = args.PickNumList<${this.cType}>();
-	''', R'''
-	${this.cType} rtn = ${caller};
-	return new Value_${this.vtype}(rtn);
-	''')
-
-TypeInfo_Number('char', '', 'char')
-TypeInfo_Number('short', '', 'short')
-TypeInfo_Number('long', '', 'long')
-TypeInfo_Number('int', '', 'int')
-TypeInfo_Number('long_long', '', 'long long')
-TypeInfo_Number('float', '', 'float')
-TypeInfo_Number('double', '', 'double')
-TypeInfo_Number('unsigned_char', '', 'unsigned char')
-TypeInfo_Number('unsigned_short', '', 'unsigned short')
-TypeInfo_Number('unsigned_long', '', 'unsigned long')
-TypeInfo_Number('unsigned_int', '', 'unsigned int')
-TypeInfo_Number('unsigned_long_long', '', 'unsigned long long')
-TypeInfo_Number('int8_t', '', 'int8_t')
-TypeInfo_Number('int16_t', '', 'int16_t')
-TypeInfo_Number('int32_t', '', 'int32_t')
-TypeInfo_Number('int64_t', '', 'int64_t')
-TypeInfo_Number('uint8_t', '', 'uint8_t')
-TypeInfo_Number('uint16_t', '', 'uint16_t')
-TypeInfo_Number('uint32_t', '', 'uint32_t')
-TypeInfo_Number('uint64_t', '', 'uint64_t')
-TypeInfo_Number('Char', '', 'Char')
-TypeInfo_Number('UChar', '', 'UChar')
-TypeInfo_Number('Short', '', 'Short')
-TypeInfo_Number('UShort', '', 'UShort')
-TypeInfo_Number('Int', '', 'Int')
-TypeInfo_Number('UInt', '', 'UInt')
-TypeInfo_Number('Long', '', 'Long')
-TypeInfo_Number('ULong', '', 'ULong')
-TypeInfo_Number('Int8', '', 'Int8')
-TypeInfo_Number('UInt8', '', 'UInt8')
-TypeInfo_Number('Int16', '', 'Int16')
-TypeInfo_Number('UInt16', '', 'UInt16')
-TypeInfo_Number('Int32', '', 'Int32')
-TypeInfo_Number('UInt32', '', 'UInt32')
-TypeInfo_Number('Int64', '', 'Int64')
-TypeInfo_Number('UInt64', '', 'UInt64')
-TypeInfo_Number('Float', '', 'Float')
-TypeInfo_Number('Double', '', 'Double')
-
-@(TypeInfo) {
-	{ 'bool', '', 'bool', 'Bool',
-		R'''
-		${this.cType} ${varName} = args.PickBool();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
-		''', R'''
-		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		${this.cType} rtn = ${caller};
-		return new Value_${this.vtype}(rtn);
-		''' }
-	{ 'Bool', '', 'Bool', 'Bool',
-		R'''
-		${this.cType} ${varName} = args.PickBool();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
-		''', R'''
-		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		${this.cType} rtn = ${caller};
-		return new Value_${this.vtype}(rtn);
-		''' }
-	{ 'const_char_p', '', 'const char*', 'String',
-		R'''
-		${this.cType} ${varName} = args.PickString();
-		''', R'''
-		${this.cType} ${varName} = args.IsValid()? args.PickString() : nullptr;
-		''', R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
-		''', R'''
-		${this.cType} rtn = ${caller};
-		return new Value_${this.vtype}(rtn);
-		''' }
-	{ 'const_char_p_NilIfNull', '', 'const char*', 'String', '', '', '',
-		R'''
-		if (${this.cType} rtn = ${caller}) {
-			return new Value_${this.vtype}(rtn);
-		}
-		return Value::nil();
-		''' }
 }
 
 //------------------------------------------------------------------------------
@@ -161,13 +48,13 @@ ArgInfo = class {
 	typeInfo:TypeInfo
 	tmplDeclaration:Template:static
 	tmplImplementation:Template:static
-	__init__(name:String, attr:Attribute, listVarFlag:Bool, optionFlag:Bool) = {
+	__init__(r:Renderer, name:String, attr:Attribute, listVarFlag:Bool, optionFlag:Bool) = {
 		this.name = name
 		this.type = attr.dottedName
 		this.listVarFlag = listVarFlag
 		this.optionFlag = optionFlag
 		this.nilFlag = attr.IsSet(`nil)
-		this.typeInfo = TypeInfo.map[this.type]
+		this.typeInfo = r.typeInfoMap[this.type]
 	}
 	ComposeDeclaration() = {
 		strArgOccur = 'ArgOccur::' + cond(this.optionFlag, 'ZeroOrOnce', 'Once')
@@ -203,9 +90,9 @@ FuncInfo = class {
 	tmplAssignment:Template:static
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
-	__init__(moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
+	__init__(r:Renderer, moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
 		this.moduleName = moduleName, this.name = name, this.type = type
-		this.typeInfo = TypeInfo.map[type]
+		this.typeInfo = r.typeInfoMap[type]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
@@ -248,6 +135,24 @@ FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}));'
 //------------------------------------------------------------------------------
 Renderer = class {
 	funcInfoTbl = []
+	typeInfoMap = %{}
+	DeclareTypeInfo(decl:String, moduleName:String, cType:String, vtype:String,
+			codePicker:String, codePickerValidation:String,
+			codePickerVec:String, codeFunctionBody:String) = {
+		this.typeInfoMap[decl] = TypeInfo(decl, moduleName, cType, vtype,
+				codePicker, codePickerValidation, codePickerVec, codeFunctionBody)
+	}
+	DeclareTypeInfo_Number(decl:String, cType:String) = this.DeclareTypeInfo(decl, '', cType, 'Number',
+		R'''
+		${this.cType} ${varName} = args.PickNumber<${this.cType}>();
+		''', R'''
+		${this.cType} ${varName} = args.IsValid()? args.PickNumber<${this.cType}>() : 0;
+		''', R'''
+		auto ${varName} = args.PickNumList<${this.cType}>();
+		''', R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''')
 	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
 	RegisterExpr(moduleName:String, expr:Expr):map:void = {
 		codeFunctionBody = nil
@@ -259,7 +164,7 @@ Renderer = class {
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		Println(expr.car.symbolName)
-		funcInfo = FuncInfo(moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
+		funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
 		this.funcInfoTbl.Add(funcInfo)
 		expr.EachParam {|exprParam|
 			//Println(exprParam)
@@ -270,7 +175,7 @@ Renderer = class {
 					optionFlag = true
 				} else {
 					ErrorDone(exprParam, 'invalid format of parameter')
-				}
+	w				}
 				exprParam = exprParam.child
 			}
 			attr = exprParam.attr
@@ -279,10 +184,116 @@ Renderer = class {
 				exprParam = exprParam.car
 			}
 			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(exprParam.symbolName, attr, listVarFlag, optionFlag)
+			argInfo = ArgInfo(this, exprParam.symbolName, attr, listVarFlag, optionFlag)
 			funcInfo.argInfoTbl.Add(argInfo)
 		}
 	}
 	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
 	ComposeAssignment(codePrefix:String) = (codePrefix + this.funcInfoTbl:*ComposeAssignment()).Join('\n')
+}
+
+Renderer.__init__() = {
+	this.DeclareTypeInfo('any', '', '', 'Any', '', '', '', '')
+	this.DeclareTypeInfo('void', '', 'void', 'Nil', '', '', '',
+		codeFunctionBody = R'''
+		${caller};
+		return Value::nil();
+		''')
+	this.DeclareTypeInfo('String', '', '', 'String', '', '', '', '')
+	this.DeclareTypeInfo('Function', '', '', 'Function',
+		codePicker = R'''
+		RefPtr<Function> ${varName}(args.PickFunction().Reference());
+		'''
+		codePickerValidation = R'''
+		RefPtr<Function> ${varName}(args.IsValid()? args.PickFunction().Reference() : nullptr);
+		'''
+		codePickerVec = ''
+		codeFunctionBody = '')
+	this.DeclareTypeInfo_Number('char', 'char')
+	this.DeclareTypeInfo_Number('short', 'short')
+	this.DeclareTypeInfo_Number('long', 'long')
+	this.DeclareTypeInfo_Number('int', 'int')
+	this.DeclareTypeInfo_Number('long_long', 'long long')
+	this.DeclareTypeInfo_Number('float', 'float')
+	this.DeclareTypeInfo_Number('double', 'double')
+	this.DeclareTypeInfo_Number('unsigned_char', 'unsigned char')
+	this.DeclareTypeInfo_Number('unsigned_short', 'unsigned short')
+	this.DeclareTypeInfo_Number('unsigned_long', 'unsigned long')
+	this.DeclareTypeInfo_Number('unsigned_int', 'unsigned int')
+	this.DeclareTypeInfo_Number('unsigned_long_long', 'unsigned long long')
+	this.DeclareTypeInfo_Number('int8_t', 'int8_t')
+	this.DeclareTypeInfo_Number('int16_t', 'int16_t')
+	this.DeclareTypeInfo_Number('int32_t', 'int32_t')
+	this.DeclareTypeInfo_Number('int64_t', 'int64_t')
+	this.DeclareTypeInfo_Number('uint8_t', 'uint8_t')
+	this.DeclareTypeInfo_Number('uint16_t', 'uint16_t')
+	this.DeclareTypeInfo_Number('uint32_t', 'uint32_t')
+	this.DeclareTypeInfo_Number('uint64_t', 'uint64_t')
+	this.DeclareTypeInfo_Number('Char', 'Char')
+	this.DeclareTypeInfo_Number('UChar', 'UChar')
+	this.DeclareTypeInfo_Number('Short', 'Short')
+	this.DeclareTypeInfo_Number('UShort', 'UShort')
+	this.DeclareTypeInfo_Number('Int', 'Int')
+	this.DeclareTypeInfo_Number('UInt', 'UInt')
+	this.DeclareTypeInfo_Number('Long', 'Long')
+	this.DeclareTypeInfo_Number('ULong', 'ULong')
+	this.DeclareTypeInfo_Number('Int8', 'Int8')
+	this.DeclareTypeInfo_Number('UInt8', 'UInt8')
+	this.DeclareTypeInfo_Number('Int16', 'Int16')
+	this.DeclareTypeInfo_Number('UInt16', 'UInt16')
+	this.DeclareTypeInfo_Number('Int32', 'Int32')
+	this.DeclareTypeInfo_Number('UInt32', 'UInt32')
+	this.DeclareTypeInfo_Number('Int64', 'Int64')
+	this.DeclareTypeInfo_Number('UInt64', 'UInt64')
+	this.DeclareTypeInfo_Number('Float', 'Float')
+	this.DeclareTypeInfo_Number('Double', 'Double')
+	this.DeclareTypeInfo('bool', '', 'bool', 'Bool',
+		codePicker = R'''
+		${this.cType} ${varName} = args.PickBool();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
+		'''
+		codeFunctionBody = R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''')
+	this.DeclareTypeInfo('Bool', '', 'Bool', 'Bool',
+		codePicker = R'''
+		${this.cType} ${varName} = args.PickBool();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
+		'''
+		codeFunctionBody = R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''')
+	this.DeclareTypeInfo('const_char_p', '', 'const char*', 'String',
+		codePicker = R'''
+		${this.cType} ${varName} = args.PickString();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args.IsValid()? args.PickString() : nullptr;
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		'''
+		codeFunctionBody = R'''
+		${this.cType} rtn = ${caller};
+		return new Value_${this.vtype}(rtn);
+		''')
+	this.DeclareTypeInfo('const_char_p_NilIfNull', '', 'const char*', 'String', '', '', '',
+		codeFunctionBody = R'''
+		if (${this.cType} rtn = ${caller}) {
+			return new Value_${this.vtype}(rtn);
+		}
+		return Value::nil();
+		''')
 }
