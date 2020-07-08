@@ -3,11 +3,25 @@ import(re)
 
 ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 	if (m = line.Match(r'^GLAPI\s+(.+)\s+GLAPIENTRY\s+(\w+)\s*\((.*)\)')) {
-		Println(m[1], ' ', m[2])
-		m[3].SplitReg(r',\s*') {|field|
-			//field = field.Strip().SplitReg(r'\s+')
-			//field.Match('(\w+)$'
-			Println('  ', field)
+		typeNameRtn = m[1]
+		funcName = m[2]
+		args = m[3].SplitReg(r',\s*'):list {|arg|
+			fields = arg.Strip().SplitReg(r'\s+'):list
+			if (fields.len < 2) {
+				if (fields[0] != 'void') {
+					Printf('error [%s]\n', arg)
+					sys.Exit(1)
+				}
+				continue
+			}
+			typeName = fields.Head(fields.len - 1):*Replace('*', ' * '):*Strip().Join(' ')
+			varName = fields.last
+			if (varName.StartsWith('*')) {
+				typeName += ' *'
+				varName = varName.Mid(1)
+			}
+			Format('%s:%s', varName, typeName.Replace(' ', '_').Replace('*', 'p'))
 		}
+		Printf('%s(%s):%s\n', funcName, args.Join(', '), typeNameRtn)
 	}
 }

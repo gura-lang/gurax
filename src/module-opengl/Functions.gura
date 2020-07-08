@@ -64,6 +64,342 @@ glewGetString(name:GLenum):const_GLubyte_p
 
 glAccum(op:GLenum, value:GLfloat):void
 glAlphaFunc(func:GLenum, ref:GLclampf):void
+//glAreTexturesResident(n:GLsizei, textures:const_GLuint_p, residences:GLboolean_p):GLboolean
+glArrayElement(i:GLint):void
+glBegin(mode:GLenum):void
+glBindTexture(target:GLenum, texture:GLuint):void
+//glBitmap(width:GLsizei, height:GLsizei, xorig:GLfloat, yorig:GLfloat, xmove:GLfloat, ymove:GLfloat, bitmap:const_GLubyte_p):void
+glBlendFunc(sfactor:GLenum, dfactor:GLenum):void
+glCallList(list:GLuint):void
+//glCallLists(n:GLsizei, type:GLenum, lists:const_void_p):void
+glClear(mask:GLbitfield):void
+glClearAccum(red:GLfloat, green:GLfloat, blue:GLfloat, alpha:GLfloat):void
+glClearColor(red:GLclampf, green:GLclampf, blue:GLclampf, alpha:GLclampf):void
+glClearDepth(depth:GLclampd):void
+glClearIndex(c:GLfloat):void
+glClearStencil(s:GLint):void
+//glClipPlane(plane:GLenum, equation:const_GLdouble_p):void
+glColor3b(red:GLbyte, green:GLbyte, blue:GLbyte):void
+glColor3bv(v[]:GLbyte):void
+glColor3d(red:GLdouble, green:GLdouble, blue:GLdouble):void
+/*
+glColor3dv(v:const_GLdouble_p):void
+glColor3f(red:GLfloat, green:GLfloat, blue:GLfloat):void
+glColor3fv(v:const_GLfloat_p):void
+glColor3i(red:GLint, green:GLint, blue:GLint):void
+glColor3iv(v:const_GLint_p):void
+glColor3s(red:GLshort, green:GLshort, blue:GLshort):void
+glColor3sv(v:const_GLshort_p):void
+glColor3ub(red:GLubyte, green:GLubyte, blue:GLubyte):void
+glColor3ubv(v:const_GLubyte_p):void
+glColor3ui(red:GLuint, green:GLuint, blue:GLuint):void
+glColor3uiv(v:const_GLuint_p):void
+glColor3us(red:GLushort, green:GLushort, blue:GLushort):void
+glColor3usv(v:const_GLushort_p):void
+glColor4b(red:GLbyte, green:GLbyte, blue:GLbyte, alpha:GLbyte):void
+glColor4bv(v:const_GLbyte_p):void
+glColor4d(red:GLdouble, green:GLdouble, blue:GLdouble, alpha:GLdouble):void
+glColor4dv(v:const_GLdouble_p):void
+glColor4f(red:GLfloat, green:GLfloat, blue:GLfloat, alpha:GLfloat):void
+glColor4fv(v:const_GLfloat_p):void
+glColor4i(red:GLint, green:GLint, blue:GLint, alpha:GLint):void
+glColor4iv(v:const_GLint_p):void
+glColor4s(red:GLshort, green:GLshort, blue:GLshort, alpha:GLshort):void
+glColor4sv(v:const_GLshort_p):void
+glColor4ub(red:GLubyte, green:GLubyte, blue:GLubyte, alpha:GLubyte):void
+glColor4ubv(v:const_GLubyte_p):void
+glColor4ui(red:GLuint, green:GLuint, blue:GLuint, alpha:GLuint):void
+glColor4uiv(v:const_GLuint_p):void
+glColor4us(red:GLushort, green:GLushort, blue:GLushort, alpha:GLushort):void
+glColor4usv(v:const_GLushort_p):void
+glColorMask(red:GLboolean, green:GLboolean, blue:GLboolean, alpha:GLboolean):void
+glColorMaterial(face:GLenum, mode:GLenum):void
+glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glCopyPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, type:GLenum):void
+glCopyTexImage1D(target:GLenum, level:GLint, internalFormat:GLenum, x:GLint, y:GLint, width:GLsizei, border:GLint):void
+glCopyTexImage2D(target:GLenum, level:GLint, internalFormat:GLenum, x:GLint, y:GLint, width:GLsizei, height:GLsizei, border:GLint):void
+glCopyTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, x:GLint, y:GLint, width:GLsizei):void
+glCopyTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
+glCullFace(mode:GLenum):void
+glDeleteLists(list:GLuint, range:GLsizei):void
+glDeleteTextures(n:GLsizei, textures:const_GLuint_p):void
+glDepthFunc(func:GLenum):void
+glDepthMask(flag:GLboolean):void
+glDepthRange(zNear:GLclampd, zFar:GLclampd):void
+glDisable(cap:GLenum):void
+glDisableClientState(array:GLenum):void
+glDrawArrays(mode:GLenum, first:GLint, count:GLsizei):void
+glDrawBuffer(mode:GLenum):void
+glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void
+glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glEdgeFlag(flag:GLboolean):void
+glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
+glEdgeFlagv(flag:const_GLboolean_p):void
+glEnable(cap:GLenum):void
+glEnableClientState(array:GLenum):void
+glEnd():void
+glEndList():void
+glEvalCoord1d(u:GLdouble):void
+glEvalCoord1dv(u:const_GLdouble_p):void
+glEvalCoord1f(u:GLfloat):void
+glEvalCoord1fv(u:const_GLfloat_p):void
+glEvalCoord2d(u:GLdouble, v:GLdouble):void
+glEvalCoord2dv(u:const_GLdouble_p):void
+glEvalCoord2f(u:GLfloat, v:GLfloat):void
+glEvalCoord2fv(u:const_GLfloat_p):void
+glEvalMesh1(mode:GLenum, i1:GLint, i2:GLint):void
+glEvalMesh2(mode:GLenum, i1:GLint, i2:GLint, j1:GLint, j2:GLint):void
+glEvalPoint1(i:GLint):void
+glEvalPoint2(i:GLint, j:GLint):void
+glFeedbackBuffer(size:GLsizei, type:GLenum, buffer:GLfloat_p):void
+glFinish():void
+glFlush():void
+glFogf(pname:GLenum, param:GLfloat):void
+glFogfv(pname:GLenum, params:const_GLfloat_p):void
+glFogi(pname:GLenum, param:GLint):void
+glFogiv(pname:GLenum, params:const_GLint_p):void
+glFrontFace(mode:GLenum):void
+glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
+glGenLists(range:GLsizei):GLuint
+glGenTextures(n:GLsizei, textures:GLuint_p):void
+glGetBooleanv(pname:GLenum, params:GLboolean_p):void
+glGetClipPlane(plane:GLenum, equation:GLdouble_p):void
+glGetDoublev(pname:GLenum, params:GLdouble_p):void
+glGetError():GLenum
+glGetFloatv(pname:GLenum, params:GLfloat_p):void
+glGetIntegerv(pname:GLenum, params:GLint_p):void
+glGetLightfv(light:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetLightiv(light:GLenum, pname:GLenum, params:GLint_p):void
+glGetMapdv(target:GLenum, query:GLenum, v:GLdouble_p):void
+glGetMapfv(target:GLenum, query:GLenum, v:GLfloat_p):void
+glGetMapiv(target:GLenum, query:GLenum, v:GLint_p):void
+glGetMaterialfv(face:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetMaterialiv(face:GLenum, pname:GLenum, params:GLint_p):void
+glGetPixelMapfv(map:GLenum, values:GLfloat_p):void
+glGetPixelMapuiv(map:GLenum, values:GLuint_p):void
+glGetPixelMapusv(map:GLenum, values:GLushort_p):void
+glGetPointerv(pname:GLenum, params:void_p_p):void
+glGetPolygonStipple(mask:GLubyte_p):void
+glGetString(name:GLenum):const GLubyte *
+glGetTexEnvfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexEnviv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexGendv(coord:GLenum, pname:GLenum, params:GLdouble_p):void
+glGetTexGenfv(coord:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexGeniv(coord:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexImage(target:GLenum, level:GLint, format:GLenum, type:GLenum, pixels:void_p):void
+glGetTexLevelParameterfv(target:GLenum, level:GLint, pname:GLenum, params:GLfloat_p):void
+glGetTexLevelParameteriv(target:GLenum, level:GLint, pname:GLenum, params:GLint_p):void
+glGetTexParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glHint(target:GLenum, mode:GLenum):void
+glIndexMask(mask:GLuint):void
+glIndexPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glIndexd(c:GLdouble):void
+glIndexdv(c:const_GLdouble_p):void
+glIndexf(c:GLfloat):void
+glIndexfv(c:const_GLfloat_p):void
+glIndexi(c:GLint):void
+glIndexiv(c:const_GLint_p):void
+glIndexs(c:GLshort):void
+glIndexsv(c:const_GLshort_p):void
+glIndexub(c:GLubyte):void
+glIndexubv(c:const_GLubyte_p):void
+glInitNames():void
+glInterleavedArrays(format:GLenum, stride:GLsizei, pointer:const_void_p):void
+glIsEnabled(cap:GLenum):GLboolean
+glIsList(list:GLuint):GLboolean
+glIsTexture(texture:GLuint):GLboolean
+glLightModelf(pname:GLenum, param:GLfloat):void
+glLightModelfv(pname:GLenum, params:const_GLfloat_p):void
+glLightModeli(pname:GLenum, param:GLint):void
+glLightModeliv(pname:GLenum, params:const_GLint_p):void
+glLightf(light:GLenum, pname:GLenum, param:GLfloat):void
+glLightfv(light:GLenum, pname:GLenum, params:const_GLfloat_p):void
+glLighti(light:GLenum, pname:GLenum, param:GLint):void
+glLightiv(light:GLenum, pname:GLenum, params:const_GLint_p):void
+glLineStipple(factor:GLint, pattern:GLushort):void
+glLineWidth(width:GLfloat):void
+glListBase(base:GLuint):void
+glLoadIdentity():void
+glLoadMatrixd(m:const_GLdouble_p):void
+glLoadMatrixf(m:const_GLfloat_p):void
+glLoadName(name:GLuint):void
+glLogicOp(opcode:GLenum):void
+glMap1d(target:GLenum, u1:GLdouble, u2:GLdouble, stride:GLint, order:GLint, points:const_GLdouble_p):void
+glMap1f(target:GLenum, u1:GLfloat, u2:GLfloat, stride:GLint, order:GLint, points:const_GLfloat_p):void
+glMap2d(target:GLenum, u1:GLdouble, u2:GLdouble, ustride:GLint, uorder:GLint, v1:GLdouble, v2:GLdouble, vstride:GLint, vorder:GLint, points:const_GLdouble_p):void
+glMap2f(target:GLenum, u1:GLfloat, u2:GLfloat, ustride:GLint, uorder:GLint, v1:GLfloat, v2:GLfloat, vstride:GLint, vorder:GLint, points:const_GLfloat_p):void
+glMapGrid1d(un:GLint, u1:GLdouble, u2:GLdouble):void
+glMapGrid1f(un:GLint, u1:GLfloat, u2:GLfloat):void
+glMapGrid2d(un:GLint, u1:GLdouble, u2:GLdouble, vn:GLint, v1:GLdouble, v2:GLdouble):void
+glMapGrid2f(un:GLint, u1:GLfloat, u2:GLfloat, vn:GLint, v1:GLfloat, v2:GLfloat):void
+glMaterialf(face:GLenum, pname:GLenum, param:GLfloat):void
+glMaterialfv(face:GLenum, pname:GLenum, params:const_GLfloat_p):void
+glMateriali(face:GLenum, pname:GLenum, param:GLint):void
+glMaterialiv(face:GLenum, pname:GLenum, params:const_GLint_p):void
+glMatrixMode(mode:GLenum):void
+glMultMatrixd(m:const_GLdouble_p):void
+glMultMatrixf(m:const_GLfloat_p):void
+glNewList(list:GLuint, mode:GLenum):void
+glNormal3b(nx:GLbyte, ny:GLbyte, nz:GLbyte):void
+glNormal3bv(v:const_GLbyte_p):void
+glNormal3d(nx:GLdouble, ny:GLdouble, nz:GLdouble):void
+glNormal3dv(v:const_GLdouble_p):void
+glNormal3f(nx:GLfloat, ny:GLfloat, nz:GLfloat):void
+glNormal3fv(v:const_GLfloat_p):void
+glNormal3i(nx:GLint, ny:GLint, nz:GLint):void
+glNormal3iv(v:const_GLint_p):void
+glNormal3s(nx:GLshort, ny:GLshort, nz:GLshort):void
+glNormal3sv(v:const_GLshort_p):void
+glNormalPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glOrtho(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
+glPassThrough(token:GLfloat):void
+glPixelMapfv(map:GLenum, mapsize:GLsizei, values:const_GLfloat_p):void
+glPixelMapuiv(map:GLenum, mapsize:GLsizei, values:const_GLuint_p):void
+glPixelMapusv(map:GLenum, mapsize:GLsizei, values:const_GLushort_p):void
+glPixelStoref(pname:GLenum, param:GLfloat):void
+glPixelStorei(pname:GLenum, param:GLint):void
+glPixelTransferf(pname:GLenum, param:GLfloat):void
+glPixelTransferi(pname:GLenum, param:GLint):void
+glPixelZoom(xfactor:GLfloat, yfactor:GLfloat):void
+glPointSize(size:GLfloat):void
+glPolygonMode(face:GLenum, mode:GLenum):void
+glPolygonOffset(factor:GLfloat, units:GLfloat):void
+glPolygonStipple(mask:const_GLubyte_p):void
+glPopAttrib():void
+glPopClientAttrib():void
+glPopMatrix():void
+glPopName():void
+glPrioritizeTextures(n:GLsizei, textures:const_GLuint_p, priorities:const_GLclampf_p):void
+glPushAttrib(mask:GLbitfield):void
+glPushClientAttrib(mask:GLbitfield):void
+glPushMatrix():void
+glPushName(name:GLuint):void
+glRasterPos2d(x:GLdouble, y:GLdouble):void
+glRasterPos2dv(v:const_GLdouble_p):void
+glRasterPos2f(x:GLfloat, y:GLfloat):void
+glRasterPos2fv(v:const_GLfloat_p):void
+glRasterPos2i(x:GLint, y:GLint):void
+glRasterPos2iv(v:const_GLint_p):void
+glRasterPos2s(x:GLshort, y:GLshort):void
+glRasterPos2sv(v:const_GLshort_p):void
+glRasterPos3d(x:GLdouble, y:GLdouble, z:GLdouble):void
+glRasterPos3dv(v:const_GLdouble_p):void
+glRasterPos3f(x:GLfloat, y:GLfloat, z:GLfloat):void
+glRasterPos3fv(v:const_GLfloat_p):void
+glRasterPos3i(x:GLint, y:GLint, z:GLint):void
+glRasterPos3iv(v:const_GLint_p):void
+glRasterPos3s(x:GLshort, y:GLshort, z:GLshort):void
+glRasterPos3sv(v:const_GLshort_p):void
+glRasterPos4d(x:GLdouble, y:GLdouble, z:GLdouble, w:GLdouble):void
+glRasterPos4dv(v:const_GLdouble_p):void
+glRasterPos4f(x:GLfloat, y:GLfloat, z:GLfloat, w:GLfloat):void
+glRasterPos4fv(v:const_GLfloat_p):void
+glRasterPos4i(x:GLint, y:GLint, z:GLint, w:GLint):void
+glRasterPos4iv(v:const_GLint_p):void
+glRasterPos4s(x:GLshort, y:GLshort, z:GLshort, w:GLshort):void
+glRasterPos4sv(v:const_GLshort_p):void
+glReadBuffer(mode:GLenum):void
+glReadPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
+glRectd(x1:GLdouble, y1:GLdouble, x2:GLdouble, y2:GLdouble):void
+glRectdv(v1:const_GLdouble_p, v2:const_GLdouble_p):void
+glRectf(x1:GLfloat, y1:GLfloat, x2:GLfloat, y2:GLfloat):void
+glRectfv(v1:const_GLfloat_p, v2:const_GLfloat_p):void
+glRecti(x1:GLint, y1:GLint, x2:GLint, y2:GLint):void
+glRectiv(v1:const_GLint_p, v2:const_GLint_p):void
+glRects(x1:GLshort, y1:GLshort, x2:GLshort, y2:GLshort):void
+glRectsv(v1:const_GLshort_p, v2:const_GLshort_p):void
+glRenderMode(mode:GLenum):GLint
+glRotated(angle:GLdouble, x:GLdouble, y:GLdouble, z:GLdouble):void
+glRotatef(angle:GLfloat, x:GLfloat, y:GLfloat, z:GLfloat):void
+glScaled(x:GLdouble, y:GLdouble, z:GLdouble):void
+glScalef(x:GLfloat, y:GLfloat, z:GLfloat):void
+glScissor(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
+glSelectBuffer(size:GLsizei, buffer:GLuint_p):void
+glShadeModel(mode:GLenum):void
+glStencilFunc(func:GLenum, ref:GLint, mask:GLuint):void
+glStencilMask(mask:GLuint):void
+glStencilOp(fail:GLenum, zfail:GLenum, zpass:GLenum):void
+glTexCoord1d(s:GLdouble):void
+glTexCoord1dv(v:const_GLdouble_p):void
+glTexCoord1f(s:GLfloat):void
+glTexCoord1fv(v:const_GLfloat_p):void
+glTexCoord1i(s:GLint):void
+glTexCoord1iv(v:const_GLint_p):void
+glTexCoord1s(s:GLshort):void
+glTexCoord1sv(v:const_GLshort_p):void
+glTexCoord2d(s:GLdouble, t:GLdouble):void
+glTexCoord2dv(v:const_GLdouble_p):void
+glTexCoord2f(s:GLfloat, t:GLfloat):void
+glTexCoord2fv(v:const_GLfloat_p):void
+glTexCoord2i(s:GLint, t:GLint):void
+glTexCoord2iv(v:const_GLint_p):void
+glTexCoord2s(s:GLshort, t:GLshort):void
+glTexCoord2sv(v:const_GLshort_p):void
+glTexCoord3d(s:GLdouble, t:GLdouble, r:GLdouble):void
+glTexCoord3dv(v:const_GLdouble_p):void
+glTexCoord3f(s:GLfloat, t:GLfloat, r:GLfloat):void
+glTexCoord3fv(v:const_GLfloat_p):void
+glTexCoord3i(s:GLint, t:GLint, r:GLint):void
+glTexCoord3iv(v:const_GLint_p):void
+glTexCoord3s(s:GLshort, t:GLshort, r:GLshort):void
+glTexCoord3sv(v:const_GLshort_p):void
+glTexCoord4d(s:GLdouble, t:GLdouble, r:GLdouble, q:GLdouble):void
+glTexCoord4dv(v:const_GLdouble_p):void
+glTexCoord4f(s:GLfloat, t:GLfloat, r:GLfloat, q:GLfloat):void
+glTexCoord4fv(v:const_GLfloat_p):void
+glTexCoord4i(s:GLint, t:GLint, r:GLint, q:GLint):void
+glTexCoord4iv(v:const_GLint_p):void
+glTexCoord4s(s:GLshort, t:GLshort, r:GLshort, q:GLshort):void
+glTexCoord4sv(v:const_GLshort_p):void
+glTexCoordPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glTexEnvf(target:GLenum, pname:GLenum, param:GLfloat):void
+glTexEnvfv(target:GLenum, pname:GLenum, params:const_GLfloat_p):void
+glTexEnvi(target:GLenum, pname:GLenum, param:GLint):void
+glTexEnviv(target:GLenum, pname:GLenum, params:const_GLint_p):void
+glTexGend(coord:GLenum, pname:GLenum, param:GLdouble):void
+glTexGendv(coord:GLenum, pname:GLenum, params:const_GLdouble_p):void
+glTexGenf(coord:GLenum, pname:GLenum, param:GLfloat):void
+glTexGenfv(coord:GLenum, pname:GLenum, params:const_GLfloat_p):void
+glTexGeni(coord:GLenum, pname:GLenum, param:GLint):void
+glTexGeniv(coord:GLenum, pname:GLenum, params:const_GLint_p):void
+glTexImage1D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexImage2D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, height:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexParameterf(target:GLenum, pname:GLenum, param:GLfloat):void
+glTexParameterfv(target:GLenum, pname:GLenum, params:const_GLfloat_p):void
+glTexParameteri(target:GLenum, pname:GLenum, param:GLint):void
+glTexParameteriv(target:GLenum, pname:GLenum, params:const_GLint_p):void
+glTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTranslated(x:GLdouble, y:GLdouble, z:GLdouble):void
+glTranslatef(x:GLfloat, y:GLfloat, z:GLfloat):void
+glVertex2d(x:GLdouble, y:GLdouble):void
+glVertex2dv(v:const_GLdouble_p):void
+glVertex2f(x:GLfloat, y:GLfloat):void
+glVertex2fv(v:const_GLfloat_p):void
+glVertex2i(x:GLint, y:GLint):void
+glVertex2iv(v:const_GLint_p):void
+glVertex2s(x:GLshort, y:GLshort):void
+glVertex2sv(v:const_GLshort_p):void
+glVertex3d(x:GLdouble, y:GLdouble, z:GLdouble):void
+glVertex3dv(v:const_GLdouble_p):void
+glVertex3f(x:GLfloat, y:GLfloat, z:GLfloat):void
+glVertex3fv(v:const_GLfloat_p):void
+glVertex3i(x:GLint, y:GLint, z:GLint):void
+glVertex3iv(v:const_GLint_p):void
+glVertex3s(x:GLshort, y:GLshort, z:GLshort):void
+glVertex3sv(v:const_GLshort_p):void
+glVertex4d(x:GLdouble, y:GLdouble, z:GLdouble, w:GLdouble):void
+glVertex4dv(v:const_GLdouble_p):void
+glVertex4f(x:GLfloat, y:GLfloat, z:GLfloat, w:GLfloat):void
+glVertex4fv(v:const_GLfloat_p):void
+glVertex4i(x:GLint, y:GLint, z:GLint, w:GLint):void
+glVertex4iv(v:const_GLint_p):void
+glVertex4s(x:GLshort, y:GLshort, z:GLshort, w:GLshort):void
+glVertex4sv(v:const_GLshort_p):void
+glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
+*/
 
 }
 
