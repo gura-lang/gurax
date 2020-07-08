@@ -278,6 +278,8 @@ public:
 	size_t size() const { return _container.size(); }
 	void clear() { _container.clear(); }
 	void reserve(size_t size) { _container.reserve(size); }
+	operator const_pointer() const { return _container.data(); }
+	const_pointer data() const { return _container.data(); }
 	const_reference front() const { return _container.front(); }
 	const_reference back() const { return _container.back(); }
 	reference front() { return _container.front(); }
