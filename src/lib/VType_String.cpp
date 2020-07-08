@@ -407,7 +407,7 @@ Gurax_DeclareMethod(String, Find)
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(rev));
+	//DeclareAttrOpt(Gurax_Symbol(rev));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
 		Gurax_Symbol(en), 
