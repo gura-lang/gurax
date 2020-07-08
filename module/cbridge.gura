@@ -13,17 +13,24 @@ ErrorDone(expr:Expr, msg:String) = {
 //------------------------------------------------------------------------------
 TypeInfo = class {
 	decl:String
-	moduleName:String
 	cType:String
-	vtype:String
+	vtypeFullName:String
+	moduleName:String = ''
+	vtype:String = ''
 	tmplPicker:Template
 	tmplPickerValidation:Template
 	tmplPickerListVar:Template
 	tmplFunctionBody:Template
-	__init__(decl:String, moduleName:String, cType:String, vtype:String,
+	__init__(decl:String, cType:String, vtypeFullName:String,
 			codePicker:String, codePickerValidation:String,
 			codePickerVec:String, codeFunctionBody:String) = {
-		this.decl = decl, this.moduleName = moduleName, this.cType = cType, this.vtype = vtype
+		this.decl = decl, this.cType = cType
+		this.vtypeFullName = vtypeFullName
+		fields = vtypeFullName.Split('.'):list
+		if (!fields.IsEmpty()) {
+			this.moduleName = fields.Head(fields.len - 1).Join('.')
+			this.vtype = fields.last
+		}
 		this.tmplPicker = Template().Parse(codePicker)
 		this.tmplPickerValidation = Template().Parse(codePickerValidation)
 		this.tmplPickerListVar = Template().Parse(codePickerVec)
@@ -33,7 +40,6 @@ TypeInfo = class {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
-	MakeFullTypeName() = cond(this.moduleName.IsEmpty(), this.vtype, this.moduleName + '.' + this.vtype)
 }
 
 //------------------------------------------------------------------------------
@@ -68,7 +74,7 @@ ArgInfo = class {
 	ComposeImplementation() = this.typeInfo.ComposePicker(
 			this.name, this.listVarFlag, this.optionFlag || this.nilFlag)
 	ToString() = Format('%s%s%s:%s%s', this.name, cond(this.listVarFlag, '[]', ''),
-			cond(this.optionFlag, '?', ''), this.typeInfo.MakeFullTypeName(),
+			cond(this.optionFlag, '?', ''), this.typeInfo.vtypeFullName,
 			cond(this.nilFlag, ':nil', ''))
 }
 
@@ -136,13 +142,13 @@ FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}));'
 Renderer = class {
 	funcInfoTbl = []
 	typeInfoMap = %{}
-	DeclareTypeInfo(decl:String, moduleName:String, cType:String, vtype:String,
-			codePicker:String, codePickerValidation:String,
-			codePickerVec:String, codeFunctionBody:String) = {
-		this.typeInfoMap[decl] = TypeInfo(decl, moduleName, cType, vtype,
+	DeclareType(decl:String, cType:String, vtypeFullName:String,
+			codePicker:String = '', codePickerValidation:String = '',
+			codePickerVec:String = '', codeFunctionBody:String = '') = {
+		this.typeInfoMap[decl] = TypeInfo(decl, cType, vtypeFullName,
 				codePicker, codePickerValidation, codePickerVec, codeFunctionBody)
 	}
-	DeclareTypeInfo_Number(decl:String, cType?:String) = this.DeclareTypeInfo(decl, '', cType || decl, 'Number',
+	DeclareType_Number(decl:String, cType?:String) = this.DeclareType(decl, cType || decl, 'Number',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickNumber<${this.cType}>();
 		'''
@@ -196,14 +202,14 @@ Renderer = class {
 }
 
 Renderer.__init__() = {
-	this.DeclareTypeInfo('any', '', '', 'Any', '', '', '', '')
-	this.DeclareTypeInfo('void', '', 'void', 'Nil', '', '', '',
+	this.DeclareType('any', '', 'Any')
+	this.DeclareType('void', 'void', 'Nil',
 		codeFunctionBody = R'''
 		${caller};
 		return Value::nil();
 		''')
-	this.DeclareTypeInfo('String', '', '', 'String', '', '', '', '')
-	this.DeclareTypeInfo('Function', '', '', 'Function',
+	this.DeclareType('String', '', 'String')
+	this.DeclareType('Function', '', 'Function',
 		codePicker = R'''
 		RefPtr<Function> ${varName}(args.PickFunction().Reference());
 		'''
@@ -212,45 +218,45 @@ Renderer.__init__() = {
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')
-	this.DeclareTypeInfo_Number('char')
-	this.DeclareTypeInfo_Number('short')
-	this.DeclareTypeInfo_Number('long')
-	this.DeclareTypeInfo_Number('int')
-	this.DeclareTypeInfo_Number('long_long', 'long long')
-	this.DeclareTypeInfo_Number('float')
-	this.DeclareTypeInfo_Number('double')
-	this.DeclareTypeInfo_Number('unsigned_char', 'unsigned char')
-	this.DeclareTypeInfo_Number('unsigned_short', 'unsigned short')
-	this.DeclareTypeInfo_Number('unsigned_long', 'unsigned long')
-	this.DeclareTypeInfo_Number('unsigned_int', 'unsigned int')
-	this.DeclareTypeInfo_Number('unsigned_long_long', 'unsigned long long')
-	this.DeclareTypeInfo_Number('int8_t')
-	this.DeclareTypeInfo_Number('int16_t')
-	this.DeclareTypeInfo_Number('int32_t')
-	this.DeclareTypeInfo_Number('int64_t')
-	this.DeclareTypeInfo_Number('uint8_t')
-	this.DeclareTypeInfo_Number('uint16_t')
-	this.DeclareTypeInfo_Number('uint32_t')
-	this.DeclareTypeInfo_Number('uint64_t')
-	this.DeclareTypeInfo_Number('Char')
-	this.DeclareTypeInfo_Number('UChar')
-	this.DeclareTypeInfo_Number('Short')
-	this.DeclareTypeInfo_Number('UShort')
-	this.DeclareTypeInfo_Number('Int')
-	this.DeclareTypeInfo_Number('UInt')
-	this.DeclareTypeInfo_Number('Long')
-	this.DeclareTypeInfo_Number('ULong')
-	this.DeclareTypeInfo_Number('Int8')
-	this.DeclareTypeInfo_Number('UInt8')
-	this.DeclareTypeInfo_Number('Int16')
-	this.DeclareTypeInfo_Number('UInt16')
-	this.DeclareTypeInfo_Number('Int32')
-	this.DeclareTypeInfo_Number('UInt32')
-	this.DeclareTypeInfo_Number('Int64')
-	this.DeclareTypeInfo_Number('UInt64')
-	this.DeclareTypeInfo_Number('Float')
-	this.DeclareTypeInfo_Number('Double')
-	this.DeclareTypeInfo('bool', '', 'bool', 'Bool',
+	this.DeclareType_Number('char')
+	this.DeclareType_Number('short')
+	this.DeclareType_Number('long')
+	this.DeclareType_Number('int')
+	this.DeclareType_Number('long_long', 'long long')
+	this.DeclareType_Number('float')
+	this.DeclareType_Number('double')
+	this.DeclareType_Number('unsigned_char', 'unsigned char')
+	this.DeclareType_Number('unsigned_short', 'unsigned short')
+	this.DeclareType_Number('unsigned_long', 'unsigned long')
+	this.DeclareType_Number('unsigned_int', 'unsigned int')
+	this.DeclareType_Number('unsigned_long_long', 'unsigned long long')
+	this.DeclareType_Number('int8_t')
+	this.DeclareType_Number('int16_t')
+	this.DeclareType_Number('int32_t')
+	this.DeclareType_Number('int64_t')
+	this.DeclareType_Number('uint8_t')
+	this.DeclareType_Number('uint16_t')
+	this.DeclareType_Number('uint32_t')
+	this.DeclareType_Number('uint64_t')
+	this.DeclareType_Number('Char')
+	this.DeclareType_Number('UChar')
+	this.DeclareType_Number('Short')
+	this.DeclareType_Number('UShort')
+	this.DeclareType_Number('Int')
+	this.DeclareType_Number('UInt')
+	this.DeclareType_Number('Long')
+	this.DeclareType_Number('ULong')
+	this.DeclareType_Number('Int8')
+	this.DeclareType_Number('UInt8')
+	this.DeclareType_Number('Int16')
+	this.DeclareType_Number('UInt16')
+	this.DeclareType_Number('Int32')
+	this.DeclareType_Number('UInt32')
+	this.DeclareType_Number('Int64')
+	this.DeclareType_Number('UInt64')
+	this.DeclareType_Number('Float')
+	this.DeclareType_Number('Double')
+	this.DeclareType('bool', 'bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickBool();
 		'''
@@ -264,7 +270,7 @@ Renderer.__init__() = {
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''')
-	this.DeclareTypeInfo('Bool', '', 'Bool', 'Bool',
+	this.DeclareType('Bool', 'Bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickBool();
 		'''
@@ -278,7 +284,7 @@ Renderer.__init__() = {
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''')
-	this.DeclareTypeInfo('const_char_p', '', 'const char*', 'String',
+	this.DeclareType('const_char_p', 'const char*', 'String',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickString();
 		'''
@@ -292,7 +298,7 @@ Renderer.__init__() = {
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''')
-	this.DeclareTypeInfo('const_char_p_NilIfNull', '', 'const char*', 'String', '', '', '',
+	this.DeclareType('const_char_p_NilIfNull', 'const char*', 'String',
 		codeFunctionBody = R'''
 		if (${this.cType} rtn = ${caller}) {
 			return new Value_${this.vtype}(rtn);

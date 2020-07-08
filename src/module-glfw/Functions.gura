@@ -6,21 +6,19 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
-moduleName = 'glfw'
-
-r.DeclareTypeInfo('int_ErrorIfFalse', moduleName, 'int', 'Nil', '', '', '',
+r.DeclareType('int_ErrorIfFalse', 'int', 'Nil',
 	codeFunctionBody = R'''
 	if (${caller} != GLFW_TRUE) IssueError();
 	return Value::nil();
 	''')
 
-r.DeclareTypeInfo('int_Bool', moduleName, 'int', 'Bool', '', '', '',
+r.DeclareType('int_Bool', 'int', 'Bool',
 	codeFunctionBody = R'''
 	bool rtn =(${caller} == GLFW_TRUE);
 	return new Value_Bool(rtn);
 	''')
 
-r.DeclareTypeInfo('GLFWimage', moduleName, 'GLFWimage', 'GLFWimage',
+r.DeclareType('GLFWimage', 'GLFWimage', 'glfw.GLFWimage',
 	codePicker = R'''
 	${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
 	'''
@@ -36,7 +34,8 @@ r.DeclareTypeInfo('GLFWimage', moduleName, 'GLFWimage', 'GLFWimage',
 	return Value::nil();
 	''')
 
-cbridge.Renderer.DeclareTypeInfo_Entity(decl:String, cType:String, vtype:String) = this.DeclareTypeInfo(decl, moduleName, cType, vtype,
+cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
+	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 	'''
@@ -54,7 +53,8 @@ cbridge.Renderer.DeclareTypeInfo_Entity(decl:String, cType:String, vtype:String)
 	return Value::nil();
 	''')
 
-cbridge.Renderer.DeclareTypeInfo_EntityEx(decl:String, cType:String, vtype:String) = this.DeclareTypeInfo(decl, moduleName, cType, vtype,
+cbridge.Renderer.DeclareType_EntityEx(decl:String, cType:String, vtypeFullName:String) = \
+	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
 	'''
@@ -72,12 +72,12 @@ cbridge.Renderer.DeclareTypeInfo_EntityEx(decl:String, cType:String, vtype:Strin
 	return Value::nil();
 	''')
 
-r.DeclareTypeInfo_Entity('GLFWcursor_p', 'GLFWcursor*', 'GLFWcursor')
-r.DeclareTypeInfo_Entity('const_GLFWimage_p', 'const GLFWimage*', 'GLFWimage')
-r.DeclareTypeInfo_Entity('const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'GLFWgammaramp')
-r.DeclareTypeInfo_Entity('const_GLFWvidmode_p', 'const GLFWvidmode*', 'GLFWvidmode')
-r.DeclareTypeInfo_Entity('GLFWmonitor_p', 'GLFWmonitor*', 'GLFWmonitor')
-r.DeclareTypeInfo_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'GLFWwindow')
+r.DeclareType_Entity('GLFWcursor_p', 'GLFWcursor*', 'glfw.GLFWcursor')
+r.DeclareType_Entity('const_GLFWimage_p', 'const GLFWimage*', 'glfw.GLFWimage')
+r.DeclareType_Entity('const_GLFWgammaramp_p', 'const GLFWgammaramp*', 'glfw.GLFWgammaramp')
+r.DeclareType_Entity('const_GLFWvidmode_p', 'const GLFWvidmode*', 'glfw.GLFWvidmode')
+r.DeclareType_Entity('GLFWmonitor_p', 'GLFWmonitor*', 'glfw.GLFWmonitor')
+r.DeclareType_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'glfw.GLFWwindow')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
