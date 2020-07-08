@@ -1,0 +1,13 @@
+#!/usr/bin/env gurax
+import(re)
+
+ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
+	if (m = line.Match(r'^GLAPI\s+(.+)\s+GLAPIENTRY\s+(\w+)\s*\((.*)\)')) {
+		Println(m[1], ' ', m[2])
+		m[3].SplitReg(r',\s*') {|field|
+			//field = field.Strip().SplitReg(r'\s+')
+			//field.Match('(\w+)$'
+			Println('  ', field)
+		}
+	}
+}
