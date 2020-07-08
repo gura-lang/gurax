@@ -82,14 +82,14 @@ glClearStencil(s:GLint):void
 glColor3b(red:GLbyte, green:GLbyte, blue:GLbyte):void
 glColor3bv(v[]:GLbyte):void
 glColor3d(red:GLdouble, green:GLdouble, blue:GLdouble):void
-/*
-glColor3dv(v:const_GLdouble_p):void
+glColor3dv(v[]:GLdouble):void
 glColor3f(red:GLfloat, green:GLfloat, blue:GLfloat):void
-glColor3fv(v:const_GLfloat_p):void
+glColor3fv(v[]:GLfloat):void
 glColor3i(red:GLint, green:GLint, blue:GLint):void
-glColor3iv(v:const_GLint_p):void
+glColor3iv(v[]:GLint):void
 glColor3s(red:GLshort, green:GLshort, blue:GLshort):void
-glColor3sv(v:const_GLshort_p):void
+glColor3sv(v[]:GLshort):void
+/*
 glColor3ub(red:GLubyte, green:GLubyte, blue:GLubyte):void
 glColor3ubv(v:const_GLubyte_p):void
 glColor3ui(red:GLuint, green:GLuint, blue:GLuint):void

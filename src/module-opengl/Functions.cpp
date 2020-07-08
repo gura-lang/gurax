@@ -421,7 +421,7 @@ Gurax_ImplementFunction(glColor3bv)
 	ArgPicker args(argument);
 	auto v = args.PickNumList<GLbyte>();
 	// Function body
-	glColor3bv(&v[0]);
+	glColor3bv(v);
 	return Value::nil();
 }
 
@@ -449,6 +449,158 @@ Gurax_ImplementFunction(glColor3d)
 	return Value::nil();
 }
 
+// opengl.glColor3dv(v[]:Number)
+Gurax_DeclareFunction(glColor3dv)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3dv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto v = args.PickNumList<GLdouble>();
+	// Function body
+	glColor3dv(v);
+	return Value::nil();
+}
+
+// opengl.glColor3f(red:Number, green:Number, blue:Number)
+Gurax_DeclareFunction(glColor3f)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLfloat red = args.PickNumber<GLfloat>();
+	GLfloat green = args.PickNumber<GLfloat>();
+	GLfloat blue = args.PickNumber<GLfloat>();
+	// Function body
+	glColor3f(red, green, blue);
+	return Value::nil();
+}
+
+// opengl.glColor3fv(v[]:Number)
+Gurax_DeclareFunction(glColor3fv)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3fv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto v = args.PickNumList<GLfloat>();
+	// Function body
+	glColor3fv(v);
+	return Value::nil();
+}
+
+// opengl.glColor3i(red:Number, green:Number, blue:Number)
+Gurax_DeclareFunction(glColor3i)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3i)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLint red = args.PickNumber<GLint>();
+	GLint green = args.PickNumber<GLint>();
+	GLint blue = args.PickNumber<GLint>();
+	// Function body
+	glColor3i(red, green, blue);
+	return Value::nil();
+}
+
+// opengl.glColor3iv(v[]:Number)
+Gurax_DeclareFunction(glColor3iv)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3iv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto v = args.PickNumList<GLint>();
+	// Function body
+	glColor3iv(v);
+	return Value::nil();
+}
+
+// opengl.glColor3s(red:Number, green:Number, blue:Number)
+Gurax_DeclareFunction(glColor3s)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3s)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLshort red = args.PickNumber<GLshort>();
+	GLshort green = args.PickNumber<GLshort>();
+	GLshort blue = args.PickNumber<GLshort>();
+	// Function body
+	glColor3s(red, green, blue);
+	return Value::nil();
+}
+
+// opengl.glColor3sv(v[]:Number)
+Gurax_DeclareFunction(glColor3sv)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColor3sv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto v = args.PickNumList<GLshort>();
+	// Function body
+	glColor3sv(v);
+	return Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(glewInit));
@@ -472,6 +624,13 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glColor3b));
 	frame.Assign(Gurax_CreateFunction(glColor3bv));
 	frame.Assign(Gurax_CreateFunction(glColor3d));
+	frame.Assign(Gurax_CreateFunction(glColor3dv));
+	frame.Assign(Gurax_CreateFunction(glColor3f));
+	frame.Assign(Gurax_CreateFunction(glColor3fv));
+	frame.Assign(Gurax_CreateFunction(glColor3i));
+	frame.Assign(Gurax_CreateFunction(glColor3iv));
+	frame.Assign(Gurax_CreateFunction(glColor3s));
+	frame.Assign(Gurax_CreateFunction(glColor3sv));
 }
 
 Gurax_EndModuleScope(opengl)
