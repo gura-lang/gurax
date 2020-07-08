@@ -6,7 +6,22 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
-r.DeclareTypeInfo_Number('GLenum')
+r.DeclareType_Number('GLenum')
+r.DeclareType('GLboolean', 'GLboolean', 'Bool',
+	codePicker = R'''
+	${this.cType} ${varName} = static_cast<GLboolean>(args.PickBool());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args.IsValid()?
+						static_cast<GLboolean>(args.PickBool()) : GL_FALSE;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(!!rtn);
+	''')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
@@ -14,6 +29,7 @@ r.DeclareTypeInfo_Number('GLenum')
 r.Register('opengl') {
 
 glewInit():GLenum
+glewIsSupported(name:const_char_p):GLboolean
 
 }
 
