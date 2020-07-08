@@ -88,11 +88,12 @@ String Error::MakeMessage() const
 
 void Error::SetExpr(const Expr& expr)
 {
-	if (!_pExpr->IsType<Expr_Empty>() || _pFileName) return;
-	_pExpr.reset(expr.Reference());
-	_pFileName.reset(expr.GetPathNameSrcReferable().Reference());
-	_lineNoTop = expr.GetLineNoTop();
-	_lineNoBtm = expr.GetLineNoBtm();
+	if (_pExpr->IsType<Expr_Empty>()) _pExpr.reset(expr.Reference());
+	if (!_pFileName) {
+		_pFileName.reset(expr.GetPathNameSrcReferable().Reference());
+		_lineNoTop = expr.GetLineNoTop();
+		_lineNoBtm = expr.GetLineNoBtm();
+	}
 }
 
 void Error::Clear()
