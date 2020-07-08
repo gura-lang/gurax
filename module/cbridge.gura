@@ -97,6 +97,7 @@ FuncInfo = class {
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
 	__init__(r:Renderer, moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
+		if (type.IsEmpty()) { type = 'void' }
 		this.moduleName = moduleName, this.name = name, this.type = type
 		this.typeInfo = r.typeInfoMap[type]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }

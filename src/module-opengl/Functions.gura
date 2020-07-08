@@ -7,6 +7,10 @@ r = cbridge.Renderer()
 // Type Information
 //------------------------------------------------------------------------------
 r.DeclareType_Number('GLenum')
+r.DeclareType_Number('GLbitfield')
+r.DeclareType_Number('GLuint')
+r.DeclareType_Number('GLint')
+r.DeclareType_Number('GLsizei')
 r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	codePicker = R'''
 	${this.cType} ${varName} = static_cast<GLboolean>(args.PickBool());
@@ -19,6 +23,21 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	${this.cType} rtn = ${caller};
 	return new Value_${this.vtype}(!!rtn);
 	''')
+r.DeclareType_Number('GLbyte')
+r.DeclareType_Number('GLshort')
+r.DeclareType_Number('GLubyte')
+r.DeclareType_Number('GLushort')
+r.DeclareType_Number('GLulong')
+r.DeclareType_Number('GLfloat')
+r.DeclareType_Number('GLclampf')
+r.DeclareType_Number('GLdouble')
+r.DeclareType_Number('GLclampd')
+//r.DeclareType(GLvoid)
+r.DeclareType_Number('GLint64')
+r.DeclareType_Number('GLuint64')
+//r.DeclareType('GLsync')
+r.DeclareType_Number('GLchar')
+
 r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args.PickString());
@@ -42,6 +61,9 @@ glewIsSupported(name:const_char_p):GLboolean
 glewGetExtension(name:const_char_p):GLboolean
 glewGetErrorString(error:GLenum):const_GLubyte_p
 glewGetString(name:GLenum):const_GLubyte_p
+
+glAccum(op:GLenum, value:GLfloat):void
+glAlphaFunc(func:GLenum, ref:GLclampf):void
 
 }
 
