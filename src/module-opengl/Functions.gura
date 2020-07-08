@@ -12,15 +12,24 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	${this.cType} ${varName} = static_cast<GLboolean>(args.PickBool());
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()?
-						static_cast<GLboolean>(args.PickBool()) : GL_FALSE;
+	${this.cType} ${varName} = args.IsValid()? static_cast<GLboolean>(args.PickBool()) : GL_FALSE;
 	'''
-	codePickerVec = R'''
-	auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
-	'''
+	codePickerVec = ''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Value_${this.vtype}(!!rtn);
+	''')
+r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args.PickString());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args.IsValid()? reinterpret_cast<${this.cType}>(args.PickString()) : nullptr;
+	'''
+	codePickerVec = ''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(reinterpret_cast<const char*>(rtn));
 	''')
 
 //------------------------------------------------------------------------------
@@ -30,6 +39,9 @@ r.Register('opengl') {
 
 glewInit():GLenum
 glewIsSupported(name:const_char_p):GLboolean
+glewGetExtension(name:const_char_p):GLboolean
+glewGetErrorString(error:GLenum):const_GLubyte_p
+glewGetString(name:GLenum):const_GLubyte_p
 
 }
 
