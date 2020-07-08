@@ -401,13 +401,12 @@ Gurax_ImplementMethod(String, EscapeHTML)
 	return new Value_String(str.EscapeHTML(quoteFlag));
 }
 
-// String#Find(sub:String, pos?:Number):map:[icase,rev]
+// String#Find(sub:String, pos?:Number):map:[icase]
 Gurax_DeclareMethod(String, Find)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	//DeclareAttrOpt(Gurax_Symbol(rev));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -416,9 +415,7 @@ Gurax_DeclareMethod(String, Find)
 		"\n"
 		"The argument `pos` specifies the position where the search starts.\n"
 		"\n"
-		"With the attribute `:icase`, character cases are ignored while matching."
-		"\n"
-		"If the attribute `:rev` is specified, the search starts from the end of the string.");
+		"With the attribute `:icase`, character cases are ignored while matching.");
 }
 
 Gurax_ImplementMethod(String, Find)
