@@ -80,15 +80,15 @@ glClearIndex(c:GLfloat):void
 glClearStencil(s:GLint):void
 //glClipPlane(plane:GLenum, equation:const_GLdouble_p):void
 glColor3b(red:GLbyte, green:GLbyte, blue:GLbyte):void
-glColor3bv(v[]:GLbyte):void
+glColor3bv(v[3]:GLbyte):void
 glColor3d(red:GLdouble, green:GLdouble, blue:GLdouble):void
-glColor3dv(v[]:GLdouble):void
+glColor3dv(v[3]:GLdouble):void
 glColor3f(red:GLfloat, green:GLfloat, blue:GLfloat):void
-glColor3fv(v[]:GLfloat):void
+glColor3fv(v[3]:GLfloat):void
 glColor3i(red:GLint, green:GLint, blue:GLint):void
-glColor3iv(v[]:GLint):void
+glColor3iv(v[3]:GLint):void
 glColor3s(red:GLshort, green:GLshort, blue:GLshort):void
-glColor3sv(v[]:GLshort):void
+glColor3sv(v[3]:GLshort):void
 /*
 glColor3ub(red:GLubyte, green:GLubyte, blue:GLubyte):void
 glColor3ubv(v:const_GLubyte_p):void
