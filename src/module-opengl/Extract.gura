@@ -1,16 +1,31 @@
 #!/usr/bin/env gurax
 import(re)
 
+FuncInfo = struct {
+	funcName:String
+	args[]:String
+	typeNameRtn:String
+	Print() = Printf('%s(%s):%s\n', this.funcName, this.args.Join(', '), this.typeNameRtn)
+}
+
+SepInfo = struct {
+	name:String
+	Print() = Printf('//======== %s ========\n', this.name)
+}
+
+infoTbl = []
+funcInfoMap = %{}
 ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
-	if (m = line.Match(r'^GLAPI\s+(.+)\s+GLAPIENTRY\s+(\w+)\s*\((.*)\)')) {
+	if (m = line.Match(r'^GLAPI\s+(.+)\s+GLAPIENTRY\s+(\w+)\s*\((.*)\)') || \
+			line.Match(r'^typedef\s+(.+)\s+\(GLAPIENTRY\s*\*\s*(\w+)\)\s+\((.*)\)')) {
 		typeNameRtn = m[1]
 		funcName = m[2]
 		args = m[3].SplitReg(r',\s*'):list {|arg|
 			fields = arg.Strip().SplitReg(r'\s+'):list
 			if (fields.len < 2) {
 				if (fields[0] != 'void') {
-					Printf('error [%s]\n', arg)
-					sys.Exit(1)
+					sys.cerr.Printf('error [%s]\n', arg)
+					//sys.Exit(1)
 				}
 				continue
 			}
@@ -22,6 +37,21 @@ ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 			}
 			Format('%s:%s', varName, typeName.Replace(' ', '_').Replace('*', 'p'))
 		}
-		Printf('%s(%s):%s\n', funcName, args.Join(', '), typeNameRtn)
+		funcInfo = FuncInfo(funcName, args, typeNameRtn)
+		infoTbl.Add(funcInfo)
+		funcInfoMap[funcInfo.funcName] = funcInfo
+		//Printf('%s(%s):%s\n', funcName, args.Join(', '), typeNameRtn)
+	} elsif (m = line.Match(r'GLEW_FUN_EXPORT\s+(\w+)\s+__glew(\w+)')) {
+		funcName = m[1]
+		funcNameExport = 'gl' + m[2]
+		if (funcInfo = funcInfoMap.Get(funcName)) {
+			funcInfo.funcName = funcNameExport
+		} else {
+			sys.cerr.Printf('Error: function name not found: %s\n', funcName)
+		}
+	} elsif (m = line.Match(r'^/\* -+\s+(\w+)\s+-+ \*/')) {
+		infoTbl.last.IsInstanceOf(SepInfo) && infoTbl.Erase(-1)
+		infoTbl.Add(SepInfo(m[1]))
 	}
 }
+infoTbl.Each {|item| item.Print()}
