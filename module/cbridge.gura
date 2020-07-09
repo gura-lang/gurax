@@ -4,7 +4,7 @@
 // ErrorDone
 //------------------------------------------------------------------------------
 ErrorDone(expr:Expr, msg:String) = {
-	sys.cerr.Printf('line.%d: %s\n', expr.lineNoTop, msg)
+	sys.cerr.Printf('%s:%d: %s\n', '', expr.lineNoTop, msg)
 	sys.Exit(1)
 }
 
@@ -182,28 +182,32 @@ Renderer = class {
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		Println(expr.car.symbolName)
-		funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
-		this.funcInfoTbl.Add(funcInfo)
-		expr.EachParam {|exprParam|
-			//Println(exprParam)
-			listVarFlag = false
-			optionFlag = false
-			if (exprParam.IsUnaryOp()) {
-				if (exprParam.operator.symbol == `?) {
-					optionFlag = true
-				} else {
-					ErrorDone(exprParam, 'invalid format of parameter')
-	w				}
-				exprParam = exprParam.child
+		try {
+			funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
+			this.funcInfoTbl.Add(funcInfo)
+			expr.EachParam {|exprParam|
+				//Println(exprParam)
+				listVarFlag = false
+				optionFlag = false
+				if (exprParam.IsUnaryOp()) {
+					if (exprParam.operator.symbol == `?) {
+						optionFlag = true
+					} else {
+						ErrorDone(exprParam, 'invalid format of parameter')
+					}
+					exprParam = exprParam.child
+				}
+				attr = exprParam.attr
+				if (exprParam.IsIndexer()) {
+					listVarFlag = true
+					exprParam = exprParam.car
+				}
+				!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
+				argInfo = ArgInfo(this, exprParam.symbolName, attr, listVarFlag, optionFlag)
+				funcInfo.argInfoTbl.Add(argInfo)
 			}
-			attr = exprParam.attr
-			if (exprParam.IsIndexer()) {
-				listVarFlag = true
-				exprParam = exprParam.car
-			}
-			!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-			argInfo = ArgInfo(this, exprParam.symbolName, attr, listVarFlag, optionFlag)
-			funcInfo.argInfoTbl.Add(argInfo)
+		} catch {|e|
+			ErrorDone(expr, e.text)
 		}
 	}
 	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
