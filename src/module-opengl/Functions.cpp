@@ -104,7 +104,7 @@ Gurax_ImplementFunction(glewGetString)
 // opengl.glAccum(op:Number, value:Number)
 Gurax_DeclareFunction(glAccum)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("op", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -378,6 +378,28 @@ Gurax_ImplementFunction(glClearStencil)
 	GLint s = args.PickNumber<GLint>();
 	// Function body
 	glClearStencil(s);
+	return Value::nil();
+}
+
+// opengl.glClipPlane(plane:Number, equation[]:Number)
+Gurax_DeclareFunction(glClipPlane)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("plane", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("equation", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glClipPlane)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum plane = args.PickNumber<GLenum>();
+	auto equation = args.PickNumList<GLdouble>();
+	// Function body
+	glClipPlane(plane, equation);
 	return Value::nil();
 }
 
@@ -1349,6 +1371,26 @@ Gurax_ImplementFunction(glDeleteLists)
 	return Value::nil();
 }
 
+// opengl.glDeleteTextures(textures[]:Number)
+Gurax_DeclareFunction(glDeleteTextures)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glDeleteTextures)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto textures = args.PickNumList<GLuint>();
+	// Function body
+	glDeleteTextures(textures.sizeT<GLsizei>(), textures);
+	return Value::nil();
+}
+
 // opengl.glDepthFunc(func:Number)
 Gurax_DeclareFunction(glDepthFunc)
 {
@@ -1865,6 +1907,29 @@ Gurax_ImplementFunction(glEvalPoint2)
 	return Value::nil();
 }
 
+// opengl.glFeedbackBuffer(size:Number, type:Number)
+Gurax_DeclareFunction(glFeedbackBuffer)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glFeedbackBuffer)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei size = args.PickNumber<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	// Function body
+	std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
+	glFeedbackBuffer(size, type, buffer.get());
+	return Value_List::Create(buffer.get(), size);
+}
+
 // opengl.glFinish()
 Gurax_DeclareFunction(glFinish)
 {
@@ -2053,6 +2118,27 @@ Gurax_ImplementFunction(glGenLists)
 	// Function body
 	GLuint rtn = glGenLists(range);
 	return new Value_Number(rtn);
+}
+
+// opengl.glGenTextures(n:Number)
+Gurax_DeclareFunction(glGenTextures)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glGenTextures)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei n = args.PickNumber<GLsizei>();
+	// Function body
+	std::unique_ptr<GLuint []> textures(new GLuint [n]);
+	glGenTextures(n, textures.get());
+	return Value_List::Create(textures.get(), n);
 }
 
 // opengl.glGetError()
@@ -6493,6 +6579,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glClearDepth));
 	frame.Assign(Gurax_CreateFunction(glClearIndex));
 	frame.Assign(Gurax_CreateFunction(glClearStencil));
+	frame.Assign(Gurax_CreateFunction(glClipPlane));
 	frame.Assign(Gurax_CreateFunction(glColor3b));
 	frame.Assign(Gurax_CreateFunction(glColor3bv));
 	frame.Assign(Gurax_CreateFunction(glColor3d));
@@ -6534,6 +6621,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glCopyTexSubImage2D));
 	frame.Assign(Gurax_CreateFunction(glCullFace));
 	frame.Assign(Gurax_CreateFunction(glDeleteLists));
+	frame.Assign(Gurax_CreateFunction(glDeleteTextures));
 	frame.Assign(Gurax_CreateFunction(glDepthFunc));
 	frame.Assign(Gurax_CreateFunction(glDepthMask));
 	frame.Assign(Gurax_CreateFunction(glDepthRange));
@@ -6559,6 +6647,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glEvalMesh2));
 	frame.Assign(Gurax_CreateFunction(glEvalPoint1));
 	frame.Assign(Gurax_CreateFunction(glEvalPoint2));
+	frame.Assign(Gurax_CreateFunction(glFeedbackBuffer));
 	frame.Assign(Gurax_CreateFunction(glFinish));
 	frame.Assign(Gurax_CreateFunction(glFlush));
 	frame.Assign(Gurax_CreateFunction(glFogf));
@@ -6568,6 +6657,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glFrontFace));
 	frame.Assign(Gurax_CreateFunction(glFrustum));
 	frame.Assign(Gurax_CreateFunction(glGenLists));
+	frame.Assign(Gurax_CreateFunction(glGenTextures));
 	frame.Assign(Gurax_CreateFunction(glGetError));
 	frame.Assign(Gurax_CreateFunction(glGetString));
 	frame.Assign(Gurax_CreateFunction(glHint));

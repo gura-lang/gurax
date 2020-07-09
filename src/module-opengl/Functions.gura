@@ -58,13 +58,15 @@ r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
 //------------------------------------------------------------------------------
 r.Register('opengl') {
 
+// GLEW
 glewInit():GLenum
 glewIsSupported(name:const_char_p):GLboolean
 glewGetExtension(name:const_char_p):GLboolean
 glewGetErrorString(error:GLenum):const_GLubyte_p
 glewGetString(name:GLenum):const_GLubyte_p
 
-glAccum(op:GLenum, value:GLfloat):void
+// GL_VERSION_1_1
+glAccum(op:GLenum, value:GLfloat)
 glAlphaFunc(func:GLenum, ref:GLclampf):void
 //glAreTexturesResident(n:GLsizei, textures[]:GLuint, residences:GLboolean_p):GLboolean
 glArrayElement(i:GLint):void
@@ -80,7 +82,7 @@ glClearColor(red:GLclampf, green:GLclampf, blue:GLclampf, alpha:GLclampf):void
 glClearDepth(depth:GLclampd):void
 glClearIndex(c:GLfloat):void
 glClearStencil(s:GLint):void
-//glClipPlane(plane:GLenum, equation[]:GLdouble):void
+glClipPlane(plane:GLenum, equation[4]:GLdouble):void
 glColor3b(red:GLbyte, green:GLbyte, blue:GLbyte):void
 glColor3bv(v[3]:GLbyte):void
 glColor3d(red:GLdouble, green:GLdouble, blue:GLdouble):void
@@ -92,27 +94,27 @@ glColor3iv(v[3]:GLint):void
 glColor3s(red:GLshort, green:GLshort, blue:GLshort):void
 glColor3sv(v[3]:GLshort):void
 glColor3ub(red:GLubyte, green:GLubyte, blue:GLubyte):void
-glColor3ubv(v[]:GLubyte):void
+glColor3ubv(v[3]:GLubyte):void
 glColor3ui(red:GLuint, green:GLuint, blue:GLuint):void
-glColor3uiv(v[]:GLuint):void
+glColor3uiv(v[3]:GLuint):void
 glColor3us(red:GLushort, green:GLushort, blue:GLushort):void
-glColor3usv(v[]:GLushort):void
+glColor3usv(v[3]:GLushort):void
 glColor4b(red:GLbyte, green:GLbyte, blue:GLbyte, alpha:GLbyte):void
-glColor4bv(v[]:GLbyte):void
+glColor4bv(v[4]:GLbyte):void
 glColor4d(red:GLdouble, green:GLdouble, blue:GLdouble, alpha:GLdouble):void
-glColor4dv(v[]:GLdouble):void
+glColor4dv(v[4]:GLdouble):void
 glColor4f(red:GLfloat, green:GLfloat, blue:GLfloat, alpha:GLfloat):void
-glColor4fv(v[]:GLfloat):void
+glColor4fv(v[4]:GLfloat):void
 glColor4i(red:GLint, green:GLint, blue:GLint, alpha:GLint):void
-glColor4iv(v[]:GLint):void
+glColor4iv(v[4]:GLint):void
 glColor4s(red:GLshort, green:GLshort, blue:GLshort, alpha:GLshort):void
-glColor4sv(v[]:GLshort):void
+glColor4sv(v[4]:GLshort):void
 glColor4ub(red:GLubyte, green:GLubyte, blue:GLubyte, alpha:GLubyte):void
-glColor4ubv(v[]:GLubyte):void
+glColor4ubv(v[4]:GLubyte):void
 glColor4ui(red:GLuint, green:GLuint, blue:GLuint, alpha:GLuint):void
-glColor4uiv(v[]:GLuint):void
+glColor4uiv(v[4]:GLuint):void
 glColor4us(red:GLushort, green:GLushort, blue:GLushort, alpha:GLushort):void
-glColor4usv(v[]:GLushort):void
+glColor4usv(v[4]:GLushort):void
 glColorMask(red:GLboolean, green:GLboolean, blue:GLboolean, alpha:GLboolean):void
 glColorMaterial(face:GLenum, mode:GLenum):void
 //glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
@@ -123,7 +125,10 @@ glCopyTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, x:GLint, y:GLint,
 glCopyTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 glCullFace(mode:GLenum):void
 glDeleteLists(list:GLuint, range:GLsizei):void
-//glDeleteTextures(n:GLsizei, textures[]:GLuint):void
+glDeleteTextures(textures[]:GLuint):void = R'''
+glDeleteTextures(textures.sizeT<GLsizei>(), textures);
+return Value::nil();
+'''
 glDepthFunc(func:GLenum):void
 glDepthMask(flag:GLboolean):void
 glDepthRange(zNear:GLclampd, zFar:GLclampd):void
@@ -141,18 +146,22 @@ glEnableClientState(array:GLenum):void
 glEnd():void
 glEndList():void
 glEvalCoord1d(u:GLdouble):void
-glEvalCoord1dv(u[]:GLdouble):void
+glEvalCoord1dv(u[1]:GLdouble):void
 glEvalCoord1f(u:GLfloat):void
-glEvalCoord1fv(u[]:GLfloat):void
+glEvalCoord1fv(u[1]:GLfloat):void
 glEvalCoord2d(u:GLdouble, v:GLdouble):void
-glEvalCoord2dv(u[]:GLdouble):void
+glEvalCoord2dv(u[2]:GLdouble):void
 glEvalCoord2f(u:GLfloat, v:GLfloat):void
-glEvalCoord2fv(u[]:GLfloat):void
+glEvalCoord2fv(u[2]:GLfloat):void
 glEvalMesh1(mode:GLenum, i1:GLint, i2:GLint):void
 glEvalMesh2(mode:GLenum, i1:GLint, i2:GLint, j1:GLint, j2:GLint):void
 glEvalPoint1(i:GLint):void
 glEvalPoint2(i:GLint, j:GLint):void
-//glFeedbackBuffer(size:GLsizei, type:GLenum, buffer:GLfloat_p):void
+glFeedbackBuffer(size:GLsizei, type:GLenum) = R'''
+std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
+glFeedbackBuffer(size, type, buffer.get());
+return Value_List::Create(buffer.get(), size);
+'''
 glFinish():void
 glFlush():void
 glFogf(pname:GLenum, param:GLfloat):void
@@ -162,7 +171,11 @@ glFogiv(pname:GLenum, params[]:GLint):void
 glFrontFace(mode:GLenum):void
 glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
 glGenLists(range:GLsizei):GLuint
-//glGenTextures(n:GLsizei, textures:GLuint_p):void
+glGenTextures(n:GLsizei) = R'''
+std::unique_ptr<GLuint []> textures(new GLuint [n]);
+glGenTextures(n, textures.get());
+return Value_List::Create(textures.get(), n);
+'''
 //glGetBooleanv(pname:GLenum, params[]:GLboolean):void
 //glGetClipPlane(plane:GLenum, equation[]:GLdouble):void
 //glGetDoublev(pname:GLenum, params[]:GLdouble):void
@@ -375,29 +388,29 @@ glTexParameteriv(target:GLenum, pname:GLenum, params[]:GLint):void
 glTranslated(x:GLdouble, y:GLdouble, z:GLdouble):void
 glTranslatef(x:GLfloat, y:GLfloat, z:GLfloat):void
 glVertex2d(x:GLdouble, y:GLdouble):void
-glVertex2dv(v[]:GLdouble):void
+glVertex2dv(v[2]:GLdouble):void
 glVertex2f(x:GLfloat, y:GLfloat):void
-glVertex2fv(v[]:GLfloat):void
+glVertex2fv(v[2]:GLfloat):void
 glVertex2i(x:GLint, y:GLint):void
-glVertex2iv(v[]:GLint):void
+glVertex2iv(v[2]:GLint):void
 glVertex2s(x:GLshort, y:GLshort):void
-glVertex2sv(v[]:GLshort):void
+glVertex2sv(v[2]:GLshort):void
 glVertex3d(x:GLdouble, y:GLdouble, z:GLdouble):void
-glVertex3dv(v[]:GLdouble):void
+glVertex3dv(v[3]:GLdouble):void
 glVertex3f(x:GLfloat, y:GLfloat, z:GLfloat):void
-glVertex3fv(v[]:GLfloat):void
+glVertex3fv(v[3]:GLfloat):void
 glVertex3i(x:GLint, y:GLint, z:GLint):void
-glVertex3iv(v[]:GLint):void
+glVertex3iv(v[3]:GLint):void
 glVertex3s(x:GLshort, y:GLshort, z:GLshort):void
-glVertex3sv(v[]:GLshort):void
+glVertex3sv(v[3]:GLshort):void
 glVertex4d(x:GLdouble, y:GLdouble, z:GLdouble, w:GLdouble):void
-glVertex4dv(v[]:GLdouble):void
+glVertex4dv(v[4]:GLdouble):void
 glVertex4f(x:GLfloat, y:GLfloat, z:GLfloat, w:GLfloat):void
-glVertex4fv(v[]:GLfloat):void
+glVertex4fv(v[4]:GLfloat):void
 glVertex4i(x:GLint, y:GLint, z:GLint, w:GLint):void
-glVertex4iv(v[]:GLint):void
+glVertex4iv(v[4]:GLint):void
 glVertex4s(x:GLshort, y:GLshort, z:GLshort, w:GLshort):void
-glVertex4sv(v[]:GLshort):void
+glVertex4sv(v[4]:GLshort):void
 //glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer[]:void):void
 glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 

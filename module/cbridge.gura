@@ -105,7 +105,7 @@ FuncInfo = class {
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
 	__init__(r:Renderer, moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
-		if (type.IsEmpty()) { type = 'void' }
+		if (type.IsEmpty()) { type = 'any' }
 		this.moduleName = moduleName, this.name = name, this.type = type
 		this.typeInfo = r.typeInfoMap[type]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
@@ -215,7 +215,11 @@ Renderer = class {
 }
 
 Renderer.__init__() = {
-	this.DeclareType('any', '', 'Any')
+	this.DeclareType('any', '', 'Any',
+		codeFunctionBody = R'''
+		${caller};
+		return Value::nil();
+		''')
 	this.DeclareType('void', 'void', 'Nil',
 		codeFunctionBody = R'''
 		${caller};
