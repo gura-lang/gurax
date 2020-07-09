@@ -1515,6 +1515,26 @@ Gurax_ImplementFunction(glEdgeFlag)
 	return Value::nil();
 }
 
+// opengl.glEdgeFlagv(flag[]:Bool)
+Gurax_DeclareFunction(glEdgeFlagv)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glEdgeFlagv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto flag = args.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
+	// Function body
+	glEdgeFlagv(flag);
+	return Value::nil();
+}
+
 // opengl.glEnable(cap:Number)
 Gurax_DeclareFunction(glEnable)
 {
@@ -6522,6 +6542,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glDrawArrays));
 	frame.Assign(Gurax_CreateFunction(glDrawBuffer));
 	frame.Assign(Gurax_CreateFunction(glEdgeFlag));
+	frame.Assign(Gurax_CreateFunction(glEdgeFlagv));
 	frame.Assign(Gurax_CreateFunction(glEnable));
 	frame.Assign(Gurax_CreateFunction(glEnableClientState));
 	frame.Assign(Gurax_CreateFunction(glEnd));

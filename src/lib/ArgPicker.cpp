@@ -52,11 +52,4 @@ Iterator& ArgPicker::PickIterator()
 	return Pick<Value_Iterator>().GetIterator();
 }
 
-
-std::vector<const Color*> f(ArgPicker& args)
-{
-	auto vec = args.PickVector<const Color*>([](const Value& value) { return &Value_Color::GetColor(value); });
-	return vec;
-}
-
 }

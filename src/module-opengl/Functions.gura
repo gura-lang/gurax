@@ -18,7 +18,9 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args.IsValid()? static_cast<GLboolean>(args.PickBool()) : GL_FALSE;
 	'''
-	codePickerVec = ''
+	codePickerVec = R'''
+	auto ${varName} = args.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
+	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Value_${this.vtype}(!!rtn);
@@ -133,7 +135,7 @@ glDrawBuffer(mode:GLenum):void
 //glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
 glEdgeFlag(flag:GLboolean):void
 //glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
-//glEdgeFlagv(flag[]:GLboolean):void
+glEdgeFlagv(flag[]:GLboolean):void
 glEnable(cap:GLenum):void
 glEnableClientState(array:GLenum):void
 glEnd():void

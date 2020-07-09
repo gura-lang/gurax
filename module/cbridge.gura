@@ -4,7 +4,7 @@
 // ErrorDone
 //------------------------------------------------------------------------------
 ErrorDone(expr:Expr, msg:String) = {
-	sys.cerr.Printf('%s:%d: %s\n', '', expr.lineNoTop, msg)
+	sys.cerr.Printf('%s:%d: %s\n', expr.pathNameSrc, expr.lineNoTop, msg)
 	sys.Exit(1)
 }
 
@@ -277,7 +277,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
 		'''
 		codePickerVec = R'''
-		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
+		auto ${varName} = args.PickListT<bool>(Value_${this.vtype}::ValueForVector);
 		'''
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
@@ -291,7 +291,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args.IsValid()? args.PickBool() : false;
 		'''
 		codePickerVec = R'''
-		auto ${varName} = args.PickVector<bool>(Value_${this.vtype}::ValueForVector);
+		auto ${varName} = args.PickListT<bool>(Value_${this.vtype}::ValueForVector);
 		'''
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
@@ -305,7 +305,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args.IsValid()? args.PickString() : nullptr;
 		'''
 		codePickerVec = R'''
-		auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+		auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		'''
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};

@@ -24,7 +24,7 @@ r.DeclareType('GLFWimage', 'GLFWimage', 'glfw.GLFWimage',
 	'''
 	codePickerValidation = ''
 	codePickerVec = R'''
-	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
@@ -43,7 +43,7 @@ cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:Str
 	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
@@ -62,7 +62,7 @@ cbridge.Renderer.DeclareType_EntityEx(decl:String, cType:String, vtypeFullName:S
 	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickVector<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {

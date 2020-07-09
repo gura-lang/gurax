@@ -1543,7 +1543,7 @@ Gurax_ImplementFunction(glfwSetWindowIcon)
 	// Arguments
 	ArgPicker args(argument);
 	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	auto images = args.PickVector<GLFWimage>(Value_GLFWimage::ValueForVector);
+	auto images = args.PickListT<GLFWimage>(Value_GLFWimage::ValueForVector);
 	// Function body
 	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 	return Value::nil();

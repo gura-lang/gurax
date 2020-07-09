@@ -84,14 +84,14 @@ public:
 	template<typename T_Num>
 	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
 	template<typename T>
-	std::vector<T> PickVector(std::function<T(Value& value)> fn) {
-		std::vector<T> vec;
+	ListBase<T> PickListT(std::function<T(Value& value)> fn) {
+		ListBase<T> lst;
 		if (IsValid()) {
 			const ValueList& valList = PickList();
-			vec.reserve(valList.size());
-			for (Value* pValue : valList) vec.push_back(fn(*pValue));
+			lst.reserve(valList.size());
+			for (Value* pValue : valList) lst.push_back(fn(*pValue));
 		}
-		return vec;
+		return lst;
 	}
 	Codec& PickCodec()				{ return Pick<Value_Codec>().GetCodec(); }
 	Color& PickColor()				{ return Pick<Value_Color>().GetColor(); }
