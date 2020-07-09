@@ -276,6 +276,7 @@ public:
 	const_reference operator[](size_t pos) const { return _container[pos]; }
 	bool empty() const { return _container.empty(); }
 	size_t size() const { return _container.size(); }
+	template<typename T> T sizeT() const { return static_cast<T>(_container.size()); }
 	void clear() { _container.clear(); }
 	void reserve(size_t size) { _container.reserve(size); }
 	operator const_pointer() const { return _container.data(); }
