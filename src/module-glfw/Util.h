@@ -5,8 +5,6 @@
 #define GURAX_MODULE_GLFW_UTIL_H
 #include <gurax.h>
 
-#define AssignGLFWConst(frame, name) frame.Assign(#name, new Value_Number(name))
-
 Gurax_BeginModuleScope(glfw)
 
 void IssueError();
