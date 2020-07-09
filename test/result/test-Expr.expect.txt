@@ -44,6 +44,7 @@ Expr
   #lineNoTop        Number       R
   #mode             Symbol       R
   #operator         Operator     R
+  #pathNameSrc      String       R,nil
   #right            Expr         R
   #string           String       R
   #symbol           Symbol       R

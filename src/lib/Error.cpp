@@ -50,13 +50,13 @@ Error::Error(const ErrorType& errorType, String text) :
 
 Error::Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text) :
 	_errorType(errorType), _pExpr(Expr::Empty.Reference()),
-	_pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _text(std::move(text))
+	_pPathName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _text(std::move(text))
 {
 }
 
 Error::Error(const ErrorType& errorType, Expr* pExpr, String text) :
 	_errorType(errorType), _pExpr(pExpr),
-	_pFileName(pExpr->GetPathNameSrcReferable().Reference()),
+	_pPathName(pExpr->GetPathNameSrcReferable().Reference()),
 	_lineNoTop(pExpr->GetLineNoTop()), _lineNoBtm(pExpr->GetLineNoBtm()), _text(std::move(text))
 {
 }
@@ -70,8 +70,8 @@ void Error::Bootup()
 String Error::MakeMessage() const
 {
 	String str;
-	if (_pFileName && !_pFileName->GetStringSTL().empty()) {
-		str += _pFileName->GetStringSTL();
+	if (_pPathName && !_pPathName->GetStringSTL().empty()) {
+		str += _pPathName->GetStringSTL();
 		if (_lineNoTop == 0) {
 			str += ": ";
 		} else if (_lineNoTop == _lineNoBtm) {
@@ -89,8 +89,8 @@ String Error::MakeMessage() const
 void Error::SetExpr(const Expr& expr)
 {
 	if (_pExpr->IsType<Expr_Empty>()) _pExpr.reset(expr.Reference());
-	if (!_pFileName) {
-		_pFileName.reset(expr.GetPathNameSrcReferable().Reference());
+	if (!_pPathName) {
+		_pPathName.reset(expr.GetPathNameSrcReferable().Reference());
 		_lineNoTop = expr.GetLineNoTop();
 		_lineNoBtm = expr.GetLineNoBtm();
 	}
@@ -113,8 +113,8 @@ String Error::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("Error:%s", GetErrorType().GetName());
-	if (HasFileName()) {
-		str.Format(":%s", PathName(GetFileName()).ExtractFileName().c_str());
+	if (HasPathName()) {
+		str.Format(":%s", PathName(GetPathName()).ExtractFileName().c_str());
 		int lineNoTop = GetLineNoTop();
 		int lineNoBtm = GetLineNoBtm();
 		if (lineNoTop == lineNoBtm) {

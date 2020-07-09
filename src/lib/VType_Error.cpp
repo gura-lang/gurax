@@ -98,19 +98,21 @@ Gurax_ImplementPropertyGetter(Error, expr)
 	return new Value_Expr(valueThis.GetError().GetExpr().Reference());
 }
 
-// Error#fileName
-Gurax_DeclareProperty_R(Error, fileName)
+// Error#pathName
+Gurax_DeclareProperty_R(Error, pathName)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The name of a file in which the error happened.");
+		"The path name of a file in which the error happened.");
 }
 
-Gurax_ImplementPropertyGetter(Error, fileName)
+Gurax_ImplementPropertyGetter(Error, pathName)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetError().GetFileName());
+	const char* pathName = valueThis.GetError().GetPathName();
+	if (*pathName) return new Value_String(pathName);
+	return Value::nil();
 }
 
 // Error#lineNo
@@ -205,7 +207,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Error, errorType));
 	Assign(Gurax_CreateProperty(Error, expr));
-	Assign(Gurax_CreateProperty(Error, fileName));
+	Assign(Gurax_CreateProperty(Error, pathName));
 	Assign(Gurax_CreateProperty(Error, lineNo));
 	Assign(Gurax_CreateProperty(Error, lineNoBtm));
 	Assign(Gurax_CreateProperty(Error, text));

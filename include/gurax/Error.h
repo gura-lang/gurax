@@ -91,7 +91,7 @@ public:
 private:
 	const ErrorType& _errorType;
 	RefPtr<Expr> _pExpr;
-	RefPtr<StringReferable> _pFileName;	// maybe nullptr
+	RefPtr<StringReferable> _pPathName;	// maybe nullptr
 	int _lineNoTop;
 	int _lineNoBtm;
 	String _text;
@@ -118,8 +118,8 @@ public:
 	const Expr& GetExpr() const { return *_pExpr; }
 	void SetExpr(const Expr& expr);
 	const ErrorType& GetErrorType() const { return _errorType; }
-	bool HasFileName() const { return _pFileName && !_pFileName->GetStringSTL().empty(); }
-	const char* GetFileName() const { return _pFileName? _pFileName->GetString() : ""; }
+	bool HasPathName() const { return _pPathName && !_pPathName->GetStringSTL().empty(); }
+	const char* GetPathName() const { return _pPathName? _pPathName->GetString() : ""; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	const char* GetText() const { return _text.c_str(); }

@@ -25,7 +25,7 @@ Error
   .ValueError       ErrorType    R
   #errorType        Number       R
   #expr             Expr         R
-  #fileName         String       R
   #lineNo           Number       R
   #lineNoBtm        Number       R
+  #pathName         String       R,nil
   #text             String       R

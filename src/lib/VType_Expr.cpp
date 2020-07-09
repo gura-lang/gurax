@@ -585,6 +585,23 @@ Gurax_ImplementPropertyGetter(Expr, operator_)
 	return new Value_Operator(pOp);
 }
 
+// Expr#pathNameSrc
+Gurax_DeclareProperty_R(Expr, pathNameSrc)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Path name of the Expr's source code.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, pathNameSrc)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const char* pathNameSrc = valueThis.GetExpr().GetPathNameSrc();
+	if (*pathNameSrc) return new Value_String(pathNameSrc);
+	return Value::nil();
+}
+
 // Expr#right
 Gurax_DeclareProperty_R(Expr, right)
 {
@@ -812,6 +829,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
 	Assign(Gurax_CreateProperty(Expr, mode));
 	Assign(Gurax_CreateProperty(Expr, operator_));
+	Assign(Gurax_CreateProperty(Expr, pathNameSrc));
 	Assign(Gurax_CreateProperty(Expr, right));
 	Assign(Gurax_CreateProperty(Expr, string));
 	Assign(Gurax_CreateProperty(Expr, symbol));
