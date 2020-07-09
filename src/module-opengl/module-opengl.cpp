@@ -6,32 +6,6 @@
 Gurax_BeginModule(opengl)
 
 //------------------------------------------------------------------------------
-// Implementation of function
-//------------------------------------------------------------------------------
-// opengl.Test()
-Gurax_DeclareFunction(Test)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
-}
-
-Gurax_ImplementFunction(Test)
-{
-	glewInit();
-	glClearColor(0, 0, 0, 0);
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
-}
-
-//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -41,8 +15,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of value
+	AssignConsts(GetFrame());
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
 	AssignFunctions(GetFrame());
 	return true;
 }

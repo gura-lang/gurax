@@ -34,6 +34,7 @@ target_compile_definitions(opengl.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(opengl.gurd PRIVATE
 	module-opengl.cpp
 	Util.cpp
+	Consts.cpp
 	Functions.cpp)
 #-------------------------------------------------------------------------------
 # Link
