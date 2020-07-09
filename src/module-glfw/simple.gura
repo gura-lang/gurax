@@ -1,16 +1,17 @@
 import(glfw) {*}
+import(opengl) {*}
 
 main() = {
 	glfwInit()
+	glewInit()
 	window = glfwCreateWindow(640, 480, "Hello World", nil, nil)
 	glfwMakeContextCurrent(window);
 	glfwSetWindowPosCallback(window, &{Printf('WindowPos(%d, %d)\n', $xpos, $ypos)})
 	glfwSetWindowSizeCallback(window, &{Printf('WindowSize(%d, %d)\n', $width, $height)})
 	glfwSetWindowCloseCallback(window, &{Printf('WindowClose()\n')})
 	while (!glfwWindowShouldClose(window)) {
-	//while (!window.WindowShouldClose()) {
 		/* Render here */
-		//glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
