@@ -465,18 +465,17 @@ glMultiTexCoord4iv(target:GLenum, v[]:GLint):void
 glMultiTexCoord4s(target:GLenum, s:GLshort, t:GLshort, r:GLshort, q:GLshort):void
 glMultiTexCoord4sv(target:GLenum, v[]:GLshort):void
 glSampleCoverage(value:GLclampf, invert:GLboolean):void
-/*
 //======== GL_VERSION_1_4 ========
 glBlendColor(red:GLclampf, green:GLclampf, blue:GLclampf, alpha:GLclampf):void
 glBlendEquation(mode:GLenum):void
 glBlendFuncSeparate(sfactorRGB:GLenum, dfactorRGB:GLenum, sfactorAlpha:GLenum, dfactorAlpha:GLenum):void
-glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+//glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
 glFogCoordd(coord:GLdouble):void
 glFogCoorddv(coord[]:GLdouble):void
 glFogCoordf(coord:GLfloat):void
 glFogCoordfv(coord[]:GLfloat):void
 glMultiDrawArrays(mode:GLenum, first[]:GLint, count[]:GLsizei, drawcount:GLsizei):void
-glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices:const_void_p_const_p, drawcount:GLsizei):void
+//glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices:const_void_p_const_p, drawcount:GLsizei):void
 glPointParameterf(pname:GLenum, param:GLfloat):void
 glPointParameterfv(pname:GLenum, params[]:GLfloat):void
 glPointParameteri(pname:GLenum, param:GLint):void
@@ -497,7 +496,7 @@ glSecondaryColor3ui(red:GLuint, green:GLuint, blue:GLuint):void
 glSecondaryColor3uiv(v[]:GLuint):void
 glSecondaryColor3us(red:GLushort, green:GLushort, blue:GLushort):void
 glSecondaryColor3usv(v[]:GLushort):void
-glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+//glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 glWindowPos2d(x:GLdouble, y:GLdouble):void
 glWindowPos2dv(p[]:GLdouble):void
 glWindowPos2f(x:GLfloat, y:GLfloat):void
@@ -517,26 +516,34 @@ glWindowPos3sv(p[]:GLshort):void
 //======== GL_VERSION_1_5 ========
 glBeginQuery(target:GLenum, id:GLuint):void
 glBindBuffer(target:GLenum, buffer:GLuint):void
-glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
-glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
+//glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
+//glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
 glDeleteBuffers(n:GLsizei, buffers[]:GLuint):void
 glDeleteQueries(n:GLsizei, ids[]:GLuint):void
 glEndQuery(target:GLenum):void
-glGenBuffers(n:GLsizei, buffers:GLuint_p):void
-glGenQueries(n:GLsizei, ids:GLuint_p):void
-glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
-glGetBufferPointerv(target:GLenum, pname:GLenum, params:void_p__p):void
-glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
-glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p):void
-glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p):void
-glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGenBuffers(n:GLsizei) = R'''
+std::unique_ptr<GLuint []> buffers(new GLuint [n]);
+glGenBuffers(n, buffers.get());
+return Value_List::Create(buffers.get(), n);
+'''
+glGenQueries(n:GLsizei) = R'''
+std::unique_ptr<GLuint []> ids(new GLuint [n]);
+glGenQueries(n, ids.get());
+return Value_List::Create(ids.get(), n);
+'''
+//glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+//glGetBufferPointerv(target:GLenum, pname:GLenum, params:void_p__p):void
+//glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
+//glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p):void
+//glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p):void
+//glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p):void
 glIsBuffer(buffer:GLuint):GLboolean
 glIsQuery(id:GLuint):GLboolean
-glMapBuffer(target:GLenum, access:GLenum):void*
+//glMapBuffer(target:GLenum, access:GLenum):void*
 glUnmapBuffer(target:GLenum):GLboolean
 //======== GL_VERSION_2_0 ========
 glAttachShader(program:GLuint, shader:GLuint):void
-glBindAttribLocation(program:GLuint, index:GLuint, name:const_GLchar_p):void
+//glBindAttribLocation(program:GLuint, index:GLuint, name:const_GLchar_p):void
 glBlendEquationSeparate(modeRGB:GLenum, modeAlpha:GLenum):void
 glCompileShader(shader:GLuint):void
 glCreateProgram():GLuint
@@ -547,26 +554,26 @@ glDetachShader(program:GLuint, shader:GLuint):void
 glDisableVertexAttribArray(index:GLuint):void
 glDrawBuffers(n:GLsizei, bufs[]:GLenum):void
 glEnableVertexAttribArray(index:GLuint):void
-glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
-glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
-glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
-glGetAttribLocation(program:GLuint, name:const_GLchar_p):GLint
-glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
-glGetProgramiv(program:GLuint, pname:GLenum, param:GLint_p):void
-glGetShaderInfoLog(shader:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
-glGetShaderSource(obj:GLuint, maxLength:GLsizei, length:GLsizei_p, source:GLchar_p):void
-glGetShaderiv(shader:GLuint, pname:GLenum, param:GLint_p):void
-glGetUniformLocation(program:GLuint, name:const_GLchar_p):GLint
-glGetUniformfv(program:GLuint, location:GLint, params:GLfloat_p):void
-glGetUniformiv(program:GLuint, location:GLint, params:GLint_p):void
-glGetVertexAttribPointerv(index:GLuint, pname:GLenum, pointer:void_p__p):void
-glGetVertexAttribdv(index:GLuint, pname:GLenum, params:GLdouble_p):void
-glGetVertexAttribfv(index:GLuint, pname:GLenum, params:GLfloat_p):void
-glGetVertexAttribiv(index:GLuint, pname:GLenum, params:GLint_p):void
+//glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+//glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+//glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
+//glGetAttribLocation(program:GLuint, name:const_GLchar_p):GLint
+//glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
+//glGetProgramiv(program:GLuint, pname:GLenum, param:GLint_p):void
+//glGetShaderInfoLog(shader:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
+//glGetShaderSource(obj:GLuint, maxLength:GLsizei, length:GLsizei_p, source:GLchar_p):void
+//glGetShaderiv(shader:GLuint, pname:GLenum, param:GLint_p):void
+//glGetUniformLocation(program:GLuint, name:const_GLchar_p):GLint
+//glGetUniformfv(program:GLuint, location:GLint, params:GLfloat_p):void
+//glGetUniformiv(program:GLuint, location:GLint, params:GLint_p):void
+//glGetVertexAttribPointerv(index:GLuint, pname:GLenum, pointer:void_p__p):void
+//glGetVertexAttribdv(index:GLuint, pname:GLenum, params:GLdouble_p):void
+//glGetVertexAttribfv(index:GLuint, pname:GLenum, params:GLfloat_p):void
+//glGetVertexAttribiv(index:GLuint, pname:GLenum, params:GLint_p):void
 glIsProgram(program:GLuint):GLboolean
 glIsShader(shader:GLuint):GLboolean
 glLinkProgram(program:GLuint):void
-glShaderSource(shader:GLuint, count:GLsizei, string:const_GLchar_p_const_p, length[]:GLint):void
+//glShaderSource(shader:GLuint, count:GLsizei, string:const_GLchar_p_const_p, length[]:GLint):void
 glStencilFuncSeparate(frontfunc:GLenum, backfunc:GLenum, ref:GLint, mask:GLuint):void
 glStencilMaskSeparate(face:GLenum, mask:GLuint):void
 glStencilOpSeparate(face:GLenum, sfail:GLenum, dpfail:GLenum, dppass:GLenum):void
@@ -627,7 +634,7 @@ glVertexAttrib4sv(index:GLuint, v[]:GLshort):void
 glVertexAttrib4ubv(index:GLuint, v[]:GLubyte):void
 glVertexAttrib4uiv(index:GLuint, v[]:GLuint):void
 glVertexAttrib4usv(index:GLuint, v[]:GLushort):void
-glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
+//glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
 //======== GL_VERSION_2_1 ========
 glUniformMatrix2x3fv(location:GLint, count:GLsizei, transpose:GLboolean, value[]:GLfloat):void
 glUniformMatrix2x4fv(location:GLint, count:GLsizei, transpose:GLboolean, value[]:GLfloat):void
@@ -638,7 +645,7 @@ glUniformMatrix4x3fv(location:GLint, count:GLsizei, transpose:GLboolean, value[]
 //======== GL_VERSION_3_0 ========
 glBeginConditionalRender(id:GLuint, mode:GLenum):void
 glBeginTransformFeedback(primitiveMode:GLenum):void
-glBindFragDataLocation(program:GLuint, colorNumber:GLuint, name:const_GLchar_p):void
+//glBindFragDataLocation(program:GLuint, colorNumber:GLuint, name:const_GLchar_p):void
 glClampColor(target:GLenum, clamp:GLenum):void
 glClearBufferfi(buffer:GLenum, drawBuffer:GLint, depth:GLfloat, stencil:GLint):void
 glClearBufferfv(buffer:GLenum, drawBuffer:GLint, value[]:GLfloat):void
@@ -649,19 +656,19 @@ glDisablei(cap:GLenum, index:GLuint):void
 glEnablei(cap:GLenum, index:GLuint):void
 glEndConditionalRender():void
 glEndTransformFeedback():void
-glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
-glGetFragDataLocation(program:GLuint, name:const_GLchar_p):GLint
-glGetStringi(name:GLenum, index:GLuint):const GLubyte*
-glGetTexParameterIiv(target:GLenum, pname:GLenum, params:GLint_p):void
-glGetTexParameterIuiv(target:GLenum, pname:GLenum, params:GLuint_p):void
-glGetTransformFeedbackVarying(program:GLuint, index:GLuint, bufSize:GLsizei, length:GLsizei_p, size:GLsizei_p, type:GLenum_p, name:GLchar_p):void
-glGetUniformuiv(program:GLuint, location:GLint, params:GLuint_p):void
-glGetVertexAttribIiv(index:GLuint, pname:GLenum, params:GLint_p):void
-glGetVertexAttribIuiv(index:GLuint, pname:GLenum, params:GLuint_p):void
+//glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
+//glGetFragDataLocation(program:GLuint, name:const_GLchar_p):GLint
+//glGetStringi(name:GLenum, index:GLuint):const GLubyte*
+//glGetTexParameterIiv(target:GLenum, pname:GLenum, params:GLint_p):void
+//glGetTexParameterIuiv(target:GLenum, pname:GLenum, params:GLuint_p):void
+//glGetTransformFeedbackVarying(program:GLuint, index:GLuint, bufSize:GLsizei, length:GLsizei_p, size:GLsizei_p, type:GLenum_p, name:GLchar_p):void
+//glGetUniformuiv(program:GLuint, location:GLint, params:GLuint_p):void
+//glGetVertexAttribIiv(index:GLuint, pname:GLenum, params:GLint_p):void
+//glGetVertexAttribIuiv(index:GLuint, pname:GLenum, params:GLuint_p):void
 glIsEnabledi(cap:GLenum, index:GLuint):GLboolean
 glTexParameterIiv(target:GLenum, pname:GLenum, params[]:GLint):void
 glTexParameterIuiv(target:GLenum, pname:GLenum, params[]:GLuint):void
-glTransformFeedbackVaryings(program:GLuint, count:GLsizei, varyings:const_GLchar_p_const_p, bufferMode:GLenum):void
+//glTransformFeedbackVaryings(program:GLuint, count:GLsizei, varyings:const_GLchar_p_const_p, bufferMode:GLenum):void
 glUniform1ui(location:GLint, v0:GLuint):void
 glUniform1uiv(location:GLint, count:GLsizei, value[]:GLuint):void
 glUniform2ui(location:GLint, v0:GLuint, v1:GLuint):void
@@ -690,16 +697,16 @@ glVertexAttribI4ubv(index:GLuint, v0[]:GLubyte):void
 glVertexAttribI4ui(index:GLuint, v0:GLuint, v1:GLuint, v2:GLuint, v3:GLuint):void
 glVertexAttribI4uiv(index:GLuint, v0[]:GLuint):void
 glVertexAttribI4usv(index:GLuint, v0[]:GLushort):void
-glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, void*pointer:const):void
+//glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, void*pointer:const):void
 //======== GL_VERSION_3_1 ========
 glDrawArraysInstanced(mode:GLenum, first:GLint, count:GLsizei, primcount:GLsizei):void
-glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
+//glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
 glPrimitiveRestartIndex(buffer:GLuint):void
 glTexBuffer(target:GLenum, internalFormat:GLenum, buffer:GLuint):void
 //======== GL_VERSION_3_2 ========
 glFramebufferTexture(target:GLenum, attachment:GLenum, texture:GLuint, level:GLint):void
-glGetBufferParameteri64v(target:GLenum, value:GLenum, data:GLint64_p):void
-glGetInteger64i_v(pname:GLenum, index:GLuint, data:GLint64_p):void
+//glGetBufferParameteri64v(target:GLenum, value:GLenum, data:GLint64_p):void
+//glGetInteger64i_v(pname:GLenum, index:GLuint, data:GLint64_p):void
 //======== GL_VERSION_3_3 ========
 glVertexAttribDivisor(index:GLuint, divisor:GLuint):void
 //======== GL_VERSION_4_0 ========
@@ -710,14 +717,13 @@ glBlendFunci(buf:GLuint, src:GLenum, dst:GLenum):void
 glMinSampleShading(value:GLclampf):void
 //======== GL_VERSION_4_5 ========
 glGetGraphicsResetStatus():GLenum
-glGetnCompressedTexImage(target:GLenum, lod:GLint, bufSize:GLsizei, pixels:GLvoid_p):void
-glGetnTexImage(tex:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:GLvoid_p):void
-glGetnUniformdv(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p):void
+//glGetnCompressedTexImage(target:GLenum, lod:GLint, bufSize:GLsizei, pixels:GLvoid_p):void
+//glGetnTexImage(tex:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:GLvoid_p):void
+//glGetnUniformdv(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p):void
 //======== GL_VERSION_4_6 ========
-glMultiDrawArraysIndirectCount(mode:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
-glMultiDrawElementsIndirectCount(mode:GLenum, type:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+//glMultiDrawArraysIndirectCount(mode:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+//glMultiDrawElementsIndirectCount(mode:GLenum, type:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
 glSpecializeShader(shader:GLuint, pEntryPoint[]:GLchar, numSpecializationConstants:GLuint, pConstantIndex[]:GLuint, pConstantValue[]:GLuint):void
-*/
 
 }
 
