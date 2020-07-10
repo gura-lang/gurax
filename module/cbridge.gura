@@ -118,7 +118,7 @@ FuncInfo = class {
 
 FuncInfo.tmplImplementation = tR'''
 // ${this.ToString()}
-Gurax_DeclareFunction(${this.name})
+Gurax_DeclareFunctionAlias(gurax_${this.name}, "${this.name}")
 {
 	Declare(VTYPE_${this.typeInfo.vtype}, Flag::None);
 	${this.argInfoTbl::ComposeDeclaration()}
@@ -127,7 +127,7 @@ Gurax_DeclareFunction(${this.name})
 		"");
 }
 
-Gurax_ImplementFunction(${this.name})
+Gurax_ImplementFunction(gurax_${this.name})
 {
 	${if (!this.argInfoTbl.IsEmpty())}
 	// Arguments
@@ -143,7 +143,7 @@ Gurax_ImplementFunction(${this.name})
 }
 '''
 
-FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}));'
+FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(gurax_${this.name}));'
 
 //------------------------------------------------------------------------------
 // Renderer

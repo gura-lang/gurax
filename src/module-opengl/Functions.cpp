@@ -6,7 +6,7 @@
 Gurax_BeginModuleScope(opengl)
 
 // opengl.glewInit()
-Gurax_DeclareFunction(glewInit)
+Gurax_DeclareFunctionAlias(gurax_glewInit, "glewInit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -14,7 +14,7 @@ Gurax_DeclareFunction(glewInit)
 		"");
 }
 
-Gurax_ImplementFunction(glewInit)
+Gurax_ImplementFunction(gurax_glewInit)
 {
 	// Function body
 	GLenum rtn = glewInit();
@@ -22,7 +22,7 @@ Gurax_ImplementFunction(glewInit)
 }
 
 // opengl.glewIsSupported(name:String)
-Gurax_DeclareFunction(glewIsSupported)
+Gurax_DeclareFunctionAlias(gurax_glewIsSupported, "glewIsSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -31,7 +31,7 @@ Gurax_DeclareFunction(glewIsSupported)
 		"");
 }
 
-Gurax_ImplementFunction(glewIsSupported)
+Gurax_ImplementFunction(gurax_glewIsSupported)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -42,7 +42,7 @@ Gurax_ImplementFunction(glewIsSupported)
 }
 
 // opengl.glewGetExtension(name:String)
-Gurax_DeclareFunction(glewGetExtension)
+Gurax_DeclareFunctionAlias(gurax_glewGetExtension, "glewGetExtension")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -51,7 +51,7 @@ Gurax_DeclareFunction(glewGetExtension)
 		"");
 }
 
-Gurax_ImplementFunction(glewGetExtension)
+Gurax_ImplementFunction(gurax_glewGetExtension)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -62,7 +62,7 @@ Gurax_ImplementFunction(glewGetExtension)
 }
 
 // opengl.glewGetErrorString(error:Number)
-Gurax_DeclareFunction(glewGetErrorString)
+Gurax_DeclareFunctionAlias(gurax_glewGetErrorString, "glewGetErrorString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("error", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -71,7 +71,7 @@ Gurax_DeclareFunction(glewGetErrorString)
 		"");
 }
 
-Gurax_ImplementFunction(glewGetErrorString)
+Gurax_ImplementFunction(gurax_glewGetErrorString)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -82,7 +82,7 @@ Gurax_ImplementFunction(glewGetErrorString)
 }
 
 // opengl.glewGetString(name:Number)
-Gurax_DeclareFunction(glewGetString)
+Gurax_DeclareFunctionAlias(gurax_glewGetString, "glewGetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -91,7 +91,7 @@ Gurax_DeclareFunction(glewGetString)
 		"");
 }
 
-Gurax_ImplementFunction(glewGetString)
+Gurax_ImplementFunction(gurax_glewGetString)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -102,7 +102,7 @@ Gurax_ImplementFunction(glewGetString)
 }
 
 // opengl.glAccum(op:Number, value:Number)
-Gurax_DeclareFunction(glAccum)
+Gurax_DeclareFunctionAlias(gurax_glAccum, "glAccum")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("op", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -112,7 +112,7 @@ Gurax_DeclareFunction(glAccum)
 		"");
 }
 
-Gurax_ImplementFunction(glAccum)
+Gurax_ImplementFunction(gurax_glAccum)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -124,7 +124,7 @@ Gurax_ImplementFunction(glAccum)
 }
 
 // opengl.glAlphaFunc(func:Number, ref:Number)
-Gurax_DeclareFunction(glAlphaFunc)
+Gurax_DeclareFunctionAlias(gurax_glAlphaFunc, "glAlphaFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -134,7 +134,7 @@ Gurax_DeclareFunction(glAlphaFunc)
 		"");
 }
 
-Gurax_ImplementFunction(glAlphaFunc)
+Gurax_ImplementFunction(gurax_glAlphaFunc)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -146,7 +146,7 @@ Gurax_ImplementFunction(glAlphaFunc)
 }
 
 // opengl.glArrayElement(i:Number)
-Gurax_DeclareFunction(glArrayElement)
+Gurax_DeclareFunctionAlias(gurax_glArrayElement, "glArrayElement")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -155,7 +155,7 @@ Gurax_DeclareFunction(glArrayElement)
 		"");
 }
 
-Gurax_ImplementFunction(glArrayElement)
+Gurax_ImplementFunction(gurax_glArrayElement)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -166,7 +166,7 @@ Gurax_ImplementFunction(glArrayElement)
 }
 
 // opengl.glBegin(mode:Number)
-Gurax_DeclareFunction(glBegin)
+Gurax_DeclareFunctionAlias(gurax_glBegin, "glBegin")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -175,7 +175,7 @@ Gurax_DeclareFunction(glBegin)
 		"");
 }
 
-Gurax_ImplementFunction(glBegin)
+Gurax_ImplementFunction(gurax_glBegin)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -186,7 +186,7 @@ Gurax_ImplementFunction(glBegin)
 }
 
 // opengl.glBindTexture(target:Number, texture:Number)
-Gurax_DeclareFunction(glBindTexture)
+Gurax_DeclareFunctionAlias(gurax_glBindTexture, "glBindTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -196,7 +196,7 @@ Gurax_DeclareFunction(glBindTexture)
 		"");
 }
 
-Gurax_ImplementFunction(glBindTexture)
+Gurax_ImplementFunction(gurax_glBindTexture)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -208,7 +208,7 @@ Gurax_ImplementFunction(glBindTexture)
 }
 
 // opengl.glBlendFunc(sfactor:Number, dfactor:Number)
-Gurax_DeclareFunction(glBlendFunc)
+Gurax_DeclareFunctionAlias(gurax_glBlendFunc, "glBlendFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -218,7 +218,7 @@ Gurax_DeclareFunction(glBlendFunc)
 		"");
 }
 
-Gurax_ImplementFunction(glBlendFunc)
+Gurax_ImplementFunction(gurax_glBlendFunc)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -230,7 +230,7 @@ Gurax_ImplementFunction(glBlendFunc)
 }
 
 // opengl.glCallList(list:Number)
-Gurax_DeclareFunction(glCallList)
+Gurax_DeclareFunctionAlias(gurax_glCallList, "glCallList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -239,7 +239,7 @@ Gurax_DeclareFunction(glCallList)
 		"");
 }
 
-Gurax_ImplementFunction(glCallList)
+Gurax_ImplementFunction(gurax_glCallList)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -250,7 +250,7 @@ Gurax_ImplementFunction(glCallList)
 }
 
 // opengl.glClear(mask:Number)
-Gurax_DeclareFunction(glClear)
+Gurax_DeclareFunctionAlias(gurax_glClear, "glClear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -259,7 +259,7 @@ Gurax_DeclareFunction(glClear)
 		"");
 }
 
-Gurax_ImplementFunction(glClear)
+Gurax_ImplementFunction(gurax_glClear)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -270,7 +270,7 @@ Gurax_ImplementFunction(glClear)
 }
 
 // opengl.glClearAccum(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glClearAccum)
+Gurax_DeclareFunctionAlias(gurax_glClearAccum, "glClearAccum")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -282,7 +282,7 @@ Gurax_DeclareFunction(glClearAccum)
 		"");
 }
 
-Gurax_ImplementFunction(glClearAccum)
+Gurax_ImplementFunction(gurax_glClearAccum)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -296,7 +296,7 @@ Gurax_ImplementFunction(glClearAccum)
 }
 
 // opengl.glClearColor(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glClearColor)
+Gurax_DeclareFunctionAlias(gurax_glClearColor, "glClearColor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -308,7 +308,7 @@ Gurax_DeclareFunction(glClearColor)
 		"");
 }
 
-Gurax_ImplementFunction(glClearColor)
+Gurax_ImplementFunction(gurax_glClearColor)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -322,7 +322,7 @@ Gurax_ImplementFunction(glClearColor)
 }
 
 // opengl.glClearDepth(depth:Number)
-Gurax_DeclareFunction(glClearDepth)
+Gurax_DeclareFunctionAlias(gurax_glClearDepth, "glClearDepth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -331,7 +331,7 @@ Gurax_DeclareFunction(glClearDepth)
 		"");
 }
 
-Gurax_ImplementFunction(glClearDepth)
+Gurax_ImplementFunction(gurax_glClearDepth)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -342,7 +342,7 @@ Gurax_ImplementFunction(glClearDepth)
 }
 
 // opengl.glClearIndex(c:Number)
-Gurax_DeclareFunction(glClearIndex)
+Gurax_DeclareFunctionAlias(gurax_glClearIndex, "glClearIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -351,7 +351,7 @@ Gurax_DeclareFunction(glClearIndex)
 		"");
 }
 
-Gurax_ImplementFunction(glClearIndex)
+Gurax_ImplementFunction(gurax_glClearIndex)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -362,7 +362,7 @@ Gurax_ImplementFunction(glClearIndex)
 }
 
 // opengl.glClearStencil(s:Number)
-Gurax_DeclareFunction(glClearStencil)
+Gurax_DeclareFunctionAlias(gurax_glClearStencil, "glClearStencil")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -371,7 +371,7 @@ Gurax_DeclareFunction(glClearStencil)
 		"");
 }
 
-Gurax_ImplementFunction(glClearStencil)
+Gurax_ImplementFunction(gurax_glClearStencil)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -382,7 +382,7 @@ Gurax_ImplementFunction(glClearStencil)
 }
 
 // opengl.glClipPlane(plane:Number, equation[]:Number)
-Gurax_DeclareFunction(glClipPlane)
+Gurax_DeclareFunctionAlias(gurax_glClipPlane, "glClipPlane")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("plane", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -392,7 +392,7 @@ Gurax_DeclareFunction(glClipPlane)
 		"");
 }
 
-Gurax_ImplementFunction(glClipPlane)
+Gurax_ImplementFunction(gurax_glClipPlane)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -404,7 +404,7 @@ Gurax_ImplementFunction(glClipPlane)
 }
 
 // opengl.glColor3b(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3b)
+Gurax_DeclareFunctionAlias(gurax_glColor3b, "glColor3b")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -415,7 +415,7 @@ Gurax_DeclareFunction(glColor3b)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3b)
+Gurax_ImplementFunction(gurax_glColor3b)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -428,7 +428,7 @@ Gurax_ImplementFunction(glColor3b)
 }
 
 // opengl.glColor3bv(v[]:Number)
-Gurax_DeclareFunction(glColor3bv)
+Gurax_DeclareFunctionAlias(gurax_glColor3bv, "glColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -437,7 +437,7 @@ Gurax_DeclareFunction(glColor3bv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3bv)
+Gurax_ImplementFunction(gurax_glColor3bv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -448,7 +448,7 @@ Gurax_ImplementFunction(glColor3bv)
 }
 
 // opengl.glColor3d(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3d)
+Gurax_DeclareFunctionAlias(gurax_glColor3d, "glColor3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -459,7 +459,7 @@ Gurax_DeclareFunction(glColor3d)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3d)
+Gurax_ImplementFunction(gurax_glColor3d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -472,7 +472,7 @@ Gurax_ImplementFunction(glColor3d)
 }
 
 // opengl.glColor3dv(v[]:Number)
-Gurax_DeclareFunction(glColor3dv)
+Gurax_DeclareFunctionAlias(gurax_glColor3dv, "glColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -481,7 +481,7 @@ Gurax_DeclareFunction(glColor3dv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3dv)
+Gurax_ImplementFunction(gurax_glColor3dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -492,7 +492,7 @@ Gurax_ImplementFunction(glColor3dv)
 }
 
 // opengl.glColor3f(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3f)
+Gurax_DeclareFunctionAlias(gurax_glColor3f, "glColor3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -503,7 +503,7 @@ Gurax_DeclareFunction(glColor3f)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3f)
+Gurax_ImplementFunction(gurax_glColor3f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -516,7 +516,7 @@ Gurax_ImplementFunction(glColor3f)
 }
 
 // opengl.glColor3fv(v[]:Number)
-Gurax_DeclareFunction(glColor3fv)
+Gurax_DeclareFunctionAlias(gurax_glColor3fv, "glColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -525,7 +525,7 @@ Gurax_DeclareFunction(glColor3fv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3fv)
+Gurax_ImplementFunction(gurax_glColor3fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -536,7 +536,7 @@ Gurax_ImplementFunction(glColor3fv)
 }
 
 // opengl.glColor3i(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3i)
+Gurax_DeclareFunctionAlias(gurax_glColor3i, "glColor3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -547,7 +547,7 @@ Gurax_DeclareFunction(glColor3i)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3i)
+Gurax_ImplementFunction(gurax_glColor3i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -560,7 +560,7 @@ Gurax_ImplementFunction(glColor3i)
 }
 
 // opengl.glColor3iv(v[]:Number)
-Gurax_DeclareFunction(glColor3iv)
+Gurax_DeclareFunctionAlias(gurax_glColor3iv, "glColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -569,7 +569,7 @@ Gurax_DeclareFunction(glColor3iv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3iv)
+Gurax_ImplementFunction(gurax_glColor3iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -580,7 +580,7 @@ Gurax_ImplementFunction(glColor3iv)
 }
 
 // opengl.glColor3s(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3s)
+Gurax_DeclareFunctionAlias(gurax_glColor3s, "glColor3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -591,7 +591,7 @@ Gurax_DeclareFunction(glColor3s)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3s)
+Gurax_ImplementFunction(gurax_glColor3s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -604,7 +604,7 @@ Gurax_ImplementFunction(glColor3s)
 }
 
 // opengl.glColor3sv(v[]:Number)
-Gurax_DeclareFunction(glColor3sv)
+Gurax_DeclareFunctionAlias(gurax_glColor3sv, "glColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -613,7 +613,7 @@ Gurax_DeclareFunction(glColor3sv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3sv)
+Gurax_ImplementFunction(gurax_glColor3sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -624,7 +624,7 @@ Gurax_ImplementFunction(glColor3sv)
 }
 
 // opengl.glColor3ub(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3ub)
+Gurax_DeclareFunctionAlias(gurax_glColor3ub, "glColor3ub")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -635,7 +635,7 @@ Gurax_DeclareFunction(glColor3ub)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ub)
+Gurax_ImplementFunction(gurax_glColor3ub)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -648,7 +648,7 @@ Gurax_ImplementFunction(glColor3ub)
 }
 
 // opengl.glColor3ubv(v[]:Number)
-Gurax_DeclareFunction(glColor3ubv)
+Gurax_DeclareFunctionAlias(gurax_glColor3ubv, "glColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -657,7 +657,7 @@ Gurax_DeclareFunction(glColor3ubv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ubv)
+Gurax_ImplementFunction(gurax_glColor3ubv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -668,7 +668,7 @@ Gurax_ImplementFunction(glColor3ubv)
 }
 
 // opengl.glColor3ui(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3ui)
+Gurax_DeclareFunctionAlias(gurax_glColor3ui, "glColor3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -679,7 +679,7 @@ Gurax_DeclareFunction(glColor3ui)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ui)
+Gurax_ImplementFunction(gurax_glColor3ui)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -692,7 +692,7 @@ Gurax_ImplementFunction(glColor3ui)
 }
 
 // opengl.glColor3uiv(v[]:Number)
-Gurax_DeclareFunction(glColor3uiv)
+Gurax_DeclareFunctionAlias(gurax_glColor3uiv, "glColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -701,7 +701,7 @@ Gurax_DeclareFunction(glColor3uiv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3uiv)
+Gurax_ImplementFunction(gurax_glColor3uiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -712,7 +712,7 @@ Gurax_ImplementFunction(glColor3uiv)
 }
 
 // opengl.glColor3us(red:Number, green:Number, blue:Number)
-Gurax_DeclareFunction(glColor3us)
+Gurax_DeclareFunctionAlias(gurax_glColor3us, "glColor3us")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -723,7 +723,7 @@ Gurax_DeclareFunction(glColor3us)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3us)
+Gurax_ImplementFunction(gurax_glColor3us)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -736,7 +736,7 @@ Gurax_ImplementFunction(glColor3us)
 }
 
 // opengl.glColor3usv(v[]:Number)
-Gurax_DeclareFunction(glColor3usv)
+Gurax_DeclareFunctionAlias(gurax_glColor3usv, "glColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -745,7 +745,7 @@ Gurax_DeclareFunction(glColor3usv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor3usv)
+Gurax_ImplementFunction(gurax_glColor3usv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -756,7 +756,7 @@ Gurax_ImplementFunction(glColor3usv)
 }
 
 // opengl.glColor4b(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4b)
+Gurax_DeclareFunctionAlias(gurax_glColor4b, "glColor4b")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -768,7 +768,7 @@ Gurax_DeclareFunction(glColor4b)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4b)
+Gurax_ImplementFunction(gurax_glColor4b)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -782,7 +782,7 @@ Gurax_ImplementFunction(glColor4b)
 }
 
 // opengl.glColor4bv(v[]:Number)
-Gurax_DeclareFunction(glColor4bv)
+Gurax_DeclareFunctionAlias(gurax_glColor4bv, "glColor4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -791,7 +791,7 @@ Gurax_DeclareFunction(glColor4bv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4bv)
+Gurax_ImplementFunction(gurax_glColor4bv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -802,7 +802,7 @@ Gurax_ImplementFunction(glColor4bv)
 }
 
 // opengl.glColor4d(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4d)
+Gurax_DeclareFunctionAlias(gurax_glColor4d, "glColor4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -814,7 +814,7 @@ Gurax_DeclareFunction(glColor4d)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4d)
+Gurax_ImplementFunction(gurax_glColor4d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -828,7 +828,7 @@ Gurax_ImplementFunction(glColor4d)
 }
 
 // opengl.glColor4dv(v[]:Number)
-Gurax_DeclareFunction(glColor4dv)
+Gurax_DeclareFunctionAlias(gurax_glColor4dv, "glColor4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -837,7 +837,7 @@ Gurax_DeclareFunction(glColor4dv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4dv)
+Gurax_ImplementFunction(gurax_glColor4dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -848,7 +848,7 @@ Gurax_ImplementFunction(glColor4dv)
 }
 
 // opengl.glColor4f(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4f)
+Gurax_DeclareFunctionAlias(gurax_glColor4f, "glColor4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -860,7 +860,7 @@ Gurax_DeclareFunction(glColor4f)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4f)
+Gurax_ImplementFunction(gurax_glColor4f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -874,7 +874,7 @@ Gurax_ImplementFunction(glColor4f)
 }
 
 // opengl.glColor4fv(v[]:Number)
-Gurax_DeclareFunction(glColor4fv)
+Gurax_DeclareFunctionAlias(gurax_glColor4fv, "glColor4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -883,7 +883,7 @@ Gurax_DeclareFunction(glColor4fv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4fv)
+Gurax_ImplementFunction(gurax_glColor4fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -894,7 +894,7 @@ Gurax_ImplementFunction(glColor4fv)
 }
 
 // opengl.glColor4i(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4i)
+Gurax_DeclareFunctionAlias(gurax_glColor4i, "glColor4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -906,7 +906,7 @@ Gurax_DeclareFunction(glColor4i)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4i)
+Gurax_ImplementFunction(gurax_glColor4i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -920,7 +920,7 @@ Gurax_ImplementFunction(glColor4i)
 }
 
 // opengl.glColor4iv(v[]:Number)
-Gurax_DeclareFunction(glColor4iv)
+Gurax_DeclareFunctionAlias(gurax_glColor4iv, "glColor4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -929,7 +929,7 @@ Gurax_DeclareFunction(glColor4iv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4iv)
+Gurax_ImplementFunction(gurax_glColor4iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -940,7 +940,7 @@ Gurax_ImplementFunction(glColor4iv)
 }
 
 // opengl.glColor4s(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4s)
+Gurax_DeclareFunctionAlias(gurax_glColor4s, "glColor4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -952,7 +952,7 @@ Gurax_DeclareFunction(glColor4s)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4s)
+Gurax_ImplementFunction(gurax_glColor4s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -966,7 +966,7 @@ Gurax_ImplementFunction(glColor4s)
 }
 
 // opengl.glColor4sv(v[]:Number)
-Gurax_DeclareFunction(glColor4sv)
+Gurax_DeclareFunctionAlias(gurax_glColor4sv, "glColor4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -975,7 +975,7 @@ Gurax_DeclareFunction(glColor4sv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4sv)
+Gurax_ImplementFunction(gurax_glColor4sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -986,7 +986,7 @@ Gurax_ImplementFunction(glColor4sv)
 }
 
 // opengl.glColor4ub(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4ub)
+Gurax_DeclareFunctionAlias(gurax_glColor4ub, "glColor4ub")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -998,7 +998,7 @@ Gurax_DeclareFunction(glColor4ub)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ub)
+Gurax_ImplementFunction(gurax_glColor4ub)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1012,7 +1012,7 @@ Gurax_ImplementFunction(glColor4ub)
 }
 
 // opengl.glColor4ubv(v[]:Number)
-Gurax_DeclareFunction(glColor4ubv)
+Gurax_DeclareFunctionAlias(gurax_glColor4ubv, "glColor4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1021,7 +1021,7 @@ Gurax_DeclareFunction(glColor4ubv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ubv)
+Gurax_ImplementFunction(gurax_glColor4ubv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1032,7 +1032,7 @@ Gurax_ImplementFunction(glColor4ubv)
 }
 
 // opengl.glColor4ui(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4ui)
+Gurax_DeclareFunctionAlias(gurax_glColor4ui, "glColor4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1044,7 +1044,7 @@ Gurax_DeclareFunction(glColor4ui)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ui)
+Gurax_ImplementFunction(gurax_glColor4ui)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1058,7 +1058,7 @@ Gurax_ImplementFunction(glColor4ui)
 }
 
 // opengl.glColor4uiv(v[]:Number)
-Gurax_DeclareFunction(glColor4uiv)
+Gurax_DeclareFunctionAlias(gurax_glColor4uiv, "glColor4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1067,7 +1067,7 @@ Gurax_DeclareFunction(glColor4uiv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4uiv)
+Gurax_ImplementFunction(gurax_glColor4uiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1078,7 +1078,7 @@ Gurax_ImplementFunction(glColor4uiv)
 }
 
 // opengl.glColor4us(red:Number, green:Number, blue:Number, alpha:Number)
-Gurax_DeclareFunction(glColor4us)
+Gurax_DeclareFunctionAlias(gurax_glColor4us, "glColor4us")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1090,7 +1090,7 @@ Gurax_DeclareFunction(glColor4us)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4us)
+Gurax_ImplementFunction(gurax_glColor4us)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1104,7 +1104,7 @@ Gurax_ImplementFunction(glColor4us)
 }
 
 // opengl.glColor4usv(v[]:Number)
-Gurax_DeclareFunction(glColor4usv)
+Gurax_DeclareFunctionAlias(gurax_glColor4usv, "glColor4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1113,7 +1113,7 @@ Gurax_DeclareFunction(glColor4usv)
 		"");
 }
 
-Gurax_ImplementFunction(glColor4usv)
+Gurax_ImplementFunction(gurax_glColor4usv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1124,7 +1124,7 @@ Gurax_ImplementFunction(glColor4usv)
 }
 
 // opengl.glColorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool)
-Gurax_DeclareFunction(glColorMask)
+Gurax_DeclareFunctionAlias(gurax_glColorMask, "glColorMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("red", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
@@ -1136,7 +1136,7 @@ Gurax_DeclareFunction(glColorMask)
 		"");
 }
 
-Gurax_ImplementFunction(glColorMask)
+Gurax_ImplementFunction(gurax_glColorMask)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1150,7 +1150,7 @@ Gurax_ImplementFunction(glColorMask)
 }
 
 // opengl.glColorMaterial(face:Number, mode:Number)
-Gurax_DeclareFunction(glColorMaterial)
+Gurax_DeclareFunctionAlias(gurax_glColorMaterial, "glColorMaterial")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1160,7 +1160,7 @@ Gurax_DeclareFunction(glColorMaterial)
 		"");
 }
 
-Gurax_ImplementFunction(glColorMaterial)
+Gurax_ImplementFunction(gurax_glColorMaterial)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1172,7 +1172,7 @@ Gurax_ImplementFunction(glColorMaterial)
 }
 
 // opengl.glCopyPixels(x:Number, y:Number, width:Number, height:Number, type:Number)
-Gurax_DeclareFunction(glCopyPixels)
+Gurax_DeclareFunctionAlias(gurax_glCopyPixels, "glCopyPixels")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1185,7 +1185,7 @@ Gurax_DeclareFunction(glCopyPixels)
 		"");
 }
 
-Gurax_ImplementFunction(glCopyPixels)
+Gurax_ImplementFunction(gurax_glCopyPixels)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1200,7 +1200,7 @@ Gurax_ImplementFunction(glCopyPixels)
 }
 
 // opengl.glCopyTexImage1D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, border:Number)
-Gurax_DeclareFunction(glCopyTexImage1D)
+Gurax_DeclareFunctionAlias(gurax_glCopyTexImage1D, "glCopyTexImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1215,7 +1215,7 @@ Gurax_DeclareFunction(glCopyTexImage1D)
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexImage1D)
+Gurax_ImplementFunction(gurax_glCopyTexImage1D)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1232,7 +1232,7 @@ Gurax_ImplementFunction(glCopyTexImage1D)
 }
 
 // opengl.glCopyTexImage2D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, height:Number, border:Number)
-Gurax_DeclareFunction(glCopyTexImage2D)
+Gurax_DeclareFunctionAlias(gurax_glCopyTexImage2D, "glCopyTexImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1248,7 +1248,7 @@ Gurax_DeclareFunction(glCopyTexImage2D)
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexImage2D)
+Gurax_ImplementFunction(gurax_glCopyTexImage2D)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1266,7 +1266,7 @@ Gurax_ImplementFunction(glCopyTexImage2D)
 }
 
 // opengl.glCopyTexSubImage1D(target:Number, level:Number, xoffset:Number, x:Number, y:Number, width:Number)
-Gurax_DeclareFunction(glCopyTexSubImage1D)
+Gurax_DeclareFunctionAlias(gurax_glCopyTexSubImage1D, "glCopyTexSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1280,7 +1280,7 @@ Gurax_DeclareFunction(glCopyTexSubImage1D)
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexSubImage1D)
+Gurax_ImplementFunction(gurax_glCopyTexSubImage1D)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1296,7 +1296,7 @@ Gurax_ImplementFunction(glCopyTexSubImage1D)
 }
 
 // opengl.glCopyTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, x:Number, y:Number, width:Number, height:Number)
-Gurax_DeclareFunction(glCopyTexSubImage2D)
+Gurax_DeclareFunctionAlias(gurax_glCopyTexSubImage2D, "glCopyTexSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1312,7 +1312,7 @@ Gurax_DeclareFunction(glCopyTexSubImage2D)
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexSubImage2D)
+Gurax_ImplementFunction(gurax_glCopyTexSubImage2D)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1330,7 +1330,7 @@ Gurax_ImplementFunction(glCopyTexSubImage2D)
 }
 
 // opengl.glCullFace(mode:Number)
-Gurax_DeclareFunction(glCullFace)
+Gurax_DeclareFunctionAlias(gurax_glCullFace, "glCullFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1339,7 +1339,7 @@ Gurax_DeclareFunction(glCullFace)
 		"");
 }
 
-Gurax_ImplementFunction(glCullFace)
+Gurax_ImplementFunction(gurax_glCullFace)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1350,7 +1350,7 @@ Gurax_ImplementFunction(glCullFace)
 }
 
 // opengl.glDeleteLists(list:Number, range:Number)
-Gurax_DeclareFunction(glDeleteLists)
+Gurax_DeclareFunctionAlias(gurax_glDeleteLists, "glDeleteLists")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1360,7 +1360,7 @@ Gurax_DeclareFunction(glDeleteLists)
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteLists)
+Gurax_ImplementFunction(gurax_glDeleteLists)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1372,7 +1372,7 @@ Gurax_ImplementFunction(glDeleteLists)
 }
 
 // opengl.glDeleteTextures(textures[]:Number)
-Gurax_DeclareFunction(glDeleteTextures)
+Gurax_DeclareFunctionAlias(gurax_glDeleteTextures, "glDeleteTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1381,7 +1381,7 @@ Gurax_DeclareFunction(glDeleteTextures)
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteTextures)
+Gurax_ImplementFunction(gurax_glDeleteTextures)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1392,7 +1392,7 @@ Gurax_ImplementFunction(glDeleteTextures)
 }
 
 // opengl.glDepthFunc(func:Number)
-Gurax_DeclareFunction(glDepthFunc)
+Gurax_DeclareFunctionAlias(gurax_glDepthFunc, "glDepthFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1401,7 +1401,7 @@ Gurax_DeclareFunction(glDepthFunc)
 		"");
 }
 
-Gurax_ImplementFunction(glDepthFunc)
+Gurax_ImplementFunction(gurax_glDepthFunc)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1412,7 +1412,7 @@ Gurax_ImplementFunction(glDepthFunc)
 }
 
 // opengl.glDepthMask(flag:Bool)
-Gurax_DeclareFunction(glDepthMask)
+Gurax_DeclareFunctionAlias(gurax_glDepthMask, "glDepthMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
@@ -1421,7 +1421,7 @@ Gurax_DeclareFunction(glDepthMask)
 		"");
 }
 
-Gurax_ImplementFunction(glDepthMask)
+Gurax_ImplementFunction(gurax_glDepthMask)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1432,7 +1432,7 @@ Gurax_ImplementFunction(glDepthMask)
 }
 
 // opengl.glDepthRange(zNear:Number, zFar:Number)
-Gurax_DeclareFunction(glDepthRange)
+Gurax_DeclareFunctionAlias(gurax_glDepthRange, "glDepthRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("zNear", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1442,7 +1442,7 @@ Gurax_DeclareFunction(glDepthRange)
 		"");
 }
 
-Gurax_ImplementFunction(glDepthRange)
+Gurax_ImplementFunction(gurax_glDepthRange)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1454,7 +1454,7 @@ Gurax_ImplementFunction(glDepthRange)
 }
 
 // opengl.glDisable(cap:Number)
-Gurax_DeclareFunction(glDisable)
+Gurax_DeclareFunctionAlias(gurax_glDisable, "glDisable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1463,7 +1463,7 @@ Gurax_DeclareFunction(glDisable)
 		"");
 }
 
-Gurax_ImplementFunction(glDisable)
+Gurax_ImplementFunction(gurax_glDisable)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1474,7 +1474,7 @@ Gurax_ImplementFunction(glDisable)
 }
 
 // opengl.glDisableClientState(array:Number)
-Gurax_DeclareFunction(glDisableClientState)
+Gurax_DeclareFunctionAlias(gurax_glDisableClientState, "glDisableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1483,7 +1483,7 @@ Gurax_DeclareFunction(glDisableClientState)
 		"");
 }
 
-Gurax_ImplementFunction(glDisableClientState)
+Gurax_ImplementFunction(gurax_glDisableClientState)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1494,7 +1494,7 @@ Gurax_ImplementFunction(glDisableClientState)
 }
 
 // opengl.glDrawArrays(mode:Number, first:Number, count:Number)
-Gurax_DeclareFunction(glDrawArrays)
+Gurax_DeclareFunctionAlias(gurax_glDrawArrays, "glDrawArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1505,7 +1505,7 @@ Gurax_DeclareFunction(glDrawArrays)
 		"");
 }
 
-Gurax_ImplementFunction(glDrawArrays)
+Gurax_ImplementFunction(gurax_glDrawArrays)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1518,7 +1518,7 @@ Gurax_ImplementFunction(glDrawArrays)
 }
 
 // opengl.glDrawBuffer(mode:Number)
-Gurax_DeclareFunction(glDrawBuffer)
+Gurax_DeclareFunctionAlias(gurax_glDrawBuffer, "glDrawBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1527,7 +1527,7 @@ Gurax_DeclareFunction(glDrawBuffer)
 		"");
 }
 
-Gurax_ImplementFunction(glDrawBuffer)
+Gurax_ImplementFunction(gurax_glDrawBuffer)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1538,7 +1538,7 @@ Gurax_ImplementFunction(glDrawBuffer)
 }
 
 // opengl.glEdgeFlag(flag:Bool)
-Gurax_DeclareFunction(glEdgeFlag)
+Gurax_DeclareFunctionAlias(gurax_glEdgeFlag, "glEdgeFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
@@ -1547,7 +1547,7 @@ Gurax_DeclareFunction(glEdgeFlag)
 		"");
 }
 
-Gurax_ImplementFunction(glEdgeFlag)
+Gurax_ImplementFunction(gurax_glEdgeFlag)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1558,7 +1558,7 @@ Gurax_ImplementFunction(glEdgeFlag)
 }
 
 // opengl.glEdgeFlagv(flag[]:Bool)
-Gurax_DeclareFunction(glEdgeFlagv)
+Gurax_DeclareFunctionAlias(gurax_glEdgeFlagv, "glEdgeFlagv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::ListVar);
@@ -1567,7 +1567,7 @@ Gurax_DeclareFunction(glEdgeFlagv)
 		"");
 }
 
-Gurax_ImplementFunction(glEdgeFlagv)
+Gurax_ImplementFunction(gurax_glEdgeFlagv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1578,7 +1578,7 @@ Gurax_ImplementFunction(glEdgeFlagv)
 }
 
 // opengl.glEnable(cap:Number)
-Gurax_DeclareFunction(glEnable)
+Gurax_DeclareFunctionAlias(gurax_glEnable, "glEnable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1587,7 +1587,7 @@ Gurax_DeclareFunction(glEnable)
 		"");
 }
 
-Gurax_ImplementFunction(glEnable)
+Gurax_ImplementFunction(gurax_glEnable)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1598,7 +1598,7 @@ Gurax_ImplementFunction(glEnable)
 }
 
 // opengl.glEnableClientState(array:Number)
-Gurax_DeclareFunction(glEnableClientState)
+Gurax_DeclareFunctionAlias(gurax_glEnableClientState, "glEnableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1607,7 +1607,7 @@ Gurax_DeclareFunction(glEnableClientState)
 		"");
 }
 
-Gurax_ImplementFunction(glEnableClientState)
+Gurax_ImplementFunction(gurax_glEnableClientState)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1618,7 +1618,7 @@ Gurax_ImplementFunction(glEnableClientState)
 }
 
 // opengl.glEnd()
-Gurax_DeclareFunction(glEnd)
+Gurax_DeclareFunctionAlias(gurax_glEnd, "glEnd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -1626,7 +1626,7 @@ Gurax_DeclareFunction(glEnd)
 		"");
 }
 
-Gurax_ImplementFunction(glEnd)
+Gurax_ImplementFunction(gurax_glEnd)
 {
 	// Function body
 	glEnd();
@@ -1634,7 +1634,7 @@ Gurax_ImplementFunction(glEnd)
 }
 
 // opengl.glEndList()
-Gurax_DeclareFunction(glEndList)
+Gurax_DeclareFunctionAlias(gurax_glEndList, "glEndList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -1642,7 +1642,7 @@ Gurax_DeclareFunction(glEndList)
 		"");
 }
 
-Gurax_ImplementFunction(glEndList)
+Gurax_ImplementFunction(gurax_glEndList)
 {
 	// Function body
 	glEndList();
@@ -1650,7 +1650,7 @@ Gurax_ImplementFunction(glEndList)
 }
 
 // opengl.glEvalCoord1d(u:Number)
-Gurax_DeclareFunction(glEvalCoord1d)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord1d, "glEvalCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1659,7 +1659,7 @@ Gurax_DeclareFunction(glEvalCoord1d)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1d)
+Gurax_ImplementFunction(gurax_glEvalCoord1d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1670,7 +1670,7 @@ Gurax_ImplementFunction(glEvalCoord1d)
 }
 
 // opengl.glEvalCoord1dv(u[]:Number)
-Gurax_DeclareFunction(glEvalCoord1dv)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord1dv, "glEvalCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1679,7 +1679,7 @@ Gurax_DeclareFunction(glEvalCoord1dv)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1dv)
+Gurax_ImplementFunction(gurax_glEvalCoord1dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1690,7 +1690,7 @@ Gurax_ImplementFunction(glEvalCoord1dv)
 }
 
 // opengl.glEvalCoord1f(u:Number)
-Gurax_DeclareFunction(glEvalCoord1f)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord1f, "glEvalCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1699,7 +1699,7 @@ Gurax_DeclareFunction(glEvalCoord1f)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1f)
+Gurax_ImplementFunction(gurax_glEvalCoord1f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1710,7 +1710,7 @@ Gurax_ImplementFunction(glEvalCoord1f)
 }
 
 // opengl.glEvalCoord1fv(u[]:Number)
-Gurax_DeclareFunction(glEvalCoord1fv)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord1fv, "glEvalCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1719,7 +1719,7 @@ Gurax_DeclareFunction(glEvalCoord1fv)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1fv)
+Gurax_ImplementFunction(gurax_glEvalCoord1fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1730,7 +1730,7 @@ Gurax_ImplementFunction(glEvalCoord1fv)
 }
 
 // opengl.glEvalCoord2d(u:Number, v:Number)
-Gurax_DeclareFunction(glEvalCoord2d)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord2d, "glEvalCoord2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1740,7 +1740,7 @@ Gurax_DeclareFunction(glEvalCoord2d)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2d)
+Gurax_ImplementFunction(gurax_glEvalCoord2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1752,7 +1752,7 @@ Gurax_ImplementFunction(glEvalCoord2d)
 }
 
 // opengl.glEvalCoord2dv(u[]:Number)
-Gurax_DeclareFunction(glEvalCoord2dv)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord2dv, "glEvalCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1761,7 +1761,7 @@ Gurax_DeclareFunction(glEvalCoord2dv)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2dv)
+Gurax_ImplementFunction(gurax_glEvalCoord2dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1772,7 +1772,7 @@ Gurax_ImplementFunction(glEvalCoord2dv)
 }
 
 // opengl.glEvalCoord2f(u:Number, v:Number)
-Gurax_DeclareFunction(glEvalCoord2f)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord2f, "glEvalCoord2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1782,7 +1782,7 @@ Gurax_DeclareFunction(glEvalCoord2f)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2f)
+Gurax_ImplementFunction(gurax_glEvalCoord2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1794,7 +1794,7 @@ Gurax_ImplementFunction(glEvalCoord2f)
 }
 
 // opengl.glEvalCoord2fv(u[]:Number)
-Gurax_DeclareFunction(glEvalCoord2fv)
+Gurax_DeclareFunctionAlias(gurax_glEvalCoord2fv, "glEvalCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -1803,7 +1803,7 @@ Gurax_DeclareFunction(glEvalCoord2fv)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2fv)
+Gurax_ImplementFunction(gurax_glEvalCoord2fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1814,7 +1814,7 @@ Gurax_ImplementFunction(glEvalCoord2fv)
 }
 
 // opengl.glEvalMesh1(mode:Number, i1:Number, i2:Number)
-Gurax_DeclareFunction(glEvalMesh1)
+Gurax_DeclareFunctionAlias(gurax_glEvalMesh1, "glEvalMesh1")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1825,7 +1825,7 @@ Gurax_DeclareFunction(glEvalMesh1)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalMesh1)
+Gurax_ImplementFunction(gurax_glEvalMesh1)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1838,7 +1838,7 @@ Gurax_ImplementFunction(glEvalMesh1)
 }
 
 // opengl.glEvalMesh2(mode:Number, i1:Number, i2:Number, j1:Number, j2:Number)
-Gurax_DeclareFunction(glEvalMesh2)
+Gurax_DeclareFunctionAlias(gurax_glEvalMesh2, "glEvalMesh2")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1851,7 +1851,7 @@ Gurax_DeclareFunction(glEvalMesh2)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalMesh2)
+Gurax_ImplementFunction(gurax_glEvalMesh2)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1866,7 +1866,7 @@ Gurax_ImplementFunction(glEvalMesh2)
 }
 
 // opengl.glEvalPoint1(i:Number)
-Gurax_DeclareFunction(glEvalPoint1)
+Gurax_DeclareFunctionAlias(gurax_glEvalPoint1, "glEvalPoint1")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1875,7 +1875,7 @@ Gurax_DeclareFunction(glEvalPoint1)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalPoint1)
+Gurax_ImplementFunction(gurax_glEvalPoint1)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1886,7 +1886,7 @@ Gurax_ImplementFunction(glEvalPoint1)
 }
 
 // opengl.glEvalPoint2(i:Number, j:Number)
-Gurax_DeclareFunction(glEvalPoint2)
+Gurax_DeclareFunctionAlias(gurax_glEvalPoint2, "glEvalPoint2")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1896,7 +1896,7 @@ Gurax_DeclareFunction(glEvalPoint2)
 		"");
 }
 
-Gurax_ImplementFunction(glEvalPoint2)
+Gurax_ImplementFunction(gurax_glEvalPoint2)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1908,7 +1908,7 @@ Gurax_ImplementFunction(glEvalPoint2)
 }
 
 // opengl.glFeedbackBuffer(size:Number, type:Number)
-Gurax_DeclareFunction(glFeedbackBuffer)
+Gurax_DeclareFunctionAlias(gurax_glFeedbackBuffer, "glFeedbackBuffer")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1918,7 +1918,7 @@ Gurax_DeclareFunction(glFeedbackBuffer)
 		"");
 }
 
-Gurax_ImplementFunction(glFeedbackBuffer)
+Gurax_ImplementFunction(gurax_glFeedbackBuffer)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1931,7 +1931,7 @@ Gurax_ImplementFunction(glFeedbackBuffer)
 }
 
 // opengl.glFinish()
-Gurax_DeclareFunction(glFinish)
+Gurax_DeclareFunctionAlias(gurax_glFinish, "glFinish")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -1939,7 +1939,7 @@ Gurax_DeclareFunction(glFinish)
 		"");
 }
 
-Gurax_ImplementFunction(glFinish)
+Gurax_ImplementFunction(gurax_glFinish)
 {
 	// Function body
 	glFinish();
@@ -1947,7 +1947,7 @@ Gurax_ImplementFunction(glFinish)
 }
 
 // opengl.glFlush()
-Gurax_DeclareFunction(glFlush)
+Gurax_DeclareFunctionAlias(gurax_glFlush, "glFlush")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -1955,7 +1955,7 @@ Gurax_DeclareFunction(glFlush)
 		"");
 }
 
-Gurax_ImplementFunction(glFlush)
+Gurax_ImplementFunction(gurax_glFlush)
 {
 	// Function body
 	glFlush();
@@ -1963,7 +1963,7 @@ Gurax_ImplementFunction(glFlush)
 }
 
 // opengl.glFogf(pname:Number, param:Number)
-Gurax_DeclareFunction(glFogf)
+Gurax_DeclareFunctionAlias(gurax_glFogf, "glFogf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1973,7 +1973,7 @@ Gurax_DeclareFunction(glFogf)
 		"");
 }
 
-Gurax_ImplementFunction(glFogf)
+Gurax_ImplementFunction(gurax_glFogf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1985,7 +1985,7 @@ Gurax_ImplementFunction(glFogf)
 }
 
 // opengl.glFogfv(pname:Number, params[]:Number)
-Gurax_DeclareFunction(glFogfv)
+Gurax_DeclareFunctionAlias(gurax_glFogfv, "glFogfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1995,7 +1995,7 @@ Gurax_DeclareFunction(glFogfv)
 		"");
 }
 
-Gurax_ImplementFunction(glFogfv)
+Gurax_ImplementFunction(gurax_glFogfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2007,7 +2007,7 @@ Gurax_ImplementFunction(glFogfv)
 }
 
 // opengl.glFogi(pname:Number, param:Number)
-Gurax_DeclareFunction(glFogi)
+Gurax_DeclareFunctionAlias(gurax_glFogi, "glFogi")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2017,7 +2017,7 @@ Gurax_DeclareFunction(glFogi)
 		"");
 }
 
-Gurax_ImplementFunction(glFogi)
+Gurax_ImplementFunction(gurax_glFogi)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2029,7 +2029,7 @@ Gurax_ImplementFunction(glFogi)
 }
 
 // opengl.glFogiv(pname:Number, params[]:Number)
-Gurax_DeclareFunction(glFogiv)
+Gurax_DeclareFunctionAlias(gurax_glFogiv, "glFogiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2039,7 +2039,7 @@ Gurax_DeclareFunction(glFogiv)
 		"");
 }
 
-Gurax_ImplementFunction(glFogiv)
+Gurax_ImplementFunction(gurax_glFogiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2051,7 +2051,7 @@ Gurax_ImplementFunction(glFogiv)
 }
 
 // opengl.glFrontFace(mode:Number)
-Gurax_DeclareFunction(glFrontFace)
+Gurax_DeclareFunctionAlias(gurax_glFrontFace, "glFrontFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2060,7 +2060,7 @@ Gurax_DeclareFunction(glFrontFace)
 		"");
 }
 
-Gurax_ImplementFunction(glFrontFace)
+Gurax_ImplementFunction(gurax_glFrontFace)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2071,7 +2071,7 @@ Gurax_ImplementFunction(glFrontFace)
 }
 
 // opengl.glFrustum(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
-Gurax_DeclareFunction(glFrustum)
+Gurax_DeclareFunctionAlias(gurax_glFrustum, "glFrustum")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2085,7 +2085,7 @@ Gurax_DeclareFunction(glFrustum)
 		"");
 }
 
-Gurax_ImplementFunction(glFrustum)
+Gurax_ImplementFunction(gurax_glFrustum)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2101,7 +2101,7 @@ Gurax_ImplementFunction(glFrustum)
 }
 
 // opengl.glGenLists(range:Number)
-Gurax_DeclareFunction(glGenLists)
+Gurax_DeclareFunctionAlias(gurax_glGenLists, "glGenLists")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2110,7 +2110,7 @@ Gurax_DeclareFunction(glGenLists)
 		"");
 }
 
-Gurax_ImplementFunction(glGenLists)
+Gurax_ImplementFunction(gurax_glGenLists)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2121,7 +2121,7 @@ Gurax_ImplementFunction(glGenLists)
 }
 
 // opengl.glGenTextures(n:Number)
-Gurax_DeclareFunction(glGenTextures)
+Gurax_DeclareFunctionAlias(gurax_glGenTextures, "glGenTextures")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2130,7 +2130,7 @@ Gurax_DeclareFunction(glGenTextures)
 		"");
 }
 
-Gurax_ImplementFunction(glGenTextures)
+Gurax_ImplementFunction(gurax_glGenTextures)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2142,7 +2142,7 @@ Gurax_ImplementFunction(glGenTextures)
 }
 
 // opengl.glGetError()
-Gurax_DeclareFunction(glGetError)
+Gurax_DeclareFunctionAlias(gurax_glGetError, "glGetError")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -2150,7 +2150,7 @@ Gurax_DeclareFunction(glGetError)
 		"");
 }
 
-Gurax_ImplementFunction(glGetError)
+Gurax_ImplementFunction(gurax_glGetError)
 {
 	// Function body
 	GLenum rtn = glGetError();
@@ -2158,7 +2158,7 @@ Gurax_ImplementFunction(glGetError)
 }
 
 // opengl.glGetString(name:Number)
-Gurax_DeclareFunction(glGetString)
+Gurax_DeclareFunctionAlias(gurax_glGetString, "glGetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2167,7 +2167,7 @@ Gurax_DeclareFunction(glGetString)
 		"");
 }
 
-Gurax_ImplementFunction(glGetString)
+Gurax_ImplementFunction(gurax_glGetString)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2178,7 +2178,7 @@ Gurax_ImplementFunction(glGetString)
 }
 
 // opengl.glHint(target:Number, mode:Number)
-Gurax_DeclareFunction(glHint)
+Gurax_DeclareFunctionAlias(gurax_glHint, "glHint")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2188,7 +2188,7 @@ Gurax_DeclareFunction(glHint)
 		"");
 }
 
-Gurax_ImplementFunction(glHint)
+Gurax_ImplementFunction(gurax_glHint)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2200,7 +2200,7 @@ Gurax_ImplementFunction(glHint)
 }
 
 // opengl.glIndexMask(mask:Number)
-Gurax_DeclareFunction(glIndexMask)
+Gurax_DeclareFunctionAlias(gurax_glIndexMask, "glIndexMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2209,7 +2209,7 @@ Gurax_DeclareFunction(glIndexMask)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexMask)
+Gurax_ImplementFunction(gurax_glIndexMask)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2220,7 +2220,7 @@ Gurax_ImplementFunction(glIndexMask)
 }
 
 // opengl.glIndexd(c:Number)
-Gurax_DeclareFunction(glIndexd)
+Gurax_DeclareFunctionAlias(gurax_glIndexd, "glIndexd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2229,7 +2229,7 @@ Gurax_DeclareFunction(glIndexd)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexd)
+Gurax_ImplementFunction(gurax_glIndexd)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2240,7 +2240,7 @@ Gurax_ImplementFunction(glIndexd)
 }
 
 // opengl.glIndexdv(c[]:Number)
-Gurax_DeclareFunction(glIndexdv)
+Gurax_DeclareFunctionAlias(gurax_glIndexdv, "glIndexdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2249,7 +2249,7 @@ Gurax_DeclareFunction(glIndexdv)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexdv)
+Gurax_ImplementFunction(gurax_glIndexdv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2260,7 +2260,7 @@ Gurax_ImplementFunction(glIndexdv)
 }
 
 // opengl.glIndexf(c:Number)
-Gurax_DeclareFunction(glIndexf)
+Gurax_DeclareFunctionAlias(gurax_glIndexf, "glIndexf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2269,7 +2269,7 @@ Gurax_DeclareFunction(glIndexf)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexf)
+Gurax_ImplementFunction(gurax_glIndexf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2280,7 +2280,7 @@ Gurax_ImplementFunction(glIndexf)
 }
 
 // opengl.glIndexfv(c[]:Number)
-Gurax_DeclareFunction(glIndexfv)
+Gurax_DeclareFunctionAlias(gurax_glIndexfv, "glIndexfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2289,7 +2289,7 @@ Gurax_DeclareFunction(glIndexfv)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexfv)
+Gurax_ImplementFunction(gurax_glIndexfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2300,7 +2300,7 @@ Gurax_ImplementFunction(glIndexfv)
 }
 
 // opengl.glIndexi(c:Number)
-Gurax_DeclareFunction(glIndexi)
+Gurax_DeclareFunctionAlias(gurax_glIndexi, "glIndexi")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2309,7 +2309,7 @@ Gurax_DeclareFunction(glIndexi)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexi)
+Gurax_ImplementFunction(gurax_glIndexi)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2320,7 +2320,7 @@ Gurax_ImplementFunction(glIndexi)
 }
 
 // opengl.glIndexiv(c[]:Number)
-Gurax_DeclareFunction(glIndexiv)
+Gurax_DeclareFunctionAlias(gurax_glIndexiv, "glIndexiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2329,7 +2329,7 @@ Gurax_DeclareFunction(glIndexiv)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexiv)
+Gurax_ImplementFunction(gurax_glIndexiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2340,7 +2340,7 @@ Gurax_ImplementFunction(glIndexiv)
 }
 
 // opengl.glIndexs(c:Number)
-Gurax_DeclareFunction(glIndexs)
+Gurax_DeclareFunctionAlias(gurax_glIndexs, "glIndexs")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2349,7 +2349,7 @@ Gurax_DeclareFunction(glIndexs)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexs)
+Gurax_ImplementFunction(gurax_glIndexs)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2360,7 +2360,7 @@ Gurax_ImplementFunction(glIndexs)
 }
 
 // opengl.glIndexsv(c[]:Number)
-Gurax_DeclareFunction(glIndexsv)
+Gurax_DeclareFunctionAlias(gurax_glIndexsv, "glIndexsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2369,7 +2369,7 @@ Gurax_DeclareFunction(glIndexsv)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexsv)
+Gurax_ImplementFunction(gurax_glIndexsv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2380,7 +2380,7 @@ Gurax_ImplementFunction(glIndexsv)
 }
 
 // opengl.glIndexub(c:Number)
-Gurax_DeclareFunction(glIndexub)
+Gurax_DeclareFunctionAlias(gurax_glIndexub, "glIndexub")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2389,7 +2389,7 @@ Gurax_DeclareFunction(glIndexub)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexub)
+Gurax_ImplementFunction(gurax_glIndexub)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2400,7 +2400,7 @@ Gurax_ImplementFunction(glIndexub)
 }
 
 // opengl.glIndexubv(c[]:Number)
-Gurax_DeclareFunction(glIndexubv)
+Gurax_DeclareFunctionAlias(gurax_glIndexubv, "glIndexubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2409,7 +2409,7 @@ Gurax_DeclareFunction(glIndexubv)
 		"");
 }
 
-Gurax_ImplementFunction(glIndexubv)
+Gurax_ImplementFunction(gurax_glIndexubv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2420,7 +2420,7 @@ Gurax_ImplementFunction(glIndexubv)
 }
 
 // opengl.glInitNames()
-Gurax_DeclareFunction(glInitNames)
+Gurax_DeclareFunctionAlias(gurax_glInitNames, "glInitNames")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -2428,7 +2428,7 @@ Gurax_DeclareFunction(glInitNames)
 		"");
 }
 
-Gurax_ImplementFunction(glInitNames)
+Gurax_ImplementFunction(gurax_glInitNames)
 {
 	// Function body
 	glInitNames();
@@ -2436,7 +2436,7 @@ Gurax_ImplementFunction(glInitNames)
 }
 
 // opengl.glIsEnabled(cap:Number)
-Gurax_DeclareFunction(glIsEnabled)
+Gurax_DeclareFunctionAlias(gurax_glIsEnabled, "glIsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2445,7 +2445,7 @@ Gurax_DeclareFunction(glIsEnabled)
 		"");
 }
 
-Gurax_ImplementFunction(glIsEnabled)
+Gurax_ImplementFunction(gurax_glIsEnabled)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2456,7 +2456,7 @@ Gurax_ImplementFunction(glIsEnabled)
 }
 
 // opengl.glIsList(list:Number)
-Gurax_DeclareFunction(glIsList)
+Gurax_DeclareFunctionAlias(gurax_glIsList, "glIsList")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2465,7 +2465,7 @@ Gurax_DeclareFunction(glIsList)
 		"");
 }
 
-Gurax_ImplementFunction(glIsList)
+Gurax_ImplementFunction(gurax_glIsList)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2476,7 +2476,7 @@ Gurax_ImplementFunction(glIsList)
 }
 
 // opengl.glIsTexture(texture:Number)
-Gurax_DeclareFunction(glIsTexture)
+Gurax_DeclareFunctionAlias(gurax_glIsTexture, "glIsTexture")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2485,7 +2485,7 @@ Gurax_DeclareFunction(glIsTexture)
 		"");
 }
 
-Gurax_ImplementFunction(glIsTexture)
+Gurax_ImplementFunction(gurax_glIsTexture)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2496,7 +2496,7 @@ Gurax_ImplementFunction(glIsTexture)
 }
 
 // opengl.glLightModelf(pname:Number, param:Number)
-Gurax_DeclareFunction(glLightModelf)
+Gurax_DeclareFunctionAlias(gurax_glLightModelf, "glLightModelf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2506,7 +2506,7 @@ Gurax_DeclareFunction(glLightModelf)
 		"");
 }
 
-Gurax_ImplementFunction(glLightModelf)
+Gurax_ImplementFunction(gurax_glLightModelf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2518,7 +2518,7 @@ Gurax_ImplementFunction(glLightModelf)
 }
 
 // opengl.glLightModelfv(pname:Number, params[]:Number)
-Gurax_DeclareFunction(glLightModelfv)
+Gurax_DeclareFunctionAlias(gurax_glLightModelfv, "glLightModelfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2528,7 +2528,7 @@ Gurax_DeclareFunction(glLightModelfv)
 		"");
 }
 
-Gurax_ImplementFunction(glLightModelfv)
+Gurax_ImplementFunction(gurax_glLightModelfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2540,7 +2540,7 @@ Gurax_ImplementFunction(glLightModelfv)
 }
 
 // opengl.glLightModeli(pname:Number, param:Number)
-Gurax_DeclareFunction(glLightModeli)
+Gurax_DeclareFunctionAlias(gurax_glLightModeli, "glLightModeli")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2550,7 +2550,7 @@ Gurax_DeclareFunction(glLightModeli)
 		"");
 }
 
-Gurax_ImplementFunction(glLightModeli)
+Gurax_ImplementFunction(gurax_glLightModeli)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2562,7 +2562,7 @@ Gurax_ImplementFunction(glLightModeli)
 }
 
 // opengl.glLightModeliv(pname:Number, params[]:Number)
-Gurax_DeclareFunction(glLightModeliv)
+Gurax_DeclareFunctionAlias(gurax_glLightModeliv, "glLightModeliv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2572,7 +2572,7 @@ Gurax_DeclareFunction(glLightModeliv)
 		"");
 }
 
-Gurax_ImplementFunction(glLightModeliv)
+Gurax_ImplementFunction(gurax_glLightModeliv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2584,7 +2584,7 @@ Gurax_ImplementFunction(glLightModeliv)
 }
 
 // opengl.glLightf(light:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glLightf)
+Gurax_DeclareFunctionAlias(gurax_glLightf, "glLightf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2595,7 +2595,7 @@ Gurax_DeclareFunction(glLightf)
 		"");
 }
 
-Gurax_ImplementFunction(glLightf)
+Gurax_ImplementFunction(gurax_glLightf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2608,7 +2608,7 @@ Gurax_ImplementFunction(glLightf)
 }
 
 // opengl.glLightfv(light:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glLightfv)
+Gurax_DeclareFunctionAlias(gurax_glLightfv, "glLightfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2619,7 +2619,7 @@ Gurax_DeclareFunction(glLightfv)
 		"");
 }
 
-Gurax_ImplementFunction(glLightfv)
+Gurax_ImplementFunction(gurax_glLightfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2632,7 +2632,7 @@ Gurax_ImplementFunction(glLightfv)
 }
 
 // opengl.glLighti(light:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glLighti)
+Gurax_DeclareFunctionAlias(gurax_glLighti, "glLighti")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2643,7 +2643,7 @@ Gurax_DeclareFunction(glLighti)
 		"");
 }
 
-Gurax_ImplementFunction(glLighti)
+Gurax_ImplementFunction(gurax_glLighti)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2656,7 +2656,7 @@ Gurax_ImplementFunction(glLighti)
 }
 
 // opengl.glLightiv(light:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glLightiv)
+Gurax_DeclareFunctionAlias(gurax_glLightiv, "glLightiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2667,7 +2667,7 @@ Gurax_DeclareFunction(glLightiv)
 		"");
 }
 
-Gurax_ImplementFunction(glLightiv)
+Gurax_ImplementFunction(gurax_glLightiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2680,7 +2680,7 @@ Gurax_ImplementFunction(glLightiv)
 }
 
 // opengl.glLineStipple(factor:Number, pattern:Number)
-Gurax_DeclareFunction(glLineStipple)
+Gurax_DeclareFunctionAlias(gurax_glLineStipple, "glLineStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2690,7 +2690,7 @@ Gurax_DeclareFunction(glLineStipple)
 		"");
 }
 
-Gurax_ImplementFunction(glLineStipple)
+Gurax_ImplementFunction(gurax_glLineStipple)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2702,7 +2702,7 @@ Gurax_ImplementFunction(glLineStipple)
 }
 
 // opengl.glLineWidth(width:Number)
-Gurax_DeclareFunction(glLineWidth)
+Gurax_DeclareFunctionAlias(gurax_glLineWidth, "glLineWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2711,7 +2711,7 @@ Gurax_DeclareFunction(glLineWidth)
 		"");
 }
 
-Gurax_ImplementFunction(glLineWidth)
+Gurax_ImplementFunction(gurax_glLineWidth)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2722,7 +2722,7 @@ Gurax_ImplementFunction(glLineWidth)
 }
 
 // opengl.glListBase(base:Number)
-Gurax_DeclareFunction(glListBase)
+Gurax_DeclareFunctionAlias(gurax_glListBase, "glListBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2731,7 +2731,7 @@ Gurax_DeclareFunction(glListBase)
 		"");
 }
 
-Gurax_ImplementFunction(glListBase)
+Gurax_ImplementFunction(gurax_glListBase)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2742,7 +2742,7 @@ Gurax_ImplementFunction(glListBase)
 }
 
 // opengl.glLoadIdentity()
-Gurax_DeclareFunction(glLoadIdentity)
+Gurax_DeclareFunctionAlias(gurax_glLoadIdentity, "glLoadIdentity")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -2750,7 +2750,7 @@ Gurax_DeclareFunction(glLoadIdentity)
 		"");
 }
 
-Gurax_ImplementFunction(glLoadIdentity)
+Gurax_ImplementFunction(gurax_glLoadIdentity)
 {
 	// Function body
 	glLoadIdentity();
@@ -2758,7 +2758,7 @@ Gurax_ImplementFunction(glLoadIdentity)
 }
 
 // opengl.glLoadMatrixd(m[]:Number)
-Gurax_DeclareFunction(glLoadMatrixd)
+Gurax_DeclareFunctionAlias(gurax_glLoadMatrixd, "glLoadMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2767,7 +2767,7 @@ Gurax_DeclareFunction(glLoadMatrixd)
 		"");
 }
 
-Gurax_ImplementFunction(glLoadMatrixd)
+Gurax_ImplementFunction(gurax_glLoadMatrixd)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2778,7 +2778,7 @@ Gurax_ImplementFunction(glLoadMatrixd)
 }
 
 // opengl.glLoadMatrixf(m[]:Number)
-Gurax_DeclareFunction(glLoadMatrixf)
+Gurax_DeclareFunctionAlias(gurax_glLoadMatrixf, "glLoadMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -2787,7 +2787,7 @@ Gurax_DeclareFunction(glLoadMatrixf)
 		"");
 }
 
-Gurax_ImplementFunction(glLoadMatrixf)
+Gurax_ImplementFunction(gurax_glLoadMatrixf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2798,7 +2798,7 @@ Gurax_ImplementFunction(glLoadMatrixf)
 }
 
 // opengl.glLoadName(name:Number)
-Gurax_DeclareFunction(glLoadName)
+Gurax_DeclareFunctionAlias(gurax_glLoadName, "glLoadName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2807,7 +2807,7 @@ Gurax_DeclareFunction(glLoadName)
 		"");
 }
 
-Gurax_ImplementFunction(glLoadName)
+Gurax_ImplementFunction(gurax_glLoadName)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2818,7 +2818,7 @@ Gurax_ImplementFunction(glLoadName)
 }
 
 // opengl.glLogicOp(opcode:Number)
-Gurax_DeclareFunction(glLogicOp)
+Gurax_DeclareFunctionAlias(gurax_glLogicOp, "glLogicOp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("opcode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2827,7 +2827,7 @@ Gurax_DeclareFunction(glLogicOp)
 		"");
 }
 
-Gurax_ImplementFunction(glLogicOp)
+Gurax_ImplementFunction(gurax_glLogicOp)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2838,7 +2838,7 @@ Gurax_ImplementFunction(glLogicOp)
 }
 
 // opengl.glMap1d(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points[]:Number)
-Gurax_DeclareFunction(glMap1d)
+Gurax_DeclareFunctionAlias(gurax_glMap1d, "glMap1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2852,7 +2852,7 @@ Gurax_DeclareFunction(glMap1d)
 		"");
 }
 
-Gurax_ImplementFunction(glMap1d)
+Gurax_ImplementFunction(gurax_glMap1d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2868,7 +2868,7 @@ Gurax_ImplementFunction(glMap1d)
 }
 
 // opengl.glMap1f(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points[]:Number)
-Gurax_DeclareFunction(glMap1f)
+Gurax_DeclareFunctionAlias(gurax_glMap1f, "glMap1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2882,7 +2882,7 @@ Gurax_DeclareFunction(glMap1f)
 		"");
 }
 
-Gurax_ImplementFunction(glMap1f)
+Gurax_ImplementFunction(gurax_glMap1f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2898,7 +2898,7 @@ Gurax_ImplementFunction(glMap1f)
 }
 
 // opengl.glMap2d(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points[]:Number)
-Gurax_DeclareFunction(glMap2d)
+Gurax_DeclareFunctionAlias(gurax_glMap2d, "glMap2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2916,7 +2916,7 @@ Gurax_DeclareFunction(glMap2d)
 		"");
 }
 
-Gurax_ImplementFunction(glMap2d)
+Gurax_ImplementFunction(gurax_glMap2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2936,7 +2936,7 @@ Gurax_ImplementFunction(glMap2d)
 }
 
 // opengl.glMap2f(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points[]:Number)
-Gurax_DeclareFunction(glMap2f)
+Gurax_DeclareFunctionAlias(gurax_glMap2f, "glMap2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2954,7 +2954,7 @@ Gurax_DeclareFunction(glMap2f)
 		"");
 }
 
-Gurax_ImplementFunction(glMap2f)
+Gurax_ImplementFunction(gurax_glMap2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2974,7 +2974,7 @@ Gurax_ImplementFunction(glMap2f)
 }
 
 // opengl.glMapGrid1d(un:Number, u1:Number, u2:Number)
-Gurax_DeclareFunction(glMapGrid1d)
+Gurax_DeclareFunctionAlias(gurax_glMapGrid1d, "glMapGrid1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -2985,7 +2985,7 @@ Gurax_DeclareFunction(glMapGrid1d)
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid1d)
+Gurax_ImplementFunction(gurax_glMapGrid1d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -2998,7 +2998,7 @@ Gurax_ImplementFunction(glMapGrid1d)
 }
 
 // opengl.glMapGrid1f(un:Number, u1:Number, u2:Number)
-Gurax_DeclareFunction(glMapGrid1f)
+Gurax_DeclareFunctionAlias(gurax_glMapGrid1f, "glMapGrid1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3009,7 +3009,7 @@ Gurax_DeclareFunction(glMapGrid1f)
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid1f)
+Gurax_ImplementFunction(gurax_glMapGrid1f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3022,7 +3022,7 @@ Gurax_ImplementFunction(glMapGrid1f)
 }
 
 // opengl.glMapGrid2d(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
-Gurax_DeclareFunction(glMapGrid2d)
+Gurax_DeclareFunctionAlias(gurax_glMapGrid2d, "glMapGrid2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3036,7 +3036,7 @@ Gurax_DeclareFunction(glMapGrid2d)
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid2d)
+Gurax_ImplementFunction(gurax_glMapGrid2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3052,7 +3052,7 @@ Gurax_ImplementFunction(glMapGrid2d)
 }
 
 // opengl.glMapGrid2f(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
-Gurax_DeclareFunction(glMapGrid2f)
+Gurax_DeclareFunctionAlias(gurax_glMapGrid2f, "glMapGrid2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3066,7 +3066,7 @@ Gurax_DeclareFunction(glMapGrid2f)
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid2f)
+Gurax_ImplementFunction(gurax_glMapGrid2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3082,7 +3082,7 @@ Gurax_ImplementFunction(glMapGrid2f)
 }
 
 // opengl.glMaterialf(face:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glMaterialf)
+Gurax_DeclareFunctionAlias(gurax_glMaterialf, "glMaterialf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3093,7 +3093,7 @@ Gurax_DeclareFunction(glMaterialf)
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialf)
+Gurax_ImplementFunction(gurax_glMaterialf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3106,7 +3106,7 @@ Gurax_ImplementFunction(glMaterialf)
 }
 
 // opengl.glMaterialfv(face:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glMaterialfv)
+Gurax_DeclareFunctionAlias(gurax_glMaterialfv, "glMaterialfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3117,7 +3117,7 @@ Gurax_DeclareFunction(glMaterialfv)
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialfv)
+Gurax_ImplementFunction(gurax_glMaterialfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3130,7 +3130,7 @@ Gurax_ImplementFunction(glMaterialfv)
 }
 
 // opengl.glMateriali(face:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glMateriali)
+Gurax_DeclareFunctionAlias(gurax_glMateriali, "glMateriali")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3141,7 +3141,7 @@ Gurax_DeclareFunction(glMateriali)
 		"");
 }
 
-Gurax_ImplementFunction(glMateriali)
+Gurax_ImplementFunction(gurax_glMateriali)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3154,7 +3154,7 @@ Gurax_ImplementFunction(glMateriali)
 }
 
 // opengl.glMaterialiv(face:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glMaterialiv)
+Gurax_DeclareFunctionAlias(gurax_glMaterialiv, "glMaterialiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3165,7 +3165,7 @@ Gurax_DeclareFunction(glMaterialiv)
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialiv)
+Gurax_ImplementFunction(gurax_glMaterialiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3178,7 +3178,7 @@ Gurax_ImplementFunction(glMaterialiv)
 }
 
 // opengl.glMatrixMode(mode:Number)
-Gurax_DeclareFunction(glMatrixMode)
+Gurax_DeclareFunctionAlias(gurax_glMatrixMode, "glMatrixMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3187,7 +3187,7 @@ Gurax_DeclareFunction(glMatrixMode)
 		"");
 }
 
-Gurax_ImplementFunction(glMatrixMode)
+Gurax_ImplementFunction(gurax_glMatrixMode)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3198,7 +3198,7 @@ Gurax_ImplementFunction(glMatrixMode)
 }
 
 // opengl.glMultMatrixd(m[]:Number)
-Gurax_DeclareFunction(glMultMatrixd)
+Gurax_DeclareFunctionAlias(gurax_glMultMatrixd, "glMultMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3207,7 +3207,7 @@ Gurax_DeclareFunction(glMultMatrixd)
 		"");
 }
 
-Gurax_ImplementFunction(glMultMatrixd)
+Gurax_ImplementFunction(gurax_glMultMatrixd)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3218,7 +3218,7 @@ Gurax_ImplementFunction(glMultMatrixd)
 }
 
 // opengl.glMultMatrixf(m[]:Number)
-Gurax_DeclareFunction(glMultMatrixf)
+Gurax_DeclareFunctionAlias(gurax_glMultMatrixf, "glMultMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3227,7 +3227,7 @@ Gurax_DeclareFunction(glMultMatrixf)
 		"");
 }
 
-Gurax_ImplementFunction(glMultMatrixf)
+Gurax_ImplementFunction(gurax_glMultMatrixf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3238,7 +3238,7 @@ Gurax_ImplementFunction(glMultMatrixf)
 }
 
 // opengl.glNewList(list:Number, mode:Number)
-Gurax_DeclareFunction(glNewList)
+Gurax_DeclareFunctionAlias(gurax_glNewList, "glNewList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3248,7 +3248,7 @@ Gurax_DeclareFunction(glNewList)
 		"");
 }
 
-Gurax_ImplementFunction(glNewList)
+Gurax_ImplementFunction(gurax_glNewList)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3260,7 +3260,7 @@ Gurax_ImplementFunction(glNewList)
 }
 
 // opengl.glNormal3b(nx:Number, ny:Number, nz:Number)
-Gurax_DeclareFunction(glNormal3b)
+Gurax_DeclareFunctionAlias(gurax_glNormal3b, "glNormal3b")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3271,7 +3271,7 @@ Gurax_DeclareFunction(glNormal3b)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3b)
+Gurax_ImplementFunction(gurax_glNormal3b)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3284,7 +3284,7 @@ Gurax_ImplementFunction(glNormal3b)
 }
 
 // opengl.glNormal3bv(v[]:Number)
-Gurax_DeclareFunction(glNormal3bv)
+Gurax_DeclareFunctionAlias(gurax_glNormal3bv, "glNormal3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3293,7 +3293,7 @@ Gurax_DeclareFunction(glNormal3bv)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3bv)
+Gurax_ImplementFunction(gurax_glNormal3bv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3304,7 +3304,7 @@ Gurax_ImplementFunction(glNormal3bv)
 }
 
 // opengl.glNormal3d(nx:Number, ny:Number, nz:Number)
-Gurax_DeclareFunction(glNormal3d)
+Gurax_DeclareFunctionAlias(gurax_glNormal3d, "glNormal3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3315,7 +3315,7 @@ Gurax_DeclareFunction(glNormal3d)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3d)
+Gurax_ImplementFunction(gurax_glNormal3d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3328,7 +3328,7 @@ Gurax_ImplementFunction(glNormal3d)
 }
 
 // opengl.glNormal3dv(v[]:Number)
-Gurax_DeclareFunction(glNormal3dv)
+Gurax_DeclareFunctionAlias(gurax_glNormal3dv, "glNormal3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3337,7 +3337,7 @@ Gurax_DeclareFunction(glNormal3dv)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3dv)
+Gurax_ImplementFunction(gurax_glNormal3dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3348,7 +3348,7 @@ Gurax_ImplementFunction(glNormal3dv)
 }
 
 // opengl.glNormal3f(nx:Number, ny:Number, nz:Number)
-Gurax_DeclareFunction(glNormal3f)
+Gurax_DeclareFunctionAlias(gurax_glNormal3f, "glNormal3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3359,7 +3359,7 @@ Gurax_DeclareFunction(glNormal3f)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3f)
+Gurax_ImplementFunction(gurax_glNormal3f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3372,7 +3372,7 @@ Gurax_ImplementFunction(glNormal3f)
 }
 
 // opengl.glNormal3fv(v[]:Number)
-Gurax_DeclareFunction(glNormal3fv)
+Gurax_DeclareFunctionAlias(gurax_glNormal3fv, "glNormal3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3381,7 +3381,7 @@ Gurax_DeclareFunction(glNormal3fv)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3fv)
+Gurax_ImplementFunction(gurax_glNormal3fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3392,7 +3392,7 @@ Gurax_ImplementFunction(glNormal3fv)
 }
 
 // opengl.glNormal3i(nx:Number, ny:Number, nz:Number)
-Gurax_DeclareFunction(glNormal3i)
+Gurax_DeclareFunctionAlias(gurax_glNormal3i, "glNormal3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3403,7 +3403,7 @@ Gurax_DeclareFunction(glNormal3i)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3i)
+Gurax_ImplementFunction(gurax_glNormal3i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3416,7 +3416,7 @@ Gurax_ImplementFunction(glNormal3i)
 }
 
 // opengl.glNormal3iv(v[]:Number)
-Gurax_DeclareFunction(glNormal3iv)
+Gurax_DeclareFunctionAlias(gurax_glNormal3iv, "glNormal3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3425,7 +3425,7 @@ Gurax_DeclareFunction(glNormal3iv)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3iv)
+Gurax_ImplementFunction(gurax_glNormal3iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3436,7 +3436,7 @@ Gurax_ImplementFunction(glNormal3iv)
 }
 
 // opengl.glNormal3s(nx:Number, ny:Number, nz:Number)
-Gurax_DeclareFunction(glNormal3s)
+Gurax_DeclareFunctionAlias(gurax_glNormal3s, "glNormal3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3447,7 +3447,7 @@ Gurax_DeclareFunction(glNormal3s)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3s)
+Gurax_ImplementFunction(gurax_glNormal3s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3460,7 +3460,7 @@ Gurax_ImplementFunction(glNormal3s)
 }
 
 // opengl.glNormal3sv(v[]:Number)
-Gurax_DeclareFunction(glNormal3sv)
+Gurax_DeclareFunctionAlias(gurax_glNormal3sv, "glNormal3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3469,7 +3469,7 @@ Gurax_DeclareFunction(glNormal3sv)
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3sv)
+Gurax_ImplementFunction(gurax_glNormal3sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3480,7 +3480,7 @@ Gurax_ImplementFunction(glNormal3sv)
 }
 
 // opengl.glOrtho(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
-Gurax_DeclareFunction(glOrtho)
+Gurax_DeclareFunctionAlias(gurax_glOrtho, "glOrtho")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3494,7 +3494,7 @@ Gurax_DeclareFunction(glOrtho)
 		"");
 }
 
-Gurax_ImplementFunction(glOrtho)
+Gurax_ImplementFunction(gurax_glOrtho)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3510,7 +3510,7 @@ Gurax_ImplementFunction(glOrtho)
 }
 
 // opengl.glPassThrough(token:Number)
-Gurax_DeclareFunction(glPassThrough)
+Gurax_DeclareFunctionAlias(gurax_glPassThrough, "glPassThrough")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("token", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3519,7 +3519,7 @@ Gurax_DeclareFunction(glPassThrough)
 		"");
 }
 
-Gurax_ImplementFunction(glPassThrough)
+Gurax_ImplementFunction(gurax_glPassThrough)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3530,7 +3530,7 @@ Gurax_ImplementFunction(glPassThrough)
 }
 
 // opengl.glPixelMapfv(map:Number, mapsize:Number, values[]:Number)
-Gurax_DeclareFunction(glPixelMapfv)
+Gurax_DeclareFunctionAlias(gurax_glPixelMapfv, "glPixelMapfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3541,7 +3541,7 @@ Gurax_DeclareFunction(glPixelMapfv)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapfv)
+Gurax_ImplementFunction(gurax_glPixelMapfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3554,7 +3554,7 @@ Gurax_ImplementFunction(glPixelMapfv)
 }
 
 // opengl.glPixelMapuiv(map:Number, mapsize:Number, values[]:Number)
-Gurax_DeclareFunction(glPixelMapuiv)
+Gurax_DeclareFunctionAlias(gurax_glPixelMapuiv, "glPixelMapuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3565,7 +3565,7 @@ Gurax_DeclareFunction(glPixelMapuiv)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapuiv)
+Gurax_ImplementFunction(gurax_glPixelMapuiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3578,7 +3578,7 @@ Gurax_ImplementFunction(glPixelMapuiv)
 }
 
 // opengl.glPixelMapusv(map:Number, mapsize:Number, values[]:Number)
-Gurax_DeclareFunction(glPixelMapusv)
+Gurax_DeclareFunctionAlias(gurax_glPixelMapusv, "glPixelMapusv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3589,7 +3589,7 @@ Gurax_DeclareFunction(glPixelMapusv)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapusv)
+Gurax_ImplementFunction(gurax_glPixelMapusv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3602,7 +3602,7 @@ Gurax_ImplementFunction(glPixelMapusv)
 }
 
 // opengl.glPixelStoref(pname:Number, param:Number)
-Gurax_DeclareFunction(glPixelStoref)
+Gurax_DeclareFunctionAlias(gurax_glPixelStoref, "glPixelStoref")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3612,7 +3612,7 @@ Gurax_DeclareFunction(glPixelStoref)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelStoref)
+Gurax_ImplementFunction(gurax_glPixelStoref)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3624,7 +3624,7 @@ Gurax_ImplementFunction(glPixelStoref)
 }
 
 // opengl.glPixelStorei(pname:Number, param:Number)
-Gurax_DeclareFunction(glPixelStorei)
+Gurax_DeclareFunctionAlias(gurax_glPixelStorei, "glPixelStorei")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3634,7 +3634,7 @@ Gurax_DeclareFunction(glPixelStorei)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelStorei)
+Gurax_ImplementFunction(gurax_glPixelStorei)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3646,7 +3646,7 @@ Gurax_ImplementFunction(glPixelStorei)
 }
 
 // opengl.glPixelTransferf(pname:Number, param:Number)
-Gurax_DeclareFunction(glPixelTransferf)
+Gurax_DeclareFunctionAlias(gurax_glPixelTransferf, "glPixelTransferf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3656,7 +3656,7 @@ Gurax_DeclareFunction(glPixelTransferf)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelTransferf)
+Gurax_ImplementFunction(gurax_glPixelTransferf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3668,7 +3668,7 @@ Gurax_ImplementFunction(glPixelTransferf)
 }
 
 // opengl.glPixelTransferi(pname:Number, param:Number)
-Gurax_DeclareFunction(glPixelTransferi)
+Gurax_DeclareFunctionAlias(gurax_glPixelTransferi, "glPixelTransferi")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3678,7 +3678,7 @@ Gurax_DeclareFunction(glPixelTransferi)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelTransferi)
+Gurax_ImplementFunction(gurax_glPixelTransferi)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3690,7 +3690,7 @@ Gurax_ImplementFunction(glPixelTransferi)
 }
 
 // opengl.glPixelZoom(xfactor:Number, yfactor:Number)
-Gurax_DeclareFunction(glPixelZoom)
+Gurax_DeclareFunctionAlias(gurax_glPixelZoom, "glPixelZoom")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3700,7 +3700,7 @@ Gurax_DeclareFunction(glPixelZoom)
 		"");
 }
 
-Gurax_ImplementFunction(glPixelZoom)
+Gurax_ImplementFunction(gurax_glPixelZoom)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3712,7 +3712,7 @@ Gurax_ImplementFunction(glPixelZoom)
 }
 
 // opengl.glPointSize(size:Number)
-Gurax_DeclareFunction(glPointSize)
+Gurax_DeclareFunctionAlias(gurax_glPointSize, "glPointSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3721,7 +3721,7 @@ Gurax_DeclareFunction(glPointSize)
 		"");
 }
 
-Gurax_ImplementFunction(glPointSize)
+Gurax_ImplementFunction(gurax_glPointSize)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3732,7 +3732,7 @@ Gurax_ImplementFunction(glPointSize)
 }
 
 // opengl.glPolygonMode(face:Number, mode:Number)
-Gurax_DeclareFunction(glPolygonMode)
+Gurax_DeclareFunctionAlias(gurax_glPolygonMode, "glPolygonMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3742,7 +3742,7 @@ Gurax_DeclareFunction(glPolygonMode)
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonMode)
+Gurax_ImplementFunction(gurax_glPolygonMode)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3754,7 +3754,7 @@ Gurax_ImplementFunction(glPolygonMode)
 }
 
 // opengl.glPolygonOffset(factor:Number, units:Number)
-Gurax_DeclareFunction(glPolygonOffset)
+Gurax_DeclareFunctionAlias(gurax_glPolygonOffset, "glPolygonOffset")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3764,7 +3764,7 @@ Gurax_DeclareFunction(glPolygonOffset)
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonOffset)
+Gurax_ImplementFunction(gurax_glPolygonOffset)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3776,7 +3776,7 @@ Gurax_ImplementFunction(glPolygonOffset)
 }
 
 // opengl.glPolygonStipple(mask[]:Number)
-Gurax_DeclareFunction(glPolygonStipple)
+Gurax_DeclareFunctionAlias(gurax_glPolygonStipple, "glPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3785,7 +3785,7 @@ Gurax_DeclareFunction(glPolygonStipple)
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonStipple)
+Gurax_ImplementFunction(gurax_glPolygonStipple)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3796,7 +3796,7 @@ Gurax_ImplementFunction(glPolygonStipple)
 }
 
 // opengl.glPopAttrib()
-Gurax_DeclareFunction(glPopAttrib)
+Gurax_DeclareFunctionAlias(gurax_glPopAttrib, "glPopAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -3804,7 +3804,7 @@ Gurax_DeclareFunction(glPopAttrib)
 		"");
 }
 
-Gurax_ImplementFunction(glPopAttrib)
+Gurax_ImplementFunction(gurax_glPopAttrib)
 {
 	// Function body
 	glPopAttrib();
@@ -3812,7 +3812,7 @@ Gurax_ImplementFunction(glPopAttrib)
 }
 
 // opengl.glPopClientAttrib()
-Gurax_DeclareFunction(glPopClientAttrib)
+Gurax_DeclareFunctionAlias(gurax_glPopClientAttrib, "glPopClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -3820,7 +3820,7 @@ Gurax_DeclareFunction(glPopClientAttrib)
 		"");
 }
 
-Gurax_ImplementFunction(glPopClientAttrib)
+Gurax_ImplementFunction(gurax_glPopClientAttrib)
 {
 	// Function body
 	glPopClientAttrib();
@@ -3828,7 +3828,7 @@ Gurax_ImplementFunction(glPopClientAttrib)
 }
 
 // opengl.glPopMatrix()
-Gurax_DeclareFunction(glPopMatrix)
+Gurax_DeclareFunctionAlias(gurax_glPopMatrix, "glPopMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -3836,7 +3836,7 @@ Gurax_DeclareFunction(glPopMatrix)
 		"");
 }
 
-Gurax_ImplementFunction(glPopMatrix)
+Gurax_ImplementFunction(gurax_glPopMatrix)
 {
 	// Function body
 	glPopMatrix();
@@ -3844,7 +3844,7 @@ Gurax_ImplementFunction(glPopMatrix)
 }
 
 // opengl.glPopName()
-Gurax_DeclareFunction(glPopName)
+Gurax_DeclareFunctionAlias(gurax_glPopName, "glPopName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -3852,7 +3852,7 @@ Gurax_DeclareFunction(glPopName)
 		"");
 }
 
-Gurax_ImplementFunction(glPopName)
+Gurax_ImplementFunction(gurax_glPopName)
 {
 	// Function body
 	glPopName();
@@ -3860,7 +3860,7 @@ Gurax_ImplementFunction(glPopName)
 }
 
 // opengl.glPrioritizeTextures(n:Number, textures[]:Number, priorities[]:Number)
-Gurax_DeclareFunction(glPrioritizeTextures)
+Gurax_DeclareFunctionAlias(gurax_glPrioritizeTextures, "glPrioritizeTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3871,7 +3871,7 @@ Gurax_DeclareFunction(glPrioritizeTextures)
 		"");
 }
 
-Gurax_ImplementFunction(glPrioritizeTextures)
+Gurax_ImplementFunction(gurax_glPrioritizeTextures)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3884,7 +3884,7 @@ Gurax_ImplementFunction(glPrioritizeTextures)
 }
 
 // opengl.glPushAttrib(mask:Number)
-Gurax_DeclareFunction(glPushAttrib)
+Gurax_DeclareFunctionAlias(gurax_glPushAttrib, "glPushAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3893,7 +3893,7 @@ Gurax_DeclareFunction(glPushAttrib)
 		"");
 }
 
-Gurax_ImplementFunction(glPushAttrib)
+Gurax_ImplementFunction(gurax_glPushAttrib)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3904,7 +3904,7 @@ Gurax_ImplementFunction(glPushAttrib)
 }
 
 // opengl.glPushClientAttrib(mask:Number)
-Gurax_DeclareFunction(glPushClientAttrib)
+Gurax_DeclareFunctionAlias(gurax_glPushClientAttrib, "glPushClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3913,7 +3913,7 @@ Gurax_DeclareFunction(glPushClientAttrib)
 		"");
 }
 
-Gurax_ImplementFunction(glPushClientAttrib)
+Gurax_ImplementFunction(gurax_glPushClientAttrib)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3924,7 +3924,7 @@ Gurax_ImplementFunction(glPushClientAttrib)
 }
 
 // opengl.glPushMatrix()
-Gurax_DeclareFunction(glPushMatrix)
+Gurax_DeclareFunctionAlias(gurax_glPushMatrix, "glPushMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -3932,7 +3932,7 @@ Gurax_DeclareFunction(glPushMatrix)
 		"");
 }
 
-Gurax_ImplementFunction(glPushMatrix)
+Gurax_ImplementFunction(gurax_glPushMatrix)
 {
 	// Function body
 	glPushMatrix();
@@ -3940,7 +3940,7 @@ Gurax_ImplementFunction(glPushMatrix)
 }
 
 // opengl.glPushName(name:Number)
-Gurax_DeclareFunction(glPushName)
+Gurax_DeclareFunctionAlias(gurax_glPushName, "glPushName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3949,7 +3949,7 @@ Gurax_DeclareFunction(glPushName)
 		"");
 }
 
-Gurax_ImplementFunction(glPushName)
+Gurax_ImplementFunction(gurax_glPushName)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3960,7 +3960,7 @@ Gurax_ImplementFunction(glPushName)
 }
 
 // opengl.glRasterPos2d(x:Number, y:Number)
-Gurax_DeclareFunction(glRasterPos2d)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2d, "glRasterPos2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3970,7 +3970,7 @@ Gurax_DeclareFunction(glRasterPos2d)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2d)
+Gurax_ImplementFunction(gurax_glRasterPos2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -3982,7 +3982,7 @@ Gurax_ImplementFunction(glRasterPos2d)
 }
 
 // opengl.glRasterPos2dv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos2dv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2dv, "glRasterPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -3991,7 +3991,7 @@ Gurax_DeclareFunction(glRasterPos2dv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2dv)
+Gurax_ImplementFunction(gurax_glRasterPos2dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4002,7 +4002,7 @@ Gurax_ImplementFunction(glRasterPos2dv)
 }
 
 // opengl.glRasterPos2f(x:Number, y:Number)
-Gurax_DeclareFunction(glRasterPos2f)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2f, "glRasterPos2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4012,7 +4012,7 @@ Gurax_DeclareFunction(glRasterPos2f)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2f)
+Gurax_ImplementFunction(gurax_glRasterPos2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4024,7 +4024,7 @@ Gurax_ImplementFunction(glRasterPos2f)
 }
 
 // opengl.glRasterPos2fv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos2fv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2fv, "glRasterPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4033,7 +4033,7 @@ Gurax_DeclareFunction(glRasterPos2fv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2fv)
+Gurax_ImplementFunction(gurax_glRasterPos2fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4044,7 +4044,7 @@ Gurax_ImplementFunction(glRasterPos2fv)
 }
 
 // opengl.glRasterPos2i(x:Number, y:Number)
-Gurax_DeclareFunction(glRasterPos2i)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2i, "glRasterPos2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4054,7 +4054,7 @@ Gurax_DeclareFunction(glRasterPos2i)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2i)
+Gurax_ImplementFunction(gurax_glRasterPos2i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4066,7 +4066,7 @@ Gurax_ImplementFunction(glRasterPos2i)
 }
 
 // opengl.glRasterPos2iv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos2iv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2iv, "glRasterPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4075,7 +4075,7 @@ Gurax_DeclareFunction(glRasterPos2iv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2iv)
+Gurax_ImplementFunction(gurax_glRasterPos2iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4086,7 +4086,7 @@ Gurax_ImplementFunction(glRasterPos2iv)
 }
 
 // opengl.glRasterPos2s(x:Number, y:Number)
-Gurax_DeclareFunction(glRasterPos2s)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2s, "glRasterPos2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4096,7 +4096,7 @@ Gurax_DeclareFunction(glRasterPos2s)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2s)
+Gurax_ImplementFunction(gurax_glRasterPos2s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4108,7 +4108,7 @@ Gurax_ImplementFunction(glRasterPos2s)
 }
 
 // opengl.glRasterPos2sv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos2sv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos2sv, "glRasterPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4117,7 +4117,7 @@ Gurax_DeclareFunction(glRasterPos2sv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2sv)
+Gurax_ImplementFunction(gurax_glRasterPos2sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4128,7 +4128,7 @@ Gurax_ImplementFunction(glRasterPos2sv)
 }
 
 // opengl.glRasterPos3d(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRasterPos3d)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3d, "glRasterPos3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4139,7 +4139,7 @@ Gurax_DeclareFunction(glRasterPos3d)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3d)
+Gurax_ImplementFunction(gurax_glRasterPos3d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4152,7 +4152,7 @@ Gurax_ImplementFunction(glRasterPos3d)
 }
 
 // opengl.glRasterPos3dv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos3dv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3dv, "glRasterPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4161,7 +4161,7 @@ Gurax_DeclareFunction(glRasterPos3dv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3dv)
+Gurax_ImplementFunction(gurax_glRasterPos3dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4172,7 +4172,7 @@ Gurax_ImplementFunction(glRasterPos3dv)
 }
 
 // opengl.glRasterPos3f(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRasterPos3f)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3f, "glRasterPos3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4183,7 +4183,7 @@ Gurax_DeclareFunction(glRasterPos3f)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3f)
+Gurax_ImplementFunction(gurax_glRasterPos3f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4196,7 +4196,7 @@ Gurax_ImplementFunction(glRasterPos3f)
 }
 
 // opengl.glRasterPos3fv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos3fv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3fv, "glRasterPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4205,7 +4205,7 @@ Gurax_DeclareFunction(glRasterPos3fv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3fv)
+Gurax_ImplementFunction(gurax_glRasterPos3fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4216,7 +4216,7 @@ Gurax_ImplementFunction(glRasterPos3fv)
 }
 
 // opengl.glRasterPos3i(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRasterPos3i)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3i, "glRasterPos3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4227,7 +4227,7 @@ Gurax_DeclareFunction(glRasterPos3i)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3i)
+Gurax_ImplementFunction(gurax_glRasterPos3i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4240,7 +4240,7 @@ Gurax_ImplementFunction(glRasterPos3i)
 }
 
 // opengl.glRasterPos3iv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos3iv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3iv, "glRasterPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4249,7 +4249,7 @@ Gurax_DeclareFunction(glRasterPos3iv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3iv)
+Gurax_ImplementFunction(gurax_glRasterPos3iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4260,7 +4260,7 @@ Gurax_ImplementFunction(glRasterPos3iv)
 }
 
 // opengl.glRasterPos3s(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRasterPos3s)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3s, "glRasterPos3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4271,7 +4271,7 @@ Gurax_DeclareFunction(glRasterPos3s)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3s)
+Gurax_ImplementFunction(gurax_glRasterPos3s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4284,7 +4284,7 @@ Gurax_ImplementFunction(glRasterPos3s)
 }
 
 // opengl.glRasterPos3sv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos3sv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos3sv, "glRasterPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4293,7 +4293,7 @@ Gurax_DeclareFunction(glRasterPos3sv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3sv)
+Gurax_ImplementFunction(gurax_glRasterPos3sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4304,7 +4304,7 @@ Gurax_ImplementFunction(glRasterPos3sv)
 }
 
 // opengl.glRasterPos4d(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glRasterPos4d)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4d, "glRasterPos4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4316,7 +4316,7 @@ Gurax_DeclareFunction(glRasterPos4d)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4d)
+Gurax_ImplementFunction(gurax_glRasterPos4d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4330,7 +4330,7 @@ Gurax_ImplementFunction(glRasterPos4d)
 }
 
 // opengl.glRasterPos4dv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos4dv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4dv, "glRasterPos4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4339,7 +4339,7 @@ Gurax_DeclareFunction(glRasterPos4dv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4dv)
+Gurax_ImplementFunction(gurax_glRasterPos4dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4350,7 +4350,7 @@ Gurax_ImplementFunction(glRasterPos4dv)
 }
 
 // opengl.glRasterPos4f(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glRasterPos4f)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4f, "glRasterPos4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4362,7 +4362,7 @@ Gurax_DeclareFunction(glRasterPos4f)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4f)
+Gurax_ImplementFunction(gurax_glRasterPos4f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4376,7 +4376,7 @@ Gurax_ImplementFunction(glRasterPos4f)
 }
 
 // opengl.glRasterPos4fv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos4fv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4fv, "glRasterPos4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4385,7 +4385,7 @@ Gurax_DeclareFunction(glRasterPos4fv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4fv)
+Gurax_ImplementFunction(gurax_glRasterPos4fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4396,7 +4396,7 @@ Gurax_ImplementFunction(glRasterPos4fv)
 }
 
 // opengl.glRasterPos4i(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glRasterPos4i)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4i, "glRasterPos4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4408,7 +4408,7 @@ Gurax_DeclareFunction(glRasterPos4i)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4i)
+Gurax_ImplementFunction(gurax_glRasterPos4i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4422,7 +4422,7 @@ Gurax_ImplementFunction(glRasterPos4i)
 }
 
 // opengl.glRasterPos4iv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos4iv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4iv, "glRasterPos4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4431,7 +4431,7 @@ Gurax_DeclareFunction(glRasterPos4iv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4iv)
+Gurax_ImplementFunction(gurax_glRasterPos4iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4442,7 +4442,7 @@ Gurax_ImplementFunction(glRasterPos4iv)
 }
 
 // opengl.glRasterPos4s(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glRasterPos4s)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4s, "glRasterPos4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4454,7 +4454,7 @@ Gurax_DeclareFunction(glRasterPos4s)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4s)
+Gurax_ImplementFunction(gurax_glRasterPos4s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4468,7 +4468,7 @@ Gurax_ImplementFunction(glRasterPos4s)
 }
 
 // opengl.glRasterPos4sv(v[]:Number)
-Gurax_DeclareFunction(glRasterPos4sv)
+Gurax_DeclareFunctionAlias(gurax_glRasterPos4sv, "glRasterPos4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4477,7 +4477,7 @@ Gurax_DeclareFunction(glRasterPos4sv)
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4sv)
+Gurax_ImplementFunction(gurax_glRasterPos4sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4488,7 +4488,7 @@ Gurax_ImplementFunction(glRasterPos4sv)
 }
 
 // opengl.glReadBuffer(mode:Number)
-Gurax_DeclareFunction(glReadBuffer)
+Gurax_DeclareFunctionAlias(gurax_glReadBuffer, "glReadBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4497,7 +4497,7 @@ Gurax_DeclareFunction(glReadBuffer)
 		"");
 }
 
-Gurax_ImplementFunction(glReadBuffer)
+Gurax_ImplementFunction(gurax_glReadBuffer)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4508,7 +4508,7 @@ Gurax_ImplementFunction(glReadBuffer)
 }
 
 // opengl.glRectd(x1:Number, y1:Number, x2:Number, y2:Number)
-Gurax_DeclareFunction(glRectd)
+Gurax_DeclareFunctionAlias(gurax_glRectd, "glRectd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4520,7 +4520,7 @@ Gurax_DeclareFunction(glRectd)
 		"");
 }
 
-Gurax_ImplementFunction(glRectd)
+Gurax_ImplementFunction(gurax_glRectd)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4534,7 +4534,7 @@ Gurax_ImplementFunction(glRectd)
 }
 
 // opengl.glRectdv(v1[]:Number, v2[]:Number)
-Gurax_DeclareFunction(glRectdv)
+Gurax_DeclareFunctionAlias(gurax_glRectdv, "glRectdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4544,7 +4544,7 @@ Gurax_DeclareFunction(glRectdv)
 		"");
 }
 
-Gurax_ImplementFunction(glRectdv)
+Gurax_ImplementFunction(gurax_glRectdv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4556,7 +4556,7 @@ Gurax_ImplementFunction(glRectdv)
 }
 
 // opengl.glRectf(x1:Number, y1:Number, x2:Number, y2:Number)
-Gurax_DeclareFunction(glRectf)
+Gurax_DeclareFunctionAlias(gurax_glRectf, "glRectf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4568,7 +4568,7 @@ Gurax_DeclareFunction(glRectf)
 		"");
 }
 
-Gurax_ImplementFunction(glRectf)
+Gurax_ImplementFunction(gurax_glRectf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4582,7 +4582,7 @@ Gurax_ImplementFunction(glRectf)
 }
 
 // opengl.glRectfv(v1[]:Number, v2[]:Number)
-Gurax_DeclareFunction(glRectfv)
+Gurax_DeclareFunctionAlias(gurax_glRectfv, "glRectfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4592,7 +4592,7 @@ Gurax_DeclareFunction(glRectfv)
 		"");
 }
 
-Gurax_ImplementFunction(glRectfv)
+Gurax_ImplementFunction(gurax_glRectfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4604,7 +4604,7 @@ Gurax_ImplementFunction(glRectfv)
 }
 
 // opengl.glRecti(x1:Number, y1:Number, x2:Number, y2:Number)
-Gurax_DeclareFunction(glRecti)
+Gurax_DeclareFunctionAlias(gurax_glRecti, "glRecti")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4616,7 +4616,7 @@ Gurax_DeclareFunction(glRecti)
 		"");
 }
 
-Gurax_ImplementFunction(glRecti)
+Gurax_ImplementFunction(gurax_glRecti)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4630,7 +4630,7 @@ Gurax_ImplementFunction(glRecti)
 }
 
 // opengl.glRectiv(v1[]:Number, v2[]:Number)
-Gurax_DeclareFunction(glRectiv)
+Gurax_DeclareFunctionAlias(gurax_glRectiv, "glRectiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4640,7 +4640,7 @@ Gurax_DeclareFunction(glRectiv)
 		"");
 }
 
-Gurax_ImplementFunction(glRectiv)
+Gurax_ImplementFunction(gurax_glRectiv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4652,7 +4652,7 @@ Gurax_ImplementFunction(glRectiv)
 }
 
 // opengl.glRects(x1:Number, y1:Number, x2:Number, y2:Number)
-Gurax_DeclareFunction(glRects)
+Gurax_DeclareFunctionAlias(gurax_glRects, "glRects")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4664,7 +4664,7 @@ Gurax_DeclareFunction(glRects)
 		"");
 }
 
-Gurax_ImplementFunction(glRects)
+Gurax_ImplementFunction(gurax_glRects)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4678,7 +4678,7 @@ Gurax_ImplementFunction(glRects)
 }
 
 // opengl.glRectsv(v1[]:Number, v2[]:Number)
-Gurax_DeclareFunction(glRectsv)
+Gurax_DeclareFunctionAlias(gurax_glRectsv, "glRectsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4688,7 +4688,7 @@ Gurax_DeclareFunction(glRectsv)
 		"");
 }
 
-Gurax_ImplementFunction(glRectsv)
+Gurax_ImplementFunction(gurax_glRectsv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4700,7 +4700,7 @@ Gurax_ImplementFunction(glRectsv)
 }
 
 // opengl.glRenderMode(mode:Number)
-Gurax_DeclareFunction(glRenderMode)
+Gurax_DeclareFunctionAlias(gurax_glRenderMode, "glRenderMode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4709,7 +4709,7 @@ Gurax_DeclareFunction(glRenderMode)
 		"");
 }
 
-Gurax_ImplementFunction(glRenderMode)
+Gurax_ImplementFunction(gurax_glRenderMode)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4720,7 +4720,7 @@ Gurax_ImplementFunction(glRenderMode)
 }
 
 // opengl.glRotated(angle:Number, x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRotated)
+Gurax_DeclareFunctionAlias(gurax_glRotated, "glRotated")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4732,7 +4732,7 @@ Gurax_DeclareFunction(glRotated)
 		"");
 }
 
-Gurax_ImplementFunction(glRotated)
+Gurax_ImplementFunction(gurax_glRotated)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4746,7 +4746,7 @@ Gurax_ImplementFunction(glRotated)
 }
 
 // opengl.glRotatef(angle:Number, x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glRotatef)
+Gurax_DeclareFunctionAlias(gurax_glRotatef, "glRotatef")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4758,7 +4758,7 @@ Gurax_DeclareFunction(glRotatef)
 		"");
 }
 
-Gurax_ImplementFunction(glRotatef)
+Gurax_ImplementFunction(gurax_glRotatef)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4772,7 +4772,7 @@ Gurax_ImplementFunction(glRotatef)
 }
 
 // opengl.glScaled(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glScaled)
+Gurax_DeclareFunctionAlias(gurax_glScaled, "glScaled")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4783,7 +4783,7 @@ Gurax_DeclareFunction(glScaled)
 		"");
 }
 
-Gurax_ImplementFunction(glScaled)
+Gurax_ImplementFunction(gurax_glScaled)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4796,7 +4796,7 @@ Gurax_ImplementFunction(glScaled)
 }
 
 // opengl.glScalef(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glScalef)
+Gurax_DeclareFunctionAlias(gurax_glScalef, "glScalef")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4807,7 +4807,7 @@ Gurax_DeclareFunction(glScalef)
 		"");
 }
 
-Gurax_ImplementFunction(glScalef)
+Gurax_ImplementFunction(gurax_glScalef)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4820,7 +4820,7 @@ Gurax_ImplementFunction(glScalef)
 }
 
 // opengl.glScissor(x:Number, y:Number, width:Number, height:Number)
-Gurax_DeclareFunction(glScissor)
+Gurax_DeclareFunctionAlias(gurax_glScissor, "glScissor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4832,7 +4832,7 @@ Gurax_DeclareFunction(glScissor)
 		"");
 }
 
-Gurax_ImplementFunction(glScissor)
+Gurax_ImplementFunction(gurax_glScissor)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4846,7 +4846,7 @@ Gurax_ImplementFunction(glScissor)
 }
 
 // opengl.glShadeModel(mode:Number)
-Gurax_DeclareFunction(glShadeModel)
+Gurax_DeclareFunctionAlias(gurax_glShadeModel, "glShadeModel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4855,7 +4855,7 @@ Gurax_DeclareFunction(glShadeModel)
 		"");
 }
 
-Gurax_ImplementFunction(glShadeModel)
+Gurax_ImplementFunction(gurax_glShadeModel)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4866,7 +4866,7 @@ Gurax_ImplementFunction(glShadeModel)
 }
 
 // opengl.glStencilFunc(func:Number, ref:Number, mask:Number)
-Gurax_DeclareFunction(glStencilFunc)
+Gurax_DeclareFunctionAlias(gurax_glStencilFunc, "glStencilFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4877,7 +4877,7 @@ Gurax_DeclareFunction(glStencilFunc)
 		"");
 }
 
-Gurax_ImplementFunction(glStencilFunc)
+Gurax_ImplementFunction(gurax_glStencilFunc)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4890,7 +4890,7 @@ Gurax_ImplementFunction(glStencilFunc)
 }
 
 // opengl.glStencilMask(mask:Number)
-Gurax_DeclareFunction(glStencilMask)
+Gurax_DeclareFunctionAlias(gurax_glStencilMask, "glStencilMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4899,7 +4899,7 @@ Gurax_DeclareFunction(glStencilMask)
 		"");
 }
 
-Gurax_ImplementFunction(glStencilMask)
+Gurax_ImplementFunction(gurax_glStencilMask)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4910,7 +4910,7 @@ Gurax_ImplementFunction(glStencilMask)
 }
 
 // opengl.glStencilOp(fail:Number, zfail:Number, zpass:Number)
-Gurax_DeclareFunction(glStencilOp)
+Gurax_DeclareFunctionAlias(gurax_glStencilOp, "glStencilOp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("fail", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4921,7 +4921,7 @@ Gurax_DeclareFunction(glStencilOp)
 		"");
 }
 
-Gurax_ImplementFunction(glStencilOp)
+Gurax_ImplementFunction(gurax_glStencilOp)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4934,7 +4934,7 @@ Gurax_ImplementFunction(glStencilOp)
 }
 
 // opengl.glTexCoord1d(s:Number)
-Gurax_DeclareFunction(glTexCoord1d)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1d, "glTexCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4943,7 +4943,7 @@ Gurax_DeclareFunction(glTexCoord1d)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1d)
+Gurax_ImplementFunction(gurax_glTexCoord1d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4954,7 +4954,7 @@ Gurax_ImplementFunction(glTexCoord1d)
 }
 
 // opengl.glTexCoord1dv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord1dv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1dv, "glTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -4963,7 +4963,7 @@ Gurax_DeclareFunction(glTexCoord1dv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1dv)
+Gurax_ImplementFunction(gurax_glTexCoord1dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4974,7 +4974,7 @@ Gurax_ImplementFunction(glTexCoord1dv)
 }
 
 // opengl.glTexCoord1f(s:Number)
-Gurax_DeclareFunction(glTexCoord1f)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1f, "glTexCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -4983,7 +4983,7 @@ Gurax_DeclareFunction(glTexCoord1f)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1f)
+Gurax_ImplementFunction(gurax_glTexCoord1f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -4994,7 +4994,7 @@ Gurax_ImplementFunction(glTexCoord1f)
 }
 
 // opengl.glTexCoord1fv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord1fv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1fv, "glTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5003,7 +5003,7 @@ Gurax_DeclareFunction(glTexCoord1fv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1fv)
+Gurax_ImplementFunction(gurax_glTexCoord1fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5014,7 +5014,7 @@ Gurax_ImplementFunction(glTexCoord1fv)
 }
 
 // opengl.glTexCoord1i(s:Number)
-Gurax_DeclareFunction(glTexCoord1i)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1i, "glTexCoord1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5023,7 +5023,7 @@ Gurax_DeclareFunction(glTexCoord1i)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1i)
+Gurax_ImplementFunction(gurax_glTexCoord1i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5034,7 +5034,7 @@ Gurax_ImplementFunction(glTexCoord1i)
 }
 
 // opengl.glTexCoord1iv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord1iv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1iv, "glTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5043,7 +5043,7 @@ Gurax_DeclareFunction(glTexCoord1iv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1iv)
+Gurax_ImplementFunction(gurax_glTexCoord1iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5054,7 +5054,7 @@ Gurax_ImplementFunction(glTexCoord1iv)
 }
 
 // opengl.glTexCoord1s(s:Number)
-Gurax_DeclareFunction(glTexCoord1s)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1s, "glTexCoord1s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5063,7 +5063,7 @@ Gurax_DeclareFunction(glTexCoord1s)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1s)
+Gurax_ImplementFunction(gurax_glTexCoord1s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5074,7 +5074,7 @@ Gurax_ImplementFunction(glTexCoord1s)
 }
 
 // opengl.glTexCoord1sv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord1sv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord1sv, "glTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5083,7 +5083,7 @@ Gurax_DeclareFunction(glTexCoord1sv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1sv)
+Gurax_ImplementFunction(gurax_glTexCoord1sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5094,7 +5094,7 @@ Gurax_ImplementFunction(glTexCoord1sv)
 }
 
 // opengl.glTexCoord2d(s:Number, t:Number)
-Gurax_DeclareFunction(glTexCoord2d)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2d, "glTexCoord2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5104,7 +5104,7 @@ Gurax_DeclareFunction(glTexCoord2d)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2d)
+Gurax_ImplementFunction(gurax_glTexCoord2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5116,7 +5116,7 @@ Gurax_ImplementFunction(glTexCoord2d)
 }
 
 // opengl.glTexCoord2dv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord2dv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2dv, "glTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5125,7 +5125,7 @@ Gurax_DeclareFunction(glTexCoord2dv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2dv)
+Gurax_ImplementFunction(gurax_glTexCoord2dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5136,7 +5136,7 @@ Gurax_ImplementFunction(glTexCoord2dv)
 }
 
 // opengl.glTexCoord2f(s:Number, t:Number)
-Gurax_DeclareFunction(glTexCoord2f)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2f, "glTexCoord2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5146,7 +5146,7 @@ Gurax_DeclareFunction(glTexCoord2f)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2f)
+Gurax_ImplementFunction(gurax_glTexCoord2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5158,7 +5158,7 @@ Gurax_ImplementFunction(glTexCoord2f)
 }
 
 // opengl.glTexCoord2fv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord2fv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2fv, "glTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5167,7 +5167,7 @@ Gurax_DeclareFunction(glTexCoord2fv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2fv)
+Gurax_ImplementFunction(gurax_glTexCoord2fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5178,7 +5178,7 @@ Gurax_ImplementFunction(glTexCoord2fv)
 }
 
 // opengl.glTexCoord2i(s:Number, t:Number)
-Gurax_DeclareFunction(glTexCoord2i)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2i, "glTexCoord2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5188,7 +5188,7 @@ Gurax_DeclareFunction(glTexCoord2i)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2i)
+Gurax_ImplementFunction(gurax_glTexCoord2i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5200,7 +5200,7 @@ Gurax_ImplementFunction(glTexCoord2i)
 }
 
 // opengl.glTexCoord2iv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord2iv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2iv, "glTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5209,7 +5209,7 @@ Gurax_DeclareFunction(glTexCoord2iv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2iv)
+Gurax_ImplementFunction(gurax_glTexCoord2iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5220,7 +5220,7 @@ Gurax_ImplementFunction(glTexCoord2iv)
 }
 
 // opengl.glTexCoord2s(s:Number, t:Number)
-Gurax_DeclareFunction(glTexCoord2s)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2s, "glTexCoord2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5230,7 +5230,7 @@ Gurax_DeclareFunction(glTexCoord2s)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2s)
+Gurax_ImplementFunction(gurax_glTexCoord2s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5242,7 +5242,7 @@ Gurax_ImplementFunction(glTexCoord2s)
 }
 
 // opengl.glTexCoord2sv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord2sv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord2sv, "glTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5251,7 +5251,7 @@ Gurax_DeclareFunction(glTexCoord2sv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2sv)
+Gurax_ImplementFunction(gurax_glTexCoord2sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5262,7 +5262,7 @@ Gurax_ImplementFunction(glTexCoord2sv)
 }
 
 // opengl.glTexCoord3d(s:Number, t:Number, r:Number)
-Gurax_DeclareFunction(glTexCoord3d)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3d, "glTexCoord3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5273,7 +5273,7 @@ Gurax_DeclareFunction(glTexCoord3d)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3d)
+Gurax_ImplementFunction(gurax_glTexCoord3d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5286,7 +5286,7 @@ Gurax_ImplementFunction(glTexCoord3d)
 }
 
 // opengl.glTexCoord3dv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord3dv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3dv, "glTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5295,7 +5295,7 @@ Gurax_DeclareFunction(glTexCoord3dv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3dv)
+Gurax_ImplementFunction(gurax_glTexCoord3dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5306,7 +5306,7 @@ Gurax_ImplementFunction(glTexCoord3dv)
 }
 
 // opengl.glTexCoord3f(s:Number, t:Number, r:Number)
-Gurax_DeclareFunction(glTexCoord3f)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3f, "glTexCoord3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5317,7 +5317,7 @@ Gurax_DeclareFunction(glTexCoord3f)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3f)
+Gurax_ImplementFunction(gurax_glTexCoord3f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5330,7 +5330,7 @@ Gurax_ImplementFunction(glTexCoord3f)
 }
 
 // opengl.glTexCoord3fv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord3fv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3fv, "glTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5339,7 +5339,7 @@ Gurax_DeclareFunction(glTexCoord3fv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3fv)
+Gurax_ImplementFunction(gurax_glTexCoord3fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5350,7 +5350,7 @@ Gurax_ImplementFunction(glTexCoord3fv)
 }
 
 // opengl.glTexCoord3i(s:Number, t:Number, r:Number)
-Gurax_DeclareFunction(glTexCoord3i)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3i, "glTexCoord3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5361,7 +5361,7 @@ Gurax_DeclareFunction(glTexCoord3i)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3i)
+Gurax_ImplementFunction(gurax_glTexCoord3i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5374,7 +5374,7 @@ Gurax_ImplementFunction(glTexCoord3i)
 }
 
 // opengl.glTexCoord3iv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord3iv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3iv, "glTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5383,7 +5383,7 @@ Gurax_DeclareFunction(glTexCoord3iv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3iv)
+Gurax_ImplementFunction(gurax_glTexCoord3iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5394,7 +5394,7 @@ Gurax_ImplementFunction(glTexCoord3iv)
 }
 
 // opengl.glTexCoord3s(s:Number, t:Number, r:Number)
-Gurax_DeclareFunction(glTexCoord3s)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3s, "glTexCoord3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5405,7 +5405,7 @@ Gurax_DeclareFunction(glTexCoord3s)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3s)
+Gurax_ImplementFunction(gurax_glTexCoord3s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5418,7 +5418,7 @@ Gurax_ImplementFunction(glTexCoord3s)
 }
 
 // opengl.glTexCoord3sv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord3sv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord3sv, "glTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5427,7 +5427,7 @@ Gurax_DeclareFunction(glTexCoord3sv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3sv)
+Gurax_ImplementFunction(gurax_glTexCoord3sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5438,7 +5438,7 @@ Gurax_ImplementFunction(glTexCoord3sv)
 }
 
 // opengl.glTexCoord4d(s:Number, t:Number, r:Number, q:Number)
-Gurax_DeclareFunction(glTexCoord4d)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4d, "glTexCoord4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5450,7 +5450,7 @@ Gurax_DeclareFunction(glTexCoord4d)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4d)
+Gurax_ImplementFunction(gurax_glTexCoord4d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5464,7 +5464,7 @@ Gurax_ImplementFunction(glTexCoord4d)
 }
 
 // opengl.glTexCoord4dv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord4dv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4dv, "glTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5473,7 +5473,7 @@ Gurax_DeclareFunction(glTexCoord4dv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4dv)
+Gurax_ImplementFunction(gurax_glTexCoord4dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5484,7 +5484,7 @@ Gurax_ImplementFunction(glTexCoord4dv)
 }
 
 // opengl.glTexCoord4f(s:Number, t:Number, r:Number, q:Number)
-Gurax_DeclareFunction(glTexCoord4f)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4f, "glTexCoord4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5496,7 +5496,7 @@ Gurax_DeclareFunction(glTexCoord4f)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4f)
+Gurax_ImplementFunction(gurax_glTexCoord4f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5510,7 +5510,7 @@ Gurax_ImplementFunction(glTexCoord4f)
 }
 
 // opengl.glTexCoord4fv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord4fv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4fv, "glTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5519,7 +5519,7 @@ Gurax_DeclareFunction(glTexCoord4fv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4fv)
+Gurax_ImplementFunction(gurax_glTexCoord4fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5530,7 +5530,7 @@ Gurax_ImplementFunction(glTexCoord4fv)
 }
 
 // opengl.glTexCoord4i(s:Number, t:Number, r:Number, q:Number)
-Gurax_DeclareFunction(glTexCoord4i)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4i, "glTexCoord4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5542,7 +5542,7 @@ Gurax_DeclareFunction(glTexCoord4i)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4i)
+Gurax_ImplementFunction(gurax_glTexCoord4i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5556,7 +5556,7 @@ Gurax_ImplementFunction(glTexCoord4i)
 }
 
 // opengl.glTexCoord4iv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord4iv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4iv, "glTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5565,7 +5565,7 @@ Gurax_DeclareFunction(glTexCoord4iv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4iv)
+Gurax_ImplementFunction(gurax_glTexCoord4iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5576,7 +5576,7 @@ Gurax_ImplementFunction(glTexCoord4iv)
 }
 
 // opengl.glTexCoord4s(s:Number, t:Number, r:Number, q:Number)
-Gurax_DeclareFunction(glTexCoord4s)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4s, "glTexCoord4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5588,7 +5588,7 @@ Gurax_DeclareFunction(glTexCoord4s)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4s)
+Gurax_ImplementFunction(gurax_glTexCoord4s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5602,7 +5602,7 @@ Gurax_ImplementFunction(glTexCoord4s)
 }
 
 // opengl.glTexCoord4sv(v[]:Number)
-Gurax_DeclareFunction(glTexCoord4sv)
+Gurax_DeclareFunctionAlias(gurax_glTexCoord4sv, "glTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -5611,7 +5611,7 @@ Gurax_DeclareFunction(glTexCoord4sv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4sv)
+Gurax_ImplementFunction(gurax_glTexCoord4sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5622,7 +5622,7 @@ Gurax_ImplementFunction(glTexCoord4sv)
 }
 
 // opengl.glTexEnvf(target:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexEnvf)
+Gurax_DeclareFunctionAlias(gurax_glTexEnvf, "glTexEnvf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5633,7 +5633,7 @@ Gurax_DeclareFunction(glTexEnvf)
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvf)
+Gurax_ImplementFunction(gurax_glTexEnvf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5646,7 +5646,7 @@ Gurax_ImplementFunction(glTexEnvf)
 }
 
 // opengl.glTexEnvfv(target:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexEnvfv)
+Gurax_DeclareFunctionAlias(gurax_glTexEnvfv, "glTexEnvfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5657,7 +5657,7 @@ Gurax_DeclareFunction(glTexEnvfv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvfv)
+Gurax_ImplementFunction(gurax_glTexEnvfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5670,7 +5670,7 @@ Gurax_ImplementFunction(glTexEnvfv)
 }
 
 // opengl.glTexEnvi(target:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexEnvi)
+Gurax_DeclareFunctionAlias(gurax_glTexEnvi, "glTexEnvi")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5681,7 +5681,7 @@ Gurax_DeclareFunction(glTexEnvi)
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvi)
+Gurax_ImplementFunction(gurax_glTexEnvi)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5694,7 +5694,7 @@ Gurax_ImplementFunction(glTexEnvi)
 }
 
 // opengl.glTexEnviv(target:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexEnviv)
+Gurax_DeclareFunctionAlias(gurax_glTexEnviv, "glTexEnviv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5705,7 +5705,7 @@ Gurax_DeclareFunction(glTexEnviv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnviv)
+Gurax_ImplementFunction(gurax_glTexEnviv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5718,7 +5718,7 @@ Gurax_ImplementFunction(glTexEnviv)
 }
 
 // opengl.glTexGend(coord:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexGend)
+Gurax_DeclareFunctionAlias(gurax_glTexGend, "glTexGend")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5729,7 +5729,7 @@ Gurax_DeclareFunction(glTexGend)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGend)
+Gurax_ImplementFunction(gurax_glTexGend)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5742,7 +5742,7 @@ Gurax_ImplementFunction(glTexGend)
 }
 
 // opengl.glTexGendv(coord:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexGendv)
+Gurax_DeclareFunctionAlias(gurax_glTexGendv, "glTexGendv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5753,7 +5753,7 @@ Gurax_DeclareFunction(glTexGendv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGendv)
+Gurax_ImplementFunction(gurax_glTexGendv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5766,7 +5766,7 @@ Gurax_ImplementFunction(glTexGendv)
 }
 
 // opengl.glTexGenf(coord:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexGenf)
+Gurax_DeclareFunctionAlias(gurax_glTexGenf, "glTexGenf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5777,7 +5777,7 @@ Gurax_DeclareFunction(glTexGenf)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGenf)
+Gurax_ImplementFunction(gurax_glTexGenf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5790,7 +5790,7 @@ Gurax_ImplementFunction(glTexGenf)
 }
 
 // opengl.glTexGenfv(coord:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexGenfv)
+Gurax_DeclareFunctionAlias(gurax_glTexGenfv, "glTexGenfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5801,7 +5801,7 @@ Gurax_DeclareFunction(glTexGenfv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGenfv)
+Gurax_ImplementFunction(gurax_glTexGenfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5814,7 +5814,7 @@ Gurax_ImplementFunction(glTexGenfv)
 }
 
 // opengl.glTexGeni(coord:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexGeni)
+Gurax_DeclareFunctionAlias(gurax_glTexGeni, "glTexGeni")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5825,7 +5825,7 @@ Gurax_DeclareFunction(glTexGeni)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGeni)
+Gurax_ImplementFunction(gurax_glTexGeni)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5838,7 +5838,7 @@ Gurax_ImplementFunction(glTexGeni)
 }
 
 // opengl.glTexGeniv(coord:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexGeniv)
+Gurax_DeclareFunctionAlias(gurax_glTexGeniv, "glTexGeniv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5849,7 +5849,7 @@ Gurax_DeclareFunction(glTexGeniv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexGeniv)
+Gurax_ImplementFunction(gurax_glTexGeniv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5862,7 +5862,7 @@ Gurax_ImplementFunction(glTexGeniv)
 }
 
 // opengl.glTexParameterf(target:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexParameterf)
+Gurax_DeclareFunctionAlias(gurax_glTexParameterf, "glTexParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5873,7 +5873,7 @@ Gurax_DeclareFunction(glTexParameterf)
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterf)
+Gurax_ImplementFunction(gurax_glTexParameterf)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5886,7 +5886,7 @@ Gurax_ImplementFunction(glTexParameterf)
 }
 
 // opengl.glTexParameterfv(target:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexParameterfv)
+Gurax_DeclareFunctionAlias(gurax_glTexParameterfv, "glTexParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5897,7 +5897,7 @@ Gurax_DeclareFunction(glTexParameterfv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterfv)
+Gurax_ImplementFunction(gurax_glTexParameterfv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5910,7 +5910,7 @@ Gurax_ImplementFunction(glTexParameterfv)
 }
 
 // opengl.glTexParameteri(target:Number, pname:Number, param:Number)
-Gurax_DeclareFunction(glTexParameteri)
+Gurax_DeclareFunctionAlias(gurax_glTexParameteri, "glTexParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5921,7 +5921,7 @@ Gurax_DeclareFunction(glTexParameteri)
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameteri)
+Gurax_ImplementFunction(gurax_glTexParameteri)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5934,7 +5934,7 @@ Gurax_ImplementFunction(glTexParameteri)
 }
 
 // opengl.glTexParameteriv(target:Number, pname:Number, params[]:Number)
-Gurax_DeclareFunction(glTexParameteriv)
+Gurax_DeclareFunctionAlias(gurax_glTexParameteriv, "glTexParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5945,7 +5945,7 @@ Gurax_DeclareFunction(glTexParameteriv)
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameteriv)
+Gurax_ImplementFunction(gurax_glTexParameteriv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5958,7 +5958,7 @@ Gurax_ImplementFunction(glTexParameteriv)
 }
 
 // opengl.glTranslated(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glTranslated)
+Gurax_DeclareFunctionAlias(gurax_glTranslated, "glTranslated")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5969,7 +5969,7 @@ Gurax_DeclareFunction(glTranslated)
 		"");
 }
 
-Gurax_ImplementFunction(glTranslated)
+Gurax_ImplementFunction(gurax_glTranslated)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -5982,7 +5982,7 @@ Gurax_ImplementFunction(glTranslated)
 }
 
 // opengl.glTranslatef(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glTranslatef)
+Gurax_DeclareFunctionAlias(gurax_glTranslatef, "glTranslatef")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5993,7 +5993,7 @@ Gurax_DeclareFunction(glTranslatef)
 		"");
 }
 
-Gurax_ImplementFunction(glTranslatef)
+Gurax_ImplementFunction(gurax_glTranslatef)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6006,7 +6006,7 @@ Gurax_ImplementFunction(glTranslatef)
 }
 
 // opengl.glVertex2d(x:Number, y:Number)
-Gurax_DeclareFunction(glVertex2d)
+Gurax_DeclareFunctionAlias(gurax_glVertex2d, "glVertex2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6016,7 +6016,7 @@ Gurax_DeclareFunction(glVertex2d)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2d)
+Gurax_ImplementFunction(gurax_glVertex2d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6028,7 +6028,7 @@ Gurax_ImplementFunction(glVertex2d)
 }
 
 // opengl.glVertex2dv(v[]:Number)
-Gurax_DeclareFunction(glVertex2dv)
+Gurax_DeclareFunctionAlias(gurax_glVertex2dv, "glVertex2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6037,7 +6037,7 @@ Gurax_DeclareFunction(glVertex2dv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2dv)
+Gurax_ImplementFunction(gurax_glVertex2dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6048,7 +6048,7 @@ Gurax_ImplementFunction(glVertex2dv)
 }
 
 // opengl.glVertex2f(x:Number, y:Number)
-Gurax_DeclareFunction(glVertex2f)
+Gurax_DeclareFunctionAlias(gurax_glVertex2f, "glVertex2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6058,7 +6058,7 @@ Gurax_DeclareFunction(glVertex2f)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2f)
+Gurax_ImplementFunction(gurax_glVertex2f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6070,7 +6070,7 @@ Gurax_ImplementFunction(glVertex2f)
 }
 
 // opengl.glVertex2fv(v[]:Number)
-Gurax_DeclareFunction(glVertex2fv)
+Gurax_DeclareFunctionAlias(gurax_glVertex2fv, "glVertex2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6079,7 +6079,7 @@ Gurax_DeclareFunction(glVertex2fv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2fv)
+Gurax_ImplementFunction(gurax_glVertex2fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6090,7 +6090,7 @@ Gurax_ImplementFunction(glVertex2fv)
 }
 
 // opengl.glVertex2i(x:Number, y:Number)
-Gurax_DeclareFunction(glVertex2i)
+Gurax_DeclareFunctionAlias(gurax_glVertex2i, "glVertex2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6100,7 +6100,7 @@ Gurax_DeclareFunction(glVertex2i)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2i)
+Gurax_ImplementFunction(gurax_glVertex2i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6112,7 +6112,7 @@ Gurax_ImplementFunction(glVertex2i)
 }
 
 // opengl.glVertex2iv(v[]:Number)
-Gurax_DeclareFunction(glVertex2iv)
+Gurax_DeclareFunctionAlias(gurax_glVertex2iv, "glVertex2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6121,7 +6121,7 @@ Gurax_DeclareFunction(glVertex2iv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2iv)
+Gurax_ImplementFunction(gurax_glVertex2iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6132,7 +6132,7 @@ Gurax_ImplementFunction(glVertex2iv)
 }
 
 // opengl.glVertex2s(x:Number, y:Number)
-Gurax_DeclareFunction(glVertex2s)
+Gurax_DeclareFunctionAlias(gurax_glVertex2s, "glVertex2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6142,7 +6142,7 @@ Gurax_DeclareFunction(glVertex2s)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2s)
+Gurax_ImplementFunction(gurax_glVertex2s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6154,7 +6154,7 @@ Gurax_ImplementFunction(glVertex2s)
 }
 
 // opengl.glVertex2sv(v[]:Number)
-Gurax_DeclareFunction(glVertex2sv)
+Gurax_DeclareFunctionAlias(gurax_glVertex2sv, "glVertex2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6163,7 +6163,7 @@ Gurax_DeclareFunction(glVertex2sv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2sv)
+Gurax_ImplementFunction(gurax_glVertex2sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6174,7 +6174,7 @@ Gurax_ImplementFunction(glVertex2sv)
 }
 
 // opengl.glVertex3d(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glVertex3d)
+Gurax_DeclareFunctionAlias(gurax_glVertex3d, "glVertex3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6185,7 +6185,7 @@ Gurax_DeclareFunction(glVertex3d)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3d)
+Gurax_ImplementFunction(gurax_glVertex3d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6198,7 +6198,7 @@ Gurax_ImplementFunction(glVertex3d)
 }
 
 // opengl.glVertex3dv(v[]:Number)
-Gurax_DeclareFunction(glVertex3dv)
+Gurax_DeclareFunctionAlias(gurax_glVertex3dv, "glVertex3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6207,7 +6207,7 @@ Gurax_DeclareFunction(glVertex3dv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3dv)
+Gurax_ImplementFunction(gurax_glVertex3dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6218,7 +6218,7 @@ Gurax_ImplementFunction(glVertex3dv)
 }
 
 // opengl.glVertex3f(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glVertex3f)
+Gurax_DeclareFunctionAlias(gurax_glVertex3f, "glVertex3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6229,7 +6229,7 @@ Gurax_DeclareFunction(glVertex3f)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3f)
+Gurax_ImplementFunction(gurax_glVertex3f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6242,7 +6242,7 @@ Gurax_ImplementFunction(glVertex3f)
 }
 
 // opengl.glVertex3fv(v[]:Number)
-Gurax_DeclareFunction(glVertex3fv)
+Gurax_DeclareFunctionAlias(gurax_glVertex3fv, "glVertex3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6251,7 +6251,7 @@ Gurax_DeclareFunction(glVertex3fv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3fv)
+Gurax_ImplementFunction(gurax_glVertex3fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6262,7 +6262,7 @@ Gurax_ImplementFunction(glVertex3fv)
 }
 
 // opengl.glVertex3i(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glVertex3i)
+Gurax_DeclareFunctionAlias(gurax_glVertex3i, "glVertex3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6273,7 +6273,7 @@ Gurax_DeclareFunction(glVertex3i)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3i)
+Gurax_ImplementFunction(gurax_glVertex3i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6286,7 +6286,7 @@ Gurax_ImplementFunction(glVertex3i)
 }
 
 // opengl.glVertex3iv(v[]:Number)
-Gurax_DeclareFunction(glVertex3iv)
+Gurax_DeclareFunctionAlias(gurax_glVertex3iv, "glVertex3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6295,7 +6295,7 @@ Gurax_DeclareFunction(glVertex3iv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3iv)
+Gurax_ImplementFunction(gurax_glVertex3iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6306,7 +6306,7 @@ Gurax_ImplementFunction(glVertex3iv)
 }
 
 // opengl.glVertex3s(x:Number, y:Number, z:Number)
-Gurax_DeclareFunction(glVertex3s)
+Gurax_DeclareFunctionAlias(gurax_glVertex3s, "glVertex3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6317,7 +6317,7 @@ Gurax_DeclareFunction(glVertex3s)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3s)
+Gurax_ImplementFunction(gurax_glVertex3s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6330,7 +6330,7 @@ Gurax_ImplementFunction(glVertex3s)
 }
 
 // opengl.glVertex3sv(v[]:Number)
-Gurax_DeclareFunction(glVertex3sv)
+Gurax_DeclareFunctionAlias(gurax_glVertex3sv, "glVertex3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6339,7 +6339,7 @@ Gurax_DeclareFunction(glVertex3sv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3sv)
+Gurax_ImplementFunction(gurax_glVertex3sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6350,7 +6350,7 @@ Gurax_ImplementFunction(glVertex3sv)
 }
 
 // opengl.glVertex4d(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glVertex4d)
+Gurax_DeclareFunctionAlias(gurax_glVertex4d, "glVertex4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6362,7 +6362,7 @@ Gurax_DeclareFunction(glVertex4d)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4d)
+Gurax_ImplementFunction(gurax_glVertex4d)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6376,7 +6376,7 @@ Gurax_ImplementFunction(glVertex4d)
 }
 
 // opengl.glVertex4dv(v[]:Number)
-Gurax_DeclareFunction(glVertex4dv)
+Gurax_DeclareFunctionAlias(gurax_glVertex4dv, "glVertex4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6385,7 +6385,7 @@ Gurax_DeclareFunction(glVertex4dv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4dv)
+Gurax_ImplementFunction(gurax_glVertex4dv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6396,7 +6396,7 @@ Gurax_ImplementFunction(glVertex4dv)
 }
 
 // opengl.glVertex4f(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glVertex4f)
+Gurax_DeclareFunctionAlias(gurax_glVertex4f, "glVertex4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6408,7 +6408,7 @@ Gurax_DeclareFunction(glVertex4f)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4f)
+Gurax_ImplementFunction(gurax_glVertex4f)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6422,7 +6422,7 @@ Gurax_ImplementFunction(glVertex4f)
 }
 
 // opengl.glVertex4fv(v[]:Number)
-Gurax_DeclareFunction(glVertex4fv)
+Gurax_DeclareFunctionAlias(gurax_glVertex4fv, "glVertex4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6431,7 +6431,7 @@ Gurax_DeclareFunction(glVertex4fv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4fv)
+Gurax_ImplementFunction(gurax_glVertex4fv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6442,7 +6442,7 @@ Gurax_ImplementFunction(glVertex4fv)
 }
 
 // opengl.glVertex4i(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glVertex4i)
+Gurax_DeclareFunctionAlias(gurax_glVertex4i, "glVertex4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6454,7 +6454,7 @@ Gurax_DeclareFunction(glVertex4i)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4i)
+Gurax_ImplementFunction(gurax_glVertex4i)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6468,7 +6468,7 @@ Gurax_ImplementFunction(glVertex4i)
 }
 
 // opengl.glVertex4iv(v[]:Number)
-Gurax_DeclareFunction(glVertex4iv)
+Gurax_DeclareFunctionAlias(gurax_glVertex4iv, "glVertex4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6477,7 +6477,7 @@ Gurax_DeclareFunction(glVertex4iv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4iv)
+Gurax_ImplementFunction(gurax_glVertex4iv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6488,7 +6488,7 @@ Gurax_ImplementFunction(glVertex4iv)
 }
 
 // opengl.glVertex4s(x:Number, y:Number, z:Number, w:Number)
-Gurax_DeclareFunction(glVertex4s)
+Gurax_DeclareFunctionAlias(gurax_glVertex4s, "glVertex4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6500,7 +6500,7 @@ Gurax_DeclareFunction(glVertex4s)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4s)
+Gurax_ImplementFunction(gurax_glVertex4s)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6514,7 +6514,7 @@ Gurax_ImplementFunction(glVertex4s)
 }
 
 // opengl.glVertex4sv(v[]:Number)
-Gurax_DeclareFunction(glVertex4sv)
+Gurax_DeclareFunctionAlias(gurax_glVertex4sv, "glVertex4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
@@ -6523,7 +6523,7 @@ Gurax_DeclareFunction(glVertex4sv)
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4sv)
+Gurax_ImplementFunction(gurax_glVertex4sv)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6534,7 +6534,7 @@ Gurax_ImplementFunction(glVertex4sv)
 }
 
 // opengl.glViewport(x:Number, y:Number, width:Number, height:Number)
-Gurax_DeclareFunction(glViewport)
+Gurax_DeclareFunctionAlias(gurax_glViewport, "glViewport")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -6546,7 +6546,7 @@ Gurax_DeclareFunction(glViewport)
 		"");
 }
 
-Gurax_ImplementFunction(glViewport)
+Gurax_ImplementFunction(gurax_glViewport)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -6559,304 +6559,1274 @@ Gurax_ImplementFunction(glViewport)
 	return Value::nil();
 }
 
+// opengl.glCopyTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, x:Number, y:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(gurax_glCopyTexSubImage3D, "glCopyTexSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glCopyTexSubImage3D)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint xoffset = args.PickNumber<GLint>();
+	GLint yoffset = args.PickNumber<GLint>();
+	GLint zoffset = args.PickNumber<GLint>();
+	GLint x = args.PickNumber<GLint>();
+	GLint y = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	// Function body
+	glCopyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+	return Value::nil();
+}
+
+// opengl.glActiveTexture(texture:Number)
+Gurax_DeclareFunctionAlias(gurax_glActiveTexture, "glActiveTexture")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glActiveTexture)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum texture = args.PickNumber<GLenum>();
+	// Function body
+	glActiveTexture(texture);
+	return Value::nil();
+}
+
+// opengl.glClientActiveTexture(texture:Number)
+Gurax_DeclareFunctionAlias(gurax_glClientActiveTexture, "glClientActiveTexture")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glClientActiveTexture)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum texture = args.PickNumber<GLenum>();
+	// Function body
+	glClientActiveTexture(texture);
+	return Value::nil();
+}
+
+// opengl.glLoadTransposeMatrixd(m[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glLoadTransposeMatrixd, "glLoadTransposeMatrixd")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glLoadTransposeMatrixd)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto m = args.PickNumList<GLdouble>();
+	// Function body
+	glLoadTransposeMatrixd(m);
+	return Value::nil();
+}
+
+// opengl.glLoadTransposeMatrixf(m[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glLoadTransposeMatrixf, "glLoadTransposeMatrixf")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glLoadTransposeMatrixf)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto m = args.PickNumList<GLfloat>();
+	// Function body
+	glLoadTransposeMatrixf(m);
+	return Value::nil();
+}
+
+// opengl.glMultTransposeMatrixd(m[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultTransposeMatrixd, "glMultTransposeMatrixd")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultTransposeMatrixd)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto m = args.PickNumList<GLdouble>();
+	// Function body
+	glMultTransposeMatrixd(m);
+	return Value::nil();
+}
+
+// opengl.glMultTransposeMatrixf(m[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultTransposeMatrixf, "glMultTransposeMatrixf")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultTransposeMatrixf)
+{
+	// Arguments
+	ArgPicker args(argument);
+	auto m = args.PickNumList<GLfloat>();
+	// Function body
+	glMultTransposeMatrixf(m);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1d(target:Number, s:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1d, "glMultiTexCoord1d")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1d)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLdouble s = args.PickNumber<GLdouble>();
+	// Function body
+	glMultiTexCoord1d(target, s);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1dv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1dv, "glMultiTexCoord1dv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1dv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLdouble>();
+	// Function body
+	glMultiTexCoord1dv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1f(target:Number, s:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1f, "glMultiTexCoord1f")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLfloat s = args.PickNumber<GLfloat>();
+	// Function body
+	glMultiTexCoord1f(target, s);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1fv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1fv, "glMultiTexCoord1fv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1fv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLfloat>();
+	// Function body
+	glMultiTexCoord1fv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1i(target:Number, s:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1i, "glMultiTexCoord1i")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1i)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint s = args.PickNumber<GLint>();
+	// Function body
+	glMultiTexCoord1i(target, s);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1iv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1iv, "glMultiTexCoord1iv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1iv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLint>();
+	// Function body
+	glMultiTexCoord1iv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1s(target:Number, s:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1s, "glMultiTexCoord1s")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1s)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLshort s = args.PickNumber<GLshort>();
+	// Function body
+	glMultiTexCoord1s(target, s);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord1sv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord1sv, "glMultiTexCoord1sv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord1sv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLshort>();
+	// Function body
+	glMultiTexCoord1sv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2d(target:Number, s:Number, t:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2d, "glMultiTexCoord2d")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2d)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLdouble s = args.PickNumber<GLdouble>();
+	GLdouble t = args.PickNumber<GLdouble>();
+	// Function body
+	glMultiTexCoord2d(target, s, t);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2dv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2dv, "glMultiTexCoord2dv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2dv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLdouble>();
+	// Function body
+	glMultiTexCoord2dv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2f(target:Number, s:Number, t:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2f, "glMultiTexCoord2f")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLfloat s = args.PickNumber<GLfloat>();
+	GLfloat t = args.PickNumber<GLfloat>();
+	// Function body
+	glMultiTexCoord2f(target, s, t);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2fv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2fv, "glMultiTexCoord2fv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2fv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLfloat>();
+	// Function body
+	glMultiTexCoord2fv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2i(target:Number, s:Number, t:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2i, "glMultiTexCoord2i")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2i)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint s = args.PickNumber<GLint>();
+	GLint t = args.PickNumber<GLint>();
+	// Function body
+	glMultiTexCoord2i(target, s, t);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2iv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2iv, "glMultiTexCoord2iv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2iv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLint>();
+	// Function body
+	glMultiTexCoord2iv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2s(target:Number, s:Number, t:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2s, "glMultiTexCoord2s")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2s)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLshort s = args.PickNumber<GLshort>();
+	GLshort t = args.PickNumber<GLshort>();
+	// Function body
+	glMultiTexCoord2s(target, s, t);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord2sv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord2sv, "glMultiTexCoord2sv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord2sv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLshort>();
+	// Function body
+	glMultiTexCoord2sv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3d(target:Number, s:Number, t:Number, r:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3d, "glMultiTexCoord3d")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3d)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLdouble s = args.PickNumber<GLdouble>();
+	GLdouble t = args.PickNumber<GLdouble>();
+	GLdouble r = args.PickNumber<GLdouble>();
+	// Function body
+	glMultiTexCoord3d(target, s, t, r);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3dv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3dv, "glMultiTexCoord3dv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3dv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLdouble>();
+	// Function body
+	glMultiTexCoord3dv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3f(target:Number, s:Number, t:Number, r:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3f, "glMultiTexCoord3f")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLfloat s = args.PickNumber<GLfloat>();
+	GLfloat t = args.PickNumber<GLfloat>();
+	GLfloat r = args.PickNumber<GLfloat>();
+	// Function body
+	glMultiTexCoord3f(target, s, t, r);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3fv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3fv, "glMultiTexCoord3fv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3fv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLfloat>();
+	// Function body
+	glMultiTexCoord3fv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3i(target:Number, s:Number, t:Number, r:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3i, "glMultiTexCoord3i")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3i)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint s = args.PickNumber<GLint>();
+	GLint t = args.PickNumber<GLint>();
+	GLint r = args.PickNumber<GLint>();
+	// Function body
+	glMultiTexCoord3i(target, s, t, r);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3iv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3iv, "glMultiTexCoord3iv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3iv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLint>();
+	// Function body
+	glMultiTexCoord3iv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3s(target:Number, s:Number, t:Number, r:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3s, "glMultiTexCoord3s")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3s)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLshort s = args.PickNumber<GLshort>();
+	GLshort t = args.PickNumber<GLshort>();
+	GLshort r = args.PickNumber<GLshort>();
+	// Function body
+	glMultiTexCoord3s(target, s, t, r);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord3sv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord3sv, "glMultiTexCoord3sv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord3sv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLshort>();
+	// Function body
+	glMultiTexCoord3sv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4d(target:Number, s:Number, t:Number, r:Number, q:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4d, "glMultiTexCoord4d")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4d)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLdouble s = args.PickNumber<GLdouble>();
+	GLdouble t = args.PickNumber<GLdouble>();
+	GLdouble r = args.PickNumber<GLdouble>();
+	GLdouble q = args.PickNumber<GLdouble>();
+	// Function body
+	glMultiTexCoord4d(target, s, t, r, q);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4dv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4dv, "glMultiTexCoord4dv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4dv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLdouble>();
+	// Function body
+	glMultiTexCoord4dv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4f(target:Number, s:Number, t:Number, r:Number, q:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4f, "glMultiTexCoord4f")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4f)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLfloat s = args.PickNumber<GLfloat>();
+	GLfloat t = args.PickNumber<GLfloat>();
+	GLfloat r = args.PickNumber<GLfloat>();
+	GLfloat q = args.PickNumber<GLfloat>();
+	// Function body
+	glMultiTexCoord4f(target, s, t, r, q);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4fv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4fv, "glMultiTexCoord4fv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4fv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLfloat>();
+	// Function body
+	glMultiTexCoord4fv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4i(target:Number, s:Number, t:Number, r:Number, q:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4i, "glMultiTexCoord4i")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4i)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint s = args.PickNumber<GLint>();
+	GLint t = args.PickNumber<GLint>();
+	GLint r = args.PickNumber<GLint>();
+	GLint q = args.PickNumber<GLint>();
+	// Function body
+	glMultiTexCoord4i(target, s, t, r, q);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4iv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4iv, "glMultiTexCoord4iv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4iv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLint>();
+	// Function body
+	glMultiTexCoord4iv(target, v);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4s(target:Number, s:Number, t:Number, r:Number, q:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4s, "glMultiTexCoord4s")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4s)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLshort s = args.PickNumber<GLshort>();
+	GLshort t = args.PickNumber<GLshort>();
+	GLshort r = args.PickNumber<GLshort>();
+	GLshort q = args.PickNumber<GLshort>();
+	// Function body
+	glMultiTexCoord4s(target, s, t, r, q);
+	return Value::nil();
+}
+
+// opengl.glMultiTexCoord4sv(target:Number, v[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glMultiTexCoord4sv, "glMultiTexCoord4sv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glMultiTexCoord4sv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	auto v = args.PickNumList<GLshort>();
+	// Function body
+	glMultiTexCoord4sv(target, v);
+	return Value::nil();
+}
+
+// opengl.glSampleCoverage(value:Number, invert:Bool)
+Gurax_DeclareFunctionAlias(gurax_glSampleCoverage, "glSampleCoverage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("invert", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glSampleCoverage)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLclampf value = args.PickNumber<GLclampf>();
+	GLboolean invert = static_cast<GLboolean>(args.PickBool());
+	// Function body
+	glSampleCoverage(value, invert);
+	return Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
-	frame.Assign(Gurax_CreateFunction(glewInit));
-	frame.Assign(Gurax_CreateFunction(glewIsSupported));
-	frame.Assign(Gurax_CreateFunction(glewGetExtension));
-	frame.Assign(Gurax_CreateFunction(glewGetErrorString));
-	frame.Assign(Gurax_CreateFunction(glewGetString));
-	frame.Assign(Gurax_CreateFunction(glAccum));
-	frame.Assign(Gurax_CreateFunction(glAlphaFunc));
-	frame.Assign(Gurax_CreateFunction(glArrayElement));
-	frame.Assign(Gurax_CreateFunction(glBegin));
-	frame.Assign(Gurax_CreateFunction(glBindTexture));
-	frame.Assign(Gurax_CreateFunction(glBlendFunc));
-	frame.Assign(Gurax_CreateFunction(glCallList));
-	frame.Assign(Gurax_CreateFunction(glClear));
-	frame.Assign(Gurax_CreateFunction(glClearAccum));
-	frame.Assign(Gurax_CreateFunction(glClearColor));
-	frame.Assign(Gurax_CreateFunction(glClearDepth));
-	frame.Assign(Gurax_CreateFunction(glClearIndex));
-	frame.Assign(Gurax_CreateFunction(glClearStencil));
-	frame.Assign(Gurax_CreateFunction(glClipPlane));
-	frame.Assign(Gurax_CreateFunction(glColor3b));
-	frame.Assign(Gurax_CreateFunction(glColor3bv));
-	frame.Assign(Gurax_CreateFunction(glColor3d));
-	frame.Assign(Gurax_CreateFunction(glColor3dv));
-	frame.Assign(Gurax_CreateFunction(glColor3f));
-	frame.Assign(Gurax_CreateFunction(glColor3fv));
-	frame.Assign(Gurax_CreateFunction(glColor3i));
-	frame.Assign(Gurax_CreateFunction(glColor3iv));
-	frame.Assign(Gurax_CreateFunction(glColor3s));
-	frame.Assign(Gurax_CreateFunction(glColor3sv));
-	frame.Assign(Gurax_CreateFunction(glColor3ub));
-	frame.Assign(Gurax_CreateFunction(glColor3ubv));
-	frame.Assign(Gurax_CreateFunction(glColor3ui));
-	frame.Assign(Gurax_CreateFunction(glColor3uiv));
-	frame.Assign(Gurax_CreateFunction(glColor3us));
-	frame.Assign(Gurax_CreateFunction(glColor3usv));
-	frame.Assign(Gurax_CreateFunction(glColor4b));
-	frame.Assign(Gurax_CreateFunction(glColor4bv));
-	frame.Assign(Gurax_CreateFunction(glColor4d));
-	frame.Assign(Gurax_CreateFunction(glColor4dv));
-	frame.Assign(Gurax_CreateFunction(glColor4f));
-	frame.Assign(Gurax_CreateFunction(glColor4fv));
-	frame.Assign(Gurax_CreateFunction(glColor4i));
-	frame.Assign(Gurax_CreateFunction(glColor4iv));
-	frame.Assign(Gurax_CreateFunction(glColor4s));
-	frame.Assign(Gurax_CreateFunction(glColor4sv));
-	frame.Assign(Gurax_CreateFunction(glColor4ub));
-	frame.Assign(Gurax_CreateFunction(glColor4ubv));
-	frame.Assign(Gurax_CreateFunction(glColor4ui));
-	frame.Assign(Gurax_CreateFunction(glColor4uiv));
-	frame.Assign(Gurax_CreateFunction(glColor4us));
-	frame.Assign(Gurax_CreateFunction(glColor4usv));
-	frame.Assign(Gurax_CreateFunction(glColorMask));
-	frame.Assign(Gurax_CreateFunction(glColorMaterial));
-	frame.Assign(Gurax_CreateFunction(glCopyPixels));
-	frame.Assign(Gurax_CreateFunction(glCopyTexImage1D));
-	frame.Assign(Gurax_CreateFunction(glCopyTexImage2D));
-	frame.Assign(Gurax_CreateFunction(glCopyTexSubImage1D));
-	frame.Assign(Gurax_CreateFunction(glCopyTexSubImage2D));
-	frame.Assign(Gurax_CreateFunction(glCullFace));
-	frame.Assign(Gurax_CreateFunction(glDeleteLists));
-	frame.Assign(Gurax_CreateFunction(glDeleteTextures));
-	frame.Assign(Gurax_CreateFunction(glDepthFunc));
-	frame.Assign(Gurax_CreateFunction(glDepthMask));
-	frame.Assign(Gurax_CreateFunction(glDepthRange));
-	frame.Assign(Gurax_CreateFunction(glDisable));
-	frame.Assign(Gurax_CreateFunction(glDisableClientState));
-	frame.Assign(Gurax_CreateFunction(glDrawArrays));
-	frame.Assign(Gurax_CreateFunction(glDrawBuffer));
-	frame.Assign(Gurax_CreateFunction(glEdgeFlag));
-	frame.Assign(Gurax_CreateFunction(glEdgeFlagv));
-	frame.Assign(Gurax_CreateFunction(glEnable));
-	frame.Assign(Gurax_CreateFunction(glEnableClientState));
-	frame.Assign(Gurax_CreateFunction(glEnd));
-	frame.Assign(Gurax_CreateFunction(glEndList));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord1d));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord1dv));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord1f));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord1fv));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord2d));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord2dv));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord2f));
-	frame.Assign(Gurax_CreateFunction(glEvalCoord2fv));
-	frame.Assign(Gurax_CreateFunction(glEvalMesh1));
-	frame.Assign(Gurax_CreateFunction(glEvalMesh2));
-	frame.Assign(Gurax_CreateFunction(glEvalPoint1));
-	frame.Assign(Gurax_CreateFunction(glEvalPoint2));
-	frame.Assign(Gurax_CreateFunction(glFeedbackBuffer));
-	frame.Assign(Gurax_CreateFunction(glFinish));
-	frame.Assign(Gurax_CreateFunction(glFlush));
-	frame.Assign(Gurax_CreateFunction(glFogf));
-	frame.Assign(Gurax_CreateFunction(glFogfv));
-	frame.Assign(Gurax_CreateFunction(glFogi));
-	frame.Assign(Gurax_CreateFunction(glFogiv));
-	frame.Assign(Gurax_CreateFunction(glFrontFace));
-	frame.Assign(Gurax_CreateFunction(glFrustum));
-	frame.Assign(Gurax_CreateFunction(glGenLists));
-	frame.Assign(Gurax_CreateFunction(glGenTextures));
-	frame.Assign(Gurax_CreateFunction(glGetError));
-	frame.Assign(Gurax_CreateFunction(glGetString));
-	frame.Assign(Gurax_CreateFunction(glHint));
-	frame.Assign(Gurax_CreateFunction(glIndexMask));
-	frame.Assign(Gurax_CreateFunction(glIndexd));
-	frame.Assign(Gurax_CreateFunction(glIndexdv));
-	frame.Assign(Gurax_CreateFunction(glIndexf));
-	frame.Assign(Gurax_CreateFunction(glIndexfv));
-	frame.Assign(Gurax_CreateFunction(glIndexi));
-	frame.Assign(Gurax_CreateFunction(glIndexiv));
-	frame.Assign(Gurax_CreateFunction(glIndexs));
-	frame.Assign(Gurax_CreateFunction(glIndexsv));
-	frame.Assign(Gurax_CreateFunction(glIndexub));
-	frame.Assign(Gurax_CreateFunction(glIndexubv));
-	frame.Assign(Gurax_CreateFunction(glInitNames));
-	frame.Assign(Gurax_CreateFunction(glIsEnabled));
-	frame.Assign(Gurax_CreateFunction(glIsList));
-	frame.Assign(Gurax_CreateFunction(glIsTexture));
-	frame.Assign(Gurax_CreateFunction(glLightModelf));
-	frame.Assign(Gurax_CreateFunction(glLightModelfv));
-	frame.Assign(Gurax_CreateFunction(glLightModeli));
-	frame.Assign(Gurax_CreateFunction(glLightModeliv));
-	frame.Assign(Gurax_CreateFunction(glLightf));
-	frame.Assign(Gurax_CreateFunction(glLightfv));
-	frame.Assign(Gurax_CreateFunction(glLighti));
-	frame.Assign(Gurax_CreateFunction(glLightiv));
-	frame.Assign(Gurax_CreateFunction(glLineStipple));
-	frame.Assign(Gurax_CreateFunction(glLineWidth));
-	frame.Assign(Gurax_CreateFunction(glListBase));
-	frame.Assign(Gurax_CreateFunction(glLoadIdentity));
-	frame.Assign(Gurax_CreateFunction(glLoadMatrixd));
-	frame.Assign(Gurax_CreateFunction(glLoadMatrixf));
-	frame.Assign(Gurax_CreateFunction(glLoadName));
-	frame.Assign(Gurax_CreateFunction(glLogicOp));
-	frame.Assign(Gurax_CreateFunction(glMap1d));
-	frame.Assign(Gurax_CreateFunction(glMap1f));
-	frame.Assign(Gurax_CreateFunction(glMap2d));
-	frame.Assign(Gurax_CreateFunction(glMap2f));
-	frame.Assign(Gurax_CreateFunction(glMapGrid1d));
-	frame.Assign(Gurax_CreateFunction(glMapGrid1f));
-	frame.Assign(Gurax_CreateFunction(glMapGrid2d));
-	frame.Assign(Gurax_CreateFunction(glMapGrid2f));
-	frame.Assign(Gurax_CreateFunction(glMaterialf));
-	frame.Assign(Gurax_CreateFunction(glMaterialfv));
-	frame.Assign(Gurax_CreateFunction(glMateriali));
-	frame.Assign(Gurax_CreateFunction(glMaterialiv));
-	frame.Assign(Gurax_CreateFunction(glMatrixMode));
-	frame.Assign(Gurax_CreateFunction(glMultMatrixd));
-	frame.Assign(Gurax_CreateFunction(glMultMatrixf));
-	frame.Assign(Gurax_CreateFunction(glNewList));
-	frame.Assign(Gurax_CreateFunction(glNormal3b));
-	frame.Assign(Gurax_CreateFunction(glNormal3bv));
-	frame.Assign(Gurax_CreateFunction(glNormal3d));
-	frame.Assign(Gurax_CreateFunction(glNormal3dv));
-	frame.Assign(Gurax_CreateFunction(glNormal3f));
-	frame.Assign(Gurax_CreateFunction(glNormal3fv));
-	frame.Assign(Gurax_CreateFunction(glNormal3i));
-	frame.Assign(Gurax_CreateFunction(glNormal3iv));
-	frame.Assign(Gurax_CreateFunction(glNormal3s));
-	frame.Assign(Gurax_CreateFunction(glNormal3sv));
-	frame.Assign(Gurax_CreateFunction(glOrtho));
-	frame.Assign(Gurax_CreateFunction(glPassThrough));
-	frame.Assign(Gurax_CreateFunction(glPixelMapfv));
-	frame.Assign(Gurax_CreateFunction(glPixelMapuiv));
-	frame.Assign(Gurax_CreateFunction(glPixelMapusv));
-	frame.Assign(Gurax_CreateFunction(glPixelStoref));
-	frame.Assign(Gurax_CreateFunction(glPixelStorei));
-	frame.Assign(Gurax_CreateFunction(glPixelTransferf));
-	frame.Assign(Gurax_CreateFunction(glPixelTransferi));
-	frame.Assign(Gurax_CreateFunction(glPixelZoom));
-	frame.Assign(Gurax_CreateFunction(glPointSize));
-	frame.Assign(Gurax_CreateFunction(glPolygonMode));
-	frame.Assign(Gurax_CreateFunction(glPolygonOffset));
-	frame.Assign(Gurax_CreateFunction(glPolygonStipple));
-	frame.Assign(Gurax_CreateFunction(glPopAttrib));
-	frame.Assign(Gurax_CreateFunction(glPopClientAttrib));
-	frame.Assign(Gurax_CreateFunction(glPopMatrix));
-	frame.Assign(Gurax_CreateFunction(glPopName));
-	frame.Assign(Gurax_CreateFunction(glPrioritizeTextures));
-	frame.Assign(Gurax_CreateFunction(glPushAttrib));
-	frame.Assign(Gurax_CreateFunction(glPushClientAttrib));
-	frame.Assign(Gurax_CreateFunction(glPushMatrix));
-	frame.Assign(Gurax_CreateFunction(glPushName));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2d));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2dv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2f));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2fv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2i));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2iv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2s));
-	frame.Assign(Gurax_CreateFunction(glRasterPos2sv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3d));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3dv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3f));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3fv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3i));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3iv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3s));
-	frame.Assign(Gurax_CreateFunction(glRasterPos3sv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4d));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4dv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4f));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4fv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4i));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4iv));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4s));
-	frame.Assign(Gurax_CreateFunction(glRasterPos4sv));
-	frame.Assign(Gurax_CreateFunction(glReadBuffer));
-	frame.Assign(Gurax_CreateFunction(glRectd));
-	frame.Assign(Gurax_CreateFunction(glRectdv));
-	frame.Assign(Gurax_CreateFunction(glRectf));
-	frame.Assign(Gurax_CreateFunction(glRectfv));
-	frame.Assign(Gurax_CreateFunction(glRecti));
-	frame.Assign(Gurax_CreateFunction(glRectiv));
-	frame.Assign(Gurax_CreateFunction(glRects));
-	frame.Assign(Gurax_CreateFunction(glRectsv));
-	frame.Assign(Gurax_CreateFunction(glRenderMode));
-	frame.Assign(Gurax_CreateFunction(glRotated));
-	frame.Assign(Gurax_CreateFunction(glRotatef));
-	frame.Assign(Gurax_CreateFunction(glScaled));
-	frame.Assign(Gurax_CreateFunction(glScalef));
-	frame.Assign(Gurax_CreateFunction(glScissor));
-	frame.Assign(Gurax_CreateFunction(glShadeModel));
-	frame.Assign(Gurax_CreateFunction(glStencilFunc));
-	frame.Assign(Gurax_CreateFunction(glStencilMask));
-	frame.Assign(Gurax_CreateFunction(glStencilOp));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1d));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1dv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1f));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1fv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1i));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1iv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1s));
-	frame.Assign(Gurax_CreateFunction(glTexCoord1sv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2d));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2dv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2f));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2fv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2i));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2iv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2s));
-	frame.Assign(Gurax_CreateFunction(glTexCoord2sv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3d));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3dv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3f));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3fv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3i));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3iv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3s));
-	frame.Assign(Gurax_CreateFunction(glTexCoord3sv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4d));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4dv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4f));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4fv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4i));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4iv));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4s));
-	frame.Assign(Gurax_CreateFunction(glTexCoord4sv));
-	frame.Assign(Gurax_CreateFunction(glTexEnvf));
-	frame.Assign(Gurax_CreateFunction(glTexEnvfv));
-	frame.Assign(Gurax_CreateFunction(glTexEnvi));
-	frame.Assign(Gurax_CreateFunction(glTexEnviv));
-	frame.Assign(Gurax_CreateFunction(glTexGend));
-	frame.Assign(Gurax_CreateFunction(glTexGendv));
-	frame.Assign(Gurax_CreateFunction(glTexGenf));
-	frame.Assign(Gurax_CreateFunction(glTexGenfv));
-	frame.Assign(Gurax_CreateFunction(glTexGeni));
-	frame.Assign(Gurax_CreateFunction(glTexGeniv));
-	frame.Assign(Gurax_CreateFunction(glTexParameterf));
-	frame.Assign(Gurax_CreateFunction(glTexParameterfv));
-	frame.Assign(Gurax_CreateFunction(glTexParameteri));
-	frame.Assign(Gurax_CreateFunction(glTexParameteriv));
-	frame.Assign(Gurax_CreateFunction(glTranslated));
-	frame.Assign(Gurax_CreateFunction(glTranslatef));
-	frame.Assign(Gurax_CreateFunction(glVertex2d));
-	frame.Assign(Gurax_CreateFunction(glVertex2dv));
-	frame.Assign(Gurax_CreateFunction(glVertex2f));
-	frame.Assign(Gurax_CreateFunction(glVertex2fv));
-	frame.Assign(Gurax_CreateFunction(glVertex2i));
-	frame.Assign(Gurax_CreateFunction(glVertex2iv));
-	frame.Assign(Gurax_CreateFunction(glVertex2s));
-	frame.Assign(Gurax_CreateFunction(glVertex2sv));
-	frame.Assign(Gurax_CreateFunction(glVertex3d));
-	frame.Assign(Gurax_CreateFunction(glVertex3dv));
-	frame.Assign(Gurax_CreateFunction(glVertex3f));
-	frame.Assign(Gurax_CreateFunction(glVertex3fv));
-	frame.Assign(Gurax_CreateFunction(glVertex3i));
-	frame.Assign(Gurax_CreateFunction(glVertex3iv));
-	frame.Assign(Gurax_CreateFunction(glVertex3s));
-	frame.Assign(Gurax_CreateFunction(glVertex3sv));
-	frame.Assign(Gurax_CreateFunction(glVertex4d));
-	frame.Assign(Gurax_CreateFunction(glVertex4dv));
-	frame.Assign(Gurax_CreateFunction(glVertex4f));
-	frame.Assign(Gurax_CreateFunction(glVertex4fv));
-	frame.Assign(Gurax_CreateFunction(glVertex4i));
-	frame.Assign(Gurax_CreateFunction(glVertex4iv));
-	frame.Assign(Gurax_CreateFunction(glVertex4s));
-	frame.Assign(Gurax_CreateFunction(glVertex4sv));
-	frame.Assign(Gurax_CreateFunction(glViewport));
+	frame.Assign(Gurax_CreateFunction(gurax_glewInit));
+	frame.Assign(Gurax_CreateFunction(gurax_glewIsSupported));
+	frame.Assign(Gurax_CreateFunction(gurax_glewGetExtension));
+	frame.Assign(Gurax_CreateFunction(gurax_glewGetErrorString));
+	frame.Assign(Gurax_CreateFunction(gurax_glewGetString));
+	frame.Assign(Gurax_CreateFunction(gurax_glAccum));
+	frame.Assign(Gurax_CreateFunction(gurax_glAlphaFunc));
+	frame.Assign(Gurax_CreateFunction(gurax_glArrayElement));
+	frame.Assign(Gurax_CreateFunction(gurax_glBegin));
+	frame.Assign(Gurax_CreateFunction(gurax_glBindTexture));
+	frame.Assign(Gurax_CreateFunction(gurax_glBlendFunc));
+	frame.Assign(Gurax_CreateFunction(gurax_glCallList));
+	frame.Assign(Gurax_CreateFunction(gurax_glClear));
+	frame.Assign(Gurax_CreateFunction(gurax_glClearAccum));
+	frame.Assign(Gurax_CreateFunction(gurax_glClearColor));
+	frame.Assign(Gurax_CreateFunction(gurax_glClearDepth));
+	frame.Assign(Gurax_CreateFunction(gurax_glClearIndex));
+	frame.Assign(Gurax_CreateFunction(gurax_glClearStencil));
+	frame.Assign(Gurax_CreateFunction(gurax_glClipPlane));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3b));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3bv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3ub));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3ubv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3ui));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3uiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3us));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor3usv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4b));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4bv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4d));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4f));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4i));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4s));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4ub));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4ubv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4ui));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4uiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4us));
+	frame.Assign(Gurax_CreateFunction(gurax_glColor4usv));
+	frame.Assign(Gurax_CreateFunction(gurax_glColorMask));
+	frame.Assign(Gurax_CreateFunction(gurax_glColorMaterial));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyPixels));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyTexImage1D));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyTexImage2D));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyTexSubImage1D));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyTexSubImage2D));
+	frame.Assign(Gurax_CreateFunction(gurax_glCullFace));
+	frame.Assign(Gurax_CreateFunction(gurax_glDeleteLists));
+	frame.Assign(Gurax_CreateFunction(gurax_glDeleteTextures));
+	frame.Assign(Gurax_CreateFunction(gurax_glDepthFunc));
+	frame.Assign(Gurax_CreateFunction(gurax_glDepthMask));
+	frame.Assign(Gurax_CreateFunction(gurax_glDepthRange));
+	frame.Assign(Gurax_CreateFunction(gurax_glDisable));
+	frame.Assign(Gurax_CreateFunction(gurax_glDisableClientState));
+	frame.Assign(Gurax_CreateFunction(gurax_glDrawArrays));
+	frame.Assign(Gurax_CreateFunction(gurax_glDrawBuffer));
+	frame.Assign(Gurax_CreateFunction(gurax_glEdgeFlag));
+	frame.Assign(Gurax_CreateFunction(gurax_glEdgeFlagv));
+	frame.Assign(Gurax_CreateFunction(gurax_glEnable));
+	frame.Assign(Gurax_CreateFunction(gurax_glEnableClientState));
+	frame.Assign(Gurax_CreateFunction(gurax_glEnd));
+	frame.Assign(Gurax_CreateFunction(gurax_glEndList));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord1d));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord1dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord1f));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord1fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord2dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalCoord2fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalMesh1));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalMesh2));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalPoint1));
+	frame.Assign(Gurax_CreateFunction(gurax_glEvalPoint2));
+	frame.Assign(Gurax_CreateFunction(gurax_glFeedbackBuffer));
+	frame.Assign(Gurax_CreateFunction(gurax_glFinish));
+	frame.Assign(Gurax_CreateFunction(gurax_glFlush));
+	frame.Assign(Gurax_CreateFunction(gurax_glFogf));
+	frame.Assign(Gurax_CreateFunction(gurax_glFogfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glFogi));
+	frame.Assign(Gurax_CreateFunction(gurax_glFogiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glFrontFace));
+	frame.Assign(Gurax_CreateFunction(gurax_glFrustum));
+	frame.Assign(Gurax_CreateFunction(gurax_glGenLists));
+	frame.Assign(Gurax_CreateFunction(gurax_glGenTextures));
+	frame.Assign(Gurax_CreateFunction(gurax_glGetError));
+	frame.Assign(Gurax_CreateFunction(gurax_glGetString));
+	frame.Assign(Gurax_CreateFunction(gurax_glHint));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexMask));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexd));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexdv));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexf));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexi));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexs));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexsv));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexub));
+	frame.Assign(Gurax_CreateFunction(gurax_glIndexubv));
+	frame.Assign(Gurax_CreateFunction(gurax_glInitNames));
+	frame.Assign(Gurax_CreateFunction(gurax_glIsEnabled));
+	frame.Assign(Gurax_CreateFunction(gurax_glIsList));
+	frame.Assign(Gurax_CreateFunction(gurax_glIsTexture));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightModelf));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightModelfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightModeli));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightModeliv));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightf));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glLighti));
+	frame.Assign(Gurax_CreateFunction(gurax_glLightiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glLineStipple));
+	frame.Assign(Gurax_CreateFunction(gurax_glLineWidth));
+	frame.Assign(Gurax_CreateFunction(gurax_glListBase));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadIdentity));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadMatrixd));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadMatrixf));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadName));
+	frame.Assign(Gurax_CreateFunction(gurax_glLogicOp));
+	frame.Assign(Gurax_CreateFunction(gurax_glMap1d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMap1f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMap2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMap2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMapGrid1d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMapGrid1f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMapGrid2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMapGrid2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMaterialf));
+	frame.Assign(Gurax_CreateFunction(gurax_glMaterialfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMateriali));
+	frame.Assign(Gurax_CreateFunction(gurax_glMaterialiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMatrixMode));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultMatrixd));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultMatrixf));
+	frame.Assign(Gurax_CreateFunction(gurax_glNewList));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3b));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3bv));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glNormal3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glOrtho));
+	frame.Assign(Gurax_CreateFunction(gurax_glPassThrough));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelMapfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelMapuiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelMapusv));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelStoref));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelStorei));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelTransferf));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelTransferi));
+	frame.Assign(Gurax_CreateFunction(gurax_glPixelZoom));
+	frame.Assign(Gurax_CreateFunction(gurax_glPointSize));
+	frame.Assign(Gurax_CreateFunction(gurax_glPolygonMode));
+	frame.Assign(Gurax_CreateFunction(gurax_glPolygonOffset));
+	frame.Assign(Gurax_CreateFunction(gurax_glPolygonStipple));
+	frame.Assign(Gurax_CreateFunction(gurax_glPopAttrib));
+	frame.Assign(Gurax_CreateFunction(gurax_glPopClientAttrib));
+	frame.Assign(Gurax_CreateFunction(gurax_glPopMatrix));
+	frame.Assign(Gurax_CreateFunction(gurax_glPopName));
+	frame.Assign(Gurax_CreateFunction(gurax_glPrioritizeTextures));
+	frame.Assign(Gurax_CreateFunction(gurax_glPushAttrib));
+	frame.Assign(Gurax_CreateFunction(gurax_glPushClientAttrib));
+	frame.Assign(Gurax_CreateFunction(gurax_glPushMatrix));
+	frame.Assign(Gurax_CreateFunction(gurax_glPushName));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2i));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2s));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos2sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4d));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4f));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4i));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4s));
+	frame.Assign(Gurax_CreateFunction(gurax_glRasterPos4sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glReadBuffer));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectd));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectdv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectf));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRecti));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectiv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRects));
+	frame.Assign(Gurax_CreateFunction(gurax_glRectsv));
+	frame.Assign(Gurax_CreateFunction(gurax_glRenderMode));
+	frame.Assign(Gurax_CreateFunction(gurax_glRotated));
+	frame.Assign(Gurax_CreateFunction(gurax_glRotatef));
+	frame.Assign(Gurax_CreateFunction(gurax_glScaled));
+	frame.Assign(Gurax_CreateFunction(gurax_glScalef));
+	frame.Assign(Gurax_CreateFunction(gurax_glScissor));
+	frame.Assign(Gurax_CreateFunction(gurax_glShadeModel));
+	frame.Assign(Gurax_CreateFunction(gurax_glStencilFunc));
+	frame.Assign(Gurax_CreateFunction(gurax_glStencilMask));
+	frame.Assign(Gurax_CreateFunction(gurax_glStencilOp));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1d));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1f));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1i));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1s));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord1sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2i));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2s));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord2sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4d));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4f));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4i));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4s));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexCoord4sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexEnvf));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexEnvfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexEnvi));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexEnviv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGend));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGendv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGenf));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGenfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGeni));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexGeniv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexParameterf));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexParameterfv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexParameteri));
+	frame.Assign(Gurax_CreateFunction(gurax_glTexParameteriv));
+	frame.Assign(Gurax_CreateFunction(gurax_glTranslated));
+	frame.Assign(Gurax_CreateFunction(gurax_glTranslatef));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2i));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2s));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex2sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4d));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4f));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4i));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4s));
+	frame.Assign(Gurax_CreateFunction(gurax_glVertex4sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glViewport));
+	frame.Assign(Gurax_CreateFunction(gurax_glCopyTexSubImage3D));
+	frame.Assign(Gurax_CreateFunction(gurax_glActiveTexture));
+	frame.Assign(Gurax_CreateFunction(gurax_glClientActiveTexture));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadTransposeMatrixd));
+	frame.Assign(Gurax_CreateFunction(gurax_glLoadTransposeMatrixf));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultTransposeMatrixd));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultTransposeMatrixf));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1i));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1s));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord1sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2i));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2s));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord2sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3i));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3s));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord3sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4d));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4dv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4f));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4fv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4i));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4iv));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4s));
+	frame.Assign(Gurax_CreateFunction(gurax_glMultiTexCoord4sv));
+	frame.Assign(Gurax_CreateFunction(gurax_glSampleCoverage));
 }
 
 Gurax_EndModuleScope(opengl)
