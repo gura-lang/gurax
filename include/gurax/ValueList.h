@@ -34,6 +34,13 @@ public:
 	size_t CountFalse() const;
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
+	template<typename T>
+	ListBase<T> ToListT(std::function<T(Value& value)> fn) const {
+		ListBase<T> lst;
+		lst.reserve(size());
+		for (Value* pValue : *this) lst.push_back(fn(*pValue));
+		return lst;
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }

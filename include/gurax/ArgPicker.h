@@ -85,13 +85,7 @@ public:
 	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
 	template<typename T>
 	ListBase<T> PickListT(std::function<T(Value& value)> fn) {
-		ListBase<T> lst;
-		if (IsValid()) {
-			const ValueList& valList = PickList();
-			lst.reserve(valList.size());
-			for (Value* pValue : valList) lst.push_back(fn(*pValue));
-		}
-		return lst;
+		return IsValid()? PickList().ToListT<T>(fn) : ListBase<T>();
 	}
 	Codec& PickCodec()				{ return Pick<Value_Codec>().GetCodec(); }
 	Color& PickColor()				{ return Pick<Value_Color>().GetColor(); }

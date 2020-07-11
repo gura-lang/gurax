@@ -125,10 +125,11 @@ glCopyTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, x:GLint, y:GLint,
 glCopyTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 glCullFace(mode:GLenum):void
 glDeleteLists(list:GLuint, range:GLsizei):void
-glDeleteTextures(textures[]:GLuint):void = R'''
-glDeleteTextures(textures.sizeT<GLsizei>(), textures);
-return Value::nil();
-'''
+glDeleteTextures(textures[]:GLuint):void = \
+	R'''
+	glDeleteTextures(textures.sizeT<GLsizei>(), textures);
+	return Value::nil();
+	'''
 glDepthFunc(func:GLenum):void
 glDepthMask(flag:GLboolean):void
 glDepthRange(zNear:GLclampd, zFar:GLclampd):void
@@ -136,7 +137,25 @@ glDisable(cap:GLenum):void
 glDisableClientState(array:GLenum):void
 glDrawArrays(mode:GLenum, first:GLint, count:GLsizei):void
 glDrawBuffer(mode:GLenum):void
-//glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void
+//glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void = \
+/*
+glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices[]:Number):void = \
+	R'''
+	switch (type) {
+	case GL_UNSIGNED_BYTE: {
+		Value_Number::indices
+	}
+	case GL_UNSIGNED_SHORT: {
+	}
+	case GL_UNSIGNED_INT: {
+	}
+	default: {
+		break;
+	}
+	}
+	return Value::nil();
+	'''
+*/
 //glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
 glEdgeFlag(flag:GLboolean):void
 //glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
@@ -157,11 +176,12 @@ glEvalMesh1(mode:GLenum, i1:GLint, i2:GLint):void
 glEvalMesh2(mode:GLenum, i1:GLint, i2:GLint, j1:GLint, j2:GLint):void
 glEvalPoint1(i:GLint):void
 glEvalPoint2(i:GLint, j:GLint):void
-glFeedbackBuffer(size:GLsizei, type:GLenum) = R'''
-std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
-glFeedbackBuffer(size, type, buffer.get());
-return Value_List::Create(buffer.get(), size);
-'''
+glFeedbackBuffer(size:GLsizei, type:GLenum) = \
+	R'''
+	std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
+	glFeedbackBuffer(size, type, buffer.get());
+	return Value_List::Create(buffer.get(), size);
+	'''
 glFinish():void
 glFlush():void
 glFogf(pname:GLenum, param:GLfloat):void
@@ -171,11 +191,12 @@ glFogiv(pname:GLenum, params[]:GLint):void
 glFrontFace(mode:GLenum):void
 glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
 glGenLists(range:GLsizei):GLuint
-glGenTextures(n:GLsizei) = R'''
-std::unique_ptr<GLuint []> textures(new GLuint [n]);
-glGenTextures(n, textures.get());
-return Value_List::Create(textures.get(), n);
-'''
+glGenTextures(n:GLsizei) = \
+	R'''
+	std::unique_ptr<GLuint []> textures(new GLuint [n]);
+	glGenTextures(n, textures.get());
+	return Value_List::Create(textures.get(), n);
+	'''
 //glGetBooleanv(pname:GLenum, params[]:GLboolean):void
 //glGetClipPlane(plane:GLenum, equation[]:GLdouble):void
 //glGetDoublev(pname:GLenum, params[]:GLdouble):void
@@ -521,16 +542,18 @@ glBindBuffer(target:GLenum, buffer:GLuint):void
 glDeleteBuffers(n:GLsizei, buffers[]:GLuint):void
 glDeleteQueries(n:GLsizei, ids[]:GLuint):void
 glEndQuery(target:GLenum):void
-glGenBuffers(n:GLsizei) = R'''
-std::unique_ptr<GLuint []> buffers(new GLuint [n]);
-glGenBuffers(n, buffers.get());
-return Value_List::Create(buffers.get(), n);
-'''
-glGenQueries(n:GLsizei) = R'''
-std::unique_ptr<GLuint []> ids(new GLuint [n]);
-glGenQueries(n, ids.get());
-return Value_List::Create(ids.get(), n);
-'''
+glGenBuffers(n:GLsizei) = \
+	R'''
+	std::unique_ptr<GLuint []> buffers(new GLuint [n]);
+	glGenBuffers(n, buffers.get());
+	return Value_List::Create(buffers.get(), n);
+	'''
+glGenQueries(n:GLsizei) = \
+	R'''
+	std::unique_ptr<GLuint []> ids(new GLuint [n]);
+	glGenQueries(n, ids.get());
+	return Value_List::Create(ids.get(), n);
+	'''
 //glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
 //glGetBufferPointerv(target:GLenum, pname:GLenum, params:void_p__p):void
 //glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
