@@ -138,16 +138,20 @@ glDisableClientState(array:GLenum):void
 glDrawArrays(mode:GLenum, first:GLint, count:GLsizei):void
 glDrawBuffer(mode:GLenum):void
 //glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void = \
-/*
 glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices[]:Number):void = \
 	R'''
 	switch (type) {
 	case GL_UNSIGNED_BYTE: {
-		Value_Number::indices
+		glDrawElements(mode, count, type, indices.ToNumList<GLubyte>());
+		break;
 	}
 	case GL_UNSIGNED_SHORT: {
+		glDrawElements(mode, count, type, indices.ToNumList<GLushort>());
+		break;
 	}
 	case GL_UNSIGNED_INT: {
+		glDrawElements(mode, count, type, indices.ToNumList<GLuint>());
+		break;
 	}
 	default: {
 		break;
@@ -155,7 +159,6 @@ glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices[]:Number):void =
 	}
 	return Value::nil();
 	'''
-*/
 //glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
 glEdgeFlag(flag:GLboolean):void
 //glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void

@@ -82,7 +82,9 @@ public:
 		return Pick<Value_Number>().GetNumberPos<T_Num>();
 	}
 	template<typename T_Num>
-	NumList<T_Num> PickNumList() { return Value_Number::GetNumList<T_Num>(PickList()); }
+	NumList<T_Num> PickNumList() {
+		return IsValid()? PickList().ToNumList<T_Num>() : NumList<T_Num>();
+	}
 	template<typename T>
 	ListBase<T> PickListT(std::function<T(Value& value)> fn) {
 		return IsValid()? PickList().ToListT<T>(fn) : ListBase<T>();

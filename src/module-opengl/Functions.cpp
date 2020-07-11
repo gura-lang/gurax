@@ -1537,6 +1537,48 @@ Gurax_ImplementFunction(gurax_glDrawBuffer)
 	return Value::nil();
 }
 
+// opengl.glDrawElements(mode:Number, count:Number, type:Number, indices[]:Number)
+Gurax_DeclareFunctionAlias(gurax_glDrawElements, "glDrawElements")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indices", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(gurax_glDrawElements)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	GLsizei count = args.PickNumber<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	const ValueList& indices = args.PickList();
+	// Function body
+	switch (type) {
+	case GL_UNSIGNED_BYTE: {
+		glDrawElements(mode, count, type, indices.ToNumList<GLubyte>());
+		break;
+	}
+	case GL_UNSIGNED_SHORT: {
+		glDrawElements(mode, count, type, indices.ToNumList<GLushort>());
+		break;
+	}
+	case GL_UNSIGNED_INT: {
+		glDrawElements(mode, count, type, indices.ToNumList<GLuint>());
+		break;
+	}
+	default: {
+		break;
+	}
+	}
+	return Value::nil();
+}
+
 // opengl.glEdgeFlag(flag:Bool)
 Gurax_DeclareFunctionAlias(gurax_glEdgeFlag, "glEdgeFlag")
 {
@@ -11865,6 +11907,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(gurax_glDisableClientState));
 	frame.Assign(Gurax_CreateFunction(gurax_glDrawArrays));
 	frame.Assign(Gurax_CreateFunction(gurax_glDrawBuffer));
+	frame.Assign(Gurax_CreateFunction(gurax_glDrawElements));
 	frame.Assign(Gurax_CreateFunction(gurax_glEdgeFlag));
 	frame.Assign(Gurax_CreateFunction(gurax_glEdgeFlagv));
 	frame.Assign(Gurax_CreateFunction(gurax_glEnable));

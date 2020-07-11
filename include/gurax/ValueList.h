@@ -34,6 +34,8 @@ public:
 	size_t CountFalse() const;
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
+	template<typename T_Num>
+	NumList<T_Num> ToNumList() const { return Value_Number::GetNumList<T_Num>(*this); }
 	template<typename T>
 	ListBase<T> ToListT(std::function<T(Value& value)> fn) const {
 		ListBase<T> lst;

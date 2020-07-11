@@ -226,6 +226,13 @@ Renderer.__init__() = {
 		return Value::nil();
 		''')
 	this.DeclareType('String', '', 'String')
+	this.DeclareType('Number', '', 'Number',
+		codePicker = R'''
+		Value_Number& ${varName} = args.Pick<Value_Number>();
+		'''
+		codePickerVec = R'''
+		const ValueList& ${varName} = args.PickList();
+		''')
 	this.DeclareType('Function', '', 'Function',
 		codePicker = R'''
 		RefPtr<Function> ${varName}(args.PickFunction().Reference());
