@@ -118,7 +118,7 @@ FuncInfo = class {
 
 FuncInfo.tmplImplementation = tR'''
 // ${this.ToString()}
-Gurax_DeclareFunctionAlias(gurax_${this.name}, "${this.name}")
+Gurax_DeclareFunctionAlias(${this.name}_gurax, "${this.name}")
 {
 	Declare(VTYPE_${this.typeInfo.vtype}, Flag::None);
 	${this.argInfoTbl::ComposeDeclaration()}
@@ -127,7 +127,7 @@ Gurax_DeclareFunctionAlias(gurax_${this.name}, "${this.name}")
 		"");
 }
 
-Gurax_ImplementFunction(gurax_${this.name})
+Gurax_ImplementFunction(${this.name}_gurax)
 {
 	${if (!this.argInfoTbl.IsEmpty())}
 	// Arguments
@@ -143,7 +143,7 @@ Gurax_ImplementFunction(gurax_${this.name})
 }
 '''
 
-FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(gurax_${this.name}));'
+FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}_gurax));'
 
 //------------------------------------------------------------------------------
 // Renderer
@@ -215,25 +215,25 @@ Renderer = class {
 }
 
 Renderer.__init__() = {
-	this.DeclareType('any', '', 'Any',
-		codeFunctionBody = R'''
-		${caller};
-		return Value::nil();
-		''')
 	this.DeclareType('void', 'void', 'Nil',
 		codeFunctionBody = R'''
 		${caller};
 		return Value::nil();
 		''')
-	this.DeclareType('String', '', 'String')
-	this.DeclareType('Number', '', 'Number',
+	this.DeclareType('any', '', 'Any',
+		codeFunctionBody = R'''
+		${caller};
+		return Value::nil();
+		''')
+	this.DeclareType('String@gurax', '', 'String')
+	this.DeclareType('Number@gurax', '', 'Number',
 		codePicker = R'''
 		Value_Number& ${varName} = args.Pick<Value_Number>();
 		'''
 		codePickerVec = R'''
-		const ValueList& ${varName} = args.PickList();
+		const ]ValueList& ${varName} = args.PickList();
 		''')
-	this.DeclareType('Function', '', 'Function',
+	this.DeclareType('Function@gurax', '', 'Function',
 		codePicker = R'''
 		RefPtr<Function> ${varName}(args.PickFunction().Reference());
 		'''
@@ -262,24 +262,24 @@ Renderer.__init__() = {
 	this.DeclareType_Number('uint16_t')
 	this.DeclareType_Number('uint32_t')
 	this.DeclareType_Number('uint64_t')
-	this.DeclareType_Number('Char')
-	this.DeclareType_Number('UChar')
-	this.DeclareType_Number('Short')
-	this.DeclareType_Number('UShort')
-	this.DeclareType_Number('Int')
-	this.DeclareType_Number('UInt')
-	this.DeclareType_Number('Long')
-	this.DeclareType_Number('ULong')
-	this.DeclareType_Number('Int8')
-	this.DeclareType_Number('UInt8')
-	this.DeclareType_Number('Int16')
-	this.DeclareType_Number('UInt16')
-	this.DeclareType_Number('Int32')
-	this.DeclareType_Number('UInt32')
-	this.DeclareType_Number('Int64')
-	this.DeclareType_Number('UInt64')
-	this.DeclareType_Number('Float')
-	this.DeclareType_Number('Double')
+	this.DeclareType_Number('Char@gurax')
+	this.DeclareType_Number('UChar@gurax')
+	this.DeclareType_Number('Short@gurax')
+	this.DeclareType_Number('UShort@gurax')
+	this.DeclareType_Number('Int@gurax')
+	this.DeclareType_Number('UInt@gurax')
+	this.DeclareType_Number('Long@gurax')
+	this.DeclareType_Number('ULong@gurax')
+	this.DeclareType_Number('Int8@gurax')
+	this.DeclareType_Number('UInt8@gurax')
+	this.DeclareType_Number('Int16@gurax')
+	this.DeclareType_Number('UInt16@gurax')
+	this.DeclareType_Number('Int32@gurax')
+	this.DeclareType_Number('UInt32@gurax')
+	this.DeclareType_Number('Int64@gurax')
+	this.DeclareType_Number('UInt64@gurax')
+	this.DeclareType_Number('Float@gurax')
+	this.DeclareType_Number('Double@gurax')
 	this.DeclareType('bool', 'bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickBool();
@@ -294,7 +294,7 @@ Renderer.__init__() = {
 		${this.cType} rtn = ${caller};
 		return new Value_${this.vtype}(rtn);
 		''')
-	this.DeclareType('Bool', 'Bool', 'Bool',
+	this.DeclareType('Bool@gurax', 'Bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args.PickBool();
 		'''

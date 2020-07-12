@@ -11,7 +11,7 @@ main() = {
 	window.SetWindowCloseCallback(&{Printf('WindowClose()\n')})
 	while (!window.WindowShouldClose()) {
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
+x		glClear(GL_COLOR_BUFFER_BIT);
 		window.SwapBuffers();
 		glfwPollEvents();
 	}

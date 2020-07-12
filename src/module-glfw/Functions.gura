@@ -107,7 +107,7 @@ glfwTerminate():void
 
 glfwInitHint(hint:int, value:int):void
 
-glfwGetVersion():any = \
+glfwGetVersion() = \
 	R'''
 	int major, minor, rev;
 	glfwGetVersion(&major, &minor, &rev);
@@ -116,14 +116,14 @@ glfwGetVersion():any = \
 
 glfwGetVersionString():const_char_p
 
-glfwGetError():String = \
+glfwGetError():String@gurax = \
 	R'''
 	const char* description;
 	glfwGetError(&description);
 	return description? new Value_String(description) : Value::nil();
 	'''
 
-glfwSetErrorCallback(callback:Function:nil):void = \
+glfwSetErrorCallback(callback:Function@gurax:nil):void = \
 	R'''
 	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
 	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
@@ -168,7 +168,7 @@ glfwDestroyCursor(cursor:GLFWcursor_p):void
 
 glfwSetCursor(window:GLFWwindow_p, cursor:GLFWcursor_p):void
 
-glfwSetKeyCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetKeyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetKeyCallback(valueThis.GetEntity(),
@@ -177,7 +177,7 @@ glfwSetKeyCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCharCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetCharCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharCallback(valueThis.GetEntity(),
@@ -186,7 +186,7 @@ glfwSetCharCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharModsCallback(valueThis.GetEntity(),
@@ -195,7 +195,7 @@ glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetMouseButtonCallback(valueThis.GetEntity(),
@@ -204,7 +204,7 @@ glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorPosCallback(valueThis.GetEntity(),
@@ -213,7 +213,7 @@ glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorEnterCallback(valueThis.GetEntity(),
@@ -222,7 +222,7 @@ glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetScrollCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetScrollCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetScrollCallback(valueThis.GetEntity(),
@@ -231,7 +231,7 @@ glfwSetScrollCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetDropCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetDropCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetDropCallback(valueThis.GetEntity(),
@@ -279,7 +279,7 @@ glfwGetJoystickGUID(jid:int):const_char_p_NilIfNull
 
 glfwJoystickIsGamepad(jid:int):int_Bool
 
-glfwSetJoystickCallback(jid:int, callback:Function:nil):void = \
+glfwSetJoystickCallback(jid:int, callback:Function@gurax:nil):void = \
 	R'''
 	//glfwSetJoystickCallback(jid,
 	//		callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
@@ -361,7 +361,7 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
  
 //glfwGetMonitorUserPointer(monitor:GLFWmonitor_p):void_p
  
-glfwSetMonitorCallback(callback:Function:nil):void = \
+glfwSetMonitorCallback(callback:Function@gurax:nil):void = \
 	R'''
 	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
 	g_pProcessor_MonitorCallback.reset(callback? processor.Reference() : nullptr);
@@ -528,7 +528,7 @@ glfwSetWindowAttrib(window:GLFWwindow_p, attrib:int, value:int):void
  
 //glfwGetWindowUserPointer(window:GLFWwindow_p):void_p
  
-glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowPosCallback(valueThis.GetEntity(),
@@ -537,7 +537,7 @@ glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
  
-glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowSizeCallback(valueThis.GetEntity(),
@@ -546,7 +546,7 @@ glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
  
-glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowCloseCallback(valueThis.GetEntity(),
@@ -555,7 +555,7 @@ glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
  
-glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowRefreshCallback(valueThis.GetEntity(),
@@ -564,7 +564,7 @@ glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function:nil):void = 
 	return Value::nil();
 	'''
  
-glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowFocusCallback(valueThis.GetEntity(),
@@ -573,7 +573,7 @@ glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function:nil):void = \
 	return Value::nil();
 	'''
  
-glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowIconifyCallback(valueThis.GetEntity(),
@@ -582,7 +582,7 @@ glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function:nil):void = 
 	return Value::nil();
 	'''
  
-glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowMaximizeCallback(valueThis.GetEntity(),
@@ -591,7 +591,7 @@ glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function:nil):void =
 	return Value::nil();
 	'''
  
-glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetFramebufferSizeCallback(valueThis.GetEntity(),
@@ -600,7 +600,7 @@ glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function:nil):void 
 	return Value::nil();
 	'''
  
-glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function:nil):void = \
+glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowContentScaleCallback(valueThis.GetEntity(),
