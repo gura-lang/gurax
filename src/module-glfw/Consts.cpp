@@ -10,6 +10,8 @@ Gurax_BeginModuleScope(glfw)
 void AssignConsts(Frame& frame)
 {
 	// Initialization, version and error
+	frame.Assign("GLFW_TRUE", Value::true_());
+	frame.Assign("GLFW_FALSE", Value::false_());
 	AssignConst(GLFW_JOYSTICK_HAT_BUTTONS);
 	AssignConst(GLFW_COCOA_CHDIR_RESOURCES);
 	AssignConst(GLFW_COCOA_MENUBAR);
@@ -25,6 +27,10 @@ void AssignConsts(Frame& frame)
 	AssignConst(GLFW_PLATFORM_ERROR);
 	AssignConst(GLFW_FORMAT_UNAVAILABLE);
 	AssignConst(GLFW_NO_WINDOW_CONTEXT);
+	// Input
+	AssignConst(GLFW_RELEASE);
+	AssignConst(GLFW_PRESS);
+	AssignConst(GLFW_REPEAT);
 	// Input - Gamepad axes
 	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_X);
 	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_Y);
