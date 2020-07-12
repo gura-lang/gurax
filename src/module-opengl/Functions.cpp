@@ -12172,6 +12172,34 @@ Gurax_ImplementFunction(glVertexAttribI4usv_gurax)
 	return Value::nil();
 }
 
+// opengl.glVertexAttribIPointer(index:Number, size:Number, type:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glVertexAttribIPointer_gurax, "glVertexAttribIPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glVertexAttribIPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLuint index = args.PickNumber<GLuint>();
+	GLint size = args.PickNumber<GLint>();
+	GLenum type = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glVertexAttribIPointer(index, size, type, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glDrawArraysInstanced(mode:Number, first:Number, count:Number, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawArraysInstanced_gurax, "glDrawArraysInstanced")
 {
@@ -12450,6 +12478,64 @@ Gurax_ImplementFunction(glGetGraphicsResetStatus_gurax)
 	// Function body
 	GLenum rtn = glGetGraphicsResetStatus();
 	return new Value_Number(rtn);
+}
+
+// opengl.glMultiDrawArraysIndirectCount(mode:Number, indirect:Pointer, drawcount:Number, maxdrawcount:Number, stride:Number)
+Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCount_gurax, "glMultiDrawArraysIndirectCount")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glMultiDrawArraysIndirectCount_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const GLvoid*>();
+	GLintptr drawcount = args.PickNumber<GLintptr>();
+	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	// Function body
+	glMultiDrawArraysIndirectCount(mode, indirect, drawcount, maxdrawcount, stride);
+	return Value::nil();
+}
+
+// opengl.glMultiDrawElementsIndirectCount(mode:Number, type:Number, indirect:Pointer, drawcount:Number, maxdrawcount:Number, stride:Number)
+Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCount_gurax, "glMultiDrawElementsIndirectCount")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glMultiDrawElementsIndirectCount_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	GLenum type = args.PickNumber<GLenum>();
+	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const GLvoid*>();
+	GLintptr drawcount = args.PickNumber<GLintptr>();
+	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	// Function body
+	glMultiDrawElementsIndirectCount(mode, type, indirect, drawcount, maxdrawcount, stride);
+	return Value::nil();
 }
 
 // opengl.glSpecializeShader(shader:Number, pEntryPoint[]:Number, numSpecializationConstants:Number, pConstantIndex[]:Number, pConstantValue[]:Number)
@@ -13017,6 +13103,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glVertexAttribI4ui_gurax));
 	frame.Assign(Gurax_CreateFunction(glVertexAttribI4uiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glVertexAttribI4usv_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexAttribIPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawArraysInstanced_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawElementsInstanced_gurax));
 	frame.Assign(Gurax_CreateFunction(glPrimitiveRestartIndex_gurax));
@@ -13029,6 +13116,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glBlendFunci_gurax));
 	frame.Assign(Gurax_CreateFunction(glMinSampleShading_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetGraphicsResetStatus_gurax));
+	frame.Assign(Gurax_CreateFunction(glMultiDrawArraysIndirectCount_gurax));
+	frame.Assign(Gurax_CreateFunction(glMultiDrawElementsIndirectCount_gurax));
 	frame.Assign(Gurax_CreateFunction(glSpecializeShader_gurax));
 }
 

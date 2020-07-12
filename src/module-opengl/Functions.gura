@@ -55,6 +55,19 @@ r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
 	return new Value_${this.vtype}(reinterpret_cast<const char*>(rtn));
 	''')
 
+r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
+	codePicker = R'''
+	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>() : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
+		return Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
+	});
+	''')
+
 //------------------------------------------------------------------------------
 // Function Registration: Context
 //------------------------------------------------------------------------------
@@ -989,6 +1002,7 @@ glGenBuffers(n:GLsizei) = \
 	glGenBuffers(n, buffers.get());
 	return Value_List::Create(buffers.get(), n);
 	'''
+
 glGenQueries(n:GLsizei) = \
 	R'''
 	std::unique_ptr<GLuint []> ids(new GLuint [n]);
@@ -1328,7 +1342,7 @@ glVertexAttribI4uiv(index:GLuint, v0[]:GLuint):void
 
 glVertexAttribI4usv(index:GLuint, v0[]:GLushort):void
 
-//glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, void*pointer:const):void
+glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 //======== GL_VERSION_3_1 ========
 
@@ -1376,9 +1390,9 @@ glGetGraphicsResetStatus():GLenum
 
 //======== GL_VERSION_4_6 ========
 
-//glMultiDrawArraysIndirectCount(mode:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+glMultiDrawArraysIndirectCount(mode:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
 
-//glMultiDrawElementsIndirectCount(mode:GLenum, type:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+glMultiDrawElementsIndirectCount(mode:GLenum, type:GLenum, indirect:const_GLvoid_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
 
 glSpecializeShader(shader:GLuint, pEntryPoint[]:GLchar, numSpecializationConstants:GLuint, pConstantIndex[]:GLuint, pConstantValue[]:GLuint):void
 
