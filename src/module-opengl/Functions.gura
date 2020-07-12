@@ -42,7 +42,7 @@ r.DeclareType_Number('GLchar')
 r.DeclareType_Number('GLintptr')
 r.DeclareType_Number('GLsizeiptr')
 
-r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
+r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args.PickString());
 	'''
@@ -57,14 +57,27 @@ r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
 
 r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
 	codePicker = R'''
-	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>();
+	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>() : nullptr;
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
 	'''
 	codePickerVec = R'''
 	auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
 		return Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
+	});
+	''')
+
+r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'Pointer',
+	codePicker = R'''
+	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
+		return Value_Pointer::GetPointer(value).GetPointerC<GLubyte>();
 	});
 	''')
 
@@ -80,9 +93,9 @@ glewIsSupported(name:const_char_p):GLboolean
 
 glewGetExtension(name:const_char_p):GLboolean
 
-glewGetErrorString(error:GLenum):const_GLubyte_p
+glewGetErrorString(error:GLenum):String_const_GLubyte_p
 
-glewGetString(name:GLenum):const_GLubyte_p
+glewGetString(name:GLenum):String_const_GLubyte_p
 
 //======== GL_VERSION_1_1 ========
 glAccum(op:GLenum, value:GLfloat)
@@ -97,7 +110,7 @@ glBegin(mode:GLenum):void
 
 glBindTexture(target:GLenum, texture:GLuint):void
 
-//glBitmap(width:GLsizei, height:GLsizei, xorig:GLfloat, yorig:GLfloat, xmove:GLfloat, ymove:GLfloat, bitmap:const_GLubyte_p):void
+glBitmap(width:GLsizei, height:GLsizei, xorig:GLfloat, yorig:GLfloat, xmove:GLfloat, ymove:GLfloat, bitmap:const_GLubyte_p):void
 
 glBlendFunc(sfactor:GLenum, dfactor:GLenum):void
 
@@ -333,7 +346,7 @@ glGetError():GLenum
 
 //glGetPolygonStipple(mask:GLubyte_p):void
 
-glGetString(name:GLenum):const_GLubyte_p
+glGetString(name:GLenum):String_const_GLubyte_p
 
 //glGetTexEnvfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
 

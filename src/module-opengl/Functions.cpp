@@ -207,6 +207,38 @@ Gurax_ImplementFunction(glBindTexture_gurax)
 	return Value::nil();
 }
 
+// opengl.glBitmap(width:Number, height:Number, xorig:Number, yorig:Number, xmove:Number, ymove:Number, bitmap:Pointer)
+Gurax_DeclareFunctionAlias(glBitmap_gurax, "glBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xorig", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yorig", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xmove", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ymove", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glBitmap_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLfloat xorig = args.PickNumber<GLfloat>();
+	GLfloat yorig = args.PickNumber<GLfloat>();
+	GLfloat xmove = args.PickNumber<GLfloat>();
+	GLfloat ymove = args.PickNumber<GLfloat>();
+	const GLubyte* bitmap = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	// Function body
+	glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
+	return Value::nil();
+}
+
 // opengl.glBlendFunc(sfactor:Number, dfactor:Number)
 Gurax_DeclareFunctionAlias(glBlendFunc_gurax, "glBlendFunc")
 {
@@ -12499,7 +12531,7 @@ Gurax_ImplementFunction(glMultiDrawArraysIndirectCount_gurax)
 	// Arguments
 	ArgPicker args(argument);
 	GLenum mode = args.PickNumber<GLenum>();
-	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const GLvoid*>();
+	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
 	GLintptr drawcount = args.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
 	GLsizei stride = args.PickNumber<GLsizei>();
@@ -12529,7 +12561,7 @@ Gurax_ImplementFunction(glMultiDrawElementsIndirectCount_gurax)
 	ArgPicker args(argument);
 	GLenum mode = args.PickNumber<GLenum>();
 	GLenum type = args.PickNumber<GLenum>();
-	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const GLvoid*>();
+	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
 	GLintptr drawcount = args.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
 	GLsizei stride = args.PickNumber<GLsizei>();
@@ -12578,6 +12610,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glArrayElement_gurax));
 	frame.Assign(Gurax_CreateFunction(glBegin_gurax));
 	frame.Assign(Gurax_CreateFunction(glBindTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(glBitmap_gurax));
 	frame.Assign(Gurax_CreateFunction(glBlendFunc_gurax));
 	frame.Assign(Gurax_CreateFunction(glCallList_gurax));
 	frame.Assign(Gurax_CreateFunction(glCallLists_gurax));
