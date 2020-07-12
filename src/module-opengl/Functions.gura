@@ -37,8 +37,10 @@ r.DeclareType_Number('GLclampd')
 //r.DeclareType(GLvoid)
 r.DeclareType_Number('GLint64')
 r.DeclareType_Number('GLuint64')
-//r.DeclareType('GLsync')
+r.DeclareType_Number('GLsync')
 r.DeclareType_Number('GLchar')
+r.DeclareType_Number('GLintptr')
+r.DeclareType_Number('GLsizeiptr')
 
 r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
@@ -88,7 +90,7 @@ glBlendFunc(sfactor:GLenum, dfactor:GLenum):void
 
 glCallList(list:GLuint):void
 
-//glCallLists(n:GLsizei, type:GLenum, lists:const_void_p):void
+glCallLists(n:GLsizei, type:GLenum, lists:const_void_p):void
 
 glClear(mask:GLbitfield):void
 
@@ -172,7 +174,7 @@ glColorMask(red:GLboolean, green:GLboolean, blue:GLboolean, alpha:GLboolean):voi
 
 glColorMaterial(face:GLenum, mode:GLenum):void
 
-//glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glCopyPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, type:GLenum):void
 
@@ -208,19 +210,13 @@ glDrawArrays(mode:GLenum, first:GLint, count:GLsizei):void
 
 glDrawBuffer(mode:GLenum):void
 
-//glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void = \
+glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void
 
-glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices[]:Number@gurax):void = \
-	R'''
-	// array
-	return Value::nil();
-	'''
-
-//glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
 
 glEdgeFlag(flag:GLboolean):void
 
-//glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
+glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
 
 glEdgeFlagv(flag[]:GLboolean):void
 
@@ -350,7 +346,7 @@ glHint(target:GLenum, mode:GLenum):void
 
 glIndexMask(mask:GLuint):void
 
-//glIndexPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glIndexPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glIndexd(c:GLdouble):void
 
@@ -374,7 +370,7 @@ glIndexubv(c[]:GLubyte):void
 
 glInitNames():void
 
-//glInterleavedArrays(format:GLenum, stride:GLsizei, pointer:const_void_p):void
+glInterleavedArrays(format:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glIsEnabled(cap:GLenum):GLboolean
 
@@ -766,11 +762,11 @@ glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
 glCopyTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-//glDrawRangeElements(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:const_void_p):void
+glDrawRangeElements(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:const_void_p):void
 
-//glTexImage3D(target:GLenum, level:GLint, internalFormat:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexImage3D(target:GLenum, level:GLint, internalFormat:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p):void
 
-//glTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
 
 //======== GL_VERSION_1_3 ========
 
@@ -778,17 +774,17 @@ glActiveTexture(texture:GLenum):void
 
 glClientActiveTexture(texture:GLenum):void
 
-//glCompressedTexImage1D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage1D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
 
-//glCompressedTexImage2D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage2D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
 
-//glCompressedTexImage3D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage3D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
 
-//glCompressedTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
 
-//glCompressedTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
 
-//glCompressedTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
 
 //glGetCompressedTexImage(target:GLenum, lod:GLint, img:void_p):void
 
@@ -874,7 +870,7 @@ glBlendEquation(mode:GLenum):void
 
 glBlendFuncSeparate(sfactorRGB:GLenum, dfactorRGB:GLenum, sfactorAlpha:GLenum, dfactorAlpha:GLenum):void
 
-//glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glFogCoordd(coord:GLdouble):void
 
@@ -928,7 +924,7 @@ glSecondaryColor3us(red:GLushort, green:GLushort, blue:GLushort):void
 
 glSecondaryColor3usv(v[]:GLushort):void
 
-//glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glWindowPos2d(x:GLdouble, y:GLdouble):void
 
@@ -968,9 +964,9 @@ glBeginQuery(target:GLenum, id:GLuint):void
 
 glBindBuffer(target:GLenum, buffer:GLuint):void
 
-//glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
+glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
 
-//glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
+glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
 
 glDeleteBuffers(n:GLsizei, buffers[]:GLuint):void
 
@@ -1197,7 +1193,7 @@ glVertexAttrib4uiv(index:GLuint, v[]:GLuint):void
 
 glVertexAttrib4usv(index:GLuint, v[]:GLushort):void
 
-//glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
+glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
 
 //======== GL_VERSION_2_1 ========
 
@@ -1329,7 +1325,7 @@ glVertexAttribI4usv(index:GLuint, v0[]:GLushort):void
 
 glDrawArraysInstanced(mode:GLenum, first:GLint, count:GLsizei, primcount:GLsizei):void
 
-//glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
+glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
 
 glPrimitiveRestartIndex(buffer:GLuint):void
 

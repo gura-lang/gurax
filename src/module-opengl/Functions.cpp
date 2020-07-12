@@ -249,6 +249,30 @@ Gurax_ImplementFunction(glCallList_gurax)
 	return Value::nil();
 }
 
+// opengl.glCallLists(n:Number, type:Number, lists:Pointer)
+Gurax_DeclareFunctionAlias(glCallLists_gurax, "glCallLists")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("lists", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCallLists_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei n = args.PickNumber<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* lists = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCallLists(n, type, lists);
+	return Value::nil();
+}
+
 // opengl.glClear(mask:Number)
 Gurax_DeclareFunctionAlias(glClear_gurax, "glClear")
 {
@@ -1171,6 +1195,32 @@ Gurax_ImplementFunction(glColorMaterial_gurax)
 	return Value::nil();
 }
 
+// opengl.glColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glColorPointer_gurax, "glColorPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glColorPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLint size = args.PickNumber<GLint>();
+	GLenum type = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glColorPointer(size, type, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glCopyPixels(x:Number, y:Number, width:Number, height:Number, type:Number)
 Gurax_DeclareFunctionAlias(glCopyPixels_gurax, "glCopyPixels")
 {
@@ -1537,14 +1587,14 @@ Gurax_ImplementFunction(glDrawBuffer_gurax)
 	return Value::nil();
 }
 
-// opengl.glDrawElements(mode:Number, count:Number, type:Number, indices[]:Number)
+// opengl.glDrawElements(mode:Number, count:Number, type:Number, indices:Pointer)
 Gurax_DeclareFunctionAlias(glDrawElements_gurax, "glDrawElements")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("indices", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1557,9 +1607,37 @@ Gurax_ImplementFunction(glDrawElements_gurax)
 	GLenum mode = args.PickNumber<GLenum>();
 	GLsizei count = args.PickNumber<GLsizei>();
 	GLenum type = args.PickNumber<GLenum>();
-	const ValueList& indices = args.PickList();
+	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
-	// array
+	glDrawElements(mode, count, type, indices);
+	return Value::nil();
+}
+
+// opengl.glDrawPixels(width:Number, height:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glDrawPixels_gurax, "glDrawPixels")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glDrawPixels_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glDrawPixels(width, height, format, type, pixels);
 	return Value::nil();
 }
 
@@ -1580,6 +1658,28 @@ Gurax_ImplementFunction(glEdgeFlag_gurax)
 	GLboolean flag = static_cast<GLboolean>(args.PickBool());
 	// Function body
 	glEdgeFlag(flag);
+	return Value::nil();
+}
+
+// opengl.glEdgeFlagPointer(stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glEdgeFlagPointer_gurax, "glEdgeFlagPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glEdgeFlagPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glEdgeFlagPointer(stride, pointer);
 	return Value::nil();
 }
 
@@ -2245,6 +2345,30 @@ Gurax_ImplementFunction(glIndexMask_gurax)
 	return Value::nil();
 }
 
+// opengl.glIndexPointer(type:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glIndexPointer_gurax, "glIndexPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glIndexPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum type = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glIndexPointer(type, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glIndexd(c:Number)
 Gurax_DeclareFunctionAlias(glIndexd_gurax, "glIndexd")
 {
@@ -2458,6 +2582,30 @@ Gurax_ImplementFunction(glInitNames_gurax)
 {
 	// Function body
 	glInitNames();
+	return Value::nil();
+}
+
+// opengl.glInterleavedArrays(format:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glInterleavedArrays_gurax, "glInterleavedArrays")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glInterleavedArrays_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum format = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glInterleavedArrays(format, stride, pointer);
 	return Value::nil();
 }
 
@@ -6621,6 +6769,114 @@ Gurax_ImplementFunction(glCopyTexSubImage3D_gurax)
 	return Value::nil();
 }
 
+// opengl.glDrawRangeElements(mode:Number, start:Number, end:Number, count:Number, type:Number, indices:Pointer)
+Gurax_DeclareFunctionAlias(glDrawRangeElements_gurax, "glDrawRangeElements")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("end", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glDrawRangeElements_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	GLuint start = args.PickNumber<GLuint>();
+	GLuint end = args.PickNumber<GLuint>();
+	GLsizei count = args.PickNumber<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glDrawRangeElements(mode, start, end, count, type, indices);
+	return Value::nil();
+}
+
+// opengl.glTexImage3D(target:Number, level:Number, internalFormat:Number, width:Number, height:Number, depth:Number, border:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glTexImage3D_gurax, "glTexImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalFormat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glTexImage3D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint internalFormat = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLsizei depth = args.PickNumber<GLsizei>();
+	GLint border = args.PickNumber<GLint>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels);
+	return Value::nil();
+}
+
+// opengl.glTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glTexSubImage3D_gurax, "glTexSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glTexSubImage3D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint xoffset = args.PickNumber<GLint>();
+	GLint yoffset = args.PickNumber<GLint>();
+	GLint zoffset = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLsizei depth = args.PickNumber<GLsizei>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+	return Value::nil();
+}
+
 // opengl.glActiveTexture(texture:Number)
 Gurax_DeclareFunctionAlias(glActiveTexture_gurax, "glActiveTexture")
 {
@@ -6658,6 +6914,216 @@ Gurax_ImplementFunction(glClientActiveTexture_gurax)
 	GLenum texture = args.PickNumber<GLenum>();
 	// Function body
 	glClientActiveTexture(texture);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexImage1D(target:Number, level:Number, internalformat:Number, width:Number, border:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexImage1D_gurax, "glCompressedTexImage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexImage1D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLenum internalformat = args.PickNumber<GLenum>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLint border = args.PickNumber<GLint>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexImage2D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, border:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexImage2D_gurax, "glCompressedTexImage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexImage2D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLenum internalformat = args.PickNumber<GLenum>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLint border = args.PickNumber<GLint>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexImage3D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, depth:Number, border:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexImage3D_gurax, "glCompressedTexImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexImage3D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLenum internalformat = args.PickNumber<GLenum>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLsizei depth = args.PickNumber<GLsizei>();
+	GLint border = args.PickNumber<GLint>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexSubImage1D(target:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexSubImage1D_gurax, "glCompressedTexSubImage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexSubImage1D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint xoffset = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexSubImage2D_gurax, "glCompressedTexSubImage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexSubImage2D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint xoffset = args.PickNumber<GLint>();
+	GLint yoffset = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
+	return Value::nil();
+}
+
+// opengl.glCompressedTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTexSubImage3D_gurax, "glCompressedTexSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glCompressedTexSubImage3D_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLint level = args.PickNumber<GLint>();
+	GLint xoffset = args.PickNumber<GLint>();
+	GLint yoffset = args.PickNumber<GLint>();
+	GLint zoffset = args.PickNumber<GLint>();
+	GLsizei width = args.PickNumber<GLsizei>();
+	GLsizei height = args.PickNumber<GLsizei>();
+	GLsizei depth = args.PickNumber<GLsizei>();
+	GLenum format = args.PickNumber<GLenum>();
+	GLsizei imageSize = args.PickNumber<GLsizei>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
 	return Value::nil();
 }
 
@@ -7587,6 +8053,30 @@ Gurax_ImplementFunction(glBlendFuncSeparate_gurax)
 	return Value::nil();
 }
 
+// opengl.glFogCoordPointer(type:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glFogCoordPointer_gurax, "glFogCoordPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glFogCoordPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum type = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glFogCoordPointer(type, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glFogCoordd(coord:Number)
 Gurax_DeclareFunctionAlias(glFogCoordd_gurax, "glFogCoordd")
 {
@@ -8133,6 +8623,32 @@ Gurax_ImplementFunction(glSecondaryColor3usv_gurax)
 	return Value::nil();
 }
 
+// opengl.glSecondaryColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glSecondaryColorPointer_gurax, "glSecondaryColorPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glSecondaryColorPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLint size = args.PickNumber<GLint>();
+	GLenum type = args.PickNumber<GLenum>();
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glSecondaryColorPointer(size, type, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glWindowPos2d(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2d_gurax, "glWindowPos2d")
 {
@@ -8518,6 +9034,58 @@ Gurax_ImplementFunction(glBindBuffer_gurax)
 	GLuint buffer = args.PickNumber<GLuint>();
 	// Function body
 	glBindBuffer(target, buffer);
+	return Value::nil();
+}
+
+// opengl.glBufferData(target:Number, size:Number, data:Pointer, usage:Number)
+Gurax_DeclareFunctionAlias(glBufferData_gurax, "glBufferData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("usage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glBufferData_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLsizeiptr size = args.PickNumber<GLsizeiptr>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLenum usage = args.PickNumber<GLenum>();
+	// Function body
+	glBufferData(target, size, data, usage);
+	return Value::nil();
+}
+
+// opengl.glBufferSubData(target:Number, offset:Number, size:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glBufferSubData_gurax, "glBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glBufferSubData_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum target = args.PickNumber<GLenum>();
+	GLintptr offset = args.PickNumber<GLintptr>();
+	GLsizeiptr size = args.PickNumber<GLsizeiptr>();
+	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glBufferSubData(target, offset, size, data);
 	return Value::nil();
 }
 
@@ -10389,6 +10957,36 @@ Gurax_ImplementFunction(glVertexAttrib4usv_gurax)
 	return Value::nil();
 }
 
+// opengl.glVertexAttribPointer(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Pointer)
+Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glVertexAttribPointer_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLuint index = args.PickNumber<GLuint>();
+	GLint size = args.PickNumber<GLint>();
+	GLenum type = args.PickNumber<GLenum>();
+	GLboolean normalized = static_cast<GLboolean>(args.PickBool());
+	GLsizei stride = args.PickNumber<GLsizei>();
+	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+	return Value::nil();
+}
+
 // opengl.glUniformMatrix2x3fv(location:Number, count:Number, transpose:Bool, value[]:Number)
 Gurax_DeclareFunctionAlias(glUniformMatrix2x3fv_gurax, "glUniformMatrix2x3fv")
 {
@@ -11567,6 +12165,34 @@ Gurax_ImplementFunction(glDrawArraysInstanced_gurax)
 	return Value::nil();
 }
 
+// opengl.glDrawElementsInstanced(mode:Number, count:Number, type:Number, indices:Pointer, primcount:Number)
+Gurax_DeclareFunctionAlias(glDrawElementsInstanced_gurax, "glDrawElementsInstanced")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glDrawElementsInstanced_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	GLsizei count = args.PickNumber<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLsizei primcount = args.PickNumber<GLsizei>();
+	// Function body
+	glDrawElementsInstanced(mode, count, type, indices, primcount);
+	return Value::nil();
+}
+
 // opengl.glPrimitiveRestartIndex(buffer:Number)
 Gurax_DeclareFunctionAlias(glPrimitiveRestartIndex_gurax, "glPrimitiveRestartIndex")
 {
@@ -11835,6 +12461,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glBindTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(glBlendFunc_gurax));
 	frame.Assign(Gurax_CreateFunction(glCallList_gurax));
+	frame.Assign(Gurax_CreateFunction(glCallLists_gurax));
 	frame.Assign(Gurax_CreateFunction(glClear_gurax));
 	frame.Assign(Gurax_CreateFunction(glClearAccum_gurax));
 	frame.Assign(Gurax_CreateFunction(glClearColor_gurax));
@@ -11876,6 +12503,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glColor4usv_gurax));
 	frame.Assign(Gurax_CreateFunction(glColorMask_gurax));
 	frame.Assign(Gurax_CreateFunction(glColorMaterial_gurax));
+	frame.Assign(Gurax_CreateFunction(glColorPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glCopyPixels_gurax));
 	frame.Assign(Gurax_CreateFunction(glCopyTexImage1D_gurax));
 	frame.Assign(Gurax_CreateFunction(glCopyTexImage2D_gurax));
@@ -11892,7 +12520,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glDrawArrays_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawElements_gurax));
+	frame.Assign(Gurax_CreateFunction(glDrawPixels_gurax));
 	frame.Assign(Gurax_CreateFunction(glEdgeFlag_gurax));
+	frame.Assign(Gurax_CreateFunction(glEdgeFlagPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glEdgeFlagv_gurax));
 	frame.Assign(Gurax_CreateFunction(glEnable_gurax));
 	frame.Assign(Gurax_CreateFunction(glEnableClientState_gurax));
@@ -11925,6 +12555,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glGetString_gurax));
 	frame.Assign(Gurax_CreateFunction(glHint_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexMask_gurax));
+	frame.Assign(Gurax_CreateFunction(glIndexPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexd_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexdv_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexf_gurax));
@@ -11936,6 +12567,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glIndexub_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexubv_gurax));
 	frame.Assign(Gurax_CreateFunction(glInitNames_gurax));
+	frame.Assign(Gurax_CreateFunction(glInterleavedArrays_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsEnabled_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsList_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsTexture_gurax));
@@ -12121,8 +12753,17 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glVertex4sv_gurax));
 	frame.Assign(Gurax_CreateFunction(glViewport_gurax));
 	frame.Assign(Gurax_CreateFunction(glCopyTexSubImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glDrawRangeElements_gurax));
+	frame.Assign(Gurax_CreateFunction(glTexImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTexSubImage3D_gurax));
 	frame.Assign(Gurax_CreateFunction(glActiveTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(glClientActiveTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexImage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexImage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexSubImage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexSubImage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTexSubImage3D_gurax));
 	frame.Assign(Gurax_CreateFunction(glLoadTransposeMatrixd_gurax));
 	frame.Assign(Gurax_CreateFunction(glLoadTransposeMatrixf_gurax));
 	frame.Assign(Gurax_CreateFunction(glMultTransposeMatrixd_gurax));
@@ -12163,6 +12804,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glBlendColor_gurax));
 	frame.Assign(Gurax_CreateFunction(glBlendEquation_gurax));
 	frame.Assign(Gurax_CreateFunction(glBlendFuncSeparate_gurax));
+	frame.Assign(Gurax_CreateFunction(glFogCoordPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glFogCoordd_gurax));
 	frame.Assign(Gurax_CreateFunction(glFogCoorddv_gurax));
 	frame.Assign(Gurax_CreateFunction(glFogCoordf_gurax));
@@ -12188,6 +12830,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glSecondaryColor3uiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glSecondaryColor3us_gurax));
 	frame.Assign(Gurax_CreateFunction(glSecondaryColor3usv_gurax));
+	frame.Assign(Gurax_CreateFunction(glSecondaryColorPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glWindowPos2d_gurax));
 	frame.Assign(Gurax_CreateFunction(glWindowPos2dv_gurax));
 	frame.Assign(Gurax_CreateFunction(glWindowPos2f_gurax));
@@ -12206,6 +12849,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glWindowPos3sv_gurax));
 	frame.Assign(Gurax_CreateFunction(glBeginQuery_gurax));
 	frame.Assign(Gurax_CreateFunction(glBindBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glBufferData_gurax));
+	frame.Assign(Gurax_CreateFunction(glBufferSubData_gurax));
 	frame.Assign(Gurax_CreateFunction(glDeleteBuffers_gurax));
 	frame.Assign(Gurax_CreateFunction(glDeleteQueries_gurax));
 	frame.Assign(Gurax_CreateFunction(glEndQuery_gurax));
@@ -12288,6 +12933,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glVertexAttrib4ubv_gurax));
 	frame.Assign(Gurax_CreateFunction(glVertexAttrib4uiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glVertexAttrib4usv_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexAttribPointer_gurax));
 	frame.Assign(Gurax_CreateFunction(glUniformMatrix2x3fv_gurax));
 	frame.Assign(Gurax_CreateFunction(glUniformMatrix2x4fv_gurax));
 	frame.Assign(Gurax_CreateFunction(glUniformMatrix3x2fv_gurax));
@@ -12338,6 +12984,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glVertexAttribI4uiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glVertexAttribI4usv_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawArraysInstanced_gurax));
+	frame.Assign(Gurax_CreateFunction(glDrawElementsInstanced_gurax));
 	frame.Assign(Gurax_CreateFunction(glPrimitiveRestartIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(glTexBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glFramebufferTexture_gurax));

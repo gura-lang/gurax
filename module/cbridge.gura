@@ -333,4 +333,11 @@ Renderer.__init__() = {
 		}
 		return Value::nil();
 		''')
+	this.DeclareType('const_void_p', 'const void*', 'Pointer',
+		codePicker = R'''
+		${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>() : nullptr;
+		''')
 }
