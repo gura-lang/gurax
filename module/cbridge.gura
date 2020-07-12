@@ -21,9 +21,10 @@ TypeInfo = class {
 	tmplPickerValidation:Template
 	tmplPickerListVar:Template
 	tmplFunctionBody:Template
+	tmplArgRef:Template
 	__init__(decl:String, cType:String, vtypeFullName:String,
 			codePicker:String, codePickerValidation:String,
-			codePickerVec:String, codeFunctionBody:String) = {
+			codePickerVec:String, codeFunctionBody:String, codeArgRef:String) = {
 		this.decl = decl, this.cType = cType
 		this.vtypeFullName = vtypeFullName
 		fields = vtypeFullName.Split('.'):list
@@ -35,11 +36,13 @@ TypeInfo = class {
 		this.tmplPickerValidation = Template().Parse(codePickerValidation)
 		this.tmplPickerListVar = Template().Parse(codePickerVec)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
+		this.tmplArgRef = Template().Parse(codeArgRef)
 	}
 	ComposePicker(varName:String, listVarFlag:Bool, validationFlag:Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
+	ComposeArgRef(varName:String) = this.tmplArgRef.Eval()
 }
 
 //------------------------------------------------------------------------------
@@ -75,6 +78,7 @@ ArgInfo = class {
 		str = this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag || this.nilFlag)
 		str
 	}
+	ComposeArgRef() = this.typeInfo.ComposeArgRef(this.name)
 	ToString() = Format('%s%s%s:%s%s', this.name, cond(this.listVarFlag, '[]', ''),
 			cond(this.optionFlag, '?', ''), this.typeInfo.vtypeFullName,
 			cond(this.nilFlag, ':nil', ''))
@@ -111,7 +115,7 @@ FuncInfo = class {
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
-		Format('%s(%s)', this.name, this.argInfoTbl:*name.Join(', ')) 
+		Format('%s(%s)', this.name, this.argInfoTbl:*ComposeArgRef().Join(', ')) 
 	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
@@ -153,9 +157,9 @@ Renderer = class {
 	typeInfoMap = %{}
 	DeclareType(decl:String, cType:String, vtypeFullName:String,
 			codePicker:String = '', codePickerValidation:String = '',
-			codePickerVec:String = '', codeFunctionBody:String = '') = {
+			codePickerVec:String = '', codeFunctionBody:String = '', codeArgRef = '${varName}') = {
 		this.typeInfoMap[decl] = TypeInfo(decl, cType, vtypeFullName,
-				codePicker, codePickerValidation, codePickerVec, codeFunctionBody)
+				codePicker, codePickerValidation, codePickerVec, codeFunctionBody, codeArgRef)
 	}
 	DeclareType_Number(decl:String, cType?:String) = this.DeclareType(decl, cType || decl, 'Number',
 		codePicker = R'''
