@@ -8183,6 +8183,39 @@ Gurax_ImplementFunction(glMultiDrawArrays_gurax)
 	return Value::nil();
 }
 
+// opengl.glMultiDrawElements(mode:Number, count[]:Number, type:Number, indices[]:Pointer)
+Gurax_DeclareFunctionAlias(glMultiDrawElements_gurax, "glMultiDrawElements")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(glMultiDrawElements_gurax)
+{
+	// Arguments
+	ArgPicker args(argument);
+	GLenum mode = args.PickNumber<GLenum>();
+	auto count = args.PickNumList<GLsizei>();
+	GLenum type = args.PickNumber<GLenum>();
+	auto indices = args.PickListT<const void*>([](Value& value) {
+		return Value_Pointer::GetPointer(value).GetPointerC<const void*>();
+	});
+	// Function body
+	GLsizei drawcount = count.sizeT<GLsizei>();
+	if (drawcount != indices.sizeT<GLsizei>()) {
+		Error::Issue(ErrorType::RangeError, "count and indices must have the same number of elements");
+		return Value::nil();
+	}
+	glMultiDrawElements(mode, count, type, indices, drawcount);
+	return Value::nil();
+}
+
 // opengl.glPointParameterf(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPointParameterf_gurax, "glPointParameterf")
 {
@@ -12810,6 +12843,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glFogCoordf_gurax));
 	frame.Assign(Gurax_CreateFunction(glFogCoordfv_gurax));
 	frame.Assign(Gurax_CreateFunction(glMultiDrawArrays_gurax));
+	frame.Assign(Gurax_CreateFunction(glMultiDrawElements_gurax));
 	frame.Assign(Gurax_CreateFunction(glPointParameterf_gurax));
 	frame.Assign(Gurax_CreateFunction(glPointParameterfv_gurax));
 	frame.Assign(Gurax_CreateFunction(glPointParameteri_gurax));

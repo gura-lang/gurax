@@ -339,5 +339,10 @@ Renderer.__init__() = {
 		'''
 		codePickerValidation = R'''
 		${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cType}>() : nullptr;
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
+			return Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
+		});
 		''')
 }

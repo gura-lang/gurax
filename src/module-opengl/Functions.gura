@@ -882,7 +882,16 @@ glFogCoordfv(coord[]:GLfloat):void
 
 glMultiDrawArrays(mode:GLenum, first[]:GLint, count[]:GLsizei, drawcount:GLsizei):void
 
-//glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices:const_void_p_const_p, drawcount:GLsizei):void
+glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices[]:const_void_p):void = \
+	R'''
+	GLsizei drawcount = count.sizeT<GLsizei>();
+	if (drawcount != indices.sizeT<GLsizei>()) {
+		Error::Issue(ErrorType::RangeError, "count and indices must have the same number of elements");
+		return Value::nil();
+	}
+	glMultiDrawElements(mode, count, type, indices, drawcount);
+	return Value::nil();
+	'''
 
 glPointParameterf(pname:GLenum, param:GLfloat):void
 
