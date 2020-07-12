@@ -231,7 +231,7 @@ Renderer.__init__() = {
 		Value_Number& ${varName} = args.Pick<Value_Number>();
 		'''
 		codePickerVec = R'''
-		const ]ValueList& ${varName} = args.PickList();
+		const ValueList& ${varName} = args.PickList();
 		''')
 	this.DeclareType('Function@gurax', '', 'Function',
 		codePicker = R'''
