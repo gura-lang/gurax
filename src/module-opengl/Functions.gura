@@ -44,6 +44,19 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	return new Gurax::Value_Bool(!!rtn);
 	''')
 
+r.DeclareType('String_const_GLchar_p', 'const GLchar*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickString());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
+	'''
+	codePickerVec = ''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
+	''')
+
 r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickString());
@@ -636,7 +649,7 @@ glScalef(x:GLfloat, y:GLfloat, z:GLfloat):void
 
 glScissor(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-//glSelectBuffer(size:GLsizei, buffer:GLuint_p):void
+glSelectBuffer(size:GLsizei, buffer:GLuint_p):void
 
 glShadeModel(mode:GLenum):void
 
@@ -1067,7 +1080,7 @@ glUnmapBuffer(target:GLenum):GLboolean
 
 glAttachShader(program:GLuint, shader:GLuint):void
 
-//glBindAttribLocation(program:GLuint, index:GLuint, name:const_GLchar_p):void
+glBindAttribLocation(program:GLuint, index:GLuint, name:String_const_GLchar_p):void
 
 glBlendEquationSeparate(modeRGB:GLenum, modeAlpha:GLenum):void
 
@@ -1095,7 +1108,7 @@ glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsiz
 
 glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
 
-glGetAttribLocation(program:GLuint, name:const_GLchar_p):GLint
+glGetAttribLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
 glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
 
@@ -1107,7 +1120,7 @@ glGetShaderSource(obj:GLuint, maxLength:GLsizei, length:GLsizei_p, source:GLchar
 
 glGetShaderiv(shader:GLuint, pname:GLenum, param:GLint_p):void
 
-glGetUniformLocation(program:GLuint, name:const_GLchar_p):GLint
+glGetUniformLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
 glGetUniformfv(program:GLuint, location:GLint, params:GLfloat_p):void
 
@@ -1271,7 +1284,7 @@ glBeginConditionalRender(id:GLuint, mode:GLenum):void
 
 glBeginTransformFeedback(primitiveMode:GLenum):void
 
-//glBindFragDataLocation(program:GLuint, colorNumber:GLuint, name:const_GLchar_p):void
+glBindFragDataLocation(program:GLuint, colorNumber:GLuint, name:String_const_GLchar_p):void
 
 glClampColor(target:GLenum, clamp:GLenum):void
 
@@ -1295,7 +1308,7 @@ glEndTransformFeedback():void
 
 //glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
 
-//glGetFragDataLocation(program:GLuint, name:const_GLchar_p):GLint
+glGetFragDataLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
 //glGetStringi(name:GLenum, index:GLuint):const GLubyte*
 

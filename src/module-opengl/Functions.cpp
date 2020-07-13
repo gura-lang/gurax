@@ -5667,6 +5667,32 @@ Gurax_ImplementFunctionEx(glScissor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// opengl.glSelectBuffer(size:Number, buffer:Pointer)
+Gurax_DeclareFunctionAlias(glSelectBuffer_gurax, "glSelectBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glSelectBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei size = args_gurax.PickNumber<GLsizei>();
+	GLuint* buffer = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!buffer) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glSelectBuffer(size, buffer);
+	return Gurax::Value::nil();
+}
+
 // opengl.glShadeModel(mode:Number)
 Gurax_DeclareFunctionAlias(glShadeModel_gurax, "glShadeModel")
 {
@@ -10282,6 +10308,30 @@ Gurax_ImplementFunctionEx(glAttachShader_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// opengl.glBindAttribLocation(program:Number, index:Number, name:String)
+Gurax_DeclareFunctionAlias(glBindAttribLocation_gurax, "glBindAttribLocation")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glBindAttribLocation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
+	// Function body
+	glBindAttribLocation(program, index, name);
+	return Gurax::Value::nil();
+}
+
 // opengl.glBlendEquationSeparate(modeRGB:Number, modeAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationSeparate_gurax, "glBlendEquationSeparate")
 {
@@ -10614,12 +10664,12 @@ Gurax_ImplementFunctionEx(glGetAttachedShaders_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// opengl.glGetAttribLocation(program:Number, name:Pointer)
+// opengl.glGetAttribLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetAttribLocation_gurax, "glGetAttribLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10630,7 +10680,7 @@ Gurax_ImplementFunctionEx(glGetAttribLocation_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
-	const GLchar* name = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
+	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
 	// Function body
 	GLint rtn = glGetAttribLocation(program, name);
 	return new Gurax::Value_Number(rtn);
@@ -10794,12 +10844,12 @@ Gurax_ImplementFunctionEx(glGetShaderiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// opengl.glGetUniformLocation(program:Number, name:Pointer)
+// opengl.glGetUniformLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetUniformLocation_gurax, "glGetUniformLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10810,7 +10860,7 @@ Gurax_ImplementFunctionEx(glGetUniformLocation_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
-	const GLchar* name = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
+	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
 	// Function body
 	GLint rtn = glGetUniformLocation(program, name);
 	return new Gurax::Value_Number(rtn);
@@ -12662,6 +12712,30 @@ Gurax_ImplementFunctionEx(glBeginTransformFeedback_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
+// opengl.glBindFragDataLocation(program:Number, colorNumber:Number, name:String)
+Gurax_DeclareFunctionAlias(glBindFragDataLocation_gurax, "glBindFragDataLocation")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colorNumber", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glBindFragDataLocation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint colorNumber = args_gurax.PickNumber<GLuint>();
+	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
+	// Function body
+	glBindFragDataLocation(program, colorNumber, name);
+	return Gurax::Value::nil();
+}
+
 // opengl.glClampColor(target:Number, clamp:Number)
 Gurax_DeclareFunctionAlias(glClampColor_gurax, "glClampColor")
 {
@@ -12884,6 +12958,28 @@ Gurax_ImplementFunctionEx(glEndTransformFeedback_gurax, processor_gurax, argumen
 	// Function body
 	glEndTransformFeedback();
 	return Gurax::Value::nil();
+}
+
+// opengl.glGetFragDataLocation(program:Number, name:String)
+Gurax_DeclareFunctionAlias(glGetFragDataLocation_gurax, "glGetFragDataLocation")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetFragDataLocation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
+	// Function body
+	GLint rtn = glGetFragDataLocation(program, name);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glGetTexParameterIiv(target:Number, pname:Number, params:Pointer)
@@ -14599,6 +14695,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glScaled_gurax));
 	frame.Assign(Gurax_CreateFunction(glScalef_gurax));
 	frame.Assign(Gurax_CreateFunction(glScissor_gurax));
+	frame.Assign(Gurax_CreateFunction(glSelectBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glShadeModel_gurax));
 	frame.Assign(Gurax_CreateFunction(glStencilFunc_gurax));
 	frame.Assign(Gurax_CreateFunction(glStencilMask_gurax));
@@ -14795,6 +14892,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glIsQuery_gurax));
 	frame.Assign(Gurax_CreateFunction(glUnmapBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glAttachShader_gurax));
+	frame.Assign(Gurax_CreateFunction(glBindAttribLocation_gurax));
 	frame.Assign(Gurax_CreateFunction(glBlendEquationSeparate_gurax));
 	frame.Assign(Gurax_CreateFunction(glCompileShader_gurax));
 	frame.Assign(Gurax_CreateFunction(glCreateProgram_gurax));
@@ -14892,6 +14990,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glUniformMatrix4x3fv_gurax));
 	frame.Assign(Gurax_CreateFunction(glBeginConditionalRender_gurax));
 	frame.Assign(Gurax_CreateFunction(glBeginTransformFeedback_gurax));
+	frame.Assign(Gurax_CreateFunction(glBindFragDataLocation_gurax));
 	frame.Assign(Gurax_CreateFunction(glClampColor_gurax));
 	frame.Assign(Gurax_CreateFunction(glClearBufferfi_gurax));
 	frame.Assign(Gurax_CreateFunction(glClearBufferfv_gurax));
@@ -14902,6 +15001,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glEnablei_gurax));
 	frame.Assign(Gurax_CreateFunction(glEndConditionalRender_gurax));
 	frame.Assign(Gurax_CreateFunction(glEndTransformFeedback_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetFragDataLocation_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetTexParameterIiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetTexParameterIuiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetTransformFeedbackVarying_gurax));
