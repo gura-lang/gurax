@@ -19,11 +19,13 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	${this.cType} ${varName} = args_gurax.IsValid()? static_cast<GLboolean>(args_gurax.PickBool()) : GL_FALSE;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
+	auto ${varName} = args_gurax.PickListT<GLboolean>([](Gurax::Value& value) {
+		return value.GetBool()? GL_TRUE : GL_FALSE;
+	});
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return new Value_${this.vtype}(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 	''')
 r.DeclareType_Number('GLbyte')
 r.DeclareType_Number('GLshort')
@@ -52,7 +54,7 @@ r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePickerVec = ''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return new Value_${this.vtype}(reinterpret_cast<const char*>(rtn));
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 	''')
 
 r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
@@ -63,8 +65,8 @@ r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Value& value) {
-		return Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
 	});
 	''')
 
@@ -76,8 +78,8 @@ r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'Pointer',
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Value& value) {
-		return Value_Pointer::GetPointer(value).GetPointerC<GLubyte>();
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<GLubyte>();
 	});
 	''')
 

@@ -14,11 +14,11 @@ Gurax_DeclareFunctionAlias(glewInit_gurax, "glewInit")
 		"");
 }
 
-Gurax_ImplementFunction(glewInit_gurax)
+Gurax_ImplementFunctionEx(glewInit_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	GLenum rtn = glewInit();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glewIsSupported(name:String)
@@ -31,14 +31,14 @@ Gurax_DeclareFunctionAlias(glewIsSupported_gurax, "glewIsSupported")
 		"");
 }
 
-Gurax_ImplementFunction(glewIsSupported_gurax)
+Gurax_ImplementFunctionEx(glewIsSupported_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* name = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
 	// Function body
 	GLboolean rtn = glewIsSupported(name);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glewGetExtension(name:String)
@@ -51,14 +51,14 @@ Gurax_DeclareFunctionAlias(glewGetExtension_gurax, "glewGetExtension")
 		"");
 }
 
-Gurax_ImplementFunction(glewGetExtension_gurax)
+Gurax_ImplementFunctionEx(glewGetExtension_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* name = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
 	// Function body
 	GLboolean rtn = glewGetExtension(name);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glewGetErrorString(error:Number)
@@ -71,14 +71,14 @@ Gurax_DeclareFunctionAlias(glewGetErrorString_gurax, "glewGetErrorString")
 		"");
 }
 
-Gurax_ImplementFunction(glewGetErrorString_gurax)
+Gurax_ImplementFunctionEx(glewGetErrorString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum error = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum error = args_gurax.PickNumber<GLenum>();
 	// Function body
 	const GLubyte* rtn = glewGetErrorString(error);
-	return new Value_String(reinterpret_cast<const char*>(rtn));
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
 // opengl.glewGetString(name:Number)
@@ -91,14 +91,14 @@ Gurax_DeclareFunctionAlias(glewGetString_gurax, "glewGetString")
 		"");
 }
 
-Gurax_ImplementFunction(glewGetString_gurax)
+Gurax_ImplementFunctionEx(glewGetString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum name = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum name = args_gurax.PickNumber<GLenum>();
 	// Function body
 	const GLubyte* rtn = glewGetString(name);
-	return new Value_String(reinterpret_cast<const char*>(rtn));
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
 // opengl.glAccum(op:Number, value:Number)
@@ -112,15 +112,15 @@ Gurax_DeclareFunctionAlias(glAccum_gurax, "glAccum")
 		"");
 }
 
-Gurax_ImplementFunction(glAccum_gurax)
+Gurax_ImplementFunctionEx(glAccum_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum op = args.PickNumber<GLenum>();
-	GLfloat value = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum op = args_gurax.PickNumber<GLenum>();
+	GLfloat value = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glAccum(op, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glAlphaFunc(func:Number, ref:Number)
@@ -134,15 +134,15 @@ Gurax_DeclareFunctionAlias(glAlphaFunc_gurax, "glAlphaFunc")
 		"");
 }
 
-Gurax_ImplementFunction(glAlphaFunc_gurax)
+Gurax_ImplementFunctionEx(glAlphaFunc_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum func = args.PickNumber<GLenum>();
-	GLclampf ref = args.PickNumber<GLclampf>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum func = args_gurax.PickNumber<GLenum>();
+	GLclampf ref = args_gurax.PickNumber<GLclampf>();
 	// Function body
 	glAlphaFunc(func, ref);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glArrayElement(i:Number)
@@ -155,14 +155,14 @@ Gurax_DeclareFunctionAlias(glArrayElement_gurax, "glArrayElement")
 		"");
 }
 
-Gurax_ImplementFunction(glArrayElement_gurax)
+Gurax_ImplementFunctionEx(glArrayElement_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint i = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint i = args_gurax.PickNumber<GLint>();
 	// Function body
 	glArrayElement(i);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBegin(mode:Number)
@@ -175,14 +175,14 @@ Gurax_DeclareFunctionAlias(glBegin_gurax, "glBegin")
 		"");
 }
 
-Gurax_ImplementFunction(glBegin_gurax)
+Gurax_ImplementFunctionEx(glBegin_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBegin(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBindTexture(target:Number, texture:Number)
@@ -196,15 +196,15 @@ Gurax_DeclareFunctionAlias(glBindTexture_gurax, "glBindTexture")
 		"");
 }
 
-Gurax_ImplementFunction(glBindTexture_gurax)
+Gurax_ImplementFunctionEx(glBindTexture_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLuint texture = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLuint texture = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glBindTexture(target, texture);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBitmap(width:Number, height:Number, xorig:Number, yorig:Number, xmove:Number, ymove:Number, bitmap:Pointer)
@@ -223,20 +223,20 @@ Gurax_DeclareFunctionAlias(glBitmap_gurax, "glBitmap")
 		"");
 }
 
-Gurax_ImplementFunction(glBitmap_gurax)
+Gurax_ImplementFunctionEx(glBitmap_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLfloat xorig = args.PickNumber<GLfloat>();
-	GLfloat yorig = args.PickNumber<GLfloat>();
-	GLfloat xmove = args.PickNumber<GLfloat>();
-	GLfloat ymove = args.PickNumber<GLfloat>();
-	const GLubyte* bitmap = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLfloat xorig = args_gurax.PickNumber<GLfloat>();
+	GLfloat yorig = args_gurax.PickNumber<GLfloat>();
+	GLfloat xmove = args_gurax.PickNumber<GLfloat>();
+	GLfloat ymove = args_gurax.PickNumber<GLfloat>();
+	const GLubyte* bitmap = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendFunc(sfactor:Number, dfactor:Number)
@@ -250,15 +250,15 @@ Gurax_DeclareFunctionAlias(glBlendFunc_gurax, "glBlendFunc")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendFunc_gurax)
+Gurax_ImplementFunctionEx(glBlendFunc_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum sfactor = args.PickNumber<GLenum>();
-	GLenum dfactor = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum sfactor = args_gurax.PickNumber<GLenum>();
+	GLenum dfactor = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendFunc(sfactor, dfactor);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCallList(list:Number)
@@ -271,14 +271,14 @@ Gurax_DeclareFunctionAlias(glCallList_gurax, "glCallList")
 		"");
 }
 
-Gurax_ImplementFunction(glCallList_gurax)
+Gurax_ImplementFunctionEx(glCallList_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint list = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint list = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glCallList(list);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCallLists(n:Number, type:Number, lists:Pointer)
@@ -293,16 +293,16 @@ Gurax_DeclareFunctionAlias(glCallLists_gurax, "glCallLists")
 		"");
 }
 
-Gurax_ImplementFunction(glCallLists_gurax)
+Gurax_ImplementFunctionEx(glCallLists_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* lists = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* lists = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCallLists(n, type, lists);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClear(mask:Number)
@@ -315,14 +315,14 @@ Gurax_DeclareFunctionAlias(glClear_gurax, "glClear")
 		"");
 }
 
-Gurax_ImplementFunction(glClear_gurax)
+Gurax_ImplementFunctionEx(glClear_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbitfield mask = args.PickNumber<GLbitfield>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbitfield mask = args_gurax.PickNumber<GLbitfield>();
 	// Function body
 	glClear(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearAccum(red:Number, green:Number, blue:Number, alpha:Number)
@@ -338,17 +338,17 @@ Gurax_DeclareFunctionAlias(glClearAccum_gurax, "glClearAccum")
 		"");
 }
 
-Gurax_ImplementFunction(glClearAccum_gurax)
+Gurax_ImplementFunctionEx(glClearAccum_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat red = args.PickNumber<GLfloat>();
-	GLfloat green = args.PickNumber<GLfloat>();
-	GLfloat blue = args.PickNumber<GLfloat>();
-	GLfloat alpha = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat red = args_gurax.PickNumber<GLfloat>();
+	GLfloat green = args_gurax.PickNumber<GLfloat>();
+	GLfloat blue = args_gurax.PickNumber<GLfloat>();
+	GLfloat alpha = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glClearAccum(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearColor(red:Number, green:Number, blue:Number, alpha:Number)
@@ -364,17 +364,17 @@ Gurax_DeclareFunctionAlias(glClearColor_gurax, "glClearColor")
 		"");
 }
 
-Gurax_ImplementFunction(glClearColor_gurax)
+Gurax_ImplementFunctionEx(glClearColor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampf red = args.PickNumber<GLclampf>();
-	GLclampf green = args.PickNumber<GLclampf>();
-	GLclampf blue = args.PickNumber<GLclampf>();
-	GLclampf alpha = args.PickNumber<GLclampf>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampf red = args_gurax.PickNumber<GLclampf>();
+	GLclampf green = args_gurax.PickNumber<GLclampf>();
+	GLclampf blue = args_gurax.PickNumber<GLclampf>();
+	GLclampf alpha = args_gurax.PickNumber<GLclampf>();
 	// Function body
 	glClearColor(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearDepth(depth:Number)
@@ -387,14 +387,14 @@ Gurax_DeclareFunctionAlias(glClearDepth_gurax, "glClearDepth")
 		"");
 }
 
-Gurax_ImplementFunction(glClearDepth_gurax)
+Gurax_ImplementFunctionEx(glClearDepth_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampd depth = args.PickNumber<GLclampd>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampd depth = args_gurax.PickNumber<GLclampd>();
 	// Function body
 	glClearDepth(depth);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearIndex(c:Number)
@@ -407,14 +407,14 @@ Gurax_DeclareFunctionAlias(glClearIndex_gurax, "glClearIndex")
 		"");
 }
 
-Gurax_ImplementFunction(glClearIndex_gurax)
+Gurax_ImplementFunctionEx(glClearIndex_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat c = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat c = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glClearIndex(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearStencil(s:Number)
@@ -427,14 +427,14 @@ Gurax_DeclareFunctionAlias(glClearStencil_gurax, "glClearStencil")
 		"");
 }
 
-Gurax_ImplementFunction(glClearStencil_gurax)
+Gurax_ImplementFunctionEx(glClearStencil_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint s = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint s = args_gurax.PickNumber<GLint>();
 	// Function body
 	glClearStencil(s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClipPlane(plane:Number, equation[]:Number)
@@ -448,15 +448,15 @@ Gurax_DeclareFunctionAlias(glClipPlane_gurax, "glClipPlane")
 		"");
 }
 
-Gurax_ImplementFunction(glClipPlane_gurax)
+Gurax_ImplementFunctionEx(glClipPlane_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum plane = args.PickNumber<GLenum>();
-	auto equation = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum plane = args_gurax.PickNumber<GLenum>();
+	auto equation = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glClipPlane(plane, equation);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3b(red:Number, green:Number, blue:Number)
@@ -471,16 +471,16 @@ Gurax_DeclareFunctionAlias(glColor3b_gurax, "glColor3b")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3b_gurax)
+Gurax_ImplementFunctionEx(glColor3b_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbyte red = args.PickNumber<GLbyte>();
-	GLbyte green = args.PickNumber<GLbyte>();
-	GLbyte blue = args.PickNumber<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbyte red = args_gurax.PickNumber<GLbyte>();
+	GLbyte green = args_gurax.PickNumber<GLbyte>();
+	GLbyte blue = args_gurax.PickNumber<GLbyte>();
 	// Function body
 	glColor3b(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3bv(v[]:Number)
@@ -493,14 +493,14 @@ Gurax_DeclareFunctionAlias(glColor3bv_gurax, "glColor3bv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3bv_gurax)
+Gurax_ImplementFunctionEx(glColor3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glColor3bv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3d(red:Number, green:Number, blue:Number)
@@ -515,16 +515,16 @@ Gurax_DeclareFunctionAlias(glColor3d_gurax, "glColor3d")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3d_gurax)
+Gurax_ImplementFunctionEx(glColor3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble red = args.PickNumber<GLdouble>();
-	GLdouble green = args.PickNumber<GLdouble>();
-	GLdouble blue = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble red = args_gurax.PickNumber<GLdouble>();
+	GLdouble green = args_gurax.PickNumber<GLdouble>();
+	GLdouble blue = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glColor3d(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3dv(v[]:Number)
@@ -537,14 +537,14 @@ Gurax_DeclareFunctionAlias(glColor3dv_gurax, "glColor3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3dv_gurax)
+Gurax_ImplementFunctionEx(glColor3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glColor3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3f(red:Number, green:Number, blue:Number)
@@ -559,16 +559,16 @@ Gurax_DeclareFunctionAlias(glColor3f_gurax, "glColor3f")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3f_gurax)
+Gurax_ImplementFunctionEx(glColor3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat red = args.PickNumber<GLfloat>();
-	GLfloat green = args.PickNumber<GLfloat>();
-	GLfloat blue = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat red = args_gurax.PickNumber<GLfloat>();
+	GLfloat green = args_gurax.PickNumber<GLfloat>();
+	GLfloat blue = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glColor3f(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3fv(v[]:Number)
@@ -581,14 +581,14 @@ Gurax_DeclareFunctionAlias(glColor3fv_gurax, "glColor3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3fv_gurax)
+Gurax_ImplementFunctionEx(glColor3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glColor3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3i(red:Number, green:Number, blue:Number)
@@ -603,16 +603,16 @@ Gurax_DeclareFunctionAlias(glColor3i_gurax, "glColor3i")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3i_gurax)
+Gurax_ImplementFunctionEx(glColor3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint red = args.PickNumber<GLint>();
-	GLint green = args.PickNumber<GLint>();
-	GLint blue = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint red = args_gurax.PickNumber<GLint>();
+	GLint green = args_gurax.PickNumber<GLint>();
+	GLint blue = args_gurax.PickNumber<GLint>();
 	// Function body
 	glColor3i(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3iv(v[]:Number)
@@ -625,14 +625,14 @@ Gurax_DeclareFunctionAlias(glColor3iv_gurax, "glColor3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3iv_gurax)
+Gurax_ImplementFunctionEx(glColor3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glColor3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3s(red:Number, green:Number, blue:Number)
@@ -647,16 +647,16 @@ Gurax_DeclareFunctionAlias(glColor3s_gurax, "glColor3s")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3s_gurax)
+Gurax_ImplementFunctionEx(glColor3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort red = args.PickNumber<GLshort>();
-	GLshort green = args.PickNumber<GLshort>();
-	GLshort blue = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort red = args_gurax.PickNumber<GLshort>();
+	GLshort green = args_gurax.PickNumber<GLshort>();
+	GLshort blue = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glColor3s(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3sv(v[]:Number)
@@ -669,14 +669,14 @@ Gurax_DeclareFunctionAlias(glColor3sv_gurax, "glColor3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3sv_gurax)
+Gurax_ImplementFunctionEx(glColor3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glColor3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3ub(red:Number, green:Number, blue:Number)
@@ -691,16 +691,16 @@ Gurax_DeclareFunctionAlias(glColor3ub_gurax, "glColor3ub")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ub_gurax)
+Gurax_ImplementFunctionEx(glColor3ub_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLubyte red = args.PickNumber<GLubyte>();
-	GLubyte green = args.PickNumber<GLubyte>();
-	GLubyte blue = args.PickNumber<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLubyte red = args_gurax.PickNumber<GLubyte>();
+	GLubyte green = args_gurax.PickNumber<GLubyte>();
+	GLubyte blue = args_gurax.PickNumber<GLubyte>();
 	// Function body
 	glColor3ub(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3ubv(v[]:Number)
@@ -713,14 +713,14 @@ Gurax_DeclareFunctionAlias(glColor3ubv_gurax, "glColor3ubv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ubv_gurax)
+Gurax_ImplementFunctionEx(glColor3ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glColor3ubv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3ui(red:Number, green:Number, blue:Number)
@@ -735,16 +735,16 @@ Gurax_DeclareFunctionAlias(glColor3ui_gurax, "glColor3ui")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3ui_gurax)
+Gurax_ImplementFunctionEx(glColor3ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint red = args.PickNumber<GLuint>();
-	GLuint green = args.PickNumber<GLuint>();
-	GLuint blue = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint red = args_gurax.PickNumber<GLuint>();
+	GLuint green = args_gurax.PickNumber<GLuint>();
+	GLuint blue = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glColor3ui(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3uiv(v[]:Number)
@@ -757,14 +757,14 @@ Gurax_DeclareFunctionAlias(glColor3uiv_gurax, "glColor3uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3uiv_gurax)
+Gurax_ImplementFunctionEx(glColor3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glColor3uiv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3us(red:Number, green:Number, blue:Number)
@@ -779,16 +779,16 @@ Gurax_DeclareFunctionAlias(glColor3us_gurax, "glColor3us")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3us_gurax)
+Gurax_ImplementFunctionEx(glColor3us_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLushort red = args.PickNumber<GLushort>();
-	GLushort green = args.PickNumber<GLushort>();
-	GLushort blue = args.PickNumber<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLushort red = args_gurax.PickNumber<GLushort>();
+	GLushort green = args_gurax.PickNumber<GLushort>();
+	GLushort blue = args_gurax.PickNumber<GLushort>();
 	// Function body
 	glColor3us(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor3usv(v[]:Number)
@@ -801,14 +801,14 @@ Gurax_DeclareFunctionAlias(glColor3usv_gurax, "glColor3usv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor3usv_gurax)
+Gurax_ImplementFunctionEx(glColor3usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glColor3usv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4b(red:Number, green:Number, blue:Number, alpha:Number)
@@ -824,17 +824,17 @@ Gurax_DeclareFunctionAlias(glColor4b_gurax, "glColor4b")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4b_gurax)
+Gurax_ImplementFunctionEx(glColor4b_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbyte red = args.PickNumber<GLbyte>();
-	GLbyte green = args.PickNumber<GLbyte>();
-	GLbyte blue = args.PickNumber<GLbyte>();
-	GLbyte alpha = args.PickNumber<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbyte red = args_gurax.PickNumber<GLbyte>();
+	GLbyte green = args_gurax.PickNumber<GLbyte>();
+	GLbyte blue = args_gurax.PickNumber<GLbyte>();
+	GLbyte alpha = args_gurax.PickNumber<GLbyte>();
 	// Function body
 	glColor4b(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4bv(v[]:Number)
@@ -847,14 +847,14 @@ Gurax_DeclareFunctionAlias(glColor4bv_gurax, "glColor4bv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4bv_gurax)
+Gurax_ImplementFunctionEx(glColor4bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glColor4bv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4d(red:Number, green:Number, blue:Number, alpha:Number)
@@ -870,17 +870,17 @@ Gurax_DeclareFunctionAlias(glColor4d_gurax, "glColor4d")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4d_gurax)
+Gurax_ImplementFunctionEx(glColor4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble red = args.PickNumber<GLdouble>();
-	GLdouble green = args.PickNumber<GLdouble>();
-	GLdouble blue = args.PickNumber<GLdouble>();
-	GLdouble alpha = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble red = args_gurax.PickNumber<GLdouble>();
+	GLdouble green = args_gurax.PickNumber<GLdouble>();
+	GLdouble blue = args_gurax.PickNumber<GLdouble>();
+	GLdouble alpha = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glColor4d(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4dv(v[]:Number)
@@ -893,14 +893,14 @@ Gurax_DeclareFunctionAlias(glColor4dv_gurax, "glColor4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4dv_gurax)
+Gurax_ImplementFunctionEx(glColor4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glColor4dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4f(red:Number, green:Number, blue:Number, alpha:Number)
@@ -916,17 +916,17 @@ Gurax_DeclareFunctionAlias(glColor4f_gurax, "glColor4f")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4f_gurax)
+Gurax_ImplementFunctionEx(glColor4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat red = args.PickNumber<GLfloat>();
-	GLfloat green = args.PickNumber<GLfloat>();
-	GLfloat blue = args.PickNumber<GLfloat>();
-	GLfloat alpha = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat red = args_gurax.PickNumber<GLfloat>();
+	GLfloat green = args_gurax.PickNumber<GLfloat>();
+	GLfloat blue = args_gurax.PickNumber<GLfloat>();
+	GLfloat alpha = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glColor4f(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4fv(v[]:Number)
@@ -939,14 +939,14 @@ Gurax_DeclareFunctionAlias(glColor4fv_gurax, "glColor4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4fv_gurax)
+Gurax_ImplementFunctionEx(glColor4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glColor4fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4i(red:Number, green:Number, blue:Number, alpha:Number)
@@ -962,17 +962,17 @@ Gurax_DeclareFunctionAlias(glColor4i_gurax, "glColor4i")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4i_gurax)
+Gurax_ImplementFunctionEx(glColor4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint red = args.PickNumber<GLint>();
-	GLint green = args.PickNumber<GLint>();
-	GLint blue = args.PickNumber<GLint>();
-	GLint alpha = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint red = args_gurax.PickNumber<GLint>();
+	GLint green = args_gurax.PickNumber<GLint>();
+	GLint blue = args_gurax.PickNumber<GLint>();
+	GLint alpha = args_gurax.PickNumber<GLint>();
 	// Function body
 	glColor4i(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4iv(v[]:Number)
@@ -985,14 +985,14 @@ Gurax_DeclareFunctionAlias(glColor4iv_gurax, "glColor4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4iv_gurax)
+Gurax_ImplementFunctionEx(glColor4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glColor4iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4s(red:Number, green:Number, blue:Number, alpha:Number)
@@ -1008,17 +1008,17 @@ Gurax_DeclareFunctionAlias(glColor4s_gurax, "glColor4s")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4s_gurax)
+Gurax_ImplementFunctionEx(glColor4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort red = args.PickNumber<GLshort>();
-	GLshort green = args.PickNumber<GLshort>();
-	GLshort blue = args.PickNumber<GLshort>();
-	GLshort alpha = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort red = args_gurax.PickNumber<GLshort>();
+	GLshort green = args_gurax.PickNumber<GLshort>();
+	GLshort blue = args_gurax.PickNumber<GLshort>();
+	GLshort alpha = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glColor4s(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4sv(v[]:Number)
@@ -1031,14 +1031,14 @@ Gurax_DeclareFunctionAlias(glColor4sv_gurax, "glColor4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4sv_gurax)
+Gurax_ImplementFunctionEx(glColor4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glColor4sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4ub(red:Number, green:Number, blue:Number, alpha:Number)
@@ -1054,17 +1054,17 @@ Gurax_DeclareFunctionAlias(glColor4ub_gurax, "glColor4ub")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ub_gurax)
+Gurax_ImplementFunctionEx(glColor4ub_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLubyte red = args.PickNumber<GLubyte>();
-	GLubyte green = args.PickNumber<GLubyte>();
-	GLubyte blue = args.PickNumber<GLubyte>();
-	GLubyte alpha = args.PickNumber<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLubyte red = args_gurax.PickNumber<GLubyte>();
+	GLubyte green = args_gurax.PickNumber<GLubyte>();
+	GLubyte blue = args_gurax.PickNumber<GLubyte>();
+	GLubyte alpha = args_gurax.PickNumber<GLubyte>();
 	// Function body
 	glColor4ub(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4ubv(v[]:Number)
@@ -1077,14 +1077,14 @@ Gurax_DeclareFunctionAlias(glColor4ubv_gurax, "glColor4ubv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ubv_gurax)
+Gurax_ImplementFunctionEx(glColor4ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glColor4ubv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4ui(red:Number, green:Number, blue:Number, alpha:Number)
@@ -1100,17 +1100,17 @@ Gurax_DeclareFunctionAlias(glColor4ui_gurax, "glColor4ui")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4ui_gurax)
+Gurax_ImplementFunctionEx(glColor4ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint red = args.PickNumber<GLuint>();
-	GLuint green = args.PickNumber<GLuint>();
-	GLuint blue = args.PickNumber<GLuint>();
-	GLuint alpha = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint red = args_gurax.PickNumber<GLuint>();
+	GLuint green = args_gurax.PickNumber<GLuint>();
+	GLuint blue = args_gurax.PickNumber<GLuint>();
+	GLuint alpha = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glColor4ui(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4uiv(v[]:Number)
@@ -1123,14 +1123,14 @@ Gurax_DeclareFunctionAlias(glColor4uiv_gurax, "glColor4uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4uiv_gurax)
+Gurax_ImplementFunctionEx(glColor4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glColor4uiv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4us(red:Number, green:Number, blue:Number, alpha:Number)
@@ -1146,17 +1146,17 @@ Gurax_DeclareFunctionAlias(glColor4us_gurax, "glColor4us")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4us_gurax)
+Gurax_ImplementFunctionEx(glColor4us_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLushort red = args.PickNumber<GLushort>();
-	GLushort green = args.PickNumber<GLushort>();
-	GLushort blue = args.PickNumber<GLushort>();
-	GLushort alpha = args.PickNumber<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLushort red = args_gurax.PickNumber<GLushort>();
+	GLushort green = args_gurax.PickNumber<GLushort>();
+	GLushort blue = args_gurax.PickNumber<GLushort>();
+	GLushort alpha = args_gurax.PickNumber<GLushort>();
 	// Function body
 	glColor4us(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColor4usv(v[]:Number)
@@ -1169,14 +1169,14 @@ Gurax_DeclareFunctionAlias(glColor4usv_gurax, "glColor4usv")
 		"");
 }
 
-Gurax_ImplementFunction(glColor4usv_gurax)
+Gurax_ImplementFunctionEx(glColor4usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glColor4usv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool)
@@ -1192,17 +1192,17 @@ Gurax_DeclareFunctionAlias(glColorMask_gurax, "glColorMask")
 		"");
 }
 
-Gurax_ImplementFunction(glColorMask_gurax)
+Gurax_ImplementFunctionEx(glColorMask_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLboolean red = static_cast<GLboolean>(args.PickBool());
-	GLboolean green = static_cast<GLboolean>(args.PickBool());
-	GLboolean blue = static_cast<GLboolean>(args.PickBool());
-	GLboolean alpha = static_cast<GLboolean>(args.PickBool());
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLboolean red = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean green = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean blue = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean alpha = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glColorMask(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColorMaterial(face:Number, mode:Number)
@@ -1216,15 +1216,15 @@ Gurax_DeclareFunctionAlias(glColorMaterial_gurax, "glColorMaterial")
 		"");
 }
 
-Gurax_ImplementFunction(glColorMaterial_gurax)
+Gurax_ImplementFunctionEx(glColorMaterial_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glColorMaterial(face, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer)
@@ -1240,17 +1240,17 @@ Gurax_DeclareFunctionAlias(glColorPointer_gurax, "glColorPointer")
 		"");
 }
 
-Gurax_ImplementFunction(glColorPointer_gurax)
+Gurax_ImplementFunctionEx(glColorPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint size = args.PickNumber<GLint>();
-	GLenum type = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glColorPointer(size, type, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyPixels(x:Number, y:Number, width:Number, height:Number, type:Number)
@@ -1267,18 +1267,18 @@ Gurax_DeclareFunctionAlias(glCopyPixels_gurax, "glCopyPixels")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyPixels_gurax)
+Gurax_ImplementFunctionEx(glCopyPixels_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glCopyPixels(x, y, width, height, type);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyTexImage1D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, border:Number)
@@ -1297,20 +1297,20 @@ Gurax_DeclareFunctionAlias(glCopyTexImage1D_gurax, "glCopyTexImage1D")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexImage1D_gurax)
+Gurax_ImplementFunctionEx(glCopyTexImage1D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLenum internalFormat = args.PickNumber<GLenum>();
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum internalFormat = args_gurax.PickNumber<GLenum>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
 	// Function body
 	glCopyTexImage1D(target, level, internalFormat, x, y, width, border);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyTexImage2D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, height:Number, border:Number)
@@ -1330,21 +1330,21 @@ Gurax_DeclareFunctionAlias(glCopyTexImage2D_gurax, "glCopyTexImage2D")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexImage2D_gurax)
+Gurax_ImplementFunctionEx(glCopyTexImage2D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLenum internalFormat = args.PickNumber<GLenum>();
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum internalFormat = args_gurax.PickNumber<GLenum>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
 	// Function body
 	glCopyTexImage2D(target, level, internalFormat, x, y, width, height, border);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyTexSubImage1D(target:Number, level:Number, xoffset:Number, x:Number, y:Number, width:Number)
@@ -1362,19 +1362,19 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage1D_gurax, "glCopyTexSubImage1D")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexSubImage1D_gurax)
+Gurax_ImplementFunctionEx(glCopyTexSubImage1D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glCopyTexSubImage1D(target, level, xoffset, x, y, width);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, x:Number, y:Number, width:Number, height:Number)
@@ -1394,21 +1394,21 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage2D_gurax, "glCopyTexSubImage2D")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexSubImage2D_gurax)
+Gurax_ImplementFunctionEx(glCopyTexSubImage2D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint yoffset = args.PickNumber<GLint>();
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCullFace(mode:Number)
@@ -1421,14 +1421,14 @@ Gurax_DeclareFunctionAlias(glCullFace_gurax, "glCullFace")
 		"");
 }
 
-Gurax_ImplementFunction(glCullFace_gurax)
+Gurax_ImplementFunctionEx(glCullFace_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glCullFace(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDeleteLists(list:Number, range:Number)
@@ -1442,15 +1442,15 @@ Gurax_DeclareFunctionAlias(glDeleteLists_gurax, "glDeleteLists")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteLists_gurax)
+Gurax_ImplementFunctionEx(glDeleteLists_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint list = args.PickNumber<GLuint>();
-	GLsizei range = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint list = args_gurax.PickNumber<GLuint>();
+	GLsizei range = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDeleteLists(list, range);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDeleteTextures(textures[]:Number)
@@ -1463,11 +1463,11 @@ Gurax_DeclareFunctionAlias(glDeleteTextures_gurax, "glDeleteTextures")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteTextures_gurax)
+Gurax_ImplementFunctionEx(glDeleteTextures_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto textures = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto textures = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glDeleteTextures(textures.sizeT<GLsizei>(), textures);
 	return Value::nil();
@@ -1483,14 +1483,14 @@ Gurax_DeclareFunctionAlias(glDepthFunc_gurax, "glDepthFunc")
 		"");
 }
 
-Gurax_ImplementFunction(glDepthFunc_gurax)
+Gurax_ImplementFunctionEx(glDepthFunc_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum func = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum func = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glDepthFunc(func);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDepthMask(flag:Bool)
@@ -1503,14 +1503,14 @@ Gurax_DeclareFunctionAlias(glDepthMask_gurax, "glDepthMask")
 		"");
 }
 
-Gurax_ImplementFunction(glDepthMask_gurax)
+Gurax_ImplementFunctionEx(glDepthMask_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLboolean flag = static_cast<GLboolean>(args.PickBool());
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLboolean flag = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glDepthMask(flag);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDepthRange(zNear:Number, zFar:Number)
@@ -1524,15 +1524,15 @@ Gurax_DeclareFunctionAlias(glDepthRange_gurax, "glDepthRange")
 		"");
 }
 
-Gurax_ImplementFunction(glDepthRange_gurax)
+Gurax_ImplementFunctionEx(glDepthRange_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampd zNear = args.PickNumber<GLclampd>();
-	GLclampd zFar = args.PickNumber<GLclampd>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampd zNear = args_gurax.PickNumber<GLclampd>();
+	GLclampd zFar = args_gurax.PickNumber<GLclampd>();
 	// Function body
 	glDepthRange(zNear, zFar);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDisable(cap:Number)
@@ -1545,14 +1545,14 @@ Gurax_DeclareFunctionAlias(glDisable_gurax, "glDisable")
 		"");
 }
 
-Gurax_ImplementFunction(glDisable_gurax)
+Gurax_ImplementFunctionEx(glDisable_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glDisable(cap);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDisableClientState(array:Number)
@@ -1565,14 +1565,14 @@ Gurax_DeclareFunctionAlias(glDisableClientState_gurax, "glDisableClientState")
 		"");
 }
 
-Gurax_ImplementFunction(glDisableClientState_gurax)
+Gurax_ImplementFunctionEx(glDisableClientState_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum array = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum array = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glDisableClientState(array);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawArrays(mode:Number, first:Number, count:Number)
@@ -1587,16 +1587,16 @@ Gurax_DeclareFunctionAlias(glDrawArrays_gurax, "glDrawArrays")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawArrays_gurax)
+Gurax_ImplementFunctionEx(glDrawArrays_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLint first = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLint first = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDrawArrays(mode, first, count);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawBuffer(mode:Number)
@@ -1609,14 +1609,14 @@ Gurax_DeclareFunctionAlias(glDrawBuffer_gurax, "glDrawBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawBuffer_gurax)
+Gurax_ImplementFunctionEx(glDrawBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glDrawBuffer(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawElements(mode:Number, count:Number, type:Number, indices:Pointer)
@@ -1632,17 +1632,17 @@ Gurax_DeclareFunctionAlias(glDrawElements_gurax, "glDrawElements")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawElements_gurax)
+Gurax_ImplementFunctionEx(glDrawElements_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* indices = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glDrawElements(mode, count, type, indices);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawPixels(width:Number, height:Number, format:Number, type:Number, pixels:Pointer)
@@ -1659,18 +1659,18 @@ Gurax_DeclareFunctionAlias(glDrawPixels_gurax, "glDrawPixels")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawPixels_gurax)
+Gurax_ImplementFunctionEx(glDrawPixels_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glDrawPixels(width, height, format, type, pixels);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEdgeFlag(flag:Bool)
@@ -1683,14 +1683,14 @@ Gurax_DeclareFunctionAlias(glEdgeFlag_gurax, "glEdgeFlag")
 		"");
 }
 
-Gurax_ImplementFunction(glEdgeFlag_gurax)
+Gurax_ImplementFunctionEx(glEdgeFlag_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLboolean flag = static_cast<GLboolean>(args.PickBool());
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLboolean flag = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glEdgeFlag(flag);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEdgeFlagPointer(stride:Number, pointer:Pointer)
@@ -1704,15 +1704,15 @@ Gurax_DeclareFunctionAlias(glEdgeFlagPointer_gurax, "glEdgeFlagPointer")
 		"");
 }
 
-Gurax_ImplementFunction(glEdgeFlagPointer_gurax)
+Gurax_ImplementFunctionEx(glEdgeFlagPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glEdgeFlagPointer(stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEdgeFlagv(flag[]:Bool)
@@ -1725,14 +1725,16 @@ Gurax_DeclareFunctionAlias(glEdgeFlagv_gurax, "glEdgeFlagv")
 		"");
 }
 
-Gurax_ImplementFunction(glEdgeFlagv_gurax)
+Gurax_ImplementFunctionEx(glEdgeFlagv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto flag = args.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto flag = args_gurax.PickListT<GLboolean>([](Gurax::Value& value) {
+		return value.GetBool()? GL_TRUE : GL_FALSE;
+	});
 	// Function body
 	glEdgeFlagv(flag);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEnable(cap:Number)
@@ -1745,14 +1747,14 @@ Gurax_DeclareFunctionAlias(glEnable_gurax, "glEnable")
 		"");
 }
 
-Gurax_ImplementFunction(glEnable_gurax)
+Gurax_ImplementFunctionEx(glEnable_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glEnable(cap);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEnableClientState(array:Number)
@@ -1765,14 +1767,14 @@ Gurax_DeclareFunctionAlias(glEnableClientState_gurax, "glEnableClientState")
 		"");
 }
 
-Gurax_ImplementFunction(glEnableClientState_gurax)
+Gurax_ImplementFunctionEx(glEnableClientState_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum array = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum array = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glEnableClientState(array);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEnd()
@@ -1784,11 +1786,11 @@ Gurax_DeclareFunctionAlias(glEnd_gurax, "glEnd")
 		"");
 }
 
-Gurax_ImplementFunction(glEnd_gurax)
+Gurax_ImplementFunctionEx(glEnd_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glEnd();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEndList()
@@ -1800,11 +1802,11 @@ Gurax_DeclareFunctionAlias(glEndList_gurax, "glEndList")
 		"");
 }
 
-Gurax_ImplementFunction(glEndList_gurax)
+Gurax_ImplementFunctionEx(glEndList_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glEndList();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord1d(u:Number)
@@ -1817,14 +1819,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord1d_gurax, "glEvalCoord1d")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1d_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble u = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble u = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glEvalCoord1d(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord1dv(u[]:Number)
@@ -1837,14 +1839,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord1dv_gurax, "glEvalCoord1dv")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1dv_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto u = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto u = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glEvalCoord1dv(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord1f(u:Number)
@@ -1857,14 +1859,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord1f_gurax, "glEvalCoord1f")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1f_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat u = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat u = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glEvalCoord1f(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord1fv(u[]:Number)
@@ -1877,14 +1879,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord1fv_gurax, "glEvalCoord1fv")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord1fv_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto u = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto u = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glEvalCoord1fv(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord2d(u:Number, v:Number)
@@ -1898,15 +1900,15 @@ Gurax_DeclareFunctionAlias(glEvalCoord2d_gurax, "glEvalCoord2d")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2d_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble u = args.PickNumber<GLdouble>();
-	GLdouble v = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble u = args_gurax.PickNumber<GLdouble>();
+	GLdouble v = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glEvalCoord2d(u, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord2dv(u[]:Number)
@@ -1919,14 +1921,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord2dv_gurax, "glEvalCoord2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2dv_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto u = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto u = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glEvalCoord2dv(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord2f(u:Number, v:Number)
@@ -1940,15 +1942,15 @@ Gurax_DeclareFunctionAlias(glEvalCoord2f_gurax, "glEvalCoord2f")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2f_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat u = args.PickNumber<GLfloat>();
-	GLfloat v = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat u = args_gurax.PickNumber<GLfloat>();
+	GLfloat v = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glEvalCoord2f(u, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalCoord2fv(u[]:Number)
@@ -1961,14 +1963,14 @@ Gurax_DeclareFunctionAlias(glEvalCoord2fv_gurax, "glEvalCoord2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalCoord2fv_gurax)
+Gurax_ImplementFunctionEx(glEvalCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto u = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto u = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glEvalCoord2fv(u);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalMesh1(mode:Number, i1:Number, i2:Number)
@@ -1983,16 +1985,16 @@ Gurax_DeclareFunctionAlias(glEvalMesh1_gurax, "glEvalMesh1")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalMesh1_gurax)
+Gurax_ImplementFunctionEx(glEvalMesh1_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLint i1 = args.PickNumber<GLint>();
-	GLint i2 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLint i1 = args_gurax.PickNumber<GLint>();
+	GLint i2 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glEvalMesh1(mode, i1, i2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalMesh2(mode:Number, i1:Number, i2:Number, j1:Number, j2:Number)
@@ -2009,18 +2011,18 @@ Gurax_DeclareFunctionAlias(glEvalMesh2_gurax, "glEvalMesh2")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalMesh2_gurax)
+Gurax_ImplementFunctionEx(glEvalMesh2_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLint i1 = args.PickNumber<GLint>();
-	GLint i2 = args.PickNumber<GLint>();
-	GLint j1 = args.PickNumber<GLint>();
-	GLint j2 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLint i1 = args_gurax.PickNumber<GLint>();
+	GLint i2 = args_gurax.PickNumber<GLint>();
+	GLint j1 = args_gurax.PickNumber<GLint>();
+	GLint j2 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glEvalMesh2(mode, i1, i2, j1, j2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalPoint1(i:Number)
@@ -2033,14 +2035,14 @@ Gurax_DeclareFunctionAlias(glEvalPoint1_gurax, "glEvalPoint1")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalPoint1_gurax)
+Gurax_ImplementFunctionEx(glEvalPoint1_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint i = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint i = args_gurax.PickNumber<GLint>();
 	// Function body
 	glEvalPoint1(i);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEvalPoint2(i:Number, j:Number)
@@ -2054,15 +2056,15 @@ Gurax_DeclareFunctionAlias(glEvalPoint2_gurax, "glEvalPoint2")
 		"");
 }
 
-Gurax_ImplementFunction(glEvalPoint2_gurax)
+Gurax_ImplementFunctionEx(glEvalPoint2_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint i = args.PickNumber<GLint>();
-	GLint j = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint i = args_gurax.PickNumber<GLint>();
+	GLint j = args_gurax.PickNumber<GLint>();
 	// Function body
 	glEvalPoint2(i, j);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFeedbackBuffer(size:Number, type:Number)
@@ -2076,12 +2078,12 @@ Gurax_DeclareFunctionAlias(glFeedbackBuffer_gurax, "glFeedbackBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glFeedbackBuffer_gurax)
+Gurax_ImplementFunctionEx(glFeedbackBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei size = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei size = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
 	// Function body
 	std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
 	glFeedbackBuffer(size, type, buffer.get());
@@ -2097,11 +2099,11 @@ Gurax_DeclareFunctionAlias(glFinish_gurax, "glFinish")
 		"");
 }
 
-Gurax_ImplementFunction(glFinish_gurax)
+Gurax_ImplementFunctionEx(glFinish_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glFinish();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFlush()
@@ -2113,11 +2115,11 @@ Gurax_DeclareFunctionAlias(glFlush_gurax, "glFlush")
 		"");
 }
 
-Gurax_ImplementFunction(glFlush_gurax)
+Gurax_ImplementFunctionEx(glFlush_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glFlush();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogf(pname:Number, param:Number)
@@ -2131,15 +2133,15 @@ Gurax_DeclareFunctionAlias(glFogf_gurax, "glFogf")
 		"");
 }
 
-Gurax_ImplementFunction(glFogf_gurax)
+Gurax_ImplementFunctionEx(glFogf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glFogf(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogfv(pname:Number, params[]:Number)
@@ -2153,15 +2155,15 @@ Gurax_DeclareFunctionAlias(glFogfv_gurax, "glFogfv")
 		"");
 }
 
-Gurax_ImplementFunction(glFogfv_gurax)
+Gurax_ImplementFunctionEx(glFogfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glFogfv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogi(pname:Number, param:Number)
@@ -2175,15 +2177,15 @@ Gurax_DeclareFunctionAlias(glFogi_gurax, "glFogi")
 		"");
 }
 
-Gurax_ImplementFunction(glFogi_gurax)
+Gurax_ImplementFunctionEx(glFogi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glFogi(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogiv(pname:Number, params[]:Number)
@@ -2197,15 +2199,15 @@ Gurax_DeclareFunctionAlias(glFogiv_gurax, "glFogiv")
 		"");
 }
 
-Gurax_ImplementFunction(glFogiv_gurax)
+Gurax_ImplementFunctionEx(glFogiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glFogiv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFrontFace(mode:Number)
@@ -2218,14 +2220,14 @@ Gurax_DeclareFunctionAlias(glFrontFace_gurax, "glFrontFace")
 		"");
 }
 
-Gurax_ImplementFunction(glFrontFace_gurax)
+Gurax_ImplementFunctionEx(glFrontFace_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glFrontFace(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFrustum(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
@@ -2243,19 +2245,19 @@ Gurax_DeclareFunctionAlias(glFrustum_gurax, "glFrustum")
 		"");
 }
 
-Gurax_ImplementFunction(glFrustum_gurax)
+Gurax_ImplementFunctionEx(glFrustum_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble left = args.PickNumber<GLdouble>();
-	GLdouble right = args.PickNumber<GLdouble>();
-	GLdouble bottom = args.PickNumber<GLdouble>();
-	GLdouble top = args.PickNumber<GLdouble>();
-	GLdouble zNear = args.PickNumber<GLdouble>();
-	GLdouble zFar = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble left = args_gurax.PickNumber<GLdouble>();
+	GLdouble right = args_gurax.PickNumber<GLdouble>();
+	GLdouble bottom = args_gurax.PickNumber<GLdouble>();
+	GLdouble top = args_gurax.PickNumber<GLdouble>();
+	GLdouble zNear = args_gurax.PickNumber<GLdouble>();
+	GLdouble zFar = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glFrustum(left, right, bottom, top, zNear, zFar);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glGenLists(range:Number)
@@ -2268,14 +2270,14 @@ Gurax_DeclareFunctionAlias(glGenLists_gurax, "glGenLists")
 		"");
 }
 
-Gurax_ImplementFunction(glGenLists_gurax)
+Gurax_ImplementFunctionEx(glGenLists_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei range = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei range = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	GLuint rtn = glGenLists(range);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glGenTextures(n:Number)
@@ -2288,11 +2290,11 @@ Gurax_DeclareFunctionAlias(glGenTextures_gurax, "glGenTextures")
 		"");
 }
 
-Gurax_ImplementFunction(glGenTextures_gurax)
+Gurax_ImplementFunctionEx(glGenTextures_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	std::unique_ptr<GLuint []> textures(new GLuint [n]);
 	glGenTextures(n, textures.get());
@@ -2308,11 +2310,11 @@ Gurax_DeclareFunctionAlias(glGetError_gurax, "glGetError")
 		"");
 }
 
-Gurax_ImplementFunction(glGetError_gurax)
+Gurax_ImplementFunctionEx(glGetError_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	GLenum rtn = glGetError();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glGetString(name:Number)
@@ -2325,14 +2327,14 @@ Gurax_DeclareFunctionAlias(glGetString_gurax, "glGetString")
 		"");
 }
 
-Gurax_ImplementFunction(glGetString_gurax)
+Gurax_ImplementFunctionEx(glGetString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum name = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum name = args_gurax.PickNumber<GLenum>();
 	// Function body
 	const GLubyte* rtn = glGetString(name);
-	return new Value_String(reinterpret_cast<const char*>(rtn));
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
 // opengl.glHint(target:Number, mode:Number)
@@ -2346,15 +2348,15 @@ Gurax_DeclareFunctionAlias(glHint_gurax, "glHint")
 		"");
 }
 
-Gurax_ImplementFunction(glHint_gurax)
+Gurax_ImplementFunctionEx(glHint_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glHint(target, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexMask(mask:Number)
@@ -2367,14 +2369,14 @@ Gurax_DeclareFunctionAlias(glIndexMask_gurax, "glIndexMask")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexMask_gurax)
+Gurax_ImplementFunctionEx(glIndexMask_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint mask = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint mask = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glIndexMask(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexPointer(type:Number, stride:Number, pointer:Pointer)
@@ -2389,16 +2391,16 @@ Gurax_DeclareFunctionAlias(glIndexPointer_gurax, "glIndexPointer")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexPointer_gurax)
+Gurax_ImplementFunctionEx(glIndexPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum type = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glIndexPointer(type, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexd(c:Number)
@@ -2411,14 +2413,14 @@ Gurax_DeclareFunctionAlias(glIndexd_gurax, "glIndexd")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexd_gurax)
+Gurax_ImplementFunctionEx(glIndexd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble c = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble c = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glIndexd(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexdv(c[]:Number)
@@ -2431,14 +2433,14 @@ Gurax_DeclareFunctionAlias(glIndexdv_gurax, "glIndexdv")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexdv_gurax)
+Gurax_ImplementFunctionEx(glIndexdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto c = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto c = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glIndexdv(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexf(c:Number)
@@ -2451,14 +2453,14 @@ Gurax_DeclareFunctionAlias(glIndexf_gurax, "glIndexf")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexf_gurax)
+Gurax_ImplementFunctionEx(glIndexf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat c = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat c = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glIndexf(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexfv(c[]:Number)
@@ -2471,14 +2473,14 @@ Gurax_DeclareFunctionAlias(glIndexfv_gurax, "glIndexfv")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexfv_gurax)
+Gurax_ImplementFunctionEx(glIndexfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto c = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto c = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glIndexfv(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexi(c:Number)
@@ -2491,14 +2493,14 @@ Gurax_DeclareFunctionAlias(glIndexi_gurax, "glIndexi")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexi_gurax)
+Gurax_ImplementFunctionEx(glIndexi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint c = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint c = args_gurax.PickNumber<GLint>();
 	// Function body
 	glIndexi(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexiv(c[]:Number)
@@ -2511,14 +2513,14 @@ Gurax_DeclareFunctionAlias(glIndexiv_gurax, "glIndexiv")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexiv_gurax)
+Gurax_ImplementFunctionEx(glIndexiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto c = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto c = args_gurax.PickNumList<GLint>();
 	// Function body
 	glIndexiv(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexs(c:Number)
@@ -2531,14 +2533,14 @@ Gurax_DeclareFunctionAlias(glIndexs_gurax, "glIndexs")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexs_gurax)
+Gurax_ImplementFunctionEx(glIndexs_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort c = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort c = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glIndexs(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexsv(c[]:Number)
@@ -2551,14 +2553,14 @@ Gurax_DeclareFunctionAlias(glIndexsv_gurax, "glIndexsv")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexsv_gurax)
+Gurax_ImplementFunctionEx(glIndexsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto c = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto c = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glIndexsv(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexub(c:Number)
@@ -2571,14 +2573,14 @@ Gurax_DeclareFunctionAlias(glIndexub_gurax, "glIndexub")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexub_gurax)
+Gurax_ImplementFunctionEx(glIndexub_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLubyte c = args.PickNumber<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLubyte c = args_gurax.PickNumber<GLubyte>();
 	// Function body
 	glIndexub(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIndexubv(c[]:Number)
@@ -2591,14 +2593,14 @@ Gurax_DeclareFunctionAlias(glIndexubv_gurax, "glIndexubv")
 		"");
 }
 
-Gurax_ImplementFunction(glIndexubv_gurax)
+Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto c = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto c = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glIndexubv(c);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glInitNames()
@@ -2610,11 +2612,11 @@ Gurax_DeclareFunctionAlias(glInitNames_gurax, "glInitNames")
 		"");
 }
 
-Gurax_ImplementFunction(glInitNames_gurax)
+Gurax_ImplementFunctionEx(glInitNames_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glInitNames();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glInterleavedArrays(format:Number, stride:Number, pointer:Pointer)
@@ -2629,16 +2631,16 @@ Gurax_DeclareFunctionAlias(glInterleavedArrays_gurax, "glInterleavedArrays")
 		"");
 }
 
-Gurax_ImplementFunction(glInterleavedArrays_gurax)
+Gurax_ImplementFunctionEx(glInterleavedArrays_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum format = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glInterleavedArrays(format, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIsEnabled(cap:Number)
@@ -2651,14 +2653,14 @@ Gurax_DeclareFunctionAlias(glIsEnabled_gurax, "glIsEnabled")
 		"");
 }
 
-Gurax_ImplementFunction(glIsEnabled_gurax)
+Gurax_ImplementFunctionEx(glIsEnabled_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
 	// Function body
 	GLboolean rtn = glIsEnabled(cap);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glIsList(list:Number)
@@ -2671,14 +2673,14 @@ Gurax_DeclareFunctionAlias(glIsList_gurax, "glIsList")
 		"");
 }
 
-Gurax_ImplementFunction(glIsList_gurax)
+Gurax_ImplementFunctionEx(glIsList_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint list = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint list = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsList(list);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glIsTexture(texture:Number)
@@ -2691,14 +2693,14 @@ Gurax_DeclareFunctionAlias(glIsTexture_gurax, "glIsTexture")
 		"");
 }
 
-Gurax_ImplementFunction(glIsTexture_gurax)
+Gurax_ImplementFunctionEx(glIsTexture_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint texture = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsTexture(texture);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glLightModelf(pname:Number, param:Number)
@@ -2712,15 +2714,15 @@ Gurax_DeclareFunctionAlias(glLightModelf_gurax, "glLightModelf")
 		"");
 }
 
-Gurax_ImplementFunction(glLightModelf_gurax)
+Gurax_ImplementFunctionEx(glLightModelf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glLightModelf(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightModelfv(pname:Number, params[]:Number)
@@ -2734,15 +2736,15 @@ Gurax_DeclareFunctionAlias(glLightModelfv_gurax, "glLightModelfv")
 		"");
 }
 
-Gurax_ImplementFunction(glLightModelfv_gurax)
+Gurax_ImplementFunctionEx(glLightModelfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glLightModelfv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightModeli(pname:Number, param:Number)
@@ -2756,15 +2758,15 @@ Gurax_DeclareFunctionAlias(glLightModeli_gurax, "glLightModeli")
 		"");
 }
 
-Gurax_ImplementFunction(glLightModeli_gurax)
+Gurax_ImplementFunctionEx(glLightModeli_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glLightModeli(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightModeliv(pname:Number, params[]:Number)
@@ -2778,15 +2780,15 @@ Gurax_DeclareFunctionAlias(glLightModeliv_gurax, "glLightModeliv")
 		"");
 }
 
-Gurax_ImplementFunction(glLightModeliv_gurax)
+Gurax_ImplementFunctionEx(glLightModeliv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glLightModeliv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightf(light:Number, pname:Number, param:Number)
@@ -2801,16 +2803,16 @@ Gurax_DeclareFunctionAlias(glLightf_gurax, "glLightf")
 		"");
 }
 
-Gurax_ImplementFunction(glLightf_gurax)
+Gurax_ImplementFunctionEx(glLightf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum light = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum light = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glLightf(light, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightfv(light:Number, pname:Number, params[]:Number)
@@ -2825,16 +2827,16 @@ Gurax_DeclareFunctionAlias(glLightfv_gurax, "glLightfv")
 		"");
 }
 
-Gurax_ImplementFunction(glLightfv_gurax)
+Gurax_ImplementFunctionEx(glLightfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum light = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum light = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glLightfv(light, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLighti(light:Number, pname:Number, param:Number)
@@ -2849,16 +2851,16 @@ Gurax_DeclareFunctionAlias(glLighti_gurax, "glLighti")
 		"");
 }
 
-Gurax_ImplementFunction(glLighti_gurax)
+Gurax_ImplementFunctionEx(glLighti_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum light = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum light = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glLighti(light, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLightiv(light:Number, pname:Number, params[]:Number)
@@ -2873,16 +2875,16 @@ Gurax_DeclareFunctionAlias(glLightiv_gurax, "glLightiv")
 		"");
 }
 
-Gurax_ImplementFunction(glLightiv_gurax)
+Gurax_ImplementFunctionEx(glLightiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum light = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum light = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glLightiv(light, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLineStipple(factor:Number, pattern:Number)
@@ -2896,15 +2898,15 @@ Gurax_DeclareFunctionAlias(glLineStipple_gurax, "glLineStipple")
 		"");
 }
 
-Gurax_ImplementFunction(glLineStipple_gurax)
+Gurax_ImplementFunctionEx(glLineStipple_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint factor = args.PickNumber<GLint>();
-	GLushort pattern = args.PickNumber<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint factor = args_gurax.PickNumber<GLint>();
+	GLushort pattern = args_gurax.PickNumber<GLushort>();
 	// Function body
 	glLineStipple(factor, pattern);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLineWidth(width:Number)
@@ -2917,14 +2919,14 @@ Gurax_DeclareFunctionAlias(glLineWidth_gurax, "glLineWidth")
 		"");
 }
 
-Gurax_ImplementFunction(glLineWidth_gurax)
+Gurax_ImplementFunctionEx(glLineWidth_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat width = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat width = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glLineWidth(width);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glListBase(base:Number)
@@ -2937,14 +2939,14 @@ Gurax_DeclareFunctionAlias(glListBase_gurax, "glListBase")
 		"");
 }
 
-Gurax_ImplementFunction(glListBase_gurax)
+Gurax_ImplementFunctionEx(glListBase_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint base = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint base = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glListBase(base);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadIdentity()
@@ -2956,11 +2958,11 @@ Gurax_DeclareFunctionAlias(glLoadIdentity_gurax, "glLoadIdentity")
 		"");
 }
 
-Gurax_ImplementFunction(glLoadIdentity_gurax)
+Gurax_ImplementFunctionEx(glLoadIdentity_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glLoadIdentity();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadMatrixd(m[]:Number)
@@ -2973,14 +2975,14 @@ Gurax_DeclareFunctionAlias(glLoadMatrixd_gurax, "glLoadMatrixd")
 		"");
 }
 
-Gurax_ImplementFunction(glLoadMatrixd_gurax)
+Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glLoadMatrixd(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadMatrixf(m[]:Number)
@@ -2993,14 +2995,14 @@ Gurax_DeclareFunctionAlias(glLoadMatrixf_gurax, "glLoadMatrixf")
 		"");
 }
 
-Gurax_ImplementFunction(glLoadMatrixf_gurax)
+Gurax_ImplementFunctionEx(glLoadMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glLoadMatrixf(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadName(name:Number)
@@ -3013,14 +3015,14 @@ Gurax_DeclareFunctionAlias(glLoadName_gurax, "glLoadName")
 		"");
 }
 
-Gurax_ImplementFunction(glLoadName_gurax)
+Gurax_ImplementFunctionEx(glLoadName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint name = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint name = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glLoadName(name);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLogicOp(opcode:Number)
@@ -3033,14 +3035,14 @@ Gurax_DeclareFunctionAlias(glLogicOp_gurax, "glLogicOp")
 		"");
 }
 
-Gurax_ImplementFunction(glLogicOp_gurax)
+Gurax_ImplementFunctionEx(glLogicOp_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum opcode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum opcode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glLogicOp(opcode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMap1d(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points[]:Number)
@@ -3058,19 +3060,19 @@ Gurax_DeclareFunctionAlias(glMap1d_gurax, "glMap1d")
 		"");
 }
 
-Gurax_ImplementFunction(glMap1d_gurax)
+Gurax_ImplementFunctionEx(glMap1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble u1 = args.PickNumber<GLdouble>();
-	GLdouble u2 = args.PickNumber<GLdouble>();
-	GLint stride = args.PickNumber<GLint>();
-	GLint order = args.PickNumber<GLint>();
-	auto points = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble u1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
+	GLint stride = args_gurax.PickNumber<GLint>();
+	GLint order = args_gurax.PickNumber<GLint>();
+	auto points = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMap1d(target, u1, u2, stride, order, points);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMap1f(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points[]:Number)
@@ -3088,19 +3090,19 @@ Gurax_DeclareFunctionAlias(glMap1f_gurax, "glMap1f")
 		"");
 }
 
-Gurax_ImplementFunction(glMap1f_gurax)
+Gurax_ImplementFunctionEx(glMap1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat u1 = args.PickNumber<GLfloat>();
-	GLfloat u2 = args.PickNumber<GLfloat>();
-	GLint stride = args.PickNumber<GLint>();
-	GLint order = args.PickNumber<GLint>();
-	auto points = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat u1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
+	GLint stride = args_gurax.PickNumber<GLint>();
+	GLint order = args_gurax.PickNumber<GLint>();
+	auto points = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMap1f(target, u1, u2, stride, order, points);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMap2d(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points[]:Number)
@@ -3122,23 +3124,23 @@ Gurax_DeclareFunctionAlias(glMap2d_gurax, "glMap2d")
 		"");
 }
 
-Gurax_ImplementFunction(glMap2d_gurax)
+Gurax_ImplementFunctionEx(glMap2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble u1 = args.PickNumber<GLdouble>();
-	GLdouble u2 = args.PickNumber<GLdouble>();
-	GLint ustride = args.PickNumber<GLint>();
-	GLint uorder = args.PickNumber<GLint>();
-	GLdouble v1 = args.PickNumber<GLdouble>();
-	GLdouble v2 = args.PickNumber<GLdouble>();
-	GLint vstride = args.PickNumber<GLint>();
-	GLint vorder = args.PickNumber<GLint>();
-	auto points = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble u1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
+	GLint ustride = args_gurax.PickNumber<GLint>();
+	GLint uorder = args_gurax.PickNumber<GLint>();
+	GLdouble v1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble v2 = args_gurax.PickNumber<GLdouble>();
+	GLint vstride = args_gurax.PickNumber<GLint>();
+	GLint vorder = args_gurax.PickNumber<GLint>();
+	auto points = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMap2f(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points[]:Number)
@@ -3160,23 +3162,23 @@ Gurax_DeclareFunctionAlias(glMap2f_gurax, "glMap2f")
 		"");
 }
 
-Gurax_ImplementFunction(glMap2f_gurax)
+Gurax_ImplementFunctionEx(glMap2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat u1 = args.PickNumber<GLfloat>();
-	GLfloat u2 = args.PickNumber<GLfloat>();
-	GLint ustride = args.PickNumber<GLint>();
-	GLint uorder = args.PickNumber<GLint>();
-	GLfloat v1 = args.PickNumber<GLfloat>();
-	GLfloat v2 = args.PickNumber<GLfloat>();
-	GLint vstride = args.PickNumber<GLint>();
-	GLint vorder = args.PickNumber<GLint>();
-	auto points = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat u1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
+	GLint ustride = args_gurax.PickNumber<GLint>();
+	GLint uorder = args_gurax.PickNumber<GLint>();
+	GLfloat v1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
+	GLint vstride = args_gurax.PickNumber<GLint>();
+	GLint vorder = args_gurax.PickNumber<GLint>();
+	auto points = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMapGrid1d(un:Number, u1:Number, u2:Number)
@@ -3191,16 +3193,16 @@ Gurax_DeclareFunctionAlias(glMapGrid1d_gurax, "glMapGrid1d")
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid1d_gurax)
+Gurax_ImplementFunctionEx(glMapGrid1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint un = args.PickNumber<GLint>();
-	GLdouble u1 = args.PickNumber<GLdouble>();
-	GLdouble u2 = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint un = args_gurax.PickNumber<GLint>();
+	GLdouble u1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMapGrid1d(un, u1, u2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMapGrid1f(un:Number, u1:Number, u2:Number)
@@ -3215,16 +3217,16 @@ Gurax_DeclareFunctionAlias(glMapGrid1f_gurax, "glMapGrid1f")
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid1f_gurax)
+Gurax_ImplementFunctionEx(glMapGrid1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint un = args.PickNumber<GLint>();
-	GLfloat u1 = args.PickNumber<GLfloat>();
-	GLfloat u2 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint un = args_gurax.PickNumber<GLint>();
+	GLfloat u1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMapGrid1f(un, u1, u2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMapGrid2d(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
@@ -3242,19 +3244,19 @@ Gurax_DeclareFunctionAlias(glMapGrid2d_gurax, "glMapGrid2d")
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid2d_gurax)
+Gurax_ImplementFunctionEx(glMapGrid2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint un = args.PickNumber<GLint>();
-	GLdouble u1 = args.PickNumber<GLdouble>();
-	GLdouble u2 = args.PickNumber<GLdouble>();
-	GLint vn = args.PickNumber<GLint>();
-	GLdouble v1 = args.PickNumber<GLdouble>();
-	GLdouble v2 = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint un = args_gurax.PickNumber<GLint>();
+	GLdouble u1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
+	GLint vn = args_gurax.PickNumber<GLint>();
+	GLdouble v1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble v2 = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMapGrid2d(un, u1, u2, vn, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMapGrid2f(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
@@ -3272,19 +3274,19 @@ Gurax_DeclareFunctionAlias(glMapGrid2f_gurax, "glMapGrid2f")
 		"");
 }
 
-Gurax_ImplementFunction(glMapGrid2f_gurax)
+Gurax_ImplementFunctionEx(glMapGrid2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint un = args.PickNumber<GLint>();
-	GLfloat u1 = args.PickNumber<GLfloat>();
-	GLfloat u2 = args.PickNumber<GLfloat>();
-	GLint vn = args.PickNumber<GLint>();
-	GLfloat v1 = args.PickNumber<GLfloat>();
-	GLfloat v2 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint un = args_gurax.PickNumber<GLint>();
+	GLfloat u1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
+	GLint vn = args_gurax.PickNumber<GLint>();
+	GLfloat v1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMapGrid2f(un, u1, u2, vn, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMaterialf(face:Number, pname:Number, param:Number)
@@ -3299,16 +3301,16 @@ Gurax_DeclareFunctionAlias(glMaterialf_gurax, "glMaterialf")
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialf_gurax)
+Gurax_ImplementFunctionEx(glMaterialf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMaterialf(face, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMaterialfv(face:Number, pname:Number, params[]:Number)
@@ -3323,16 +3325,16 @@ Gurax_DeclareFunctionAlias(glMaterialfv_gurax, "glMaterialfv")
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialfv_gurax)
+Gurax_ImplementFunctionEx(glMaterialfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMaterialfv(face, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMateriali(face:Number, pname:Number, param:Number)
@@ -3347,16 +3349,16 @@ Gurax_DeclareFunctionAlias(glMateriali_gurax, "glMateriali")
 		"");
 }
 
-Gurax_ImplementFunction(glMateriali_gurax)
+Gurax_ImplementFunctionEx(glMateriali_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glMateriali(face, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMaterialiv(face:Number, pname:Number, params[]:Number)
@@ -3371,16 +3373,16 @@ Gurax_DeclareFunctionAlias(glMaterialiv_gurax, "glMaterialiv")
 		"");
 }
 
-Gurax_ImplementFunction(glMaterialiv_gurax)
+Gurax_ImplementFunctionEx(glMaterialiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glMaterialiv(face, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMatrixMode(mode:Number)
@@ -3393,14 +3395,14 @@ Gurax_DeclareFunctionAlias(glMatrixMode_gurax, "glMatrixMode")
 		"");
 }
 
-Gurax_ImplementFunction(glMatrixMode_gurax)
+Gurax_ImplementFunctionEx(glMatrixMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glMatrixMode(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultMatrixd(m[]:Number)
@@ -3413,14 +3415,14 @@ Gurax_DeclareFunctionAlias(glMultMatrixd_gurax, "glMultMatrixd")
 		"");
 }
 
-Gurax_ImplementFunction(glMultMatrixd_gurax)
+Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultMatrixd(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultMatrixf(m[]:Number)
@@ -3433,14 +3435,14 @@ Gurax_DeclareFunctionAlias(glMultMatrixf_gurax, "glMultMatrixf")
 		"");
 }
 
-Gurax_ImplementFunction(glMultMatrixf_gurax)
+Gurax_ImplementFunctionEx(glMultMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultMatrixf(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNewList(list:Number, mode:Number)
@@ -3454,15 +3456,15 @@ Gurax_DeclareFunctionAlias(glNewList_gurax, "glNewList")
 		"");
 }
 
-Gurax_ImplementFunction(glNewList_gurax)
+Gurax_ImplementFunctionEx(glNewList_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint list = args.PickNumber<GLuint>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint list = args_gurax.PickNumber<GLuint>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glNewList(list, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3b(nx:Number, ny:Number, nz:Number)
@@ -3477,16 +3479,16 @@ Gurax_DeclareFunctionAlias(glNormal3b_gurax, "glNormal3b")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3b_gurax)
+Gurax_ImplementFunctionEx(glNormal3b_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbyte nx = args.PickNumber<GLbyte>();
-	GLbyte ny = args.PickNumber<GLbyte>();
-	GLbyte nz = args.PickNumber<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbyte nx = args_gurax.PickNumber<GLbyte>();
+	GLbyte ny = args_gurax.PickNumber<GLbyte>();
+	GLbyte nz = args_gurax.PickNumber<GLbyte>();
 	// Function body
 	glNormal3b(nx, ny, nz);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3bv(v[]:Number)
@@ -3499,14 +3501,14 @@ Gurax_DeclareFunctionAlias(glNormal3bv_gurax, "glNormal3bv")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3bv_gurax)
+Gurax_ImplementFunctionEx(glNormal3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glNormal3bv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3d(nx:Number, ny:Number, nz:Number)
@@ -3521,16 +3523,16 @@ Gurax_DeclareFunctionAlias(glNormal3d_gurax, "glNormal3d")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3d_gurax)
+Gurax_ImplementFunctionEx(glNormal3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble nx = args.PickNumber<GLdouble>();
-	GLdouble ny = args.PickNumber<GLdouble>();
-	GLdouble nz = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble nx = args_gurax.PickNumber<GLdouble>();
+	GLdouble ny = args_gurax.PickNumber<GLdouble>();
+	GLdouble nz = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glNormal3d(nx, ny, nz);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3dv(v[]:Number)
@@ -3543,14 +3545,14 @@ Gurax_DeclareFunctionAlias(glNormal3dv_gurax, "glNormal3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3dv_gurax)
+Gurax_ImplementFunctionEx(glNormal3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glNormal3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3f(nx:Number, ny:Number, nz:Number)
@@ -3565,16 +3567,16 @@ Gurax_DeclareFunctionAlias(glNormal3f_gurax, "glNormal3f")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3f_gurax)
+Gurax_ImplementFunctionEx(glNormal3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat nx = args.PickNumber<GLfloat>();
-	GLfloat ny = args.PickNumber<GLfloat>();
-	GLfloat nz = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat nx = args_gurax.PickNumber<GLfloat>();
+	GLfloat ny = args_gurax.PickNumber<GLfloat>();
+	GLfloat nz = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glNormal3f(nx, ny, nz);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3fv(v[]:Number)
@@ -3587,14 +3589,14 @@ Gurax_DeclareFunctionAlias(glNormal3fv_gurax, "glNormal3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3fv_gurax)
+Gurax_ImplementFunctionEx(glNormal3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glNormal3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3i(nx:Number, ny:Number, nz:Number)
@@ -3609,16 +3611,16 @@ Gurax_DeclareFunctionAlias(glNormal3i_gurax, "glNormal3i")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3i_gurax)
+Gurax_ImplementFunctionEx(glNormal3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint nx = args.PickNumber<GLint>();
-	GLint ny = args.PickNumber<GLint>();
-	GLint nz = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint nx = args_gurax.PickNumber<GLint>();
+	GLint ny = args_gurax.PickNumber<GLint>();
+	GLint nz = args_gurax.PickNumber<GLint>();
 	// Function body
 	glNormal3i(nx, ny, nz);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3iv(v[]:Number)
@@ -3631,14 +3633,14 @@ Gurax_DeclareFunctionAlias(glNormal3iv_gurax, "glNormal3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3iv_gurax)
+Gurax_ImplementFunctionEx(glNormal3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glNormal3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3s(nx:Number, ny:Number, nz:Number)
@@ -3653,16 +3655,16 @@ Gurax_DeclareFunctionAlias(glNormal3s_gurax, "glNormal3s")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3s_gurax)
+Gurax_ImplementFunctionEx(glNormal3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort nx = args.PickNumber<GLshort>();
-	GLshort ny = args.PickNumber<GLshort>();
-	GLshort nz = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort nx = args_gurax.PickNumber<GLshort>();
+	GLshort ny = args_gurax.PickNumber<GLshort>();
+	GLshort nz = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glNormal3s(nx, ny, nz);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glNormal3sv(v[]:Number)
@@ -3675,14 +3677,14 @@ Gurax_DeclareFunctionAlias(glNormal3sv_gurax, "glNormal3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glNormal3sv_gurax)
+Gurax_ImplementFunctionEx(glNormal3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glNormal3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glOrtho(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
@@ -3700,19 +3702,19 @@ Gurax_DeclareFunctionAlias(glOrtho_gurax, "glOrtho")
 		"");
 }
 
-Gurax_ImplementFunction(glOrtho_gurax)
+Gurax_ImplementFunctionEx(glOrtho_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble left = args.PickNumber<GLdouble>();
-	GLdouble right = args.PickNumber<GLdouble>();
-	GLdouble bottom = args.PickNumber<GLdouble>();
-	GLdouble top = args.PickNumber<GLdouble>();
-	GLdouble zNear = args.PickNumber<GLdouble>();
-	GLdouble zFar = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble left = args_gurax.PickNumber<GLdouble>();
+	GLdouble right = args_gurax.PickNumber<GLdouble>();
+	GLdouble bottom = args_gurax.PickNumber<GLdouble>();
+	GLdouble top = args_gurax.PickNumber<GLdouble>();
+	GLdouble zNear = args_gurax.PickNumber<GLdouble>();
+	GLdouble zFar = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glOrtho(left, right, bottom, top, zNear, zFar);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPassThrough(token:Number)
@@ -3725,14 +3727,14 @@ Gurax_DeclareFunctionAlias(glPassThrough_gurax, "glPassThrough")
 		"");
 }
 
-Gurax_ImplementFunction(glPassThrough_gurax)
+Gurax_ImplementFunctionEx(glPassThrough_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat token = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat token = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPassThrough(token);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelMapfv(map:Number, mapsize:Number, values[]:Number)
@@ -3747,16 +3749,16 @@ Gurax_DeclareFunctionAlias(glPixelMapfv_gurax, "glPixelMapfv")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapfv_gurax)
+Gurax_ImplementFunctionEx(glPixelMapfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum map = args.PickNumber<GLenum>();
-	GLsizei mapsize = args.PickNumber<GLsizei>();
-	auto values = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum map = args_gurax.PickNumber<GLenum>();
+	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
+	auto values = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glPixelMapfv(map, mapsize, values);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelMapuiv(map:Number, mapsize:Number, values[]:Number)
@@ -3771,16 +3773,16 @@ Gurax_DeclareFunctionAlias(glPixelMapuiv_gurax, "glPixelMapuiv")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapuiv_gurax)
+Gurax_ImplementFunctionEx(glPixelMapuiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum map = args.PickNumber<GLenum>();
-	GLsizei mapsize = args.PickNumber<GLsizei>();
-	auto values = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum map = args_gurax.PickNumber<GLenum>();
+	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
+	auto values = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glPixelMapuiv(map, mapsize, values);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelMapusv(map:Number, mapsize:Number, values[]:Number)
@@ -3795,16 +3797,16 @@ Gurax_DeclareFunctionAlias(glPixelMapusv_gurax, "glPixelMapusv")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelMapusv_gurax)
+Gurax_ImplementFunctionEx(glPixelMapusv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum map = args.PickNumber<GLenum>();
-	GLsizei mapsize = args.PickNumber<GLsizei>();
-	auto values = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum map = args_gurax.PickNumber<GLenum>();
+	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
+	auto values = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glPixelMapusv(map, mapsize, values);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelStoref(pname:Number, param:Number)
@@ -3818,15 +3820,15 @@ Gurax_DeclareFunctionAlias(glPixelStoref_gurax, "glPixelStoref")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelStoref_gurax)
+Gurax_ImplementFunctionEx(glPixelStoref_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPixelStoref(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelStorei(pname:Number, param:Number)
@@ -3840,15 +3842,15 @@ Gurax_DeclareFunctionAlias(glPixelStorei_gurax, "glPixelStorei")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelStorei_gurax)
+Gurax_ImplementFunctionEx(glPixelStorei_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glPixelStorei(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelTransferf(pname:Number, param:Number)
@@ -3862,15 +3864,15 @@ Gurax_DeclareFunctionAlias(glPixelTransferf_gurax, "glPixelTransferf")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelTransferf_gurax)
+Gurax_ImplementFunctionEx(glPixelTransferf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPixelTransferf(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelTransferi(pname:Number, param:Number)
@@ -3884,15 +3886,15 @@ Gurax_DeclareFunctionAlias(glPixelTransferi_gurax, "glPixelTransferi")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelTransferi_gurax)
+Gurax_ImplementFunctionEx(glPixelTransferi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glPixelTransferi(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPixelZoom(xfactor:Number, yfactor:Number)
@@ -3906,15 +3908,15 @@ Gurax_DeclareFunctionAlias(glPixelZoom_gurax, "glPixelZoom")
 		"");
 }
 
-Gurax_ImplementFunction(glPixelZoom_gurax)
+Gurax_ImplementFunctionEx(glPixelZoom_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat xfactor = args.PickNumber<GLfloat>();
-	GLfloat yfactor = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat xfactor = args_gurax.PickNumber<GLfloat>();
+	GLfloat yfactor = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPixelZoom(xfactor, yfactor);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPointSize(size:Number)
@@ -3927,14 +3929,14 @@ Gurax_DeclareFunctionAlias(glPointSize_gurax, "glPointSize")
 		"");
 }
 
-Gurax_ImplementFunction(glPointSize_gurax)
+Gurax_ImplementFunctionEx(glPointSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat size = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat size = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPointSize(size);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPolygonMode(face:Number, mode:Number)
@@ -3948,15 +3950,15 @@ Gurax_DeclareFunctionAlias(glPolygonMode_gurax, "glPolygonMode")
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonMode_gurax)
+Gurax_ImplementFunctionEx(glPolygonMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glPolygonMode(face, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPolygonOffset(factor:Number, units:Number)
@@ -3970,15 +3972,15 @@ Gurax_DeclareFunctionAlias(glPolygonOffset_gurax, "glPolygonOffset")
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonOffset_gurax)
+Gurax_ImplementFunctionEx(glPolygonOffset_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat factor = args.PickNumber<GLfloat>();
-	GLfloat units = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat factor = args_gurax.PickNumber<GLfloat>();
+	GLfloat units = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPolygonOffset(factor, units);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPolygonStipple(mask[]:Number)
@@ -3991,14 +3993,14 @@ Gurax_DeclareFunctionAlias(glPolygonStipple_gurax, "glPolygonStipple")
 		"");
 }
 
-Gurax_ImplementFunction(glPolygonStipple_gurax)
+Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto mask = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto mask = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glPolygonStipple(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPopAttrib()
@@ -4010,11 +4012,11 @@ Gurax_DeclareFunctionAlias(glPopAttrib_gurax, "glPopAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glPopAttrib_gurax)
+Gurax_ImplementFunctionEx(glPopAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glPopAttrib();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPopClientAttrib()
@@ -4026,11 +4028,11 @@ Gurax_DeclareFunctionAlias(glPopClientAttrib_gurax, "glPopClientAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glPopClientAttrib_gurax)
+Gurax_ImplementFunctionEx(glPopClientAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glPopClientAttrib();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPopMatrix()
@@ -4042,11 +4044,11 @@ Gurax_DeclareFunctionAlias(glPopMatrix_gurax, "glPopMatrix")
 		"");
 }
 
-Gurax_ImplementFunction(glPopMatrix_gurax)
+Gurax_ImplementFunctionEx(glPopMatrix_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glPopMatrix();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPopName()
@@ -4058,11 +4060,11 @@ Gurax_DeclareFunctionAlias(glPopName_gurax, "glPopName")
 		"");
 }
 
-Gurax_ImplementFunction(glPopName_gurax)
+Gurax_ImplementFunctionEx(glPopName_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glPopName();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPrioritizeTextures(n:Number, textures[]:Number, priorities[]:Number)
@@ -4077,16 +4079,16 @@ Gurax_DeclareFunctionAlias(glPrioritizeTextures_gurax, "glPrioritizeTextures")
 		"");
 }
 
-Gurax_ImplementFunction(glPrioritizeTextures_gurax)
+Gurax_ImplementFunctionEx(glPrioritizeTextures_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
-	auto textures = args.PickNumList<GLuint>();
-	auto priorities = args.PickNumList<GLclampf>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	auto textures = args_gurax.PickNumList<GLuint>();
+	auto priorities = args_gurax.PickNumList<GLclampf>();
 	// Function body
 	glPrioritizeTextures(n, textures, priorities);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPushAttrib(mask:Number)
@@ -4099,14 +4101,14 @@ Gurax_DeclareFunctionAlias(glPushAttrib_gurax, "glPushAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glPushAttrib_gurax)
+Gurax_ImplementFunctionEx(glPushAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbitfield mask = args.PickNumber<GLbitfield>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbitfield mask = args_gurax.PickNumber<GLbitfield>();
 	// Function body
 	glPushAttrib(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPushClientAttrib(mask:Number)
@@ -4119,14 +4121,14 @@ Gurax_DeclareFunctionAlias(glPushClientAttrib_gurax, "glPushClientAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glPushClientAttrib_gurax)
+Gurax_ImplementFunctionEx(glPushClientAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbitfield mask = args.PickNumber<GLbitfield>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbitfield mask = args_gurax.PickNumber<GLbitfield>();
 	// Function body
 	glPushClientAttrib(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPushMatrix()
@@ -4138,11 +4140,11 @@ Gurax_DeclareFunctionAlias(glPushMatrix_gurax, "glPushMatrix")
 		"");
 }
 
-Gurax_ImplementFunction(glPushMatrix_gurax)
+Gurax_ImplementFunctionEx(glPushMatrix_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glPushMatrix();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPushName(name:Number)
@@ -4155,14 +4157,14 @@ Gurax_DeclareFunctionAlias(glPushName_gurax, "glPushName")
 		"");
 }
 
-Gurax_ImplementFunction(glPushName_gurax)
+Gurax_ImplementFunctionEx(glPushName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint name = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint name = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glPushName(name);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2d(x:Number, y:Number)
@@ -4176,15 +4178,15 @@ Gurax_DeclareFunctionAlias(glRasterPos2d_gurax, "glRasterPos2d")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2d_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glRasterPos2d(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2dv(v[]:Number)
@@ -4197,14 +4199,14 @@ Gurax_DeclareFunctionAlias(glRasterPos2dv_gurax, "glRasterPos2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2dv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glRasterPos2dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2f(x:Number, y:Number)
@@ -4218,15 +4220,15 @@ Gurax_DeclareFunctionAlias(glRasterPos2f_gurax, "glRasterPos2f")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2f_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glRasterPos2f(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2fv(v[]:Number)
@@ -4239,14 +4241,14 @@ Gurax_DeclareFunctionAlias(glRasterPos2fv_gurax, "glRasterPos2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2fv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glRasterPos2fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2i(x:Number, y:Number)
@@ -4260,15 +4262,15 @@ Gurax_DeclareFunctionAlias(glRasterPos2i_gurax, "glRasterPos2i")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2i_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
 	// Function body
 	glRasterPos2i(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2iv(v[]:Number)
@@ -4281,14 +4283,14 @@ Gurax_DeclareFunctionAlias(glRasterPos2iv_gurax, "glRasterPos2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2iv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glRasterPos2iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2s(x:Number, y:Number)
@@ -4302,15 +4304,15 @@ Gurax_DeclareFunctionAlias(glRasterPos2s_gurax, "glRasterPos2s")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2s_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glRasterPos2s(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos2sv(v[]:Number)
@@ -4323,14 +4325,14 @@ Gurax_DeclareFunctionAlias(glRasterPos2sv_gurax, "glRasterPos2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos2sv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glRasterPos2sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3d(x:Number, y:Number, z:Number)
@@ -4345,16 +4347,16 @@ Gurax_DeclareFunctionAlias(glRasterPos3d_gurax, "glRasterPos3d")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3d_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glRasterPos3d(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3dv(v[]:Number)
@@ -4367,14 +4369,14 @@ Gurax_DeclareFunctionAlias(glRasterPos3dv_gurax, "glRasterPos3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3dv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glRasterPos3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3f(x:Number, y:Number, z:Number)
@@ -4389,16 +4391,16 @@ Gurax_DeclareFunctionAlias(glRasterPos3f_gurax, "glRasterPos3f")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3f_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glRasterPos3f(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3fv(v[]:Number)
@@ -4411,14 +4413,14 @@ Gurax_DeclareFunctionAlias(glRasterPos3fv_gurax, "glRasterPos3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3fv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glRasterPos3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3i(x:Number, y:Number, z:Number)
@@ -4433,16 +4435,16 @@ Gurax_DeclareFunctionAlias(glRasterPos3i_gurax, "glRasterPos3i")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3i_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLint z = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLint z = args_gurax.PickNumber<GLint>();
 	// Function body
 	glRasterPos3i(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3iv(v[]:Number)
@@ -4455,14 +4457,14 @@ Gurax_DeclareFunctionAlias(glRasterPos3iv_gurax, "glRasterPos3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3iv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glRasterPos3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3s(x:Number, y:Number, z:Number)
@@ -4477,16 +4479,16 @@ Gurax_DeclareFunctionAlias(glRasterPos3s_gurax, "glRasterPos3s")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3s_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glRasterPos3s(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos3sv(v[]:Number)
@@ -4499,14 +4501,14 @@ Gurax_DeclareFunctionAlias(glRasterPos3sv_gurax, "glRasterPos3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos3sv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glRasterPos3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4d(x:Number, y:Number, z:Number, w:Number)
@@ -4522,17 +4524,17 @@ Gurax_DeclareFunctionAlias(glRasterPos4d_gurax, "glRasterPos4d")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4d_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
-	GLdouble w = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
+	GLdouble w = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glRasterPos4d(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4dv(v[]:Number)
@@ -4545,14 +4547,14 @@ Gurax_DeclareFunctionAlias(glRasterPos4dv_gurax, "glRasterPos4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4dv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glRasterPos4dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4f(x:Number, y:Number, z:Number, w:Number)
@@ -4568,17 +4570,17 @@ Gurax_DeclareFunctionAlias(glRasterPos4f_gurax, "glRasterPos4f")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4f_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
-	GLfloat w = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
+	GLfloat w = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glRasterPos4f(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4fv(v[]:Number)
@@ -4591,14 +4593,14 @@ Gurax_DeclareFunctionAlias(glRasterPos4fv_gurax, "glRasterPos4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4fv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glRasterPos4fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4i(x:Number, y:Number, z:Number, w:Number)
@@ -4614,17 +4616,17 @@ Gurax_DeclareFunctionAlias(glRasterPos4i_gurax, "glRasterPos4i")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4i_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLint z = args.PickNumber<GLint>();
-	GLint w = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLint z = args_gurax.PickNumber<GLint>();
+	GLint w = args_gurax.PickNumber<GLint>();
 	// Function body
 	glRasterPos4i(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4iv(v[]:Number)
@@ -4637,14 +4639,14 @@ Gurax_DeclareFunctionAlias(glRasterPos4iv_gurax, "glRasterPos4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4iv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glRasterPos4iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4s(x:Number, y:Number, z:Number, w:Number)
@@ -4660,17 +4662,17 @@ Gurax_DeclareFunctionAlias(glRasterPos4s_gurax, "glRasterPos4s")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4s_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
-	GLshort w = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
+	GLshort w = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glRasterPos4s(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRasterPos4sv(v[]:Number)
@@ -4683,14 +4685,14 @@ Gurax_DeclareFunctionAlias(glRasterPos4sv_gurax, "glRasterPos4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glRasterPos4sv_gurax)
+Gurax_ImplementFunctionEx(glRasterPos4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glRasterPos4sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glReadBuffer(mode:Number)
@@ -4703,14 +4705,14 @@ Gurax_DeclareFunctionAlias(glReadBuffer_gurax, "glReadBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glReadBuffer_gurax)
+Gurax_ImplementFunctionEx(glReadBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glReadBuffer(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectd(x1:Number, y1:Number, x2:Number, y2:Number)
@@ -4726,17 +4728,17 @@ Gurax_DeclareFunctionAlias(glRectd_gurax, "glRectd")
 		"");
 }
 
-Gurax_ImplementFunction(glRectd_gurax)
+Gurax_ImplementFunctionEx(glRectd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x1 = args.PickNumber<GLdouble>();
-	GLdouble y1 = args.PickNumber<GLdouble>();
-	GLdouble x2 = args.PickNumber<GLdouble>();
-	GLdouble y2 = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble y1 = args_gurax.PickNumber<GLdouble>();
+	GLdouble x2 = args_gurax.PickNumber<GLdouble>();
+	GLdouble y2 = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glRectd(x1, y1, x2, y2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectdv(v1[]:Number, v2[]:Number)
@@ -4750,15 +4752,15 @@ Gurax_DeclareFunctionAlias(glRectdv_gurax, "glRectdv")
 		"");
 }
 
-Gurax_ImplementFunction(glRectdv_gurax)
+Gurax_ImplementFunctionEx(glRectdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v1 = args.PickNumList<GLdouble>();
-	auto v2 = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v1 = args_gurax.PickNumList<GLdouble>();
+	auto v2 = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glRectdv(v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectf(x1:Number, y1:Number, x2:Number, y2:Number)
@@ -4774,17 +4776,17 @@ Gurax_DeclareFunctionAlias(glRectf_gurax, "glRectf")
 		"");
 }
 
-Gurax_ImplementFunction(glRectf_gurax)
+Gurax_ImplementFunctionEx(glRectf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x1 = args.PickNumber<GLfloat>();
-	GLfloat y1 = args.PickNumber<GLfloat>();
-	GLfloat x2 = args.PickNumber<GLfloat>();
-	GLfloat y2 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat y1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat x2 = args_gurax.PickNumber<GLfloat>();
+	GLfloat y2 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glRectf(x1, y1, x2, y2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectfv(v1[]:Number, v2[]:Number)
@@ -4798,15 +4800,15 @@ Gurax_DeclareFunctionAlias(glRectfv_gurax, "glRectfv")
 		"");
 }
 
-Gurax_ImplementFunction(glRectfv_gurax)
+Gurax_ImplementFunctionEx(glRectfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v1 = args.PickNumList<GLfloat>();
-	auto v2 = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v1 = args_gurax.PickNumList<GLfloat>();
+	auto v2 = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glRectfv(v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRecti(x1:Number, y1:Number, x2:Number, y2:Number)
@@ -4822,17 +4824,17 @@ Gurax_DeclareFunctionAlias(glRecti_gurax, "glRecti")
 		"");
 }
 
-Gurax_ImplementFunction(glRecti_gurax)
+Gurax_ImplementFunctionEx(glRecti_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x1 = args.PickNumber<GLint>();
-	GLint y1 = args.PickNumber<GLint>();
-	GLint x2 = args.PickNumber<GLint>();
-	GLint y2 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x1 = args_gurax.PickNumber<GLint>();
+	GLint y1 = args_gurax.PickNumber<GLint>();
+	GLint x2 = args_gurax.PickNumber<GLint>();
+	GLint y2 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glRecti(x1, y1, x2, y2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectiv(v1[]:Number, v2[]:Number)
@@ -4846,15 +4848,15 @@ Gurax_DeclareFunctionAlias(glRectiv_gurax, "glRectiv")
 		"");
 }
 
-Gurax_ImplementFunction(glRectiv_gurax)
+Gurax_ImplementFunctionEx(glRectiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v1 = args.PickNumList<GLint>();
-	auto v2 = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v1 = args_gurax.PickNumList<GLint>();
+	auto v2 = args_gurax.PickNumList<GLint>();
 	// Function body
 	glRectiv(v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRects(x1:Number, y1:Number, x2:Number, y2:Number)
@@ -4870,17 +4872,17 @@ Gurax_DeclareFunctionAlias(glRects_gurax, "glRects")
 		"");
 }
 
-Gurax_ImplementFunction(glRects_gurax)
+Gurax_ImplementFunctionEx(glRects_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x1 = args.PickNumber<GLshort>();
-	GLshort y1 = args.PickNumber<GLshort>();
-	GLshort x2 = args.PickNumber<GLshort>();
-	GLshort y2 = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x1 = args_gurax.PickNumber<GLshort>();
+	GLshort y1 = args_gurax.PickNumber<GLshort>();
+	GLshort x2 = args_gurax.PickNumber<GLshort>();
+	GLshort y2 = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glRects(x1, y1, x2, y2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRectsv(v1[]:Number, v2[]:Number)
@@ -4894,15 +4896,15 @@ Gurax_DeclareFunctionAlias(glRectsv_gurax, "glRectsv")
 		"");
 }
 
-Gurax_ImplementFunction(glRectsv_gurax)
+Gurax_ImplementFunctionEx(glRectsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v1 = args.PickNumList<GLshort>();
-	auto v2 = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v1 = args_gurax.PickNumList<GLshort>();
+	auto v2 = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glRectsv(v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRenderMode(mode:Number)
@@ -4915,14 +4917,14 @@ Gurax_DeclareFunctionAlias(glRenderMode_gurax, "glRenderMode")
 		"");
 }
 
-Gurax_ImplementFunction(glRenderMode_gurax)
+Gurax_ImplementFunctionEx(glRenderMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	GLint rtn = glRenderMode(mode);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glRotated(angle:Number, x:Number, y:Number, z:Number)
@@ -4938,17 +4940,17 @@ Gurax_DeclareFunctionAlias(glRotated_gurax, "glRotated")
 		"");
 }
 
-Gurax_ImplementFunction(glRotated_gurax)
+Gurax_ImplementFunctionEx(glRotated_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble angle = args.PickNumber<GLdouble>();
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble angle = args_gurax.PickNumber<GLdouble>();
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glRotated(angle, x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glRotatef(angle:Number, x:Number, y:Number, z:Number)
@@ -4964,17 +4966,17 @@ Gurax_DeclareFunctionAlias(glRotatef_gurax, "glRotatef")
 		"");
 }
 
-Gurax_ImplementFunction(glRotatef_gurax)
+Gurax_ImplementFunctionEx(glRotatef_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat angle = args.PickNumber<GLfloat>();
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat angle = args_gurax.PickNumber<GLfloat>();
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glRotatef(angle, x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glScaled(x:Number, y:Number, z:Number)
@@ -4989,16 +4991,16 @@ Gurax_DeclareFunctionAlias(glScaled_gurax, "glScaled")
 		"");
 }
 
-Gurax_ImplementFunction(glScaled_gurax)
+Gurax_ImplementFunctionEx(glScaled_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glScaled(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glScalef(x:Number, y:Number, z:Number)
@@ -5013,16 +5015,16 @@ Gurax_DeclareFunctionAlias(glScalef_gurax, "glScalef")
 		"");
 }
 
-Gurax_ImplementFunction(glScalef_gurax)
+Gurax_ImplementFunctionEx(glScalef_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glScalef(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glScissor(x:Number, y:Number, width:Number, height:Number)
@@ -5038,17 +5040,17 @@ Gurax_DeclareFunctionAlias(glScissor_gurax, "glScissor")
 		"");
 }
 
-Gurax_ImplementFunction(glScissor_gurax)
+Gurax_ImplementFunctionEx(glScissor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glScissor(x, y, width, height);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glShadeModel(mode:Number)
@@ -5061,14 +5063,14 @@ Gurax_DeclareFunctionAlias(glShadeModel_gurax, "glShadeModel")
 		"");
 }
 
-Gurax_ImplementFunction(glShadeModel_gurax)
+Gurax_ImplementFunctionEx(glShadeModel_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glShadeModel(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilFunc(func:Number, ref:Number, mask:Number)
@@ -5083,16 +5085,16 @@ Gurax_DeclareFunctionAlias(glStencilFunc_gurax, "glStencilFunc")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilFunc_gurax)
+Gurax_ImplementFunctionEx(glStencilFunc_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum func = args.PickNumber<GLenum>();
-	GLint ref = args.PickNumber<GLint>();
-	GLuint mask = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum func = args_gurax.PickNumber<GLenum>();
+	GLint ref = args_gurax.PickNumber<GLint>();
+	GLuint mask = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glStencilFunc(func, ref, mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilMask(mask:Number)
@@ -5105,14 +5107,14 @@ Gurax_DeclareFunctionAlias(glStencilMask_gurax, "glStencilMask")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilMask_gurax)
+Gurax_ImplementFunctionEx(glStencilMask_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint mask = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint mask = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glStencilMask(mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilOp(fail:Number, zfail:Number, zpass:Number)
@@ -5127,16 +5129,16 @@ Gurax_DeclareFunctionAlias(glStencilOp_gurax, "glStencilOp")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilOp_gurax)
+Gurax_ImplementFunctionEx(glStencilOp_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum fail = args.PickNumber<GLenum>();
-	GLenum zfail = args.PickNumber<GLenum>();
-	GLenum zpass = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum fail = args_gurax.PickNumber<GLenum>();
+	GLenum zfail = args_gurax.PickNumber<GLenum>();
+	GLenum zpass = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glStencilOp(fail, zfail, zpass);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1d(s:Number)
@@ -5149,14 +5151,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1d_gurax, "glTexCoord1d")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1d_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble s = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTexCoord1d(s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1dv(v[]:Number)
@@ -5169,14 +5171,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1dv_gurax, "glTexCoord1dv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1dv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glTexCoord1dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1f(s:Number)
@@ -5189,14 +5191,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1f_gurax, "glTexCoord1f")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1f_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat s = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexCoord1f(s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1fv(v[]:Number)
@@ -5209,14 +5211,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1fv_gurax, "glTexCoord1fv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1fv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexCoord1fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1i(s:Number)
@@ -5229,14 +5231,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1i_gurax, "glTexCoord1i")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1i_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint s = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint s = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexCoord1i(s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1iv(v[]:Number)
@@ -5249,14 +5251,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1iv_gurax, "glTexCoord1iv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1iv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexCoord1iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1s(s:Number)
@@ -5269,14 +5271,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1s_gurax, "glTexCoord1s")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1s_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort s = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort s = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glTexCoord1s(s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord1sv(v[]:Number)
@@ -5289,14 +5291,14 @@ Gurax_DeclareFunctionAlias(glTexCoord1sv_gurax, "glTexCoord1sv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord1sv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord1sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glTexCoord1sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2d(s:Number, t:Number)
@@ -5310,15 +5312,15 @@ Gurax_DeclareFunctionAlias(glTexCoord2d_gurax, "glTexCoord2d")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2d_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTexCoord2d(s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2dv(v[]:Number)
@@ -5331,14 +5333,14 @@ Gurax_DeclareFunctionAlias(glTexCoord2dv_gurax, "glTexCoord2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2dv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glTexCoord2dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2f(s:Number, t:Number)
@@ -5352,15 +5354,15 @@ Gurax_DeclareFunctionAlias(glTexCoord2f_gurax, "glTexCoord2f")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2f_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexCoord2f(s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2fv(v[]:Number)
@@ -5373,14 +5375,14 @@ Gurax_DeclareFunctionAlias(glTexCoord2fv_gurax, "glTexCoord2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2fv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexCoord2fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2i(s:Number, t:Number)
@@ -5394,15 +5396,15 @@ Gurax_DeclareFunctionAlias(glTexCoord2i_gurax, "glTexCoord2i")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2i_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexCoord2i(s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2iv(v[]:Number)
@@ -5415,14 +5417,14 @@ Gurax_DeclareFunctionAlias(glTexCoord2iv_gurax, "glTexCoord2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2iv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexCoord2iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2s(s:Number, t:Number)
@@ -5436,15 +5438,15 @@ Gurax_DeclareFunctionAlias(glTexCoord2s_gurax, "glTexCoord2s")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2s_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glTexCoord2s(s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord2sv(v[]:Number)
@@ -5457,14 +5459,14 @@ Gurax_DeclareFunctionAlias(glTexCoord2sv_gurax, "glTexCoord2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord2sv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glTexCoord2sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3d(s:Number, t:Number, r:Number)
@@ -5479,16 +5481,16 @@ Gurax_DeclareFunctionAlias(glTexCoord3d_gurax, "glTexCoord3d")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3d_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
-	GLdouble r = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
+	GLdouble r = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTexCoord3d(s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3dv(v[]:Number)
@@ -5501,14 +5503,14 @@ Gurax_DeclareFunctionAlias(glTexCoord3dv_gurax, "glTexCoord3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3dv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glTexCoord3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3f(s:Number, t:Number, r:Number)
@@ -5523,16 +5525,16 @@ Gurax_DeclareFunctionAlias(glTexCoord3f_gurax, "glTexCoord3f")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3f_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
-	GLfloat r = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
+	GLfloat r = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexCoord3f(s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3fv(v[]:Number)
@@ -5545,14 +5547,14 @@ Gurax_DeclareFunctionAlias(glTexCoord3fv_gurax, "glTexCoord3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3fv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexCoord3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3i(s:Number, t:Number, r:Number)
@@ -5567,16 +5569,16 @@ Gurax_DeclareFunctionAlias(glTexCoord3i_gurax, "glTexCoord3i")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3i_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
-	GLint r = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
+	GLint r = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexCoord3i(s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3iv(v[]:Number)
@@ -5589,14 +5591,14 @@ Gurax_DeclareFunctionAlias(glTexCoord3iv_gurax, "glTexCoord3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3iv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexCoord3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3s(s:Number, t:Number, r:Number)
@@ -5611,16 +5613,16 @@ Gurax_DeclareFunctionAlias(glTexCoord3s_gurax, "glTexCoord3s")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3s_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
-	GLshort r = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
+	GLshort r = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glTexCoord3s(s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord3sv(v[]:Number)
@@ -5633,14 +5635,14 @@ Gurax_DeclareFunctionAlias(glTexCoord3sv_gurax, "glTexCoord3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord3sv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glTexCoord3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4d(s:Number, t:Number, r:Number, q:Number)
@@ -5656,17 +5658,17 @@ Gurax_DeclareFunctionAlias(glTexCoord4d_gurax, "glTexCoord4d")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4d_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
-	GLdouble r = args.PickNumber<GLdouble>();
-	GLdouble q = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
+	GLdouble r = args_gurax.PickNumber<GLdouble>();
+	GLdouble q = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTexCoord4d(s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4dv(v[]:Number)
@@ -5679,14 +5681,14 @@ Gurax_DeclareFunctionAlias(glTexCoord4dv_gurax, "glTexCoord4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4dv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glTexCoord4dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4f(s:Number, t:Number, r:Number, q:Number)
@@ -5702,17 +5704,17 @@ Gurax_DeclareFunctionAlias(glTexCoord4f_gurax, "glTexCoord4f")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4f_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
-	GLfloat r = args.PickNumber<GLfloat>();
-	GLfloat q = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
+	GLfloat r = args_gurax.PickNumber<GLfloat>();
+	GLfloat q = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexCoord4f(s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4fv(v[]:Number)
@@ -5725,14 +5727,14 @@ Gurax_DeclareFunctionAlias(glTexCoord4fv_gurax, "glTexCoord4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4fv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexCoord4fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4i(s:Number, t:Number, r:Number, q:Number)
@@ -5748,17 +5750,17 @@ Gurax_DeclareFunctionAlias(glTexCoord4i_gurax, "glTexCoord4i")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4i_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
-	GLint r = args.PickNumber<GLint>();
-	GLint q = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
+	GLint r = args_gurax.PickNumber<GLint>();
+	GLint q = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexCoord4i(s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4iv(v[]:Number)
@@ -5771,14 +5773,14 @@ Gurax_DeclareFunctionAlias(glTexCoord4iv_gurax, "glTexCoord4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4iv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexCoord4iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4s(s:Number, t:Number, r:Number, q:Number)
@@ -5794,17 +5796,17 @@ Gurax_DeclareFunctionAlias(glTexCoord4s_gurax, "glTexCoord4s")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4s_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
-	GLshort r = args.PickNumber<GLshort>();
-	GLshort q = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
+	GLshort r = args_gurax.PickNumber<GLshort>();
+	GLshort q = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glTexCoord4s(s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexCoord4sv(v[]:Number)
@@ -5817,14 +5819,14 @@ Gurax_DeclareFunctionAlias(glTexCoord4sv_gurax, "glTexCoord4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexCoord4sv_gurax)
+Gurax_ImplementFunctionEx(glTexCoord4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glTexCoord4sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexEnvf(target:Number, pname:Number, param:Number)
@@ -5839,16 +5841,16 @@ Gurax_DeclareFunctionAlias(glTexEnvf_gurax, "glTexEnvf")
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvf_gurax)
+Gurax_ImplementFunctionEx(glTexEnvf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexEnvf(target, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexEnvfv(target:Number, pname:Number, params[]:Number)
@@ -5863,16 +5865,16 @@ Gurax_DeclareFunctionAlias(glTexEnvfv_gurax, "glTexEnvfv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvfv_gurax)
+Gurax_ImplementFunctionEx(glTexEnvfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexEnvfv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexEnvi(target:Number, pname:Number, param:Number)
@@ -5887,16 +5889,16 @@ Gurax_DeclareFunctionAlias(glTexEnvi_gurax, "glTexEnvi")
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnvi_gurax)
+Gurax_ImplementFunctionEx(glTexEnvi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexEnvi(target, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexEnviv(target:Number, pname:Number, params[]:Number)
@@ -5911,16 +5913,16 @@ Gurax_DeclareFunctionAlias(glTexEnviv_gurax, "glTexEnviv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexEnviv_gurax)
+Gurax_ImplementFunctionEx(glTexEnviv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexEnviv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGend(coord:Number, pname:Number, param:Number)
@@ -5935,16 +5937,16 @@ Gurax_DeclareFunctionAlias(glTexGend_gurax, "glTexGend")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGend_gurax)
+Gurax_ImplementFunctionEx(glTexGend_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLdouble param = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLdouble param = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTexGend(coord, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGendv(coord:Number, pname:Number, params[]:Number)
@@ -5959,16 +5961,16 @@ Gurax_DeclareFunctionAlias(glTexGendv_gurax, "glTexGendv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGendv_gurax)
+Gurax_ImplementFunctionEx(glTexGendv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glTexGendv(coord, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGenf(coord:Number, pname:Number, param:Number)
@@ -5983,16 +5985,16 @@ Gurax_DeclareFunctionAlias(glTexGenf_gurax, "glTexGenf")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGenf_gurax)
+Gurax_ImplementFunctionEx(glTexGenf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexGenf(coord, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGenfv(coord:Number, pname:Number, params[]:Number)
@@ -6007,16 +6009,16 @@ Gurax_DeclareFunctionAlias(glTexGenfv_gurax, "glTexGenfv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGenfv_gurax)
+Gurax_ImplementFunctionEx(glTexGenfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexGenfv(coord, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGeni(coord:Number, pname:Number, param:Number)
@@ -6031,16 +6033,16 @@ Gurax_DeclareFunctionAlias(glTexGeni_gurax, "glTexGeni")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGeni_gurax)
+Gurax_ImplementFunctionEx(glTexGeni_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexGeni(coord, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexGeniv(coord:Number, pname:Number, params[]:Number)
@@ -6055,16 +6057,16 @@ Gurax_DeclareFunctionAlias(glTexGeniv_gurax, "glTexGeniv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexGeniv_gurax)
+Gurax_ImplementFunctionEx(glTexGeniv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum coord = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum coord = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexGeniv(coord, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexParameterf(target:Number, pname:Number, param:Number)
@@ -6079,16 +6081,16 @@ Gurax_DeclareFunctionAlias(glTexParameterf_gurax, "glTexParameterf")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterf_gurax)
+Gurax_ImplementFunctionEx(glTexParameterf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTexParameterf(target, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexParameterfv(target:Number, pname:Number, params[]:Number)
@@ -6103,16 +6105,16 @@ Gurax_DeclareFunctionAlias(glTexParameterfv_gurax, "glTexParameterfv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterfv_gurax)
+Gurax_ImplementFunctionEx(glTexParameterfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glTexParameterfv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexParameteri(target:Number, pname:Number, param:Number)
@@ -6127,16 +6129,16 @@ Gurax_DeclareFunctionAlias(glTexParameteri_gurax, "glTexParameteri")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameteri_gurax)
+Gurax_ImplementFunctionEx(glTexParameteri_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glTexParameteri(target, pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexParameteriv(target:Number, pname:Number, params[]:Number)
@@ -6151,16 +6153,16 @@ Gurax_DeclareFunctionAlias(glTexParameteriv_gurax, "glTexParameteriv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameteriv_gurax)
+Gurax_ImplementFunctionEx(glTexParameteriv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexParameteriv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTranslated(x:Number, y:Number, z:Number)
@@ -6175,16 +6177,16 @@ Gurax_DeclareFunctionAlias(glTranslated_gurax, "glTranslated")
 		"");
 }
 
-Gurax_ImplementFunction(glTranslated_gurax)
+Gurax_ImplementFunctionEx(glTranslated_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glTranslated(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTranslatef(x:Number, y:Number, z:Number)
@@ -6199,16 +6201,16 @@ Gurax_DeclareFunctionAlias(glTranslatef_gurax, "glTranslatef")
 		"");
 }
 
-Gurax_ImplementFunction(glTranslatef_gurax)
+Gurax_ImplementFunctionEx(glTranslatef_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glTranslatef(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2d(x:Number, y:Number)
@@ -6222,15 +6224,15 @@ Gurax_DeclareFunctionAlias(glVertex2d_gurax, "glVertex2d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2d_gurax)
+Gurax_ImplementFunctionEx(glVertex2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertex2d(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2dv(v[]:Number)
@@ -6243,14 +6245,14 @@ Gurax_DeclareFunctionAlias(glVertex2dv_gurax, "glVertex2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2dv_gurax)
+Gurax_ImplementFunctionEx(glVertex2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertex2dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2f(x:Number, y:Number)
@@ -6264,15 +6266,15 @@ Gurax_DeclareFunctionAlias(glVertex2f_gurax, "glVertex2f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2f_gurax)
+Gurax_ImplementFunctionEx(glVertex2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertex2f(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2fv(v[]:Number)
@@ -6285,14 +6287,14 @@ Gurax_DeclareFunctionAlias(glVertex2fv_gurax, "glVertex2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2fv_gurax)
+Gurax_ImplementFunctionEx(glVertex2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertex2fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2i(x:Number, y:Number)
@@ -6306,15 +6308,15 @@ Gurax_DeclareFunctionAlias(glVertex2i_gurax, "glVertex2i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2i_gurax)
+Gurax_ImplementFunctionEx(glVertex2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertex2i(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2iv(v[]:Number)
@@ -6327,14 +6329,14 @@ Gurax_DeclareFunctionAlias(glVertex2iv_gurax, "glVertex2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2iv_gurax)
+Gurax_ImplementFunctionEx(glVertex2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertex2iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2s(x:Number, y:Number)
@@ -6348,15 +6350,15 @@ Gurax_DeclareFunctionAlias(glVertex2s_gurax, "glVertex2s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2s_gurax)
+Gurax_ImplementFunctionEx(glVertex2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertex2s(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex2sv(v[]:Number)
@@ -6369,14 +6371,14 @@ Gurax_DeclareFunctionAlias(glVertex2sv_gurax, "glVertex2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex2sv_gurax)
+Gurax_ImplementFunctionEx(glVertex2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertex2sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3d(x:Number, y:Number, z:Number)
@@ -6391,16 +6393,16 @@ Gurax_DeclareFunctionAlias(glVertex3d_gurax, "glVertex3d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3d_gurax)
+Gurax_ImplementFunctionEx(glVertex3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertex3d(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3dv(v[]:Number)
@@ -6413,14 +6415,14 @@ Gurax_DeclareFunctionAlias(glVertex3dv_gurax, "glVertex3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3dv_gurax)
+Gurax_ImplementFunctionEx(glVertex3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertex3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3f(x:Number, y:Number, z:Number)
@@ -6435,16 +6437,16 @@ Gurax_DeclareFunctionAlias(glVertex3f_gurax, "glVertex3f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3f_gurax)
+Gurax_ImplementFunctionEx(glVertex3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertex3f(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3fv(v[]:Number)
@@ -6457,14 +6459,14 @@ Gurax_DeclareFunctionAlias(glVertex3fv_gurax, "glVertex3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3fv_gurax)
+Gurax_ImplementFunctionEx(glVertex3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertex3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3i(x:Number, y:Number, z:Number)
@@ -6479,16 +6481,16 @@ Gurax_DeclareFunctionAlias(glVertex3i_gurax, "glVertex3i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3i_gurax)
+Gurax_ImplementFunctionEx(glVertex3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLint z = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLint z = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertex3i(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3iv(v[]:Number)
@@ -6501,14 +6503,14 @@ Gurax_DeclareFunctionAlias(glVertex3iv_gurax, "glVertex3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3iv_gurax)
+Gurax_ImplementFunctionEx(glVertex3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertex3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3s(x:Number, y:Number, z:Number)
@@ -6523,16 +6525,16 @@ Gurax_DeclareFunctionAlias(glVertex3s_gurax, "glVertex3s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3s_gurax)
+Gurax_ImplementFunctionEx(glVertex3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertex3s(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex3sv(v[]:Number)
@@ -6545,14 +6547,14 @@ Gurax_DeclareFunctionAlias(glVertex3sv_gurax, "glVertex3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex3sv_gurax)
+Gurax_ImplementFunctionEx(glVertex3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertex3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4d(x:Number, y:Number, z:Number, w:Number)
@@ -6568,17 +6570,17 @@ Gurax_DeclareFunctionAlias(glVertex4d_gurax, "glVertex4d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4d_gurax)
+Gurax_ImplementFunctionEx(glVertex4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
-	GLdouble w = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
+	GLdouble w = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertex4d(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4dv(v[]:Number)
@@ -6591,14 +6593,14 @@ Gurax_DeclareFunctionAlias(glVertex4dv_gurax, "glVertex4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4dv_gurax)
+Gurax_ImplementFunctionEx(glVertex4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertex4dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4f(x:Number, y:Number, z:Number, w:Number)
@@ -6614,17 +6616,17 @@ Gurax_DeclareFunctionAlias(glVertex4f_gurax, "glVertex4f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4f_gurax)
+Gurax_ImplementFunctionEx(glVertex4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
-	GLfloat w = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
+	GLfloat w = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertex4f(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4fv(v[]:Number)
@@ -6637,14 +6639,14 @@ Gurax_DeclareFunctionAlias(glVertex4fv_gurax, "glVertex4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4fv_gurax)
+Gurax_ImplementFunctionEx(glVertex4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertex4fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4i(x:Number, y:Number, z:Number, w:Number)
@@ -6660,17 +6662,17 @@ Gurax_DeclareFunctionAlias(glVertex4i_gurax, "glVertex4i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4i_gurax)
+Gurax_ImplementFunctionEx(glVertex4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLint z = args.PickNumber<GLint>();
-	GLint w = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLint z = args_gurax.PickNumber<GLint>();
+	GLint w = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertex4i(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4iv(v[]:Number)
@@ -6683,14 +6685,14 @@ Gurax_DeclareFunctionAlias(glVertex4iv_gurax, "glVertex4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4iv_gurax)
+Gurax_ImplementFunctionEx(glVertex4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertex4iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4s(x:Number, y:Number, z:Number, w:Number)
@@ -6706,17 +6708,17 @@ Gurax_DeclareFunctionAlias(glVertex4s_gurax, "glVertex4s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4s_gurax)
+Gurax_ImplementFunctionEx(glVertex4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
-	GLshort w = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
+	GLshort w = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertex4s(x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertex4sv(v[]:Number)
@@ -6729,14 +6731,14 @@ Gurax_DeclareFunctionAlias(glVertex4sv_gurax, "glVertex4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertex4sv_gurax)
+Gurax_ImplementFunctionEx(glVertex4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertex4sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glViewport(x:Number, y:Number, width:Number, height:Number)
@@ -6752,17 +6754,17 @@ Gurax_DeclareFunctionAlias(glViewport_gurax, "glViewport")
 		"");
 }
 
-Gurax_ImplementFunction(glViewport_gurax)
+Gurax_ImplementFunctionEx(glViewport_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glViewport(x, y, width, height);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCopyTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, x:Number, y:Number, width:Number, height:Number)
@@ -6783,22 +6785,22 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage3D_gurax, "glCopyTexSubImage3D")
 		"");
 }
 
-Gurax_ImplementFunction(glCopyTexSubImage3D_gurax)
+Gurax_ImplementFunctionEx(glCopyTexSubImage3D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint yoffset = args.PickNumber<GLint>();
-	GLint zoffset = args.PickNumber<GLint>();
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glCopyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawRangeElements(mode:Number, start:Number, end:Number, count:Number, type:Number, indices:Pointer)
@@ -6816,19 +6818,19 @@ Gurax_DeclareFunctionAlias(glDrawRangeElements_gurax, "glDrawRangeElements")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawRangeElements_gurax)
+Gurax_ImplementFunctionEx(glDrawRangeElements_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLuint start = args.PickNumber<GLuint>();
-	GLuint end = args.PickNumber<GLuint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLuint start = args_gurax.PickNumber<GLuint>();
+	GLuint end = args_gurax.PickNumber<GLuint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* indices = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glDrawRangeElements(mode, start, end, count, type, indices);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexImage3D(target:Number, level:Number, internalFormat:Number, width:Number, height:Number, depth:Number, border:Number, format:Number, type:Number, pixels:Pointer)
@@ -6850,23 +6852,23 @@ Gurax_DeclareFunctionAlias(glTexImage3D_gurax, "glTexImage3D")
 		"");
 }
 
-Gurax_ImplementFunction(glTexImage3D_gurax)
+Gurax_ImplementFunctionEx(glTexImage3D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint internalFormat = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLsizei depth = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint internalFormat = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, pixels:Pointer)
@@ -6889,24 +6891,24 @@ Gurax_DeclareFunctionAlias(glTexSubImage3D_gurax, "glTexSubImage3D")
 		"");
 }
 
-Gurax_ImplementFunction(glTexSubImage3D_gurax)
+Gurax_ImplementFunctionEx(glTexSubImage3D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint yoffset = args.PickNumber<GLint>();
-	GLint zoffset = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLsizei depth = args.PickNumber<GLsizei>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* pixels = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glActiveTexture(texture:Number)
@@ -6919,14 +6921,14 @@ Gurax_DeclareFunctionAlias(glActiveTexture_gurax, "glActiveTexture")
 		"");
 }
 
-Gurax_ImplementFunction(glActiveTexture_gurax)
+Gurax_ImplementFunctionEx(glActiveTexture_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum texture = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum texture = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glActiveTexture(texture);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClientActiveTexture(texture:Number)
@@ -6939,14 +6941,14 @@ Gurax_DeclareFunctionAlias(glClientActiveTexture_gurax, "glClientActiveTexture")
 		"");
 }
 
-Gurax_ImplementFunction(glClientActiveTexture_gurax)
+Gurax_ImplementFunctionEx(glClientActiveTexture_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum texture = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum texture = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glClientActiveTexture(texture);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexImage1D(target:Number, level:Number, internalformat:Number, width:Number, border:Number, imageSize:Number, data:Pointer)
@@ -6965,20 +6967,20 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage1D_gurax, "glCompressedTexImage1D
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexImage1D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexImage1D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLenum internalformat = args.PickNumber<GLenum>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexImage2D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, border:Number, imageSize:Number, data:Pointer)
@@ -6998,21 +7000,21 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage2D_gurax, "glCompressedTexImage2D
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexImage2D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexImage2D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLenum internalformat = args.PickNumber<GLenum>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexImage3D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, depth:Number, border:Number, imageSize:Number, data:Pointer)
@@ -7033,22 +7035,22 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage3D_gurax, "glCompressedTexImage3D
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexImage3D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexImage3D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLenum internalformat = args.PickNumber<GLenum>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLsizei depth = args.PickNumber<GLsizei>();
-	GLint border = args.PickNumber<GLint>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLint border = args_gurax.PickNumber<GLint>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexSubImage1D(target:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer)
@@ -7067,20 +7069,20 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage1D_gurax, "glCompressedTexSubI
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexSubImage1D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexSubImage1D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer)
@@ -7101,22 +7103,22 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage2D_gurax, "glCompressedTexSubI
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexSubImage2D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexSubImage2D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint yoffset = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompressedTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer)
@@ -7139,24 +7141,24 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage3D_gurax, "glCompressedTexSubI
 		"");
 }
 
-Gurax_ImplementFunction(glCompressedTexSubImage3D_gurax)
+Gurax_ImplementFunctionEx(glCompressedTexSubImage3D_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint level = args.PickNumber<GLint>();
-	GLint xoffset = args.PickNumber<GLint>();
-	GLint yoffset = args.PickNumber<GLint>();
-	GLint zoffset = args.PickNumber<GLint>();
-	GLsizei width = args.PickNumber<GLsizei>();
-	GLsizei height = args.PickNumber<GLsizei>();
-	GLsizei depth = args.PickNumber<GLsizei>();
-	GLenum format = args.PickNumber<GLenum>();
-	GLsizei imageSize = args.PickNumber<GLsizei>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadTransposeMatrixd(m[]:Number)
@@ -7169,14 +7171,14 @@ Gurax_DeclareFunctionAlias(glLoadTransposeMatrixd_gurax, "glLoadTransposeMatrixd
 		"");
 }
 
-Gurax_ImplementFunction(glLoadTransposeMatrixd_gurax)
+Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glLoadTransposeMatrixd(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glLoadTransposeMatrixf(m[]:Number)
@@ -7189,14 +7191,14 @@ Gurax_DeclareFunctionAlias(glLoadTransposeMatrixf_gurax, "glLoadTransposeMatrixf
 		"");
 }
 
-Gurax_ImplementFunction(glLoadTransposeMatrixf_gurax)
+Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glLoadTransposeMatrixf(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultTransposeMatrixd(m[]:Number)
@@ -7209,14 +7211,14 @@ Gurax_DeclareFunctionAlias(glMultTransposeMatrixd_gurax, "glMultTransposeMatrixd
 		"");
 }
 
-Gurax_ImplementFunction(glMultTransposeMatrixd_gurax)
+Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultTransposeMatrixd(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultTransposeMatrixf(m[]:Number)
@@ -7229,14 +7231,14 @@ Gurax_DeclareFunctionAlias(glMultTransposeMatrixf_gurax, "glMultTransposeMatrixf
 		"");
 }
 
-Gurax_ImplementFunction(glMultTransposeMatrixf_gurax)
+Gurax_ImplementFunctionEx(glMultTransposeMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto m = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto m = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultTransposeMatrixf(m);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1d(target:Number, s:Number)
@@ -7250,15 +7252,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1d_gurax, "glMultiTexCoord1d")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1d_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble s = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMultiTexCoord1d(target, s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1dv(target:Number, v[]:Number)
@@ -7272,15 +7274,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1dv_gurax, "glMultiTexCoord1dv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1dv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultiTexCoord1dv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1f(target:Number, s:Number)
@@ -7294,15 +7296,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1f_gurax, "glMultiTexCoord1f")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1f_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat s = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMultiTexCoord1f(target, s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1fv(target:Number, v[]:Number)
@@ -7316,15 +7318,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1fv_gurax, "glMultiTexCoord1fv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1fv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultiTexCoord1fv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1i(target:Number, s:Number)
@@ -7338,15 +7340,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1i_gurax, "glMultiTexCoord1i")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1i_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint s = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint s = args_gurax.PickNumber<GLint>();
 	// Function body
 	glMultiTexCoord1i(target, s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1iv(target:Number, v[]:Number)
@@ -7360,15 +7362,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1iv_gurax, "glMultiTexCoord1iv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1iv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glMultiTexCoord1iv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1s(target:Number, s:Number)
@@ -7382,15 +7384,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1s_gurax, "glMultiTexCoord1s")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1s_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLshort s = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLshort s = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glMultiTexCoord1s(target, s);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord1sv(target:Number, v[]:Number)
@@ -7404,15 +7406,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1sv_gurax, "glMultiTexCoord1sv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord1sv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord1sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glMultiTexCoord1sv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2d(target:Number, s:Number, t:Number)
@@ -7427,16 +7429,16 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2d_gurax, "glMultiTexCoord2d")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2d_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMultiTexCoord2d(target, s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2dv(target:Number, v[]:Number)
@@ -7450,15 +7452,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2dv_gurax, "glMultiTexCoord2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2dv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultiTexCoord2dv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2f(target:Number, s:Number, t:Number)
@@ -7473,16 +7475,16 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2f_gurax, "glMultiTexCoord2f")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2f_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMultiTexCoord2f(target, s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2fv(target:Number, v[]:Number)
@@ -7496,15 +7498,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2fv_gurax, "glMultiTexCoord2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2fv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultiTexCoord2fv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2i(target:Number, s:Number, t:Number)
@@ -7519,16 +7521,16 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2i_gurax, "glMultiTexCoord2i")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2i_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
 	// Function body
 	glMultiTexCoord2i(target, s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2iv(target:Number, v[]:Number)
@@ -7542,15 +7544,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2iv_gurax, "glMultiTexCoord2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2iv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glMultiTexCoord2iv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2s(target:Number, s:Number, t:Number)
@@ -7565,16 +7567,16 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2s_gurax, "glMultiTexCoord2s")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2s_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glMultiTexCoord2s(target, s, t);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord2sv(target:Number, v[]:Number)
@@ -7588,15 +7590,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2sv_gurax, "glMultiTexCoord2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord2sv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glMultiTexCoord2sv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3d(target:Number, s:Number, t:Number, r:Number)
@@ -7612,17 +7614,17 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3d_gurax, "glMultiTexCoord3d")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3d_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
-	GLdouble r = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
+	GLdouble r = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMultiTexCoord3d(target, s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3dv(target:Number, v[]:Number)
@@ -7636,15 +7638,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3dv_gurax, "glMultiTexCoord3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3dv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultiTexCoord3dv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3f(target:Number, s:Number, t:Number, r:Number)
@@ -7660,17 +7662,17 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3f_gurax, "glMultiTexCoord3f")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3f_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
-	GLfloat r = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
+	GLfloat r = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMultiTexCoord3f(target, s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3fv(target:Number, v[]:Number)
@@ -7684,15 +7686,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3fv_gurax, "glMultiTexCoord3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3fv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultiTexCoord3fv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3i(target:Number, s:Number, t:Number, r:Number)
@@ -7708,17 +7710,17 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3i_gurax, "glMultiTexCoord3i")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3i_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
-	GLint r = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
+	GLint r = args_gurax.PickNumber<GLint>();
 	// Function body
 	glMultiTexCoord3i(target, s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3iv(target:Number, v[]:Number)
@@ -7732,15 +7734,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3iv_gurax, "glMultiTexCoord3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3iv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glMultiTexCoord3iv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3s(target:Number, s:Number, t:Number, r:Number)
@@ -7756,17 +7758,17 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3s_gurax, "glMultiTexCoord3s")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3s_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
-	GLshort r = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
+	GLshort r = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glMultiTexCoord3s(target, s, t, r);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord3sv(target:Number, v[]:Number)
@@ -7780,15 +7782,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3sv_gurax, "glMultiTexCoord3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord3sv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glMultiTexCoord3sv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4d(target:Number, s:Number, t:Number, r:Number, q:Number)
@@ -7805,18 +7807,18 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4d_gurax, "glMultiTexCoord4d")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4d_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLdouble s = args.PickNumber<GLdouble>();
-	GLdouble t = args.PickNumber<GLdouble>();
-	GLdouble r = args.PickNumber<GLdouble>();
-	GLdouble q = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLdouble s = args_gurax.PickNumber<GLdouble>();
+	GLdouble t = args_gurax.PickNumber<GLdouble>();
+	GLdouble r = args_gurax.PickNumber<GLdouble>();
+	GLdouble q = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glMultiTexCoord4d(target, s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4dv(target:Number, v[]:Number)
@@ -7830,15 +7832,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4dv_gurax, "glMultiTexCoord4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4dv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glMultiTexCoord4dv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4f(target:Number, s:Number, t:Number, r:Number, q:Number)
@@ -7855,18 +7857,18 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4f_gurax, "glMultiTexCoord4f")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4f_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLfloat s = args.PickNumber<GLfloat>();
-	GLfloat t = args.PickNumber<GLfloat>();
-	GLfloat r = args.PickNumber<GLfloat>();
-	GLfloat q = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLfloat s = args_gurax.PickNumber<GLfloat>();
+	GLfloat t = args_gurax.PickNumber<GLfloat>();
+	GLfloat r = args_gurax.PickNumber<GLfloat>();
+	GLfloat q = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glMultiTexCoord4f(target, s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4fv(target:Number, v[]:Number)
@@ -7880,15 +7882,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4fv_gurax, "glMultiTexCoord4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4fv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glMultiTexCoord4fv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4i(target:Number, s:Number, t:Number, r:Number, q:Number)
@@ -7905,18 +7907,18 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4i_gurax, "glMultiTexCoord4i")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4i_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLint s = args.PickNumber<GLint>();
-	GLint t = args.PickNumber<GLint>();
-	GLint r = args.PickNumber<GLint>();
-	GLint q = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint s = args_gurax.PickNumber<GLint>();
+	GLint t = args_gurax.PickNumber<GLint>();
+	GLint r = args_gurax.PickNumber<GLint>();
+	GLint q = args_gurax.PickNumber<GLint>();
 	// Function body
 	glMultiTexCoord4i(target, s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4iv(target:Number, v[]:Number)
@@ -7930,15 +7932,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4iv_gurax, "glMultiTexCoord4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4iv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glMultiTexCoord4iv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4s(target:Number, s:Number, t:Number, r:Number, q:Number)
@@ -7955,18 +7957,18 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4s_gurax, "glMultiTexCoord4s")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4s_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLshort s = args.PickNumber<GLshort>();
-	GLshort t = args.PickNumber<GLshort>();
-	GLshort r = args.PickNumber<GLshort>();
-	GLshort q = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLshort s = args_gurax.PickNumber<GLshort>();
+	GLshort t = args_gurax.PickNumber<GLshort>();
+	GLshort r = args_gurax.PickNumber<GLshort>();
+	GLshort q = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glMultiTexCoord4s(target, s, t, r, q);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiTexCoord4sv(target:Number, v[]:Number)
@@ -7980,15 +7982,15 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4sv_gurax, "glMultiTexCoord4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiTexCoord4sv_gurax)
+Gurax_ImplementFunctionEx(glMultiTexCoord4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glMultiTexCoord4sv(target, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSampleCoverage(value:Number, invert:Bool)
@@ -8002,15 +8004,15 @@ Gurax_DeclareFunctionAlias(glSampleCoverage_gurax, "glSampleCoverage")
 		"");
 }
 
-Gurax_ImplementFunction(glSampleCoverage_gurax)
+Gurax_ImplementFunctionEx(glSampleCoverage_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampf value = args.PickNumber<GLclampf>();
-	GLboolean invert = static_cast<GLboolean>(args.PickBool());
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampf value = args_gurax.PickNumber<GLclampf>();
+	GLboolean invert = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glSampleCoverage(value, invert);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendColor(red:Number, green:Number, blue:Number, alpha:Number)
@@ -8026,17 +8028,17 @@ Gurax_DeclareFunctionAlias(glBlendColor_gurax, "glBlendColor")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendColor_gurax)
+Gurax_ImplementFunctionEx(glBlendColor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampf red = args.PickNumber<GLclampf>();
-	GLclampf green = args.PickNumber<GLclampf>();
-	GLclampf blue = args.PickNumber<GLclampf>();
-	GLclampf alpha = args.PickNumber<GLclampf>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampf red = args_gurax.PickNumber<GLclampf>();
+	GLclampf green = args_gurax.PickNumber<GLclampf>();
+	GLclampf blue = args_gurax.PickNumber<GLclampf>();
+	GLclampf alpha = args_gurax.PickNumber<GLclampf>();
 	// Function body
 	glBlendColor(red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendEquation(mode:Number)
@@ -8049,14 +8051,14 @@ Gurax_DeclareFunctionAlias(glBlendEquation_gurax, "glBlendEquation")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendEquation_gurax)
+Gurax_ImplementFunctionEx(glBlendEquation_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendEquation(mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendFuncSeparate(sfactorRGB:Number, dfactorRGB:Number, sfactorAlpha:Number, dfactorAlpha:Number)
@@ -8072,17 +8074,17 @@ Gurax_DeclareFunctionAlias(glBlendFuncSeparate_gurax, "glBlendFuncSeparate")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendFuncSeparate_gurax)
+Gurax_ImplementFunctionEx(glBlendFuncSeparate_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum sfactorRGB = args.PickNumber<GLenum>();
-	GLenum dfactorRGB = args.PickNumber<GLenum>();
-	GLenum sfactorAlpha = args.PickNumber<GLenum>();
-	GLenum dfactorAlpha = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum sfactorRGB = args_gurax.PickNumber<GLenum>();
+	GLenum dfactorRGB = args_gurax.PickNumber<GLenum>();
+	GLenum sfactorAlpha = args_gurax.PickNumber<GLenum>();
+	GLenum dfactorAlpha = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogCoordPointer(type:Number, stride:Number, pointer:Pointer)
@@ -8097,16 +8099,16 @@ Gurax_DeclareFunctionAlias(glFogCoordPointer_gurax, "glFogCoordPointer")
 		"");
 }
 
-Gurax_ImplementFunction(glFogCoordPointer_gurax)
+Gurax_ImplementFunctionEx(glFogCoordPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum type = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glFogCoordPointer(type, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogCoordd(coord:Number)
@@ -8119,14 +8121,14 @@ Gurax_DeclareFunctionAlias(glFogCoordd_gurax, "glFogCoordd")
 		"");
 }
 
-Gurax_ImplementFunction(glFogCoordd_gurax)
+Gurax_ImplementFunctionEx(glFogCoordd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble coord = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble coord = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glFogCoordd(coord);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogCoorddv(coord[]:Number)
@@ -8139,14 +8141,14 @@ Gurax_DeclareFunctionAlias(glFogCoorddv_gurax, "glFogCoorddv")
 		"");
 }
 
-Gurax_ImplementFunction(glFogCoorddv_gurax)
+Gurax_ImplementFunctionEx(glFogCoorddv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto coord = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto coord = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glFogCoorddv(coord);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogCoordf(coord:Number)
@@ -8159,14 +8161,14 @@ Gurax_DeclareFunctionAlias(glFogCoordf_gurax, "glFogCoordf")
 		"");
 }
 
-Gurax_ImplementFunction(glFogCoordf_gurax)
+Gurax_ImplementFunctionEx(glFogCoordf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat coord = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat coord = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glFogCoordf(coord);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFogCoordfv(coord[]:Number)
@@ -8179,14 +8181,14 @@ Gurax_DeclareFunctionAlias(glFogCoordfv_gurax, "glFogCoordfv")
 		"");
 }
 
-Gurax_ImplementFunction(glFogCoordfv_gurax)
+Gurax_ImplementFunctionEx(glFogCoordfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto coord = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto coord = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glFogCoordfv(coord);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiDrawArrays(mode:Number, first[]:Number, count[]:Number, drawcount:Number)
@@ -8202,17 +8204,17 @@ Gurax_DeclareFunctionAlias(glMultiDrawArrays_gurax, "glMultiDrawArrays")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiDrawArrays_gurax)
+Gurax_ImplementFunctionEx(glMultiDrawArrays_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	auto first = args.PickNumList<GLint>();
-	auto count = args.PickNumList<GLsizei>();
-	GLsizei drawcount = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	auto first = args_gurax.PickNumList<GLint>();
+	auto count = args_gurax.PickNumList<GLsizei>();
+	GLsizei drawcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glMultiDrawArrays(mode, first, count, drawcount);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiDrawElements(mode:Number, count[]:Number, type:Number, indices[]:Pointer)
@@ -8228,15 +8230,15 @@ Gurax_DeclareFunctionAlias(glMultiDrawElements_gurax, "glMultiDrawElements")
 		"");
 }
 
-Gurax_ImplementFunction(glMultiDrawElements_gurax)
+Gurax_ImplementFunctionEx(glMultiDrawElements_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	auto count = args.PickNumList<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
-	auto indices = args.PickListT<const void*>([](Value& value) {
-		return Value_Pointer::GetPointer(value).GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	auto count = args_gurax.PickNumList<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	auto indices = args_gurax.PickListT<const void*>([](Gurax::Value& value) {
+		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<const void*>();
 	});
 	// Function body
 	GLsizei drawcount = count.sizeT<GLsizei>();
@@ -8259,15 +8261,15 @@ Gurax_DeclareFunctionAlias(glPointParameterf_gurax, "glPointParameterf")
 		"");
 }
 
-Gurax_ImplementFunction(glPointParameterf_gurax)
+Gurax_ImplementFunctionEx(glPointParameterf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLfloat param = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glPointParameterf(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPointParameterfv(pname:Number, params[]:Number)
@@ -8281,15 +8283,15 @@ Gurax_DeclareFunctionAlias(glPointParameterfv_gurax, "glPointParameterfv")
 		"");
 }
 
-Gurax_ImplementFunction(glPointParameterfv_gurax)
+Gurax_ImplementFunctionEx(glPointParameterfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glPointParameterfv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPointParameteri(pname:Number, param:Number)
@@ -8303,15 +8305,15 @@ Gurax_DeclareFunctionAlias(glPointParameteri_gurax, "glPointParameteri")
 		"");
 }
 
-Gurax_ImplementFunction(glPointParameteri_gurax)
+Gurax_ImplementFunctionEx(glPointParameteri_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	GLint param = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
 	// Function body
 	glPointParameteri(pname, param);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPointParameteriv(pname:Number, params[]:Number)
@@ -8325,15 +8327,15 @@ Gurax_DeclareFunctionAlias(glPointParameteriv_gurax, "glPointParameteriv")
 		"");
 }
 
-Gurax_ImplementFunction(glPointParameteriv_gurax)
+Gurax_ImplementFunctionEx(glPointParameteriv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glPointParameteriv(pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3b(red:Number, green:Number, blue:Number)
@@ -8348,16 +8350,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3b_gurax, "glSecondaryColor3b")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3b_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3b_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLbyte red = args.PickNumber<GLbyte>();
-	GLbyte green = args.PickNumber<GLbyte>();
-	GLbyte blue = args.PickNumber<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLbyte red = args_gurax.PickNumber<GLbyte>();
+	GLbyte green = args_gurax.PickNumber<GLbyte>();
+	GLbyte blue = args_gurax.PickNumber<GLbyte>();
 	// Function body
 	glSecondaryColor3b(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3bv(v[]:Number)
@@ -8370,14 +8372,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3bv_gurax, "glSecondaryColor3bv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3bv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glSecondaryColor3bv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3d(red:Number, green:Number, blue:Number)
@@ -8392,16 +8394,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3d_gurax, "glSecondaryColor3d")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3d_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble red = args.PickNumber<GLdouble>();
-	GLdouble green = args.PickNumber<GLdouble>();
-	GLdouble blue = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble red = args_gurax.PickNumber<GLdouble>();
+	GLdouble green = args_gurax.PickNumber<GLdouble>();
+	GLdouble blue = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glSecondaryColor3d(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3dv(v[]:Number)
@@ -8414,14 +8416,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3dv_gurax, "glSecondaryColor3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3dv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glSecondaryColor3dv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3f(red:Number, green:Number, blue:Number)
@@ -8436,16 +8438,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3f_gurax, "glSecondaryColor3f")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3f_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat red = args.PickNumber<GLfloat>();
-	GLfloat green = args.PickNumber<GLfloat>();
-	GLfloat blue = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat red = args_gurax.PickNumber<GLfloat>();
+	GLfloat green = args_gurax.PickNumber<GLfloat>();
+	GLfloat blue = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glSecondaryColor3f(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3fv(v[]:Number)
@@ -8458,14 +8460,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3fv_gurax, "glSecondaryColor3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3fv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glSecondaryColor3fv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3i(red:Number, green:Number, blue:Number)
@@ -8480,16 +8482,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3i_gurax, "glSecondaryColor3i")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3i_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint red = args.PickNumber<GLint>();
-	GLint green = args.PickNumber<GLint>();
-	GLint blue = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint red = args_gurax.PickNumber<GLint>();
+	GLint green = args_gurax.PickNumber<GLint>();
+	GLint blue = args_gurax.PickNumber<GLint>();
 	// Function body
 	glSecondaryColor3i(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3iv(v[]:Number)
@@ -8502,14 +8504,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3iv_gurax, "glSecondaryColor3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3iv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glSecondaryColor3iv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3s(red:Number, green:Number, blue:Number)
@@ -8524,16 +8526,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3s_gurax, "glSecondaryColor3s")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3s_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort red = args.PickNumber<GLshort>();
-	GLshort green = args.PickNumber<GLshort>();
-	GLshort blue = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort red = args_gurax.PickNumber<GLshort>();
+	GLshort green = args_gurax.PickNumber<GLshort>();
+	GLshort blue = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glSecondaryColor3s(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3sv(v[]:Number)
@@ -8546,14 +8548,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3sv_gurax, "glSecondaryColor3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3sv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glSecondaryColor3sv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3ub(red:Number, green:Number, blue:Number)
@@ -8568,16 +8570,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ub_gurax, "glSecondaryColor3ub")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3ub_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3ub_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLubyte red = args.PickNumber<GLubyte>();
-	GLubyte green = args.PickNumber<GLubyte>();
-	GLubyte blue = args.PickNumber<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLubyte red = args_gurax.PickNumber<GLubyte>();
+	GLubyte green = args_gurax.PickNumber<GLubyte>();
+	GLubyte blue = args_gurax.PickNumber<GLubyte>();
 	// Function body
 	glSecondaryColor3ub(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3ubv(v[]:Number)
@@ -8590,14 +8592,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ubv_gurax, "glSecondaryColor3ubv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3ubv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glSecondaryColor3ubv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3ui(red:Number, green:Number, blue:Number)
@@ -8612,16 +8614,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ui_gurax, "glSecondaryColor3ui")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3ui_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint red = args.PickNumber<GLuint>();
-	GLuint green = args.PickNumber<GLuint>();
-	GLuint blue = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint red = args_gurax.PickNumber<GLuint>();
+	GLuint green = args_gurax.PickNumber<GLuint>();
+	GLuint blue = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glSecondaryColor3ui(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3uiv(v[]:Number)
@@ -8634,14 +8636,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3uiv_gurax, "glSecondaryColor3uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3uiv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glSecondaryColor3uiv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3us(red:Number, green:Number, blue:Number)
@@ -8656,16 +8658,16 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3us_gurax, "glSecondaryColor3us")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3us_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3us_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLushort red = args.PickNumber<GLushort>();
-	GLushort green = args.PickNumber<GLushort>();
-	GLushort blue = args.PickNumber<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLushort red = args_gurax.PickNumber<GLushort>();
+	GLushort green = args_gurax.PickNumber<GLushort>();
+	GLushort blue = args_gurax.PickNumber<GLushort>();
 	// Function body
 	glSecondaryColor3us(red, green, blue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColor3usv(v[]:Number)
@@ -8678,14 +8680,14 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3usv_gurax, "glSecondaryColor3usv")
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColor3usv_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColor3usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto v = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto v = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glSecondaryColor3usv(v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSecondaryColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer)
@@ -8701,17 +8703,17 @@ Gurax_DeclareFunctionAlias(glSecondaryColorPointer_gurax, "glSecondaryColorPoint
 		"");
 }
 
-Gurax_ImplementFunction(glSecondaryColorPointer_gurax)
+Gurax_ImplementFunctionEx(glSecondaryColorPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint size = args.PickNumber<GLint>();
-	GLenum type = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glSecondaryColorPointer(size, type, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2d(x:Number, y:Number)
@@ -8725,15 +8727,15 @@ Gurax_DeclareFunctionAlias(glWindowPos2d_gurax, "glWindowPos2d")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2d_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glWindowPos2d(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2dv(p[]:Number)
@@ -8746,14 +8748,14 @@ Gurax_DeclareFunctionAlias(glWindowPos2dv_gurax, "glWindowPos2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2dv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glWindowPos2dv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2f(x:Number, y:Number)
@@ -8767,15 +8769,15 @@ Gurax_DeclareFunctionAlias(glWindowPos2f_gurax, "glWindowPos2f")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2f_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glWindowPos2f(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2fv(p[]:Number)
@@ -8788,14 +8790,14 @@ Gurax_DeclareFunctionAlias(glWindowPos2fv_gurax, "glWindowPos2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2fv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glWindowPos2fv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2i(x:Number, y:Number)
@@ -8809,15 +8811,15 @@ Gurax_DeclareFunctionAlias(glWindowPos2i_gurax, "glWindowPos2i")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2i_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
 	// Function body
 	glWindowPos2i(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2iv(p[]:Number)
@@ -8830,14 +8832,14 @@ Gurax_DeclareFunctionAlias(glWindowPos2iv_gurax, "glWindowPos2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2iv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLint>();
 	// Function body
 	glWindowPos2iv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2s(x:Number, y:Number)
@@ -8851,15 +8853,15 @@ Gurax_DeclareFunctionAlias(glWindowPos2s_gurax, "glWindowPos2s")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2s_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glWindowPos2s(x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos2sv(p[]:Number)
@@ -8872,14 +8874,14 @@ Gurax_DeclareFunctionAlias(glWindowPos2sv_gurax, "glWindowPos2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos2sv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glWindowPos2sv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3d(x:Number, y:Number, z:Number)
@@ -8894,16 +8896,16 @@ Gurax_DeclareFunctionAlias(glWindowPos3d_gurax, "glWindowPos3d")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3d_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glWindowPos3d(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3dv(p[]:Number)
@@ -8916,14 +8918,14 @@ Gurax_DeclareFunctionAlias(glWindowPos3dv_gurax, "glWindowPos3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3dv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glWindowPos3dv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3f(x:Number, y:Number, z:Number)
@@ -8938,16 +8940,16 @@ Gurax_DeclareFunctionAlias(glWindowPos3f_gurax, "glWindowPos3f")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3f_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glWindowPos3f(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3fv(p[]:Number)
@@ -8960,14 +8962,14 @@ Gurax_DeclareFunctionAlias(glWindowPos3fv_gurax, "glWindowPos3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3fv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glWindowPos3fv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3i(x:Number, y:Number, z:Number)
@@ -8982,16 +8984,16 @@ Gurax_DeclareFunctionAlias(glWindowPos3i_gurax, "glWindowPos3i")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3i_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint x = args.PickNumber<GLint>();
-	GLint y = args.PickNumber<GLint>();
-	GLint z = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLint z = args_gurax.PickNumber<GLint>();
 	// Function body
 	glWindowPos3i(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3iv(p[]:Number)
@@ -9004,14 +9006,14 @@ Gurax_DeclareFunctionAlias(glWindowPos3iv_gurax, "glWindowPos3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3iv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLint>();
 	// Function body
 	glWindowPos3iv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3s(x:Number, y:Number, z:Number)
@@ -9026,16 +9028,16 @@ Gurax_DeclareFunctionAlias(glWindowPos3s_gurax, "glWindowPos3s")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3s_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glWindowPos3s(x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glWindowPos3sv(p[]:Number)
@@ -9048,14 +9050,14 @@ Gurax_DeclareFunctionAlias(glWindowPos3sv_gurax, "glWindowPos3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glWindowPos3sv_gurax)
+Gurax_ImplementFunctionEx(glWindowPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	auto p = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto p = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glWindowPos3sv(p);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBeginQuery(target:Number, id:Number)
@@ -9069,15 +9071,15 @@ Gurax_DeclareFunctionAlias(glBeginQuery_gurax, "glBeginQuery")
 		"");
 }
 
-Gurax_ImplementFunction(glBeginQuery_gurax)
+Gurax_ImplementFunctionEx(glBeginQuery_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLuint id = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLuint id = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glBeginQuery(target, id);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBindBuffer(target:Number, buffer:Number)
@@ -9091,15 +9093,15 @@ Gurax_DeclareFunctionAlias(glBindBuffer_gurax, "glBindBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glBindBuffer_gurax)
+Gurax_ImplementFunctionEx(glBindBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLuint buffer = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glBindBuffer(target, buffer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBufferData(target:Number, size:Number, data:Pointer, usage:Number)
@@ -9115,17 +9117,17 @@ Gurax_DeclareFunctionAlias(glBufferData_gurax, "glBufferData")
 		"");
 }
 
-Gurax_ImplementFunction(glBufferData_gurax)
+Gurax_ImplementFunctionEx(glBufferData_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLsizeiptr size = args.PickNumber<GLsizeiptr>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
-	GLenum usage = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLenum usage = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBufferData(target, size, data, usage);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBufferSubData(target:Number, offset:Number, size:Number, data:Pointer)
@@ -9141,17 +9143,17 @@ Gurax_DeclareFunctionAlias(glBufferSubData_gurax, "glBufferSubData")
 		"");
 }
 
-Gurax_ImplementFunction(glBufferSubData_gurax)
+Gurax_ImplementFunctionEx(glBufferSubData_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLintptr offset = args.PickNumber<GLintptr>();
-	GLsizeiptr size = args.PickNumber<GLsizeiptr>();
-	const void* data = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glBufferSubData(target, offset, size, data);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDeleteBuffers(n:Number, buffers[]:Number)
@@ -9165,15 +9167,15 @@ Gurax_DeclareFunctionAlias(glDeleteBuffers_gurax, "glDeleteBuffers")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteBuffers_gurax)
+Gurax_ImplementFunctionEx(glDeleteBuffers_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
-	auto buffers = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	auto buffers = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glDeleteBuffers(n, buffers);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDeleteQueries(n:Number, ids[]:Number)
@@ -9187,15 +9189,15 @@ Gurax_DeclareFunctionAlias(glDeleteQueries_gurax, "glDeleteQueries")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteQueries_gurax)
+Gurax_ImplementFunctionEx(glDeleteQueries_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
-	auto ids = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	auto ids = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glDeleteQueries(n, ids);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEndQuery(target:Number)
@@ -9208,14 +9210,14 @@ Gurax_DeclareFunctionAlias(glEndQuery_gurax, "glEndQuery")
 		"");
 }
 
-Gurax_ImplementFunction(glEndQuery_gurax)
+Gurax_ImplementFunctionEx(glEndQuery_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glEndQuery(target);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glGenBuffers(n:Number)
@@ -9228,11 +9230,11 @@ Gurax_DeclareFunctionAlias(glGenBuffers_gurax, "glGenBuffers")
 		"");
 }
 
-Gurax_ImplementFunction(glGenBuffers_gurax)
+Gurax_ImplementFunctionEx(glGenBuffers_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	std::unique_ptr<GLuint []> buffers(new GLuint [n]);
 	glGenBuffers(n, buffers.get());
@@ -9249,11 +9251,11 @@ Gurax_DeclareFunctionAlias(glGenQueries_gurax, "glGenQueries")
 		"");
 }
 
-Gurax_ImplementFunction(glGenQueries_gurax)
+Gurax_ImplementFunctionEx(glGenQueries_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	std::unique_ptr<GLuint []> ids(new GLuint [n]);
 	glGenQueries(n, ids.get());
@@ -9270,14 +9272,14 @@ Gurax_DeclareFunctionAlias(glIsBuffer_gurax, "glIsBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glIsBuffer_gurax)
+Gurax_ImplementFunctionEx(glIsBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buffer = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsBuffer(buffer);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glIsQuery(id:Number)
@@ -9290,14 +9292,14 @@ Gurax_DeclareFunctionAlias(glIsQuery_gurax, "glIsQuery")
 		"");
 }
 
-Gurax_ImplementFunction(glIsQuery_gurax)
+Gurax_ImplementFunctionEx(glIsQuery_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint id = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsQuery(id);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glUnmapBuffer(target:Number)
@@ -9310,14 +9312,14 @@ Gurax_DeclareFunctionAlias(glUnmapBuffer_gurax, "glUnmapBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glUnmapBuffer_gurax)
+Gurax_ImplementFunctionEx(glUnmapBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
 	// Function body
 	GLboolean rtn = glUnmapBuffer(target);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glAttachShader(program:Number, shader:Number)
@@ -9331,15 +9333,15 @@ Gurax_DeclareFunctionAlias(glAttachShader_gurax, "glAttachShader")
 		"");
 }
 
-Gurax_ImplementFunction(glAttachShader_gurax)
+Gurax_ImplementFunctionEx(glAttachShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
-	GLuint shader = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint shader = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glAttachShader(program, shader);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendEquationSeparate(modeRGB:Number, modeAlpha:Number)
@@ -9353,15 +9355,15 @@ Gurax_DeclareFunctionAlias(glBlendEquationSeparate_gurax, "glBlendEquationSepara
 		"");
 }
 
-Gurax_ImplementFunction(glBlendEquationSeparate_gurax)
+Gurax_ImplementFunctionEx(glBlendEquationSeparate_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum modeRGB = args.PickNumber<GLenum>();
-	GLenum modeAlpha = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum modeRGB = args_gurax.PickNumber<GLenum>();
+	GLenum modeAlpha = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendEquationSeparate(modeRGB, modeAlpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCompileShader(shader:Number)
@@ -9374,14 +9376,14 @@ Gurax_DeclareFunctionAlias(glCompileShader_gurax, "glCompileShader")
 		"");
 }
 
-Gurax_ImplementFunction(glCompileShader_gurax)
+Gurax_ImplementFunctionEx(glCompileShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint shader = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint shader = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glCompileShader(shader);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glCreateProgram()
@@ -9393,11 +9395,11 @@ Gurax_DeclareFunctionAlias(glCreateProgram_gurax, "glCreateProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glCreateProgram_gurax)
+Gurax_ImplementFunctionEx(glCreateProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	GLuint rtn = glCreateProgram();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glCreateShader(type:Number)
@@ -9410,14 +9412,14 @@ Gurax_DeclareFunctionAlias(glCreateShader_gurax, "glCreateShader")
 		"");
 }
 
-Gurax_ImplementFunction(glCreateShader_gurax)
+Gurax_ImplementFunctionEx(glCreateShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum type = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum type = args_gurax.PickNumber<GLenum>();
 	// Function body
 	GLuint rtn = glCreateShader(type);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glDeleteProgram(program:Number)
@@ -9430,14 +9432,14 @@ Gurax_DeclareFunctionAlias(glDeleteProgram_gurax, "glDeleteProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteProgram_gurax)
+Gurax_ImplementFunctionEx(glDeleteProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glDeleteProgram(program);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDeleteShader(shader:Number)
@@ -9450,14 +9452,14 @@ Gurax_DeclareFunctionAlias(glDeleteShader_gurax, "glDeleteShader")
 		"");
 }
 
-Gurax_ImplementFunction(glDeleteShader_gurax)
+Gurax_ImplementFunctionEx(glDeleteShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint shader = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint shader = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glDeleteShader(shader);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDetachShader(program:Number, shader:Number)
@@ -9471,15 +9473,15 @@ Gurax_DeclareFunctionAlias(glDetachShader_gurax, "glDetachShader")
 		"");
 }
 
-Gurax_ImplementFunction(glDetachShader_gurax)
+Gurax_ImplementFunctionEx(glDetachShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
-	GLuint shader = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint shader = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glDetachShader(program, shader);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDisableVertexAttribArray(index:Number)
@@ -9492,14 +9494,14 @@ Gurax_DeclareFunctionAlias(glDisableVertexAttribArray_gurax, "glDisableVertexAtt
 		"");
 }
 
-Gurax_ImplementFunction(glDisableVertexAttribArray_gurax)
+Gurax_ImplementFunctionEx(glDisableVertexAttribArray_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glDisableVertexAttribArray(index);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawBuffers(n:Number, bufs[]:Number)
@@ -9513,15 +9515,15 @@ Gurax_DeclareFunctionAlias(glDrawBuffers_gurax, "glDrawBuffers")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawBuffers_gurax)
+Gurax_ImplementFunctionEx(glDrawBuffers_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLsizei n = args.PickNumber<GLsizei>();
-	auto bufs = args.PickNumList<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	auto bufs = args_gurax.PickNumList<GLenum>();
 	// Function body
 	glDrawBuffers(n, bufs);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEnableVertexAttribArray(index:Number)
@@ -9534,14 +9536,14 @@ Gurax_DeclareFunctionAlias(glEnableVertexAttribArray_gurax, "glEnableVertexAttri
 		"");
 }
 
-Gurax_ImplementFunction(glEnableVertexAttribArray_gurax)
+Gurax_ImplementFunctionEx(glEnableVertexAttribArray_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glEnableVertexAttribArray(index);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIsProgram(program:Number)
@@ -9554,14 +9556,14 @@ Gurax_DeclareFunctionAlias(glIsProgram_gurax, "glIsProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glIsProgram_gurax)
+Gurax_ImplementFunctionEx(glIsProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsProgram(program);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glIsShader(shader:Number)
@@ -9574,14 +9576,14 @@ Gurax_DeclareFunctionAlias(glIsShader_gurax, "glIsShader")
 		"");
 }
 
-Gurax_ImplementFunction(glIsShader_gurax)
+Gurax_ImplementFunctionEx(glIsShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint shader = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint shader = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsShader(shader);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glLinkProgram(program:Number)
@@ -9594,14 +9596,14 @@ Gurax_DeclareFunctionAlias(glLinkProgram_gurax, "glLinkProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glLinkProgram_gurax)
+Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glLinkProgram(program);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilFuncSeparate(frontfunc:Number, backfunc:Number, ref:Number, mask:Number)
@@ -9617,17 +9619,17 @@ Gurax_DeclareFunctionAlias(glStencilFuncSeparate_gurax, "glStencilFuncSeparate")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilFuncSeparate_gurax)
+Gurax_ImplementFunctionEx(glStencilFuncSeparate_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum frontfunc = args.PickNumber<GLenum>();
-	GLenum backfunc = args.PickNumber<GLenum>();
-	GLint ref = args.PickNumber<GLint>();
-	GLuint mask = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum frontfunc = args_gurax.PickNumber<GLenum>();
+	GLenum backfunc = args_gurax.PickNumber<GLenum>();
+	GLint ref = args_gurax.PickNumber<GLint>();
+	GLuint mask = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glStencilFuncSeparate(frontfunc, backfunc, ref, mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilMaskSeparate(face:Number, mask:Number)
@@ -9641,15 +9643,15 @@ Gurax_DeclareFunctionAlias(glStencilMaskSeparate_gurax, "glStencilMaskSeparate")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilMaskSeparate_gurax)
+Gurax_ImplementFunctionEx(glStencilMaskSeparate_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLuint mask = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLuint mask = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glStencilMaskSeparate(face, mask);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glStencilOpSeparate(face:Number, sfail:Number, dpfail:Number, dppass:Number)
@@ -9665,17 +9667,17 @@ Gurax_DeclareFunctionAlias(glStencilOpSeparate_gurax, "glStencilOpSeparate")
 		"");
 }
 
-Gurax_ImplementFunction(glStencilOpSeparate_gurax)
+Gurax_ImplementFunctionEx(glStencilOpSeparate_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum face = args.PickNumber<GLenum>();
-	GLenum sfail = args.PickNumber<GLenum>();
-	GLenum dpfail = args.PickNumber<GLenum>();
-	GLenum dppass = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum face = args_gurax.PickNumber<GLenum>();
+	GLenum sfail = args_gurax.PickNumber<GLenum>();
+	GLenum dpfail = args_gurax.PickNumber<GLenum>();
+	GLenum dppass = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glStencilOpSeparate(face, sfail, dpfail, dppass);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1f(location:Number, v0:Number)
@@ -9689,15 +9691,15 @@ Gurax_DeclareFunctionAlias(glUniform1f_gurax, "glUniform1f")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1f_gurax)
+Gurax_ImplementFunctionEx(glUniform1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLfloat v0 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLfloat v0 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glUniform1f(location, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1fv(location:Number, count:Number, value[]:Number)
@@ -9712,16 +9714,16 @@ Gurax_DeclareFunctionAlias(glUniform1fv_gurax, "glUniform1fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1fv_gurax)
+Gurax_ImplementFunctionEx(glUniform1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniform1fv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1i(location:Number, v0:Number)
@@ -9735,15 +9737,15 @@ Gurax_DeclareFunctionAlias(glUniform1i_gurax, "glUniform1i")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1i_gurax)
+Gurax_ImplementFunctionEx(glUniform1i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLint v0 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glUniform1i(location, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1iv(location:Number, count:Number, value[]:Number)
@@ -9758,16 +9760,16 @@ Gurax_DeclareFunctionAlias(glUniform1iv_gurax, "glUniform1iv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1iv_gurax)
+Gurax_ImplementFunctionEx(glUniform1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLint>();
 	// Function body
 	glUniform1iv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2f(location:Number, v0:Number, v1:Number)
@@ -9782,16 +9784,16 @@ Gurax_DeclareFunctionAlias(glUniform2f_gurax, "glUniform2f")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2f_gurax)
+Gurax_ImplementFunctionEx(glUniform2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLfloat v0 = args.PickNumber<GLfloat>();
-	GLfloat v1 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLfloat v0 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v1 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glUniform2f(location, v0, v1);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2fv(location:Number, count:Number, value[]:Number)
@@ -9806,16 +9808,16 @@ Gurax_DeclareFunctionAlias(glUniform2fv_gurax, "glUniform2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2fv_gurax)
+Gurax_ImplementFunctionEx(glUniform2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniform2fv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2i(location:Number, v0:Number, v1:Number)
@@ -9830,16 +9832,16 @@ Gurax_DeclareFunctionAlias(glUniform2i_gurax, "glUniform2i")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2i_gurax)
+Gurax_ImplementFunctionEx(glUniform2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glUniform2i(location, v0, v1);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2iv(location:Number, count:Number, value[]:Number)
@@ -9854,16 +9856,16 @@ Gurax_DeclareFunctionAlias(glUniform2iv_gurax, "glUniform2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2iv_gurax)
+Gurax_ImplementFunctionEx(glUniform2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLint>();
 	// Function body
 	glUniform2iv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3f(location:Number, v0:Number, v1:Number, v2:Number)
@@ -9879,17 +9881,17 @@ Gurax_DeclareFunctionAlias(glUniform3f_gurax, "glUniform3f")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3f_gurax)
+Gurax_ImplementFunctionEx(glUniform3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLfloat v0 = args.PickNumber<GLfloat>();
-	GLfloat v1 = args.PickNumber<GLfloat>();
-	GLfloat v2 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLfloat v0 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glUniform3f(location, v0, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3fv(location:Number, count:Number, value[]:Number)
@@ -9904,16 +9906,16 @@ Gurax_DeclareFunctionAlias(glUniform3fv_gurax, "glUniform3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3fv_gurax)
+Gurax_ImplementFunctionEx(glUniform3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniform3fv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3i(location:Number, v0:Number, v1:Number, v2:Number)
@@ -9929,17 +9931,17 @@ Gurax_DeclareFunctionAlias(glUniform3i_gurax, "glUniform3i")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3i_gurax)
+Gurax_ImplementFunctionEx(glUniform3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
-	GLint v2 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
+	GLint v2 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glUniform3i(location, v0, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3iv(location:Number, count:Number, value[]:Number)
@@ -9954,16 +9956,16 @@ Gurax_DeclareFunctionAlias(glUniform3iv_gurax, "glUniform3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3iv_gurax)
+Gurax_ImplementFunctionEx(glUniform3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLint>();
 	// Function body
 	glUniform3iv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4f(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
@@ -9980,18 +9982,18 @@ Gurax_DeclareFunctionAlias(glUniform4f_gurax, "glUniform4f")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4f_gurax)
+Gurax_ImplementFunctionEx(glUniform4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLfloat v0 = args.PickNumber<GLfloat>();
-	GLfloat v1 = args.PickNumber<GLfloat>();
-	GLfloat v2 = args.PickNumber<GLfloat>();
-	GLfloat v3 = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLfloat v0 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v1 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
+	GLfloat v3 = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glUniform4f(location, v0, v1, v2, v3);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4fv(location:Number, count:Number, value[]:Number)
@@ -10006,16 +10008,16 @@ Gurax_DeclareFunctionAlias(glUniform4fv_gurax, "glUniform4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4fv_gurax)
+Gurax_ImplementFunctionEx(glUniform4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniform4fv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4i(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
@@ -10032,18 +10034,18 @@ Gurax_DeclareFunctionAlias(glUniform4i_gurax, "glUniform4i")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4i_gurax)
+Gurax_ImplementFunctionEx(glUniform4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
-	GLint v2 = args.PickNumber<GLint>();
-	GLint v3 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
+	GLint v2 = args_gurax.PickNumber<GLint>();
+	GLint v3 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glUniform4i(location, v0, v1, v2, v3);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4iv(location:Number, count:Number, value[]:Number)
@@ -10058,16 +10060,16 @@ Gurax_DeclareFunctionAlias(glUniform4iv_gurax, "glUniform4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4iv_gurax)
+Gurax_ImplementFunctionEx(glUniform4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLint>();
 	// Function body
 	glUniform4iv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix2fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -10083,17 +10085,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2fv_gurax, "glUniformMatrix2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix2fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix2fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix3fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -10109,17 +10111,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3fv_gurax, "glUniformMatrix3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix3fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix3fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix4fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -10135,17 +10137,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4fv_gurax, "glUniformMatrix4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix4fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix4fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUseProgram(program:Number)
@@ -10158,14 +10160,14 @@ Gurax_DeclareFunctionAlias(glUseProgram_gurax, "glUseProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glUseProgram_gurax)
+Gurax_ImplementFunctionEx(glUseProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glUseProgram(program);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glValidateProgram(program:Number)
@@ -10178,14 +10180,14 @@ Gurax_DeclareFunctionAlias(glValidateProgram_gurax, "glValidateProgram")
 		"");
 }
 
-Gurax_ImplementFunction(glValidateProgram_gurax)
+Gurax_ImplementFunctionEx(glValidateProgram_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint program = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glValidateProgram(program);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1d(index:Number, x:Number)
@@ -10199,15 +10201,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1d_gurax, "glVertexAttrib1d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1d_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLdouble x = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertexAttrib1d(index, x);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1dv(index:Number, v[]:Number)
@@ -10221,15 +10223,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1dv_gurax, "glVertexAttrib1dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1dv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertexAttrib1dv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1f(index:Number, x:Number)
@@ -10243,15 +10245,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1f_gurax, "glVertexAttrib1f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1f_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLfloat x = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertexAttrib1f(index, x);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1fv(index:Number, v[]:Number)
@@ -10265,15 +10267,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1fv_gurax, "glVertexAttrib1fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1fv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertexAttrib1fv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1s(index:Number, x:Number)
@@ -10287,15 +10289,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1s_gurax, "glVertexAttrib1s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1s_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLshort x = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLshort x = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertexAttrib1s(index, x);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib1sv(index:Number, v[]:Number)
@@ -10309,15 +10311,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1sv_gurax, "glVertexAttrib1sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib1sv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib1sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttrib1sv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2d(index:Number, x:Number, y:Number)
@@ -10332,16 +10334,16 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2d_gurax, "glVertexAttrib2d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2d_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertexAttrib2d(index, x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2dv(index:Number, v[]:Number)
@@ -10355,15 +10357,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2dv_gurax, "glVertexAttrib2dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2dv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertexAttrib2dv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2f(index:Number, x:Number, y:Number)
@@ -10378,16 +10380,16 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2f_gurax, "glVertexAttrib2f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2f_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertexAttrib2f(index, x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2fv(index:Number, v[]:Number)
@@ -10401,15 +10403,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2fv_gurax, "glVertexAttrib2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2fv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertexAttrib2fv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2s(index:Number, x:Number, y:Number)
@@ -10424,16 +10426,16 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2s_gurax, "glVertexAttrib2s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2s_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertexAttrib2s(index, x, y);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib2sv(index:Number, v[]:Number)
@@ -10447,15 +10449,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2sv_gurax, "glVertexAttrib2sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib2sv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttrib2sv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3d(index:Number, x:Number, y:Number, z:Number)
@@ -10471,17 +10473,17 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3d_gurax, "glVertexAttrib3d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3d_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertexAttrib3d(index, x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3dv(index:Number, v[]:Number)
@@ -10495,15 +10497,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3dv_gurax, "glVertexAttrib3dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3dv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertexAttrib3dv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3f(index:Number, x:Number, y:Number, z:Number)
@@ -10519,17 +10521,17 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3f_gurax, "glVertexAttrib3f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3f_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertexAttrib3f(index, x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3fv(index:Number, v[]:Number)
@@ -10543,15 +10545,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3fv_gurax, "glVertexAttrib3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3fv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertexAttrib3fv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3s(index:Number, x:Number, y:Number, z:Number)
@@ -10567,17 +10569,17 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3s_gurax, "glVertexAttrib3s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3s_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertexAttrib3s(index, x, y, z);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib3sv(index:Number, v[]:Number)
@@ -10591,15 +10593,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3sv_gurax, "glVertexAttrib3sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib3sv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttrib3sv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nbv(index:Number, v[]:Number)
@@ -10613,15 +10615,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nbv_gurax, "glVertexAttrib4Nbv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nbv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nbv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glVertexAttrib4Nbv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Niv(index:Number, v[]:Number)
@@ -10635,15 +10637,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Niv_gurax, "glVertexAttrib4Niv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Niv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Niv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttrib4Niv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nsv(index:Number, v[]:Number)
@@ -10657,15 +10659,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nsv_gurax, "glVertexAttrib4Nsv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nsv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttrib4Nsv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nub(index:Number, x:Number, y:Number, z:Number, w:Number)
@@ -10682,18 +10684,18 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nub_gurax, "glVertexAttrib4Nub")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nub_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nub_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLubyte x = args.PickNumber<GLubyte>();
-	GLubyte y = args.PickNumber<GLubyte>();
-	GLubyte z = args.PickNumber<GLubyte>();
-	GLubyte w = args.PickNumber<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLubyte x = args_gurax.PickNumber<GLubyte>();
+	GLubyte y = args_gurax.PickNumber<GLubyte>();
+	GLubyte z = args_gurax.PickNumber<GLubyte>();
+	GLubyte w = args_gurax.PickNumber<GLubyte>();
 	// Function body
 	glVertexAttrib4Nub(index, x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nubv(index:Number, v[]:Number)
@@ -10707,15 +10709,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nubv_gurax, "glVertexAttrib4Nubv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nubv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glVertexAttrib4Nubv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nuiv(index:Number, v[]:Number)
@@ -10729,15 +10731,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nuiv_gurax, "glVertexAttrib4Nuiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nuiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nuiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttrib4Nuiv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4Nusv(index:Number, v[]:Number)
@@ -10751,15 +10753,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nusv_gurax, "glVertexAttrib4Nusv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4Nusv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4Nusv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glVertexAttrib4Nusv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4bv(index:Number, v[]:Number)
@@ -10773,15 +10775,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4bv_gurax, "glVertexAttrib4bv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4bv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glVertexAttrib4bv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4d(index:Number, x:Number, y:Number, z:Number, w:Number)
@@ -10798,18 +10800,18 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4d_gurax, "glVertexAttrib4d")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4d_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4d_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLdouble x = args.PickNumber<GLdouble>();
-	GLdouble y = args.PickNumber<GLdouble>();
-	GLdouble z = args.PickNumber<GLdouble>();
-	GLdouble w = args.PickNumber<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble z = args_gurax.PickNumber<GLdouble>();
+	GLdouble w = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	glVertexAttrib4d(index, x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4dv(index:Number, v[]:Number)
@@ -10823,15 +10825,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4dv_gurax, "glVertexAttrib4dv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4dv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLdouble>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLdouble>();
 	// Function body
 	glVertexAttrib4dv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4f(index:Number, x:Number, y:Number, z:Number, w:Number)
@@ -10848,18 +10850,18 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4f_gurax, "glVertexAttrib4f")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4f_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4f_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLfloat x = args.PickNumber<GLfloat>();
-	GLfloat y = args.PickNumber<GLfloat>();
-	GLfloat z = args.PickNumber<GLfloat>();
-	GLfloat w = args.PickNumber<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLfloat x = args_gurax.PickNumber<GLfloat>();
+	GLfloat y = args_gurax.PickNumber<GLfloat>();
+	GLfloat z = args_gurax.PickNumber<GLfloat>();
+	GLfloat w = args_gurax.PickNumber<GLfloat>();
 	// Function body
 	glVertexAttrib4f(index, x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4fv(index:Number, v[]:Number)
@@ -10873,15 +10875,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4fv_gurax, "glVertexAttrib4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4fv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glVertexAttrib4fv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4iv(index:Number, v[]:Number)
@@ -10895,15 +10897,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4iv_gurax, "glVertexAttrib4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4iv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttrib4iv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4s(index:Number, x:Number, y:Number, z:Number, w:Number)
@@ -10920,18 +10922,18 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4s_gurax, "glVertexAttrib4s")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4s_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4s_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLshort x = args.PickNumber<GLshort>();
-	GLshort y = args.PickNumber<GLshort>();
-	GLshort z = args.PickNumber<GLshort>();
-	GLshort w = args.PickNumber<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLshort x = args_gurax.PickNumber<GLshort>();
+	GLshort y = args_gurax.PickNumber<GLshort>();
+	GLshort z = args_gurax.PickNumber<GLshort>();
+	GLshort w = args_gurax.PickNumber<GLshort>();
 	// Function body
 	glVertexAttrib4s(index, x, y, z, w);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4sv(index:Number, v[]:Number)
@@ -10945,15 +10947,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4sv_gurax, "glVertexAttrib4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4sv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttrib4sv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4ubv(index:Number, v[]:Number)
@@ -10967,15 +10969,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4ubv_gurax, "glVertexAttrib4ubv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4ubv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glVertexAttrib4ubv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4uiv(index:Number, v[]:Number)
@@ -10989,15 +10991,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4uiv_gurax, "glVertexAttrib4uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4uiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttrib4uiv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttrib4usv(index:Number, v[]:Number)
@@ -11011,15 +11013,15 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4usv_gurax, "glVertexAttrib4usv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttrib4usv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glVertexAttrib4usv(index, v);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribPointer(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Pointer)
@@ -11037,19 +11039,19 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribPointer_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint size = args.PickNumber<GLint>();
-	GLenum type = args.PickNumber<GLenum>();
-	GLboolean normalized = static_cast<GLboolean>(args.PickBool());
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix2x3fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11065,17 +11067,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x3fv_gurax, "glUniformMatrix2x3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix2x3fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix2x3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix2x3fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix2x4fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11091,17 +11093,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x4fv_gurax, "glUniformMatrix2x4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix2x4fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix2x4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix2x4fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix3x2fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11117,17 +11119,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x2fv_gurax, "glUniformMatrix3x2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix3x2fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix3x2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix3x2fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix3x4fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11143,17 +11145,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x4fv_gurax, "glUniformMatrix3x4fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix3x4fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix3x4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix3x4fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix4x2fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11169,17 +11171,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x2fv_gurax, "glUniformMatrix4x2fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix4x2fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix4x2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix4x2fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniformMatrix4x3fv(location:Number, count:Number, transpose:Bool, value[]:Number)
@@ -11195,17 +11197,17 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x3fv_gurax, "glUniformMatrix4x3fv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniformMatrix4x3fv_gurax)
+Gurax_ImplementFunctionEx(glUniformMatrix4x3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLboolean transpose = static_cast<GLboolean>(args.PickBool());
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glUniformMatrix4x3fv(location, count, transpose, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBeginConditionalRender(id:Number, mode:Number)
@@ -11219,15 +11221,15 @@ Gurax_DeclareFunctionAlias(glBeginConditionalRender_gurax, "glBeginConditionalRe
 		"");
 }
 
-Gurax_ImplementFunction(glBeginConditionalRender_gurax)
+Gurax_ImplementFunctionEx(glBeginConditionalRender_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint id = args.PickNumber<GLuint>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBeginConditionalRender(id, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBeginTransformFeedback(primitiveMode:Number)
@@ -11240,14 +11242,14 @@ Gurax_DeclareFunctionAlias(glBeginTransformFeedback_gurax, "glBeginTransformFeed
 		"");
 }
 
-Gurax_ImplementFunction(glBeginTransformFeedback_gurax)
+Gurax_ImplementFunctionEx(glBeginTransformFeedback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum primitiveMode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum primitiveMode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBeginTransformFeedback(primitiveMode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClampColor(target:Number, clamp:Number)
@@ -11261,15 +11263,15 @@ Gurax_DeclareFunctionAlias(glClampColor_gurax, "glClampColor")
 		"");
 }
 
-Gurax_ImplementFunction(glClampColor_gurax)
+Gurax_ImplementFunctionEx(glClampColor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum clamp = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum clamp = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glClampColor(target, clamp);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearBufferfi(buffer:Number, drawBuffer:Number, depth:Number, stencil:Number)
@@ -11285,17 +11287,17 @@ Gurax_DeclareFunctionAlias(glClearBufferfi_gurax, "glClearBufferfi")
 		"");
 }
 
-Gurax_ImplementFunction(glClearBufferfi_gurax)
+Gurax_ImplementFunctionEx(glClearBufferfi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum buffer = args.PickNumber<GLenum>();
-	GLint drawBuffer = args.PickNumber<GLint>();
-	GLfloat depth = args.PickNumber<GLfloat>();
-	GLint stencil = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawBuffer = args_gurax.PickNumber<GLint>();
+	GLfloat depth = args_gurax.PickNumber<GLfloat>();
+	GLint stencil = args_gurax.PickNumber<GLint>();
 	// Function body
 	glClearBufferfi(buffer, drawBuffer, depth, stencil);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearBufferfv(buffer:Number, drawBuffer:Number, value[]:Number)
@@ -11310,16 +11312,16 @@ Gurax_DeclareFunctionAlias(glClearBufferfv_gurax, "glClearBufferfv")
 		"");
 }
 
-Gurax_ImplementFunction(glClearBufferfv_gurax)
+Gurax_ImplementFunctionEx(glClearBufferfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum buffer = args.PickNumber<GLenum>();
-	GLint drawBuffer = args.PickNumber<GLint>();
-	auto value = args.PickNumList<GLfloat>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawBuffer = args_gurax.PickNumber<GLint>();
+	auto value = args_gurax.PickNumList<GLfloat>();
 	// Function body
 	glClearBufferfv(buffer, drawBuffer, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearBufferiv(buffer:Number, drawBuffer:Number, value[]:Number)
@@ -11334,16 +11336,16 @@ Gurax_DeclareFunctionAlias(glClearBufferiv_gurax, "glClearBufferiv")
 		"");
 }
 
-Gurax_ImplementFunction(glClearBufferiv_gurax)
+Gurax_ImplementFunctionEx(glClearBufferiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum buffer = args.PickNumber<GLenum>();
-	GLint drawBuffer = args.PickNumber<GLint>();
-	auto value = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawBuffer = args_gurax.PickNumber<GLint>();
+	auto value = args_gurax.PickNumList<GLint>();
 	// Function body
 	glClearBufferiv(buffer, drawBuffer, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glClearBufferuiv(buffer:Number, drawBuffer:Number, value[]:Number)
@@ -11358,16 +11360,16 @@ Gurax_DeclareFunctionAlias(glClearBufferuiv_gurax, "glClearBufferuiv")
 		"");
 }
 
-Gurax_ImplementFunction(glClearBufferuiv_gurax)
+Gurax_ImplementFunctionEx(glClearBufferuiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum buffer = args.PickNumber<GLenum>();
-	GLint drawBuffer = args.PickNumber<GLint>();
-	auto value = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawBuffer = args_gurax.PickNumber<GLint>();
+	auto value = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glClearBufferuiv(buffer, drawBuffer, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glColorMaski(buf:Number, red:Bool, green:Bool, blue:Bool, alpha:Bool)
@@ -11384,18 +11386,18 @@ Gurax_DeclareFunctionAlias(glColorMaski_gurax, "glColorMaski")
 		"");
 }
 
-Gurax_ImplementFunction(glColorMaski_gurax)
+Gurax_ImplementFunctionEx(glColorMaski_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buf = args.PickNumber<GLuint>();
-	GLboolean red = static_cast<GLboolean>(args.PickBool());
-	GLboolean green = static_cast<GLboolean>(args.PickBool());
-	GLboolean blue = static_cast<GLboolean>(args.PickBool());
-	GLboolean alpha = static_cast<GLboolean>(args.PickBool());
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buf = args_gurax.PickNumber<GLuint>();
+	GLboolean red = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean green = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean blue = static_cast<GLboolean>(args_gurax.PickBool());
+	GLboolean alpha = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glColorMaski(buf, red, green, blue, alpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDisablei(cap:Number, index:Number)
@@ -11409,15 +11411,15 @@ Gurax_DeclareFunctionAlias(glDisablei_gurax, "glDisablei")
 		"");
 }
 
-Gurax_ImplementFunction(glDisablei_gurax)
+Gurax_ImplementFunctionEx(glDisablei_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
-	GLuint index = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glDisablei(cap, index);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEnablei(cap:Number, index:Number)
@@ -11431,15 +11433,15 @@ Gurax_DeclareFunctionAlias(glEnablei_gurax, "glEnablei")
 		"");
 }
 
-Gurax_ImplementFunction(glEnablei_gurax)
+Gurax_ImplementFunctionEx(glEnablei_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
-	GLuint index = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glEnablei(cap, index);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEndConditionalRender()
@@ -11451,11 +11453,11 @@ Gurax_DeclareFunctionAlias(glEndConditionalRender_gurax, "glEndConditionalRender
 		"");
 }
 
-Gurax_ImplementFunction(glEndConditionalRender_gurax)
+Gurax_ImplementFunctionEx(glEndConditionalRender_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glEndConditionalRender();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glEndTransformFeedback()
@@ -11467,11 +11469,11 @@ Gurax_DeclareFunctionAlias(glEndTransformFeedback_gurax, "glEndTransformFeedback
 		"");
 }
 
-Gurax_ImplementFunction(glEndTransformFeedback_gurax)
+Gurax_ImplementFunctionEx(glEndTransformFeedback_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glEndTransformFeedback();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glIsEnabledi(cap:Number, index:Number)
@@ -11485,15 +11487,15 @@ Gurax_DeclareFunctionAlias(glIsEnabledi_gurax, "glIsEnabledi")
 		"");
 }
 
-Gurax_ImplementFunction(glIsEnabledi_gurax)
+Gurax_ImplementFunctionEx(glIsEnabledi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum cap = args.PickNumber<GLenum>();
-	GLuint index = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum cap = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
 	// Function body
 	GLboolean rtn = glIsEnabledi(cap, index);
-	return new Value_Bool(!!rtn);
+	return new Gurax::Value_Bool(!!rtn);
 }
 
 // opengl.glTexParameterIiv(target:Number, pname:Number, params[]:Number)
@@ -11508,16 +11510,16 @@ Gurax_DeclareFunctionAlias(glTexParameterIiv_gurax, "glTexParameterIiv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterIiv_gurax)
+Gurax_ImplementFunctionEx(glTexParameterIiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLint>();
 	// Function body
 	glTexParameterIiv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexParameterIuiv(target:Number, pname:Number, params[]:Number)
@@ -11532,16 +11534,16 @@ Gurax_DeclareFunctionAlias(glTexParameterIuiv_gurax, "glTexParameterIuiv")
 		"");
 }
 
-Gurax_ImplementFunction(glTexParameterIuiv_gurax)
+Gurax_ImplementFunctionEx(glTexParameterIuiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum pname = args.PickNumber<GLenum>();
-	auto params = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	auto params = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glTexParameterIuiv(target, pname, params);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1ui(location:Number, v0:Number)
@@ -11555,15 +11557,15 @@ Gurax_DeclareFunctionAlias(glUniform1ui_gurax, "glUniform1ui")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1ui_gurax)
+Gurax_ImplementFunctionEx(glUniform1ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLuint v0 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glUniform1ui(location, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform1uiv(location:Number, count:Number, value[]:Number)
@@ -11578,16 +11580,16 @@ Gurax_DeclareFunctionAlias(glUniform1uiv_gurax, "glUniform1uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform1uiv_gurax)
+Gurax_ImplementFunctionEx(glUniform1uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glUniform1uiv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2ui(location:Number, v0:Number, v1:Number)
@@ -11602,16 +11604,16 @@ Gurax_DeclareFunctionAlias(glUniform2ui_gurax, "glUniform2ui")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2ui_gurax)
+Gurax_ImplementFunctionEx(glUniform2ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glUniform2ui(location, v0, v1);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform2uiv(location:Number, count:Number, value[]:Number)
@@ -11626,16 +11628,16 @@ Gurax_DeclareFunctionAlias(glUniform2uiv_gurax, "glUniform2uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform2uiv_gurax)
+Gurax_ImplementFunctionEx(glUniform2uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glUniform2uiv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3ui(location:Number, v0:Number, v1:Number, v2:Number)
@@ -11651,17 +11653,17 @@ Gurax_DeclareFunctionAlias(glUniform3ui_gurax, "glUniform3ui")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3ui_gurax)
+Gurax_ImplementFunctionEx(glUniform3ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
-	GLuint v2 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
+	GLuint v2 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glUniform3ui(location, v0, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform3uiv(location:Number, count:Number, value[]:Number)
@@ -11676,16 +11678,16 @@ Gurax_DeclareFunctionAlias(glUniform3uiv_gurax, "glUniform3uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform3uiv_gurax)
+Gurax_ImplementFunctionEx(glUniform3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glUniform3uiv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4ui(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
@@ -11702,18 +11704,18 @@ Gurax_DeclareFunctionAlias(glUniform4ui_gurax, "glUniform4ui")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4ui_gurax)
+Gurax_ImplementFunctionEx(glUniform4ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
-	GLuint v2 = args.PickNumber<GLuint>();
-	GLuint v3 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
+	GLuint v2 = args_gurax.PickNumber<GLuint>();
+	GLuint v3 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glUniform4ui(location, v0, v1, v2, v3);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glUniform4uiv(location:Number, count:Number, value[]:Number)
@@ -11728,16 +11730,16 @@ Gurax_DeclareFunctionAlias(glUniform4uiv_gurax, "glUniform4uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glUniform4uiv_gurax)
+Gurax_ImplementFunctionEx(glUniform4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLint location = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	auto value = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLint location = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto value = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glUniform4uiv(location, count, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI1i(index:Number, v0:Number)
@@ -11751,15 +11753,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1i_gurax, "glVertexAttribI1i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI1i_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI1i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint v0 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertexAttribI1i(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI1iv(index:Number, v0[]:Number)
@@ -11773,15 +11775,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1iv_gurax, "glVertexAttribI1iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI1iv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttribI1iv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI1ui(index:Number, v0:Number)
@@ -11795,15 +11797,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1ui_gurax, "glVertexAttribI1ui")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI1ui_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI1ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLuint v0 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glVertexAttribI1ui(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI1uiv(index:Number, v0[]:Number)
@@ -11817,15 +11819,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1uiv_gurax, "glVertexAttribI1uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI1uiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI1uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttribI1uiv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI2i(index:Number, v0:Number, v1:Number)
@@ -11840,16 +11842,16 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2i_gurax, "glVertexAttribI2i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI2i_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI2i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertexAttribI2i(index, v0, v1);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI2iv(index:Number, v0[]:Number)
@@ -11863,15 +11865,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2iv_gurax, "glVertexAttribI2iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI2iv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttribI2iv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI2ui(index:Number, v0:Number, v1:Number)
@@ -11886,16 +11888,16 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2ui_gurax, "glVertexAttribI2ui")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI2ui_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI2ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glVertexAttribI2ui(index, v0, v1);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI2uiv(index:Number, v0[]:Number)
@@ -11909,15 +11911,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2uiv_gurax, "glVertexAttribI2uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI2uiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI2uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttribI2uiv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI3i(index:Number, v0:Number, v1:Number, v2:Number)
@@ -11933,17 +11935,17 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3i_gurax, "glVertexAttribI3i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI3i_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI3i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
-	GLint v2 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
+	GLint v2 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertexAttribI3i(index, v0, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI3iv(index:Number, v0[]:Number)
@@ -11957,15 +11959,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3iv_gurax, "glVertexAttribI3iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI3iv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttribI3iv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI3ui(index:Number, v0:Number, v1:Number, v2:Number)
@@ -11981,17 +11983,17 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3ui_gurax, "glVertexAttribI3ui")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI3ui_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI3ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
-	GLuint v2 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
+	GLuint v2 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glVertexAttribI3ui(index, v0, v1, v2);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI3uiv(index:Number, v0[]:Number)
@@ -12005,15 +12007,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3uiv_gurax, "glVertexAttribI3uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI3uiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttribI3uiv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4bv(index:Number, v0[]:Number)
@@ -12027,15 +12029,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4bv_gurax, "glVertexAttribI4bv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4bv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLbyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLbyte>();
 	// Function body
 	glVertexAttribI4bv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4i(index:Number, v0:Number, v1:Number, v2:Number, v3:Number)
@@ -12052,18 +12054,18 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4i_gurax, "glVertexAttribI4i")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4i_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4i_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint v0 = args.PickNumber<GLint>();
-	GLint v1 = args.PickNumber<GLint>();
-	GLint v2 = args.PickNumber<GLint>();
-	GLint v3 = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint v0 = args_gurax.PickNumber<GLint>();
+	GLint v1 = args_gurax.PickNumber<GLint>();
+	GLint v2 = args_gurax.PickNumber<GLint>();
+	GLint v3 = args_gurax.PickNumber<GLint>();
 	// Function body
 	glVertexAttribI4i(index, v0, v1, v2, v3);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4iv(index:Number, v0[]:Number)
@@ -12077,15 +12079,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4iv_gurax, "glVertexAttribI4iv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4iv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLint>();
 	// Function body
 	glVertexAttribI4iv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4sv(index:Number, v0[]:Number)
@@ -12099,15 +12101,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4sv_gurax, "glVertexAttribI4sv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4sv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLshort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLshort>();
 	// Function body
 	glVertexAttribI4sv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4ubv(index:Number, v0[]:Number)
@@ -12121,15 +12123,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4ubv_gurax, "glVertexAttribI4ubv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4ubv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLubyte>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLubyte>();
 	// Function body
 	glVertexAttribI4ubv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4ui(index:Number, v0:Number, v1:Number, v2:Number, v3:Number)
@@ -12146,18 +12148,18 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4ui_gurax, "glVertexAttribI4ui")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4ui_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4ui_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLuint v0 = args.PickNumber<GLuint>();
-	GLuint v1 = args.PickNumber<GLuint>();
-	GLuint v2 = args.PickNumber<GLuint>();
-	GLuint v3 = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint v0 = args_gurax.PickNumber<GLuint>();
+	GLuint v1 = args_gurax.PickNumber<GLuint>();
+	GLuint v2 = args_gurax.PickNumber<GLuint>();
+	GLuint v3 = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glVertexAttribI4ui(index, v0, v1, v2, v3);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4uiv(index:Number, v0[]:Number)
@@ -12171,15 +12173,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4uiv_gurax, "glVertexAttribI4uiv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4uiv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glVertexAttribI4uiv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribI4usv(index:Number, v0[]:Number)
@@ -12193,15 +12195,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4usv_gurax, "glVertexAttribI4usv")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribI4usv_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribI4usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	auto v0 = args.PickNumList<GLushort>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	auto v0 = args_gurax.PickNumList<GLushort>();
 	// Function body
 	glVertexAttribI4usv(index, v0);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribIPointer(index:Number, size:Number, type:Number, stride:Number, pointer:Pointer)
@@ -12218,18 +12220,18 @@ Gurax_DeclareFunctionAlias(glVertexAttribIPointer_gurax, "glVertexAttribIPointer
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribIPointer_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribIPointer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLint size = args.PickNumber<GLint>();
-	GLenum type = args.PickNumber<GLenum>();
-	GLsizei stride = args.PickNumber<GLsizei>();
-	const void* pointer = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	const void* pointer = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
 	// Function body
 	glVertexAttribIPointer(index, size, type, stride, pointer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawArraysInstanced(mode:Number, first:Number, count:Number, primcount:Number)
@@ -12245,17 +12247,17 @@ Gurax_DeclareFunctionAlias(glDrawArraysInstanced_gurax, "glDrawArraysInstanced")
 		"");
 }
 
-Gurax_ImplementFunction(glDrawArraysInstanced_gurax)
+Gurax_ImplementFunctionEx(glDrawArraysInstanced_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLint first = args.PickNumber<GLint>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLsizei primcount = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLint first = args_gurax.PickNumber<GLint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDrawArraysInstanced(mode, first, count, primcount);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glDrawElementsInstanced(mode:Number, count:Number, type:Number, indices:Pointer, primcount:Number)
@@ -12272,18 +12274,18 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstanced_gurax, "glDrawElementsInstanc
 		"");
 }
 
-Gurax_ImplementFunction(glDrawElementsInstanced_gurax)
+Gurax_ImplementFunctionEx(glDrawElementsInstanced_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLsizei count = args.PickNumber<GLsizei>();
-	GLenum type = args.PickNumber<GLenum>();
-	const void* indices = args.Pick<Value_Pointer>().GetPointer().GetPointerC<const void*>();
-	GLsizei primcount = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* indices = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDrawElementsInstanced(mode, count, type, indices, primcount);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glPrimitiveRestartIndex(buffer:Number)
@@ -12296,14 +12298,14 @@ Gurax_DeclareFunctionAlias(glPrimitiveRestartIndex_gurax, "glPrimitiveRestartInd
 		"");
 }
 
-Gurax_ImplementFunction(glPrimitiveRestartIndex_gurax)
+Gurax_ImplementFunctionEx(glPrimitiveRestartIndex_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buffer = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glPrimitiveRestartIndex(buffer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glTexBuffer(target:Number, internalFormat:Number, buffer:Number)
@@ -12318,16 +12320,16 @@ Gurax_DeclareFunctionAlias(glTexBuffer_gurax, "glTexBuffer")
 		"");
 }
 
-Gurax_ImplementFunction(glTexBuffer_gurax)
+Gurax_ImplementFunctionEx(glTexBuffer_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum internalFormat = args.PickNumber<GLenum>();
-	GLuint buffer = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum internalFormat = args_gurax.PickNumber<GLenum>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glTexBuffer(target, internalFormat, buffer);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glFramebufferTexture(target:Number, attachment:Number, texture:Number, level:Number)
@@ -12343,17 +12345,17 @@ Gurax_DeclareFunctionAlias(glFramebufferTexture_gurax, "glFramebufferTexture")
 		"");
 }
 
-Gurax_ImplementFunction(glFramebufferTexture_gurax)
+Gurax_ImplementFunctionEx(glFramebufferTexture_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum target = args.PickNumber<GLenum>();
-	GLenum attachment = args.PickNumber<GLenum>();
-	GLuint texture = args.PickNumber<GLuint>();
-	GLint level = args.PickNumber<GLint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum attachment = args_gurax.PickNumber<GLenum>();
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
 	// Function body
 	glFramebufferTexture(target, attachment, texture, level);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glVertexAttribDivisor(index:Number, divisor:Number)
@@ -12367,15 +12369,15 @@ Gurax_DeclareFunctionAlias(glVertexAttribDivisor_gurax, "glVertexAttribDivisor")
 		"");
 }
 
-Gurax_ImplementFunction(glVertexAttribDivisor_gurax)
+Gurax_ImplementFunctionEx(glVertexAttribDivisor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint index = args.PickNumber<GLuint>();
-	GLuint divisor = args.PickNumber<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint divisor = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glVertexAttribDivisor(index, divisor);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendEquationSeparatei(buf:Number, modeRGB:Number, modeAlpha:Number)
@@ -12390,16 +12392,16 @@ Gurax_DeclareFunctionAlias(glBlendEquationSeparatei_gurax, "glBlendEquationSepar
 		"");
 }
 
-Gurax_ImplementFunction(glBlendEquationSeparatei_gurax)
+Gurax_ImplementFunctionEx(glBlendEquationSeparatei_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buf = args.PickNumber<GLuint>();
-	GLenum modeRGB = args.PickNumber<GLenum>();
-	GLenum modeAlpha = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buf = args_gurax.PickNumber<GLuint>();
+	GLenum modeRGB = args_gurax.PickNumber<GLenum>();
+	GLenum modeAlpha = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendEquationSeparatei(buf, modeRGB, modeAlpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendEquationi(buf:Number, mode:Number)
@@ -12413,15 +12415,15 @@ Gurax_DeclareFunctionAlias(glBlendEquationi_gurax, "glBlendEquationi")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendEquationi_gurax)
+Gurax_ImplementFunctionEx(glBlendEquationi_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buf = args.PickNumber<GLuint>();
-	GLenum mode = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buf = args_gurax.PickNumber<GLuint>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendEquationi(buf, mode);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendFuncSeparatei(buf:Number, srcRGB:Number, dstRGB:Number, srcAlpha:Number, dstAlpha:Number)
@@ -12438,18 +12440,18 @@ Gurax_DeclareFunctionAlias(glBlendFuncSeparatei_gurax, "glBlendFuncSeparatei")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendFuncSeparatei_gurax)
+Gurax_ImplementFunctionEx(glBlendFuncSeparatei_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buf = args.PickNumber<GLuint>();
-	GLenum srcRGB = args.PickNumber<GLenum>();
-	GLenum dstRGB = args.PickNumber<GLenum>();
-	GLenum srcAlpha = args.PickNumber<GLenum>();
-	GLenum dstAlpha = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buf = args_gurax.PickNumber<GLuint>();
+	GLenum srcRGB = args_gurax.PickNumber<GLenum>();
+	GLenum dstRGB = args_gurax.PickNumber<GLenum>();
+	GLenum srcAlpha = args_gurax.PickNumber<GLenum>();
+	GLenum dstAlpha = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendFuncSeparatei(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glBlendFunci(buf:Number, src:Number, dst:Number)
@@ -12464,16 +12466,16 @@ Gurax_DeclareFunctionAlias(glBlendFunci_gurax, "glBlendFunci")
 		"");
 }
 
-Gurax_ImplementFunction(glBlendFunci_gurax)
+Gurax_ImplementFunctionEx(glBlendFunci_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint buf = args.PickNumber<GLuint>();
-	GLenum src = args.PickNumber<GLenum>();
-	GLenum dst = args.PickNumber<GLenum>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buf = args_gurax.PickNumber<GLuint>();
+	GLenum src = args_gurax.PickNumber<GLenum>();
+	GLenum dst = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBlendFunci(buf, src, dst);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMinSampleShading(value:Number)
@@ -12486,14 +12488,14 @@ Gurax_DeclareFunctionAlias(glMinSampleShading_gurax, "glMinSampleShading")
 		"");
 }
 
-Gurax_ImplementFunction(glMinSampleShading_gurax)
+Gurax_ImplementFunctionEx(glMinSampleShading_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLclampf value = args.PickNumber<GLclampf>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLclampf value = args_gurax.PickNumber<GLclampf>();
 	// Function body
 	glMinSampleShading(value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glGetGraphicsResetStatus()
@@ -12505,11 +12507,11 @@ Gurax_DeclareFunctionAlias(glGetGraphicsResetStatus_gurax, "glGetGraphicsResetSt
 		"");
 }
 
-Gurax_ImplementFunction(glGetGraphicsResetStatus_gurax)
+Gurax_ImplementFunctionEx(glGetGraphicsResetStatus_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	GLenum rtn = glGetGraphicsResetStatus();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glMultiDrawArraysIndirectCount(mode:Number, indirect:Pointer, drawcount:Number, maxdrawcount:Number, stride:Number)
@@ -12526,18 +12528,18 @@ Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCount_gurax, "glMultiDrawArr
 		"");
 }
 
-Gurax_ImplementFunction(glMultiDrawArraysIndirectCount_gurax)
+Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCount_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
-	GLintptr drawcount = args.PickNumber<GLintptr>();
-	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
-	GLsizei stride = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	const GLvoid* indirect = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
+	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
+	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glMultiDrawArraysIndirectCount(mode, indirect, drawcount, maxdrawcount, stride);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glMultiDrawElementsIndirectCount(mode:Number, type:Number, indirect:Pointer, drawcount:Number, maxdrawcount:Number, stride:Number)
@@ -12555,19 +12557,19 @@ Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCount_gurax, "glMultiDrawE
 		"");
 }
 
-Gurax_ImplementFunction(glMultiDrawElementsIndirectCount_gurax)
+Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCount_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLenum mode = args.PickNumber<GLenum>();
-	GLenum type = args.PickNumber<GLenum>();
-	const GLvoid* indirect = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
-	GLintptr drawcount = args.PickNumber<GLintptr>();
-	GLsizei maxdrawcount = args.PickNumber<GLsizei>();
-	GLsizei stride = args.PickNumber<GLsizei>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const GLvoid* indirect = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
+	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
+	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glMultiDrawElementsIndirectCount(mode, type, indirect, drawcount, maxdrawcount, stride);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // opengl.glSpecializeShader(shader:Number, pEntryPoint[]:Number, numSpecializationConstants:Number, pConstantIndex[]:Number, pConstantValue[]:Number)
@@ -12584,18 +12586,18 @@ Gurax_DeclareFunctionAlias(glSpecializeShader_gurax, "glSpecializeShader")
 		"");
 }
 
-Gurax_ImplementFunction(glSpecializeShader_gurax)
+Gurax_ImplementFunctionEx(glSpecializeShader_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLuint shader = args.PickNumber<GLuint>();
-	auto pEntryPoint = args.PickNumList<GLchar>();
-	GLuint numSpecializationConstants = args.PickNumber<GLuint>();
-	auto pConstantIndex = args.PickNumList<GLuint>();
-	auto pConstantValue = args.PickNumList<GLuint>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint shader = args_gurax.PickNumber<GLuint>();
+	auto pEntryPoint = args_gurax.PickNumList<GLchar>();
+	GLuint numSpecializationConstants = args_gurax.PickNumber<GLuint>();
+	auto pConstantIndex = args_gurax.PickNumList<GLuint>();
+	auto pConstantValue = args_gurax.PickNumList<GLuint>();
 	// Function body
 	glSpecializeShader(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 void AssignFunctions(Frame& frame)
