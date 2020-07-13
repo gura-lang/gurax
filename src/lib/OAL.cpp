@@ -512,7 +512,7 @@ int OAL::ExecProgram(
 			::PeekNamedPipe(hStdoutWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
 			if (bytesAvail > 0) {
 				dataAvailFlag = true;
-				char* buff = pMemory->GetPointer<char>();
+				char* buff = pMemory->GetPointerC<char>();
 				DWORD bytesRead;
 				::ReadFile(hStdoutWatch, buff,
 					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);
@@ -524,7 +524,7 @@ int OAL::ExecProgram(
 			::PeekNamedPipe(hStderrWatch, nullptr, 0, nullptr, &bytesAvail, nullptr);
 			if (bytesAvail > 0) {
 				dataAvailFlag = true;
-				char* buff = pMemory->GetPointer<char>();
+				char* buff = pMemory->GetPointerC<char>();
 				DWORD bytesRead;
 				::ReadFile(hStderrWatch, buff,
 					static_cast<DWORD>(pMemory->GetBytes()), &bytesRead, nullptr);

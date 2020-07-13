@@ -98,7 +98,7 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image) const
 	}
 	std::unique_ptr<png_bytep[]> row_pointers(new png_bytep [height]);
 	for (size_t y = 0; y < static_cast<size_t>(height); y++) {
-		row_pointers[y] = reinterpret_cast<png_bytep>(image.GetPointer(0, y));
+		row_pointers[y] = reinterpret_cast<png_bytep>(image.GetPointerC(0, y));
 	}
 	::png_read_image(png_ptr, row_pointers.get());
 	::png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -152,7 +152,7 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image) const
 	::png_write_info(png_ptr, info_ptr);
 	::png_set_packing(png_ptr);		// pack pixels into bytes
 	::png_set_bgr(png_ptr);			// flip BGR pixel to RGB 
-	const UInt8* pRow = image.GetPointer();
+	const UInt8* pRow = image.GetPointerC();
 	for (size_t y = 0; y < static_cast<size_t>(height); y++, pRow += image.GetBytesPerLine()) {
 		::png_write_row(png_ptr, pRow);
 	}

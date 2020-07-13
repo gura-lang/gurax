@@ -163,9 +163,9 @@ public:
 		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
-		UInt8* GetPointer() const { return _p; }
-		UInt8* GetPointer(size_t x, size_t y) const {
-			return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+		UInt8* GetPointerC() const { return _p; }
+		UInt8* GetPointerC(size_t x, size_t y) const {
+			return GetPointerC() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 		}
 	public:
 		static void SetR(UInt8* p, UInt8 r) { *(p + offsetR) = r; }
@@ -287,7 +287,7 @@ public:
 		int _pitchRow;
 		bool _horzFlag;
 	public:
-		UInt8* GetPointer() const { return _p; }
+		UInt8* GetPointerC() const { return _p; }
 	public:
 		// Constructor
 		Scanner(const Metrics& metrics, UInt8* p, size_t x, size_t y,
@@ -443,16 +443,16 @@ public:
 	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
 		return _metrics.AdjustCoord(pRect, x, y, width, height);
 	}
-	UInt8* GetPointer() const { return _pMemory->GetPointer<UInt8>(); }
-	UInt8* GetPointer(size_t x, size_t y) const {
-		return GetPointer() + x * GetBytesPerPixel() + y * GetBytesPerLine();
+	UInt8* GetPointerC() const { return _pMemory->GetPointerC<UInt8>(); }
+	UInt8* GetPointerC(size_t x, size_t y) const {
+		return GetPointerC() + x * GetBytesPerPixel() + y * GetBytesPerLine();
 	}
 	size_t GetBytes() const { return _pMemory->GetBytes(); }
 	template<typename T_Pixel> T_Pixel MakePixel() const {
-		return T_Pixel(GetMetrics(), GetPointer());
+		return T_Pixel(GetMetrics(), GetPointerC());
 	}
 	template<typename T_Pixel> T_Pixel MakePixel(size_t x, size_t y) const {
-		return T_Pixel(GetMetrics(), GetPointer(x, y));
+		return T_Pixel(GetMetrics(), GetPointerC(x, y));
 	}
 	bool Read(Stream& stream, const char* imgTypeName = nullptr);
 	bool Write(Stream& stream, const char* imgTypeName) const;

@@ -65,7 +65,7 @@ UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRec
 		bytesBuff = EndOfCentralDirectoryRecord::MaxSize;
 	}
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
-	char* buff = pMemory->GetPointer<char>();
+	char* buff = pMemory->GetPointerC<char>();
 	streamSrc.Read(buff, bytesBuff);
 	if (Error::IsIssued()) return 0;
 	char* buffAnchor = nullptr;

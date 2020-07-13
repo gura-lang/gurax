@@ -90,26 +90,26 @@ bool Pointer_Memory::StorePrepare(size_t bytes)
 void Pointer_Memory::StoreBuffer(const void* buff, size_t bytes)
 {
 	size_t offsetNext = _offset + bytes;
-	if (buff) ::memcpy(GetMemory().GetPointer<char>(_offset), buff, bytes);
+	if (buff) ::memcpy(GetMemory().GetPointerC<char>(_offset), buff, bytes);
 	_offset = offsetNext;
 }
 
 const UInt8* Pointer_Memory::ExtractPrepare(size_t bytes)
 {
 	if (_offset + bytes > GetMemory().GetBytes()) return nullptr;
-	const UInt8* p = GetMemory().GetPointer<UInt8>(_offset);
+	const UInt8* p = GetMemory().GetPointerC<UInt8>(_offset);
 	_offset += bytes;
 	return p;
 }
 
 const void* Pointer_Memory::DoGetPointerC() const
 {
-	return GetMemory().GetPointer<UInt8>(_offset);
+	return GetMemory().GetPointerC<UInt8>(_offset);
 }
 
 void* Pointer_Memory::DoGetWritablePointerC() const
 {
-	return GetMemory().GetPointer<UInt8>(_offset);
+	return GetMemory().GetPointerC<UInt8>(_offset);
 }
 
 size_t Pointer_Memory::GetBytesEntire() const

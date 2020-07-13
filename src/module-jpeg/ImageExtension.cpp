@@ -84,7 +84,7 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image, int quality)
 		reinterpret_cast<j_common_ptr>(&cinfo), JPOOL_IMAGE,
 		cinfo.image_width * cinfo.input_components, 1);
 	while (cinfo.next_scanline < cinfo.image_height) {
-		const UInt8* pSrc = image.GetPointer(0, cinfo.next_scanline);
+		const UInt8* pSrc = image.GetPointerC(0, cinfo.next_scanline);
 		UInt8* pDst = scanlines[0];
 		for (UInt i = 0; i < cinfo.image_width; i++) {
 			*(pDst + 0) = Image::Pixel::GetR(pSrc);
@@ -115,7 +115,7 @@ bool ImageMgrEx::DoDecompress(Image& image, jpeg_decompress_struct& cinfo)
 			return false;
 		}
 		const UInt8* pSrc = scanlines[0];
-		UInt8* pDst = image.GetPointer(0, cinfo.output_scanline - 1);
+		UInt8* pDst = image.GetPointerC(0, cinfo.output_scanline - 1);
 		if (grayScaleFlag) {
 			for (UInt i = 0; i < cinfo.output_width; i++) {
 				Image::Pixel::SetRGB(pDst, *pSrc, *pSrc, *pSrc);

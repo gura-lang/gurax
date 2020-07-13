@@ -16,7 +16,7 @@ bool Content::Read(Stream& stream)
 	UInt16 biBitCount = Gurax_UnpackUInt16(_bih.biBitCount);
 	size_t bytes = ImageMgrEx::CalcDIBImageSize(biWidth, biHeight, biBitCount, false);
 	_pMemory.reset(new MemoryHeap(bytes));
-	if (stream.Read(_pMemory->GetPointer<void>(), bytes) < bytes) {
+	if (stream.Read(_pMemory->GetPointerC<void>(), bytes) < bytes) {
 		IssueError_InvalidFormat();
 		return false;
 	}
@@ -30,7 +30,7 @@ bool Content::Write(Stream& stream) const
 		return false;
 	}
 	const Memory* pMemory = GetMemory();
-	if (pMemory && !stream.Write(pMemory->GetPointer<void>(), pMemory->GetBytes())) {
+	if (pMemory && !stream.Write(pMemory->GetPointerC<void>(), pMemory->GetBytes())) {
 		IssueError_FailToWrite();
 		return false;
 	}

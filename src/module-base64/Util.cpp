@@ -150,7 +150,7 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 bool Decoder::DecodeStream(Stream& streamSrc, size_t bytesUnit)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	UInt8* buffWork = pMemory->GetPointerC<UInt8>();
 	size_t bytesRead;
 	while ((bytesRead = streamSrc.Read(buffWork, bytesUnit)) > 0) {
 		if (!Decode(buffWork, bytesRead)) break;
@@ -205,7 +205,7 @@ bool Encoder::Encode(const void* buff, size_t bytes)
 bool Encoder::EncodeStream(Stream& streamSrc, size_t bytesUnit)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	UInt8* buffWork = pMemory->GetPointerC<UInt8>();
 	size_t bytesRead;
 	while ((bytesRead = streamSrc.Read(buffWork, bytesUnit)) > 0) {
 		if (!Encode(buffWork, bytesRead)) break;

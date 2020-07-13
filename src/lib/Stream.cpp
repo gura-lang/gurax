@@ -311,7 +311,7 @@ bool Stream::SetOffset(size_t offset)
 bool Stream::ReadToBinary(Binary& buff, size_t bytesUnit)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	UInt8* buffWork = pMemory->GetPointerC<UInt8>();
 	size_t bytesRead;
 	while ((bytesRead = Read(buffWork, bytesUnit)) > 0) {
 		buff.append(buffWork, bytesRead);
@@ -322,7 +322,7 @@ bool Stream::ReadToBinary(Binary& buff, size_t bytesUnit)
 bool Stream::PipeToStream(Stream& streamDst, size_t bytesUnit)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
-	UInt8* buffWork = pMemory->GetPointer<UInt8>();
+	UInt8* buffWork = pMemory->GetPointerC<UInt8>();
 	size_t bytesRead;
 	while ((bytesRead = Read(buffWork, bytesUnit)) > 0) {
 		if (!streamDst.Write(buffWork, bytesRead)) break;

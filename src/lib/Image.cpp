@@ -53,7 +53,7 @@ bool Image::Metrics::CheckArea(int x, int y, int width, int height) const
 // Image::Accumulator
 //------------------------------------------------------------------------------
 Image::Accumulator::Accumulator(size_t width) :
-	_pMemory(new MemoryHeap(sizeof(Elem) * width)), _pElem(_pMemory->GetPointer<Elem>())
+	_pMemory(new MemoryHeap(sizeof(Elem) * width)), _pElem(_pMemory->GetPointerC<Elem>())
 {
 	Clear();
 }
@@ -101,7 +101,7 @@ Image::Scanner Image::Scanner::LeftTopHorz(const Image& image, size_t x, size_t 
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x, y), x, y, width, height,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x, y), x, y, width, height,
 				   bytesPerPixel, bytesPerLine, true);
 }
 
@@ -109,7 +109,7 @@ Image::Scanner Image::Scanner::LeftTopVert(const Image& image, size_t x, size_t 
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x, y), x, y, height, width,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x, y), x, y, height, width,
 				   bytesPerLine, bytesPerPixel, false);
 }
 
@@ -117,7 +117,7 @@ Image::Scanner Image::Scanner::LeftBottomHorz(const Image& image, size_t x, size
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x, y + height - 1), x, y, width, height,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x, y + height - 1), x, y, width, height,
 				   bytesPerPixel, -bytesPerLine, true);
 }
 
@@ -125,7 +125,7 @@ Image::Scanner Image::Scanner::LeftBottomVert(const Image& image, size_t x, size
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x, y + height - 1), x, y, height, width,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x, y + height - 1), x, y, height, width,
 				   -bytesPerLine, bytesPerPixel, false);
 }
 
@@ -133,7 +133,7 @@ Image::Scanner Image::Scanner::RightTopHorz(const Image& image, size_t x, size_t
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y), x, y, width, height,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x + width - 1, y), x, y, width, height,
 				   -bytesPerPixel, bytesPerLine, true);
 }
 
@@ -141,7 +141,7 @@ Image::Scanner Image::Scanner::RightTopVert(const Image& image, size_t x, size_t
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y), x, y, height, width,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x + width - 1, y), x, y, height, width,
 				   bytesPerLine, -bytesPerPixel, false);
 }
 
@@ -149,7 +149,7 @@ Image::Scanner Image::Scanner::RightBottomHorz(const Image& image, size_t x, siz
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y + height - 1), x, y, width, height,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x + width - 1, y + height - 1), x, y, width, height,
 				   -bytesPerPixel, -bytesPerLine, true);
 }
 
@@ -157,40 +157,40 @@ Image::Scanner Image::Scanner::RightBottomVert(const Image& image, size_t x, siz
 {
 	int bytesPerPixel = static_cast<int>(image.GetBytesPerPixel());
 	int bytesPerLine = static_cast<int>(image.GetBytesPerLine());
-	return Scanner(image.GetMetrics(), image.GetPointer(x + width - 1, y + height - 1), x, y, height, width,
+	return Scanner(image.GetMetrics(), image.GetPointerC(x + width - 1, y + height - 1), x, y, height, width,
 				   -bytesPerLine, -bytesPerPixel, false);
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* p)
 {
-	::memcpy(GetPointer(), p, PixelRGB::bytesPerPixel);
+	::memcpy(GetPointerC(), p, PixelRGB::bytesPerPixel);
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* p)
 {
-	PixelRGB::SetRGB(GetPointer(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p));
+	PixelRGB::SetRGB(GetPointerC(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p));
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* p)
 {
-	PixelRGBA::SetRGBA(GetPointer(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p),
+	PixelRGBA::SetRGBA(GetPointerC(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p),
 					   GetMetrics().alphaDefault);
 }
 
 template<>
 void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(const UInt8* p)
 {
-	PixelRGBA::SetPacked(GetPointer(), PixelRGBA::GetPacked(p));
+	PixelRGBA::SetPacked(GetPointerC(), PixelRGBA::GetPacked(p));
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
 void Image::Scanner::PasteT(Scanner& scannerDst, Scanner& scannerSrc)
 {
 	do {
-		scannerDst.PutPixel<T_PixelDst, T_PixelSrc>(scannerSrc.GetPointer());
+		scannerDst.PutPixel<T_PixelDst, T_PixelSrc>(scannerSrc.GetPointerC());
 	} while (scannerDst.Next(scannerSrc));
 }
 
@@ -216,8 +216,8 @@ void Image::Scanner::Paste(Scanner& scannerDst, Scanner& scannerSrc)
 //------------------------------------------------------------------------------
 void Image::Pixel::PasteSame(Pixel& pixelDst, const Pixel& pixelSrc, size_t width, size_t height)
 {
-	UInt8* pLineDst = pixelDst.GetPointer();
-	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	UInt8* pLineDst = pixelDst.GetPointerC();
+	const UInt8* pLineSrc = pixelSrc.GetPointerC();
 	size_t bytesToCopy = pixelDst.WidthToBytes(width);
 	for (size_t y = 0; y < height; y++) {
 		::memcpy(pLineDst, pLineSrc, bytesToCopy);
@@ -238,8 +238,8 @@ void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGBA& pixelSrc, size_t 
 
 void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t width, size_t height)
 {
-	UInt8* pLineDst = pixelDst.GetPointer();
-	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	UInt8* pLineDst = pixelDst.GetPointerC();
+	const UInt8* pLineSrc = pixelSrc.GetPointerC();
 	for (size_t y = 0; y < height; y++) {
 		UInt8* pDst = pLineDst;
 		const UInt8* pSrc = pLineSrc;
@@ -254,8 +254,8 @@ void Image::Pixel::Paste(PixelRGB& pixelDst, const PixelRGBA& pixelSrc, size_t w
 void Image::Pixel::Paste(PixelRGBA& pixelDst, const PixelRGB& pixelSrc, size_t width, size_t height)
 {
 	UInt8 alphaDefault = pixelDst.GetAlphaDefault();
-	UInt8* pLineDst = pixelDst.GetPointer();
-	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	UInt8* pLineDst = pixelDst.GetPointerC();
+	const UInt8* pLineSrc = pixelSrc.GetPointerC();
 	for (size_t y = 0; y < height; y++) {
 		UInt8* pDst = pLineDst;
 		const UInt8* pSrc = pLineSrc;
@@ -350,9 +350,9 @@ Image* Image::RotateT(const Format& format, double angleDeg, const Color& colorB
 		int xSrc = ((xDst * cos1024 - yDst * sin1024) >> 10) + xCenterSrc;
 		int ySrc = ((xDst * sin1024 + yDst * cos1024) >> 10) + yCenterSrc;
 		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc < htSrc) {
-			scanner.PutPixel<T_PixelDst, T_PixelSrc>(GetPointer(xSrc, ySrc));
+			scanner.PutPixel<T_PixelDst, T_PixelSrc>(GetPointerC(xSrc, ySrc));
 		} else {
-			T_PixelDst::SetColor(scanner.GetPointer(), colorBg);
+			T_PixelDst::SetColor(scanner.GetPointerC(), colorBg);
 		}
 	} while (scanner.Next());
 	return pImage.release();
@@ -411,7 +411,7 @@ Image* Image::Rotate270(const Format& format) const
 void Image::Fill(const Color& color)
 {
 	if (IsAreaZero()) return;
-	UInt8* pLineSrc = GetPointer();
+	UInt8* pLineSrc = GetPointerC();
 	if (IsFormat(Format::RGB)) {
 		PixelRGB(GetMetrics(), pLineSrc).SetColorN(color, GetWidth());
 	} else if (IsFormat(Format::RGBA)) {
@@ -427,7 +427,7 @@ void Image::Fill(const Color& color)
 void Image::FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color)
 {
 	if (width == 0 || height == 0) return;
-	UInt8* pLineSrc = GetPointer(x, y);
+	UInt8* pLineSrc = GetPointerC(x, y);
 	if (IsFormat(Format::RGB)) {
 		PixelRGB(GetMetrics(), pLineSrc).SetColorN(color, width);
 	} else if (IsFormat(Format::RGBA)) {
@@ -471,8 +471,8 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 						 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc)
 {
 	Accumulator accumulator(wdDst);
-	UInt8* pLineDst = pixelDst.GetPointer();
-	const UInt8* pLineSrc = pixelSrc.GetPointer();
+	UInt8* pLineDst = pixelDst.GetPointerC();
+	const UInt8* pLineSrc = pixelSrc.GetPointerC();
 	size_t htAccum = 0;
 	for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
 		const UInt8* pSrc = pLineSrc;
@@ -557,8 +557,8 @@ Image* Image::Flip(const Format& format, bool horzFlag, bool vertFlag) const
 template<typename T_PixelDst, typename T_PixelSrc>
 void Image::GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc)
 {
-	UInt8* pDst = pixelDst.GetPointer();
-	const UInt8* pSrc = pixelSrc.GetPointer();
+	UInt8* pDst = pixelDst.GetPointerC();
+	const UInt8* pSrc = pixelSrc.GetPointerC();
 	UInt8 alphaDefault = pixelDst.GetMetrics().alphaDefault;
 	size_t nPixels = pixelDst.GetMetrics().CountPixels();
 	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
@@ -601,8 +601,8 @@ template<typename T_PixelDst, typename T_PixelSrc>
 void Image::MapColorLevelT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc,
 						   const UInt8* mapR, const UInt8* mapG, const UInt8* mapB)
 {
-	UInt8* pDst = pixelDst.GetPointer();
-	const UInt8* pSrc = pixelSrc.GetPointer();
+	UInt8* pDst = pixelDst.GetPointerC();
+	const UInt8* pSrc = pixelSrc.GetPointerC();
 	UInt8 alphaDefault = pixelDst.GetMetrics().alphaDefault;
 	size_t nPixels = pixelDst.GetMetrics().CountPixels();
 	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
@@ -646,8 +646,8 @@ Image* Image::MapAlphaLevel(const UInt8* mapA) const
 	if (!IsFormat(Format::RGBA)) return nullptr;
 	RefPtr<Image> pImage(new Image(GetFormat()));
 	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
-	UInt8* pDst = pImage->GetPointer();
-	const UInt8* pSrc = GetPointer();
+	UInt8* pDst = pImage->GetPointerC();
+	const UInt8* pSrc = GetPointerC();
 	size_t nPixels = GetMetrics().CountPixels();
 	for (size_t iPixel = 0; iPixel < nPixels; iPixel++) {
 		PixelRGBA::SetRGBA(pDst, PixelRGBA::GetR(pSrc), PixelRGBA::GetG(pSrc),
