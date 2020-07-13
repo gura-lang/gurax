@@ -679,8 +679,15 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
-		return new Value_Pointer(
-			new Pointer_Binary(dynamic_cast<const Value_Binary&>(value).GetBinaryReferable().Reference()));
+		const BinaryReferable& buff = Value_Binary::GetBinaryReferable(value);
+		return new Value_Pointer(new Pointer_Binary(buff.Reference()));
+	} else if (value.IsType(VTYPE_Image)) {
+		const Memory* pMemory = Value_Image::GetImage(value).GetMemory();
+		if (!pMemory) {
+			Error::Issue(ErrorType::MemoryError, "the image buffer is not allocated");
+			return Value::nil();
+		}
+		return new Value_Pointer(new Pointer_Memory(pMemory->Reference()));
 	}
 	return nullptr;
 }

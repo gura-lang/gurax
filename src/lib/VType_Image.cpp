@@ -805,10 +805,12 @@ Gurax_DeclareProperty_R(Image, p)
 Gurax_ImplementPropertyGetter(Image, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Memory* pMemory = valueThis.GetImage().GetMemory();
-	if (!pMemory) return Value::nil();
-	RefPtr<Pointer> pPointer(new Pointer_Memory(pMemory->Reference()));
-	return new Value_Pointer(pPointer.release());
+	const Memory* pMemory = valueThis.GetImage().GetMemory();
+	if (!pMemory) {
+		Error::Issue(ErrorType::MemoryError, "the image buffer is not allocated");
+		return Value::nil();
+	}
+	return new Value_Pointer(new Pointer_Memory(pMemory->Reference()));
 }
 
 // Image#palette:nil
