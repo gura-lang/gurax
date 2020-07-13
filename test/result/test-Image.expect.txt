@@ -932,3 +932,30 @@ RightBottomVert
    *@**. @.   **    
    .     *          
 ======== Image#Write() ========
+======== Image#alphaDefault ========
+Image.Blank(32, 24).alphaDefault .. 255
+======== Image#bytes ========
+Image.Blank(32, 24).bytes .. 3072
+Image.Blank(32, 24):rgb.bytes .. 2304
+======== Image#bytesPerLine ========
+Image.Blank(32, 24).bytesPerLine .. 128
+Image.Blank(32, 24):rgb.bytesPerLine .. 96
+======== Image#bytesPerPixel ========
+Image.Blank(32, 24).bytesPerPixel .. 4
+Image.Blank(32, 24):rgb.bytesPerPixel .. 3
+======== Image#format ========
+Image.Blank(32, 24).format .. `rgba
+Image.Blank(32, 24):rgb.format .. `rgb
+======== Image#height ========
+Image.Blank(32, 24).height .. 24
+Image.Blank(32, 24):rgb.height .. 24
+======== Image#p ========
+Image.Blank(32, 24).p .. <Pointer:0/3072>
+Image.Blank(32, 24):rgb.p .. <Pointer:0/2304>
+Image().p .. the image buffer is not allocated
+======== Image#palette ========
+Image.Blank(32, 24).palette .. <Nil>
+Image.Blank(32, 24):rgb.palette .. <Nil>
+======== Image#width ========
+Image.Blank(32, 24).width .. 32
+Image.Blank(32, 24):rgb.width .. 32

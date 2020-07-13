@@ -151,3 +151,48 @@ TestCase('Image#Scan()') {
 
 TestCase('Image#Write()') {
 }
+
+TestCase('Image#alphaDefault') {
+	Tester(`Image.Blank(32, 24).alphaDefault)
+}
+
+TestCase('Image#bytes') {
+	Tester(`Image.Blank(32, 24).bytes)
+	Tester(`(Image.Blank(32, 24):rgb).bytes)
+}
+
+TestCase('Image#bytesPerLine') {
+	Tester(`Image.Blank(32, 24).bytesPerLine)
+	Tester(`(Image.Blank(32, 24):rgb).bytesPerLine)
+}
+
+TestCase('Image#bytesPerPixel') {
+	Tester(`Image.Blank(32, 24).bytesPerPixel)
+	Tester(`(Image.Blank(32, 24):rgb).bytesPerPixel)
+}
+
+TestCase('Image#format') {
+	Tester(`Image.Blank(32, 24).format)
+	Tester(`(Image.Blank(32, 24):rgb).format)
+}
+
+TestCase('Image#height') {
+	Tester(`Image.Blank(32, 24).height)
+	Tester(`(Image.Blank(32, 24):rgb).height)
+}
+
+TestCase('Image#p') {
+	Tester(`Image.Blank(32, 24).p)
+	Tester(`(Image.Blank(32, 24):rgb).p)
+	Tester(`Image().p)
+}
+
+TestCase('Image#palette') {
+	Tester(`Image.Blank(32, 24).palette)
+	Tester(`(Image.Blank(32, 24):rgb).palette)
+}
+
+TestCase('Image#width') {
+	Tester(`Image.Blank(32, 24).width)
+	Tester(`(Image.Blank(32, 24):rgb).width)
+}
