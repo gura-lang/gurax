@@ -15,14 +15,14 @@ Gurax_DeclareFunctionAlias(glfwMakeContextCurrent_gurax, "glfwMakeContextCurrent
 		"");
 }
 
-Gurax_ImplementFunction(glfwMakeContextCurrent_gurax)
+Gurax_ImplementFunctionEx(glfwMakeContextCurrent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwMakeContextCurrent(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetCurrentContext()
@@ -34,14 +34,14 @@ Gurax_DeclareFunctionAlias(glfwGetCurrentContext_gurax, "glfwGetCurrentContext")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetCurrentContext_gurax)
+Gurax_ImplementFunctionEx(glfwGetCurrentContext_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	if (GLFWwindow* rtn = glfwGetCurrentContext()) {
-		return new Value_GLFWwindow(rtn, processor.Reference());
+		return new Value_GLFWwindow(rtn, processor_gurax.Reference());
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSwapInterval(interval:Number)
@@ -54,14 +54,14 @@ Gurax_DeclareFunctionAlias(glfwSwapInterval_gurax, "glfwSwapInterval")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSwapInterval_gurax)
+Gurax_ImplementFunctionEx(glfwSwapInterval_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int interval = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int interval = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSwapInterval(interval);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwExtensionSupported(extension:String)
@@ -74,14 +74,14 @@ Gurax_DeclareFunctionAlias(glfwExtensionSupported_gurax, "glfwExtensionSupported
 		"");
 }
 
-Gurax_ImplementFunction(glfwExtensionSupported_gurax)
+Gurax_ImplementFunctionEx(glfwExtensionSupported_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* extension = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* extension = args_gurax.PickString();
 	// Function body
-	bool rtn =(glfwExtensionSupported(extension) == GLFW_TRUE);
-	return new Value_Bool(rtn);
+	bool rtn = (glfwExtensionSupported(extension) == GLFW_TRUE);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // glfw.glfwInit()
@@ -93,11 +93,11 @@ Gurax_DeclareFunctionAlias(glfwInit_gurax, "glfwInit")
 		"");
 }
 
-Gurax_ImplementFunction(glfwInit_gurax)
+Gurax_ImplementFunctionEx(glfwInit_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	if (glfwInit() != GLFW_TRUE) IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwTerminate()
@@ -109,11 +109,11 @@ Gurax_DeclareFunctionAlias(glfwTerminate_gurax, "glfwTerminate")
 		"");
 }
 
-Gurax_ImplementFunction(glfwTerminate_gurax)
+Gurax_ImplementFunctionEx(glfwTerminate_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glfwTerminate();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwInitHint(hint:Number, value:Number)
@@ -127,15 +127,15 @@ Gurax_DeclareFunctionAlias(glfwInitHint_gurax, "glfwInitHint")
 		"");
 }
 
-Gurax_ImplementFunction(glfwInitHint_gurax)
+Gurax_ImplementFunctionEx(glfwInitHint_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int hint = args.PickNumber<int>();
-	int value = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hint = args_gurax.PickNumber<int>();
+	int value = args_gurax.PickNumber<int>();
 	// Function body
 	glfwInitHint(hint, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetVersion()
@@ -147,7 +147,7 @@ Gurax_DeclareFunctionAlias(glfwGetVersion_gurax, "glfwGetVersion")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetVersion_gurax)
+Gurax_ImplementFunctionEx(glfwGetVersion_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	int major, minor, rev;
@@ -164,11 +164,11 @@ Gurax_DeclareFunctionAlias(glfwGetVersionString_gurax, "glfwGetVersionString")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetVersionString_gurax)
+Gurax_ImplementFunctionEx(glfwGetVersionString_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	const char* rtn = glfwGetVersionString();
-	return new Value_String(rtn);
+	return new Gurax::Value_String(rtn);
 }
 
 // glfw.glfwGetError()
@@ -180,7 +180,7 @@ Gurax_DeclareFunctionAlias(glfwGetError_gurax, "glfwGetError")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetError_gurax)
+Gurax_ImplementFunctionEx(glfwGetError_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	const char* description;
@@ -198,14 +198,14 @@ Gurax_DeclareFunctionAlias(glfwSetErrorCallback_gurax, "glfwSetErrorCallback")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetErrorCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetErrorCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
-	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pProcessor_ErrorCallback.reset(callback? processor_gurax.Reference() : nullptr);
 	g_pFunc_ErrorCallback.reset(callback.release());
 	return Value::nil();
 }
@@ -221,15 +221,15 @@ Gurax_DeclareFunctionAlias(glfwGetInputMode_gurax, "glfwGetInputMode")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetInputMode_gurax)
+Gurax_ImplementFunctionEx(glfwGetInputMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int mode = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int mode = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwGetInputMode(window, mode);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwSetInputMode(window:glfw.GLFWwindow, mode:Number, value:Number)
@@ -244,16 +244,16 @@ Gurax_DeclareFunctionAlias(glfwSetInputMode_gurax, "glfwSetInputMode")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetInputMode_gurax)
+Gurax_ImplementFunctionEx(glfwSetInputMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int mode = args.PickNumber<int>();
-	int value = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int mode = args_gurax.PickNumber<int>();
+	int value = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetInputMode(window, mode, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwRawMouseMotionSupported()
@@ -265,11 +265,11 @@ Gurax_DeclareFunctionAlias(glfwRawMouseMotionSupported_gurax, "glfwRawMouseMotio
 		"");
 }
 
-Gurax_ImplementFunction(glfwRawMouseMotionSupported_gurax)
+Gurax_ImplementFunctionEx(glfwRawMouseMotionSupported_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	bool rtn =(glfwRawMouseMotionSupported() == GLFW_TRUE);
-	return new Value_Bool(rtn);
+	bool rtn = (glfwRawMouseMotionSupported() == GLFW_TRUE);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // glfw.glfwGetKeyName(key:Number, scancode:Number)
@@ -283,17 +283,17 @@ Gurax_DeclareFunctionAlias(glfwGetKeyName_gurax, "glfwGetKeyName")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetKeyName_gurax)
+Gurax_ImplementFunctionEx(glfwGetKeyName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int key = args.PickNumber<int>();
-	int scancode = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int key = args_gurax.PickNumber<int>();
+	int scancode = args_gurax.PickNumber<int>();
 	// Function body
 	if (const char* rtn = glfwGetKeyName(key, scancode)) {
-		return new Value_String(rtn);
+		return new Gurax::Value_String(rtn);
 	}
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetKeyScancode(key:Number)
@@ -306,14 +306,14 @@ Gurax_DeclareFunctionAlias(glfwGetKeyScancode_gurax, "glfwGetKeyScancode")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetKeyScancode_gurax)
+Gurax_ImplementFunctionEx(glfwGetKeyScancode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int key = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int key = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwGetKeyScancode(key);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetKey(window:glfw.GLFWwindow, key:Number)
@@ -327,15 +327,15 @@ Gurax_DeclareFunctionAlias(glfwGetKey_gurax, "glfwGetKey")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetKey_gurax)
+Gurax_ImplementFunctionEx(glfwGetKey_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int key = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int key = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwGetKey(window, key);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetMouseButton(window:glfw.GLFWwindow, button:Number)
@@ -349,15 +349,15 @@ Gurax_DeclareFunctionAlias(glfwGetMouseButton_gurax, "glfwGetMouseButton")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMouseButton_gurax)
+Gurax_ImplementFunctionEx(glfwGetMouseButton_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int button = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int button = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwGetMouseButton(window, button);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetCursorPos(window:glfw.GLFWwindow)
@@ -370,11 +370,11 @@ Gurax_DeclareFunctionAlias(glfwGetCursorPos_gurax, "glfwGetCursorPos")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetCursorPos_gurax)
+Gurax_ImplementFunctionEx(glfwGetCursorPos_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
@@ -393,16 +393,16 @@ Gurax_DeclareFunctionAlias(glfwSetCursorPos_gurax, "glfwSetCursorPos")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCursorPos_gurax)
+Gurax_ImplementFunctionEx(glfwSetCursorPos_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	double xpos = args.PickNumber<double>();
-	double ypos = args.PickNumber<double>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	double xpos = args_gurax.PickNumber<double>();
+	double ypos = args_gurax.PickNumber<double>();
 	// Function body
 	glfwSetCursorPos(window, xpos, ypos);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwCreateCursor(image:glfw.GLFWimage, xhot:Number, yhot:Number)
@@ -417,19 +417,19 @@ Gurax_DeclareFunctionAlias(glfwCreateCursor_gurax, "glfwCreateCursor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwCreateCursor_gurax)
+Gurax_ImplementFunctionEx(glfwCreateCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const GLFWimage* image = args.Pick<Value_GLFWimage>().GetEntity();
-	int xhot = args.PickNumber<int>();
-	int yhot = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const GLFWimage* image = args_gurax.Pick<Value_GLFWimage>().GetEntity();
+	int xhot = args_gurax.PickNumber<int>();
+	int yhot = args_gurax.PickNumber<int>();
 	// Function body
 	if (GLFWcursor* rtn = glfwCreateCursor(image, xhot, yhot)) {
 		return new Value_GLFWcursor(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwCreateStandardCursor(shape:Number)
@@ -442,17 +442,17 @@ Gurax_DeclareFunctionAlias(glfwCreateStandardCursor_gurax, "glfwCreateStandardCu
 		"");
 }
 
-Gurax_ImplementFunction(glfwCreateStandardCursor_gurax)
+Gurax_ImplementFunctionEx(glfwCreateStandardCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int shape = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int shape = args_gurax.PickNumber<int>();
 	// Function body
 	if (GLFWcursor* rtn = glfwCreateStandardCursor(shape)) {
 		return new Value_GLFWcursor(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwDestroyCursor(cursor:glfw.GLFWcursor)
@@ -465,14 +465,14 @@ Gurax_DeclareFunctionAlias(glfwDestroyCursor_gurax, "glfwDestroyCursor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwDestroyCursor_gurax)
+Gurax_ImplementFunctionEx(glfwDestroyCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWcursor* cursor = args.Pick<Value_GLFWcursor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWcursor* cursor = args_gurax.Pick<Value_GLFWcursor>().GetEntity();
 	// Function body
 	glfwDestroyCursor(cursor);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetCursor(window:glfw.GLFWwindow, cursor:glfw.GLFWcursor)
@@ -486,15 +486,15 @@ Gurax_DeclareFunctionAlias(glfwSetCursor_gurax, "glfwSetCursor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCursor_gurax)
+Gurax_ImplementFunctionEx(glfwSetCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	GLFWcursor* cursor = args.Pick<Value_GLFWcursor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	GLFWcursor* cursor = args_gurax.Pick<Value_GLFWcursor>().GetEntity();
 	// Function body
 	glfwSetCursor(window, cursor);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetKeyCallback(window:glfw.GLFWwindow, callback:Function:nil)
@@ -508,12 +508,12 @@ Gurax_DeclareFunctionAlias(glfwSetKeyCallback_gurax, "glfwSetKeyCallback")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetKeyCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetKeyCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetKeyCallback(valueThis.GetEntity(),
@@ -533,12 +533,12 @@ Gurax_DeclareFunctionAlias(glfwSetCharCallback_gurax, "glfwSetCharCallback")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCharCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetCharCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharCallback(valueThis.GetEntity(),
@@ -558,12 +558,12 @@ Gurax_DeclareFunctionAlias(glfwSetCharModsCallback_gurax, "glfwSetCharModsCallba
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCharModsCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetCharModsCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharModsCallback(valueThis.GetEntity(),
@@ -583,12 +583,12 @@ Gurax_DeclareFunctionAlias(glfwSetMouseButtonCallback_gurax, "glfwSetMouseButton
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetMouseButtonCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetMouseButtonCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetMouseButtonCallback(valueThis.GetEntity(),
@@ -608,12 +608,12 @@ Gurax_DeclareFunctionAlias(glfwSetCursorPosCallback_gurax, "glfwSetCursorPosCall
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCursorPosCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetCursorPosCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorPosCallback(valueThis.GetEntity(),
@@ -633,12 +633,12 @@ Gurax_DeclareFunctionAlias(glfwSetCursorEnterCallback_gurax, "glfwSetCursorEnter
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetCursorEnterCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetCursorEnterCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorEnterCallback(valueThis.GetEntity(),
@@ -658,12 +658,12 @@ Gurax_DeclareFunctionAlias(glfwSetScrollCallback_gurax, "glfwSetScrollCallback")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetScrollCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetScrollCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetScrollCallback(valueThis.GetEntity(),
@@ -683,12 +683,12 @@ Gurax_DeclareFunctionAlias(glfwSetDropCallback_gurax, "glfwSetDropCallback")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetDropCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetDropCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetDropCallback(valueThis.GetEntity(),
@@ -707,14 +707,14 @@ Gurax_DeclareFunctionAlias(glfwJoystickPresent_gurax, "glfwJoystickPresent")
 		"");
 }
 
-Gurax_ImplementFunction(glfwJoystickPresent_gurax)
+Gurax_ImplementFunctionEx(glfwJoystickPresent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwJoystickPresent(jid);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetJoystickAxes(jid:Number)
@@ -727,11 +727,11 @@ Gurax_DeclareFunctionAlias(glfwGetJoystickAxes_gurax, "glfwGetJoystickAxes")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetJoystickAxes_gurax)
+Gurax_ImplementFunctionEx(glfwGetJoystickAxes_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	int count;
 	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
@@ -750,11 +750,11 @@ Gurax_DeclareFunctionAlias(glfwGetJoystickButtons_gurax, "glfwGetJoystickButtons
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetJoystickButtons_gurax)
+Gurax_ImplementFunctionEx(glfwGetJoystickButtons_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
@@ -773,11 +773,11 @@ Gurax_DeclareFunctionAlias(glfwGetJoystickHats_gurax, "glfwGetJoystickHats")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetJoystickHats_gurax)
+Gurax_ImplementFunctionEx(glfwGetJoystickHats_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
@@ -796,16 +796,16 @@ Gurax_DeclareFunctionAlias(glfwGetJoystickName_gurax, "glfwGetJoystickName")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetJoystickName_gurax)
+Gurax_ImplementFunctionEx(glfwGetJoystickName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	if (const char* rtn = glfwGetJoystickName(jid)) {
-		return new Value_String(rtn);
+		return new Gurax::Value_String(rtn);
 	}
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetJoystickGUID(jid:Number)
@@ -818,16 +818,16 @@ Gurax_DeclareFunctionAlias(glfwGetJoystickGUID_gurax, "glfwGetJoystickGUID")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetJoystickGUID_gurax)
+Gurax_ImplementFunctionEx(glfwGetJoystickGUID_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	if (const char* rtn = glfwGetJoystickGUID(jid)) {
-		return new Value_String(rtn);
+		return new Gurax::Value_String(rtn);
 	}
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwJoystickIsGamepad(jid:Number)
@@ -840,14 +840,14 @@ Gurax_DeclareFunctionAlias(glfwJoystickIsGamepad_gurax, "glfwJoystickIsGamepad")
 		"");
 }
 
-Gurax_ImplementFunction(glfwJoystickIsGamepad_gurax)
+Gurax_ImplementFunctionEx(glfwJoystickIsGamepad_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
-	bool rtn =(glfwJoystickIsGamepad(jid) == GLFW_TRUE);
-	return new Value_Bool(rtn);
+	bool rtn = (glfwJoystickIsGamepad(jid) == GLFW_TRUE);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // glfw.glfwSetJoystickCallback(jid:Number, callback:Function:nil)
@@ -861,12 +861,12 @@ Gurax_DeclareFunctionAlias(glfwSetJoystickCallback_gurax, "glfwSetJoystickCallba
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetJoystickCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetJoystickCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	//glfwSetJoystickCallback(jid,
 	//		callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
@@ -884,14 +884,14 @@ Gurax_DeclareFunctionAlias(glfwUpdateGamepadMappings_gurax, "glfwUpdateGamepadMa
 		"");
 }
 
-Gurax_ImplementFunction(glfwUpdateGamepadMappings_gurax)
+Gurax_ImplementFunctionEx(glfwUpdateGamepadMappings_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* string = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
 	// Function body
 	if (glfwUpdateGamepadMappings(string) != GLFW_TRUE) IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetGamepadName(jid:Number)
@@ -904,16 +904,16 @@ Gurax_DeclareFunctionAlias(glfwGetGamepadName_gurax, "glfwGetGamepadName")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetGamepadName_gurax)
+Gurax_ImplementFunctionEx(glfwGetGamepadName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int jid = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int jid = args_gurax.PickNumber<int>();
 	// Function body
 	if (const char* rtn = glfwGetGamepadName(jid)) {
-		return new Value_String(rtn);
+		return new Gurax::Value_String(rtn);
 	}
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetClipboardString(window:glfw.GLFWwindow, string:String)
@@ -927,15 +927,15 @@ Gurax_DeclareFunctionAlias(glfwSetClipboardString_gurax, "glfwSetClipboardString
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetClipboardString_gurax)
+Gurax_ImplementFunctionEx(glfwSetClipboardString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	const char* string = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	const char* string = args_gurax.PickString();
 	// Function body
 	glfwSetClipboardString(window, string);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetClipboardString(window:glfw.GLFWwindow)
@@ -948,16 +948,16 @@ Gurax_DeclareFunctionAlias(glfwGetClipboardString_gurax, "glfwGetClipboardString
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetClipboardString_gurax)
+Gurax_ImplementFunctionEx(glfwGetClipboardString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	if (const char* rtn = glfwGetClipboardString(window)) {
-		return new Value_String(rtn);
+		return new Gurax::Value_String(rtn);
 	}
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetTime()
@@ -969,11 +969,11 @@ Gurax_DeclareFunctionAlias(glfwGetTime_gurax, "glfwGetTime")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetTime_gurax)
+Gurax_ImplementFunctionEx(glfwGetTime_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	double rtn = glfwGetTime();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwSetTime(time:Number)
@@ -986,14 +986,14 @@ Gurax_DeclareFunctionAlias(glfwSetTime_gurax, "glfwSetTime")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetTime_gurax)
+Gurax_ImplementFunctionEx(glfwSetTime_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	double time = args.PickNumber<double>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double time = args_gurax.PickNumber<double>();
 	// Function body
 	glfwSetTime(time);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetTimerValue()
@@ -1005,11 +1005,11 @@ Gurax_DeclareFunctionAlias(glfwGetTimerValue_gurax, "glfwGetTimerValue")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetTimerValue_gurax)
+Gurax_ImplementFunctionEx(glfwGetTimerValue_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	uint64_t rtn = glfwGetTimerValue();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetTimerFrequency()
@@ -1021,11 +1021,11 @@ Gurax_DeclareFunctionAlias(glfwGetTimerFrequency_gurax, "glfwGetTimerFrequency")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetTimerFrequency_gurax)
+Gurax_ImplementFunctionEx(glfwGetTimerFrequency_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	uint64_t rtn = glfwGetTimerFrequency();
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwGetMonitors()
@@ -1037,7 +1037,7 @@ Gurax_DeclareFunctionAlias(glfwGetMonitors_gurax, "glfwGetMonitors")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitors_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitors_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	int count;
@@ -1059,14 +1059,14 @@ Gurax_DeclareFunctionAlias(glfwGetPrimaryMonitor_gurax, "glfwGetPrimaryMonitor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetPrimaryMonitor_gurax)
+Gurax_ImplementFunctionEx(glfwGetPrimaryMonitor_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	if (GLFWmonitor* rtn = glfwGetPrimaryMonitor()) {
 		return new Value_GLFWmonitor(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetMonitorPos(monitor:glfw.GLFWmonitor)
@@ -1079,11 +1079,11 @@ Gurax_DeclareFunctionAlias(glfwGetMonitorPos_gurax, "glfwGetMonitorPos")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitorPos_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitorPos_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	int xpos, ypos;
 	glfwGetMonitorPos(monitor, &xpos, &ypos);
@@ -1100,11 +1100,11 @@ Gurax_DeclareFunctionAlias(glfwGetMonitorWorkarea_gurax, "glfwGetMonitorWorkarea
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitorWorkarea_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitorWorkarea_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	int xpos, ypos, width, height;
 	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &width, &height);
@@ -1122,11 +1122,11 @@ Gurax_DeclareFunctionAlias(glfwGetMonitorPhysicalSize_gurax, "glfwGetMonitorPhys
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitorPhysicalSize_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitorPhysicalSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	int widthMM, heightMM;
 	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
@@ -1143,11 +1143,11 @@ Gurax_DeclareFunctionAlias(glfwGetMonitorContentScale_gurax, "glfwGetMonitorCont
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitorContentScale_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitorContentScale_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	float xscale, yscale;
 	glfwGetMonitorContentScale(monitor, &xscale, &yscale);
@@ -1164,14 +1164,14 @@ Gurax_DeclareFunctionAlias(glfwGetMonitorName_gurax, "glfwGetMonitorName")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetMonitorName_gurax)
+Gurax_ImplementFunctionEx(glfwGetMonitorName_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	const char* rtn = glfwGetMonitorName(monitor);
-	return new Value_String(rtn);
+	return new Gurax::Value_String(rtn);
 }
 
 // glfw.glfwSetMonitorCallback(callback:Function:nil)
@@ -1184,14 +1184,14 @@ Gurax_DeclareFunctionAlias(glfwSetMonitorCallback_gurax, "glfwSetMonitorCallback
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetMonitorCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetMonitorCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
-	g_pProcessor_MonitorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pProcessor_MonitorCallback.reset(callback? processor_gurax.Reference() : nullptr);
 	g_pFunc_MonitorCallback.reset(callback.release());
 	return Value::nil();
 }
@@ -1206,11 +1206,11 @@ Gurax_DeclareFunctionAlias(glfwGetVideoModes_gurax, "glfwGetVideoModes")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetVideoModes_gurax)
+Gurax_ImplementFunctionEx(glfwGetVideoModes_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	int count;
 	const GLFWvidmode* rtn = glfwGetVideoModes(monitor, &count);
@@ -1233,17 +1233,17 @@ Gurax_DeclareFunctionAlias(glfwGetVideoMode_gurax, "glfwGetVideoMode")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetVideoMode_gurax)
+Gurax_ImplementFunctionEx(glfwGetVideoMode_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	if (const GLFWvidmode* rtn = glfwGetVideoMode(monitor)) {
 		return new Value_GLFWvidmode(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetGamma(monitor:glfw.GLFWmonitor, gamma:Number)
@@ -1257,15 +1257,15 @@ Gurax_DeclareFunctionAlias(glfwSetGamma_gurax, "glfwSetGamma")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetGamma_gurax)
+Gurax_ImplementFunctionEx(glfwSetGamma_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
-	float gamma = args.PickNumber<float>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
+	float gamma = args_gurax.PickNumber<float>();
 	// Function body
 	glfwSetGamma(monitor, gamma);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetGammaRamp(monitor:glfw.GLFWmonitor)
@@ -1278,17 +1278,17 @@ Gurax_DeclareFunctionAlias(glfwGetGammaRamp_gurax, "glfwGetGammaRamp")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetGammaRamp_gurax)
+Gurax_ImplementFunctionEx(glfwGetGammaRamp_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
 	// Function body
 	if (const GLFWgammaramp* rtn = glfwGetGammaRamp(monitor)) {
 		return new Value_GLFWgammaramp(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetGammaRamp(monitor:glfw.GLFWmonitor, ramp:glfw.GLFWgammaramp)
@@ -1302,15 +1302,15 @@ Gurax_DeclareFunctionAlias(glfwSetGammaRamp_gurax, "glfwSetGammaRamp")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetGammaRamp_gurax)
+Gurax_ImplementFunctionEx(glfwSetGammaRamp_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
-	const GLFWgammaramp* ramp = args.Pick<Value_GLFWgammaramp>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
+	const GLFWgammaramp* ramp = args_gurax.Pick<Value_GLFWgammaramp>().GetEntity();
 	// Function body
 	glfwSetGammaRamp(monitor, ramp);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwVulkanSupported()
@@ -1322,11 +1322,11 @@ Gurax_DeclareFunctionAlias(glfwVulkanSupported_gurax, "glfwVulkanSupported")
 		"");
 }
 
-Gurax_ImplementFunction(glfwVulkanSupported_gurax)
+Gurax_ImplementFunctionEx(glfwVulkanSupported_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	bool rtn =(glfwVulkanSupported() == GLFW_TRUE);
-	return new Value_Bool(rtn);
+	bool rtn = (glfwVulkanSupported() == GLFW_TRUE);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // glfw.glfwGetRequiredInstanceExtensions()
@@ -1338,7 +1338,7 @@ Gurax_DeclareFunctionAlias(glfwGetRequiredInstanceExtensions_gurax, "glfwGetRequ
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetRequiredInstanceExtensions_gurax)
+Gurax_ImplementFunctionEx(glfwGetRequiredInstanceExtensions_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	uint32_t count;
@@ -1361,11 +1361,11 @@ Gurax_DeclareFunctionAlias(glfwDefaultWindowHints_gurax, "glfwDefaultWindowHints
 		"");
 }
 
-Gurax_ImplementFunction(glfwDefaultWindowHints_gurax)
+Gurax_ImplementFunctionEx(glfwDefaultWindowHints_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glfwDefaultWindowHints();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwWindowHint(hint:Number, value:Number)
@@ -1379,15 +1379,15 @@ Gurax_DeclareFunctionAlias(glfwWindowHint_gurax, "glfwWindowHint")
 		"");
 }
 
-Gurax_ImplementFunction(glfwWindowHint_gurax)
+Gurax_ImplementFunctionEx(glfwWindowHint_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int hint = args.PickNumber<int>();
-	int value = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hint = args_gurax.PickNumber<int>();
+	int value = args_gurax.PickNumber<int>();
 	// Function body
 	glfwWindowHint(hint, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwWindowHintString(hint:Number, value:String)
@@ -1401,15 +1401,15 @@ Gurax_DeclareFunctionAlias(glfwWindowHintString_gurax, "glfwWindowHintString")
 		"");
 }
 
-Gurax_ImplementFunction(glfwWindowHintString_gurax)
+Gurax_ImplementFunctionEx(glfwWindowHintString_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int hint = args.PickNumber<int>();
-	const char* value = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hint = args_gurax.PickNumber<int>();
+	const char* value = args_gurax.PickString();
 	// Function body
 	glfwWindowHintString(hint, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwCreateWindow(width:Number, height:Number, title:String, monitor:glfw.GLFWmonitor:nil, share:glfw.GLFWwindow:nil)
@@ -1426,21 +1426,21 @@ Gurax_DeclareFunctionAlias(glfwCreateWindow_gurax, "glfwCreateWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwCreateWindow_gurax)
+Gurax_ImplementFunctionEx(glfwCreateWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	int width = args.PickNumber<int>();
-	int height = args.PickNumber<int>();
-	const char* title = args.PickString();
-	GLFWmonitor* monitor = args.IsValid()? args.Pick<Value_GLFWmonitor>().GetEntity() : nullptr;
-	GLFWwindow* share = args.IsValid()? args.Pick<Value_GLFWwindow>().GetEntity() : nullptr;
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	const char* title = args_gurax.PickString();
+	GLFWmonitor* monitor = args_gurax.IsValid()? args_gurax.Pick<Value_GLFWmonitor>().GetEntity() : nullptr;
+	GLFWwindow* share = args_gurax.IsValid()? args_gurax.Pick<Value_GLFWwindow>().GetEntity() : nullptr;
 	// Function body
 	if (GLFWwindow* rtn = glfwCreateWindow(width, height, title, monitor, share)) {
-		return new Value_GLFWwindow(rtn, processor.Reference());
+		return new Value_GLFWwindow(rtn, processor_gurax.Reference());
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwDestroyWindow(window:glfw.GLFWwindow)
@@ -1453,14 +1453,14 @@ Gurax_DeclareFunctionAlias(glfwDestroyWindow_gurax, "glfwDestroyWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwDestroyWindow_gurax)
+Gurax_ImplementFunctionEx(glfwDestroyWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwDestroyWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwWindowShouldClose(window:glfw.GLFWwindow)
@@ -1473,14 +1473,14 @@ Gurax_DeclareFunctionAlias(glfwWindowShouldClose_gurax, "glfwWindowShouldClose")
 		"");
 }
 
-Gurax_ImplementFunction(glfwWindowShouldClose_gurax)
+Gurax_ImplementFunctionEx(glfwWindowShouldClose_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	bool rtn = glfwWindowShouldClose(window);
-	return new Value_Bool(rtn);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // glfw.glfwSetWindowShouldClose(window:glfw.GLFWwindow, value:Bool)
@@ -1494,15 +1494,15 @@ Gurax_DeclareFunctionAlias(glfwSetWindowShouldClose_gurax, "glfwSetWindowShouldC
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowShouldClose_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowShouldClose_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	bool value = args.PickBool();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	bool value = args_gurax.PickBool();
 	// Function body
 	glfwSetWindowShouldClose(window, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowTitle(window:glfw.GLFWwindow, title:String)
@@ -1516,15 +1516,15 @@ Gurax_DeclareFunctionAlias(glfwSetWindowTitle_gurax, "glfwSetWindowTitle")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowTitle_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowTitle_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	const char* title = args.PickString();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	const char* title = args_gurax.PickString();
 	// Function body
 	glfwSetWindowTitle(window, title);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowIcon(window:glfw.GLFWwindow, images[]:glfw.GLFWimage)
@@ -1538,12 +1538,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowIcon_gurax, "glfwSetWindowIcon")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowIcon_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowIcon_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	auto images = args.PickListT<GLFWimage>(Value_GLFWimage::ValueForVector);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	auto images = args_gurax.PickListT<GLFWimage>(Value_GLFWimage::ValueForVector);
 	// Function body
 	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 	return Value::nil();
@@ -1559,11 +1559,11 @@ Gurax_DeclareFunctionAlias(glfwGetWindowPos_gurax, "glfwGetWindowPos")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowPos_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowPos_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	int xpos, ypos;
 	glfwGetWindowPos(window, &xpos, &ypos);
@@ -1582,16 +1582,16 @@ Gurax_DeclareFunctionAlias(glfwSetWindowPos_gurax, "glfwSetWindowPos")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowPos_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowPos_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int xpos = args.PickNumber<int>();
-	int ypos = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int xpos = args_gurax.PickNumber<int>();
+	int ypos = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowPos(window, xpos, ypos);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetWindowSize(window:glfw.GLFWwindow)
@@ -1604,11 +1604,11 @@ Gurax_DeclareFunctionAlias(glfwGetWindowSize_gurax, "glfwGetWindowSize")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowSize_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
@@ -1629,18 +1629,18 @@ Gurax_DeclareFunctionAlias(glfwSetWindowSizeLimits_gurax, "glfwSetWindowSizeLimi
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowSizeLimits_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowSizeLimits_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int minwidth = args.PickNumber<int>();
-	int minheight = args.PickNumber<int>();
-	int maxwidth = args.PickNumber<int>();
-	int maxheight = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int minwidth = args_gurax.PickNumber<int>();
+	int minheight = args_gurax.PickNumber<int>();
+	int maxwidth = args_gurax.PickNumber<int>();
+	int maxheight = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowSizeLimits(window, minwidth, minheight, maxwidth, maxheight);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowAspectRatio(window:glfw.GLFWwindow, numer:Number, denom:Number)
@@ -1655,16 +1655,16 @@ Gurax_DeclareFunctionAlias(glfwSetWindowAspectRatio_gurax, "glfwSetWindowAspectR
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowAspectRatio_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowAspectRatio_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int numer = args.PickNumber<int>();
-	int denom = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int numer = args_gurax.PickNumber<int>();
+	int denom = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowAspectRatio(window, numer, denom);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowSize(window:glfw.GLFWwindow, width:Number, height:Number)
@@ -1679,16 +1679,16 @@ Gurax_DeclareFunctionAlias(glfwSetWindowSize_gurax, "glfwSetWindowSize")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowSize_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int width = args.PickNumber<int>();
-	int height = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowSize(window, width, height);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetFramebufferSize(window:glfw.GLFWwindow)
@@ -1701,11 +1701,11 @@ Gurax_DeclareFunctionAlias(glfwGetFramebufferSize_gurax, "glfwGetFramebufferSize
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetFramebufferSize_gurax)
+Gurax_ImplementFunctionEx(glfwGetFramebufferSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
@@ -1722,11 +1722,11 @@ Gurax_DeclareFunctionAlias(glfwGetWindowFrameSize_gurax, "glfwGetWindowFrameSize
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowFrameSize_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowFrameSize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	int left, top, right, bottom;
 	glfwGetWindowFrameSize(window, &left, &top, &right, &bottom);
@@ -1744,11 +1744,11 @@ Gurax_DeclareFunctionAlias(glfwGetWindowContentScale_gurax, "glfwGetWindowConten
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowContentScale_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowContentScale_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	float xscale, yscale;
 	glfwGetWindowContentScale(window, &xscale, &yscale);
@@ -1765,14 +1765,14 @@ Gurax_DeclareFunctionAlias(glfwGetWindowOpacity_gurax, "glfwGetWindowOpacity")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowOpacity_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowOpacity_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	float rtn = glfwGetWindowOpacity(window);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwSetWindowOpacity(window:glfw.GLFWwindow, opacity:Number)
@@ -1786,15 +1786,15 @@ Gurax_DeclareFunctionAlias(glfwSetWindowOpacity_gurax, "glfwSetWindowOpacity")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowOpacity_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowOpacity_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	float opacity = args.PickNumber<float>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	float opacity = args_gurax.PickNumber<float>();
 	// Function body
 	glfwSetWindowOpacity(window, opacity);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwIconifyWindow(window:glfw.GLFWwindow)
@@ -1807,14 +1807,14 @@ Gurax_DeclareFunctionAlias(glfwIconifyWindow_gurax, "glfwIconifyWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwIconifyWindow_gurax)
+Gurax_ImplementFunctionEx(glfwIconifyWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwIconifyWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwRestoreWindow(window:glfw.GLFWwindow)
@@ -1827,14 +1827,14 @@ Gurax_DeclareFunctionAlias(glfwRestoreWindow_gurax, "glfwRestoreWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwRestoreWindow_gurax)
+Gurax_ImplementFunctionEx(glfwRestoreWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwRestoreWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwMaximizeWindow(window:glfw.GLFWwindow)
@@ -1847,14 +1847,14 @@ Gurax_DeclareFunctionAlias(glfwMaximizeWindow_gurax, "glfwMaximizeWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwMaximizeWindow_gurax)
+Gurax_ImplementFunctionEx(glfwMaximizeWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwMaximizeWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwShowWindow(window:glfw.GLFWwindow)
@@ -1867,14 +1867,14 @@ Gurax_DeclareFunctionAlias(glfwShowWindow_gurax, "glfwShowWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwShowWindow_gurax)
+Gurax_ImplementFunctionEx(glfwShowWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwShowWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwHideWindow(window:glfw.GLFWwindow)
@@ -1887,14 +1887,14 @@ Gurax_DeclareFunctionAlias(glfwHideWindow_gurax, "glfwHideWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwHideWindow_gurax)
+Gurax_ImplementFunctionEx(glfwHideWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwHideWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwFocusWindow(window:glfw.GLFWwindow)
@@ -1907,14 +1907,14 @@ Gurax_DeclareFunctionAlias(glfwFocusWindow_gurax, "glfwFocusWindow")
 		"");
 }
 
-Gurax_ImplementFunction(glfwFocusWindow_gurax)
+Gurax_ImplementFunctionEx(glfwFocusWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwFocusWindow(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwRequestWindowAttention(window:glfw.GLFWwindow)
@@ -1927,14 +1927,14 @@ Gurax_DeclareFunctionAlias(glfwRequestWindowAttention_gurax, "glfwRequestWindowA
 		"");
 }
 
-Gurax_ImplementFunction(glfwRequestWindowAttention_gurax)
+Gurax_ImplementFunctionEx(glfwRequestWindowAttention_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwRequestWindowAttention(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetWindowMonitor(window:glfw.GLFWwindow)
@@ -1947,17 +1947,17 @@ Gurax_DeclareFunctionAlias(glfwGetWindowMonitor_gurax, "glfwGetWindowMonitor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowMonitor_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowMonitor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	if (GLFWmonitor* rtn = glfwGetWindowMonitor(window)) {
 		return new Value_GLFWmonitor(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowMonitor(window:glfw.GLFWwindow, monitor:glfw.GLFWmonitor, xpos:Number, ypos:Number, width:Number, height:Number, refreshRate:Number)
@@ -1976,20 +1976,20 @@ Gurax_DeclareFunctionAlias(glfwSetWindowMonitor_gurax, "glfwSetWindowMonitor")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowMonitor_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowMonitor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	GLFWmonitor* monitor = args.Pick<Value_GLFWmonitor>().GetEntity();
-	int xpos = args.PickNumber<int>();
-	int ypos = args.PickNumber<int>();
-	int width = args.PickNumber<int>();
-	int height = args.PickNumber<int>();
-	int refreshRate = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	GLFWmonitor* monitor = args_gurax.Pick<Value_GLFWmonitor>().GetEntity();
+	int xpos = args_gurax.PickNumber<int>();
+	int ypos = args_gurax.PickNumber<int>();
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	int refreshRate = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwGetWindowAttrib(window:glfw.GLFWwindow, attrib:Number)
@@ -2003,15 +2003,15 @@ Gurax_DeclareFunctionAlias(glfwGetWindowAttrib_gurax, "glfwGetWindowAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glfwGetWindowAttrib_gurax)
+Gurax_ImplementFunctionEx(glfwGetWindowAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int attrib = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int attrib = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = glfwGetWindowAttrib(window, attrib);
-	return new Value_Number(rtn);
+	return new Gurax::Value_Number(rtn);
 }
 
 // glfw.glfwSetWindowAttrib(window:glfw.GLFWwindow, attrib:Number, value:Number)
@@ -2026,16 +2026,16 @@ Gurax_DeclareFunctionAlias(glfwSetWindowAttrib_gurax, "glfwSetWindowAttrib")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowAttrib_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowAttrib_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	int attrib = args.PickNumber<int>();
-	int value = args.PickNumber<int>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	int attrib = args_gurax.PickNumber<int>();
+	int value = args_gurax.PickNumber<int>();
 	// Function body
 	glfwSetWindowAttrib(window, attrib, value);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSetWindowPosCallback(window:glfw.GLFWwindow, callback:Function:nil)
@@ -2049,12 +2049,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowPosCallback_gurax, "glfwSetWindowPosCall
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowPosCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowPosCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowPosCallback(valueThis.GetEntity(),
@@ -2074,12 +2074,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowSizeCallback_gurax, "glfwSetWindowSizeCa
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowSizeCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowSizeCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowSizeCallback(valueThis.GetEntity(),
@@ -2099,12 +2099,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowCloseCallback_gurax, "glfwSetWindowClose
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowCloseCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowCloseCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowCloseCallback(valueThis.GetEntity(),
@@ -2124,12 +2124,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowRefreshCallback_gurax, "glfwSetWindowRef
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowRefreshCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowRefreshCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowRefreshCallback(valueThis.GetEntity(),
@@ -2149,12 +2149,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowFocusCallback_gurax, "glfwSetWindowFocus
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowFocusCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowFocusCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowFocusCallback(valueThis.GetEntity(),
@@ -2174,12 +2174,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowIconifyCallback_gurax, "glfwSetWindowIco
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowIconifyCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowIconifyCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowIconifyCallback(valueThis.GetEntity(),
@@ -2199,12 +2199,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowMaximizeCallback_gurax, "glfwSetWindowMa
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowMaximizeCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowMaximizeCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowMaximizeCallback(valueThis.GetEntity(),
@@ -2224,12 +2224,12 @@ Gurax_DeclareFunctionAlias(glfwSetFramebufferSizeCallback_gurax, "glfwSetFramebu
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetFramebufferSizeCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetFramebufferSizeCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetFramebufferSizeCallback(valueThis.GetEntity(),
@@ -2249,12 +2249,12 @@ Gurax_DeclareFunctionAlias(glfwSetWindowContentScaleCallback_gurax, "glfwSetWind
 		"");
 }
 
-Gurax_ImplementFunction(glfwSetWindowContentScaleCallback_gurax)
+Gurax_ImplementFunctionEx(glfwSetWindowContentScaleCallback_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
-	RefPtr<Function> callback(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
+	RefPtr<Function> callback(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
 	// Function body
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowContentScaleCallback(valueThis.GetEntity(),
@@ -2272,11 +2272,11 @@ Gurax_DeclareFunctionAlias(glfwPollEvents_gurax, "glfwPollEvents")
 		"");
 }
 
-Gurax_ImplementFunction(glfwPollEvents_gurax)
+Gurax_ImplementFunctionEx(glfwPollEvents_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glfwPollEvents();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwWaitEvents()
@@ -2288,11 +2288,11 @@ Gurax_DeclareFunctionAlias(glfwWaitEvents_gurax, "glfwWaitEvents")
 		"");
 }
 
-Gurax_ImplementFunction(glfwWaitEvents_gurax)
+Gurax_ImplementFunctionEx(glfwWaitEvents_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glfwWaitEvents();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwWaitEventsTimeout(timeout:Number)
@@ -2305,14 +2305,14 @@ Gurax_DeclareFunctionAlias(glfwWaitEventsTimeout_gurax, "glfwWaitEventsTimeout")
 		"");
 }
 
-Gurax_ImplementFunction(glfwWaitEventsTimeout_gurax)
+Gurax_ImplementFunctionEx(glfwWaitEventsTimeout_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	double timeout = args.PickNumber<double>();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double timeout = args_gurax.PickNumber<double>();
 	// Function body
 	glfwWaitEventsTimeout(timeout);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwPostEmptyEvent()
@@ -2324,11 +2324,11 @@ Gurax_DeclareFunctionAlias(glfwPostEmptyEvent_gurax, "glfwPostEmptyEvent")
 		"");
 }
 
-Gurax_ImplementFunction(glfwPostEmptyEvent_gurax)
+Gurax_ImplementFunctionEx(glfwPostEmptyEvent_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	glfwPostEmptyEvent();
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 // glfw.glfwSwapBuffers(window:glfw.GLFWwindow)
@@ -2341,14 +2341,14 @@ Gurax_DeclareFunctionAlias(glfwSwapBuffers_gurax, "glfwSwapBuffers")
 		"");
 }
 
-Gurax_ImplementFunction(glfwSwapBuffers_gurax)
+Gurax_ImplementFunctionEx(glfwSwapBuffers_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	GLFWwindow* window = args.Pick<Value_GLFWwindow>().GetEntity();
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLFWwindow* window = args_gurax.Pick<Value_GLFWwindow>().GetEntity();
 	// Function body
 	glfwSwapBuffers(window);
-	return Value::nil();
+	return Gurax::Value::nil();
 }
 
 void AssignFunctions(Frame& frame)

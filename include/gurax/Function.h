@@ -41,6 +41,9 @@ Function_##name::Function_##name(const char* name_) : Function(Type::Function, n
 #define Gurax_ImplementFunction(name) \
 Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
+#define Gurax_ImplementFunctionEx(name, processor, argument) \
+Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
+
 #define Gurax_CreateFunction(name) (new Function_##name())
 #define Gurax_CreateFunctionAlias(name, strName) (new Function_##name(strName))
 
@@ -56,6 +59,9 @@ Constructor_##name::Constructor_##name(const char* name_) : Function(Type::Const
 #define Gurax_DeclareConstructor(name) Gurax_DeclareConstructorAlias(name, #name)
 
 #define Gurax_ImplementConstructor(name) \
+Value* Constructor_##name::DoEval(Processor& processor, Argument& argument) const
+
+#define Gurax_ImplementConstructorEx(name, processor, argument) \
 Value* Constructor_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateConstructor(name) (new Constructor_##name())
@@ -78,6 +84,9 @@ Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Fu
 #define Gurax_ImplementMethod(nameVType, name) \
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
+#define Gurax_ImplementMethodEx(nameVType, name, procesor, argument) \
+Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
+
 #define Gurax_CreateMethod(nameVType, name) (new Method_##nameVType##_##name())
 
 // Declaration/implementation/creation of Class Method
@@ -95,6 +104,9 @@ Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Fu
 #define Gurax_DeclareClassMethod(nameVType, name) Gurax_DeclareClassMethodAlias(nameVType, name, #name)
 
 #define Gurax_ImplementClassMethod(nameVType, name) \
+Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
+
+#define Gurax_ImplementClassMethodEx(nameVType, name, processor, argument) \
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateClassMethod(nameVType, name) (new Method_##nameVType##_##name())

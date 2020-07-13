@@ -13,13 +13,13 @@ r.DeclareType_Number('GLint')
 r.DeclareType_Number('GLsizei')
 r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	codePicker = R'''
-	${this.cType} ${varName} = static_cast<GLboolean>(args.PickBool());
+	${this.cType} ${varName} = static_cast<GLboolean>(args_gurax.PickBool());
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? static_cast<GLboolean>(args.PickBool()) : GL_FALSE;
+	${this.cType} ${varName} = args_gurax.IsValid()? static_cast<GLboolean>(args_gurax.PickBool()) : GL_FALSE;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
+	auto ${varName} = args_gurax.PickListT<GLboolean>([](Value& value) { return value.GetBool()? GL_TRUE : GL_FALSE; });
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
@@ -44,10 +44,10 @@ r.DeclareType_Number('GLsizeiptr')
 
 r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
-	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args.PickString());
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickString());
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? reinterpret_cast<${this.cType}>(args.PickString()) : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
 	'''
 	codePickerVec = ''
 	codeFunctionBody = R'''
@@ -57,26 +57,26 @@ r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 
 r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
 	codePicker = R'''
-	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
+	${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Value& value) {
 		return Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
 	});
 	''')
 
 r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'Pointer',
 	codePicker = R'''
-	${this.cType} ${varName} = args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<${this.cType}>([](Value& value) {
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Value& value) {
 		return Value_Pointer::GetPointer(value).GetPointerC<GLubyte>();
 	});
 	''')

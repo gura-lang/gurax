@@ -9,67 +9,67 @@ r = cbridge.Renderer()
 r.DeclareType('int_ErrorIfFalse', 'int', 'Nil',
 	codeFunctionBody = R'''
 	if (${caller} != GLFW_TRUE) IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 	''')
 
 r.DeclareType('int_Bool', 'int', 'Bool',
 	codeFunctionBody = R'''
-	bool rtn =(${caller} == GLFW_TRUE);
-	return new Value_Bool(rtn);
+	bool rtn = (${caller} == GLFW_TRUE);
+	return new Gurax::Value_Bool(rtn);
 	''')
 
 r.DeclareType('GLFWimage', 'GLFWimage', 'glfw.GLFWimage',
 	codePicker = R'''
-	${this.cType}& ${varName} = *args.Pick<Value_${this.vtype}>().GetEntity();
+	${this.cType}& ${varName} = *args_gurax.Pick<Value_${this.vtype}>().GetEntity();
 	'''
 	codePickerValidation = ''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
 		return new Value_${this.vtype}(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 	''')
 
 cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
 	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
-	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
 		return new Value_${this.vtype}(rtn);
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 	''')
 
 cbridge.Renderer.DeclareType_EntityEx(decl:String, cType:String, vtypeFullName:String) = \
 	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
-	${this.cType} ${varName} = args.Pick<Value_${this.vtype}>().GetEntity();
+	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args.IsValid()? args.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
 	'''
 	codePickerVec = R'''
-	auto ${varName} = args.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
 	if (${this.cType} rtn = ${caller}) {
-		return new Value_${this.vtype}(rtn, processor.Reference());
+		return new Value_${this.vtype}(rtn, processor_gurax.Reference());
 	}
 	IssueError();
-	return Value::nil();
+	return Gurax::Value::nil();
 	''')
 
 r.DeclareType_Entity('GLFWcursor_p', 'GLFWcursor*', 'glfw.GLFWcursor')
@@ -126,7 +126,7 @@ glfwGetError():String@gurax = \
 glfwSetErrorCallback(callback:Function@gurax:nil):void = \
 	R'''
 	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
-	g_pProcessor_ErrorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pProcessor_ErrorCallback.reset(callback? processor_gurax.Reference() : nullptr);
 	g_pFunc_ErrorCallback.reset(callback.release());
 	return Value::nil();
 	'''
@@ -364,7 +364,7 @@ glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
 glfwSetMonitorCallback(callback:Function@gurax:nil):void = \
 	R'''
 	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
-	g_pProcessor_MonitorCallback.reset(callback? processor.Reference() : nullptr);
+	g_pProcessor_MonitorCallback.reset(callback? processor_gurax.Reference() : nullptr);
 	g_pFunc_MonitorCallback.reset(callback.release());
 	return Value::nil();
 	'''
