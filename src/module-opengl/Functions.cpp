@@ -2317,6 +2317,32 @@ Gurax_ImplementFunctionEx(glGetError_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// opengl.glGetFloatv(pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetFloatv_gurax, "glGetFloatv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetFloatv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetFloatv(pname, params);
+	return Gurax::Value::nil();
+}
+
 // opengl.glGetString(name:Number)
 Gurax_DeclareFunctionAlias(glGetString_gurax, "glGetString")
 {
@@ -9262,6 +9288,148 @@ Gurax_ImplementFunctionEx(glGenQueries_gurax, processor_gurax, argument_gurax)
 	return Value_List::Create(ids.get(), n);
 }
 
+// opengl.glGetBufferParameteriv(target:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetBufferParameteriv_gurax, "glGetBufferParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetBufferParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetBufferParameteriv(target, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetBufferSubData(target:Number, offset:Number, size:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glGetBufferSubData_gurax, "glGetBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetBufferSubData(target, offset, size, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryObjectiv(id:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetQueryObjectiv_gurax, "glGetQueryObjectiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryObjectiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetQueryObjectiv(id, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryObjectuiv(id:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetQueryObjectuiv_gurax, "glGetQueryObjectuiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryObjectuiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLuint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetQueryObjectuiv(id, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryiv(target:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetQueryiv_gurax, "glGetQueryiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetQueryiv(target, pname, params);
+	return Gurax::Value::nil();
+}
+
 // opengl.glIsBuffer(buffer:Number)
 Gurax_DeclareFunctionAlias(glIsBuffer_gurax, "glIsBuffer")
 {
@@ -9544,6 +9712,158 @@ Gurax_ImplementFunctionEx(glEnableVertexAttribArray_gurax, processor_gurax, argu
 	// Function body
 	glEnableVertexAttribArray(index);
 	return Gurax::Value::nil();
+}
+
+// opengl.glGetActiveAttrib(program:Number, index:Number, maxLength:Number, length:Pointer, size:Pointer, type:Pointer, name:Pointer)
+Gurax_DeclareFunctionAlias(glGetActiveAttrib_gurax, "glGetActiveAttrib")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetActiveAttrib_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLsizei maxLength = args_gurax.PickNumber<GLsizei>();
+	GLsizei* length = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>();
+	if (!length) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLint* size = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!size) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLenum* type = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>();
+	if (!type) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLchar* name = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>();
+	if (!name) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetActiveAttrib(program, index, maxLength, length, size, type, name);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetActiveUniform(program:Number, index:Number, maxLength:Number, length:Pointer, size:Pointer, type:Pointer, name:Pointer)
+Gurax_DeclareFunctionAlias(glGetActiveUniform_gurax, "glGetActiveUniform")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetActiveUniform_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLsizei maxLength = args_gurax.PickNumber<GLsizei>();
+	GLsizei* length = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>();
+	if (!length) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLint* size = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!size) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLenum* type = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>();
+	if (!type) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLchar* name = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>();
+	if (!name) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetActiveUniform(program, index, maxLength, length, size, type, name);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetAttachedShaders(program:Number, maxCount:Number, count:Pointer, shaders:Pointer)
+Gurax_DeclareFunctionAlias(glGetAttachedShaders_gurax, "glGetAttachedShaders")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("shaders", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetAttachedShaders_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	GLsizei maxCount = args_gurax.PickNumber<GLsizei>();
+	GLsizei* count = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>();
+	if (!count) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLuint* shaders = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!shaders) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetAttachedShaders(program, maxCount, count, shaders);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetAttribLocation(program:Number, name:Pointer)
+Gurax_DeclareFunctionAlias(glGetAttribLocation_gurax, "glGetAttribLocation")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetAttribLocation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint program = args_gurax.PickNumber<GLuint>();
+	const GLchar* name = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
+	// Function body
+	GLint rtn = glGetAttribLocation(program, name);
+	return new Gurax::Value_Number(rtn);
 }
 
 // opengl.glIsProgram(program:Number)
@@ -12706,6 +13026,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glGenLists_gurax));
 	frame.Assign(Gurax_CreateFunction(glGenTextures_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetError_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetFloatv_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetString_gurax));
 	frame.Assign(Gurax_CreateFunction(glHint_gurax));
 	frame.Assign(Gurax_CreateFunction(glIndexMask_gurax));
@@ -13011,6 +13332,11 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glEndQuery_gurax));
 	frame.Assign(Gurax_CreateFunction(glGenBuffers_gurax));
 	frame.Assign(Gurax_CreateFunction(glGenQueries_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetBufferParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryObjectiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryObjectuiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsQuery_gurax));
 	frame.Assign(Gurax_CreateFunction(glUnmapBuffer_gurax));
@@ -13025,6 +13351,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glDisableVertexAttribArray_gurax));
 	frame.Assign(Gurax_CreateFunction(glDrawBuffers_gurax));
 	frame.Assign(Gurax_CreateFunction(glEnableVertexAttribArray_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetActiveAttrib_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetActiveUniform_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetAttachedShaders_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetAttribLocation_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsProgram_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsShader_gurax));
 	frame.Assign(Gurax_CreateFunction(glLinkProgram_gurax));

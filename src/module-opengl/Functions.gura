@@ -11,6 +11,22 @@ r.DeclareType_Number('GLbitfield')
 r.DeclareType_Number('GLuint')
 r.DeclareType_Number('GLint')
 r.DeclareType_Number('GLsizei')
+r.DeclareType_Number('GLbyte')
+r.DeclareType_Number('GLshort')
+r.DeclareType_Number('GLubyte')
+r.DeclareType_Number('GLushort')
+r.DeclareType_Number('GLulong')
+r.DeclareType_Number('GLfloat')
+r.DeclareType_Number('GLclampf')
+r.DeclareType_Number('GLdouble')
+r.DeclareType_Number('GLclampd')
+r.DeclareType_Number('GLint64')
+r.DeclareType_Number('GLuint64')
+r.DeclareType_Number('GLsync')
+r.DeclareType_Number('GLchar')
+r.DeclareType_Number('GLintptr')
+r.DeclareType_Number('GLsizeiptr')
+//r.DeclareType(GLvoid)
 r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	codePicker = R'''
 	${this.cType} ${varName} = static_cast<GLboolean>(args_gurax.PickBool());
@@ -27,22 +43,6 @@ r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	${this.cType} rtn = ${caller};
 	return new Gurax::Value_Bool(!!rtn);
 	''')
-r.DeclareType_Number('GLbyte')
-r.DeclareType_Number('GLshort')
-r.DeclareType_Number('GLubyte')
-r.DeclareType_Number('GLushort')
-r.DeclareType_Number('GLulong')
-r.DeclareType_Number('GLfloat')
-r.DeclareType_Number('GLclampf')
-r.DeclareType_Number('GLdouble')
-r.DeclareType_Number('GLclampd')
-//r.DeclareType(GLvoid)
-r.DeclareType_Number('GLint64')
-r.DeclareType_Number('GLuint64')
-r.DeclareType_Number('GLsync')
-r.DeclareType_Number('GLchar')
-r.DeclareType_Number('GLintptr')
-r.DeclareType_Number('GLsizeiptr')
 
 r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePicker = R'''
@@ -57,31 +57,49 @@ r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 	''')
 
-r.DeclareType('const_GLvoid_p', 'const GLvoid*', 'Pointer',
-	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>();
-	'''
-	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
-	'''
-	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
-		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
-	});
-	''')
+r.DeclareType_Pointer('const_GLenum_p', 'const GLenum*')
+r.DeclareType_Pointer('const_GLbitfield_p', 'const GLbitfield*')
+r.DeclareType_Pointer('const_GLuint_p', 'const GLuint*')
+r.DeclareType_Pointer('const_GLint_p', 'const GLint*')
+r.DeclareType_Pointer('const_GLsizei_p', 'const GLsizei*')
+r.DeclareType_Pointer('const_GLbyte_p', 'const GLbyte*')
+r.DeclareType_Pointer('const_GLshort_p', 'const GLshort*')
+r.DeclareType_Pointer('const_GLubyte_p', 'const GLubyte*')
+r.DeclareType_Pointer('const_GLushort_p', 'const GLushort*')
+r.DeclareType_Pointer('const_GLulong_p', 'const GLulong*')
+r.DeclareType_Pointer('const_GLfloat_p', 'const GLfloat*')
+r.DeclareType_Pointer('const_GLclampf_p', 'const GLclampf*')
+r.DeclareType_Pointer('const_GLdouble_p', 'const GLdouble*')
+r.DeclareType_Pointer('const_GLclampd_p', 'const GLclampd*')
+r.DeclareType_Pointer('const_GLint64_p', 'const GLint64*')
+r.DeclareType_Pointer('const_GLuint64_p', 'const GLuint64*')
+r.DeclareType_Pointer('const_GLsync_p', 'const GLsync*')
+r.DeclareType_Pointer('const_GLchar_p', 'const GLchar*')
+r.DeclareType_Pointer('const_GLintptr_p', 'const GLintptr*')
+r.DeclareType_Pointer('const_GLsizeiptr_p', 'const GLsizeiptr*')
+r.DeclareType_Pointer('const_GLvoid_p', 'const GLvoid*')
 
-r.DeclareType('const_GLubyte_p', 'const GLubyte*', 'Pointer',
-	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
-	'''
-	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
-	'''
-	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
-		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<GLubyte>();
-	});
-	''')
+r.DeclareType_WritablePointer('GLenum_p', 'GLenum*')
+r.DeclareType_WritablePointer('GLbitfield_p', 'GLbitfield*')
+r.DeclareType_WritablePointer('GLuint_p', 'GLuint*')
+r.DeclareType_WritablePointer('GLint_p', 'GLint*')
+r.DeclareType_WritablePointer('GLsizei_p', 'GLsizei*')
+r.DeclareType_WritablePointer('GLbyte_p', 'GLbyte*')
+r.DeclareType_WritablePointer('GLshort_p', 'GLshort*')
+r.DeclareType_WritablePointer('GLubyte_p', 'GLubyte*')
+r.DeclareType_WritablePointer('GLushort_p', 'GLushort*')
+r.DeclareType_WritablePointer('GLulong_p', 'GLulong*')
+r.DeclareType_WritablePointer('GLfloat_p', 'GLfloat*')
+r.DeclareType_WritablePointer('GLclampf_p', 'GLclampf*')
+r.DeclareType_WritablePointer('GLdouble_p', 'GLdouble*')
+r.DeclareType_WritablePointer('GLclampd_p', 'GLclampd*')
+r.DeclareType_WritablePointer('GLint64_p', 'GLint64*')
+r.DeclareType_WritablePointer('GLuint64_p', 'GLuint64*')
+r.DeclareType_WritablePointer('GLsync_p', 'GLsync*')
+r.DeclareType_WritablePointer('GLchar_p', 'GLchar*')
+r.DeclareType_WritablePointer('GLintptr_p', 'GLintptr*')
+r.DeclareType_WritablePointer('GLsizeiptr_p', 'GLsizeiptr*')
+r.DeclareType_WritablePointer('GLvoid_p', 'GLvoid*')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
@@ -320,7 +338,7 @@ glGenTextures(n:GLsizei) = \
 
 glGetError():GLenum
 
-//glGetFloatv(pname:GLenum, params:GLfloat_p):void
+glGetFloatv(pname:GLenum, params:GLfloat_p):void
 
 //glGetIntegerv(pname:GLenum, params:GLint_p):void
 
@@ -1025,17 +1043,17 @@ glGenQueries(n:GLsizei) = \
 	return Value_List::Create(ids.get(), n);
 	'''
 
-//glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
 
 //glGetBufferPointerv(target:GLenum, pname:GLenum, params:void_p__p):void
 
-//glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
+glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
 
-//glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p):void
+glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p):void
 
-//glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p):void
+glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p):void
 
-//glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p):void
 
 glIsBuffer(buffer:GLuint):GLboolean
 
@@ -1071,13 +1089,13 @@ glDrawBuffers(n:GLsizei, bufs[]:GLenum):void
 
 glEnableVertexAttribArray(index:GLuint):void
 
-//glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
 
-//glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
 
-//glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
+glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
 
-//glGetAttribLocation(program:GLuint, name:const_GLchar_p):GLint
+glGetAttribLocation(program:GLuint, name:const_GLchar_p):GLint
 
 //glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
 

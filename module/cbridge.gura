@@ -14,6 +14,7 @@ ErrorDone(expr:Expr, msg:String) = {
 TypeInfo = class {
 	decl:String
 	cType:String
+	cTypeElem:String
 	vtypeFullName:String
 	moduleName:String = ''
 	vtype:String = ''
@@ -26,6 +27,7 @@ TypeInfo = class {
 			codePicker:String, codePickerValidation:String,
 			codePickerVec:String, codeFunctionBody:String, codeArgRef:String) = {
 		this.decl = decl, this.cType = cType
+		this.cTypeElem = cType.Sub(r'(const\s+)?(\w+).*', r'\2')
 		this.vtypeFullName = vtypeFullName
 		fields = vtypeFullName.Split('.'):list
 		if (!fields.IsEmpty()) {
@@ -175,6 +177,26 @@ Renderer = class {
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);
 		''')
+	DeclareType_Pointer(decl:String, cType:String) = this.DeclareType(decl, cType, 'Pointer',
+		codePicker = R'''
+		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>() : nullptr;
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+			return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cTypeElem}>();
+		});
+		''')
+	DeclareType_WritablePointer(decl:String, cType:String) =  this.DeclareType(decl, cType, 'Pointer',
+		codePicker = R'''
+		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>();
+		if (!${varName}) {
+			Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+			return Value::nil();
+		}
+		''')
 	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
 	RegisterExpr(moduleName:String, expr:Expr):map:void = {
 		codeFunctionBody = nil
@@ -284,6 +306,8 @@ Renderer.__init__() = {
 	this.DeclareType_Number('UInt64@gurax')
 	this.DeclareType_Number('Float@gurax')
 	this.DeclareType_Number('Double@gurax')
+	this.DeclareType_Pointer('const_void_p', 'const void*')
+	this.DeclareType_WritablePointer('void_p', 'void*')
 	this.DeclareType('bool', 'bool', 'Bool',
 		codePicker = R'''
 		${this.cType} ${varName} = args_gurax.PickBool();
