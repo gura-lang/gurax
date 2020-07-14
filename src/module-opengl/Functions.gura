@@ -311,12 +311,7 @@ glEvalPoint1(i:GLint):void
 
 glEvalPoint2(i:GLint, j:GLint):void
 
-glFeedbackBuffer(size:GLsizei, type:GLenum) = \
-	R'''
-	std::unique_ptr<GLfloat []> buffer(new GLfloat [size]);
-	glFeedbackBuffer(size, type, buffer.get());
-	return Value_List::Create(buffer.get(), size);
-	'''
+glFeedbackBuffer(size:GLsizei, type:GLenum, buffer:GLfloat_p):void
 
 glFinish():void
 
@@ -336,18 +331,13 @@ glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GL
 
 glGenLists(range:GLsizei):GLuint
 
-glGenTextures(n:GLsizei) = \
-	R'''
-	std::unique_ptr<GLuint []> textures(new GLuint [n]);
-	glGenTextures(n, textures.get());
-	return Value_List::Create(textures.get(), n);
-	'''
+glGenTextures(n:GLsizei, textures:GLuint_p);
 
 //glGetBooleanv(pname:GLenum, params[]:GLboolean):void
 
-//glGetClipPlane(plane:GLenum, equation[]:GLdouble):void
+glGetClipPlane(plane:GLenum, equation:GLdouble_p):void
 
-//glGetDoublev(pname:GLenum, params[]:GLdouble):void
+glGetDoublev(pname:GLenum, params:GLdouble_p):void
 
 glGetError():GLenum
 
@@ -377,7 +367,7 @@ glGetPixelMapusv(map:GLenum, values:GLushort_p):void
 
 //glGetPointerv(pname:GLenum, params:void_p_p):void
 
-//glGetPolygonStipple(mask:GLubyte_p):void
+glGetPolygonStipple(mask:GLubyte_p):void
 
 glGetString(name:GLenum):String_const_GLubyte_p
 
@@ -521,7 +511,7 @@ glNormal3s(nx:GLshort, ny:GLshort, nz:GLshort):void
 
 glNormal3sv(v[]:GLshort):void
 
-//glNormalPointer(type:GLenum, stride:GLsizei, pointer[]:void):void
+glNormalPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glOrtho(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
 
@@ -619,7 +609,7 @@ glRasterPos4sv(v[]:GLshort):void
 
 glReadBuffer(mode:GLenum):void
 
-//glReadPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
+glReadPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
 
 glRectd(x1:GLdouble, y1:GLdouble, x2:GLdouble, y2:GLdouble):void
 
@@ -723,7 +713,7 @@ glTexCoord4s(s:GLshort, t:GLshort, r:GLshort, q:GLshort):void
 
 glTexCoord4sv(v[]:GLshort):void
 
-//glTexCoordPointer(size:GLint, type:GLenum, stride:GLsizei, pointer[]:void):void
+glTexCoordPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glTexEnvf(target:GLenum, pname:GLenum, param:GLfloat):void
 
@@ -813,7 +803,7 @@ glVertex4s(x:GLshort, y:GLshort, z:GLshort, w:GLshort):void
 
 glVertex4sv(v[4]:GLshort):void
 
-//glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer[]:void):void
+glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
 
 glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
@@ -1042,19 +1032,9 @@ glDeleteQueries(n:GLsizei, ids[]:GLuint):void
 
 glEndQuery(target:GLenum):void
 
-glGenBuffers(n:GLsizei) = \
-	R'''
-	std::unique_ptr<GLuint []> buffers(new GLuint [n]);
-	glGenBuffers(n, buffers.get());
-	return Value_List::Create(buffers.get(), n);
-	'''
+glGenBuffers(n:GLsizei, buffers:GLuint_p):void
 
-glGenQueries(n:GLsizei) = \
-	R'''
-	std::unique_ptr<GLuint []> ids(new GLuint [n]);
-	glGenQueries(n, ids.get());
-	return Value_List::Create(ids.get(), n);
-	'''
+glGenQueries(n:GLsizei, ids:GLuint_p):void
 
 glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
 
@@ -1310,7 +1290,7 @@ glEndTransformFeedback():void
 
 glGetFragDataLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
-//glGetStringi(name:GLenum, index:GLuint):const GLubyte*
+glGetStringi(name:GLenum, index:GLuint):String_const_GLubyte_p
 
 glGetTexParameterIiv(target:GLenum, pname:GLenum, params:GLint_p):void
 
