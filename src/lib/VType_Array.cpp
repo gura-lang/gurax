@@ -28,28 +28,31 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol) {block?}
+// Array(elemType:Symbol, n:Number) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Array` instance.");
+		"Creates an `Array` instance.");
 }
 
 Gurax_ImplementConstructor(Array)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemType elemType = Array::SymbolToElemType(args.PickSymbol());
-	if (elemType == Array::ElemType::None) {
+	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
+	size_t nElems = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Array> pArray(new Array(elemType, nullptr));
+	RefPtr<Array> pArray(new Array(elemType, nElems, new MemoryHeap(elemType.bytes * nElems)));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
@@ -82,6 +85,22 @@ Gurax_ImplementMethod(Array, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// Array#bytes
+Gurax_DeclareProperty_R(Array, bytes)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The array's size in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(Array, bytes)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Memory& memory = valueThis.GetArray().GetMemory();
+	return new Value_Number(memory.GetBytes());
+}
+
 // Array#p
 Gurax_DeclareProperty_R(Array, p)
 {
@@ -112,6 +131,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, MethodSkeleton));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, p));
 }
 
@@ -123,6 +143,21 @@ VType& Value_Array::vtype = VTYPE_Array;
 String Value_Array::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetArray().ToString(ss));
+}
+
+Value* Value_Array::DoIndexGet(const Index& index) const
+{
+	//const ValueList& valuesIndex = index.GetValueOwner();
+	return Value::nil();
+}
+
+void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
+{
+	//const ValueList& valuesIndex = index.GetValueOwner();
+	Array& array = GetArray();
+	size_t idx;
+	Double num;
+	array.GetElemType().IndexSet(array.GetPointerC<void>(), idx, num);
 }
 
 }

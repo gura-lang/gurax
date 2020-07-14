@@ -36,7 +36,7 @@ Value* ValueTypedOwner::Get(Int pos) const
 	return valueOwner.Get(pos);
 }
 
-bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
+bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	UpdateVTypeOfElems(*pValue);
@@ -64,11 +64,11 @@ bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
 			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
 				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 				if (!pValueIndexEach) break;
-				if (!IndexSet2(*pValueIndexEach, pValueEach.release())) return false;
+				if (!IndexSet(*pValueIndexEach, pValueEach.release())) return false;
 			}
 		} else {
 			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
-				if (!IndexSet2(*pValueIndexEach, pValue->Reference())) return false;
+				if (!IndexSet(*pValueIndexEach, pValue->Reference())) return false;
 			}
 		}
 		return true;
@@ -86,7 +86,7 @@ bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
 				if (!pValueIndexEach) break;
 				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 				if (!pValueIndexEach) break;
-				if (!IndexSet2(*pValueIndexEach, pValueEach.release())) return false;
+				if (!IndexSet(*pValueIndexEach, pValueEach.release())) return false;
 			}
 		} else {
 			if (iteratorIndex.IsInfinite()) {
@@ -96,7 +96,7 @@ bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
 			for (;;) {
 				RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
 				if (!pValueIndexEach) break;
-				if (!IndexSet2(*pValueIndexEach, pValue->Reference())) return false;
+				if (!IndexSet(*pValueIndexEach, pValue->Reference())) return false;
 			}
 		}
 	} else {
@@ -106,7 +106,7 @@ bool ValueTypedOwner::IndexSet2(const Value& valueIndex, Value* pValue)
 	return false;
 }
 
-bool ValueTypedOwner::IndexGet2(const Value& valueIndex, Value** ppValue) const
+bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
@@ -126,7 +126,7 @@ bool ValueTypedOwner::IndexGet2(const Value& valueIndex, Value** ppValue) const
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
 		for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
-			if (!IndexGet2(*pValueIndexEach, &pValue)) return false;
+			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
 			pValueOwner->push_back(pValue->Reference());
 		}
 		*ppValue = new Value_List(pValueOwner.release());
@@ -139,7 +139,7 @@ bool ValueTypedOwner::IndexGet2(const Value& valueIndex, Value** ppValue) const
 		for (;;) {
 			RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
 			if (!pValueIndexEach) break;
-			if (!IndexGet2(*pValueIndexEach, &pValue)) return false;
+			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
 			pValueOwner->push_back(pValue->Reference());
 		}
 		*ppValue = new Value_List(pValueOwner.release());

@@ -73,8 +73,8 @@ public:
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
 	bool Set(Int pos, Value* pValue);
 	Value* Get(Int pos) const;
-	bool IndexSet2(const Value& valueIndex, Value* pValue);
-	bool IndexGet2(const Value& valueIndex, Value** ppValue) const;
+	bool IndexSet(const Value& valueIndex, Value* pValue);
+	bool IndexGet(const Value& valueIndex, Value** ppValue) const;
 	void Add(Value* pValue);
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);

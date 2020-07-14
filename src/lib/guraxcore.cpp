@@ -9,6 +9,7 @@ namespace Gurax {
 bool Initialize(int& argc, char** argv)
 {
 	Symbol::Bootup(); String::Bootup();	// must be at first
+	Array::Bootup();
 	Attribute::Bootup();
 	Binary::Bootup();
 	Color::Bootup();
@@ -21,6 +22,7 @@ bool Initialize(int& argc, char** argv)
 	Function::Bootup();
 	Image::Bootup();
 	Iterator::Bootup();
+	Memory::Bootup();
 	Operator::Bootup();
 	Palette::Bootup();
 	Random::Bootup();
