@@ -82,19 +82,20 @@ Gurax_ImplementMethod(Array, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Array#propSkeleton
-Gurax_DeclareProperty_R(Array, propSkeleton)
+// Array#p
+Gurax_DeclareProperty_R(Array, p)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Pointer, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"A `Pointer` instance that points at the first address of the Array's buffer.");
 }
 
-Gurax_ImplementPropertyGetter(Array, propSkeleton)
+Gurax_ImplementPropertyGetter(Array, p)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const Memory& memory = valueThis.GetArray().GetMemory();
+	return new Value_Pointer(new Pointer_Memory(memory.Reference()));
 }
 
 //------------------------------------------------------------------------------
@@ -111,7 +112,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Array, propSkeleton));
+	Assign(Gurax_CreateProperty(Array, p));
 }
 
 //------------------------------------------------------------------------------

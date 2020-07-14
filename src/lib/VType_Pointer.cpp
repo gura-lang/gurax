@@ -681,6 +681,9 @@ Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& buff = Value_Binary::GetBinaryReferable(value);
 		return new Value_Pointer(new Pointer_Binary(buff.Reference()));
+	} else if (value.IsType(VTYPE_Array)) {
+		const Memory& memory = Value_Array::GetArray(value).GetMemory();
+		return new Value_Pointer(new Pointer_Memory(memory.Reference()));
 	} else if (value.IsType(VTYPE_Image)) {
 		const Memory* pMemory = Value_Image::GetImage(value).GetMemory();
 		if (!pMemory) {

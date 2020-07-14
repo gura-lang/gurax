@@ -108,7 +108,9 @@ bool Pointer::CheckWritable() const
 String Pointer::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("Pointer:%d/%d", GetOffset(), GetBytesEntire());
+	size_t bytesEntire = GetBytesEntire();
+	str.Format("Pointer:%d", GetOffset());
+	if (bytesEntire != static_cast<size_t>(-1)) str.Format("/%d", bytesEntire);
 	return str;
 }
 

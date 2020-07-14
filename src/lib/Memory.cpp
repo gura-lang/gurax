@@ -8,6 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Memory
 //------------------------------------------------------------------------------
+Memory* Memory::Empty = nullptr;
+
+void Memory::Bootup()
+{
+	static char* buff = "";
+	Empty = new MemorySloth(0, buff);
+}
+
 String Memory::MakeId() const
 {
 	return String().Format("%p", _buff);
@@ -25,6 +33,14 @@ void MemoryOwner::Clear()
 {
 	for (Memory* pMemory : *this) Memory::Delete(pMemory);
 	clear();
+}
+
+//------------------------------------------------------------------------------
+// MemorySloth
+//------------------------------------------------------------------------------
+Memory* MemorySloth::Clone() const
+{
+	return new MemorySloth(_bytes, _buff);
 }
 
 #if defined(GURAX_ON_MSWIN)

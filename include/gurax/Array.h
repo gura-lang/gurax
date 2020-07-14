@@ -67,6 +67,9 @@ public:
 protected:
 	~Array() = default;
 public:
+	Memory& GetMemory() { return *_pMemory; }
+	const Memory& GetMemory() const { return *_pMemory; }
+public:
 	static ElemType SymbolToElemType(const Symbol* pSymbol) {
 		return SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);
 	}

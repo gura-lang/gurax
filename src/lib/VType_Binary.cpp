@@ -277,7 +277,7 @@ String Value_Binary::ToString(const StringStyle& ss) const
 	const Binary& buff = _pBinary->GetBinary();
 	if (ss.IsBracket()) {
 		return ToStringGeneric(ss, String().Format(":%dbytes:%s",
-				buff.size(), buff.IsWritable()? "writrable" : "constant"));
+				buff.size(), buff.IsWritable()? "writrable" : "readOnly"));
 	}
 	return buff.ToString(ss);
 }

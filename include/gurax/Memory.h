@@ -17,6 +17,10 @@ protected:
 	size_t _bytes;
 	char* _buff;
 public:
+	static Memory* Empty;
+public:
+	static void Bootup();
+public:
 	// Constructor
 	Memory() : _bytes(0), _buff(nullptr) {}
 	Memory(size_t bytes, void* buff) : _bytes(bytes), _buff(reinterpret_cast<char*>(buff)) {}
@@ -30,6 +34,7 @@ protected:
 	// Destructor
 	virtual ~Memory() = default;
 public:
+	virtual bool IsSloth() const { return false; }
 	size_t GetBytes() const { return _bytes; }
 	template<typename T> T* GetPointerC() const { return reinterpret_cast<T*>(_buff); }
 	template<typename T> T* GetPointerC(size_t offset) const { return reinterpret_cast<T*>(_buff + offset); }
@@ -51,6 +56,20 @@ class GURAX_DLLDECLARE MemoryOwner : public MemoryList {
 public:
 	~MemoryOwner();
 	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// MemorySloth
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE MemorySloth : public Memory {
+public:
+	MemorySloth(void* buff) : Memory(static_cast<size_t>(-1), buff) {}
+	MemorySloth(size_t bytes, void* buff) : Memory(bytes, buff) {}
+protected:
+	virtual ~MemorySloth() {}
+public:
+	virtual bool IsSloth() const { return true; }
+	virtual Memory* Clone() const override;
 };
 
 //------------------------------------------------------------------------------
@@ -80,7 +99,7 @@ public:
 protected:
 	virtual ~MemoryDIB();
 public:
-	inline HBITMAP GetHBITMAP() { return _hBitmap; }
+	HBITMAP GetHBITMAP() { return _hBitmap; }
 	bool AllocBuffer(size_t width, size_t height, size_t bitsPerPixel);
 	virtual Memory* Clone() const override;
 };
