@@ -3,9 +3,11 @@
 //==============================================================================
 #ifndef GURAX_ARRAY_H
 #define GURAX_ARRAY_H
-#include "Referable.h"
+#include "Memory.h"
 
 namespace Gurax {
+
+class ValueOwner;
 
 //------------------------------------------------------------------------------
 // Array
@@ -97,6 +99,7 @@ public:
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	size_t CountElems() const { return _nElems; }
+	void ExtractElems(ValueOwner& values) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);

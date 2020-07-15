@@ -3,7 +3,11 @@
 //==============================================================================
 #ifndef GURAX_COMMON_H
 #define GURAX_COMMON_H
+#if defined(_MSC_VER)
+#include <windows.h>
+#endif
 #include <array>
+#include <algorithm>
 #include <complex>
 #include <deque>
 #include <functional>

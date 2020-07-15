@@ -122,6 +122,11 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	return cnt;
 }
 
+Array* ValueList::CreateArray(Array::ElemType& elemType) const
+{
+	return nullptr;
+}
+
 String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;

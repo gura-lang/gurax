@@ -4,6 +4,7 @@
 #ifndef GURAX_VALUELIST_H
 #define GURAX_VALUELIST_H
 #include "Value.h"
+#include "Array.h"
 
 namespace Gurax {
 
@@ -43,6 +44,7 @@ public:
 		for (Value* pValue : *this) lst.push_back(fn(*pValue));
 		return lst;
 	}
+	Array* CreateArray(Array::ElemType& elemType) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }

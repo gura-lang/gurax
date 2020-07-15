@@ -50,6 +50,10 @@ void Array::Bootup()
 	ElemType::Complex.IndexSet	= Tmpl_IndexSet<Complex>;
 }
 
+void Array::ExtractElems(ValueOwner& values) const
+{
+}
+
 String Array::ToString(const StringStyle& ss) const
 {
 	return String().Format("Array:%s", _elemType.pSymbol->GetName());
