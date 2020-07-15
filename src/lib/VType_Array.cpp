@@ -154,10 +154,12 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
 	//const ValueList& valuesIndex = index.GetValueOwner();
+#if 0
 	Array& array = GetArray();
 	size_t idx;
 	Double num;
 	array.GetElemType().IndexSet(array.GetPointerC<void>(), idx, num);
+#endif
 }
 
 }

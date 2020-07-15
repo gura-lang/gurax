@@ -21,8 +21,10 @@ public:
 	public:
 		const Symbol* pSymbol;
 		size_t bytes;
-		std::function<void(void* p, size_t idx, Double num)> IndexSet;
-		std::function<Double(void* p, size_t idx)> IndexGet;
+		std::function<void (void* p, size_t idx, const Value& value)> IndexSet;
+		std::function<Value* (const void* p, size_t idx)> IndexGet;
+		std::function<void (const void* p, const ValueList& values)> InjectElems;
+		std::function<void (const void* p, size_t nElems, ValueOwner& values)> ExtractElems;
 	public:
 		ElemTypeT(size_t bytes) : bytes(bytes) {}
 		bool IsNone() const;
