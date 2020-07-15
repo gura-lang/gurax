@@ -57,6 +57,12 @@ public:
 	static const Complex& GetComplex(const Value& value) {
 		return dynamic_cast<const Value_Complex&>(value).GetComplex();
 	}
+	static Complex GetComplexRobust(const Value& value) {
+		return
+			value.IsType(VTYPE_Complex)? dynamic_cast<const Value_Complex&>(value).GetComplex() :
+			value.IsType(VTYPE_Number)? Complex(dynamic_cast<const Value_Number&>(value).GetNumber<Double>()) :
+			Complex::Zero;
+	}
 public:
 	static ComplexList GetComplexList(const ValueList& values);
 public:

@@ -12,6 +12,8 @@ String Complex::_formatterFormat = "%g%+gj";
 String Complex::_formatterFormat_Real = "%g";
 String Complex::_formatterFormat_Imag = "%gj";
 
+const Complex Complex::Zero;
+
 String Complex::ToString(const StringStyle& ss) const
 {
 	if (imag() == 0) {

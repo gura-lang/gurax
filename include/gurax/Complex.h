@@ -16,6 +16,8 @@ protected:
 	static String _formatterFormat_Real;
 	static String _formatterFormat_Imag;
 public:
+	static const Complex Zero;
+public:
 	using std::complex<Double>::complex;
 	Complex() {}
 	Complex(std::complex<Double>& num) : std::complex<Double>(num) {}

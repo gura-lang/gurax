@@ -23,8 +23,8 @@ public:
 		size_t bytes;
 		std::function<void (void* p, size_t idx, const Value& value)> IndexSet;
 		std::function<Value* (const void* p, size_t idx)> IndexGet;
-		std::function<void (const void* p, const ValueList& values)> InjectElems;
-		std::function<void (const void* p, size_t nElems, ValueOwner& values)> ExtractElems;
+		std::function<void (void* p, size_t offset, size_t nElems, const ValueList& values)> InjectElems;
+		std::function<void (const void* p, size_t offset, size_t nElems, ValueOwner& values)> ExtractElems;
 	public:
 		ElemTypeT(size_t bytes) : bytes(bytes) {}
 		bool IsNone() const;
@@ -99,9 +99,13 @@ public:
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
+	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
+	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 	size_t CountElems() const { return _nElems; }
-	void ExtractElems(ValueOwner& values) const;
+public:
+	void InjectElems(ValueList& values, size_t offset, size_t nElems);
+	void ExtractElems(ValueOwner& values, size_t offset, size_t nElems) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);

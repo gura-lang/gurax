@@ -9,31 +9,53 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
-template<typename T_Elem> void Tmpl_IndexSet(void* p, size_t idx, const Value& value)
+template<typename T_Elem> void IndexSet_T(void* p, size_t idx, const Value& value)
 {
 	*(reinterpret_cast<T_Elem*>(p) + idx) = Value_Number::GetNumber<T_Elem>(value);
 }
 
-template<typename T_Elem> Value* Tmpl_IndexGet(void* p, size_t idx)
+template<> void IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 {
-	return new Value_Number(*(reinterpret_cast<T_Elem*>(p) + idx));
+	*(reinterpret_cast<Complex*>(p) + idx) = Value_Complex::GetComplexRobust(value);
 }
 
-template<typename T_Elem> void Tmpl_InjectElems(void* p, const ValueList& values)
+template<typename T_Elem> Value* IndexGet_T(const void* p, size_t idx)
 {
-	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p);
-	for (const Value* pValue : values) *pElem++ = Value_Number::GetNumber<T_Elem>(*pValue);
+	return new Value_Number(*(reinterpret_cast<const T_Elem*>(p) + idx));
 }
 
-template<typename T_Elem> void Tmpl_ExtractElems(const void* p, size_t nElems, ValueOwner& values)
+template<> Value* IndexGet_T<Complex>(const void* p, size_t idx)
 {
-	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p);
+	return new Value_Complex(*(reinterpret_cast<const Complex*>(p) + idx));
+}
+
+template<typename T_Elem> void InjectElems_T(void* p, size_t offset, size_t nElems, const ValueList& values)
+{
+	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + offset;
+	auto ppValue = values.begin();
+	for (size_t i = 0; i < nElems; i++, pElem++, ppValue++) {
+		*pElem = Value_Number::GetNumber<T_Elem>(**ppValue);
+	}
+}
+
+template<> void InjectElems_T<Complex>(void* p, size_t offset, size_t nElems, const ValueList& values)
+{
+	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
+	auto ppValue = values.begin();
+	for (size_t i = 0; i < nElems; i++, pElem++, ppValue++) {
+		*pElem = Value_Complex::GetComplexRobust(**ppValue);
+	}
+}
+
+template<typename T_Elem> void ExtractElems_T(const void* p, size_t offset, size_t nElems, ValueOwner& values)
+{
+	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p) + offset;
 	for (size_t i = 0; i < nElems; i++, pElem++) values.push_back(new Value_Number(*pElem));
 }
 
-template<> void Tmpl_ExtractElems<Complex>(const void* p, size_t nElems, ValueOwner& values)
+template<> void ExtractElems_T<Complex>(const void* p, size_t offset, size_t nElems, ValueOwner& values)
 {
-	const Complex* pElem = reinterpret_cast<const Complex*>(p);
+	const Complex* pElem = reinterpret_cast<const Complex*>(p) + offset;
 	for (size_t i = 0; i < nElems; i++, pElem++) values.push_back(new Value_Complex(*pElem));
 }
 
@@ -41,6 +63,22 @@ Array::Array(ElemTypeT& elemType, size_t nElems, Memory* pMemory) :
 				_elemType(elemType), _nElems(nElems), _pMemory(pMemory)
 {
 }
+
+#define SetFunctionTmpl(func, funcTmpl) do { \
+	ElemType::Bool.func		= funcTmpl<Bool>; \
+	ElemType::Int8.func		= funcTmpl<Int8>; \
+	ElemType::UInt8.func	= funcTmpl<UInt8>; \
+	ElemType::Int16.func	= funcTmpl<Int16>; \
+	ElemType::UInt16.func	= funcTmpl<UInt16>; \
+	ElemType::Int32.func	= funcTmpl<Int32>; \
+	ElemType::UInt32.func	= funcTmpl<UInt32>; \
+	ElemType::Int64.func	= funcTmpl<Int64>; \
+	ElemType::UInt64.func	= funcTmpl<UInt64>; \
+	ElemType::Half.func		= funcTmpl<Half>; \
+	ElemType::Float.func	= funcTmpl<Float>; \
+	ElemType::Double.func	= funcTmpl<Double>; \
+	ElemType::Complex.func	= funcTmpl<Complex>; \
+} while (0)
 
 void Array::Bootup()
 {
@@ -58,38 +96,21 @@ void Array::Bootup()
 	ElemType::Float.pSymbol			= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol		= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol		= Gurax_Symbol(complex);
-	ElemType::Bool.IndexSet			= Tmpl_IndexSet<Bool>;
-	ElemType::Int8.IndexSet			= Tmpl_IndexSet<Int8>;
-	ElemType::UInt8.IndexSet		= Tmpl_IndexSet<UInt8>;
-	ElemType::Int16.IndexSet		= Tmpl_IndexSet<Int16>;
-	ElemType::UInt16.IndexSet		= Tmpl_IndexSet<UInt16>;
-	ElemType::Int32.IndexSet		= Tmpl_IndexSet<Int32>;
-	ElemType::UInt32.IndexSet		= Tmpl_IndexSet<UInt32>;
-	ElemType::Int64.IndexSet		= Tmpl_IndexSet<Int64>;
-	ElemType::UInt64.IndexSet		= Tmpl_IndexSet<UInt64>;
-	ElemType::Half.IndexSet			= Tmpl_IndexSet<Half>;
-	ElemType::Float.IndexSet		= Tmpl_IndexSet<Float>;
-	ElemType::Double.IndexSet		= Tmpl_IndexSet<Double>;
-	ElemType::Complex.IndexSet		= Tmpl_IndexSet<Complex>;
-	ElemType::Bool.ExtractElems		= Tmpl_ExtractElems<Bool>;
-	ElemType::Int8.ExtractElems		= Tmpl_ExtractElems<Int8>;
-	ElemType::UInt8.ExtractElems	= Tmpl_ExtractElems<UInt8>;
-	ElemType::Int16.ExtractElems	= Tmpl_ExtractElems<Int16>;
-	ElemType::UInt16.ExtractElems	= Tmpl_ExtractElems<UInt16>;
-	ElemType::Int32.ExtractElems	= Tmpl_ExtractElems<Int32>;
-	ElemType::UInt32.ExtractElems	= Tmpl_ExtractElems<UInt32>;
-	ElemType::Int64.ExtractElems	= Tmpl_ExtractElems<Int64>;
-	ElemType::UInt64.ExtractElems	= Tmpl_ExtractElems<UInt64>;
-	ElemType::Half.ExtractElems		= Tmpl_ExtractElems<Half>;
-	ElemType::Float.ExtractElems	= Tmpl_ExtractElems<Float>;
-	ElemType::Double.ExtractElems	= Tmpl_ExtractElems<Double>;
-	ElemType::Complex.ExtractElems	= Tmpl_ExtractElems<Complex>;
+	SetFunctionTmpl(IndexSet,		IndexSet_T);
+	SetFunctionTmpl(IndexGet,		IndexGet_T);
+	SetFunctionTmpl(InjectElems,	InjectElems_T);
+	SetFunctionTmpl(ExtractElems,	ExtractElems_T);
 }
 
-void Array::ExtractElems(ValueOwner& values) const
+void Array::InjectElems(ValueList& values, size_t offset, size_t nElems)
 {
-	values.reserve(values.size() + _nElems);
-	_elemType.ExtractElems(GetPointerC<void>(), _nElems, values);
+	_elemType.InjectElems(GetPointerC<void>(), offset, nElems, values);
+}
+
+void Array::ExtractElems(ValueOwner& values, size_t offset, size_t nElems) const
+{
+	values.reserve(values.size() + nElems);
+	_elemType.ExtractElems(GetPointerC<void>(), offset, nElems, values);
 }
 
 String Array::ToString(const StringStyle& ss) const
