@@ -64,7 +64,7 @@ Array::Array(ElemTypeT& elemType, size_t nElems, Memory* pMemory) :
 {
 }
 
-#define SetFunctionTmpl(func, funcTmpl) do { \
+#define SetFuncBurst(func, funcTmpl) do { \
 	ElemType::Bool.func		= funcTmpl<Bool>; \
 	ElemType::Int8.func		= funcTmpl<Int8>; \
 	ElemType::UInt8.func	= funcTmpl<UInt8>; \
@@ -96,10 +96,10 @@ void Array::Bootup()
 	ElemType::Float.pSymbol			= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol		= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol		= Gurax_Symbol(complex);
-	SetFunctionTmpl(IndexSet,		IndexSet_T);
-	SetFunctionTmpl(IndexGet,		IndexGet_T);
-	SetFunctionTmpl(InjectElems,	InjectElems_T);
-	SetFunctionTmpl(ExtractElems,	ExtractElems_T);
+	SetFuncBurst(IndexSet,			IndexSet_T);
+	SetFuncBurst(IndexGet,			IndexGet_T);
+	SetFuncBurst(InjectElems,		InjectElems_T);
+	SetFuncBurst(ExtractElems,		ExtractElems_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t nElems)
