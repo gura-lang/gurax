@@ -25,6 +25,19 @@ public:
 	bool IsZero() const { return real() == 0. && imag() == 0.; }
 	String ToString(const StringStyle& ss) const;
 public:
+	explicit operator Bool() const { return !IsZero(); }
+	explicit operator Int8() const { return 0; }
+	explicit operator UInt8() const { return 0; }
+	explicit operator Int16() const { return 0; }
+	explicit operator UInt16() const { return 0; }
+	explicit operator Int32() const { return 0; }
+	explicit operator UInt32() const { return 0; }
+	explicit operator Int64() const { return 0; }
+	explicit operator UInt64() const { return 0; }
+	//explicit operator Half() const { return 0; }
+	explicit operator Float() const { return 0; }
+	explicit operator Double() const { return 0; }
+public:
 	static void SetFormatterFormat(String formatterFormat) {
 		_formatterFormat = formatterFormat;
 	}

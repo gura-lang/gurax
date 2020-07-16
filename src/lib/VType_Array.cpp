@@ -28,12 +28,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, n:Number) {block?}
+// Array(elemType:Symbol, len:Number) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -49,10 +49,10 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	size_t nElems = args.PickNumberPos<size_t>();
+	size_t len = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Array> pArray(new Array(elemType, nElems, new MemoryHeap(elemType.bytes * nElems)));
+	RefPtr<Array> pArray(new Array(elemType, len, new MemoryHeap(elemType.bytes * len)));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
@@ -101,6 +101,36 @@ Gurax_ImplementPropertyGetter(Array, bytes)
 	return new Value_Number(memory.GetBytes());
 }
 
+// Array#elemType
+Gurax_DeclareProperty_R(Array, elemType)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A symbol that represents the array's element type.");
+}
+
+Gurax_ImplementPropertyGetter(Array, elemType)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetArray().GetElemType().pSymbol);
+}
+
+// Array#len
+Gurax_DeclareProperty_R(Array, len)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The number of elements in the array.");
+}
+
+Gurax_ImplementPropertyGetter(Array, len)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetArray().GetLength());
+}
+
 // Array#p
 Gurax_DeclareProperty_R(Array, p)
 {
@@ -132,6 +162,8 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
+	Assign(Gurax_CreateProperty(Array, elemType));
+	Assign(Gurax_CreateProperty(Array, len));
 	Assign(Gurax_CreateProperty(Array, p));
 }
 

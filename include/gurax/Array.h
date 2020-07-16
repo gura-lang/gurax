@@ -18,16 +18,20 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Array);
 public:
+	static const size_t ElemTypeIdMax = 13;
 	class GURAX_DLLDECLARE ElemTypeT {
 	public:
-		const Symbol* pSymbol;
+		size_t id;
 		size_t bytes;
+		const Symbol* pSymbol;
+	public:
 		std::function<void (void* p, size_t idx, const Value& value)> IndexSet;
 		std::function<Value* (const void* p, size_t idx)> IndexGet;
-		std::function<void (void* p, size_t offset, size_t nElems, const ValueList& values)> InjectElems;
-		std::function<void (const void* p, size_t offset, size_t nElems, ValueOwner& values)> ExtractElems;
+		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectElems;
+		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractElems;
+		std::function<void (void* pDst, const void* pSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
 	public:
-		ElemTypeT(size_t bytes) : bytes(bytes) {}
+		ElemTypeT(size_t id, size_t bytes) : id(id), bytes(bytes) {}
 		bool IsNone() const;
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
 	};
@@ -80,11 +84,11 @@ public:
 	};
 protected:
 	ElemTypeT& _elemType;
-	size_t _nElems;
+	size_t _len;
 	RefPtr<Memory> _pMemory;
 public:
 	// Constructor
-	Array(ElemTypeT& elemType, size_t nElems, Memory* pMemory);
+	Array(ElemTypeT& elemType, size_t len, Memory* pMemory);
 	// Copy constructor/operator
 	Array(const Array& src) = delete;
 	Array& operator=(const Array& src) = delete;
@@ -96,20 +100,23 @@ protected:
 public:
 	static void Bootup();
 public:
-	ElemTypeT& GetElemType() { return _elemType; }
+	static Array* Create(ElemTypeT& elemType, size_t len);
+	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
-	size_t CountElems() const { return _nElems; }
+	size_t GetLength() const { return _len; }
 public:
-	void InjectElems(ValueList& values, size_t offset, size_t nElems);
+	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset);
-	void ExtractElems(ValueOwner& values, size_t offset, size_t nElems) const;
+	void InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len);
+	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElems(ValueOwner& values, size_t offset) const;
 	void ExtractElems(ValueOwner& values) const;
+	Array* CreateCasted(ElemTypeT& elemType) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);
