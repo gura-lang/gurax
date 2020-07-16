@@ -7,6 +7,7 @@
 
 namespace Gurax {
 
+class ValueList;
 class ValueOwner;
 
 //------------------------------------------------------------------------------
@@ -105,7 +106,10 @@ public:
 	size_t CountElems() const { return _nElems; }
 public:
 	void InjectElems(ValueList& values, size_t offset, size_t nElems);
+	void InjectElems(ValueList& values, size_t offset);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t nElems) const;
+	void ExtractElems(ValueOwner& values, size_t offset) const;
+	void ExtractElems(ValueOwner& values) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);

@@ -54,6 +54,11 @@ VType& ValueList::GetVTypeOfElems() const
 	return *pVTypeOfElems;
 }
 
+VType& ValueList::GetVTypeOfElemsQuick() const
+{
+	return empty()? VTYPE_Undefined : front()->GetVType();
+}
+
 void ValueList::IncCntRefOfEach() const
 {
 	for (Value* pValue : *this) pValue->IncCntRef();

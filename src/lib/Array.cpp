@@ -9,6 +9,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
+Array::Array(ElemTypeT& elemType, size_t nElems, Memory* pMemory) :
+				_elemType(elemType), _nElems(nElems), _pMemory(pMemory)
+{
+}
+
 template<typename T_Elem> void IndexSet_T(void* p, size_t idx, const Value& value)
 {
 	*(reinterpret_cast<T_Elem*>(p) + idx) = Value_Number::GetNumber<T_Elem>(value);
@@ -59,11 +64,6 @@ template<> void ExtractElems_T<Complex>(const void* p, size_t offset, size_t nEl
 	for (size_t i = 0; i < nElems; i++, pElem++) values.push_back(new Value_Complex(*pElem));
 }
 
-Array::Array(ElemTypeT& elemType, size_t nElems, Memory* pMemory) :
-				_elemType(elemType), _nElems(nElems), _pMemory(pMemory)
-{
-}
-
 #define SetFuncBurst(func, funcTmpl) do { \
 	ElemType::Bool.func		= funcTmpl<Bool>; \
 	ElemType::Int8.func		= funcTmpl<Int8>; \
@@ -107,10 +107,25 @@ void Array::InjectElems(ValueList& values, size_t offset, size_t nElems)
 	_elemType.InjectElems(GetPointerC<void>(), offset, nElems, values);
 }
 
+void Array::InjectElems(ValueList& values, size_t offset)
+{
+	InjectElems(values, offset, values.size());
+}
+
 void Array::ExtractElems(ValueOwner& values, size_t offset, size_t nElems) const
 {
 	values.reserve(values.size() + nElems);
 	_elemType.ExtractElems(GetPointerC<void>(), offset, nElems, values);
+}
+
+void Array::ExtractElems(ValueOwner& values, size_t offset) const
+{
+	ExtractElems(values, offset, CountElems() - offset);
+}
+
+void Array::ExtractElems(ValueOwner& values) const
+{
+	ExtractElems(values, 0, CountElems());
 }
 
 String Array::ToString(const StringStyle& ss) const

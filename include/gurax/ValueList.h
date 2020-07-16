@@ -26,6 +26,7 @@ public:
 	ValueList& StableSort(Processor& processor, const Function& function);
 	ValueList& Shuffle(Random& random);
 	VType& GetVTypeOfElems() const;
+	VType& GetVTypeOfElemsQuick() const;
 	void IncCntRefOfEach() const;
 	bool CheckPosition(Int pos, Int posRaw) const;
 	bool CheckPosition(Int pos) const { return CheckPosition(pos, pos); }
