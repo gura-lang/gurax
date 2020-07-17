@@ -8,24 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
-Array::Array(ElemTypeT& elemType, Memory* pMemory, NumList<size_t> dimSizes) :
+Array::Array(ElemTypeT& elemType, Memory* pMemory, Array::DimSizes dimSizes) :
 		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
 {
 }
 
-Array* Array::Create(ElemTypeT& elemType, size_t len)
+Array* Array::Create(ElemTypeT& elemType, Array::DimSizes dimSizes)
 {
-	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * len));
-	pMemory->Fill(0);
-	NumList<size_t> dimSizesNum;
-	dimSizesNum.push_back(len);
-	RefPtr<Array> pArray(new Array(elemType, pMemory.release(), std::move(dimSizesNum)));
-	return pArray.release();
-}
-
-Array* Array::Create(ElemTypeT& elemType, NumList<size_t> dimSizes)
-{
-	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * CalcLength(dimSizes)));
+	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.GetLength()));
 	pMemory->Fill(0);
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
@@ -160,13 +150,6 @@ void Array::Bootup()
 	SetFuncBurstM(CopyElems,		CopyElems_T);
 }
 
-size_t Array::CalcLength(const NumList<size_t>& dimSizes)
-{
-	size_t len = 1;
-	for (size_t dimSize : dimSizes) len *= dimSize;
-	return len;
-}
-
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 {
 	_elemType.InjectElems(values, GetPointerC<void>(), offset, len);
@@ -188,26 +171,22 @@ void Array::ExtractElems(ValueOwner& values, size_t offset, size_t len) const
 	_elemType.ExtractElems(values, GetPointerC<void>(), offset, len);
 }
 
-void Array::ExtractElems(ValueOwner& values, size_t offset) const
-{
-	ExtractElems(values, offset, GetLength() - offset);
-}
-
 void Array::ExtractElems(ValueOwner& values) const
 {
-	ExtractElems(values, 0, GetLength());
+	ExtractElems(values, 0, _dimSizes.GetLength());
 }
 
 Array* Array::CreateCasted(ElemTypeT& elemType) const
 {
-	RefPtr<Array> pArray(Array::Create(elemType, GetLength()));
-	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, GetLength());
+	RefPtr<Array> pArray(Array::Create(elemType, _dimSizes));
+	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.GetLength());
 	return pArray.release();
 }
 
 String Array::ToString(const StringStyle& ss) const
 {
-	return String().Format("Array:%s:%zuelems", _elemType.pSymbol->GetName(), GetLength());
+	return String().Format("Array:%s:[%s]",
+		_elemType.pSymbol->GetName(), _dimSizes.ToString(StringStyle::Cram).c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -231,6 +210,26 @@ Array::ElemTypeT Array::ElemType::Complex(12, sizeof(Complex));
 bool Array::ElemTypeT::IsNone() const
 {
 	return IsIdentical(ElemType::None);
+}
+
+//------------------------------------------------------------------------------
+// Array::DimSizes
+//------------------------------------------------------------------------------
+size_t Array::DimSizes::GetLength() const
+{
+	size_t len = 1;
+	for (size_t dimSize : *this) len *= dimSize;
+	return len;
+}
+
+String Array::DimSizes::ToString(const StringStyle& ss) const
+{
+	String str;
+	for (size_t dimSize : *this) {
+		if (!str.empty()) str += ss.GetComma();
+		str.Format("%zu", dimSize);
+	}
+	return str;
 }
 
 }

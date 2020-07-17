@@ -77,22 +77,23 @@ public:
 			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ElemType());
 		}
 	};
-	template<typename T_Elem>
-	class Accessor {
+	class GURAX_DLLDECLARE DimSizes : public NumList<size_t> {
 	public:
-		static T_Elem* GetPointer(void* p) { return reinterpret_cast<T_Elem*>(p); }
-		static const T_Elem* GetPointer(const void* p) { return reinterpret_cast<const T_Elem*>(p); }
-		static T_Elem& Get(void* p) { return *reinterpret_cast<T_Elem*>(p); }
-		static const T_Elem& Get(const void* p) { return *reinterpret_cast<const T_Elem*>(p); }
-		static void Set(void* p, const T_Elem& elem) { *reinterpret_cast<T_Elem*>(p) = elem; }
+		using NumList::NumList;
+	public:
+		DimSizes(const NumList& src) : NumList(src) {}
+		DimSizes(NumList&& src) : NumList(src) {}
+	public:
+		size_t GetLength() const;
+		String ToString(const StringStyle& ss) const;
 	};
 protected:
 	ElemTypeT& _elemType;
 	RefPtr<Memory> _pMemory;
-	NumList<size_t> _dimSizes;
+	DimSizes _dimSizes;
 protected:
 	// Constructor
-	Array(ElemTypeT& elemType, Memory* pMemory, NumList<size_t> dimSizes);
+	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
 	// Copy constructor/operator
 	Array(const Array& src) = delete;
 	Array& operator=(const Array& src) = delete;
@@ -104,24 +105,20 @@ protected:
 public:
 	static void Bootup();
 public:
-	static Array* Create(ElemTypeT& elemType, size_t len);
-	static Array* Create(ElemTypeT& elemType, NumList<size_t> dimSizes);
+	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
 	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
-	const NumList<size_t>& GetDimSizes() const { return _dimSizes; }
+	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
-	static size_t CalcLength(const NumList<size_t>& dimSizes);
-	size_t GetLength() const { return CalcLength(_dimSizes); }
 public:
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset);
 	void InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
-	void ExtractElems(ValueOwner& values, size_t offset) const;
 	void ExtractElems(ValueOwner& values) const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
 public:

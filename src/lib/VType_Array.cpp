@@ -48,7 +48,7 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	NumList<size_t> dimSizes = args.PickNumListPos<size_t>();
+	Array::DimSizes dimSizes = args.PickNumListPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Array> pArray(Array::Create(elemType, std::move(dimSizes)));
@@ -130,7 +130,7 @@ Gurax_DeclareProperty_R(Array, len)
 Gurax_ImplementPropertyGetter(Array, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetArray().GetLength());
+	return new Value_Number(valueThis.GetArray().GetDimSizes().GetLength());
 }
 
 // Array#p
