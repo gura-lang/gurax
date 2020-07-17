@@ -13,6 +13,7 @@ namespace Gurax {
 class Value;
 class ValueList;
 class ValueOwner;
+class Value_List;
 
 //------------------------------------------------------------------------------
 // Array
@@ -31,8 +32,8 @@ public:
 	public:
 		std::function<void (void* p, size_t idx, const Value& value)> IndexSet;
 		std::function<Value* (const void* p, size_t idx)> IndexGet;
-		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectElems;
-		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractElems;
+		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectFromValueList;
+		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pDst, const void* pSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id, size_t bytes) : id(id), bytes(bytes) {}
@@ -117,9 +118,13 @@ public:
 public:
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset);
+	//bool InjectElems(Iterator& iterator, size_t offset, size_t len);
+	//bool InjectElems(Iteartor& iterator, size_t offset);
 	void InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
+	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
+	Value_List* ToList() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {

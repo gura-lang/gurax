@@ -40,7 +40,7 @@ template<> Value* IndexGet_T<Complex>(const void* p, size_t idx)
 	return new Value_Complex(*(reinterpret_cast<const Complex*>(p) + idx));
 }
 
-template<typename T_Elem> void InjectElems_T(const ValueList& values, void* p, size_t offset, size_t len)
+template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, void* p, size_t offset, size_t len)
 {
 	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + offset;
 	auto ppValue = values.begin();
@@ -49,7 +49,7 @@ template<typename T_Elem> void InjectElems_T(const ValueList& values, void* p, s
 	}
 }
 
-template<> void InjectElems_T<Complex>(const ValueList& values, void* p, size_t offset, size_t len)
+template<> void InjectFromValueList_T<Complex>(const ValueList& values, void* p, size_t offset, size_t len)
 {
 	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
 	auto ppValue = values.begin();
@@ -58,13 +58,13 @@ template<> void InjectElems_T<Complex>(const ValueList& values, void* p, size_t 
 	}
 }
 
-template<typename T_Elem> void ExtractElems_T(ValueOwner& values, const void* p, size_t offset, size_t len)
+template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const void* p, size_t offset, size_t len)
 {
 	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p) + offset;
 	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Number(*pElem));
 }
 
-template<> void ExtractElems_T<Complex>(ValueOwner& values, const void* p, size_t offset, size_t len)
+template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* p, size_t offset, size_t len)
 {
 	const Complex* pElem = reinterpret_cast<const Complex*>(p) + offset;
 	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Complex(*pElem));
@@ -129,36 +129,48 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 
 void Array::Bootup()
 {
-	ElemType::None.pSymbol			= Symbol::Empty;
-	ElemType::Bool.pSymbol			= Gurax_Symbol(bool_);
-	ElemType::Int8.pSymbol			= Gurax_Symbol(int8);
-	ElemType::UInt8.pSymbol			= Gurax_Symbol(uint8);
-	ElemType::Int16.pSymbol			= Gurax_Symbol(int16);
-	ElemType::UInt16.pSymbol		= Gurax_Symbol(uint16);
-	ElemType::Int32.pSymbol			= Gurax_Symbol(int32);
-	ElemType::UInt32.pSymbol		= Gurax_Symbol(uint32);
-	ElemType::Int64.pSymbol			= Gurax_Symbol(int64);
-	ElemType::UInt64.pSymbol		= Gurax_Symbol(uint64);
-	ElemType::Half.pSymbol			= Gurax_Symbol(half);
-	ElemType::Float.pSymbol			= Gurax_Symbol(float_);
-	ElemType::Double.pSymbol		= Gurax_Symbol(double_);
-	ElemType::Complex.pSymbol		= Gurax_Symbol(complex);
-	SetFuncBurst(IndexSet,			IndexSet_T);
-	SetFuncBurst(IndexGet,			IndexGet_T);
-	SetFuncBurst(InjectElems,		InjectElems_T);
-	SetFuncBurst(ExtractElems,		ExtractElems_T);
-	SetFuncBurstM(CopyElems,		CopyElems_T);
+	ElemType::None.pSymbol				= Symbol::Empty;
+	ElemType::Bool.pSymbol				= Gurax_Symbol(bool_);
+	ElemType::Int8.pSymbol				= Gurax_Symbol(int8);
+	ElemType::UInt8.pSymbol				= Gurax_Symbol(uint8);
+	ElemType::Int16.pSymbol				= Gurax_Symbol(int16);
+	ElemType::UInt16.pSymbol			= Gurax_Symbol(uint16);
+	ElemType::Int32.pSymbol				= Gurax_Symbol(int32);
+	ElemType::UInt32.pSymbol			= Gurax_Symbol(uint32);
+	ElemType::Int64.pSymbol				= Gurax_Symbol(int64);
+	ElemType::UInt64.pSymbol			= Gurax_Symbol(uint64);
+	ElemType::Half.pSymbol				= Gurax_Symbol(half);
+	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
+	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
+	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
+	SetFuncBurst(IndexSet,				IndexSet_T);
+	SetFuncBurst(IndexGet,				IndexGet_T);
+	SetFuncBurst(InjectFromValueList,	InjectFromValueList_T);
+	SetFuncBurst(ExtractToValueOwner,	ExtractToValueOwner_T);
+	SetFuncBurstM(CopyElems,			CopyElems_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 {
-	_elemType.InjectElems(values, GetPointerC<void>(), offset, len);
+	_elemType.InjectFromValueList(values, GetPointerC<void>(), offset, len);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset)
 {
 	InjectElems(values, offset, values.size());
 }
+
+#if 0
+void Array::InjectElems(Iterator& iterator, size_t offset, size_t len)
+{
+	_elemType.InjectElems(iterator, GetPointerC<void>(), offset, len);
+}
+
+void Array::InjectElems(Iterator& iterator, size_t offset)
+{
+	InjectElems(iterator, offset, values.size());
+}
+#endif
 
 void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
 {
@@ -168,12 +180,36 @@ void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, si
 void Array::ExtractElems(ValueOwner& values, size_t offset, size_t len) const
 {
 	values.reserve(values.size() + len);
-	_elemType.ExtractElems(values, GetPointerC<void>(), offset, len);
+	_elemType.ExtractToValueOwner(values, GetPointerC<void>(), offset, len);
+}
+
+void Array::ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const
+{
+	if (pDimSize + 1 == _dimSizes.end()) {
+		ExtractElems(values, offset, *pDimSize);
+		offset += *pDimSize;
+	} else {
+		for (size_t i = 0; i < *pDimSize; i++) {
+			RefPtr<ValueOwner> pValues(new ValueOwner());
+			ExtractElemsSub(*pValues, offset, pDimSize + 1);
+			VType& vtypeOfElems = pValues->GetVTypeOfElemsQuick();
+			values.push_back(new Value_List(vtypeOfElems, pValues.release()));
+		}
+	}
 }
 
 void Array::ExtractElems(ValueOwner& values) const
 {
-	ExtractElems(values, 0, _dimSizes.GetLength());
+	size_t offset = 0;
+	ExtractElemsSub(values, offset, _dimSizes.begin());
+}
+
+Value_List* Array::ToList() const
+{
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	ExtractElems(*pValues);
+	VType& vtypeOfElems = pValues->GetVTypeOfElemsQuick();
+	return new Value_List(vtypeOfElems, pValues.release());
 }
 
 Array* Array::CreateCasted(ElemTypeT& elemType) const

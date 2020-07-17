@@ -1563,10 +1563,7 @@ Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 		return new Value_List(ValueTypedOwner::CreateFromIterator(iterator, false));
 	} else if (value.IsType(VTYPE_Array)) {
 		const Array& array = Value_Array::GetArray(value);
-		RefPtr<ValueOwner> pValues(new ValueOwner());
-		array.ExtractElems(*pValues);
-		VType& vtypeOfElems = pValues->GetVTypeOfElemsQuick();
-		return new Value_List(vtypeOfElems, pValues.release());
+		return array.ToList();
 	}
 	return nullptr;
 }

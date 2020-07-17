@@ -84,6 +84,44 @@ Gurax_ImplementMethod(Array, CreateCasted)
 	return new Value_Array(valueThis.GetArray().CreateCasted(elemType));
 }
 
+// Array#Inject(nums[])
+Gurax_DeclareMethod(Array, Inject)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Array, Inject)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int num = args.PickNumber<Int>();
+	// Function body
+	return new Value_Number(num * 3);
+}
+
+// Array#ToList()
+Gurax_DeclareMethod(Array, ToList)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Convets the Array to a List.");
+}
+
+Gurax_ImplementMethod(Array, ToList)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return valueThis.GetArray().ToList();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -162,6 +200,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, CreateCasted));
+	Assign(Gurax_CreateMethod(Array, ToList));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, elemType));
