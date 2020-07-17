@@ -58,6 +58,39 @@ template<> void InjectFromValueList_T<Complex>(const ValueList& values, void* p,
 	}
 }
 
+template<typename T_Elem> bool InjectFromIterator_T(Iterator& iterator, void* p, size_t offset, size_t len)
+{
+	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + offset;
+	for (size_t i = 0; i < len; i++, pElem++) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		if (!pValue->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "must be Number value");
+			return false;
+		}
+		*pElem = Value_Number::GetNumber<T_Elem>(*pValue);
+	}
+	return !Error::IsIssued();
+}
+
+template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* p, size_t offset, size_t len)
+{
+	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
+	for (size_t i = 0; i < len; i++, pElem++) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		if (pValue->IsType(VTYPE_Number)) {
+			*pElem = Value_Number::GetNumber<Double>(*pValue);
+		} else if (pValue->IsType(VTYPE_Complex)) {
+			*pElem = Value_Complex::GetComplex(*pValue);
+		} else {
+			Error::Issue(ErrorType::TypeError, "must be Complex or Number value");
+			return false;
+		}
+	}
+	return !Error::IsIssued();
+}
+
 template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const void* p, size_t offset, size_t len)
 {
 	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p) + offset;
@@ -146,6 +179,7 @@ void Array::Bootup()
 	SetFuncBurst(IndexSet,				IndexSet_T);
 	SetFuncBurst(IndexGet,				IndexGet_T);
 	SetFuncBurst(InjectFromValueList,	InjectFromValueList_T);
+	SetFuncBurst(InjectFromIterator,	InjectFromIterator_T);
 	SetFuncBurst(ExtractToValueOwner,	ExtractToValueOwner_T);
 	SetFuncBurstM(CopyElems,			CopyElems_T);
 }
@@ -157,20 +191,18 @@ void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 
 void Array::InjectElems(ValueList& values, size_t offset)
 {
-	InjectElems(values, offset, values.size());
+	InjectElems(values, offset, std::min(values.size(), _dimSizes.GetLength() - offset));
 }
 
-#if 0
-void Array::InjectElems(Iterator& iterator, size_t offset, size_t len)
+bool Array::InjectElems(Iterator& iterator, size_t offset, size_t len)
 {
-	_elemType.InjectElems(iterator, GetPointerC<void>(), offset, len);
+	return _elemType.InjectFromIterator(iterator, GetPointerC<void>(), offset, len);
 }
 
-void Array::InjectElems(Iterator& iterator, size_t offset)
+bool Array::InjectElems(Iterator& iterator, size_t offset)
 {
-	InjectElems(iterator, offset, values.size());
+	return InjectElems(iterator, offset, _dimSizes.GetLength() - offset);
 }
-#endif
 
 void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
 {
