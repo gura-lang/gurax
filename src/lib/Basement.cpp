@@ -2,7 +2,6 @@
 // Basement.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax-tentative.h>
 
 namespace Gurax {
 

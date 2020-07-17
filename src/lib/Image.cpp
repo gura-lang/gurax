@@ -2,7 +2,6 @@
 // Image.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax-tentative.h>
 #undef RGB
 namespace Gurax {
 

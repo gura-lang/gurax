@@ -2,21 +2,32 @@
 // Array.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax-tentative.h>
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
-Array::Array(ElemTypeT& elemType, size_t len, Memory* pMemory) :
-				_elemType(elemType), _len(len), _pMemory(pMemory)
+Array::Array(ElemTypeT& elemType, Memory* pMemory, NumList<size_t> dimSizes) :
+		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
 {
 }
 
 Array* Array::Create(ElemTypeT& elemType, size_t len)
 {
-	return new Array(elemType, len, new MemoryHeap(elemType.bytes * len));
+	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * len));
+	pMemory->Fill(0);
+	NumList<size_t> dimSizesNum;
+	dimSizesNum.push_back(len);
+	RefPtr<Array> pArray(new Array(elemType, pMemory.release(), std::move(dimSizesNum)));
+	return pArray.release();
+}
+
+Array* Array::Create(ElemTypeT& elemType, NumList<size_t> dimSizes)
+{
+	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * CalcLength(dimSizes)));
+	pMemory->Fill(0);
+	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
 
 template<typename T_Elem> void IndexSet_T(void* p, size_t idx, const Value& value)
@@ -147,6 +158,13 @@ void Array::Bootup()
 	SetFuncBurst(InjectElems,		InjectElems_T);
 	SetFuncBurst(ExtractElems,		ExtractElems_T);
 	SetFuncBurstM(CopyElems,		CopyElems_T);
+}
+
+size_t Array::CalcLength(const NumList<size_t>& dimSizes)
+{
+	size_t len = 1;
+	for (size_t dimSize : dimSizes) len *= dimSize;
+	return len;
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)

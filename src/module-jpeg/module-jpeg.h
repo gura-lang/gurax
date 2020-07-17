@@ -4,7 +4,6 @@
 #ifndef GURAX_MODULE_JPEG_H
 #define GURAX_MODULE_JPEG_H
 #include <gurax.h>
-#include <gurax-tentative.h>
 #include "DataType.h"
 #include "Symbol.h"
 #include "Util.h"

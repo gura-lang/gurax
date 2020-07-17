@@ -3,10 +3,14 @@
 //==============================================================================
 #ifndef GURAX_ARRAY_H
 #define GURAX_ARRAY_H
+#include "Referable.h"
+#include "Symbols.h"
 #include "Memory.h"
+#include "Number.h"
 
 namespace Gurax {
 
+class Value;
 class ValueList;
 class ValueOwner;
 
@@ -84,11 +88,11 @@ public:
 	};
 protected:
 	ElemTypeT& _elemType;
-	size_t _len;
 	RefPtr<Memory> _pMemory;
-public:
+	NumList<size_t> _dimSizes;
+protected:
 	// Constructor
-	Array(ElemTypeT& elemType, size_t len, Memory* pMemory);
+	Array(ElemTypeT& elemType, Memory* pMemory, NumList<size_t> dimSizes);
 	// Copy constructor/operator
 	Array(const Array& src) = delete;
 	Array& operator=(const Array& src) = delete;
@@ -101,14 +105,17 @@ public:
 	static void Bootup();
 public:
 	static Array* Create(ElemTypeT& elemType, size_t len);
+	static Array* Create(ElemTypeT& elemType, NumList<size_t> dimSizes);
 	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
+	const NumList<size_t>& GetDimSizes() const { return _dimSizes; }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
-	size_t GetLength() const { return _len; }
+	static size_t CalcLength(const NumList<size_t>& dimSizes);
+	size_t GetLength() const { return CalcLength(_dimSizes); }
 public:
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset);

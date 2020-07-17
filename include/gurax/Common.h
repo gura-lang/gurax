@@ -275,8 +275,13 @@ public:
 	ListBase() {}
 	ListBase(size_t n) : _container(n) {}
 	ListBase(size_t n, T elem) : _container(n, elem) {}
+	ListBase(const ListBase& src) : _container(src._container) {}
+	ListBase(ListBase&& src) : _container(std::move(src._container)) {}
 	ListBase(const_iterator first, const_iterator last) : _container(first, last) {}
 	ListBase(std::initializer_list<T> initList) : _container(initList) {}
+public:
+	void operator=(const ListBase& src) { _container = src._container; }
+	void operator=(ListBase&& src) { _container = std::move(src._container); }
 public:
 	reference operator[](size_t pos) { return _container[pos]; }
 	const_reference operator[](size_t pos) const { return _container[pos]; }

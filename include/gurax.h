@@ -4,7 +4,7 @@
 #ifndef GURAX_H
 #define GURAX_H
 
-//#include "gurax/Array.h"
+#include "gurax/Array.h"
 #include "gurax/ArgFeeder.h"
 #include "gurax/ArgPicker.h"
 #include "gurax/ArgSlot.h"
@@ -85,7 +85,7 @@
 #include "gurax/VType.h"
 #include "gurax/VTypeCustom.h"
 #include "gurax/VType_Any.h"
-//#include "gurax/VType_Array.h"
+#include "gurax/VType_Array.h"
 #include "gurax/VType_ArgMapper.h"
 #include "gurax/VType_ArgMapper_Multiple.h"
 #include "gurax/VType_ArgSlot.h"

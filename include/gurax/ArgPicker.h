@@ -85,6 +85,18 @@ public:
 	NumList<T_Num> PickNumList() {
 		return IsValid()? PickList().ToNumList<T_Num>() : NumList<T_Num>();
 	}
+	template<typename T_Num>
+	NumList<T_Num> PickNumListRanged(T_Num numMin, T_Num numMax) {
+		return IsValid()? PickList().ToNumListRanged<T_Num>(numMin, numMax) : NumList<T_Num>();
+	}
+	template<typename T_Num>
+	NumList<T_Num> PickNumListNonNeg() {
+		return IsValid()? PickList().ToNumListNonNeg<T_Num>() : NumList<T_Num>();
+	}
+	template<typename T_Num>
+	NumList<T_Num> PickNumListPos() {
+		return IsValid()? PickList().ToNumListPos<T_Num>() : NumList<T_Num>();
+	}
 	template<typename T>
 	ListBase<T> PickListT(std::function<T(Value& value)> fn) {
 		return IsValid()? PickList().ToListT<T>(fn) : ListBase<T>();

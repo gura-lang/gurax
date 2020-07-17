@@ -2,7 +2,6 @@
 // VType_Array.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax-tentative.h>
 
 namespace Gurax {
 
@@ -28,12 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, len:Number) {block?}
+// Array(elemType:Symbol, dimSize+:Number) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dimSize", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -49,37 +48,40 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	size_t len = args.PickNumberPos<size_t>();
+	NumList<size_t> dimSizes = args.PickNumListPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Array> pArray(new Array(elemType, len, new MemoryHeap(elemType.bytes * len)));
+	RefPtr<Array> pArray(Array::Create(elemType, std::move(dimSizes)));
+	if (!pArray) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Array#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Array, MethodSkeleton)
+// Array#CreateCasted(elemType:Symbol)
+Gurax_DeclareMethod(Array, CreateCasted)
 {
 	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Creates a new Array that contains elements casted by the specified element type.\n");
 }
 
-Gurax_ImplementMethod(Array, MethodSkeleton)
+Gurax_ImplementMethod(Array, CreateCasted)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
+		return Value::nil();
+	}
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_Array(valueThis.GetArray().CreateCasted(elemType));
 }
 
 //-----------------------------------------------------------------------------
@@ -159,7 +161,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Array, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Array, CreateCasted));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, elemType));

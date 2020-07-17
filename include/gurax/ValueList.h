@@ -38,6 +38,14 @@ public:
 	size_t CountIf(Processor& processor, const Function& function) const;
 	template<typename T_Num>
 	NumList<T_Num> ToNumList() const { return Value_Number::GetNumList<T_Num>(*this); }
+	template<typename T_Num>
+	NumList<T_Num> ToNumListRanged(T_Num numMin, T_Num numMax) const {
+		return Value_Number::GetNumListRanged<T_Num>(*this);
+	}
+	template<typename T_Num>
+	NumList<T_Num> ToNumListNonNeg() const { return Value_Number::GetNumListNonNeg<T_Num>(*this); }
+	template<typename T_Num>
+	NumList<T_Num> ToNumListPos() const { return Value_Number::GetNumListPos<T_Num>(*this); }
 	template<typename T>
 	ListBase<T> ToListT(std::function<T(Value& value)> fn) const {
 		ListBase<T> lst;
