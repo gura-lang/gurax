@@ -38,11 +38,11 @@ public:
 		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pDst, const void* pSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
 	public:
-		ElemTypeT(size_t id, size_t bytes) : id(id), bytes(bytes) {}
+		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
 	};
-	struct ElemType {
+	struct GURAX_DLLDECLARE ElemType {
 		static ElemTypeT None;
 		static ElemTypeT Bool;
 		static ElemTypeT Int8;

@@ -204,6 +204,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, CreateCasted));
+	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));

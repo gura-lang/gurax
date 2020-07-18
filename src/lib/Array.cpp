@@ -189,6 +189,19 @@ void Array::Bootup()
 	AssocSymbol(Gurax_Symbol(uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	AssocSymbol(Gurax_Symbol(long_),	(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
 	AssocSymbol(Gurax_Symbol(ulong),	(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	ElemType::Bool.bytes				= sizeof(bool);
+	ElemType::Int8.bytes				= sizeof(Int8);
+	ElemType::UInt8.bytes				= sizeof(UInt8);
+	ElemType::Int16.bytes				= sizeof(Int16);
+	ElemType::UInt16.bytes				= sizeof(UInt16);
+	ElemType::Int32.bytes				= sizeof(Int32);
+	ElemType::UInt32.bytes				= sizeof(UInt32);
+	ElemType::Int64.bytes				= sizeof(Int64);
+	ElemType::UInt64.bytes				= sizeof(UInt64);
+	ElemType::Half.bytes				= sizeof(Half);
+	ElemType::Float.bytes				= sizeof(Float);
+	ElemType::Double.bytes				= sizeof(Double);
+	ElemType::Complex.bytes				= sizeof(Complex);
 	ElemType::None.pSymbol				= Symbol::Empty;
 	ElemType::Bool.pSymbol				= Gurax_Symbol(bool_);
 	ElemType::Int8.pSymbol				= Gurax_Symbol(int8);
@@ -287,20 +300,20 @@ String Array::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Array::ElemType
 //------------------------------------------------------------------------------
-Array::ElemTypeT Array::ElemType::None(-1, 0);
-Array::ElemTypeT Array::ElemType::Bool(0, sizeof(Bool));
-Array::ElemTypeT Array::ElemType::Int8(1, sizeof(Int8));
-Array::ElemTypeT Array::ElemType::UInt8(2, sizeof(UInt8));
-Array::ElemTypeT Array::ElemType::Int16(3, sizeof(Int16));
-Array::ElemTypeT Array::ElemType::UInt16(4, sizeof(UInt16));
-Array::ElemTypeT Array::ElemType::Int32(5, sizeof(Int32));
-Array::ElemTypeT Array::ElemType::UInt32(6, sizeof(UInt32));
-Array::ElemTypeT Array::ElemType::Int64(7, sizeof(Int64));
-Array::ElemTypeT Array::ElemType::UInt64(8, sizeof(UInt64));
-Array::ElemTypeT Array::ElemType::Half(9, sizeof(Half));
-Array::ElemTypeT Array::ElemType::Float(10, sizeof(Float));
-Array::ElemTypeT Array::ElemType::Double(11, sizeof(Double));
-Array::ElemTypeT Array::ElemType::Complex(12, sizeof(Complex));
+Array::ElemTypeT Array::ElemType::None(-1);
+Array::ElemTypeT Array::ElemType::Bool(0);
+Array::ElemTypeT Array::ElemType::Int8(1);
+Array::ElemTypeT Array::ElemType::UInt8(2);
+Array::ElemTypeT Array::ElemType::Int16(3);
+Array::ElemTypeT Array::ElemType::UInt16(4);
+Array::ElemTypeT Array::ElemType::Int32(5);
+Array::ElemTypeT Array::ElemType::UInt32(6);
+Array::ElemTypeT Array::ElemType::Int64(7);
+Array::ElemTypeT Array::ElemType::UInt64(8);
+Array::ElemTypeT Array::ElemType::Half(9);
+Array::ElemTypeT Array::ElemType::Float(10);
+Array::ElemTypeT Array::ElemType::Double(11);
+Array::ElemTypeT Array::ElemType::Complex(12);
 
 bool Array::ElemTypeT::IsNone() const
 {
