@@ -58,28 +58,8 @@ public:
 		static ElemTypeT Double;
 		static ElemTypeT Complex;
 	};
-	class SymbolAssoc_ElemType : public SymbolAssoc<ElemTypeT*, &ElemType::None> {
-	public:
-		SymbolAssoc_ElemType() {
-			Assoc(Gurax_Symbol(bool_),		&ElemType::Bool);
-			Assoc(Gurax_Symbol(int8),		&ElemType::Int8);
-			Assoc(Gurax_Symbol(uint8),		&ElemType::UInt8);
-			Assoc(Gurax_Symbol(int16),		&ElemType::Int16);
-			Assoc(Gurax_Symbol(uint16),		&ElemType::UInt16);
-			Assoc(Gurax_Symbol(int32),		&ElemType::Int32);
-			Assoc(Gurax_Symbol(uint32),		&ElemType::UInt32);
-			Assoc(Gurax_Symbol(int64),		&ElemType::Int64);
-			Assoc(Gurax_Symbol(uint64),		&ElemType::UInt64);
-			Assoc(Gurax_Symbol(half),		&ElemType::Half);
-			Assoc(Gurax_Symbol(float_),		&ElemType::Float);
-			Assoc(Gurax_Symbol(double_),	&ElemType::Double);
-			Assoc(Gurax_Symbol(complex),	&ElemType::Complex);
-		}
-		static const SymbolAssoc& GetInstance() {
-			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ElemType());
-		}
-	};
+	using MapSymbolToElemType = std::unordered_map<
+			const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 	class GURAX_DLLDECLARE DimSizes : public NumList<size_t> {
 	public:
 		using NumList::NumList;
@@ -94,6 +74,8 @@ protected:
 	ElemTypeT& _elemType;
 	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
+protected:
+	static MapSymbolToElemType _mapSymbolToElemType;
 protected:
 	// Constructor
 	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
@@ -119,9 +101,9 @@ public:
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
 	void InjectElems(ValueList& values, size_t offset, size_t len);
-	void InjectElems(ValueList& values, size_t offset);
+	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
-	bool InjectElems(Iterator& iterator, size_t offset);
+	bool InjectElems(Iterator& iterator, size_t offset = 0);
 	void InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
@@ -130,7 +112,7 @@ public:
 	Array* CreateCasted(ElemTypeT& elemType) const;
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
-		return *SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);
+		return *_mapSymbolToElemType.find(pSymbol)->second;
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

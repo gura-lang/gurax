@@ -84,14 +84,15 @@ Gurax_ImplementMethod(Array, CreateCasted)
 	return new Value_Array(valueThis.GetArray().CreateCasted(elemType));
 }
 
-// Array#Inject(nums[])
+// Array#Inject(nums:Iterator, offset?:Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Iterator, Flag::Reduce);
+	DeclareArg("nums", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Injects values from an Iterator.");
 }
 
 Gurax_ImplementMethod(Array, Inject)
@@ -100,9 +101,12 @@ Gurax_ImplementMethod(Array, Inject)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int num = args.PickNumber<Int>();
+	Iterator& iterator = args.PickIterator();
+	size_t offset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return new Value_Number(num * 3);
+	if (!valueThis.GetArray().InjectElems(iterator, offset)) return Value::nil();
+	return valueThis.Reference();
 }
 
 // Array#ToList()

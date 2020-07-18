@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
+Array::MapSymbolToElemType Array::_mapSymbolToElemType;
+
 Array::Array(ElemTypeT& elemType, Memory* pMemory, Array::DimSizes dimSizes) :
 		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
 {
@@ -162,6 +164,31 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 
 void Array::Bootup()
 {
+	auto AssocSymbol = [](const Symbol* pSymbol, ElemTypeT& elemType) {
+		_mapSymbolToElemType[pSymbol] = &elemType;
+	};
+	AssocSymbol(Symbol::Empty,			ElemType::None);
+	AssocSymbol(Gurax_Symbol(bool_),	ElemType::Bool);
+	AssocSymbol(Gurax_Symbol(int8),		ElemType::Int8);
+	AssocSymbol(Gurax_Symbol(uint8),	ElemType::UInt8);
+	AssocSymbol(Gurax_Symbol(int16),	ElemType::Int16);
+	AssocSymbol(Gurax_Symbol(uint16),	ElemType::UInt16);
+	AssocSymbol(Gurax_Symbol(int32),	ElemType::Int32);
+	AssocSymbol(Gurax_Symbol(uint32),	ElemType::UInt32);
+	AssocSymbol(Gurax_Symbol(int64),	ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(uint64),	ElemType::UInt64);
+	AssocSymbol(Gurax_Symbol(half),		ElemType::Half);
+	AssocSymbol(Gurax_Symbol(float_),	ElemType::Float);
+	AssocSymbol(Gurax_Symbol(double_),	ElemType::Double);
+	AssocSymbol(Gurax_Symbol(complex),	ElemType::Complex);
+	AssocSymbol(Gurax_Symbol(char_),	ElemType::Int8);
+	AssocSymbol(Gurax_Symbol(uchar),	ElemType::UInt8);
+	AssocSymbol(Gurax_Symbol(short_),	ElemType::Int16);
+	AssocSymbol(Gurax_Symbol(ushort),	ElemType::UInt16);
+	AssocSymbol(Gurax_Symbol(int_),		(sizeof(int) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	AssocSymbol(Gurax_Symbol(long_),	(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(ulong),	(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	ElemType::None.pSymbol				= Symbol::Empty;
 	ElemType::Bool.pSymbol				= Gurax_Symbol(bool_);
 	ElemType::Int8.pSymbol				= Gurax_Symbol(int8);
