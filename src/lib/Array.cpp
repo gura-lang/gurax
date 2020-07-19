@@ -243,7 +243,6 @@ bool Array::InjectElems(Iterator& iterator, size_t offset)
 {
 	return InjectElems(iterator, offset, _dimSizes.GetLength() - offset);
 }
-
 void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
 {
 	_elemType.CopyElems[elemType.id](GetPointerC<void>(), pSrc, offset, len);

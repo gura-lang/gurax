@@ -13,6 +13,24 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Array : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+	private:
+		RefPtr<Array> _pArray;
+		size_t _idx;
+		size_t _len;
+	public:
+		Iterator_Each(Array* pArray) : _pArray(pArray),
+					_idx(0), _len(pArray->GetDimSizes().GetLength()) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenDetermined;
+		}
+		virtual size_t GetLength() const override { return _len; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };

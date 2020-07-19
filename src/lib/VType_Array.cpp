@@ -214,6 +214,23 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
+// VType_Array::Iterator_Each
+//------------------------------------------------------------------------------
+
+Value* VType_Array::Iterator_Each::DoNextValue()
+{
+	if (_idx >= _len) return nullptr;
+	RefPtr<Value> pValue(_pArray->IndexGet(_idx));
+	_idx++;
+	return pValue.release();
+}
+
+String VType_Array::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return "Array.Each";
+}
+
+//------------------------------------------------------------------------------
 // Value_Array
 //------------------------------------------------------------------------------
 VType& Value_Array::vtype = VTYPE_Array;

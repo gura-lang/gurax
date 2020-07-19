@@ -100,6 +100,12 @@ public:
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
+	void IndexSet(size_t idx, const Value& value) {
+		_elemType.IndexSet(GetPointerC<void>(), idx, value);
+	}
+	Value* IndexGet(size_t idx) const {
+		return _elemType.IndexGet(GetPointerC<void>(), idx);
+	}
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
