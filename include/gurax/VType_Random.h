@@ -13,13 +13,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Random : public VType {
 public:
-	class GURAX_DLLDECLARE Iterator_Float : public Iterator {
+	class GURAX_DLLDECLARE Iterator_FloatSeq : public Iterator {
 	private:
 		RefPtr<Random> _pRandom;
 		size_t _cnt;
 		size_t _idx;
 	public:
-		Iterator_Float(Random* pRandom, size_t cnt) :
+		Iterator_FloatSeq(Random* pRandom, size_t cnt) :
 			_pRandom(pRandom), _cnt(cnt), _idx(0) {}
 	public:
 		// Virtual functions of Iterator
@@ -30,14 +30,14 @@ public:
 		virtual Value* DoNextValue() override;
 		virtual String ToString(const StringStyle& ss) const override;
 	};
-	class GURAX_DLLDECLARE Iterator_Int : public Iterator {
+	class GURAX_DLLDECLARE Iterator_IntSeq : public Iterator {
 	private:
 		RefPtr<Random> _pRandom;
 		size_t _cnt;
 		size_t _idx;
 		Int _range;
 	public:
-		Iterator_Int(Random* pRandom, size_t cnt, Int range) :
+		Iterator_IntSeq(Random* pRandom, size_t cnt, Int range) :
 			_pRandom(pRandom), _cnt(cnt), _idx(0), _range(range) {}
 	public:
 		// Virtual functions of Iterator
@@ -48,7 +48,7 @@ public:
 		virtual Value* DoNextValue() override;
 		virtual String ToString(const StringStyle& ss) const override;
 	};
-	class GURAX_DLLDECLARE Iterator_Normal : public Iterator {
+	class GURAX_DLLDECLARE Iterator_NormalSeq : public Iterator {
 	private:
 		RefPtr<Random> _pRandom;
 		size_t _cnt;
@@ -56,7 +56,7 @@ public:
 		Double _mean;
 		Double _stddev;
 	public:
-		Iterator_Normal(Random* pRandom, size_t cnt, Double mean, Double stddev) :
+		Iterator_NormalSeq(Random* pRandom, size_t cnt, Double mean, Double stddev) :
 			_pRandom(pRandom), _cnt(cnt), _idx(0), _mean(mean), _stddev(stddev) {}
 	public:
 		// Virtual functions of Iterator

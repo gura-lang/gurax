@@ -104,7 +104,7 @@ Gurax_ImplementHybridMethod(Random, FloatSeq)
 	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Float(random.Reference(), cnt));
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_FloatSeq(random.Reference(), cnt));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -164,7 +164,7 @@ Gurax_ImplementHybridMethod(Random, IntSeq)
 	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Int(random.Reference(), cnt, range));
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_IntSeq(random.Reference(), cnt, range));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -231,7 +231,7 @@ Gurax_ImplementHybridMethod(Random, NormalSeq)
 	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Normal(random.Reference(), cnt, mean, stddev));
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_NormalSeq(random.Reference(), cnt, mean, stddev));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -318,9 +318,9 @@ String Value_Random::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// VType_Random::Iterator_Float
+// VType_Random::Iterator_FloatSeq
 //------------------------------------------------------------------------------
-Value* VType_Random::Iterator_Float::DoNextValue()
+Value* VType_Random::Iterator_FloatSeq::DoNextValue()
 {
 	if (_cnt != -1) {
 		if (_idx >= _cnt) return nullptr;
@@ -329,16 +329,17 @@ Value* VType_Random::Iterator_Float::DoNextValue()
 	return new Value_Number(_pRandom->GenFloat());
 }
 
-String VType_Random::Iterator_Float::ToString(const StringStyle& ss) const
+String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
 {
-	String str = "Random.Float";
+	String str = "Random.FloatSeq";
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
 	return str;
 }
 
 //------------------------------------------------------------------------------
-// VType_Random::Iterator_Int
+// VType_Random::Iterator_IntSeq
 //------------------------------------------------------------------------------
-Value* VType_Random::Iterator_Int::DoNextValue()
+Value* VType_Random::Iterator_IntSeq::DoNextValue()
 {
 	if (_cnt != -1) {
 		if (_idx >= _cnt) return nullptr;
@@ -347,16 +348,18 @@ Value* VType_Random::Iterator_Int::DoNextValue()
 	return new Value_Number(_pRandom->GenInt<Int>(_range));
 }
 
-String VType_Random::Iterator_Int::ToString(const StringStyle& ss) const
+String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const
 {
-	String str = "Random.Int";
+	String str;
+	str.Format("Random.IntSeq:range=%zu", _range);
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
 	return str;
 }
 
 //------------------------------------------------------------------------------
-// VType_Random::Iterator_Normal
+// VType_Random::Iterator_NormalSeq
 //------------------------------------------------------------------------------
-Value* VType_Random::Iterator_Normal::DoNextValue()
+Value* VType_Random::Iterator_NormalSeq::DoNextValue()
 {
 	if (_cnt != -1) {
 		if (_idx >= _cnt) return nullptr;
@@ -365,9 +368,11 @@ Value* VType_Random::Iterator_Normal::DoNextValue()
 	return new Value_Number(_pRandom->GenNormal<Double>(_mean, _stddev));
 }
 
-String VType_Random::Iterator_Normal::ToString(const StringStyle& ss) const
+String VType_Random::Iterator_NormalSeq::ToString(const StringStyle& ss) const
 {
-	String str = "Random.Normal";
+	String str;
+	str.Format("Random.NormalSeq:mean=%g,stddev=%g", _mean, _stddev);
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
 	return str;
 }
 

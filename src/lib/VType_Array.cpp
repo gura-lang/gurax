@@ -84,6 +84,25 @@ Gurax_ImplementMethod(Array, CreateCasted)
 	return new Value_Array(valueThis.GetArray().CreateCasted(elemType));
 }
 
+// Array#Each()
+Gurax_DeclareMethod(Array, Each)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Array, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Array::Iterator_Each(valueThis.GetArray().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Array#Inject(nums:Iterator, offset?:Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
@@ -204,6 +223,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, CreateCasted));
+	Assign(Gurax_CreateMethod(Array, Each));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	// Assignment of property
