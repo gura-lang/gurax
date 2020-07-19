@@ -27,6 +27,11 @@ template<typename T_Elem> void IndexSet_T(void* p, size_t idx, const Value& valu
 	*(reinterpret_cast<T_Elem*>(p) + idx) = Value_Number::GetNumber<T_Elem>(value);
 }
 
+template<> void IndexSet_T<Bool>(void* p, size_t idx, const Value& value)
+{
+	*(reinterpret_cast<Bool*>(p) + idx) = value.GetBool();
+}
+
 template<> void IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 {
 	*(reinterpret_cast<Complex*>(p) + idx) = Value_Complex::GetComplexRobust(value);
@@ -35,6 +40,11 @@ template<> void IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 template<typename T_Elem> Value* IndexGet_T(const void* p, size_t idx)
 {
 	return new Value_Number(*(reinterpret_cast<const T_Elem*>(p) + idx));
+}
+
+template<> Value* IndexGet_T<Bool>(const void* p, size_t idx)
+{
+	return new Value_Bool(!!*(reinterpret_cast<const Bool*>(p) + idx));
 }
 
 template<> Value* IndexGet_T<Complex>(const void* p, size_t idx)
@@ -48,6 +58,15 @@ template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, vo
 	auto ppValue = values.begin();
 	for (size_t i = 0; i < len; i++, pElem++, ppValue++) {
 		*pElem = Value_Number::GetNumber<T_Elem>(**ppValue);
+	}
+}
+
+template<> void InjectFromValueList_T<Bool>(const ValueList& values, void* p, size_t offset, size_t len)
+{
+	Bool* pElem = reinterpret_cast<Bool*>(p) + offset;
+	auto ppValue = values.begin();
+	for (size_t i = 0; i < len; i++, pElem++, ppValue++) {
+		*pElem = (*ppValue)->GetBool();
 	}
 }
 
@@ -75,6 +94,17 @@ template<typename T_Elem> bool InjectFromIterator_T(Iterator& iterator, void* p,
 	return !Error::IsIssued();
 }
 
+template<> bool InjectFromIterator_T<Bool>(Iterator& iterator, void* p, size_t offset, size_t len)
+{
+	Bool* pElem = reinterpret_cast<Bool*>(p) + offset;
+	for (size_t i = 0; i < len; i++, pElem++) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		*pElem = pValue->GetBool();
+	}
+	return !Error::IsIssued();
+}
+
 template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* p, size_t offset, size_t len)
 {
 	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
@@ -97,6 +127,12 @@ template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const v
 {
 	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p) + offset;
 	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Number(*pElem));
+}
+
+template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* p, size_t offset, size_t len)
+{
+	const Bool* pElem = reinterpret_cast<const Bool*>(p) + offset;
+	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Bool(!!*pElem));
 }
 
 template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* p, size_t offset, size_t len)

@@ -70,6 +70,7 @@ r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 	''')
 
+r.DeclareType_Pointer('const_GLboolean_p', 'const GLboolean*')
 r.DeclareType_Pointer('const_GLenum_p', 'const GLenum*')
 r.DeclareType_Pointer('const_GLbitfield_p', 'const GLbitfield*')
 r.DeclareType_Pointer('const_GLuint_p', 'const GLuint*')
@@ -92,6 +93,7 @@ r.DeclareType_Pointer('const_GLintptr_p', 'const GLintptr*')
 r.DeclareType_Pointer('const_GLsizeiptr_p', 'const GLsizeiptr*')
 r.DeclareType_Pointer('const_GLvoid_p', 'const GLvoid*')
 
+r.DeclareType_WritablePointer('GLboolean_p', 'GLboolean*')
 r.DeclareType_WritablePointer('GLenum_p', 'GLenum*')
 r.DeclareType_WritablePointer('GLbitfield_p', 'GLbitfield*')
 r.DeclareType_WritablePointer('GLuint_p', 'GLuint*')
@@ -135,7 +137,7 @@ glAccum(op:GLenum, value:GLfloat)
 
 glAlphaFunc(func:GLenum, ref:GLclampf):void
 
-//glAreTexturesResident(n:GLsizei, textures[]:GLuint, residences:GLboolean_p):GLboolean
+glAreTexturesResident(n:GLsizei, textures[]:GLuint, residences:GLboolean_p):GLboolean
 
 glArrayElement(i:GLint):void
 
@@ -333,7 +335,7 @@ glGenLists(range:GLsizei):GLuint
 
 glGenTextures(n:GLsizei, textures:GLuint_p);
 
-//glGetBooleanv(pname:GLenum, params[]:GLboolean):void
+glGetBooleanv(pname:GLenum, params:GLboolean_p):void
 
 glGetClipPlane(plane:GLenum, equation:GLdouble_p):void
 
@@ -1286,7 +1288,7 @@ glEndConditionalRender():void
 
 glEndTransformFeedback():void
 
-//glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
+glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
 
 glGetFragDataLocation(program:GLuint, name:String_const_GLchar_p):GLint
 

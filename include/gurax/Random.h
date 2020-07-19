@@ -39,6 +39,7 @@ public:
 	void Reset() { _engine.seed(_seed); }
 	void SetSeed(UInt32 seed) { _seed = seed; _engine.seed(_seed); }
 	UInt32 GetSeed() const { return _seed; }
+	Bool GenBool() { return !!GenInt<int>(2); }
 	template<typename T = Double> T GenFloat() { return std::uniform_real_distribution<T>()(_engine); }
 	template<typename T = Int> T GenInt(T range) { return static_cast<T>(GenFloat<Double>() * range); }
 	template<typename T = Double> T GenNormal(T mean = 0., T stddev = 1.) {

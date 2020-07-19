@@ -145,6 +145,34 @@ Gurax_ImplementFunctionEx(glAlphaFunc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// opengl.glAreTexturesResident(n:Number, textures[]:Number, residences:Pointer)
+Gurax_DeclareFunctionAlias(glAreTexturesResident_gurax, "glAreTexturesResident")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("residences", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glAreTexturesResident_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	auto textures = args_gurax.PickNumList<GLuint>();
+	GLboolean* residences = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>();
+	if (!residences) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	GLboolean rtn = glAreTexturesResident(n, textures, residences);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
 // opengl.glArrayElement(i:Number)
 Gurax_DeclareFunctionAlias(glArrayElement_gurax, "glArrayElement")
 {
@@ -2308,6 +2336,32 @@ Gurax_ImplementFunctionEx(glGenTextures_gurax, processor_gurax, argument_gurax)
 	}
 	// Function body
 	glGenTextures(n, textures);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetBooleanv(pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetBooleanv_gurax, "glGetBooleanv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetBooleanv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLboolean* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetBooleanv(pname, params);
 	return Gurax::Value::nil();
 }
 
@@ -13168,6 +13222,34 @@ Gurax_ImplementFunctionEx(glEndTransformFeedback_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
+// opengl.glGetBooleani_v(pname:Number, index:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glGetBooleani_v_gurax, "glGetBooleani_v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetBooleani_v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLboolean* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetBooleani_v(pname, index, data);
+	return Gurax::Value::nil();
+}
+
 // opengl.glGetFragDataLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetFragDataLocation_gurax, "glGetFragDataLocation")
 {
@@ -14683,6 +14765,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glewGetString_gurax));
 	frame.Assign(Gurax_CreateFunction(glAccum_gurax));
 	frame.Assign(Gurax_CreateFunction(glAlphaFunc_gurax));
+	frame.Assign(Gurax_CreateFunction(glAreTexturesResident_gurax));
 	frame.Assign(Gurax_CreateFunction(glArrayElement_gurax));
 	frame.Assign(Gurax_CreateFunction(glBegin_gurax));
 	frame.Assign(Gurax_CreateFunction(glBindTexture_gurax));
@@ -14779,6 +14862,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glFrustum_gurax));
 	frame.Assign(Gurax_CreateFunction(glGenLists_gurax));
 	frame.Assign(Gurax_CreateFunction(glGenTextures_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetBooleanv_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetClipPlane_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetDoublev_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetError_gurax));
@@ -15238,6 +15322,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glEnablei_gurax));
 	frame.Assign(Gurax_CreateFunction(glEndConditionalRender_gurax));
 	frame.Assign(Gurax_CreateFunction(glEndTransformFeedback_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetBooleani_v_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetFragDataLocation_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetStringi_gurax));
 	frame.Assign(Gurax_CreateFunction(glGetTexParameterIiv_gurax));

@@ -55,6 +55,59 @@ Gurax_ImplementConstructor(Random)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Random##Bool()
+Gurax_DeclareHybridMethod(Random, Bool)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Randomly generates a boolean value, `true` or `false`.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
+}
+
+Gurax_ImplementHybridMethod(Random, Bool)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
+	// Function body
+	return new Value_Bool(random.GenBool());
+}
+
+// Random##BoolSeq(cnt?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, BoolSeq)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that randomly generates boolean numbers, `true` or `false`\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
+}
+
+Gurax_ImplementHybridMethod(Random, BoolSeq)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
+	// Arguments
+	ArgPicker args(argument);
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_BoolSeq(random.Reference(), cnt));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Random##Float()
 Gurax_DeclareHybridMethod(Random, Float)
 {
@@ -296,6 +349,8 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Random, Bool));
+	Assign(Gurax_CreateMethod(Random, BoolSeq));
 	Assign(Gurax_CreateMethod(Random, Float));
 	Assign(Gurax_CreateMethod(Random, FloatSeq));
 	Assign(Gurax_CreateMethod(Random, Int));
@@ -315,6 +370,26 @@ VType& Value_Random::vtype = VTYPE_Random;
 String Value_Random::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetRandom().ToString(ss));
+}
+
+//------------------------------------------------------------------------------
+// VType_Random::Iterator_BoolSeq
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_BoolSeq::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_Bool(_pRandom->GenBool());
+}
+
+String VType_Random::Iterator_BoolSeq::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("Random.BoolSeq");
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	return str;
 }
 
 //------------------------------------------------------------------------------

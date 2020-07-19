@@ -103,11 +103,11 @@ Gurax_ImplementMethod(Array, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Array#Inject(nums:Iterator, offset?:Number):reduce
+// Array#Inject(values:Iterator, offset?:Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
 	Declare(VTYPE_Iterator, Flag::Reduce);
-	DeclareArg("nums", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("values", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
