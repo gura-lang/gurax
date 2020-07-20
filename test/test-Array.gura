@@ -1,4 +1,43 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-Tester(`Array(`float, 10))
+TestCase('Property') {
+	Array.PrintPropSlots()
+}
+
+TestCase('Array#bytes') {
+
+}
+
+TestCase('Array#bytesPerElem') {
+	Tester(`Array(`bool, 1).bytesPerElem)
+	Tester(`Array(`int8, 1).bytesPerElem)
+	Tester(`Array(`uint8, 1).bytesPerElem)
+	Tester(`Array(`int16, 1).bytesPerElem)
+	Tester(`Array(`uint16, 1).bytesPerElem)
+	Tester(`Array(`int32, 1).bytesPerElem)
+	Tester(`Array(`uint32, 1).bytesPerElem)
+	Tester(`Array(`int64, 1).bytesPerElem)
+	Tester(`Array(`uint64, 1).bytesPerElem)
+	Tester(`Array(`half, 1).bytesPerElem)
+	Tester(`Array(`float, 1).bytesPerElem)
+	Tester(`Array(`double, 1).bytesPerElem)
+	Tester(`Array(`complex, 1).bytesPerElem)
+	Tester(`Array(`char, 1).bytesPerElem)
+	Tester(`Array(`uchar, 1).bytesPerElem)
+	Tester(`Array(`short, 1).bytesPerElem)
+	Tester(`Array(`ushort, 1).bytesPerElem)
+	Tester(`Array(`int, 1).bytesPerElem)
+	Tester(`Array(`uint, 1).bytesPerElem)
+	Tester(`Array(`long, 1).bytesPerElem)
+	Tester(`Array(`ulong, 1).bytesPerElem)
+}
+
+TestCase('Array#elemType') {
+}
+
+TestCase('Array#len') {
+}
+
+TestCase('Array#p') {
+}

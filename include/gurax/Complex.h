@@ -34,7 +34,6 @@ public:
 	explicit operator UInt32() const { return 0; }
 	explicit operator Int64() const { return 0; }
 	explicit operator UInt64() const { return 0; }
-	//explicit operator Half() const { return 0; }
 	explicit operator Float() const { return 0; }
 	explicit operator Double() const { return 0; }
 public:

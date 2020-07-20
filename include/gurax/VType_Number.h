@@ -38,6 +38,8 @@ public:
 		Value_Number(0., vtype) {}
 	explicit Value_Number(Double num, VType& vtype = VTYPE_Number) :
 		Value_Object(vtype), _num(num) {}
+	explicit Value_Number(Half num, VType& vtype = VTYPE_Number) :
+		Value_Object(vtype), _num(static_cast<Double>(num)) {}
 	// Copy constructor/operator
 	Value_Number(const Value_Number& src) :
 		Value_Object(src), _num(src._num) {}

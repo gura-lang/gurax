@@ -7,6 +7,7 @@
 #include "Symbols.h"
 #include "Memory.h"
 #include "Number.h"
+#include "Half.h"
 
 namespace Gurax {
 

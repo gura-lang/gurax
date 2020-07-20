@@ -36,6 +36,7 @@
 #include "gurax/Frame.h"
 #include "gurax/Function.h"
 #include "gurax/FunctionCustom.h"
+#include "gurax/Half.h"
 #include "gurax/Help.h"
 #include "gurax/Image.h"
 #include "gurax/ImageMgr.h"

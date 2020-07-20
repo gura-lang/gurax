@@ -57,6 +57,7 @@ target_sources(guraxcore PRIVATE
 	Frame.cpp
 	Function.cpp
 	FunctionCustom.cpp
+	Half.cpp
 	Help.cpp
 	Image.cpp
 	ImageMgr.cpp

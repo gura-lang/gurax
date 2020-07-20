@@ -151,7 +151,7 @@ Gurax_ImplementMethod(Array, ToList)
 // Array#bytes
 Gurax_DeclareProperty_R(Array, bytes)
 {
-	Declare(VTYPE_Pointer, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The array's size in bytes.");
@@ -162,6 +162,21 @@ Gurax_ImplementPropertyGetter(Array, bytes)
 	auto& valueThis = GetValueThis(valueTarget);
 	const Memory& memory = valueThis.GetArray().GetMemory();
 	return new Value_Number(memory.GetBytes());
+}
+
+// Array#bytesPerElem
+Gurax_DeclareProperty_R(Array, bytesPerElem)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The array's element size in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(Array, bytesPerElem)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetArray().GetElemType().bytes);
 }
 
 // Array#elemType
@@ -182,7 +197,7 @@ Gurax_ImplementPropertyGetter(Array, elemType)
 // Array#len
 Gurax_DeclareProperty_R(Array, len)
 {
-	Declare(VTYPE_Pointer, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The number of elements in the array.");
@@ -228,6 +243,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, ToList));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
+	Assign(Gurax_CreateProperty(Array, bytesPerElem));
 	Assign(Gurax_CreateProperty(Array, elemType));
 	Assign(Gurax_CreateProperty(Array, len));
 	Assign(Gurax_CreateProperty(Array, p));
