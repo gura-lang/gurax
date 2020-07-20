@@ -1,0 +1,33 @@
+======== Property ========
+Array
+  #bytes            Number       R
+  #bytesPerElem     Number       R
+  #elemType         Symbol       R
+  #len              Number       R
+  #p                Pointer      R
+======== Array#bytes ========
+======== Array#bytesPerElem ========
+Array(`bool, 1).bytesPerElem .. 1
+Array(`int8, 1).bytesPerElem .. 1
+Array(`uint8, 1).bytesPerElem .. 1
+Array(`int16, 1).bytesPerElem .. 2
+Array(`uint16, 1).bytesPerElem .. 2
+Array(`int32, 1).bytesPerElem .. 4
+Array(`uint32, 1).bytesPerElem .. 4
+Array(`int64, 1).bytesPerElem .. 8
+Array(`uint64, 1).bytesPerElem .. 8
+Array(`half, 1).bytesPerElem .. 2
+Array(`float, 1).bytesPerElem .. 4
+Array(`double, 1).bytesPerElem .. 8
+Array(`complex, 1).bytesPerElem .. 16
+Array(`char, 1).bytesPerElem .. 1
+Array(`uchar, 1).bytesPerElem .. 1
+Array(`short, 1).bytesPerElem .. 2
+Array(`ushort, 1).bytesPerElem .. 2
+Array(`int, 1).bytesPerElem .. 4
+Array(`uint, 1).bytesPerElem .. 4
+Array(`long, 1).bytesPerElem .. 4
+Array(`ulong, 1).bytesPerElem .. 4
+======== Array#elemType ========
+======== Array#len ========
+======== Array#p ========
