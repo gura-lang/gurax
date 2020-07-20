@@ -1,3 +1,4 @@
+
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
@@ -94,4 +95,26 @@ TestCase('Array#p') {
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
+}
+
+TestCase('Array#Cast()') {
+	arr = Array(`uint8, 0x100)
+	arr.Inject(0..)
+	arr.p.Dump()
+	[`int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double].Each {|elemType|
+		arr.Cast(elemType) {|arr|
+			Printf('Casted:%s\n', arr.elemType)
+			arr.p.Dump()
+			Println(arr.Each().Join(','))
+		}
+	}
+}
+
+TestCase('Array#Each()') {
+}
+
+TestCase('Array#Inject()') {
+}
+
+TestCase('Array#ToList()') {
 }

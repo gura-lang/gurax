@@ -59,17 +59,18 @@ Gurax_ImplementConstructor(Array)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Array#CreateCasted(elemType:Symbol)
-Gurax_DeclareMethod(Array, CreateCasted)
+// Array#Cast(elemType:Symbol) {block?}
+Gurax_DeclareMethod(Array, Cast)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a new Array that contains elements casted by the specified element type.\n");
 }
 
-Gurax_ImplementMethod(Array, CreateCasted)
+Gurax_ImplementMethod(Array, Cast)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -81,10 +82,11 @@ Gurax_ImplementMethod(Array, CreateCasted)
 		return Value::nil();
 	}
 	// Function body
-	return new Value_Array(valueThis.GetArray().CreateCasted(elemType));
+	return argument.ReturnValue(processor,
+				new Value_Array(valueThis.GetArray().CreateCasted(elemType)));
 }
 
-// Array#Each()
+// Array#Each() {block?}
 Gurax_DeclareMethod(Array, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -237,7 +239,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Array, CreateCasted));
+	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
