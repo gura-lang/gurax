@@ -5,39 +5,93 @@ TestCase('Property') {
 	Array.PrintPropSlots()
 }
 
-TestCase('Array#bytes') {
-
-}
-
-TestCase('Array#bytesPerElem') {
-	Tester(`Array(`bool, 1).bytesPerElem)
-	Tester(`Array(`int8, 1).bytesPerElem)
-	Tester(`Array(`uint8, 1).bytesPerElem)
-	Tester(`Array(`int16, 1).bytesPerElem)
-	Tester(`Array(`uint16, 1).bytesPerElem)
-	Tester(`Array(`int32, 1).bytesPerElem)
-	Tester(`Array(`uint32, 1).bytesPerElem)
-	Tester(`Array(`int64, 1).bytesPerElem)
-	Tester(`Array(`uint64, 1).bytesPerElem)
-	Tester(`Array(`half, 1).bytesPerElem)
-	Tester(`Array(`float, 1).bytesPerElem)
-	Tester(`Array(`double, 1).bytesPerElem)
-	Tester(`Array(`complex, 1).bytesPerElem)
-	Tester(`Array(`char, 1).bytesPerElem)
-	Tester(`Array(`uchar, 1).bytesPerElem)
-	Tester(`Array(`short, 1).bytesPerElem)
-	Tester(`Array(`ushort, 1).bytesPerElem)
-	Tester(`Array(`int, 1).bytesPerElem)
-	Tester(`Array(`uint, 1).bytesPerElem)
-	Tester(`Array(`long, 1).bytesPerElem)
-	Tester(`Array(`ulong, 1).bytesPerElem)
-}
-
-TestCase('Array#elemType') {
-}
-
-TestCase('Array#len') {
+TestCase('Array#bytes/bytesPerElem/elemType/len') {
+	elemTypes = [
+		`bool, `int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64,
+		`half, `float, `double, `complex, `char, `uchar, `short, `ushort, `int, `uint, `long, `ulong,
+	]
+	elemTypes.Each {|elemType|
+		arr = Array(elemType, 10000)
+		Printf('%-8s .. elemType=%-8s bytesPerElem=%d len=%d bytes=%d\n',
+					elemType, arr.elemType, arr.bytesPerElem, arr.len, arr.bytes)
+	}
 }
 
 TestCase('Array#p') {
+	scope {
+		Println('[int8]')
+		arr = Array(`int8, 0x100)
+		p = arr.p
+		repeat (0x100) {|i| p.int8 = i - 0x80}
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[uint8]')
+		arr = Array(`uint8, 0x100)
+		p = arr.p
+		repeat (0x100) {|i| p.uint8 = i }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[int16]')
+		arr = Array(`int16, 512)
+		p = arr.p
+		repeat (0x80) {|i| p.int16 = i - 0x8000 }
+		repeat (0x80) {|i| p.int16 = i - 0x80 }
+		repeat (0x80) {|i| p.int16 = i }
+		repeat (0x80) {|i| p.int16 = i + 0x8000 - 0x80 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[uint16]')
+		arr = Array(`uint16, 512)
+		p = arr.p
+		repeat (0x100) {|i| p.uint16 = i }
+		repeat (0x100) {|i| p.uint16 = i + 0x10000 - 0x100 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[int32]')
+		arr = Array(`int32, 512)
+		p = arr.p
+		repeat (0x80) {|i| p.int32 = i - 0x80000000 }
+		repeat (0x80) {|i| p.int32 = i - 0x80 }
+		repeat (0x80) {|i| p.int32 = i }
+		repeat (0x80) {|i| p.int32 = i + 0x80000000 - 0x80 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[uint32]')
+		arr = Array(`uint32, 512)
+		p = arr.p
+		repeat (0x100) {|i| p.uint32 = i }
+		repeat (0x100) {|i| p.uint32 = i + 0x100000000 - 256 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[int64]')
+		arr = Array(`int64, 512)
+		p = arr.p
+		repeat (0x80) {|i| p.int64 = i - 0x0010_0000_0000_0000 }
+		repeat (0x80) {|i| p.int64 = i - 0x80 }
+		repeat (0x80) {|i| p.int64 = i }
+		repeat (0x80) {|i| p.int64 = i + 0x0010_0000_0000_0000 - 0x80 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
+	scope {
+		Println('[uint64]')
+		arr = Array(`uint64, 512)
+		p = arr.p
+		repeat (0x100) {|i| p.uint64 = i }
+		repeat (0x100) {|i| p.uint64 = i + 0x0010_0000_0000_0000 - 256 }
+		arr.p.Dump()
+		Println(arr.Each().Join(', '))
+	}
 }
