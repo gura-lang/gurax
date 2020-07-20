@@ -367,7 +367,7 @@ glGetPixelMapuiv(map:GLenum, values:GLuint_p):void
 
 glGetPixelMapusv(map:GLenum, values:GLushort_p):void
 
-//glGetPointerv(pname:GLenum, params:void_p_p):void
+//glGetPointerv(pname:GLenum, params[]:void_p):void
 
 glGetPolygonStipple(mask:GLubyte_p):void
 
@@ -1040,7 +1040,7 @@ glGenQueries(n:GLsizei, ids:GLuint_p):void
 
 glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
 
-//glGetBufferPointerv(target:GLenum, pname:GLenum, params:void_p__p):void
+//glGetBufferPointerv(target:GLenum, pname:GLenum, params[]:void_p):void
 
 glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
 

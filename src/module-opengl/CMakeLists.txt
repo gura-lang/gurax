@@ -41,6 +41,8 @@ target_sources(opengl.gurd PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(opengl.gurd PRIVATE
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>)
 target_link_libraries(opengl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libglew32.lib>
 	$<$<PLATFORM_ID:Windows>:opengl32.lib>

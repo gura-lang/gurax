@@ -196,6 +196,16 @@ Renderer = class {
 			Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 			return Value::nil();
 		}
+		'''
+		codePickerVec = R'''
+		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) -> ${this.cType} {
+			auto p = Gurax::Value_Pointer::GetPointer(value).GetWritablePointerC<${this.cTypeElem}>();
+			if (!p) {
+				Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+				return nullptr;
+			}
+			return p;
+		});
 		''')
 	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
 	RegisterExpr(moduleName:String, expr:Expr):map:void = {
