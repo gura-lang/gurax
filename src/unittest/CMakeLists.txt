@@ -34,6 +34,7 @@ target_sources(unittest PRIVATE
 	test-Error.cpp
 	test-Formatter.cpp
 	test-Function.cpp
+	test-Half.cpp
 	test-Help.cpp
 	test-Iterator.cpp
 	test-MemoryPool.cpp
