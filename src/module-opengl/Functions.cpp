@@ -15786,6 +15786,2802 @@ Gurax_ImplementFunctionEx(glDispatchComputeGroupSizeARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
+// opengl.glCopyBufferSubData(readtarget:Number, writetarget:Number, readoffset:Number, writeoffset:Number, size:Number)
+Gurax_DeclareFunctionAlias(glCopyBufferSubData_gurax, "glCopyBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("readtarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("writetarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("readoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("writeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum readtarget = args_gurax.PickNumber<GLenum>();
+	GLenum writetarget = args_gurax.PickNumber<GLenum>();
+	GLintptr readoffset = args_gurax.PickNumber<GLintptr>();
+	GLintptr writeoffset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	// Function body
+	glCopyBufferSubData(readtarget, writetarget, readoffset, writeoffset, size);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCopyImageSubData(srcName:Number, srcTarget:Number, srcLevel:Number, srcX:Number, srcY:Number, srcZ:Number, dstName:Number, dstTarget:Number, dstLevel:Number, dstX:Number, dstY:Number, dstZ:Number, srcWidth:Number, srcHeight:Number, srcDepth:Number)
+Gurax_DeclareFunctionAlias(glCopyImageSubData_gurax, "glCopyImageSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("srcName", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcTarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcLevel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcX", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcY", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcZ", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstName", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstTarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstLevel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstX", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstY", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstZ", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcDepth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyImageSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint srcName = args_gurax.PickNumber<GLuint>();
+	GLenum srcTarget = args_gurax.PickNumber<GLenum>();
+	GLint srcLevel = args_gurax.PickNumber<GLint>();
+	GLint srcX = args_gurax.PickNumber<GLint>();
+	GLint srcY = args_gurax.PickNumber<GLint>();
+	GLint srcZ = args_gurax.PickNumber<GLint>();
+	GLuint dstName = args_gurax.PickNumber<GLuint>();
+	GLenum dstTarget = args_gurax.PickNumber<GLenum>();
+	GLint dstLevel = args_gurax.PickNumber<GLint>();
+	GLint dstX = args_gurax.PickNumber<GLint>();
+	GLint dstY = args_gurax.PickNumber<GLint>();
+	GLint dstZ = args_gurax.PickNumber<GLint>();
+	GLsizei srcWidth = args_gurax.PickNumber<GLsizei>();
+	GLsizei srcHeight = args_gurax.PickNumber<GLsizei>();
+	GLsizei srcDepth = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glCopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
+	return Gurax::Value::nil();
+}
+
+// opengl.glDebugMessageControlARB(source:Number, type:Number, severity:Number, count:Number, ids:Pointer, enabled:Bool)
+Gurax_DeclareFunctionAlias(glDebugMessageControlARB_gurax, "glDebugMessageControlARB")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("source", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("severity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glDebugMessageControlARB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum source = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLenum severity = args_gurax.PickNumber<GLenum>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	const GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	GLboolean enabled = static_cast<GLboolean>(args_gurax.PickBool());
+	// Function body
+	glDebugMessageControlARB(source, type, severity, count, ids, enabled);
+	return Gurax::Value::nil();
+}
+
+// opengl.glDebugMessageInsertARB(source:Number, type:Number, id:Number, severity:Number, length:Number, buf:Pointer)
+Gurax_DeclareFunctionAlias(glDebugMessageInsertARB_gurax, "glDebugMessageInsertARB")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("source", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("severity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glDebugMessageInsertARB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum source = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLenum severity = args_gurax.PickNumber<GLenum>();
+	GLsizei length = args_gurax.PickNumber<GLsizei>();
+	const GLchar* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
+	// Function body
+	glDebugMessageInsertARB(source, type, id, severity, length, buf);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetDebugMessageLogARB(count:Number, bufSize:Number, sources:Pointer, types:Pointer, ids:Pointer, severities:Pointer, lengths:Pointer, messageLog:Pointer)
+Gurax_DeclareFunctionAlias(glGetDebugMessageLogARB_gurax, "glGetDebugMessageLogARB")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sources", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("types", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("severities", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("lengths", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("messageLog", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetDebugMessageLogARB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint count = args_gurax.PickNumber<GLuint>();
+	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
+	GLenum* sources = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>();
+	if (!sources) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLenum* types = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>();
+	if (!types) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!ids) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLenum* severities = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>();
+	if (!severities) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLsizei* lengths = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>();
+	if (!lengths) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	GLchar* messageLog = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>();
+	if (!messageLog) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	GLuint rtn = glGetDebugMessageLogARB(count, bufSize, sources, types, ids, severities, lengths, messageLog);
+	return new Gurax::Value_Number(rtn);
+}
+
+// opengl.glBindTextureUnit(unit:Number, texture:Number)
+Gurax_DeclareFunctionAlias(glBindTextureUnit_gurax, "glBindTextureUnit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("unit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glBindTextureUnit_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint unit = args_gurax.PickNumber<GLuint>();
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glBindTextureUnit(unit, texture);
+	return Gurax::Value::nil();
+}
+
+// opengl.glBlitNamedFramebuffer(readFramebuffer:Number, drawFramebuffer:Number, srcX0:Number, srcY0:Number, srcX1:Number, srcY1:Number, dstX0:Number, dstY0:Number, dstX1:Number, dstY1:Number, mask:Number, filter:Number)
+Gurax_DeclareFunctionAlias(glBlitNamedFramebuffer_gurax, "glBlitNamedFramebuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("readFramebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawFramebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcX0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcY0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcX1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcY1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstX0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstY0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstX1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstY1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("filter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glBlitNamedFramebuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint readFramebuffer = args_gurax.PickNumber<GLuint>();
+	GLuint drawFramebuffer = args_gurax.PickNumber<GLuint>();
+	GLint srcX0 = args_gurax.PickNumber<GLint>();
+	GLint srcY0 = args_gurax.PickNumber<GLint>();
+	GLint srcX1 = args_gurax.PickNumber<GLint>();
+	GLint srcY1 = args_gurax.PickNumber<GLint>();
+	GLint dstX0 = args_gurax.PickNumber<GLint>();
+	GLint dstY0 = args_gurax.PickNumber<GLint>();
+	GLint dstX1 = args_gurax.PickNumber<GLint>();
+	GLint dstY1 = args_gurax.PickNumber<GLint>();
+	GLbitfield mask = args_gurax.PickNumber<GLbitfield>();
+	GLenum filter = args_gurax.PickNumber<GLenum>();
+	// Function body
+	glBlitNamedFramebuffer(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCheckNamedFramebufferStatus(framebuffer:Number, target:Number)
+Gurax_DeclareFunctionAlias(glCheckNamedFramebufferStatus_gurax, "glCheckNamedFramebufferStatus")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCheckNamedFramebufferStatus_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	// Function body
+	GLenum rtn = glCheckNamedFramebufferStatus(framebuffer, target);
+	return new Gurax::Value_Number(rtn);
+}
+
+// opengl.glClearNamedBufferData(buffer:Number, internalformat:Number, format:Number, type:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glClearNamedBufferData_gurax, "glClearNamedBufferData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedBufferData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glClearNamedBufferData(buffer, internalformat, format, type, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glClearNamedBufferSubData(buffer:Number, internalformat:Number, offset:Number, size:Number, format:Number, type:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glClearNamedBufferSubData_gurax, "glClearNamedBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glClearNamedFramebufferfi(framebuffer:Number, buffer:Number, drawbuffer:Number, depth:Number, stencil:Number)
+Gurax_DeclareFunctionAlias(glClearNamedFramebufferfi_gurax, "glClearNamedFramebufferfi")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stencil", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedFramebufferfi_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawbuffer = args_gurax.PickNumber<GLint>();
+	GLfloat depth = args_gurax.PickNumber<GLfloat>();
+	GLint stencil = args_gurax.PickNumber<GLint>();
+	// Function body
+	glClearNamedFramebufferfi(framebuffer, buffer, drawbuffer, depth, stencil);
+	return Gurax::Value::nil();
+}
+
+// opengl.glClearNamedFramebufferfv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer)
+Gurax_DeclareFunctionAlias(glClearNamedFramebufferfv_gurax, "glClearNamedFramebufferfv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedFramebufferfv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawbuffer = args_gurax.PickNumber<GLint>();
+	GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>();
+	if (!value) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glClearNamedFramebufferfv(framebuffer, buffer, drawbuffer, value);
+	return Gurax::Value::nil();
+}
+
+// opengl.glClearNamedFramebufferiv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer)
+Gurax_DeclareFunctionAlias(glClearNamedFramebufferiv_gurax, "glClearNamedFramebufferiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedFramebufferiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawbuffer = args_gurax.PickNumber<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	// Function body
+	glClearNamedFramebufferiv(framebuffer, buffer, drawbuffer, value);
+	return Gurax::Value::nil();
+}
+
+// opengl.glClearNamedFramebufferuiv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer)
+Gurax_DeclareFunctionAlias(glClearNamedFramebufferuiv_gurax, "glClearNamedFramebufferuiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glClearNamedFramebufferuiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum buffer = args_gurax.PickNumber<GLenum>();
+	GLint drawbuffer = args_gurax.PickNumber<GLint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	// Function body
+	glClearNamedFramebufferuiv(framebuffer, buffer, drawbuffer, value);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCompressedTextureSubImage1D(texture:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTextureSubImage1D_gurax, "glCompressedTextureSubImage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCompressedTextureSubImage1D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCompressedTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTextureSubImage2D_gurax, "glCompressedTextureSubImage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCompressedTextureSubImage2D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCompressedTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glCompressedTextureSubImage3D_gurax, "glCompressedTextureSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCompressedTextureSubImage3D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glCompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCopyNamedBufferSubData(readBuffer:Number, writeBuffer:Number, readOffset:Number, writeOffset:Number, size:Number)
+Gurax_DeclareFunctionAlias(glCopyNamedBufferSubData_gurax, "glCopyNamedBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("readBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("writeBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("readOffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("writeOffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyNamedBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint readBuffer = args_gurax.PickNumber<GLuint>();
+	GLuint writeBuffer = args_gurax.PickNumber<GLuint>();
+	GLintptr readOffset = args_gurax.PickNumber<GLintptr>();
+	GLintptr writeOffset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	// Function body
+	glCopyNamedBufferSubData(readBuffer, writeBuffer, readOffset, writeOffset, size);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCopyTextureSubImage1D(texture:Number, level:Number, xoffset:Number, x:Number, y:Number, width:Number)
+Gurax_DeclareFunctionAlias(glCopyTextureSubImage1D_gurax, "glCopyTextureSubImage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyTextureSubImage1D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glCopyTextureSubImage1D(texture, level, xoffset, x, y, width);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCopyTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, x:Number, y:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glCopyTextureSubImage2D_gurax, "glCopyTextureSubImage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyTextureSubImage2D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glCopyTextureSubImage2D(texture, level, xoffset, yoffset, x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCopyTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, x:Number, y:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glCopyTextureSubImage3D_gurax, "glCopyTextureSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCopyTextureSubImage3D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glCopyTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateBuffers(n:Number, buffers:Pointer)
+Gurax_DeclareFunctionAlias(glCreateBuffers_gurax, "glCreateBuffers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateBuffers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* buffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!buffers) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateBuffers(n, buffers);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateFramebuffers(n:Number, framebuffers:Pointer)
+Gurax_DeclareFunctionAlias(glCreateFramebuffers_gurax, "glCreateFramebuffers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("framebuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateFramebuffers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* framebuffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!framebuffers) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateFramebuffers(n, framebuffers);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateProgramPipelines(n:Number, pipelines:Pointer)
+Gurax_DeclareFunctionAlias(glCreateProgramPipelines_gurax, "glCreateProgramPipelines")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pipelines", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateProgramPipelines_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* pipelines = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!pipelines) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateProgramPipelines(n, pipelines);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateQueries(target:Number, n:Number, ids:Pointer)
+Gurax_DeclareFunctionAlias(glCreateQueries_gurax, "glCreateQueries")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateQueries_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!ids) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateQueries(target, n, ids);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateRenderbuffers(n:Number, renderbuffers:Pointer)
+Gurax_DeclareFunctionAlias(glCreateRenderbuffers_gurax, "glCreateRenderbuffers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("renderbuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateRenderbuffers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* renderbuffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!renderbuffers) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateRenderbuffers(n, renderbuffers);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateSamplers(n:Number, samplers:Pointer)
+Gurax_DeclareFunctionAlias(glCreateSamplers_gurax, "glCreateSamplers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("samplers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateSamplers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* samplers = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!samplers) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateSamplers(n, samplers);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateTextures(target:Number, n:Number, textures:Pointer)
+Gurax_DeclareFunctionAlias(glCreateTextures_gurax, "glCreateTextures")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateTextures_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!textures) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateTextures(target, n, textures);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateTransformFeedbacks(n:Number, ids:Pointer)
+Gurax_DeclareFunctionAlias(glCreateTransformFeedbacks_gurax, "glCreateTransformFeedbacks")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateTransformFeedbacks_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!ids) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateTransformFeedbacks(n, ids);
+	return Gurax::Value::nil();
+}
+
+// opengl.glCreateVertexArrays(n:Number, arrays:Pointer)
+Gurax_DeclareFunctionAlias(glCreateVertexArrays_gurax, "glCreateVertexArrays")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glCreateVertexArrays_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	GLuint* arrays = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!arrays) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glCreateVertexArrays(n, arrays);
+	return Gurax::Value::nil();
+}
+
+// opengl.glDisableVertexArrayAttrib(vaobj:Number, index:Number)
+Gurax_DeclareFunctionAlias(glDisableVertexArrayAttrib_gurax, "glDisableVertexArrayAttrib")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glDisableVertexArrayAttrib_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glDisableVertexArrayAttrib(vaobj, index);
+	return Gurax::Value::nil();
+}
+
+// opengl.glEnableVertexArrayAttrib(vaobj:Number, index:Number)
+Gurax_DeclareFunctionAlias(glEnableVertexArrayAttrib_gurax, "glEnableVertexArrayAttrib")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glEnableVertexArrayAttrib_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glEnableVertexArrayAttrib(vaobj, index);
+	return Gurax::Value::nil();
+}
+
+// opengl.glFlushMappedNamedBufferRange(buffer:Number, offset:Number, length:Number)
+Gurax_DeclareFunctionAlias(glFlushMappedNamedBufferRange_gurax, "glFlushMappedNamedBufferRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glFlushMappedNamedBufferRange_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr length = args_gurax.PickNumber<GLsizeiptr>();
+	// Function body
+	glFlushMappedNamedBufferRange(buffer, offset, length);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGenerateTextureMipmap(texture:Number)
+Gurax_DeclareFunctionAlias(glGenerateTextureMipmap_gurax, "glGenerateTextureMipmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGenerateTextureMipmap_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glGenerateTextureMipmap(texture);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetCompressedTextureImage(texture:Number, level:Number, bufSize:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glGetCompressedTextureImage_gurax, "glGetCompressedTextureImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetCompressedTextureImage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
+	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!pixels) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetCompressedTextureImage(texture, level, bufSize, pixels);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedBufferParameteri64v(buffer:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedBufferParameteri64v_gurax, "glGetNamedBufferParameteri64v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedBufferParameteri64v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint64* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedBufferParameteri64v(buffer, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedBufferParameteriv(buffer:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedBufferParameteriv_gurax, "glGetNamedBufferParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedBufferParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedBufferParameteriv(buffer, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedBufferSubData(buffer:Number, offset:Number, size:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedBufferSubData_gurax, "glGetNamedBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedBufferSubData(buffer, offset, size, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedFramebufferAttachmentParameteriv(framebuffer:Number, attachment:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedFramebufferAttachmentParameteriv_gurax, "glGetNamedFramebufferAttachmentParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedFramebufferAttachmentParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum attachment = args_gurax.PickNumber<GLenum>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedFramebufferParameteriv(framebuffer:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedFramebufferParameteriv_gurax, "glGetNamedFramebufferParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedFramebufferParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedFramebufferParameteriv(framebuffer, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetNamedRenderbufferParameteriv(renderbuffer:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetNamedRenderbufferParameteriv_gurax, "glGetNamedRenderbufferParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetNamedRenderbufferParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint renderbuffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetNamedRenderbufferParameteriv(renderbuffer, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryBufferObjecti64v(id:Number, buffer:Number, pname:Number, offset:Number)
+Gurax_DeclareFunctionAlias(glGetQueryBufferObjecti64v_gurax, "glGetQueryBufferObjecti64v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryBufferObjecti64v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	// Function body
+	glGetQueryBufferObjecti64v(id, buffer, pname, offset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryBufferObjectiv(id:Number, buffer:Number, pname:Number, offset:Number)
+Gurax_DeclareFunctionAlias(glGetQueryBufferObjectiv_gurax, "glGetQueryBufferObjectiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryBufferObjectiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	// Function body
+	glGetQueryBufferObjectiv(id, buffer, pname, offset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryBufferObjectui64v(id:Number, buffer:Number, pname:Number, offset:Number)
+Gurax_DeclareFunctionAlias(glGetQueryBufferObjectui64v_gurax, "glGetQueryBufferObjectui64v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryBufferObjectui64v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	// Function body
+	glGetQueryBufferObjectui64v(id, buffer, pname, offset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetQueryBufferObjectuiv(id:Number, buffer:Number, pname:Number, offset:Number)
+Gurax_DeclareFunctionAlias(glGetQueryBufferObjectuiv_gurax, "glGetQueryBufferObjectuiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetQueryBufferObjectuiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint id = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	// Function body
+	glGetQueryBufferObjectuiv(id, buffer, pname, offset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureImage(texture:Number, level:Number, format:Number, type:Number, bufSize:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureImage_gurax, "glGetTextureImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureImage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
+	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!pixels) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureImage(texture, level, format, type, bufSize, pixels);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureLevelParameterfv(texture:Number, level:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureLevelParameterfv_gurax, "glGetTextureLevelParameterfv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureLevelParameterfv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureLevelParameterfv(texture, level, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureLevelParameteriv(texture:Number, level:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureLevelParameteriv_gurax, "glGetTextureLevelParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureLevelParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureLevelParameteriv(texture, level, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureParameterIiv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureParameterIiv_gurax, "glGetTextureParameterIiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureParameterIiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureParameterIiv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureParameterIuiv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureParameterIuiv_gurax, "glGetTextureParameterIuiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureParameterIuiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLuint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureParameterIuiv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureParameterfv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureParameterfv_gurax, "glGetTextureParameterfv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureParameterfv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureParameterfv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTextureParameteriv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glGetTextureParameteriv_gurax, "glGetTextureParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTextureParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!params) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTextureParameteriv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTransformFeedbacki64_v(xfb:Number, pname:Number, index:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetTransformFeedbacki64_v_gurax, "glGetTransformFeedbacki64_v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTransformFeedbacki64_v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint xfb = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint64* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTransformFeedbacki64_v(xfb, pname, index, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTransformFeedbacki_v(xfb:Number, pname:Number, index:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetTransformFeedbacki_v_gurax, "glGetTransformFeedbacki_v")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTransformFeedbacki_v_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint xfb = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTransformFeedbacki_v(xfb, pname, index, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetTransformFeedbackiv(xfb:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetTransformFeedbackiv_gurax, "glGetTransformFeedbackiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetTransformFeedbackiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint xfb = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetTransformFeedbackiv(xfb, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetVertexArrayIndexed64iv(vaobj:Number, index:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetVertexArrayIndexed64iv_gurax, "glGetVertexArrayIndexed64iv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetVertexArrayIndexed64iv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint64* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetVertexArrayIndexed64iv(vaobj, index, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetVertexArrayIndexediv(vaobj:Number, index:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetVertexArrayIndexediv_gurax, "glGetVertexArrayIndexediv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetVertexArrayIndexediv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetVertexArrayIndexediv(vaobj, index, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glGetVertexArrayiv(vaobj:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glGetVertexArrayiv_gurax, "glGetVertexArrayiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glGetVertexArrayiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!param) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glGetVertexArrayiv(vaobj, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glInvalidateNamedFramebufferData(framebuffer:Number, numAttachments:Number, attachments:Pointer)
+Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferData_gurax, "glInvalidateNamedFramebufferData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numAttachments", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachments", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
+	const GLenum* attachments = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>();
+	// Function body
+	glInvalidateNamedFramebufferData(framebuffer, numAttachments, attachments);
+	return Gurax::Value::nil();
+}
+
+// opengl.glInvalidateNamedFramebufferSubData(framebuffer:Number, numAttachments:Number, attachments:Pointer, x:Number, y:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferSubData_gurax, "glInvalidateNamedFramebufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numAttachments", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachments", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
+	const GLenum* attachments = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>();
+	GLint x = args_gurax.PickNumber<GLint>();
+	GLint y = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glInvalidateNamedFramebufferSubData(framebuffer, numAttachments, attachments, x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedBufferData(buffer:Number, size:Number, data:Pointer, usage:Number)
+Gurax_DeclareFunctionAlias(glNamedBufferData_gurax, "glNamedBufferData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("usage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedBufferData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLenum usage = args_gurax.PickNumber<GLenum>();
+	// Function body
+	glNamedBufferData(buffer, size, data, usage);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedBufferStorage(buffer:Number, size:Number, data:Pointer, flags:Number)
+Gurax_DeclareFunctionAlias(glNamedBufferStorage_gurax, "glNamedBufferStorage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedBufferStorage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	GLbitfield flags = args_gurax.PickNumber<GLbitfield>();
+	// Function body
+	glNamedBufferStorage(buffer, size, data, flags);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedBufferSubData(buffer:Number, offset:Number, size:Number, data:Pointer)
+Gurax_DeclareFunctionAlias(glNamedBufferSubData_gurax, "glNamedBufferSubData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedBufferSubData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glNamedBufferSubData(buffer, offset, size, data);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferDrawBuffer(framebuffer:Number, mode:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffer_gurax, "glNamedFramebufferDrawBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	// Function body
+	glNamedFramebufferDrawBuffer(framebuffer, mode);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferDrawBuffers(framebuffer:Number, n:Number, bufs:Pointer)
+Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffers_gurax, "glNamedFramebufferDrawBuffers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bufs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	const GLenum* bufs = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>();
+	// Function body
+	glNamedFramebufferDrawBuffers(framebuffer, n, bufs);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferParameteri(framebuffer:Number, pname:Number, param:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferParameteri_gurax, "glNamedFramebufferParameteri")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferParameteri_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
+	// Function body
+	glNamedFramebufferParameteri(framebuffer, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferReadBuffer(framebuffer:Number, mode:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferReadBuffer_gurax, "glNamedFramebufferReadBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferReadBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum mode = args_gurax.PickNumber<GLenum>();
+	// Function body
+	glNamedFramebufferReadBuffer(framebuffer, mode);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferRenderbuffer(framebuffer:Number, attachment:Number, renderbuffertarget:Number, renderbuffer:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferRenderbuffer_gurax, "glNamedFramebufferRenderbuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("renderbuffertarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferRenderbuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum attachment = args_gurax.PickNumber<GLenum>();
+	GLenum renderbuffertarget = args_gurax.PickNumber<GLenum>();
+	GLuint renderbuffer = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glNamedFramebufferRenderbuffer(framebuffer, attachment, renderbuffertarget, renderbuffer);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferTexture(framebuffer:Number, attachment:Number, texture:Number, level:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferTexture_gurax, "glNamedFramebufferTexture")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum attachment = args_gurax.PickNumber<GLenum>();
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	// Function body
+	glNamedFramebufferTexture(framebuffer, attachment, texture, level);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedFramebufferTextureLayer(framebuffer:Number, attachment:Number, texture:Number, level:Number, layer:Number)
+Gurax_DeclareFunctionAlias(glNamedFramebufferTextureLayer_gurax, "glNamedFramebufferTextureLayer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedFramebufferTextureLayer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
+	GLenum attachment = args_gurax.PickNumber<GLenum>();
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint layer = args_gurax.PickNumber<GLint>();
+	// Function body
+	glNamedFramebufferTextureLayer(framebuffer, attachment, texture, level, layer);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedRenderbufferStorage(renderbuffer:Number, internalformat:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glNamedRenderbufferStorage_gurax, "glNamedRenderbufferStorage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedRenderbufferStorage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint renderbuffer = args_gurax.PickNumber<GLuint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glNamedRenderbufferStorage(renderbuffer, internalformat, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glNamedRenderbufferStorageMultisample(renderbuffer:Number, samples:Number, internalformat:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glNamedRenderbufferStorageMultisample_gurax, "glNamedRenderbufferStorageMultisample")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("samples", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glNamedRenderbufferStorageMultisample_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint renderbuffer = args_gurax.PickNumber<GLuint>();
+	GLsizei samples = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glNamedRenderbufferStorageMultisample(renderbuffer, samples, internalformat, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureBuffer(texture:Number, internalformat:Number, buffer:Number)
+Gurax_DeclareFunctionAlias(glTextureBuffer_gurax, "glTextureBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glTextureBuffer(texture, internalformat, buffer);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureBufferRange(texture:Number, internalformat:Number, buffer:Number, offset:Number, size:Number)
+Gurax_DeclareFunctionAlias(glTextureBufferRange_gurax, "glTextureBufferRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureBufferRange_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	// Function body
+	glTextureBufferRange(texture, internalformat, buffer, offset, size);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameterIiv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glTextureParameterIiv_gurax, "glTextureParameterIiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameterIiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	// Function body
+	glTextureParameterIiv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameterIuiv(texture:Number, pname:Number, params:Pointer)
+Gurax_DeclareFunctionAlias(glTextureParameterIuiv_gurax, "glTextureParameterIuiv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameterIuiv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	const GLuint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	// Function body
+	glTextureParameterIuiv(texture, pname, params);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameterf(texture:Number, pname:Number, param:Number)
+Gurax_DeclareFunctionAlias(glTextureParameterf_gurax, "glTextureParameterf")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameterf_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLfloat param = args_gurax.PickNumber<GLfloat>();
+	// Function body
+	glTextureParameterf(texture, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameterfv(texture:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glTextureParameterfv_gurax, "glTextureParameterfv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameterfv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	const GLfloat* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	// Function body
+	glTextureParameterfv(texture, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameteri(texture:Number, pname:Number, param:Number)
+Gurax_DeclareFunctionAlias(glTextureParameteri_gurax, "glTextureParameteri")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameteri_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	GLint param = args_gurax.PickNumber<GLint>();
+	// Function body
+	glTextureParameteri(texture, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureParameteriv(texture:Number, pname:Number, param:Pointer)
+Gurax_DeclareFunctionAlias(glTextureParameteriv_gurax, "glTextureParameteriv")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureParameteriv_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLenum pname = args_gurax.PickNumber<GLenum>();
+	const GLint* param = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	// Function body
+	glTextureParameteriv(texture, pname, param);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureStorage1D(texture:Number, levels:Number, internalformat:Number, width:Number)
+Gurax_DeclareFunctionAlias(glTextureStorage1D_gurax, "glTextureStorage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("levels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureStorage1D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLsizei levels = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glTextureStorage1D(texture, levels, internalformat, width);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureStorage2D(texture:Number, levels:Number, internalformat:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(glTextureStorage2D_gurax, "glTextureStorage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("levels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureStorage2D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLsizei levels = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glTextureStorage2D(texture, levels, internalformat, width, height);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureStorage2DMultisample(texture:Number, samples:Number, internalformat:Number, width:Number, height:Number, fixedsamplelocations:Bool)
+Gurax_DeclareFunctionAlias(glTextureStorage2DMultisample_gurax, "glTextureStorage2DMultisample")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("samples", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureStorage2DMultisample_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLsizei samples = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLboolean fixedsamplelocations = static_cast<GLboolean>(args_gurax.PickBool());
+	// Function body
+	glTextureStorage2DMultisample(texture, samples, internalformat, width, height, fixedsamplelocations);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureStorage3D(texture:Number, levels:Number, internalformat:Number, width:Number, height:Number, depth:Number)
+Gurax_DeclareFunctionAlias(glTextureStorage3D_gurax, "glTextureStorage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("levels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureStorage3D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLsizei levels = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glTextureStorage3D(texture, levels, internalformat, width, height, depth);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureStorage3DMultisample(texture:Number, samples:Number, internalformat:Number, width:Number, height:Number, depth:Number, fixedsamplelocations:Bool)
+Gurax_DeclareFunctionAlias(glTextureStorage3DMultisample_gurax, "glTextureStorage3DMultisample")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("samples", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureStorage3DMultisample_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLsizei samples = args_gurax.PickNumber<GLsizei>();
+	GLenum internalformat = args_gurax.PickNumber<GLenum>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLboolean fixedsamplelocations = static_cast<GLboolean>(args_gurax.PickBool());
+	// Function body
+	glTextureStorage3DMultisample(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureSubImage1D(texture:Number, level:Number, xoffset:Number, width:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glTextureSubImage1D_gurax, "glTextureSubImage1D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureSubImage1D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glTextureSubImage1D(texture, level, xoffset, width, format, type, pixels);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glTextureSubImage2D_gurax, "glTextureSubImage2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureSubImage2D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, pixels:Pointer)
+Gurax_DeclareFunctionAlias(glTextureSubImage3D_gurax, "glTextureSubImage3D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("zoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTextureSubImage3D_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint texture = args_gurax.PickNumber<GLuint>();
+	GLint level = args_gurax.PickNumber<GLint>();
+	GLint xoffset = args_gurax.PickNumber<GLint>();
+	GLint yoffset = args_gurax.PickNumber<GLint>();
+	GLint zoffset = args_gurax.PickNumber<GLint>();
+	GLsizei width = args_gurax.PickNumber<GLsizei>();
+	GLsizei height = args_gurax.PickNumber<GLsizei>();
+	GLsizei depth = args_gurax.PickNumber<GLsizei>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	// Function body
+	glTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTransformFeedbackBufferBase(xfb:Number, index:Number, buffer:Number)
+Gurax_DeclareFunctionAlias(glTransformFeedbackBufferBase_gurax, "glTransformFeedbackBufferBase")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTransformFeedbackBufferBase_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint xfb = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glTransformFeedbackBufferBase(xfb, index, buffer);
+	return Gurax::Value::nil();
+}
+
+// opengl.glTransformFeedbackBufferRange(xfb:Number, index:Number, buffer:Number, offset:Number, size:Number)
+Gurax_DeclareFunctionAlias(glTransformFeedbackBufferRange_gurax, "glTransformFeedbackBufferRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glTransformFeedbackBufferRange_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint xfb = args_gurax.PickNumber<GLuint>();
+	GLuint index = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
+	// Function body
+	glTransformFeedbackBufferRange(xfb, index, buffer, offset, size);
+	return Gurax::Value::nil();
+}
+
+// opengl.glUnmapNamedBuffer(buffer:Number)
+Gurax_DeclareFunctionAlias(glUnmapNamedBuffer_gurax, "glUnmapNamedBuffer")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glUnmapNamedBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	// Function body
+	GLboolean rtn = glUnmapNamedBuffer(buffer);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// opengl.glVertexArrayAttribBinding(vaobj:Number, attribindex:Number, bindingindex:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayAttribBinding_gurax, "glVertexArrayAttribBinding")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayAttribBinding_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint attribindex = args_gurax.PickNumber<GLuint>();
+	GLuint bindingindex = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayAttribBinding(vaobj, attribindex, bindingindex);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayAttribFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, normalized:Bool, relativeoffset:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayAttribFormat_gurax, "glVertexArrayAttribFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayAttribFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint attribindex = args_gurax.PickNumber<GLuint>();
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
+	GLuint relativeoffset = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayAttribFormat(vaobj, attribindex, size, type, normalized, relativeoffset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayAttribIFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayAttribIFormat_gurax, "glVertexArrayAttribIFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayAttribIFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint attribindex = args_gurax.PickNumber<GLuint>();
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLuint relativeoffset = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayAttribIFormat(vaobj, attribindex, size, type, relativeoffset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayAttribLFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayAttribLFormat_gurax, "glVertexArrayAttribLFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayAttribLFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint attribindex = args_gurax.PickNumber<GLuint>();
+	GLint size = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	GLuint relativeoffset = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayAttribLFormat(vaobj, attribindex, size, type, relativeoffset);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayBindingDivisor(vaobj:Number, bindingindex:Number, divisor:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayBindingDivisor_gurax, "glVertexArrayBindingDivisor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayBindingDivisor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint bindingindex = args_gurax.PickNumber<GLuint>();
+	GLuint divisor = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayBindingDivisor(vaobj, bindingindex, divisor);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayElementBuffer(vaobj:Number, buffer:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayElementBuffer_gurax, "glVertexArrayElementBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayElementBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	// Function body
+	glVertexArrayElementBuffer(vaobj, buffer);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayVertexBuffer(vaobj:Number, bindingindex:Number, buffer:Number, offset:Number, stride:Number)
+Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffer_gurax, "glVertexArrayVertexBuffer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayVertexBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint bindingindex = args_gurax.PickNumber<GLuint>();
+	GLuint buffer = args_gurax.PickNumber<GLuint>();
+	GLintptr offset = args_gurax.PickNumber<GLintptr>();
+	GLsizei stride = args_gurax.PickNumber<GLsizei>();
+	// Function body
+	glVertexArrayVertexBuffer(vaobj, bindingindex, buffer, offset, stride);
+	return Gurax::Value::nil();
+}
+
+// opengl.glVertexArrayVertexBuffers(vaobj:Number, first:Number, count:Number, buffers:Pointer, offsets:Pointer, strides:Pointer)
+Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffers_gurax, "glVertexArrayVertexBuffers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offsets", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("strides", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glVertexArrayVertexBuffers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint vaobj = args_gurax.PickNumber<GLuint>();
+	GLuint first = args_gurax.PickNumber<GLuint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	const GLuint* buffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLintptr* offsets = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLintptr>();
+	const GLsizei* strides = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizei>();
+	// Function body
+	glVertexArrayVertexBuffers(vaobj, first, count, buffers, offsets, strides);
+	return Gurax::Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(glewInit_gurax));
@@ -16454,6 +19250,105 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glDispatchCompute_gurax));
 	frame.Assign(Gurax_CreateFunction(glDispatchComputeIndirect_gurax));
 	frame.Assign(Gurax_CreateFunction(glDispatchComputeGroupSizeARB_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyImageSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glDebugMessageControlARB_gurax));
+	frame.Assign(Gurax_CreateFunction(glDebugMessageInsertARB_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetDebugMessageLogARB_gurax));
+	frame.Assign(Gurax_CreateFunction(glBindTextureUnit_gurax));
+	frame.Assign(Gurax_CreateFunction(glBlitNamedFramebuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glCheckNamedFramebufferStatus_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedBufferData_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedFramebufferfi_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedFramebufferfv_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedFramebufferiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glClearNamedFramebufferuiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTextureSubImage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTextureSubImage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCompressedTextureSubImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyNamedBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyTextureSubImage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyTextureSubImage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCopyTextureSubImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateBuffers_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateFramebuffers_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateProgramPipelines_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateQueries_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateRenderbuffers_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateSamplers_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateTextures_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateTransformFeedbacks_gurax));
+	frame.Assign(Gurax_CreateFunction(glCreateVertexArrays_gurax));
+	frame.Assign(Gurax_CreateFunction(glDisableVertexArrayAttrib_gurax));
+	frame.Assign(Gurax_CreateFunction(glEnableVertexArrayAttrib_gurax));
+	frame.Assign(Gurax_CreateFunction(glFlushMappedNamedBufferRange_gurax));
+	frame.Assign(Gurax_CreateFunction(glGenerateTextureMipmap_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetCompressedTextureImage_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedBufferParameteri64v_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedBufferParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedFramebufferAttachmentParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedFramebufferParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetNamedRenderbufferParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryBufferObjecti64v_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryBufferObjectiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryBufferObjectui64v_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetQueryBufferObjectuiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureImage_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureLevelParameterfv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureLevelParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureParameterIiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureParameterIuiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureParameterfv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTextureParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTransformFeedbacki64_v_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTransformFeedbacki_v_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetTransformFeedbackiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetVertexArrayIndexed64iv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetVertexArrayIndexediv_gurax));
+	frame.Assign(Gurax_CreateFunction(glGetVertexArrayiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glInvalidateNamedFramebufferData_gurax));
+	frame.Assign(Gurax_CreateFunction(glInvalidateNamedFramebufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedBufferData_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedBufferStorage_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedBufferSubData_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferDrawBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferDrawBuffers_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferParameteri_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferReadBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferRenderbuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedFramebufferTextureLayer_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedRenderbufferStorage_gurax));
+	frame.Assign(Gurax_CreateFunction(glNamedRenderbufferStorageMultisample_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureBufferRange_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameterIiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameterIuiv_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameterf_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameterfv_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameteri_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureParameteriv_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureStorage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureStorage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureStorage2DMultisample_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureStorage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureStorage3DMultisample_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureSubImage1D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureSubImage2D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTextureSubImage3D_gurax));
+	frame.Assign(Gurax_CreateFunction(glTransformFeedbackBufferBase_gurax));
+	frame.Assign(Gurax_CreateFunction(glTransformFeedbackBufferRange_gurax));
+	frame.Assign(Gurax_CreateFunction(glUnmapNamedBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayAttribBinding_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayAttribFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayAttribIFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayAttribLFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayBindingDivisor_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayElementBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayVertexBuffer_gurax));
+	frame.Assign(Gurax_CreateFunction(glVertexArrayVertexBuffers_gurax));
 }
 
 Gurax_EndModuleScope(opengl)

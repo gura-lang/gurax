@@ -1554,7 +1554,6 @@ glDispatchComputeIndirect(indirect:GLintptr):void
 
 glDispatchComputeGroupSizeARB(num_groups_x:GLuint, num_groups_y:GLuint, num_groups_z:GLuint, group_size_x:GLuint, group_size_y:GLuint, group_size_z:GLuint):void
 
-/*
 //======== GL_ARB_copy_buffer ========
 
 glCopyBufferSubData(readtarget:GLenum, writetarget:GLenum, readoffset:GLintptr, writeoffset:GLintptr, size:GLsizeiptr):void
@@ -1565,7 +1564,7 @@ glCopyImageSubData(srcName:GLuint, srcTarget:GLenum, srcLevel:GLint, srcX:GLint,
 
 //======== GL_ARB_debug_output ========
 
-glDebugMessageCallbackARB(callback:GLDEBUGPROCARB, userParam:const_void_p):void
+//glDebugMessageCallbackARB(callback:GLDEBUGPROCARB, userParam:const_void_p):void
 
 glDebugMessageControlARB(source:GLenum, type:GLenum, severity:GLenum, count:GLsizei, ids:const_GLuint_p, enabled:GLboolean):void
 
@@ -1639,7 +1638,7 @@ glGetNamedBufferParameteri64v(buffer:GLuint, pname:GLenum, params:GLint64_p):voi
 
 glGetNamedBufferParameteriv(buffer:GLuint, pname:GLenum, params:GLint_p):void
 
-glGetNamedBufferPointerv(buffer:GLuint, pname:GLenum, params:void_p__p):void
+//glGetNamedBufferPointerv(buffer:GLuint, pname:GLenum, params:void_p__p):void
 
 glGetNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:void_p):void
 
@@ -1687,9 +1686,9 @@ glInvalidateNamedFramebufferData(framebuffer:GLuint, numAttachments:GLsizei, att
 
 glInvalidateNamedFramebufferSubData(framebuffer:GLuint, numAttachments:GLsizei, attachments:const_GLenum_p, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-glMapNamedBuffer(buffer:GLuint, access:GLenum):void *
+//glMapNamedBuffer(buffer:GLuint, access:GLenum):void *
 
-glMapNamedBufferRange(buffer:GLuint, offset:GLintptr, length:GLsizeiptr, access:GLbitfield):void *
+//glMapNamedBufferRange(buffer:GLuint, offset:GLintptr, length:GLsizeiptr, access:GLbitfield):void *
 
 glNamedBufferData(buffer:GLuint, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
 
@@ -1769,6 +1768,7 @@ glVertexArrayVertexBuffer(vaobj:GLuint, bindingindex:GLuint, buffer:GLuint, offs
 
 glVertexArrayVertexBuffers(vaobj:GLuint, first:GLuint, count:GLsizei, buffers:const_GLuint_p, offsets:const_GLintptr_p, strides:const_GLsizei_p):void
 
+/*
 //======== GL_ARB_draw_buffers ========
 
 glDrawBuffersARB(n:GLsizei, bufs:const_GLenum_p):void
