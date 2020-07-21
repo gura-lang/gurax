@@ -43,11 +43,18 @@ Gurax_ImplementFunction(_function_)
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
 	SymbolList symbolList(pExprOfBlock->GatherArgSymbols());
-	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-	for (const Symbol* pSymbol : symbolList) {
-		RefPtr<DeclArg> pDeclArg(
-			new DeclArg(pSymbol, VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
-		pDeclCallable->GetDeclArgOwner().push_back(pDeclArg.release());
+	RefPtr<DeclCallable> pDeclCallable(pExprOfBlock->GetDeclCallable().Reference());
+	if (!pExprOfBlock->HasExprParam()) {
+		pDeclCallable.reset(new DeclCallable());
+		for (const Symbol* pSymbol : symbolList) {
+			RefPtr<DeclArg> pDeclArg(
+				new DeclArg(pSymbol, VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+			pDeclCallable->GetDeclArgOwner().push_back(pDeclArg.release());
+		}
+	} else if (!symbolList.empty()) {
+		Error::Issue(ErrorType::SyntaxError,
+				"block parameters and dollar-style arguments can not be used together.");
+		return Value::nil();
 	}
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(

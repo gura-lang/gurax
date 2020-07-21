@@ -212,6 +212,14 @@ TestCase('Function Creation by &{}') {
 	Tester(`{f = &{$a + g($b, $c, $d)}, f(3, 4, 5, 6)})
 	Tester(`{f = &{$a + $a}, f})
 	Tester(`{f = &{$a + $a}, f(3)})
+	Tester(`{f = &{|a|}, f})
+	Tester(`{f = &{|a| $x}, f})
+	Tester(`{f = &{|a|}, f()})
+	Tester(`{f = &{|a|}, f(3)})
+	Tester(`{f = &{|a|}, f(3, 4)})
+	Tester(`{f = &{|a, b| a + b}, f})
+	Tester(`{f = &{|a, b| a + b}, f(3, 4)})
+	Tester(`{f = &{|a:String, b:Number| a * b}, f('hello', 4)})
 }
 
 TestCase('Variable Expansion by Asterisk Operator') {
