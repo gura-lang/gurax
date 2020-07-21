@@ -9,57 +9,17 @@ Gurax_BeginModuleScope(glfw)
 
 void AssignConsts(Frame& frame)
 {
+	// GLFW version macros
+	AssignConst(GLFW_VERSION_MAJOR);
+	AssignConst(GLFW_VERSION_MINOR);
+	AssignConst(GLFW_VERSION_REVISION);
 	// Initialization, version and error
 	frame.Assign("GLFW_TRUE", Value::true_());
 	frame.Assign("GLFW_FALSE", Value::false_());
-	AssignConst(GLFW_JOYSTICK_HAT_BUTTONS);
-	AssignConst(GLFW_COCOA_CHDIR_RESOURCES);
-	AssignConst(GLFW_COCOA_MENUBAR);
-	// Error codes
-	AssignConst(GLFW_NO_ERROR);
-	AssignConst(GLFW_NOT_INITIALIZED);
-	AssignConst(GLFW_NO_CURRENT_CONTEXT);
-	AssignConst(GLFW_INVALID_ENUM);
-	AssignConst(GLFW_INVALID_VALUE);
-	AssignConst(GLFW_OUT_OF_MEMORY);
-	AssignConst(GLFW_API_UNAVAILABLE);
-	AssignConst(GLFW_VERSION_UNAVAILABLE);
-	AssignConst(GLFW_PLATFORM_ERROR);
-	AssignConst(GLFW_FORMAT_UNAVAILABLE);
-	AssignConst(GLFW_NO_WINDOW_CONTEXT);
-	// Input
+	// Input - Key and button actions
 	AssignConst(GLFW_RELEASE);
 	AssignConst(GLFW_PRESS);
 	AssignConst(GLFW_REPEAT);
-	// Input - Gamepad axes
-	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_X);
-	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_Y);
-	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_X);
-	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_Y);
-	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_TRIGGER);
-	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER);
-	AssignConst(GLFW_GAMEPAD_AXIS_LAST);
-	// Input - Gamepad buttons
-	AssignConst(GLFW_GAMEPAD_BUTTON_A);
-	AssignConst(GLFW_GAMEPAD_BUTTON_B);
-	AssignConst(GLFW_GAMEPAD_BUTTON_X);
-	AssignConst(GLFW_GAMEPAD_BUTTON_Y);
-	AssignConst(GLFW_GAMEPAD_BUTTON_LEFT_BUMPER);
-	AssignConst(GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER);
-	AssignConst(GLFW_GAMEPAD_BUTTON_BACK);
-	AssignConst(GLFW_GAMEPAD_BUTTON_START);
-	AssignConst(GLFW_GAMEPAD_BUTTON_GUIDE);
-	AssignConst(GLFW_GAMEPAD_BUTTON_LEFT_THUMB);
-	AssignConst(GLFW_GAMEPAD_BUTTON_RIGHT_THUMB);
-	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_UP);
-	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_RIGHT);
-	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_DOWN);
-	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_LEFT);
-	AssignConst(GLFW_GAMEPAD_BUTTON_LAST);
-	AssignConst(GLFW_GAMEPAD_BUTTON_CROSS);
-	AssignConst(GLFW_GAMEPAD_BUTTON_CIRCLE);
-	AssignConst(GLFW_GAMEPAD_BUTTON_SQUARE);
-	AssignConst(GLFW_GAMEPAD_BUTTON_TRIANGLE);
 	// Input - Joystick hat states
 	AssignConst(GLFW_HAT_CENTERED);
 	AssignConst(GLFW_HAT_UP);
@@ -70,25 +30,7 @@ void AssignConsts(Frame& frame)
 	AssignConst(GLFW_HAT_RIGHT_DOWN);
 	AssignConst(GLFW_HAT_LEFT_UP);
 	AssignConst(GLFW_HAT_LEFT_DOWN);
-	// Input - Joysticks
-	AssignConst(GLFW_JOYSTICK_1);
-	AssignConst(GLFW_JOYSTICK_2);
-	AssignConst(GLFW_JOYSTICK_3);
-	AssignConst(GLFW_JOYSTICK_4);
-	AssignConst(GLFW_JOYSTICK_5);
-	AssignConst(GLFW_JOYSTICK_6);
-	AssignConst(GLFW_JOYSTICK_7);
-	AssignConst(GLFW_JOYSTICK_8);
-	AssignConst(GLFW_JOYSTICK_9);
-	AssignConst(GLFW_JOYSTICK_10);
-	AssignConst(GLFW_JOYSTICK_11);
-	AssignConst(GLFW_JOYSTICK_12);
-	AssignConst(GLFW_JOYSTICK_13);
-	AssignConst(GLFW_JOYSTICK_14);
-	AssignConst(GLFW_JOYSTICK_15);
-	AssignConst(GLFW_JOYSTICK_16);
-	AssignConst(GLFW_JOYSTICK_LAST);
-	// Input - Keyboard keys
+	// Input - Keyboard key IDs
 	AssignConst(GLFW_KEY_UNKNOWN);
 	AssignConst(GLFW_KEY_SPACE);
 	AssignConst(GLFW_KEY_APOSTROPHE);
@@ -218,7 +160,7 @@ void AssignConsts(Frame& frame)
 	AssignConst(GLFW_MOD_SUPER);
 	AssignConst(GLFW_MOD_CAPS_LOCK);
 	AssignConst(GLFW_MOD_NUM_LOCK);
-	// Input - Mouse buttons
+	// Input - Mouse button IDs
 	AssignConst(GLFW_MOUSE_BUTTON_1);
 	AssignConst(GLFW_MOUSE_BUTTON_2);
 	AssignConst(GLFW_MOUSE_BUTTON_3);
@@ -231,13 +173,76 @@ void AssignConsts(Frame& frame)
 	AssignConst(GLFW_MOUSE_BUTTON_LEFT);
 	AssignConst(GLFW_MOUSE_BUTTON_RIGHT);
 	AssignConst(GLFW_MOUSE_BUTTON_MIDDLE);
-	// Input - Standard cursor shapes
+	// Input - Joystick IDs
+	AssignConst(GLFW_JOYSTICK_1);
+	AssignConst(GLFW_JOYSTICK_2);
+	AssignConst(GLFW_JOYSTICK_3);
+	AssignConst(GLFW_JOYSTICK_4);
+	AssignConst(GLFW_JOYSTICK_5);
+	AssignConst(GLFW_JOYSTICK_6);
+	AssignConst(GLFW_JOYSTICK_7);
+	AssignConst(GLFW_JOYSTICK_8);
+	AssignConst(GLFW_JOYSTICK_9);
+	AssignConst(GLFW_JOYSTICK_10);
+	AssignConst(GLFW_JOYSTICK_11);
+	AssignConst(GLFW_JOYSTICK_12);
+	AssignConst(GLFW_JOYSTICK_13);
+	AssignConst(GLFW_JOYSTICK_14);
+	AssignConst(GLFW_JOYSTICK_15);
+	AssignConst(GLFW_JOYSTICK_16);
+	AssignConst(GLFW_JOYSTICK_LAST);
+	// Input - Gamepad buttons
+	AssignConst(GLFW_GAMEPAD_BUTTON_A);
+	AssignConst(GLFW_GAMEPAD_BUTTON_B);
+	AssignConst(GLFW_GAMEPAD_BUTTON_X);
+	AssignConst(GLFW_GAMEPAD_BUTTON_Y);
+	AssignConst(GLFW_GAMEPAD_BUTTON_LEFT_BUMPER);
+	AssignConst(GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER);
+	AssignConst(GLFW_GAMEPAD_BUTTON_BACK);
+	AssignConst(GLFW_GAMEPAD_BUTTON_START);
+	AssignConst(GLFW_GAMEPAD_BUTTON_GUIDE);
+	AssignConst(GLFW_GAMEPAD_BUTTON_LEFT_THUMB);
+	AssignConst(GLFW_GAMEPAD_BUTTON_RIGHT_THUMB);
+	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_UP);
+	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_RIGHT);
+	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_DOWN);
+	AssignConst(GLFW_GAMEPAD_BUTTON_DPAD_LEFT);
+	AssignConst(GLFW_GAMEPAD_BUTTON_LAST);
+	AssignConst(GLFW_GAMEPAD_BUTTON_CROSS);
+	AssignConst(GLFW_GAMEPAD_BUTTON_CIRCLE);
+	AssignConst(GLFW_GAMEPAD_BUTTON_SQUARE);
+	AssignConst(GLFW_GAMEPAD_BUTTON_TRIANGLE);
+	// Input - Gamepad axes
+	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_X);
+	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_Y);
+	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_X);
+	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_Y);
+	AssignConst(GLFW_GAMEPAD_AXIS_LEFT_TRIGGER);
+	AssignConst(GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER);
+	AssignConst(GLFW_GAMEPAD_AXIS_LAST);
+	// Error codes
+	AssignConst(GLFW_NO_ERROR);
+	AssignConst(GLFW_NOT_INITIALIZED);
+	AssignConst(GLFW_NO_CURRENT_CONTEXT);
+	AssignConst(GLFW_INVALID_ENUM);
+	AssignConst(GLFW_INVALID_VALUE);
+	AssignConst(GLFW_OUT_OF_MEMORY);
+	AssignConst(GLFW_API_UNAVAILABLE);
+	AssignConst(GLFW_VERSION_UNAVAILABLE);
+	AssignConst(GLFW_PLATFORM_ERROR);
+	AssignConst(GLFW_FORMAT_UNAVAILABLE);
+	AssignConst(GLFW_NO_WINDOW_CONTEXT);
+	// Input - Standard system cursor shapes
 	AssignConst(GLFW_ARROW_CURSOR);
 	AssignConst(GLFW_IBEAM_CURSOR);
 	AssignConst(GLFW_CROSSHAIR_CURSOR);
 	AssignConst(GLFW_HAND_CURSOR);
 	AssignConst(GLFW_HRESIZE_CURSOR);
 	AssignConst(GLFW_VRESIZE_CURSOR);
+	// Window
+	AssignConst(GLFW_JOYSTICK_HAT_BUTTONS);
+	AssignConst(GLFW_COCOA_CHDIR_RESOURCES);
+	AssignConst(GLFW_COCOA_MENUBAR);
 	// Window
 	AssignConst(GLFW_FOCUSED);
 	AssignConst(GLFW_ICONIFIED);
@@ -284,6 +289,30 @@ void AssignConsts(Frame& frame)
 	AssignConst(GLFW_COCOA_GRAPHICS_SWITCHING);
 	AssignConst(GLFW_X11_CLASS_NAME);
 	AssignConst(GLFW_X11_INSTANCE_NAME);
+	// Misc
+	AssignConst(GLFW_NO_API);
+	AssignConst(GLFW_OPENGL_API);
+	AssignConst(GLFW_OPENGL_ES_API);
+	AssignConst(GLFW_NO_ROBUSTNESS);
+	AssignConst(GLFW_NO_RESET_NOTIFICATION);
+	AssignConst(GLFW_LOSE_CONTEXT_ON_RESET);
+	AssignConst(GLFW_OPENGL_ANY_PROFILE);
+	AssignConst(GLFW_OPENGL_CORE_PROFILE);
+	AssignConst(GLFW_OPENGL_COMPAT_PROFILE);
+	AssignConst(GLFW_CURSOR);
+	AssignConst(GLFW_STICKY_KEYS);
+	AssignConst(GLFW_STICKY_MOUSE_BUTTONS);
+	AssignConst(GLFW_LOCK_KEY_MODS);
+	AssignConst(GLFW_RAW_MOUSE_MOTION);
+	AssignConst(GLFW_CURSOR_NORMAL);
+	AssignConst(GLFW_CURSOR_HIDDEN);
+	AssignConst(GLFW_CURSOR_DISABLED);
+	AssignConst(GLFW_ANY_RELEASE_BEHAVIOR);
+	AssignConst(GLFW_RELEASE_BEHAVIOR_FLUSH);
+	AssignConst(GLFW_RELEASE_BEHAVIOR_NONE);
+	AssignConst(GLFW_NATIVE_CONTEXT_API);
+	AssignConst(GLFW_EGL_CONTEXT_API);
+	AssignConst(GLFW_OSMESA_CONTEXT_API);
 }
 
 Gurax_EndModuleScope(glfw)
