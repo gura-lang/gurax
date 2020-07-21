@@ -54,4 +54,4 @@ ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 		infoTbl.Add(SepInfo(m[1]))
 	}
 }
-infoTbl.Each {|item| item.Print()}
+infoTbl.Each {|item| item.Print(), Println()}
