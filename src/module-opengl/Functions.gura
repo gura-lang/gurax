@@ -26,6 +26,8 @@ r.DeclareType_Number('GLsync')
 r.DeclareType_Number('GLchar')
 r.DeclareType_Number('GLintptr')
 r.DeclareType_Number('GLsizeiptr')
+r.DeclareType_Number('GLint64EXT')
+r.DeclareType_Number('GLuint64EXT')
 //r.DeclareType(GLvoid)
 r.DeclareType('GLboolean', 'GLboolean', 'Bool',
 	codePicker = R'''
@@ -106,6 +108,8 @@ r.DeclareType_Pointer('const_GLchar_p', 'const GLchar*')
 r.DeclareType_Pointer('const_GLintptr_p', 'const GLintptr*')
 r.DeclareType_Pointer('const_GLsizeiptr_p', 'const GLsizeiptr*')
 r.DeclareType_Pointer('const_GLvoid_p', 'const GLvoid*')
+r.DeclareType_Pointer('const_GLint64EXT_p', 'const GLint64EXT*')
+r.DeclareType_Pointer('const_GLuint64EXT_p', 'const GLuint64EXT*')
 
 r.DeclareType_WritablePointer('GLboolean_p', 'GLboolean*')
 r.DeclareType_WritablePointer('GLenum_p', 'GLenum*')
@@ -129,6 +133,8 @@ r.DeclareType_WritablePointer('GLchar_p', 'GLchar*')
 r.DeclareType_WritablePointer('GLintptr_p', 'GLintptr*')
 r.DeclareType_WritablePointer('GLsizeiptr_p', 'GLsizeiptr*')
 r.DeclareType_WritablePointer('GLvoid_p', 'GLvoid*')
+r.DeclareType_Pointer('GLint64EXT_p', 'GLint64EXT*')
+r.DeclareType_Pointer('GLuint64EXT_p', 'GLuint64EXT*')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
@@ -1438,7 +1444,6 @@ glMultiDrawElementsIndirectCount(mode:GLenum, type:GLenum, indirect:const_GLvoid
 
 glSpecializeShader(shader:GLuint, pEntryPoint[]:GLchar, numSpecializationConstants:GLuint, pConstantIndex[]:GLuint, pConstantValue[]:GLuint):void
 
-/*
 //======== GL_ARB_ES2_compatibility ========
 
 glClearDepthf(d:GLclampf):void
@@ -1449,7 +1454,7 @@ glGetShaderPrecisionFormat(shadertype:GLenum, precisiontype:GLenum, range:GLint_
 
 glReleaseShaderCompiler():void
 
-glShaderBinary(count:GLsizei, shaders:const_GLuint_p, binaryformat:GLenum, void*binary:const, length:GLsizei):void
+glShaderBinary(count:GLsizei, shaders:const_GLuint_p, binaryformat:GLenum, binary:const_void_p, length:GLsizei):void
 
 //======== GL_ARB_ES3_1_compatibility ========
 
@@ -1475,7 +1480,7 @@ glGetTextureHandleARB(texture:GLuint):GLuint64
 
 glGetTextureSamplerHandleARB(texture:GLuint, sampler:GLuint):GLuint64
 
-glGetVertexAttribLui64vARB(index:GLuint, pname:GLenum, params:GLuint64EXT_p):void
+//glGetVertexAttribLui64vARB(index:GLuint, pname:GLenum, params:GLuint64EXT_p):void
 
 glIsImageHandleResidentARB(handle:GLuint64):GLboolean
 
@@ -1503,9 +1508,9 @@ glVertexAttribL1ui64vARB(index:GLuint, v:const_GLuint64EXT_p):void
 
 //======== GL_ARB_blend_func_extended ========
 
-glBindFragDataLocationIndexed(program:GLuint, colorNumber:GLuint, index:GLuint, name:const_GLchar_p):void
+glBindFragDataLocationIndexed(program:GLuint, colorNumber:GLuint, index:GLuint, name:String_const_GLchar_p):void
 
-glGetFragDataIndex(program:GLuint, name:const_GLchar_p):GLint
+glGetFragDataIndex(program:GLuint, name:String_const_GLchar_p):GLint
 
 //======== GL_ARB_buffer_storage ========
 
@@ -1513,7 +1518,7 @@ glBufferStorage(target:GLenum, size:GLsizeiptr, data:const_void_p, flags:GLbitfi
 
 //======== GL_ARB_cl_event ========
 
-glCreateSyncFromCLeventARB(context:cl_context, event:cl_event, flags:GLbitfield):GLsync
+//glCreateSyncFromCLeventARB(context:cl_context, event:cl_event, flags:GLbitfield):GLsync
 
 //======== GL_ARB_clear_buffer_object ========
 
@@ -1549,6 +1554,7 @@ glDispatchComputeIndirect(indirect:GLintptr):void
 
 glDispatchComputeGroupSizeARB(num_groups_x:GLuint, num_groups_y:GLuint, num_groups_z:GLuint, group_size_x:GLuint, group_size_y:GLuint, group_size_z:GLuint):void
 
+/*
 //======== GL_ARB_copy_buffer ========
 
 glCopyBufferSubData(readtarget:GLenum, writetarget:GLenum, readoffset:GLintptr, writeoffset:GLintptr, size:GLsizeiptr):void
@@ -2235,11 +2241,11 @@ glPolygonOffsetClamp(factor:GLfloat, units:GLfloat, clamp:GLfloat):void
 
 glGetProgramInterfaceiv(program:GLuint, programInterface:GLenum, pname:GLenum, params:GLint_p):void
 
-glGetProgramResourceIndex(program:GLuint, programInterface:GLenum, name:const_GLchar_p):GLuint
+glGetProgramResourceIndex(program:GLuint, programInterface:GLenum, name:String_const_GLchar_p):GLuint
 
-glGetProgramResourceLocation(program:GLuint, programInterface:GLenum, name:const_GLchar_p):GLint
+glGetProgramResourceLocation(program:GLuint, programInterface:GLenum, name:String_const_GLchar_p):GLint
 
-glGetProgramResourceLocationIndex(program:GLuint, programInterface:GLenum, name:const_GLchar_p):GLint
+glGetProgramResourceLocationIndex(program:GLuint, programInterface:GLenum, name:String_const_GLchar_p):GLint
 
 glGetProgramResourceName(program:GLuint, programInterface:GLenum, index:GLuint, bufSize:GLsizei, length:GLsizei_p, name:GLchar_p):void
 
@@ -2569,15 +2575,15 @@ glUniformSubroutinesuiv(shadertype:GLenum, count:GLsizei, indices:const_GLuint_p
 
 glCompileShaderIncludeARB(shader:GLuint, count:GLsizei, path:const_GLchar_p_const_p, length:const_GLint_p):void
 
-glDeleteNamedStringARB(namelen:GLint, name:const_GLchar_p):void
+glDeleteNamedStringARB(namelen:GLint, name:String_const_GLchar_p):void
 
-glGetNamedStringARB(namelen:GLint, name:const_GLchar_p, bufSize:GLsizei, stringlen:GLint_p, string:GLchar_p):void
+glGetNamedStringARB(namelen:GLint, name:String_const_GLchar_p, bufSize:GLsizei, stringlen:GLint_p, string:GLchar_p):void
 
-glGetNamedStringivARB(namelen:GLint, name:const_GLchar_p, pname:GLenum, params:GLint_p):void
+glGetNamedStringivARB(namelen:GLint, name:String_const_GLchar_p, pname:GLenum, params:GLint_p):void
 
-glIsNamedStringARB(namelen:GLint, name:const_GLchar_p):GLboolean
+glIsNamedStringARB(namelen:GLint, name:String_const_GLchar_p):GLboolean
 
-glNamedStringARB(type:GLenum, namelen:GLint, name:const_GLchar_p, stringlen:GLint, string:const_GLchar_p):void
+glNamedStringARB(type:GLenum, namelen:GLint, name:String_const_GLchar_p, stringlen:GLint, string:const_GLchar_p):void
 
 //======== GL_ARB_sparse_buffer ========
 
@@ -2737,7 +2743,7 @@ glGetActiveUniformsiv(program:GLuint, uniformCount:GLsizei, uniformIndices:const
 
 glGetIntegeri_v(target:GLenum, index:GLuint, data:GLint_p):void
 
-glGetUniformBlockIndex(program:GLuint, uniformBlockName:const_GLchar_p):GLuint
+glGetUniformBlockIndex(program:GLuint, uniformBlockName:String_const_GLchar_p):GLuint
 
 glGetUniformIndices(program:GLuint, uniformCount:GLsizei, uniformNames:const_GLchar_p_const_p, uniformIndices:GLuint_p):void
 
@@ -2975,11 +2981,11 @@ glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboo
 
 //======== GL_ARB_vertex_shader ========
 
-glBindAttribLocationARB(programObj:GLhandleARB, index:GLuint, name:const_GLcharARB_p):void
+glBindAttribLocationARB(programObj:GLhandleARB, index:GLuint, name:String_const_GLcharARB_p):void
 
 glGetActiveAttribARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
 
-glGetAttribLocationARB(programObj:GLhandleARB, name:const_GLcharARB_p):GLint
+glGetAttribLocationARB(programObj:GLhandleARB, name:String_const_GLcharARB_p):GLint
 
 //======== GL_ARB_vertex_type_2_10_10_10_rev ========
 
