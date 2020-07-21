@@ -1768,7 +1768,6 @@ glVertexArrayVertexBuffer(vaobj:GLuint, bindingindex:GLuint, buffer:GLuint, offs
 
 glVertexArrayVertexBuffers(vaobj:GLuint, first:GLuint, count:GLsizei, buffers:const_GLuint_p, offsets:const_GLintptr_p, strides:const_GLsizei_p):void
 
-/*
 //======== GL_ARB_draw_buffers ========
 
 glDrawBuffersARB(n:GLsizei, bufs:const_GLenum_p):void
@@ -1791,7 +1790,7 @@ glDrawElementsInstancedBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indic
 
 glDrawRangeElementsBaseVertex(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:void_p, basevertex:GLint):void
 
-glMultiDrawElementsBaseVertex(mode:GLenum, count:GLsizei_p, type:GLenum, , primcount:GLsizei, basevertex:GLint_p):void
+//glMultiDrawElementsBaseVertex(mode:GLenum, count:GLsizei_p, type:GLenum, , primcount:GLsizei, basevertex:GLint_p):void
 
 //======== GL_ARB_draw_indirect ========
 
@@ -1863,7 +1862,7 @@ glProgramParameteriARB(program:GLuint, pname:GLenum, value:GLint):void
 
 //======== GL_ARB_get_program_binary ========
 
-glGetProgramBinary(program:GLuint, bufSize:GLsizei, length:GLsizei_p, binaryFormat:GLenum_p, ):void
+//glGetProgramBinary(program:GLuint, bufSize:GLsizei, length:GLsizei_p, binaryFormat:GLenum_p, ):void
 
 glProgramBinary(program:GLuint, binaryFormat:GLenum, binary:const_void_p, length:GLsizei):void
 
@@ -1917,6 +1916,7 @@ glUniformMatrix4x2dv(location:GLint, count:GLsizei, transpose:GLboolean, value:c
 
 glUniformMatrix4x3dv(location:GLint, count:GLsizei, transpose:GLboolean, value:const_GLdouble_p):void
 
+/*
 //======== GL_ARB_gpu_shader_int64 ========
 
 glGetUniformi64vARB(program:GLuint, location:GLint, params:GLint64_p):void
