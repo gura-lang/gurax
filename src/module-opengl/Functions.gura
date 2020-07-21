@@ -2570,11 +2570,9 @@ glGetUniformSubroutineuiv(shadertype:GLenum, location:GLint, params:GLuint_p):vo
 
 glUniformSubroutinesuiv(shadertype:GLenum, count:GLsizei, indices:const_GLuint_p):void
 
-/*
-
 //======== GL_ARB_shading_language_include ========
 
-glCompileShaderIncludeARB(shader:GLuint, count:GLsizei, path:const_GLchar_p_const_p, length:const_GLint_p):void
+//glCompileShaderIncludeARB(shader:GLuint, count:GLsizei, path:const_GLchar_p_const_p, length:const_GLint_p):void
 
 glDeleteNamedStringARB(namelen:GLint, name:String_const_GLchar_p):void
 
@@ -2596,19 +2594,19 @@ glTexPageCommitmentARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint,
 
 //======== GL_ARB_sync ========
 
-glClientWaitSync(GLsync:GLsync, flags:GLbitfield, timeout:GLuint64):GLenum
+//glClientWaitSync(GLsync:GLsync, flags:GLbitfield, timeout:GLuint64):GLenum
 
-glDeleteSync(GLsync:GLsync):void
+//glDeleteSync(GLsync:GLsync):void
 
-glFenceSync(condition:GLenum, flags:GLbitfield):GLsync
+//glFenceSync(condition:GLenum, flags:GLbitfield):GLsync
 
 glGetInteger64v(pname:GLenum, params:GLint64_p):void
 
-glGetSynciv(GLsync:GLsync, pname:GLenum, bufSize:GLsizei, length:GLsizei_p, values:GLint_p):void
+//glGetSynciv(GLsync:GLsync, pname:GLenum, bufSize:GLsizei, length:GLsizei_p, values:GLint_p):void
 
-glIsSync(GLsync:GLsync):GLboolean
+//glIsSync(GLsync:GLsync):GLboolean
 
-glWaitSync(GLsync:GLsync, flags:GLbitfield, timeout:GLuint64):void
+//glWaitSync(GLsync:GLsync, flags:GLbitfield, timeout:GLuint64):void
 
 //======== GL_ARB_tessellation_shader ========
 
@@ -2655,6 +2653,8 @@ glSampleMaski(index:GLuint, mask:GLbitfield):void
 glTexImage2DMultisample(target:GLenum, samples:GLsizei, internalformat:GLenum, width:GLsizei, height:GLsizei, fixedsamplelocations:GLboolean):void
 
 glTexImage3DMultisample(target:GLenum, samples:GLsizei, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, fixedsamplelocations:GLboolean):void
+
+/*
 
 //======== GL_ARB_texture_storage ========
 
