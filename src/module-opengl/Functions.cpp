@@ -10528,6 +10528,28 @@ Gurax_ImplementFunctionEx(glIsQuery_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
+// opengl.glMapBuffer(target:Number, access:Number)
+Gurax_DeclareFunctionAlias(glMapBuffer_gurax, "glMapBuffer")
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glMapBuffer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLenum access = args_gurax.PickNumber<GLenum>();
+	// Function body
+	void* rtn = glMapBuffer(target, access);
+	return new Gurax::Value_Pointer(new Pointer_Memory(new MemorySloth(rtn)));
+}
+
 // opengl.glUnmapBuffer(target:Number)
 Gurax_DeclareFunctionAlias(glUnmapBuffer_gurax, "glUnmapBuffer")
 {
@@ -11325,6 +11347,38 @@ Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	// Function body
 	glLinkProgram(program);
+	return Gurax::Value::nil();
+}
+
+// opengl.glShaderSource(shader:Number, count:Number, string[]:String, length:Pointer)
+Gurax_DeclareFunctionAlias(glShaderSource_gurax, "glShaderSource")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(glShaderSource_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLuint shader = args_gurax.PickNumber<GLuint>();
+	GLsizei count = args_gurax.PickNumber<GLsizei>();
+	auto string = args_gurax.PickListT<const GLchar*>([](Gurax::Value& value) {
+		return reinterpret_cast<const GLchar*>(Gurax::Value_String::GetString(value));
+	});
+	GLint* length = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
+	if (!length) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	glShaderSource(shader, count, string, length);
 	return Gurax::Value::nil();
 }
 
@@ -15211,6 +15265,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glGetQueryiv_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsQuery_gurax));
+	frame.Assign(Gurax_CreateFunction(glMapBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glUnmapBuffer_gurax));
 	frame.Assign(Gurax_CreateFunction(glAttachShader_gurax));
 	frame.Assign(Gurax_CreateFunction(glBindAttribLocation_gurax));
@@ -15242,6 +15297,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(glIsProgram_gurax));
 	frame.Assign(Gurax_CreateFunction(glIsShader_gurax));
 	frame.Assign(Gurax_CreateFunction(glLinkProgram_gurax));
+	frame.Assign(Gurax_CreateFunction(glShaderSource_gurax));
 	frame.Assign(Gurax_CreateFunction(glStencilFuncSeparate_gurax));
 	frame.Assign(Gurax_CreateFunction(glStencilMaskSeparate_gurax));
 	frame.Assign(Gurax_CreateFunction(glStencilOpSeparate_gurax));

@@ -51,10 +51,20 @@ r.DeclareType('String_const_GLchar_p', 'const GLchar*', 'String',
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
 	'''
-	codePickerVec = ''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return reinterpret_cast<${this.cType}>(Gurax::Value_String::GetString(value));
+	});
+	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
+	''')
+
+r.DeclareType('Return_void_p', 'void*', 'Pointer',
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_Pointer(new Pointer_Memory(new MemorySloth(rtn)));
 	''')
 
 r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
@@ -64,7 +74,11 @@ r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
 	'''
-	codePickerVec = ''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return reinterpret_cast<${this.cType}>(Gurax::Value_String::GetString(value));
+	});
+	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
@@ -1054,7 +1068,7 @@ glIsBuffer(buffer:GLuint):GLboolean
 
 glIsQuery(id:GLuint):GLboolean
 
-//glMapBuffer(target:GLenum, access:GLenum):void*
+glMapBuffer(target:GLenum, access:GLenum):Return_void_p
 
 glUnmapBuffer(target:GLenum):GLboolean
 
@@ -1122,7 +1136,7 @@ glIsShader(shader:GLuint):GLboolean
 
 glLinkProgram(program:GLuint):void
 
-//glShaderSource(shader:GLuint, count:GLsizei, string:const_GLchar_p_const_p, length:GLint_p):void
+glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p):void
 
 glStencilFuncSeparate(frontfunc:GLenum, backfunc:GLenum, ref:GLint, mask:GLuint):void
 
