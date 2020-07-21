@@ -11350,14 +11350,14 @@ Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// opengl.glShaderSource(shader:Number, count:Number, string[]:String, length:Pointer)
+// opengl.glShaderSource(shader:Number, count:Number, string[]:String, length:Pointer:nil)
 Gurax_DeclareFunctionAlias(glShaderSource_gurax, "glShaderSource")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11372,11 +11372,7 @@ Gurax_ImplementFunctionEx(glShaderSource_gurax, processor_gurax, argument_gurax)
 	auto string = args_gurax.PickListT<const GLchar*>([](Gurax::Value& value) {
 		return reinterpret_cast<const GLchar*>(Gurax::Value_String::GetString(value));
 	});
-	GLint* length = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>();
-	if (!length) {
-		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
-		return Value::nil();
-	}
+	GLint* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glShaderSource(shader, count, string, length);
 	return Gurax::Value::nil();

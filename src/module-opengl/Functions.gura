@@ -1142,7 +1142,7 @@ glIsShader(shader:GLuint):GLboolean
 
 glLinkProgram(program:GLuint):void
 
-glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p):void
+glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p:nil):void
 
 glStencilFuncSeparate(frontfunc:GLenum, backfunc:GLenum, ref:GLint, mask:GLuint):void
 

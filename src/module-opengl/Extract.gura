@@ -8,6 +8,11 @@ FuncInfo = struct {
 	Print() = Printf('%s(%s):%s\n', this.funcName, this.args.Join(', '), this.typeNameRtn)
 }
 
+DefineInfo = struct {
+	varName:String
+	Print() = Printf('AssignConst(%s);\n', this.varName)
+}
+
 SepInfo = struct {
 	name:String
 	Print() = Printf('//======== %s ========\n', this.name)
@@ -38,9 +43,13 @@ ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 			Format('%s:%s', varName, typeName.Replace(' ', '_').Replace('*', 'p'))
 		}
 		funcInfo = FuncInfo(funcName, args, typeNameRtn)
-		infoTbl.Add(funcInfo)
+		//infoTbl.Add(funcInfo)
 		funcInfoMap[funcInfo.funcName] = funcInfo
 		//Printf('%s(%s):%s\n', funcName, args.Join(', '), typeNameRtn)
+	} elsif (m = line.Match(r'#define\s+(\w+)\s+(\d+)')) {
+		varName = m[1]
+		defineInfo = DefineInfo(varName)
+		infoTbl.Add(defineInfo)
 	} elsif (m = line.Match(r'GLEW_FUN_EXPORT\s+(\w+)\s+__glew(\w+)')) {
 		funcName = m[1]
 		funcNameExport = 'gl' + m[2]
@@ -54,4 +63,5 @@ ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 		infoTbl.Add(SepInfo(m[1]))
 	}
 }
-infoTbl.Each {|item| item.Print(), Println()}
+//infoTbl.Each {|item| item.Print(), Println()}
+infoTbl.Each {|item| item.Print()}

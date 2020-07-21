@@ -197,6 +197,9 @@ Renderer = class {
 			return Value::nil();
 		}
 		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>() : nullptr;
+		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) -> ${this.cType} {
 			auto p = Gurax::Value_Pointer::GetPointer(value).GetWritablePointerC<${this.cTypeElem}>();
