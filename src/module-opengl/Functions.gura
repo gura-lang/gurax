@@ -2654,8 +2654,6 @@ glTexImage2DMultisample(target:GLenum, samples:GLsizei, internalformat:GLenum, w
 
 glTexImage3DMultisample(target:GLenum, samples:GLsizei, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, fixedsamplelocations:GLboolean):void
 
-/*
-
 //======== GL_ARB_texture_storage ========
 
 glTexStorage1D(target:GLenum, levels:GLsizei, internalformat:GLenum, width:GLsizei):void
@@ -2720,13 +2718,13 @@ glDrawTransformFeedbackStreamInstanced(mode:GLenum, id:GLuint, stream:GLuint, pr
 
 //======== GL_ARB_transpose_matrix ========
 
-glLoadTransposeMatrixdARB(m[16]:GLdouble):void
+//glLoadTransposeMatrixdARB(m[16]:GLdouble):void
 
-glLoadTransposeMatrixfARB(m[16]:GLfloat):void
+//glLoadTransposeMatrixfARB(m[16]:GLfloat):void
 
-glMultTransposeMatrixdARB(m[16]:GLdouble):void
+//glMultTransposeMatrixdARB(m[16]:GLdouble):void
 
-glMultTransposeMatrixfARB(m[16]:GLfloat):void
+//glMultTransposeMatrixfARB(m[16]:GLfloat):void
 
 //======== GL_ARB_uniform_buffer_object ========
 
@@ -2746,7 +2744,7 @@ glGetIntegeri_v(target:GLenum, index:GLuint, data:GLint_p):void
 
 glGetUniformBlockIndex(program:GLuint, uniformBlockName:String_const_GLchar_p):GLuint
 
-glGetUniformIndices(program:GLuint, uniformCount:GLsizei, uniformNames:const_GLchar_p_const_p, uniformIndices:GLuint_p):void
+//glGetUniformIndices(program:GLuint, uniformCount:GLsizei, uniformNames:const_GLchar_p_const_p, uniformIndices:GLuint_p):void
 
 glUniformBlockBinding(program:GLuint, uniformBlockIndex:GLuint, uniformBlockBinding:GLuint):void
 
@@ -2834,9 +2832,9 @@ glWeightusvARB(size:GLint, weights:GLushort_p):void
 
 glBindBufferARB(target:GLenum, buffer:GLuint):void
 
-glBufferDataARB(target:GLenum, size:GLsizeiptrARB, data:const_void_p, usage:GLenum):void
+//glBufferDataARB(target:GLenum, size:GLsizeiptrARB, data:const_void_p, usage:GLenum):void
 
-glBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:const_void_p):void
+//glBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:const_void_p):void
 
 glDeleteBuffersARB(n:GLsizei, buffers:const_GLuint_p):void
 
@@ -2844,13 +2842,13 @@ glGenBuffersARB(n:GLsizei, buffers:GLuint_p):void
 
 glGetBufferParameterivARB(target:GLenum, pname:GLenum, params:GLint_p):void
 
-glGetBufferPointervARB(target:GLenum, pname:GLenum, params:void_p__p):void
+//glGetBufferPointervARB(target:GLenum, pname:GLenum, params:void_p__p):void
 
-glGetBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:void_p):void
+//glGetBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:void_p):void
 
 glIsBufferARB(buffer:GLuint):GLboolean
 
-glMapBufferARB(target:GLenum, access:GLenum):void *
+//glMapBufferARB(target:GLenum, access:GLenum):void *
 
 glUnmapBufferARB(target:GLenum):GLboolean
 
@@ -2878,7 +2876,7 @@ glGetProgramStringARB(target:GLenum, pname:GLenum, string:void_p):void
 
 glGetProgramivARB(target:GLenum, pname:GLenum, params:GLint_p):void
 
-glGetVertexAttribPointervARB(index:GLuint, pname:GLenum, pointer:void_p__p):void
+//glGetVertexAttribPointervARB(index:GLuint, pname:GLenum, pointer:void_p__p):void
 
 glGetVertexAttribdvARB(index:GLuint, pname:GLenum, params:GLdouble_p):void
 
@@ -2982,11 +2980,11 @@ glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboo
 
 //======== GL_ARB_vertex_shader ========
 
-glBindAttribLocationARB(programObj:GLhandleARB, index:GLuint, name:String_const_GLcharARB_p):void
+//glBindAttribLocationARB(programObj:GLhandleARB, index:GLuint, name:String_const_GLcharARB_p):void
 
-glGetActiveAttribARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
+//glGetActiveAttribARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
 
-glGetAttribLocationARB(programObj:GLhandleARB, name:String_const_GLcharARB_p):GLint
+//glGetAttribLocationARB(programObj:GLhandleARB, name:String_const_GLcharARB_p):GLint
 
 //======== GL_ARB_vertex_type_2_10_10_10_rev ========
 
@@ -3121,7 +3119,6 @@ glWindowPos3ivARB(p:const_GLint_p):void
 glWindowPos3sARB(x:GLshort, y:GLshort, z:GLshort):void
 
 glWindowPos3svARB(p:const_GLshort_p):void
-*/
 
 }
 
