@@ -1916,7 +1916,6 @@ glUniformMatrix4x2dv(location:GLint, count:GLsizei, transpose:GLboolean, value:c
 
 glUniformMatrix4x3dv(location:GLint, count:GLsizei, transpose:GLboolean, value:const_GLdouble_p):void
 
-/*
 //======== GL_ARB_gpu_shader_int64 ========
 
 glGetUniformi64vARB(program:GLuint, location:GLint, params:GLint64_p):void
@@ -2097,7 +2096,7 @@ glInvalidateTexSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLin
 
 glFlushMappedBufferRange(target:GLenum, offset:GLintptr, length:GLsizeiptr):void
 
-glMapBufferRange(target:GLenum, offset:GLintptr, length:GLsizeiptr, access:GLbitfield):void *
+//glMapBufferRange(target:GLenum, offset:GLintptr, length:GLsizeiptr, access:GLbitfield):void *
 
 //======== GL_ARB_matrix_palette ========
 
@@ -2283,7 +2282,7 @@ glGetnPixelMapusvARB(map:GLenum, bufSize:GLsizei, values:GLushort_p):void
 
 glGetnPolygonStippleARB(bufSize:GLsizei, pattern:GLubyte_p):void
 
-glGetnSeparableFilterARB(target:GLenum, format:GLenum, type:GLenum, rowBufSize:GLsizei, row:void_p, columnBufSize:GLsizei, , ):void
+//glGetnSeparableFilterARB(target:GLenum, format:GLenum, type:GLenum, rowBufSize:GLsizei, row:void_p, columnBufSize:GLsizei, , ):void
 
 glGetnTexImageARB(target:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, img:void_p):void
 
@@ -2343,7 +2342,7 @@ glActiveShaderProgram(pipeline:GLuint, program:GLuint):void
 
 glBindProgramPipeline(pipeline:GLuint):void
 
-glCreateShaderProgramv(type:GLenum, count:GLsizei, strings:const_GLchar_p_const_p):GLuint
+//glCreateShaderProgramv(type:GLenum, count:GLsizei, strings:const_GLchar_p_const_p):GLuint
 
 glDeleteProgramPipelines(n:GLsizei, pipelines:const_GLuint_p):void
 
@@ -2471,41 +2470,41 @@ glMemoryBarrier(barriers:GLbitfield):void
 
 //======== GL_ARB_shader_objects ========
 
-glAttachObjectARB(containerObj:GLhandleARB, obj:GLhandleARB):void
+//glAttachObjectARB(containerObj:GLhandleARB, obj:GLhandleARB):void
 
-glCompileShaderARB(shaderObj:GLhandleARB):void
+//glCompileShaderARB(shaderObj:GLhandleARB):void
 
-glCreateProgramObjectARB():GLhandleARB
+//glCreateProgramObjectARB():GLhandleARB
 
-glCreateShaderObjectARB(shaderType:GLenum):GLhandleARB
+//glCreateShaderObjectARB(shaderType:GLenum):GLhandleARB
 
-glDeleteObjectARB(obj:GLhandleARB):void
+//glDeleteObjectARB(obj:GLhandleARB):void
 
-glDetachObjectARB(containerObj:GLhandleARB, attachedObj:GLhandleARB):void
+//glDetachObjectARB(containerObj:GLhandleARB, attachedObj:GLhandleARB):void
 
-glGetActiveUniformARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
+//glGetActiveUniformARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
 
-glGetAttachedObjectsARB(containerObj:GLhandleARB, maxCount:GLsizei, count:GLsizei_p, obj:GLhandleARB_p):void
+//glGetAttachedObjectsARB(containerObj:GLhandleARB, maxCount:GLsizei, count:GLsizei_p, obj:GLhandleARB_p):void
 
-glGetHandleARB(pname:GLenum):GLhandleARB
+//glGetHandleARB(pname:GLenum):GLhandleARB
 
-glGetInfoLogARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, infoLog:GLcharARB_p):void
+//glGetInfoLogARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, infoLog:GLcharARB_p):void
 
-glGetObjectParameterfvARB(obj:GLhandleARB, pname:GLenum, params:GLfloat_p):void
+//glGetObjectParameterfvARB(obj:GLhandleARB, pname:GLenum, params:GLfloat_p):void
 
-glGetObjectParameterivARB(obj:GLhandleARB, pname:GLenum, params:GLint_p):void
+//glGetObjectParameterivARB(obj:GLhandleARB, pname:GLenum, params:GLint_p):void
 
-glGetShaderSourceARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, source:GLcharARB_p):void
+//glGetShaderSourceARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, source:GLcharARB_p):void
 
-glGetUniformLocationARB(programObj:GLhandleARB, name:const_GLcharARB_p):GLint
+//glGetUniformLocationARB(programObj:GLhandleARB, name:const_GLcharARB_p):GLint
 
-glGetUniformfvARB(programObj:GLhandleARB, location:GLint, params:GLfloat_p):void
+//glGetUniformfvARB(programObj:GLhandleARB, location:GLint, params:GLfloat_p):void
 
-glGetUniformivARB(programObj:GLhandleARB, location:GLint, params:GLint_p):void
+//glGetUniformivARB(programObj:GLhandleARB, location:GLint, params:GLint_p):void
 
-glLinkProgramARB(programObj:GLhandleARB):void
+//glLinkProgramARB(programObj:GLhandleARB):void
 
-glShaderSourceARB(shaderObj:GLhandleARB, count:GLsizei, string:const_GLcharARB_p__p, length:const_GLint_p):void
+//glShaderSourceARB(shaderObj:GLhandleARB, count:GLsizei, string:const_GLcharARB_p__p, length:const_GLint_p):void
 
 glUniform1fARB(location:GLint, v0:GLfloat):void
 
@@ -2545,9 +2544,9 @@ glUniformMatrix3fvARB(location:GLint, count:GLsizei, transpose:GLboolean, value:
 
 glUniformMatrix4fvARB(location:GLint, count:GLsizei, transpose:GLboolean, value:const_GLfloat_p):void
 
-glUseProgramObjectARB(programObj:GLhandleARB):void
+//glUseProgramObjectARB(programObj:GLhandleARB):void
 
-glValidateProgramARB(programObj:GLhandleARB):void
+//glValidateProgramARB(programObj:GLhandleARB):void
 
 //======== GL_ARB_shader_storage_buffer_object ========
 
@@ -2570,6 +2569,8 @@ glGetSubroutineUniformLocation(program:GLuint, shadertype:GLenum, name:const_GLc
 glGetUniformSubroutineuiv(shadertype:GLenum, location:GLint, params:GLuint_p):void
 
 glUniformSubroutinesuiv(shadertype:GLenum, count:GLsizei, indices:const_GLuint_p):void
+
+/*
 
 //======== GL_ARB_shading_language_include ========
 
