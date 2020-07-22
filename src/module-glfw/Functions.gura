@@ -621,7 +621,7 @@ glfwSwapBuffers(window:GLFWwindow_p):void
 
 }
 
-//Println(r.funcInfoTbl:*ToString())
+//Println(r.funcInfoTbl:*__ToString__())
 
 tR'''
 //==============================================================================

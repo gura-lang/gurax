@@ -157,7 +157,7 @@ glAccum(op:GLenum, value:GLfloat)
 
 glAlphaFunc(func:GLenum, ref:GLclampf):void
 
-glAreTexturesResident(n:GLsizei, textures[]:GLuint, residences:GLboolean_p):GLboolean
+glAreTexturesResident(n:GLsizei, textures[]:GLuint, residences:GLboolean_p:nil):GLboolean
 
 glArrayElement(i:GLint):void
 
@@ -333,7 +333,7 @@ glEvalPoint1(i:GLint):void
 
 glEvalPoint2(i:GLint, j:GLint):void
 
-glFeedbackBuffer(size:GLsizei, type:GLenum, buffer:GLfloat_p):void
+glFeedbackBuffer(size:GLsizei, type:GLenum, buffer:GLfloat_p:nil):void
 
 glFinish():void
 
@@ -353,65 +353,65 @@ glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GL
 
 glGenLists(range:GLsizei):GLuint
 
-glGenTextures(n:GLsizei, textures:GLuint_p);
+glGenTextures(n:GLsizei, textures:GLuint_p:nil);
 
-glGetBooleanv(pname:GLenum, params:GLboolean_p):void
+glGetBooleanv(pname:GLenum, params:GLboolean_p:nil):void
 
-glGetClipPlane(plane:GLenum, equation:GLdouble_p):void
+glGetClipPlane(plane:GLenum, equation:GLdouble_p:nil):void
 
-glGetDoublev(pname:GLenum, params:GLdouble_p):void
+glGetDoublev(pname:GLenum, params:GLdouble_p:nil):void
 
 glGetError():GLenum
 
-glGetFloatv(pname:GLenum, params:GLfloat_p):void
+glGetFloatv(pname:GLenum, params:GLfloat_p:nil):void
 
-glGetIntegerv(pname:GLenum, params:GLint_p):void
+glGetIntegerv(pname:GLenum, params:GLint_p:nil):void
 
-glGetLightfv(light:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetLightfv(light:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetLightiv(light:GLenum, pname:GLenum, params:GLint_p):void
+glGetLightiv(light:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetMapdv(target:GLenum, query:GLenum, v:GLdouble_p):void
+glGetMapdv(target:GLenum, query:GLenum, v:GLdouble_p:nil):void
 
-glGetMapfv(target:GLenum, query:GLenum, v:GLfloat_p):void
+glGetMapfv(target:GLenum, query:GLenum, v:GLfloat_p:nil):void
 
-glGetMapiv(target:GLenum, query:GLenum, v:GLint_p):void
+glGetMapiv(target:GLenum, query:GLenum, v:GLint_p:nil):void
 
-glGetMaterialfv(face:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetMaterialfv(face:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetMaterialiv(face:GLenum, pname:GLenum, params:GLint_p):void
+glGetMaterialiv(face:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetPixelMapfv(map:GLenum, values:GLfloat_p):void
+glGetPixelMapfv(map:GLenum, values:GLfloat_p:nil):void
 
-glGetPixelMapuiv(map:GLenum, values:GLuint_p):void
+glGetPixelMapuiv(map:GLenum, values:GLuint_p:nil):void
 
-glGetPixelMapusv(map:GLenum, values:GLushort_p):void
+glGetPixelMapusv(map:GLenum, values:GLushort_p:nil):void
 
 //glGetPointerv(pname:GLenum, params[]:void_p):void
 
-glGetPolygonStipple(mask:GLubyte_p):void
+glGetPolygonStipple(mask:GLubyte_p:nil):void
 
 glGetString(name:GLenum):String_const_GLubyte_p
 
-glGetTexEnvfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexEnvfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTexEnviv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexEnviv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetTexGendv(coord:GLenum, pname:GLenum, params:GLdouble_p):void
+glGetTexGendv(coord:GLenum, pname:GLenum, params:GLdouble_p:nil):void
 
-glGetTexGenfv(coord:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexGenfv(coord:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTexGeniv(coord:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexGeniv(coord:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetTexImage(target:GLenum, level:GLint, format:GLenum, type:GLenum, pixels:void_p):void
 
-glGetTexLevelParameterfv(target:GLenum, level:GLint, pname:GLenum, params:GLfloat_p):void
+glGetTexLevelParameterfv(target:GLenum, level:GLint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTexLevelParameteriv(target:GLenum, level:GLint, pname:GLenum, params:GLint_p):void
+glGetTexLevelParameteriv(target:GLenum, level:GLint, pname:GLenum, params:GLint_p:nil):void
 
-glGetTexParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetTexParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTexParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glHint(target:GLenum, mode:GLenum):void
 
@@ -661,7 +661,7 @@ glScalef(x:GLfloat, y:GLfloat, z:GLfloat):void
 
 glScissor(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-glSelectBuffer(size:GLsizei, buffer:GLuint_p):void
+glSelectBuffer(size:GLsizei, buffer:GLuint_p:nil):void
 
 glShadeModel(mode:GLenum):void
 
@@ -1054,21 +1054,21 @@ glDeleteQueries(n:GLsizei, ids[]:GLuint):void
 
 glEndQuery(target:GLenum):void
 
-glGenBuffers(n:GLsizei, buffers:GLuint_p):void
+glGenBuffers(n:GLsizei, buffers:GLuint_p:nil):void
 
-glGenQueries(n:GLsizei, ids:GLuint_p):void
+glGenQueries(n:GLsizei, ids:GLuint_p:nil):void
 
-glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 //glGetBufferPointerv(target:GLenum, pname:GLenum, params[]:void_p):void
 
 glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
 
-glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p):void
+glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p):void
+glGetQueryObjectuiv(id:GLuint, pname:GLenum, params:GLuint_p:nil):void
 
-glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetQueryiv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glIsBuffer(buffer:GLuint):GLboolean
 
@@ -1104,37 +1104,37 @@ glDrawBuffers(n:GLsizei, bufs[]:GLenum):void
 
 glEnableVertexAttribArray(index:GLuint):void
 
-glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+glGetActiveAttrib(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p:nil, size:GLint_p:nil, type:GLenum_p:nil, name:GLchar_p:nil):void
 
-glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLchar_p):void
+glGetActiveUniform(program:GLuint, index:GLuint, maxLength:GLsizei, length:GLsizei_p:nil, size:GLint_p:nil, type:GLenum_p:nil, name:GLchar_p:nil):void
 
-glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p, shaders:GLuint_p):void
+glGetAttachedShaders(program:GLuint, maxCount:GLsizei, count:GLsizei_p:nil, shaders:GLuint_p:nil):void
 
 glGetAttribLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
-glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
+glGetProgramInfoLog(program:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, infoLog:GLchar_p:nil):void
 
-glGetProgramiv(program:GLuint, pname:GLenum, param:GLint_p):void
+glGetProgramiv(program:GLuint, pname:GLenum, param:GLint_p:nil):void
 
-glGetShaderInfoLog(shader:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
+glGetShaderInfoLog(shader:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, infoLog:GLchar_p:nil):void
 
-glGetShaderSource(obj:GLuint, maxLength:GLsizei, length:GLsizei_p, source:GLchar_p):void
+glGetShaderSource(obj:GLuint, maxLength:GLsizei, length:GLsizei_p:nil, source:GLchar_p:nil):void
 
-glGetShaderiv(shader:GLuint, pname:GLenum, param:GLint_p):void
+glGetShaderiv(shader:GLuint, pname:GLenum, param:GLint_p:nil):void
 
 glGetUniformLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
-glGetUniformfv(program:GLuint, location:GLint, params:GLfloat_p):void
+glGetUniformfv(program:GLuint, location:GLint, params:GLfloat_p:nil):void
 
-glGetUniformiv(program:GLuint, location:GLint, params:GLint_p):void
+glGetUniformiv(program:GLuint, location:GLint, params:GLint_p:nil):void
 
 //glGetVertexAttribPointerv(index:GLuint, pname:GLenum, pointer:void_p__p):void
 
-glGetVertexAttribdv(index:GLuint, pname:GLenum, params:GLdouble_p):void
+glGetVertexAttribdv(index:GLuint, pname:GLenum, params:GLdouble_p:nil):void
 
-glGetVertexAttribfv(index:GLuint, pname:GLenum, params:GLfloat_p):void
+glGetVertexAttribfv(index:GLuint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetVertexAttribiv(index:GLuint, pname:GLenum, params:GLint_p):void
+glGetVertexAttribiv(index:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glIsProgram(program:GLuint):GLboolean
 
@@ -1308,23 +1308,23 @@ glEndConditionalRender():void
 
 glEndTransformFeedback():void
 
-glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p):void
+glGetBooleani_v(pname:GLenum, index:GLuint, data:GLboolean_p:nil):void
 
 glGetFragDataLocation(program:GLuint, name:String_const_GLchar_p):GLint
 
 glGetStringi(name:GLenum, index:GLuint):String_const_GLubyte_p
 
-glGetTexParameterIiv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetTexParameterIiv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetTexParameterIuiv(target:GLenum, pname:GLenum, params:GLuint_p):void
+glGetTexParameterIuiv(target:GLenum, pname:GLenum, params:GLuint_p:nil):void
 
-glGetTransformFeedbackVarying(program:GLuint, index:GLuint, bufSize:GLsizei, length:GLsizei_p, size:GLsizei_p, type:GLenum_p, name:GLchar_p):void
+glGetTransformFeedbackVarying(program:GLuint, index:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, size:GLsizei_p:nil, type:GLenum_p:nil, name:GLchar_p:nil):void
 
-glGetUniformuiv(program:GLuint, location:GLint, params:GLuint_p):void
+glGetUniformuiv(program:GLuint, location:GLint, params:GLuint_p:nil):void
 
-glGetVertexAttribIiv(index:GLuint, pname:GLenum, params:GLint_p):void
+glGetVertexAttribIiv(index:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetVertexAttribIuiv(index:GLuint, pname:GLenum, params:GLuint_p):void
+glGetVertexAttribIuiv(index:GLuint, pname:GLenum, params:GLuint_p:nil):void
 
 glIsEnabledi(cap:GLenum, index:GLuint):GLboolean
 
@@ -1406,9 +1406,9 @@ glTexBuffer(target:GLenum, internalFormat:GLenum, buffer:GLuint):void
 
 glFramebufferTexture(target:GLenum, attachment:GLenum, texture:GLuint, level:GLint):void
 
-glGetBufferParameteri64v(target:GLenum, value:GLenum, data:GLint64_p):void
+glGetBufferParameteri64v(target:GLenum, value:GLenum, data:GLint64_p:nil):void
 
-glGetInteger64i_v(pname:GLenum, index:GLuint, data:GLint64_p):void
+glGetInteger64i_v(pname:GLenum, index:GLuint, data:GLint64_p:nil):void
 
 //======== GL_VERSION_3_3 ========
 
@@ -1430,11 +1430,11 @@ glMinSampleShading(value:GLclampf):void
 
 glGetGraphicsResetStatus():GLenum
 
-glGetnCompressedTexImage(target:GLenum, lod:GLint, bufSize:GLsizei, pixels:GLvoid_p):void
+glGetnCompressedTexImage(target:GLenum, lod:GLint, bufSize:GLsizei, pixels:GLvoid_p:nil):void
 
-glGetnTexImage(tex:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:GLvoid_p):void
+glGetnTexImage(tex:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:GLvoid_p:nil):void
 
-glGetnUniformdv(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p):void
+glGetnUniformdv(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p:nil):void
 
 //======== GL_VERSION_4_6 ========
 
@@ -1450,7 +1450,7 @@ glClearDepthf(d:GLclampf):void
 
 glDepthRangef(n:GLclampf, f:GLclampf):void
 
-glGetShaderPrecisionFormat(shadertype:GLenum, precisiontype:GLenum, range:GLint_p, precision:GLint_p):void
+glGetShaderPrecisionFormat(shadertype:GLenum, precisiontype:GLenum, range:GLint_p:nil, precision:GLint_p:nil):void
 
 glReleaseShaderCompiler():void
 
@@ -1480,7 +1480,7 @@ glGetTextureHandleARB(texture:GLuint):GLuint64
 
 glGetTextureSamplerHandleARB(texture:GLuint, sampler:GLuint):GLuint64
 
-//glGetVertexAttribLui64vARB(index:GLuint, pname:GLenum, params:GLuint64EXT_p):void
+//glGetVertexAttribLui64vARB(index:GLuint, pname:GLenum, params:GLuint64EXT_p:nil):void
 
 glIsImageHandleResidentARB(handle:GLuint64):GLboolean
 
@@ -1570,7 +1570,7 @@ glDebugMessageControlARB(source:GLenum, type:GLenum, severity:GLenum, count:GLsi
 
 glDebugMessageInsertARB(source:GLenum, type:GLenum, id:GLuint, severity:GLenum, length:GLsizei, buf:const_GLchar_p:nil):void
 
-glGetDebugMessageLogARB(count:GLuint, bufSize:GLsizei, sources:GLenum_p, types:GLenum_p, ids:GLuint_p, severities:GLenum_p, lengths:GLsizei_p, messageLog:GLchar_p):GLuint
+glGetDebugMessageLogARB(count:GLuint, bufSize:GLsizei, sources:GLenum_p:nil, types:GLenum_p:nil, ids:GLuint_p:nil, severities:GLenum_p:nil, lengths:GLsizei_p:nil, messageLog:GLchar_p:nil):GLuint
 
 //======== GL_ARB_direct_state_access ========
 
@@ -1586,7 +1586,7 @@ glClearNamedBufferSubData(buffer:GLuint, internalformat:GLenum, offset:GLintptr,
 
 glClearNamedFramebufferfi(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, depth:GLfloat, stencil:GLint):void
 
-glClearNamedFramebufferfv(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, value:GLfloat_p):void
+glClearNamedFramebufferfv(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, value:GLfloat_p:nil):void
 
 glClearNamedFramebufferiv(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, value:const_GLint_p:nil):void
 
@@ -1606,23 +1606,23 @@ glCopyTextureSubImage2D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLin
 
 glCopyTextureSubImage3D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-glCreateBuffers(n:GLsizei, buffers:GLuint_p):void
+glCreateBuffers(n:GLsizei, buffers:GLuint_p:nil):void
 
-glCreateFramebuffers(n:GLsizei, framebuffers:GLuint_p):void
+glCreateFramebuffers(n:GLsizei, framebuffers:GLuint_p:nil):void
 
-glCreateProgramPipelines(n:GLsizei, pipelines:GLuint_p):void
+glCreateProgramPipelines(n:GLsizei, pipelines:GLuint_p:nil):void
 
-glCreateQueries(target:GLenum, n:GLsizei, ids:GLuint_p):void
+glCreateQueries(target:GLenum, n:GLsizei, ids:GLuint_p:nil):void
 
-glCreateRenderbuffers(n:GLsizei, renderbuffers:GLuint_p):void
+glCreateRenderbuffers(n:GLsizei, renderbuffers:GLuint_p:nil):void
 
-glCreateSamplers(n:GLsizei, samplers:GLuint_p):void
+glCreateSamplers(n:GLsizei, samplers:GLuint_p:nil):void
 
-glCreateTextures(target:GLenum, n:GLsizei, textures:GLuint_p):void
+glCreateTextures(target:GLenum, n:GLsizei, textures:GLuint_p:nil):void
 
-glCreateTransformFeedbacks(n:GLsizei, ids:GLuint_p):void
+glCreateTransformFeedbacks(n:GLsizei, ids:GLuint_p:nil):void
 
-glCreateVertexArrays(n:GLsizei, arrays:GLuint_p):void
+glCreateVertexArrays(n:GLsizei, arrays:GLuint_p:nil):void
 
 glDisableVertexArrayAttrib(vaobj:GLuint, index:GLuint):void
 
@@ -1634,19 +1634,19 @@ glGenerateTextureMipmap(texture:GLuint):void
 
 glGetCompressedTextureImage(texture:GLuint, level:GLint, bufSize:GLsizei, pixels:void_p):void
 
-glGetNamedBufferParameteri64v(buffer:GLuint, pname:GLenum, params:GLint64_p):void
+glGetNamedBufferParameteri64v(buffer:GLuint, pname:GLenum, params:GLint64_p:nil):void
 
-glGetNamedBufferParameteriv(buffer:GLuint, pname:GLenum, params:GLint_p):void
+glGetNamedBufferParameteriv(buffer:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 //glGetNamedBufferPointerv(buffer:GLuint, pname:GLenum, params:void_p__p):void
 
 glGetNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:void_p):void
 
-glGetNamedFramebufferAttachmentParameteriv(framebuffer:GLuint, attachment:GLenum, pname:GLenum, params:GLint_p):void
+glGetNamedFramebufferAttachmentParameteriv(framebuffer:GLuint, attachment:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetNamedFramebufferParameteriv(framebuffer:GLuint, pname:GLenum, param:GLint_p):void
+glGetNamedFramebufferParameteriv(framebuffer:GLuint, pname:GLenum, param:GLint_p:nil):void
 
-glGetNamedRenderbufferParameteriv(renderbuffer:GLuint, pname:GLenum, params:GLint_p):void
+glGetNamedRenderbufferParameteriv(renderbuffer:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glGetQueryBufferObjecti64v(id:GLuint, buffer:GLuint, pname:GLenum, offset:GLintptr):void
 
@@ -1658,29 +1658,29 @@ glGetQueryBufferObjectuiv(id:GLuint, buffer:GLuint, pname:GLenum, offset:GLintpt
 
 glGetTextureImage(texture:GLuint, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:void_p):void
 
-glGetTextureLevelParameterfv(texture:GLuint, level:GLint, pname:GLenum, params:GLfloat_p):void
+glGetTextureLevelParameterfv(texture:GLuint, level:GLint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTextureLevelParameteriv(texture:GLuint, level:GLint, pname:GLenum, params:GLint_p):void
+glGetTextureLevelParameteriv(texture:GLuint, level:GLint, pname:GLenum, params:GLint_p:nil):void
 
-glGetTextureParameterIiv(texture:GLuint, pname:GLenum, params:GLint_p):void
+glGetTextureParameterIiv(texture:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetTextureParameterIuiv(texture:GLuint, pname:GLenum, params:GLuint_p):void
+glGetTextureParameterIuiv(texture:GLuint, pname:GLenum, params:GLuint_p:nil):void
 
-glGetTextureParameterfv(texture:GLuint, pname:GLenum, params:GLfloat_p):void
+glGetTextureParameterfv(texture:GLuint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetTextureParameteriv(texture:GLuint, pname:GLenum, params:GLint_p):void
+glGetTextureParameteriv(texture:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetTransformFeedbacki64_v(xfb:GLuint, pname:GLenum, index:GLuint, param:GLint64_p):void
+glGetTransformFeedbacki64_v(xfb:GLuint, pname:GLenum, index:GLuint, param:GLint64_p:nil):void
 
-glGetTransformFeedbacki_v(xfb:GLuint, pname:GLenum, index:GLuint, param:GLint_p):void
+glGetTransformFeedbacki_v(xfb:GLuint, pname:GLenum, index:GLuint, param:GLint_p:nil):void
 
-glGetTransformFeedbackiv(xfb:GLuint, pname:GLenum, param:GLint_p):void
+glGetTransformFeedbackiv(xfb:GLuint, pname:GLenum, param:GLint_p:nil):void
 
-glGetVertexArrayIndexed64iv(vaobj:GLuint, index:GLuint, pname:GLenum, param:GLint64_p):void
+glGetVertexArrayIndexed64iv(vaobj:GLuint, index:GLuint, pname:GLenum, param:GLint64_p:nil):void
 
-glGetVertexArrayIndexediv(vaobj:GLuint, index:GLuint, pname:GLenum, param:GLint_p):void
+glGetVertexArrayIndexediv(vaobj:GLuint, index:GLuint, pname:GLenum, param:GLint_p:nil):void
 
-glGetVertexArrayiv(vaobj:GLuint, pname:GLenum, param:GLint_p):void
+glGetVertexArrayiv(vaobj:GLuint, pname:GLenum, param:GLint_p:nil):void
 
 glInvalidateNamedFramebufferData(framebuffer:GLuint, numAttachments:GLsizei, attachments:const_GLenum_p:nil):void
 
@@ -1790,7 +1790,7 @@ glDrawElementsInstancedBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indic
 
 glDrawRangeElementsBaseVertex(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:void_p, basevertex:GLint):void
 
-//glMultiDrawElementsBaseVertex(mode:GLenum, count:GLsizei_p, type:GLenum, , primcount:GLsizei, basevertex:GLint_p):void
+//glMultiDrawElementsBaseVertex(mode:GLenum, count:GLsizei_p:nil, type:GLenum, , primcount:GLsizei, basevertex:GLint_p:nil):void
 
 //======== GL_ARB_draw_indirect ========
 
@@ -1802,9 +1802,9 @@ glDrawElementsIndirect(mode:GLenum, type:GLenum, indirect:const_void_p):void
 
 glFramebufferParameteri(target:GLenum, pname:GLenum, param:GLint):void
 
-glGetFramebufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetFramebufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetNamedFramebufferParameterivEXT(framebuffer:GLuint, pname:GLenum, params:GLint_p):void
+glGetNamedFramebufferParameterivEXT(framebuffer:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glNamedFramebufferParameteriEXT(framebuffer:GLuint, pname:GLenum, param:GLint):void
 
@@ -1832,15 +1832,15 @@ glFramebufferTexture3D(target:GLenum, attachment:GLenum, textarget:GLenum, textu
 
 glFramebufferTextureLayer(target:GLenum, attachment:GLenum, texture:GLuint, level:GLint, layer:GLint):void
 
-glGenFramebuffers(n:GLsizei, framebuffers:GLuint_p):void
+glGenFramebuffers(n:GLsizei, framebuffers:GLuint_p:nil):void
 
-glGenRenderbuffers(n:GLsizei, renderbuffers:GLuint_p):void
+glGenRenderbuffers(n:GLsizei, renderbuffers:GLuint_p:nil):void
 
 glGenerateMipmap(target:GLenum):void
 
-glGetFramebufferAttachmentParameteriv(target:GLenum, attachment:GLenum, pname:GLenum, params:GLint_p):void
+glGetFramebufferAttachmentParameteriv(target:GLenum, attachment:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetRenderbufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetRenderbufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glIsFramebuffer(framebuffer:GLuint):GLboolean
 
@@ -1862,7 +1862,7 @@ glProgramParameteriARB(program:GLuint, pname:GLenum, value:GLint):void
 
 //======== GL_ARB_get_program_binary ========
 
-//glGetProgramBinary(program:GLuint, bufSize:GLsizei, length:GLsizei_p, binaryFormat:GLenum_p, ):void
+//glGetProgramBinary(program:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, binaryFormat:GLenum_p:nil, ):void
 
 glProgramBinary(program:GLuint, binaryFormat:GLenum, binary:const_void_p, length:GLsizei):void
 
@@ -1880,7 +1880,7 @@ glSpecializeShaderARB(shader:GLuint, pEntryPoint:const_GLchar_p:nil, numSpeciali
 
 //======== GL_ARB_gpu_shader_fp64 ========
 
-glGetUniformdv(program:GLuint, location:GLint, params:GLdouble_p):void
+glGetUniformdv(program:GLuint, location:GLint, params:GLdouble_p:nil):void
 
 glUniform1d(location:GLint, x:GLdouble):void
 
@@ -1918,13 +1918,13 @@ glUniformMatrix4x3dv(location:GLint, count:GLsizei, transpose:GLboolean, value:c
 
 //======== GL_ARB_gpu_shader_int64 ========
 
-glGetUniformi64vARB(program:GLuint, location:GLint, params:GLint64_p):void
+glGetUniformi64vARB(program:GLuint, location:GLint, params:GLint64_p:nil):void
 
-glGetUniformui64vARB(program:GLuint, location:GLint, params:GLuint64_p):void
+glGetUniformui64vARB(program:GLuint, location:GLint, params:GLuint64_p:nil):void
 
-glGetnUniformi64vARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLint64_p):void
+glGetnUniformi64vARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLint64_p:nil):void
 
-glGetnUniformui64vARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLuint64_p):void
+glGetnUniformui64vARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLuint64_p:nil):void
 
 glProgramUniform1i64ARB(program:GLuint, location:GLint, x:GLint64):void
 
@@ -2022,27 +2022,27 @@ glCopyConvolutionFilter2D(target:GLenum, internalformat:GLenum, x:GLint, y:GLint
 
 glGetColorTable(target:GLenum, format:GLenum, type:GLenum, table:void_p):void
 
-glGetColorTableParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetColorTableParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetColorTableParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetColorTableParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetConvolutionFilter(target:GLenum, format:GLenum, type:GLenum, image:void_p):void
 
-glGetConvolutionParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetConvolutionParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetConvolutionParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetConvolutionParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetHistogram(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, values:void_p):void
 
-glGetHistogramParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetHistogramParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetHistogramParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetHistogramParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetMinmax(target:GLenum, reset:GLboolean, format:GLenum, types:GLenum, values:void_p):void
 
-glGetMinmaxParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p):void
+glGetMinmaxParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetMinmaxParameteriv(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetMinmaxParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetSeparableFilter(target:GLenum, format:GLenum, type:GLenum, row:void_p, column:void_p, span:void_p):void
 
@@ -2072,11 +2072,11 @@ glVertexAttribDivisorARB(index:GLuint, divisor:GLuint):void
 
 //======== GL_ARB_internalformat_query ========
 
-glGetInternalformativ(target:GLenum, internalformat:GLenum, pname:GLenum, bufSize:GLsizei, params:GLint_p):void
+glGetInternalformativ(target:GLenum, internalformat:GLenum, pname:GLenum, bufSize:GLsizei, params:GLint_p:nil):void
 
 //======== GL_ARB_internalformat_query2 ========
 
-glGetInternalformati64v(target:GLenum, internalformat:GLenum, pname:GLenum, bufSize:GLsizei, params:GLint64_p):void
+glGetInternalformati64v(target:GLenum, internalformat:GLenum, pname:GLenum, bufSize:GLsizei, params:GLint64_p:nil):void
 
 //======== GL_ARB_invalidate_subdata ========
 
@@ -2104,11 +2104,11 @@ glCurrentPaletteMatrixARB(index:GLint):void
 
 glMatrixIndexPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p):void
 
-glMatrixIndexubvARB(size:GLint, indices:GLubyte_p):void
+glMatrixIndexubvARB(size:GLint, indices:GLubyte_p:nil):void
 
-glMatrixIndexuivARB(size:GLint, indices:GLuint_p):void
+glMatrixIndexuivARB(size:GLint, indices:GLuint_p:nil):void
 
-glMatrixIndexusvARB(size:GLint, indices:GLushort_p):void
+glMatrixIndexusvARB(size:GLint, indices:GLushort_p:nil):void
 
 //======== GL_ARB_multi_bind ========
 
@@ -2212,13 +2212,13 @@ glDeleteQueriesARB(n:GLsizei, ids:const_GLuint_p:nil):void
 
 glEndQueryARB(target:GLenum):void
 
-glGenQueriesARB(n:GLsizei, ids:GLuint_p):void
+glGenQueriesARB(n:GLsizei, ids:GLuint_p:nil):void
 
-glGetQueryObjectivARB(id:GLuint, pname:GLenum, params:GLint_p):void
+glGetQueryObjectivARB(id:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetQueryObjectuivARB(id:GLuint, pname:GLenum, params:GLuint_p):void
+glGetQueryObjectuivARB(id:GLuint, pname:GLenum, params:GLuint_p:nil):void
 
-glGetQueryivARB(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetQueryivARB(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glIsQueryARB(id:GLuint):GLboolean
 
@@ -2238,7 +2238,7 @@ glPolygonOffsetClamp(factor:GLfloat, units:GLfloat, clamp:GLfloat):void
 
 //======== GL_ARB_program_interface_query ========
 
-glGetProgramInterfaceiv(program:GLuint, programInterface:GLenum, pname:GLenum, params:GLint_p):void
+glGetProgramInterfaceiv(program:GLuint, programInterface:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 glGetProgramResourceIndex(program:GLuint, programInterface:GLenum, name:String_const_GLchar_p):GLuint
 
@@ -2246,9 +2246,9 @@ glGetProgramResourceLocation(program:GLuint, programInterface:GLenum, name:Strin
 
 glGetProgramResourceLocationIndex(program:GLuint, programInterface:GLenum, name:String_const_GLchar_p):GLint
 
-glGetProgramResourceName(program:GLuint, programInterface:GLenum, index:GLuint, bufSize:GLsizei, length:GLsizei_p, name:GLchar_p):void
+glGetProgramResourceName(program:GLuint, programInterface:GLenum, index:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, name:GLchar_p:nil):void
 
-glGetProgramResourceiv(program:GLuint, programInterface:GLenum, index:GLuint, propCount:GLsizei, props:const_GLenum_p:nil, bufSize:GLsizei, length:GLsizei_p, params:GLint_p):void
+glGetProgramResourceiv(program:GLuint, programInterface:GLenum, index:GLuint, propCount:GLsizei, props:const_GLenum_p:nil, bufSize:GLsizei, length:GLsizei_p:nil, params:GLint_p:nil):void
 
 //======== GL_ARB_provoking_vertex ========
 
@@ -2266,33 +2266,33 @@ glGetnConvolutionFilterARB(target:GLenum, format:GLenum, type:GLenum, bufSize:GL
 
 glGetnHistogramARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p):void
 
-glGetnMapdvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLdouble_p):void
+glGetnMapdvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLdouble_p:nil):void
 
-glGetnMapfvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLfloat_p):void
+glGetnMapfvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLfloat_p:nil):void
 
-glGetnMapivARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLint_p):void
+glGetnMapivARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLint_p:nil):void
 
 glGetnMinmaxARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p):void
 
-glGetnPixelMapfvARB(map:GLenum, bufSize:GLsizei, values:GLfloat_p):void
+glGetnPixelMapfvARB(map:GLenum, bufSize:GLsizei, values:GLfloat_p:nil):void
 
-glGetnPixelMapuivARB(map:GLenum, bufSize:GLsizei, values:GLuint_p):void
+glGetnPixelMapuivARB(map:GLenum, bufSize:GLsizei, values:GLuint_p:nil):void
 
-glGetnPixelMapusvARB(map:GLenum, bufSize:GLsizei, values:GLushort_p):void
+glGetnPixelMapusvARB(map:GLenum, bufSize:GLsizei, values:GLushort_p:nil):void
 
-glGetnPolygonStippleARB(bufSize:GLsizei, pattern:GLubyte_p):void
+glGetnPolygonStippleARB(bufSize:GLsizei, pattern:GLubyte_p:nil):void
 
 //glGetnSeparableFilterARB(target:GLenum, format:GLenum, type:GLenum, rowBufSize:GLsizei, row:void_p, columnBufSize:GLsizei, , ):void
 
 glGetnTexImageARB(target:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, img:void_p):void
 
-glGetnUniformdvARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p):void
+glGetnUniformdvARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p:nil):void
 
-glGetnUniformfvARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLfloat_p):void
+glGetnUniformfvARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLfloat_p:nil):void
 
-glGetnUniformivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLint_p):void
+glGetnUniformivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLint_p:nil):void
 
-glGetnUniformuivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLuint_p):void
+glGetnUniformuivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLuint_p:nil):void
 
 glReadnPixelsARB(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, bufSize:GLsizei, data:void_p):void
 
@@ -2312,15 +2312,15 @@ glBindSampler(unit:GLuint, sampler:GLuint):void
 
 glDeleteSamplers(count:GLsizei, samplers:const_GLuint_p:nil):void
 
-glGenSamplers(count:GLsizei, samplers:GLuint_p):void
+glGenSamplers(count:GLsizei, samplers:GLuint_p:nil):void
 
-glGetSamplerParameterIiv(sampler:GLuint, pname:GLenum, params:GLint_p):void
+glGetSamplerParameterIiv(sampler:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetSamplerParameterIuiv(sampler:GLuint, pname:GLenum, params:GLuint_p):void
+glGetSamplerParameterIuiv(sampler:GLuint, pname:GLenum, params:GLuint_p:nil):void
 
-glGetSamplerParameterfv(sampler:GLuint, pname:GLenum, params:GLfloat_p):void
+glGetSamplerParameterfv(sampler:GLuint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetSamplerParameteriv(sampler:GLuint, pname:GLenum, params:GLint_p):void
+glGetSamplerParameteriv(sampler:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glIsSampler(sampler:GLuint):GLboolean
 
@@ -2346,11 +2346,11 @@ glBindProgramPipeline(pipeline:GLuint):void
 
 glDeleteProgramPipelines(n:GLsizei, pipelines:const_GLuint_p:nil):void
 
-glGenProgramPipelines(n:GLsizei, pipelines:GLuint_p):void
+glGenProgramPipelines(n:GLsizei, pipelines:GLuint_p:nil):void
 
-glGetProgramPipelineInfoLog(pipeline:GLuint, bufSize:GLsizei, length:GLsizei_p, infoLog:GLchar_p):void
+glGetProgramPipelineInfoLog(pipeline:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, infoLog:GLchar_p:nil):void
 
-glGetProgramPipelineiv(pipeline:GLuint, pname:GLenum, params:GLint_p):void
+glGetProgramPipelineiv(pipeline:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glIsProgramPipeline(pipeline:GLuint):GLboolean
 
@@ -2460,7 +2460,7 @@ glValidateProgramPipeline(pipeline:GLuint):void
 
 //======== GL_ARB_shader_atomic_counters ========
 
-glGetActiveAtomicCounterBufferiv(program:GLuint, bufferIndex:GLuint, pname:GLenum, params:GLint_p):void
+glGetActiveAtomicCounterBufferiv(program:GLuint, bufferIndex:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 //======== GL_ARB_shader_image_load_store ========
 
@@ -2482,25 +2482,25 @@ glMemoryBarrier(barriers:GLbitfield):void
 
 //glDetachObjectARB(containerObj:GLhandleARB, attachedObj:GLhandleARB):void
 
-//glGetActiveUniformARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
+//glGetActiveUniformARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p:nil, size:GLint_p:nil, type:GLenum_p:nil, name:GLcharARB_p:nil):void
 
-//glGetAttachedObjectsARB(containerObj:GLhandleARB, maxCount:GLsizei, count:GLsizei_p, obj:GLhandleARB_p):void
+//glGetAttachedObjectsARB(containerObj:GLhandleARB, maxCount:GLsizei, count:GLsizei_p:nil, obj:GLhandleARB_p:nil):void
 
 //glGetHandleARB(pname:GLenum):GLhandleARB
 
-//glGetInfoLogARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, infoLog:GLcharARB_p):void
+//glGetInfoLogARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p:nil, infoLog:GLcharARB_p:nil):void
 
-//glGetObjectParameterfvARB(obj:GLhandleARB, pname:GLenum, params:GLfloat_p):void
+//glGetObjectParameterfvARB(obj:GLhandleARB, pname:GLenum, params:GLfloat_p:nil):void
 
-//glGetObjectParameterivARB(obj:GLhandleARB, pname:GLenum, params:GLint_p):void
+//glGetObjectParameterivARB(obj:GLhandleARB, pname:GLenum, params:GLint_p:nil):void
 
-//glGetShaderSourceARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p, source:GLcharARB_p):void
+//glGetShaderSourceARB(obj:GLhandleARB, maxLength:GLsizei, length:GLsizei_p:nil, source:GLcharARB_p:nil):void
 
 //glGetUniformLocationARB(programObj:GLhandleARB, name:const_GLcharARB_p:nil):GLint
 
-//glGetUniformfvARB(programObj:GLhandleARB, location:GLint, params:GLfloat_p):void
+//glGetUniformfvARB(programObj:GLhandleARB, location:GLint, params:GLfloat_p:nil):void
 
-//glGetUniformivARB(programObj:GLhandleARB, location:GLint, params:GLint_p):void
+//glGetUniformivARB(programObj:GLhandleARB, location:GLint, params:GLint_p:nil):void
 
 //glLinkProgramARB(programObj:GLhandleARB):void
 
@@ -2554,19 +2554,19 @@ glShaderStorageBlockBinding(program:GLuint, storageBlockIndex:GLuint, storageBlo
 
 //======== GL_ARB_shader_subroutine ========
 
-glGetActiveSubroutineName(program:GLuint, shadertype:GLenum, index:GLuint, bufsize:GLsizei, length:GLsizei_p, name:GLchar_p):void
+glGetActiveSubroutineName(program:GLuint, shadertype:GLenum, index:GLuint, bufsize:GLsizei, length:GLsizei_p:nil, name:GLchar_p:nil):void
 
-glGetActiveSubroutineUniformName(program:GLuint, shadertype:GLenum, index:GLuint, bufsize:GLsizei, length:GLsizei_p, name:GLchar_p):void
+glGetActiveSubroutineUniformName(program:GLuint, shadertype:GLenum, index:GLuint, bufsize:GLsizei, length:GLsizei_p:nil, name:GLchar_p:nil):void
 
-glGetActiveSubroutineUniformiv(program:GLuint, shadertype:GLenum, index:GLuint, pname:GLenum, values:GLint_p):void
+glGetActiveSubroutineUniformiv(program:GLuint, shadertype:GLenum, index:GLuint, pname:GLenum, values:GLint_p:nil):void
 
-glGetProgramStageiv(program:GLuint, shadertype:GLenum, pname:GLenum, values:GLint_p):void
+glGetProgramStageiv(program:GLuint, shadertype:GLenum, pname:GLenum, values:GLint_p:nil):void
 
 glGetSubroutineIndex(program:GLuint, shadertype:GLenum, name:const_GLchar_p:nil):GLuint
 
 glGetSubroutineUniformLocation(program:GLuint, shadertype:GLenum, name:const_GLchar_p:nil):GLint
 
-glGetUniformSubroutineuiv(shadertype:GLenum, location:GLint, params:GLuint_p):void
+glGetUniformSubroutineuiv(shadertype:GLenum, location:GLint, params:GLuint_p:nil):void
 
 glUniformSubroutinesuiv(shadertype:GLenum, count:GLsizei, indices:const_GLuint_p:nil):void
 
@@ -2576,9 +2576,9 @@ glUniformSubroutinesuiv(shadertype:GLenum, count:GLsizei, indices:const_GLuint_p
 
 glDeleteNamedStringARB(namelen:GLint, name:String_const_GLchar_p):void
 
-glGetNamedStringARB(namelen:GLint, name:String_const_GLchar_p, bufSize:GLsizei, stringlen:GLint_p, string:GLchar_p):void
+glGetNamedStringARB(namelen:GLint, name:String_const_GLchar_p, bufSize:GLsizei, stringlen:GLint_p:nil, string:GLchar_p:nil):void
 
-glGetNamedStringivARB(namelen:GLint, name:String_const_GLchar_p, pname:GLenum, params:GLint_p):void
+glGetNamedStringivARB(namelen:GLint, name:String_const_GLchar_p, pname:GLenum, params:GLint_p:nil):void
 
 glIsNamedStringARB(namelen:GLint, name:String_const_GLchar_p):GLboolean
 
@@ -2600,9 +2600,9 @@ glTexPageCommitmentARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint,
 
 //glFenceSync(condition:GLenum, flags:GLbitfield):GLsync
 
-glGetInteger64v(pname:GLenum, params:GLint64_p):void
+glGetInteger64v(pname:GLenum, params:GLint64_p:nil):void
 
-//glGetSynciv(GLsync:GLsync, pname:GLenum, bufSize:GLsizei, length:GLsizei_p, values:GLint_p):void
+//glGetSynciv(GLsync:GLsync, pname:GLenum, bufSize:GLsizei, length:GLsizei_p:nil, values:GLint_p:nil):void
 
 //glIsSync(GLsync:GLsync):GLboolean
 
@@ -2646,7 +2646,7 @@ glGetCompressedTexImageARB(target:GLenum, lod:GLint, img:void_p):void
 
 //======== GL_ARB_texture_multisample ========
 
-glGetMultisamplefv(pname:GLenum, index:GLuint, val:GLfloat_p):void
+glGetMultisamplefv(pname:GLenum, index:GLuint, val:GLfloat_p:nil):void
 
 glSampleMaski(index:GLuint, mask:GLbitfield):void
 
@@ -2678,9 +2678,9 @@ glTextureView(texture:GLuint, target:GLenum, origtexture:GLuint, internalformat:
 
 //======== GL_ARB_timer_query ========
 
-glGetQueryObjecti64v(id:GLuint, pname:GLenum, params:GLint64_p):void
+glGetQueryObjecti64v(id:GLuint, pname:GLenum, params:GLint64_p:nil):void
 
-glGetQueryObjectui64v(id:GLuint, pname:GLenum, params:GLuint64_p):void
+glGetQueryObjectui64v(id:GLuint, pname:GLenum, params:GLuint64_p:nil):void
 
 glQueryCounter(id:GLuint, target:GLenum):void
 
@@ -2692,7 +2692,7 @@ glDeleteTransformFeedbacks(n:GLsizei, ids:const_GLuint_p:nil):void
 
 glDrawTransformFeedback(mode:GLenum, id:GLuint):void
 
-glGenTransformFeedbacks(n:GLsizei, ids:GLuint_p):void
+glGenTransformFeedbacks(n:GLsizei, ids:GLuint_p:nil):void
 
 glIsTransformFeedback(id:GLuint):GLboolean
 
@@ -2708,7 +2708,7 @@ glDrawTransformFeedbackStream(mode:GLenum, id:GLuint, stream:GLuint):void
 
 glEndQueryIndexed(target:GLenum, index:GLuint):void
 
-glGetQueryIndexediv(target:GLenum, index:GLuint, pname:GLenum, params:GLint_p):void
+glGetQueryIndexediv(target:GLenum, index:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 //======== GL_ARB_transform_feedback_instanced ========
 
@@ -2732,19 +2732,19 @@ glBindBufferBase(target:GLenum, index:GLuint, buffer:GLuint):void
 
 glBindBufferRange(target:GLenum, index:GLuint, buffer:GLuint, offset:GLintptr, size:GLsizeiptr):void
 
-glGetActiveUniformBlockName(program:GLuint, uniformBlockIndex:GLuint, bufSize:GLsizei, length:GLsizei_p, uniformBlockName:GLchar_p):void
+glGetActiveUniformBlockName(program:GLuint, uniformBlockIndex:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, uniformBlockName:GLchar_p:nil):void
 
-glGetActiveUniformBlockiv(program:GLuint, uniformBlockIndex:GLuint, pname:GLenum, params:GLint_p):void
+glGetActiveUniformBlockiv(program:GLuint, uniformBlockIndex:GLuint, pname:GLenum, params:GLint_p:nil):void
 
-glGetActiveUniformName(program:GLuint, uniformIndex:GLuint, bufSize:GLsizei, length:GLsizei_p, uniformName:GLchar_p):void
+glGetActiveUniformName(program:GLuint, uniformIndex:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, uniformName:GLchar_p:nil):void
 
-glGetActiveUniformsiv(program:GLuint, uniformCount:GLsizei, uniformIndices:const_GLuint_p:nil, pname:GLenum, params:GLint_p):void
+glGetActiveUniformsiv(program:GLuint, uniformCount:GLsizei, uniformIndices:const_GLuint_p:nil, pname:GLenum, params:GLint_p:nil):void
 
-glGetIntegeri_v(target:GLenum, index:GLuint, data:GLint_p):void
+glGetIntegeri_v(target:GLenum, index:GLuint, data:GLint_p:nil):void
 
 glGetUniformBlockIndex(program:GLuint, uniformBlockName:String_const_GLchar_p):GLuint
 
-//glGetUniformIndices(program:GLuint, uniformCount:GLsizei, uniformNames:const_GLchar_p_const_p:nil, uniformIndices:GLuint_p):void
+//glGetUniformIndices(program:GLuint, uniformCount:GLsizei, uniformNames:const_GLchar_p_const_p:nil, uniformIndices:GLuint_p:nil):void
 
 glUniformBlockBinding(program:GLuint, uniformBlockIndex:GLuint, uniformBlockBinding:GLuint):void
 
@@ -2754,13 +2754,13 @@ glBindVertexArray(array:GLuint):void
 
 glDeleteVertexArrays(n:GLsizei, arrays:const_GLuint_p:nil):void
 
-glGenVertexArrays(n:GLsizei, arrays:GLuint_p):void
+glGenVertexArrays(n:GLsizei, arrays:GLuint_p:nil):void
 
 glIsVertexArray(array:GLuint):GLboolean
 
 //======== GL_ARB_vertex_attrib_64bit ========
 
-glGetVertexAttribLdv(index:GLuint, pname:GLenum, params:GLdouble_p):void
+glGetVertexAttribLdv(index:GLuint, pname:GLenum, params:GLdouble_p:nil):void
 
 glVertexAttribL1d(index:GLuint, x:GLdouble):void
 
@@ -2812,21 +2812,21 @@ glVertexBlendARB(count:GLint):void
 
 glWeightPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p):void
 
-glWeightbvARB(size:GLint, weights:GLbyte_p):void
+glWeightbvARB(size:GLint, weights:GLbyte_p:nil):void
 
-glWeightdvARB(size:GLint, weights:GLdouble_p):void
+glWeightdvARB(size:GLint, weights:GLdouble_p:nil):void
 
-glWeightfvARB(size:GLint, weights:GLfloat_p):void
+glWeightfvARB(size:GLint, weights:GLfloat_p:nil):void
 
-glWeightivARB(size:GLint, weights:GLint_p):void
+glWeightivARB(size:GLint, weights:GLint_p:nil):void
 
-glWeightsvARB(size:GLint, weights:GLshort_p):void
+glWeightsvARB(size:GLint, weights:GLshort_p:nil):void
 
-glWeightubvARB(size:GLint, weights:GLubyte_p):void
+glWeightubvARB(size:GLint, weights:GLubyte_p:nil):void
 
-glWeightuivARB(size:GLint, weights:GLuint_p):void
+glWeightuivARB(size:GLint, weights:GLuint_p:nil):void
 
-glWeightusvARB(size:GLint, weights:GLushort_p):void
+glWeightusvARB(size:GLint, weights:GLushort_p:nil):void
 
 //======== GL_ARB_vertex_buffer_object ========
 
@@ -2838,9 +2838,9 @@ glBindBufferARB(target:GLenum, buffer:GLuint):void
 
 glDeleteBuffersARB(n:GLsizei, buffers:const_GLuint_p:nil):void
 
-glGenBuffersARB(n:GLsizei, buffers:GLuint_p):void
+glGenBuffersARB(n:GLsizei, buffers:GLuint_p:nil):void
 
-glGetBufferParameterivARB(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetBufferParameterivARB(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 //glGetBufferPointervARB(target:GLenum, pname:GLenum, params:void_p__p):void
 
@@ -2862,27 +2862,27 @@ glDisableVertexAttribArrayARB(index:GLuint):void
 
 glEnableVertexAttribArrayARB(index:GLuint):void
 
-glGenProgramsARB(n:GLsizei, programs:GLuint_p):void
+glGenProgramsARB(n:GLsizei, programs:GLuint_p:nil):void
 
-glGetProgramEnvParameterdvARB(target:GLenum, index:GLuint, params:GLdouble_p):void
+glGetProgramEnvParameterdvARB(target:GLenum, index:GLuint, params:GLdouble_p:nil):void
 
-glGetProgramEnvParameterfvARB(target:GLenum, index:GLuint, params:GLfloat_p):void
+glGetProgramEnvParameterfvARB(target:GLenum, index:GLuint, params:GLfloat_p:nil):void
 
-glGetProgramLocalParameterdvARB(target:GLenum, index:GLuint, params:GLdouble_p):void
+glGetProgramLocalParameterdvARB(target:GLenum, index:GLuint, params:GLdouble_p:nil):void
 
-glGetProgramLocalParameterfvARB(target:GLenum, index:GLuint, params:GLfloat_p):void
+glGetProgramLocalParameterfvARB(target:GLenum, index:GLuint, params:GLfloat_p:nil):void
 
 glGetProgramStringARB(target:GLenum, pname:GLenum, string:void_p):void
 
-glGetProgramivARB(target:GLenum, pname:GLenum, params:GLint_p):void
+glGetProgramivARB(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 //glGetVertexAttribPointervARB(index:GLuint, pname:GLenum, pointer:void_p__p):void
 
-glGetVertexAttribdvARB(index:GLuint, pname:GLenum, params:GLdouble_p):void
+glGetVertexAttribdvARB(index:GLuint, pname:GLenum, params:GLdouble_p:nil):void
 
-glGetVertexAttribfvARB(index:GLuint, pname:GLenum, params:GLfloat_p):void
+glGetVertexAttribfvARB(index:GLuint, pname:GLenum, params:GLfloat_p:nil):void
 
-glGetVertexAttribivARB(index:GLuint, pname:GLenum, params:GLint_p):void
+glGetVertexAttribivARB(index:GLuint, pname:GLenum, params:GLint_p:nil):void
 
 glIsProgramARB(program:GLuint):GLboolean
 
@@ -2982,7 +2982,7 @@ glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboo
 
 //glBindAttribLocationARB(programObj:GLhandleARB, index:GLuint, name:String_const_GLcharARB_p):void
 
-//glGetActiveAttribARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p, size:GLint_p, type:GLenum_p, name:GLcharARB_p):void
+//glGetActiveAttribARB(programObj:GLhandleARB, index:GLuint, maxLength:GLsizei, length:GLsizei_p:nil, size:GLint_p:nil, type:GLenum_p:nil, name:GLcharARB_p:nil):void
 
 //glGetAttribLocationARB(programObj:GLhandleARB, name:String_const_GLcharARB_p):GLint
 
@@ -3070,9 +3070,9 @@ glDepthRangeArrayv(first:GLuint, count:GLsizei, v:const_GLclampd_p:nil):void
 
 glDepthRangeIndexed(index:GLuint, n:GLclampd, f:GLclampd):void
 
-glGetDoublei_v(target:GLenum, index:GLuint, data:GLdouble_p):void
+glGetDoublei_v(target:GLenum, index:GLuint, data:GLdouble_p:nil):void
 
-glGetFloati_v(target:GLenum, index:GLuint, data:GLfloat_p):void
+glGetFloati_v(target:GLenum, index:GLuint, data:GLfloat_p:nil):void
 
 glScissorArrayv(first:GLuint, count:GLsizei, v:const_GLint_p:nil):void
 

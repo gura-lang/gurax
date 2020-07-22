@@ -2,15 +2,15 @@
 import(util.tester) {*}
 
 InspectExpr(x:Expr) = {
-	Printf('%s .. %s\n', x.ToString():quoteSymbol, x.type)
+	Printf('%s .. %s\n', x.__ToString__():quoteSymbol, x.type)
 	[`block, `car, `target, `child, `left, `right, `trailer,
 	 `value, `string, `symbol, `mode, `operator, `attr].Each {|prop|
 		Printf('  %-10s %-10s %s\n', prop,
 				Expr.__GetPropSlot__(prop).vtype.__fullName__,
-				x.__GetProp__(prop).ToString():nilVisible:quote)
+				x.__GetProp__(prop).__ToString__():nilVisible:quote)
 	}
-	Printf('  %-10s %s\n', 'EachParam', cond(x, x.EachParam():list).ToString())
-	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).ToString())
+	Printf('  %-10s %s\n', 'EachParam', cond(x, x.EachParam():list).__ToString__())
+	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).__ToString__())
 }
 
 TestCase('PUnit') {

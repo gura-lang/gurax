@@ -3,9 +3,9 @@ import(opengl) {*}
 
 main() = {
 	glfwInit()
-	glewInit()
 	window = glfwCreateWindow(640, 480, "Hello World", nil, nil)
 	window.MakeContextCurrent();
+	glewInit()
 	window.SetWindowPosCallback(&{Printf('WindowPos(%d, %d)\n', $xpos, $ypos)})
 	window.SetWindowSizeCallback(&{Printf('WindowSize(%d, %d)\n', $width, $height)})
 	window.SetWindowCloseCallback(&{Printf('WindowClose()\n')})

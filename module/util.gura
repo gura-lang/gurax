@@ -8,7 +8,7 @@ Expr.PrintPUnit(stream:Stream = sys.cout, strIndent:String = ''):void = {
 	seqIdFirst = punits.first.seqId
 	wdSeqId = Format('%d', punits.last.seqId - seqIdFirst).len
 	stream.Printf('%s##%-*d %s\n', strIndent, wdSeqId,
-					punits:*seqId - seqIdFirst, punits:*ToString(seqIdFirst))
+					punits:*seqId - seqIdFirst, punits:*__ToString__(seqIdFirst))
 }
 
 Expr.PrintPUnitWithLabel(stream:Stream = sys.cout, strIndent:String = '  '):void = {

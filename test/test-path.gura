@@ -48,7 +48,7 @@ TestCase('path.AbsName()') {
 TestCase('path.BaseName(), path.ExtName() and path.SplitExt()') {
 	Printf('path.BaseName(\'%s\') .. \'%s\'\n', pathNames, path.BaseName(pathNames))
 	Printf('path.ExtName(\'%s\') .. \'%s\'\n', pathNames, path.ExtName(pathNames))
-	Printf('path.SplitExt(\'%s\') .. %s\n', pathNames, path.SplitExt(pathNames):*ToString())
+	Printf('path.SplitExt(\'%s\') .. %s\n', pathNames, path.SplitExt(pathNames):*__ToString__())
 }
 
 TestCase('path.Dir()') {
@@ -57,7 +57,7 @@ TestCase('path.Dir()') {
 TestCase('path.DirName(), path.FileName() and path.Split()') {
 	Printf('path.DirName(\'%s\') .. \'%s\'\n', pathNames, path.DirName(pathNames))
 	Printf('path.FileName(\'%s\') .. \'%s\'\n', pathNames, path.FileName(pathNames))
-	Printf('path.Split(\'%s\') .. %s\n', pathNames, path.Split(pathNames):*ToString())
+	Printf('path.Split(\'%s\') .. %s\n', pathNames, path.Split(pathNames):*__ToString__())
 }
 
 TestCase('path.Exists()') {
@@ -69,7 +69,7 @@ TestCase('path.Glob()') {
 TestCase('path.HeadName() and path.BottomName() and path.SplitBottom()') {
 	Printf('path.HeadName(\'%s\') .. \'%s\'\n', pathNames, path.HeadName(pathNames))
 	Printf('path.BottomName(\'%s\') .. \'%s\'\n', pathNames, path.BottomName(pathNames))
-	Printf('path.SplitBottom(\'%s\') .. %s\n', pathNames, path.SplitBottom(pathNames):*ToString())
+	Printf('path.SplitBottom(\'%s\') .. %s\n', pathNames, path.SplitBottom(pathNames):*__ToString__())
 }
 
 TestCase('path.Join()') {

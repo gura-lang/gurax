@@ -123,7 +123,7 @@ FuncInfo = class {
 }
 
 FuncInfo.tmplImplementation = tR'''
-// ${this.ToString()}
+// ${this.__ToString__()}
 Gurax_DeclareFunctionAlias(${this.name}_gurax, "${this.name}")
 {
 	Declare(VTYPE_${this.typeInfo.vtype}, Flag::None);

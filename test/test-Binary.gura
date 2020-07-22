@@ -74,7 +74,7 @@ TestCase('Binary#Reader()') {
 		stream.Read(8).Dump()
 		stream.Read(8).Dump()
 		stream.Read(8).Dump()
-		Println(stream.Read(8).ToString():nilVisible)
+		Println(stream.Read(8).__ToString__():nilVisible)
 		stream.Seek(4)
 		stream.Read(8).Dump()
 		stream.Seek(0)

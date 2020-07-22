@@ -280,19 +280,70 @@ String Value_Array::ToString(const StringStyle& ss) const
 
 Value* Value_Array::DoIndexGet(const Index& index) const
 {
-	//const ValueList& valuesIndex = index.GetValueOwner();
-	return Value::nil();
+	const Array& array = GetArray();
+	const ValueList& valuesIndex = index.GetValueOwner();
+	const Array::DimSizes& dimSizes = array.GetDimSizes();
+	if (valuesIndex.size() != dimSizes.size()) {
+		Error::Issue(ErrorType::IndexError, "invalid number of indices");
+		return Value::nil();
+	}
+	size_t idx = 0;
+	size_t idxMult = 1;
+	auto ppValueIndex = valuesIndex.rbegin();
+	auto pDimSize = dimSizes.rbegin();
+	for (;;) {
+		const Value& valueIndex = **ppValueIndex;
+		if (!valueIndex.IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::IndexError, "invalid value type of indices");
+			return Value::nil();
+		}
+		size_t dim = Value_Number::GetNumberNonNeg<size_t>(valueIndex);
+		if (Error::IsIssued()) return Value::nil();
+		if (dim >= *pDimSize) {
+			Error::Issue(ErrorType::IndexError, "index is out of range");
+			return Value::nil();
+		}
+		idx += dim * idxMult;
+		ppValueIndex++;
+		if (ppValueIndex == valuesIndex.rend()) break;
+		idxMult *= *pDimSize;
+		pDimSize++;
+	}
+	return array.IndexGet(idx);
 }
 
 void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
-	//const ValueList& valuesIndex = index.GetValueOwner();
-#if 0
 	Array& array = GetArray();
-	size_t idx;
-	Double num;
-	array.GetElemType().IndexSet(array.GetPointerC<void>(), idx, num);
-#endif
+	const ValueList& valuesIndex = index.GetValueOwner();
+	const Array::DimSizes& dimSizes = array.GetDimSizes();
+	if (valuesIndex.size() != dimSizes.size()) {
+		Error::Issue(ErrorType::IndexError, "invalid number of indices");
+		return;
+	}
+	size_t idx = 0;
+	size_t idxMult = 1;
+	auto ppValueIndex = valuesIndex.rbegin();
+	auto pDimSize = dimSizes.rbegin();
+	for (;;) {
+		const Value& valueIndex = **ppValueIndex;
+		if (!valueIndex.IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::IndexError, "invalid value type of indices");
+			return;
+		}
+		size_t dim = Value_Number::GetNumberNonNeg<size_t>(valueIndex);
+		if (Error::IsIssued()) return;
+		if (dim >= *pDimSize) {
+			Error::Issue(ErrorType::IndexError, "index is out of range");
+			return;
+		}
+		idx += dim * idxMult;
+		ppValueIndex++;
+		if (ppValueIndex == valuesIndex.rend()) break;
+		idxMult *= *pDimSize;
+		pDimSize++;
+	}
+	array.IndexSet(idx, *pValue);
 }
 
 }

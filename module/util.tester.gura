@@ -12,8 +12,8 @@ Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 	try {
 		rtn = expr.Eval()
 		rtnStr = cond(arg.IsSet(`quote),
-					rtn.ToString():quote:nilVisible
-					rtn.ToString():quoteSymbol:nilVisible)
+					rtn.__ToString__():quote:nilVisible
+					rtn.__ToString__():quoteSymbol:nilVisible)
 		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):noMap
 		block && block(rtn)
 	} catch {|e|

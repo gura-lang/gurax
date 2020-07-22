@@ -92,8 +92,8 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 	return new Value_Bool(valueThis.IsInstanceOf(vtype));
 }
 
-// Object#ToString()
-Gurax_DeclareClassMethod(Object, ToString)
+// Object#__ToString__()
+Gurax_DeclareClassMethod(Object, __ToString__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
@@ -102,7 +102,7 @@ Gurax_DeclareClassMethod(Object, ToString)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementClassMethod(Object, ToString)
+Gurax_ImplementClassMethod(Object, __ToString__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -145,7 +145,7 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Object, __GetProp__));
 	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
-	Assign(Gurax_CreateMethod(Object, ToString));
+	Assign(Gurax_CreateMethod(Object, __ToString__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Object, __vtype__));
 }

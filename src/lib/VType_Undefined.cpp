@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Undefined#ToString()
-Gurax_DeclareClassMethod(Undefined, ToString)
+// Undefined#__ToString__()
+Gurax_DeclareClassMethod(Undefined, __ToString__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
@@ -37,7 +37,7 @@ Gurax_DeclareClassMethod(Undefined, ToString)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementClassMethod(Undefined, ToString)
+Gurax_ImplementClassMethod(Undefined, __ToString__)
 {
 	// Function body
 	return new Value_String("<Undefined>");
@@ -55,7 +55,7 @@ void VType_Undefined::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Undefined, ToString));
+	Assign(Gurax_CreateMethod(Undefined, __ToString__));
 }
 
 //------------------------------------------------------------------------------
