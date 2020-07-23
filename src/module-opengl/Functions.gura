@@ -171,7 +171,7 @@ glBlendFunc(sfactor:GLenum, dfactor:GLenum):void
 
 glCallList(list:GLuint):void
 
-glCallLists(n:GLsizei, type:GLenum, lists:const_void_p):void
+glCallLists(n:GLsizei, type:GLenum, lists:const_void_p:nil):void
 
 glClear(mask:GLbitfield):void
 
@@ -255,7 +255,7 @@ glColorMask(red:GLboolean, green:GLboolean, blue:GLboolean, alpha:GLboolean):voi
 
 glColorMaterial(face:GLenum, mode:GLenum):void
 
-glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glCopyPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, type:GLenum):void
 
@@ -291,13 +291,13 @@ glDrawArrays(mode:GLenum, first:GLint, count:GLsizei):void
 
 glDrawBuffer(mode:GLenum):void
 
-glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p):void
+glDrawElements(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil):void
 
-glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glDrawPixels(width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
 glEdgeFlag(flag:GLboolean):void
 
-glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p):void
+glEdgeFlagPointer(stride:GLsizei, pointer:const_void_p:nil):void
 
 glEdgeFlagv(flag[]:GLboolean):void
 
@@ -403,7 +403,7 @@ glGetTexGenfv(coord:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
 glGetTexGeniv(coord:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetTexImage(target:GLenum, level:GLint, format:GLenum, type:GLenum, pixels:void_p):void
+glGetTexImage(target:GLenum, level:GLint, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
 glGetTexLevelParameterfv(target:GLenum, level:GLint, pname:GLenum, params:GLfloat_p:nil):void
 
@@ -417,7 +417,7 @@ glHint(target:GLenum, mode:GLenum):void
 
 glIndexMask(mask:GLuint):void
 
-glIndexPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glIndexPointer(type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glIndexd(c:GLdouble):void
 
@@ -441,7 +441,7 @@ glIndexubv(c[]:GLubyte):void
 
 glInitNames():void
 
-glInterleavedArrays(format:GLenum, stride:GLsizei, pointer:const_void_p):void
+glInterleavedArrays(format:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glIsEnabled(cap:GLenum):GLboolean
 
@@ -533,7 +533,7 @@ glNormal3s(nx:GLshort, ny:GLshort, nz:GLshort):void
 
 glNormal3sv(v[]:GLshort):void
 
-glNormalPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glNormalPointer(type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glOrtho(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GLdouble, zFar:GLdouble):void
 
@@ -631,7 +631,7 @@ glRasterPos4sv(v[]:GLshort):void
 
 glReadBuffer(mode:GLenum):void
 
-glReadPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
+glReadPixels(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
 glRectd(x1:GLdouble, y1:GLdouble, x2:GLdouble, y2:GLdouble):void
 
@@ -735,7 +735,7 @@ glTexCoord4s(s:GLshort, t:GLshort, r:GLshort, q:GLshort):void
 
 glTexCoord4sv(v[]:GLshort):void
 
-glTexCoordPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glTexCoordPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glTexEnvf(target:GLenum, pname:GLenum, param:GLfloat):void
 
@@ -757,9 +757,9 @@ glTexGeni(coord:GLenum, pname:GLenum, param:GLint):void
 
 glTexGeniv(coord:GLenum, pname:GLenum, params[]:GLint):void
 
-glTexImage1D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:void_p):void
+glTexImage1D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
-glTexImage2D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, height:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:void_p):void
+glTexImage2D(target:GLenum, level:GLint, internalformat:GLint, width:GLsizei, height:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
 glTexParameterf(target:GLenum, pname:GLenum, param:GLfloat):void
 
@@ -769,9 +769,9 @@ glTexParameteri(target:GLenum, pname:GLenum, param:GLint):void
 
 glTexParameteriv(target:GLenum, pname:GLenum, params[]:GLint):void
 
-glTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
+glTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
-glTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p):void
+glTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:void_p:nil):void
 
 glTranslated(x:GLdouble, y:GLdouble, z:GLdouble):void
 
@@ -825,7 +825,7 @@ glVertex4s(x:GLshort, y:GLshort, z:GLshort, w:GLshort):void
 
 glVertex4sv(v[4]:GLshort):void
 
-glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glVertexPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
@@ -833,11 +833,11 @@ glViewport(x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
 glCopyTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-glDrawRangeElements(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:const_void_p):void
+glDrawRangeElements(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:const_void_p:nil):void
 
-glTexImage3D(target:GLenum, level:GLint, internalFormat:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexImage3D(target:GLenum, level:GLint, internalFormat:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
-glTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
 //======== GL_VERSION_1_3 ========
 
@@ -845,19 +845,19 @@ glActiveTexture(texture:GLenum):void
 
 glClientActiveTexture(texture:GLenum):void
 
-glCompressedTexImage1D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage1D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexImage2D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage2D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexImage3D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage3D(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage1D(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage2D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage3D(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glGetCompressedTexImage(target:GLenum, lod:GLint, img:void_p):void
+glGetCompressedTexImage(target:GLenum, lod:GLint, img:void_p:nil):void
 
 glLoadTransposeMatrixd(m[16]:GLdouble):void
 
@@ -941,7 +941,7 @@ glBlendEquation(mode:GLenum):void
 
 glBlendFuncSeparate(sfactorRGB:GLenum, dfactorRGB:GLenum, sfactorAlpha:GLenum, dfactorAlpha:GLenum):void
 
-glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glFogCoordPointer(type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glFogCoordd(coord:GLdouble):void
 
@@ -953,7 +953,7 @@ glFogCoordfv(coord[]:GLfloat):void
 
 glMultiDrawArrays(mode:GLenum, first[]:GLint, count[]:GLsizei, drawcount:GLsizei):void
 
-glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices[]:const_void_p):void = \
+glMultiDrawElements(mode:GLenum, count[]:GLsizei, type:GLenum, indices[]:const_void_p:nil):void = \
 	R'''
 	GLsizei drawcount = count.sizeT<GLsizei>();
 	if (drawcount != indices.sizeT<GLsizei>()) {
@@ -1004,7 +1004,7 @@ glSecondaryColor3us(red:GLushort, green:GLushort, blue:GLushort):void
 
 glSecondaryColor3usv(v[]:GLushort):void
 
-glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glSecondaryColorPointer(size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 glWindowPos2d(x:GLdouble, y:GLdouble):void
 
@@ -1044,9 +1044,9 @@ glBeginQuery(target:GLenum, id:GLuint):void
 
 glBindBuffer(target:GLenum, buffer:GLuint):void
 
-glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
+glBufferData(target:GLenum, size:GLsizeiptr, data:const_void_p:nil, usage:GLenum):void
 
-glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
+glBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:const_void_p:nil):void
 
 glDeleteBuffers(n:GLsizei, buffers[]:GLuint):void
 
@@ -1062,7 +1062,7 @@ glGetBufferParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 //glGetBufferPointerv(target:GLenum, pname:GLenum, params[]:void_p):void
 
-glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p):void
+glGetBufferSubData(target:GLenum, offset:GLintptr, size:GLsizeiptr, data:void_p:nil):void
 
 glGetQueryObjectiv(id:GLuint, pname:GLenum, params:GLint_p:nil):void
 
@@ -1264,7 +1264,7 @@ glVertexAttrib4uiv(index:GLuint, v[]:GLuint):void
 
 glVertexAttrib4usv(index:GLuint, v[]:GLushort):void
 
-glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
+glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p:nil:nil):void
 
 //======== GL_VERSION_2_1 ========
 
@@ -1390,13 +1390,13 @@ glVertexAttribI4uiv(index:GLuint, v0[]:GLuint):void
 
 glVertexAttribI4usv(index:GLuint, v0[]:GLushort):void
 
-glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glVertexAttribIPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 //======== GL_VERSION_3_1 ========
 
 glDrawArraysInstanced(mode:GLenum, first:GLint, count:GLsizei, primcount:GLsizei):void
 
-glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
+glDrawElementsInstanced(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil, primcount:GLsizei):void
 
 glPrimitiveRestartIndex(buffer:GLuint):void
 
@@ -1454,7 +1454,7 @@ glGetShaderPrecisionFormat(shadertype:GLenum, precisiontype:GLenum, range:GLint_
 
 glReleaseShaderCompiler():void
 
-glShaderBinary(count:GLsizei, shaders:const_GLuint_p:nil, binaryformat:GLenum, binary:const_void_p, length:GLsizei):void
+glShaderBinary(count:GLsizei, shaders:const_GLuint_p:nil, binaryformat:GLenum, binary:const_void_p:nil, length:GLsizei):void
 
 //======== GL_ARB_ES3_1_compatibility ========
 
@@ -1468,9 +1468,9 @@ glPrimitiveBoundingBoxARB(minX:GLfloat, minY:GLfloat, minZ:GLfloat, minW:GLfloat
 
 glDrawArraysInstancedBaseInstance(mode:GLenum, first:GLint, count:GLsizei, primcount:GLsizei, baseinstance:GLuint):void
 
-glDrawElementsInstancedBaseInstance(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei, baseinstance:GLuint):void
+glDrawElementsInstancedBaseInstance(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil, primcount:GLsizei, baseinstance:GLuint):void
 
-glDrawElementsInstancedBaseVertexBaseInstance(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei, basevertex:GLint, baseinstance:GLuint):void
+glDrawElementsInstancedBaseVertexBaseInstance(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil, primcount:GLsizei, basevertex:GLint, baseinstance:GLuint):void
 
 //======== GL_ARB_bindless_texture ========
 
@@ -1514,7 +1514,7 @@ glGetFragDataIndex(program:GLuint, name:String_const_GLchar_p):GLint
 
 //======== GL_ARB_buffer_storage ========
 
-glBufferStorage(target:GLenum, size:GLsizeiptr, data:const_void_p, flags:GLbitfield):void
+glBufferStorage(target:GLenum, size:GLsizeiptr, data:const_void_p:nil, flags:GLbitfield):void
 
 //======== GL_ARB_cl_event ========
 
@@ -1522,19 +1522,19 @@ glBufferStorage(target:GLenum, size:GLsizeiptr, data:const_void_p, flags:GLbitfi
 
 //======== GL_ARB_clear_buffer_object ========
 
-glClearBufferData(target:GLenum, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p):void
+glClearBufferData(target:GLenum, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glClearBufferSubData(target:GLenum, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p):void
+glClearBufferSubData(target:GLenum, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glClearNamedBufferDataEXT(buffer:GLuint, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p):void
+glClearNamedBufferDataEXT(buffer:GLuint, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glClearNamedBufferSubDataEXT(buffer:GLuint, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p):void
+glClearNamedBufferSubDataEXT(buffer:GLuint, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
 //======== GL_ARB_clear_texture ========
 
-glClearTexImage(texture:GLuint, level:GLint, format:GLenum, type:GLenum, data:const_void_p):void
+glClearTexImage(texture:GLuint, level:GLint, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glClearTexSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, data:const_void_p):void
+glClearTexSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
 //======== GL_ARB_clip_control ========
 
@@ -1564,7 +1564,7 @@ glCopyImageSubData(srcName:GLuint, srcTarget:GLenum, srcLevel:GLint, srcX:GLint,
 
 //======== GL_ARB_debug_output ========
 
-//glDebugMessageCallbackARB(callback:GLDEBUGPROCARB, userParam:const_void_p):void
+//glDebugMessageCallbackARB(callback:GLDEBUGPROCARB, userParam:const_void_p:nil):void
 
 glDebugMessageControlARB(source:GLenum, type:GLenum, severity:GLenum, count:GLsizei, ids:const_GLuint_p:nil, enabled:GLboolean):void
 
@@ -1580,9 +1580,9 @@ glBlitNamedFramebuffer(readFramebuffer:GLuint, drawFramebuffer:GLuint, srcX0:GLi
 
 glCheckNamedFramebufferStatus(framebuffer:GLuint, target:GLenum):GLenum
 
-glClearNamedBufferData(buffer:GLuint, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p):void
+glClearNamedBufferData(buffer:GLuint, internalformat:GLenum, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glClearNamedBufferSubData(buffer:GLuint, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p):void
+glClearNamedBufferSubData(buffer:GLuint, internalformat:GLenum, offset:GLintptr, size:GLsizeiptr, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
 glClearNamedFramebufferfi(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, depth:GLfloat, stencil:GLint):void
 
@@ -1592,11 +1592,11 @@ glClearNamedFramebufferiv(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, v
 
 glClearNamedFramebufferuiv(framebuffer:GLuint, buffer:GLenum, drawbuffer:GLint, value:const_GLuint_p:nil):void
 
-glCompressedTextureSubImage1D(texture:GLuint, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTextureSubImage1D(texture:GLuint, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTextureSubImage2D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTextureSubImage2D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTextureSubImage3D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTextureSubImage3D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
 glCopyNamedBufferSubData(readBuffer:GLuint, writeBuffer:GLuint, readOffset:GLintptr, writeOffset:GLintptr, size:GLsizeiptr):void
 
@@ -1632,7 +1632,7 @@ glFlushMappedNamedBufferRange(buffer:GLuint, offset:GLintptr, length:GLsizeiptr)
 
 glGenerateTextureMipmap(texture:GLuint):void
 
-glGetCompressedTextureImage(texture:GLuint, level:GLint, bufSize:GLsizei, pixels:void_p):void
+glGetCompressedTextureImage(texture:GLuint, level:GLint, bufSize:GLsizei, pixels:void_p:nil):void
 
 glGetNamedBufferParameteri64v(buffer:GLuint, pname:GLenum, params:GLint64_p:nil):void
 
@@ -1640,7 +1640,7 @@ glGetNamedBufferParameteriv(buffer:GLuint, pname:GLenum, params:GLint_p:nil):voi
 
 //glGetNamedBufferPointerv(buffer:GLuint, pname:GLenum, params:void_p__p):void
 
-glGetNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:void_p):void
+glGetNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:void_p:nil):void
 
 glGetNamedFramebufferAttachmentParameteriv(framebuffer:GLuint, attachment:GLenum, pname:GLenum, params:GLint_p:nil):void
 
@@ -1656,7 +1656,7 @@ glGetQueryBufferObjectui64v(id:GLuint, buffer:GLuint, pname:GLenum, offset:GLint
 
 glGetQueryBufferObjectuiv(id:GLuint, buffer:GLuint, pname:GLenum, offset:GLintptr):void
 
-glGetTextureImage(texture:GLuint, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:void_p):void
+glGetTextureImage(texture:GLuint, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:void_p:nil):void
 
 glGetTextureLevelParameterfv(texture:GLuint, level:GLint, pname:GLenum, params:GLfloat_p:nil):void
 
@@ -1690,11 +1690,11 @@ glInvalidateNamedFramebufferSubData(framebuffer:GLuint, numAttachments:GLsizei, 
 
 //glMapNamedBufferRange(buffer:GLuint, offset:GLintptr, length:GLsizeiptr, access:GLbitfield):void *
 
-glNamedBufferData(buffer:GLuint, size:GLsizeiptr, data:const_void_p, usage:GLenum):void
+glNamedBufferData(buffer:GLuint, size:GLsizeiptr, data:const_void_p:nil, usage:GLenum):void
 
-glNamedBufferStorage(buffer:GLuint, size:GLsizeiptr, data:const_void_p, flags:GLbitfield):void
+glNamedBufferStorage(buffer:GLuint, size:GLsizeiptr, data:const_void_p:nil, flags:GLbitfield):void
 
-glNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:const_void_p):void
+glNamedBufferSubData(buffer:GLuint, offset:GLintptr, size:GLsizeiptr, data:const_void_p:nil):void
 
 glNamedFramebufferDrawBuffer(framebuffer:GLuint, mode:GLenum):void
 
@@ -1740,11 +1740,11 @@ glTextureStorage3D(texture:GLuint, levels:GLsizei, internalformat:GLenum, width:
 
 glTextureStorage3DMultisample(texture:GLuint, samples:GLsizei, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, fixedsamplelocations:GLboolean):void
 
-glTextureSubImage1D(texture:GLuint, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTextureSubImage1D(texture:GLuint, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
-glTextureSubImage2D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTextureSubImage2D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
-glTextureSubImage3D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p):void
+glTextureSubImage3D(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, pixels:const_void_p:nil):void
 
 glTransformFeedbackBufferBase(xfb:GLuint, index:GLuint, buffer:GLuint):void
 
@@ -1784,19 +1784,19 @@ glBlendFunciARB(buf:GLuint, src:GLenum, dst:GLenum):void
 
 //======== GL_ARB_draw_elements_base_vertex ========
 
-glDrawElementsBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indices:void_p, basevertex:GLint):void
+glDrawElementsBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indices:void_p:nil, basevertex:GLint):void
 
-glDrawElementsInstancedBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei, basevertex:GLint):void
+glDrawElementsInstancedBaseVertex(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil, primcount:GLsizei, basevertex:GLint):void
 
-glDrawRangeElementsBaseVertex(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:void_p, basevertex:GLint):void
+glDrawRangeElementsBaseVertex(mode:GLenum, start:GLuint, end:GLuint, count:GLsizei, type:GLenum, indices:void_p:nil, basevertex:GLint):void
 
 //glMultiDrawElementsBaseVertex(mode:GLenum, count:GLsizei_p:nil, type:GLenum, , primcount:GLsizei, basevertex:GLint_p:nil):void
 
 //======== GL_ARB_draw_indirect ========
 
-glDrawArraysIndirect(mode:GLenum, indirect:const_void_p):void
+glDrawArraysIndirect(mode:GLenum, indirect:const_void_p:nil):void
 
-glDrawElementsIndirect(mode:GLenum, type:GLenum, indirect:const_void_p):void
+glDrawElementsIndirect(mode:GLenum, type:GLenum, indirect:const_void_p:nil):void
 
 //======== GL_ARB_framebuffer_no_attachments ========
 
@@ -1864,15 +1864,15 @@ glProgramParameteriARB(program:GLuint, pname:GLenum, value:GLint):void
 
 //glGetProgramBinary(program:GLuint, bufSize:GLsizei, length:GLsizei_p:nil, binaryFormat:GLenum_p:nil, ):void
 
-glProgramBinary(program:GLuint, binaryFormat:GLenum, binary:const_void_p, length:GLsizei):void
+glProgramBinary(program:GLuint, binaryFormat:GLenum, binary:const_void_p:nil, length:GLsizei):void
 
 glProgramParameteri(program:GLuint, pname:GLenum, value:GLint):void
 
 //======== GL_ARB_get_texture_sub_image ========
 
-glGetCompressedTextureSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, bufSize:GLsizei, pixels:void_p):void
+glGetCompressedTextureSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, bufSize:GLsizei, pixels:void_p:nil):void
 
-glGetTextureSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:void_p):void
+glGetTextureSubImage(texture:GLuint, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, type:GLenum, bufSize:GLsizei, pixels:void_p:nil):void
 
 //======== GL_ARB_gl_spirv ========
 
@@ -1992,17 +1992,17 @@ glUniform4ui64vARB(location:GLint, count:GLsizei, value:const_GLuint64_p:nil):vo
 
 //======== GL_ARB_imaging ========
 
-glColorSubTable(target:GLenum, start:GLsizei, count:GLsizei, format:GLenum, type:GLenum, data:const_void_p):void
+glColorSubTable(target:GLenum, start:GLsizei, count:GLsizei, format:GLenum, type:GLenum, data:const_void_p:nil):void
 
-glColorTable(target:GLenum, internalformat:GLenum, width:GLsizei, format:GLenum, type:GLenum, table:const_void_p):void
+glColorTable(target:GLenum, internalformat:GLenum, width:GLsizei, format:GLenum, type:GLenum, table:const_void_p:nil):void
 
 glColorTableParameterfv(target:GLenum, pname:GLenum, params:const_GLfloat_p:nil):void
 
 glColorTableParameteriv(target:GLenum, pname:GLenum, params:const_GLint_p:nil):void
 
-glConvolutionFilter1D(target:GLenum, internalformat:GLenum, width:GLsizei, format:GLenum, type:GLenum, image:const_void_p):void
+glConvolutionFilter1D(target:GLenum, internalformat:GLenum, width:GLsizei, format:GLenum, type:GLenum, image:const_void_p:nil):void
 
-glConvolutionFilter2D(target:GLenum, internalformat:GLenum, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, image:const_void_p):void
+glConvolutionFilter2D(target:GLenum, internalformat:GLenum, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, image:const_void_p:nil):void
 
 glConvolutionParameterf(target:GLenum, pname:GLenum, params:GLfloat):void
 
@@ -2020,31 +2020,31 @@ glCopyConvolutionFilter1D(target:GLenum, internalformat:GLenum, x:GLint, y:GLint
 
 glCopyConvolutionFilter2D(target:GLenum, internalformat:GLenum, x:GLint, y:GLint, width:GLsizei, height:GLsizei):void
 
-glGetColorTable(target:GLenum, format:GLenum, type:GLenum, table:void_p):void
+glGetColorTable(target:GLenum, format:GLenum, type:GLenum, table:void_p:nil):void
 
 glGetColorTableParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
 glGetColorTableParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetConvolutionFilter(target:GLenum, format:GLenum, type:GLenum, image:void_p):void
+glGetConvolutionFilter(target:GLenum, format:GLenum, type:GLenum, image:void_p:nil):void
 
 glGetConvolutionParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
 glGetConvolutionParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetHistogram(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, values:void_p):void
+glGetHistogram(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, values:void_p:nil):void
 
 glGetHistogramParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
 glGetHistogramParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetMinmax(target:GLenum, reset:GLboolean, format:GLenum, types:GLenum, values:void_p):void
+glGetMinmax(target:GLenum, reset:GLboolean, format:GLenum, types:GLenum, values:void_p:nil):void
 
 glGetMinmaxParameterfv(target:GLenum, pname:GLenum, params:GLfloat_p:nil):void
 
 glGetMinmaxParameteriv(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
-glGetSeparableFilter(target:GLenum, format:GLenum, type:GLenum, row:void_p, column:void_p, span:void_p):void
+glGetSeparableFilter(target:GLenum, format:GLenum, type:GLenum, row:void_p:nil, column:void_p:nil, span:void_p:nil):void
 
 glHistogram(target:GLenum, width:GLsizei, internalformat:GLenum, sink:GLboolean):void
 
@@ -2054,19 +2054,19 @@ glResetHistogram(target:GLenum):void
 
 glResetMinmax(target:GLenum):void
 
-glSeparableFilter2D(target:GLenum, internalformat:GLenum, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, row:const_void_p, column:const_void_p):void
+glSeparableFilter2D(target:GLenum, internalformat:GLenum, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, row:const_void_p:nil, column:const_void_p:nil):void
 
 //======== GL_ARB_indirect_parameters ========
 
-glMultiDrawArraysIndirectCountARB(mode:GLenum, indirect:const_void_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+glMultiDrawArraysIndirectCountARB(mode:GLenum, indirect:const_void_p:nil, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
 
-glMultiDrawElementsIndirectCountARB(mode:GLenum, type:GLenum, indirect:const_void_p, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
+glMultiDrawElementsIndirectCountARB(mode:GLenum, type:GLenum, indirect:const_void_p:nil, drawcount:GLintptr, maxdrawcount:GLsizei, stride:GLsizei):void
 
 //======== GL_ARB_instanced_arrays ========
 
 glDrawArraysInstancedARB(mode:GLenum, first:GLint, count:GLsizei, primcount:GLsizei):void
 
-glDrawElementsInstancedARB(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p, primcount:GLsizei):void
+glDrawElementsInstancedARB(mode:GLenum, count:GLsizei, type:GLenum, indices:const_void_p:nil, primcount:GLsizei):void
 
 glVertexAttribDivisorARB(index:GLuint, divisor:GLuint):void
 
@@ -2102,7 +2102,7 @@ glFlushMappedBufferRange(target:GLenum, offset:GLintptr, length:GLsizeiptr):void
 
 glCurrentPaletteMatrixARB(index:GLint):void
 
-glMatrixIndexPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p):void
+glMatrixIndexPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p:nil):void
 
 glMatrixIndexubvARB(size:GLint, indices:GLubyte_p:nil):void
 
@@ -2126,9 +2126,9 @@ glBindVertexBuffers(first:GLuint, count:GLsizei, buffers:const_GLuint_p:nil, off
 
 //======== GL_ARB_multi_draw_indirect ========
 
-glMultiDrawArraysIndirect(mode:GLenum, indirect:const_void_p, primcount:GLsizei, stride:GLsizei):void
+glMultiDrawArraysIndirect(mode:GLenum, indirect:const_void_p:nil, primcount:GLsizei, stride:GLsizei):void
 
-glMultiDrawElementsIndirect(mode:GLenum, type:GLenum, indirect:const_void_p, primcount:GLsizei, stride:GLsizei):void
+glMultiDrawElementsIndirect(mode:GLenum, type:GLenum, indirect:const_void_p:nil, primcount:GLsizei, stride:GLsizei):void
 
 //======== GL_ARB_multisample ========
 
@@ -2258,13 +2258,13 @@ glProvokingVertex(mode:GLenum):void
 
 glGetGraphicsResetStatusARB():GLenum
 
-glGetnColorTableARB(target:GLenum, format:GLenum, type:GLenum, bufSize:GLsizei, table:void_p):void
+glGetnColorTableARB(target:GLenum, format:GLenum, type:GLenum, bufSize:GLsizei, table:void_p:nil):void
 
-glGetnCompressedTexImageARB(target:GLenum, lod:GLint, bufSize:GLsizei, img:void_p):void
+glGetnCompressedTexImageARB(target:GLenum, lod:GLint, bufSize:GLsizei, img:void_p:nil):void
 
-glGetnConvolutionFilterARB(target:GLenum, format:GLenum, type:GLenum, bufSize:GLsizei, image:void_p):void
+glGetnConvolutionFilterARB(target:GLenum, format:GLenum, type:GLenum, bufSize:GLsizei, image:void_p:nil):void
 
-glGetnHistogramARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p):void
+glGetnHistogramARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p:nil):void
 
 glGetnMapdvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLdouble_p:nil):void
 
@@ -2272,7 +2272,7 @@ glGetnMapfvARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLfloat_p:nil):vo
 
 glGetnMapivARB(target:GLenum, query:GLenum, bufSize:GLsizei, v:GLint_p:nil):void
 
-glGetnMinmaxARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p):void
+glGetnMinmaxARB(target:GLenum, reset:GLboolean, format:GLenum, type:GLenum, bufSize:GLsizei, values:void_p:nil):void
 
 glGetnPixelMapfvARB(map:GLenum, bufSize:GLsizei, values:GLfloat_p:nil):void
 
@@ -2282,9 +2282,9 @@ glGetnPixelMapusvARB(map:GLenum, bufSize:GLsizei, values:GLushort_p:nil):void
 
 glGetnPolygonStippleARB(bufSize:GLsizei, pattern:GLubyte_p:nil):void
 
-//glGetnSeparableFilterARB(target:GLenum, format:GLenum, type:GLenum, rowBufSize:GLsizei, row:void_p, columnBufSize:GLsizei, , ):void
+//glGetnSeparableFilterARB(target:GLenum, format:GLenum, type:GLenum, rowBufSize:GLsizei, row:void_p:nil, columnBufSize:GLsizei, , ):void
 
-glGetnTexImageARB(target:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, img:void_p):void
+glGetnTexImageARB(target:GLenum, level:GLint, format:GLenum, type:GLenum, bufSize:GLsizei, img:void_p:nil):void
 
 glGetnUniformdvARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLdouble_p:nil):void
 
@@ -2294,7 +2294,7 @@ glGetnUniformivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLint
 
 glGetnUniformuivARB(program:GLuint, location:GLint, bufSize:GLsizei, params:GLuint_p:nil):void
 
-glReadnPixelsARB(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, bufSize:GLsizei, data:void_p):void
+glReadnPixelsARB(x:GLint, y:GLint, width:GLsizei, height:GLsizei, format:GLenum, type:GLenum, bufSize:GLsizei, data:void_p:nil):void
 
 //======== GL_ARB_sample_locations ========
 
@@ -2630,19 +2630,19 @@ glTextureBufferRangeEXT(texture:GLuint, target:GLenum, internalformat:GLenum, bu
 
 //======== GL_ARB_texture_compression ========
 
-glCompressedTexImage1DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage1DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexImage2DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage2DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexImage3DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexImage3DARB(target:GLenum, level:GLint, internalformat:GLenum, width:GLsizei, height:GLsizei, depth:GLsizei, border:GLint, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage1DARB(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage1DARB(target:GLenum, level:GLint, xoffset:GLint, width:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage2DARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage2DARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, width:GLsizei, height:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glCompressedTexSubImage3DARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p):void
+glCompressedTexSubImage3DARB(target:GLenum, level:GLint, xoffset:GLint, yoffset:GLint, zoffset:GLint, width:GLsizei, height:GLsizei, depth:GLsizei, format:GLenum, imageSize:GLsizei, data:const_void_p:nil):void
 
-glGetCompressedTexImageARB(target:GLenum, lod:GLint, img:void_p):void
+glGetCompressedTexImageARB(target:GLenum, lod:GLint, img:void_p:nil):void
 
 //======== GL_ARB_texture_multisample ========
 
@@ -2778,7 +2778,7 @@ glVertexAttribL4d(index:GLuint, x:GLdouble, y:GLdouble, z:GLdouble, w:GLdouble):
 
 glVertexAttribL4dv(index:GLuint, v:const_GLdouble_p:nil):void
 
-glVertexAttribLPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p):void
+glVertexAttribLPointer(index:GLuint, size:GLint, type:GLenum, stride:GLsizei, pointer:const_void_p:nil):void
 
 //======== GL_ARB_vertex_attrib_binding ========
 
@@ -2810,7 +2810,7 @@ glVertexBindingDivisor(bindingindex:GLuint, divisor:GLuint):void
 
 glVertexBlendARB(count:GLint):void
 
-glWeightPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p):void
+glWeightPointerARB(size:GLint, type:GLenum, stride:GLsizei, pointer:void_p:nil):void
 
 glWeightbvARB(size:GLint, weights:GLbyte_p:nil):void
 
@@ -2832,9 +2832,9 @@ glWeightusvARB(size:GLint, weights:GLushort_p:nil):void
 
 glBindBufferARB(target:GLenum, buffer:GLuint):void
 
-//glBufferDataARB(target:GLenum, size:GLsizeiptrARB, data:const_void_p, usage:GLenum):void
+//glBufferDataARB(target:GLenum, size:GLsizeiptrARB, data:const_void_p:nil, usage:GLenum):void
 
-//glBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:const_void_p):void
+//glBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:const_void_p:nil):void
 
 glDeleteBuffersARB(n:GLsizei, buffers:const_GLuint_p:nil):void
 
@@ -2844,7 +2844,7 @@ glGetBufferParameterivARB(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
 //glGetBufferPointervARB(target:GLenum, pname:GLenum, params:void_p__p):void
 
-//glGetBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:void_p):void
+//glGetBufferSubDataARB(target:GLenum, offset:GLintptrARB, size:GLsizeiptrARB, data:void_p:nil):void
 
 glIsBufferARB(buffer:GLuint):GLboolean
 
@@ -2872,7 +2872,7 @@ glGetProgramLocalParameterdvARB(target:GLenum, index:GLuint, params:GLdouble_p:n
 
 glGetProgramLocalParameterfvARB(target:GLenum, index:GLuint, params:GLfloat_p:nil):void
 
-glGetProgramStringARB(target:GLenum, pname:GLenum, string:void_p):void
+glGetProgramStringARB(target:GLenum, pname:GLenum, string:void_p:nil):void
 
 glGetProgramivARB(target:GLenum, pname:GLenum, params:GLint_p:nil):void
 
@@ -2902,7 +2902,7 @@ glProgramLocalParameter4fARB(target:GLenum, index:GLuint, x:GLfloat, y:GLfloat, 
 
 glProgramLocalParameter4fvARB(target:GLenum, index:GLuint, params:const_GLfloat_p:nil):void
 
-glProgramStringARB(target:GLenum, format:GLenum, len:GLsizei, string:const_void_p):void
+glProgramStringARB(target:GLenum, format:GLenum, len:GLsizei, string:const_void_p:nil):void
 
 glVertexAttrib1dARB(index:GLuint, x:GLdouble):void
 
@@ -2976,7 +2976,7 @@ glVertexAttrib4uivARB(index:GLuint, v:const_GLuint_p:nil):void
 
 glVertexAttrib4usvARB(index:GLuint, v:const_GLushort_p:nil):void
 
-glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p):void
+glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p:nil):void
 
 //======== GL_ARB_vertex_shader ========
 
