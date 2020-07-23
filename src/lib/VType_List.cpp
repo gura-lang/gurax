@@ -62,7 +62,7 @@ Gurax_ImplementStatement(_create_list_)
 		composer.Add_DiscardValue(exprCaller);									// [List]
 	} else {
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ComposeWithinLister(composer);									// [List]
+			pExpr->ComposeWithinLister(composer);								// [List]
 		}
 	}
 }

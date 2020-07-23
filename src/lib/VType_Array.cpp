@@ -5,6 +5,9 @@
 
 namespace Gurax {
 
+Value* ConstructArray(Processor& processor, Argument& argument,
+	const Value& arg, const ValueList& values, Array::ElemTypeT& elemType);
+
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
@@ -27,12 +30,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, dimSize+:Number) {block?}
+// Array(elemType:Symbol, arg, dimSize*:Number) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dimSize", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareArg("arg", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dimSize", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -48,11 +52,54 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	Array::DimSizes dimSizes = args.PickNumListPos<size_t>();
-	if (Error::IsIssued()) return Value::nil();
+	const Value& arg = args.PickValue();
+	const ValueList& values = args.PickList();
 	// Function body
-	RefPtr<Array> pArray(Array::Create(elemType, std::move(dimSizes)));
-	if (!pArray) return Value::nil();
+	return ConstructArray(processor, argument, arg, values, elemType);
+}
+
+// Array.float(arg, dimSize*:Number) {block?}
+Gurax_DeclareMethodAlias(Array, float_, "float")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arg", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dimSize", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Array, float_)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Value& arg = args.PickValue();
+	const ValueList& values = args.PickList();
+	// Function body
+	return ConstructArray(processor, argument, arg, values, Array::ElemType::Float);
+}
+
+Value* ConstructArray(Processor& processor, Argument& argument,
+	const Value& arg, const ValueList& values, Array::ElemTypeT& elemType)
+{
+	RefPtr<Array> pArray;
+	if (arg.IsType(VTYPE_Number)) {
+		Array::DimSizes dimSizes;
+		dimSizes.reserve(values.size() + 1);
+		dimSizes.push_back(Value_Number::GetNumberPos<size_t>(arg));
+		for (const Value* pValue : values) {
+			dimSizes.push_back(Value_Number::GetNumberPos<size_t>(*pValue));
+		}
+		if (Error::IsIssued()) return Value::nil();
+		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
+		if (!pArray) return Value::nil();
+	} else if (arg.IsType(VTYPE_List)) {
+
+	} else {
+		Error::Issue(ErrorType::TypeError, "invalid argument type");
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
