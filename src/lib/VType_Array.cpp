@@ -147,6 +147,30 @@ Gurax_ImplementMethod(Array, ToList)
 	return valueThis.GetArray().ToList();
 }
 
+// Array#ToString(codec?:Codec)
+Gurax_DeclareMethod(Array, ToString)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Array, ToString)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Codec& codec = args.IsValid()? args.Pick<Value_Codec>().GetCodec() : *Codec::Dumb;
+	// Function body
+	Array& array = valueThis.GetArray();
+	String str;
+	codec.GetDecoder().Decode(str, array.GetPointerC<UInt8>(), array.GetDimSizes().GetLength());
+	return new Value_String(str);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -243,6 +267,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, Each));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
+	Assign(Gurax_CreateMethod(Array, ToString));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));

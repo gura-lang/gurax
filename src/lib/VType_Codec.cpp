@@ -91,5 +91,4 @@ String Value_Codec::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetCodec().ToString(ss));
 }
 
-
 }

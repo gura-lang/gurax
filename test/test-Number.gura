@@ -70,3 +70,10 @@ TestCase('Number.formatInt / Number.formatFloat') {
 	Number.formatInt = formatInt
 	Number.formatFloat = formatFloat
 }
+
+TestCase('Suffx f') {
+	Tester(`0f)
+	Tester(`1f)
+	Tester(`123456f)
+	Tester(`1.23456f)
+}

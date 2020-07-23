@@ -60,3 +60,8 @@ Number.formatInt = '' .. too few format specifiers
 Number.formatFloat = '' .. too few format specifiers
 Number.formatInt = '%lld %lld' .. too many format specifiers
 Number.formatFloat = '%f %f' .. too many format specifiers
+======== Suffx f ========
+0f .. 0
+1f .. 1
+123456f .. 123456
+1.23456f .. 1.23456

@@ -419,6 +419,20 @@ Gurax_ImplementBinary(Xor, Number, Number)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Compose(Number, f)
+{
+	bool successFlag = false;
+	Double num = strRef.GetStringSTL().ToDouble(&successFlag);
+	if (!successFlag) {
+		String::IssueError_InvalidFormatOfNumber();
+		return;
+	}
+	composer.Add_Value(new Value_Number(num), *pExpr);							// [Value]
+}
+
+//------------------------------------------------------------------------------
 // VType_Number
 //------------------------------------------------------------------------------
 VType_Number VTYPE_Number("Number");
@@ -471,6 +485,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignBinary(Sub,			Number, Number);
 	Gurax_AssignBinary(Union,		Number, Number);
 	Gurax_AssignBinary(Xor,			Number, Number);
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Number, f);
 }
 
 Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
