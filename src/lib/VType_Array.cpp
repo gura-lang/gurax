@@ -58,8 +58,8 @@ Gurax_ImplementConstructor(Array)
 	return ConstructArray(processor, argument, arg, values, elemType);
 }
 
-// Array.float(arg, dimSize*:Number) {block?}
-Gurax_DeclareMethodAlias(Array, float_, "float")
+// Array.[name](arg, dimSize*:Number) {block?}
+Gurax_DeclareClassMethod(Array, GenericConstructor)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("arg", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
@@ -70,14 +70,15 @@ Gurax_DeclareMethodAlias(Array, float_, "float")
 		"");
 }
 
-Gurax_ImplementMethod(Array, float_)
+Gurax_ImplementClassMethod(Array, GenericConstructor)
 {
 	// Arguments
 	ArgPicker args(argument);
 	const Value& arg = args.PickValue();
 	const ValueList& values = args.PickList();
+	Array::ElemTypeT& elemType = Array::SymbolToElemType(GetSymbol());
 	// Function body
-	return ConstructArray(processor, argument, arg, values, Array::ElemType::Float);
+	return ConstructArray(processor, argument, arg, values, elemType);
 }
 
 Value* ConstructArray(Processor& processor, Argument& argument,
@@ -309,6 +310,28 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
+	// Assignment of constructor
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "bool"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int8"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint8"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int16"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint16"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int32"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint32"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int64"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint64"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "half"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "float"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "double"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "complex"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "char"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uchar"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "short"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "ushort"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "long"));
+	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "ulong"));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));

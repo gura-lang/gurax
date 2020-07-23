@@ -88,6 +88,7 @@ Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argum
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateMethod(nameVType, name) (new Method_##nameVType##_##name())
+#define Gurax_CreateMethodAlias(nameVType, strName) (new Method_##nameVType##_##name(strName))
 
 // Declaration/implementation/creation of Class Method
 #define Gurax_DeclareClassMethodAlias(nameVType, name, strName)	\
@@ -110,6 +111,7 @@ Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argum
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateClassMethod(nameVType, name) (new Method_##nameVType##_##name())
+#define Gurax_CreateClassMethodAlias(nameVType, name, strName) (new Method_##nameVType##_##name(strName))
 
 // Declaration/implementation/creation of Hybrid Method
 #define Gurax_DeclareHybridMethodAlias(nameVType, name, strName)	\
@@ -129,6 +131,7 @@ Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Fu
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateHybridMethod(nameVType, name) (new Method_##nameVType##_##name())
+#define Gurax_CreateHybridMethodAlias(nameVType, name, strName) (new Method_##nameVType##_##name(strName))
 
 namespace Gurax {
 
