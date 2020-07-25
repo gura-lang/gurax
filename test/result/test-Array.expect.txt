@@ -5,6 +5,15 @@ Array
   #elemType         Symbol       R
   #len              Number       R
   #p                Pointer      R
+======== Array constructor ========
+Array(`bool, [true, false, false, true]).ToList() .. [true, false, false, true]
+Array(`int, [0]).ToList() .. [0]
+Array(`int, [[0, 1, 2], [3, 4, 5]]).ToList() .. [[0, 1, 2], [3, 4, 5]]
+Array(`int, [[0, 1, 2], [3, 4, 5], [6, 7, 8]]).ToList() .. [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+Array(`int, [[0, 1, 2], [3, 4, 5], [5]]).ToList() .. failed to create an array
+Array(`int, [3j]).ToList() .. Number value is expected
+Array(`int, ['hello']).ToList() .. Number value is expected
+Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]]).ToList() .. [[0, 1+1j, 2+2j], [3+3j, 4+4j, 5+5j]]
 ======== Array#bytes/bytesPerElem/elemType/len ========
 bool     .. elemType=bool     bytesPerElem=1 len=10000 bytes=10000
 int8     .. elemType=int8     bytesPerElem=1 len=10000 bytes=10000

@@ -6,13 +6,24 @@ TestCase('Property') {
 	Array.PrintPropSlots()
 }
 
+TestCase('Array constructor') {
+	Tester(`Array(`bool, [true, false, false, true]).ToList())
+	Tester(`Array(`int, [0]).ToList())
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5]]).ToList())
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [6, 7, 8]]).ToList())
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [5]]).ToList())
+	Tester(`Array(`int, [3j]).ToList())
+	Tester(`Array(`int, ['hello']).ToList())
+	Tester(`Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]]).ToList())
+}
+
 TestCase('Array#bytes/bytesPerElem/elemType/len') {
 	elemTypes = [
 		`bool, `int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64,
 		`half, `float, `double, `complex, `char, `uchar, `short, `ushort, `int, `uint, `long, `ulong,
 	]
 	elemTypes.Each {|elemType|
-		arr = Array(elemType, 10000)
+		arr = Array.Zero(elemType, 10000)
 		Printf('%-8s .. elemType=%-8s bytesPerElem=%d len=%d bytes=%d\n',
 					elemType, arr.elemType, arr.bytesPerElem, arr.len, arr.bytes)
 	}
@@ -21,7 +32,7 @@ TestCase('Array#bytes/bytesPerElem/elemType/len') {
 TestCase('Array#p') {
 	scope {
 		Println('[int8]')
-		arr = Array(`int8, 0x100)
+		arr = Array.Zero(`int8, 0x100)
 		p = arr.p
 		repeat (0x100) {|i| p.int8 = i - 0x80}
 		arr.p.Dump()
@@ -29,7 +40,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[uint8]')
-		arr = Array(`uint8, 0x100)
+		arr = Array.Zero(`uint8, 0x100)
 		p = arr.p
 		repeat (0x100) {|i| p.uint8 = i }
 		arr.p.Dump()
@@ -37,7 +48,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[int16]')
-		arr = Array(`int16, 512)
+		arr = Array.Zero(`int16, 512)
 		p = arr.p
 		repeat (0x80) {|i| p.int16 = i - 0x8000 }
 		repeat (0x80) {|i| p.int16 = i - 0x80 }
@@ -48,7 +59,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[uint16]')
-		arr = Array(`uint16, 512)
+		arr = Array.Zero(`uint16, 512)
 		p = arr.p
 		repeat (0x100) {|i| p.uint16 = i }
 		repeat (0x100) {|i| p.uint16 = i + 0x10000 - 0x100 }
@@ -57,7 +68,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[int32]')
-		arr = Array(`int32, 512)
+		arr = Array.Zero(`int32, 512)
 		p = arr.p
 		repeat (0x80) {|i| p.int32 = i - 0x80000000 }
 		repeat (0x80) {|i| p.int32 = i - 0x80 }
@@ -68,7 +79,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[uint32]')
-		arr = Array(`uint32, 512)
+		arr = Array.Zero(`uint32, 512)
 		p = arr.p
 		repeat (0x100) {|i| p.uint32 = i }
 		repeat (0x100) {|i| p.uint32 = i + 0x100000000 - 256 }
@@ -77,7 +88,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[int64]')
-		arr = Array(`int64, 512)
+		arr = Array.Zero(`int64, 512)
 		p = arr.p
 		repeat (0x80) {|i| p.int64 = i - 0x0010_0000_0000_0000 }
 		repeat (0x80) {|i| p.int64 = i - 0x80 }
@@ -88,7 +99,7 @@ TestCase('Array#p') {
 	}
 	scope {
 		Println('[uint64]')
-		arr = Array(`uint64, 512)
+		arr = Array.Zero(`uint64, 512)
 		p = arr.p
 		repeat (0x100) {|i| p.uint64 = i }
 		repeat (0x100) {|i| p.uint64 = i + 0x0010_0000_0000_0000 - 256 }
@@ -98,7 +109,7 @@ TestCase('Array#p') {
 }
 
 TestCase('Array#Cast()') {
-	arr = Array(`uint8, 0x100)
+	arr = Array.Zero(`uint8, 0x100)
 	arr.Inject(0..)
 	arr.p.Dump()
 	[`int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double].Each {|elemType|
@@ -120,7 +131,7 @@ TestCase('Array#ToList()') {
 }
 
 TestCase('Index access') {
-	Array(`int16, 32) {|arr|
+	Array.Zero(`int16, 32) {|arr|
 		repeat (32) {|i| arr[i] = i}
 		Println((repeat (32):iter {|i| arr[i]}).Join(', '))
 		Tester(`arr[0])
@@ -130,7 +141,7 @@ TestCase('Index access') {
 		Tester(`arr[-1])
 		Tester(`arr[32])
 	}
-	Array(`int16, 3, 4) {|arr|
+	Array.Zero(`int16, 3, 4) {|arr|
 		arr.Inject(0..)
 		Tester(`arr[0, 0])
 		Tester(`arr[0, 1])
