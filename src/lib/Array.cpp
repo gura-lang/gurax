@@ -10,31 +10,48 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 
-Array::Array(ElemTypeT& elemType, Memory* pMemory, Array::DimSizes dimSizes) :
+Array::Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
 		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
 {
 }
 
-Array* Array::Create(ElemTypeT& elemType, Array::DimSizes dimSizes)
+Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.GetLength()));
 	pMemory->Fill(0);
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
 
-template<typename T_Elem> void IndexSet_T(void* p, size_t idx, const Value& value)
+template<typename T_Elem> bool IndexSet_T(void* p, size_t idx, const Value& value)
 {
-	*(reinterpret_cast<T_Elem*>(p) + idx) = Value_Number::GetNumber<T_Elem>(value);
+	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
+	if (value.IsType(VTYPE_Number)) {
+		*pElem = Value_Number::GetNumber<Double>(value);
+	} else {
+		Error::Issue(ErrorType::ValueError, "Number value is expected");
+		return false;
+	}
+	return true;
 }
 
-template<> void IndexSet_T<Bool>(void* p, size_t idx, const Value& value)
+template<> bool IndexSet_T<Bool>(void* p, size_t idx, const Value& value)
 {
 	*(reinterpret_cast<Bool*>(p) + idx) = value.GetBool();
+	return true;
 }
 
-template<> void IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
+template<> bool IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 {
-	*(reinterpret_cast<Complex*>(p) + idx) = Value_Complex::GetComplexRobust(value);
+	Complex* pElem = reinterpret_cast<Complex*>(p) + idx;
+	if (value.IsType(VTYPE_Number)) {
+		*pElem = Complex(Value_Number::GetNumber<Double>(value));
+	} else if (value.IsType(VTYPE_Complex)) {
+		*pElem = Value_Complex::GetComplex(value);
+	} else {
+		Error::Issue(ErrorType::ValueError, "Number or Complex value is expected");
+		return false;
+	}
+	return true;
 }
 
 template<typename T_Elem> Value* IndexGet_T(const void* p, size_t idx)
@@ -356,16 +373,16 @@ bool Array::ElemTypeT::IsNone() const
 }
 
 //------------------------------------------------------------------------------
-// Array::DimSizes
+// DimSizes
 //------------------------------------------------------------------------------
-size_t Array::DimSizes::GetLength() const
+size_t DimSizes::GetLength() const
 {
 	size_t len = 1;
 	for (size_t dimSize : *this) len *= dimSize;
 	return len;
 }
 
-String Array::DimSizes::ToString(const StringStyle& ss) const
+String DimSizes::ToString(const StringStyle& ss) const
 {
 	String str;
 	for (size_t dimSize : *this) {

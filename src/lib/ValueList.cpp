@@ -127,9 +127,55 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	return cnt;
 }
 
-Array* ValueList::CreateArray(Array::ElemType& elemType) const
+DimSizes ValueList::GetShape() const
 {
-	return nullptr;
+	DimSizes dimSizes;
+	const ValueList* pValues = this;
+	while (pValues) {
+		dimSizes.push_back(pValues->size());
+		if (pValues->empty() || !pValues->front()->IsType(VTYPE_List)) break;
+		pValues = &Value_List::GetValueOwner(*pValues->front());
+	}
+	return dimSizes;
+}
+
+Array* ValueList::CreateArray(Array::ElemTypeT& elemType) const
+{
+	DimSizes dimSizes = GetShape();
+	if (dimSizes.GetLength() == 0) {
+		Error::Issue(ErrorType::ValueError, "failed to create an array");
+		return nullptr;
+	}
+	RefPtr<Array> pArray(Array::Create(elemType, dimSizes));
+	size_t idx = 0;
+	if (!CreateArraySub(elemType, pArray->GetPointerC<void>(), idx,
+							dimSizes.begin(), dimSizes.end())) return nullptr;
+	return pArray.release();
+}
+
+bool ValueList::CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
+		DimSizes::const_iterator pDimSize, DimSizes::const_iterator pDimSizeEnd) const
+{
+	if (*pDimSize != size()) {
+		Error::Issue(ErrorType::ValueError, "failed to create an array");
+		return false;
+	} else if (pDimSize + 1 == pDimSizeEnd) {
+		for (const Value* pValue : *this) {
+			if (!elemType.IndexSet(p, idx, *pValue)) return false;
+			idx++;
+		}
+	} else {
+		for (const Value* pValue : *this) {
+			if (pValue->IsType(VTYPE_List)) {
+				const ValueList& values = Value_List::GetValueOwner(*pValue);
+				values.CreateArraySub(elemType, p, idx, pDimSize + 1, pDimSizeEnd);
+			} else {
+				Error::Issue(ErrorType::ValueError, "failed to create an array");
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 String ValueList::ToString(const StringStyle& ss) const

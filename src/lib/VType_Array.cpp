@@ -86,7 +86,7 @@ Value* ConstructArray(Processor& processor, Argument& argument,
 {
 	RefPtr<Array> pArray;
 	if (arg.IsType(VTYPE_Number)) {
-		Array::DimSizes dimSizes;
+		DimSizes dimSizes;
 		dimSizes.reserve(values.size() + 1);
 		dimSizes.push_back(Value_Number::GetNumberPos<size_t>(arg));
 		for (const Value* pValue : values) {
@@ -377,7 +377,7 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 {
 	const Array& array = GetArray();
 	const ValueList& valuesIndex = index.GetValueOwner();
-	const Array::DimSizes& dimSizes = array.GetDimSizes();
+	const DimSizes& dimSizes = array.GetDimSizes();
 	if (valuesIndex.size() != dimSizes.size()) {
 		Error::Issue(ErrorType::IndexError, "invalid number of indices");
 		return Value::nil();
@@ -411,7 +411,7 @@ void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
 	Array& array = GetArray();
 	const ValueList& valuesIndex = index.GetValueOwner();
-	const Array::DimSizes& dimSizes = array.GetDimSizes();
+	const DimSizes& dimSizes = array.GetDimSizes();
 	if (valuesIndex.size() != dimSizes.size()) {
 		Error::Issue(ErrorType::IndexError, "invalid number of indices");
 		return;

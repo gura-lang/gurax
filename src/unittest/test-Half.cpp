@@ -34,6 +34,7 @@ Gurax_TesterEntry(Half)
 	} while (0);
 	do {
 		Half a(3), b(5);
+
 		::printf("%f + %f = %f\n", static_cast<Float>(a), static_cast<Float>(b), static_cast<Float>(a + b));
 	} while (0);
 	do {

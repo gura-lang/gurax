@@ -18,6 +18,20 @@ class ValueOwner;
 class Value_List;
 
 //------------------------------------------------------------------------------
+// DimSizes
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE DimSizes : public NumList<size_t> {
+public:
+	using NumList::NumList;
+public:
+	DimSizes(const NumList& src) : NumList(src) {}
+	DimSizes(NumList&& src) : NumList(src) {}
+public:
+	size_t GetLength() const;
+	String ToString(const StringStyle& ss) const;
+};
+
+//------------------------------------------------------------------------------
 // Array
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Array : public Referable {
@@ -32,7 +46,7 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
-		std::function<void (void* p, size_t idx, const Value& value)> IndexSet;
+		std::function<bool (void* p, size_t idx, const Value& value)> IndexSet;
 		std::function<Value* (const void* p, size_t idx)> IndexGet;
 		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectFromValueList;
 		std::function<bool (Iterator& iterator, void* p, size_t offset, size_t len)> InjectFromIterator;
@@ -61,16 +75,6 @@ public:
 	};
 	using MapSymbolToElemType = std::unordered_map<
 			const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
-	class GURAX_DLLDECLARE DimSizes : public NumList<size_t> {
-	public:
-		using NumList::NumList;
-	public:
-		DimSizes(const NumList& src) : NumList(src) {}
-		DimSizes(NumList&& src) : NumList(src) {}
-	public:
-		size_t GetLength() const;
-		String ToString(const StringStyle& ss) const;
-	};
 protected:
 	ElemTypeT& _elemType;
 	RefPtr<Memory> _pMemory;
@@ -101,8 +105,8 @@ public:
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
-	void IndexSet(size_t idx, const Value& value) {
-		_elemType.IndexSet(GetPointerC<void>(), idx, value);
+	bool IndexSet(size_t idx, const Value& value) {
+		return _elemType.IndexSet(GetPointerC<void>(), idx, value);
 	}
 	Value* IndexGet(size_t idx) const {
 		return _elemType.IndexGet(GetPointerC<void>(), idx);

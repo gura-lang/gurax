@@ -53,7 +53,10 @@ public:
 		for (Value* pValue : *this) lst.push_back(fn(*pValue));
 		return lst;
 	}
-	Array* CreateArray(Array::ElemType& elemType) const;
+	DimSizes GetShape() const;
+	Array* CreateArray(Array::ElemTypeT& elemType) const;
+	bool CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
+		DimSizes::const_iterator pDimSize, DimSizes::const_iterator pDimSizeEnd) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }
