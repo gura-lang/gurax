@@ -5,9 +5,6 @@
 
 namespace Gurax {
 
-Value* ConstructArray(Processor& processor, Argument& argument,
-	const Value& arg, const ValueList& values, Array::ElemTypeT& elemType);
-
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
@@ -30,13 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, arg, dimSize*:Number) {block?}
+// Array(elemType:Symbol, src:List) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("arg", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dimSize", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("src", VTYPE_List, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -52,54 +48,38 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	const Value& arg = args.PickValue();
-	const ValueList& values = args.PickList();
+	const ValueList& src = args.PickList();
 	// Function body
-	return ConstructArray(processor, argument, arg, values, elemType);
+	RefPtr<Array> pArray(src.CreateArray(elemType));
+	if (!pArray) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
-// Array.[name](arg, dimSize*:Number) {block?}
-Gurax_DeclareClassMethod(Array, GenericConstructor)
+// Array.Zero(elemType:Symbol, dim+:Number) {block?}
+Gurax_DeclareClassMethod(Array, Zero)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("arg", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dimSize", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dim", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementClassMethod(Array, GenericConstructor)
+Gurax_ImplementClassMethod(Array, Zero)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Value& arg = args.PickValue();
-	const ValueList& values = args.PickList();
-	Array::ElemTypeT& elemType = Array::SymbolToElemType(GetSymbol());
-	// Function body
-	return ConstructArray(processor, argument, arg, values, elemType);
-}
-
-Value* ConstructArray(Processor& processor, Argument& argument,
-	const Value& arg, const ValueList& values, Array::ElemTypeT& elemType)
-{
-	RefPtr<Array> pArray;
-	if (arg.IsType(VTYPE_Number)) {
-		DimSizes dimSizes;
-		dimSizes.reserve(values.size() + 1);
-		dimSizes.push_back(Value_Number::GetNumberPos<size_t>(arg));
-		for (const Value* pValue : values) {
-			dimSizes.push_back(Value_Number::GetNumberPos<size_t>(*pValue));
-		}
-		if (Error::IsIssued()) return Value::nil();
-		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
-	} else if (arg.IsType(VTYPE_List)) {
-		pArray.reset(Value_List::GetValueOwner(arg).CreateArray(elemType));
-	} else {
-		Error::Issue(ErrorType::TypeError, "invalid argument type");
+	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
+	DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(args.PickList()));
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Array> pArray(Array::Create(elemType, std::move(dimSizes)));
 	if (!pArray) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
@@ -310,28 +290,8 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
-	// Assignment of constructor
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "bool"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int8"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint8"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int16"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint16"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int32"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint32"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int64"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint64"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "half"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "float"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "double"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "complex"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "char"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uchar"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "short"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "ushort"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "int"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "uint"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "long"));
-	Assign(Gurax_CreateClassMethodAlias(Array, GenericConstructor, "ulong"));
+	// Constructor
+	Assign(Gurax_CreateClassMethod(Array, Zero));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
