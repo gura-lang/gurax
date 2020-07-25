@@ -94,13 +94,13 @@ Value* ConstructArray(Processor& processor, Argument& argument,
 		}
 		if (Error::IsIssued()) return Value::nil();
 		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
-		if (!pArray) return Value::nil();
 	} else if (arg.IsType(VTYPE_List)) {
-
+		pArray.reset(Value_List::GetValueOwner(arg).CreateArray(elemType));
 	} else {
 		Error::Issue(ErrorType::TypeError, "invalid argument type");
 		return Value::nil();
 	}
+	if (!pArray) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
