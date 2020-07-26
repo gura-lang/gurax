@@ -23,6 +23,7 @@ bool Initialize(int& argc, char** argv)
 	Image::Bootup();
 	Iterator::Bootup();
 	Memory::Bootup();
+	NumberBase::Bootup();
 	Operator::Bootup();
 	Palette::Bootup();
 	Random::Bootup();

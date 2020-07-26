@@ -138,6 +138,7 @@ target_sources(guraxcore PRIVATE
 	VType_Module.cpp
 	VType_Nil.cpp
 	VType_Number.cpp
+	VType_NumberTrait.cpp
 	VType_Object.cpp
 	VType_Operator.cpp
 	VType_Palette.cpp

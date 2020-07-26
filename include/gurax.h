@@ -117,6 +117,7 @@
 #include "gurax/VType_Module.h"
 #include "gurax/VType_Nil.h"
 #include "gurax/VType_Number.h"
+#include "gurax/VType_NumberTrait.h"
 #include "gurax/VType_Object.h"
 #include "gurax/VType_Operator.h"
 #include "gurax/VType_Palette.h"

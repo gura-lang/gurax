@@ -15,6 +15,7 @@ protected:
 	static String _formatterFormat_Int;
 	static String _formatterFormat_Float;
 public:
+	static void Bootup();
 	static void SetFormatterFormat_Int(String formatterFormat) {
 		_formatterFormat_Int = formatterFormat;
 	}

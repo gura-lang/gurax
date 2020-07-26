@@ -27,6 +27,163 @@ Number.format
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of class property
+//------------------------------------------------------------------------------
+// Number.int8
+Gurax_DeclareClassProperty_R(Number, int8)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for int8.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, int8)
+{
+	return VTYPE_NumberTrait.pValue_int8->Reference();
+}
+
+// Number.uint8
+Gurax_DeclareClassProperty_R(Number, uint8)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for uint8.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, uint8)
+{
+	return VTYPE_NumberTrait.pValue_uint8->Reference();
+}
+
+// Number.int16
+Gurax_DeclareClassProperty_R(Number, int16)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for int16.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, int16)
+{
+	return VTYPE_NumberTrait.pValue_int16->Reference();
+}
+
+// Number.uint16
+Gurax_DeclareClassProperty_R(Number, uint16)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for uint16.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, uint16)
+{
+	return VTYPE_NumberTrait.pValue_uint16->Reference();
+}
+
+// Number.int32
+Gurax_DeclareClassProperty_R(Number, int32)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for int32.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, int32)
+{
+	return VTYPE_NumberTrait.pValue_int32->Reference();
+}
+
+// Number.uint32
+Gurax_DeclareClassProperty_R(Number, uint32)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for uint32.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, uint32)
+{
+	return VTYPE_NumberTrait.pValue_uint32->Reference();
+}
+
+// Number.int64
+Gurax_DeclareClassProperty_R(Number, int64)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for int64.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, int64)
+{
+	return VTYPE_NumberTrait.pValue_int64->Reference();
+}
+
+// Number.uint64
+Gurax_DeclareClassProperty_R(Number, uint64)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for uint64.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, uint64)
+{
+	return VTYPE_NumberTrait.pValue_uint64->Reference();
+}
+
+// Number.half
+Gurax_DeclareClassProperty_R(Number, half)
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for half.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, half)
+{
+	return VTYPE_NumberTrait.pValue_half->Reference();
+}
+
+// Number.float
+Gurax_DeclareClassPropertyAlias_R(Number, float_, "float")
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for float.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, float_)
+{
+	return VTYPE_NumberTrait.pValue_float->Reference();
+}
+
+// Number.double
+Gurax_DeclareClassPropertyAlias_R(Number, double_, "double")
+{
+	Declare(VTYPE_NumberTrait, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Number trait for double.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, double_)
+{
+	return VTYPE_NumberTrait.pValue_double->Reference();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Number#abs
@@ -443,6 +600,18 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(Number, int8));
+	Assign(Gurax_CreateClassProperty(Number, uint8));
+	Assign(Gurax_CreateClassProperty(Number, int16));
+	Assign(Gurax_CreateClassProperty(Number, uint16));
+	Assign(Gurax_CreateClassProperty(Number, int32));
+	Assign(Gurax_CreateClassProperty(Number, uint32));
+	Assign(Gurax_CreateClassProperty(Number, int64));
+	Assign(Gurax_CreateClassProperty(Number, uint64));
+	Assign(Gurax_CreateClassProperty(Number, half));
+	Assign(Gurax_CreateClassProperty(Number, float_));
+	Assign(Gurax_CreateClassProperty(Number, double_));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Number, abs));
 	Assign(Gurax_CreateProperty(Number, arg));

@@ -11,6 +11,10 @@ namespace Gurax {
 String NumberBase::_formatterFormat_Int("%lld");
 String NumberBase::_formatterFormat_Float("%g");
 
+void NumberBase::Bootup()
+{
+}
+
 //------------------------------------------------------------------------------
 // Number
 //------------------------------------------------------------------------------
