@@ -12,14 +12,14 @@ void AssignConsts(Frame& frame)
 	//======== GL_VERSION_1_1 ========
 	AssignConst(GL_VERSION_1_1);
 	AssignConst(GL_ZERO);
-	AssignConst(GL_FALSE);
+	frame.Assign("GL_FALSE", Value::false_());
 	AssignConst(GL_LOGIC_OP);
 	AssignConst(GL_NONE);
 	AssignConst(GL_TEXTURE_COMPONENTS);
 	AssignConst(GL_NO_ERROR);
 	AssignConst(GL_POINTS);
 	AssignConst(GL_CURRENT_BIT);
-	AssignConst(GL_TRUE);
+	frame.Assign("GL_TRUE", Value::true_());
 	AssignConst(GL_ONE);
 	AssignConst(GL_CLIENT_PIXEL_STORE_BIT);
 	AssignConst(GL_LINES);

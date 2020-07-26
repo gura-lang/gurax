@@ -55,19 +55,19 @@ Gurax_ImplementConstructor(Array)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
-// Array.Zero(elemType:Symbol, dim+:Number) {block?}
-Gurax_DeclareClassMethod(Array, Zero)
+// Array.Dim(elemType:Symbol, dim*:Number) {block?}
+Gurax_DeclareClassMethod(Array, Dim)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dim", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareArg("dim", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementClassMethod(Array, Zero)
+Gurax_ImplementClassMethod(Array, Dim)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -79,7 +79,8 @@ Gurax_ImplementClassMethod(Array, Zero)
 	DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(args.PickList()));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Array> pArray(Array::Create(elemType, std::move(dimSizes)));
+	RefPtr<Array> pArray(dimSizes.empty()?
+		Array::Create1d(elemType, 1) : Array::Create(elemType, std::move(dimSizes)));
 	if (!pArray) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
@@ -208,7 +209,7 @@ Gurax_DeclareProperty_R(Array, bytes)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The array's size in bytes.");
+		"The `array`'s whole size in bytes.");
 }
 
 Gurax_ImplementPropertyGetter(Array, bytes)
@@ -224,7 +225,7 @@ Gurax_DeclareProperty_R(Array, bytesPerElem)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The array's element size in bytes.");
+		"The `Array`'s element size in bytes.");
 }
 
 Gurax_ImplementPropertyGetter(Array, bytesPerElem)
@@ -239,7 +240,7 @@ Gurax_DeclareProperty_R(Array, elemType)
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"A symbol that represents the array's element type.");
+		"A symbol that represents the `Array`'s element type.");
 }
 
 Gurax_ImplementPropertyGetter(Array, elemType)
@@ -254,7 +255,7 @@ Gurax_DeclareProperty_R(Array, len)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The number of elements in the array.");
+		"The number of elements in the `Array`.");
 }
 
 Gurax_ImplementPropertyGetter(Array, len)
@@ -269,7 +270,7 @@ Gurax_DeclareProperty_R(Array, p)
 	Declare(VTYPE_Pointer, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"A `Pointer` instance that points at the first address of the Array's buffer.");
+		"A `Pointer` instance that points at the first address of the `Array`'s buffer.");
 }
 
 Gurax_ImplementPropertyGetter(Array, p)
@@ -277,6 +278,25 @@ Gurax_ImplementPropertyGetter(Array, p)
 	auto& valueThis = GetValueThis(valueTarget);
 	const Memory& memory = valueThis.GetArray().GetMemory();
 	return new Value_Pointer(new Pointer_Memory(memory.Reference()));
+}
+
+// Array#shape
+Gurax_DeclareProperty_R(Array, shape)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A list of dimension of the array.");
+}
+
+Gurax_ImplementPropertyGetter(Array, shape)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DimSizes& dimSizes = valueThis.GetArray().GetDimSizes();
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	pValues->reserve(dimSizes.size());
+	for (size_t dimSize : dimSizes) pValues->push_back(new Value_Number(dimSize));
+	return new Value_List(VTYPE_Number, pValues.release());
 }
 
 //------------------------------------------------------------------------------
@@ -291,7 +311,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Constructor
-	Assign(Gurax_CreateClassMethod(Array, Zero));
+	Assign(Gurax_CreateClassMethod(Array, Dim));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
@@ -304,6 +324,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, elemType));
 	Assign(Gurax_CreateProperty(Array, len));
 	Assign(Gurax_CreateProperty(Array, p));
+	Assign(Gurax_CreateProperty(Array, shape));
 }
 
 //------------------------------------------------------------------------------

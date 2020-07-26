@@ -150,7 +150,7 @@ Gurax_DeclareFunctionAlias(glAreTexturesResident_gurax, "glAreTexturesResident")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("residences", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -162,7 +162,7 @@ Gurax_ImplementFunctionEx(glAreTexturesResident_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	auto textures = args_gurax.PickNumList<GLuint>();
+	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	GLboolean* residences = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
 	// Function body
 	GLboolean rtn = glAreTexturesResident(n, textures, residences);
@@ -466,7 +466,7 @@ Gurax_DeclareFunctionAlias(glClipPlane_gurax, "glClipPlane")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("plane", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("equation", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("equation", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -477,7 +477,7 @@ Gurax_ImplementFunctionEx(glClipPlane_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum plane = args_gurax.PickNumber<GLenum>();
-	auto equation = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* equation = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glClipPlane(plane, equation);
 	return Gurax::Value::nil();
@@ -511,7 +511,7 @@ Gurax_ImplementFunctionEx(glColor3b_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3bv_gurax, "glColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -521,7 +521,7 @@ Gurax_ImplementFunctionEx(glColor3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glColor3bv(v);
 	return Gurax::Value::nil();
@@ -555,7 +555,7 @@ Gurax_ImplementFunctionEx(glColor3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3dv_gurax, "glColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -565,7 +565,7 @@ Gurax_ImplementFunctionEx(glColor3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glColor3dv(v);
 	return Gurax::Value::nil();
@@ -599,7 +599,7 @@ Gurax_ImplementFunctionEx(glColor3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3fv_gurax, "glColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -609,7 +609,7 @@ Gurax_ImplementFunctionEx(glColor3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glColor3fv(v);
 	return Gurax::Value::nil();
@@ -643,7 +643,7 @@ Gurax_ImplementFunctionEx(glColor3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3iv_gurax, "glColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -653,7 +653,7 @@ Gurax_ImplementFunctionEx(glColor3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glColor3iv(v);
 	return Gurax::Value::nil();
@@ -687,7 +687,7 @@ Gurax_ImplementFunctionEx(glColor3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3sv_gurax, "glColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -697,7 +697,7 @@ Gurax_ImplementFunctionEx(glColor3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glColor3sv(v);
 	return Gurax::Value::nil();
@@ -731,7 +731,7 @@ Gurax_ImplementFunctionEx(glColor3ub_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3ubv_gurax, "glColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -741,7 +741,7 @@ Gurax_ImplementFunctionEx(glColor3ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glColor3ubv(v);
 	return Gurax::Value::nil();
@@ -775,7 +775,7 @@ Gurax_ImplementFunctionEx(glColor3ui_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3uiv_gurax, "glColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -785,7 +785,7 @@ Gurax_ImplementFunctionEx(glColor3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLuint>();
+	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glColor3uiv(v);
 	return Gurax::Value::nil();
@@ -819,7 +819,7 @@ Gurax_ImplementFunctionEx(glColor3us_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor3usv_gurax, "glColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -829,7 +829,7 @@ Gurax_ImplementFunctionEx(glColor3usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLushort>();
+	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glColor3usv(v);
 	return Gurax::Value::nil();
@@ -865,7 +865,7 @@ Gurax_ImplementFunctionEx(glColor4b_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4bv_gurax, "glColor4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -875,7 +875,7 @@ Gurax_ImplementFunctionEx(glColor4bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glColor4bv(v);
 	return Gurax::Value::nil();
@@ -911,7 +911,7 @@ Gurax_ImplementFunctionEx(glColor4d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4dv_gurax, "glColor4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -921,7 +921,7 @@ Gurax_ImplementFunctionEx(glColor4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glColor4dv(v);
 	return Gurax::Value::nil();
@@ -957,7 +957,7 @@ Gurax_ImplementFunctionEx(glColor4f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4fv_gurax, "glColor4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -967,7 +967,7 @@ Gurax_ImplementFunctionEx(glColor4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glColor4fv(v);
 	return Gurax::Value::nil();
@@ -1003,7 +1003,7 @@ Gurax_ImplementFunctionEx(glColor4i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4iv_gurax, "glColor4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1013,7 +1013,7 @@ Gurax_ImplementFunctionEx(glColor4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glColor4iv(v);
 	return Gurax::Value::nil();
@@ -1049,7 +1049,7 @@ Gurax_ImplementFunctionEx(glColor4s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4sv_gurax, "glColor4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1059,7 +1059,7 @@ Gurax_ImplementFunctionEx(glColor4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glColor4sv(v);
 	return Gurax::Value::nil();
@@ -1095,7 +1095,7 @@ Gurax_ImplementFunctionEx(glColor4ub_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4ubv_gurax, "glColor4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1105,7 +1105,7 @@ Gurax_ImplementFunctionEx(glColor4ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glColor4ubv(v);
 	return Gurax::Value::nil();
@@ -1141,7 +1141,7 @@ Gurax_ImplementFunctionEx(glColor4ui_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4uiv_gurax, "glColor4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1151,7 +1151,7 @@ Gurax_ImplementFunctionEx(glColor4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLuint>();
+	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glColor4uiv(v);
 	return Gurax::Value::nil();
@@ -1187,7 +1187,7 @@ Gurax_ImplementFunctionEx(glColor4us_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glColor4usv_gurax, "glColor4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1197,7 +1197,7 @@ Gurax_ImplementFunctionEx(glColor4usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLushort>();
+	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glColor4usv(v);
 	return Gurax::Value::nil();
@@ -1481,7 +1481,8 @@ Gurax_ImplementFunctionEx(glDeleteLists_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glDeleteTextures_gurax, "glDeleteTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1491,10 +1492,11 @@ Gurax_ImplementFunctionEx(glDeleteTextures_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto textures = args_gurax.PickNumList<GLuint>();
+	GLsizei n = args_gurax.PickNumber<GLsizei>();
+	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
-	glDeleteTextures(textures.sizeT<GLsizei>(), textures);
-	return Value::nil();
+	glDeleteTextures(n, textures);
+	return Gurax::Value::nil();
 }
 
 // <FuncInfo>
@@ -1743,7 +1745,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagPointer_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(glEdgeFlagv_gurax, "glEdgeFlagv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("flag", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1753,9 +1755,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto flag = args_gurax.PickListT<GLboolean>([](Gurax::Value& value) {
-		return value.GetBool()? GL_TRUE : GL_FALSE;
-	});
+	const GLboolean* flag = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLboolean>();
 	// Function body
 	glEdgeFlagv(flag);
 	return Gurax::Value::nil();
@@ -1857,7 +1857,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEvalCoord1dv_gurax, "glEvalCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1867,7 +1867,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto u = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glEvalCoord1dv(u);
 	return Gurax::Value::nil();
@@ -1897,7 +1897,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEvalCoord1fv_gurax, "glEvalCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1907,7 +1907,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto u = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glEvalCoord1fv(u);
 	return Gurax::Value::nil();
@@ -1939,7 +1939,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEvalCoord2dv_gurax, "glEvalCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1949,7 +1949,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto u = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glEvalCoord2dv(u);
 	return Gurax::Value::nil();
@@ -1981,7 +1981,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEvalCoord2fv_gurax, "glEvalCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1991,7 +1991,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto u = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glEvalCoord2fv(u);
 	return Gurax::Value::nil();
@@ -2174,7 +2174,7 @@ Gurax_DeclareFunctionAlias(glFogfv_gurax, "glFogfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2185,7 +2185,7 @@ Gurax_ImplementFunctionEx(glFogfv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glFogfv(pname, params);
 	return Gurax::Value::nil();
@@ -2218,7 +2218,7 @@ Gurax_DeclareFunctionAlias(glFogiv_gurax, "glFogiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2229,7 +2229,7 @@ Gurax_ImplementFunctionEx(glFogiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glFogiv(pname, params);
 	return Gurax::Value::nil();
@@ -3065,7 +3065,7 @@ Gurax_ImplementFunctionEx(glIndexd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glIndexdv_gurax, "glIndexdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3075,7 +3075,7 @@ Gurax_ImplementFunctionEx(glIndexdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto c = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glIndexdv(c);
 	return Gurax::Value::nil();
@@ -3105,7 +3105,7 @@ Gurax_ImplementFunctionEx(glIndexf_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glIndexfv_gurax, "glIndexfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3115,7 +3115,7 @@ Gurax_ImplementFunctionEx(glIndexfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto c = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glIndexfv(c);
 	return Gurax::Value::nil();
@@ -3145,7 +3145,7 @@ Gurax_ImplementFunctionEx(glIndexi_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glIndexiv_gurax, "glIndexiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3155,7 +3155,7 @@ Gurax_ImplementFunctionEx(glIndexiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto c = args_gurax.PickNumList<GLint>();
+	const GLint* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glIndexiv(c);
 	return Gurax::Value::nil();
@@ -3185,7 +3185,7 @@ Gurax_ImplementFunctionEx(glIndexs_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glIndexsv_gurax, "glIndexsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3195,7 +3195,7 @@ Gurax_ImplementFunctionEx(glIndexsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto c = args_gurax.PickNumList<GLshort>();
+	const GLshort* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glIndexsv(c);
 	return Gurax::Value::nil();
@@ -3225,7 +3225,7 @@ Gurax_ImplementFunctionEx(glIndexub_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glIndexubv_gurax, "glIndexubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3235,7 +3235,7 @@ Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto c = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glIndexubv(c);
 	return Gurax::Value::nil();
@@ -3368,7 +3368,7 @@ Gurax_DeclareFunctionAlias(glLightModelfv_gurax, "glLightModelfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3379,7 +3379,7 @@ Gurax_ImplementFunctionEx(glLightModelfv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLightModelfv(pname, params);
 	return Gurax::Value::nil();
@@ -3412,7 +3412,7 @@ Gurax_DeclareFunctionAlias(glLightModeliv_gurax, "glLightModeliv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3423,7 +3423,7 @@ Gurax_ImplementFunctionEx(glLightModeliv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glLightModeliv(pname, params);
 	return Gurax::Value::nil();
@@ -3459,7 +3459,7 @@ Gurax_DeclareFunctionAlias(glLightfv_gurax, "glLightfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3471,7 +3471,7 @@ Gurax_ImplementFunctionEx(glLightfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLightfv(light, pname, params);
 	return Gurax::Value::nil();
@@ -3507,7 +3507,7 @@ Gurax_DeclareFunctionAlias(glLightiv_gurax, "glLightiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3519,7 +3519,7 @@ Gurax_ImplementFunctionEx(glLightiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glLightiv(light, pname, params);
 	return Gurax::Value::nil();
@@ -3607,7 +3607,7 @@ Gurax_ImplementFunctionEx(glLoadIdentity_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glLoadMatrixd_gurax, "glLoadMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3617,7 +3617,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glLoadMatrixd(m);
 	return Gurax::Value::nil();
@@ -3627,7 +3627,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glLoadMatrixf_gurax, "glLoadMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3637,7 +3637,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLoadMatrixf(m);
 	return Gurax::Value::nil();
@@ -3692,7 +3692,7 @@ Gurax_DeclareFunctionAlias(glMap1d_gurax, "glMap1d")
 	DeclareArg("u2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("points", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3707,7 +3707,7 @@ Gurax_ImplementFunctionEx(glMap1d_gurax, processor_gurax, argument_gurax)
 	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
 	GLint stride = args_gurax.PickNumber<GLint>();
 	GLint order = args_gurax.PickNumber<GLint>();
-	auto points = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMap1d(target, u1, u2, stride, order, points);
 	return Gurax::Value::nil();
@@ -3722,7 +3722,7 @@ Gurax_DeclareFunctionAlias(glMap1f_gurax, "glMap1f")
 	DeclareArg("u2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("points", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3737,7 +3737,7 @@ Gurax_ImplementFunctionEx(glMap1f_gurax, processor_gurax, argument_gurax)
 	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
 	GLint stride = args_gurax.PickNumber<GLint>();
 	GLint order = args_gurax.PickNumber<GLint>();
-	auto points = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMap1f(target, u1, u2, stride, order, points);
 	return Gurax::Value::nil();
@@ -3756,7 +3756,7 @@ Gurax_DeclareFunctionAlias(glMap2d_gurax, "glMap2d")
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vstride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vorder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("points", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3775,7 +3775,7 @@ Gurax_ImplementFunctionEx(glMap2d_gurax, processor_gurax, argument_gurax)
 	GLdouble v2 = args_gurax.PickNumber<GLdouble>();
 	GLint vstride = args_gurax.PickNumber<GLint>();
 	GLint vorder = args_gurax.PickNumber<GLint>();
-	auto points = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
 	return Gurax::Value::nil();
@@ -3794,7 +3794,7 @@ Gurax_DeclareFunctionAlias(glMap2f_gurax, "glMap2f")
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vstride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vorder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("points", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3813,7 +3813,7 @@ Gurax_ImplementFunctionEx(glMap2f_gurax, processor_gurax, argument_gurax)
 	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
 	GLint vstride = args_gurax.PickNumber<GLint>();
 	GLint vorder = args_gurax.PickNumber<GLint>();
-	auto points = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
 	return Gurax::Value::nil();
@@ -3957,7 +3957,7 @@ Gurax_DeclareFunctionAlias(glMaterialfv_gurax, "glMaterialfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3969,7 +3969,7 @@ Gurax_ImplementFunctionEx(glMaterialfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMaterialfv(face, pname, params);
 	return Gurax::Value::nil();
@@ -4005,7 +4005,7 @@ Gurax_DeclareFunctionAlias(glMaterialiv_gurax, "glMaterialiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4017,7 +4017,7 @@ Gurax_ImplementFunctionEx(glMaterialiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMaterialiv(face, pname, params);
 	return Gurax::Value::nil();
@@ -4047,7 +4047,7 @@ Gurax_ImplementFunctionEx(glMatrixMode_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glMultMatrixd_gurax, "glMultMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4057,7 +4057,7 @@ Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultMatrixd(m);
 	return Gurax::Value::nil();
@@ -4067,7 +4067,7 @@ Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glMultMatrixf_gurax, "glMultMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4077,7 +4077,7 @@ Gurax_ImplementFunctionEx(glMultMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultMatrixf(m);
 	return Gurax::Value::nil();
@@ -4133,7 +4133,7 @@ Gurax_ImplementFunctionEx(glNormal3b_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glNormal3bv_gurax, "glNormal3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4143,7 +4143,7 @@ Gurax_ImplementFunctionEx(glNormal3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glNormal3bv(v);
 	return Gurax::Value::nil();
@@ -4177,7 +4177,7 @@ Gurax_ImplementFunctionEx(glNormal3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glNormal3dv_gurax, "glNormal3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4187,7 +4187,7 @@ Gurax_ImplementFunctionEx(glNormal3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glNormal3dv(v);
 	return Gurax::Value::nil();
@@ -4221,7 +4221,7 @@ Gurax_ImplementFunctionEx(glNormal3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glNormal3fv_gurax, "glNormal3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4231,7 +4231,7 @@ Gurax_ImplementFunctionEx(glNormal3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glNormal3fv(v);
 	return Gurax::Value::nil();
@@ -4265,7 +4265,7 @@ Gurax_ImplementFunctionEx(glNormal3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glNormal3iv_gurax, "glNormal3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4275,7 +4275,7 @@ Gurax_ImplementFunctionEx(glNormal3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glNormal3iv(v);
 	return Gurax::Value::nil();
@@ -4309,7 +4309,7 @@ Gurax_ImplementFunctionEx(glNormal3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glNormal3sv_gurax, "glNormal3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4319,7 +4319,7 @@ Gurax_ImplementFunctionEx(glNormal3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glNormal3sv(v);
 	return Gurax::Value::nil();
@@ -4405,7 +4405,7 @@ Gurax_DeclareFunctionAlias(glPixelMapfv_gurax, "glPixelMapfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("values", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4417,7 +4417,7 @@ Gurax_ImplementFunctionEx(glPixelMapfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	auto values = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glPixelMapfv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4429,7 +4429,7 @@ Gurax_DeclareFunctionAlias(glPixelMapuiv_gurax, "glPixelMapuiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("values", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4441,7 +4441,7 @@ Gurax_ImplementFunctionEx(glPixelMapuiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	auto values = args_gurax.PickNumList<GLuint>();
+	const GLuint* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glPixelMapuiv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4453,7 +4453,7 @@ Gurax_DeclareFunctionAlias(glPixelMapusv_gurax, "glPixelMapusv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("values", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4465,7 +4465,7 @@ Gurax_ImplementFunctionEx(glPixelMapusv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	auto values = args_gurax.PickNumList<GLushort>();
+	const GLushort* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glPixelMapusv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4649,7 +4649,7 @@ Gurax_ImplementFunctionEx(glPolygonOffset_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(glPolygonStipple_gurax, "glPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("mask", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4659,7 +4659,7 @@ Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto mask = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* mask = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glPolygonStipple(mask);
 	return Gurax::Value::nil();
@@ -4734,8 +4734,8 @@ Gurax_DeclareFunctionAlias(glPrioritizeTextures_gurax, "glPrioritizeTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("textures", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("priorities", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("priorities", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4746,8 +4746,8 @@ Gurax_ImplementFunctionEx(glPrioritizeTextures_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	auto textures = args_gurax.PickNumList<GLuint>();
-	auto priorities = args_gurax.PickNumList<GLclampf>();
+	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLclampf* priorities = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLclampf>();
 	// Function body
 	glPrioritizeTextures(n, textures, priorities);
 	return Gurax::Value::nil();
@@ -4855,7 +4855,7 @@ Gurax_ImplementFunctionEx(glRasterPos2d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos2dv_gurax, "glRasterPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4865,7 +4865,7 @@ Gurax_ImplementFunctionEx(glRasterPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos2dv(v);
 	return Gurax::Value::nil();
@@ -4897,7 +4897,7 @@ Gurax_ImplementFunctionEx(glRasterPos2f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos2fv_gurax, "glRasterPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4907,7 +4907,7 @@ Gurax_ImplementFunctionEx(glRasterPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos2fv(v);
 	return Gurax::Value::nil();
@@ -4939,7 +4939,7 @@ Gurax_ImplementFunctionEx(glRasterPos2i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos2iv_gurax, "glRasterPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4949,7 +4949,7 @@ Gurax_ImplementFunctionEx(glRasterPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos2iv(v);
 	return Gurax::Value::nil();
@@ -4981,7 +4981,7 @@ Gurax_ImplementFunctionEx(glRasterPos2s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos2sv_gurax, "glRasterPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4991,7 +4991,7 @@ Gurax_ImplementFunctionEx(glRasterPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos2sv(v);
 	return Gurax::Value::nil();
@@ -5025,7 +5025,7 @@ Gurax_ImplementFunctionEx(glRasterPos3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos3dv_gurax, "glRasterPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5035,7 +5035,7 @@ Gurax_ImplementFunctionEx(glRasterPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos3dv(v);
 	return Gurax::Value::nil();
@@ -5069,7 +5069,7 @@ Gurax_ImplementFunctionEx(glRasterPos3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos3fv_gurax, "glRasterPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5079,7 +5079,7 @@ Gurax_ImplementFunctionEx(glRasterPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos3fv(v);
 	return Gurax::Value::nil();
@@ -5113,7 +5113,7 @@ Gurax_ImplementFunctionEx(glRasterPos3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos3iv_gurax, "glRasterPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5123,7 +5123,7 @@ Gurax_ImplementFunctionEx(glRasterPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos3iv(v);
 	return Gurax::Value::nil();
@@ -5157,7 +5157,7 @@ Gurax_ImplementFunctionEx(glRasterPos3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos3sv_gurax, "glRasterPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5167,7 +5167,7 @@ Gurax_ImplementFunctionEx(glRasterPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos3sv(v);
 	return Gurax::Value::nil();
@@ -5203,7 +5203,7 @@ Gurax_ImplementFunctionEx(glRasterPos4d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos4dv_gurax, "glRasterPos4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5213,7 +5213,7 @@ Gurax_ImplementFunctionEx(glRasterPos4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos4dv(v);
 	return Gurax::Value::nil();
@@ -5249,7 +5249,7 @@ Gurax_ImplementFunctionEx(glRasterPos4f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos4fv_gurax, "glRasterPos4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5259,7 +5259,7 @@ Gurax_ImplementFunctionEx(glRasterPos4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos4fv(v);
 	return Gurax::Value::nil();
@@ -5295,7 +5295,7 @@ Gurax_ImplementFunctionEx(glRasterPos4i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos4iv_gurax, "glRasterPos4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5305,7 +5305,7 @@ Gurax_ImplementFunctionEx(glRasterPos4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos4iv(v);
 	return Gurax::Value::nil();
@@ -5341,7 +5341,7 @@ Gurax_ImplementFunctionEx(glRasterPos4s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRasterPos4sv_gurax, "glRasterPos4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5351,7 +5351,7 @@ Gurax_ImplementFunctionEx(glRasterPos4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos4sv(v);
 	return Gurax::Value::nil();
@@ -5439,8 +5439,8 @@ Gurax_ImplementFunctionEx(glRectd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRectdv_gurax, "glRectdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5450,8 +5450,8 @@ Gurax_ImplementFunctionEx(glRectdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v1 = args_gurax.PickNumList<GLdouble>();
-	auto v2 = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRectdv(v1, v2);
 	return Gurax::Value::nil();
@@ -5487,8 +5487,8 @@ Gurax_ImplementFunctionEx(glRectf_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRectfv_gurax, "glRectfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5498,8 +5498,8 @@ Gurax_ImplementFunctionEx(glRectfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v1 = args_gurax.PickNumList<GLfloat>();
-	auto v2 = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRectfv(v1, v2);
 	return Gurax::Value::nil();
@@ -5535,8 +5535,8 @@ Gurax_ImplementFunctionEx(glRecti_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRectiv_gurax, "glRectiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5546,8 +5546,8 @@ Gurax_ImplementFunctionEx(glRectiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v1 = args_gurax.PickNumList<GLint>();
-	auto v2 = args_gurax.PickNumList<GLint>();
+	const GLint* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRectiv(v1, v2);
 	return Gurax::Value::nil();
@@ -5583,8 +5583,8 @@ Gurax_ImplementFunctionEx(glRects_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glRectsv_gurax, "glRectsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5594,8 +5594,8 @@ Gurax_ImplementFunctionEx(glRectsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v1 = args_gurax.PickNumList<GLshort>();
-	auto v2 = args_gurax.PickNumList<GLshort>();
+	const GLshort* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRectsv(v1, v2);
 	return Gurax::Value::nil();
@@ -5881,7 +5881,7 @@ Gurax_ImplementFunctionEx(glTexCoord1d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord1dv_gurax, "glTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5891,7 +5891,7 @@ Gurax_ImplementFunctionEx(glTexCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord1dv(v);
 	return Gurax::Value::nil();
@@ -5921,7 +5921,7 @@ Gurax_ImplementFunctionEx(glTexCoord1f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord1fv_gurax, "glTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5931,7 +5931,7 @@ Gurax_ImplementFunctionEx(glTexCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord1fv(v);
 	return Gurax::Value::nil();
@@ -5961,7 +5961,7 @@ Gurax_ImplementFunctionEx(glTexCoord1i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord1iv_gurax, "glTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5971,7 +5971,7 @@ Gurax_ImplementFunctionEx(glTexCoord1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord1iv(v);
 	return Gurax::Value::nil();
@@ -6001,7 +6001,7 @@ Gurax_ImplementFunctionEx(glTexCoord1s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord1sv_gurax, "glTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6011,7 +6011,7 @@ Gurax_ImplementFunctionEx(glTexCoord1sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord1sv(v);
 	return Gurax::Value::nil();
@@ -6043,7 +6043,7 @@ Gurax_ImplementFunctionEx(glTexCoord2d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord2dv_gurax, "glTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6053,7 +6053,7 @@ Gurax_ImplementFunctionEx(glTexCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord2dv(v);
 	return Gurax::Value::nil();
@@ -6085,7 +6085,7 @@ Gurax_ImplementFunctionEx(glTexCoord2f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord2fv_gurax, "glTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6095,7 +6095,7 @@ Gurax_ImplementFunctionEx(glTexCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord2fv(v);
 	return Gurax::Value::nil();
@@ -6127,7 +6127,7 @@ Gurax_ImplementFunctionEx(glTexCoord2i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord2iv_gurax, "glTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6137,7 +6137,7 @@ Gurax_ImplementFunctionEx(glTexCoord2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord2iv(v);
 	return Gurax::Value::nil();
@@ -6169,7 +6169,7 @@ Gurax_ImplementFunctionEx(glTexCoord2s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord2sv_gurax, "glTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6179,7 +6179,7 @@ Gurax_ImplementFunctionEx(glTexCoord2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord2sv(v);
 	return Gurax::Value::nil();
@@ -6213,7 +6213,7 @@ Gurax_ImplementFunctionEx(glTexCoord3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord3dv_gurax, "glTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6223,7 +6223,7 @@ Gurax_ImplementFunctionEx(glTexCoord3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord3dv(v);
 	return Gurax::Value::nil();
@@ -6257,7 +6257,7 @@ Gurax_ImplementFunctionEx(glTexCoord3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord3fv_gurax, "glTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6267,7 +6267,7 @@ Gurax_ImplementFunctionEx(glTexCoord3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord3fv(v);
 	return Gurax::Value::nil();
@@ -6301,7 +6301,7 @@ Gurax_ImplementFunctionEx(glTexCoord3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord3iv_gurax, "glTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6311,7 +6311,7 @@ Gurax_ImplementFunctionEx(glTexCoord3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord3iv(v);
 	return Gurax::Value::nil();
@@ -6345,7 +6345,7 @@ Gurax_ImplementFunctionEx(glTexCoord3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord3sv_gurax, "glTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6355,7 +6355,7 @@ Gurax_ImplementFunctionEx(glTexCoord3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord3sv(v);
 	return Gurax::Value::nil();
@@ -6391,7 +6391,7 @@ Gurax_ImplementFunctionEx(glTexCoord4d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord4dv_gurax, "glTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6401,7 +6401,7 @@ Gurax_ImplementFunctionEx(glTexCoord4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord4dv(v);
 	return Gurax::Value::nil();
@@ -6437,7 +6437,7 @@ Gurax_ImplementFunctionEx(glTexCoord4f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord4fv_gurax, "glTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6447,7 +6447,7 @@ Gurax_ImplementFunctionEx(glTexCoord4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord4fv(v);
 	return Gurax::Value::nil();
@@ -6483,7 +6483,7 @@ Gurax_ImplementFunctionEx(glTexCoord4i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord4iv_gurax, "glTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6493,7 +6493,7 @@ Gurax_ImplementFunctionEx(glTexCoord4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord4iv(v);
 	return Gurax::Value::nil();
@@ -6529,7 +6529,7 @@ Gurax_ImplementFunctionEx(glTexCoord4s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glTexCoord4sv_gurax, "glTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6539,7 +6539,7 @@ Gurax_ImplementFunctionEx(glTexCoord4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord4sv(v);
 	return Gurax::Value::nil();
@@ -6601,7 +6601,7 @@ Gurax_DeclareFunctionAlias(glTexEnvfv_gurax, "glTexEnvfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6613,7 +6613,7 @@ Gurax_ImplementFunctionEx(glTexEnvfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexEnvfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6649,7 +6649,7 @@ Gurax_DeclareFunctionAlias(glTexEnviv_gurax, "glTexEnviv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6661,7 +6661,7 @@ Gurax_ImplementFunctionEx(glTexEnviv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexEnviv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6697,7 +6697,7 @@ Gurax_DeclareFunctionAlias(glTexGendv_gurax, "glTexGendv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6709,7 +6709,7 @@ Gurax_ImplementFunctionEx(glTexGendv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexGendv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6745,7 +6745,7 @@ Gurax_DeclareFunctionAlias(glTexGenfv_gurax, "glTexGenfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6757,7 +6757,7 @@ Gurax_ImplementFunctionEx(glTexGenfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexGenfv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6793,7 +6793,7 @@ Gurax_DeclareFunctionAlias(glTexGeniv_gurax, "glTexGeniv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6805,7 +6805,7 @@ Gurax_ImplementFunctionEx(glTexGeniv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexGeniv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6911,7 +6911,7 @@ Gurax_DeclareFunctionAlias(glTexParameterfv_gurax, "glTexParameterfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6923,7 +6923,7 @@ Gurax_ImplementFunctionEx(glTexParameterfv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6959,7 +6959,7 @@ Gurax_DeclareFunctionAlias(glTexParameteriv_gurax, "glTexParameteriv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -6971,7 +6971,7 @@ Gurax_ImplementFunctionEx(glTexParameteriv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -7119,7 +7119,7 @@ Gurax_ImplementFunctionEx(glVertex2d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex2dv_gurax, "glVertex2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7129,7 +7129,7 @@ Gurax_ImplementFunctionEx(glVertex2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex2dv(v);
 	return Gurax::Value::nil();
@@ -7161,7 +7161,7 @@ Gurax_ImplementFunctionEx(glVertex2f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex2fv_gurax, "glVertex2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7171,7 +7171,7 @@ Gurax_ImplementFunctionEx(glVertex2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex2fv(v);
 	return Gurax::Value::nil();
@@ -7203,7 +7203,7 @@ Gurax_ImplementFunctionEx(glVertex2i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex2iv_gurax, "glVertex2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7213,7 +7213,7 @@ Gurax_ImplementFunctionEx(glVertex2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex2iv(v);
 	return Gurax::Value::nil();
@@ -7245,7 +7245,7 @@ Gurax_ImplementFunctionEx(glVertex2s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex2sv_gurax, "glVertex2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7255,7 +7255,7 @@ Gurax_ImplementFunctionEx(glVertex2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex2sv(v);
 	return Gurax::Value::nil();
@@ -7289,7 +7289,7 @@ Gurax_ImplementFunctionEx(glVertex3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex3dv_gurax, "glVertex3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7299,7 +7299,7 @@ Gurax_ImplementFunctionEx(glVertex3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex3dv(v);
 	return Gurax::Value::nil();
@@ -7333,7 +7333,7 @@ Gurax_ImplementFunctionEx(glVertex3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex3fv_gurax, "glVertex3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7343,7 +7343,7 @@ Gurax_ImplementFunctionEx(glVertex3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex3fv(v);
 	return Gurax::Value::nil();
@@ -7377,7 +7377,7 @@ Gurax_ImplementFunctionEx(glVertex3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex3iv_gurax, "glVertex3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7387,7 +7387,7 @@ Gurax_ImplementFunctionEx(glVertex3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex3iv(v);
 	return Gurax::Value::nil();
@@ -7421,7 +7421,7 @@ Gurax_ImplementFunctionEx(glVertex3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex3sv_gurax, "glVertex3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7431,7 +7431,7 @@ Gurax_ImplementFunctionEx(glVertex3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex3sv(v);
 	return Gurax::Value::nil();
@@ -7467,7 +7467,7 @@ Gurax_ImplementFunctionEx(glVertex4d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex4dv_gurax, "glVertex4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7477,7 +7477,7 @@ Gurax_ImplementFunctionEx(glVertex4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex4dv(v);
 	return Gurax::Value::nil();
@@ -7513,7 +7513,7 @@ Gurax_ImplementFunctionEx(glVertex4f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex4fv_gurax, "glVertex4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7523,7 +7523,7 @@ Gurax_ImplementFunctionEx(glVertex4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex4fv(v);
 	return Gurax::Value::nil();
@@ -7559,7 +7559,7 @@ Gurax_ImplementFunctionEx(glVertex4i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex4iv_gurax, "glVertex4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7569,7 +7569,7 @@ Gurax_ImplementFunctionEx(glVertex4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex4iv(v);
 	return Gurax::Value::nil();
@@ -7605,7 +7605,7 @@ Gurax_ImplementFunctionEx(glVertex4s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glVertex4sv_gurax, "glVertex4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -7615,7 +7615,7 @@ Gurax_ImplementFunctionEx(glVertex4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex4sv(v);
 	return Gurax::Value::nil();
@@ -8095,7 +8095,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTexImage_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(glLoadTransposeMatrixd_gurax, "glLoadTransposeMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8105,7 +8105,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glLoadTransposeMatrixd(m);
 	return Gurax::Value::nil();
@@ -8115,7 +8115,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(glLoadTransposeMatrixf_gurax, "glLoadTransposeMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8125,7 +8125,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLoadTransposeMatrixf(m);
 	return Gurax::Value::nil();
@@ -8135,7 +8135,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(glMultTransposeMatrixd_gurax, "glMultTransposeMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8145,7 +8145,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultTransposeMatrixd(m);
 	return Gurax::Value::nil();
@@ -8155,7 +8155,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(glMultTransposeMatrixf_gurax, "glMultTransposeMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("m", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8165,7 +8165,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixf_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto m = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultTransposeMatrixf(m);
 	return Gurax::Value::nil();
@@ -8198,7 +8198,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1dv_gurax, "glMultiTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8209,7 +8209,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord1dv(target, v);
 	return Gurax::Value::nil();
@@ -8242,7 +8242,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1fv_gurax, "glMultiTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8253,7 +8253,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord1fv(target, v);
 	return Gurax::Value::nil();
@@ -8286,7 +8286,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1iv_gurax, "glMultiTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8297,7 +8297,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord1iv(target, v);
 	return Gurax::Value::nil();
@@ -8330,7 +8330,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1sv_gurax, "glMultiTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8341,7 +8341,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord1sv(target, v);
 	return Gurax::Value::nil();
@@ -8376,7 +8376,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2dv_gurax, "glMultiTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8387,7 +8387,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord2dv(target, v);
 	return Gurax::Value::nil();
@@ -8422,7 +8422,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2fv_gurax, "glMultiTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8433,7 +8433,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord2fv(target, v);
 	return Gurax::Value::nil();
@@ -8468,7 +8468,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2iv_gurax, "glMultiTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8479,7 +8479,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord2iv(target, v);
 	return Gurax::Value::nil();
@@ -8514,7 +8514,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2sv_gurax, "glMultiTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8525,7 +8525,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord2sv(target, v);
 	return Gurax::Value::nil();
@@ -8562,7 +8562,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3dv_gurax, "glMultiTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8573,7 +8573,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord3dv(target, v);
 	return Gurax::Value::nil();
@@ -8610,7 +8610,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3fv_gurax, "glMultiTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8621,7 +8621,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord3fv(target, v);
 	return Gurax::Value::nil();
@@ -8658,7 +8658,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3iv_gurax, "glMultiTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8669,7 +8669,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord3iv(target, v);
 	return Gurax::Value::nil();
@@ -8706,7 +8706,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3sv_gurax, "glMultiTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8717,7 +8717,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord3sv(target, v);
 	return Gurax::Value::nil();
@@ -8756,7 +8756,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4dv_gurax, "glMultiTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8767,7 +8767,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord4dv(target, v);
 	return Gurax::Value::nil();
@@ -8806,7 +8806,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4fv_gurax, "glMultiTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8817,7 +8817,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord4fv(target, v);
 	return Gurax::Value::nil();
@@ -8856,7 +8856,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4iv_gurax, "glMultiTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8867,7 +8867,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord4iv(target, v);
 	return Gurax::Value::nil();
@@ -8906,7 +8906,7 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4sv_gurax, "glMultiTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8917,7 +8917,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord4sv(target, v);
 	return Gurax::Value::nil();
@@ -9065,7 +9065,7 @@ Gurax_ImplementFunctionEx(glFogCoordd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glFogCoorddv_gurax, "glFogCoorddv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("coord", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9075,7 +9075,7 @@ Gurax_ImplementFunctionEx(glFogCoorddv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto coord = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* coord = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glFogCoorddv(coord);
 	return Gurax::Value::nil();
@@ -9105,7 +9105,7 @@ Gurax_ImplementFunctionEx(glFogCoordf_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glFogCoordfv_gurax, "glFogCoordfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("coord", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9115,7 +9115,7 @@ Gurax_ImplementFunctionEx(glFogCoordfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto coord = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* coord = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glFogCoordfv(coord);
 	return Gurax::Value::nil();
@@ -9126,8 +9126,8 @@ Gurax_DeclareFunctionAlias(glMultiDrawArrays_gurax, "glMultiDrawArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("first", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -9139,8 +9139,8 @@ Gurax_ImplementFunctionEx(glMultiDrawArrays_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	auto first = args_gurax.PickNumList<GLint>();
-	auto count = args_gurax.PickNumList<GLsizei>();
+	const GLint* first = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLsizei* count = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizei>();
 	GLsizei drawcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glMultiDrawArrays(mode, first, count, drawcount);
@@ -9207,7 +9207,7 @@ Gurax_DeclareFunctionAlias(glPointParameterfv_gurax, "glPointParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9218,7 +9218,7 @@ Gurax_ImplementFunctionEx(glPointParameterfv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glPointParameterfv(pname, params);
 	return Gurax::Value::nil();
@@ -9251,7 +9251,7 @@ Gurax_DeclareFunctionAlias(glPointParameteriv_gurax, "glPointParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9262,7 +9262,7 @@ Gurax_ImplementFunctionEx(glPointParameteriv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glPointParameteriv(pname, params);
 	return Gurax::Value::nil();
@@ -9296,7 +9296,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3b_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glSecondaryColor3bv_gurax, "glSecondaryColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9306,7 +9306,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3bv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glSecondaryColor3bv(v);
 	return Gurax::Value::nil();
@@ -9340,7 +9340,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3d_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glSecondaryColor3dv_gurax, "glSecondaryColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9350,7 +9350,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3dv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glSecondaryColor3dv(v);
 	return Gurax::Value::nil();
@@ -9384,7 +9384,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3f_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glSecondaryColor3fv_gurax, "glSecondaryColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9394,7 +9394,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3fv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glSecondaryColor3fv(v);
 	return Gurax::Value::nil();
@@ -9428,7 +9428,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3i_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glSecondaryColor3iv_gurax, "glSecondaryColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9438,7 +9438,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3iv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glSecondaryColor3iv(v);
 	return Gurax::Value::nil();
@@ -9472,7 +9472,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3s_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glSecondaryColor3sv_gurax, "glSecondaryColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9482,7 +9482,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3sv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glSecondaryColor3sv(v);
 	return Gurax::Value::nil();
@@ -9516,7 +9516,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ub_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(glSecondaryColor3ubv_gurax, "glSecondaryColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9526,7 +9526,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ubv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glSecondaryColor3ubv(v);
 	return Gurax::Value::nil();
@@ -9560,7 +9560,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ui_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(glSecondaryColor3uiv_gurax, "glSecondaryColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9570,7 +9570,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3uiv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLuint>();
+	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glSecondaryColor3uiv(v);
 	return Gurax::Value::nil();
@@ -9604,7 +9604,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3us_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(glSecondaryColor3usv_gurax, "glSecondaryColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9614,7 +9614,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3usv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto v = args_gurax.PickNumList<GLushort>();
+	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glSecondaryColor3usv(v);
 	return Gurax::Value::nil();
@@ -9672,7 +9672,7 @@ Gurax_ImplementFunctionEx(glWindowPos2d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos2dv_gurax, "glWindowPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9682,7 +9682,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glWindowPos2dv(p);
 	return Gurax::Value::nil();
@@ -9714,7 +9714,7 @@ Gurax_ImplementFunctionEx(glWindowPos2f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos2fv_gurax, "glWindowPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9724,7 +9724,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glWindowPos2fv(p);
 	return Gurax::Value::nil();
@@ -9756,7 +9756,7 @@ Gurax_ImplementFunctionEx(glWindowPos2i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos2iv_gurax, "glWindowPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9766,7 +9766,7 @@ Gurax_ImplementFunctionEx(glWindowPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLint>();
+	const GLint* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glWindowPos2iv(p);
 	return Gurax::Value::nil();
@@ -9798,7 +9798,7 @@ Gurax_ImplementFunctionEx(glWindowPos2s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos2sv_gurax, "glWindowPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9808,7 +9808,7 @@ Gurax_ImplementFunctionEx(glWindowPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLshort>();
+	const GLshort* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glWindowPos2sv(p);
 	return Gurax::Value::nil();
@@ -9842,7 +9842,7 @@ Gurax_ImplementFunctionEx(glWindowPos3d_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos3dv_gurax, "glWindowPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9852,7 +9852,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glWindowPos3dv(p);
 	return Gurax::Value::nil();
@@ -9886,7 +9886,7 @@ Gurax_ImplementFunctionEx(glWindowPos3f_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos3fv_gurax, "glWindowPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9896,7 +9896,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glWindowPos3fv(p);
 	return Gurax::Value::nil();
@@ -9930,7 +9930,7 @@ Gurax_ImplementFunctionEx(glWindowPos3i_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos3iv_gurax, "glWindowPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9940,7 +9940,7 @@ Gurax_ImplementFunctionEx(glWindowPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLint>();
+	const GLint* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glWindowPos3iv(p);
 	return Gurax::Value::nil();
@@ -9974,7 +9974,7 @@ Gurax_ImplementFunctionEx(glWindowPos3s_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glWindowPos3sv_gurax, "glWindowPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9984,7 +9984,7 @@ Gurax_ImplementFunctionEx(glWindowPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto p = args_gurax.PickNumList<GLshort>();
+	const GLshort* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glWindowPos3sv(p);
 	return Gurax::Value::nil();
@@ -10091,7 +10091,7 @@ Gurax_DeclareFunctionAlias(glDeleteBuffers_gurax, "glDeleteBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("buffers", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10102,7 +10102,7 @@ Gurax_ImplementFunctionEx(glDeleteBuffers_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	auto buffers = args_gurax.PickNumList<GLuint>();
+	const GLuint* buffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteBuffers(n, buffers);
 	return Gurax::Value::nil();
@@ -10113,7 +10113,7 @@ Gurax_DeclareFunctionAlias(glDeleteQueries_gurax, "glDeleteQueries")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("ids", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10124,7 +10124,7 @@ Gurax_ImplementFunctionEx(glDeleteQueries_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	auto ids = args_gurax.PickNumList<GLuint>();
+	const GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteQueries(n, ids);
 	return Gurax::Value::nil();
@@ -10609,7 +10609,7 @@ Gurax_DeclareFunctionAlias(glDrawBuffers_gurax, "glDrawBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bufs", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("bufs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10620,7 +10620,7 @@ Gurax_ImplementFunctionEx(glDrawBuffers_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	auto bufs = args_gurax.PickNumList<GLenum>();
+	const GLenum* bufs = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>();
 	// Function body
 	glDrawBuffers(n, bufs);
 	return Gurax::Value::nil();
@@ -11216,7 +11216,7 @@ Gurax_DeclareFunctionAlias(glUniform1fv_gurax, "glUniform1fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11228,7 +11228,7 @@ Gurax_ImplementFunctionEx(glUniform1fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform1fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11262,7 +11262,7 @@ Gurax_DeclareFunctionAlias(glUniform1iv_gurax, "glUniform1iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11274,7 +11274,7 @@ Gurax_ImplementFunctionEx(glUniform1iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform1iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11310,7 +11310,7 @@ Gurax_DeclareFunctionAlias(glUniform2fv_gurax, "glUniform2fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11322,7 +11322,7 @@ Gurax_ImplementFunctionEx(glUniform2fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform2fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11358,7 +11358,7 @@ Gurax_DeclareFunctionAlias(glUniform2iv_gurax, "glUniform2iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11370,7 +11370,7 @@ Gurax_ImplementFunctionEx(glUniform2iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform2iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11408,7 +11408,7 @@ Gurax_DeclareFunctionAlias(glUniform3fv_gurax, "glUniform3fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11420,7 +11420,7 @@ Gurax_ImplementFunctionEx(glUniform3fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform3fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11458,7 +11458,7 @@ Gurax_DeclareFunctionAlias(glUniform3iv_gurax, "glUniform3iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11470,7 +11470,7 @@ Gurax_ImplementFunctionEx(glUniform3iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform3iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11510,7 +11510,7 @@ Gurax_DeclareFunctionAlias(glUniform4fv_gurax, "glUniform4fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11522,7 +11522,7 @@ Gurax_ImplementFunctionEx(glUniform4fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform4fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11562,7 +11562,7 @@ Gurax_DeclareFunctionAlias(glUniform4iv_gurax, "glUniform4iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11574,7 +11574,7 @@ Gurax_ImplementFunctionEx(glUniform4iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform4iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11587,7 +11587,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2fv_gurax, "glUniformMatrix2fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11600,7 +11600,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11613,7 +11613,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3fv_gurax, "glUniformMatrix3fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11626,7 +11626,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11639,7 +11639,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4fv_gurax, "glUniformMatrix4fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11652,7 +11652,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11725,7 +11725,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1dv_gurax, "glVertexAttrib1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11736,7 +11736,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib1dv(index, v);
 	return Gurax::Value::nil();
@@ -11769,7 +11769,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1fv_gurax, "glVertexAttrib1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11780,7 +11780,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib1fv(index, v);
 	return Gurax::Value::nil();
@@ -11813,7 +11813,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1sv_gurax, "glVertexAttrib1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11824,7 +11824,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib1sv(index, v);
 	return Gurax::Value::nil();
@@ -11859,7 +11859,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2dv_gurax, "glVertexAttrib2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11870,7 +11870,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib2dv(index, v);
 	return Gurax::Value::nil();
@@ -11905,7 +11905,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2fv_gurax, "glVertexAttrib2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11916,7 +11916,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib2fv(index, v);
 	return Gurax::Value::nil();
@@ -11951,7 +11951,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2sv_gurax, "glVertexAttrib2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11962,7 +11962,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib2sv(index, v);
 	return Gurax::Value::nil();
@@ -11999,7 +11999,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3dv_gurax, "glVertexAttrib3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12010,7 +12010,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib3dv(index, v);
 	return Gurax::Value::nil();
@@ -12047,7 +12047,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3fv_gurax, "glVertexAttrib3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12058,7 +12058,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib3fv(index, v);
 	return Gurax::Value::nil();
@@ -12095,7 +12095,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3sv_gurax, "glVertexAttrib3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12106,7 +12106,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib3sv(index, v);
 	return Gurax::Value::nil();
@@ -12117,7 +12117,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nbv_gurax, "glVertexAttrib4Nbv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12128,7 +12128,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nbv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttrib4Nbv(index, v);
 	return Gurax::Value::nil();
@@ -12139,7 +12139,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Niv_gurax, "glVertexAttrib4Niv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12150,7 +12150,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Niv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttrib4Niv(index, v);
 	return Gurax::Value::nil();
@@ -12161,7 +12161,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nsv_gurax, "glVertexAttrib4Nsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12172,7 +12172,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nsv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib4Nsv(index, v);
 	return Gurax::Value::nil();
@@ -12211,7 +12211,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nubv_gurax, "glVertexAttrib4Nubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12222,7 +12222,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nubv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttrib4Nubv(index, v);
 	return Gurax::Value::nil();
@@ -12233,7 +12233,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nuiv_gurax, "glVertexAttrib4Nuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12244,7 +12244,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nuiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLuint>();
+	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttrib4Nuiv(index, v);
 	return Gurax::Value::nil();
@@ -12255,7 +12255,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nusv_gurax, "glVertexAttrib4Nusv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12266,7 +12266,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nusv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLushort>();
+	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttrib4Nusv(index, v);
 	return Gurax::Value::nil();
@@ -12277,7 +12277,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4bv_gurax, "glVertexAttrib4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12288,7 +12288,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4bv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttrib4bv(index, v);
 	return Gurax::Value::nil();
@@ -12327,7 +12327,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4dv_gurax, "glVertexAttrib4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12338,7 +12338,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib4dv(index, v);
 	return Gurax::Value::nil();
@@ -12377,7 +12377,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4fv_gurax, "glVertexAttrib4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12388,7 +12388,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib4fv(index, v);
 	return Gurax::Value::nil();
@@ -12399,7 +12399,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4iv_gurax, "glVertexAttrib4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12410,7 +12410,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4iv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLint>();
+	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttrib4iv(index, v);
 	return Gurax::Value::nil();
@@ -12449,7 +12449,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4sv_gurax, "glVertexAttrib4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12460,7 +12460,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLshort>();
+	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib4sv(index, v);
 	return Gurax::Value::nil();
@@ -12471,7 +12471,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4ubv_gurax, "glVertexAttrib4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12482,7 +12482,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ubv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttrib4ubv(index, v);
 	return Gurax::Value::nil();
@@ -12493,7 +12493,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4uiv_gurax, "glVertexAttrib4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12504,7 +12504,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4uiv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLuint>();
+	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttrib4uiv(index, v);
 	return Gurax::Value::nil();
@@ -12515,7 +12515,7 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4usv_gurax, "glVertexAttrib4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12526,7 +12526,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v = args_gurax.PickNumList<GLushort>();
+	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttrib4usv(index, v);
 	return Gurax::Value::nil();
@@ -12569,7 +12569,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x3fv_gurax, "glUniformMatrix2x3fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12582,7 +12582,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x3fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2x3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12595,7 +12595,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x4fv_gurax, "glUniformMatrix2x4fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12608,7 +12608,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x4fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2x4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12621,7 +12621,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x2fv_gurax, "glUniformMatrix3x2fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12634,7 +12634,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x2fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3x2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12647,7 +12647,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x4fv_gurax, "glUniformMatrix3x4fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12660,7 +12660,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x4fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3x4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12673,7 +12673,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x2fv_gurax, "glUniformMatrix4x2fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12686,7 +12686,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x2fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4x2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12699,7 +12699,7 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x3fv_gurax, "glUniformMatrix4x3fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12712,7 +12712,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x3fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4x3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12838,7 +12838,7 @@ Gurax_DeclareFunctionAlias(glClearBufferfv_gurax, "glClearBufferfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12850,7 +12850,7 @@ Gurax_ImplementFunctionEx(glClearBufferfv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	auto value = args_gurax.PickNumList<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glClearBufferfv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -12862,7 +12862,7 @@ Gurax_DeclareFunctionAlias(glClearBufferiv_gurax, "glClearBufferiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12874,7 +12874,7 @@ Gurax_ImplementFunctionEx(glClearBufferiv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	auto value = args_gurax.PickNumList<GLint>();
+	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glClearBufferiv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -12886,7 +12886,7 @@ Gurax_DeclareFunctionAlias(glClearBufferuiv_gurax, "glClearBufferuiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12898,7 +12898,7 @@ Gurax_ImplementFunctionEx(glClearBufferuiv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	auto value = args_gurax.PickNumList<GLuint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glClearBufferuiv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -13256,7 +13256,7 @@ Gurax_DeclareFunctionAlias(glTexParameterIiv_gurax, "glTexParameterIiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13268,7 +13268,7 @@ Gurax_ImplementFunctionEx(glTexParameterIiv_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLint>();
+	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexParameterIiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13280,7 +13280,7 @@ Gurax_DeclareFunctionAlias(glTexParameterIuiv_gurax, "glTexParameterIuiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13292,7 +13292,7 @@ Gurax_ImplementFunctionEx(glTexParameterIuiv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	auto params = args_gurax.PickNumList<GLuint>();
+	const GLuint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glTexParameterIuiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13326,7 +13326,7 @@ Gurax_DeclareFunctionAlias(glUniform1uiv_gurax, "glUniform1uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13338,7 +13338,7 @@ Gurax_ImplementFunctionEx(glUniform1uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLuint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform1uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13374,7 +13374,7 @@ Gurax_DeclareFunctionAlias(glUniform2uiv_gurax, "glUniform2uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13386,7 +13386,7 @@ Gurax_ImplementFunctionEx(glUniform2uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLuint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform2uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13424,7 +13424,7 @@ Gurax_DeclareFunctionAlias(glUniform3uiv_gurax, "glUniform3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13436,7 +13436,7 @@ Gurax_ImplementFunctionEx(glUniform3uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLuint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform3uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13476,7 +13476,7 @@ Gurax_DeclareFunctionAlias(glUniform4uiv_gurax, "glUniform4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13488,7 +13488,7 @@ Gurax_ImplementFunctionEx(glUniform4uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	auto value = args_gurax.PickNumList<GLuint>();
+	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform4uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13521,7 +13521,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1iv_gurax, "glVertexAttribI1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13532,7 +13532,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLint>();
+	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI1iv(index, v0);
 	return Gurax::Value::nil();
@@ -13565,7 +13565,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1uiv_gurax, "glVertexAttribI1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13576,7 +13576,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI1uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13611,7 +13611,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2iv_gurax, "glVertexAttribI2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13622,7 +13622,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLint>();
+	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI2iv(index, v0);
 	return Gurax::Value::nil();
@@ -13657,7 +13657,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2uiv_gurax, "glVertexAttribI2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13668,7 +13668,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI2uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13705,7 +13705,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3iv_gurax, "glVertexAttribI3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13716,7 +13716,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLint>();
+	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI3iv(index, v0);
 	return Gurax::Value::nil();
@@ -13753,7 +13753,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3uiv_gurax, "glVertexAttribI3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13764,7 +13764,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI3uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13775,7 +13775,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4bv_gurax, "glVertexAttribI4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13786,7 +13786,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4bv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLbyte>();
+	const GLbyte* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttribI4bv(index, v0);
 	return Gurax::Value::nil();
@@ -13825,7 +13825,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4iv_gurax, "glVertexAttribI4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13836,7 +13836,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLint>();
+	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI4iv(index, v0);
 	return Gurax::Value::nil();
@@ -13847,7 +13847,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4sv_gurax, "glVertexAttribI4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13858,7 +13858,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLshort>();
+	const GLshort* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttribI4sv(index, v0);
 	return Gurax::Value::nil();
@@ -13869,7 +13869,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4ubv_gurax, "glVertexAttribI4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13880,7 +13880,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4ubv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLubyte>();
+	const GLubyte* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttribI4ubv(index, v0);
 	return Gurax::Value::nil();
@@ -13919,7 +13919,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4uiv_gurax, "glVertexAttribI4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13930,7 +13930,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI4uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13941,7 +13941,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4usv_gurax, "glVertexAttribI4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13952,7 +13952,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4usv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	auto v0 = args_gurax.PickNumList<GLushort>();
+	const GLushort* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttribI4usv(index, v0);
 	return Gurax::Value::nil();
@@ -14459,10 +14459,10 @@ Gurax_DeclareFunctionAlias(glSpecializeShader_gurax, "glSpecializeShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pEntryPoint", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("pEntryPoint", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numSpecializationConstants", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pConstantIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("pConstantValue", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("pConstantIndex", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pConstantValue", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14473,10 +14473,10 @@ Gurax_ImplementFunctionEx(glSpecializeShader_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
-	auto pEntryPoint = args_gurax.PickNumList<GLchar>();
+	const GLchar* pEntryPoint = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
 	GLuint numSpecializationConstants = args_gurax.PickNumber<GLuint>();
-	auto pConstantIndex = args_gurax.PickNumList<GLuint>();
-	auto pConstantValue = args_gurax.PickNumList<GLuint>();
+	const GLuint* pConstantIndex = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* pConstantValue = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glSpecializeShader(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
 	return Gurax::Value::nil();
@@ -28153,7 +28153,7 @@ Gurax_DeclareFunctionAlias(glDeleteVertexArrays_gurax, "glDeleteVertexArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -28164,7 +28164,7 @@ Gurax_ImplementFunctionEx(glDeleteVertexArrays_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* arrays = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* arrays = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteVertexArrays(n, arrays);
 	return Gurax::Value::nil();

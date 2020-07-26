@@ -22,10 +22,14 @@ class Value_List;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE DimSizes : public NumList<size_t> {
 public:
-	using NumList::NumList;
-public:
+	DimSizes() {}
 	DimSizes(const NumList& src) : NumList(src) {}
 	DimSizes(NumList&& src) : NumList(src) {}
+	DimSizes(size_t n) { reserve(1); push_back(n); }
+	DimSizes(size_t m, size_t n) { reserve(2); push_back(m); push_back(n); }
+	DimSizes(size_t l, size_t m, size_t n) {
+		reserve(3); push_back(l); push_back(m); push_back(n);
+	}
 public:
 	size_t GetLength() const;
 	String ToString(const StringStyle& ss) const;
@@ -96,6 +100,15 @@ public:
 	static void Bootup();
 public:
 	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
+	static Array* Create1d(ElemTypeT& elemType, size_t n) {
+		return Create(elemType, DimSizes(n));
+	}
+	static Array* Create2d(ElemTypeT& elemType, size_t m, size_t n) {
+		return Create(elemType, DimSizes(m, n));
+	}
+	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) {
+		return Create(elemType, DimSizes(l, m, n));
+	}
 	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
