@@ -95,7 +95,7 @@ main() = {
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	vertices = Array(`float, [
+	vertices = @float([
 		-0.5f, -0.5f, 0.0f, // left  
 		 0.5f, -0.5f, 0.0f, // right 
 		 0.0f,  0.5f, 0.0f  // top   
