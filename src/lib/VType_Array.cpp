@@ -27,12 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, src:List) {block?}
+// Array(elemType:Symbol, init*) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("src", VTYPE_List, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -48,40 +48,55 @@ Gurax_ImplementConstructor(Array)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	const ValueList& src = args.PickList();
-	// Function body
-	RefPtr<Array> pArray(src.CreateArray(elemType));
+	const ValueList& values = args.PickList();
+	RefPtr<Array> pArray;
+	if (values.empty()) {
+		pArray.reset(Array::Create1d(elemType, 1));
+	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
+		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
+	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
+		DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(values));
+		if (Error::IsIssued()) return Value::nil();
+		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
+	} else {
+		Error::Issue(ErrorType::TypeError, "invalid argument");
+	}
 	if (!pArray) return Value::nil();
+	// Function body
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
-// Array.Dim(elemType:Symbol, dim*:Number) {block?}
-Gurax_DeclareClassMethod(Array, Dim)
+// ConstructArray(init*) {block?}
+Gurax_DeclareFunction(ConstructArray)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dim", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	Declare(VTYPE_Array, Flag::None);
+	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementClassMethod(Array, Dim)
+Gurax_ImplementFunction(ConstructArray)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
-	if (elemType.IsNone()) {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
-		return Value::nil();
+	Array::ElemTypeT& elemType = Array::AtSymbolToElemType(GetSymbol());
+	const ValueList& values = args.PickList();
+	RefPtr<Array> pArray;
+	if (values.empty()) {
+		pArray.reset(Array::Create1d(elemType, 1));
+	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
+		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
+	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
+		DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(values));
+		if (Error::IsIssued()) return Value::nil();
+		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
+	} else {
+		Error::Issue(ErrorType::TypeError, "invalid argument");
 	}
-	DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(args.PickList()));
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	RefPtr<Array> pArray(dimSizes.empty()?
-		Array::Create1d(elemType, 1) : Array::Create(elemType, std::move(dimSizes)));
 	if (!pArray) return Value::nil();
+	// Function body
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
@@ -311,7 +326,27 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Array));
 	// Constructor
-	Assign(Gurax_CreateClassMethod(Array, Dim));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@bool"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@int8"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint8"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@int16"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint16"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@int32"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint32"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@int64"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint64"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@half"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@float"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@double"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@complex"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@char"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uchar"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@short"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@ushort"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@int"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@long"));
+	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@ulong"));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));

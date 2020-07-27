@@ -5,7 +5,8 @@ Array
   #elemType         Symbol       R
   #len              Number       R
   #p                Pointer      R
-======== Array constructor ========
+  #shape            Pointer      R
+======== Array constructor (1) ========
 Array(`bool, [true, false, false, true]).ToList() .. [true, false, false, true]
 Array(`int, [0]).ToList() .. [0]
 Array(`int, [[0, 1, 2], [3, 4, 5]]).ToList() .. [[0, 1, 2], [3, 4, 5]]
@@ -14,6 +15,67 @@ Array(`int, [[0, 1, 2], [3, 4, 5], [5]]).ToList() .. failed to create an array
 Array(`int, [3j]).ToList() .. Number value is expected
 Array(`int, ['hello']).ToList() .. Number value is expected
 Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]]).ToList() .. [[0, 1+1j, 2+2j], [3+3j, 4+4j, 5+5j]]
+======== Array constructor (2) ========
+@int8() .. <Array:int8:[1]>
+@uint8() .. <Array:uint8:[1]>
+@int16() .. <Array:int16:[1]>
+@uint16() .. <Array:uint16:[1]>
+@int32() .. <Array:int32:[1]>
+@uint32() .. <Array:uint32:[1]>
+@int64() .. <Array:int64:[1]>
+@uint64() .. <Array:uint64:[1]>
+@half() .. <Array:half:[1]>
+@float() .. <Array:float:[1]>
+@double() .. <Array:double:[1]>
+@complex() .. <Array:complex:[1]>
+@char() .. <Array:int8:[1]>
+@uchar() .. <Array:uint8:[1]>
+@short() .. <Array:int16:[1]>
+@ushort() .. <Array:uint16:[1]>
+@int() .. <Array:int32:[1]>
+@uint() .. <Array:uint32:[1]>
+@long() .. <Array:int32:[1]>
+@ulong() .. <Array:uint32:[1]>
+@int8(3, 4, 2) .. <Array:int8:[3,4,2]>
+@uint8(3, 4, 2) .. <Array:uint8:[3,4,2]>
+@int16(3, 4, 2) .. <Array:int16:[3,4,2]>
+@uint16(3, 4, 2) .. <Array:uint16:[3,4,2]>
+@int32(3, 4, 2) .. <Array:int32:[3,4,2]>
+@uint32(3, 4, 2) .. <Array:uint32:[3,4,2]>
+@int64(3, 4, 2) .. <Array:int64:[3,4,2]>
+@uint64(3, 4, 2) .. <Array:uint64:[3,4,2]>
+@half(3, 4, 2) .. <Array:half:[3,4,2]>
+@float(3, 4, 2) .. <Array:float:[3,4,2]>
+@double(3, 4, 2) .. <Array:double:[3,4,2]>
+@complex(3, 4, 2) .. <Array:complex:[3,4,2]>
+@char(3, 4, 2) .. <Array:int8:[3,4,2]>
+@uchar(3, 4, 2) .. <Array:uint8:[3,4,2]>
+@short(3, 4, 2) .. <Array:int16:[3,4,2]>
+@ushort(3, 4, 2) .. <Array:uint16:[3,4,2]>
+@int(3, 4, 2) .. <Array:int32:[3,4,2]>
+@uint(3, 4, 2) .. <Array:uint32:[3,4,2]>
+@long(3, 4, 2) .. <Array:int32:[3,4,2]>
+@ulong(3, 4, 2) .. <Array:uint32:[3,4,2]>
+@int8([[1, 2, 3], [4, 5, 6]]) .. <Array:int8:[2,3]>
+@uint8([[1, 2, 3], [4, 5, 6]]) .. <Array:uint8:[2,3]>
+@int16([[1, 2, 3], [4, 5, 6]]) .. <Array:int16:[2,3]>
+@uint16([[1, 2, 3], [4, 5, 6]]) .. <Array:uint16:[2,3]>
+@int32([[1, 2, 3], [4, 5, 6]]) .. <Array:int32:[2,3]>
+@uint32([[1, 2, 3], [4, 5, 6]]) .. <Array:uint32:[2,3]>
+@int64([[1, 2, 3], [4, 5, 6]]) .. <Array:int64:[2,3]>
+@uint64([[1, 2, 3], [4, 5, 6]]) .. <Array:uint64:[2,3]>
+@half([[1, 2, 3], [4, 5, 6]]) .. <Array:half:[2,3]>
+@float([[1, 2, 3], [4, 5, 6]]) .. <Array:float:[2,3]>
+@double([[1, 2, 3], [4, 5, 6]]) .. <Array:double:[2,3]>
+@complex([[1, 2, 3], [4, 5, 6]]) .. <Array:complex:[2,3]>
+@char([[1, 2, 3], [4, 5, 6]]) .. <Array:int8:[2,3]>
+@uchar([[1, 2, 3], [4, 5, 6]]) .. <Array:uint8:[2,3]>
+@short([[1, 2, 3], [4, 5, 6]]) .. <Array:int16:[2,3]>
+@ushort([[1, 2, 3], [4, 5, 6]]) .. <Array:uint16:[2,3]>
+@int([[1, 2, 3], [4, 5, 6]]) .. <Array:int32:[2,3]>
+@uint([[1, 2, 3], [4, 5, 6]]) .. <Array:uint32:[2,3]>
+@long([[1, 2, 3], [4, 5, 6]]) .. <Array:int32:[2,3]>
+@ulong([[1, 2, 3], [4, 5, 6]]) .. <Array:uint32:[2,3]>
 ======== Array#bytes/bytesPerElem/elemType/len ========
 bool     .. elemType=bool     bytesPerElem=1 len=10000 bytes=10000
 int8     .. elemType=int8     bytesPerElem=1 len=10000 bytes=10000

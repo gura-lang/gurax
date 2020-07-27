@@ -85,6 +85,7 @@ protected:
 	DimSizes _dimSizes;
 protected:
 	static MapSymbolToElemType _mapSymbolToElemType;
+	static MapSymbolToElemType _mapAtSymbolToElemType;
 protected:
 	// Constructor
 	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
@@ -137,6 +138,9 @@ public:
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *_mapSymbolToElemType.find(pSymbol)->second;
+	}
+	static ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol) {
+		return *_mapAtSymbolToElemType.find(pSymbol)->second;
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

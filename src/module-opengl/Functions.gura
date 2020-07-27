@@ -349,7 +349,7 @@ glFrustum(left:GLdouble, right:GLdouble, bottom:GLdouble, top:GLdouble, zNear:GL
 
 glGenLists(range:GLsizei):GLuint
 
-glGenTextures(n:GLsizei, textures:GLuint_p:nil);
+glGenTextures(n:GLsizei, textures:GLuint_p:nil):void
 
 glGetBooleanv(pname:GLenum, params:GLboolean_p:nil):void
 

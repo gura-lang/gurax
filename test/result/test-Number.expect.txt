@@ -2,11 +2,22 @@
 Number
   #abs              Number       R
   #arg              Number       R
+  .double           NumberTrait  R
+  .float            NumberTrait  R
   .formatFloat      String       R/W
   .formatInt        String       R/W
+  .half             NumberTrait  R
   #imag             Number       R
+  .int16            NumberTrait  R
+  .int32            NumberTrait  R
+  .int64            NumberTrait  R
+  .int8             NumberTrait  R
   #norm             Number       R
   #real             Number       R
+  .uint16           NumberTrait  R
+  .uint32           NumberTrait  R
+  .uint64           NumberTrait  R
+  .uint8            NumberTrait  R
 ======== Property Access ========
 a .. 3
 a.abs .. 3

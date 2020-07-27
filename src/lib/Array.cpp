@@ -9,6 +9,7 @@ namespace Gurax {
 // Array
 //------------------------------------------------------------------------------
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
+Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
 Array::Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
 		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
@@ -217,31 +218,32 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 
 void Array::Bootup()
 {
-	auto AssocSymbol = [](const Symbol* pSymbol, ElemTypeT& elemType) {
+	auto AssocSymbol = [](const Symbol* pSymbol, const Symbol* pAtSymbol, ElemTypeT& elemType) {
 		_mapSymbolToElemType[pSymbol] = &elemType;
+		_mapAtSymbolToElemType[pAtSymbol] = &elemType;
 	};
-	AssocSymbol(Symbol::Empty,			ElemType::None);
-	AssocSymbol(Gurax_Symbol(bool_),	ElemType::Bool);
-	AssocSymbol(Gurax_Symbol(int8),		ElemType::Int8);
-	AssocSymbol(Gurax_Symbol(uint8),	ElemType::UInt8);
-	AssocSymbol(Gurax_Symbol(int16),	ElemType::Int16);
-	AssocSymbol(Gurax_Symbol(uint16),	ElemType::UInt16);
-	AssocSymbol(Gurax_Symbol(int32),	ElemType::Int32);
-	AssocSymbol(Gurax_Symbol(uint32),	ElemType::UInt32);
-	AssocSymbol(Gurax_Symbol(int64),	ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(uint64),	ElemType::UInt64);
-	AssocSymbol(Gurax_Symbol(half),		ElemType::Half);
-	AssocSymbol(Gurax_Symbol(float_),	ElemType::Float);
-	AssocSymbol(Gurax_Symbol(double_),	ElemType::Double);
-	AssocSymbol(Gurax_Symbol(complex),	ElemType::Complex);
-	AssocSymbol(Gurax_Symbol(char_),	ElemType::Int8);
-	AssocSymbol(Gurax_Symbol(uchar),	ElemType::UInt8);
-	AssocSymbol(Gurax_Symbol(short_),	ElemType::Int16);
-	AssocSymbol(Gurax_Symbol(ushort),	ElemType::UInt16);
-	AssocSymbol(Gurax_Symbol(int_),		(sizeof(int) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
-	AssocSymbol(Gurax_Symbol(long_),	(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(ulong),	(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	AssocSymbol(Symbol::Empty,			Symbol::Empty,				ElemType::None);
+	AssocSymbol(Gurax_Symbol(bool_),	Gurax_Symbol(at_bool),		ElemType::Bool);
+	AssocSymbol(Gurax_Symbol(int8),		Gurax_Symbol(at_int8),		ElemType::Int8);
+	AssocSymbol(Gurax_Symbol(uint8),	Gurax_Symbol(at_uint8),		ElemType::UInt8);
+	AssocSymbol(Gurax_Symbol(int16),	Gurax_Symbol(at_int16),		ElemType::Int16);
+	AssocSymbol(Gurax_Symbol(uint16),	Gurax_Symbol(at_uint16),	ElemType::UInt16);
+	AssocSymbol(Gurax_Symbol(int32),	Gurax_Symbol(at_int32),		ElemType::Int32);
+	AssocSymbol(Gurax_Symbol(uint32),	Gurax_Symbol(at_uint32),	ElemType::UInt32);
+	AssocSymbol(Gurax_Symbol(int64),	Gurax_Symbol(at_int64),		ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(uint64),	Gurax_Symbol(at_uint64),	ElemType::UInt64);
+	AssocSymbol(Gurax_Symbol(half),		Gurax_Symbol(at_half),		ElemType::Half);
+	AssocSymbol(Gurax_Symbol(float_),	Gurax_Symbol(at_float),		ElemType::Float);
+	AssocSymbol(Gurax_Symbol(double_),	Gurax_Symbol(at_double),	ElemType::Double);
+	AssocSymbol(Gurax_Symbol(complex),	Gurax_Symbol(at_complex),	ElemType::Complex);
+	AssocSymbol(Gurax_Symbol(char_),	Gurax_Symbol(at_char),		ElemType::Int8);
+	AssocSymbol(Gurax_Symbol(uchar),	Gurax_Symbol(at_uchar),		ElemType::UInt8);
+	AssocSymbol(Gurax_Symbol(short_),	Gurax_Symbol(at_short),		ElemType::Int16);
+	AssocSymbol(Gurax_Symbol(ushort),	Gurax_Symbol(at_ushort),	ElemType::UInt16);
+	AssocSymbol(Gurax_Symbol(int_),		Gurax_Symbol(at_int),		(sizeof(int) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(uint),		Gurax_Symbol(at_uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	AssocSymbol(Gurax_Symbol(long_),	Gurax_Symbol(at_long),		(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	AssocSymbol(Gurax_Symbol(ulong),	Gurax_Symbol(at_ulong),		(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	ElemType::Bool.bytes				= sizeof(bool);
 	ElemType::Int8.bytes				= sizeof(Int8);
 	ElemType::UInt8.bytes				= sizeof(UInt8);
