@@ -63,6 +63,14 @@ r.DeclareType('String_const_GLchar_p', 'const GLchar*', 'String',
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 	''')
 
+r.DeclareType('Number_const_void_p', 'const void*', 'Number',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickNumber<size_t>());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickNumber<size_t>()) : nullptr;
+	''')
+
 r.DeclareType('Return_void_p', 'void*', 'Pointer',
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
@@ -1138,7 +1146,13 @@ glIsShader(shader:GLuint):GLboolean
 
 glLinkProgram(program:GLuint):void
 
-glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p:nil):void
+//glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p:nil):void
+glShaderSource(shader:GLuint, string[]:String_const_GLchar_p, length:GLint_p:nil):void = \
+	R'''
+	size_t count = string.size();
+	glShaderSource(shader, count, string, length);
+	return Value::nil();
+	'''
 
 glStencilFuncSeparate(frontfunc:GLenum, backfunc:GLenum, ref:GLint, mask:GLuint):void
 
@@ -1260,7 +1274,7 @@ glVertexAttrib4uiv(index:GLuint, v:const_GLuint_p):void
 
 glVertexAttrib4usv(index:GLuint, v:const_GLushort_p):void
 
-glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p:nil:nil):void
+glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:Number_const_void_p):void
 
 //======== GL_VERSION_2_1 ========
 
@@ -2972,7 +2986,7 @@ glVertexAttrib4uivARB(index:GLuint, v:const_GLuint_p:nil):void
 
 glVertexAttrib4usvARB(index:GLuint, v:const_GLushort_p:nil):void
 
-glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:const_void_p:nil):void
+glVertexAttribPointerARB(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:Number_const_void_p):void
 
 //======== GL_ARB_vertex_shader ========
 

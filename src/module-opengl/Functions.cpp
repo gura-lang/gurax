@@ -5,7 +5,7 @@
 
 Gurax_BeginModuleScope(opengl)
 
-// <FuncInfo>
+// opengl.glewInit()
 Gurax_DeclareFunctionAlias(glewInit_gurax, "glewInit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -21,7 +21,7 @@ Gurax_ImplementFunctionEx(glewInit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glewIsSupported(name:String)
 Gurax_DeclareFunctionAlias(glewIsSupported_gurax, "glewIsSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -41,7 +41,7 @@ Gurax_ImplementFunctionEx(glewIsSupported_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glewGetExtension(name:String)
 Gurax_DeclareFunctionAlias(glewGetExtension_gurax, "glewGetExtension")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -61,7 +61,7 @@ Gurax_ImplementFunctionEx(glewGetExtension_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glewGetErrorString(error:Number)
 Gurax_DeclareFunctionAlias(glewGetErrorString_gurax, "glewGetErrorString")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -81,7 +81,7 @@ Gurax_ImplementFunctionEx(glewGetErrorString_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
-// <FuncInfo>
+// opengl.glewGetString(name:Number)
 Gurax_DeclareFunctionAlias(glewGetString_gurax, "glewGetString")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -101,7 +101,7 @@ Gurax_ImplementFunctionEx(glewGetString_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
-// <FuncInfo>
+// opengl.glAccum(op:Number, value:Number)
 Gurax_DeclareFunctionAlias(glAccum_gurax, "glAccum")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -123,7 +123,7 @@ Gurax_ImplementFunctionEx(glAccum_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glAlphaFunc(func:Number, ref:Number)
 Gurax_DeclareFunctionAlias(glAlphaFunc_gurax, "glAlphaFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -145,7 +145,7 @@ Gurax_ImplementFunctionEx(glAlphaFunc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glAreTexturesResident(n:Number, textures:Pointer, residences:Pointer:nil)
 Gurax_DeclareFunctionAlias(glAreTexturesResident_gurax, "glAreTexturesResident")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -169,7 +169,7 @@ Gurax_ImplementFunctionEx(glAreTexturesResident_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glArrayElement(i:Number)
 Gurax_DeclareFunctionAlias(glArrayElement_gurax, "glArrayElement")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -189,7 +189,7 @@ Gurax_ImplementFunctionEx(glArrayElement_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBegin(mode:Number)
 Gurax_DeclareFunctionAlias(glBegin_gurax, "glBegin")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -209,7 +209,7 @@ Gurax_ImplementFunctionEx(glBegin_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindTexture(target:Number, texture:Number)
 Gurax_DeclareFunctionAlias(glBindTexture_gurax, "glBindTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -231,7 +231,7 @@ Gurax_ImplementFunctionEx(glBindTexture_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBitmap(width:Number, height:Number, xorig:Number, yorig:Number, xmove:Number, ymove:Number, bitmap:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBitmap_gurax, "glBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -263,7 +263,7 @@ Gurax_ImplementFunctionEx(glBitmap_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFunc(sfactor:Number, dfactor:Number)
 Gurax_DeclareFunctionAlias(glBlendFunc_gurax, "glBlendFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -285,7 +285,7 @@ Gurax_ImplementFunctionEx(glBlendFunc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCallList(list:Number)
 Gurax_DeclareFunctionAlias(glCallList_gurax, "glCallList")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -305,7 +305,7 @@ Gurax_ImplementFunctionEx(glCallList_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCallLists(n:Number, type:Number, lists:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCallLists_gurax, "glCallLists")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -329,7 +329,7 @@ Gurax_ImplementFunctionEx(glCallLists_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClear(mask:Number)
 Gurax_DeclareFunctionAlias(glClear_gurax, "glClear")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -349,7 +349,7 @@ Gurax_ImplementFunctionEx(glClear_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearAccum(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glClearAccum_gurax, "glClearAccum")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -375,7 +375,7 @@ Gurax_ImplementFunctionEx(glClearAccum_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearColor(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glClearColor_gurax, "glClearColor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -401,7 +401,7 @@ Gurax_ImplementFunctionEx(glClearColor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearDepth(depth:Number)
 Gurax_DeclareFunctionAlias(glClearDepth_gurax, "glClearDepth")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -421,7 +421,7 @@ Gurax_ImplementFunctionEx(glClearDepth_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearIndex(c:Number)
 Gurax_DeclareFunctionAlias(glClearIndex_gurax, "glClearIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -441,7 +441,7 @@ Gurax_ImplementFunctionEx(glClearIndex_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearStencil(s:Number)
 Gurax_DeclareFunctionAlias(glClearStencil_gurax, "glClearStencil")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -461,7 +461,7 @@ Gurax_ImplementFunctionEx(glClearStencil_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClipPlane(plane:Number, equation:Pointer)
 Gurax_DeclareFunctionAlias(glClipPlane_gurax, "glClipPlane")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -483,7 +483,7 @@ Gurax_ImplementFunctionEx(glClipPlane_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3b(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3b_gurax, "glColor3b")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -507,7 +507,7 @@ Gurax_ImplementFunctionEx(glColor3b_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3bv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3bv_gurax, "glColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -527,7 +527,7 @@ Gurax_ImplementFunctionEx(glColor3bv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3d(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3d_gurax, "glColor3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -551,7 +551,7 @@ Gurax_ImplementFunctionEx(glColor3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3dv_gurax, "glColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -571,7 +571,7 @@ Gurax_ImplementFunctionEx(glColor3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3f(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3f_gurax, "glColor3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -595,7 +595,7 @@ Gurax_ImplementFunctionEx(glColor3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3fv_gurax, "glColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -615,7 +615,7 @@ Gurax_ImplementFunctionEx(glColor3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3i(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3i_gurax, "glColor3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -639,7 +639,7 @@ Gurax_ImplementFunctionEx(glColor3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3iv_gurax, "glColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -659,7 +659,7 @@ Gurax_ImplementFunctionEx(glColor3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3s(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3s_gurax, "glColor3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -683,7 +683,7 @@ Gurax_ImplementFunctionEx(glColor3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3sv_gurax, "glColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -703,7 +703,7 @@ Gurax_ImplementFunctionEx(glColor3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3ub(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3ub_gurax, "glColor3ub")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -727,7 +727,7 @@ Gurax_ImplementFunctionEx(glColor3ub_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3ubv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3ubv_gurax, "glColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -747,7 +747,7 @@ Gurax_ImplementFunctionEx(glColor3ubv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3ui(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3ui_gurax, "glColor3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -771,7 +771,7 @@ Gurax_ImplementFunctionEx(glColor3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3uiv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3uiv_gurax, "glColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -791,7 +791,7 @@ Gurax_ImplementFunctionEx(glColor3uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3us(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glColor3us_gurax, "glColor3us")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -815,7 +815,7 @@ Gurax_ImplementFunctionEx(glColor3us_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor3usv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor3usv_gurax, "glColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -835,7 +835,7 @@ Gurax_ImplementFunctionEx(glColor3usv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4b(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4b_gurax, "glColor4b")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -861,7 +861,7 @@ Gurax_ImplementFunctionEx(glColor4b_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4bv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4bv_gurax, "glColor4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -881,7 +881,7 @@ Gurax_ImplementFunctionEx(glColor4bv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4d(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4d_gurax, "glColor4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -907,7 +907,7 @@ Gurax_ImplementFunctionEx(glColor4d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4dv_gurax, "glColor4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -927,7 +927,7 @@ Gurax_ImplementFunctionEx(glColor4dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4f(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4f_gurax, "glColor4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -953,7 +953,7 @@ Gurax_ImplementFunctionEx(glColor4f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4fv_gurax, "glColor4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -973,7 +973,7 @@ Gurax_ImplementFunctionEx(glColor4fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4i(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4i_gurax, "glColor4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -999,7 +999,7 @@ Gurax_ImplementFunctionEx(glColor4i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4iv_gurax, "glColor4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1019,7 +1019,7 @@ Gurax_ImplementFunctionEx(glColor4iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4s(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4s_gurax, "glColor4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1045,7 +1045,7 @@ Gurax_ImplementFunctionEx(glColor4s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4sv_gurax, "glColor4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1065,7 +1065,7 @@ Gurax_ImplementFunctionEx(glColor4sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4ub(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4ub_gurax, "glColor4ub")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1091,7 +1091,7 @@ Gurax_ImplementFunctionEx(glColor4ub_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4ubv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4ubv_gurax, "glColor4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1111,7 +1111,7 @@ Gurax_ImplementFunctionEx(glColor4ubv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4ui(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4ui_gurax, "glColor4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1137,7 +1137,7 @@ Gurax_ImplementFunctionEx(glColor4ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4uiv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4uiv_gurax, "glColor4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1157,7 +1157,7 @@ Gurax_ImplementFunctionEx(glColor4uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4us(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glColor4us_gurax, "glColor4us")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1183,7 +1183,7 @@ Gurax_ImplementFunctionEx(glColor4us_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColor4usv(v:Pointer)
 Gurax_DeclareFunctionAlias(glColor4usv_gurax, "glColor4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1203,7 +1203,7 @@ Gurax_ImplementFunctionEx(glColor4usv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool)
 Gurax_DeclareFunctionAlias(glColorMask_gurax, "glColorMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1229,7 +1229,7 @@ Gurax_ImplementFunctionEx(glColorMask_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorMaterial(face:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glColorMaterial_gurax, "glColorMaterial")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1251,7 +1251,7 @@ Gurax_ImplementFunctionEx(glColorMaterial_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorPointer_gurax, "glColorPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1277,7 +1277,7 @@ Gurax_ImplementFunctionEx(glColorPointer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyPixels(x:Number, y:Number, width:Number, height:Number, type:Number)
 Gurax_DeclareFunctionAlias(glCopyPixels_gurax, "glCopyPixels")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1305,7 +1305,7 @@ Gurax_ImplementFunctionEx(glCopyPixels_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTexImage1D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, border:Number)
 Gurax_DeclareFunctionAlias(glCopyTexImage1D_gurax, "glCopyTexImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1337,7 +1337,7 @@ Gurax_ImplementFunctionEx(glCopyTexImage1D_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTexImage2D(target:Number, level:Number, internalFormat:Number, x:Number, y:Number, width:Number, height:Number, border:Number)
 Gurax_DeclareFunctionAlias(glCopyTexImage2D_gurax, "glCopyTexImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1371,7 +1371,7 @@ Gurax_ImplementFunctionEx(glCopyTexImage2D_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTexSubImage1D(target:Number, level:Number, xoffset:Number, x:Number, y:Number, width:Number)
 Gurax_DeclareFunctionAlias(glCopyTexSubImage1D_gurax, "glCopyTexSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1401,7 +1401,7 @@ Gurax_ImplementFunctionEx(glCopyTexSubImage1D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glCopyTexSubImage2D_gurax, "glCopyTexSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1435,7 +1435,7 @@ Gurax_ImplementFunctionEx(glCopyTexSubImage2D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCullFace(mode:Number)
 Gurax_DeclareFunctionAlias(glCullFace_gurax, "glCullFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1455,7 +1455,7 @@ Gurax_ImplementFunctionEx(glCullFace_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteLists(list:Number, range:Number)
 Gurax_DeclareFunctionAlias(glDeleteLists_gurax, "glDeleteLists")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1477,7 +1477,7 @@ Gurax_ImplementFunctionEx(glDeleteLists_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteTextures(n:Number, textures:Pointer)
 Gurax_DeclareFunctionAlias(glDeleteTextures_gurax, "glDeleteTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1499,7 +1499,7 @@ Gurax_ImplementFunctionEx(glDeleteTextures_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthFunc(func:Number)
 Gurax_DeclareFunctionAlias(glDepthFunc_gurax, "glDepthFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1519,7 +1519,7 @@ Gurax_ImplementFunctionEx(glDepthFunc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthMask(flag:Bool)
 Gurax_DeclareFunctionAlias(glDepthMask_gurax, "glDepthMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1539,7 +1539,7 @@ Gurax_ImplementFunctionEx(glDepthMask_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthRange(zNear:Number, zFar:Number)
 Gurax_DeclareFunctionAlias(glDepthRange_gurax, "glDepthRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1561,7 +1561,7 @@ Gurax_ImplementFunctionEx(glDepthRange_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisable(cap:Number)
 Gurax_DeclareFunctionAlias(glDisable_gurax, "glDisable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1581,7 +1581,7 @@ Gurax_ImplementFunctionEx(glDisable_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisableClientState(array:Number)
 Gurax_DeclareFunctionAlias(glDisableClientState_gurax, "glDisableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1601,7 +1601,7 @@ Gurax_ImplementFunctionEx(glDisableClientState_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawArrays(mode:Number, first:Number, count:Number)
 Gurax_DeclareFunctionAlias(glDrawArrays_gurax, "glDrawArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1625,7 +1625,7 @@ Gurax_ImplementFunctionEx(glDrawArrays_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawBuffer(mode:Number)
 Gurax_DeclareFunctionAlias(glDrawBuffer_gurax, "glDrawBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1645,7 +1645,7 @@ Gurax_ImplementFunctionEx(glDrawBuffer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElements(mode:Number, count:Number, type:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawElements_gurax, "glDrawElements")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1671,7 +1671,7 @@ Gurax_ImplementFunctionEx(glDrawElements_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawPixels(width:Number, height:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawPixels_gurax, "glDrawPixels")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1699,7 +1699,7 @@ Gurax_ImplementFunctionEx(glDrawPixels_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEdgeFlag(flag:Bool)
 Gurax_DeclareFunctionAlias(glEdgeFlag_gurax, "glEdgeFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1719,7 +1719,7 @@ Gurax_ImplementFunctionEx(glEdgeFlag_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEdgeFlagPointer(stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glEdgeFlagPointer_gurax, "glEdgeFlagPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1741,7 +1741,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagPointer_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEdgeFlagv(flag:Pointer)
 Gurax_DeclareFunctionAlias(glEdgeFlagv_gurax, "glEdgeFlagv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1761,7 +1761,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnable(cap:Number)
 Gurax_DeclareFunctionAlias(glEnable_gurax, "glEnable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1781,7 +1781,7 @@ Gurax_ImplementFunctionEx(glEnable_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnableClientState(array:Number)
 Gurax_DeclareFunctionAlias(glEnableClientState_gurax, "glEnableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1801,7 +1801,7 @@ Gurax_ImplementFunctionEx(glEnableClientState_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnd()
 Gurax_DeclareFunctionAlias(glEnd_gurax, "glEnd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1817,7 +1817,7 @@ Gurax_ImplementFunctionEx(glEnd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndList()
 Gurax_DeclareFunctionAlias(glEndList_gurax, "glEndList")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1833,7 +1833,7 @@ Gurax_ImplementFunctionEx(glEndList_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord1d(u:Number)
 Gurax_DeclareFunctionAlias(glEvalCoord1d_gurax, "glEvalCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1853,7 +1853,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord1dv(u:Pointer)
 Gurax_DeclareFunctionAlias(glEvalCoord1dv_gurax, "glEvalCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1873,7 +1873,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord1f(u:Number)
 Gurax_DeclareFunctionAlias(glEvalCoord1f_gurax, "glEvalCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1893,7 +1893,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord1fv(u:Pointer)
 Gurax_DeclareFunctionAlias(glEvalCoord1fv_gurax, "glEvalCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1913,7 +1913,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord2d(u:Number, v:Number)
 Gurax_DeclareFunctionAlias(glEvalCoord2d_gurax, "glEvalCoord2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1935,7 +1935,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord2dv(u:Pointer)
 Gurax_DeclareFunctionAlias(glEvalCoord2dv_gurax, "glEvalCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1955,7 +1955,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord2f(u:Number, v:Number)
 Gurax_DeclareFunctionAlias(glEvalCoord2f_gurax, "glEvalCoord2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1977,7 +1977,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalCoord2fv(u:Pointer)
 Gurax_DeclareFunctionAlias(glEvalCoord2fv_gurax, "glEvalCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1997,7 +1997,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalMesh1(mode:Number, i1:Number, i2:Number)
 Gurax_DeclareFunctionAlias(glEvalMesh1_gurax, "glEvalMesh1")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2021,7 +2021,7 @@ Gurax_ImplementFunctionEx(glEvalMesh1_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalMesh2(mode:Number, i1:Number, i2:Number, j1:Number, j2:Number)
 Gurax_DeclareFunctionAlias(glEvalMesh2_gurax, "glEvalMesh2")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2049,7 +2049,7 @@ Gurax_ImplementFunctionEx(glEvalMesh2_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalPoint1(i:Number)
 Gurax_DeclareFunctionAlias(glEvalPoint1_gurax, "glEvalPoint1")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2069,7 +2069,7 @@ Gurax_ImplementFunctionEx(glEvalPoint1_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEvalPoint2(i:Number, j:Number)
 Gurax_DeclareFunctionAlias(glEvalPoint2_gurax, "glEvalPoint2")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2091,7 +2091,7 @@ Gurax_ImplementFunctionEx(glEvalPoint2_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFeedbackBuffer(size:Number, type:Number, buffer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glFeedbackBuffer_gurax, "glFeedbackBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2115,7 +2115,7 @@ Gurax_ImplementFunctionEx(glFeedbackBuffer_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFinish()
 Gurax_DeclareFunctionAlias(glFinish_gurax, "glFinish")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2131,7 +2131,7 @@ Gurax_ImplementFunctionEx(glFinish_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFlush()
 Gurax_DeclareFunctionAlias(glFlush_gurax, "glFlush")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2147,7 +2147,7 @@ Gurax_ImplementFunctionEx(glFlush_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogf(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glFogf_gurax, "glFogf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2169,7 +2169,7 @@ Gurax_ImplementFunctionEx(glFogf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogfv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glFogfv_gurax, "glFogfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2191,7 +2191,7 @@ Gurax_ImplementFunctionEx(glFogfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogi(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glFogi_gurax, "glFogi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2213,7 +2213,7 @@ Gurax_ImplementFunctionEx(glFogi_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogiv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glFogiv_gurax, "glFogiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2235,7 +2235,7 @@ Gurax_ImplementFunctionEx(glFogiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFrontFace(mode:Number)
 Gurax_DeclareFunctionAlias(glFrontFace_gurax, "glFrontFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2255,7 +2255,7 @@ Gurax_ImplementFunctionEx(glFrontFace_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFrustum(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
 Gurax_DeclareFunctionAlias(glFrustum_gurax, "glFrustum")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2285,7 +2285,7 @@ Gurax_ImplementFunctionEx(glFrustum_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenLists(range:Number)
 Gurax_DeclareFunctionAlias(glGenLists_gurax, "glGenLists")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2305,10 +2305,10 @@ Gurax_ImplementFunctionEx(glGenLists_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGenTextures(n:Number, textures:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenTextures_gurax, "glGenTextures")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
@@ -2327,7 +2327,7 @@ Gurax_ImplementFunctionEx(glGenTextures_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBooleanv(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBooleanv_gurax, "glGetBooleanv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2349,7 +2349,7 @@ Gurax_ImplementFunctionEx(glGetBooleanv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetClipPlane(plane:Number, equation:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetClipPlane_gurax, "glGetClipPlane")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2371,7 +2371,7 @@ Gurax_ImplementFunctionEx(glGetClipPlane_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetDoublev(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetDoublev_gurax, "glGetDoublev")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2393,7 +2393,7 @@ Gurax_ImplementFunctionEx(glGetDoublev_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetError()
 Gurax_DeclareFunctionAlias(glGetError_gurax, "glGetError")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2409,7 +2409,7 @@ Gurax_ImplementFunctionEx(glGetError_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetFloatv(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetFloatv_gurax, "glGetFloatv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2431,7 +2431,7 @@ Gurax_ImplementFunctionEx(glGetFloatv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetIntegerv(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetIntegerv_gurax, "glGetIntegerv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2453,7 +2453,7 @@ Gurax_ImplementFunctionEx(glGetIntegerv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetLightfv(light:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetLightfv_gurax, "glGetLightfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2477,7 +2477,7 @@ Gurax_ImplementFunctionEx(glGetLightfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetLightiv(light:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetLightiv_gurax, "glGetLightiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2501,7 +2501,7 @@ Gurax_ImplementFunctionEx(glGetLightiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMapdv(target:Number, query:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMapdv_gurax, "glGetMapdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2525,7 +2525,7 @@ Gurax_ImplementFunctionEx(glGetMapdv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMapfv(target:Number, query:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMapfv_gurax, "glGetMapfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2549,7 +2549,7 @@ Gurax_ImplementFunctionEx(glGetMapfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMapiv(target:Number, query:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMapiv_gurax, "glGetMapiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2573,7 +2573,7 @@ Gurax_ImplementFunctionEx(glGetMapiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMaterialfv(face:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMaterialfv_gurax, "glGetMaterialfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2597,7 +2597,7 @@ Gurax_ImplementFunctionEx(glGetMaterialfv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMaterialiv(face:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMaterialiv_gurax, "glGetMaterialiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2621,7 +2621,7 @@ Gurax_ImplementFunctionEx(glGetMaterialiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetPixelMapfv(map:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetPixelMapfv_gurax, "glGetPixelMapfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2643,7 +2643,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapfv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetPixelMapuiv(map:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetPixelMapuiv_gurax, "glGetPixelMapuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2665,7 +2665,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapuiv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetPixelMapusv(map:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetPixelMapusv_gurax, "glGetPixelMapusv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2687,7 +2687,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapusv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetPolygonStipple(mask:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetPolygonStipple_gurax, "glGetPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2707,7 +2707,7 @@ Gurax_ImplementFunctionEx(glGetPolygonStipple_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetString(name:Number)
 Gurax_DeclareFunctionAlias(glGetString_gurax, "glGetString")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -2727,7 +2727,7 @@ Gurax_ImplementFunctionEx(glGetString_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
-// <FuncInfo>
+// opengl.glGetTexEnvfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexEnvfv_gurax, "glGetTexEnvfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2751,7 +2751,7 @@ Gurax_ImplementFunctionEx(glGetTexEnvfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexEnviv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexEnviv_gurax, "glGetTexEnviv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2775,7 +2775,7 @@ Gurax_ImplementFunctionEx(glGetTexEnviv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexGendv(coord:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexGendv_gurax, "glGetTexGendv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2799,7 +2799,7 @@ Gurax_ImplementFunctionEx(glGetTexGendv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexGenfv(coord:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexGenfv_gurax, "glGetTexGenfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2823,7 +2823,7 @@ Gurax_ImplementFunctionEx(glGetTexGenfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexGeniv(coord:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexGeniv_gurax, "glGetTexGeniv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2847,7 +2847,7 @@ Gurax_ImplementFunctionEx(glGetTexGeniv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexImage(target:Number, level:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexImage_gurax, "glGetTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2875,7 +2875,7 @@ Gurax_ImplementFunctionEx(glGetTexImage_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexLevelParameterfv(target:Number, level:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexLevelParameterfv_gurax, "glGetTexLevelParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2901,7 +2901,7 @@ Gurax_ImplementFunctionEx(glGetTexLevelParameterfv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexLevelParameteriv(target:Number, level:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexLevelParameteriv_gurax, "glGetTexLevelParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2927,7 +2927,7 @@ Gurax_ImplementFunctionEx(glGetTexLevelParameteriv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexParameterfv_gurax, "glGetTexParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2951,7 +2951,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterfv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexParameteriv_gurax, "glGetTexParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2975,7 +2975,7 @@ Gurax_ImplementFunctionEx(glGetTexParameteriv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glHint(target:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glHint_gurax, "glHint")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2997,7 +2997,7 @@ Gurax_ImplementFunctionEx(glHint_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexMask(mask:Number)
 Gurax_DeclareFunctionAlias(glIndexMask_gurax, "glIndexMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3017,7 +3017,7 @@ Gurax_ImplementFunctionEx(glIndexMask_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexPointer(type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glIndexPointer_gurax, "glIndexPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3041,7 +3041,7 @@ Gurax_ImplementFunctionEx(glIndexPointer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexd(c:Number)
 Gurax_DeclareFunctionAlias(glIndexd_gurax, "glIndexd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3061,7 +3061,7 @@ Gurax_ImplementFunctionEx(glIndexd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexdv(c:Pointer)
 Gurax_DeclareFunctionAlias(glIndexdv_gurax, "glIndexdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3081,7 +3081,7 @@ Gurax_ImplementFunctionEx(glIndexdv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexf(c:Number)
 Gurax_DeclareFunctionAlias(glIndexf_gurax, "glIndexf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3101,7 +3101,7 @@ Gurax_ImplementFunctionEx(glIndexf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexfv(c:Pointer)
 Gurax_DeclareFunctionAlias(glIndexfv_gurax, "glIndexfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3121,7 +3121,7 @@ Gurax_ImplementFunctionEx(glIndexfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexi(c:Number)
 Gurax_DeclareFunctionAlias(glIndexi_gurax, "glIndexi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3141,7 +3141,7 @@ Gurax_ImplementFunctionEx(glIndexi_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexiv(c:Pointer)
 Gurax_DeclareFunctionAlias(glIndexiv_gurax, "glIndexiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3161,7 +3161,7 @@ Gurax_ImplementFunctionEx(glIndexiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexs(c:Number)
 Gurax_DeclareFunctionAlias(glIndexs_gurax, "glIndexs")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3181,7 +3181,7 @@ Gurax_ImplementFunctionEx(glIndexs_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexsv(c:Pointer)
 Gurax_DeclareFunctionAlias(glIndexsv_gurax, "glIndexsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3201,7 +3201,7 @@ Gurax_ImplementFunctionEx(glIndexsv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexub(c:Number)
 Gurax_DeclareFunctionAlias(glIndexub_gurax, "glIndexub")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3221,7 +3221,7 @@ Gurax_ImplementFunctionEx(glIndexub_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIndexubv(c:Pointer)
 Gurax_DeclareFunctionAlias(glIndexubv_gurax, "glIndexubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3241,7 +3241,7 @@ Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInitNames()
 Gurax_DeclareFunctionAlias(glInitNames_gurax, "glInitNames")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3257,7 +3257,7 @@ Gurax_ImplementFunctionEx(glInitNames_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInterleavedArrays(format:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glInterleavedArrays_gurax, "glInterleavedArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3281,7 +3281,7 @@ Gurax_ImplementFunctionEx(glInterleavedArrays_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsEnabled(cap:Number)
 Gurax_DeclareFunctionAlias(glIsEnabled_gurax, "glIsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -3301,7 +3301,7 @@ Gurax_ImplementFunctionEx(glIsEnabled_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsList(list:Number)
 Gurax_DeclareFunctionAlias(glIsList_gurax, "glIsList")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -3321,7 +3321,7 @@ Gurax_ImplementFunctionEx(glIsList_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsTexture(texture:Number)
 Gurax_DeclareFunctionAlias(glIsTexture_gurax, "glIsTexture")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -3341,7 +3341,7 @@ Gurax_ImplementFunctionEx(glIsTexture_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glLightModelf(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glLightModelf_gurax, "glLightModelf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3363,7 +3363,7 @@ Gurax_ImplementFunctionEx(glLightModelf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightModelfv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glLightModelfv_gurax, "glLightModelfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3385,7 +3385,7 @@ Gurax_ImplementFunctionEx(glLightModelfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightModeli(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glLightModeli_gurax, "glLightModeli")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3407,7 +3407,7 @@ Gurax_ImplementFunctionEx(glLightModeli_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightModeliv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glLightModeliv_gurax, "glLightModeliv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3429,7 +3429,7 @@ Gurax_ImplementFunctionEx(glLightModeliv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightf(light:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glLightf_gurax, "glLightf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3453,7 +3453,7 @@ Gurax_ImplementFunctionEx(glLightf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightfv(light:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glLightfv_gurax, "glLightfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3477,7 +3477,7 @@ Gurax_ImplementFunctionEx(glLightfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLighti(light:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glLighti_gurax, "glLighti")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3501,7 +3501,7 @@ Gurax_ImplementFunctionEx(glLighti_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLightiv(light:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glLightiv_gurax, "glLightiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3525,7 +3525,7 @@ Gurax_ImplementFunctionEx(glLightiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLineStipple(factor:Number, pattern:Number)
 Gurax_DeclareFunctionAlias(glLineStipple_gurax, "glLineStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3547,7 +3547,7 @@ Gurax_ImplementFunctionEx(glLineStipple_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLineWidth(width:Number)
 Gurax_DeclareFunctionAlias(glLineWidth_gurax, "glLineWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3567,7 +3567,7 @@ Gurax_ImplementFunctionEx(glLineWidth_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glListBase(base:Number)
 Gurax_DeclareFunctionAlias(glListBase_gurax, "glListBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3587,7 +3587,7 @@ Gurax_ImplementFunctionEx(glListBase_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadIdentity()
 Gurax_DeclareFunctionAlias(glLoadIdentity_gurax, "glLoadIdentity")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3603,7 +3603,7 @@ Gurax_ImplementFunctionEx(glLoadIdentity_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadMatrixd(m:Pointer)
 Gurax_DeclareFunctionAlias(glLoadMatrixd_gurax, "glLoadMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3623,7 +3623,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadMatrixf(m:Pointer)
 Gurax_DeclareFunctionAlias(glLoadMatrixf_gurax, "glLoadMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3643,7 +3643,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadName(name:Number)
 Gurax_DeclareFunctionAlias(glLoadName_gurax, "glLoadName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3663,7 +3663,7 @@ Gurax_ImplementFunctionEx(glLoadName_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLogicOp(opcode:Number)
 Gurax_DeclareFunctionAlias(glLogicOp_gurax, "glLogicOp")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3683,7 +3683,7 @@ Gurax_ImplementFunctionEx(glLogicOp_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMap1d(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points:Pointer)
 Gurax_DeclareFunctionAlias(glMap1d_gurax, "glMap1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3713,7 +3713,7 @@ Gurax_ImplementFunctionEx(glMap1d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMap1f(target:Number, u1:Number, u2:Number, stride:Number, order:Number, points:Pointer)
 Gurax_DeclareFunctionAlias(glMap1f_gurax, "glMap1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3743,7 +3743,7 @@ Gurax_ImplementFunctionEx(glMap1f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMap2d(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points:Pointer)
 Gurax_DeclareFunctionAlias(glMap2d_gurax, "glMap2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3781,7 +3781,7 @@ Gurax_ImplementFunctionEx(glMap2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMap2f(target:Number, u1:Number, u2:Number, ustride:Number, uorder:Number, v1:Number, v2:Number, vstride:Number, vorder:Number, points:Pointer)
 Gurax_DeclareFunctionAlias(glMap2f_gurax, "glMap2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3819,7 +3819,7 @@ Gurax_ImplementFunctionEx(glMap2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMapGrid1d(un:Number, u1:Number, u2:Number)
 Gurax_DeclareFunctionAlias(glMapGrid1d_gurax, "glMapGrid1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3843,7 +3843,7 @@ Gurax_ImplementFunctionEx(glMapGrid1d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMapGrid1f(un:Number, u1:Number, u2:Number)
 Gurax_DeclareFunctionAlias(glMapGrid1f_gurax, "glMapGrid1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3867,7 +3867,7 @@ Gurax_ImplementFunctionEx(glMapGrid1f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMapGrid2d(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glMapGrid2d_gurax, "glMapGrid2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3897,7 +3897,7 @@ Gurax_ImplementFunctionEx(glMapGrid2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMapGrid2f(un:Number, u1:Number, u2:Number, vn:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glMapGrid2f_gurax, "glMapGrid2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3927,7 +3927,7 @@ Gurax_ImplementFunctionEx(glMapGrid2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMaterialf(face:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glMaterialf_gurax, "glMaterialf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3951,7 +3951,7 @@ Gurax_ImplementFunctionEx(glMaterialf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMaterialfv(face:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glMaterialfv_gurax, "glMaterialfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3975,7 +3975,7 @@ Gurax_ImplementFunctionEx(glMaterialfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMateriali(face:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glMateriali_gurax, "glMateriali")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3999,7 +3999,7 @@ Gurax_ImplementFunctionEx(glMateriali_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMaterialiv(face:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glMaterialiv_gurax, "glMaterialiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4023,7 +4023,7 @@ Gurax_ImplementFunctionEx(glMaterialiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMatrixMode(mode:Number)
 Gurax_DeclareFunctionAlias(glMatrixMode_gurax, "glMatrixMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4043,7 +4043,7 @@ Gurax_ImplementFunctionEx(glMatrixMode_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultMatrixd(m:Pointer)
 Gurax_DeclareFunctionAlias(glMultMatrixd_gurax, "glMultMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4063,7 +4063,7 @@ Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultMatrixf(m:Pointer)
 Gurax_DeclareFunctionAlias(glMultMatrixf_gurax, "glMultMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4083,7 +4083,7 @@ Gurax_ImplementFunctionEx(glMultMatrixf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNewList(list:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glNewList_gurax, "glNewList")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4105,7 +4105,7 @@ Gurax_ImplementFunctionEx(glNewList_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3b(nx:Number, ny:Number, nz:Number)
 Gurax_DeclareFunctionAlias(glNormal3b_gurax, "glNormal3b")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4129,7 +4129,7 @@ Gurax_ImplementFunctionEx(glNormal3b_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3bv(v:Pointer)
 Gurax_DeclareFunctionAlias(glNormal3bv_gurax, "glNormal3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4149,7 +4149,7 @@ Gurax_ImplementFunctionEx(glNormal3bv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3d(nx:Number, ny:Number, nz:Number)
 Gurax_DeclareFunctionAlias(glNormal3d_gurax, "glNormal3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4173,7 +4173,7 @@ Gurax_ImplementFunctionEx(glNormal3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glNormal3dv_gurax, "glNormal3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4193,7 +4193,7 @@ Gurax_ImplementFunctionEx(glNormal3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3f(nx:Number, ny:Number, nz:Number)
 Gurax_DeclareFunctionAlias(glNormal3f_gurax, "glNormal3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4217,7 +4217,7 @@ Gurax_ImplementFunctionEx(glNormal3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glNormal3fv_gurax, "glNormal3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4237,7 +4237,7 @@ Gurax_ImplementFunctionEx(glNormal3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3i(nx:Number, ny:Number, nz:Number)
 Gurax_DeclareFunctionAlias(glNormal3i_gurax, "glNormal3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4261,7 +4261,7 @@ Gurax_ImplementFunctionEx(glNormal3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glNormal3iv_gurax, "glNormal3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4281,7 +4281,7 @@ Gurax_ImplementFunctionEx(glNormal3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3s(nx:Number, ny:Number, nz:Number)
 Gurax_DeclareFunctionAlias(glNormal3s_gurax, "glNormal3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4305,7 +4305,7 @@ Gurax_ImplementFunctionEx(glNormal3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormal3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glNormal3sv_gurax, "glNormal3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4325,7 +4325,7 @@ Gurax_ImplementFunctionEx(glNormal3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormalPointer(type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNormalPointer_gurax, "glNormalPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4349,7 +4349,7 @@ Gurax_ImplementFunctionEx(glNormalPointer_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glOrtho(left:Number, right:Number, bottom:Number, top:Number, zNear:Number, zFar:Number)
 Gurax_DeclareFunctionAlias(glOrtho_gurax, "glOrtho")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4379,7 +4379,7 @@ Gurax_ImplementFunctionEx(glOrtho_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPassThrough(token:Number)
 Gurax_DeclareFunctionAlias(glPassThrough_gurax, "glPassThrough")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4399,7 +4399,7 @@ Gurax_ImplementFunctionEx(glPassThrough_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelMapfv(map:Number, mapsize:Number, values:Pointer)
 Gurax_DeclareFunctionAlias(glPixelMapfv_gurax, "glPixelMapfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4423,7 +4423,7 @@ Gurax_ImplementFunctionEx(glPixelMapfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelMapuiv(map:Number, mapsize:Number, values:Pointer)
 Gurax_DeclareFunctionAlias(glPixelMapuiv_gurax, "glPixelMapuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4447,7 +4447,7 @@ Gurax_ImplementFunctionEx(glPixelMapuiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelMapusv(map:Number, mapsize:Number, values:Pointer)
 Gurax_DeclareFunctionAlias(glPixelMapusv_gurax, "glPixelMapusv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4471,7 +4471,7 @@ Gurax_ImplementFunctionEx(glPixelMapusv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelStoref(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPixelStoref_gurax, "glPixelStoref")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4493,7 +4493,7 @@ Gurax_ImplementFunctionEx(glPixelStoref_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelStorei(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPixelStorei_gurax, "glPixelStorei")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4515,7 +4515,7 @@ Gurax_ImplementFunctionEx(glPixelStorei_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelTransferf(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPixelTransferf_gurax, "glPixelTransferf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4537,7 +4537,7 @@ Gurax_ImplementFunctionEx(glPixelTransferf_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelTransferi(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPixelTransferi_gurax, "glPixelTransferi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4559,7 +4559,7 @@ Gurax_ImplementFunctionEx(glPixelTransferi_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPixelZoom(xfactor:Number, yfactor:Number)
 Gurax_DeclareFunctionAlias(glPixelZoom_gurax, "glPixelZoom")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4581,7 +4581,7 @@ Gurax_ImplementFunctionEx(glPixelZoom_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointSize(size:Number)
 Gurax_DeclareFunctionAlias(glPointSize_gurax, "glPointSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4601,7 +4601,7 @@ Gurax_ImplementFunctionEx(glPointSize_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPolygonMode(face:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glPolygonMode_gurax, "glPolygonMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4623,7 +4623,7 @@ Gurax_ImplementFunctionEx(glPolygonMode_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPolygonOffset(factor:Number, units:Number)
 Gurax_DeclareFunctionAlias(glPolygonOffset_gurax, "glPolygonOffset")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4645,7 +4645,7 @@ Gurax_ImplementFunctionEx(glPolygonOffset_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPolygonStipple(mask:Pointer)
 Gurax_DeclareFunctionAlias(glPolygonStipple_gurax, "glPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4665,7 +4665,7 @@ Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPopAttrib()
 Gurax_DeclareFunctionAlias(glPopAttrib_gurax, "glPopAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4681,7 +4681,7 @@ Gurax_ImplementFunctionEx(glPopAttrib_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPopClientAttrib()
 Gurax_DeclareFunctionAlias(glPopClientAttrib_gurax, "glPopClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4697,7 +4697,7 @@ Gurax_ImplementFunctionEx(glPopClientAttrib_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPopMatrix()
 Gurax_DeclareFunctionAlias(glPopMatrix_gurax, "glPopMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4713,7 +4713,7 @@ Gurax_ImplementFunctionEx(glPopMatrix_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPopName()
 Gurax_DeclareFunctionAlias(glPopName_gurax, "glPopName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4729,7 +4729,7 @@ Gurax_ImplementFunctionEx(glPopName_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPrioritizeTextures(n:Number, textures:Pointer, priorities:Pointer)
 Gurax_DeclareFunctionAlias(glPrioritizeTextures_gurax, "glPrioritizeTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4753,7 +4753,7 @@ Gurax_ImplementFunctionEx(glPrioritizeTextures_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPushAttrib(mask:Number)
 Gurax_DeclareFunctionAlias(glPushAttrib_gurax, "glPushAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4773,7 +4773,7 @@ Gurax_ImplementFunctionEx(glPushAttrib_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPushClientAttrib(mask:Number)
 Gurax_DeclareFunctionAlias(glPushClientAttrib_gurax, "glPushClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4793,7 +4793,7 @@ Gurax_ImplementFunctionEx(glPushClientAttrib_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPushMatrix()
 Gurax_DeclareFunctionAlias(glPushMatrix_gurax, "glPushMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4809,7 +4809,7 @@ Gurax_ImplementFunctionEx(glPushMatrix_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPushName(name:Number)
 Gurax_DeclareFunctionAlias(glPushName_gurax, "glPushName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4829,7 +4829,7 @@ Gurax_ImplementFunctionEx(glPushName_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2d(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glRasterPos2d_gurax, "glRasterPos2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4851,7 +4851,7 @@ Gurax_ImplementFunctionEx(glRasterPos2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos2dv_gurax, "glRasterPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4871,7 +4871,7 @@ Gurax_ImplementFunctionEx(glRasterPos2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2f(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glRasterPos2f_gurax, "glRasterPos2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4893,7 +4893,7 @@ Gurax_ImplementFunctionEx(glRasterPos2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos2fv_gurax, "glRasterPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4913,7 +4913,7 @@ Gurax_ImplementFunctionEx(glRasterPos2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2i(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glRasterPos2i_gurax, "glRasterPos2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4935,7 +4935,7 @@ Gurax_ImplementFunctionEx(glRasterPos2i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos2iv_gurax, "glRasterPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4955,7 +4955,7 @@ Gurax_ImplementFunctionEx(glRasterPos2iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2s(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glRasterPos2s_gurax, "glRasterPos2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4977,7 +4977,7 @@ Gurax_ImplementFunctionEx(glRasterPos2s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos2sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos2sv_gurax, "glRasterPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4997,7 +4997,7 @@ Gurax_ImplementFunctionEx(glRasterPos2sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3d(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRasterPos3d_gurax, "glRasterPos3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5021,7 +5021,7 @@ Gurax_ImplementFunctionEx(glRasterPos3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos3dv_gurax, "glRasterPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5041,7 +5041,7 @@ Gurax_ImplementFunctionEx(glRasterPos3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3f(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRasterPos3f_gurax, "glRasterPos3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5065,7 +5065,7 @@ Gurax_ImplementFunctionEx(glRasterPos3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos3fv_gurax, "glRasterPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5085,7 +5085,7 @@ Gurax_ImplementFunctionEx(glRasterPos3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3i(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRasterPos3i_gurax, "glRasterPos3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5109,7 +5109,7 @@ Gurax_ImplementFunctionEx(glRasterPos3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos3iv_gurax, "glRasterPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5129,7 +5129,7 @@ Gurax_ImplementFunctionEx(glRasterPos3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3s(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRasterPos3s_gurax, "glRasterPos3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5153,7 +5153,7 @@ Gurax_ImplementFunctionEx(glRasterPos3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos3sv_gurax, "glRasterPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5173,7 +5173,7 @@ Gurax_ImplementFunctionEx(glRasterPos3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4d(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glRasterPos4d_gurax, "glRasterPos4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5199,7 +5199,7 @@ Gurax_ImplementFunctionEx(glRasterPos4d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos4dv_gurax, "glRasterPos4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5219,7 +5219,7 @@ Gurax_ImplementFunctionEx(glRasterPos4dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4f(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glRasterPos4f_gurax, "glRasterPos4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5245,7 +5245,7 @@ Gurax_ImplementFunctionEx(glRasterPos4f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos4fv_gurax, "glRasterPos4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5265,7 +5265,7 @@ Gurax_ImplementFunctionEx(glRasterPos4fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4i(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glRasterPos4i_gurax, "glRasterPos4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5291,7 +5291,7 @@ Gurax_ImplementFunctionEx(glRasterPos4i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos4iv_gurax, "glRasterPos4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5311,7 +5311,7 @@ Gurax_ImplementFunctionEx(glRasterPos4iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4s(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glRasterPos4s_gurax, "glRasterPos4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5337,7 +5337,7 @@ Gurax_ImplementFunctionEx(glRasterPos4s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRasterPos4sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glRasterPos4sv_gurax, "glRasterPos4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5357,7 +5357,7 @@ Gurax_ImplementFunctionEx(glRasterPos4sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glReadBuffer(mode:Number)
 Gurax_DeclareFunctionAlias(glReadBuffer_gurax, "glReadBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5377,7 +5377,7 @@ Gurax_ImplementFunctionEx(glReadBuffer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glReadPixels(x:Number, y:Number, width:Number, height:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glReadPixels_gurax, "glReadPixels")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5409,7 +5409,7 @@ Gurax_ImplementFunctionEx(glReadPixels_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectd(x1:Number, y1:Number, x2:Number, y2:Number)
 Gurax_DeclareFunctionAlias(glRectd_gurax, "glRectd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5435,7 +5435,7 @@ Gurax_ImplementFunctionEx(glRectd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectdv(v1:Pointer, v2:Pointer)
 Gurax_DeclareFunctionAlias(glRectdv_gurax, "glRectdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5457,7 +5457,7 @@ Gurax_ImplementFunctionEx(glRectdv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectf(x1:Number, y1:Number, x2:Number, y2:Number)
 Gurax_DeclareFunctionAlias(glRectf_gurax, "glRectf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5483,7 +5483,7 @@ Gurax_ImplementFunctionEx(glRectf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectfv(v1:Pointer, v2:Pointer)
 Gurax_DeclareFunctionAlias(glRectfv_gurax, "glRectfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5505,7 +5505,7 @@ Gurax_ImplementFunctionEx(glRectfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRecti(x1:Number, y1:Number, x2:Number, y2:Number)
 Gurax_DeclareFunctionAlias(glRecti_gurax, "glRecti")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5531,7 +5531,7 @@ Gurax_ImplementFunctionEx(glRecti_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectiv(v1:Pointer, v2:Pointer)
 Gurax_DeclareFunctionAlias(glRectiv_gurax, "glRectiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5553,7 +5553,7 @@ Gurax_ImplementFunctionEx(glRectiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRects(x1:Number, y1:Number, x2:Number, y2:Number)
 Gurax_DeclareFunctionAlias(glRects_gurax, "glRects")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5579,7 +5579,7 @@ Gurax_ImplementFunctionEx(glRects_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRectsv(v1:Pointer, v2:Pointer)
 Gurax_DeclareFunctionAlias(glRectsv_gurax, "glRectsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5601,7 +5601,7 @@ Gurax_ImplementFunctionEx(glRectsv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRenderMode(mode:Number)
 Gurax_DeclareFunctionAlias(glRenderMode_gurax, "glRenderMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5621,7 +5621,7 @@ Gurax_ImplementFunctionEx(glRenderMode_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glRotated(angle:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRotated_gurax, "glRotated")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5647,7 +5647,7 @@ Gurax_ImplementFunctionEx(glRotated_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRotatef(angle:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glRotatef_gurax, "glRotatef")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5673,7 +5673,7 @@ Gurax_ImplementFunctionEx(glRotatef_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScaled(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glScaled_gurax, "glScaled")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5697,7 +5697,7 @@ Gurax_ImplementFunctionEx(glScaled_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScalef(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glScalef_gurax, "glScalef")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5721,7 +5721,7 @@ Gurax_ImplementFunctionEx(glScalef_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScissor(x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glScissor_gurax, "glScissor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5747,7 +5747,7 @@ Gurax_ImplementFunctionEx(glScissor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSelectBuffer(size:Number, buffer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSelectBuffer_gurax, "glSelectBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5769,7 +5769,7 @@ Gurax_ImplementFunctionEx(glSelectBuffer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glShadeModel(mode:Number)
 Gurax_DeclareFunctionAlias(glShadeModel_gurax, "glShadeModel")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5789,7 +5789,7 @@ Gurax_ImplementFunctionEx(glShadeModel_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilFunc(func:Number, ref:Number, mask:Number)
 Gurax_DeclareFunctionAlias(glStencilFunc_gurax, "glStencilFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5813,7 +5813,7 @@ Gurax_ImplementFunctionEx(glStencilFunc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilMask(mask:Number)
 Gurax_DeclareFunctionAlias(glStencilMask_gurax, "glStencilMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5833,7 +5833,7 @@ Gurax_ImplementFunctionEx(glStencilMask_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilOp(fail:Number, zfail:Number, zpass:Number)
 Gurax_DeclareFunctionAlias(glStencilOp_gurax, "glStencilOp")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5857,7 +5857,7 @@ Gurax_ImplementFunctionEx(glStencilOp_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1d(s:Number)
 Gurax_DeclareFunctionAlias(glTexCoord1d_gurax, "glTexCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5877,7 +5877,7 @@ Gurax_ImplementFunctionEx(glTexCoord1d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord1dv_gurax, "glTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5897,7 +5897,7 @@ Gurax_ImplementFunctionEx(glTexCoord1dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1f(s:Number)
 Gurax_DeclareFunctionAlias(glTexCoord1f_gurax, "glTexCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5917,7 +5917,7 @@ Gurax_ImplementFunctionEx(glTexCoord1f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord1fv_gurax, "glTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5937,7 +5937,7 @@ Gurax_ImplementFunctionEx(glTexCoord1fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1i(s:Number)
 Gurax_DeclareFunctionAlias(glTexCoord1i_gurax, "glTexCoord1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5957,7 +5957,7 @@ Gurax_ImplementFunctionEx(glTexCoord1i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord1iv_gurax, "glTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5977,7 +5977,7 @@ Gurax_ImplementFunctionEx(glTexCoord1iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1s(s:Number)
 Gurax_DeclareFunctionAlias(glTexCoord1s_gurax, "glTexCoord1s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5997,7 +5997,7 @@ Gurax_ImplementFunctionEx(glTexCoord1s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord1sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord1sv_gurax, "glTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6017,7 +6017,7 @@ Gurax_ImplementFunctionEx(glTexCoord1sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2d(s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glTexCoord2d_gurax, "glTexCoord2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6039,7 +6039,7 @@ Gurax_ImplementFunctionEx(glTexCoord2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord2dv_gurax, "glTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6059,7 +6059,7 @@ Gurax_ImplementFunctionEx(glTexCoord2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2f(s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glTexCoord2f_gurax, "glTexCoord2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6081,7 +6081,7 @@ Gurax_ImplementFunctionEx(glTexCoord2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord2fv_gurax, "glTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6101,7 +6101,7 @@ Gurax_ImplementFunctionEx(glTexCoord2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2i(s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glTexCoord2i_gurax, "glTexCoord2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6123,7 +6123,7 @@ Gurax_ImplementFunctionEx(glTexCoord2i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord2iv_gurax, "glTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6143,7 +6143,7 @@ Gurax_ImplementFunctionEx(glTexCoord2iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2s(s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glTexCoord2s_gurax, "glTexCoord2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6165,7 +6165,7 @@ Gurax_ImplementFunctionEx(glTexCoord2s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord2sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord2sv_gurax, "glTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6185,7 +6185,7 @@ Gurax_ImplementFunctionEx(glTexCoord2sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3d(s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glTexCoord3d_gurax, "glTexCoord3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6209,7 +6209,7 @@ Gurax_ImplementFunctionEx(glTexCoord3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord3dv_gurax, "glTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6229,7 +6229,7 @@ Gurax_ImplementFunctionEx(glTexCoord3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3f(s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glTexCoord3f_gurax, "glTexCoord3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6253,7 +6253,7 @@ Gurax_ImplementFunctionEx(glTexCoord3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord3fv_gurax, "glTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6273,7 +6273,7 @@ Gurax_ImplementFunctionEx(glTexCoord3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3i(s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glTexCoord3i_gurax, "glTexCoord3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6297,7 +6297,7 @@ Gurax_ImplementFunctionEx(glTexCoord3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord3iv_gurax, "glTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6317,7 +6317,7 @@ Gurax_ImplementFunctionEx(glTexCoord3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3s(s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glTexCoord3s_gurax, "glTexCoord3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6341,7 +6341,7 @@ Gurax_ImplementFunctionEx(glTexCoord3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord3sv_gurax, "glTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6361,7 +6361,7 @@ Gurax_ImplementFunctionEx(glTexCoord3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4d(s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glTexCoord4d_gurax, "glTexCoord4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6387,7 +6387,7 @@ Gurax_ImplementFunctionEx(glTexCoord4d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord4dv_gurax, "glTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6407,7 +6407,7 @@ Gurax_ImplementFunctionEx(glTexCoord4dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4f(s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glTexCoord4f_gurax, "glTexCoord4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6433,7 +6433,7 @@ Gurax_ImplementFunctionEx(glTexCoord4f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord4fv_gurax, "glTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6453,7 +6453,7 @@ Gurax_ImplementFunctionEx(glTexCoord4fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4i(s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glTexCoord4i_gurax, "glTexCoord4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6479,7 +6479,7 @@ Gurax_ImplementFunctionEx(glTexCoord4i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord4iv_gurax, "glTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6499,7 +6499,7 @@ Gurax_ImplementFunctionEx(glTexCoord4iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4s(s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glTexCoord4s_gurax, "glTexCoord4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6525,7 +6525,7 @@ Gurax_ImplementFunctionEx(glTexCoord4s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoord4sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glTexCoord4sv_gurax, "glTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6545,7 +6545,7 @@ Gurax_ImplementFunctionEx(glTexCoord4sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordPointer(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexCoordPointer_gurax, "glTexCoordPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6571,7 +6571,7 @@ Gurax_ImplementFunctionEx(glTexCoordPointer_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexEnvf(target:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexEnvf_gurax, "glTexEnvf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6595,7 +6595,7 @@ Gurax_ImplementFunctionEx(glTexEnvf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexEnvfv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexEnvfv_gurax, "glTexEnvfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6619,7 +6619,7 @@ Gurax_ImplementFunctionEx(glTexEnvfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexEnvi(target:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexEnvi_gurax, "glTexEnvi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6643,7 +6643,7 @@ Gurax_ImplementFunctionEx(glTexEnvi_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexEnviv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexEnviv_gurax, "glTexEnviv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6667,7 +6667,7 @@ Gurax_ImplementFunctionEx(glTexEnviv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGend(coord:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexGend_gurax, "glTexGend")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6691,7 +6691,7 @@ Gurax_ImplementFunctionEx(glTexGend_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGendv(coord:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexGendv_gurax, "glTexGendv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6715,7 +6715,7 @@ Gurax_ImplementFunctionEx(glTexGendv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGenf(coord:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexGenf_gurax, "glTexGenf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6739,7 +6739,7 @@ Gurax_ImplementFunctionEx(glTexGenf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGenfv(coord:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexGenfv_gurax, "glTexGenfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6763,7 +6763,7 @@ Gurax_ImplementFunctionEx(glTexGenfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGeni(coord:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexGeni_gurax, "glTexGeni")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6787,7 +6787,7 @@ Gurax_ImplementFunctionEx(glTexGeni_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexGeniv(coord:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexGeniv_gurax, "glTexGeniv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6811,7 +6811,7 @@ Gurax_ImplementFunctionEx(glTexGeniv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexImage1D(target:Number, level:Number, internalformat:Number, width:Number, border:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexImage1D_gurax, "glTexImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6845,7 +6845,7 @@ Gurax_ImplementFunctionEx(glTexImage1D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexImage2D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, border:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexImage2D_gurax, "glTexImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6881,7 +6881,7 @@ Gurax_ImplementFunctionEx(glTexImage2D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexParameterf(target:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexParameterf_gurax, "glTexParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6905,7 +6905,7 @@ Gurax_ImplementFunctionEx(glTexParameterf_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexParameterfv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexParameterfv_gurax, "glTexParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6929,7 +6929,7 @@ Gurax_ImplementFunctionEx(glTexParameterfv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexParameteri(target:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTexParameteri_gurax, "glTexParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6953,7 +6953,7 @@ Gurax_ImplementFunctionEx(glTexParameteri_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexParameteriv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexParameteriv_gurax, "glTexParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6977,7 +6977,7 @@ Gurax_ImplementFunctionEx(glTexParameteriv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexSubImage1D(target:Number, level:Number, xoffset:Number, width:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexSubImage1D_gurax, "glTexSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7009,7 +7009,7 @@ Gurax_ImplementFunctionEx(glTexSubImage1D_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexSubImage2D_gurax, "glTexSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7045,7 +7045,7 @@ Gurax_ImplementFunctionEx(glTexSubImage2D_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTranslated(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glTranslated_gurax, "glTranslated")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7069,7 +7069,7 @@ Gurax_ImplementFunctionEx(glTranslated_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTranslatef(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glTranslatef_gurax, "glTranslatef")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7093,7 +7093,7 @@ Gurax_ImplementFunctionEx(glTranslatef_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2d(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertex2d_gurax, "glVertex2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7115,7 +7115,7 @@ Gurax_ImplementFunctionEx(glVertex2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex2dv_gurax, "glVertex2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7135,7 +7135,7 @@ Gurax_ImplementFunctionEx(glVertex2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2f(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertex2f_gurax, "glVertex2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7157,7 +7157,7 @@ Gurax_ImplementFunctionEx(glVertex2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex2fv_gurax, "glVertex2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7177,7 +7177,7 @@ Gurax_ImplementFunctionEx(glVertex2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2i(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertex2i_gurax, "glVertex2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7199,7 +7199,7 @@ Gurax_ImplementFunctionEx(glVertex2i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex2iv_gurax, "glVertex2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7219,7 +7219,7 @@ Gurax_ImplementFunctionEx(glVertex2iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2s(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertex2s_gurax, "glVertex2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7241,7 +7241,7 @@ Gurax_ImplementFunctionEx(glVertex2s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex2sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex2sv_gurax, "glVertex2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7261,7 +7261,7 @@ Gurax_ImplementFunctionEx(glVertex2sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3d(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertex3d_gurax, "glVertex3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7285,7 +7285,7 @@ Gurax_ImplementFunctionEx(glVertex3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex3dv_gurax, "glVertex3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7305,7 +7305,7 @@ Gurax_ImplementFunctionEx(glVertex3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3f(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertex3f_gurax, "glVertex3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7329,7 +7329,7 @@ Gurax_ImplementFunctionEx(glVertex3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex3fv_gurax, "glVertex3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7349,7 +7349,7 @@ Gurax_ImplementFunctionEx(glVertex3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3i(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertex3i_gurax, "glVertex3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7373,7 +7373,7 @@ Gurax_ImplementFunctionEx(glVertex3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex3iv_gurax, "glVertex3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7393,7 +7393,7 @@ Gurax_ImplementFunctionEx(glVertex3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3s(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertex3s_gurax, "glVertex3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7417,7 +7417,7 @@ Gurax_ImplementFunctionEx(glVertex3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex3sv_gurax, "glVertex3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7437,7 +7437,7 @@ Gurax_ImplementFunctionEx(glVertex3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4d(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertex4d_gurax, "glVertex4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7463,7 +7463,7 @@ Gurax_ImplementFunctionEx(glVertex4d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex4dv_gurax, "glVertex4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7483,7 +7483,7 @@ Gurax_ImplementFunctionEx(glVertex4dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4f(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertex4f_gurax, "glVertex4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7509,7 +7509,7 @@ Gurax_ImplementFunctionEx(glVertex4f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex4fv_gurax, "glVertex4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7529,7 +7529,7 @@ Gurax_ImplementFunctionEx(glVertex4fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4i(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertex4i_gurax, "glVertex4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7555,7 +7555,7 @@ Gurax_ImplementFunctionEx(glVertex4i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex4iv_gurax, "glVertex4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7575,7 +7575,7 @@ Gurax_ImplementFunctionEx(glVertex4iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4s(x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertex4s_gurax, "glVertex4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7601,7 +7601,7 @@ Gurax_ImplementFunctionEx(glVertex4s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertex4sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glVertex4sv_gurax, "glVertex4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7621,7 +7621,7 @@ Gurax_ImplementFunctionEx(glVertex4sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexPointer(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexPointer_gurax, "glVertexPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7647,7 +7647,7 @@ Gurax_ImplementFunctionEx(glVertexPointer_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glViewport(x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glViewport_gurax, "glViewport")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7673,7 +7673,7 @@ Gurax_ImplementFunctionEx(glViewport_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glCopyTexSubImage3D_gurax, "glCopyTexSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7709,7 +7709,7 @@ Gurax_ImplementFunctionEx(glCopyTexSubImage3D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawRangeElements(mode:Number, start:Number, end:Number, count:Number, type:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawRangeElements_gurax, "glDrawRangeElements")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7739,7 +7739,7 @@ Gurax_ImplementFunctionEx(glDrawRangeElements_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexImage3D(target:Number, level:Number, internalFormat:Number, width:Number, height:Number, depth:Number, border:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexImage3D_gurax, "glTexImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7777,7 +7777,7 @@ Gurax_ImplementFunctionEx(glTexImage3D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexSubImage3D_gurax, "glTexSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7817,7 +7817,7 @@ Gurax_ImplementFunctionEx(glTexSubImage3D_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glActiveTexture(texture:Number)
 Gurax_DeclareFunctionAlias(glActiveTexture_gurax, "glActiveTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7837,7 +7837,7 @@ Gurax_ImplementFunctionEx(glActiveTexture_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClientActiveTexture(texture:Number)
 Gurax_DeclareFunctionAlias(glClientActiveTexture_gurax, "glClientActiveTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7857,7 +7857,7 @@ Gurax_ImplementFunctionEx(glClientActiveTexture_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage1D(target:Number, level:Number, internalformat:Number, width:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage1D_gurax, "glCompressedTexImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7889,7 +7889,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage1D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage2D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage2D_gurax, "glCompressedTexImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7923,7 +7923,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage2D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage3D(target:Number, level:Number, internalformat:Number, width:Number, height:Number, depth:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage3D_gurax, "glCompressedTexImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7959,7 +7959,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage3D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage1D(target:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage1D_gurax, "glCompressedTexSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7991,7 +7991,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage1D_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage2D(target:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage2D_gurax, "glCompressedTexSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8027,7 +8027,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage2D_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage3D(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage3D_gurax, "glCompressedTexSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8067,7 +8067,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage3D_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetCompressedTexImage(target:Number, lod:Number, img:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetCompressedTexImage_gurax, "glGetCompressedTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8091,7 +8091,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTexImage_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadTransposeMatrixd(m:Pointer)
 Gurax_DeclareFunctionAlias(glLoadTransposeMatrixd_gurax, "glLoadTransposeMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8111,7 +8111,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glLoadTransposeMatrixf(m:Pointer)
 Gurax_DeclareFunctionAlias(glLoadTransposeMatrixf_gurax, "glLoadTransposeMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8131,7 +8131,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultTransposeMatrixd(m:Pointer)
 Gurax_DeclareFunctionAlias(glMultTransposeMatrixd_gurax, "glMultTransposeMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8151,7 +8151,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultTransposeMatrixf(m:Pointer)
 Gurax_DeclareFunctionAlias(glMultTransposeMatrixf_gurax, "glMultTransposeMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8171,7 +8171,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixf_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1d(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1d_gurax, "glMultiTexCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8193,7 +8193,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1dv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1dv_gurax, "glMultiTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8215,7 +8215,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1f(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1f_gurax, "glMultiTexCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8237,7 +8237,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1f_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1fv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1fv_gurax, "glMultiTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8259,7 +8259,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1i(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1i_gurax, "glMultiTexCoord1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8281,7 +8281,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1iv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1iv_gurax, "glMultiTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8303,7 +8303,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1s(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1s_gurax, "glMultiTexCoord1s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8325,7 +8325,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1s_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1sv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1sv_gurax, "glMultiTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8347,7 +8347,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1sv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2d(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2d_gurax, "glMultiTexCoord2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8371,7 +8371,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2dv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2dv_gurax, "glMultiTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8393,7 +8393,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2f(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2f_gurax, "glMultiTexCoord2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8417,7 +8417,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2f_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2fv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2fv_gurax, "glMultiTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8439,7 +8439,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2i(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2i_gurax, "glMultiTexCoord2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8463,7 +8463,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2iv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2iv_gurax, "glMultiTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8485,7 +8485,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2s(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2s_gurax, "glMultiTexCoord2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8509,7 +8509,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2s_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2sv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2sv_gurax, "glMultiTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8531,7 +8531,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2sv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3d(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3d_gurax, "glMultiTexCoord3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8557,7 +8557,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3dv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3dv_gurax, "glMultiTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8579,7 +8579,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3f(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3f_gurax, "glMultiTexCoord3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8605,7 +8605,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3f_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3fv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3fv_gurax, "glMultiTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8627,7 +8627,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3i(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3i_gurax, "glMultiTexCoord3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8653,7 +8653,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3iv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3iv_gurax, "glMultiTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8675,7 +8675,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3s(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3s_gurax, "glMultiTexCoord3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8701,7 +8701,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3s_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3sv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3sv_gurax, "glMultiTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8723,7 +8723,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3sv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4d(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4d_gurax, "glMultiTexCoord4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8751,7 +8751,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4dv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4dv_gurax, "glMultiTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8773,7 +8773,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4f(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4f_gurax, "glMultiTexCoord4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8801,7 +8801,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4f_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4fv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4fv_gurax, "glMultiTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8823,7 +8823,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4i(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4i_gurax, "glMultiTexCoord4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8851,7 +8851,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4iv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4iv_gurax, "glMultiTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8873,7 +8873,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4s(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4s_gurax, "glMultiTexCoord4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8901,7 +8901,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4s_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4sv(target:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4sv_gurax, "glMultiTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8923,7 +8923,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4sv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSampleCoverage(value:Number, invert:Bool)
 Gurax_DeclareFunctionAlias(glSampleCoverage_gurax, "glSampleCoverage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8945,7 +8945,7 @@ Gurax_ImplementFunctionEx(glSampleCoverage_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendColor(red:Number, green:Number, blue:Number, alpha:Number)
 Gurax_DeclareFunctionAlias(glBlendColor_gurax, "glBlendColor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8971,7 +8971,7 @@ Gurax_ImplementFunctionEx(glBlendColor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquation(mode:Number)
 Gurax_DeclareFunctionAlias(glBlendEquation_gurax, "glBlendEquation")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8991,7 +8991,7 @@ Gurax_ImplementFunctionEx(glBlendEquation_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFuncSeparate(sfactorRGB:Number, dfactorRGB:Number, sfactorAlpha:Number, dfactorAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendFuncSeparate_gurax, "glBlendFuncSeparate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9017,7 +9017,7 @@ Gurax_ImplementFunctionEx(glBlendFuncSeparate_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogCoordPointer(type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glFogCoordPointer_gurax, "glFogCoordPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9041,7 +9041,7 @@ Gurax_ImplementFunctionEx(glFogCoordPointer_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogCoordd(coord:Number)
 Gurax_DeclareFunctionAlias(glFogCoordd_gurax, "glFogCoordd")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9061,7 +9061,7 @@ Gurax_ImplementFunctionEx(glFogCoordd_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogCoorddv(coord:Pointer)
 Gurax_DeclareFunctionAlias(glFogCoorddv_gurax, "glFogCoorddv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9081,7 +9081,7 @@ Gurax_ImplementFunctionEx(glFogCoorddv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogCoordf(coord:Number)
 Gurax_DeclareFunctionAlias(glFogCoordf_gurax, "glFogCoordf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9101,7 +9101,7 @@ Gurax_ImplementFunctionEx(glFogCoordf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFogCoordfv(coord:Pointer)
 Gurax_DeclareFunctionAlias(glFogCoordfv_gurax, "glFogCoordfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9121,7 +9121,7 @@ Gurax_ImplementFunctionEx(glFogCoordfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawArrays(mode:Number, first:Pointer, count:Pointer, drawcount:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawArrays_gurax, "glMultiDrawArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9147,7 +9147,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArrays_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawElements(mode:Number, count[]:Number, type:Number, indices[]:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiDrawElements_gurax, "glMultiDrawElements")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9180,7 +9180,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElements_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameterf(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPointParameterf_gurax, "glPointParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9202,7 +9202,7 @@ Gurax_ImplementFunctionEx(glPointParameterf_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameterfv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glPointParameterfv_gurax, "glPointParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9224,7 +9224,7 @@ Gurax_ImplementFunctionEx(glPointParameterfv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameteri(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPointParameteri_gurax, "glPointParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9246,7 +9246,7 @@ Gurax_ImplementFunctionEx(glPointParameteri_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameteriv(pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glPointParameteriv_gurax, "glPointParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9268,7 +9268,7 @@ Gurax_ImplementFunctionEx(glPointParameteriv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3b(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3b_gurax, "glSecondaryColor3b")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9292,7 +9292,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3b_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3bv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3bv_gurax, "glSecondaryColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9312,7 +9312,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3bv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3d(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3d_gurax, "glSecondaryColor3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9336,7 +9336,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3d_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3dv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3dv_gurax, "glSecondaryColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9356,7 +9356,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3dv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3f(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3f_gurax, "glSecondaryColor3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9380,7 +9380,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3f_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3fv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3fv_gurax, "glSecondaryColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9400,7 +9400,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3fv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3i(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3i_gurax, "glSecondaryColor3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9424,7 +9424,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3i_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3iv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3iv_gurax, "glSecondaryColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9444,7 +9444,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3iv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3s(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3s_gurax, "glSecondaryColor3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9468,7 +9468,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3s_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3sv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3sv_gurax, "glSecondaryColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9488,7 +9488,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3sv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3ub(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3ub_gurax, "glSecondaryColor3ub")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9512,7 +9512,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ub_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3ubv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3ubv_gurax, "glSecondaryColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9532,7 +9532,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ubv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3ui(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3ui_gurax, "glSecondaryColor3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9556,7 +9556,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3uiv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3uiv_gurax, "glSecondaryColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9576,7 +9576,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3us(red:Number, green:Number, blue:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColor3us_gurax, "glSecondaryColor3us")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9600,7 +9600,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3us_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColor3usv(v:Pointer)
 Gurax_DeclareFunctionAlias(glSecondaryColor3usv_gurax, "glSecondaryColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9620,7 +9620,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3usv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColorPointer(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSecondaryColorPointer_gurax, "glSecondaryColorPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9646,7 +9646,7 @@ Gurax_ImplementFunctionEx(glSecondaryColorPointer_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2d(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2d_gurax, "glWindowPos2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9668,7 +9668,7 @@ Gurax_ImplementFunctionEx(glWindowPos2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2dv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos2dv_gurax, "glWindowPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9688,7 +9688,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2f(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2f_gurax, "glWindowPos2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9710,7 +9710,7 @@ Gurax_ImplementFunctionEx(glWindowPos2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2fv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos2fv_gurax, "glWindowPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9730,7 +9730,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2i(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2i_gurax, "glWindowPos2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9752,7 +9752,7 @@ Gurax_ImplementFunctionEx(glWindowPos2i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2iv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos2iv_gurax, "glWindowPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9772,7 +9772,7 @@ Gurax_ImplementFunctionEx(glWindowPos2iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2s(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2s_gurax, "glWindowPos2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9794,7 +9794,7 @@ Gurax_ImplementFunctionEx(glWindowPos2s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2sv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos2sv_gurax, "glWindowPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9814,7 +9814,7 @@ Gurax_ImplementFunctionEx(glWindowPos2sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3d(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3d_gurax, "glWindowPos3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9838,7 +9838,7 @@ Gurax_ImplementFunctionEx(glWindowPos3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3dv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos3dv_gurax, "glWindowPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9858,7 +9858,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3f(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3f_gurax, "glWindowPos3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9882,7 +9882,7 @@ Gurax_ImplementFunctionEx(glWindowPos3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3fv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos3fv_gurax, "glWindowPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9902,7 +9902,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3i(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3i_gurax, "glWindowPos3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9926,7 +9926,7 @@ Gurax_ImplementFunctionEx(glWindowPos3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3iv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos3iv_gurax, "glWindowPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9946,7 +9946,7 @@ Gurax_ImplementFunctionEx(glWindowPos3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3s(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3s_gurax, "glWindowPos3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9970,7 +9970,7 @@ Gurax_ImplementFunctionEx(glWindowPos3s_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3sv(p:Pointer)
 Gurax_DeclareFunctionAlias(glWindowPos3sv_gurax, "glWindowPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9990,7 +9990,7 @@ Gurax_ImplementFunctionEx(glWindowPos3sv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBeginQuery(target:Number, id:Number)
 Gurax_DeclareFunctionAlias(glBeginQuery_gurax, "glBeginQuery")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10012,7 +10012,7 @@ Gurax_ImplementFunctionEx(glBeginQuery_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBuffer(target:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glBindBuffer_gurax, "glBindBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10034,7 +10034,7 @@ Gurax_ImplementFunctionEx(glBindBuffer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBufferData(target:Number, size:Number, data:Pointer:nil, usage:Number)
 Gurax_DeclareFunctionAlias(glBufferData_gurax, "glBufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10060,7 +10060,7 @@ Gurax_ImplementFunctionEx(glBufferData_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBufferSubData(target:Number, offset:Number, size:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBufferSubData_gurax, "glBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10086,7 +10086,7 @@ Gurax_ImplementFunctionEx(glBufferSubData_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteBuffers(n:Number, buffers:Pointer)
 Gurax_DeclareFunctionAlias(glDeleteBuffers_gurax, "glDeleteBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10108,7 +10108,7 @@ Gurax_ImplementFunctionEx(glDeleteBuffers_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteQueries(n:Number, ids:Pointer)
 Gurax_DeclareFunctionAlias(glDeleteQueries_gurax, "glDeleteQueries")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10130,7 +10130,7 @@ Gurax_ImplementFunctionEx(glDeleteQueries_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndQuery(target:Number)
 Gurax_DeclareFunctionAlias(glEndQuery_gurax, "glEndQuery")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10150,7 +10150,7 @@ Gurax_ImplementFunctionEx(glEndQuery_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenBuffers(n:Number, buffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenBuffers_gurax, "glGenBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10172,7 +10172,7 @@ Gurax_ImplementFunctionEx(glGenBuffers_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenQueries(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenQueries_gurax, "glGenQueries")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10194,7 +10194,7 @@ Gurax_ImplementFunctionEx(glGenQueries_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBufferParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBufferParameteriv_gurax, "glGetBufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10218,7 +10218,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameteriv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBufferSubData(target:Number, offset:Number, size:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBufferSubData_gurax, "glGetBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10244,7 +10244,7 @@ Gurax_ImplementFunctionEx(glGetBufferSubData_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjectiv(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjectiv_gurax, "glGetQueryObjectiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10268,7 +10268,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectiv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjectuiv(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjectuiv_gurax, "glGetQueryObjectuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10292,7 +10292,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectuiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryiv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryiv_gurax, "glGetQueryiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10316,7 +10316,7 @@ Gurax_ImplementFunctionEx(glGetQueryiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsBuffer(buffer:Number)
 Gurax_DeclareFunctionAlias(glIsBuffer_gurax, "glIsBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -10336,7 +10336,7 @@ Gurax_ImplementFunctionEx(glIsBuffer_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsQuery(id:Number)
 Gurax_DeclareFunctionAlias(glIsQuery_gurax, "glIsQuery")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -10356,7 +10356,7 @@ Gurax_ImplementFunctionEx(glIsQuery_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glMapBuffer(target:Number, access:Number)
 Gurax_DeclareFunctionAlias(glMapBuffer_gurax, "glMapBuffer")
 {
 	Declare(VTYPE_Pointer, Flag::None);
@@ -10378,7 +10378,7 @@ Gurax_ImplementFunctionEx(glMapBuffer_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Pointer(new Pointer_Memory(new MemorySloth(rtn)));
 }
 
-// <FuncInfo>
+// opengl.glUnmapBuffer(target:Number)
 Gurax_DeclareFunctionAlias(glUnmapBuffer_gurax, "glUnmapBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -10398,7 +10398,7 @@ Gurax_ImplementFunctionEx(glUnmapBuffer_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glAttachShader(program:Number, shader:Number)
 Gurax_DeclareFunctionAlias(glAttachShader_gurax, "glAttachShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10420,7 +10420,7 @@ Gurax_ImplementFunctionEx(glAttachShader_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindAttribLocation(program:Number, index:Number, name:String)
 Gurax_DeclareFunctionAlias(glBindAttribLocation_gurax, "glBindAttribLocation")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10444,7 +10444,7 @@ Gurax_ImplementFunctionEx(glBindAttribLocation_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquationSeparate(modeRGB:Number, modeAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationSeparate_gurax, "glBlendEquationSeparate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10466,7 +10466,7 @@ Gurax_ImplementFunctionEx(glBlendEquationSeparate_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompileShader(shader:Number)
 Gurax_DeclareFunctionAlias(glCompileShader_gurax, "glCompileShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10486,7 +10486,7 @@ Gurax_ImplementFunctionEx(glCompileShader_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateProgram()
 Gurax_DeclareFunctionAlias(glCreateProgram_gurax, "glCreateProgram")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10502,7 +10502,7 @@ Gurax_ImplementFunctionEx(glCreateProgram_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glCreateShader(type:Number)
 Gurax_DeclareFunctionAlias(glCreateShader_gurax, "glCreateShader")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10522,7 +10522,7 @@ Gurax_ImplementFunctionEx(glCreateShader_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glDeleteProgram(program:Number)
 Gurax_DeclareFunctionAlias(glDeleteProgram_gurax, "glDeleteProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10542,7 +10542,7 @@ Gurax_ImplementFunctionEx(glDeleteProgram_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteShader(shader:Number)
 Gurax_DeclareFunctionAlias(glDeleteShader_gurax, "glDeleteShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10562,7 +10562,7 @@ Gurax_ImplementFunctionEx(glDeleteShader_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDetachShader(program:Number, shader:Number)
 Gurax_DeclareFunctionAlias(glDetachShader_gurax, "glDetachShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10584,7 +10584,7 @@ Gurax_ImplementFunctionEx(glDetachShader_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisableVertexAttribArray(index:Number)
 Gurax_DeclareFunctionAlias(glDisableVertexAttribArray_gurax, "glDisableVertexAttribArray")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10604,7 +10604,7 @@ Gurax_ImplementFunctionEx(glDisableVertexAttribArray_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawBuffers(n:Number, bufs:Pointer)
 Gurax_DeclareFunctionAlias(glDrawBuffers_gurax, "glDrawBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10626,7 +10626,7 @@ Gurax_ImplementFunctionEx(glDrawBuffers_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnableVertexAttribArray(index:Number)
 Gurax_DeclareFunctionAlias(glEnableVertexAttribArray_gurax, "glEnableVertexAttribArray")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10646,7 +10646,7 @@ Gurax_ImplementFunctionEx(glEnableVertexAttribArray_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveAttrib(program:Number, index:Number, maxLength:Number, length:Pointer:nil, size:Pointer:nil, type:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveAttrib_gurax, "glGetActiveAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10678,7 +10678,7 @@ Gurax_ImplementFunctionEx(glGetActiveAttrib_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveUniform(program:Number, index:Number, maxLength:Number, length:Pointer:nil, size:Pointer:nil, type:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveUniform_gurax, "glGetActiveUniform")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10710,7 +10710,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniform_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetAttachedShaders(program:Number, maxCount:Number, count:Pointer:nil, shaders:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetAttachedShaders_gurax, "glGetAttachedShaders")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10736,7 +10736,7 @@ Gurax_ImplementFunctionEx(glGetAttachedShaders_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetAttribLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetAttribLocation_gurax, "glGetAttribLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10758,7 +10758,7 @@ Gurax_ImplementFunctionEx(glGetAttribLocation_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetProgramInfoLog(program:Number, bufSize:Number, length:Pointer:nil, infoLog:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramInfoLog_gurax, "glGetProgramInfoLog")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10784,7 +10784,7 @@ Gurax_ImplementFunctionEx(glGetProgramInfoLog_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramiv(program:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramiv_gurax, "glGetProgramiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10808,7 +10808,7 @@ Gurax_ImplementFunctionEx(glGetProgramiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetShaderInfoLog(shader:Number, bufSize:Number, length:Pointer:nil, infoLog:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetShaderInfoLog_gurax, "glGetShaderInfoLog")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10834,7 +10834,7 @@ Gurax_ImplementFunctionEx(glGetShaderInfoLog_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetShaderSource(obj:Number, maxLength:Number, length:Pointer:nil, source:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetShaderSource_gurax, "glGetShaderSource")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10860,7 +10860,7 @@ Gurax_ImplementFunctionEx(glGetShaderSource_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetShaderiv(shader:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetShaderiv_gurax, "glGetShaderiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10884,7 +10884,7 @@ Gurax_ImplementFunctionEx(glGetShaderiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetUniformLocation_gurax, "glGetUniformLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10906,7 +10906,7 @@ Gurax_ImplementFunctionEx(glGetUniformLocation_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetUniformfv(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformfv_gurax, "glGetUniformfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10930,7 +10930,7 @@ Gurax_ImplementFunctionEx(glGetUniformfv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformiv(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformiv_gurax, "glGetUniformiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10954,7 +10954,7 @@ Gurax_ImplementFunctionEx(glGetUniformiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribdv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribdv_gurax, "glGetVertexAttribdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10978,7 +10978,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribdv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribfv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribfv_gurax, "glGetVertexAttribfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11002,7 +11002,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribfv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribiv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribiv_gurax, "glGetVertexAttribiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11026,7 +11026,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsProgram(program:Number)
 Gurax_DeclareFunctionAlias(glIsProgram_gurax, "glIsProgram")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -11046,7 +11046,7 @@ Gurax_ImplementFunctionEx(glIsProgram_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsShader(shader:Number)
 Gurax_DeclareFunctionAlias(glIsShader_gurax, "glIsShader")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -11066,7 +11066,7 @@ Gurax_ImplementFunctionEx(glIsShader_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glLinkProgram(program:Number)
 Gurax_DeclareFunctionAlias(glLinkProgram_gurax, "glLinkProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11086,12 +11086,11 @@ Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glShaderSource(shader:Number, string[]:String, length:Pointer:nil)
 Gurax_DeclareFunctionAlias(glShaderSource_gurax, "glShaderSource")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
@@ -11104,17 +11103,17 @@ Gurax_ImplementFunctionEx(glShaderSource_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
-	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	auto string = args_gurax.PickListT<const GLchar*>([](Gurax::Value& value) {
 		return reinterpret_cast<const GLchar*>(Gurax::Value_String::GetString(value));
 	});
 	GLint* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
+	size_t count = string.size();
 	glShaderSource(shader, count, string, length);
-	return Gurax::Value::nil();
+	return Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilFuncSeparate(frontfunc:Number, backfunc:Number, ref:Number, mask:Number)
 Gurax_DeclareFunctionAlias(glStencilFuncSeparate_gurax, "glStencilFuncSeparate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11140,7 +11139,7 @@ Gurax_ImplementFunctionEx(glStencilFuncSeparate_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilMaskSeparate(face:Number, mask:Number)
 Gurax_DeclareFunctionAlias(glStencilMaskSeparate_gurax, "glStencilMaskSeparate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11162,7 +11161,7 @@ Gurax_ImplementFunctionEx(glStencilMaskSeparate_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glStencilOpSeparate(face:Number, sfail:Number, dpfail:Number, dppass:Number)
 Gurax_DeclareFunctionAlias(glStencilOpSeparate_gurax, "glStencilOpSeparate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11188,7 +11187,7 @@ Gurax_ImplementFunctionEx(glStencilOpSeparate_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1f(location:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glUniform1f_gurax, "glUniform1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11210,7 +11209,7 @@ Gurax_ImplementFunctionEx(glUniform1f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1fv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform1fv_gurax, "glUniform1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11234,7 +11233,7 @@ Gurax_ImplementFunctionEx(glUniform1fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1i(location:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glUniform1i_gurax, "glUniform1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11256,7 +11255,7 @@ Gurax_ImplementFunctionEx(glUniform1i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1iv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform1iv_gurax, "glUniform1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11280,7 +11279,7 @@ Gurax_ImplementFunctionEx(glUniform1iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2f(location:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glUniform2f_gurax, "glUniform2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11304,7 +11303,7 @@ Gurax_ImplementFunctionEx(glUniform2f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2fv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform2fv_gurax, "glUniform2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11328,7 +11327,7 @@ Gurax_ImplementFunctionEx(glUniform2fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2i(location:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glUniform2i_gurax, "glUniform2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11352,7 +11351,7 @@ Gurax_ImplementFunctionEx(glUniform2i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2iv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform2iv_gurax, "glUniform2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11376,7 +11375,7 @@ Gurax_ImplementFunctionEx(glUniform2iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3f(location:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glUniform3f_gurax, "glUniform3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11402,7 +11401,7 @@ Gurax_ImplementFunctionEx(glUniform3f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3fv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform3fv_gurax, "glUniform3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11426,7 +11425,7 @@ Gurax_ImplementFunctionEx(glUniform3fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3i(location:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glUniform3i_gurax, "glUniform3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11452,7 +11451,7 @@ Gurax_ImplementFunctionEx(glUniform3i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3iv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform3iv_gurax, "glUniform3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11476,7 +11475,7 @@ Gurax_ImplementFunctionEx(glUniform3iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4f(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glUniform4f_gurax, "glUniform4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11504,7 +11503,7 @@ Gurax_ImplementFunctionEx(glUniform4f_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4fv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform4fv_gurax, "glUniform4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11528,7 +11527,7 @@ Gurax_ImplementFunctionEx(glUniform4fv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4i(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glUniform4i_gurax, "glUniform4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11556,7 +11555,7 @@ Gurax_ImplementFunctionEx(glUniform4i_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4iv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform4iv_gurax, "glUniform4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11580,7 +11579,7 @@ Gurax_ImplementFunctionEx(glUniform4iv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix2fv_gurax, "glUniformMatrix2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11606,7 +11605,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix3fv_gurax, "glUniformMatrix3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11632,7 +11631,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix4fv_gurax, "glUniformMatrix4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11658,7 +11657,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4fv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUseProgram(program:Number)
 Gurax_DeclareFunctionAlias(glUseProgram_gurax, "glUseProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11678,7 +11677,7 @@ Gurax_ImplementFunctionEx(glUseProgram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glValidateProgram(program:Number)
 Gurax_DeclareFunctionAlias(glValidateProgram_gurax, "glValidateProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11698,7 +11697,7 @@ Gurax_ImplementFunctionEx(glValidateProgram_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1d(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1d_gurax, "glVertexAttrib1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11720,7 +11719,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1d_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1dv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib1dv_gurax, "glVertexAttrib1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11742,7 +11741,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1f(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1f_gurax, "glVertexAttrib1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11764,7 +11763,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1f_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1fv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib1fv_gurax, "glVertexAttrib1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11786,7 +11785,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1s(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1s_gurax, "glVertexAttrib1s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11808,7 +11807,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1s_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1sv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib1sv_gurax, "glVertexAttrib1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11830,7 +11829,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1sv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2d(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2d_gurax, "glVertexAttrib2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11854,7 +11853,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2d_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2dv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib2dv_gurax, "glVertexAttrib2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11876,7 +11875,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2f(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2f_gurax, "glVertexAttrib2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11900,7 +11899,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2f_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2fv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib2fv_gurax, "glVertexAttrib2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11922,7 +11921,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2s(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2s_gurax, "glVertexAttrib2s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11946,7 +11945,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2s_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2sv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib2sv_gurax, "glVertexAttrib2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11968,7 +11967,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2sv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3d(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3d_gurax, "glVertexAttrib3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11994,7 +11993,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3d_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3dv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib3dv_gurax, "glVertexAttrib3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12016,7 +12015,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3f(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3f_gurax, "glVertexAttrib3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12042,7 +12041,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3f_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3fv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib3fv_gurax, "glVertexAttrib3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12064,7 +12063,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3s(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3s_gurax, "glVertexAttrib3s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12090,7 +12089,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3s_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3sv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib3sv_gurax, "glVertexAttrib3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12112,7 +12111,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3sv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nbv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nbv_gurax, "glVertexAttrib4Nbv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12134,7 +12133,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nbv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Niv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Niv_gurax, "glVertexAttrib4Niv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12156,7 +12155,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Niv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nsv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nsv_gurax, "glVertexAttrib4Nsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12178,7 +12177,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nsv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nub(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nub_gurax, "glVertexAttrib4Nub")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12206,7 +12205,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nub_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nubv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nubv_gurax, "glVertexAttrib4Nubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12228,7 +12227,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nubv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nuiv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nuiv_gurax, "glVertexAttrib4Nuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12250,7 +12249,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nuiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4Nusv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4Nusv_gurax, "glVertexAttrib4Nusv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12272,7 +12271,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nusv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4bv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4bv_gurax, "glVertexAttrib4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12294,7 +12293,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4bv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4d(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4d_gurax, "glVertexAttrib4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12322,7 +12321,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4d_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4dv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4dv_gurax, "glVertexAttrib4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12344,7 +12343,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4f(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4f_gurax, "glVertexAttrib4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12372,7 +12371,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4f_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4fv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4fv_gurax, "glVertexAttrib4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12394,7 +12393,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4iv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4iv_gurax, "glVertexAttrib4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12416,7 +12415,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4iv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4s(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4s_gurax, "glVertexAttrib4s")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12444,7 +12443,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4s_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4sv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4sv_gurax, "glVertexAttrib4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12466,7 +12465,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4sv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4ubv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4ubv_gurax, "glVertexAttrib4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12488,7 +12487,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ubv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4uiv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4uiv_gurax, "glVertexAttrib4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12510,7 +12509,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4uiv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4usv(index:Number, v:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttrib4usv_gurax, "glVertexAttrib4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12532,7 +12531,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribPointer(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12541,7 +12540,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12556,13 +12555,13 @@ Gurax_ImplementFunctionEx(glVertexAttribPointer_gurax, processor_gurax, argument
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = reinterpret_cast<const void*>(args_gurax.PickNumber<size_t>());
 	// Function body
 	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2x3fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix2x3fv_gurax, "glUniformMatrix2x3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12588,7 +12587,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x3fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2x4fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix2x4fv_gurax, "glUniformMatrix2x4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12614,7 +12613,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x4fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3x2fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix3x2fv_gurax, "glUniformMatrix3x2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12640,7 +12639,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x2fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3x4fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix3x4fv_gurax, "glUniformMatrix3x4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12666,7 +12665,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x4fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4x2fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix4x2fv_gurax, "glUniformMatrix4x2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12692,7 +12691,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x2fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4x3fv(location:Number, count:Number, transpose:Bool, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniformMatrix4x3fv_gurax, "glUniformMatrix4x3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12718,7 +12717,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x3fv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBeginConditionalRender(id:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glBeginConditionalRender_gurax, "glBeginConditionalRender")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12740,7 +12739,7 @@ Gurax_ImplementFunctionEx(glBeginConditionalRender_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBeginTransformFeedback(primitiveMode:Number)
 Gurax_DeclareFunctionAlias(glBeginTransformFeedback_gurax, "glBeginTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12760,7 +12759,7 @@ Gurax_ImplementFunctionEx(glBeginTransformFeedback_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindFragDataLocation(program:Number, colorNumber:Number, name:String)
 Gurax_DeclareFunctionAlias(glBindFragDataLocation_gurax, "glBindFragDataLocation")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12784,7 +12783,7 @@ Gurax_ImplementFunctionEx(glBindFragDataLocation_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClampColor(target:Number, clamp:Number)
 Gurax_DeclareFunctionAlias(glClampColor_gurax, "glClampColor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12806,7 +12805,7 @@ Gurax_ImplementFunctionEx(glClampColor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferfi(buffer:Number, drawBuffer:Number, depth:Number, stencil:Number)
 Gurax_DeclareFunctionAlias(glClearBufferfi_gurax, "glClearBufferfi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12832,7 +12831,7 @@ Gurax_ImplementFunctionEx(glClearBufferfi_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferfv(buffer:Number, drawBuffer:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glClearBufferfv_gurax, "glClearBufferfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12856,7 +12855,7 @@ Gurax_ImplementFunctionEx(glClearBufferfv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferiv(buffer:Number, drawBuffer:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glClearBufferiv_gurax, "glClearBufferiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12880,7 +12879,7 @@ Gurax_ImplementFunctionEx(glClearBufferiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferuiv(buffer:Number, drawBuffer:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glClearBufferuiv_gurax, "glClearBufferuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12904,7 +12903,7 @@ Gurax_ImplementFunctionEx(glClearBufferuiv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorMaski(buf:Number, red:Bool, green:Bool, blue:Bool, alpha:Bool)
 Gurax_DeclareFunctionAlias(glColorMaski_gurax, "glColorMaski")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12932,7 +12931,7 @@ Gurax_ImplementFunctionEx(glColorMaski_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisablei(cap:Number, index:Number)
 Gurax_DeclareFunctionAlias(glDisablei_gurax, "glDisablei")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12954,7 +12953,7 @@ Gurax_ImplementFunctionEx(glDisablei_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnablei(cap:Number, index:Number)
 Gurax_DeclareFunctionAlias(glEnablei_gurax, "glEnablei")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12976,7 +12975,7 @@ Gurax_ImplementFunctionEx(glEnablei_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndConditionalRender()
 Gurax_DeclareFunctionAlias(glEndConditionalRender_gurax, "glEndConditionalRender")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12992,7 +12991,7 @@ Gurax_ImplementFunctionEx(glEndConditionalRender_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndTransformFeedback()
 Gurax_DeclareFunctionAlias(glEndTransformFeedback_gurax, "glEndTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13008,7 +13007,7 @@ Gurax_ImplementFunctionEx(glEndTransformFeedback_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBooleani_v(pname:Number, index:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBooleani_v_gurax, "glGetBooleani_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13032,7 +13031,7 @@ Gurax_ImplementFunctionEx(glGetBooleani_v_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetFragDataLocation(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetFragDataLocation_gurax, "glGetFragDataLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -13054,7 +13053,7 @@ Gurax_ImplementFunctionEx(glGetFragDataLocation_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetStringi(name:Number, index:Number)
 Gurax_DeclareFunctionAlias(glGetStringi_gurax, "glGetStringi")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -13076,7 +13075,7 @@ Gurax_ImplementFunctionEx(glGetStringi_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
 }
 
-// <FuncInfo>
+// opengl.glGetTexParameterIiv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexParameterIiv_gurax, "glGetTexParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13100,7 +13099,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterIiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTexParameterIuiv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTexParameterIuiv_gurax, "glGetTexParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13124,7 +13123,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterIuiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTransformFeedbackVarying(program:Number, index:Number, bufSize:Number, length:Pointer:nil, size:Pointer:nil, type:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTransformFeedbackVarying_gurax, "glGetTransformFeedbackVarying")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13156,7 +13155,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbackVarying_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformuiv(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformuiv_gurax, "glGetUniformuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13180,7 +13179,7 @@ Gurax_ImplementFunctionEx(glGetUniformuiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribIiv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribIiv_gurax, "glGetVertexAttribIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13204,7 +13203,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribIiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribIuiv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribIuiv_gurax, "glGetVertexAttribIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13228,7 +13227,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribIuiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsEnabledi(cap:Number, index:Number)
 Gurax_DeclareFunctionAlias(glIsEnabledi_gurax, "glIsEnabledi")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -13250,7 +13249,7 @@ Gurax_ImplementFunctionEx(glIsEnabledi_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glTexParameterIiv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexParameterIiv_gurax, "glTexParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13274,7 +13273,7 @@ Gurax_ImplementFunctionEx(glTexParameterIiv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexParameterIuiv(target:Number, pname:Number, params:Pointer)
 Gurax_DeclareFunctionAlias(glTexParameterIuiv_gurax, "glTexParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13298,7 +13297,7 @@ Gurax_ImplementFunctionEx(glTexParameterIuiv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1ui(location:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glUniform1ui_gurax, "glUniform1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13320,7 +13319,7 @@ Gurax_ImplementFunctionEx(glUniform1ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1uiv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform1uiv_gurax, "glUniform1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13344,7 +13343,7 @@ Gurax_ImplementFunctionEx(glUniform1uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2ui(location:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glUniform2ui_gurax, "glUniform2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13368,7 +13367,7 @@ Gurax_ImplementFunctionEx(glUniform2ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2uiv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform2uiv_gurax, "glUniform2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13392,7 +13391,7 @@ Gurax_ImplementFunctionEx(glUniform2uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3ui(location:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glUniform3ui_gurax, "glUniform3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13418,7 +13417,7 @@ Gurax_ImplementFunctionEx(glUniform3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3uiv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform3uiv_gurax, "glUniform3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13442,7 +13441,7 @@ Gurax_ImplementFunctionEx(glUniform3uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4ui(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glUniform4ui_gurax, "glUniform4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13470,7 +13469,7 @@ Gurax_ImplementFunctionEx(glUniform4ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4uiv(location:Number, count:Number, value:Pointer)
 Gurax_DeclareFunctionAlias(glUniform4uiv_gurax, "glUniform4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13494,7 +13493,7 @@ Gurax_ImplementFunctionEx(glUniform4uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI1i(index:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI1i_gurax, "glVertexAttribI1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13516,7 +13515,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI1iv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI1iv_gurax, "glVertexAttribI1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13538,7 +13537,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI1ui(index:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI1ui_gurax, "glVertexAttribI1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13560,7 +13559,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI1uiv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI1uiv_gurax, "glVertexAttribI1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13582,7 +13581,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI2i(index:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI2i_gurax, "glVertexAttribI2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13606,7 +13605,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI2iv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI2iv_gurax, "glVertexAttribI2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13628,7 +13627,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI2ui(index:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI2ui_gurax, "glVertexAttribI2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13652,7 +13651,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI2uiv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI2uiv_gurax, "glVertexAttribI2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13674,7 +13673,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI3i(index:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI3i_gurax, "glVertexAttribI3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13700,7 +13699,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI3iv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI3iv_gurax, "glVertexAttribI3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13722,7 +13721,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI3ui(index:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI3ui_gurax, "glVertexAttribI3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13748,7 +13747,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI3uiv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI3uiv_gurax, "glVertexAttribI3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13770,7 +13769,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4bv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4bv_gurax, "glVertexAttribI4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13792,7 +13791,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4bv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4i(index:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI4i_gurax, "glVertexAttribI4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13820,7 +13819,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4i_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4iv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4iv_gurax, "glVertexAttribI4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13842,7 +13841,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4iv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4sv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4sv_gurax, "glVertexAttribI4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13864,7 +13863,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4sv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4ubv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4ubv_gurax, "glVertexAttribI4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13886,7 +13885,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4ubv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4ui(index:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribI4ui_gurax, "glVertexAttribI4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13914,7 +13913,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4uiv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4uiv_gurax, "glVertexAttribI4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13936,7 +13935,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribI4usv(index:Number, v0:Pointer)
 Gurax_DeclareFunctionAlias(glVertexAttribI4usv_gurax, "glVertexAttribI4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13958,7 +13957,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4usv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribIPointer(index:Number, size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribIPointer_gurax, "glVertexAttribIPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -13986,7 +13985,7 @@ Gurax_ImplementFunctionEx(glVertexAttribIPointer_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawArraysInstanced(mode:Number, first:Number, count:Number, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawArraysInstanced_gurax, "glDrawArraysInstanced")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14012,7 +14011,7 @@ Gurax_ImplementFunctionEx(glDrawArraysInstanced_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsInstanced(mode:Number, count:Number, type:Number, indices:Pointer:nil, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsInstanced_gurax, "glDrawElementsInstanced")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14040,7 +14039,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstanced_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPrimitiveRestartIndex(buffer:Number)
 Gurax_DeclareFunctionAlias(glPrimitiveRestartIndex_gurax, "glPrimitiveRestartIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14060,7 +14059,7 @@ Gurax_ImplementFunctionEx(glPrimitiveRestartIndex_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexBuffer(target:Number, internalFormat:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glTexBuffer_gurax, "glTexBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14084,7 +14083,7 @@ Gurax_ImplementFunctionEx(glTexBuffer_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTexture(target:Number, attachment:Number, texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTexture_gurax, "glFramebufferTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14110,7 +14109,7 @@ Gurax_ImplementFunctionEx(glFramebufferTexture_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBufferParameteri64v(target:Number, value:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBufferParameteri64v_gurax, "glGetBufferParameteri64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14134,7 +14133,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameteri64v_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetInteger64i_v(pname:Number, index:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetInteger64i_v_gurax, "glGetInteger64i_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14158,7 +14157,7 @@ Gurax_ImplementFunctionEx(glGetInteger64i_v_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribDivisor(index:Number, divisor:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribDivisor_gurax, "glVertexAttribDivisor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14180,7 +14179,7 @@ Gurax_ImplementFunctionEx(glVertexAttribDivisor_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquationSeparatei(buf:Number, modeRGB:Number, modeAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationSeparatei_gurax, "glBlendEquationSeparatei")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14204,7 +14203,7 @@ Gurax_ImplementFunctionEx(glBlendEquationSeparatei_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquationi(buf:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationi_gurax, "glBlendEquationi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14226,7 +14225,7 @@ Gurax_ImplementFunctionEx(glBlendEquationi_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFuncSeparatei(buf:Number, srcRGB:Number, dstRGB:Number, srcAlpha:Number, dstAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendFuncSeparatei_gurax, "glBlendFuncSeparatei")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14254,7 +14253,7 @@ Gurax_ImplementFunctionEx(glBlendFuncSeparatei_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFunci(buf:Number, src:Number, dst:Number)
 Gurax_DeclareFunctionAlias(glBlendFunci_gurax, "glBlendFunci")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14278,7 +14277,7 @@ Gurax_ImplementFunctionEx(glBlendFunci_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMinSampleShading(value:Number)
 Gurax_DeclareFunctionAlias(glMinSampleShading_gurax, "glMinSampleShading")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14298,7 +14297,7 @@ Gurax_ImplementFunctionEx(glMinSampleShading_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetGraphicsResetStatus()
 Gurax_DeclareFunctionAlias(glGetGraphicsResetStatus_gurax, "glGetGraphicsResetStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -14314,7 +14313,7 @@ Gurax_ImplementFunctionEx(glGetGraphicsResetStatus_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetnCompressedTexImage(target:Number, lod:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnCompressedTexImage_gurax, "glGetnCompressedTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14340,7 +14339,7 @@ Gurax_ImplementFunctionEx(glGetnCompressedTexImage_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnTexImage(tex:Number, level:Number, format:Number, type:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnTexImage_gurax, "glGetnTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14370,7 +14369,7 @@ Gurax_ImplementFunctionEx(glGetnTexImage_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformdv(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformdv_gurax, "glGetnUniformdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14396,7 +14395,7 @@ Gurax_ImplementFunctionEx(glGetnUniformdv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawArraysIndirectCount(mode:Number, indirect:Pointer:nil, drawcount:Number, maxdrawcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCount_gurax, "glMultiDrawArraysIndirectCount")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14424,7 +14423,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCount_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawElementsIndirectCount(mode:Number, type:Number, indirect:Pointer:nil, drawcount:Number, maxdrawcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCount_gurax, "glMultiDrawElementsIndirectCount")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14454,7 +14453,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCount_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSpecializeShader(shader:Number, pEntryPoint:Pointer, numSpecializationConstants:Number, pConstantIndex:Pointer, pConstantValue:Pointer)
 Gurax_DeclareFunctionAlias(glSpecializeShader_gurax, "glSpecializeShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14482,7 +14481,7 @@ Gurax_ImplementFunctionEx(glSpecializeShader_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearDepthf(d:Number)
 Gurax_DeclareFunctionAlias(glClearDepthf_gurax, "glClearDepthf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14502,7 +14501,7 @@ Gurax_ImplementFunctionEx(glClearDepthf_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthRangef(n:Number, f:Number)
 Gurax_DeclareFunctionAlias(glDepthRangef_gurax, "glDepthRangef")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14524,7 +14523,7 @@ Gurax_ImplementFunctionEx(glDepthRangef_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetShaderPrecisionFormat(shadertype:Number, precisiontype:Number, range:Pointer:nil, precision:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetShaderPrecisionFormat_gurax, "glGetShaderPrecisionFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14550,7 +14549,7 @@ Gurax_ImplementFunctionEx(glGetShaderPrecisionFormat_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glReleaseShaderCompiler()
 Gurax_DeclareFunctionAlias(glReleaseShaderCompiler_gurax, "glReleaseShaderCompiler")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14566,7 +14565,7 @@ Gurax_ImplementFunctionEx(glReleaseShaderCompiler_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glShaderBinary(count:Number, shaders:Pointer:nil, binaryformat:Number, binary:Pointer:nil, length:Number)
 Gurax_DeclareFunctionAlias(glShaderBinary_gurax, "glShaderBinary")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14594,7 +14593,7 @@ Gurax_ImplementFunctionEx(glShaderBinary_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMemoryBarrierByRegion(barriers:Number)
 Gurax_DeclareFunctionAlias(glMemoryBarrierByRegion_gurax, "glMemoryBarrierByRegion")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14614,7 +14613,7 @@ Gurax_ImplementFunctionEx(glMemoryBarrierByRegion_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPrimitiveBoundingBoxARB(minX:Number, minY:Number, minZ:Number, minW:Number, maxX:Number, maxY:Number, maxZ:Number, maxW:Number)
 Gurax_DeclareFunctionAlias(glPrimitiveBoundingBoxARB_gurax, "glPrimitiveBoundingBoxARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14648,7 +14647,7 @@ Gurax_ImplementFunctionEx(glPrimitiveBoundingBoxARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawArraysInstancedBaseInstance(mode:Number, first:Number, count:Number, primcount:Number, baseinstance:Number)
 Gurax_DeclareFunctionAlias(glDrawArraysInstancedBaseInstance_gurax, "glDrawArraysInstancedBaseInstance")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14676,7 +14675,7 @@ Gurax_ImplementFunctionEx(glDrawArraysInstancedBaseInstance_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsInstancedBaseInstance(mode:Number, count:Number, type:Number, indices:Pointer:nil, primcount:Number, baseinstance:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseInstance_gurax, "glDrawElementsInstancedBaseInstance")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14706,7 +14705,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseInstance_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsInstancedBaseVertexBaseInstance(mode:Number, count:Number, type:Number, indices:Pointer:nil, primcount:Number, basevertex:Number, baseinstance:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseVertexBaseInstance_gurax, "glDrawElementsInstancedBaseVertexBaseInstance")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14738,7 +14737,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertexBaseInstance_gurax, p
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetImageHandleARB(texture:Number, level:Number, layered:Bool, layer:Number, format:Number)
 Gurax_DeclareFunctionAlias(glGetImageHandleARB_gurax, "glGetImageHandleARB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -14766,7 +14765,7 @@ Gurax_ImplementFunctionEx(glGetImageHandleARB_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetTextureHandleARB(texture:Number)
 Gurax_DeclareFunctionAlias(glGetTextureHandleARB_gurax, "glGetTextureHandleARB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -14786,7 +14785,7 @@ Gurax_ImplementFunctionEx(glGetTextureHandleARB_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetTextureSamplerHandleARB(texture:Number, sampler:Number)
 Gurax_DeclareFunctionAlias(glGetTextureSamplerHandleARB_gurax, "glGetTextureSamplerHandleARB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -14808,7 +14807,7 @@ Gurax_ImplementFunctionEx(glGetTextureSamplerHandleARB_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsImageHandleResidentARB(handle:Number)
 Gurax_DeclareFunctionAlias(glIsImageHandleResidentARB_gurax, "glIsImageHandleResidentARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -14828,7 +14827,7 @@ Gurax_ImplementFunctionEx(glIsImageHandleResidentARB_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsTextureHandleResidentARB(handle:Number)
 Gurax_DeclareFunctionAlias(glIsTextureHandleResidentARB_gurax, "glIsTextureHandleResidentARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -14848,7 +14847,7 @@ Gurax_ImplementFunctionEx(glIsTextureHandleResidentARB_gurax, processor_gurax, a
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glMakeImageHandleNonResidentARB(handle:Number)
 Gurax_DeclareFunctionAlias(glMakeImageHandleNonResidentARB_gurax, "glMakeImageHandleNonResidentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14868,7 +14867,7 @@ Gurax_ImplementFunctionEx(glMakeImageHandleNonResidentARB_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMakeImageHandleResidentARB(handle:Number, access:Number)
 Gurax_DeclareFunctionAlias(glMakeImageHandleResidentARB_gurax, "glMakeImageHandleResidentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14890,7 +14889,7 @@ Gurax_ImplementFunctionEx(glMakeImageHandleResidentARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMakeTextureHandleNonResidentARB(handle:Number)
 Gurax_DeclareFunctionAlias(glMakeTextureHandleNonResidentARB_gurax, "glMakeTextureHandleNonResidentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14910,7 +14909,7 @@ Gurax_ImplementFunctionEx(glMakeTextureHandleNonResidentARB_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMakeTextureHandleResidentARB(handle:Number)
 Gurax_DeclareFunctionAlias(glMakeTextureHandleResidentARB_gurax, "glMakeTextureHandleResidentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14930,7 +14929,7 @@ Gurax_ImplementFunctionEx(glMakeTextureHandleResidentARB_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformHandleui64ARB(program:Number, location:Number, value:Number)
 Gurax_DeclareFunctionAlias(glProgramUniformHandleui64ARB_gurax, "glProgramUniformHandleui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14954,7 +14953,7 @@ Gurax_ImplementFunctionEx(glProgramUniformHandleui64ARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformHandleui64vARB(program:Number, location:Number, count:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformHandleui64vARB_gurax, "glProgramUniformHandleui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -14980,7 +14979,7 @@ Gurax_ImplementFunctionEx(glProgramUniformHandleui64vARB_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformHandleui64ARB(location:Number, value:Number)
 Gurax_DeclareFunctionAlias(glUniformHandleui64ARB_gurax, "glUniformHandleui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15002,7 +15001,7 @@ Gurax_ImplementFunctionEx(glUniformHandleui64ARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformHandleui64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformHandleui64vARB_gurax, "glUniformHandleui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15026,7 +15025,7 @@ Gurax_ImplementFunctionEx(glUniformHandleui64vARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL1ui64ARB(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribL1ui64ARB_gurax, "glVertexAttribL1ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15048,7 +15047,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1ui64ARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL1ui64vARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribL1ui64vARB_gurax, "glVertexAttribL1ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15070,7 +15069,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1ui64vARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindFragDataLocationIndexed(program:Number, colorNumber:Number, index:Number, name:String)
 Gurax_DeclareFunctionAlias(glBindFragDataLocationIndexed_gurax, "glBindFragDataLocationIndexed")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15096,7 +15095,7 @@ Gurax_ImplementFunctionEx(glBindFragDataLocationIndexed_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetFragDataIndex(program:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetFragDataIndex_gurax, "glGetFragDataIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -15118,7 +15117,7 @@ Gurax_ImplementFunctionEx(glGetFragDataIndex_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glBufferStorage(target:Number, size:Number, data:Pointer:nil, flags:Number)
 Gurax_DeclareFunctionAlias(glBufferStorage_gurax, "glBufferStorage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15144,7 +15143,7 @@ Gurax_ImplementFunctionEx(glBufferStorage_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferData(target:Number, internalformat:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearBufferData_gurax, "glClearBufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15172,7 +15171,7 @@ Gurax_ImplementFunctionEx(glClearBufferData_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearBufferSubData(target:Number, internalformat:Number, offset:Number, size:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearBufferSubData_gurax, "glClearBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15204,7 +15203,7 @@ Gurax_ImplementFunctionEx(glClearBufferSubData_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedBufferDataEXT(buffer:Number, internalformat:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedBufferDataEXT_gurax, "glClearNamedBufferDataEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15232,7 +15231,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferDataEXT_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedBufferSubDataEXT(buffer:Number, internalformat:Number, offset:Number, size:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedBufferSubDataEXT_gurax, "glClearNamedBufferSubDataEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15264,7 +15263,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferSubDataEXT_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearTexImage(texture:Number, level:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearTexImage_gurax, "glClearTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15292,7 +15291,7 @@ Gurax_ImplementFunctionEx(glClearTexImage_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearTexSubImage(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearTexSubImage_gurax, "glClearTexSubImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15332,7 +15331,7 @@ Gurax_ImplementFunctionEx(glClearTexSubImage_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClipControl(origin:Number, depth:Number)
 Gurax_DeclareFunctionAlias(glClipControl_gurax, "glClipControl")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15354,7 +15353,7 @@ Gurax_ImplementFunctionEx(glClipControl_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClampColorARB(target:Number, clamp:Number)
 Gurax_DeclareFunctionAlias(glClampColorARB_gurax, "glClampColorARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15376,7 +15375,7 @@ Gurax_ImplementFunctionEx(glClampColorARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDispatchCompute(num_groups_x:Number, num_groups_y:Number, num_groups_z:Number)
 Gurax_DeclareFunctionAlias(glDispatchCompute_gurax, "glDispatchCompute")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15400,7 +15399,7 @@ Gurax_ImplementFunctionEx(glDispatchCompute_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDispatchComputeIndirect(indirect:Number)
 Gurax_DeclareFunctionAlias(glDispatchComputeIndirect_gurax, "glDispatchComputeIndirect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15420,7 +15419,7 @@ Gurax_ImplementFunctionEx(glDispatchComputeIndirect_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDispatchComputeGroupSizeARB(num_groups_x:Number, num_groups_y:Number, num_groups_z:Number, group_size_x:Number, group_size_y:Number, group_size_z:Number)
 Gurax_DeclareFunctionAlias(glDispatchComputeGroupSizeARB_gurax, "glDispatchComputeGroupSizeARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15450,7 +15449,7 @@ Gurax_ImplementFunctionEx(glDispatchComputeGroupSizeARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyBufferSubData(readtarget:Number, writetarget:Number, readoffset:Number, writeoffset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glCopyBufferSubData_gurax, "glCopyBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15478,7 +15477,7 @@ Gurax_ImplementFunctionEx(glCopyBufferSubData_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyImageSubData(srcName:Number, srcTarget:Number, srcLevel:Number, srcX:Number, srcY:Number, srcZ:Number, dstName:Number, dstTarget:Number, dstLevel:Number, dstX:Number, dstY:Number, dstZ:Number, srcWidth:Number, srcHeight:Number, srcDepth:Number)
 Gurax_DeclareFunctionAlias(glCopyImageSubData_gurax, "glCopyImageSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15526,7 +15525,7 @@ Gurax_ImplementFunctionEx(glCopyImageSubData_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDebugMessageControlARB(source:Number, type:Number, severity:Number, count:Number, ids:Pointer:nil, enabled:Bool)
 Gurax_DeclareFunctionAlias(glDebugMessageControlARB_gurax, "glDebugMessageControlARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15556,7 +15555,7 @@ Gurax_ImplementFunctionEx(glDebugMessageControlARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDebugMessageInsertARB(source:Number, type:Number, id:Number, severity:Number, length:Number, buf:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDebugMessageInsertARB_gurax, "glDebugMessageInsertARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15586,7 +15585,7 @@ Gurax_ImplementFunctionEx(glDebugMessageInsertARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetDebugMessageLogARB(count:Number, bufSize:Number, sources:Pointer:nil, types:Pointer:nil, ids:Pointer:nil, severities:Pointer:nil, lengths:Pointer:nil, messageLog:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetDebugMessageLogARB_gurax, "glGetDebugMessageLogARB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -15620,7 +15619,7 @@ Gurax_ImplementFunctionEx(glGetDebugMessageLogARB_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glBindTextureUnit(unit:Number, texture:Number)
 Gurax_DeclareFunctionAlias(glBindTextureUnit_gurax, "glBindTextureUnit")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15642,7 +15641,7 @@ Gurax_ImplementFunctionEx(glBindTextureUnit_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlitNamedFramebuffer(readFramebuffer:Number, drawFramebuffer:Number, srcX0:Number, srcY0:Number, srcX1:Number, srcY1:Number, dstX0:Number, dstY0:Number, dstX1:Number, dstY1:Number, mask:Number, filter:Number)
 Gurax_DeclareFunctionAlias(glBlitNamedFramebuffer_gurax, "glBlitNamedFramebuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15684,7 +15683,7 @@ Gurax_ImplementFunctionEx(glBlitNamedFramebuffer_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCheckNamedFramebufferStatus(framebuffer:Number, target:Number)
 Gurax_DeclareFunctionAlias(glCheckNamedFramebufferStatus_gurax, "glCheckNamedFramebufferStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -15706,7 +15705,7 @@ Gurax_ImplementFunctionEx(glCheckNamedFramebufferStatus_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glClearNamedBufferData(buffer:Number, internalformat:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedBufferData_gurax, "glClearNamedBufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15734,7 +15733,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferData_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedBufferSubData(buffer:Number, internalformat:Number, offset:Number, size:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedBufferSubData_gurax, "glClearNamedBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15766,7 +15765,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferSubData_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedFramebufferfi(framebuffer:Number, buffer:Number, drawbuffer:Number, depth:Number, stencil:Number)
 Gurax_DeclareFunctionAlias(glClearNamedFramebufferfi_gurax, "glClearNamedFramebufferfi")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15794,7 +15793,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferfi_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedFramebufferfv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedFramebufferfv_gurax, "glClearNamedFramebufferfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15820,7 +15819,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferfv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedFramebufferiv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedFramebufferiv_gurax, "glClearNamedFramebufferiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15846,7 +15845,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClearNamedFramebufferuiv(framebuffer:Number, buffer:Number, drawbuffer:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glClearNamedFramebufferuiv_gurax, "glClearNamedFramebufferuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15872,7 +15871,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferuiv_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTextureSubImage1D(texture:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTextureSubImage1D_gurax, "glCompressedTextureSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15904,7 +15903,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage1D_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTextureSubImage2D_gurax, "glCompressedTextureSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15940,7 +15939,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage2D_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTextureSubImage3D_gurax, "glCompressedTextureSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -15980,7 +15979,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage3D_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyNamedBufferSubData(readBuffer:Number, writeBuffer:Number, readOffset:Number, writeOffset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glCopyNamedBufferSubData_gurax, "glCopyNamedBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16008,7 +16007,7 @@ Gurax_ImplementFunctionEx(glCopyNamedBufferSubData_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTextureSubImage1D(texture:Number, level:Number, xoffset:Number, x:Number, y:Number, width:Number)
 Gurax_DeclareFunctionAlias(glCopyTextureSubImage1D_gurax, "glCopyTextureSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16038,7 +16037,7 @@ Gurax_ImplementFunctionEx(glCopyTextureSubImage1D_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glCopyTextureSubImage2D_gurax, "glCopyTextureSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16072,7 +16071,7 @@ Gurax_ImplementFunctionEx(glCopyTextureSubImage2D_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glCopyTextureSubImage3D_gurax, "glCopyTextureSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16108,7 +16107,7 @@ Gurax_ImplementFunctionEx(glCopyTextureSubImage3D_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateBuffers(n:Number, buffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateBuffers_gurax, "glCreateBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16130,7 +16129,7 @@ Gurax_ImplementFunctionEx(glCreateBuffers_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateFramebuffers(n:Number, framebuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateFramebuffers_gurax, "glCreateFramebuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16152,7 +16151,7 @@ Gurax_ImplementFunctionEx(glCreateFramebuffers_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateProgramPipelines(n:Number, pipelines:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateProgramPipelines_gurax, "glCreateProgramPipelines")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16174,7 +16173,7 @@ Gurax_ImplementFunctionEx(glCreateProgramPipelines_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateQueries(target:Number, n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateQueries_gurax, "glCreateQueries")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16198,7 +16197,7 @@ Gurax_ImplementFunctionEx(glCreateQueries_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateRenderbuffers(n:Number, renderbuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateRenderbuffers_gurax, "glCreateRenderbuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16220,7 +16219,7 @@ Gurax_ImplementFunctionEx(glCreateRenderbuffers_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateSamplers(n:Number, samplers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateSamplers_gurax, "glCreateSamplers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16242,7 +16241,7 @@ Gurax_ImplementFunctionEx(glCreateSamplers_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateTextures(target:Number, n:Number, textures:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateTextures_gurax, "glCreateTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16266,7 +16265,7 @@ Gurax_ImplementFunctionEx(glCreateTextures_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateTransformFeedbacks(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateTransformFeedbacks_gurax, "glCreateTransformFeedbacks")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16288,7 +16287,7 @@ Gurax_ImplementFunctionEx(glCreateTransformFeedbacks_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCreateVertexArrays(n:Number, arrays:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCreateVertexArrays_gurax, "glCreateVertexArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16310,7 +16309,7 @@ Gurax_ImplementFunctionEx(glCreateVertexArrays_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisableVertexArrayAttrib(vaobj:Number, index:Number)
 Gurax_DeclareFunctionAlias(glDisableVertexArrayAttrib_gurax, "glDisableVertexArrayAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16332,7 +16331,7 @@ Gurax_ImplementFunctionEx(glDisableVertexArrayAttrib_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnableVertexArrayAttrib(vaobj:Number, index:Number)
 Gurax_DeclareFunctionAlias(glEnableVertexArrayAttrib_gurax, "glEnableVertexArrayAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16354,7 +16353,7 @@ Gurax_ImplementFunctionEx(glEnableVertexArrayAttrib_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFlushMappedNamedBufferRange(buffer:Number, offset:Number, length:Number)
 Gurax_DeclareFunctionAlias(glFlushMappedNamedBufferRange_gurax, "glFlushMappedNamedBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16378,7 +16377,7 @@ Gurax_ImplementFunctionEx(glFlushMappedNamedBufferRange_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenerateTextureMipmap(texture:Number)
 Gurax_DeclareFunctionAlias(glGenerateTextureMipmap_gurax, "glGenerateTextureMipmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16398,7 +16397,7 @@ Gurax_ImplementFunctionEx(glGenerateTextureMipmap_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetCompressedTextureImage(texture:Number, level:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetCompressedTextureImage_gurax, "glGetCompressedTextureImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16424,7 +16423,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTextureImage_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedBufferParameteri64v(buffer:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedBufferParameteri64v_gurax, "glGetNamedBufferParameteri64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16448,7 +16447,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferParameteri64v_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedBufferParameteriv(buffer:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedBufferParameteriv_gurax, "glGetNamedBufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16472,7 +16471,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferParameteriv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedBufferSubData(buffer:Number, offset:Number, size:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedBufferSubData_gurax, "glGetNamedBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16498,7 +16497,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferSubData_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedFramebufferAttachmentParameteriv(framebuffer:Number, attachment:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedFramebufferAttachmentParameteriv_gurax, "glGetNamedFramebufferAttachmentParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16524,7 +16523,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferAttachmentParameteriv_gurax, proc
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedFramebufferParameteriv(framebuffer:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedFramebufferParameteriv_gurax, "glGetNamedFramebufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16548,7 +16547,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferParameteriv_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedRenderbufferParameteriv(renderbuffer:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedRenderbufferParameteriv_gurax, "glGetNamedRenderbufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16572,7 +16571,7 @@ Gurax_ImplementFunctionEx(glGetNamedRenderbufferParameteriv_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryBufferObjecti64v(id:Number, buffer:Number, pname:Number, offset:Number)
 Gurax_DeclareFunctionAlias(glGetQueryBufferObjecti64v_gurax, "glGetQueryBufferObjecti64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16598,7 +16597,7 @@ Gurax_ImplementFunctionEx(glGetQueryBufferObjecti64v_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryBufferObjectiv(id:Number, buffer:Number, pname:Number, offset:Number)
 Gurax_DeclareFunctionAlias(glGetQueryBufferObjectiv_gurax, "glGetQueryBufferObjectiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16624,7 +16623,7 @@ Gurax_ImplementFunctionEx(glGetQueryBufferObjectiv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryBufferObjectui64v(id:Number, buffer:Number, pname:Number, offset:Number)
 Gurax_DeclareFunctionAlias(glGetQueryBufferObjectui64v_gurax, "glGetQueryBufferObjectui64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16650,7 +16649,7 @@ Gurax_ImplementFunctionEx(glGetQueryBufferObjectui64v_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryBufferObjectuiv(id:Number, buffer:Number, pname:Number, offset:Number)
 Gurax_DeclareFunctionAlias(glGetQueryBufferObjectuiv_gurax, "glGetQueryBufferObjectuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16676,7 +16675,7 @@ Gurax_ImplementFunctionEx(glGetQueryBufferObjectuiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureImage(texture:Number, level:Number, format:Number, type:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureImage_gurax, "glGetTextureImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16706,7 +16705,7 @@ Gurax_ImplementFunctionEx(glGetTextureImage_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureLevelParameterfv(texture:Number, level:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureLevelParameterfv_gurax, "glGetTextureLevelParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16732,7 +16731,7 @@ Gurax_ImplementFunctionEx(glGetTextureLevelParameterfv_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureLevelParameteriv(texture:Number, level:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureLevelParameteriv_gurax, "glGetTextureLevelParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16758,7 +16757,7 @@ Gurax_ImplementFunctionEx(glGetTextureLevelParameteriv_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureParameterIiv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureParameterIiv_gurax, "glGetTextureParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16782,7 +16781,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterIiv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureParameterIuiv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureParameterIuiv_gurax, "glGetTextureParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16806,7 +16805,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterIuiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureParameterfv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureParameterfv_gurax, "glGetTextureParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16830,7 +16829,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterfv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureParameteriv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureParameteriv_gurax, "glGetTextureParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16854,7 +16853,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameteriv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTransformFeedbacki64_v(xfb:Number, pname:Number, index:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTransformFeedbacki64_v_gurax, "glGetTransformFeedbacki64_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16880,7 +16879,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbacki64_v_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTransformFeedbacki_v(xfb:Number, pname:Number, index:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTransformFeedbacki_v_gurax, "glGetTransformFeedbacki_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16906,7 +16905,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbacki_v_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTransformFeedbackiv(xfb:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTransformFeedbackiv_gurax, "glGetTransformFeedbackiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16930,7 +16929,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbackiv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexArrayIndexed64iv(vaobj:Number, index:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexArrayIndexed64iv_gurax, "glGetVertexArrayIndexed64iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16956,7 +16955,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayIndexed64iv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexArrayIndexediv(vaobj:Number, index:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexArrayIndexediv_gurax, "glGetVertexArrayIndexediv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -16982,7 +16981,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayIndexediv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexArrayiv(vaobj:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexArrayiv_gurax, "glGetVertexArrayiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17006,7 +17005,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayiv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateNamedFramebufferData(framebuffer:Number, numAttachments:Number, attachments:Pointer:nil)
 Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferData_gurax, "glInvalidateNamedFramebufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17030,7 +17029,7 @@ Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferData_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateNamedFramebufferSubData(framebuffer:Number, numAttachments:Number, attachments:Pointer:nil, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferSubData_gurax, "glInvalidateNamedFramebufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17062,7 +17061,7 @@ Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferSubData_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedBufferData(buffer:Number, size:Number, data:Pointer:nil, usage:Number)
 Gurax_DeclareFunctionAlias(glNamedBufferData_gurax, "glNamedBufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17088,7 +17087,7 @@ Gurax_ImplementFunctionEx(glNamedBufferData_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedBufferStorage(buffer:Number, size:Number, data:Pointer:nil, flags:Number)
 Gurax_DeclareFunctionAlias(glNamedBufferStorage_gurax, "glNamedBufferStorage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17114,7 +17113,7 @@ Gurax_ImplementFunctionEx(glNamedBufferStorage_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedBufferSubData(buffer:Number, offset:Number, size:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNamedBufferSubData_gurax, "glNamedBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17140,7 +17139,7 @@ Gurax_ImplementFunctionEx(glNamedBufferSubData_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferDrawBuffer(framebuffer:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffer_gurax, "glNamedFramebufferDrawBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17162,7 +17161,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffer_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferDrawBuffers(framebuffer:Number, n:Number, bufs:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffers_gurax, "glNamedFramebufferDrawBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17186,7 +17185,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffers_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferParameteri(framebuffer:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferParameteri_gurax, "glNamedFramebufferParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17210,7 +17209,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferParameteri_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferReadBuffer(framebuffer:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferReadBuffer_gurax, "glNamedFramebufferReadBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17232,7 +17231,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferReadBuffer_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferRenderbuffer(framebuffer:Number, attachment:Number, renderbuffertarget:Number, renderbuffer:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferRenderbuffer_gurax, "glNamedFramebufferRenderbuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17258,7 +17257,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferRenderbuffer_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferTexture(framebuffer:Number, attachment:Number, texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferTexture_gurax, "glNamedFramebufferTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17284,7 +17283,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferTexture_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferTextureLayer(framebuffer:Number, attachment:Number, texture:Number, level:Number, layer:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferTextureLayer_gurax, "glNamedFramebufferTextureLayer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17312,7 +17311,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferTextureLayer_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedRenderbufferStorage(renderbuffer:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glNamedRenderbufferStorage_gurax, "glNamedRenderbufferStorage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17338,7 +17337,7 @@ Gurax_ImplementFunctionEx(glNamedRenderbufferStorage_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedRenderbufferStorageMultisample(renderbuffer:Number, samples:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glNamedRenderbufferStorageMultisample_gurax, "glNamedRenderbufferStorageMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17366,7 +17365,7 @@ Gurax_ImplementFunctionEx(glNamedRenderbufferStorageMultisample_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureBuffer(texture:Number, internalformat:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glTextureBuffer_gurax, "glTextureBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17390,7 +17389,7 @@ Gurax_ImplementFunctionEx(glTextureBuffer_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureBufferRange(texture:Number, internalformat:Number, buffer:Number, offset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glTextureBufferRange_gurax, "glTextureBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17418,7 +17417,7 @@ Gurax_ImplementFunctionEx(glTextureBufferRange_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameterIiv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureParameterIiv_gurax, "glTextureParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17442,7 +17441,7 @@ Gurax_ImplementFunctionEx(glTextureParameterIiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameterIuiv(texture:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureParameterIuiv_gurax, "glTextureParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17466,7 +17465,7 @@ Gurax_ImplementFunctionEx(glTextureParameterIuiv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameterf(texture:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTextureParameterf_gurax, "glTextureParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17490,7 +17489,7 @@ Gurax_ImplementFunctionEx(glTextureParameterf_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameterfv(texture:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureParameterfv_gurax, "glTextureParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17514,7 +17513,7 @@ Gurax_ImplementFunctionEx(glTextureParameterfv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameteri(texture:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glTextureParameteri_gurax, "glTextureParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17538,7 +17537,7 @@ Gurax_ImplementFunctionEx(glTextureParameteri_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureParameteriv(texture:Number, pname:Number, param:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureParameteriv_gurax, "glTextureParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17562,7 +17561,7 @@ Gurax_ImplementFunctionEx(glTextureParameteriv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage1D(texture:Number, levels:Number, internalformat:Number, width:Number)
 Gurax_DeclareFunctionAlias(glTextureStorage1D_gurax, "glTextureStorage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17588,7 +17587,7 @@ Gurax_ImplementFunctionEx(glTextureStorage1D_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage2D(texture:Number, levels:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glTextureStorage2D_gurax, "glTextureStorage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17616,7 +17615,7 @@ Gurax_ImplementFunctionEx(glTextureStorage2D_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage2DMultisample(texture:Number, samples:Number, internalformat:Number, width:Number, height:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTextureStorage2DMultisample_gurax, "glTextureStorage2DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17646,7 +17645,7 @@ Gurax_ImplementFunctionEx(glTextureStorage2DMultisample_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage3D(texture:Number, levels:Number, internalformat:Number, width:Number, height:Number, depth:Number)
 Gurax_DeclareFunctionAlias(glTextureStorage3D_gurax, "glTextureStorage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17676,7 +17675,7 @@ Gurax_ImplementFunctionEx(glTextureStorage3D_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage3DMultisample(texture:Number, samples:Number, internalformat:Number, width:Number, height:Number, depth:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTextureStorage3DMultisample_gurax, "glTextureStorage3DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17708,7 +17707,7 @@ Gurax_ImplementFunctionEx(glTextureStorage3DMultisample_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureSubImage1D(texture:Number, level:Number, xoffset:Number, width:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureSubImage1D_gurax, "glTextureSubImage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17740,7 +17739,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage1D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureSubImage2D(texture:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureSubImage2D_gurax, "glTextureSubImage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17776,7 +17775,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage2D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureSubImage3D(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTextureSubImage3D_gurax, "glTextureSubImage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17816,7 +17815,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage3D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTransformFeedbackBufferBase(xfb:Number, index:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glTransformFeedbackBufferBase_gurax, "glTransformFeedbackBufferBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17840,7 +17839,7 @@ Gurax_ImplementFunctionEx(glTransformFeedbackBufferBase_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTransformFeedbackBufferRange(xfb:Number, index:Number, buffer:Number, offset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glTransformFeedbackBufferRange_gurax, "glTransformFeedbackBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17868,7 +17867,7 @@ Gurax_ImplementFunctionEx(glTransformFeedbackBufferRange_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUnmapNamedBuffer(buffer:Number)
 Gurax_DeclareFunctionAlias(glUnmapNamedBuffer_gurax, "glUnmapNamedBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -17888,7 +17887,7 @@ Gurax_ImplementFunctionEx(glUnmapNamedBuffer_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayAttribBinding(vaobj:Number, attribindex:Number, bindingindex:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayAttribBinding_gurax, "glVertexArrayAttribBinding")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17912,7 +17911,7 @@ Gurax_ImplementFunctionEx(glVertexArrayAttribBinding_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayAttribFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, normalized:Bool, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayAttribFormat_gurax, "glVertexArrayAttribFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17942,7 +17941,7 @@ Gurax_ImplementFunctionEx(glVertexArrayAttribFormat_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayAttribIFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayAttribIFormat_gurax, "glVertexArrayAttribIFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17970,7 +17969,7 @@ Gurax_ImplementFunctionEx(glVertexArrayAttribIFormat_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayAttribLFormat(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayAttribLFormat_gurax, "glVertexArrayAttribLFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -17998,7 +17997,7 @@ Gurax_ImplementFunctionEx(glVertexArrayAttribLFormat_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayBindingDivisor(vaobj:Number, bindingindex:Number, divisor:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayBindingDivisor_gurax, "glVertexArrayBindingDivisor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18022,7 +18021,7 @@ Gurax_ImplementFunctionEx(glVertexArrayBindingDivisor_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayElementBuffer(vaobj:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayElementBuffer_gurax, "glVertexArrayElementBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18044,7 +18043,7 @@ Gurax_ImplementFunctionEx(glVertexArrayElementBuffer_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexBuffer(vaobj:Number, bindingindex:Number, buffer:Number, offset:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffer_gurax, "glVertexArrayVertexBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18072,7 +18071,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexBuffer_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexBuffers(vaobj:Number, first:Number, count:Number, buffers:Pointer:nil, offsets:Pointer:nil, strides:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffers_gurax, "glVertexArrayVertexBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18102,7 +18101,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexBuffers_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawBuffersARB(n:Number, bufs:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawBuffersARB_gurax, "glDrawBuffersARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18124,7 +18123,7 @@ Gurax_ImplementFunctionEx(glDrawBuffersARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquationSeparateiARB(buf:Number, modeRGB:Number, modeAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationSeparateiARB_gurax, "glBlendEquationSeparateiARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18148,7 +18147,7 @@ Gurax_ImplementFunctionEx(glBlendEquationSeparateiARB_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendEquationiARB(buf:Number, mode:Number)
 Gurax_DeclareFunctionAlias(glBlendEquationiARB_gurax, "glBlendEquationiARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18170,7 +18169,7 @@ Gurax_ImplementFunctionEx(glBlendEquationiARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFuncSeparateiARB(buf:Number, srcRGB:Number, dstRGB:Number, srcAlpha:Number, dstAlpha:Number)
 Gurax_DeclareFunctionAlias(glBlendFuncSeparateiARB_gurax, "glBlendFuncSeparateiARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18198,7 +18197,7 @@ Gurax_ImplementFunctionEx(glBlendFuncSeparateiARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlendFunciARB(buf:Number, src:Number, dst:Number)
 Gurax_DeclareFunctionAlias(glBlendFunciARB_gurax, "glBlendFunciARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18222,7 +18221,7 @@ Gurax_ImplementFunctionEx(glBlendFunciARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsBaseVertex(mode:Number, count:Number, type:Number, indices:Pointer:nil, basevertex:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsBaseVertex_gurax, "glDrawElementsBaseVertex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18250,7 +18249,7 @@ Gurax_ImplementFunctionEx(glDrawElementsBaseVertex_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsInstancedBaseVertex(mode:Number, count:Number, type:Number, indices:Pointer:nil, primcount:Number, basevertex:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseVertex_gurax, "glDrawElementsInstancedBaseVertex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18280,7 +18279,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertex_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawRangeElementsBaseVertex(mode:Number, start:Number, end:Number, count:Number, type:Number, indices:Pointer:nil, basevertex:Number)
 Gurax_DeclareFunctionAlias(glDrawRangeElementsBaseVertex_gurax, "glDrawRangeElementsBaseVertex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18312,7 +18311,7 @@ Gurax_ImplementFunctionEx(glDrawRangeElementsBaseVertex_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawArraysIndirect(mode:Number, indirect:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawArraysIndirect_gurax, "glDrawArraysIndirect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18334,7 +18333,7 @@ Gurax_ImplementFunctionEx(glDrawArraysIndirect_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsIndirect(mode:Number, type:Number, indirect:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDrawElementsIndirect_gurax, "glDrawElementsIndirect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18358,7 +18357,7 @@ Gurax_ImplementFunctionEx(glDrawElementsIndirect_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferParameteri(target:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glFramebufferParameteri_gurax, "glFramebufferParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18382,7 +18381,7 @@ Gurax_ImplementFunctionEx(glFramebufferParameteri_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetFramebufferParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetFramebufferParameteriv_gurax, "glGetFramebufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18406,7 +18405,7 @@ Gurax_ImplementFunctionEx(glGetFramebufferParameteriv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedFramebufferParameterivEXT(framebuffer:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedFramebufferParameterivEXT_gurax, "glGetNamedFramebufferParameterivEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18430,7 +18429,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferParameterivEXT_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferParameteriEXT(framebuffer:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glNamedFramebufferParameteriEXT_gurax, "glNamedFramebufferParameteriEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18454,7 +18453,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferParameteriEXT_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindFramebuffer(target:Number, framebuffer:Number)
 Gurax_DeclareFunctionAlias(glBindFramebuffer_gurax, "glBindFramebuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18476,7 +18475,7 @@ Gurax_ImplementFunctionEx(glBindFramebuffer_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindRenderbuffer(target:Number, renderbuffer:Number)
 Gurax_DeclareFunctionAlias(glBindRenderbuffer_gurax, "glBindRenderbuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18498,7 +18497,7 @@ Gurax_ImplementFunctionEx(glBindRenderbuffer_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBlitFramebuffer(srcX0:Number, srcY0:Number, srcX1:Number, srcY1:Number, dstX0:Number, dstY0:Number, dstX1:Number, dstY1:Number, mask:Number, filter:Number)
 Gurax_DeclareFunctionAlias(glBlitFramebuffer_gurax, "glBlitFramebuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18536,7 +18535,7 @@ Gurax_ImplementFunctionEx(glBlitFramebuffer_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCheckFramebufferStatus(target:Number)
 Gurax_DeclareFunctionAlias(glCheckFramebufferStatus_gurax, "glCheckFramebufferStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -18556,7 +18555,7 @@ Gurax_ImplementFunctionEx(glCheckFramebufferStatus_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glDeleteFramebuffers(n:Number, framebuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteFramebuffers_gurax, "glDeleteFramebuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18578,7 +18577,7 @@ Gurax_ImplementFunctionEx(glDeleteFramebuffers_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteRenderbuffers(n:Number, renderbuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteRenderbuffers_gurax, "glDeleteRenderbuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18600,7 +18599,7 @@ Gurax_ImplementFunctionEx(glDeleteRenderbuffers_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferRenderbuffer(target:Number, attachment:Number, renderbuffertarget:Number, renderbuffer:Number)
 Gurax_DeclareFunctionAlias(glFramebufferRenderbuffer_gurax, "glFramebufferRenderbuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18626,7 +18625,7 @@ Gurax_ImplementFunctionEx(glFramebufferRenderbuffer_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTexture1D(target:Number, attachment:Number, textarget:Number, texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTexture1D_gurax, "glFramebufferTexture1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18654,7 +18653,7 @@ Gurax_ImplementFunctionEx(glFramebufferTexture1D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTexture2D(target:Number, attachment:Number, textarget:Number, texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTexture2D_gurax, "glFramebufferTexture2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18682,7 +18681,7 @@ Gurax_ImplementFunctionEx(glFramebufferTexture2D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTexture3D(target:Number, attachment:Number, textarget:Number, texture:Number, level:Number, layer:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTexture3D_gurax, "glFramebufferTexture3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18712,7 +18711,7 @@ Gurax_ImplementFunctionEx(glFramebufferTexture3D_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTextureLayer(target:Number, attachment:Number, texture:Number, level:Number, layer:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTextureLayer_gurax, "glFramebufferTextureLayer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18740,7 +18739,7 @@ Gurax_ImplementFunctionEx(glFramebufferTextureLayer_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenFramebuffers(n:Number, framebuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenFramebuffers_gurax, "glGenFramebuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18762,7 +18761,7 @@ Gurax_ImplementFunctionEx(glGenFramebuffers_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenRenderbuffers(n:Number, renderbuffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenRenderbuffers_gurax, "glGenRenderbuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18784,7 +18783,7 @@ Gurax_ImplementFunctionEx(glGenRenderbuffers_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenerateMipmap(target:Number)
 Gurax_DeclareFunctionAlias(glGenerateMipmap_gurax, "glGenerateMipmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18804,7 +18803,7 @@ Gurax_ImplementFunctionEx(glGenerateMipmap_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetFramebufferAttachmentParameteriv(target:Number, attachment:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetFramebufferAttachmentParameteriv_gurax, "glGetFramebufferAttachmentParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18830,7 +18829,7 @@ Gurax_ImplementFunctionEx(glGetFramebufferAttachmentParameteriv_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetRenderbufferParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetRenderbufferParameteriv_gurax, "glGetRenderbufferParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18854,7 +18853,7 @@ Gurax_ImplementFunctionEx(glGetRenderbufferParameteriv_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsFramebuffer(framebuffer:Number)
 Gurax_DeclareFunctionAlias(glIsFramebuffer_gurax, "glIsFramebuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -18874,7 +18873,7 @@ Gurax_ImplementFunctionEx(glIsFramebuffer_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glIsRenderbuffer(renderbuffer:Number)
 Gurax_DeclareFunctionAlias(glIsRenderbuffer_gurax, "glIsRenderbuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -18894,7 +18893,7 @@ Gurax_ImplementFunctionEx(glIsRenderbuffer_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glRenderbufferStorage(target:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glRenderbufferStorage_gurax, "glRenderbufferStorage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18920,7 +18919,7 @@ Gurax_ImplementFunctionEx(glRenderbufferStorage_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glRenderbufferStorageMultisample(target:Number, samples:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glRenderbufferStorageMultisample_gurax, "glRenderbufferStorageMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18948,7 +18947,7 @@ Gurax_ImplementFunctionEx(glRenderbufferStorageMultisample_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTextureARB(target:Number, attachment:Number, texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTextureARB_gurax, "glFramebufferTextureARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -18974,7 +18973,7 @@ Gurax_ImplementFunctionEx(glFramebufferTextureARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTextureFaceARB(target:Number, attachment:Number, texture:Number, level:Number, face:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTextureFaceARB_gurax, "glFramebufferTextureFaceARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19002,7 +19001,7 @@ Gurax_ImplementFunctionEx(glFramebufferTextureFaceARB_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferTextureLayerARB(target:Number, attachment:Number, texture:Number, level:Number, layer:Number)
 Gurax_DeclareFunctionAlias(glFramebufferTextureLayerARB_gurax, "glFramebufferTextureLayerARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19030,7 +19029,7 @@ Gurax_ImplementFunctionEx(glFramebufferTextureLayerARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramParameteriARB(program:Number, pname:Number, value:Number)
 Gurax_DeclareFunctionAlias(glProgramParameteriARB_gurax, "glProgramParameteriARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19054,7 +19053,7 @@ Gurax_ImplementFunctionEx(glProgramParameteriARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramBinary(program:Number, binaryFormat:Number, binary:Pointer:nil, length:Number)
 Gurax_DeclareFunctionAlias(glProgramBinary_gurax, "glProgramBinary")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19080,7 +19079,7 @@ Gurax_ImplementFunctionEx(glProgramBinary_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramParameteri(program:Number, pname:Number, value:Number)
 Gurax_DeclareFunctionAlias(glProgramParameteri_gurax, "glProgramParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19104,7 +19103,7 @@ Gurax_ImplementFunctionEx(glProgramParameteri_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetCompressedTextureSubImage(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetCompressedTextureSubImage_gurax, "glGetCompressedTextureSubImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19142,7 +19141,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTextureSubImage_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetTextureSubImage(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, type:Number, bufSize:Number, pixels:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetTextureSubImage_gurax, "glGetTextureSubImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19184,7 +19183,7 @@ Gurax_ImplementFunctionEx(glGetTextureSubImage_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSpecializeShaderARB(shader:Number, pEntryPoint:Pointer:nil, numSpecializationConstants:Number, pConstantIndex:Pointer:nil, pConstantValue:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSpecializeShaderARB_gurax, "glSpecializeShaderARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19212,7 +19211,7 @@ Gurax_ImplementFunctionEx(glSpecializeShaderARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformdv(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformdv_gurax, "glGetUniformdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19236,7 +19235,7 @@ Gurax_ImplementFunctionEx(glGetUniformdv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1d(location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glUniform1d_gurax, "glUniform1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19258,7 +19257,7 @@ Gurax_ImplementFunctionEx(glUniform1d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1dv(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform1dv_gurax, "glUniform1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19282,7 +19281,7 @@ Gurax_ImplementFunctionEx(glUniform1dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2d(location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glUniform2d_gurax, "glUniform2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19306,7 +19305,7 @@ Gurax_ImplementFunctionEx(glUniform2d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2dv(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform2dv_gurax, "glUniform2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19330,7 +19329,7 @@ Gurax_ImplementFunctionEx(glUniform2dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3d(location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glUniform3d_gurax, "glUniform3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19356,7 +19355,7 @@ Gurax_ImplementFunctionEx(glUniform3d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3dv(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform3dv_gurax, "glUniform3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19380,7 +19379,7 @@ Gurax_ImplementFunctionEx(glUniform3dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4d(location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glUniform4d_gurax, "glUniform4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19408,7 +19407,7 @@ Gurax_ImplementFunctionEx(glUniform4d_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4dv(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform4dv_gurax, "glUniform4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19432,7 +19431,7 @@ Gurax_ImplementFunctionEx(glUniform4dv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix2dv_gurax, "glUniformMatrix2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19458,7 +19457,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2x3dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix2x3dv_gurax, "glUniformMatrix2x3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19484,7 +19483,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x3dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2x4dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix2x4dv_gurax, "glUniformMatrix2x4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19510,7 +19509,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x4dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix3dv_gurax, "glUniformMatrix3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19536,7 +19535,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3x2dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix3x2dv_gurax, "glUniformMatrix3x2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19562,7 +19561,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x2dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3x4dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix3x4dv_gurax, "glUniformMatrix3x4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19588,7 +19587,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x4dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix4dv_gurax, "glUniformMatrix4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19614,7 +19613,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4x2dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix4x2dv_gurax, "glUniformMatrix4x2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19640,7 +19639,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x2dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4x3dv(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix4x3dv_gurax, "glUniformMatrix4x3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19666,7 +19665,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x3dv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformi64vARB(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformi64vARB_gurax, "glGetUniformi64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19690,7 +19689,7 @@ Gurax_ImplementFunctionEx(glGetUniformi64vARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformui64vARB(program:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformui64vARB_gurax, "glGetUniformui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19714,7 +19713,7 @@ Gurax_ImplementFunctionEx(glGetUniformui64vARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformi64vARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformi64vARB_gurax, "glGetnUniformi64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19740,7 +19739,7 @@ Gurax_ImplementFunctionEx(glGetnUniformi64vARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformui64vARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformui64vARB_gurax, "glGetnUniformui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19766,7 +19765,7 @@ Gurax_ImplementFunctionEx(glGetnUniformui64vARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1i64ARB(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1i64ARB_gurax, "glProgramUniform1i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19790,7 +19789,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1i64ARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1i64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1i64vARB_gurax, "glProgramUniform1i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19816,7 +19815,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1i64vARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1ui64ARB(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1ui64ARB_gurax, "glProgramUniform1ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19840,7 +19839,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1ui64ARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1ui64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1ui64vARB_gurax, "glProgramUniform1ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19866,7 +19865,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1ui64vARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2i64ARB(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2i64ARB_gurax, "glProgramUniform2i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19892,7 +19891,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2i64ARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2i64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2i64vARB_gurax, "glProgramUniform2i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19918,7 +19917,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2i64vARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2ui64ARB(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2ui64ARB_gurax, "glProgramUniform2ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19944,7 +19943,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2ui64ARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2ui64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2ui64vARB_gurax, "glProgramUniform2ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19970,7 +19969,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2ui64vARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3i64ARB(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3i64ARB_gurax, "glProgramUniform3i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -19998,7 +19997,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3i64ARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3i64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3i64vARB_gurax, "glProgramUniform3i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20024,7 +20023,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3i64vARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3ui64ARB(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3ui64ARB_gurax, "glProgramUniform3ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20052,7 +20051,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3ui64ARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3ui64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3ui64vARB_gurax, "glProgramUniform3ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20078,7 +20077,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3ui64vARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4i64ARB(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4i64ARB_gurax, "glProgramUniform4i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20108,7 +20107,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4i64ARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4i64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4i64vARB_gurax, "glProgramUniform4i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20134,7 +20133,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4i64vARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4ui64ARB(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4ui64ARB_gurax, "glProgramUniform4ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20164,7 +20163,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4ui64ARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4ui64vARB(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4ui64vARB_gurax, "glProgramUniform4ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20190,7 +20189,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4ui64vARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1i64ARB(location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glUniform1i64ARB_gurax, "glUniform1i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20212,7 +20211,7 @@ Gurax_ImplementFunctionEx(glUniform1i64ARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1i64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform1i64vARB_gurax, "glUniform1i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20236,7 +20235,7 @@ Gurax_ImplementFunctionEx(glUniform1i64vARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1ui64ARB(location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glUniform1ui64ARB_gurax, "glUniform1ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20258,7 +20257,7 @@ Gurax_ImplementFunctionEx(glUniform1ui64ARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1ui64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform1ui64vARB_gurax, "glUniform1ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20282,7 +20281,7 @@ Gurax_ImplementFunctionEx(glUniform1ui64vARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2i64ARB(location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glUniform2i64ARB_gurax, "glUniform2i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20306,7 +20305,7 @@ Gurax_ImplementFunctionEx(glUniform2i64ARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2i64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform2i64vARB_gurax, "glUniform2i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20330,7 +20329,7 @@ Gurax_ImplementFunctionEx(glUniform2i64vARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2ui64ARB(location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glUniform2ui64ARB_gurax, "glUniform2ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20354,7 +20353,7 @@ Gurax_ImplementFunctionEx(glUniform2ui64ARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2ui64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform2ui64vARB_gurax, "glUniform2ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20378,7 +20377,7 @@ Gurax_ImplementFunctionEx(glUniform2ui64vARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3i64ARB(location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glUniform3i64ARB_gurax, "glUniform3i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20404,7 +20403,7 @@ Gurax_ImplementFunctionEx(glUniform3i64ARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3i64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform3i64vARB_gurax, "glUniform3i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20428,7 +20427,7 @@ Gurax_ImplementFunctionEx(glUniform3i64vARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3ui64ARB(location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glUniform3ui64ARB_gurax, "glUniform3ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20454,7 +20453,7 @@ Gurax_ImplementFunctionEx(glUniform3ui64ARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3ui64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform3ui64vARB_gurax, "glUniform3ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20478,7 +20477,7 @@ Gurax_ImplementFunctionEx(glUniform3ui64vARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4i64ARB(location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glUniform4i64ARB_gurax, "glUniform4i64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20506,7 +20505,7 @@ Gurax_ImplementFunctionEx(glUniform4i64ARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4i64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform4i64vARB_gurax, "glUniform4i64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20530,7 +20529,7 @@ Gurax_ImplementFunctionEx(glUniform4i64vARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4ui64ARB(location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glUniform4ui64ARB_gurax, "glUniform4ui64ARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20558,7 +20557,7 @@ Gurax_ImplementFunctionEx(glUniform4ui64ARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4ui64vARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform4ui64vARB_gurax, "glUniform4ui64vARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20582,7 +20581,7 @@ Gurax_ImplementFunctionEx(glUniform4ui64vARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorSubTable(target:Number, start:Number, count:Number, format:Number, type:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorSubTable_gurax, "glColorSubTable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20612,7 +20611,7 @@ Gurax_ImplementFunctionEx(glColorSubTable_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorTable(target:Number, internalformat:Number, width:Number, format:Number, type:Number, table:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorTable_gurax, "glColorTable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20642,7 +20641,7 @@ Gurax_ImplementFunctionEx(glColorTable_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorTableParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorTableParameterfv_gurax, "glColorTableParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20666,7 +20665,7 @@ Gurax_ImplementFunctionEx(glColorTableParameterfv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorTableParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorTableParameteriv_gurax, "glColorTableParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20690,7 +20689,7 @@ Gurax_ImplementFunctionEx(glColorTableParameteriv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionFilter1D(target:Number, internalformat:Number, width:Number, format:Number, type:Number, image:Pointer:nil)
 Gurax_DeclareFunctionAlias(glConvolutionFilter1D_gurax, "glConvolutionFilter1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20720,7 +20719,7 @@ Gurax_ImplementFunctionEx(glConvolutionFilter1D_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionFilter2D(target:Number, internalformat:Number, width:Number, height:Number, format:Number, type:Number, image:Pointer:nil)
 Gurax_DeclareFunctionAlias(glConvolutionFilter2D_gurax, "glConvolutionFilter2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20752,7 +20751,7 @@ Gurax_ImplementFunctionEx(glConvolutionFilter2D_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionParameterf(target:Number, pname:Number, params:Number)
 Gurax_DeclareFunctionAlias(glConvolutionParameterf_gurax, "glConvolutionParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20776,7 +20775,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameterf_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glConvolutionParameterfv_gurax, "glConvolutionParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20800,7 +20799,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameterfv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionParameteri(target:Number, pname:Number, params:Number)
 Gurax_DeclareFunctionAlias(glConvolutionParameteri_gurax, "glConvolutionParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20824,7 +20823,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameteri_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glConvolutionParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glConvolutionParameteriv_gurax, "glConvolutionParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20848,7 +20847,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameteriv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyColorSubTable(target:Number, start:Number, x:Number, y:Number, width:Number)
 Gurax_DeclareFunctionAlias(glCopyColorSubTable_gurax, "glCopyColorSubTable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20876,7 +20875,7 @@ Gurax_ImplementFunctionEx(glCopyColorSubTable_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyColorTable(target:Number, internalformat:Number, x:Number, y:Number, width:Number)
 Gurax_DeclareFunctionAlias(glCopyColorTable_gurax, "glCopyColorTable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20904,7 +20903,7 @@ Gurax_ImplementFunctionEx(glCopyColorTable_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyConvolutionFilter1D(target:Number, internalformat:Number, x:Number, y:Number, width:Number)
 Gurax_DeclareFunctionAlias(glCopyConvolutionFilter1D_gurax, "glCopyConvolutionFilter1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20932,7 +20931,7 @@ Gurax_ImplementFunctionEx(glCopyConvolutionFilter1D_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCopyConvolutionFilter2D(target:Number, internalformat:Number, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glCopyConvolutionFilter2D_gurax, "glCopyConvolutionFilter2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20962,7 +20961,7 @@ Gurax_ImplementFunctionEx(glCopyConvolutionFilter2D_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetColorTable(target:Number, format:Number, type:Number, table:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetColorTable_gurax, "glGetColorTable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -20988,7 +20987,7 @@ Gurax_ImplementFunctionEx(glGetColorTable_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetColorTableParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetColorTableParameterfv_gurax, "glGetColorTableParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21012,7 +21011,7 @@ Gurax_ImplementFunctionEx(glGetColorTableParameterfv_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetColorTableParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetColorTableParameteriv_gurax, "glGetColorTableParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21036,7 +21035,7 @@ Gurax_ImplementFunctionEx(glGetColorTableParameteriv_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetConvolutionFilter(target:Number, format:Number, type:Number, image:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetConvolutionFilter_gurax, "glGetConvolutionFilter")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21062,7 +21061,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionFilter_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetConvolutionParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetConvolutionParameterfv_gurax, "glGetConvolutionParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21086,7 +21085,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionParameterfv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetConvolutionParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetConvolutionParameteriv_gurax, "glGetConvolutionParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21110,7 +21109,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionParameteriv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetHistogram(target:Number, reset:Bool, format:Number, type:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetHistogram_gurax, "glGetHistogram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21138,7 +21137,7 @@ Gurax_ImplementFunctionEx(glGetHistogram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetHistogramParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetHistogramParameterfv_gurax, "glGetHistogramParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21162,7 +21161,7 @@ Gurax_ImplementFunctionEx(glGetHistogramParameterfv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetHistogramParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetHistogramParameteriv_gurax, "glGetHistogramParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21186,7 +21185,7 @@ Gurax_ImplementFunctionEx(glGetHistogramParameteriv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMinmax(target:Number, reset:Bool, format:Number, types:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMinmax_gurax, "glGetMinmax")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21214,7 +21213,7 @@ Gurax_ImplementFunctionEx(glGetMinmax_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMinmaxParameterfv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMinmaxParameterfv_gurax, "glGetMinmaxParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21238,7 +21237,7 @@ Gurax_ImplementFunctionEx(glGetMinmaxParameterfv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMinmaxParameteriv(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMinmaxParameteriv_gurax, "glGetMinmaxParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21262,7 +21261,7 @@ Gurax_ImplementFunctionEx(glGetMinmaxParameteriv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSeparableFilter(target:Number, format:Number, type:Number, row:Pointer:nil, column:Pointer:nil, span:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSeparableFilter_gurax, "glGetSeparableFilter")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21292,7 +21291,7 @@ Gurax_ImplementFunctionEx(glGetSeparableFilter_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glHistogram(target:Number, width:Number, internalformat:Number, sink:Bool)
 Gurax_DeclareFunctionAlias(glHistogram_gurax, "glHistogram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21318,7 +21317,7 @@ Gurax_ImplementFunctionEx(glHistogram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMinmax(target:Number, internalformat:Number, sink:Bool)
 Gurax_DeclareFunctionAlias(glMinmax_gurax, "glMinmax")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21342,7 +21341,7 @@ Gurax_ImplementFunctionEx(glMinmax_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glResetHistogram(target:Number)
 Gurax_DeclareFunctionAlias(glResetHistogram_gurax, "glResetHistogram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21362,7 +21361,7 @@ Gurax_ImplementFunctionEx(glResetHistogram_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glResetMinmax(target:Number)
 Gurax_DeclareFunctionAlias(glResetMinmax_gurax, "glResetMinmax")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21382,7 +21381,7 @@ Gurax_ImplementFunctionEx(glResetMinmax_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSeparableFilter2D(target:Number, internalformat:Number, width:Number, height:Number, format:Number, type:Number, row:Pointer:nil, column:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSeparableFilter2D_gurax, "glSeparableFilter2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21416,7 +21415,7 @@ Gurax_ImplementFunctionEx(glSeparableFilter2D_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawArraysIndirectCountARB(mode:Number, indirect:Pointer:nil, drawcount:Number, maxdrawcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCountARB_gurax, "glMultiDrawArraysIndirectCountARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21444,7 +21443,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCountARB_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawElementsIndirectCountARB(mode:Number, type:Number, indirect:Pointer:nil, drawcount:Number, maxdrawcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCountARB_gurax, "glMultiDrawElementsIndirectCountARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21474,7 +21473,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCountARB_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawArraysInstancedARB(mode:Number, first:Number, count:Number, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawArraysInstancedARB_gurax, "glDrawArraysInstancedARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21500,7 +21499,7 @@ Gurax_ImplementFunctionEx(glDrawArraysInstancedARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawElementsInstancedARB(mode:Number, count:Number, type:Number, indices:Pointer:nil, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawElementsInstancedARB_gurax, "glDrawElementsInstancedARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21528,7 +21527,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedARB_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribDivisorARB(index:Number, divisor:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribDivisorARB_gurax, "glVertexAttribDivisorARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21550,7 +21549,7 @@ Gurax_ImplementFunctionEx(glVertexAttribDivisorARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetInternalformativ(target:Number, internalformat:Number, pname:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetInternalformativ_gurax, "glGetInternalformativ")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21578,7 +21577,7 @@ Gurax_ImplementFunctionEx(glGetInternalformativ_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetInternalformati64v(target:Number, internalformat:Number, pname:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetInternalformati64v_gurax, "glGetInternalformati64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21606,7 +21605,7 @@ Gurax_ImplementFunctionEx(glGetInternalformati64v_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateBufferData(buffer:Number)
 Gurax_DeclareFunctionAlias(glInvalidateBufferData_gurax, "glInvalidateBufferData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21626,7 +21625,7 @@ Gurax_ImplementFunctionEx(glInvalidateBufferData_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateBufferSubData(buffer:Number, offset:Number, length:Number)
 Gurax_DeclareFunctionAlias(glInvalidateBufferSubData_gurax, "glInvalidateBufferSubData")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21650,7 +21649,7 @@ Gurax_ImplementFunctionEx(glInvalidateBufferSubData_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateFramebuffer(target:Number, numAttachments:Number, attachments:Pointer:nil)
 Gurax_DeclareFunctionAlias(glInvalidateFramebuffer_gurax, "glInvalidateFramebuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21674,7 +21673,7 @@ Gurax_ImplementFunctionEx(glInvalidateFramebuffer_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateSubFramebuffer(target:Number, numAttachments:Number, attachments:Pointer:nil, x:Number, y:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glInvalidateSubFramebuffer_gurax, "glInvalidateSubFramebuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21706,7 +21705,7 @@ Gurax_ImplementFunctionEx(glInvalidateSubFramebuffer_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateTexImage(texture:Number, level:Number)
 Gurax_DeclareFunctionAlias(glInvalidateTexImage_gurax, "glInvalidateTexImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21728,7 +21727,7 @@ Gurax_ImplementFunctionEx(glInvalidateTexImage_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glInvalidateTexSubImage(texture:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number)
 Gurax_DeclareFunctionAlias(glInvalidateTexSubImage_gurax, "glInvalidateTexSubImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21762,7 +21761,7 @@ Gurax_ImplementFunctionEx(glInvalidateTexSubImage_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFlushMappedBufferRange(target:Number, offset:Number, length:Number)
 Gurax_DeclareFunctionAlias(glFlushMappedBufferRange_gurax, "glFlushMappedBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21786,7 +21785,7 @@ Gurax_ImplementFunctionEx(glFlushMappedBufferRange_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCurrentPaletteMatrixARB(index:Number)
 Gurax_DeclareFunctionAlias(glCurrentPaletteMatrixARB_gurax, "glCurrentPaletteMatrixARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21806,7 +21805,7 @@ Gurax_ImplementFunctionEx(glCurrentPaletteMatrixARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMatrixIndexPointerARB(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMatrixIndexPointerARB_gurax, "glMatrixIndexPointerARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21832,7 +21831,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexPointerARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMatrixIndexubvARB(size:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMatrixIndexubvARB_gurax, "glMatrixIndexubvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21854,7 +21853,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexubvARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMatrixIndexuivARB(size:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMatrixIndexuivARB_gurax, "glMatrixIndexuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21876,7 +21875,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexuivARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMatrixIndexusvARB(size:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMatrixIndexusvARB_gurax, "glMatrixIndexusvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21898,7 +21897,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexusvARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBuffersBase(target:Number, first:Number, count:Number, buffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindBuffersBase_gurax, "glBindBuffersBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21924,7 +21923,7 @@ Gurax_ImplementFunctionEx(glBindBuffersBase_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBuffersRange(target:Number, first:Number, count:Number, buffers:Pointer:nil, offsets:Pointer:nil, sizes:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindBuffersRange_gurax, "glBindBuffersRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21954,7 +21953,7 @@ Gurax_ImplementFunctionEx(glBindBuffersRange_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindImageTextures(first:Number, count:Number, textures:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindImageTextures_gurax, "glBindImageTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -21978,7 +21977,7 @@ Gurax_ImplementFunctionEx(glBindImageTextures_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindSamplers(first:Number, count:Number, samplers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindSamplers_gurax, "glBindSamplers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22002,7 +22001,7 @@ Gurax_ImplementFunctionEx(glBindSamplers_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindTextures(first:Number, count:Number, textures:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindTextures_gurax, "glBindTextures")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22026,7 +22025,7 @@ Gurax_ImplementFunctionEx(glBindTextures_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindVertexBuffers(first:Number, count:Number, buffers:Pointer:nil, offsets:Pointer:nil, strides:Pointer:nil)
 Gurax_DeclareFunctionAlias(glBindVertexBuffers_gurax, "glBindVertexBuffers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22054,7 +22053,7 @@ Gurax_ImplementFunctionEx(glBindVertexBuffers_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawArraysIndirect(mode:Number, indirect:Pointer:nil, primcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirect_gurax, "glMultiDrawArraysIndirect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22080,7 +22079,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirect_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiDrawElementsIndirect(mode:Number, type:Number, indirect:Pointer:nil, primcount:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirect_gurax, "glMultiDrawElementsIndirect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22108,7 +22107,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirect_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSampleCoverageARB(value:Number, invert:Bool)
 Gurax_DeclareFunctionAlias(glSampleCoverageARB_gurax, "glSampleCoverageARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22130,7 +22129,7 @@ Gurax_ImplementFunctionEx(glSampleCoverageARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glActiveTextureARB(texture:Number)
 Gurax_DeclareFunctionAlias(glActiveTextureARB_gurax, "glActiveTextureARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22150,7 +22149,7 @@ Gurax_ImplementFunctionEx(glActiveTextureARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glClientActiveTextureARB(texture:Number)
 Gurax_DeclareFunctionAlias(glClientActiveTextureARB_gurax, "glClientActiveTextureARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22170,7 +22169,7 @@ Gurax_ImplementFunctionEx(glClientActiveTextureARB_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1dARB(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1dARB_gurax, "glMultiTexCoord1dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22192,7 +22191,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1dvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1dvARB_gurax, "glMultiTexCoord1dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22214,7 +22213,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1fARB(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1fARB_gurax, "glMultiTexCoord1fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22236,7 +22235,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1fvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1fvARB_gurax, "glMultiTexCoord1fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22258,7 +22257,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1iARB(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1iARB_gurax, "glMultiTexCoord1iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22280,7 +22279,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1iARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1ivARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1ivARB_gurax, "glMultiTexCoord1ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22302,7 +22301,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1ivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1sARB(target:Number, s:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1sARB_gurax, "glMultiTexCoord1sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22324,7 +22323,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1sARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord1svARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord1svARB_gurax, "glMultiTexCoord1svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22346,7 +22345,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1svARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2dARB(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2dARB_gurax, "glMultiTexCoord2dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22370,7 +22369,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2dvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2dvARB_gurax, "glMultiTexCoord2dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22392,7 +22391,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2fARB(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2fARB_gurax, "glMultiTexCoord2fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22416,7 +22415,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2fvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2fvARB_gurax, "glMultiTexCoord2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22438,7 +22437,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2iARB(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2iARB_gurax, "glMultiTexCoord2iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22462,7 +22461,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2iARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2ivARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2ivARB_gurax, "glMultiTexCoord2ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22484,7 +22483,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2ivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2sARB(target:Number, s:Number, t:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2sARB_gurax, "glMultiTexCoord2sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22508,7 +22507,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2sARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord2svARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord2svARB_gurax, "glMultiTexCoord2svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22530,7 +22529,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2svARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3dARB(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3dARB_gurax, "glMultiTexCoord3dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22556,7 +22555,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3dvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3dvARB_gurax, "glMultiTexCoord3dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22578,7 +22577,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3fARB(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3fARB_gurax, "glMultiTexCoord3fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22604,7 +22603,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3fvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3fvARB_gurax, "glMultiTexCoord3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22626,7 +22625,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3iARB(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3iARB_gurax, "glMultiTexCoord3iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22652,7 +22651,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3iARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3ivARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3ivARB_gurax, "glMultiTexCoord3ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22674,7 +22673,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3ivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3sARB(target:Number, s:Number, t:Number, r:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3sARB_gurax, "glMultiTexCoord3sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22700,7 +22699,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3sARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord3svARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord3svARB_gurax, "glMultiTexCoord3svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22722,7 +22721,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3svARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4dARB(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4dARB_gurax, "glMultiTexCoord4dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22750,7 +22749,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4dvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4dvARB_gurax, "glMultiTexCoord4dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22772,7 +22771,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4fARB(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4fARB_gurax, "glMultiTexCoord4fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22800,7 +22799,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4fvARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4fvARB_gurax, "glMultiTexCoord4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22822,7 +22821,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4iARB(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4iARB_gurax, "glMultiTexCoord4iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22850,7 +22849,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4iARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4ivARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4ivARB_gurax, "glMultiTexCoord4ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22872,7 +22871,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4ivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4sARB(target:Number, s:Number, t:Number, r:Number, q:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4sARB_gurax, "glMultiTexCoord4sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22900,7 +22899,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4sARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoord4svARB(target:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoord4svARB_gurax, "glMultiTexCoord4svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22922,7 +22921,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4svARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBeginQueryARB(target:Number, id:Number)
 Gurax_DeclareFunctionAlias(glBeginQueryARB_gurax, "glBeginQueryARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22944,7 +22943,7 @@ Gurax_ImplementFunctionEx(glBeginQueryARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteQueriesARB(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteQueriesARB_gurax, "glDeleteQueriesARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22966,7 +22965,7 @@ Gurax_ImplementFunctionEx(glDeleteQueriesARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndQueryARB(target:Number)
 Gurax_DeclareFunctionAlias(glEndQueryARB_gurax, "glEndQueryARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -22986,7 +22985,7 @@ Gurax_ImplementFunctionEx(glEndQueryARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenQueriesARB(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenQueriesARB_gurax, "glGenQueriesARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23008,7 +23007,7 @@ Gurax_ImplementFunctionEx(glGenQueriesARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjectivARB(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjectivARB_gurax, "glGetQueryObjectivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23032,7 +23031,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjectuivARB(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjectuivARB_gurax, "glGetQueryObjectuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23056,7 +23055,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectuivARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryivARB(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryivARB_gurax, "glGetQueryivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23080,7 +23079,7 @@ Gurax_ImplementFunctionEx(glGetQueryivARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsQueryARB(id:Number)
 Gurax_DeclareFunctionAlias(glIsQueryARB_gurax, "glIsQueryARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -23100,7 +23099,7 @@ Gurax_ImplementFunctionEx(glIsQueryARB_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glMaxShaderCompilerThreadsARB(count:Number)
 Gurax_DeclareFunctionAlias(glMaxShaderCompilerThreadsARB_gurax, "glMaxShaderCompilerThreadsARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23120,7 +23119,7 @@ Gurax_ImplementFunctionEx(glMaxShaderCompilerThreadsARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameterfARB(pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glPointParameterfARB_gurax, "glPointParameterfARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23142,7 +23141,7 @@ Gurax_ImplementFunctionEx(glPointParameterfARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPointParameterfvARB(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glPointParameterfvARB_gurax, "glPointParameterfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23164,7 +23163,7 @@ Gurax_ImplementFunctionEx(glPointParameterfvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPolygonOffsetClamp(factor:Number, units:Number, clamp:Number)
 Gurax_DeclareFunctionAlias(glPolygonOffsetClamp_gurax, "glPolygonOffsetClamp")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23188,7 +23187,7 @@ Gurax_ImplementFunctionEx(glPolygonOffsetClamp_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramInterfaceiv(program:Number, programInterface:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramInterfaceiv_gurax, "glGetProgramInterfaceiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23214,7 +23213,7 @@ Gurax_ImplementFunctionEx(glGetProgramInterfaceiv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramResourceIndex(program:Number, programInterface:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetProgramResourceIndex_gurax, "glGetProgramResourceIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -23238,7 +23237,7 @@ Gurax_ImplementFunctionEx(glGetProgramResourceIndex_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetProgramResourceLocation(program:Number, programInterface:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetProgramResourceLocation_gurax, "glGetProgramResourceLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -23262,7 +23261,7 @@ Gurax_ImplementFunctionEx(glGetProgramResourceLocation_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetProgramResourceLocationIndex(program:Number, programInterface:Number, name:String)
 Gurax_DeclareFunctionAlias(glGetProgramResourceLocationIndex_gurax, "glGetProgramResourceLocationIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -23286,7 +23285,7 @@ Gurax_ImplementFunctionEx(glGetProgramResourceLocationIndex_gurax, processor_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetProgramResourceName(program:Number, programInterface:Number, index:Number, bufSize:Number, length:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramResourceName_gurax, "glGetProgramResourceName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23316,7 +23315,7 @@ Gurax_ImplementFunctionEx(glGetProgramResourceName_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramResourceiv(program:Number, programInterface:Number, index:Number, propCount:Number, props:Pointer:nil, bufSize:Number, length:Pointer:nil, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramResourceiv_gurax, "glGetProgramResourceiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23350,7 +23349,7 @@ Gurax_ImplementFunctionEx(glGetProgramResourceiv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProvokingVertex(mode:Number)
 Gurax_DeclareFunctionAlias(glProvokingVertex_gurax, "glProvokingVertex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23370,7 +23369,7 @@ Gurax_ImplementFunctionEx(glProvokingVertex_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetGraphicsResetStatusARB()
 Gurax_DeclareFunctionAlias(glGetGraphicsResetStatusARB_gurax, "glGetGraphicsResetStatusARB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -23386,7 +23385,7 @@ Gurax_ImplementFunctionEx(glGetGraphicsResetStatusARB_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetnColorTableARB(target:Number, format:Number, type:Number, bufSize:Number, table:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnColorTableARB_gurax, "glGetnColorTableARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23414,7 +23413,7 @@ Gurax_ImplementFunctionEx(glGetnColorTableARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnCompressedTexImageARB(target:Number, lod:Number, bufSize:Number, img:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnCompressedTexImageARB_gurax, "glGetnCompressedTexImageARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23440,7 +23439,7 @@ Gurax_ImplementFunctionEx(glGetnCompressedTexImageARB_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnConvolutionFilterARB(target:Number, format:Number, type:Number, bufSize:Number, image:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnConvolutionFilterARB_gurax, "glGetnConvolutionFilterARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23468,7 +23467,7 @@ Gurax_ImplementFunctionEx(glGetnConvolutionFilterARB_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnHistogramARB(target:Number, reset:Bool, format:Number, type:Number, bufSize:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnHistogramARB_gurax, "glGetnHistogramARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23498,7 +23497,7 @@ Gurax_ImplementFunctionEx(glGetnHistogramARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnMapdvARB(target:Number, query:Number, bufSize:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnMapdvARB_gurax, "glGetnMapdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23524,7 +23523,7 @@ Gurax_ImplementFunctionEx(glGetnMapdvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnMapfvARB(target:Number, query:Number, bufSize:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnMapfvARB_gurax, "glGetnMapfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23550,7 +23549,7 @@ Gurax_ImplementFunctionEx(glGetnMapfvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnMapivARB(target:Number, query:Number, bufSize:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnMapivARB_gurax, "glGetnMapivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23576,7 +23575,7 @@ Gurax_ImplementFunctionEx(glGetnMapivARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnMinmaxARB(target:Number, reset:Bool, format:Number, type:Number, bufSize:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnMinmaxARB_gurax, "glGetnMinmaxARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23606,7 +23605,7 @@ Gurax_ImplementFunctionEx(glGetnMinmaxARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnPixelMapfvARB(map:Number, bufSize:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnPixelMapfvARB_gurax, "glGetnPixelMapfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23630,7 +23629,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapfvARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnPixelMapuivARB(map:Number, bufSize:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnPixelMapuivARB_gurax, "glGetnPixelMapuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23654,7 +23653,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapuivARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnPixelMapusvARB(map:Number, bufSize:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnPixelMapusvARB_gurax, "glGetnPixelMapusvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23678,7 +23677,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapusvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnPolygonStippleARB(bufSize:Number, pattern:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnPolygonStippleARB_gurax, "glGetnPolygonStippleARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23700,7 +23699,7 @@ Gurax_ImplementFunctionEx(glGetnPolygonStippleARB_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnTexImageARB(target:Number, level:Number, format:Number, type:Number, bufSize:Number, img:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnTexImageARB_gurax, "glGetnTexImageARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23730,7 +23729,7 @@ Gurax_ImplementFunctionEx(glGetnTexImageARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformdvARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformdvARB_gurax, "glGetnUniformdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23756,7 +23755,7 @@ Gurax_ImplementFunctionEx(glGetnUniformdvARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformfvARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformfvARB_gurax, "glGetnUniformfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23782,7 +23781,7 @@ Gurax_ImplementFunctionEx(glGetnUniformfvARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformivARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformivARB_gurax, "glGetnUniformivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23808,7 +23807,7 @@ Gurax_ImplementFunctionEx(glGetnUniformivARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetnUniformuivARB(program:Number, location:Number, bufSize:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetnUniformuivARB_gurax, "glGetnUniformuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23834,7 +23833,7 @@ Gurax_ImplementFunctionEx(glGetnUniformuivARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glReadnPixelsARB(x:Number, y:Number, width:Number, height:Number, format:Number, type:Number, bufSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glReadnPixelsARB_gurax, "glReadnPixelsARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23868,7 +23867,7 @@ Gurax_ImplementFunctionEx(glReadnPixelsARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glFramebufferSampleLocationsfvARB(target:Number, start:Number, count:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glFramebufferSampleLocationsfvARB_gurax, "glFramebufferSampleLocationsfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23894,7 +23893,7 @@ Gurax_ImplementFunctionEx(glFramebufferSampleLocationsfvARB_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNamedFramebufferSampleLocationsfvARB(framebuffer:Number, start:Number, count:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNamedFramebufferSampleLocationsfvARB_gurax, "glNamedFramebufferSampleLocationsfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23920,7 +23919,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferSampleLocationsfvARB_gurax, processo
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMinSampleShadingARB(value:Number)
 Gurax_DeclareFunctionAlias(glMinSampleShadingARB_gurax, "glMinSampleShadingARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23940,7 +23939,7 @@ Gurax_ImplementFunctionEx(glMinSampleShadingARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindSampler(unit:Number, sampler:Number)
 Gurax_DeclareFunctionAlias(glBindSampler_gurax, "glBindSampler")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23962,7 +23961,7 @@ Gurax_ImplementFunctionEx(glBindSampler_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteSamplers(count:Number, samplers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteSamplers_gurax, "glDeleteSamplers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -23984,7 +23983,7 @@ Gurax_ImplementFunctionEx(glDeleteSamplers_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenSamplers(count:Number, samplers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenSamplers_gurax, "glGenSamplers")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24006,7 +24005,7 @@ Gurax_ImplementFunctionEx(glGenSamplers_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSamplerParameterIiv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSamplerParameterIiv_gurax, "glGetSamplerParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24030,7 +24029,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterIiv_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSamplerParameterIuiv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSamplerParameterIuiv_gurax, "glGetSamplerParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24054,7 +24053,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterIuiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSamplerParameterfv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSamplerParameterfv_gurax, "glGetSamplerParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24078,7 +24077,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterfv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSamplerParameteriv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSamplerParameteriv_gurax, "glGetSamplerParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24102,7 +24101,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameteriv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsSampler(sampler:Number)
 Gurax_DeclareFunctionAlias(glIsSampler_gurax, "glIsSampler")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -24122,7 +24121,7 @@ Gurax_ImplementFunctionEx(glIsSampler_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameterIiv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSamplerParameterIiv_gurax, "glSamplerParameterIiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24146,7 +24145,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterIiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameterIuiv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSamplerParameterIuiv_gurax, "glSamplerParameterIuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24170,7 +24169,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterIuiv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameterf(sampler:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glSamplerParameterf_gurax, "glSamplerParameterf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24194,7 +24193,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterf_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameterfv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSamplerParameterfv_gurax, "glSamplerParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24218,7 +24217,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterfv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameteri(sampler:Number, pname:Number, param:Number)
 Gurax_DeclareFunctionAlias(glSamplerParameteri_gurax, "glSamplerParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24242,7 +24241,7 @@ Gurax_ImplementFunctionEx(glSamplerParameteri_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSamplerParameteriv(sampler:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSamplerParameteriv_gurax, "glSamplerParameteriv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24266,7 +24265,7 @@ Gurax_ImplementFunctionEx(glSamplerParameteriv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glActiveShaderProgram(pipeline:Number, program:Number)
 Gurax_DeclareFunctionAlias(glActiveShaderProgram_gurax, "glActiveShaderProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24288,7 +24287,7 @@ Gurax_ImplementFunctionEx(glActiveShaderProgram_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindProgramPipeline(pipeline:Number)
 Gurax_DeclareFunctionAlias(glBindProgramPipeline_gurax, "glBindProgramPipeline")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24308,7 +24307,7 @@ Gurax_ImplementFunctionEx(glBindProgramPipeline_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteProgramPipelines(n:Number, pipelines:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteProgramPipelines_gurax, "glDeleteProgramPipelines")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24330,7 +24329,7 @@ Gurax_ImplementFunctionEx(glDeleteProgramPipelines_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenProgramPipelines(n:Number, pipelines:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenProgramPipelines_gurax, "glGenProgramPipelines")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24352,7 +24351,7 @@ Gurax_ImplementFunctionEx(glGenProgramPipelines_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramPipelineInfoLog(pipeline:Number, bufSize:Number, length:Pointer:nil, infoLog:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramPipelineInfoLog_gurax, "glGetProgramPipelineInfoLog")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24378,7 +24377,7 @@ Gurax_ImplementFunctionEx(glGetProgramPipelineInfoLog_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramPipelineiv(pipeline:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramPipelineiv_gurax, "glGetProgramPipelineiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24402,7 +24401,7 @@ Gurax_ImplementFunctionEx(glGetProgramPipelineiv_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsProgramPipeline(pipeline:Number)
 Gurax_DeclareFunctionAlias(glIsProgramPipeline_gurax, "glIsProgramPipeline")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -24422,7 +24421,7 @@ Gurax_ImplementFunctionEx(glIsProgramPipeline_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1d(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1d_gurax, "glProgramUniform1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24446,7 +24445,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1d_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1dv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1dv_gurax, "glProgramUniform1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24472,7 +24471,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1dv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1f(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1f_gurax, "glProgramUniform1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24496,7 +24495,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1f_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1fv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1fv_gurax, "glProgramUniform1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24522,7 +24521,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1fv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1i(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1i_gurax, "glProgramUniform1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24546,7 +24545,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1i_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1iv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1iv_gurax, "glProgramUniform1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24572,7 +24571,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1iv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1ui(program:Number, location:Number, x:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform1ui_gurax, "glProgramUniform1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24596,7 +24595,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform1uiv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform1uiv_gurax, "glProgramUniform1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24622,7 +24621,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2d(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2d_gurax, "glProgramUniform2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24648,7 +24647,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2d_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2dv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2dv_gurax, "glProgramUniform2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24674,7 +24673,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2dv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2f(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2f_gurax, "glProgramUniform2f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24700,7 +24699,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2f_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2fv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2fv_gurax, "glProgramUniform2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24726,7 +24725,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2fv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2i(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2i_gurax, "glProgramUniform2i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24752,7 +24751,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2i_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2iv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2iv_gurax, "glProgramUniform2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24778,7 +24777,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2iv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2ui(program:Number, location:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform2ui_gurax, "glProgramUniform2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24804,7 +24803,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform2uiv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform2uiv_gurax, "glProgramUniform2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24830,7 +24829,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3d(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3d_gurax, "glProgramUniform3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24858,7 +24857,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3d_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3dv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3dv_gurax, "glProgramUniform3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24884,7 +24883,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3dv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3f(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3f_gurax, "glProgramUniform3f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24912,7 +24911,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3f_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3fv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3fv_gurax, "glProgramUniform3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24938,7 +24937,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3fv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3i(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3i_gurax, "glProgramUniform3i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24966,7 +24965,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3i_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3iv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3iv_gurax, "glProgramUniform3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -24992,7 +24991,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3iv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3ui(program:Number, location:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform3ui_gurax, "glProgramUniform3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25020,7 +25019,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform3uiv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform3uiv_gurax, "glProgramUniform3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25046,7 +25045,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4d(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4d_gurax, "glProgramUniform4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25076,7 +25075,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4d_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4dv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4dv_gurax, "glProgramUniform4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25102,7 +25101,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4dv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4f(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4f_gurax, "glProgramUniform4f")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25132,7 +25131,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4f_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4fv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4fv_gurax, "glProgramUniform4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25158,7 +25157,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4fv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4i(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4i_gurax, "glProgramUniform4i")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25188,7 +25187,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4i_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4iv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4iv_gurax, "glProgramUniform4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25214,7 +25213,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4iv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4ui(program:Number, location:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramUniform4ui_gurax, "glProgramUniform4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25244,7 +25243,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniform4uiv(program:Number, location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniform4uiv_gurax, "glProgramUniform4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25270,7 +25269,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2dv_gurax, "glProgramUniformMatrix2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25298,7 +25297,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2dv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2fv_gurax, "glProgramUniformMatrix2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25326,7 +25325,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2fv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2x3dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x3dv_gurax, "glProgramUniformMatrix2x3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25354,7 +25353,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2x3fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x3fv_gurax, "glProgramUniformMatrix2x3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25382,7 +25381,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2x4dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x4dv_gurax, "glProgramUniformMatrix2x4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25410,7 +25409,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix2x4fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x4fv_gurax, "glProgramUniformMatrix2x4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25438,7 +25437,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3dv_gurax, "glProgramUniformMatrix3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25466,7 +25465,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3dv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3fv_gurax, "glProgramUniformMatrix3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25494,7 +25493,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3fv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3x2dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x2dv_gurax, "glProgramUniformMatrix3x2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25522,7 +25521,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3x2fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x2fv_gurax, "glProgramUniformMatrix3x2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25550,7 +25549,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3x4dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x4dv_gurax, "glProgramUniformMatrix3x4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25578,7 +25577,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix3x4fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x4fv_gurax, "glProgramUniformMatrix3x4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25606,7 +25605,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4dv_gurax, "glProgramUniformMatrix4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25634,7 +25633,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4dv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4fv_gurax, "glProgramUniformMatrix4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25662,7 +25661,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4fv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4x2dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x2dv_gurax, "glProgramUniformMatrix4x2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25690,7 +25689,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4x2fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x2fv_gurax, "glProgramUniformMatrix4x2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25718,7 +25717,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4x3dv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x3dv_gurax, "glProgramUniformMatrix4x3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25746,7 +25745,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3dv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramUniformMatrix4x3fv(program:Number, location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x3fv_gurax, "glProgramUniformMatrix4x3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25774,7 +25773,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3fv_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUseProgramStages(pipeline:Number, stages:Number, program:Number)
 Gurax_DeclareFunctionAlias(glUseProgramStages_gurax, "glUseProgramStages")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25798,7 +25797,7 @@ Gurax_ImplementFunctionEx(glUseProgramStages_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glValidateProgramPipeline(pipeline:Number)
 Gurax_DeclareFunctionAlias(glValidateProgramPipeline_gurax, "glValidateProgramPipeline")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25818,7 +25817,7 @@ Gurax_ImplementFunctionEx(glValidateProgramPipeline_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveAtomicCounterBufferiv(program:Number, bufferIndex:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveAtomicCounterBufferiv_gurax, "glGetActiveAtomicCounterBufferiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25844,7 +25843,7 @@ Gurax_ImplementFunctionEx(glGetActiveAtomicCounterBufferiv_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindImageTexture(unit:Number, texture:Number, level:Number, layered:Bool, layer:Number, access:Number, format:Number)
 Gurax_DeclareFunctionAlias(glBindImageTexture_gurax, "glBindImageTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25876,7 +25875,7 @@ Gurax_ImplementFunctionEx(glBindImageTexture_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMemoryBarrier(barriers:Number)
 Gurax_DeclareFunctionAlias(glMemoryBarrier_gurax, "glMemoryBarrier")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25896,7 +25895,7 @@ Gurax_ImplementFunctionEx(glMemoryBarrier_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1fARB(location:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glUniform1fARB_gurax, "glUniform1fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25918,7 +25917,7 @@ Gurax_ImplementFunctionEx(glUniform1fARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1fvARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform1fvARB_gurax, "glUniform1fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25942,7 +25941,7 @@ Gurax_ImplementFunctionEx(glUniform1fvARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1iARB(location:Number, v0:Number)
 Gurax_DeclareFunctionAlias(glUniform1iARB_gurax, "glUniform1iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25964,7 +25963,7 @@ Gurax_ImplementFunctionEx(glUniform1iARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform1ivARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform1ivARB_gurax, "glUniform1ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -25988,7 +25987,7 @@ Gurax_ImplementFunctionEx(glUniform1ivARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2fARB(location:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glUniform2fARB_gurax, "glUniform2fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26012,7 +26011,7 @@ Gurax_ImplementFunctionEx(glUniform2fARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2fvARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform2fvARB_gurax, "glUniform2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26036,7 +26035,7 @@ Gurax_ImplementFunctionEx(glUniform2fvARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2iARB(location:Number, v0:Number, v1:Number)
 Gurax_DeclareFunctionAlias(glUniform2iARB_gurax, "glUniform2iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26060,7 +26059,7 @@ Gurax_ImplementFunctionEx(glUniform2iARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform2ivARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform2ivARB_gurax, "glUniform2ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26084,7 +26083,7 @@ Gurax_ImplementFunctionEx(glUniform2ivARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3fARB(location:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glUniform3fARB_gurax, "glUniform3fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26110,7 +26109,7 @@ Gurax_ImplementFunctionEx(glUniform3fARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3fvARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform3fvARB_gurax, "glUniform3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26134,7 +26133,7 @@ Gurax_ImplementFunctionEx(glUniform3fvARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3iARB(location:Number, v0:Number, v1:Number, v2:Number)
 Gurax_DeclareFunctionAlias(glUniform3iARB_gurax, "glUniform3iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26160,7 +26159,7 @@ Gurax_ImplementFunctionEx(glUniform3iARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform3ivARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform3ivARB_gurax, "glUniform3ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26184,7 +26183,7 @@ Gurax_ImplementFunctionEx(glUniform3ivARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4fARB(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glUniform4fARB_gurax, "glUniform4fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26212,7 +26211,7 @@ Gurax_ImplementFunctionEx(glUniform4fARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4fvARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform4fvARB_gurax, "glUniform4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26236,7 +26235,7 @@ Gurax_ImplementFunctionEx(glUniform4fvARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4iARB(location:Number, v0:Number, v1:Number, v2:Number, v3:Number)
 Gurax_DeclareFunctionAlias(glUniform4iARB_gurax, "glUniform4iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26264,7 +26263,7 @@ Gurax_ImplementFunctionEx(glUniform4iARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniform4ivARB(location:Number, count:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniform4ivARB_gurax, "glUniform4ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26288,7 +26287,7 @@ Gurax_ImplementFunctionEx(glUniform4ivARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix2fvARB(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix2fvARB_gurax, "glUniformMatrix2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26314,7 +26313,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix3fvARB(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix3fvARB_gurax, "glUniformMatrix3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26340,7 +26339,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformMatrix4fvARB(location:Number, count:Number, transpose:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformMatrix4fvARB_gurax, "glUniformMatrix4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26366,7 +26365,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4fvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glShaderStorageBlockBinding(program:Number, storageBlockIndex:Number, storageBlockBinding:Number)
 Gurax_DeclareFunctionAlias(glShaderStorageBlockBinding_gurax, "glShaderStorageBlockBinding")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26390,7 +26389,7 @@ Gurax_ImplementFunctionEx(glShaderStorageBlockBinding_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveSubroutineName(program:Number, shadertype:Number, index:Number, bufsize:Number, length:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveSubroutineName_gurax, "glGetActiveSubroutineName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26420,7 +26419,7 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineName_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveSubroutineUniformName(program:Number, shadertype:Number, index:Number, bufsize:Number, length:Pointer:nil, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveSubroutineUniformName_gurax, "glGetActiveSubroutineUniformName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26450,7 +26449,7 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformName_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveSubroutineUniformiv(program:Number, shadertype:Number, index:Number, pname:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveSubroutineUniformiv_gurax, "glGetActiveSubroutineUniformiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26478,7 +26477,7 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformiv_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramStageiv(program:Number, shadertype:Number, pname:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramStageiv_gurax, "glGetProgramStageiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26504,7 +26503,7 @@ Gurax_ImplementFunctionEx(glGetProgramStageiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetSubroutineIndex(program:Number, shadertype:Number, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSubroutineIndex_gurax, "glGetSubroutineIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -26528,7 +26527,7 @@ Gurax_ImplementFunctionEx(glGetSubroutineIndex_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetSubroutineUniformLocation(program:Number, shadertype:Number, name:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetSubroutineUniformLocation_gurax, "glGetSubroutineUniformLocation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -26552,7 +26551,7 @@ Gurax_ImplementFunctionEx(glGetSubroutineUniformLocation_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetUniformSubroutineuiv(shadertype:Number, location:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetUniformSubroutineuiv_gurax, "glGetUniformSubroutineuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26576,7 +26575,7 @@ Gurax_ImplementFunctionEx(glGetUniformSubroutineuiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glUniformSubroutinesuiv(shadertype:Number, count:Number, indices:Pointer:nil)
 Gurax_DeclareFunctionAlias(glUniformSubroutinesuiv_gurax, "glUniformSubroutinesuiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26600,7 +26599,7 @@ Gurax_ImplementFunctionEx(glUniformSubroutinesuiv_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteNamedStringARB(namelen:Number, name:String)
 Gurax_DeclareFunctionAlias(glDeleteNamedStringARB_gurax, "glDeleteNamedStringARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26622,7 +26621,7 @@ Gurax_ImplementFunctionEx(glDeleteNamedStringARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedStringARB(namelen:Number, name:String, bufSize:Number, stringlen:Pointer:nil, string:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedStringARB_gurax, "glGetNamedStringARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26650,7 +26649,7 @@ Gurax_ImplementFunctionEx(glGetNamedStringARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetNamedStringivARB(namelen:Number, name:String, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetNamedStringivARB_gurax, "glGetNamedStringivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26676,7 +26675,7 @@ Gurax_ImplementFunctionEx(glGetNamedStringivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsNamedStringARB(namelen:Number, name:String)
 Gurax_DeclareFunctionAlias(glIsNamedStringARB_gurax, "glIsNamedStringARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -26698,7 +26697,7 @@ Gurax_ImplementFunctionEx(glIsNamedStringARB_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glNamedStringARB(type:Number, namelen:Number, name:String, stringlen:Number, string:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNamedStringARB_gurax, "glNamedStringARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26726,7 +26725,7 @@ Gurax_ImplementFunctionEx(glNamedStringARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBufferPageCommitmentARB(target:Number, offset:Number, size:Number, commit:Bool)
 Gurax_DeclareFunctionAlias(glBufferPageCommitmentARB_gurax, "glBufferPageCommitmentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26752,7 +26751,7 @@ Gurax_ImplementFunctionEx(glBufferPageCommitmentARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexPageCommitmentARB(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, commit:Bool)
 Gurax_DeclareFunctionAlias(glTexPageCommitmentARB_gurax, "glTexPageCommitmentARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26788,7 +26787,7 @@ Gurax_ImplementFunctionEx(glTexPageCommitmentARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetInteger64v(pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetInteger64v_gurax, "glGetInteger64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26810,7 +26809,7 @@ Gurax_ImplementFunctionEx(glGetInteger64v_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPatchParameterfv(pname:Number, values:Pointer:nil)
 Gurax_DeclareFunctionAlias(glPatchParameterfv_gurax, "glPatchParameterfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26832,7 +26831,7 @@ Gurax_ImplementFunctionEx(glPatchParameterfv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glPatchParameteri(pname:Number, value:Number)
 Gurax_DeclareFunctionAlias(glPatchParameteri_gurax, "glPatchParameteri")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26854,7 +26853,7 @@ Gurax_ImplementFunctionEx(glPatchParameteri_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureBarrier()
 Gurax_DeclareFunctionAlias(glTextureBarrier_gurax, "glTextureBarrier")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26870,7 +26869,7 @@ Gurax_ImplementFunctionEx(glTextureBarrier_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexBufferARB(target:Number, internalformat:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glTexBufferARB_gurax, "glTexBufferARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26894,7 +26893,7 @@ Gurax_ImplementFunctionEx(glTexBufferARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexBufferRange(target:Number, internalformat:Number, buffer:Number, offset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glTexBufferRange_gurax, "glTexBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26922,7 +26921,7 @@ Gurax_ImplementFunctionEx(glTexBufferRange_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureBufferRangeEXT(texture:Number, target:Number, internalformat:Number, buffer:Number, offset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glTextureBufferRangeEXT_gurax, "glTextureBufferRangeEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26952,7 +26951,7 @@ Gurax_ImplementFunctionEx(glTextureBufferRangeEXT_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage1DARB(target:Number, level:Number, internalformat:Number, width:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage1DARB_gurax, "glCompressedTexImage1DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -26984,7 +26983,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage1DARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage2DARB(target:Number, level:Number, internalformat:Number, width:Number, height:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage2DARB_gurax, "glCompressedTexImage2DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27018,7 +27017,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage2DARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexImage3DARB(target:Number, level:Number, internalformat:Number, width:Number, height:Number, depth:Number, border:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexImage3DARB_gurax, "glCompressedTexImage3DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27054,7 +27053,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage3DARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage1DARB(target:Number, level:Number, xoffset:Number, width:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage1DARB_gurax, "glCompressedTexSubImage1DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27086,7 +27085,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage1DARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage2DARB(target:Number, level:Number, xoffset:Number, yoffset:Number, width:Number, height:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage2DARB_gurax, "glCompressedTexSubImage2DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27122,7 +27121,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage2DARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glCompressedTexSubImage3DARB(target:Number, level:Number, xoffset:Number, yoffset:Number, zoffset:Number, width:Number, height:Number, depth:Number, format:Number, imageSize:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glCompressedTexSubImage3DARB_gurax, "glCompressedTexSubImage3DARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27162,7 +27161,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage3DARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetCompressedTexImageARB(target:Number, lod:Number, img:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetCompressedTexImageARB_gurax, "glGetCompressedTexImageARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27186,7 +27185,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTexImageARB_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetMultisamplefv(pname:Number, index:Number, val:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetMultisamplefv_gurax, "glGetMultisamplefv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27210,7 +27209,7 @@ Gurax_ImplementFunctionEx(glGetMultisamplefv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSampleMaski(index:Number, mask:Number)
 Gurax_DeclareFunctionAlias(glSampleMaski_gurax, "glSampleMaski")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27232,7 +27231,7 @@ Gurax_ImplementFunctionEx(glSampleMaski_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexImage2DMultisample(target:Number, samples:Number, internalformat:Number, width:Number, height:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTexImage2DMultisample_gurax, "glTexImage2DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27262,7 +27261,7 @@ Gurax_ImplementFunctionEx(glTexImage2DMultisample_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexImage3DMultisample(target:Number, samples:Number, internalformat:Number, width:Number, height:Number, depth:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTexImage3DMultisample_gurax, "glTexImage3DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27294,7 +27293,7 @@ Gurax_ImplementFunctionEx(glTexImage3DMultisample_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexStorage1D(target:Number, levels:Number, internalformat:Number, width:Number)
 Gurax_DeclareFunctionAlias(glTexStorage1D_gurax, "glTexStorage1D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27320,7 +27319,7 @@ Gurax_ImplementFunctionEx(glTexStorage1D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexStorage2D(target:Number, levels:Number, internalformat:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glTexStorage2D_gurax, "glTexStorage2D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27348,7 +27347,7 @@ Gurax_ImplementFunctionEx(glTexStorage2D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexStorage3D(target:Number, levels:Number, internalformat:Number, width:Number, height:Number, depth:Number)
 Gurax_DeclareFunctionAlias(glTexStorage3D_gurax, "glTexStorage3D")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27378,7 +27377,7 @@ Gurax_ImplementFunctionEx(glTexStorage3D_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexStorage2DMultisample(target:Number, samples:Number, internalformat:Number, width:Number, height:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTexStorage2DMultisample_gurax, "glTexStorage2DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27408,7 +27407,7 @@ Gurax_ImplementFunctionEx(glTexStorage2DMultisample_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexStorage3DMultisample(target:Number, samples:Number, internalformat:Number, width:Number, height:Number, depth:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTexStorage3DMultisample_gurax, "glTexStorage3DMultisample")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27440,7 +27439,7 @@ Gurax_ImplementFunctionEx(glTexStorage3DMultisample_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage2DMultisampleEXT(texture:Number, target:Number, samples:Number, internalformat:Number, width:Number, height:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTextureStorage2DMultisampleEXT_gurax, "glTextureStorage2DMultisampleEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27472,7 +27471,7 @@ Gurax_ImplementFunctionEx(glTextureStorage2DMultisampleEXT_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureStorage3DMultisampleEXT(texture:Number, target:Number, samples:Number, internalformat:Number, width:Number, height:Number, depth:Number, fixedsamplelocations:Bool)
 Gurax_DeclareFunctionAlias(glTextureStorage3DMultisampleEXT_gurax, "glTextureStorage3DMultisampleEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27506,7 +27505,7 @@ Gurax_ImplementFunctionEx(glTextureStorage3DMultisampleEXT_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTextureView(texture:Number, target:Number, origtexture:Number, internalformat:Number, minlevel:Number, numlevels:Number, minlayer:Number, numlayers:Number)
 Gurax_DeclareFunctionAlias(glTextureView_gurax, "glTextureView")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27540,7 +27539,7 @@ Gurax_ImplementFunctionEx(glTextureView_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjecti64v(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjecti64v_gurax, "glGetQueryObjecti64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27564,7 +27563,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjecti64v_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryObjectui64v(id:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryObjectui64v_gurax, "glGetQueryObjectui64v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27588,7 +27587,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectui64v_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glQueryCounter(id:Number, target:Number)
 Gurax_DeclareFunctionAlias(glQueryCounter_gurax, "glQueryCounter")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27610,7 +27609,7 @@ Gurax_ImplementFunctionEx(glQueryCounter_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindTransformFeedback(target:Number, id:Number)
 Gurax_DeclareFunctionAlias(glBindTransformFeedback_gurax, "glBindTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27632,7 +27631,7 @@ Gurax_ImplementFunctionEx(glBindTransformFeedback_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteTransformFeedbacks(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteTransformFeedbacks_gurax, "glDeleteTransformFeedbacks")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27654,7 +27653,7 @@ Gurax_ImplementFunctionEx(glDeleteTransformFeedbacks_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawTransformFeedback(mode:Number, id:Number)
 Gurax_DeclareFunctionAlias(glDrawTransformFeedback_gurax, "glDrawTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27676,7 +27675,7 @@ Gurax_ImplementFunctionEx(glDrawTransformFeedback_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenTransformFeedbacks(n:Number, ids:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenTransformFeedbacks_gurax, "glGenTransformFeedbacks")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27698,7 +27697,7 @@ Gurax_ImplementFunctionEx(glGenTransformFeedbacks_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsTransformFeedback(id:Number)
 Gurax_DeclareFunctionAlias(glIsTransformFeedback_gurax, "glIsTransformFeedback")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -27718,7 +27717,7 @@ Gurax_ImplementFunctionEx(glIsTransformFeedback_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glPauseTransformFeedback()
 Gurax_DeclareFunctionAlias(glPauseTransformFeedback_gurax, "glPauseTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27734,7 +27733,7 @@ Gurax_ImplementFunctionEx(glPauseTransformFeedback_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glResumeTransformFeedback()
 Gurax_DeclareFunctionAlias(glResumeTransformFeedback_gurax, "glResumeTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27750,7 +27749,7 @@ Gurax_ImplementFunctionEx(glResumeTransformFeedback_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBeginQueryIndexed(target:Number, index:Number, id:Number)
 Gurax_DeclareFunctionAlias(glBeginQueryIndexed_gurax, "glBeginQueryIndexed")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27774,7 +27773,7 @@ Gurax_ImplementFunctionEx(glBeginQueryIndexed_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawTransformFeedbackStream(mode:Number, id:Number, stream:Number)
 Gurax_DeclareFunctionAlias(glDrawTransformFeedbackStream_gurax, "glDrawTransformFeedbackStream")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27798,7 +27797,7 @@ Gurax_ImplementFunctionEx(glDrawTransformFeedbackStream_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEndQueryIndexed(target:Number, index:Number)
 Gurax_DeclareFunctionAlias(glEndQueryIndexed_gurax, "glEndQueryIndexed")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27820,7 +27819,7 @@ Gurax_ImplementFunctionEx(glEndQueryIndexed_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetQueryIndexediv(target:Number, index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetQueryIndexediv_gurax, "glGetQueryIndexediv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27846,7 +27845,7 @@ Gurax_ImplementFunctionEx(glGetQueryIndexediv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawTransformFeedbackInstanced(mode:Number, id:Number, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawTransformFeedbackInstanced_gurax, "glDrawTransformFeedbackInstanced")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27870,7 +27869,7 @@ Gurax_ImplementFunctionEx(glDrawTransformFeedbackInstanced_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDrawTransformFeedbackStreamInstanced(mode:Number, id:Number, stream:Number, primcount:Number)
 Gurax_DeclareFunctionAlias(glDrawTransformFeedbackStreamInstanced_gurax, "glDrawTransformFeedbackStreamInstanced")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27896,7 +27895,7 @@ Gurax_ImplementFunctionEx(glDrawTransformFeedbackStreamInstanced_gurax, processo
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBufferBase(target:Number, index:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glBindBufferBase_gurax, "glBindBufferBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27920,7 +27919,7 @@ Gurax_ImplementFunctionEx(glBindBufferBase_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBufferRange(target:Number, index:Number, buffer:Number, offset:Number, size:Number)
 Gurax_DeclareFunctionAlias(glBindBufferRange_gurax, "glBindBufferRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27948,7 +27947,7 @@ Gurax_ImplementFunctionEx(glBindBufferRange_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveUniformBlockName(program:Number, uniformBlockIndex:Number, bufSize:Number, length:Pointer:nil, uniformBlockName:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveUniformBlockName_gurax, "glGetActiveUniformBlockName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -27976,7 +27975,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniformBlockName_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveUniformBlockiv(program:Number, uniformBlockIndex:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveUniformBlockiv_gurax, "glGetActiveUniformBlockiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28002,7 +28001,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniformBlockiv_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveUniformName(program:Number, uniformIndex:Number, bufSize:Number, length:Pointer:nil, uniformName:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveUniformName_gurax, "glGetActiveUniformName")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28030,7 +28029,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniformName_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetActiveUniformsiv(program:Number, uniformCount:Number, uniformIndices:Pointer:nil, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetActiveUniformsiv_gurax, "glGetActiveUniformsiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28058,7 +28057,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniformsiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetIntegeri_v(target:Number, index:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetIntegeri_v_gurax, "glGetIntegeri_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28082,7 +28081,7 @@ Gurax_ImplementFunctionEx(glGetIntegeri_v_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetUniformBlockIndex(program:Number, uniformBlockName:String)
 Gurax_DeclareFunctionAlias(glGetUniformBlockIndex_gurax, "glGetUniformBlockIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -28104,7 +28103,7 @@ Gurax_ImplementFunctionEx(glGetUniformBlockIndex_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// <FuncInfo>
+// opengl.glUniformBlockBinding(program:Number, uniformBlockIndex:Number, uniformBlockBinding:Number)
 Gurax_DeclareFunctionAlias(glUniformBlockBinding_gurax, "glUniformBlockBinding")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28128,7 +28127,7 @@ Gurax_ImplementFunctionEx(glUniformBlockBinding_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindVertexArray(array:Number)
 Gurax_DeclareFunctionAlias(glBindVertexArray_gurax, "glBindVertexArray")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28148,7 +28147,7 @@ Gurax_ImplementFunctionEx(glBindVertexArray_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteVertexArrays(n:Number, arrays:Pointer)
 Gurax_DeclareFunctionAlias(glDeleteVertexArrays_gurax, "glDeleteVertexArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28170,7 +28169,7 @@ Gurax_ImplementFunctionEx(glDeleteVertexArrays_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenVertexArrays(n:Number, arrays:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenVertexArrays_gurax, "glGenVertexArrays")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28192,7 +28191,7 @@ Gurax_ImplementFunctionEx(glGenVertexArrays_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsVertexArray(array:Number)
 Gurax_DeclareFunctionAlias(glIsVertexArray_gurax, "glIsVertexArray")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -28212,7 +28211,7 @@ Gurax_ImplementFunctionEx(glIsVertexArray_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribLdv(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribLdv_gurax, "glGetVertexAttribLdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28236,7 +28235,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribLdv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL1d(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribL1d_gurax, "glVertexAttribL1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28258,7 +28257,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL1dv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribL1dv_gurax, "glVertexAttribL1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28280,7 +28279,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL2d(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribL2d_gurax, "glVertexAttribL2d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28304,7 +28303,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL2d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL2dv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribL2dv_gurax, "glVertexAttribL2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28326,7 +28325,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL2dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL3d(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribL3d_gurax, "glVertexAttribL3d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28352,7 +28351,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL3d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL3dv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribL3dv_gurax, "glVertexAttribL3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28374,7 +28373,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL3dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL4d(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribL4d_gurax, "glVertexAttribL4d")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28402,7 +28401,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL4d_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribL4dv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribL4dv_gurax, "glVertexAttribL4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28424,7 +28423,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL4dv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribLPointer(index:Number, size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribLPointer_gurax, "glVertexAttribLPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28452,7 +28451,7 @@ Gurax_ImplementFunctionEx(glVertexAttribLPointer_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindVertexBuffer(bindingindex:Number, buffer:Number, offset:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glBindVertexBuffer_gurax, "glBindVertexBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28478,7 +28477,7 @@ Gurax_ImplementFunctionEx(glBindVertexBuffer_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayBindVertexBufferEXT(vaobj:Number, bindingindex:Number, buffer:Number, offset:Number, stride:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayBindVertexBufferEXT_gurax, "glVertexArrayBindVertexBufferEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28506,7 +28505,7 @@ Gurax_ImplementFunctionEx(glVertexArrayBindVertexBufferEXT_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexAttribBindingEXT(vaobj:Number, attribindex:Number, bindingindex:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribBindingEXT_gurax, "glVertexArrayVertexAttribBindingEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28530,7 +28529,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexAttribBindingEXT_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexAttribFormatEXT(vaobj:Number, attribindex:Number, size:Number, type:Number, normalized:Bool, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribFormatEXT_gurax, "glVertexArrayVertexAttribFormatEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28560,7 +28559,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexAttribFormatEXT_gurax, processor_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexAttribIFormatEXT(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribIFormatEXT_gurax, "glVertexArrayVertexAttribIFormatEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28588,7 +28587,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexAttribIFormatEXT_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexAttribLFormatEXT(vaobj:Number, attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribLFormatEXT_gurax, "glVertexArrayVertexAttribLFormatEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28616,7 +28615,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexAttribLFormatEXT_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexArrayVertexBindingDivisorEXT(vaobj:Number, bindingindex:Number, divisor:Number)
 Gurax_DeclareFunctionAlias(glVertexArrayVertexBindingDivisorEXT_gurax, "glVertexArrayVertexBindingDivisorEXT")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28640,7 +28639,7 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexBindingDivisorEXT_gurax, processor_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribBinding(attribindex:Number, bindingindex:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribBinding_gurax, "glVertexAttribBinding")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28662,7 +28661,7 @@ Gurax_ImplementFunctionEx(glVertexAttribBinding_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribFormat(attribindex:Number, size:Number, type:Number, normalized:Bool, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribFormat_gurax, "glVertexAttribFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28690,7 +28689,7 @@ Gurax_ImplementFunctionEx(glVertexAttribFormat_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribIFormat(attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribIFormat_gurax, "glVertexAttribIFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28716,7 +28715,7 @@ Gurax_ImplementFunctionEx(glVertexAttribIFormat_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribLFormat(attribindex:Number, size:Number, type:Number, relativeoffset:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribLFormat_gurax, "glVertexAttribLFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28742,7 +28741,7 @@ Gurax_ImplementFunctionEx(glVertexAttribLFormat_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexBindingDivisor(bindingindex:Number, divisor:Number)
 Gurax_DeclareFunctionAlias(glVertexBindingDivisor_gurax, "glVertexBindingDivisor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28764,7 +28763,7 @@ Gurax_ImplementFunctionEx(glVertexBindingDivisor_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexBlendARB(count:Number)
 Gurax_DeclareFunctionAlias(glVertexBlendARB_gurax, "glVertexBlendARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28784,7 +28783,7 @@ Gurax_ImplementFunctionEx(glVertexBlendARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightPointerARB(size:Number, type:Number, stride:Number, pointer:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightPointerARB_gurax, "glWeightPointerARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28810,7 +28809,7 @@ Gurax_ImplementFunctionEx(glWeightPointerARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightbvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightbvARB_gurax, "glWeightbvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28832,7 +28831,7 @@ Gurax_ImplementFunctionEx(glWeightbvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightdvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightdvARB_gurax, "glWeightdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28854,7 +28853,7 @@ Gurax_ImplementFunctionEx(glWeightdvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightfvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightfvARB_gurax, "glWeightfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28876,7 +28875,7 @@ Gurax_ImplementFunctionEx(glWeightfvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightivARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightivARB_gurax, "glWeightivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28898,7 +28897,7 @@ Gurax_ImplementFunctionEx(glWeightivARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightsvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightsvARB_gurax, "glWeightsvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28920,7 +28919,7 @@ Gurax_ImplementFunctionEx(glWeightsvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightubvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightubvARB_gurax, "glWeightubvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28942,7 +28941,7 @@ Gurax_ImplementFunctionEx(glWeightubvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightuivARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightuivARB_gurax, "glWeightuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28964,7 +28963,7 @@ Gurax_ImplementFunctionEx(glWeightuivARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWeightusvARB(size:Number, weights:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWeightusvARB_gurax, "glWeightusvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -28986,7 +28985,7 @@ Gurax_ImplementFunctionEx(glWeightusvARB_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glBindBufferARB(target:Number, buffer:Number)
 Gurax_DeclareFunctionAlias(glBindBufferARB_gurax, "glBindBufferARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29008,7 +29007,7 @@ Gurax_ImplementFunctionEx(glBindBufferARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteBuffersARB(n:Number, buffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteBuffersARB_gurax, "glDeleteBuffersARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29030,7 +29029,7 @@ Gurax_ImplementFunctionEx(glDeleteBuffersARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenBuffersARB(n:Number, buffers:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenBuffersARB_gurax, "glGenBuffersARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29052,7 +29051,7 @@ Gurax_ImplementFunctionEx(glGenBuffersARB_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetBufferParameterivARB(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetBufferParameterivARB_gurax, "glGetBufferParameterivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29076,7 +29075,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameterivARB_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsBufferARB(buffer:Number)
 Gurax_DeclareFunctionAlias(glIsBufferARB_gurax, "glIsBufferARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -29096,7 +29095,7 @@ Gurax_ImplementFunctionEx(glIsBufferARB_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glUnmapBufferARB(target:Number)
 Gurax_DeclareFunctionAlias(glUnmapBufferARB_gurax, "glUnmapBufferARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -29116,7 +29115,7 @@ Gurax_ImplementFunctionEx(glUnmapBufferARB_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glBindProgramARB(target:Number, program:Number)
 Gurax_DeclareFunctionAlias(glBindProgramARB_gurax, "glBindProgramARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29138,7 +29137,7 @@ Gurax_ImplementFunctionEx(glBindProgramARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDeleteProgramsARB(n:Number, programs:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDeleteProgramsARB_gurax, "glDeleteProgramsARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29160,7 +29159,7 @@ Gurax_ImplementFunctionEx(glDeleteProgramsARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDisableVertexAttribArrayARB(index:Number)
 Gurax_DeclareFunctionAlias(glDisableVertexAttribArrayARB_gurax, "glDisableVertexAttribArrayARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29180,7 +29179,7 @@ Gurax_ImplementFunctionEx(glDisableVertexAttribArrayARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glEnableVertexAttribArrayARB(index:Number)
 Gurax_DeclareFunctionAlias(glEnableVertexAttribArrayARB_gurax, "glEnableVertexAttribArrayARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29200,7 +29199,7 @@ Gurax_ImplementFunctionEx(glEnableVertexAttribArrayARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGenProgramsARB(n:Number, programs:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGenProgramsARB_gurax, "glGenProgramsARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29222,7 +29221,7 @@ Gurax_ImplementFunctionEx(glGenProgramsARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramEnvParameterdvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramEnvParameterdvARB_gurax, "glGetProgramEnvParameterdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29246,7 +29245,7 @@ Gurax_ImplementFunctionEx(glGetProgramEnvParameterdvARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramEnvParameterfvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramEnvParameterfvARB_gurax, "glGetProgramEnvParameterfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29270,7 +29269,7 @@ Gurax_ImplementFunctionEx(glGetProgramEnvParameterfvARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramLocalParameterdvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramLocalParameterdvARB_gurax, "glGetProgramLocalParameterdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29294,7 +29293,7 @@ Gurax_ImplementFunctionEx(glGetProgramLocalParameterdvARB_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramLocalParameterfvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramLocalParameterfvARB_gurax, "glGetProgramLocalParameterfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29318,7 +29317,7 @@ Gurax_ImplementFunctionEx(glGetProgramLocalParameterfvARB_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramStringARB(target:Number, pname:Number, string:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramStringARB_gurax, "glGetProgramStringARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29342,7 +29341,7 @@ Gurax_ImplementFunctionEx(glGetProgramStringARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetProgramivARB(target:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetProgramivARB_gurax, "glGetProgramivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29366,7 +29365,7 @@ Gurax_ImplementFunctionEx(glGetProgramivARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribdvARB(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribdvARB_gurax, "glGetVertexAttribdvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29390,7 +29389,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribdvARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribfvARB(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribfvARB_gurax, "glGetVertexAttribfvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29414,7 +29413,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribfvARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetVertexAttribivARB(index:Number, pname:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetVertexAttribivARB_gurax, "glGetVertexAttribivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29438,7 +29437,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribivARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glIsProgramARB(program:Number)
 Gurax_DeclareFunctionAlias(glIsProgramARB_gurax, "glIsProgramARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -29458,7 +29457,7 @@ Gurax_ImplementFunctionEx(glIsProgramARB_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// <FuncInfo>
+// opengl.glProgramEnvParameter4dARB(target:Number, index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramEnvParameter4dARB_gurax, "glProgramEnvParameter4dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29488,7 +29487,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4dARB_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramEnvParameter4dvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramEnvParameter4dvARB_gurax, "glProgramEnvParameter4dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29512,7 +29511,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4dvARB_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramEnvParameter4fARB(target:Number, index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramEnvParameter4fARB_gurax, "glProgramEnvParameter4fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29542,7 +29541,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4fARB_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramEnvParameter4fvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramEnvParameter4fvARB_gurax, "glProgramEnvParameter4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29566,7 +29565,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4fvARB_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramLocalParameter4dARB(target:Number, index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramLocalParameter4dARB_gurax, "glProgramLocalParameter4dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29596,7 +29595,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4dARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramLocalParameter4dvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramLocalParameter4dvARB_gurax, "glProgramLocalParameter4dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29620,7 +29619,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4dvARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramLocalParameter4fARB(target:Number, index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glProgramLocalParameter4fARB_gurax, "glProgramLocalParameter4fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29650,7 +29649,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4fARB_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramLocalParameter4fvARB(target:Number, index:Number, params:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramLocalParameter4fvARB_gurax, "glProgramLocalParameter4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29674,7 +29673,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4fvARB_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glProgramStringARB(target:Number, format:Number, len:Number, string:Pointer:nil)
 Gurax_DeclareFunctionAlias(glProgramStringARB_gurax, "glProgramStringARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29700,7 +29699,7 @@ Gurax_ImplementFunctionEx(glProgramStringARB_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1dARB(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1dARB_gurax, "glVertexAttrib1dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29722,7 +29721,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1dvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib1dvARB_gurax, "glVertexAttrib1dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29744,7 +29743,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1fARB(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1fARB_gurax, "glVertexAttrib1fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29766,7 +29765,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1fvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib1fvARB_gurax, "glVertexAttrib1fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29788,7 +29787,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1sARB(index:Number, x:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib1sARB_gurax, "glVertexAttrib1sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29810,7 +29809,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1sARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib1svARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib1svARB_gurax, "glVertexAttrib1svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29832,7 +29831,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1svARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2dARB(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2dARB_gurax, "glVertexAttrib2dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29856,7 +29855,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2dvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib2dvARB_gurax, "glVertexAttrib2dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29878,7 +29877,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2fARB(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2fARB_gurax, "glVertexAttrib2fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29902,7 +29901,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2fvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib2fvARB_gurax, "glVertexAttrib2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29924,7 +29923,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2sARB(index:Number, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib2sARB_gurax, "glVertexAttrib2sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29948,7 +29947,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2sARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib2svARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib2svARB_gurax, "glVertexAttrib2svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29970,7 +29969,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2svARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3dARB(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3dARB_gurax, "glVertexAttrib3dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -29996,7 +29995,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3dvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib3dvARB_gurax, "glVertexAttrib3dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30018,7 +30017,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3fARB(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3fARB_gurax, "glVertexAttrib3fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30044,7 +30043,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3fvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib3fvARB_gurax, "glVertexAttrib3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30066,7 +30065,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3sARB(index:Number, x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib3sARB_gurax, "glVertexAttrib3sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30092,7 +30091,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3sARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib3svARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib3svARB_gurax, "glVertexAttrib3svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30114,7 +30113,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3svARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NbvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NbvARB_gurax, "glVertexAttrib4NbvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30136,7 +30135,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NbvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NivARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NivARB_gurax, "glVertexAttrib4NivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30158,7 +30157,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NsvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NsvARB_gurax, "glVertexAttrib4NsvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30180,7 +30179,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NsvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NubARB(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NubARB_gurax, "glVertexAttrib4NubARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30208,7 +30207,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NubARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NubvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NubvARB_gurax, "glVertexAttrib4NubvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30230,7 +30229,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NubvARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NuivARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NuivARB_gurax, "glVertexAttrib4NuivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30252,7 +30251,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NuivARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4NusvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4NusvARB_gurax, "glVertexAttrib4NusvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30274,7 +30273,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NusvARB_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4bvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4bvARB_gurax, "glVertexAttrib4bvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30296,7 +30295,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4bvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4dARB(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4dARB_gurax, "glVertexAttrib4dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30324,7 +30323,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4dvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4dvARB_gurax, "glVertexAttrib4dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30346,7 +30345,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4fARB(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4fARB_gurax, "glVertexAttrib4fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30374,7 +30373,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4fvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4fvARB_gurax, "glVertexAttrib4fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30396,7 +30395,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fvARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4ivARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4ivARB_gurax, "glVertexAttrib4ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30418,7 +30417,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ivARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4sARB(index:Number, x:Number, y:Number, z:Number, w:Number)
 Gurax_DeclareFunctionAlias(glVertexAttrib4sARB_gurax, "glVertexAttrib4sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30446,7 +30445,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4sARB_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4svARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4svARB_gurax, "glVertexAttrib4svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30468,7 +30467,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4svARB_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4ubvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4ubvARB_gurax, "glVertexAttrib4ubvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30490,7 +30489,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ubvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4uivARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4uivARB_gurax, "glVertexAttrib4uivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30512,7 +30511,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4uivARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttrib4usvARB(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttrib4usvARB_gurax, "glVertexAttrib4usvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30534,7 +30533,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usvARB_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribPointerARB(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribPointerARB_gurax, "glVertexAttribPointerARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30543,7 +30542,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointerARB_gurax, "glVertexAttribPointe
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -30558,13 +30557,13 @@ Gurax_ImplementFunctionEx(glVertexAttribPointerARB_gurax, processor_gurax, argum
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = reinterpret_cast<const void*>(args_gurax.PickNumber<size_t>());
 	// Function body
 	glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorP3ui(type:Number, color:Number)
 Gurax_DeclareFunctionAlias(glColorP3ui_gurax, "glColorP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30586,7 +30585,7 @@ Gurax_ImplementFunctionEx(glColorP3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorP3uiv(type:Number, color:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorP3uiv_gurax, "glColorP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30608,7 +30607,7 @@ Gurax_ImplementFunctionEx(glColorP3uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorP4ui(type:Number, color:Number)
 Gurax_DeclareFunctionAlias(glColorP4ui_gurax, "glColorP4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30630,7 +30629,7 @@ Gurax_ImplementFunctionEx(glColorP4ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glColorP4uiv(type:Number, color:Pointer:nil)
 Gurax_DeclareFunctionAlias(glColorP4uiv_gurax, "glColorP4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30652,7 +30651,7 @@ Gurax_ImplementFunctionEx(glColorP4uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP1ui(texture:Number, type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP1ui_gurax, "glMultiTexCoordP1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30676,7 +30675,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP1ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP1uiv(texture:Number, type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP1uiv_gurax, "glMultiTexCoordP1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30700,7 +30699,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP1uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP2ui(texture:Number, type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP2ui_gurax, "glMultiTexCoordP2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30724,7 +30723,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP2ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP2uiv(texture:Number, type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP2uiv_gurax, "glMultiTexCoordP2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30748,7 +30747,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP2uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP3ui(texture:Number, type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP3ui_gurax, "glMultiTexCoordP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30772,7 +30771,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP3ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP3uiv(texture:Number, type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP3uiv_gurax, "glMultiTexCoordP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30796,7 +30795,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP3uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP4ui(texture:Number, type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP4ui_gurax, "glMultiTexCoordP4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30820,7 +30819,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP4ui_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glMultiTexCoordP4uiv(texture:Number, type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glMultiTexCoordP4uiv_gurax, "glMultiTexCoordP4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30844,7 +30843,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP4uiv_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormalP3ui(type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glNormalP3ui_gurax, "glNormalP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30866,7 +30865,7 @@ Gurax_ImplementFunctionEx(glNormalP3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glNormalP3uiv(type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glNormalP3uiv_gurax, "glNormalP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30888,7 +30887,7 @@ Gurax_ImplementFunctionEx(glNormalP3uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColorP3ui(type:Number, color:Number)
 Gurax_DeclareFunctionAlias(glSecondaryColorP3ui_gurax, "glSecondaryColorP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30910,7 +30909,7 @@ Gurax_ImplementFunctionEx(glSecondaryColorP3ui_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glSecondaryColorP3uiv(type:Number, color:Pointer:nil)
 Gurax_DeclareFunctionAlias(glSecondaryColorP3uiv_gurax, "glSecondaryColorP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30932,7 +30931,7 @@ Gurax_ImplementFunctionEx(glSecondaryColorP3uiv_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP1ui(type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glTexCoordP1ui_gurax, "glTexCoordP1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30954,7 +30953,7 @@ Gurax_ImplementFunctionEx(glTexCoordP1ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP1uiv(type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexCoordP1uiv_gurax, "glTexCoordP1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30976,7 +30975,7 @@ Gurax_ImplementFunctionEx(glTexCoordP1uiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP2ui(type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glTexCoordP2ui_gurax, "glTexCoordP2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -30998,7 +30997,7 @@ Gurax_ImplementFunctionEx(glTexCoordP2ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP2uiv(type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexCoordP2uiv_gurax, "glTexCoordP2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31020,7 +31019,7 @@ Gurax_ImplementFunctionEx(glTexCoordP2uiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP3ui(type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glTexCoordP3ui_gurax, "glTexCoordP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31042,7 +31041,7 @@ Gurax_ImplementFunctionEx(glTexCoordP3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP3uiv(type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexCoordP3uiv_gurax, "glTexCoordP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31064,7 +31063,7 @@ Gurax_ImplementFunctionEx(glTexCoordP3uiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP4ui(type:Number, coords:Number)
 Gurax_DeclareFunctionAlias(glTexCoordP4ui_gurax, "glTexCoordP4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31086,7 +31085,7 @@ Gurax_ImplementFunctionEx(glTexCoordP4ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glTexCoordP4uiv(type:Number, coords:Pointer:nil)
 Gurax_DeclareFunctionAlias(glTexCoordP4uiv_gurax, "glTexCoordP4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31108,7 +31107,7 @@ Gurax_ImplementFunctionEx(glTexCoordP4uiv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP1ui(index:Number, type:Number, normalized:Bool, value:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribP1ui_gurax, "glVertexAttribP1ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31134,7 +31133,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP1ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP1uiv(index:Number, type:Number, normalized:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribP1uiv_gurax, "glVertexAttribP1uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31160,7 +31159,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP1uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP2ui(index:Number, type:Number, normalized:Bool, value:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribP2ui_gurax, "glVertexAttribP2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31186,7 +31185,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP2ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP2uiv(index:Number, type:Number, normalized:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribP2uiv_gurax, "glVertexAttribP2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31212,7 +31211,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP2uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP3ui(index:Number, type:Number, normalized:Bool, value:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribP3ui_gurax, "glVertexAttribP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31238,7 +31237,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP3ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP3uiv(index:Number, type:Number, normalized:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribP3uiv_gurax, "glVertexAttribP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31264,7 +31263,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP3uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP4ui(index:Number, type:Number, normalized:Bool, value:Number)
 Gurax_DeclareFunctionAlias(glVertexAttribP4ui_gurax, "glVertexAttribP4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31290,7 +31289,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP4ui_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexAttribP4uiv(index:Number, type:Number, normalized:Bool, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribP4uiv_gurax, "glVertexAttribP4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31316,7 +31315,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP4uiv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP2ui(type:Number, value:Number)
 Gurax_DeclareFunctionAlias(glVertexP2ui_gurax, "glVertexP2ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31338,7 +31337,7 @@ Gurax_ImplementFunctionEx(glVertexP2ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP2uiv(type:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexP2uiv_gurax, "glVertexP2uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31360,7 +31359,7 @@ Gurax_ImplementFunctionEx(glVertexP2uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP3ui(type:Number, value:Number)
 Gurax_DeclareFunctionAlias(glVertexP3ui_gurax, "glVertexP3ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31382,7 +31381,7 @@ Gurax_ImplementFunctionEx(glVertexP3ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP3uiv(type:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexP3uiv_gurax, "glVertexP3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31404,7 +31403,7 @@ Gurax_ImplementFunctionEx(glVertexP3uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP4ui(type:Number, value:Number)
 Gurax_DeclareFunctionAlias(glVertexP4ui_gurax, "glVertexP4ui")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31426,7 +31425,7 @@ Gurax_ImplementFunctionEx(glVertexP4ui_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glVertexP4uiv(type:Number, value:Pointer:nil)
 Gurax_DeclareFunctionAlias(glVertexP4uiv_gurax, "glVertexP4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31448,7 +31447,7 @@ Gurax_ImplementFunctionEx(glVertexP4uiv_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthRangeArrayv(first:Number, count:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glDepthRangeArrayv_gurax, "glDepthRangeArrayv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31472,7 +31471,7 @@ Gurax_ImplementFunctionEx(glDepthRangeArrayv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glDepthRangeIndexed(index:Number, n:Number, f:Number)
 Gurax_DeclareFunctionAlias(glDepthRangeIndexed_gurax, "glDepthRangeIndexed")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31496,7 +31495,7 @@ Gurax_ImplementFunctionEx(glDepthRangeIndexed_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetDoublei_v(target:Number, index:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetDoublei_v_gurax, "glGetDoublei_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31520,7 +31519,7 @@ Gurax_ImplementFunctionEx(glGetDoublei_v_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glGetFloati_v(target:Number, index:Number, data:Pointer:nil)
 Gurax_DeclareFunctionAlias(glGetFloati_v_gurax, "glGetFloati_v")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31544,7 +31543,7 @@ Gurax_ImplementFunctionEx(glGetFloati_v_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScissorArrayv(first:Number, count:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glScissorArrayv_gurax, "glScissorArrayv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31568,7 +31567,7 @@ Gurax_ImplementFunctionEx(glScissorArrayv_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScissorIndexed(index:Number, left:Number, bottom:Number, width:Number, height:Number)
 Gurax_DeclareFunctionAlias(glScissorIndexed_gurax, "glScissorIndexed")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31596,7 +31595,7 @@ Gurax_ImplementFunctionEx(glScissorIndexed_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glScissorIndexedv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glScissorIndexedv_gurax, "glScissorIndexedv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31618,7 +31617,7 @@ Gurax_ImplementFunctionEx(glScissorIndexedv_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glViewportArrayv(first:Number, count:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glViewportArrayv_gurax, "glViewportArrayv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31642,7 +31641,7 @@ Gurax_ImplementFunctionEx(glViewportArrayv_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glViewportIndexedf(index:Number, x:Number, y:Number, w:Number, h:Number)
 Gurax_DeclareFunctionAlias(glViewportIndexedf_gurax, "glViewportIndexedf")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31670,7 +31669,7 @@ Gurax_ImplementFunctionEx(glViewportIndexedf_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glViewportIndexedfv(index:Number, v:Pointer:nil)
 Gurax_DeclareFunctionAlias(glViewportIndexedfv_gurax, "glViewportIndexedfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31692,7 +31691,7 @@ Gurax_ImplementFunctionEx(glViewportIndexedfv_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2dARB(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2dARB_gurax, "glWindowPos2dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31714,7 +31713,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2dvARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos2dvARB_gurax, "glWindowPos2dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31734,7 +31733,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dvARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2fARB(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2fARB_gurax, "glWindowPos2fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31756,7 +31755,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2fvARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos2fvARB_gurax, "glWindowPos2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31776,7 +31775,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fvARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2iARB(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2iARB_gurax, "glWindowPos2iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31798,7 +31797,7 @@ Gurax_ImplementFunctionEx(glWindowPos2iARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2ivARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos2ivARB_gurax, "glWindowPos2ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31818,7 +31817,7 @@ Gurax_ImplementFunctionEx(glWindowPos2ivARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2sARB(x:Number, y:Number)
 Gurax_DeclareFunctionAlias(glWindowPos2sARB_gurax, "glWindowPos2sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31840,7 +31839,7 @@ Gurax_ImplementFunctionEx(glWindowPos2sARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos2svARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos2svARB_gurax, "glWindowPos2svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31860,7 +31859,7 @@ Gurax_ImplementFunctionEx(glWindowPos2svARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3dARB(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3dARB_gurax, "glWindowPos3dARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31884,7 +31883,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3dvARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos3dvARB_gurax, "glWindowPos3dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31904,7 +31903,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dvARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3fARB(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3fARB_gurax, "glWindowPos3fARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31928,7 +31927,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3fvARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos3fvARB_gurax, "glWindowPos3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31948,7 +31947,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fvARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3iARB(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3iARB_gurax, "glWindowPos3iARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31972,7 +31971,7 @@ Gurax_ImplementFunctionEx(glWindowPos3iARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3ivARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos3ivARB_gurax, "glWindowPos3ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -31992,7 +31991,7 @@ Gurax_ImplementFunctionEx(glWindowPos3ivARB_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3sARB(x:Number, y:Number, z:Number)
 Gurax_DeclareFunctionAlias(glWindowPos3sARB_gurax, "glWindowPos3sARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -32016,7 +32015,7 @@ Gurax_ImplementFunctionEx(glWindowPos3sARB_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// <FuncInfo>
+// opengl.glWindowPos3svARB(p:Pointer:nil)
 Gurax_DeclareFunctionAlias(glWindowPos3svARB_gurax, "glWindowPos3svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
