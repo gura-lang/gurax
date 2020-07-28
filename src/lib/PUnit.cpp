@@ -1076,22 +1076,42 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
 	ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
-	if (expandFlag && pValueElem->IsIterator()) {
-		Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
-		if (!iterator.MustBeFinite()) {
-			processor.ErrorDone();
-			return;
-		}
-		if (xlistFlag) {
-			valueTypedOwner.AddX(iterator);
+	if (pValueElem->IsIterator()) {
+		if (expandFlag) {
+			Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
+			if (!iterator.MustBeFinite()) {
+				processor.ErrorDone();
+				return;
+			}
+			if (xlistFlag) {
+				valueTypedOwner.AddX(iterator);
+			} else {
+				valueTypedOwner.Add(iterator);
+			}
 		} else {
-			valueTypedOwner.Add(iterator);
+			valueTypedOwner.Add(pValueElem.release());
 		}
-	} else if (expandFlag && pValueElem->IsList()) {
-		if (xlistFlag) {
-			valueTypedOwner.AddX(Value_List::GetValueTypedOwner(*pValueElem));
+	} else if (pValueElem->IsList()) {
+		if (expandFlag) {
+			if (xlistFlag) {
+				valueTypedOwner.AddX(Value_List::GetValueTypedOwner(*pValueElem));
+			} else {
+				valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+			}
 		} else {
-			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+			valueTypedOwner.Add(pValueElem.release());
+		}
+	} else if (pValueElem->IsType(VTYPE_Array)) {
+		if (expandFlag) {
+			const Array& array = Value_Array::GetArray(*pValueElem);
+			array.ExtractElems(valueTypedOwner.GetValueOwnerToModify());
+			if (array.IsMultidemensional()) {
+				valueTypedOwner.UpdateVTypeOfElems(VTYPE_List);
+			} else {
+				valueTypedOwner.UpdateVTypeOfElems(VTYPE_Number);
+			}
+		} else {
+			valueTypedOwner.Add(pValueElem.release());
 		}
 	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		valueTypedOwner.Add(pValueElem.release());

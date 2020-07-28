@@ -114,6 +114,7 @@ public:
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
+	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }

@@ -92,6 +92,7 @@ public:
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
+	ValueOwner& GetValueOwnerToModify() { return *_pValueOwner; }
 	ValueOwner& GetValueOwnerToSort() { return *_pValueOwner; }
 	ValueOwner* GetValueOwnerReference() const { return _pValueOwner->Reference(); }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
@@ -100,8 +101,6 @@ public:
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const;
-private:
-	ValueOwner& GetValueOwnerToModify() { return *_pValueOwner; }
 };
 
 }
