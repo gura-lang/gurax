@@ -11086,13 +11086,13 @@ Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// opengl.glShaderSource(shader:Number, string[]:String, length:Pointer:nil)
+// opengl.glShaderSource(shader:Number, string[]:String, length[]:Number)
 Gurax_DeclareFunctionAlias(glShaderSource_gurax, "glShaderSource")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -11106,10 +11106,14 @@ Gurax_ImplementFunctionEx(glShaderSource_gurax, processor_gurax, argument_gurax)
 	auto string = args_gurax.PickListT<const GLchar*>([](Gurax::Value& value) {
 		return reinterpret_cast<const GLchar*>(Gurax::Value_String::GetString(value));
 	});
-	GLint* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	auto length = args_gurax.PickNumList<GLint>();
 	// Function body
-	size_t count = string.size();
-	glShaderSource(shader, count, string, length);
+	GLsizei count = string.sizeT<GLsizei>();
+	if (!length.empty() && count != length.sizeT<GLsizei>()) {
+		Error::Issue(ErrorType::RangeError, "string and length must have the same number of elements");
+		return Value::nil();
+	}
+	glShaderSource(shader, count, string, length.empty()? nullptr : length.data());
 	return Value::nil();
 }
 
@@ -12531,7 +12535,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// opengl.glVertexAttribPointer(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Number)
+// opengl.glVertexAttribPointer(index:Number, size:Number, type:Number, normalized:Bool, stride:Number, pointer:Number:nil)
 Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12540,7 +12544,7 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12555,7 +12559,7 @@ Gurax_ImplementFunctionEx(glVertexAttribPointer_gurax, processor_gurax, argument
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = reinterpret_cast<const void*>(args_gurax.PickNumber<size_t>());
+	const void* pointer = args_gurax.IsValid()? reinterpret_cast<const void*>(args_gurax.PickNumber<size_t>()) : nullptr;
 	// Function body
 	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 	return Gurax::Value::nil();

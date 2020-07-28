@@ -1146,11 +1146,15 @@ glIsShader(shader:GLuint):GLboolean
 
 glLinkProgram(program:GLuint):void
 
-//glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length:GLint_p:nil):void
-glShaderSource(shader:GLuint, string[]:String_const_GLchar_p, length:GLint_p:nil):void = \
+//glShaderSource(shader:GLuint, count:GLsizei, string[]:String_const_GLchar_p, length[]:GLint):void
+glShaderSource(shader:GLuint, string[]:String_const_GLchar_p, length[]:GLint):void = \
 	R'''
-	size_t count = string.size();
-	glShaderSource(shader, count, string, length);
+	GLsizei count = string.sizeT<GLsizei>();
+	if (!length.empty() && count != length.sizeT<GLsizei>()) {
+		Error::Issue(ErrorType::RangeError, "string and length must have the same number of elements");
+		return Value::nil();
+	}
+	glShaderSource(shader, count, string, length.empty()? nullptr : length.data());
 	return Value::nil();
 	'''
 
@@ -1274,7 +1278,7 @@ glVertexAttrib4uiv(index:GLuint, v:const_GLuint_p):void
 
 glVertexAttrib4usv(index:GLuint, v:const_GLushort_p):void
 
-glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:Number_const_void_p):void
+glVertexAttribPointer(index:GLuint, size:GLint, type:GLenum, normalized:GLboolean, stride:GLsizei, pointer:Number_const_void_p:nil):void
 
 //======== GL_VERSION_2_1 ========
 
