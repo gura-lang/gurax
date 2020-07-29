@@ -600,7 +600,7 @@ Gurax_ImplementPropertySetter(Pointer, double_)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Pointer + Number
-Gurax_ImplementBinary(Add, Pointer, Number)
+Gurax_ImplementOpBinary(Add, Pointer, Number)
 {
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueL).Clone());
 	long offset = Value_Number::GetNumber<long>(valueR);
@@ -609,7 +609,7 @@ Gurax_ImplementBinary(Add, Pointer, Number)
 }
 
 // Number + Pointer
-Gurax_ImplementBinary(Add, Number, Pointer)
+Gurax_ImplementOpBinary(Add, Number, Pointer)
 {
 	long offset = Value_Number::GetNumber<long>(valueL);
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueR).Clone());
@@ -618,7 +618,7 @@ Gurax_ImplementBinary(Add, Number, Pointer)
 }
 
 // Pointer - Number
-Gurax_ImplementBinary(Sub, Pointer, Number)
+Gurax_ImplementOpBinary(Sub, Pointer, Number)
 {
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueL).Clone());
 	long offset = Value_Number::GetNumber<long>(valueR);
@@ -627,7 +627,7 @@ Gurax_ImplementBinary(Sub, Pointer, Number)
 }
 
 // Pointer - Pointer
-Gurax_ImplementBinary(Sub, Pointer, Pointer)
+Gurax_ImplementOpBinary(Sub, Pointer, Pointer)
 {
 	const Pointer& pointerL = Value_Pointer::GetPointer(valueL);
 	const Pointer& pointerR = Value_Pointer::GetPointer(valueR);
@@ -670,10 +670,10 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Pointer, float_));
 	Assign(Gurax_CreateProperty(Pointer, double_));
 	// Assignment of operator
-	Gurax_AssignBinary(Add, Pointer, Number);
-	Gurax_AssignBinary(Add, Number, Pointer);
-	Gurax_AssignBinary(Sub, Pointer, Number);
-	Gurax_AssignBinary(Sub, Pointer, Pointer);
+	Gurax_AssignOpBinary(Add, Pointer, Number);
+	Gurax_AssignOpBinary(Add, Number, Pointer);
+	Gurax_AssignOpBinary(Sub, Pointer, Number);
+	Gurax_AssignOpBinary(Sub, Pointer, Pointer);
 }
 
 Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const

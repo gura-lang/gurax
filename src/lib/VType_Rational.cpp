@@ -256,7 +256,7 @@ Gurax_ImplementOpUnary(Pos, Rational)
 }
 
 // Rational + Rational
-Gurax_ImplementBinary(Add, Rational, Rational)
+Gurax_ImplementOpBinary(Add, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -265,7 +265,7 @@ Gurax_ImplementBinary(Add, Rational, Rational)
 }
 
 // Rational + Number
-Gurax_ImplementBinary(Add, Rational, Number)
+Gurax_ImplementOpBinary(Add, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -274,7 +274,7 @@ Gurax_ImplementBinary(Add, Rational, Number)
 }
 
 // Number + Rational
-Gurax_ImplementBinary(Add, Number, Rational)
+Gurax_ImplementOpBinary(Add, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -283,7 +283,7 @@ Gurax_ImplementBinary(Add, Number, Rational)
 }
 
 // Rational - Rational
-Gurax_ImplementBinary(Sub, Rational, Rational)
+Gurax_ImplementOpBinary(Sub, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -292,7 +292,7 @@ Gurax_ImplementBinary(Sub, Rational, Rational)
 }
 
 // Rational - Number
-Gurax_ImplementBinary(Sub, Rational, Number)
+Gurax_ImplementOpBinary(Sub, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -301,7 +301,7 @@ Gurax_ImplementBinary(Sub, Rational, Number)
 }
 
 // Number - Rational
-Gurax_ImplementBinary(Sub, Number, Rational)
+Gurax_ImplementOpBinary(Sub, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -310,7 +310,7 @@ Gurax_ImplementBinary(Sub, Number, Rational)
 }
 
 // Rational * Rational
-Gurax_ImplementBinary(Mul, Rational, Rational)
+Gurax_ImplementOpBinary(Mul, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -319,7 +319,7 @@ Gurax_ImplementBinary(Mul, Rational, Rational)
 }
 
 // Rational * Number
-Gurax_ImplementBinary(Mul, Rational, Number)
+Gurax_ImplementOpBinary(Mul, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -328,7 +328,7 @@ Gurax_ImplementBinary(Mul, Rational, Number)
 }
 
 // Number * Rational
-Gurax_ImplementBinary(Mul, Number, Rational)
+Gurax_ImplementOpBinary(Mul, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -337,7 +337,7 @@ Gurax_ImplementBinary(Mul, Number, Rational)
 }
 
 // Rational / Rational
-Gurax_ImplementBinary(Div, Rational, Rational)
+Gurax_ImplementOpBinary(Div, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -350,7 +350,7 @@ Gurax_ImplementBinary(Div, Rational, Rational)
 }
 
 // Rational / Number
-Gurax_ImplementBinary(Div, Rational, Number)
+Gurax_ImplementOpBinary(Div, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -363,7 +363,7 @@ Gurax_ImplementBinary(Div, Rational, Number)
 }
 
 // Number / Rational
-Gurax_ImplementBinary(Div, Number, Rational)
+Gurax_ImplementOpBinary(Div, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -376,7 +376,7 @@ Gurax_ImplementBinary(Div, Number, Rational)
 }
 
 // Rational == Rational
-Gurax_ImplementBinary(Eq, Rational, Rational)
+Gurax_ImplementOpBinary(Eq, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -384,7 +384,7 @@ Gurax_ImplementBinary(Eq, Rational, Rational)
 }
 
 // Rational == Number
-Gurax_ImplementBinary(Eq, Rational, Number)
+Gurax_ImplementOpBinary(Eq, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -392,7 +392,7 @@ Gurax_ImplementBinary(Eq, Rational, Number)
 }
 
 // Number == Rational
-Gurax_ImplementBinary(Eq, Number, Rational)
+Gurax_ImplementOpBinary(Eq, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -400,7 +400,7 @@ Gurax_ImplementBinary(Eq, Number, Rational)
 }
 
 // Rational != Rational
-Gurax_ImplementBinary(Ne, Rational, Rational)
+Gurax_ImplementOpBinary(Ne, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -408,7 +408,7 @@ Gurax_ImplementBinary(Ne, Rational, Rational)
 }
 
 // Rational != Number
-Gurax_ImplementBinary(Ne, Rational, Number)
+Gurax_ImplementOpBinary(Ne, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -416,7 +416,7 @@ Gurax_ImplementBinary(Ne, Rational, Number)
 }
 
 // Number != Rational
-Gurax_ImplementBinary(Ne, Number, Rational)
+Gurax_ImplementOpBinary(Ne, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -424,7 +424,7 @@ Gurax_ImplementBinary(Ne, Number, Rational)
 }
 
 // Rational < Rational
-Gurax_ImplementBinary(Lt, Rational, Rational)
+Gurax_ImplementOpBinary(Lt, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -432,7 +432,7 @@ Gurax_ImplementBinary(Lt, Rational, Rational)
 }
 
 // Rational < Number
-Gurax_ImplementBinary(Lt, Rational, Number)
+Gurax_ImplementOpBinary(Lt, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -440,7 +440,7 @@ Gurax_ImplementBinary(Lt, Rational, Number)
 }
 
 // Number < Rational
-Gurax_ImplementBinary(Lt, Number, Rational)
+Gurax_ImplementOpBinary(Lt, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -448,7 +448,7 @@ Gurax_ImplementBinary(Lt, Number, Rational)
 }
 
 // Rational > Rational
-Gurax_ImplementBinary(Gt, Rational, Rational)
+Gurax_ImplementOpBinary(Gt, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -456,7 +456,7 @@ Gurax_ImplementBinary(Gt, Rational, Rational)
 }
 
 // Rational > Number
-Gurax_ImplementBinary(Gt, Rational, Number)
+Gurax_ImplementOpBinary(Gt, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -464,7 +464,7 @@ Gurax_ImplementBinary(Gt, Rational, Number)
 }
 
 // Number > Rational
-Gurax_ImplementBinary(Gt, Number, Rational)
+Gurax_ImplementOpBinary(Gt, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -472,7 +472,7 @@ Gurax_ImplementBinary(Gt, Number, Rational)
 }
 
 // Rational <= Rational
-Gurax_ImplementBinary(Le, Rational, Rational)
+Gurax_ImplementOpBinary(Le, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -480,7 +480,7 @@ Gurax_ImplementBinary(Le, Rational, Rational)
 }
 
 // Rational <= Number
-Gurax_ImplementBinary(Le, Rational, Number)
+Gurax_ImplementOpBinary(Le, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -488,7 +488,7 @@ Gurax_ImplementBinary(Le, Rational, Number)
 }
 
 // Number <= Rational
-Gurax_ImplementBinary(Le, Number, Rational)
+Gurax_ImplementOpBinary(Le, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -496,7 +496,7 @@ Gurax_ImplementBinary(Le, Number, Rational)
 }
 
 // Rational >= Rational
-Gurax_ImplementBinary(Ge, Rational, Rational)
+Gurax_ImplementOpBinary(Ge, Rational, Rational)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -504,7 +504,7 @@ Gurax_ImplementBinary(Ge, Rational, Rational)
 }
 
 // Rational >= Number
-Gurax_ImplementBinary(Ge, Rational, Number)
+Gurax_ImplementOpBinary(Ge, Rational, Number)
 {
 	const Rational& ratL = Value_Rational::GetRational(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
@@ -512,7 +512,7 @@ Gurax_ImplementBinary(Ge, Rational, Number)
 }
 
 // Number >= Rational
-Gurax_ImplementBinary(Ge, Number, Rational)
+Gurax_ImplementOpBinary(Ge, Number, Rational)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	const Rational& ratR = Value_Rational::GetRational(valueR);
@@ -560,36 +560,36 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg,	Rational);
 	Gurax_AssignOpUnary(Pos,	Rational);
-	Gurax_AssignBinary(Add,	Rational, Rational);
-	Gurax_AssignBinary(Add,	Rational, Number);
-	Gurax_AssignBinary(Add,	Number, Rational);
-	Gurax_AssignBinary(Sub,	Rational, Rational);
-	Gurax_AssignBinary(Sub,	Rational, Number);
-	Gurax_AssignBinary(Sub,	Number, Rational);
-	Gurax_AssignBinary(Mul,	Rational, Rational);
-	Gurax_AssignBinary(Mul,	Rational, Number);
-	Gurax_AssignBinary(Mul,	Number, Rational);
-	Gurax_AssignBinary(Div,	Rational, Rational);
-	Gurax_AssignBinary(Div,	Rational, Number);
-	Gurax_AssignBinary(Div,	Number, Rational);
-	Gurax_AssignBinary(Eq,	Rational, Rational);
-	Gurax_AssignBinary(Eq,	Rational, Number);
-	Gurax_AssignBinary(Eq,	Number, Rational);
-	Gurax_AssignBinary(Ne,	Rational, Rational);
-	Gurax_AssignBinary(Ne,	Rational, Number);
-	Gurax_AssignBinary(Ne,	Number, Rational);
-	Gurax_AssignBinary(Lt,	Rational, Rational);
-	Gurax_AssignBinary(Lt,	Rational, Number);
-	Gurax_AssignBinary(Lt,	Number, Rational);
-	Gurax_AssignBinary(Gt,	Rational, Rational);
-	Gurax_AssignBinary(Gt,	Rational, Number);
-	Gurax_AssignBinary(Gt,	Number, Rational);
-	Gurax_AssignBinary(Le,	Rational, Rational);
-	Gurax_AssignBinary(Le,	Rational, Number);
-	Gurax_AssignBinary(Le,	Number, Rational);
-	Gurax_AssignBinary(Ge,	Rational, Rational);
-	Gurax_AssignBinary(Ge,	Rational, Number);
-	Gurax_AssignBinary(Ge,	Number, Rational);
+	Gurax_AssignOpBinary(Add,	Rational, Rational);
+	Gurax_AssignOpBinary(Add,	Rational, Number);
+	Gurax_AssignOpBinary(Add,	Number, Rational);
+	Gurax_AssignOpBinary(Sub,	Rational, Rational);
+	Gurax_AssignOpBinary(Sub,	Rational, Number);
+	Gurax_AssignOpBinary(Sub,	Number, Rational);
+	Gurax_AssignOpBinary(Mul,	Rational, Rational);
+	Gurax_AssignOpBinary(Mul,	Rational, Number);
+	Gurax_AssignOpBinary(Mul,	Number, Rational);
+	Gurax_AssignOpBinary(Div,	Rational, Rational);
+	Gurax_AssignOpBinary(Div,	Rational, Number);
+	Gurax_AssignOpBinary(Div,	Number, Rational);
+	Gurax_AssignOpBinary(Eq,	Rational, Rational);
+	Gurax_AssignOpBinary(Eq,	Rational, Number);
+	Gurax_AssignOpBinary(Eq,	Number, Rational);
+	Gurax_AssignOpBinary(Ne,	Rational, Rational);
+	Gurax_AssignOpBinary(Ne,	Rational, Number);
+	Gurax_AssignOpBinary(Ne,	Number, Rational);
+	Gurax_AssignOpBinary(Lt,	Rational, Rational);
+	Gurax_AssignOpBinary(Lt,	Rational, Number);
+	Gurax_AssignOpBinary(Lt,	Number, Rational);
+	Gurax_AssignOpBinary(Gt,	Rational, Rational);
+	Gurax_AssignOpBinary(Gt,	Rational, Number);
+	Gurax_AssignOpBinary(Gt,	Number, Rational);
+	Gurax_AssignOpBinary(Le,	Rational, Rational);
+	Gurax_AssignOpBinary(Le,	Rational, Number);
+	Gurax_AssignOpBinary(Le,	Number, Rational);
+	Gurax_AssignOpBinary(Ge,	Rational, Rational);
+	Gurax_AssignOpBinary(Ge,	Rational, Number);
+	Gurax_AssignOpBinary(Ge,	Number, Rational);
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Number, r);
 }

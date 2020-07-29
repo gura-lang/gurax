@@ -21,14 +21,14 @@ Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeNam
 //------------------------------------------------------------------------------
 // Macros to implement binary operators
 //------------------------------------------------------------------------------
-#define Gurax_ImplementBinary(opType, typeNameL, typeNameR) \
+#define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
 	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const; \
 }; \
 Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 
-#define Gurax_AssignBinary(opType, typeNameL, typeNameR) \
+#define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
 Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
 
 namespace Gurax {

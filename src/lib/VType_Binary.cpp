@@ -207,7 +207,7 @@ Gurax_ImplementPropertyGetter(Binary, writable)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Binary + Binary
-Gurax_ImplementBinary(Add, Binary, Binary)
+Gurax_ImplementOpBinary(Add, Binary, Binary)
 {
 	Binary binaryL = Value_Binary::GetBinary(valueL);
 	const Binary& binaryR = Value_Binary::GetBinary(valueR);
@@ -216,7 +216,7 @@ Gurax_ImplementBinary(Add, Binary, Binary)
 }
 
 // Binary * Number
-Gurax_ImplementBinary(Mul, Binary, Number)
+Gurax_ImplementOpBinary(Mul, Binary, Number)
 {
 	const Binary& binaryL = Value_Binary::GetBinary(valueL);
 	size_t numR = Value_Number::GetNumberNonNeg<size_t>(valueR);
@@ -225,7 +225,7 @@ Gurax_ImplementBinary(Mul, Binary, Number)
 }
 
 // Binary == Binary
-Gurax_ImplementBinary(Eq, Binary, Binary)
+Gurax_ImplementOpBinary(Eq, Binary, Binary)
 {
 	const Binary& binaryL = Value_Binary::GetBinary(valueL);
 	const Binary& binaryR = Value_Binary::GetBinary(valueR);
@@ -233,7 +233,7 @@ Gurax_ImplementBinary(Eq, Binary, Binary)
 }
 
 // Binary != Binary
-Gurax_ImplementBinary(Ne, Binary, Binary)
+Gurax_ImplementOpBinary(Ne, Binary, Binary)
 {
 	const Binary& binaryL = Value_Binary::GetBinary(valueL);
 	const Binary& binaryR = Value_Binary::GetBinary(valueR);
@@ -261,10 +261,10 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Binary, p));
 	Assign(Gurax_CreateProperty(Binary, writable));
 	// Assignment of operator
-	Gurax_AssignBinary(Add, Binary, Binary);
-	Gurax_AssignBinary(Mul, Binary, Number);
-	Gurax_AssignBinary(Eq, Binary, Binary);
-	Gurax_AssignBinary(Ne, Binary, Binary);
+	Gurax_AssignOpBinary(Add, Binary, Binary);
+	Gurax_AssignOpBinary(Mul, Binary, Number);
+	Gurax_AssignOpBinary(Eq, Binary, Binary);
+	Gurax_AssignOpBinary(Ne, Binary, Binary);
 }
 
 //------------------------------------------------------------------------------

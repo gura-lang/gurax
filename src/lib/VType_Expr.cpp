@@ -740,7 +740,7 @@ Gurax_ImplementPropertyGetter(Expr, value)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Expr == Expr
-Gurax_ImplementBinary(Eq, Expr, Expr)
+Gurax_ImplementOpBinary(Eq, Expr, Expr)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
@@ -748,7 +748,7 @@ Gurax_ImplementBinary(Eq, Expr, Expr)
 }
 
 // Symbol == Expr
-Gurax_ImplementBinary(Eq, Symbol, Expr)
+Gurax_ImplementOpBinary(Eq, Symbol, Expr)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
@@ -756,7 +756,7 @@ Gurax_ImplementBinary(Eq, Symbol, Expr)
 }
 
 // Expr == Symbol
-Gurax_ImplementBinary(Eq, Expr, Symbol)
+Gurax_ImplementOpBinary(Eq, Expr, Symbol)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
@@ -764,7 +764,7 @@ Gurax_ImplementBinary(Eq, Expr, Symbol)
 }
 
 // Expr != Expr
-Gurax_ImplementBinary(Ne, Expr, Expr)
+Gurax_ImplementOpBinary(Ne, Expr, Expr)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
@@ -772,7 +772,7 @@ Gurax_ImplementBinary(Ne, Expr, Expr)
 }
 
 // Symbol != Expr
-Gurax_ImplementBinary(Ne, Symbol, Expr)
+Gurax_ImplementOpBinary(Ne, Symbol, Expr)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
@@ -780,7 +780,7 @@ Gurax_ImplementBinary(Ne, Symbol, Expr)
 }
 
 // Expr != Symbol
-Gurax_ImplementBinary(Ne, Expr, Symbol)
+Gurax_ImplementOpBinary(Ne, Expr, Symbol)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
@@ -839,12 +839,12 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, type));
 	Assign(Gurax_CreateProperty(Expr, value));
 	// Assignment of operator
-	Gurax_AssignBinary(Eq, Expr, Expr);
-	Gurax_AssignBinary(Eq, Symbol, Expr);
-	Gurax_AssignBinary(Eq, Expr, Symbol);
-	Gurax_AssignBinary(Ne, Expr, Expr);
-	Gurax_AssignBinary(Ne, Symbol, Expr);
-	Gurax_AssignBinary(Ne, Expr, Symbol);
+	Gurax_AssignOpBinary(Eq, Expr, Expr);
+	Gurax_AssignOpBinary(Eq, Symbol, Expr);
+	Gurax_AssignOpBinary(Eq, Expr, Symbol);
+	Gurax_AssignOpBinary(Ne, Expr, Expr);
+	Gurax_AssignOpBinary(Ne, Symbol, Expr);
+	Gurax_AssignOpBinary(Ne, Expr, Symbol);
 }
 
 //------------------------------------------------------------------------------

@@ -1433,14 +1433,14 @@ Gurax_ImplementPropertyGetter(List, vtypeOfElem)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Any in List
-Gurax_ImplementBinary(Contains, Any, List)
+Gurax_ImplementOpBinary(Contains, Any, List)
 {
 	const ValueOwner& values = Value_List::GetValueTypedOwner(valueR).GetValueOwner();
 	return new Value_Bool(values.Contains(valueL));
 }
 
 // List |+| List
-Gurax_ImplementBinary(Concat, List, List)
+Gurax_ImplementOpBinary(Concat, List, List)
 {
 	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
 	const ValueTypedOwner& valuesR = Value_List::GetValueTypedOwner(valueR);
@@ -1449,7 +1449,7 @@ Gurax_ImplementBinary(Concat, List, List)
 }
 
 // Any |+| List
-Gurax_ImplementBinary(Concat, Any, List)
+Gurax_ImplementOpBinary(Concat, Any, List)
 {
 	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
 	const ValueTypedOwner& valuesR = Value_List::GetValueTypedOwner(valueR);
@@ -1459,7 +1459,7 @@ Gurax_ImplementBinary(Concat, Any, List)
 }
 
 // List |+| Any
-Gurax_ImplementBinary(Concat, List, Any)
+Gurax_ImplementOpBinary(Concat, List, Any)
 {
 	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
 	pValues->Add(valueR.Reference());
@@ -1549,10 +1549,10 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, len));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 	// Assignment of operator
-	Gurax_AssignBinary(Contains, Any, List);
-	Gurax_AssignBinary(Concat, List, List);
-	Gurax_AssignBinary(Concat, Any, List);
-	Gurax_AssignBinary(Concat, List, Any);
+	Gurax_AssignOpBinary(Contains, Any, List);
+	Gurax_AssignOpBinary(Concat, List, List);
+	Gurax_AssignOpBinary(Concat, Any, List);
+	Gurax_AssignOpBinary(Concat, List, Any);
 }
 
 Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const

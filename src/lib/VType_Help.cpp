@@ -139,7 +139,7 @@ Gurax_ImplementOpUnary(Question, Any)
 }
 
 // Any %% String
-Gurax_ImplementBinary(ModMod, Any, String)
+Gurax_ImplementOpBinary(ModMod, Any, String)
 {
 	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
 	if (!pHelpHolder) {
@@ -152,7 +152,7 @@ Gurax_ImplementBinary(ModMod, Any, String)
 }
 
 // Any %% Help
-Gurax_ImplementBinary(ModMod, Any, Help)
+Gurax_ImplementOpBinary(ModMod, Any, Help)
 {
 	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
 	if (!pHelpHolder) {
@@ -182,8 +182,8 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Help, lang));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Question, Any);
-	Gurax_AssignBinary(ModMod, Any, String);
-	Gurax_AssignBinary(ModMod, Any, Help);
+	Gurax_AssignOpBinary(ModMod, Any, String);
+	Gurax_AssignOpBinary(ModMod, Any, Help);
 }
 
 //------------------------------------------------------------------------------

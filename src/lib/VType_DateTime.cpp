@@ -423,7 +423,7 @@ Gurax_ImplementPropertyGetter(DateTime, tzOffset)
 // Implementation of operator
 //------------------------------------------------------------------------------
 // DateTime + TimeDelta
-Gurax_ImplementBinary(Add, DateTime, TimeDelta)
+Gurax_ImplementOpBinary(Add, DateTime, TimeDelta)
 {
 	const DateTime& dt = Value_DateTime::GetDateTime(valueL);
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
@@ -433,7 +433,7 @@ Gurax_ImplementBinary(Add, DateTime, TimeDelta)
 }
 
 // DateTime - TimeDelta
-Gurax_ImplementBinary(Sub, DateTime, TimeDelta)
+Gurax_ImplementOpBinary(Sub, DateTime, TimeDelta)
 {
 	const DateTime& dt = Value_DateTime::GetDateTime(valueL);
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
@@ -443,7 +443,7 @@ Gurax_ImplementBinary(Sub, DateTime, TimeDelta)
 }
 
 // DateTime - DateTime
-Gurax_ImplementBinary(Sub, DateTime, DateTime)
+Gurax_ImplementOpBinary(Sub, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -452,7 +452,7 @@ Gurax_ImplementBinary(Sub, DateTime, DateTime)
 }
 
 // DateTime == DateTime
-Gurax_ImplementBinary(Eq, DateTime, DateTime)
+Gurax_ImplementOpBinary(Eq, DateTime, DateTime)
 {
 	const DateTime& td1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& td2 = Value_DateTime::GetDateTime(valueR);
@@ -460,7 +460,7 @@ Gurax_ImplementBinary(Eq, DateTime, DateTime)
 }
 
 // DateTime != DateTime
-Gurax_ImplementBinary(Ne, DateTime, DateTime)
+Gurax_ImplementOpBinary(Ne, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -468,7 +468,7 @@ Gurax_ImplementBinary(Ne, DateTime, DateTime)
 }
 
 // DateTime < DateTime
-Gurax_ImplementBinary(Lt, DateTime, DateTime)
+Gurax_ImplementOpBinary(Lt, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -476,7 +476,7 @@ Gurax_ImplementBinary(Lt, DateTime, DateTime)
 }
 
 // DateTime <= DateTime
-Gurax_ImplementBinary(Le, DateTime, DateTime)
+Gurax_ImplementOpBinary(Le, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -484,7 +484,7 @@ Gurax_ImplementBinary(Le, DateTime, DateTime)
 }
 
 // DateTime > DateTime
-Gurax_ImplementBinary(Gt, DateTime, DateTime)
+Gurax_ImplementOpBinary(Gt, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -492,7 +492,7 @@ Gurax_ImplementBinary(Gt, DateTime, DateTime)
 }
 
 // DateTime >= DateTime
-Gurax_ImplementBinary(Ge, DateTime, DateTime)
+Gurax_ImplementOpBinary(Ge, DateTime, DateTime)
 {
 	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
 	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
@@ -531,15 +531,15 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	// Assignment of class property
 	Assign(Gurax_CreateClassProperty(DateTime, tzOffset));
 	// Assignment of operator
-	Gurax_AssignBinary(Add, DateTime, TimeDelta);
-	Gurax_AssignBinary(Sub, DateTime, TimeDelta);
-	Gurax_AssignBinary(Sub, DateTime, DateTime);
-	Gurax_AssignBinary(Eq, DateTime, DateTime);
-	Gurax_AssignBinary(Ne, DateTime, DateTime);
-	Gurax_AssignBinary(Lt, DateTime, DateTime);
-	Gurax_AssignBinary(Le, DateTime, DateTime);
-	Gurax_AssignBinary(Gt, DateTime, DateTime);
-	Gurax_AssignBinary(Ge, DateTime, DateTime);
+	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Sub, DateTime, DateTime);
+	Gurax_AssignOpBinary(Eq, DateTime, DateTime);
+	Gurax_AssignOpBinary(Ne, DateTime, DateTime);
+	Gurax_AssignOpBinary(Lt, DateTime, DateTime);
+	Gurax_AssignOpBinary(Le, DateTime, DateTime);
+	Gurax_AssignOpBinary(Gt, DateTime, DateTime);
+	Gurax_AssignOpBinary(Ge, DateTime, DateTime);
 }
 
 //------------------------------------------------------------------------------
