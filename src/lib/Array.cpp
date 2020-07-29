@@ -27,7 +27,9 @@ template<typename T_Elem> bool IndexSet_T(void* p, size_t idx, const Value& valu
 {
 	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
 	if (value.IsType(VTYPE_Number)) {
-		*pElem = Value_Number::GetNumber<Double>(value);
+		*pElem = Value_Number::GetNumber<T_Elem>(value);
+	} else if (value.IsType(VTYPE_Bool)) {
+		*pElem = value.GetBool()? 1 : 0;
 	} else {
 		Error::Issue(ErrorType::ValueError, "Number value is expected");
 		return false;
@@ -48,6 +50,8 @@ template<> bool IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 		*pElem = Complex(Value_Number::GetNumber<Double>(value));
 	} else if (value.IsType(VTYPE_Complex)) {
 		*pElem = Value_Complex::GetComplex(value);
+	} else if (value.IsType(VTYPE_Bool)) {
+		*pElem = Complex(value.GetBool()? 1. : 0.);
 	} else {
 		Error::Issue(ErrorType::ValueError, "Number or Complex value is expected");
 		return false;
