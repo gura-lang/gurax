@@ -114,6 +114,7 @@ public:
 	}
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
+	String ReadText();
 	Binary Read(size_t len);
 	BinaryReferable* ReadAsReferable(size_t len);
 	static OpenFlags ModeToOpenFlags(const char* mode);

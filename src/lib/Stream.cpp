@@ -194,6 +194,13 @@ Iterator* Stream::ReadLines(bool includeEOLFlag)
 	return new Iterator_ReadLines(Reference(), includeEOLFlag);
 }
 
+String Stream::ReadText()
+{
+	String str;
+	while (char ch = GetChar()) str += ch;
+	return str;
+}
+
 Binary Stream::Read(size_t len)
 {
 	Binary buff(len, '\0');
@@ -389,7 +396,7 @@ Value* Iterator_ReadLines::DoNextValue()
 		_doneFlag = true;
 		return nullptr;
 	}
-	return new Value_String(str);
+	return new Value_String(std::move(str));
 }
 
 String Iterator_ReadLines::ToString(const StringStyle& ss) const

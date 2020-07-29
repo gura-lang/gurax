@@ -75,6 +75,10 @@ TestCase('Stream#ReadLines()') {
 	}
 }
 
+TestCase('Stream#ReadText()') {
+	Print(Open('test-Stream/sample.txt').ReadText())
+}
+
 TestCase('Stream#Seek()') {
 }
 

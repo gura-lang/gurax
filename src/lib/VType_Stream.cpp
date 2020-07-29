@@ -158,6 +158,62 @@ Gurax_ImplementMethod(Stream, Flush)
 	return valueThis.Reference();
 }
 
+// Stream#PipeFromStream(streamSrc:Stream):Stream:reduce
+Gurax_DeclareMethod(Stream, PipeFromStream)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");
+}
+
+Gurax_ImplementMethod(Stream, PipeFromStream)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamSrc = args.PickStream();
+	// Function body
+	if (stream.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	}
+	if (!stream.PipeFromStream(streamSrc)) return Value::nil();
+	return valueThis.Reference();
+}
+
+// Stream#PipeToStream(streamDst:Stream:w):Stream:reduce
+Gurax_DeclareMethod(Stream, PipeToStream)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data from the target `Stream` instance and writes it into `streamDst`.");
+}
+
+Gurax_ImplementMethod(Stream, PipeToStream)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamDst = args.PickStream();
+	// Function body
+	if (stream.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	}
+	if (!stream.PipeToStream(streamDst)) return Value::nil();
+	return valueThis.Reference();
+}
+
 // Stream#Print(values*):void:map
 Gurax_DeclareMethod(Stream, Print)
 {
@@ -273,7 +329,7 @@ Gurax_ImplementMethod(Stream, Read)
 // Stream#ReadLine():[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLine)
 {
-	Declare(VTYPE_Binary, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -291,13 +347,13 @@ Gurax_ImplementMethod(Stream, ReadLine)
 	// Function body
 	String str;
 	if (!stream.ReadLine(str, includeEOLFlag)) return Value::nil();
-	return argument.ReturnValue(processor, new Value_String(str));
+	return argument.ReturnValue(processor, new Value_String(std::move(str)));
 }
 
 // Stream#ReadLines():[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLines)
 {
-	Declare(VTYPE_Binary, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -316,32 +372,25 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
-// Stream#PipeToStream(streamDst:Stream:w):Stream:reduce
-Gurax_DeclareMethod(Stream, PipeToStream)
+// Stream#ReadText() {block?}
+Gurax_DeclareMethod(Stream, ReadText)
 {
-	Declare(VTYPE_Stream, Flag::Reduce);
-	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	Declare(VTYPE_String, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Reads data from the target `Stream` instance and writes it into `streamDst`.");
+		"Reads whole text from the `Stream` and returns it as a `String` instance.");
 }
 
-Gurax_ImplementMethod(Stream, PipeToStream)
+Gurax_ImplementMethod(Stream, ReadText)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Stream& stream = valueThis.GetStream();
-	// Arguments
-	ArgPicker args(argument);
-	Stream& streamDst = args.PickStream();
 	// Function body
-	if (stream.IsInfinite()) {
-		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
-		return Value::nil();
-	}
-	if (!stream.PipeToStream(streamDst)) return Value::nil();
-	return valueThis.Reference();
+	String str = stream.ReadText();
+	if (Error::IsIssued()) return Value::nil();
+	return argument.ReturnValue(processor, new Value_String(std::move(str)));
 }
 
 // Stream#Seek(offset:Number, whence?:Symbol):reduce
@@ -410,34 +459,6 @@ Gurax_ImplementMethod(Stream, Write)
 		Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
 		return Value::nil();
 	}
-	return valueThis.Reference();
-}
-
-// Stream#PipeFromStream(streamSrc:Stream):Stream:reduce
-Gurax_DeclareMethod(Stream, PipeFromStream)
-{
-	Declare(VTYPE_Stream, Flag::Reduce);
-	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");
-}
-
-Gurax_ImplementMethod(Stream, PipeFromStream)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	Stream& stream = valueThis.GetStream();
-	// Arguments
-	ArgPicker args(argument);
-	Stream& streamSrc = args.PickStream();
-	// Function body
-	if (stream.IsInfinite()) {
-		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
-		return Value::nil();
-	}
-	if (!stream.PipeFromStream(streamSrc)) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -521,16 +542,17 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
 	Assign(Gurax_CreateMethod(Stream, Flush));
+	Assign(Gurax_CreateMethod(Stream, PipeFromStream));
+	Assign(Gurax_CreateMethod(Stream, PipeToStream));
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));
 	Assign(Gurax_CreateMethod(Stream, Println));
 	Assign(Gurax_CreateMethod(Stream, Read));
 	Assign(Gurax_CreateMethod(Stream, ReadLine));
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
-	Assign(Gurax_CreateMethod(Stream, PipeToStream));
+	Assign(Gurax_CreateMethod(Stream, ReadText));
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
-	Assign(Gurax_CreateMethod(Stream, PipeFromStream));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator
