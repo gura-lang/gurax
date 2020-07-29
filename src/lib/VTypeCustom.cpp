@@ -229,6 +229,7 @@ ValueCustom::~ValueCustom()
 	const Function& funcDestructor = GetVType().GetDestructor();
 	if (!funcDestructor.IsEmpty()) {
 		RefPtr<Argument> pArgument(new Argument(funcDestructor));
+		//pArgument->SetValueThis(Reference());
 		Value::Delete(funcDestructor.Eval(GetProcessor(), *pArgument));
 	}
 }

@@ -1,0 +1,66 @@
+#!/usr/bin/env gurax
+import(opengl) {*}
+
+Shader = class {
+	program:Number
+	// constructor generates the shader on the fly
+	// ------------------------------------------------------------------------
+	__init__(vertexStream:Stream, fragmentStream:Stream) = {
+		// convert stream into string
+		vertexCode = vertexStream.ReadText();
+		fragmentCode = fragmentStream.ReadText();
+		// vertex shader
+		shaderVertex = glCreateShader(GL_VERTEX_SHADER);
+		this.CompileShader(shaderVertex, vertexCode, 'VERTEX')
+		// fragment Shader
+		shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+		this.CompileShader(shaderFragment, fragmentCode, 'FRAGMENT')
+		// shader Program
+		this.program = glCreateProgram();
+		glAttachShader(this.program, shaderVertex);
+		glAttachShader(this.program, shaderFragment);
+		glLinkProgram(this.program);
+		success = @int {|v| glGetProgramiv(this.program, GL_LINK_STATUS, v), v[0]}
+		if (success == 0) {
+			infoLog = @char(1024)
+			glGetProgramInfoLog(this.program, infoLog.bytes, nil, infoLog);
+			Println("ERROR::PRPGRAM_LINKING_ERROR of type: ", 'PROGRAM')
+			Println(infoLog)
+			Println("-- --------------------------------------------------- -- ")
+		}
+		// delete the shaders as they're linked into our program now and no longer necessary
+		glDeleteShader(shaderVertex);
+		glDeleteShader(shaderFragment);
+	}
+	// activate the shader
+	// ------------------------------------------------------------------------
+	use() = {
+		glUseProgram(this.program)
+	}
+	// utility uniform functions
+	// ------------------------------------------------------------------------
+	setBool(name:String, value:Bool) = {         
+		@int {|v| v[0] = value, glUniform1i(glGetUniformLocation(this.program, name), v)} 
+	}
+	// ------------------------------------------------------------------------
+	setInt(name:String, value:Number) = {
+		@int {|v| v[0] = value, glUniform1i(glGetUniformLocation(this.program, name), v)} 
+	}
+	// ------------------------------------------------------------------------
+	setFloat(name:String, value:Number) = {
+		@float {|v| v[0] = value, glUniform1f(glGetUniformLocation(this.program, name), v)} 
+	}
+	// ------------------------------------------------------------------------
+	CompileShader(shader:Number, shaderCode:String, typeName:String) = {
+		glShaderSource(shader, [shaderCode], []);
+		glCompileShader(shader);
+		success = @int {|v| glGetShaderiv(shader, GL_COMPILE_STATUS, v), v[0]}
+		if (success == 0) {
+			infoLog = @char(1024)
+			glGetShaderInfoLog(shader, infoLog.bytes, nil, infoLog);
+			Println("ERROR::SHADER_COMPILATION_ERROR of type: ", typeName)
+			Println(infoLog)
+			Println("-- --------------------------------------------------- -- ")
+		}
+	}
+}
