@@ -22,14 +22,14 @@ deleted: B
 deleted: C
 WeakRef
 created: A
+locked:  A 1
+         A 1
 locked:  A 2
-         A 2
 locked:  A 3
-locked:  A 4
 WeakRef longevity
 created: A
-WeakRef: 2
-WeakRef: 3
+WeakRef: 1
 WeakRef: 2
 WeakRef: 1
+WeakRef: 0
 deleted: A

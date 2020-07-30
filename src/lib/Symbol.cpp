@@ -120,7 +120,7 @@ String SymbolList::ToString(const StringStyle& ss) const
 {
 	String str;
 	for (const Symbol* pSymbol : *this) {
-		if (!str.empty()) ss.GetComma();
+		if (!str.empty()) str += ss.GetComma();
 		str += pSymbol->ToString(ss);
 	}
 	return str;

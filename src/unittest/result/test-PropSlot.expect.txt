@@ -1,4 +1,4 @@
-[PropHandler]
+[PropSlot]
 grape
 orange
 apple

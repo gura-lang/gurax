@@ -12,7 +12,7 @@ cases="$cases Parser"
 cases="$cases PUnit"
 cases="$cases Random"
 cases="$cases PathName"
-cases="$cases PropHandler"
+cases="$cases PropSlot"
 cases="$cases Referable"
 cases="$cases SizeOf"
 cases="$cases Stream"
@@ -34,13 +34,13 @@ if [ $# -eq 1 ]; then
 	for case in $cases
 	do
 		echo "$case"
-		./unittest $case > result/test-$case.result.txt
-		gura ../../script/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
+		unittest $case > result/test-$case.result.txt
+		gurax ../../test/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
 	done	
 elif [ "$2" = "update" ]; then
 	for case in $cases
 	do
 		echo "update: $case"
-		./unittest $case > result/test-$case.expect.txt
+		unittest $case > result/test-$case.expect.txt
 	done
 fi

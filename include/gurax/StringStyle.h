@@ -23,9 +23,10 @@ public:
 		static const Flags QuoteString	= (1 << 2);
 		static const Flags QuoteSymbol	= (1 << 3);
 		static const Flags NilVisible	= (1 << 4);
-		static const Flags Cram			= (1 << 5);
-		static const Flags MultiLine	= (1 << 6);
-		static const Flags Verbose		= (1 << 7);
+		static const Flags UndefVisible	= (1 << 5);
+		static const Flags Cram			= (1 << 6);
+		static const Flags MultiLine	= (1 << 7);
+		static const Flags Verbose		= (1 << 8);
 	};
 private:
 	Flags _flags;
@@ -41,6 +42,7 @@ public:
 	static const StringStyle QuoteString;
 	static const StringStyle QuoteSymbol;
 	static const StringStyle Quote_NilVisible;
+	static const StringStyle Quote_InvalidVisible;
 	static const StringStyle Cram;
 public:
 	// Constructor
@@ -69,6 +71,8 @@ public:
 	StringStyle& UnsetQuoteSymbol()		{ _flags &= ~Flag::QuoteSymbol; return *this; }
 	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
 	StringStyle& UnsetNilVisible()		{ _flags &= ~Flag::NilVisible; return *this; }
+	StringStyle& SetUndefVisible()		{ _flags |= Flag::UndefVisible; return *this; }
+	StringStyle& UnsetUndefVisible()	{ _flags &= ~Flag::UndefVisible; return *this; }
 	StringStyle& SetCram()				{ _flags |= Flag::Cram; return *this; }
 	StringStyle& UnsetCram()			{ _flags &= ~Flag::Cram; return *this; }
 	StringStyle& SetMultiLine()			{ _flags |= Flag::MultiLine; return *this; }
@@ -80,6 +84,7 @@ public:
 	bool IsQuoteString() const			{ return (_flags & Flag::QuoteString) != 0; }
 	bool IsQuoteSymbol() const			{ return (_flags & Flag::QuoteSymbol) != 0; }
 	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
+	bool IsUndefVisible() const			{ return (_flags & Flag::UndefVisible) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsVerbose() const				{ return (_flags & Flag::Verbose) != 0; }

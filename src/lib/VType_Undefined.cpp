@@ -65,7 +65,7 @@ VType& Value_Undefined::vtype = VTYPE_Undefined;
 
 String Value_Undefined::ToString(const StringStyle& ss) const
 {
-	return String::Empty;
+	return (ss.IsBracket() || ss.IsUndefVisible())? "<Undefined>" : String::Empty;
 }
 
 }

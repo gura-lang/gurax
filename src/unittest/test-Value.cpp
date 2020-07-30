@@ -5,6 +5,8 @@
 
 namespace Gurax {
 
+StringStyle ss = StringStyle::Quote_InvalidVisible;
+
 void Test_ValueMap()
 {
 	RefPtr<ValueMap> pValueMap(new ValueMap());
@@ -18,7 +20,7 @@ void Test_ValueMap()
 	pValueMap->Assign(Symbol::Add("foo8"), Value::undefined());
 	pValueMap->Assign(Symbol::Add("foo9"), Value::Zero());
 	pValueMap->Assign(Symbol::Add("fooA"), Value::EmptyStr());
-	std::cout << pValueMap->ToString();
+	std::cout << pValueMap->ToString(ss);
 }
 
 void Test_IsType()
@@ -43,11 +45,11 @@ void Test_Sort()
 								 pSampleRecord->name; ++pSampleRecord) {
 		pValueOwner->push_back(new Value_String(pSampleRecord->name));
 	}
-	std::cout << pValueOwner->ToString();
+	std::cout << pValueOwner->ToString(ss);
 	pValueOwner->Sort();
-	for (auto pValue : *pValueOwner) std::cout << pValue->ToString();
+	for (auto pValue : *pValueOwner) std::cout << pValue->ToString(ss);
 	pValueOwner->Sort(SortOrder::Descend);
-	for (auto pValue : *pValueOwner) std::cout << pValue->ToString();
+	for (auto pValue : *pValueOwner) std::cout << pValue->ToString(ss);
 }
 
 void Test_Dict()
@@ -57,12 +59,12 @@ void Test_Dict()
 								 pSampleRecord->name; ++pSampleRecord) {
 		pValueDict->Assign(new Value_String(pSampleRecord->name), new Value_String(pSampleRecord->email));
 	}
-	std::cout << pValueDict->ToString();
+	std::cout << pValueDict->ToString(ss);
 	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
 								 pSampleRecord->name; ++pSampleRecord) {
 		RefPtr<Value> pValueKey(new Value_String(pSampleRecord->name));
 		const Value* pValue = pValueDict->Lookup(*pValueKey);
-		::printf("%s: %s\n", pValueKey->ToString().c_str(), pValue->ToString().c_str());
+		::printf("%s: %s\n", pValueKey->ToString(ss).c_str(), pValue->ToString(ss).c_str());
 	}
 }
 

@@ -35,7 +35,7 @@ String ValueMap::ToString(const StringStyle& ss) const
 		str += ":";
 		str += pValue->GetVType().MakeFullName().c_str();
 		str += " = ";
-		str += pValue->ToString();
+		str += pValue->ToString(ss);
 		str += "\n";
 	}
 	return str;

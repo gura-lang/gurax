@@ -16,6 +16,9 @@ const StringStyle StringStyle::QuoteSymbol(StringStyle::Flag::QuoteSymbol);
 const StringStyle StringStyle::Quote_NilVisible(
 	StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol |
 	StringStyle::Flag::NilVisible);
+const StringStyle StringStyle::Quote_InvalidVisible(
+	StringStyle::Flag::QuoteString | StringStyle::Flag::QuoteSymbol |
+	StringStyle::Flag::NilVisible | StringStyle::Flag::UndefVisible);
 const StringStyle StringStyle::Cram(StringStyle::Flag::Cram);
 
 const char* StringStyle::_strsComma[2]		{ ", ", "," };
