@@ -2,7 +2,7 @@
 import(opengl) {*}
 
 Shader = class {
-	program:Number
+	ID:Number
 	// constructor generates the shader on the fly
 	// ------------------------------------------------------------------------
 	__init__(vertexStream:Stream, fragmentStream:Stream) = {
@@ -16,39 +16,39 @@ Shader = class {
 		shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
 		this.CompileShader(shaderFragment, fragmentCode, 'FRAGMENT')
 		// shader Program
-		this.program = glCreateProgram();
-		glAttachShader(this.program, shaderVertex);
-		glAttachShader(this.program, shaderFragment);
-		glLinkProgram(this.program);
-		success = @int {|v| glGetProgramiv(this.program, GL_LINK_STATUS, v), v[0]}
+		this.ID = glCreateProgram();
+		glAttachShader(this.ID, shaderVertex);
+		glAttachShader(this.ID, shaderFragment);
+		glLinkProgram(this.ID);
+		success = @int {|v| glGetProgramiv(this.ID, GL_LINK_STATUS, v), v[0]}
 		if (success == 0) {
 			infoLog = @char(1024)
-			glGetProgramInfoLog(this.program, infoLog.bytes, nil, infoLog);
+			glGetProgramInfoLog(this.ID, infoLog.bytes, nil, infoLog);
 			Println("ERROR::PRPGRAM_LINKING_ERROR of type: ", 'PROGRAM')
 			Println(infoLog)
 			Println("-- --------------------------------------------------- -- ")
 		}
-		// delete the shaders as they're linked into our program now and no longer necessary
+		// delete the shaders as they're linked into our ID now and no longer necessary
 		glDeleteShader(shaderVertex);
 		glDeleteShader(shaderFragment);
 	}
 	// activate the shader
 	// ------------------------------------------------------------------------
 	use() = {
-		glUseProgram(this.program)
+		glUseProgram(this.ID)
 	}
 	// utility uniform functions
 	// ------------------------------------------------------------------------
 	setBool(name:String, value:Bool) = {         
-		glUniform1i(glGetUniformLocation(this.program, name), value) 
+		glUniform1i(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	setInt(name:String, value:Number) = {
-		glUniform1i(glGetUniformLocation(this.program, name), value) 
+		glUniform1i(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	setFloat(name:String, value:Number) = {
-		glUniform1f(glGetUniformLocation(this.program, name), value) 
+		glUniform1f(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	CompileShader(shader:Number, shaderCode:String, typeName:String) = {

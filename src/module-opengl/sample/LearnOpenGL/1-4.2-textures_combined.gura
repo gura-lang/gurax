@@ -24,7 +24,6 @@ void main()
 	ourColor = aColor;
 	TexCoord = aTexCoord;
 }
-
 '''
 
 fragmentShaderSource = bR'''
@@ -34,14 +33,13 @@ out vec4 FragColor;
 in vec3 ourColor;
 in vec2 TexCoord;
 
-uniform sampler2D ourTexture;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 
 void main()
 {
-	//FragColor = texture(ourTexture, TexCoord);
-	FragColor = texture(ourTexture, TexCoord) * vec4(ourColor, 1.0);
+    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
 }
-
 '''
 
 main() = {
@@ -137,7 +135,7 @@ main() = {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// load image, create texture and generate mipmaps
-	data = Image('resources/textures/awesomeface.png'):rgb
+	data = (Image('resources/textures/awesomeface.png'):rgb).Flip(`vert)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, data.width, data.height, 0, GL_BGR, GL_UNSIGNED_BYTE, data.p);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	data = nil
@@ -146,7 +144,7 @@ main() = {
     // -------------------------------------------------------------------------------------------
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
-    glUniform1i(glGetUniformLocation(ourShader.program, 'texture1'), 0);
+    glUniform1i(glGetUniformLocation(ourShader.ID, 'texture1'), 0);
     // or set it via the texture class
     ourShader.setInt('texture2', 1);
 

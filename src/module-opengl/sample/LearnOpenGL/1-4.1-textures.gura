@@ -23,7 +23,6 @@ void main()
 	ourColor = aColor;
 	TexCoord = aTexCoord;
 }
-
 '''
 
 fragmentShaderSource = bR'''
@@ -40,7 +39,6 @@ void main()
 	//FragColor = texture(ourTexture, TexCoord);
 	FragColor = texture(ourTexture, TexCoord) * vec4(ourColor, 1.0);
 }
-
 '''
 
 main() = {
