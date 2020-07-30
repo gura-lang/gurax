@@ -40,15 +40,15 @@ Shader = class {
 	// utility uniform functions
 	// ------------------------------------------------------------------------
 	setBool(name:String, value:Bool) = {         
-		@int {|v| v[0] = value, glUniform1i(glGetUniformLocation(this.program, name), v)} 
+		glUniform1i(glGetUniformLocation(this.program, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	setInt(name:String, value:Number) = {
-		@int {|v| v[0] = value, glUniform1i(glGetUniformLocation(this.program, name), v)} 
+		glUniform1i(glGetUniformLocation(this.program, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	setFloat(name:String, value:Number) = {
-		@float {|v| v[0] = value, glUniform1f(glGetUniformLocation(this.program, name), v)} 
+		glUniform1f(glGetUniformLocation(this.program, name), value) 
 	}
 	// ------------------------------------------------------------------------
 	CompileShader(shader:Number, shaderCode:String, typeName:String) = {

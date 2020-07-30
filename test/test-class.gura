@@ -30,9 +30,13 @@ TestCase('Constructor') {
 
 TestCase('Destructor') {
 	A = class {
-		__del__() = Println('destructor')
+		name:String
+		__init__(name:String):map = { this.name = name }
+		__del__() = Printf('%s was destroyed\n', this.name)
 	}
-	a = A()
+	Tester(`A)
+	a = A('A')
+	//x = A(Format('x%d', Range(100))):list
 	a = nil
 }
 
