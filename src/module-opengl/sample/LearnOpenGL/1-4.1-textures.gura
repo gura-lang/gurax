@@ -118,10 +118,10 @@ main() = {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// load image, create texture and generate mipmaps
-	data = Image('resources/textures/container.jpg'):rgb
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, data.width, data.height, 0, GL_BGR, GL_UNSIGNED_BYTE, data.p);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	data = nil
+	Image('resources/textures/container.jpg'):rgb {|img|
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.width, img.height, 0, GL_BGR, GL_UNSIGNED_BYTE, img.p);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
 
 	// render loop
 	// -----------
