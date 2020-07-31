@@ -136,9 +136,9 @@ main() = {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// load image, create texture and generate mipmaps
-	Image('resources/textures/awesomeface.png'):rgb {|img|
+	Image('resources/textures/awesomeface.png'):rgba {|img|
 		img = img.Flip(`vert)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.width, img.height, 0, GL_BGR, GL_UNSIGNED_BYTE, img.p);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.width, img.height, 0, GL_BGRA, GL_UNSIGNED_BYTE, img.p);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
