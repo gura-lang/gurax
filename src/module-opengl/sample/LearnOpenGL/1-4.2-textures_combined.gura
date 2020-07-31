@@ -38,7 +38,7 @@ uniform sampler2D texture2;
 
 void main()
 {
-    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
 }
 '''
 
@@ -142,13 +142,13 @@ main() = {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
-    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-    // -------------------------------------------------------------------------------------------
-    ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
-    // either set it manually like so:
-    glUniform1i(glGetUniformLocation(ourShader.ID, 'texture1'), 0);
-    // or set it via the texture class
-    ourShader.setInt('texture2', 1);
+	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+	// -------------------------------------------------------------------------------------------
+	ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+	// either set it manually like so:
+	glUniform1i(glGetUniformLocation(ourShader.ID, 'texture1'), 0);
+	// or set it via the texture class
+	ourShader.setInt('texture2', 1);
 
 	// render loop
 	// -----------
@@ -163,9 +163,9 @@ main() = {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// bind Texture
-        glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
-        glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
 		// render container
