@@ -31,6 +31,18 @@ void FrameMap::Assign(const Symbol* pSymbol, Frame* pFrame)
 //------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
+Frame* Frame::GetFrameExtern(const Symbol* pSymbol)
+{
+	Frame* pFrame = this;
+	do {
+		Frame* pFrameOuter = pFrame->GetFrameOuter();
+		if (!pFrameOuter) break;
+		pFrame = pFrameOuter;
+	} while (pFrame->IsFrameOfBlock());
+	//************************
+	return pFrame;
+}
+
 Value* Frame::Retrieve(const Symbol* pSymbol)
 {
 	const Frame* pFrameSrc = nullptr;

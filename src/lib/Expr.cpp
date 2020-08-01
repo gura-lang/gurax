@@ -520,7 +520,8 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 						 "operator can not be applied in lister assigment");
 		return;
 	}
-	composer.Add_AssignToSymbol(GetSymbol(), *this);							// [Assigned]
+	bool externFlag = GetAttr().IsSet(Gurax_Symbol(extern_));
+	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 	composer.FlushDiscard();
 }
 
@@ -534,7 +535,8 @@ void Expr_Identifier::ComposeWithinAssignment(
 	} else {
 		exprAssigned.ComposeOrNil(composer);									// [Assigned]
 	}
-	composer.Add_AssignToSymbol(GetSymbol(), *this);							// [Assigned]
+	bool externFlag = GetAttr().IsSet(Gurax_Symbol(extern_));
+	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 }
 
 void Expr_Identifier::ComposeWithinClass(Composer& composer, bool publicFlag)

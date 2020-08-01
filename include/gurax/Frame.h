@@ -62,7 +62,12 @@ protected:
 	virtual ~Frame() = default;
 public:
 	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
+	Frame* GetFrameOuter() { return _pFrameOuter.get(); }
 	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
+	Frame* GetFrameExtern(const Symbol* pSymbol);
+	const Frame* GetFrameExtern(const Symbol* pSymbol) const {
+		return const_cast<Frame*>(this)->GetFrameExtern(pSymbol);
+	}
 	Value* Retrieve(const DottedSymbol& dottedSymbol, size_t nTail = 0);
 	Value* Retrieve(const Symbol* pSymbol);
 	Value* Retrieve(const char* name) { return Retrieve(Symbol::Add(name)); }
@@ -88,6 +93,11 @@ public:
 	static String MakeFullName(const Frame* pFrame, const char* name);
 public:
 	// Virtual functions
+	virtual bool IsFrameOfBasement() const { return false; }
+	virtual bool IsFrameOfVType() const { return false; }
+	virtual bool IsFrameOfModule() const { return false; }
+	virtual bool IsFrameOfScope() const { return false; }
+	virtual bool IsFrameOfBlock() const { return false; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const = 0;
@@ -202,6 +212,7 @@ public:
 	Frame_Basement();
 public:
 	// Virtual functions of Frame
+	virtual bool IsFrameOfBasement() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
@@ -225,6 +236,7 @@ public:
 	explicit Frame_VType(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
+	virtual bool IsFrameOfVType() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
@@ -252,6 +264,7 @@ public:
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 public:
 	// Virtual functions of Frame
+	virtual bool IsFrameOfModule() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
@@ -276,6 +289,7 @@ public:
 	explicit Frame_Scope(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
+	virtual bool IsFrameOfScope() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
@@ -299,6 +313,7 @@ public:
 	explicit Frame_Block(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
+	virtual bool IsFrameOfBlock() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;

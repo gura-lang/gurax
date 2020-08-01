@@ -276,7 +276,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_AssignToSymbol
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, bool externFlag>
 class GURAX_DLLDECLARE PUnit_AssignToSymbol : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -306,11 +306,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignToSymbol");
 private:
 	const Symbol* _pSymbol;
+	bool _externFlag;
 public:
-	PUnitFactory_AssignToSymbol(const Symbol* pSymbol, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
+	PUnitFactory_AssignToSymbol(const Symbol* pSymbol, bool externFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _externFlag(externFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_AssignToSymbol<false>);
+		return sizeof(PUnit_AssignToSymbol<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

@@ -181,10 +181,18 @@ PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 // Stack View: [Assigned] -> [Assigned] (continue)
 //                        -> []         (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool externFlag>
+void PUnit_AssignToSymbol<discardValueFlag, externFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
+	Frame* pFrame = &processor.GetFrameCur();
+	if constexpr (externFlag) {
+		pFrame = pFrame->GetFrameExtern(GetSymbol());
+		if (!pFrame) {
+			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+			processor.ErrorDone();
+			return;
+		}
+	}
 	if constexpr (discardValueFlag) {
 		RefPtr<Value> pValueAssigned(processor.PopValue());
 		if (pValueAssigned->IsVType()) {
@@ -194,7 +202,7 @@ void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
 			Function& function = Value_Function::GetFunction(*pValueAssigned);
 			if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
 		}
-		frame.Assign(GetSymbol(), pValueAssigned.release());
+		pFrame->Assign(GetSymbol(), pValueAssigned.release());
 	} else {
 		Value& valueAssigned(processor.PeekValue(0));
 		if (valueAssigned.IsVType()) {
@@ -204,13 +212,13 @@ void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
 			Function& function = Value_Function::GetFunction(valueAssigned);
 			if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
 		}
-		frame.Assign(GetSymbol(), valueAssigned.Reference());
+		pFrame->Assign(GetSymbol(), valueAssigned.Reference());
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
-template<bool discardValueFlag>
-String PUnit_AssignToSymbol<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool externFlag>
+String PUnit_AssignToSymbol<discardValueFlag, externFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Format("AssignToSymbol(`%s)", GetSymbol()->GetName());
@@ -221,9 +229,17 @@ String PUnit_AssignToSymbol<discardValueFlag>::ToString(const StringStyle& ss, i
 PUnit* PUnitFactory_AssignToSymbol::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_AssignToSymbol<true>(_pSymbol, _pExprSrc.Reference());
+		if (_externFlag) {
+			_pPUnitCreated = new PUnit_AssignToSymbol<true, true>(_pSymbol, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_AssignToSymbol<true, false>(_pSymbol, _pExprSrc.Reference());
+		}
 	} else {
-		_pPUnitCreated = new PUnit_AssignToSymbol<false>(_pSymbol, _pExprSrc.Reference());
+		if (_externFlag) {
+			_pPUnitCreated = new PUnit_AssignToSymbol<false, true>(_pSymbol, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_AssignToSymbol<false, false>(_pSymbol, _pExprSrc.Reference());
+		}
 	}
 	return _pPUnitCreated;
 }

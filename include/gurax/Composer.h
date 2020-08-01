@@ -142,8 +142,8 @@ public:
 					  const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Suffixed(pStrSegment, mode, pSymbol, exprSrc.Reference()));
 	}
-	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_AssignToSymbol(pSymbol, exprSrc.Reference()));
+	void Add_AssignToSymbol(const Symbol* pSymbol, bool externFlag, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_AssignToSymbol(pSymbol, externFlag, exprSrc.Reference()));
 	}
 	void Add_AssignToDeclArg(DeclArg* pDeclArg, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_AssignToDeclArg(pDeclArg, exprSrc.Reference()));

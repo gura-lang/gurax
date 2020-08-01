@@ -17,7 +17,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Value_);
 	using PUnit_Lookup_ = PUnit_Lookup<false>;
 	PrintSizeOf(PUnit_Lookup_);
-	using PUnit_AssignToSymbol_ = PUnit_AssignToSymbol<false>;
+	using PUnit_AssignToSymbol_ = PUnit_AssignToSymbol<false, false>;
 	PrintSizeOf(PUnit_AssignToSymbol_);
 	using PUnit_AssignToDeclArg_ = PUnit_AssignToDeclArg<false>;
 	PrintSizeOf(PUnit_AssignToDeclArg_);

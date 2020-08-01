@@ -30,6 +30,8 @@ fragmentShaderSource = bR'''
 #version 330 core
 out vec4 FragColor;
   
+uniform float ratio;
+
 in vec3 ourColor;
 in vec2 TexCoord;
 
@@ -38,7 +40,7 @@ uniform sampler2D texture2;
 
 void main()
 {
-	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), ratio);
 }
 '''
 
@@ -152,11 +154,20 @@ main() = {
 
 	// render loop
 	// -----------
+	ratio = 0.2
 	while (!glfwWindowShouldClose(window)) {
 		// input
 		// -----
 		processInput(window);
 
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			ratio += .001
+			if (ratio >= 1) { ratio = 1 }
+		}
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			ratio -= .001
+			if (ratio < 0) { ratio = 0 }
+		}
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -167,6 +178,8 @@ main() = {
 		glBindTexture(GL_TEXTURE_2D, texture1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
+
+		ourShader.setFloat('ratio', ratio)
 
 		// render container
 		ourShader.use()
