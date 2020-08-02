@@ -30,3 +30,14 @@ TestCase('List#Each()\'s scope') {
 TestCase('Test of module scope') {
 	Tester(`path.Println)
 }
+
+TestCase('extern attribute') {
+	f1() = { var:extern = 'modified' }
+	f2() = { var, var = 'modified' }
+	f3() = { var = 'modified' }
+	f4() = { varErr:extern = 'modified' }
+	var = 'original', Tester(`f1()), Println('var = ', var)
+	var = 'original', Tester(`f2()), Println('var = ', var)
+	var = 'original', Tester(`f3()), Println('var = ', var)
+	var = 'original', Tester(`f4()), Println('var = ', var)
+}

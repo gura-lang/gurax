@@ -188,7 +188,7 @@ void PUnit_AssignToSymbol<discardValueFlag, externFlag>::Exec(Processor& process
 	if constexpr (externFlag) {
 		pFrame = pFrame->GetFrameExtern(GetSymbol());
 		if (!pFrame) {
-			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+			Error::Issue(ErrorType::ValueError, "external symbol '%s' is not found", GetSymbol()->GetName());
 			processor.ErrorDone();
 			return;
 		}

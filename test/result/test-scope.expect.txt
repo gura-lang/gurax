@@ -10,3 +10,12 @@ a = 3
 #6 a = -5, b = 3
 ======== Test of module scope ========
 path.Println .. module 'path' doesn't have a property 'Println'
+======== extern attribute ========
+f1() .. modified
+var = modified
+f2() .. modified
+var = modified
+f3() .. modified
+var = original
+f4() .. external symbol 'varErr' is not found
+var = original

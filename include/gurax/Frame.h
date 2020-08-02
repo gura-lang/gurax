@@ -100,8 +100,8 @@ public:
 	virtual bool IsFrameOfBlock() const { return false; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const = 0;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const = 0;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
@@ -166,8 +166,8 @@ public:
 	// Virtual functions of Frame
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -215,8 +215,8 @@ public:
 	virtual bool IsFrameOfBasement() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -239,8 +239,8 @@ public:
 	virtual bool IsFrameOfVType() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -267,8 +267,8 @@ public:
 	virtual bool IsFrameOfModule() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -292,8 +292,8 @@ public:
 	virtual bool IsFrameOfScope() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -316,8 +316,8 @@ public:
 	virtual bool IsFrameOfBlock() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
