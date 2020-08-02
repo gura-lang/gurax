@@ -30,6 +30,8 @@ fragmentShaderSource = bR'''
 #version 330 core
 out vec4 FragColor;
   
+uniform float mixRatio;
+
 in vec3 ourColor;
 in vec2 TexCoord;
 
@@ -38,9 +40,11 @@ uniform sampler2D texture2;
 
 void main()
 {
-	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), mixRatio);
 }
 '''
+
+mixRatio = 0.2
 
 main() = {
 	// glfw: initialize and configure
@@ -168,6 +172,8 @@ main() = {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
+		ourShader.setFloat('mixRatio', mixRatio)
+
 		// render container
 		ourShader.use()
 		glBindVertexArray(VAO)
@@ -192,6 +198,12 @@ main() = {
 processInput(window:GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	} elsif (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		mixRatio:extern += .001
+		if (mixRatio >= 1) { mixRatio = 1 }
+	} elsif (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		mixRatio:extern -= .001
+		if (mixRatio < 0) { mixRatio = 0 }
 	}
 }
 

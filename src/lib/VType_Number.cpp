@@ -575,12 +575,231 @@ Gurax_ImplementOpBinary(Xor, Number, Number)
 	return new Value_Number(numL ^ numR);
 }
 
+// math.Abs(Number)
+Gurax_ImplementOpUnary(math_Abs, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::abs(num));
+}
+
+// math.Acos(Number)
+Gurax_ImplementOpUnary(math_Acos, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::acos(num));
+}
+
+// math.Arg(Number)
+Gurax_ImplementOpUnary(math_Arg, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::arg(num));
+}
+
+// math.Asin(Number)
+Gurax_ImplementOpUnary(math_Asin, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::asin(num));
+}
+
+// math.Atan(Number)
+Gurax_ImplementOpUnary(math_Atan, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::atan(num));
+}
+
+// math.Atan2(Number, Number)
+Gurax_ImplementOpBinary(math_Atan2, Number, Number)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Number(std::atan2(numL, numR));
+}
+
+// math.Ceil(Number)
+Gurax_ImplementOpUnary(math_Ceil, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::ceil(num));
+}
+
+// math.Conj(Number)
+Gurax_ImplementOpUnary(math_Conj, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::conj(num));
+}
+
+// math.Cos(Number)
+Gurax_ImplementOpUnary(math_Cos, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::cos(num));
+}
+
+// math.Cosh(Number)
+Gurax_ImplementOpUnary(math_Cosh, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::cosh(num));
+}
+
+#if 0
+// math.Covariance(Number)
+Gurax_ImplementOpUnary(math_Covariance, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::covariance(num));
+}
+#endif
+
+#if 0
+// math.Cross(Number)
+Gurax_ImplementOpUnary(math_Cross, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::cross(num));
+}
+#endif
+
+#if 0
+// math.Delta(Number)
+Gurax_ImplementOpUnary(math_Delta, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::delta(num));
+}
+#endif
+
+#if 0
+// math.Dot(Number)
+Gurax_ImplementOpUnary(math_Dot, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::dot(num));
+}
+#endif
+
+// math.Exp(Number)
+Gurax_ImplementOpUnary(math_Exp, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::exp(num));
+}
+
+// math.Floor(Number)
+Gurax_ImplementOpUnary(math_Floor, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::floor(num));
+}
+
+// math.Hypot(Number, Number)
+Gurax_ImplementOpBinary(math_Hypot, Number, Number)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Number(std::hypot(numL, numR));
+}
+
+// math.Imag(Number)
+Gurax_ImplementOpUnary(math_Imag, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::imag(num));
+}
+
+// math.Log(Number)
+Gurax_ImplementOpUnary(math_Log, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::log(num));
+}
+
+// math.Log10(Number)
+Gurax_ImplementOpUnary(math_Log10, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::log10(num));
+}
+
+// math.Norm(Number)
+Gurax_ImplementOpUnary(math_Norm, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::norm(num));
+}
+
+// math.Real(Number)
+Gurax_ImplementOpUnary(math_Real, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::real(num));
+}
+
+#if 0
+// math.Relu(Number)
+Gurax_ImplementOpUnary(math_Relu, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::relu(num));
+}
+#endif
+
+#if 0
+// math.Sigmoid(Number)
+Gurax_ImplementOpUnary(math_Sigmoid, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::sigmoid(num));
+}
+#endif
+
 // math.Sin(Number)
 Gurax_ImplementOpUnary(math_Sin, Number)
 {
 	Double num = Value_Number::GetNumber<Double>(value);
 	return new Value_Number(std::sin(num));
 }
+
+// math.Sinh(Number)
+Gurax_ImplementOpUnary(math_Sinh, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::sinh(num));
+}
+
+// math.Sqrt(Number)
+Gurax_ImplementOpUnary(math_Sqrt, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::sqrt(num));
+}
+
+// math.Tan(Number)
+Gurax_ImplementOpUnary(math_Tan, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::tan(num));
+}
+
+// math.Tanh(Number)
+Gurax_ImplementOpUnary(math_Tanh, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::tanh(num));
+}
+
+#if 0
+// math.Unitstep(Number)
+Gurax_ImplementOpUnary(math_Unitstep, Number)
+{
+	Double num = Value_Number::GetNumber<Double>(value);
+	return new Value_Number(std::unitstep(num));
+}
+#endif
 
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
@@ -629,39 +848,68 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Number, formatFloat));
 	Assign(Gurax_CreateClassProperty(Number, formatInt));
 	// Assignment of operator
-	Gurax_AssignOpUnary(Inv,			Number);
-	Gurax_AssignOpUnary(Neg,			Number);
-	Gurax_AssignOpUnary(Pos,			Number);
-	Gurax_AssignOpUnary(PostSeq,		Number);
-	Gurax_AssignOpBinary(Add,			Number, Number);
-	Gurax_AssignOpBinary(And,			Number, Number);
-	Gurax_AssignOpBinary(Cmp,			Number, Number);
-	Gurax_AssignOpBinary(Concat,		Number, Number);
-	Gurax_AssignOpBinary(Contains,		Number, Number);
-	Gurax_AssignOpBinary(Cross,			Number, Number);
-	Gurax_AssignOpBinary(Difference,	Number, Number);
-	Gurax_AssignOpBinary(Div,			Number, Number);
-	Gurax_AssignOpBinary(Dot,			Number, Number);
-	Gurax_AssignOpBinary(Eq,			Number, Number);
-	Gurax_AssignOpBinary(Gear,			Number, Number);
-	Gurax_AssignOpBinary(Ge,			Number, Number);
-	Gurax_AssignOpBinary(Gt,			Number, Number);
-	Gurax_AssignOpBinary(Intersection,	Number, Number);
-	Gurax_AssignOpBinary(Le,			Number, Number);
-	Gurax_AssignOpBinary(Lt,			Number, Number);
-	Gurax_AssignOpBinary(Mod,			Number, Number);
-	Gurax_AssignOpBinary(ModMod,		Number, Number);
-	Gurax_AssignOpBinary(Mul,			Number, Number);
-	Gurax_AssignOpBinary(Ne,			Number, Number);
-	Gurax_AssignOpBinary(Or,			Number, Number);
-	Gurax_AssignOpBinary(Pow,			Number, Number);
-	Gurax_AssignOpBinary(Seq,			Number, Number);
-	Gurax_AssignOpBinary(Shl,			Number, Number);
-	Gurax_AssignOpBinary(Shr,			Number, Number);
-	Gurax_AssignOpBinary(Sub,			Number, Number);
-	Gurax_AssignOpBinary(Union,			Number, Number);
-	Gurax_AssignOpBinary(Xor,			Number, Number);
-	Gurax_AssignOpUnary(math_Sin,		Number);
+	Gurax_AssignOpUnary(Inv,				Number);
+	Gurax_AssignOpUnary(Neg,				Number);
+	Gurax_AssignOpUnary(Pos,				Number);
+	Gurax_AssignOpUnary(PostSeq,			Number);
+	Gurax_AssignOpBinary(Add,				Number, Number);
+	Gurax_AssignOpBinary(And,				Number, Number);
+	Gurax_AssignOpBinary(Cmp,				Number, Number);
+	Gurax_AssignOpBinary(Concat,			Number, Number);
+	Gurax_AssignOpBinary(Contains,			Number, Number);
+	Gurax_AssignOpBinary(Cross,				Number, Number);
+	Gurax_AssignOpBinary(Difference,		Number, Number);
+	Gurax_AssignOpBinary(Div,				Number, Number);
+	Gurax_AssignOpBinary(Dot,				Number, Number);
+	Gurax_AssignOpBinary(Eq,				Number, Number);
+	Gurax_AssignOpBinary(Gear,				Number, Number);
+	Gurax_AssignOpBinary(Ge,				Number, Number);
+	Gurax_AssignOpBinary(Gt,				Number, Number);
+	Gurax_AssignOpBinary(Intersection,		Number, Number);
+	Gurax_AssignOpBinary(Le,				Number, Number);
+	Gurax_AssignOpBinary(Lt,				Number, Number);
+	Gurax_AssignOpBinary(Mod,				Number, Number);
+	Gurax_AssignOpBinary(ModMod,			Number, Number);
+	Gurax_AssignOpBinary(Mul,				Number, Number);
+	Gurax_AssignOpBinary(Ne,				Number, Number);
+	Gurax_AssignOpBinary(Or,				Number, Number);
+	Gurax_AssignOpBinary(Pow,				Number, Number);
+	Gurax_AssignOpBinary(Seq,				Number, Number);
+	Gurax_AssignOpBinary(Shl,				Number, Number);
+	Gurax_AssignOpBinary(Shr,				Number, Number);
+	Gurax_AssignOpBinary(Sub,				Number, Number);
+	Gurax_AssignOpBinary(Union,				Number, Number);
+	Gurax_AssignOpBinary(Xor,				Number, Number);
+	Gurax_AssignOpUnary(math_Abs,			Number);
+	Gurax_AssignOpUnary(math_Acos,			Number);
+	Gurax_AssignOpUnary(math_Arg,			Number);
+	Gurax_AssignOpUnary(math_Asin,			Number);
+	Gurax_AssignOpUnary(math_Atan,			Number);
+	Gurax_AssignOpBinary(math_Atan2,		Number, Number);
+	Gurax_AssignOpUnary(math_Ceil,			Number);
+	Gurax_AssignOpUnary(math_Conj,			Number);
+	Gurax_AssignOpUnary(math_Cos,			Number);
+	Gurax_AssignOpUnary(math_Cosh,			Number);
+	//Gurax_AssignOpUnary(math_Covariance,	Number);
+	//Gurax_AssignOpUnary(math_Cross,		Number);
+	//Gurax_AssignOpUnary(math_Delta,		Number);
+	//Gurax_AssignOpUnary(math_Dot,			Number);
+	Gurax_AssignOpUnary(math_Exp,			Number);
+	Gurax_AssignOpUnary(math_Floor,			Number);
+	Gurax_AssignOpBinary(math_Hypot,		Number, Number);
+	Gurax_AssignOpUnary(math_Imag,			Number);
+	Gurax_AssignOpUnary(math_Log,			Number);
+	Gurax_AssignOpUnary(math_Log10,			Number);
+	Gurax_AssignOpUnary(math_Norm,			Number);
+	Gurax_AssignOpUnary(math_Real,			Number);
+	//Gurax_AssignOpUnary(math_Relu,		Number);
+	//Gurax_AssignOpUnary(math_Sigmoid,		Number);
+	Gurax_AssignOpUnary(math_Sin,			Number);
+	Gurax_AssignOpUnary(math_Sinh,			Number);
+	Gurax_AssignOpUnary(math_Sqrt,			Number);
+	Gurax_AssignOpUnary(math_Tan,			Number);
+	Gurax_AssignOpUnary(math_Tanh,			Number);
+	//Gurax_AssignOpUnary(math_Unitstep,	Number);
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Number, f);
 }
