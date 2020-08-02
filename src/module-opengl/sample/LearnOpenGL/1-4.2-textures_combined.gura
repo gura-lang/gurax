@@ -30,7 +30,7 @@ fragmentShaderSource = bR'''
 #version 330 core
 out vec4 FragColor;
   
-uniform float ratio;
+uniform float mixRatio;
 
 in vec3 ourColor;
 in vec2 TexCoord;
@@ -40,9 +40,11 @@ uniform sampler2D texture2;
 
 void main()
 {
-	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), ratio);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), mixRatio);
 }
 '''
+
+mixRatio = 0.2
 
 main() = {
 	// glfw: initialize and configure
@@ -154,20 +156,11 @@ main() = {
 
 	// render loop
 	// -----------
-	ratio = 0.2
 	while (!glfwWindowShouldClose(window)) {
 		// input
 		// -----
 		processInput(window);
 
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-			ratio += .001
-			if (ratio >= 1) { ratio = 1 }
-		}
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-			ratio -= .001
-			if (ratio < 0) { ratio = 0 }
-		}
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -179,7 +172,7 @@ main() = {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		ourShader.setFloat('ratio', ratio)
+		ourShader.setFloat('mixRatio', mixRatio)
 
 		// render container
 		ourShader.use()
@@ -205,6 +198,12 @@ main() = {
 processInput(window:GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	} elsif (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		mixRatio:extern += .001
+		if (mixRatio >= 1) { mixRatio = 1 }
+	} elsif (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		mixRatio:extern -= .001
+		if (mixRatio < 0) { mixRatio = 0 }
 	}
 }
 
