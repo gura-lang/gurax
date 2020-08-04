@@ -31,13 +31,13 @@ Array* Array::CreateIdentity(ElemTypeT& elemType, size_t n, Double mag)
 	return pArray.release();
 }
 
-template<typename T_Elem> bool IndexSetValue_T(void* p, size_t idx, const Value& value)
+template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)
 {
-	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + idx;
 	if (value.IsType(VTYPE_Number)) {
-		*pElem = Value_Number::GetNumber<T_Elem>(value);
+		*p = Value_Number::GetNumber<T_Elem>(value);
 	} else if (value.IsType(VTYPE_Bool)) {
-		*pElem = value.GetBool()? 1 : 0;
+		*p = value.GetBool()? 1 : 0;
 	} else {
 		Error::Issue(ErrorType::ValueError, "Number value is expected");
 		return false;
@@ -45,21 +45,21 @@ template<typename T_Elem> bool IndexSetValue_T(void* p, size_t idx, const Value&
 	return true;
 }
 
-template<> bool IndexSetValue_T<Bool>(void* p, size_t idx, const Value& value)
+template<> bool IndexSetValue_T<Bool>(void* pv, size_t idx, const Value& value)
 {
-	*(reinterpret_cast<Bool*>(p) + idx) = value.GetBool();
+	*(reinterpret_cast<Bool*>(pv) + idx) = value.GetBool();
 	return true;
 }
 
-template<> bool IndexSetValue_T<Complex>(void* p, size_t idx, const Value& value)
+template<> bool IndexSetValue_T<Complex>(void* pv, size_t idx, const Value& value)
 {
-	Complex* pElem = reinterpret_cast<Complex*>(p) + idx;
+	Complex* p = reinterpret_cast<Complex*>(pv) + idx;
 	if (value.IsType(VTYPE_Number)) {
-		*pElem = Complex(Value_Number::GetNumber<Double>(value));
+		*p = Complex(Value_Number::GetNumber<Double>(value));
 	} else if (value.IsType(VTYPE_Complex)) {
-		*pElem = Value_Complex::GetComplex(value);
+		*p = Value_Complex::GetComplex(value);
 	} else if (value.IsType(VTYPE_Bool)) {
-		*pElem = Complex(value.GetBool()? 1. : 0.);
+		*p = Complex(value.GetBool()? 1. : 0.);
 	} else {
 		Error::Issue(ErrorType::ValueError, "Number or Complex value is expected");
 		return false;
@@ -67,119 +67,119 @@ template<> bool IndexSetValue_T<Complex>(void* p, size_t idx, const Value& value
 	return true;
 }
 
-template<typename T_Elem> bool IndexSetDouble_T(void* p, size_t idx, Double num)
+template<typename T_Elem> bool IndexSetDouble_T(void* pv, size_t idx, Double num)
 {
-	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
-	*pElem = static_cast<T_Elem>(num);
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + idx;
+	*p = static_cast<T_Elem>(num);
 	return true;
 }
 
-template<> bool IndexSetDouble_T<Bool>(void* p, size_t idx, Double num)
+template<> bool IndexSetDouble_T<Bool>(void* pv, size_t idx, Double num)
 {
-	*(reinterpret_cast<Bool*>(p) + idx) = (num > 0);
+	*(reinterpret_cast<Bool*>(pv) + idx) = (num > 0);
 	return true;
 }
 
-template<> bool IndexSetDouble_T<Complex>(void* p, size_t idx, Double num)
+template<> bool IndexSetDouble_T<Complex>(void* pv, size_t idx, Double num)
 {
-	Complex* pElem = reinterpret_cast<Complex*>(p) + idx;
-	*pElem = Complex(num);
+	Complex* p = reinterpret_cast<Complex*>(pv) + idx;
+	*p = Complex(num);
 	return true;
 }
 
-template<typename T_Elem> Value* IndexGetValue_T(const void* p, size_t idx)
+template<typename T_Elem> Value* IndexGetValue_T(const void* pv, size_t idx)
 {
-	return new Value_Number(*(reinterpret_cast<const T_Elem*>(p) + idx));
+	return new Value_Number(*(reinterpret_cast<const T_Elem*>(pv) + idx));
 }
 
-template<> Value* IndexGetValue_T<Bool>(const void* p, size_t idx)
+template<> Value* IndexGetValue_T<Bool>(const void* pv, size_t idx)
 {
-	return new Value_Bool(*(reinterpret_cast<const Bool*>(p) + idx));
+	return new Value_Bool(*(reinterpret_cast<const Bool*>(pv) + idx));
 }
 
-template<> Value* IndexGetValue_T<Complex>(const void* p, size_t idx)
+template<> Value* IndexGetValue_T<Complex>(const void* pv, size_t idx)
 {
-	return new Value_Complex(*(reinterpret_cast<const Complex*>(p) + idx));
+	return new Value_Complex(*(reinterpret_cast<const Complex*>(pv) + idx));
 }
 
-template<typename T_Elem> Double IndexGetDouble_T(const void* p, size_t idx)
+template<typename T_Elem> Double IndexGetDouble_T(const void* pv, size_t idx)
 {
-	return static_cast<Double>(*(reinterpret_cast<const T_Elem*>(p) + idx));
+	return static_cast<Double>(*(reinterpret_cast<const T_Elem*>(pv) + idx));
 }
 
-template<> Double IndexGetDouble_T<Bool>(const void* p, size_t idx)
+template<> Double IndexGetDouble_T<Bool>(const void* pv, size_t idx)
 {
-	return *(reinterpret_cast<const Bool*>(p) + idx)? 1. : 0.;
+	return *(reinterpret_cast<const Bool*>(pv) + idx)? 1. : 0.;
 }
 
-template<> Double IndexGetDouble_T<Complex>(const void* p, size_t idx)
+template<> Double IndexGetDouble_T<Complex>(const void* pv, size_t idx)
 {
 	return 0.;
 }
 
-template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, void* p, size_t offset, size_t len)
+template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, void* pv, size_t offset, size_t len)
 {
-	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + offset;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
 	auto ppValue = values.begin();
-	for (size_t i = 0; i < len; i++, pElem++, ppValue++) {
-		*pElem = Value_Number::GetNumber<T_Elem>(**ppValue);
+	for (size_t i = 0; i < len; i++, p++, ppValue++) {
+		*p = Value_Number::GetNumber<T_Elem>(**ppValue);
 	}
 }
 
-template<> void InjectFromValueList_T<Bool>(const ValueList& values, void* p, size_t offset, size_t len)
+template<> void InjectFromValueList_T<Bool>(const ValueList& values, void* pv, size_t offset, size_t len)
 {
-	Bool* pElem = reinterpret_cast<Bool*>(p) + offset;
+	Bool* p = reinterpret_cast<Bool*>(pv) + offset;
 	auto ppValue = values.begin();
-	for (size_t i = 0; i < len; i++, pElem++, ppValue++) {
-		*pElem = (*ppValue)->GetBool();
+	for (size_t i = 0; i < len; i++, p++, ppValue++) {
+		*p = (*ppValue)->GetBool();
 	}
 }
 
-template<> void InjectFromValueList_T<Complex>(const ValueList& values, void* p, size_t offset, size_t len)
+template<> void InjectFromValueList_T<Complex>(const ValueList& values, void* pv, size_t offset, size_t len)
 {
-	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
+	Complex* p = reinterpret_cast<Complex*>(pv) + offset;
 	auto ppValue = values.begin();
-	for (size_t i = 0; i < len; i++, pElem++, ppValue++) {
-		*pElem = Value_Complex::GetComplexRobust(**ppValue);
+	for (size_t i = 0; i < len; i++, p++, ppValue++) {
+		*p = Value_Complex::GetComplexRobust(**ppValue);
 	}
 }
 
-template<typename T_Elem> bool InjectFromIterator_T(Iterator& iterator, void* p, size_t offset, size_t len)
+template<typename T_Elem> bool InjectFromIterator_T(Iterator& iterator, void* pv, size_t offset, size_t len)
 {
-	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) {
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
 		if (!pValue->IsType(VTYPE_Number)) {
 			Error::Issue(ErrorType::TypeError, "must be Number value");
 			return false;
 		}
-		*pElem = Value_Number::GetNumber<T_Elem>(*pValue);
+		*p = Value_Number::GetNumber<T_Elem>(*pValue);
 	}
 	return !Error::IsIssued();
 }
 
-template<> bool InjectFromIterator_T<Bool>(Iterator& iterator, void* p, size_t offset, size_t len)
+template<> bool InjectFromIterator_T<Bool>(Iterator& iterator, void* pv, size_t offset, size_t len)
 {
-	Bool* pElem = reinterpret_cast<Bool*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) {
+	Bool* p = reinterpret_cast<Bool*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
-		*pElem = pValue->GetBool();
+		*p = pValue->GetBool();
 	}
 	return !Error::IsIssued();
 }
 
-template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* p, size_t offset, size_t len)
+template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* pv, size_t offset, size_t len)
 {
-	Complex* pElem = reinterpret_cast<Complex*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) {
+	Complex* p = reinterpret_cast<Complex*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
 		if (pValue->IsType(VTYPE_Number)) {
-			*pElem = Value_Number::GetNumber<Double>(*pValue);
+			*p = Value_Number::GetNumber<Double>(*pValue);
 		} else if (pValue->IsType(VTYPE_Complex)) {
-			*pElem = Value_Complex::GetComplex(*pValue);
+			*p = Value_Complex::GetComplex(*pValue);
 		} else {
 			Error::Issue(ErrorType::TypeError, "must be Complex or Number value");
 			return false;
@@ -188,41 +188,101 @@ template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* p, size_
 	return !Error::IsIssued();
 }
 
-template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const void* p, size_t offset, size_t len)
+template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
-	const T_Elem* pElem = reinterpret_cast<const T_Elem*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Number(*pElem));
+	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) values.push_back(new Value_Number(*p));
 }
 
-template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* p, size_t offset, size_t len)
+template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
-	const Bool* pElem = reinterpret_cast<const Bool*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Bool(!!*pElem));
+	const Bool* p = reinterpret_cast<const Bool*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) values.push_back(new Value_Bool(!!*p));
 }
 
-template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* p, size_t offset, size_t len)
+template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
-	const Complex* pElem = reinterpret_cast<const Complex*>(p) + offset;
-	for (size_t i = 0; i < len; i++, pElem++) values.push_back(new Value_Complex(*pElem));
+	const Complex* p = reinterpret_cast<const Complex*>(pv) + offset;
+	for (size_t i = 0; i < len; i++, p++) values.push_back(new Value_Complex(*p));
 }
 
-template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, const void* pSrc, size_t offset, size_t len)
+template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pvDst, const void* pvSrc, size_t offset, size_t len)
 {
-	T_ElemDst* pElemDst = reinterpret_cast<T_ElemDst*>(pDst);
-	const T_ElemSrc* pElemSrc = reinterpret_cast<const T_ElemSrc*>(pSrc) + offset;
-	for (size_t i = 0; i < len; i++, pElemDst++, pElemSrc++) {
-		*pElemDst = static_cast<T_ElemDst>(*pElemSrc);
+	T_ElemDst* pDst = reinterpret_cast<T_ElemDst*>(pvDst);
+	const T_ElemSrc* pSrc = reinterpret_cast<const T_ElemSrc*>(pvSrc) + offset;
+	for (size_t i = 0; i < len; i++, pDst++, pSrc++) {
+		*pDst = static_cast<T_ElemDst>(*pSrc);
 	}
 }
 
-template<typename T_ElemRtn, typename T_ElemLeft, typename T_ElemRight>
-void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void AddElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
-	T_ElemRtn* pElemRtn = reinterpret_cast<T_ElemRtn*>(pRtn);
-	const T_ElemLeft* pElemLeft = reinterpret_cast<const T_ElemLeft*>(pLeft);
-	const T_ElemRight* pElemRight = reinterpret_cast<const T_ElemRight*>(pRight);
-	for (size_t i = 0; i < len; i++, pElemRtn++, pElemLeft++, pElemRight++) {
-		*pElemRtn = static_cast<T_ElemRtn>(*pElemLeft) + static_cast<T_ElemRtn>(*pElemRight);
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) + static_cast<T_ElemRtn>(*pR);
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void SubElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) - static_cast<T_ElemRtn>(*pR);
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void MulElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+bool DivElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		auto elemR = static_cast<T_ElemRtn>(*pR);
+		if (elemR == 0) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return false;
+		}
+		*pRtn = static_cast<T_ElemRtn>(*pL) / elemR;
+	}
+	return true;
+}
+
+// [m, n] = dot([m, l], [l, n])
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void DotElems_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < m; i++, pBaseL += l) {
+		const T_ElemR* pSaveR = pBaseR;
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+			T_ElemRtn elemRtn = 0;
+			const T_ElemL* pL = pBaseL;
+			const T_ElemR* pR = pSaveR;
+			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
+			}
+			*pRtn = elemRtn;
+		}
 	}
 }
 
@@ -301,8 +361,8 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::Int8.id]		= funcTmpl<Float, Float, Int8>; \
 	Array::ElemType::Double.func[ElemType::Int8.id]		= funcTmpl<Double, Double, Int8>; \
 	Array::ElemType::Complex.func[ElemType::Int8.id]	= funcTmpl<Complex, Complex, Int8>; \
-	Array::ElemType::Bool.func[ElemType::UInt8.id]		= funcTmpl<Bool, Bool, UInt8>; \
-	Array::ElemType::Int8.func[ElemType::UInt8.id]		= funcTmpl<Int8, Int8, UInt8>; \
+	Array::ElemType::Bool.func[ElemType::UInt8.id]		= funcTmpl<UInt8, Bool, UInt8>; \
+	Array::ElemType::Int8.func[ElemType::UInt8.id]		= funcTmpl<UInt8, Int8, UInt8>; \
 	Array::ElemType::UInt8.func[ElemType::UInt8.id]		= funcTmpl<UInt8, UInt8, UInt8>; \
 	Array::ElemType::Int16.func[ElemType::UInt8.id]		= funcTmpl<Int16, Int16, UInt8>; \
 	Array::ElemType::UInt16.func[ElemType::UInt8.id]	= funcTmpl<UInt16, UInt16, UInt8>; \
@@ -314,9 +374,9 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::UInt8.id]		= funcTmpl<Float, Float, UInt8>; \
 	Array::ElemType::Double.func[ElemType::UInt8.id]	= funcTmpl<Double, Double, UInt8>; \
 	Array::ElemType::Complex.func[ElemType::UInt8.id]	= funcTmpl<Complex, Complex, UInt8>; \
-	Array::ElemType::Bool.func[ElemType::Int16.id]		= funcTmpl<Bool, Bool, Int16>; \
-	Array::ElemType::Int8.func[ElemType::Int16.id]		= funcTmpl<Int8, Int8, Int16>; \
-	Array::ElemType::UInt8.func[ElemType::Int16.id]		= funcTmpl<UInt8, UInt8, Int16>; \
+	Array::ElemType::Bool.func[ElemType::Int16.id]		= funcTmpl<Int16, Bool, Int16>; \
+	Array::ElemType::Int8.func[ElemType::Int16.id]		= funcTmpl<Int16, Int8, Int16>; \
+	Array::ElemType::UInt8.func[ElemType::Int16.id]		= funcTmpl<Int16, UInt8, Int16>; \
 	Array::ElemType::Int16.func[ElemType::Int16.id]		= funcTmpl<Int16, Int16, Int16>; \
 	Array::ElemType::UInt16.func[ElemType::Int16.id]	= funcTmpl<UInt16, UInt16, Int16>; \
 	Array::ElemType::Int32.func[ElemType::Int16.id]		= funcTmpl<Int32, Int32, Int16>; \
@@ -327,10 +387,10 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::Int16.id]		= funcTmpl<Float, Float, Int16>; \
 	Array::ElemType::Double.func[ElemType::Int16.id]	= funcTmpl<Double, Double, Int16>; \
 	Array::ElemType::Complex.func[ElemType::Int16.id]	= funcTmpl<Complex, Complex, Int16>; \
-	Array::ElemType::Bool.func[ElemType::UInt16.id]		= funcTmpl<Bool, Bool, UInt16>; \
-	Array::ElemType::Int8.func[ElemType::UInt16.id]		= funcTmpl<Int8, Int8, UInt16>; \
-	Array::ElemType::UInt8.func[ElemType::UInt16.id]	= funcTmpl<UInt8, UInt8, UInt16>; \
-	Array::ElemType::Int16.func[ElemType::UInt16.id]	= funcTmpl<Int16, Int16, UInt16>; \
+	Array::ElemType::Bool.func[ElemType::UInt16.id]		= funcTmpl<UInt16, Bool, UInt16>; \
+	Array::ElemType::Int8.func[ElemType::UInt16.id]		= funcTmpl<UInt16, Int8, UInt16>; \
+	Array::ElemType::UInt8.func[ElemType::UInt16.id]	= funcTmpl<UInt16, UInt8, UInt16>; \
+	Array::ElemType::Int16.func[ElemType::UInt16.id]	= funcTmpl<UInt16, Int16, UInt16>; \
 	Array::ElemType::UInt16.func[ElemType::UInt16.id]	= funcTmpl<UInt16, UInt16, UInt16>; \
 	Array::ElemType::Int32.func[ElemType::UInt16.id]	= funcTmpl<Int32, Int32, UInt16>; \
 	Array::ElemType::UInt32.func[ElemType::UInt16.id]	= funcTmpl<UInt32, UInt32, UInt16>; \
@@ -340,11 +400,11 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::UInt16.id]	= funcTmpl<Float, Float, UInt16>; \
 	Array::ElemType::Double.func[ElemType::UInt16.id]	= funcTmpl<Double, Double, UInt16>; \
 	Array::ElemType::Complex.func[ElemType::UInt16.id]	= funcTmpl<Complex, Complex, UInt16>; \
-	Array::ElemType::Bool.func[ElemType::Int32.id]		= funcTmpl<Bool, Bool, Int32>; \
-	Array::ElemType::Int8.func[ElemType::Int32.id]		= funcTmpl<Int8, Int8, Int32>; \
-	Array::ElemType::UInt8.func[ElemType::Int32.id]		= funcTmpl<UInt8, UInt8, Int32>; \
-	Array::ElemType::Int16.func[ElemType::Int32.id]		= funcTmpl<Int16, Int16, Int32>; \
-	Array::ElemType::UInt16.func[ElemType::Int32.id]	= funcTmpl<UInt16, UInt16, Int32>; \
+	Array::ElemType::Bool.func[ElemType::Int32.id]		= funcTmpl<Int32, Bool, Int32>; \
+	Array::ElemType::Int8.func[ElemType::Int32.id]		= funcTmpl<Int32, Int8, Int32>; \
+	Array::ElemType::UInt8.func[ElemType::Int32.id]		= funcTmpl<Int32, UInt8, Int32>; \
+	Array::ElemType::Int16.func[ElemType::Int32.id]		= funcTmpl<Int32, Int16, Int32>; \
+	Array::ElemType::UInt16.func[ElemType::Int32.id]	= funcTmpl<Int32, UInt16, Int32>; \
 	Array::ElemType::Int32.func[ElemType::Int32.id]		= funcTmpl<Int32, Int32, Int32>; \
 	Array::ElemType::UInt32.func[ElemType::Int32.id]	= funcTmpl<UInt32, UInt32, Int32>; \
 	Array::ElemType::Int64.func[ElemType::Int32.id]		= funcTmpl<Int64, Int64, Int32>; \
@@ -353,12 +413,12 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::Int32.id]		= funcTmpl<Float, Float, Int32>; \
 	Array::ElemType::Double.func[ElemType::Int32.id]	= funcTmpl<Double, Double, Int32>; \
 	Array::ElemType::Complex.func[ElemType::Int32.id]	= funcTmpl<Complex, Complex, Int32>; \
-	Array::ElemType::Bool.func[ElemType::UInt32.id]		= funcTmpl<Bool, Bool, UInt32>; \
-	Array::ElemType::Int8.func[ElemType::UInt32.id]		= funcTmpl<Int8, Int8, UInt32>; \
-	Array::ElemType::UInt8.func[ElemType::UInt32.id]	= funcTmpl<UInt8, UInt8, UInt32>; \
-	Array::ElemType::Int16.func[ElemType::UInt32.id]	= funcTmpl<Int16, Int16, UInt32>; \
-	Array::ElemType::UInt16.func[ElemType::UInt32.id]	= funcTmpl<UInt16, UInt16, UInt32>; \
-	Array::ElemType::Int32.func[ElemType::UInt32.id]	= funcTmpl<Int32, Int32, UInt32>; \
+	Array::ElemType::Bool.func[ElemType::UInt32.id]		= funcTmpl<UInt32, Bool, UInt32>; \
+	Array::ElemType::Int8.func[ElemType::UInt32.id]		= funcTmpl<UInt32, Int8, UInt32>; \
+	Array::ElemType::UInt8.func[ElemType::UInt32.id]	= funcTmpl<UInt32, UInt8, UInt32>; \
+	Array::ElemType::Int16.func[ElemType::UInt32.id]	= funcTmpl<UInt32, Int16, UInt32>; \
+	Array::ElemType::UInt16.func[ElemType::UInt32.id]	= funcTmpl<UInt32, UInt16, UInt32>; \
+	Array::ElemType::Int32.func[ElemType::UInt32.id]	= funcTmpl<UInt32, Int32, UInt32>; \
 	Array::ElemType::UInt32.func[ElemType::UInt32.id]	= funcTmpl<UInt32, UInt32, UInt32>; \
 	Array::ElemType::Int64.func[ElemType::UInt32.id]	= funcTmpl<Int64, Int64, UInt32>; \
 	Array::ElemType::UInt64.func[ElemType::UInt32.id]	= funcTmpl<UInt64, UInt64, UInt32>; \
@@ -366,83 +426,83 @@ void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
 	Array::ElemType::Float.func[ElemType::UInt32.id]	= funcTmpl<Float, Float, UInt32>; \
 	Array::ElemType::Double.func[ElemType::UInt32.id]	= funcTmpl<Double, Double, UInt32>; \
 	Array::ElemType::Complex.func[ElemType::UInt32.id]	= funcTmpl<Complex, Complex, UInt32>; \
-	Array::ElemType::Bool.func[ElemType::Int64.id]		= funcTmpl<Bool, Bool, Int64>; \
-	Array::ElemType::Int8.func[ElemType::Int64.id]		= funcTmpl<Int8, Int8, Int64>; \
-	Array::ElemType::UInt8.func[ElemType::Int64.id]		= funcTmpl<UInt8, UInt8, Int64>; \
-	Array::ElemType::Int16.func[ElemType::Int64.id]		= funcTmpl<Int16, Int16, Int64>; \
-	Array::ElemType::UInt16.func[ElemType::Int64.id]	= funcTmpl<UInt16, UInt16, Int64>; \
-	Array::ElemType::Int32.func[ElemType::Int64.id]		= funcTmpl<Int32, Int32, Int64>; \
-	Array::ElemType::UInt32.func[ElemType::Int64.id]	= funcTmpl<UInt32, UInt32, Int64>; \
+	Array::ElemType::Bool.func[ElemType::Int64.id]		= funcTmpl<Int64, Bool, Int64>; \
+	Array::ElemType::Int8.func[ElemType::Int64.id]		= funcTmpl<Int64, Int8, Int64>; \
+	Array::ElemType::UInt8.func[ElemType::Int64.id]		= funcTmpl<Int64, UInt8, Int64>; \
+	Array::ElemType::Int16.func[ElemType::Int64.id]		= funcTmpl<Int64, Int16, Int64>; \
+	Array::ElemType::UInt16.func[ElemType::Int64.id]	= funcTmpl<Int64, UInt16, Int64>; \
+	Array::ElemType::Int32.func[ElemType::Int64.id]		= funcTmpl<Int64, Int32, Int64>; \
+	Array::ElemType::UInt32.func[ElemType::Int64.id]	= funcTmpl<Int64, UInt32, Int64>; \
 	Array::ElemType::Int64.func[ElemType::Int64.id]		= funcTmpl<Int64, Int64, Int64>; \
 	Array::ElemType::UInt64.func[ElemType::Int64.id]	= funcTmpl<UInt64, UInt64, Int64>; \
 	Array::ElemType::Half.func[ElemType::Int64.id]		= funcTmpl<Half, Half, Int64>; \
 	Array::ElemType::Float.func[ElemType::Int64.id]		= funcTmpl<Float, Float, Int64>; \
 	Array::ElemType::Double.func[ElemType::Int64.id]	= funcTmpl<Double, Double, Int64>; \
 	Array::ElemType::Complex.func[ElemType::Int64.id]	= funcTmpl<Complex, Complex, Int64>; \
-	Array::ElemType::Bool.func[ElemType::UInt64.id]		= funcTmpl<Bool, Bool, UInt64>; \
-	Array::ElemType::Int8.func[ElemType::UInt64.id]		= funcTmpl<Int8, Int8, UInt64>; \
-	Array::ElemType::UInt8.func[ElemType::UInt64.id]	= funcTmpl<UInt8, UInt8, UInt64>; \
-	Array::ElemType::Int16.func[ElemType::UInt64.id]	= funcTmpl<Int16, Int16, UInt64>; \
-	Array::ElemType::UInt16.func[ElemType::UInt64.id]	= funcTmpl<UInt16, UInt16, UInt64>; \
-	Array::ElemType::Int32.func[ElemType::UInt64.id]	= funcTmpl<Int32, Int32, UInt64>; \
-	Array::ElemType::UInt32.func[ElemType::UInt64.id]	= funcTmpl<UInt32, UInt32, UInt64>; \
-	Array::ElemType::Int64.func[ElemType::UInt64.id]	= funcTmpl<Int64, Int64, UInt64>; \
+	Array::ElemType::Bool.func[ElemType::UInt64.id]		= funcTmpl<UInt64, Bool, UInt64>; \
+	Array::ElemType::Int8.func[ElemType::UInt64.id]		= funcTmpl<UInt64, Int8, UInt64>; \
+	Array::ElemType::UInt8.func[ElemType::UInt64.id]	= funcTmpl<UInt64, UInt8, UInt64>; \
+	Array::ElemType::Int16.func[ElemType::UInt64.id]	= funcTmpl<UInt64, Int16, UInt64>; \
+	Array::ElemType::UInt16.func[ElemType::UInt64.id]	= funcTmpl<UInt64, UInt16, UInt64>; \
+	Array::ElemType::Int32.func[ElemType::UInt64.id]	= funcTmpl<UInt64, Int32, UInt64>; \
+	Array::ElemType::UInt32.func[ElemType::UInt64.id]	= funcTmpl<UInt64, UInt32, UInt64>; \
+	Array::ElemType::Int64.func[ElemType::UInt64.id]	= funcTmpl<UInt64, Int64, UInt64>; \
 	Array::ElemType::UInt64.func[ElemType::UInt64.id]	= funcTmpl<UInt64, UInt64, UInt64>; \
 	Array::ElemType::Half.func[ElemType::UInt64.id]		= funcTmpl<Half, Half, UInt64>; \
 	Array::ElemType::Float.func[ElemType::UInt64.id]	= funcTmpl<Float, Float, UInt64>; \
 	Array::ElemType::Double.func[ElemType::UInt64.id]	= funcTmpl<Double, Double, UInt64>; \
 	Array::ElemType::Complex.func[ElemType::UInt64.id]	= funcTmpl<Complex, Complex, UInt64>; \
-	Array::ElemType::Bool.func[ElemType::Half.id]		= funcTmpl<Bool, Bool, Half>; \
-	Array::ElemType::Int8.func[ElemType::Half.id]		= funcTmpl<Int8, Int8, Half>; \
-	Array::ElemType::UInt8.func[ElemType::Half.id]		= funcTmpl<UInt8, UInt8, Half>; \
-	Array::ElemType::Int16.func[ElemType::Half.id]		= funcTmpl<Int16, Int16, Half>; \
-	Array::ElemType::UInt16.func[ElemType::Half.id]		= funcTmpl<UInt16, UInt16, Half>; \
-	Array::ElemType::Int32.func[ElemType::Half.id]		= funcTmpl<Int32, Int32, Half>; \
-	Array::ElemType::UInt32.func[ElemType::Half.id]		= funcTmpl<UInt32, UInt32, Half>; \
-	Array::ElemType::Int64.func[ElemType::Half.id]		= funcTmpl<Int64, Int64, Half>; \
-	Array::ElemType::UInt64.func[ElemType::Half.id]		= funcTmpl<UInt64, UInt64, Half>; \
+	Array::ElemType::Bool.func[ElemType::Half.id]		= funcTmpl<Half, Bool, Half>; \
+	Array::ElemType::Int8.func[ElemType::Half.id]		= funcTmpl<Half, Int8, Half>; \
+	Array::ElemType::UInt8.func[ElemType::Half.id]		= funcTmpl<Half, UInt8, Half>; \
+	Array::ElemType::Int16.func[ElemType::Half.id]		= funcTmpl<Half, Int16, Half>; \
+	Array::ElemType::UInt16.func[ElemType::Half.id]		= funcTmpl<Half, UInt16, Half>; \
+	Array::ElemType::Int32.func[ElemType::Half.id]		= funcTmpl<Half, Int32, Half>; \
+	Array::ElemType::UInt32.func[ElemType::Half.id]		= funcTmpl<Half, UInt32, Half>; \
+	Array::ElemType::Int64.func[ElemType::Half.id]		= funcTmpl<Half, Int64, Half>; \
+	Array::ElemType::UInt64.func[ElemType::Half.id]		= funcTmpl<Half, UInt64, Half>; \
 	Array::ElemType::Half.func[ElemType::Half.id]		= funcTmpl<Half, Half, Half>; \
 	Array::ElemType::Float.func[ElemType::Half.id]		= funcTmpl<Float, Float, Half>; \
 	Array::ElemType::Double.func[ElemType::Half.id]		= funcTmpl<Double, Double, Half>; \
 	Array::ElemType::Complex.func[ElemType::Half.id]	= funcTmpl<Complex, Complex, Half>; \
-	Array::ElemType::Bool.func[ElemType::Float.id]		= funcTmpl<Bool, Bool, Float>; \
-	Array::ElemType::Int8.func[ElemType::Float.id]		= funcTmpl<Int8, Int8, Float>; \
-	Array::ElemType::UInt8.func[ElemType::Float.id]		= funcTmpl<UInt8, UInt8, Float>; \
-	Array::ElemType::Int16.func[ElemType::Float.id]		= funcTmpl<Int16, Int16, Float>; \
-	Array::ElemType::UInt16.func[ElemType::Float.id]	= funcTmpl<UInt16, UInt16, Float>; \
-	Array::ElemType::Int32.func[ElemType::Float.id]		= funcTmpl<Int32, Int32, Float>; \
-	Array::ElemType::UInt32.func[ElemType::Float.id]	= funcTmpl<UInt32, UInt32, Float>; \
-	Array::ElemType::Int64.func[ElemType::Float.id]		= funcTmpl<Int64, Int64, Float>; \
-	Array::ElemType::UInt64.func[ElemType::Float.id]	= funcTmpl<UInt64, UInt64, Float>; \
-	Array::ElemType::Half.func[ElemType::Float.id]		= funcTmpl<Half, Half, Float>; \
+	Array::ElemType::Bool.func[ElemType::Float.id]		= funcTmpl<Float, Bool, Float>; \
+	Array::ElemType::Int8.func[ElemType::Float.id]		= funcTmpl<Float, Int8, Float>; \
+	Array::ElemType::UInt8.func[ElemType::Float.id]		= funcTmpl<Float, UInt8, Float>; \
+	Array::ElemType::Int16.func[ElemType::Float.id]		= funcTmpl<Float, Int16, Float>; \
+	Array::ElemType::UInt16.func[ElemType::Float.id]	= funcTmpl<Float, UInt16, Float>; \
+	Array::ElemType::Int32.func[ElemType::Float.id]		= funcTmpl<Float, Int32, Float>; \
+	Array::ElemType::UInt32.func[ElemType::Float.id]	= funcTmpl<Float, UInt32, Float>; \
+	Array::ElemType::Int64.func[ElemType::Float.id]		= funcTmpl<Float, Int64, Float>; \
+	Array::ElemType::UInt64.func[ElemType::Float.id]	= funcTmpl<Float, UInt64, Float>; \
+	Array::ElemType::Half.func[ElemType::Float.id]		= funcTmpl<Float, Half, Float>; \
 	Array::ElemType::Float.func[ElemType::Float.id]		= funcTmpl<Float, Float, Float>; \
 	Array::ElemType::Double.func[ElemType::Float.id]	= funcTmpl<Double, Double, Float>; \
 	Array::ElemType::Complex.func[ElemType::Float.id]	= funcTmpl<Complex, Complex, Float>; \
-	Array::ElemType::Bool.func[ElemType::Double.id]		= funcTmpl<Bool, Bool, Double>; \
-	Array::ElemType::Int8.func[ElemType::Double.id]		= funcTmpl<Int8, Int8, Double>; \
-	Array::ElemType::UInt8.func[ElemType::Double.id]	= funcTmpl<UInt8, UInt8, Double>; \
-	Array::ElemType::Int16.func[ElemType::Double.id]	= funcTmpl<Int16, Int16, Double>; \
-	Array::ElemType::UInt16.func[ElemType::Double.id]	= funcTmpl<UInt16, UInt16, Double>; \
-	Array::ElemType::Int32.func[ElemType::Double.id]	= funcTmpl<Int32, Int32, Double>; \
-	Array::ElemType::UInt32.func[ElemType::Double.id]	= funcTmpl<UInt32, UInt32, Double>; \
-	Array::ElemType::Int64.func[ElemType::Double.id]	= funcTmpl<Int64, Int64, Double>; \
-	Array::ElemType::UInt64.func[ElemType::Double.id]	= funcTmpl<UInt64, UInt64, Double>; \
-	Array::ElemType::Half.func[ElemType::Double.id]		= funcTmpl<Half, Half, Double>; \
-	Array::ElemType::Float.func[ElemType::Double.id]	= funcTmpl<Float, Float, Double>; \
+	Array::ElemType::Bool.func[ElemType::Double.id]		= funcTmpl<Double, Bool, Double>; \
+	Array::ElemType::Int8.func[ElemType::Double.id]		= funcTmpl<Double, Int8, Double>; \
+	Array::ElemType::UInt8.func[ElemType::Double.id]	= funcTmpl<Double, UInt8, Double>; \
+	Array::ElemType::Int16.func[ElemType::Double.id]	= funcTmpl<Double, Int16, Double>; \
+	Array::ElemType::UInt16.func[ElemType::Double.id]	= funcTmpl<Double, UInt16, Double>; \
+	Array::ElemType::Int32.func[ElemType::Double.id]	= funcTmpl<Double, Int32, Double>; \
+	Array::ElemType::UInt32.func[ElemType::Double.id]	= funcTmpl<Double, UInt32, Double>; \
+	Array::ElemType::Int64.func[ElemType::Double.id]	= funcTmpl<Double, Int64, Double>; \
+	Array::ElemType::UInt64.func[ElemType::Double.id]	= funcTmpl<Double, UInt64, Double>; \
+	Array::ElemType::Half.func[ElemType::Double.id]		= funcTmpl<Double, Half, Double>; \
+	Array::ElemType::Float.func[ElemType::Double.id]	= funcTmpl<Double, Float, Double>; \
 	Array::ElemType::Double.func[ElemType::Double.id]	= funcTmpl<Double, Double, Double>; \
 	Array::ElemType::Complex.func[ElemType::Double.id]	= funcTmpl<Complex, Complex, Double>; \
-	Array::ElemType::Bool.func[ElemType::Complex.id]	= funcTmpl<Bool, Bool, Complex>; \
-	Array::ElemType::Int8.func[ElemType::Complex.id]	= funcTmpl<Int8, Int8, Complex>; \
-	Array::ElemType::UInt8.func[ElemType::Complex.id]	= funcTmpl<UInt8, UInt8, Complex>; \
-	Array::ElemType::Int16.func[ElemType::Complex.id]	= funcTmpl<Int16, Int16, Complex>; \
-	Array::ElemType::UInt16.func[ElemType::Complex.id]	= funcTmpl<UInt16, UInt16, Complex>; \
-	Array::ElemType::Int32.func[ElemType::Complex.id]	= funcTmpl<Int32, Int32, Complex>; \
-	Array::ElemType::UInt32.func[ElemType::Complex.id]	= funcTmpl<UInt32, UInt32, Complex>; \
-	Array::ElemType::Int64.func[ElemType::Complex.id]	= funcTmpl<Int64, Int64, Complex>; \
-	Array::ElemType::UInt64.func[ElemType::Complex.id]	= funcTmpl<UInt64, UInt64, Complex>; \
-	Array::ElemType::Half.func[ElemType::Complex.id]	= funcTmpl<Half, Half, Complex>; \
-	Array::ElemType::Float.func[ElemType::Complex.id]	= funcTmpl<Float, Float, Complex>; \
-	Array::ElemType::Double.func[ElemType::Complex.id]	= funcTmpl<Double, Double, Complex>; \
+	Array::ElemType::Bool.func[ElemType::Complex.id]	= funcTmpl<Complex, Bool, Complex>; \
+	Array::ElemType::Int8.func[ElemType::Complex.id]	= funcTmpl<Complex, Int8, Complex>; \
+	Array::ElemType::UInt8.func[ElemType::Complex.id]	= funcTmpl<Complex, UInt8, Complex>; \
+	Array::ElemType::Int16.func[ElemType::Complex.id]	= funcTmpl<Complex, Int16, Complex>; \
+	Array::ElemType::UInt16.func[ElemType::Complex.id]	= funcTmpl<Complex, UInt16, Complex>; \
+	Array::ElemType::Int32.func[ElemType::Complex.id]	= funcTmpl<Complex, Int32, Complex>; \
+	Array::ElemType::UInt32.func[ElemType::Complex.id]	= funcTmpl<Complex, UInt32, Complex>; \
+	Array::ElemType::Int64.func[ElemType::Complex.id]	= funcTmpl<Complex, Int64, Complex>; \
+	Array::ElemType::UInt64.func[ElemType::Complex.id]	= funcTmpl<Complex, UInt64, Complex>; \
+	Array::ElemType::Half.func[ElemType::Complex.id]	= funcTmpl<Complex, Half, Complex>; \
+	Array::ElemType::Float.func[ElemType::Complex.id]	= funcTmpl<Complex, Float, Complex>; \
+	Array::ElemType::Double.func[ElemType::Complex.id]	= funcTmpl<Complex, Double, Complex>; \
 	Array::ElemType::Complex.func[ElemType::Complex.id]	= funcTmpl<Complex, Complex, Complex>; \
 } while (0)
 
@@ -510,6 +570,10 @@ void Array::Bootup()
 	SetFuncBurst(ExtractToValueOwner,	ExtractToValueOwner_T);
 	SetFuncBurst2(CopyElems,			CopyElems_T);
 	SetFuncBurst3(AddElems,				AddElems_T);
+	SetFuncBurst3(SubElems,				SubElems_T);
+	SetFuncBurst3(MulElems,				MulElems_T);
+	SetFuncBurst3(DivElems,				DivElems_T);
+	SetFuncBurst3(DotElems,				DotElems_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
@@ -561,6 +625,37 @@ void Array::ExtractElems(ValueOwner& values) const
 {
 	size_t offset = 0;
 	ExtractElemsSub(values, offset, _dimSizes.begin());
+}
+
+Array* Array::AddElems(const Array& arrayL, const Array& arrayR)
+{
+	//RefPtr<Array> pArrayRtn(Create(
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
+	size_t len = arrayL.GetDimSizes().GetLength();
+	void* pvRtn = nullptr;
+	arrayL.GetElemType().AddElems[arrayR.GetElemType().id](pvRtn, pvL, pvR, len);
+	return nullptr;
+}
+
+Array* Array::SubElems(const Array& arrayL, const Array& arrayR)
+{
+	return nullptr;
+}
+
+Array* Array::MulElems(const Array& arrayL, const Array& arrayR)
+{
+	return nullptr;
+}
+
+Array* Array::DivElems(const Array& arrayL, const Array& arrayR)
+{
+	return nullptr;
+}
+
+Array* Array::DotElems(const Array& arrayL, const Array& arrayR)
+{
+	return nullptr;
 }
 
 Value_List* Array::ToList() const

@@ -50,15 +50,19 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
-		std::function<bool (void* p, size_t idx, const Value& value)> IndexSetValue;
-		std::function<bool (void* p, size_t idx, Double num)> IndexSetDouble;
-		std::function<Value* (const void* p, size_t idx)> IndexGetValue;
-		std::function<Double (const void* p, size_t idx)> IndexGetDouble;
-		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectFromValueList;
-		std::function<bool (Iterator& iterator, void* p, size_t offset, size_t len)> InjectFromIterator;
-		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractToValueOwner;
-		std::function<void (void* pDst, const void* pSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
-		std::function<void (void* pRtn, void* pLeft, const void* pRight, size_t len)> AddElems[ElemTypeIdMax];
+		std::function<bool (void* pv, size_t idx, const Value& value)> IndexSetValue;
+		std::function<bool (void* pv, size_t idx, Double num)> IndexSetDouble;
+		std::function<Value* (const void* pv, size_t idx)> IndexGetValue;
+		std::function<Double (const void* pv, size_t idx)> IndexGetDouble;
+		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)> InjectFromValueList;
+		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)> InjectFromIterator;
+		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
+		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> AddElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> SubElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> MulElems[ElemTypeIdMax];
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)> DivElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, size_t m, size_t n, void* pvL, const void* pvR, size_t l)> DotElems[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
@@ -156,10 +160,15 @@ public:
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
 	bool InjectElems(Iterator& iterator, size_t offset = 0);
-	void InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len);
+	void InjectElems(const void* pvSrc, ElemTypeT& elemType, size_t offset, size_t len);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
+	static Array* AddElems(const Array& arrayL, const Array& arrayR);
+	static Array* SubElems(const Array& arrayL, const Array& arrayR);
+	static Array* MulElems(const Array& arrayL, const Array& arrayR);
+	static Array* DivElems(const Array& arrayL, const Array& arrayR);
+	static Array* DotElems(const Array& arrayL, const Array& arrayR);
 	Value_List* ToList() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
 public:
