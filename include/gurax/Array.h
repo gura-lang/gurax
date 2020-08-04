@@ -50,12 +50,15 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
-		std::function<bool (void* p, size_t idx, const Value& value)> IndexSet;
-		std::function<Value* (const void* p, size_t idx)> IndexGet;
+		std::function<bool (void* p, size_t idx, const Value& value)> IndexSetValue;
+		std::function<bool (void* p, size_t idx, Double num)> IndexSetDouble;
+		std::function<Value* (const void* p, size_t idx)> IndexGetValue;
+		std::function<Double (const void* p, size_t idx)> IndexGetDouble;
 		std::function<void (const ValueList& values, void* p, size_t offset, size_t len)> InjectFromValueList;
 		std::function<bool (Iterator& iterator, void* p, size_t offset, size_t len)> InjectFromIterator;
 		std::function<void (ValueOwner& values, const void* p, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pDst, const void* pSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
+		std::function<void (void* pRtn, void* pLeft, const void* pRight, size_t len)> AddElems[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
@@ -76,6 +79,22 @@ public:
 		static ElemTypeT Float;
 		static ElemTypeT Double;
 		static ElemTypeT Complex;
+	};
+	enum class ElemTypePrec {
+		None,
+		Bool,
+		Int8,
+		UInt8,
+		Int16,
+		UInt16,
+		Int32,
+		UInt32,
+		Int64,
+		UInt64,
+		Half,
+		Float,
+		Double,
+		Complex,
 	};
 	using MapSymbolToElemType = std::unordered_map<
 			const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
@@ -110,6 +129,7 @@ public:
 	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) {
 		return Create(elemType, DimSizes(l, m, n));
 	}
+	static Array* CreateIdentity(ElemTypeT& elemType, size_t n, Double mag);
 	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
@@ -120,11 +140,17 @@ public:
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
-	bool IndexSet(size_t idx, const Value& value) {
-		return _elemType.IndexSet(GetPointerC<void>(), idx, value);
+	bool IndexSetValue(size_t idx, const Value& value) {
+		return _elemType.IndexSetValue(GetPointerC<void>(), idx, value);
 	}
-	Value* IndexGet(size_t idx) const {
-		return _elemType.IndexGet(GetPointerC<void>(), idx);
+	bool IndexSetDouble(size_t idx, Double num) {
+		return _elemType.IndexSetDouble(GetPointerC<void>(), idx, num);
+	}
+	Value* IndexGetValue(size_t idx) const {
+		return _elemType.IndexGetValue(GetPointerC<void>(), idx);
+	}
+	Double IndexGetDouble(size_t idx) const {
+		return _elemType.IndexGetDouble(GetPointerC<void>(), idx);
 	}
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);

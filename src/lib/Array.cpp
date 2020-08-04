@@ -23,7 +23,15 @@ Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
 
-template<typename T_Elem> bool IndexSet_T(void* p, size_t idx, const Value& value)
+Array* Array::CreateIdentity(ElemTypeT& elemType, size_t n, Double mag)
+{
+	RefPtr<Array> pArray(Create2d(elemType, n, n));
+	size_t idx = 0;
+	for (size_t i = 0; i < n; i++, idx += n + 1) pArray->IndexSetDouble(idx, mag);
+	return pArray.release();
+}
+
+template<typename T_Elem> bool IndexSetValue_T(void* p, size_t idx, const Value& value)
 {
 	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
 	if (value.IsType(VTYPE_Number)) {
@@ -37,13 +45,13 @@ template<typename T_Elem> bool IndexSet_T(void* p, size_t idx, const Value& valu
 	return true;
 }
 
-template<> bool IndexSet_T<Bool>(void* p, size_t idx, const Value& value)
+template<> bool IndexSetValue_T<Bool>(void* p, size_t idx, const Value& value)
 {
 	*(reinterpret_cast<Bool*>(p) + idx) = value.GetBool();
 	return true;
 }
 
-template<> bool IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
+template<> bool IndexSetValue_T<Complex>(void* p, size_t idx, const Value& value)
 {
 	Complex* pElem = reinterpret_cast<Complex*>(p) + idx;
 	if (value.IsType(VTYPE_Number)) {
@@ -59,19 +67,54 @@ template<> bool IndexSet_T<Complex>(void* p, size_t idx, const Value& value)
 	return true;
 }
 
-template<typename T_Elem> Value* IndexGet_T(const void* p, size_t idx)
+template<typename T_Elem> bool IndexSetDouble_T(void* p, size_t idx, Double num)
+{
+	T_Elem* pElem = reinterpret_cast<T_Elem*>(p) + idx;
+	*pElem = static_cast<T_Elem>(num);
+	return true;
+}
+
+template<> bool IndexSetDouble_T<Bool>(void* p, size_t idx, Double num)
+{
+	*(reinterpret_cast<Bool*>(p) + idx) = (num > 0);
+	return true;
+}
+
+template<> bool IndexSetDouble_T<Complex>(void* p, size_t idx, Double num)
+{
+	Complex* pElem = reinterpret_cast<Complex*>(p) + idx;
+	*pElem = Complex(num);
+	return true;
+}
+
+template<typename T_Elem> Value* IndexGetValue_T(const void* p, size_t idx)
 {
 	return new Value_Number(*(reinterpret_cast<const T_Elem*>(p) + idx));
 }
 
-template<> Value* IndexGet_T<Bool>(const void* p, size_t idx)
+template<> Value* IndexGetValue_T<Bool>(const void* p, size_t idx)
 {
-	return new Value_Bool(!!*(reinterpret_cast<const Bool*>(p) + idx));
+	return new Value_Bool(*(reinterpret_cast<const Bool*>(p) + idx));
 }
 
-template<> Value* IndexGet_T<Complex>(const void* p, size_t idx)
+template<> Value* IndexGetValue_T<Complex>(const void* p, size_t idx)
 {
 	return new Value_Complex(*(reinterpret_cast<const Complex*>(p) + idx));
+}
+
+template<typename T_Elem> Double IndexGetDouble_T(const void* p, size_t idx)
+{
+	return static_cast<Double>(*(reinterpret_cast<const T_Elem*>(p) + idx));
+}
+
+template<> Double IndexGetDouble_T<Bool>(const void* p, size_t idx)
+{
+	return *(reinterpret_cast<const Bool*>(p) + idx)? 1. : 0.;
+}
+
+template<> Double IndexGetDouble_T<Complex>(const void* p, size_t idx)
+{
+	return 0.;
 }
 
 template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, void* p, size_t offset, size_t len)
@@ -172,6 +215,17 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 	}
 }
 
+template<typename T_ElemRtn, typename T_ElemLeft, typename T_ElemRight>
+void AddElems_T(void* pRtn, const void* pLeft, const void* pRight, size_t len)
+{
+	T_ElemRtn* pElemRtn = reinterpret_cast<T_ElemRtn*>(pRtn);
+	const T_ElemLeft* pElemLeft = reinterpret_cast<const T_ElemLeft*>(pLeft);
+	const T_ElemRight* pElemRight = reinterpret_cast<const T_ElemRight*>(pRight);
+	for (size_t i = 0; i < len; i++, pElemRtn++, pElemLeft++, pElemRight++) {
+		*pElemRtn = static_cast<T_ElemRtn>(*pElemLeft) + static_cast<T_ElemRtn>(*pElemRight);
+	}
+}
+
 #define SetFuncBurst(func, funcTmpl) do { \
 	Array::ElemType::Bool.func		= funcTmpl<Bool>; \
 	Array::ElemType::Int8.func		= funcTmpl<Int8>; \
@@ -188,7 +242,7 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 	Array::ElemType::Complex.func	= funcTmpl<Complex>; \
 } while (0)
 
-#define SetFuncBurstM_Sub(func, funcTmpl, elemTypeSub) do { \
+#define SetFuncBurst2_Sub(func, funcTmpl, elemTypeSub) do { \
 	Array::ElemType::Bool.func[ElemType::elemTypeSub.id]	= funcTmpl<Bool, elemTypeSub>; \
 	Array::ElemType::Int8.func[ElemType::elemTypeSub.id]	= funcTmpl<Int8, elemTypeSub>; \
 	Array::ElemType::UInt8.func[ElemType::elemTypeSub.id]	= funcTmpl<UInt8, elemTypeSub>; \
@@ -204,20 +258,192 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pDst, co
 	Array::ElemType::Complex.func[ElemType::elemTypeSub.id]	= funcTmpl<Complex, elemTypeSub>; \
 } while (0)
 
-#define SetFuncBurstM(func, funcTmpl) do { \
-	SetFuncBurstM_Sub(func, funcTmpl, Bool); \
-	SetFuncBurstM_Sub(func, funcTmpl, Int8); \
-	SetFuncBurstM_Sub(func, funcTmpl, UInt8); \
-	SetFuncBurstM_Sub(func, funcTmpl, Int16); \
-	SetFuncBurstM_Sub(func, funcTmpl, UInt16); \
-	SetFuncBurstM_Sub(func, funcTmpl, Int32); \
-	SetFuncBurstM_Sub(func, funcTmpl, UInt32); \
-	SetFuncBurstM_Sub(func, funcTmpl, Int64); \
-	SetFuncBurstM_Sub(func, funcTmpl, UInt64); \
-	SetFuncBurstM_Sub(func, funcTmpl, Half); \
-	SetFuncBurstM_Sub(func, funcTmpl, Float); \
-	SetFuncBurstM_Sub(func, funcTmpl, Double); \
-	SetFuncBurstM_Sub(func, funcTmpl, Complex); \
+#define SetFuncBurst2(func, funcTmpl) do { \
+	SetFuncBurst2_Sub(func, funcTmpl, Bool); \
+	SetFuncBurst2_Sub(func, funcTmpl, Int8); \
+	SetFuncBurst2_Sub(func, funcTmpl, UInt8); \
+	SetFuncBurst2_Sub(func, funcTmpl, Int16); \
+	SetFuncBurst2_Sub(func, funcTmpl, UInt16); \
+	SetFuncBurst2_Sub(func, funcTmpl, Int32); \
+	SetFuncBurst2_Sub(func, funcTmpl, UInt32); \
+	SetFuncBurst2_Sub(func, funcTmpl, Int64); \
+	SetFuncBurst2_Sub(func, funcTmpl, UInt64); \
+	SetFuncBurst2_Sub(func, funcTmpl, Half); \
+	SetFuncBurst2_Sub(func, funcTmpl, Float); \
+	SetFuncBurst2_Sub(func, funcTmpl, Double); \
+	SetFuncBurst2_Sub(func, funcTmpl, Complex); \
+} while (0)
+
+#define SetFuncBurst3(func, funcTmpl) do { \
+	Array::ElemType::Bool.func[ElemType::Bool.id]		= funcTmpl<Bool, Bool, Bool>; \
+	Array::ElemType::Int8.func[ElemType::Bool.id]		= funcTmpl<Int8, Int8, Bool>; \
+	Array::ElemType::UInt8.func[ElemType::Bool.id]		= funcTmpl<UInt8, UInt8, Bool>; \
+	Array::ElemType::Int16.func[ElemType::Bool.id]		= funcTmpl<Int16, Int16, Bool>; \
+	Array::ElemType::UInt16.func[ElemType::Bool.id]		= funcTmpl<UInt16, UInt16, Bool>; \
+	Array::ElemType::Int32.func[ElemType::Bool.id]		= funcTmpl<Int32, Int32, Bool>; \
+	Array::ElemType::UInt32.func[ElemType::Bool.id]		= funcTmpl<UInt32, UInt32, Bool>; \
+	Array::ElemType::Int64.func[ElemType::Bool.id]		= funcTmpl<Int64, Int64, Bool>; \
+	Array::ElemType::UInt64.func[ElemType::Bool.id]		= funcTmpl<UInt64, UInt64, Bool>; \
+	Array::ElemType::Half.func[ElemType::Bool.id]		= funcTmpl<Half, Half, Bool>; \
+	Array::ElemType::Float.func[ElemType::Bool.id]		= funcTmpl<Float, Float, Bool>; \
+	Array::ElemType::Double.func[ElemType::Bool.id]		= funcTmpl<Double, Double, Bool>; \
+	Array::ElemType::Complex.func[ElemType::Bool.id]	= funcTmpl<Complex, Complex, Bool>; \
+	Array::ElemType::Bool.func[ElemType::Int8.id]		= funcTmpl<Int8, Bool, Int8>; \
+	Array::ElemType::Int8.func[ElemType::Int8.id]		= funcTmpl<Int8, Int8, Int8>; \
+	Array::ElemType::UInt8.func[ElemType::Int8.id]		= funcTmpl<UInt8, UInt8, Int8>; \
+	Array::ElemType::Int16.func[ElemType::Int8.id]		= funcTmpl<Int16, Int16, Int8>; \
+	Array::ElemType::UInt16.func[ElemType::Int8.id]		= funcTmpl<UInt16, UInt16, Int8>; \
+	Array::ElemType::Int32.func[ElemType::Int8.id]		= funcTmpl<Int32, Int32, Int8>; \
+	Array::ElemType::UInt32.func[ElemType::Int8.id]		= funcTmpl<UInt32, UInt32, Int8>; \
+	Array::ElemType::Int64.func[ElemType::Int8.id]		= funcTmpl<Int64, Int64, Int8>; \
+	Array::ElemType::UInt64.func[ElemType::Int8.id]		= funcTmpl<UInt64, UInt64, Int8>; \
+	Array::ElemType::Half.func[ElemType::Int8.id]		= funcTmpl<Half, Half, Int8>; \
+	Array::ElemType::Float.func[ElemType::Int8.id]		= funcTmpl<Float, Float, Int8>; \
+	Array::ElemType::Double.func[ElemType::Int8.id]		= funcTmpl<Double, Double, Int8>; \
+	Array::ElemType::Complex.func[ElemType::Int8.id]	= funcTmpl<Complex, Complex, Int8>; \
+	Array::ElemType::Bool.func[ElemType::UInt8.id]		= funcTmpl<Bool, Bool, UInt8>; \
+	Array::ElemType::Int8.func[ElemType::UInt8.id]		= funcTmpl<Int8, Int8, UInt8>; \
+	Array::ElemType::UInt8.func[ElemType::UInt8.id]		= funcTmpl<UInt8, UInt8, UInt8>; \
+	Array::ElemType::Int16.func[ElemType::UInt8.id]		= funcTmpl<Int16, Int16, UInt8>; \
+	Array::ElemType::UInt16.func[ElemType::UInt8.id]	= funcTmpl<UInt16, UInt16, UInt8>; \
+	Array::ElemType::Int32.func[ElemType::UInt8.id]		= funcTmpl<Int32, Int32, UInt8>; \
+	Array::ElemType::UInt32.func[ElemType::UInt8.id]	= funcTmpl<UInt32, UInt32, UInt8>; \
+	Array::ElemType::Int64.func[ElemType::UInt8.id]		= funcTmpl<Int64, Int64, UInt8>; \
+	Array::ElemType::UInt64.func[ElemType::UInt8.id]	= funcTmpl<UInt64, UInt64, UInt8>; \
+	Array::ElemType::Half.func[ElemType::UInt8.id]		= funcTmpl<Half, Half, UInt8>; \
+	Array::ElemType::Float.func[ElemType::UInt8.id]		= funcTmpl<Float, Float, UInt8>; \
+	Array::ElemType::Double.func[ElemType::UInt8.id]	= funcTmpl<Double, Double, UInt8>; \
+	Array::ElemType::Complex.func[ElemType::UInt8.id]	= funcTmpl<Complex, Complex, UInt8>; \
+	Array::ElemType::Bool.func[ElemType::Int16.id]		= funcTmpl<Bool, Bool, Int16>; \
+	Array::ElemType::Int8.func[ElemType::Int16.id]		= funcTmpl<Int8, Int8, Int16>; \
+	Array::ElemType::UInt8.func[ElemType::Int16.id]		= funcTmpl<UInt8, UInt8, Int16>; \
+	Array::ElemType::Int16.func[ElemType::Int16.id]		= funcTmpl<Int16, Int16, Int16>; \
+	Array::ElemType::UInt16.func[ElemType::Int16.id]	= funcTmpl<UInt16, UInt16, Int16>; \
+	Array::ElemType::Int32.func[ElemType::Int16.id]		= funcTmpl<Int32, Int32, Int16>; \
+	Array::ElemType::UInt32.func[ElemType::Int16.id]	= funcTmpl<UInt32, UInt32, Int16>; \
+	Array::ElemType::Int64.func[ElemType::Int16.id]		= funcTmpl<Int64, Int64, Int16>; \
+	Array::ElemType::UInt64.func[ElemType::Int16.id]	= funcTmpl<UInt64, UInt64, Int16>; \
+	Array::ElemType::Half.func[ElemType::Int16.id]		= funcTmpl<Half, Half, Int16>; \
+	Array::ElemType::Float.func[ElemType::Int16.id]		= funcTmpl<Float, Float, Int16>; \
+	Array::ElemType::Double.func[ElemType::Int16.id]	= funcTmpl<Double, Double, Int16>; \
+	Array::ElemType::Complex.func[ElemType::Int16.id]	= funcTmpl<Complex, Complex, Int16>; \
+	Array::ElemType::Bool.func[ElemType::UInt16.id]		= funcTmpl<Bool, Bool, UInt16>; \
+	Array::ElemType::Int8.func[ElemType::UInt16.id]		= funcTmpl<Int8, Int8, UInt16>; \
+	Array::ElemType::UInt8.func[ElemType::UInt16.id]	= funcTmpl<UInt8, UInt8, UInt16>; \
+	Array::ElemType::Int16.func[ElemType::UInt16.id]	= funcTmpl<Int16, Int16, UInt16>; \
+	Array::ElemType::UInt16.func[ElemType::UInt16.id]	= funcTmpl<UInt16, UInt16, UInt16>; \
+	Array::ElemType::Int32.func[ElemType::UInt16.id]	= funcTmpl<Int32, Int32, UInt16>; \
+	Array::ElemType::UInt32.func[ElemType::UInt16.id]	= funcTmpl<UInt32, UInt32, UInt16>; \
+	Array::ElemType::Int64.func[ElemType::UInt16.id]	= funcTmpl<Int64, Int64, UInt16>; \
+	Array::ElemType::UInt64.func[ElemType::UInt16.id]	= funcTmpl<UInt64, UInt64, UInt16>; \
+	Array::ElemType::Half.func[ElemType::UInt16.id]		= funcTmpl<Half, Half, UInt16>; \
+	Array::ElemType::Float.func[ElemType::UInt16.id]	= funcTmpl<Float, Float, UInt16>; \
+	Array::ElemType::Double.func[ElemType::UInt16.id]	= funcTmpl<Double, Double, UInt16>; \
+	Array::ElemType::Complex.func[ElemType::UInt16.id]	= funcTmpl<Complex, Complex, UInt16>; \
+	Array::ElemType::Bool.func[ElemType::Int32.id]		= funcTmpl<Bool, Bool, Int32>; \
+	Array::ElemType::Int8.func[ElemType::Int32.id]		= funcTmpl<Int8, Int8, Int32>; \
+	Array::ElemType::UInt8.func[ElemType::Int32.id]		= funcTmpl<UInt8, UInt8, Int32>; \
+	Array::ElemType::Int16.func[ElemType::Int32.id]		= funcTmpl<Int16, Int16, Int32>; \
+	Array::ElemType::UInt16.func[ElemType::Int32.id]	= funcTmpl<UInt16, UInt16, Int32>; \
+	Array::ElemType::Int32.func[ElemType::Int32.id]		= funcTmpl<Int32, Int32, Int32>; \
+	Array::ElemType::UInt32.func[ElemType::Int32.id]	= funcTmpl<UInt32, UInt32, Int32>; \
+	Array::ElemType::Int64.func[ElemType::Int32.id]		= funcTmpl<Int64, Int64, Int32>; \
+	Array::ElemType::UInt64.func[ElemType::Int32.id]	= funcTmpl<UInt64, UInt64, Int32>; \
+	Array::ElemType::Half.func[ElemType::Int32.id]		= funcTmpl<Half, Half, Int32>; \
+	Array::ElemType::Float.func[ElemType::Int32.id]		= funcTmpl<Float, Float, Int32>; \
+	Array::ElemType::Double.func[ElemType::Int32.id]	= funcTmpl<Double, Double, Int32>; \
+	Array::ElemType::Complex.func[ElemType::Int32.id]	= funcTmpl<Complex, Complex, Int32>; \
+	Array::ElemType::Bool.func[ElemType::UInt32.id]		= funcTmpl<Bool, Bool, UInt32>; \
+	Array::ElemType::Int8.func[ElemType::UInt32.id]		= funcTmpl<Int8, Int8, UInt32>; \
+	Array::ElemType::UInt8.func[ElemType::UInt32.id]	= funcTmpl<UInt8, UInt8, UInt32>; \
+	Array::ElemType::Int16.func[ElemType::UInt32.id]	= funcTmpl<Int16, Int16, UInt32>; \
+	Array::ElemType::UInt16.func[ElemType::UInt32.id]	= funcTmpl<UInt16, UInt16, UInt32>; \
+	Array::ElemType::Int32.func[ElemType::UInt32.id]	= funcTmpl<Int32, Int32, UInt32>; \
+	Array::ElemType::UInt32.func[ElemType::UInt32.id]	= funcTmpl<UInt32, UInt32, UInt32>; \
+	Array::ElemType::Int64.func[ElemType::UInt32.id]	= funcTmpl<Int64, Int64, UInt32>; \
+	Array::ElemType::UInt64.func[ElemType::UInt32.id]	= funcTmpl<UInt64, UInt64, UInt32>; \
+	Array::ElemType::Half.func[ElemType::UInt32.id]		= funcTmpl<Half, Half, UInt32>; \
+	Array::ElemType::Float.func[ElemType::UInt32.id]	= funcTmpl<Float, Float, UInt32>; \
+	Array::ElemType::Double.func[ElemType::UInt32.id]	= funcTmpl<Double, Double, UInt32>; \
+	Array::ElemType::Complex.func[ElemType::UInt32.id]	= funcTmpl<Complex, Complex, UInt32>; \
+	Array::ElemType::Bool.func[ElemType::Int64.id]		= funcTmpl<Bool, Bool, Int64>; \
+	Array::ElemType::Int8.func[ElemType::Int64.id]		= funcTmpl<Int8, Int8, Int64>; \
+	Array::ElemType::UInt8.func[ElemType::Int64.id]		= funcTmpl<UInt8, UInt8, Int64>; \
+	Array::ElemType::Int16.func[ElemType::Int64.id]		= funcTmpl<Int16, Int16, Int64>; \
+	Array::ElemType::UInt16.func[ElemType::Int64.id]	= funcTmpl<UInt16, UInt16, Int64>; \
+	Array::ElemType::Int32.func[ElemType::Int64.id]		= funcTmpl<Int32, Int32, Int64>; \
+	Array::ElemType::UInt32.func[ElemType::Int64.id]	= funcTmpl<UInt32, UInt32, Int64>; \
+	Array::ElemType::Int64.func[ElemType::Int64.id]		= funcTmpl<Int64, Int64, Int64>; \
+	Array::ElemType::UInt64.func[ElemType::Int64.id]	= funcTmpl<UInt64, UInt64, Int64>; \
+	Array::ElemType::Half.func[ElemType::Int64.id]		= funcTmpl<Half, Half, Int64>; \
+	Array::ElemType::Float.func[ElemType::Int64.id]		= funcTmpl<Float, Float, Int64>; \
+	Array::ElemType::Double.func[ElemType::Int64.id]	= funcTmpl<Double, Double, Int64>; \
+	Array::ElemType::Complex.func[ElemType::Int64.id]	= funcTmpl<Complex, Complex, Int64>; \
+	Array::ElemType::Bool.func[ElemType::UInt64.id]		= funcTmpl<Bool, Bool, UInt64>; \
+	Array::ElemType::Int8.func[ElemType::UInt64.id]		= funcTmpl<Int8, Int8, UInt64>; \
+	Array::ElemType::UInt8.func[ElemType::UInt64.id]	= funcTmpl<UInt8, UInt8, UInt64>; \
+	Array::ElemType::Int16.func[ElemType::UInt64.id]	= funcTmpl<Int16, Int16, UInt64>; \
+	Array::ElemType::UInt16.func[ElemType::UInt64.id]	= funcTmpl<UInt16, UInt16, UInt64>; \
+	Array::ElemType::Int32.func[ElemType::UInt64.id]	= funcTmpl<Int32, Int32, UInt64>; \
+	Array::ElemType::UInt32.func[ElemType::UInt64.id]	= funcTmpl<UInt32, UInt32, UInt64>; \
+	Array::ElemType::Int64.func[ElemType::UInt64.id]	= funcTmpl<Int64, Int64, UInt64>; \
+	Array::ElemType::UInt64.func[ElemType::UInt64.id]	= funcTmpl<UInt64, UInt64, UInt64>; \
+	Array::ElemType::Half.func[ElemType::UInt64.id]		= funcTmpl<Half, Half, UInt64>; \
+	Array::ElemType::Float.func[ElemType::UInt64.id]	= funcTmpl<Float, Float, UInt64>; \
+	Array::ElemType::Double.func[ElemType::UInt64.id]	= funcTmpl<Double, Double, UInt64>; \
+	Array::ElemType::Complex.func[ElemType::UInt64.id]	= funcTmpl<Complex, Complex, UInt64>; \
+	Array::ElemType::Bool.func[ElemType::Half.id]		= funcTmpl<Bool, Bool, Half>; \
+	Array::ElemType::Int8.func[ElemType::Half.id]		= funcTmpl<Int8, Int8, Half>; \
+	Array::ElemType::UInt8.func[ElemType::Half.id]		= funcTmpl<UInt8, UInt8, Half>; \
+	Array::ElemType::Int16.func[ElemType::Half.id]		= funcTmpl<Int16, Int16, Half>; \
+	Array::ElemType::UInt16.func[ElemType::Half.id]		= funcTmpl<UInt16, UInt16, Half>; \
+	Array::ElemType::Int32.func[ElemType::Half.id]		= funcTmpl<Int32, Int32, Half>; \
+	Array::ElemType::UInt32.func[ElemType::Half.id]		= funcTmpl<UInt32, UInt32, Half>; \
+	Array::ElemType::Int64.func[ElemType::Half.id]		= funcTmpl<Int64, Int64, Half>; \
+	Array::ElemType::UInt64.func[ElemType::Half.id]		= funcTmpl<UInt64, UInt64, Half>; \
+	Array::ElemType::Half.func[ElemType::Half.id]		= funcTmpl<Half, Half, Half>; \
+	Array::ElemType::Float.func[ElemType::Half.id]		= funcTmpl<Float, Float, Half>; \
+	Array::ElemType::Double.func[ElemType::Half.id]		= funcTmpl<Double, Double, Half>; \
+	Array::ElemType::Complex.func[ElemType::Half.id]	= funcTmpl<Complex, Complex, Half>; \
+	Array::ElemType::Bool.func[ElemType::Float.id]		= funcTmpl<Bool, Bool, Float>; \
+	Array::ElemType::Int8.func[ElemType::Float.id]		= funcTmpl<Int8, Int8, Float>; \
+	Array::ElemType::UInt8.func[ElemType::Float.id]		= funcTmpl<UInt8, UInt8, Float>; \
+	Array::ElemType::Int16.func[ElemType::Float.id]		= funcTmpl<Int16, Int16, Float>; \
+	Array::ElemType::UInt16.func[ElemType::Float.id]	= funcTmpl<UInt16, UInt16, Float>; \
+	Array::ElemType::Int32.func[ElemType::Float.id]		= funcTmpl<Int32, Int32, Float>; \
+	Array::ElemType::UInt32.func[ElemType::Float.id]	= funcTmpl<UInt32, UInt32, Float>; \
+	Array::ElemType::Int64.func[ElemType::Float.id]		= funcTmpl<Int64, Int64, Float>; \
+	Array::ElemType::UInt64.func[ElemType::Float.id]	= funcTmpl<UInt64, UInt64, Float>; \
+	Array::ElemType::Half.func[ElemType::Float.id]		= funcTmpl<Half, Half, Float>; \
+	Array::ElemType::Float.func[ElemType::Float.id]		= funcTmpl<Float, Float, Float>; \
+	Array::ElemType::Double.func[ElemType::Float.id]	= funcTmpl<Double, Double, Float>; \
+	Array::ElemType::Complex.func[ElemType::Float.id]	= funcTmpl<Complex, Complex, Float>; \
+	Array::ElemType::Bool.func[ElemType::Double.id]		= funcTmpl<Bool, Bool, Double>; \
+	Array::ElemType::Int8.func[ElemType::Double.id]		= funcTmpl<Int8, Int8, Double>; \
+	Array::ElemType::UInt8.func[ElemType::Double.id]	= funcTmpl<UInt8, UInt8, Double>; \
+	Array::ElemType::Int16.func[ElemType::Double.id]	= funcTmpl<Int16, Int16, Double>; \
+	Array::ElemType::UInt16.func[ElemType::Double.id]	= funcTmpl<UInt16, UInt16, Double>; \
+	Array::ElemType::Int32.func[ElemType::Double.id]	= funcTmpl<Int32, Int32, Double>; \
+	Array::ElemType::UInt32.func[ElemType::Double.id]	= funcTmpl<UInt32, UInt32, Double>; \
+	Array::ElemType::Int64.func[ElemType::Double.id]	= funcTmpl<Int64, Int64, Double>; \
+	Array::ElemType::UInt64.func[ElemType::Double.id]	= funcTmpl<UInt64, UInt64, Double>; \
+	Array::ElemType::Half.func[ElemType::Double.id]		= funcTmpl<Half, Half, Double>; \
+	Array::ElemType::Float.func[ElemType::Double.id]	= funcTmpl<Float, Float, Double>; \
+	Array::ElemType::Double.func[ElemType::Double.id]	= funcTmpl<Double, Double, Double>; \
+	Array::ElemType::Complex.func[ElemType::Double.id]	= funcTmpl<Complex, Complex, Double>; \
+	Array::ElemType::Bool.func[ElemType::Complex.id]	= funcTmpl<Bool, Bool, Complex>; \
+	Array::ElemType::Int8.func[ElemType::Complex.id]	= funcTmpl<Int8, Int8, Complex>; \
+	Array::ElemType::UInt8.func[ElemType::Complex.id]	= funcTmpl<UInt8, UInt8, Complex>; \
+	Array::ElemType::Int16.func[ElemType::Complex.id]	= funcTmpl<Int16, Int16, Complex>; \
+	Array::ElemType::UInt16.func[ElemType::Complex.id]	= funcTmpl<UInt16, UInt16, Complex>; \
+	Array::ElemType::Int32.func[ElemType::Complex.id]	= funcTmpl<Int32, Int32, Complex>; \
+	Array::ElemType::UInt32.func[ElemType::Complex.id]	= funcTmpl<UInt32, UInt32, Complex>; \
+	Array::ElemType::Int64.func[ElemType::Complex.id]	= funcTmpl<Int64, Int64, Complex>; \
+	Array::ElemType::UInt64.func[ElemType::Complex.id]	= funcTmpl<UInt64, UInt64, Complex>; \
+	Array::ElemType::Half.func[ElemType::Complex.id]	= funcTmpl<Half, Half, Complex>; \
+	Array::ElemType::Float.func[ElemType::Complex.id]	= funcTmpl<Float, Float, Complex>; \
+	Array::ElemType::Double.func[ElemType::Complex.id]	= funcTmpl<Double, Double, Complex>; \
+	Array::ElemType::Complex.func[ElemType::Complex.id]	= funcTmpl<Complex, Complex, Complex>; \
 } while (0)
 
 void Array::Bootup()
@@ -275,12 +501,15 @@ void Array::Bootup()
 	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
-	SetFuncBurst(IndexSet,				IndexSet_T);
-	SetFuncBurst(IndexGet,				IndexGet_T);
+	SetFuncBurst(IndexSetValue,			IndexSetValue_T);
+	SetFuncBurst(IndexGetValue,			IndexGetValue_T);
+	SetFuncBurst(IndexSetDouble,		IndexSetDouble_T);
+	SetFuncBurst(IndexGetDouble,		IndexGetDouble_T);
 	SetFuncBurst(InjectFromValueList,	InjectFromValueList_T);
 	SetFuncBurst(InjectFromIterator,	InjectFromIterator_T);
 	SetFuncBurst(ExtractToValueOwner,	ExtractToValueOwner_T);
-	SetFuncBurstM(CopyElems,			CopyElems_T);
+	SetFuncBurst2(CopyElems,			CopyElems_T);
+	SetFuncBurst3(AddElems,				AddElems_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)

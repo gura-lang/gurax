@@ -101,6 +101,37 @@ Gurax_ImplementFunction(ConstructArray)
 }
 
 //-----------------------------------------------------------------------------
+// Implementation of class method
+//-----------------------------------------------------------------------------
+// Array.Identity(elemType:Symbol, n:Number)
+Gurax_DeclareClassMethod(Array, Identity)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(Array, Identity)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
+		return Value::nil();
+	}
+	Int n = args.PickNumberPos<Int>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Array> pArray(Array::CreateIdentity(elemType, n, 1.));
+	return new Value_Array(pArray.release());
+}
+
+
+//-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
 // Array#Cast(elemType:Symbol) {block?}
@@ -347,6 +378,8 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@uint"));
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@long"));
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@ulong"));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Array, Identity));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
@@ -369,7 +402,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 Value* VType_Array::Iterator_Each::DoNextValue()
 {
 	if (_idx >= _len) return nullptr;
-	RefPtr<Value> pValue(_pArray->IndexGet(_idx));
+	RefPtr<Value> pValue(_pArray->IndexGetValue(_idx));
 	_idx++;
 	return pValue.release();
 }
@@ -420,7 +453,7 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 		idxMult *= *pDimSize;
 		pDimSize++;
 	}
-	return array.IndexGet(idx);
+	return array.IndexGetValue(idx);
 }
 
 void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
@@ -454,7 +487,7 @@ void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 		idxMult *= *pDimSize;
 		pDimSize++;
 	}
-	array.IndexSet(idx, *pValue);
+	array.IndexSetValue(idx, *pValue);
 }
 
 }
