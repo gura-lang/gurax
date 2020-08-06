@@ -242,7 +242,7 @@ Array::Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
 
 Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
 {
-	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.GetLength()));
+	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.CalcLength()));
 	pMemory->Fill(0);
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
@@ -756,7 +756,7 @@ void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 
 void Array::InjectElems(ValueList& values, size_t offset)
 {
-	InjectElems(values, offset, std::min(values.size(), _dimSizes.GetLength() - offset));
+	InjectElems(values, offset, std::min(values.size(), _dimSizes.CalcLength() - offset));
 }
 
 bool Array::InjectElems(Iterator& iterator, size_t offset, size_t len)
@@ -766,7 +766,7 @@ bool Array::InjectElems(Iterator& iterator, size_t offset, size_t len)
 
 bool Array::InjectElems(Iterator& iterator, size_t offset)
 {
-	return InjectElems(iterator, offset, _dimSizes.GetLength() - offset);
+	return InjectElems(iterator, offset, _dimSizes.CalcLength() - offset);
 }
 void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
 {
@@ -802,10 +802,13 @@ void Array::ExtractElems(ValueOwner& values) const
 
 Array* Array::AddElems(const Array& arrayL, const Array& arrayR)
 {
-	//RefPtr<Array> pArrayRtn(Create(
+	const DimSizes* pDimSizes = &arrayL.GetDimSizes();
+
+
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizes));
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	size_t len = arrayL.GetDimSizes().GetLength();
+	size_t len = arrayL.GetDimSizes().CalcLength();
 	void* pvRtn = nullptr;
 	arrayL.GetElemType().AddElems[arrayR.GetElemType().id](pvRtn, pvL, pvR, len);
 	return nullptr;
@@ -842,7 +845,7 @@ Value_List* Array::ToList() const
 Array* Array::CreateCasted(ElemTypeT& elemType) const
 {
 	RefPtr<Array> pArray(Array::Create(elemType, _dimSizes));
-	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.GetLength());
+	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.CalcLength());
 	return pArray.release();
 }
 
@@ -878,10 +881,10 @@ bool Array::ElemTypeT::IsNone() const
 //------------------------------------------------------------------------------
 // DimSizes
 //------------------------------------------------------------------------------
-size_t DimSizes::GetLength() const
+size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd)
 {
 	size_t len = 1;
-	for (size_t dimSize : *this) len *= dimSize;
+	for (auto pDimSize = pDimSizeBegin; pDimSize != pDimSizeEnd; pDimSize++) len *= *pDimSize;
 	return len;
 }
 

@@ -142,7 +142,7 @@ DimSizes ValueList::GetShape() const
 Array* ValueList::CreateArray(Array::ElemTypeT& elemType) const
 {
 	DimSizes dimSizes = GetShape();
-	if (dimSizes.GetLength() == 0) {
+	if (dimSizes.CalcLength() == 0) {
 		Error::Issue(ErrorType::ValueError, "failed to create an array");
 		return nullptr;
 	}

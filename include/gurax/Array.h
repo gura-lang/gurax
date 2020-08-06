@@ -31,7 +31,8 @@ public:
 		reserve(3); push_back(l); push_back(m); push_back(n);
 	}
 public:
-	size_t GetLength() const;
+	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
+	size_t CalcLength() const { return CalcLength(begin(), end()); }
 	String ToString(const StringStyle& ss) const;
 };
 
@@ -180,8 +181,11 @@ public:
 		return *_mapAtSymbolToElemType.find(pSymbol)->second;
 	}
 public:
-	ElemTypeT& GetElemTypeRtn(ElemTypeT& elemTypeL, ElemTypeT& elemTypeR) {
+	static ElemTypeT& GetElemTypeRtn(ElemTypeT& elemTypeL, ElemTypeT& elemTypeR) {
 		return *_pElemTypeRtnTbl[elemTypeL.id][elemTypeR.id];
+	}
+	static ElemTypeT& GetElemTypeRtn(const Array& arrayL, const Array& arrayR) {
+		return GetElemTypeRtn(arrayL.GetElemType(), arrayR.GetElemType());
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

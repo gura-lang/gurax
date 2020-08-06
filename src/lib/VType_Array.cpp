@@ -242,7 +242,7 @@ Gurax_ImplementMethod(Array, ToString)
 	// Function body
 	Array& array = valueThis.GetArray();
 	String str;
-	codec.GetDecoder().Decode(str, array.GetPointerC<UInt8>(), array.GetDimSizes().GetLength());
+	codec.GetDecoder().Decode(str, array.GetPointerC<UInt8>(), array.GetDimSizes().CalcLength());
 	return new Value_String(str);
 }
 
@@ -307,7 +307,7 @@ Gurax_DeclareProperty_R(Array, len)
 Gurax_ImplementPropertyGetter(Array, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetArray().GetDimSizes().GetLength());
+	return new Value_Number(valueThis.GetArray().GetDimSizes().CalcLength());
 }
 
 // Array#p

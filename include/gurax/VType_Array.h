@@ -20,7 +20,7 @@ public:
 		size_t _len;
 	public:
 		Iterator_Each(Array* pArray) : _pArray(pArray),
-					_idx(0), _len(pArray->GetDimSizes().GetLength()) {}
+					_idx(0), _len(pArray->GetDimSizes().CalcLength()) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override {
