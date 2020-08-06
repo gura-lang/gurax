@@ -107,6 +107,7 @@ protected:
 	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
 protected:
+	static ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 protected:
@@ -177,6 +178,10 @@ public:
 	}
 	static ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol) {
 		return *_mapAtSymbolToElemType.find(pSymbol)->second;
+	}
+public:
+	ElemTypeT& GetElemTypeRtn(ElemTypeT& elemTypeL, ElemTypeT& elemTypeR) {
+		return *_pElemTypeRtnTbl[elemTypeL.id][elemTypeR.id];
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
