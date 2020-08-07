@@ -346,6 +346,49 @@ Gurax_ImplementPropertyGetter(Array, shape)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Array + Array
+Gurax_ImplementOpBinary(Add, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Add(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array - Array
+Gurax_ImplementOpBinary(Sub, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Sub(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array * Array
+Gurax_ImplementOpBinary(Mul, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Mul(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array / Array
+Gurax_ImplementOpBinary(Div, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Div(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_Array
 //------------------------------------------------------------------------------
 VType_Array VTYPE_Array("Array");
@@ -393,6 +436,11 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, len));
 	Assign(Gurax_CreateProperty(Array, p));
 	Assign(Gurax_CreateProperty(Array, shape));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Add,	Array, Array);
+	Gurax_AssignOpBinary(Sub,	Array, Array);
+	Gurax_AssignOpBinary(Mul,	Array, Array);
+	Gurax_AssignOpBinary(Div,	Array, Array);
 }
 
 //------------------------------------------------------------------------------

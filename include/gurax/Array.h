@@ -33,6 +33,8 @@ public:
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
+	bool DoesMatch(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd) const;
+	bool DoesMatch(const DimSizes& dimSizes) const { return DoesMatch(dimSizes.begin(), dimSizes.end()); }
 	String ToString(const StringStyle& ss) const;
 };
 
@@ -59,15 +61,17 @@ public:
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)> InjectFromIterator;
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> AddElems[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> SubElems[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> MulElems[ElemTypeIdMax];
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)> DivElems[ElemTypeIdMax];
-		std::function<void (void* pvRtn, size_t m, size_t n, void* pvL, const void* pvR, size_t l)> DotElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Add_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Sub_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Mul_ArrayArray[ElemTypeIdMax];
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Div_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, size_t m, size_t n, void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
+		void* FwdPointer(void* pv, int n) const { return reinterpret_cast<char*>(pv) + n * bytes; }
+		const void* FwdPointer(const void* pv, int n) const { return FwdPointer(const_cast<void*>(pv), n); }
 	};
 	struct GURAX_DLLDECLARE ElemType {
 		static ElemTypeT None;
@@ -166,13 +170,19 @@ public:
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
-	static Array* AddElems(const Array& arrayL, const Array& arrayR);
-	static Array* SubElems(const Array& arrayL, const Array& arrayR);
-	static Array* MulElems(const Array& arrayL, const Array& arrayR);
-	static Array* DivElems(const Array& arrayL, const Array& arrayR);
-	static Array* DotElems(const Array& arrayL, const Array& arrayR);
+public:
+	static Array* GenericOp(const Array& arrayL, const Array& arrayR,
+		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
+	static Array* Add(const Array& arrayL, const Array& arrayR);
+	static Array* Sub(const Array& arrayL, const Array& arrayR);
+	static Array* Mul(const Array& arrayL, const Array& arrayR);
+	static Array* Div(const Array& arrayL, const Array& arrayR);
+	static Array* Dot(const Array& arrayL, const Array& arrayR);
+public:
 	Value_List* ToList() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
+	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
+	const void* FwdPointer(const void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 public:
 	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *_mapSymbolToElemType.find(pSymbol)->second;

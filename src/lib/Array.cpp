@@ -440,7 +440,7 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pvDst, c
 }
 
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
-void AddElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+void Add_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
@@ -451,7 +451,7 @@ void AddElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 }
 
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
-void SubElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+void Sub_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
@@ -462,7 +462,7 @@ void SubElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 }
 
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
-void MulElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+void Mul_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
@@ -473,7 +473,7 @@ void MulElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 }
 
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
-bool DivElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
@@ -491,7 +491,7 @@ bool DivElems_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 
 // [m, n] = dot([m, l], [l, n])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
-void DotElems_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
+void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
@@ -742,11 +742,11 @@ void Array::Bootup()
 	SetFuncBurst(InjectFromIterator,	InjectFromIterator_T);
 	SetFuncBurst(ExtractToValueOwner,	ExtractToValueOwner_T);
 	SetFuncBurst2(CopyElems,			CopyElems_T);
-	SetFuncBurst3(AddElems,				AddElems_T);
-	SetFuncBurst3(SubElems,				SubElems_T);
-	SetFuncBurst3(MulElems,				MulElems_T);
-	SetFuncBurst3(DivElems,				DivElems_T);
-	SetFuncBurst3(DotElems,				DotElems_T);
+	SetFuncBurst3(Add_ArrayArray,		Add_ArrayArray_T);
+	SetFuncBurst3(Sub_ArrayArray,		Sub_ArrayArray_T);
+	SetFuncBurst3(Mul_ArrayArray,		Mul_ArrayArray_T);
+	SetFuncBurst3(Div_ArrayArray,		Div_ArrayArray_T);
+	SetFuncBurst3(Dot_ArrayArray,		Dot_ArrayArray_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
@@ -768,6 +768,7 @@ bool Array::InjectElems(Iterator& iterator, size_t offset)
 {
 	return InjectElems(iterator, offset, _dimSizes.CalcLength() - offset);
 }
+
 void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
 {
 	_elemType.CopyElems[elemType.id](GetPointerC<void>(), pSrc, offset, len);
@@ -800,36 +801,69 @@ void Array::ExtractElems(ValueOwner& values) const
 	ExtractElemsSub(values, offset, _dimSizes.begin());
 }
 
-Array* Array::AddElems(const Array& arrayL, const Array& arrayR)
+Array* Array::GenericOp(const Array& arrayL, const Array& arrayR,
+	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func)
 {
-	const DimSizes* pDimSizes = &arrayL.GetDimSizes();
-
-
-	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizes));
+	size_t nUnits = 1;
+	size_t lenUnit = 0;;
+	size_t lenFwdL = 0, lenFwdR = 0;
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	const DimSizes* pDimSizesRtn = nullptr;;
+	bool matchFlag = false;
+	if (dimSizesL.size() >= dimSizesR.size()) {
+		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
+		nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		lenUnit = dimSizesR.CalcLength();
+		lenFwdL = lenUnit, lenFwdR = 0;
+		pDimSizesRtn = &dimSizesL;
+		matchFlag = dimSizesR.DoesMatch(dimSizesL.begin() + nDimsHead, dimSizesL.end());
+	} else {
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		lenUnit = dimSizesL.CalcLength();
+		lenFwdL = 0, lenFwdR = lenUnit;
+		pDimSizesRtn = &dimSizesR;
+		matchFlag = dimSizesL.DoesMatch(dimSizesR.begin() + nDimsHead, dimSizesR.end());
+	}
+	if (!matchFlag) {
+		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		return nullptr;
+	}
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	size_t len = arrayL.GetDimSizes().CalcLength();
-	void* pvRtn = nullptr;
-	arrayL.GetElemType().AddElems[arrayR.GetElemType().id](pvRtn, pvL, pvR, len);
-	return nullptr;
+	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+		func(pvRtn, pvL, pvR, lenUnit);
+		pvRtn = pArrayRtn->FwdPointer(pvRtn, lenUnit);
+		pvL = arrayL.FwdPointer(pvL, lenFwdL);
+		pvR = arrayR.FwdPointer(pvR, lenFwdR);
+	}
+	return pArrayRtn.release();
 }
 
-Array* Array::SubElems(const Array& arrayL, const Array& arrayR)
+Array* Array::Add(const Array& arrayL, const Array& arrayR)
 {
-	return nullptr;
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Add_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::MulElems(const Array& arrayL, const Array& arrayR)
+Array* Array::Sub(const Array& arrayL, const Array& arrayR)
 {
-	return nullptr;
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Sub_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::DivElems(const Array& arrayL, const Array& arrayR)
+Array* Array::Mul(const Array& arrayL, const Array& arrayR)
 {
-	return nullptr;
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Mul_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::DotElems(const Array& arrayL, const Array& arrayR)
+Array* Array::Div(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Div_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 {
 	return nullptr;
 }
@@ -886,6 +920,16 @@ size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSiz
 	size_t len = 1;
 	for (auto pDimSize = pDimSizeBegin; pDimSize != pDimSizeEnd; pDimSize++) len *= *pDimSize;
 	return len;
+}
+
+bool DimSizes::DoesMatch(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd) const
+{
+	auto pDimSize1 = begin();
+	auto pDimSize2 = pDimSizeBegin;
+	for ( ; pDimSize1 != end() && pDimSize2 != pDimSizeEnd; pDimSize1++, pDimSize2++) {
+		if (*pDimSize1 != *pDimSize2) return false;
+	}
+	return pDimSize1 == end() && pDimSize2 == pDimSizeEnd;
 }
 
 String DimSizes::ToString(const StringStyle& ss) const

@@ -332,7 +332,7 @@ Gurax_ImplementOpUnary(Pos, Number)
 // Number ..
 Gurax_ImplementOpUnary(PostSeq, Number)
 {
-	int num = Value_Number::GetNumber<Int>(value);
+	Int num = Value_Number::GetNumber<Int>(value);
 	return new Value_Iterator(new Iterator_Counter(num, 1));
 }
 
