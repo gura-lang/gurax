@@ -843,9 +843,44 @@ Array* Array::GenericOp(const Array& arrayL, const Array& arrayR,
 	return pArrayRtn.release();
 }
 
+Array* Array::GenericOp(const Array& arrayL, Double numR,
+	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func)
+{
+	return nullptr;
+}
+
+Array* Array::GenericOp(Double numL, const Array& arrayR,
+	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func)
+{
+	return nullptr;
+}
+
+Array* Array::GenericOp(const Array& arrayL, const Complex& numR,
+	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func)
+{
+	return nullptr;
+}
+
+Array* Array::GenericOp(const Complex& numL, const Array& arrayR,
+	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func)
+{
+	return nullptr;
+}
+
+
 Array* Array::Add(const Array& arrayL, const Array& arrayR)
 {
 	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Add_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Add(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Add_ArrayNumber);
+}
+
+Array* Array::Add(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Add_ArrayComplex);
 }
 
 Array* Array::Sub(const Array& arrayL, const Array& arrayR)
@@ -853,14 +888,64 @@ Array* Array::Sub(const Array& arrayL, const Array& arrayR)
 	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Sub_ArrayArray[arrayR.GetElemType().id]);
 }
 
+Array* Array::Sub(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Sub_ArrayNumber);
+}
+
+Array* Array::Sub(Double numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Sub_NumberArray);
+}
+
+Array* Array::Sub(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Sub_ArrayComplex);
+}
+
+Array* Array::Sub(const Complex& numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Sub_ComplexArray);
+}
+
 Array* Array::Mul(const Array& arrayL, const Array& arrayR)
 {
 	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Mul_ArrayArray[arrayR.GetElemType().id]);
 }
 
+Array* Array::Mul(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Mul_ArrayNumber);
+}
+
+Array* Array::Mul(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Mul_ArrayComplex);
+}
+
 Array* Array::Div(const Array& arrayL, const Array& arrayR)
 {
 	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Div_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Div(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Div_ArrayNumber);
+}
+
+Array* Array::Div(Double numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Div_NumberArray);
+}
+
+Array* Array::Div(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Div_ArrayComplex);
+}
+
+Array* Array::Div(const Complex& numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Div_ComplexArray);
 }
 
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)

@@ -60,11 +60,23 @@ public:
 		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)> InjectFromValueList;
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)> InjectFromIterator;
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
-		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> CopyElems[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Add_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Sub_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Mul_ArrayArray[ElemTypeIdMax];
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)> Div_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Add_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Sub_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Sub_NumberArray;
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Sub_ArrayNumber;
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Sub_ComplexArray;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Sub_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Mul_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Mul_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Mul_ArrayComplex;
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Div_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Div_NumberArray;
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber;
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
 		std::function<void (void* pvRtn, size_t m, size_t n, void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
@@ -173,10 +185,30 @@ public:
 public:
 	static Array* GenericOp(const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
+	static Array* GenericOp(const Array& arrayL, Double numR,
+		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
+	static Array* GenericOp(Double numL, const Array& arrayR,
+		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
+	static Array* GenericOp(const Array& arrayL, const Complex& numR,
+		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
+	static Array* GenericOp(const Complex& numL, const Array& arrayR,
+		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
+	static Array* Add(const Array& arrayL, Double numR);
+	static Array* Add(const Array& arrayL, const Complex& numR);
 	static Array* Sub(const Array& arrayL, const Array& arrayR);
+	static Array* Sub(const Array& arrayL, Double numR);
+	static Array* Sub(Double numL, const Array& arrayR);
+	static Array* Sub(const Array& arrayL, const Complex& numR);
+	static Array* Sub(const Complex& numL, const Array& arrayR);
 	static Array* Mul(const Array& arrayL, const Array& arrayR);
+	static Array* Mul(const Array& arrayL, Double numR);
+	static Array* Mul(const Array& arrayL, const Complex& numR);
 	static Array* Div(const Array& arrayL, const Array& arrayR);
+	static Array* Div(const Array& arrayL, Double numR);
+	static Array* Div(Double numL, const Array& arrayR);
+	static Array* Div(const Array& arrayL, const Complex& numR);
+	static Array* Div(const Complex& numL, const Array& arrayR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
