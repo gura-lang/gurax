@@ -989,14 +989,14 @@ Array* Array::GenericOp(const Array& arrayL, const Array& arrayR,
 		lenUnit = dimSizesR.CalcLength();
 		lenFwdL = lenUnit, lenFwdR = 0;
 		pDimSizesRtn = &dimSizesL;
-		matchFlag = dimSizesR.DoesMatch(dimSizesL.begin() + nDimsHead, dimSizesL.end());
+		matchFlag = dimSizesR.DoesMatch(dimSizesL, nDimsHead);
 	} else {
 		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
 		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		lenUnit = dimSizesL.CalcLength();
 		lenFwdL = 0, lenFwdR = lenUnit;
 		pDimSizesRtn = &dimSizesR;
-		matchFlag = dimSizesL.DoesMatch(dimSizesR.begin() + nDimsHead, dimSizesR.end());
+		matchFlag = dimSizesL.DoesMatch(dimSizesR, nDimsHead);
 	}
 	if (!matchFlag) {
 		Error::Issue(ErrorType::RangeError, "unmatched array size");
@@ -1202,14 +1202,27 @@ size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSiz
 	return len;
 }
 
-bool DimSizes::DoesMatch(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd) const
+bool DimSizes::DoesMatch(const DimSizes& dimSizes, size_t offset) const
 {
 	auto pDimSize1 = begin();
-	auto pDimSize2 = pDimSizeBegin;
-	for ( ; pDimSize1 != end() && pDimSize2 != pDimSizeEnd; pDimSize1++, pDimSize2++) {
+	auto pDimSize2 = dimSizes.begin() + offset;
+	if (size() != dimSizes.size() - offset) return false;
+	for ( ; pDimSize1 != end(); pDimSize1++, pDimSize2++) {
 		if (*pDimSize1 != *pDimSize2) return false;
 	}
-	return pDimSize1 == end() && pDimSize2 == pDimSizeEnd;
+	return true;
+}
+
+bool DimSizes::DoesMatchDot(const DimSizes& dimSizes, size_t offset) const
+{
+	auto pDimSize1 = begin();
+	auto pDimSize2 = dimSizes.begin() + offset;
+	if (size() != dimSizes.size() - offset) return false;
+	auto pDimSizeEnd1 = begin() + size() - 2;
+	for ( ; pDimSize1 != pDimSizeEnd1; pDimSize1++, pDimSize2++) {
+		if (*pDimSize1 != *pDimSize2) return false;
+	}
+	return *(pDimSize1 + 1) == *pDimSize2;
 }
 
 String DimSizes::ToString(const StringStyle& ss) const

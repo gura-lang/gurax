@@ -33,8 +33,8 @@ public:
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
-	bool DoesMatch(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd) const;
-	bool DoesMatch(const DimSizes& dimSizes) const { return DoesMatch(dimSizes.begin(), dimSizes.end()); }
+	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
+	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
 	String ToString(const StringStyle& ss) const;
 };
 
