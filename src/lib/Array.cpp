@@ -484,6 +484,52 @@ void Sub_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	}
 }
 
+template<typename T_ElemL>
+void Sub_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) - numRCasted;
+	}
+}
+
+template<typename T_ElemR>
+void Sub_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = T_ElemR;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		*pRtn = numLCasted - static_cast<T_ElemRtn>(*pR);
+	}
+}
+
+template<typename T_ElemL>
+void Sub_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) - numR;
+	}
+}
+
+template<typename T_ElemR>
+void Sub_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		*pRtn = numL - static_cast<T_ElemRtn>(*pR);
+	}
+}
+
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Mul_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
@@ -769,6 +815,10 @@ void Array::Bootup()
 	SetFuncBurst(Add_ArrayNumber,		Add_ArrayNumber_T);
 	SetFuncBurst(Add_ArrayComplex,		Add_ArrayComplex_T);
 	SetFuncBurst3(Sub_ArrayArray,		Sub_ArrayArray_T);
+	SetFuncBurst(Sub_ArrayNumber,		Sub_ArrayNumber_T);
+	SetFuncBurst(Sub_NumberArray,		Sub_NumberArray_T);
+	SetFuncBurst(Sub_ArrayComplex,		Sub_ArrayComplex_T);
+	SetFuncBurst(Sub_ComplexArray,		Sub_ComplexArray_T);
 	SetFuncBurst3(Mul_ArrayArray,		Mul_ArrayArray_T);
 	SetFuncBurst3(Div_ArrayArray,		Div_ArrayArray_T);
 	SetFuncBurst3(Dot_ArrayArray,		Dot_ArrayArray_T);
