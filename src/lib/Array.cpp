@@ -541,6 +541,29 @@ void Mul_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	}
 }
 
+template<typename T_ElemL>
+void Mul_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) * numRCasted;
+	}
+}
+
+template<typename T_ElemL>
+void Mul_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) * numR;
+	}
+}
+
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
@@ -554,6 +577,74 @@ bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 			return false;
 		}
 		*pRtn = static_cast<T_ElemRtn>(*pL) / elemR;
+	}
+	return true;
+}
+
+template<typename T_ElemL>
+bool Div_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	if (numRCasted == 0) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) / numRCasted;
+	}
+	return true;
+}
+
+template<typename T_ElemR>
+bool Div_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = T_ElemR;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		auto elemR = static_cast<T_ElemRtn>(*pR);
+		if (elemR == 0) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return false;
+		}
+		*pRtn = numLCasted / elemR;
+	}
+	return true;
+}
+
+template<typename T_ElemL>
+bool Div_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	if (numR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL) / numR;
+	}
+	return true;
+}
+
+template<typename T_ElemR>
+bool Div_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		auto elemR = static_cast<T_ElemRtn>(*pR);
+		if (elemR == 0) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return false;
+		}
+		*pRtn = numL / elemR;
 	}
 	return true;
 }
@@ -820,7 +911,13 @@ void Array::Bootup()
 	SetFuncBurst(Sub_ArrayComplex,		Sub_ArrayComplex_T);
 	SetFuncBurst(Sub_ComplexArray,		Sub_ComplexArray_T);
 	SetFuncBurst3(Mul_ArrayArray,		Mul_ArrayArray_T);
+	SetFuncBurst(Mul_ArrayNumber,		Mul_ArrayNumber_T);
+	SetFuncBurst(Mul_ArrayComplex,		Mul_ArrayComplex_T);
 	SetFuncBurst3(Div_ArrayArray,		Div_ArrayArray_T);
+	SetFuncBurst(Div_ArrayNumber,		Div_ArrayNumber_T);
+	SetFuncBurst(Div_NumberArray,		Div_NumberArray_T);
+	SetFuncBurst(Div_ArrayComplex,		Div_ArrayComplex_T);
+	SetFuncBurst(Div_ComplexArray,		Div_ComplexArray_T);
 	SetFuncBurst3(Dot_ArrayArray,		Dot_ArrayArray_T);
 }
 
