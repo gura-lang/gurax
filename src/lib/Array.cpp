@@ -1145,7 +1145,64 @@ Array* Array::Div(const Complex& numL, const Array& arrayR)
 
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 {
-	return nullptr;
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 ||
+					dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
+		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		return nullptr;
+	}
+	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
+	auto func = arrayL.GetElemType().Dot_ArrayArray[arrayR.GetElemType().id];
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), dimSizesRtn));
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
+	func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
+	return pArrayRtn.release();
+#if 0
+	size_t nUnits = 1;
+	size_t lenUnit = 0;;
+	size_t lenFwdL = 0, lenFwdR = 0;
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	const DimSizes* pDimSizesRtn = nullptr;;
+	bool matchFlag = false;
+	if (dimSizesL.size() >= dimSizesR.size()) {
+		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
+		nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		lenUnit = dimSizesR.CalcLength();
+		lenFwdL = lenUnit, lenFwdR = 0;
+		pDimSizesRtn = &dimSizesL;
+		matchFlag = dimSizesR.DoesMatchDot(dimSizesL, nDimsHead);
+	} else {
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		lenUnit = dimSizesL.CalcLength();
+		lenFwdL = 0, lenFwdR = lenUnit;
+		pDimSizesRtn = &dimSizesR;
+		matchFlag = dimSizesL.DoesMatchDot(dimSizesR, nDimsHead);
+	}
+	if (!matchFlag) {
+		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		return nullptr;
+	}
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
+	auto func = arrayL.GetElemType().Dot_ArrayArray[arrayR.GetElemType().id];
+	size_t m = pDimSizesRtn->GetRowSize();
+	size_t n = pDimSizesRtn->GetColSize();
+	size_t l = dimSizesL.GetColSize();
+	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+		func(pvRtn, m, n, pvL, pvR, l);
+		pvRtn = pArrayRtn->FwdPointer(pvRtn, lenUnit);
+		pvL = arrayL.FwdPointer(pvL, lenFwdL);
+		pvR = arrayR.FwdPointer(pvR, lenFwdR);
+	}
+	return pArrayRtn.release();
+#endif
 }
 
 Value_List* Array::ToList() const

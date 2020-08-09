@@ -35,6 +35,8 @@ public:
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
+	size_t GetRowSize() const { return *(rbegin() + 1); }
+	size_t GetColSize() const { return back(); }
 	String ToString(const StringStyle& ss) const;
 };
 
@@ -77,7 +79,7 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber;
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
-		std::function<void (void* pvRtn, size_t m, size_t n, void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;

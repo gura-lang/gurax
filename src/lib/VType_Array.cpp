@@ -548,6 +548,16 @@ Gurax_ImplementOpBinary(Div, Complex, Array)
 	return new Value_Array(pArrayRtn.release());
 }
 
+// Array |.| Array
+Gurax_ImplementOpBinary(Dot, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Dot(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_Array
 //------------------------------------------------------------------------------
@@ -605,6 +615,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Sub,	Array, Array);
 	Gurax_AssignOpBinary(Mul,	Array, Array);
 	Gurax_AssignOpBinary(Div,	Array, Array);
+	Gurax_AssignOpBinary(Dot,	Array, Array);
 }
 
 //------------------------------------------------------------------------------
