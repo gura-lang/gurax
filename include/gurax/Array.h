@@ -187,6 +187,8 @@ public:
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
 public:
+	Array* Transpose() const;
+public:
 	static Array* GenericOp(const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
 	static Array* GenericOp(const Array& arrayL, Double numR,
@@ -197,7 +199,6 @@ public:
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
 	static Array* GenericOp(const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
-	static Array* Transpose(const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
 	static Array* Add(const Array& arrayL, Double numR);
 	static Array* Add(const Array& arrayL, const Complex& numR);

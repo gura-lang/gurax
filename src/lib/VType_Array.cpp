@@ -246,6 +246,27 @@ Gurax_ImplementMethod(Array, ToString)
 	return new Value_String(str);
 }
 
+// Array#Transpose() {block?}
+Gurax_DeclareMethod(Array, Transpose)
+{
+	Declare(VTYPE_Array, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Array, Transpose)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	Array& array = valueThis.GetArray();
+	RefPtr<Array> pArray(array.Transpose());
+	if (!pArray) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -599,6 +620,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	Assign(Gurax_CreateMethod(Array, ToString));
+	Assign(Gurax_CreateMethod(Array, Transpose));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));

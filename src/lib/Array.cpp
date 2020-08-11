@@ -455,7 +455,7 @@ template<typename T_ElemDst, typename T_ElemSrc> void Transpose_T(void* pvDst, s
 	const T_ElemSrc* pSrcSave = reinterpret_cast<const T_ElemSrc*>(pvSrc);
 	for (size_t iRow = 0; iRow < nRows; iRow++, pSrcSave++) {
 		const T_ElemSrc* pSrc = pSrcSave;
-		for (size_t iCol = 0; iCol < nCols; iCol++, pDst++, pSrc += nCols) {
+		for (size_t iCol = 0; iCol < nCols; iCol++, pDst++, pSrc += nRows) {
 			*pDst = static_cast<T_ElemDst>(*pSrc);
 		}
 	}
@@ -996,6 +996,34 @@ void Array::ExtractElems(ValueOwner& values) const
 	ExtractElemsSub(values, offset, _dimSizes.begin());
 }
 
+Array* Array::Transpose() const
+{
+	const DimSizes& dimSizes = GetDimSizes();
+	if (dimSizes.size() < 2) return Clone();
+	DimSizes dimSizesRtn;
+	dimSizesRtn.reserve(dimSizes.size());
+	size_t nUnits = 1;
+	for (auto pDim = dimSizes.begin(); pDim != dimSizes.begin() + dimSizes.size() - 2; pDim++) {
+		nUnits *= *pDim;
+		dimSizesRtn.push_back(*pDim);
+	}
+	size_t nRows = dimSizes.GetColSize();
+	size_t nCols = dimSizes.GetRowSize();
+	size_t lenFwd = nRows * nCols;
+	dimSizesRtn.push_back(nRows);
+	dimSizesRtn.push_back(nCols);
+	RefPtr<Array> pArrayRtn(Create(GetElemType(), dimSizesRtn));	
+	auto func = GetElemType().Transpose[GetElemType().id];
+	void* pvDst = pArrayRtn->GetPointerC<void>();
+	const void* pvSrc = GetPointerC<void>();
+	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+		func(pvDst, nRows, nCols, pvSrc);
+		pvDst = pArrayRtn->FwdPointer(pvDst, lenFwd);
+		pvSrc = FwdPointer(pvSrc, lenFwd);
+	}
+	return pArrayRtn.release();
+}
+
 Array* Array::GenericOp(const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func)
 {
@@ -1084,33 +1112,6 @@ Array* Array::GenericOp(const Complex& numL, const Array& arrayR,
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
 	return pArrayRtn.release();
-}
-
-Array* Array::Transpose(const Array& array)
-{
-	const DimSizes& dimSizes = array.GetDimSizes();
-	if (dimSizes.size() < 2) return array.Clone();
-	DimSizes dimSizesRtn;
-	dimSizesRtn.reserve(dimSizes.size());
-	size_t nUnits = 1;
-	for (auto pDim = dimSizes.begin(); pDim != dimSizes.begin() + dimSizes.size() - 2; pDim++) {
-		nUnits *= *pDim;
-		dimSizesRtn.push_back(*pDim);
-	}
-	size_t nRows = dimSizes.GetColSize();
-	size_t nCols = dimSizes.GetRowSize();
-	size_t lenFwd = nRows * nCols;
-	dimSizesRtn.push_back(nRows);
-	dimSizesRtn.push_back(nCols);
-	RefPtr<Array> pArrayRtn(Create(array.GetElemType(), dimSizesRtn));	
-	auto func = array.GetElemType().Transpose[array.GetElemType().id];
-	void* pvDst = pArrayRtn->GetPointerC<void>();
-	const void* pvSrc = array.GetPointerC<void>();
-	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
-		func(pvDst, nRows, nCols, pvSrc);
-		pvDst = pArrayRtn->FwdPointer(pvDst, lenFwd);
-		pvSrc = array.FwdPointer(pvSrc, lenFwd);
-	}
 }
 
 Array* Array::Add(const Array& arrayL, const Array& arrayR)
