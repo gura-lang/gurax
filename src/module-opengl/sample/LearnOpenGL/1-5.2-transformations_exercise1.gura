@@ -4,6 +4,7 @@ import(opengl) {*}
 import(Shader) {*}
 import(jpeg)
 import(png)
+import(array_extension)
 
 // settings
 SCR_WIDTH = 800
@@ -165,8 +166,8 @@ main() = {
 		// create transformations
 		transform = Array.Identity(`float, 4)
 		angle = glfwGetTime()
-		transform = transform |.| @float([[math.Cos(angle), -math.Sin(angle), 0, 0], [math.Sin(angle), math.Cos(angle), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
-		transform = transform |.| @float([[1, 0, 0, .5], [0, 1, 0, -.5], [0, 0, 1, 0], [0, 0, 0, 1]])
+		transform = transform |.| Array.Rotation(`float, angle, [0, 0, 1])
+		transform = transform |.| Array.Translation(`float, .5, -.5, 0)
 
 		// get matrix's uniform location and set matrix
 		ourShader.use()

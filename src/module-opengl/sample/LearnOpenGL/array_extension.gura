@@ -1,0 +1,27 @@
+#!/usr/bin/env gurax
+
+Array.Rotation(elemType:Symbol, angle:Number, axis[]:Number):static = {
+	[nx, ny, nz] = axis / math.Sqrt((axis * axis).Sum())
+	cos = math.Cos(angle), sin = math.Sin(angle)
+	Array(elemType,
+		[[cos + nx * (1 - cos), nx * ny * (1 - cos) - nz * sin, nz * nx * (1 - cos) + ny * sin, 0]
+		 [nx * ny * (1 - cos) + nz * sin, cos + ny * ny * (1 - cos), ny * nz * (1 - cos) - nx * sin, 0]
+		 [nz * nx * (1 - cos) - ny * sin, ny * nz * (1 - cos) + nx * sin, cos + nz * nz * (1 - cos), 0]
+		 [0, 0, 0, 1]])
+}
+
+Array.Translation(elemType:Symbol, tx:Number, ty:Number, tz:Number):static = {
+	Array(elemType,
+		[[1, 0, 0, tx]
+		 [0, 1, 0, ty]
+		 [0, 0, 1, tz]
+		 [0, 0, 0, 1]])
+}
+
+Array.Scale(elemType:Symbol, sx:Number, sy:Number, sz:Number):static = {
+	Array(elemType,
+		[[sx, 0, 0, 0]
+		 [0, sy, 0, 0]
+		 [0, 0, sz, 0]
+		 [0, 0, 0, 1]])
+}
