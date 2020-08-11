@@ -164,9 +164,9 @@ main() = {
 
 		// create transformations
 		transform = Array.Identity(`float, 4)
-		transform = transform |.| @float([[1, 0, 0, .5], [0, 1, 0, -.5], [0, 0, 1, 0], [0, 0, 0, 1]])
 		angle = glfwGetTime()
 		transform = transform |.| @float([[math.Cos(angle), -math.Sin(angle), 0, 0], [math.Sin(angle), math.Cos(angle), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+		transform = transform |.| @float([[1, 0, 0, .5], [0, 1, 0, -.5], [0, 0, 1, 0], [0, 0, 0, 1]])
 
 		// get matrix's uniform location and set matrix
 		ourShader.use()
@@ -175,14 +175,6 @@ main() = {
 
 		// render container
 		glBindVertexArray(VAO)
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nil);
-
-		// second transformation
-		transform = Array.Identity(`float, 4)
-		transform = transform |.| @float([[1, 0, 0, -.5], [0, 1, 0, .5], [0, 0, 1, 0], [0, 0, 0, 1]])
-		angle = glfwGetTime()
-		transform = transform |.| @float([[math.Sin(angle), 0, 0, 0], [0, math.Sin(angle), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform.Transpose().p)
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nil);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
