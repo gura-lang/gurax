@@ -1145,6 +1145,7 @@ Array* Array::Div(const Complex& numL, const Array& arrayR)
 
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 {
+#if 1
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 ||
@@ -1160,7 +1161,7 @@ Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 	const void* pvR = arrayR.GetPointerC<void>();
 	func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
 	return pArrayRtn.release();
-#if 0
+#else
 	size_t nUnits = 1;
 	size_t lenUnit = 0;;
 	size_t lenFwdL = 0, lenFwdR = 0;
@@ -1279,7 +1280,7 @@ bool DimSizes::DoesMatchDot(const DimSizes& dimSizes, size_t offset) const
 	for ( ; pDimSize1 != pDimSizeEnd1; pDimSize1++, pDimSize2++) {
 		if (*pDimSize1 != *pDimSize2) return false;
 	}
-	return *(pDimSize1 + 1) == *pDimSize2;
+	return GetColSize() == dimSizes.GetRowSize();
 }
 
 String DimSizes::ToString(const StringStyle& ss) const
