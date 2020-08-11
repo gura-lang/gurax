@@ -63,6 +63,7 @@ public:
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)> InjectFromIterator;
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax];
+		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Add_ArrayComplex;
@@ -133,16 +134,17 @@ protected:
 	// Constructor
 	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
 	// Copy constructor/operator
-	Array(const Array& src) = delete;
+	Array(const Array& src);
 	Array& operator=(const Array& src) = delete;
 	// Move constructor/operator
-	Array(Array&& src) = delete;
+	Array(Array&& src);
 	Array& operator=(Array&& src) noexcept = delete;
 protected:
 	~Array() = default;
 public:
 	static void Bootup();
 public:
+	Array* Clone() const { return new Array(*this); }
 	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
 	static Array* Create1d(ElemTypeT& elemType, size_t n) {
 		return Create(elemType, DimSizes(n));
@@ -195,6 +197,7 @@ public:
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
 	static Array* GenericOp(const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
+	static Array* Transpose(const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
 	static Array* Add(const Array& arrayL, Double numR);
 	static Array* Add(const Array& arrayL, const Complex& numR);
