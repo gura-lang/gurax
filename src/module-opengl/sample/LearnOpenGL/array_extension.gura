@@ -39,7 +39,7 @@ Array.Perspective(elemType:Symbol, fieldOfView:Number, aspect:Number, near:Numbe
 	right = top * aspect
 	Array(elemType,
 		[[near / right, 0, 0, 0]
-		 [0, 2 * near / top, 0, 0]
+		 [0, near / top, 0, 0]
 		 [0, 0, -(far + near) / (far - near), -2 * far * near / (far - near)]
 		 [0, 0, -1, 0]])
 }
