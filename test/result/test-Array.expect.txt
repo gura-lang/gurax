@@ -1828,3 +1828,9 @@ matTrans1 |.| pt2.ToList() .. [[1.73205], [1], [1]]
 @float([[1, 2, 3], [4, 5, 6]]).Transpose().ToList() .. [[1, 4], [2, 5], [3, 6]]
 @float([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]]).Transpose().ToList() .. [[1, 7], [2, 8], [3, 9], [4, 10], [5, 11], [6, 12]]
 @float([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]]).Transpose().ToList() .. [[[1, 4], [2, 5], [3, 6]], [[7, 10], [8, 11], [9, 12]]]
+======== Array#VerifyShape() ========
+@float(3, 4, 5).VerifyShape(3) .. false
+@float(3, 4, 5).VerifyShape(3, 4) .. false
+@float(3, 4, 5).VerifyShape(3, 4, 5) .. true
+@float(3, 4, 5).VerifyShape(3, 4, 5, 6) .. false
+@float(3, 4, 5).VerifyShape(3, 3, 5) .. false

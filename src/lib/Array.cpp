@@ -1304,6 +1304,15 @@ bool Array::ElemTypeT::IsNone() const
 //------------------------------------------------------------------------------
 // DimSizes
 //------------------------------------------------------------------------------
+DimSizes::DimSizes(const ValueList& values)
+{
+	reserve(values.size());
+	for (const Value* pValue : values) {
+		push_back(Value_Number::GetNumberPos<size_t>(*pValue));
+		if (Error::IsIssued()) break;
+	}
+}
+
 size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd)
 {
 	size_t len = 1;
@@ -1332,6 +1341,16 @@ bool DimSizes::DoesMatchDot(const DimSizes& dimSizes, size_t offset) const
 		if (*pDimSize1 != *pDimSize2) return false;
 	}
 	return GetColSize() == dimSizes.GetRowSize();
+}
+
+bool DimSizes::Verify(const ValueList& values) const
+{
+	auto pDimSize = begin();
+	auto ppValue = values.begin();
+	for ( ; pDimSize != end() && ppValue != values.end(); pDimSize++, ppValue++) {
+		if (*pDimSize != Value_Number::GetNumber<size_t>(**ppValue)) return false;
+	}
+	return pDimSize == end() && ppValue == values.end();
 }
 
 String DimSizes::ToString(const StringStyle& ss) const

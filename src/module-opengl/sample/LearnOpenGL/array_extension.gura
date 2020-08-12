@@ -25,3 +25,21 @@ Array.Scale(elemType:Symbol, sx:Number, sy:Number, sz:Number):static = {
 		 [0, 0, sz, 0]
 		 [0, 0, 0, 1]])
 }
+
+Array.Ortho(elemType:Symbol, left:Number, right:Number, bottom:Number, top:Number, near:Number, far:Number):static = {
+	Array(elemType,
+		[[2 / (right - left), 0, 0, -(right + left) / (right - left)]
+		 [0, 2 / (top - bottom), 0, -(top + bottom) / (top - bottom)]
+		 [0, 0, -2 / (far - near), -(far + near) / (far - near)]
+		 [0, 0, 0, 1]])
+}
+
+Array.Perspective(elemType:Symbol, fieldOfView:Number, aspect:Number, near:Number, far:Number):static = {
+	top = near * math.Tan(fieldOfView / 2)
+	right = top * aspect
+	Array(elemType,
+		[[near / right, 0, 0, 0]
+		 [0, 2 * near / top, 0, 0]
+		 [0, 0, -(far + near) / (far - near), -2 * far * near / (far - near)]
+		 [0, 0, -1, 0]])
+}

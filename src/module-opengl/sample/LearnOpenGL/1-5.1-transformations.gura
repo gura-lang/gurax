@@ -171,8 +171,7 @@ main() = {
 	
 		// get matrix's uniform location and set matrix
 		ourShader.use()
-		transformLoc = glGetUniformLocation(ourShader.ID, 'transform')
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform.Transpose().p)
+		ourShader.setArray('transform', transform)
 
 		// render container
 		glBindVertexArray(VAO)

@@ -51,6 +51,24 @@ Shader = class {
 		glUniform1f(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
+	setArray(name:String, array:Array) = {
+		uniformLoc = glGetUniformLocation(this.ID, name)
+		if (array.elemType == `float) {
+			if (array.VerifyShape(2)) {
+				glUniform2fv(uniformLoc, 1, array.p)
+			} elsif (array.VerifyShape(3)) {
+				glUniform3fv(uniformLoc, 1, array.p)
+			} elsif (array.VerifyShape(4)) {
+				glUniform4fv(uniformLoc, 1, array.p)
+			} elsif (array.VerifyShape(2, 2)) {
+				glUniformMatrix2fv(uniformLoc, 1, GL_TRUE, array.p)
+			} elsif (array.VerifyShape(3, 3)) {
+				glUniformMatrix3fv(uniformLoc, 1, GL_TRUE, array.p)
+			} elsif (array.VerifyShape(4, 4)) {
+				glUniformMatrix4fv(uniformLoc, 1, GL_TRUE, array.p)
+			}
+		}
+	}
 	CompileShader(shader:Number, shaderCode:String, typeName:String) = {
 		glShaderSource(shader, [shaderCode], []);
 		glCompileShader(shader);

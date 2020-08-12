@@ -30,6 +30,7 @@ public:
 	DimSizes(size_t l, size_t m, size_t n) {
 		reserve(3); push_back(l); push_back(m); push_back(n);
 	}
+	DimSizes(const ValueList& values);
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
@@ -37,6 +38,7 @@ public:
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
 	size_t GetRowSize() const { return *(rbegin() + 1); }
 	size_t GetColSize() const { return back(); }
+	bool Verify(const ValueList& values) const;
 	String ToString(const StringStyle& ss) const;
 };
 

@@ -165,13 +165,14 @@ main() = {
 
 		// create transformations
 		transform = Array.Identity(`float, 4)
+		transform = transform |.| Array.Translation(`float, .5, -.5, 0)
 		angle = glfwGetTime()
 		transform = transform |.| Array.Rotation(`float, angle, [0, 0, 1])
-		transform = transform |.| Array.Translation(`float, .5, -.5, 0)
-
+	
 		// get matrix's uniform location and set matrix
 		ourShader.use()
-		ourShader.setArray('transform', transform)
+		transformLoc = glGetUniformLocation(ourShader.ID, 'transform')
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform.Transpose().p)
 
 		// render container
 		glBindVertexArray(VAO)

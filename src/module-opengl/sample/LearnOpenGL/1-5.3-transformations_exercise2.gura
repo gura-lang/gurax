@@ -171,8 +171,7 @@ main() = {
 
 		// get matrix's uniform location and set matrix
 		ourShader.use()
-		transformLoc = glGetUniformLocation(ourShader.ID, 'transform')
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform.Transpose().p)
+		ourShader.setArray('transform', transform)
 
 		// render container
 		glBindVertexArray(VAO)
@@ -183,7 +182,7 @@ main() = {
 		transform = transform |.| Array.Translation(`float, -.5, .5, 0)
 		angle = glfwGetTime()
 		transform = transform |.| Array.Scale(`float, math.Sin(angle), math.Sin(angle), 1)
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform.Transpose().p)
+		ourShader.setArray('transform', transform)
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nil);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

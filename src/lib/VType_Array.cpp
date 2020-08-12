@@ -55,7 +55,7 @@ Gurax_ImplementConstructor(Array)
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
-		DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(values));
+		DimSizes dimSizes(values);
 		if (Error::IsIssued()) return Value::nil();
 		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
 	} else {
@@ -89,7 +89,7 @@ Gurax_ImplementFunction(ConstructArray)
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
-		DimSizes dimSizes(Value_Number::GetNumListPos<size_t>(values));
+		DimSizes dimSizes(values);
 		if (Error::IsIssued()) return Value::nil();
 		pArray.reset(Array::Create(elemType, std::move(dimSizes)));
 	} else {
@@ -129,7 +129,6 @@ Gurax_ImplementClassMethod(Array, Identity)
 	RefPtr<Array> pArray(Array::CreateIdentity(elemType, n, 1.));
 	return new Value_Array(pArray.release());
 }
-
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -265,6 +264,28 @@ Gurax_ImplementMethod(Array, Transpose)
 	RefPtr<Array> pArray(array.Transpose());
 	if (!pArray) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
+// Array#VerifyShape(dim+:Number)
+Gurax_DeclareMethod(Array, VerifyShape)
+{
+	Declare(VTYPE_Bool, Flag::Reduce);
+	DeclareArg("dim", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Verifies the array's shape.");
+}
+
+Gurax_ImplementMethod(Array, VerifyShape)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& values = args.PickList();
+	// Function body
+	const DimSizes& dimSizes = valueThis.GetArray().GetDimSizes();
+	return new Value_Bool(dimSizes.Verify(values));
 }
 
 //-----------------------------------------------------------------------------
@@ -621,6 +642,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, ToList));
 	Assign(Gurax_CreateMethod(Array, ToString));
 	Assign(Gurax_CreateMethod(Array, Transpose));
+	Assign(Gurax_CreateMethod(Array, VerifyShape));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));
@@ -643,7 +665,6 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // VType_Array::Iterator_Each
 //------------------------------------------------------------------------------
-
 Value* VType_Array::Iterator_Each::DoNextValue()
 {
 	if (_idx >= _len) return nullptr;
