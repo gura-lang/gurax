@@ -85,14 +85,6 @@ main() = {
 	// ------------------------------------------------------------------
 	vertices = @float([
 		// positions          // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
-		 0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
- 	])
-
-	vertices = @float([
-		// positions          // texture coords
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
 		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -136,13 +128,8 @@ main() = {
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	])
 
-	indices = @int([  
-		0, 1, 3, // first triangle
-		1, 2, 3  // second triangle
-	])
 	VAO = @uint {|v| glGenVertexArrays(1, v), v[0]}
 	VBO = @uint {|v| glGenBuffers(1, v), v[0]}
-	EBO = @uint {|v| glGenBuffers(1, v), v[0]}
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glBindVertexArray(VAO);
 
@@ -221,18 +208,15 @@ main() = {
 		ourShader.use()
 
 		// create transformation
-		//model = Array.Rotation(`float, Radians(-55.0f), [1.0f, 0.0f, 0.0f])
-		model = Array.Rotation(`float, glfwGetTime() * Radians(50.0f), [0.5f, 1.0f, 0.0f])
+		model = Array.Rotation(`float, glfwGetTime(), [0.5f, 1.0f, 0.0f])
 		view = Array.Translation(`float, 0.0f, 0.0f, -3.0f)
 		projection = Array.Perspective(`float, Radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f)
-		//projection = Array.Ortho(`float, -SCR_WIDTH / 2, SCR_WIDTH / 2, -SCR_HEIGHT / 2, SCR_HEIGHT / 2, 0.1f, 100.0f)
 		ourShader.setArray('model', model)
 		ourShader.setArray('view', view)
 		ourShader.setArray('projection', projection)
 
 		// render container
 		glBindVertexArray(VAO)
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nil);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
