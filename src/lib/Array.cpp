@@ -692,6 +692,23 @@ void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const vo
 	}
 }
 
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Cross_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t n)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	T_ElemRtn a1 = static_cast<T_ElemRtn>(pL[0]);
+	T_ElemRtn a2 = static_cast<T_ElemRtn>(pL[1]);
+	T_ElemRtn a3 = static_cast<T_ElemRtn>(pL[2]);
+	T_ElemRtn b1 = static_cast<T_ElemRtn>(pR[0]);
+	T_ElemRtn b2 = static_cast<T_ElemRtn>(pR[1]);
+	T_ElemRtn b3 = static_cast<T_ElemRtn>(pR[2]);
+	pRtn[0] = a2 * b3 - a3 * b2;
+	pRtn[1] = a3 * b1 - a1 * b3;
+	pRtn[2] = a1 * b2 - a2 * b1; 
+}
+
 void Array::Bootup()
 {
 	auto AssocSymbol = [](const Symbol* pSymbol, const Symbol* pAtSymbol, ElemTypeT& elemType) {
@@ -942,6 +959,7 @@ void Array::Bootup()
 	SetFuncBurst(Div_ArrayComplex,		Div_ArrayComplex_T);
 	SetFuncBurst(Div_ComplexArray,		Div_ComplexArray_T);
 	SetFuncBurst3(Dot_ArrayArray,		Dot_ArrayArray_T);
+	SetFuncBurst3(Cross_ArrayArray,		Cross_ArrayArray_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
@@ -1255,6 +1273,25 @@ Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 	}
 	return pArrayRtn.release();
 #endif
+}
+
+Array* Array::Cross(const Array& arrayL, const Array& arrayR)
+{
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 ||
+								dimSizesL[0] != 3 || dimSizesR[0] != 3) {
+		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		return nullptr;
+	}
+	size_t n = 3;
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), DimSizes(n)));
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
+	auto func = arrayL.GetElemType().Cross_ArrayArray[arrayR.GetElemType().id];
+	func(pvRtn, pvL, pvR, n);
+	return pArrayRtn.release();
 }
 
 Value_List* Array::ToList() const

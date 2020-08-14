@@ -208,7 +208,7 @@ main() = {
 		ourShader.use()
 
 		// create transformation
-		model = Array.Rotation(`float, glfwGetTime(), [0.5f, 1.0f, 0.0f])
+		model = Array.Rotation(`float, glfwGetTime(), 0.5f, 1.0f, 0.0f)
 		view = Array.Translation(`float, 0.0f, 0.0f, -3.0f)
 		projection = Array.Perspective(`float, Radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f)
 		ourShader.setArray('model', model)

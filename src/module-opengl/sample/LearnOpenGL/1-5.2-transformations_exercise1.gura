@@ -166,7 +166,7 @@ main() = {
 		// create transformations
 		transform = Array.Identity(`float, 4)
 		angle = glfwGetTime()
-		transform = transform |.| Array.Rotation(`float, angle, [0, 0, 1])
+		transform = transform |.| Array.Rotation(`float, angle, 0, 0, 1)
 		transform = transform |.| Array.Translation(`float, .5, -.5, 0)
 
 		// get matrix's uniform location and set matrix

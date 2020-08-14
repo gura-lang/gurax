@@ -1,6 +1,7 @@
 #!/usr/bin/env gurax
 
-Array.Rotation(elemType:Symbol, angle:Number, axis[]:Number):static = {
+Array.Rotation(elemType:Symbol, angle:Number, ax:Number, ay:Number, az:Number):static = {
+	axis = [ax, ay, az]
 	[nx, ny, nz] = axis / math.Sqrt((axis * axis).Sum())
 	cos = math.Cos(angle), sin = math.Sin(angle)
 	Array(elemType,

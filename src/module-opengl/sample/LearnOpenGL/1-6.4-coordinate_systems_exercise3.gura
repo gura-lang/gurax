@@ -231,7 +231,7 @@ main() = {
 		cubePositions.Each {|cubePosition, i|
 			model = Array.Translation(`float, cubePosition*)
 			angle = cond(i % 3 == 0, glfwGetTime() * 25.0f, 20.0f * i)
-			model = model |.| Array.Rotation(`float, Radians(angle), [1.0f, 0.3f, 0.5f])
+			model = model |.| Array.Rotation(`float, Radians(angle), 1.0f, 0.3f, 0.5f)
 			ourShader.setArray('model', model)
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);

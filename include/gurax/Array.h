@@ -83,6 +83,7 @@ public:
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
@@ -218,6 +219,7 @@ public:
 	static Array* Div(const Array& arrayL, const Complex& numR);
 	static Array* Div(const Complex& numL, const Array& arrayR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
+	static Array* Cross(const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;

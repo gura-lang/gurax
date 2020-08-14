@@ -176,7 +176,7 @@ main() = {
 		ourShader.use()
 
 		// create transformation
-		model = Array.Rotation(`float, Radians(-55.0f), [1.0f, 0.0f, 0.0f])
+		model = Array.Rotation(`float, Radians(-55.0f), 1.0f, 0.0f, 0.0f)
 		view = Array.Translation(`float, 0.0f, 0.0f, -3.0f)
 		projection = Array.Perspective(`float, Radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f)
 		//projection = Array.Ortho(`float, -SCR_WIDTH / 2, SCR_WIDTH / 2, -SCR_HEIGHT / 2, SCR_HEIGHT / 2, 0.1f, 100.0f)
