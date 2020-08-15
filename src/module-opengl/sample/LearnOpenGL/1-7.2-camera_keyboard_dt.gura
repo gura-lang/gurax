@@ -6,10 +6,6 @@ import(jpeg)
 import(png)
 import(array_extension)
 
-// settings
-SCR_WIDTH = 800
-SCR_HEIGHT = 600
-
 vertexShaderSource = bR'''
 #version 330 core
 layout (location = 0) in vec3 aPos;
@@ -44,6 +40,25 @@ void main()
 '''
 
 Radians(degree:Number):map = degree * math.pi / 180
+
+Cross(a[]:Number, b[]:Number) = {
+	[a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+}
+
+Normalize(a[]:Number) = a / math.Sqrt((a * a).Sum())
+
+// settings
+SCR_WIDTH = 800
+SCR_HEIGHT = 600
+
+// camera
+cameraPos   = [0.0f, 0.0f,  3.0f];
+cameraFront = [0.0f, 0.0f, -1.0f];
+cameraUp    = [0.0f, 1.0f,  0.0f];
+
+// timing
+deltaTime = 0.0f;	// time between current frame and last frame
+lastFrame = 0.0f;
 
 main() = {
 	// glfw: initialize and configure
@@ -198,9 +213,20 @@ main() = {
 	ourShader.setInt('texture1', 0);
 	ourShader.setInt('texture2', 1);
 
+	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+	// -----------------------------------------------------------------------------------------------------------
+	projection = Array.Perspective(`float, Radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f)
+	ourShader.setArray('projection', projection)
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window)) {
+		// per-frame time logic
+		// --------------------
+		currentFrame = glfwGetTime();
+		deltaTime:extern = currentFrame - lastFrame;
+		lastFrame:extern = currentFrame;
+
 		// input
 		// -----
 		processInput(window);
@@ -219,11 +245,9 @@ main() = {
 		// activate shader
 		ourShader.use()
 
-		// create transformation
-		view = Array.Translation(`float, 0.0f, 0.0f, -3.0f)
-		projection = Array.Perspective(`float, Radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f)
-		ourShader.setArray('view', view)
-		ourShader.setArray('projection', projection)
+		// camera/view transformation
+		view = Array.LookAt(`float, cameraPos*,  (cameraPos + cameraFront)*,  cameraUp*);
+		ourShader.setArray('view', view);
 
 		// render container
 		glBindVertexArray(VAO)
@@ -255,6 +279,19 @@ main() = {
 processInput(window:GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
+	cameraSpeed = 2.5 * deltaTime; 
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		cameraPos -= Normalize(Cross(cameraFront, cameraUp)) * cameraSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		cameraPos += Normalize(Cross(cameraFront, cameraUp)) * cameraSpeed;
 	}
 }
 
