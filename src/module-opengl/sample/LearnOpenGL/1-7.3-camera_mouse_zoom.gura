@@ -5,6 +5,7 @@ import(Shader) {*}
 import(jpeg)
 import(png)
 import(array_extension)
+import(Util) {*}
 
 vertexShaderSource = bR'''
 #version 330 core
@@ -38,14 +39,6 @@ void main()
 	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
 }
 '''
-
-Radians(degree:Number):map = degree * math.pi / 180
-
-Cross(a[]:Number, b[]:Number) = {
-	[a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
-}
-
-Normalize(a[]:Number) = a / math.Sqrt((a * a).Sum())
 
 // settings
 SCR_WIDTH = 800
