@@ -4,7 +4,7 @@ import(opengl) {*}
 import(Shader) {*}
 import(jpeg)
 import(png)
-import(array_extension)
+import(ArrayExtension)
 
 // settings
 SCR_WIDTH = 800

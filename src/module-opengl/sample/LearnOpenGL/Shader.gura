@@ -51,6 +51,21 @@ Shader = class {
 		glUniform1f(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
+	setVec2(name:String, x:Number, y:Number) = {
+		uniformLoc = glGetUniformLocation(this.ID, name)
+		glUniform2f(uniformLoc, x, y)
+	}
+	// ------------------------------------------------------------------------
+	setVec3(name:String, x:Number, y:Number, z:Number) = {
+		uniformLoc = glGetUniformLocation(this.ID, name)
+		glUniform3f(uniformLoc, x, y, z)
+	}
+	// ------------------------------------------------------------------------
+	setVec4(name:String, x:Number, y:Number, z:Number, w:Number) = {
+		uniformLoc = glGetUniformLocation(this.ID, name)
+		glUniform4f(uniformLoc, x, y, z, w)
+	}
+	// ------------------------------------------------------------------------
 	setArray(name:String, array:Array) = {
 		uniformLoc = glGetUniformLocation(this.ID, name)
 		if (array.elemType == `float) {

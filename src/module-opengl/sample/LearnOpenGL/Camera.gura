@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 import(opengl) {*}
-import(array_extension)
+import(ArrayExtension)
 import(Util) {*}
 
 // Default camera values
@@ -50,6 +50,7 @@ Camera = class {
 		} elsif (direction == `RIGHT) {
 			this.Position += this.Right * velocity;
 		}
+		this.Position[1] = 0.0f;
 	}
 	// processes input received from a mouse input system. Expects the offset value in both the x and y direction.
 	ProcessMouseMovement(xoffset:Number, yoffset:Number, constrainPitch:Bool = true) = {
