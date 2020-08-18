@@ -36,7 +36,7 @@ protected:
 	VType* _pVTypeInh;
 	const Symbol* _pSymbol;
 	Flags _flags;
-	RefPtr<Frame_Inheritance> _pFrame;
+	RefPtr<Frame_OfMember> _pFrameOfMember;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
 	RefPtr<PropSlotMap> _pPropSlotMap;
 	RefPtr<PropSlotMap> _pPropSlotMapOfClass;
@@ -76,8 +76,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
-	Frame_Inheritance& GetFrame() { return *_pFrame; }
-	const Frame_Inheritance& GetFrame() const { return *_pFrame; }
+	Frame_OfMember& GetFrameOfMember() { return *_pFrameOfMember; }
+	const Frame_OfMember& GetFrameOfMember() const { return *_pFrameOfMember; }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
 	PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
 	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }
@@ -86,9 +86,9 @@ public:
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
 	Value* Cast(const Value& value, DeclArg::Flags flags = DeclArg::Flag::None) const;
-	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
-	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
-	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
+	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrameOfMember().Assign(pSymbol, pValue); }
+	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }
+	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }
 	void Assign(Function* pFunction);
 	void Assign(PropSlot* pPropSlot) {
 		(pPropSlot->IsSet(PropSlot::Flag::OfClass)?

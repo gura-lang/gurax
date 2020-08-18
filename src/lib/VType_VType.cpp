@@ -193,7 +193,7 @@ Value* Value_VType::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, 
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
-		RefPtr<Value> pValue(GetVTypeThis().GetFrame().Retrieve(pSymbol));
+		RefPtr<Value> pValue(GetVTypeThis().GetFrameOfMember().Retrieve(pSymbol));
 		return pValue? pValue.release() : Value::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
@@ -214,7 +214,7 @@ bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, con
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
-		GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
+		GetVTypeThis().GetFrameOfMember().Assign(pSymbol, pValue.release());
 		return true;
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return false;

@@ -1834,3 +1834,8 @@ matTrans1 |.| pt2.ToList() .. [[1.73205], [1], [1]]
 @float(3, 4, 5).VerifyShape(3, 4, 5) .. true
 @float(3, 4, 5).VerifyShape(3, 4, 5, 6) .. false
 @float(3, 4, 5).VerifyShape(3, 3, 5) .. false
+======== array |^| array ========
+@float([1, -4, -2]) |^| @float([2, 5, 1]).ToList() .. [6, -5, 13]
+@float([2, 5, 1]) |^| @float([1, -4, -2]).ToList() .. [-6, 5, -13]
+@float([2, 4, -3]) |^| @float([3, 8, -5]).ToList() .. [4, 1, 4]
+@float([3, 8, -5]) |^| @float([2, 4, -3]).ToList() .. [-4, -1, -4]

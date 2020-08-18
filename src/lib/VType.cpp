@@ -13,7 +13,7 @@ VType VType::Empty("");
 
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
-	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_Inheritance(nullptr)),
+	_pSymbol(pSymbol), _flags(0), _pFrameOfMember(new Frame_OfMember(nullptr)),
 	_pPropSlotMap(new PropSlotMap()), _pPropSlotMapOfClass(new PropSlotMap())
 {
 }
@@ -21,12 +21,12 @@ VType::VType(const Symbol* pSymbol) :
 void VType::Assign(Function* pFunction)
 {
 	pFunction->SetVTypeOfOwner(*this);
-	GetFrame().Assign(pFunction);
+	GetFrameOfMember().Assign(pFunction);
 }
 
 void VType::GatherMemberSymbol(SymbolList& symbolList) const
 {
-	GetFrame().GatherSymbol(symbolList);
+	GetFrameOfMember().GatherSymbol(symbolList);
 	if (_pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList);
 	GetPropSlotMap().GatherSymbol(symbolList);
 	GetPropSlotMapOfClass().GatherSymbol(symbolList);
@@ -59,7 +59,7 @@ String VType::ToString(const StringStyle& ss) const
 void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
 {
 	_pVTypeInh = &vtypeInh;
-	_pFrame->SetFrameOuter(_pVTypeInh->GetFrame().Reference());
+	_pFrameOfMember->SetFrameOuter(_pVTypeInh->GetFrameOfMember().Reference());
 	_flags = flags;
 	_pConstructor.reset(pConstructor? pConstructor : Function::Empty.Reference());
 }
@@ -160,7 +160,7 @@ bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 	//pFunction->SetFrameOuter();
 	pFunction->SetVTypeOfOwner(*this);
 	const Symbol* pSymbol = pFunction->GetSymbol();
-	GetFrame().Assign(pSymbol, new Value_Function(pFunction.release()));
+	GetFrameOfMember().Assign(pSymbol, new Value_Function(pFunction.release()));
 	return true;
 }
 

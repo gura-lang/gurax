@@ -221,19 +221,19 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Inheritance
+// Frame_OfMember
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Inheritance : public Frame_Branch {
+class GURAX_DLLDECLARE Frame_OfMember : public Frame_Branch {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Inheritance);
+	Gurax_DeclareReferable(Frame_OfMember);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Inheritance");
+	Gurax_MemoryPoolAllocator("Frame_OfMember");
 public:
 	static const char* name;
 public:
 	// Constructor
-	explicit Frame_Inheritance(Frame* pFrameOuter);
+	explicit Frame_OfMember(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfVType() const override { return true; }
