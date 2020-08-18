@@ -36,7 +36,7 @@ protected:
 	VType* _pVTypeInh;
 	const Symbol* _pSymbol;
 	Flags _flags;
-	RefPtr<Frame_VType> _pFrame;
+	RefPtr<Frame_Inheritance> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
 	RefPtr<PropSlotMap> _pPropSlotMap;
 	RefPtr<PropSlotMap> _pPropSlotMapOfClass;
@@ -76,8 +76,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
-	Frame_VType& GetFrame() { return *_pFrame; }
-	const Frame_VType& GetFrame() const { return *_pFrame; }
+	Frame_Inheritance& GetFrame() { return *_pFrame; }
+	const Frame_Inheritance& GetFrame() const { return *_pFrame; }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
 	PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
 	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }

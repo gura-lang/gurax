@@ -13,7 +13,7 @@ VType VType::Empty("");
 
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
-	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
+	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_Inheritance(nullptr)),
 	_pPropSlotMap(new PropSlotMap()), _pPropSlotMapOfClass(new PropSlotMap())
 {
 }
@@ -157,6 +157,7 @@ Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 
 bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
+	//pFunction->SetFrameOuter();
 	pFunction->SetVTypeOfOwner(*this);
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	GetFrame().Assign(pSymbol, new Value_Function(pFunction.release()));

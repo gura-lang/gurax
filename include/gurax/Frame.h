@@ -153,7 +153,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_ValueMap");
 protected:
-	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h hasn't included yet.
+	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h isn't included yet.
 public:
 	static const char* name;
 public:
@@ -221,19 +221,19 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_VType
+// Frame_Inheritance
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_VType : public Frame_Branch {
+class GURAX_DLLDECLARE Frame_Inheritance : public Frame_Branch {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_VType);
+	Gurax_DeclareReferable(Frame_Inheritance);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_VType");
+	Gurax_MemoryPoolAllocator("Frame_Inheritance");
 public:
 	static const char* name;
 public:
 	// Constructor
-	explicit Frame_VType(Frame* pFrameOuter);
+	explicit Frame_Inheritance(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfVType() const override { return true; }
