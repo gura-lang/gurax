@@ -67,8 +67,7 @@ void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
 
 String VType::MakeFullName() const
 {
-	RefPtr<Frame> pFrame(LockFrameOuter());
-	return Frame::MakeFullName(pFrame.get(), GetName());
+	return Frame::MakeFullName(GetFrameOuter(), GetName());
 }
 
 DottedSymbol* VType::MakeDottedSymbol() const

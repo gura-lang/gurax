@@ -37,7 +37,6 @@ protected:
 	const Symbol* _pSymbol;
 	Flags _flags;
 	RefPtr<Frame_Scope> _pFrame;
-	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
 	RefPtr<PropSlotMap> _pPropSlotMap;
 	RefPtr<PropSlotMap> _pPropSlotMapOfClass;
 	RefPtr<Function> _pConstructor;
@@ -66,8 +65,6 @@ public:
 	VType* GetVTypeInh() const { return _pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
-	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
-	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
@@ -76,6 +73,9 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
+	void SetFrameOuter(Frame* pFrameOuter) { _pFrame->SetFrameOuter(pFrameOuter); }
+	Frame* GetFrameOuter() { return _pFrame->GetFrameOuter(); }
+	const Frame* GetFrameOuter() const { return _pFrame->GetFrameOuter(); }
 	Frame& GetFrameOfMember() { return *_pFrame->GetFrameLocal(); }
 	const Frame& GetFrameOfMember() const { return *_pFrame->GetFrameLocal(); }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }

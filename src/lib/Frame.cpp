@@ -104,7 +104,7 @@ bool Frame::Assign(Module* pModule)
 
 void Frame::Assign(VType& vtype)
 {
-	vtype.SetFrameOuter(*this);
+	vtype.SetFrameOuter(Reference());
 	Assign(vtype.GetSymbol(), new Value_VType(vtype));
 }
 
