@@ -286,7 +286,7 @@ public:
 	static const char* name;
 public:
 	// Constructor
-	explicit Frame_Scope(Frame* pFrameOuter);
+	explicit Frame_Scope(Frame* pFrameOuter, Frame* pFrameLocal = nullptr);
 public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfScope() const override { return true; }

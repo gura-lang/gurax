@@ -346,7 +346,8 @@ void Frame_Module::GatherSymbol(SymbolList& symbolList) const
 //------------------------------------------------------------------------------
 const char* Frame_Scope::name = "Scope";
 
-Frame_Scope::Frame_Scope(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
+Frame_Scope::Frame_Scope(Frame* pFrameOuter, Frame* pFrameLocal) :
+									Frame_Branch(pFrameOuter, pFrameLocal)
 {
 }
 
