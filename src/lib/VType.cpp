@@ -13,7 +13,8 @@ VType VType::Empty("");
 
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
-	_pSymbol(pSymbol), _flags(0), _pFrameOfMember(new Frame_OfMember(nullptr)),
+	_pSymbol(pSymbol), _flags(0),
+	_pFrame(new Frame_Scope(nullptr, new Frame_OfMember(nullptr))),
 	_pPropSlotMap(new PropSlotMap()), _pPropSlotMapOfClass(new PropSlotMap())
 {
 }
@@ -59,7 +60,7 @@ String VType::ToString(const StringStyle& ss) const
 void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
 {
 	_pVTypeInh = &vtypeInh;
-	_pFrameOfMember->SetFrameOuter(_pVTypeInh->GetFrameOfMember().Reference());
+	GetFrameOfMember().SetFrameOuter(_pVTypeInh->GetFrameOfMember().Reference());
 	_flags = flags;
 	_pConstructor.reset(pConstructor? pConstructor : Function::Empty.Reference());
 }

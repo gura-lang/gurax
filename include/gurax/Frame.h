@@ -186,6 +186,7 @@ public:
 		Frame(pFrameOuter), _pFrameLocal(pFrameLocal) {}
 public:
 	void SetFrameLocal(Frame* pFrame) { _pFrameLocal.reset(pFrame); }
+	Frame* GetFrameLocal() { return _pFrameLocal.get(); }
 	const Frame* GetFrameLocal() const { return _pFrameLocal.get(); }
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override {
 		return GetFrameLocal()? GetFrameLocal()->ExportTo(frameDst, overwriteFlag) : true;
