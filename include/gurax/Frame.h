@@ -105,6 +105,11 @@ public:
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
+	virtual const char* GetTypeName() const = 0;
+	virtual void PrintTree(int indentLevel) const {
+		::printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+		if (_pFrameOuter) _pFrameOuter->PrintTree(indentLevel + 1);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Frame& frame) const { return this == &frame; }
@@ -170,6 +175,7 @@ public:
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 //------------------------------------------------------------------------------
@@ -195,6 +201,11 @@ public:
 		return _pFrameLocal? _pFrameLocal->Retrieve(pSymbol) : nullptr;
 	}
 	Value* RetrieveLocal(const char* name) { return RetrieveLocal(Symbol::Add(name)); }
+	virtual void PrintTree(int indentLevel) const override {
+		::printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+		if (_pFrameOuter) _pFrameOuter->PrintTree(indentLevel + 1);
+		if (_pFrameLocal) _pFrameLocal->PrintTree(indentLevel + 1);
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -219,6 +230,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 //------------------------------------------------------------------------------
@@ -243,6 +255,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 //------------------------------------------------------------------------------
@@ -272,6 +285,7 @@ public:
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 //------------------------------------------------------------------------------
@@ -296,6 +310,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 //------------------------------------------------------------------------------
@@ -320,6 +335,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
 };
 
 }
