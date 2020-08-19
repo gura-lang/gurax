@@ -411,9 +411,9 @@ TestCase('Constructor Inheritance (1)') {
 	Derive2 = class(Derive1) {
 		c
 		__init__() = { this.c = 'C' }
-		Format() = Format('%s, %s, %s', this.a, this.b, this.c)
+		ToText() = Format('%s, %s, %s', this.a, this.b, this.c)
 	}
-	Tester(`Derive2().Format())
+	Tester(`Derive2().ToText())
 }
 
 TestCase('Constructor Inheritance (2)') {
@@ -423,7 +423,7 @@ TestCase('Constructor Inheritance (2)') {
 		__init__(a, b, c) = {
 			this.a = a, this.b = b, this.c = c, this.ext = ext
 		}
-		Format() = Format('%s, %s, %s, %s', this.a, this.b, this.c, this.ext)
+		ToText() = Format('%s, %s, %s, %s', this.a, this.b, this.c, this.ext)
 	}
 	Derive1 = class(Base) {
 		__init__(a, b, c) = {|a, b, c|}
@@ -434,10 +434,10 @@ TestCase('Constructor Inheritance (2)') {
 	Derive3 = class(Base) {
 		__init__(a) = {|a * 1, a * 2, a * 3|}
 	}
-	Tester(`Base(1, 2, 3).Format())
-	Tester(`Derive1(11, 22, 33).Format())
-	Tester(`Derive2(22, 33).Format())
-	Tester(`Derive3(111).Format())
+	Tester(`Base(1, 2, 3).ToText())
+	Tester(`Derive1(11, 22, 33).ToText())
+	Tester(`Derive2(22, 33).ToText())
+	Tester(`Derive3(111).ToText())
 }
 
 TestCase('Post-definition of method') {

@@ -197,6 +197,7 @@ void PUnit_AssignToSymbol<discardValueFlag, externFlag>::Exec(Processor& process
 		RefPtr<Value> pValueAssigned(processor.PopValue());
 		if (pValueAssigned->IsVType()) {
 			VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
+			vtype.SetFrameOuter(pFrame->Reference());
 			vtype.PrepareForAssignment(processor, GetSymbol());
 		} else if (pValueAssigned->IsType(VTYPE_Function)) {
 			Function& function = Value_Function::GetFunction(*pValueAssigned);
@@ -207,6 +208,7 @@ void PUnit_AssignToSymbol<discardValueFlag, externFlag>::Exec(Processor& process
 		Value& valueAssigned(processor.PeekValue(0));
 		if (valueAssigned.IsVType()) {
 			VType& vtype = Value_VType::GetVTypeThis(valueAssigned);
+			vtype.SetFrameOuter(pFrame->Reference());
 			vtype.PrepareForAssignment(processor, GetSymbol());
 		} else if (valueAssigned.IsType(VTYPE_Function)) {
 			Function& function = Value_Function::GetFunction(valueAssigned);
@@ -333,10 +335,9 @@ void PUnit_AssignMethod<discardValueFlag, keepTargetFlag>::Exec(Processor& proce
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueTarget(keepTargetFlag? processor.PeekValue(0).Reference() : processor.PopValue());
 	RefPtr<Function> pFunction(GetFunction().Reference());
-
-	//frame.PrintTree(0);
+	
 	pFunction->SetFrameOuter(frame);
-
+	
 	if (!pValueTarget->DoAssignCustomMethod(pFunction.Reference())) {
 		processor.ErrorDone();
 		return;

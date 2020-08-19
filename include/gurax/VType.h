@@ -73,6 +73,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
+	Frame& GetFrame() { return *_pFrame; }
+	const Frame& GetFrame() const { return *_pFrame; }
 	void SetFrameOuter(Frame* pFrameOuter) { _pFrame->SetFrameOuter(pFrameOuter); }
 	Frame* GetFrameOuter() { return _pFrame->GetFrameOuter(); }
 	const Frame* GetFrameOuter() const { return _pFrame->GetFrameOuter(); }

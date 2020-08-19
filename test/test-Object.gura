@@ -4,33 +4,33 @@ import(util.tester) {*}
 TestCase('Member assignment') {
 	A = struct {
 		p1:String, p2:Number, p3:String
-		Format() = Format('p1=%s p2=%d p3=%s', this.p1, this.p2, this.p3)
+		ToText() = Format('p1=%s p2=%d p3=%s', this.p1, this.p2, this.p3)
 	}
 	a = A('v1', 3, 'v3')
-	Println(a.Format())
+	Println(a.ToText())
 	a.p1 = 'v1-mod'
-	Println(a.Format())
+	Println(a.ToText())
 	a.p2 = 33
-	Println(a.Format())
+	Println(a.ToText())
 	a.p2 += 11
-	Println(a.Format())
+	Println(a.ToText())
 }
 
 TestCase('Member mapping assignment') {
 	X = struct {
 		a = 0, b = 0, c = 0, d = 0
-		Format() = Format('[a=%d,b=%d,c=%d,d=%d]', this.a, this.b, this.c, this.d)
+		ToText() = Format('[a=%d,b=%d,c=%d,d=%d]', this.a, this.b, this.c, this.d)
 	}
 	x = Dim(10) {X()}
-	Println(x:*Format().Join(','))
+	Println(x:*ToText().Join(','))
 	x::a = 2
-	Println(x:*Format().Join(','))
+	Println(x:*ToText().Join(','))
 	x:&b = 0..
-	Println(x:*Format().Join(','))
+	Println(x:*ToText().Join(','))
 	x:&c = 7..9
-	Println(x:*Format().Join(','))
+	Println(x:*ToText().Join(','))
 	x.Offset(6):&d = 1..
-	Println(x:*Format().Join(','))
+	Println(x:*ToText().Join(','))
 }
 
 TestCase('Object#__ToString__()') {

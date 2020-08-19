@@ -106,7 +106,7 @@ public:
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
 	virtual const char* GetTypeName() const = 0;
-	virtual void PrintTree(int indentLevel) const {
+	virtual void PrintTree(int indentLevel = 0) const {
 		::printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
 		if (_pFrameOuter) _pFrameOuter->PrintTree(indentLevel + 1);
 	}
