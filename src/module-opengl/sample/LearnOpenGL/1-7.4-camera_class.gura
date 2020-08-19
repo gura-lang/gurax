@@ -287,6 +287,9 @@ processInput(window:GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		camera.ProcessKeyboard(`RIGHT, deltaTime);
 	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		glReadAsImage(0, 0, SCR_WIDTH, SCR_HEIGHT).Write('a.png')
+	}
 }
 
 // glfw: whenever the mouse moves, this callback is called
