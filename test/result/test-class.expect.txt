@@ -220,3 +220,7 @@ String.Test .. <CallableMember:String#Test()>
 'Hello'.Test() .. Hello:5
 A.Test .. <CallableMember:A#Test()>
 a.Test() .. first second third
+======== Call to class method ========
+f()
+g()
+h() .. the function A.h must be evaluated with an instance

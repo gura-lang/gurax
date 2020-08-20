@@ -450,3 +450,21 @@ TestCase('Post-definition of method') {
 	a = A('first', 'second', 'third')
 	Tester(`a.Test())
 }
+
+TestCase('Call to class method') {
+	A = class {
+		g():static = {
+			Println('g()')
+		}
+		h() = {
+			Println('h()')
+		}
+		f() = {
+			Println('f()')
+			g()
+			Tester(`h())
+		}
+	}
+	a = A()
+	a.f()
+}
