@@ -157,7 +157,7 @@ Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 
 bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
-	//pFunction->SetFrameOuter(GetFrame());
+	pFunction->SetFrameOuter(GetFrame());
 	pFunction->SetVTypeOfOwner(*this);
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	GetFrameOfMember().Assign(pSymbol, new Value_Function(pFunction.release()));

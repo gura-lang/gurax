@@ -111,9 +111,9 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 								   *this, pFunction->GetDeclCallable().Reference(),
 								   pFunction->GetExprBody().Reference(), nullptr));
 		}
-		RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
-		pConstructor->SetFrameOuter(*pFrameOuter);
-		//pConstructor->SetFrameOuter(GetFrame());
+		//RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
+		//pConstructor->SetFrameOuter(*pFrameOuter);
+		pConstructor->SetFrameOuter(GetFrame());
 		SetConstructor(pConstructor.release());
 		return true;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
@@ -121,7 +121,7 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
 			return false;
 		}
-		//pFunction->SetFrameOuter(GetFrame());
+		pFunction->SetFrameOuter(GetFrame());
 		SetDestructor(pFunction.release());
 		return true;
 	}

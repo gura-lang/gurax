@@ -52,7 +52,7 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
-	virtual bool CanEvalAsMethod(const Function& function) const override { return true; }
+	virtual bool CanEvalAsMethod(const Function& function) const override;
 	virtual bool IsValid() const override { return false; }
 	virtual bool IsUndefined() const override { return true; }
 	virtual Value* PickValue() override { return Value::nil(); }

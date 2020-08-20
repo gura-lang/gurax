@@ -335,9 +335,7 @@ void PUnit_AssignMethod<discardValueFlag, keepTargetFlag>::Exec(Processor& proce
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueTarget(keepTargetFlag? processor.PeekValue(0).Reference() : processor.PopValue());
 	RefPtr<Function> pFunction(GetFunction().Reference());
-	
-	pFunction->SetFrameOuter(frame);
-	
+	//pFunction->SetFrameOuter(frame);
 	if (!pValueTarget->DoAssignCustomMethod(pFunction.Reference())) {
 		processor.ErrorDone();
 		return;

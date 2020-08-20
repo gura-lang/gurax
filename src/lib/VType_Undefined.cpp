@@ -63,6 +63,18 @@ void VType_Undefined::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Undefined::vtype = VTYPE_Undefined;
 
+bool Value_Undefined::CanEvalAsMethod(const Function& function) const
+{
+	if (function.IsTypeFunction() || function.IsTypeConstructor() || function.IsTypeStatement()) {
+		return true;
+	} else if (function.IsTypeMethod()) {
+		if (function.IsSet(Function::Flag::OfClass)) return true;
+	}
+	Error::Issue(ErrorType::ValueError, "the function %s must be evaluated with an instance",
+						function.MakeFullName().c_str());
+	return false;
+}
+
 String Value_Undefined::ToString(const StringStyle& ss) const
 {
 	return (ss.IsBracket() || ss.IsUndefVisible())? "<Undefined>" : String::Empty;

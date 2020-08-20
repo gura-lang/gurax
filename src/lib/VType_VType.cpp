@@ -152,9 +152,10 @@ String Value_VType::ToString(const StringStyle& ss) const
 
 bool Value_VType::CanEvalAsMethod(const Function& function) const
 {
-	if ((function.IsTypeMethod() && function.IsSet(Function::Flag::OfClass)) || function.IsTypeConstructor()) {
+	if (function.IsTypeConstructor()) {
 		return true;
 	} else if (function.IsTypeMethod()) {
+		if (function.IsSet(Function::Flag::OfClass)) return true;
 		Error::Issue(ErrorType::ValueError, "the function must be evaluated with an instance");
 	} else {
 		Error::Issue(ErrorType::ValueError, "the function can not be evaluated as a method");

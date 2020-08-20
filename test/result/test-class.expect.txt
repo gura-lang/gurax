@@ -209,12 +209,12 @@ a.p1 .. A#p1-mod
 b.p1 .. B#p1-mod
 b.p3 .. B#p3-mod
 ======== Constructor Inheritance (1) ========
-Derive2().Format() .. A, B, C
+Derive2().ToText() .. A, B, C
 ======== Constructor Inheritance (2) ========
-Base(1, 2, 3).Format() .. 1, 2, 3, EXT
-Derive1(11, 22, 33).Format() .. 11, 22, 33, EXT
-Derive2(22, 33).Format() .. 11, 22, 33, EXT
-Derive3(111).Format() .. 111, 222, 333, EXT
+Base(1, 2, 3).ToText() .. 1, 2, 3, EXT
+Derive1(11, 22, 33).ToText() .. 11, 22, 33, EXT
+Derive2(22, 33).ToText() .. 11, 22, 33, EXT
+Derive3(111).ToText() .. 111, 222, 333, EXT
 ======== Post-definition of method ========
 String.Test .. <CallableMember:String#Test()>
 'Hello'.Test() .. Hello:5
