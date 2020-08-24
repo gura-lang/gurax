@@ -1,0 +1,79 @@
+#!/usr/bin/env gurax
+import(re)
+
+fileNames = [
+	'SDL.h'
+	'SDL_hints.h'
+	'SDL_error.h'
+	'SDL_log.h'
+	'SDL_assert.h'
+	'SDL_version.h'
+	'SDL_video.h'
+	'SDL_render.h'
+	'SDL_pixels.h'
+	'SDL_rect.h'
+	'SDL_surface.h'
+	'SDL_syswm.h'
+	'SDL_clipboard.h'
+	'SDL_vulkan.h'
+	'SDL_events.h'
+	'SDL_keyboard.h'
+	'SDL_keycode.h'
+	'SDL_scancode.h'
+	'SDL_mouse.h'
+	'SDL_joystick.h'
+	'SDL_gamecontroller.h'
+	'SDL_sensor.h'
+	'SDL_haptic.h'
+	'SDL_audio.h'
+	'SDL_thread.h'
+	'SDL_mutex.h'
+	'SDL_atomic.h'
+	'SDL_timer.h'
+	'SDL_filesystem.h'
+	'SDL_rwops.h'
+	'SDL_loadso.h'
+	'SDL_platform.h'
+	'SDL_cpuinfo.h'
+	'SDL_endian.h'
+	'SDL_bits.h'
+	'SDL_power.h'
+	'SDL_system.h'
+	'SDL_stdinc.h'
+]
+
+dirName = '../../guest/SDL2-2.0.12/include/'
+
+stat = `entry
+fileNames.Each {|fileName|
+	ReadLines(path.Join(dirName, fileName)) {|line|
+		line = line.Strip()
+		if (stat == `entry) {
+			if (line.Match(r'^extern DECLSPEC(.+)SDLCALL\s+(\w+)\((.*)\)')) {
+				Println(line)
+			} elsif (line.Match(r'^extern DECLSPEC(.+)SDLCALL\s+(\w+)\((.*)')) {
+				lineAccum = line
+				stat = `args
+			} elsif (line.Match(r'^extern DECLSPEC(.+)SDLCALL')) {
+				stat = `entryCont
+			}
+		} elsif (stat == `args) {
+			if (line.Match(r'(.*)\)')) {
+				lineAccum += line
+				Println(lineAccum)
+				stat = `entry
+			} else {
+				lineAccum += ' ' + line
+			}
+		} elsif (stat == `entryCont) {
+			if (line.Match(r'^\s*(\w+)\((.*)\)')) {
+				lineAccum += ' ' + line
+				Println(lineAccum)
+				stat = `entry
+			} elsif (line.Match(r'^\s*(\w+)\((.*)')) {
+				lineAccum += ' ' + line
+				stat = `args
+			}
+		}
+	}
+}
