@@ -380,6 +380,9 @@ TestCase('String#Split()') {
 	Tester(`str.Split(':', 2):list)
 	Tester(`str.Split(':', 3):list)
 	Tester(`str.Split(':', 10):list)
+	Tester(`':abc:def:ghi:jkl:mno'.Split(':'):list)
+	Tester(`'abc:def:ghi:jkl:mno:'.Split(':'):list)
+	Tester(`':abc:def:ghi:jkl:mno:'.Split(':'):list)
 }
 
 TestCase('String#Strip()') {

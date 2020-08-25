@@ -44,34 +44,70 @@ fileNames = [
 
 dirName = '../../guest/SDL2-2.0.12/include/'
 
+ArgInfo = class {
+	typeNameC:String
+	typeNameP:String	// pseudo type name
+	argName:String
+	__init__(argRaw:String) = {
+		argRaw = argRaw.Strip()
+		fields = []
+		argRaw.SplitReg(r'\s+') {|field|
+			field.Split('*')
+		}
+	}
+}
+
+FuncInfo = struct {
+	rtnType:String
+	funcName:String
+	argInfoTbl[]:String
+	ToString() = Format('%s %s(%s)', rtnType, funcName, argList)
+}
+
+funcInfoTbl = []
+
+AddFuncInfo(rtnType:String, funcName:String, argList:String) = {
+	funcInfo = FuncInfo(rtnType, funcName, ArgInfo(argList.Split(','))
+	Println(funcInfo.ToString())
+	funcInfoTbl.Add(funcInfo)
+}
+
 stat = `entry
 fileNames.Each {|fileName|
 	ReadLines(path.Join(dirName, fileName)) {|line|
 		line = line.Strip()
 		if (stat == `entry) {
-			if (line.Match(r'^extern DECLSPEC(.+)SDLCALL\s+(\w+)\((.*)\)')) {
-				Println(line)
-			} elsif (line.Match(r'^extern DECLSPEC(.+)SDLCALL\s+(\w+)\((.*)')) {
-				lineAccum = line
+			if (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)\((.*)\)')) {
+				rtnType = m[1]
+				funcName = m[2]
+				argList = m[3]
+				AddFuncInfo(rtnType, funcName, argList)
+			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)\((.*)')) {
+				rtnType = m[1]
+				funcName = m[2]
+				argList = m[3]
 				stat = `args
-			} elsif (line.Match(r'^extern DECLSPEC(.+)SDLCALL')) {
+			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL')) {
+				rtnType = m[1]
 				stat = `entryCont
 			}
 		} elsif (stat == `args) {
-			if (line.Match(r'(.*)\)')) {
-				lineAccum += line
-				Println(lineAccum)
+			if (m = line.Match(r'(.*)\)')) {
+				argList += ' ' + m[1]
+				AddFuncInfo(rtnType, funcName, argList)
 				stat = `entry
 			} else {
-				lineAccum += ' ' + line
+				argList += ' ' + line
 			}
 		} elsif (stat == `entryCont) {
-			if (line.Match(r'^\s*(\w+)\((.*)\)')) {
-				lineAccum += ' ' + line
-				Println(lineAccum)
+			if (m = line.Match(r'^\s*(\w+)\((.*)\)')) {
+				funcName = m[1]
+				argList = ' ' + m[2]
+				AddFuncInfo(rtnType, funcName, argList)
 				stat = `entry
-			} elsif (line.Match(r'^\s*(\w+)\((.*)')) {
-				lineAccum += ' ' + line
+			} elsif (m = line.Match(r'^\s*(\w+)\((.*)')) {
+				funcName = m[1]
+				argList = ' ' + m[2]
 				stat = `args
 			}
 		}

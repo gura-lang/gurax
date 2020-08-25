@@ -450,6 +450,9 @@ str.Split(':', 1):list .. ['abc', 'def:ghi:jkl:mno']
 str.Split(':', 2):list .. ['abc', 'def', 'ghi:jkl:mno']
 str.Split(':', 3):list .. ['abc', 'def', 'ghi', 'jkl:mno']
 str.Split(':', 10):list .. ['abc', 'def', 'ghi', 'jkl', 'mno']
+':abc:def:ghi:jkl:mno'.Split(':'):list .. ['', 'abc', 'def', 'ghi', 'jkl', 'mno']
+'abc:def:ghi:jkl:mno:'.Split(':'):list .. ['abc', 'def', 'ghi', 'jkl', 'mno', '']
+':abc:def:ghi:jkl:mno:'.Split(':'):list .. ['', 'abc', 'def', 'ghi', 'jkl', 'mno', '']
 ======== String#Strip() ========
 ''.Strip() .. ''
 'abcdefg'.Strip() .. 'abcdefg'

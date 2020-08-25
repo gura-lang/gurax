@@ -798,6 +798,10 @@ void String::Split(StringList& strs, const char* str, char sep)
 		if (pFind) {
 			strs.push_back(String(p, pFind));
 			p = pFind + 1;
+			if (!*p) {
+				strs.push_back(p);
+				break;
+			}
 		} else {
 			strs.push_back(p);
 			break;

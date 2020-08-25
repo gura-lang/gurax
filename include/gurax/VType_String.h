@@ -19,10 +19,11 @@ public:
 		String _sep;
 		Int _cntMax;
 		Int _cnt;
+		bool _foundFlag;
 		const char* _pCurrent;
 	public:
 		Iterator_Split(StringReferable* pStr, String sep, Int cntMax) :
-			_pStr(pStr), _sep(sep), _cntMax(cntMax), _cnt(0), _pCurrent(GetString()) {}
+			_pStr(pStr), _sep(sep), _cntMax(cntMax), _cnt(0), _foundFlag(false), _pCurrent(GetString()) {}
 	public:
 		const char* GetString() const { return _pStr->GetString(); }
 	public:
@@ -198,9 +199,16 @@ public:
 template<typename T_CharCmp>
 Value* VType_String::Iterator_Split<T_CharCmp>::DoNextValue()
 {
-	if (!*_pCurrent) return nullptr;
+	if (!*_pCurrent) {
+		if (_foundFlag) {
+			_foundFlag = false;
+			return new Value_String("");
+		}
+		return nullptr;
+	}
 	if (_cnt == _cntMax) {
 		RefPtr<Value> pValue(new Value_String(_pCurrent));
+		_foundFlag = false;
 		_pCurrent += ::strlen(_pCurrent);
 		return pValue.release();
 	}
@@ -208,6 +216,7 @@ Value* VType_String::Iterator_Split<T_CharCmp>::DoNextValue()
 	const char* pEnd = String::Find<T_CharCmp>(_pCurrent, _sep.c_str(), &pCurrentNext);
 	String strRtn(_pCurrent, pEnd);
 	_cnt++;
+	_foundFlag = (*pEnd != '\0');
 	_pCurrent = pCurrentNext;
 	return new Value_String(strRtn);
 }
