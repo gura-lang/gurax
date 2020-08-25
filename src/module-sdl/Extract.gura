@@ -52,10 +52,24 @@ ArgInfo = class {
 		argRaw = argRaw.Strip()
 		fields = []
 		argRaw.SplitReg(r'\s+') {|field|
-			field.Split('*')
+			if (m = field.Match(r'^(\*+)(.*)')) {
+				fields.Add(m[1])
+				field = m[2]
+			}
+			field.Scan(r'(\w+)(\**)') {|m|
+				fields.Add(m[1])
+				!m[2].IsEmpty() && fields.Add(m[2])
+			}
 		}
+		this.argName = fields.last
+		fields.Erase(-1)
+		this.typeNameC = fields.Join(' ').Sub(r'\s+\*', '*').Sub(r'\*\s+', '*')
+		Println(this.typeNameC)
 	}
 }
+
+ArgInfo('aaaaa **bbbb*ccccc** dddd')
+sys.Exit()
 
 FuncInfo = struct {
 	rtnType:String
@@ -67,7 +81,7 @@ FuncInfo = struct {
 funcInfoTbl = []
 
 AddFuncInfo(rtnType:String, funcName:String, argList:String) = {
-	funcInfo = FuncInfo(rtnType, funcName, ArgInfo(argList.Split(','))
+	funcInfo = FuncInfo(rtnType, funcName, ArgInfo(argList.Split(',')))
 	Println(funcInfo.ToString())
 	funcInfoTbl.Add(funcInfo)
 }
