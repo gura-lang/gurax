@@ -1,129 +1,165 @@
 #!/usr/bin/env gurax
 import(re)
 
-fileNames = [
-	'SDL.h'
-	'SDL_hints.h'
-	'SDL_error.h'
-	'SDL_log.h'
-	'SDL_assert.h'
-	'SDL_version.h'
-	'SDL_video.h'
-	'SDL_render.h'
-	'SDL_pixels.h'
-	'SDL_rect.h'
-	'SDL_surface.h'
-	'SDL_syswm.h'
-	'SDL_clipboard.h'
-	'SDL_vulkan.h'
-	'SDL_events.h'
-	'SDL_keyboard.h'
-	'SDL_keycode.h'
-	'SDL_scancode.h'
-	'SDL_mouse.h'
-	'SDL_joystick.h'
-	'SDL_gamecontroller.h'
-	'SDL_sensor.h'
-	'SDL_haptic.h'
-	'SDL_audio.h'
-	'SDL_thread.h'
-	'SDL_mutex.h'
-	'SDL_atomic.h'
-	'SDL_timer.h'
-	'SDL_filesystem.h'
-	'SDL_rwops.h'
-	'SDL_loadso.h'
-	'SDL_platform.h'
-	'SDL_cpuinfo.h'
-	'SDL_endian.h'
-	'SDL_bits.h'
-	'SDL_power.h'
-	'SDL_system.h'
-	'SDL_stdinc.h'
-]
+FileInfo = struct {
+	fileName:String
+	remark:String
+}
 
-dirName = '../../guest/SDL2-2.0.12/include/'
+fileInfoTbl = @(FileInfo) {
+	{ 'SDL.h',					'Initialization and Shutdown' }
+	{ 'SDL_hints.h',			'Configuration Variables' }
+	{ 'SDL_error.h',			'Error Handling' }
+	{ 'SDL_log.h',				'Log Handling' }
+	{ 'SDL_assert.h',			'Assertions' }
+	{ 'SDL_version.h',			'Querying SDL Version' }
+	{ 'SDL_video.h',			'Display and Window Management' }
+	{ 'SDL_render.h',			'2D Accelerated Rendering' }
+	{ 'SDL_pixels.h',			'Pixel Formats and Conversion Routines' }
+	{ 'SDL_rect.h',				'Rectangle Functions' }
+	{ 'SDL_surface.h',			'Surface Creation and Simple Drawing' }
+	{ 'SDL_syswm.h',			'Platform-specific Window Management' }
+	{ 'SDL_clipboard.h',		'Clipboard Handling' }
+	{ 'SDL_vulkan.h',			'Vulkan Support' }
+	{ 'SDL_events.h',			'Event Handling' }
+	{ 'SDL_keyboard.h',			'Keyboard Support' }
+	{ 'SDL_keycode.h',			'Keyboard Support' }
+	{ 'SDL_scancode.h',			'Keyboard Support' }
+	{ 'SDL_mouse.h',			'Mouse Support' }
+	{ 'SDL_joystick.h',			'Joystick Support' }
+	{ 'SDL_gamecontroller.h',	'Game Controller Support' }
+	{ 'SDL_sensor.h',			'Sensors' }
+	{ 'SDL_haptic.h',			'Force Feedback Support' }
+	{ 'SDL_audio.h',			'Audio Device Management, Playing and Recording' }
+	{ 'SDL_thread.h',			'Thread Management' }
+	{ 'SDL_mutex.h',			'Thread Synchronization Primitives' }
+	{ 'SDL_atomic.h',			'Atomic Operations' }
+	{ 'SDL_timer.h',			'Timer Support' }
+	{ 'SDL_filesystem.h',		'Filesystem Paths' }
+	{ 'SDL_rwops.h',			'File I/O Abstraction' }
+	{ 'SDL_loadso.h',			'Shared Object Loading and Function Lookup' }
+	{ 'SDL_platform.h',			'Platform Detection' }
+	{ 'SDL_cpuinfo.h',			'CPU Feature Detection' }
+	{ 'SDL_endian.h',			'Byte Order and Byte Swapping' }
+	{ 'SDL_bits.h',				'Bit Manipulation' }
+	{ 'SDL_power.h',			'Power Management Status' }
+	{ 'SDL_system.h',			'Platform-specific Functionality' }
+	{ 'SDL_stdinc.h',			'Standard Library Functionality' }
+}
+
+ExtractFromDecl(decl:String):map = {
+	fields = []
+	decl.SplitReg(r'\s+') {|field|
+		if (m = field.Match(r'^(\*+)(.*)')) {
+			fields.Add(m[1])
+			field = m[2]
+		}
+		field.Scan(r'(\w+)(\**)') {|m|
+			fields.Add(m[1])
+			!m[2].IsEmpty() && fields.Add(m[2])
+		}
+	}
+	fields
+}
+
+RtnInfo = class {
+	typeNameC:String
+	typeNameP:String	// pseudo type name
+	__init__(declRtn:String):map = {
+		declRtn = declRtn.Strip()
+		fields = ExtractFromDecl(declRtn)
+		this.typeNameC = fields.Join(' ').Sub(r' \*', '*').Sub(r'\* ', '*')
+		this.typeNameP = fields.Join('_').Sub(r'\*', 'p')
+	}
+}
 
 ArgInfo = class {
 	typeNameC:String
 	typeNameP:String	// pseudo type name
 	argName:String
-	__init__(argRaw:String) = {
-		argRaw = argRaw.Strip()
-		fields = []
-		argRaw.SplitReg(r'\s+') {|field|
-			if (m = field.Match(r'^(\*+)(.*)')) {
-				fields.Add(m[1])
-				field = m[2]
-			}
-			field.Scan(r'(\w+)(\**)') {|m|
-				fields.Add(m[1])
-				!m[2].IsEmpty() && fields.Add(m[2])
-			}
+	__init__(declArg:String):map = {
+		declArg = declArg.Strip()
+		fields = ExtractFromDecl(declArg)
+		if (fields.len > 1) {
+			this.argName = fields.last
+			fields.Erase(-1)
+			this.typeNameC = fields.Join(' ').Sub(r' \*', '*').Sub(r'\* ', '*')
+			this.typeNameP = fields.Join('_').Sub(r'\*', 'p')
+		} else {
+			this.typeNameC = this.typeNameP = fields.first
 		}
-		this.argName = fields.last
-		fields.Erase(-1)
-		this.typeNameC = fields.Join(' ').Sub(r'\s+\*', '*').Sub(r'\*\s+', '*')
-		Println(this.typeNameC)
 	}
+	ToString() = Format('%s:%s', this.argName, this.typeNameP)
 }
-
-ArgInfo('aaaaa **bbbb*ccccc** dddd')
-sys.Exit()
 
 FuncInfo = struct {
-	rtnType:String
+	rtnInfo:RtnInfo
 	funcName:String
-	argInfoTbl[]:String
-	ToString() = Format('%s %s(%s)', rtnType, funcName, argList)
+	argInfoTbl[]:ArgInfo
+	ToString() = Format('%s(%s):%s', this.funcName,
+			this.argInfoTbl:*ToString().Join(', '), this.rtnInfo.typeNameP)
 }
 
-funcInfoTbl = []
-
-AddFuncInfo(rtnType:String, funcName:String, argList:String) = {
-	funcInfo = FuncInfo(rtnType, funcName, ArgInfo(argList.Split(',')))
-	Println(funcInfo.ToString())
-	funcInfoTbl.Add(funcInfo)
-}
-
-stat = `entry
-fileNames.Each {|fileName|
+Extract(fileName:String):map = {
+	AddFuncInfo(declRtn:String, funcName:String, declArgJoined:String) = {
+		declArgJoined = declArgJoined.Strip()
+		if (declArgJoined == 'void') { declArgJoined = '' }
+		funcInfo = FuncInfo(RtnInfo(declRtn), funcName, ArgInfo(declArgJoined.Split(',')))
+		funcInfoTbl.Add(funcInfo)
+	}
+	funcInfoTbl = []
+	stat = `entry
 	ReadLines(path.Join(dirName, fileName)) {|line|
 		line = line.Strip()
 		if (stat == `entry) {
 			if (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)\((.*)\)')) {
-				rtnType = m[1]
+				declRtn = m[1]
 				funcName = m[2]
-				argList = m[3]
-				AddFuncInfo(rtnType, funcName, argList)
+				declArgJoined = m[3]
+				AddFuncInfo(declRtn, funcName, declArgJoined)
 			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)\((.*)')) {
-				rtnType = m[1]
+				declRtn = m[1]
 				funcName = m[2]
-				argList = m[3]
+				declArgJoined = m[3]
 				stat = `args
 			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL')) {
-				rtnType = m[1]
+				declRtn = m[1]
 				stat = `entryCont
 			}
 		} elsif (stat == `args) {
 			if (m = line.Match(r'(.*)\)')) {
-				argList += ' ' + m[1]
-				AddFuncInfo(rtnType, funcName, argList)
+				declArgJoined += ' ' + m[1]
+				AddFuncInfo(declRtn, funcName, declArgJoined)
 				stat = `entry
 			} else {
-				argList += ' ' + line
+				declArgJoined += ' ' + line
 			}
 		} elsif (stat == `entryCont) {
 			if (m = line.Match(r'^\s*(\w+)\((.*)\)')) {
 				funcName = m[1]
-				argList = ' ' + m[2]
-				AddFuncInfo(rtnType, funcName, argList)
+				declArgJoined = ' ' + m[2]
+				AddFuncInfo(declRtn, funcName, declArgJoined)
 				stat = `entry
 			} elsif (m = line.Match(r'^\s*(\w+)\((.*)')) {
 				funcName = m[1]
-				argList = ' ' + m[2]
+				declArgJoined = ' ' + m[2]
 				stat = `args
 			}
 		}
+	}
+	funcInfoTbl
+}
+
+dirName = '../../guest/SDL2-2.0.12/include/'
+
+fileInfoTbl.Each {|fileInfo|
+	funcInfoTbl = Extract(fileInfo.fileName)
+	Println('//', '-' * 78)
+	Printf('// %s (%s)\n', fileInfo.remark, fileInfo.fileName)
+	Println('//', '-' * 78)
+	if (funcInfoTbl.IsEmpty()) {
+		Println()
+	} else {
+		Println(funcInfoTbl:*ToString() + '\n')
 	}
 }
