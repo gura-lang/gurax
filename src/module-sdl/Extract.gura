@@ -4,6 +4,7 @@ import(re)
 FileInfo = struct {
 	fileName:String
 	remark:String
+	funcInfoTbl[]:FuncInfo
 }
 
 fileInfoTbl = @(FileInfo) {
@@ -153,13 +154,8 @@ Extract(fileName:String):map = {
 dirName = '../../guest/SDL2-2.0.12/include/'
 
 fileInfoTbl.Each {|fileInfo|
-	funcInfoTbl = Extract(fileInfo.fileName)
-	Println('//', '-' * 78)
-	Printf('// %s (%s)\n', fileInfo.remark, fileInfo.fileName)
-	Println('//', '-' * 78)
-	if (funcInfoTbl.IsEmpty()) {
-		Println()
-	} else {
-		Println(funcInfoTbl:*ToString() + '\n')
-	}
+	fileInfo.funcInfoTbl = Extract(fileInfo.fileName)
+	Printf('//======== %s (%s) ========\n', fileInfo.remark, fileInfo.fileName)
+	Println('\n' + fileInfo.funcInfoTbl:*ToString())
+	Println()
 }

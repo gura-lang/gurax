@@ -1,0 +1,32 @@
+#!/usr/bin/env gurax
+import(cbridge)
+
+r = cbridge.Renderer()
+
+//------------------------------------------------------------------------------
+// Type Information
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Function Registration: Context
+//------------------------------------------------------------------------------
+r.Register('sdl') {
+}
+
+tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(sdl)
+
+${r.ComposeImplementation()}
+
+void AssignFunctions(Frame& frame)
+{
+	${r.ComposeAssignment('frame.')}
+}
+
+Gurax_EndModuleScope(sdl)
+'''.Render('Functions.cpp')
