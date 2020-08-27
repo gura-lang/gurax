@@ -101,7 +101,7 @@ FuncInfo = struct {
 			this.argInfoTbl:*ToString().Join(', '), this.rtnInfo.typeNameP)
 }
 
-Extract(fileName:String):map = {
+Extract(stream:Stream):map = {
 	AddFuncInfo(declRtn:String, funcName:String, declArgJoined:String) = {
 		declArgJoined = declArgJoined.Strip()
 		if (declArgJoined == 'void') { declArgJoined = '' }
@@ -110,7 +110,7 @@ Extract(fileName:String):map = {
 	}
 	funcInfoTbl = []
 	stat = `entry
-	ReadLines(path.Join(dirName, fileName)) {|line|
+	stream.ReadLines {|line|
 		line = line.Strip()
 		if (stat == `entry) {
 			if (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)\((.*)\)')) {
@@ -154,7 +154,7 @@ Extract(fileName:String):map = {
 dirName = '../../guest/SDL2-2.0.12/include/'
 
 fileInfoTbl.Each {|fileInfo|
-	fileInfo.funcInfoTbl = Extract(fileInfo.fileName)
+	fileInfo.funcInfoTbl = Extract(path.Join(dirName, fileInfo.fileName))
 	Printf('//======== %s (%s) ========\n', fileInfo.remark, fileInfo.fileName)
 	Println('\n' + fileInfo.funcInfoTbl:*ToString())
 	Println()

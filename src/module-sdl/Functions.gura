@@ -43,6 +43,7 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 //------------------------------------------------------------------------------
 r.Register('sdl') {
 
+/*
 //======== Initialization and Shutdown (SDL.h) ========
 
 SDL_Init(flags:Uint32):int
@@ -57,7 +58,7 @@ SDL_Quit():void
 
 //======== Configuration Variables (SDL_hints.h) ========
 
-SDL_SetHintWithPriority(priority:SDL_HintPriority, priority:SDL_HintPriority, priority:SDL_HintPriority):SDL_bool
+//SDL_SetHintWithPriority(priority:SDL_HintPriority, priority:SDL_HintPriority, priority:SDL_HintPriority):SDL_bool
 
 SDL_SetHint(value:const_char_p, value:const_char_p):SDL_bool
 
@@ -83,13 +84,14 @@ SDL_Error(code:SDL_errorcode):int
 
 //======== Log Handling (SDL_log.h) ========
 
-SDL_LogSetAllPriority(priority:SDL_LogPriority):void
+//SDL_LogSetAllPriority(priority:SDL_LogPriority):void
 
-SDL_LogSetPriority(priority:SDL_LogPriority, priority:SDL_LogPriority):void
+//SDL_LogSetPriority(priority:SDL_LogPriority, priority:SDL_LogPriority):void
 
 SDL_LogGetPriority(category:int):SDL_LogPriority
 
 SDL_LogResetPriorities():void
+*/
 
 /*
 SDL_Log(1:SDL_PRINTF_VARARG_FUNC, 1:SDL_PRINTF_VARARG_FUNC):void
@@ -142,7 +144,7 @@ SDL_GetRevisionNumber():int
 */
 
 //======== Display and Window Management (SDL_video.h) ========
-
+/*
 SDL_GetNumVideoDrivers():int
 
 SDL_GetVideoDriver(index:int):const_char_p
@@ -156,7 +158,7 @@ SDL_GetCurrentVideoDriver():const_char_p
 SDL_GetNumVideoDisplays():int
 
 SDL_GetDisplayName(displayIndex:int):const_char_p
-
+*/
 /*
 SDL_GetDisplayBounds(rect:SDL_Rect_p, rect:SDL_Rect_p):int
 

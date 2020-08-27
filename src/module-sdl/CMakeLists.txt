@@ -33,7 +33,8 @@ target_compile_options(sdl.gurd PRIVATE
 target_compile_definitions(sdl.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(sdl.gurd PRIVATE
 	module-sdl.cpp
-	Util.cpp)
+	Util.cpp
+	Functions.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

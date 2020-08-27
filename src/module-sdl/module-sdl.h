@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <SDL.h>
 #include "Util.h"
+#include "Functions.h"
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)
