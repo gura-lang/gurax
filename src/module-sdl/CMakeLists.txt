@@ -34,7 +34,8 @@ target_compile_definitions(sdl.gurd PRIVATE GURAX_MODULE_SEPARATED)
 target_sources(sdl.gurd PRIVATE
 	module-sdl.cpp
 	Util.cpp
-	Functions.cpp)
+	Functions.cpp
+	VTYPE_SDL_Color.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
