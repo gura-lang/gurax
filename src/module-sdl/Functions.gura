@@ -15,11 +15,42 @@ r.DeclareType_Number('Uint32')
 r.DeclareType_Number('Sint64')
 r.DeclareType_Number('Uint64')
 
-r.DeclareType_Number('SDL_HintPriority')
-
 r.DeclareType_Number('SDL_errorcode')
 
+r.DeclareType_Number('SDL_AssertState')
+r.DeclareType_Number('SDL_AudioFormat')
+r.DeclareType_Number('SDL_AudioStatus')
+r.DeclareType_Number('SDL_BlendFactor')
+r.DeclareType_Number('SDL_BlendMode')
+r.DeclareType_Number('SDL_BlendOperation')
+r.DeclareType_Number('SDL_EventType')
+r.DeclareType_Number('SDL_GLattr')
+r.DeclareType_Number('SDL_GLcontextFlag')
+r.DeclareType_Number('SDL_GLprofile')
+r.DeclareType_Number('SDL_GameControllerAxis')
+r.DeclareType_Number('SDL_GameControllerButton')
+r.DeclareType_Number('SDL_HintPriority')
+r.DeclareType_Number('SDL_HitTestResult')
+r.DeclareType_Number('SDL_JoystickPowerLevel')
+r.DeclareType_Number('SDL_Keycode')
+r.DeclareType_Number('SDL_Keymod')
+r.DeclareType_Number('SDL_LOG_CATEGORY')
 r.DeclareType_Number('SDL_LogPriority')
+r.DeclareType_Number('SDL_MessageBoxButtonFlags')
+r.DeclareType_Number('SDL_MessageBoxColorType')
+r.DeclareType_Number('SDL_MessageBoxFlags')
+r.DeclareType_Number('SDL_PixelFormatEnum')
+r.DeclareType_Number('SDL_PowerState')
+r.DeclareType_Number('SDL_RendererFlags')
+r.DeclareType_Number('SDL_RendererFlip')
+r.DeclareType_Number('SDL_SYSWM_TYPE')
+r.DeclareType_Number('SDL_Scancode')
+r.DeclareType_Number('SDL_TextureAccess')
+r.DeclareType_Number('SDL_TextureModulate')
+r.DeclareType_Number('SDL_ThreadPriority')
+r.DeclareType_Number('SDL_WinRT_Path')
+r.DeclareType_Number('SDL_WindowEventID')
+r.DeclareType_Number('SDL_WindowFlags')
 
 r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	codePicker = R'''
@@ -55,7 +86,6 @@ SDL_WasInit(flags:Uint32):Uint32
 
 SDL_Quit():void
 
-/*
 //======== Configuration Variables (SDL_hints.h) ========
 
 SDL_SetHintWithPriority(name:const_char_p, value:const_char_p, priority:SDL_HintPriority):SDL_bool
@@ -66,15 +96,15 @@ SDL_GetHint(name:const_char_p):const_char_p
 
 SDL_GetHintBoolean(name:const_char_p, default_value:SDL_bool):SDL_bool
 
-SDL_AddHintCallback(name:const_char_p, callback:SDL_HintCallback, userdata:void_p):void
+//SDL_AddHintCallback(name:const_char_p, callback:SDL_HintCallback, userdata:void_p):void
 
-SDL_DelHintCallback(name:const_char_p, callback:SDL_HintCallback, userdata:void_p):void
+//SDL_DelHintCallback(name:const_char_p, callback:SDL_HintCallback, userdata:void_p):void
 
 SDL_ClearHints():void
 
 //======== Error Handling (SDL_error.h) ========
 
-SDL_SetError(fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 1:SDL_PRINTF_VARARG_FUNC):int
+//SDL_SetError(fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 1:SDL_PRINTF_VARARG_FUNC):int
 
 SDL_GetError():const_char_p
 
@@ -92,45 +122,45 @@ SDL_LogGetPriority(category:int):SDL_LogPriority
 
 SDL_LogResetPriorities():void
 
-SDL_Log(fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 1:SDL_PRINTF_VARARG_FUNC):void
+//SDL_Log(fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 1:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogVerbose(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogVerbose(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogDebug(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogDebug(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogInfo(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogInfo(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogWarn(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogWarn(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogError(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogError(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogCritical(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogCritical(category:int, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 2:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogMessage(category:int, priority:SDL_LogPriority, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 3:SDL_PRINTF_VARARG_FUNC):void
+//SDL_LogMessage(category:int, priority:SDL_LogPriority, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 3:SDL_PRINTF_VARARG_FUNC):void
 
-SDL_LogMessageV(category:int, priority:SDL_LogPriority, fmt:const_char_p, ap:va_list):void
+//SDL_LogMessageV(category:int, priority:SDL_LogPriority, fmt:const_char_p, ap:va_list):void
 
-SDL_LogGetOutputFunction(callback:SDL_LogOutputFunction_p, userdata:void_pp):void
+//SDL_LogGetOutputFunction(callback:SDL_LogOutputFunction_p, userdata:void_pp):void
 
-SDL_LogSetOutputFunction(callback:SDL_LogOutputFunction, userdata:void_p):void
+//SDL_LogSetOutputFunction(callback:SDL_LogOutputFunction, userdata:void_p):void
 
 //======== Assertions (SDL_assert.h) ========
 
-SDL_ReportAssertion(*:SDL_AssertData, *:const_char, *:const_char, :int):SDL_AssertState
+//SDL_ReportAssertion(*:SDL_AssertData, *:const_char, *:const_char, :int):SDL_AssertState
 
-SDL_SetAssertionHandler(handler:SDL_AssertionHandler, userdata:void_p):void
+//SDL_SetAssertionHandler(handler:SDL_AssertionHandler, userdata:void_p):void
 
-SDL_GetDefaultAssertionHandler():SDL_AssertionHandler
+//SDL_GetDefaultAssertionHandler():SDL_AssertionHandler
 
-SDL_GetAssertionHandler(puserdata:void_pp):SDL_AssertionHandler
+//SDL_GetAssertionHandler(puserdata:void_pp):SDL_AssertionHandler
 
-SDL_GetAssertionReport():const_SDL_AssertData_p
+//SDL_GetAssertionReport():const_SDL_AssertData_p
 
 SDL_ResetAssertionReport():void
 
 //======== Querying SDL Version (SDL_version.h) ========
 
-SDL_GetVersion(ver:SDL_version_p):void
+//SDL_GetVersion(ver:SDL_version_p):void
 
 SDL_GetRevision():const_char_p
 
@@ -152,16 +182,17 @@ SDL_GetNumVideoDisplays():int
 
 SDL_GetDisplayName(displayIndex:int):const_char_p
 
-SDL_GetDisplayBounds(displayIndex:int, rect:SDL_Rect_p):int
+//SDL_GetDisplayBounds(displayIndex:int, rect:SDL_Rect_p):int
 
-SDL_GetDisplayUsableBounds(displayIndex:int, rect:SDL_Rect_p):int
+//SDL_GetDisplayUsableBounds(displayIndex:int, rect:SDL_Rect_p):int
 
-SDL_GetDisplayDPI(displayIndex:int, ddpi:float_p, hdpi:float_p, vdpi:float_p):int
+//SDL_GetDisplayDPI(displayIndex:int, ddpi:float_p, hdpi:float_p, vdpi:float_p):int
 
-SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
+//SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
 
 SDL_GetNumDisplayModes(displayIndex:int):int
 
+/*
 SDL_GetDisplayMode(displayIndex:int, modeIndex:int, mode:SDL_DisplayMode_p):int
 
 SDL_GetDesktopDisplayMode(displayIndex:int, mode:SDL_DisplayMode_p):int
