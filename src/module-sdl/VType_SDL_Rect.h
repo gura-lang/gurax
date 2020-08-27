@@ -1,59 +1,59 @@
 //==============================================================================
-// VType_SDL_Color.h
+// VType_SDL_Rect.h
 //==============================================================================
-#ifndef GURAX_MODULE_SDL_VTYPE_SDL_COLOR_H
-#define GURAX_MODULE_SDL_VTYPE_SDL_COLOR_H
+#ifndef GURAX_MODULE_SDL_VTYPE_SDL_RECT_H
+#define GURAX_MODULE_SDL_VTYPE_SDL_RECT_H
 #include "module-sdl.h"
 
 Gurax_BeginModuleScope(sdl)
 
 //------------------------------------------------------------------------------
-// VType_SDL_Color
+// VType_SDL_Rect
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_SDL_Color : public VType {
+class GURAX_DLLDECLARE VType_SDL_Rect : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_SDL_Color VTYPE_SDL_Color;
+extern GURAX_DLLDECLARE VType_SDL_Rect VTYPE_SDL_Rect;
 
 //------------------------------------------------------------------------------
-// Value_SDL_Color
+// Value_SDL_Rect
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_SDL_Color : public Value_Object {
+class GURAX_DLLDECLARE Value_SDL_Rect : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_SDL_Color);
+	Gurax_DeclareReferable(Value_SDL_Rect);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_SDL_Color");
+	Gurax_MemoryPoolAllocator("Value_SDL_Rect");
 protected:
-	SDL_Color _entity;
+	SDL_Rect _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_SDL_Color(VType& vtype = VTYPE_SDL_Color) : Value_Object(vtype) {}
-	explicit Value_SDL_Color(const SDL_Color& entity, VType& vtype = VTYPE_SDL_Color) :
+	explicit Value_SDL_Rect(VType& vtype = VTYPE_SDL_Rect) : Value_Object(vtype) {}
+	explicit Value_SDL_Rect(const SDL_Rect& entity, VType& vtype = VTYPE_SDL_Rect) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
-	Value_SDL_Color(const Value_SDL_Color& src) = delete;
-	Value_SDL_Color& operator=(const Value_SDL_Color& src) = delete;
+	Value_SDL_Rect(const Value_SDL_Rect& src) = delete;
+	Value_SDL_Rect& operator=(const Value_SDL_Rect& src) = delete;
 	// Move constructor/operator
-	Value_SDL_Color(Value_SDL_Color&& src) noexcept = delete;
-	Value_SDL_Color& operator=(Value_SDL_Color&& src) noexcept = delete;
+	Value_SDL_Rect(Value_SDL_Rect&& src) noexcept = delete;
+	Value_SDL_Rect& operator=(Value_SDL_Rect&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_SDL_Color() = default;
+	~Value_SDL_Rect() = default;
 public:
-	SDL_Color& GetEntity() { return _entity; }
-	const SDL_Color& GetEntity() const { return _entity; }
+	SDL_Rect& GetEntity() { return _entity; }
+	const SDL_Rect& GetEntity() const { return _entity; }
 public:
-	static SDL_Color& GetEntity(Value& value) {
-		return dynamic_cast<Value_SDL_Color&>(value).GetEntity();
+	static SDL_Rect& GetEntity(Value& value) {
+		return dynamic_cast<Value_SDL_Rect&>(value).GetEntity();
 	}
-	static const SDL_Color& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_SDL_Color&>(value).GetEntity();
+	static const SDL_Rect& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_SDL_Rect&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value
@@ -63,11 +63,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			&_entity == &Value_SDL_Color::GetEntity(*pValue);
+			&_entity == &Value_SDL_Rect::GetEntity(*pValue);
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			&_entity < &Value_SDL_Color::GetEntity(*pValue) :
+			&_entity < &Value_SDL_Rect::GetEntity(*pValue) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

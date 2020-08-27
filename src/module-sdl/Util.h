@@ -6,6 +6,9 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(sdl)
+
+void IssueError_SDL();
+
 Gurax_EndModuleScope(sdl)
 
 #endif

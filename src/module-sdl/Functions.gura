@@ -51,6 +51,7 @@ r.DeclareType_Number('SDL_ThreadPriority')
 r.DeclareType_Number('SDL_WinRT_Path')
 r.DeclareType_Number('SDL_WindowEventID')
 r.DeclareType_Number('SDL_WindowFlags')
+r.DeclareType_Number('SDL_DisplayOrientation')
 
 r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	codePicker = R'''
@@ -183,12 +184,39 @@ SDL_GetNumVideoDisplays():int
 SDL_GetDisplayName(displayIndex:int):const_char_p
 
 //SDL_GetDisplayBounds(displayIndex:int, rect:SDL_Rect_p):int
+SDL_GetDisplayBounds(displayIndex:int):any = \
+	R'''
+	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
+	if (SDL_GetDisplayBounds(displayIndex, &pValue->GetEntity()) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return pValue.release();
+	'''
 
 //SDL_GetDisplayUsableBounds(displayIndex:int, rect:SDL_Rect_p):int
+SDL_GetDisplayUsableBounds(displayIndex:int):any = \
+	R'''
+	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
+	if (SDL_GetDisplayUsableBounds(displayIndex, &pValue->GetEntity()) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return pValue.release();
+	'''
 
 //SDL_GetDisplayDPI(displayIndex:int, ddpi:float_p, hdpi:float_p, vdpi:float_p):int
+SDL_GetDisplayDPI(displayIndex:int):any = \
+	R'''
+	float ddpi, hdpi, vdpi;
+	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_List::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
+	'''
 
-//SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
+SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
 
 SDL_GetNumDisplayModes(displayIndex:int):int
 

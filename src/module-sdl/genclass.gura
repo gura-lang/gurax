@@ -152,7 +152,6 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_${className}() = delete;
 	explicit Value_${className}(VType& vtype = VTYPE_${className}) : Value_Object(vtype) {}
 	explicit Value_${className}(const ${entityName}& entity, VType& vtype = VTYPE_${className}) :
 		Value_Object(vtype), _entity(entity) {}

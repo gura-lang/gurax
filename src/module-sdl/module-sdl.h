@@ -7,8 +7,8 @@
 #include <SDL.h>
 #include "Util.h"
 #include "Functions.h"
-
 #include "VType_SDL_Color.h"
+#include "VType_SDL_Rect.h"
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)

@@ -507,6 +507,98 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayName_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
+// sdl.SDL_GetDisplayBounds(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDisplayBounds_gurax, "SDL_GetDisplayBounds")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
+	if (SDL_GetDisplayBounds(displayIndex, &pValue->GetEntity()) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return pValue.release();
+}
+
+// sdl.SDL_GetDisplayUsableBounds(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDisplayUsableBounds_gurax, "SDL_GetDisplayUsableBounds")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
+	if (SDL_GetDisplayUsableBounds(displayIndex, &pValue->GetEntity()) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return pValue.release();
+}
+
+// sdl.SDL_GetDisplayDPI(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDisplayDPI_gurax, "SDL_GetDisplayDPI")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	float ddpi, hdpi, vdpi;
+	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_List::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
+}
+
+// sdl.SDL_GetDisplayOrientation(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDisplayOrientation_gurax, "SDL_GetDisplayOrientation")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDisplayOrientation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_DisplayOrientation rtn = SDL_GetDisplayOrientation(displayIndex);
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_GetNumDisplayModes(displayIndex:Number)
 Gurax_DeclareFunctionAlias(SDL_GetNumDisplayModes_gurax, "SDL_GetNumDisplayModes")
 {
@@ -556,6 +648,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentVideoDriver_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetNumVideoDisplays_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayBounds_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayUsableBounds_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayDPI_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayOrientation_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetNumDisplayModes_gurax));
 }
 

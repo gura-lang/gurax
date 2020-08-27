@@ -72,6 +72,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+    Assign(VTYPE_SDL_Color);
+    Assign(VTYPE_SDL_Rect);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;
