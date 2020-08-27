@@ -175,6 +175,8 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
+	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.
+	argument.SetValueThis(Value::nil());
 	return argument.ReturnValue(processor, pValueThis.release());
 }
 
