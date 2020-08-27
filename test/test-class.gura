@@ -468,3 +468,12 @@ TestCase('Call to class method') {
 	a = A()
 	a.f()
 }
+
+TestCase('Constructor call with mapping') {
+	A = class {
+		x
+		__init__(x):map = { this.x = x }
+	}
+	tbl = A([1, 2, 3]):list
+	Println(tbl::x):noMap
+}
