@@ -220,8 +220,8 @@ bool Parser::ReduceTwoTokens()
 	int lineNoBtm = pToken2->GetLineNoBtm();
 	if (pToken1->IsType(TokenType::LParenthesis)) {
 		if (pToken2->IsType(TokenType::RParenthesis)) {
-			DBGPARSER(::printf("Reduce: Expr(Iterer) -> '(' ')'\n"));
-			pExprGen.reset(new Expr_Iterer(pToken1->GetExprLink().Reference()));
+			DBGPARSER(::printf("Reduce: Expr(Tuple) -> '(' ')'\n"));
+			pExprGen.reset(new Expr_Tuple(pToken1->GetExprLink().Reference()));
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '(' -> '(' EndOfLine\n"));
 			tokenStack.Push(pToken1.release());
@@ -611,17 +611,17 @@ bool Parser::ReduceThreeTokens()
 	} else if (pToken1->IsType(TokenType::LParenthesis) && pToken2->IsType(TokenType::Expr)) {
 		ExprLink& exprLink = pToken1->GetExprLink();
 		if (pToken3->IsType(TokenType::RParenthesis)) {
-			if (pToken1->GetItererFlag()) {
-				DBGPARSER(::printf("Reduce: Expr(Iterer) -> '(' Expr ')'\n"));
+			if (pToken1->GetTupleFlag()) {
+				DBGPARSER(::printf("Reduce: Expr(Tuple) -> '(' Expr ')'\n"));
 				exprLink.AddExpr(pToken2->GetExpr()->Reference());
-				pExprGen.reset(new Expr_Iterer(exprLink.Reference()));
+				pExprGen.reset(new Expr_Tuple(exprLink.Reference()));
 			} else {
 				DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
 				pExprGen.reset(pToken2->GetExpr()->Reference());	// simply removes parenthesis
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '(' -> '(' Expr ','\n"));
-			pToken1->SetItererFlag(true);
+			pToken1->SetTupleFlag(true);
 			exprLink.AddExpr(pToken2->GetExpr()->Reference());
 			tokenStack.Push(pToken1->Reference());
 			return true;

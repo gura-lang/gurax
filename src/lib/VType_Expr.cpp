@@ -248,21 +248,21 @@ Gurax_ImplementMethod(Expr, IsIndexer)
 	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Indexer>());
 }
 
-// Expr#IsIterer()
-Gurax_DeclareMethod(Expr, IsIterer)
+// Expr#IsTuple()
+Gurax_DeclareMethod(Expr, IsTuple)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Iterer");
+		"Returns `true` if the expression is Tuple");
 }
 
-Gurax_ImplementMethod(Expr, IsIterer)
+Gurax_ImplementMethod(Expr, IsTuple)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Iterer>());
+	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Tuple>());
 }
 
 // Expr#IsLister()
@@ -809,7 +809,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, IsCaller));
 	Assign(Gurax_CreateMethod(Expr, IsIdentifier));
 	Assign(Gurax_CreateMethod(Expr, IsIndexer));
-	Assign(Gurax_CreateMethod(Expr, IsIterer));
+	Assign(Gurax_CreateMethod(Expr, IsTuple));
 	Assign(Gurax_CreateMethod(Expr, IsLister));
 	Assign(Gurax_CreateMethod(Expr, IsMember));
 	Assign(Gurax_CreateMethod(Expr, IsPureAssign));

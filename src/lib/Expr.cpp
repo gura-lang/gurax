@@ -1018,11 +1018,11 @@ String Expr_Block::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Expr_Iterer : Expr_Collector
+// Expr_Tuple : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Iterer::typeInfo("Iterer");
+const Expr::TypeInfo Expr_Tuple::typeInfo("Tuple");
 
-void Expr_Iterer::Compose(Composer& composer)
+void Expr_Tuple::Compose(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, *this);										// [List]
@@ -1033,7 +1033,7 @@ void Expr_Iterer::Compose(Composer& composer)
 	composer.Add_GenIterator(*this);											// [Iterator]
 }
 
-String Expr_Iterer::ToString(const StringStyle& ss) const
+String Expr_Tuple::ToString(const StringStyle& ss) const
 {
 	String str;
 	if (GetExprLinkElem().CountSequence() == 1) {

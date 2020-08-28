@@ -65,7 +65,7 @@ inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 //        +- Expr_Collector <-+- Expr_Root
 //        |                   +- Expr_Block
 //        |                   +- Expr_Lister
-//        |                   `- Expr_Iterer
+//        |                   `- Expr_Tuple
 //        `- Expr_Composite <-+- Expr_Indexer
 //                            `- Expr_Caller
 //------------------------------------------------------------------------------
@@ -833,16 +833,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Expr_Iterer : Expr_Collector
+// Expr_Tuple : Expr_Collector
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Iterer : public Expr_Collector {
+class GURAX_DLLDECLARE Expr_Tuple : public Expr_Collector {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Expr_Iterer);
+	Gurax_DeclareReferable(Expr_Tuple);
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Iterer(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
+	Expr_Tuple(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
