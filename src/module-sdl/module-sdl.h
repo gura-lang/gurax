@@ -8,6 +8,7 @@
 #include "Util.h"
 #include "Functions.h"
 #include "VType_SDL_Color.h"
+#include "VType_SDL_DisplayMode.h"
 #include "VType_SDL_Rect.h"
 #include "VType_SDL_Window.h"
 

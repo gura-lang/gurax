@@ -36,7 +36,9 @@ target_sources(sdl.gurd PRIVATE
 	Util.cpp
 	Functions.cpp
 	VTYPE_SDL_Color.cpp
-	VTYPE_SDL_Rect.cpp)
+	VTYPE_SDL_DisplayMode.cpp
+	VTYPE_SDL_Rect.cpp
+	VTYPE_SDL_Window.cpp)
 
 #-------------------------------------------------------------------------------
 # Link
