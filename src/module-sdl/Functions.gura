@@ -220,13 +220,37 @@ SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
 
 SDL_GetNumDisplayModes(displayIndex:int):int
 
+SDL_GetDisplayMode(displayIndex:int, modeIndex:int):any = \
+	R'''
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+	'''
+
+SDL_GetDesktopDisplayMode(displayIndex:int):any = \
+	R'''
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+	'''
+
+SDL_GetCurrentDisplayMode(displayIndex:int):any = \
+	R'''
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+	'''
+
 /*
-SDL_GetDisplayMode(displayIndex:int, modeIndex:int, mode:SDL_DisplayMode_p):int
-
-SDL_GetDesktopDisplayMode(displayIndex:int, mode:SDL_DisplayMode_p):int
-
-SDL_GetCurrentDisplayMode(displayIndex:int, mode:SDL_DisplayMode_p):int
-
 SDL_GetClosestDisplayMode(displayIndex:int, mode:const_SDL_DisplayMode_p, closest:SDL_DisplayMode_p):SDL_DisplayMode_p
 
 SDL_GetWindowDisplayIndex(window:SDL_Window_p):int

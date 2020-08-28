@@ -619,6 +619,80 @@ Gurax_ImplementFunctionEx(SDL_GetNumDisplayModes_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GetDisplayMode(displayIndex:Number, modeIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDisplayMode_gurax, "SDL_GetDisplayMode")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("modeIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	int modeIndex = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+}
+
+// sdl.SDL_GetDesktopDisplayMode(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetDesktopDisplayMode_gurax, "SDL_GetDesktopDisplayMode")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+}
+
+// sdl.SDL_GetCurrentDisplayMode(displayIndex:Number)
+Gurax_DeclareFunctionAlias(SDL_GetCurrentDisplayMode_gurax, "SDL_GetCurrentDisplayMode")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int displayIndex = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_DisplayMode(mode);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -653,6 +727,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayDPI_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayOrientation_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetNumDisplayModes_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDesktopDisplayMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentDisplayMode_gurax));
 }
 
 Gurax_EndModuleScope(sdl)
