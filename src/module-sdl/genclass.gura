@@ -147,14 +147,23 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_${className}");
 protected:
+${if (entityPointerFlag)}
+	${entityName}* _entity;
+${else}
 	${entityName} _entity;
+${end}
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	explicit Value_${className}(VType& vtype = VTYPE_${className}) : Value_Object(vtype) {}
+${if (entityPointerFlag)}
+	explicit Value_${className}(${entityName}* entity, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _entity(entity) {}
+${else}
 	explicit Value_${className}(const ${entityName}& entity, VType& vtype = VTYPE_${className}) :
 		Value_Object(vtype), _entity(entity) {}
+${end}
 	// Copy constructor/operator
 	Value_${className}(const Value_${className}& src) = delete;
 	Value_${className}& operator=(const Value_${className}& src) = delete;
@@ -165,18 +174,46 @@ protected:
 	// Destructor
 	~Value_${className}() = default;
 public:
+${if (entityPointerFlag)}
+	${entityName}* GetEntity() { return _entity; }
+	const ${entityName}* GetEntity() const { return _entity; }
+${else}
 	${entityName}& GetEntity() { return _entity; }
 	const ${entityName}& GetEntity() const { return _entity; }
+${end}
 public:
+${if (entityPointerFlag)}
+	static ${entityName}* GetEntity(Value& value) {
+		return dynamic_cast<Value_${entityName}&>(value).GetEntity();
+	}
+	static const ${entityName}* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_${entityName}&>(value).GetEntity();
+	}
+${else}
 	static ${entityName}& GetEntity(Value& value) {
 		return dynamic_cast<Value_${entityName}&>(value).GetEntity();
 	}
 	static const ${entityName}& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_${entityName}&>(value).GetEntity();
 	}
+${end}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
+${if (entityPointerFlag)}
+	virtual size_t DoCalcHash() const override {
+		return reinterpret_cast<size_t>(_entity);
+	}
+	virtual bool IsEqualTo(const Value* pValue) const override {
+		return IsSameType(pValue) &&
+			_entity == Value_${className}::GetEntity(*pValue);
+	}
+	virtual bool IsLessThan(const Value* pValue) const override {
+		return IsSameType(pValue)?
+			_entity < Value_${className}::GetEntity(*pValue) :
+			GetVType().IsLessThan(pValue->GetVType());
+	}
+${else}
 	virtual size_t DoCalcHash() const override {
 		return reinterpret_cast<size_t>(&_entity);
 	}
@@ -189,6 +226,7 @@ public:
 			&_entity < &Value_${className}::GetEntity(*pValue) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
+${end}
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -325,6 +363,7 @@ options:
 main() = {
 	argopt.Parser {|p|
 		p.AddFlag('help', 'h', 'prints help')
+		p.AddFlag('pointer', 'p', 'entity as a pointer')
 		p.AddFlag('entity', 'e', 'generates entity class')
 		p.AddFlag('vtype', 'v', 'generates VType')
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
@@ -335,6 +374,7 @@ main() = {
 			sys.Exit(1)
 		}
 	}
+	entityPointerFlag = opt['pointer']
 	dotClassName = path.FileName(argv[0])
 	fields = dotClassName.Split('.'):list
 	if (fields.len == 1) {

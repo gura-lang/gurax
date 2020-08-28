@@ -9,6 +9,7 @@
 #include "Functions.h"
 #include "VType_SDL_Color.h"
 #include "VType_SDL_Rect.h"
+#include "VType_SDL_Window.h"
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)
