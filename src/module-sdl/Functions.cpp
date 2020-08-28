@@ -977,6 +977,30 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 	return Value_List::Create(new Value_Number(w), new Value_Number(h));
 }
 
+// sdl.SDL_GetWindowBordersSize(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowBordersSize_gurax, "SDL_GetWindowBordersSize")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	int top, left, bottom, right;
+	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_List::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
+}
+
 // sdl.SDL_SetWindowMinimumSize(window:SDL_Window, min_w:Number, min_h:Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowMinimumSize_gurax, "SDL_SetWindowMinimumSize")
 {
@@ -1239,6 +1263,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowPosition_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowSize_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowBordersSize_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowMinimumSize_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowMaximumSize_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowBordered_gurax));

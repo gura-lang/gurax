@@ -157,6 +157,7 @@ target_sources(guraxcore PRIVATE
 	VType_Symbol.cpp
 	VType_Template.cpp
 	VType_TimeDelta.cpp
+	VType_Tuple.cpp
 	VType_Undefined.cpp
 	VType_VType.cpp
 )

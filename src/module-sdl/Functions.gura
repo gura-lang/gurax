@@ -316,7 +316,15 @@ SDL_GetWindowSize(window:SDL_Window_p):any = \
 	return Value_List::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-//SDL_GetWindowBordersSize(window:SDL_Window_p, top:int_p, left:int_p, bottom:int_p, right:int_p):int
+SDL_GetWindowBordersSize(window:SDL_Window_p) = \
+	R'''
+	int top, left, bottom, right;
+	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_List::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
+	'''
 
 SDL_SetWindowMinimumSize(window:SDL_Window_p, min_w:int, min_h:int):void
 

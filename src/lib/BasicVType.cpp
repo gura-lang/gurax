@@ -61,6 +61,7 @@ void BasicVType::Prepare(Frame& frame)
 	VTYPE_Symbol.Prepare(frame);
 	VTYPE_Template.Prepare(frame);
 	VTYPE_TimeDelta.Prepare(frame);
+	VTYPE_Tuple.Prepare(frame);
 	VTYPE_Undefined.Prepare(frame);
 }
 
