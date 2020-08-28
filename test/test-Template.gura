@@ -245,15 +245,15 @@ TestCase('Empty iterator') {
 	tR'''
 	hello
 	${
-	()
+	[].Each()
 	}
-	${()}
+	${[].Each()}
 	gura
 	${''}
 	world
-	${()}
+	${[].Each()}
 	!!!
-	ABCD${()}EFG
+	ABCD${[].Each()}EFG
 	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------

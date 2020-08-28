@@ -1025,12 +1025,11 @@ const Expr::TypeInfo Expr_Tuple::typeInfo("Tuple");
 void Expr_Tuple::Compose(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(nExprs, *this);										// [List]
+	composer.Add_CreateTuple(nExprs, *this);									// [Tuple]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);											// [List Elem]
-		composer.Add_ListElem(0, false, false, *this);							// [List]
+		pExpr->ComposeOrNil(composer);											// [Tuple Elem]
+		composer.Add_TupleElem(0, false, *this);								// [Tuple]
 	}	
-	composer.Add_GenIterator(*this);											// [Iterator]
 }
 
 String Expr_Tuple::ToString(const StringStyle& ss) const

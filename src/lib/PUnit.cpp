@@ -1193,7 +1193,7 @@ void PUnit_CreateTuple<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (GetSizeReserve() > 0) pValueOwner->reserve(GetSizeReserve());
-	if constexpr (!discardValueFlag) processor.PushValue(new Value_List(pValueOwner.release()));
+	if constexpr (!discardValueFlag) processor.PushValue(new Value_Tuple(pValueOwner.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 

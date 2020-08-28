@@ -600,7 +600,7 @@ Expr
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   [`a, `b, `c]
-`() .. Iterer
+`() .. Tuple
   block      Expr       <Nil>
   car        Expr       <Nil>
   target     Expr       <Nil>
@@ -616,7 +616,7 @@ Expr
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   []
-`(a,) .. Iterer
+`(a,) .. Tuple
   block      Expr       <Nil>
   car        Expr       <Nil>
   target     Expr       <Nil>
@@ -632,7 +632,7 @@ Expr
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   [`a]
-`(a, b) .. Iterer
+`(a, b) .. Tuple
   block      Expr       <Nil>
   car        Expr       <Nil>
   target     Expr       <Nil>
@@ -648,7 +648,7 @@ Expr
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   [`a, `b]
-`(a, b, c) .. Iterer
+`(a, b, c) .. Tuple
   block      Expr       <Nil>
   car        Expr       <Nil>
   target     Expr       <Nil>

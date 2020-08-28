@@ -215,6 +215,12 @@ public:
 	void Add_ListElem(size_t offset, bool xlistFlag, bool expandFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_ListElem(offset, xlistFlag, expandFlag, exprSrc.Reference()));
 	}
+	void Add_CreateTuple(size_t sizeReserve, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_CreateTuple(sizeReserve, exprSrc.Reference()));
+	}
+	void Add_TupleElem(size_t offset, bool expandFlag, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_TupleElem(offset, expandFlag, exprSrc.Reference()));
+	}
 	void Add_CreateDict(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_CreateDict(exprSrc.Reference()));
 	}

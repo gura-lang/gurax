@@ -130,13 +130,13 @@ TestCase('Pointer#Put()') {
 		Println('6 elements in list')
 		(buff = B'').p.Put(elemType, [0x00, 0x11, 0x22, 0x33, 0x44, 0x55]), buff.Dump()
 		Println('0 element in iterator')
-		(buff = B'').p.Put(elemType, ()), buff.Dump()
+		(buff = B'').p.Put(elemType, [].Each()), buff.Dump()
 		Println('1 element in iterator')
-		(buff = B'').p.Put(elemType, (0x00,)), buff.Dump()
+		(buff = B'').p.Put(elemType, [0x00].Each()), buff.Dump()
 		Println('2 elements in iterator')
-		(buff = B'').p.Put(elemType, (0x00, 0x11)), buff.Dump()
+		(buff = B'').p.Put(elemType, [0x00, 0x11].Each()), buff.Dump()
 		Println('6 elements in iterator')
-		(buff = B'').p.Put(elemType, (0x00, 0x11, 0x22, 0x33, 0x44, 0x55)), buff.Dump()
+		(buff = B'').p.Put(elemType, [0x00, 0x11, 0x22, 0x33, 0x44, 0x55].Each()), buff.Dump()
 	}
 }
 
