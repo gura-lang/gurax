@@ -38,6 +38,7 @@ target_sources(sdl.gurd PRIVATE
 	VTYPE_SDL_Color.cpp
 	VTYPE_SDL_DisplayMode.cpp
 	VTYPE_SDL_Rect.cpp
+	VTYPE_SDL_Surface.cpp
 	VTYPE_SDL_Window.cpp)
 
 #-------------------------------------------------------------------------------

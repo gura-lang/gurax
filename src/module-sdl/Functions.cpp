@@ -693,6 +693,502 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argu
 	return new Value_SDL_DisplayMode(mode);
 }
 
+// sdl.SDL_GetWindowDisplayIndex(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayIndex_gurax, "SDL_GetWindowDisplayIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowDisplayIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	int rtn = SDL_GetWindowDisplayIndex(window);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetWindowPixelFormat(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowPixelFormat_gurax, "SDL_GetWindowPixelFormat")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowPixelFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	Uint32 rtn = SDL_GetWindowPixelFormat(window);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_CreateWindow(title:String, x:Number, y:Number, w:Number, h:Number, flags:Number)
+Gurax_DeclareFunctionAlias(SDL_CreateWindow_gurax, "SDL_CreateWindow")
+{
+	Declare(VTYPE_SDL_Window, Flag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CreateWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* title = args_gurax.PickString();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	int w = args_gurax.PickNumber<int>();
+	int h = args_gurax.PickNumber<int>();
+	Uint32 flags = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_Window* rtn = SDL_CreateWindow(title, x, y, w, h, flags);
+	return new Value_SDL_Window(rtn);
+}
+
+// sdl.SDL_GetWindowID(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowID_gurax, "SDL_GetWindowID")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	Uint32 rtn = SDL_GetWindowID(window);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetWindowFromID(id:Number)
+Gurax_DeclareFunctionAlias(SDL_GetWindowFromID_gurax, "SDL_GetWindowFromID")
+{
+	Declare(VTYPE_SDL_Window, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowFromID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 id = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_Window* rtn = SDL_GetWindowFromID(id);
+	return new Value_SDL_Window(rtn);
+}
+
+// sdl.SDL_GetWindowFlags(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowFlags_gurax, "SDL_GetWindowFlags")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	Uint32 rtn = SDL_GetWindowFlags(window);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetWindowTitle(window:SDL_Window, title:String)
+Gurax_DeclareFunctionAlias(SDL_SetWindowTitle_gurax, "SDL_SetWindowTitle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowTitle_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	const char* title = args_gurax.PickString();
+	// Function body
+	SDL_SetWindowTitle(window, title);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetWindowTitle(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowTitle_gurax, "SDL_GetWindowTitle")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowTitle_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	const char* rtn = SDL_GetWindowTitle(window);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_SetWindowIcon(window:SDL_Window, icon:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_SetWindowIcon_gurax, "SDL_SetWindowIcon")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("icon", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowIcon_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	SDL_Surface* icon = args_gurax.Pick<Value_SDL_Surface>().GetEntity();
+	// Function body
+	SDL_SetWindowIcon(window, icon);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SetWindowPosition(window:SDL_Window, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(SDL_SetWindowPosition_gurax, "SDL_SetWindowPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SetWindowPosition(window, x, y);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetWindowPosition(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowPosition_gurax, "SDL_GetWindowPosition")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	int x, y;
+	SDL_GetWindowPosition(window, &x, &y);
+	return Value_List::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// sdl.SDL_SetWindowSize(window:SDL_Window, w:Number, h:Number)
+Gurax_DeclareFunctionAlias(SDL_SetWindowSize_gurax, "SDL_SetWindowSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	int w = args_gurax.PickNumber<int>();
+	int h = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SetWindowSize(window, w, h);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetWindowSize(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowSize_gurax, "SDL_GetWindowSize")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	return Value_List::Create(new Value_Number(w), new Value_Number(h));
+}
+
+// sdl.SDL_SetWindowMinimumSize(window:SDL_Window, min_w:Number, min_h:Number)
+Gurax_DeclareFunctionAlias(SDL_SetWindowMinimumSize_gurax, "SDL_SetWindowMinimumSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("min_w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("min_h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowMinimumSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	int min_w = args_gurax.PickNumber<int>();
+	int min_h = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SetWindowMinimumSize(window, min_w, min_h);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SetWindowMaximumSize(window:SDL_Window, max_w:Number, max_h:Number)
+Gurax_DeclareFunctionAlias(SDL_SetWindowMaximumSize_gurax, "SDL_SetWindowMaximumSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("max_w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("max_h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowMaximumSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	int max_w = args_gurax.PickNumber<int>();
+	int max_h = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SetWindowMaximumSize(window, max_w, max_h);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SetWindowBordered(window:SDL_Window, bordered:Bool)
+Gurax_DeclareFunctionAlias(SDL_SetWindowBordered_gurax, "SDL_SetWindowBordered")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bordered", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowBordered_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	SDL_bool bordered = static_cast<SDL_bool>(args_gurax.PickBool());
+	// Function body
+	SDL_SetWindowBordered(window, bordered);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SetWindowResizable(window:SDL_Window, resizable:Bool)
+Gurax_DeclareFunctionAlias(SDL_SetWindowResizable_gurax, "SDL_SetWindowResizable")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("resizable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowResizable_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	SDL_bool resizable = static_cast<SDL_bool>(args_gurax.PickBool());
+	// Function body
+	SDL_SetWindowResizable(window, resizable);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_ShowWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_ShowWindow_gurax, "SDL_ShowWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_ShowWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_ShowWindow(window);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_HideWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_HideWindow_gurax, "SDL_HideWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HideWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_HideWindow(window);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_RaiseWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_RaiseWindow_gurax, "SDL_RaiseWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RaiseWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_RaiseWindow(window);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_MaximizeWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_MaximizeWindow_gurax, "SDL_MaximizeWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MaximizeWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_MaximizeWindow(window);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_MinimizeWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_MinimizeWindow_gurax, "SDL_MinimizeWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MinimizeWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_MinimizeWindow(window);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_RestoreWindow(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_RestoreWindow_gurax, "SDL_RestoreWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RestoreWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntity();
+	// Function body
+	SDL_RestoreWindow(window);
+	return Gurax::Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -730,6 +1226,29 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetDisplayMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetDesktopDisplayMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentDisplayMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowDisplayIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowPixelFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CreateWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowFromID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowFlags_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowTitle_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowTitle_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowIcon_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowPosition_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowPosition_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowMinimumSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowMaximumSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowBordered_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowResizable_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_ShowWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HideWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RaiseWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MaximizeWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MinimizeWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RestoreWindow_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

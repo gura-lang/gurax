@@ -6,6 +6,19 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
+cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
+this.DeclareType(decl, cType, vtypeFullName,
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(rtn);
+	''')
+
 r.DeclareType_Number('Sint8')
 r.DeclareType_Number('Uint8')
 r.DeclareType_Number('Sint16')
@@ -69,6 +82,9 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	${this.cType} rtn = ${caller};
 	return new Gurax::Value_Bool(!!rtn);
 	''')
+
+r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
+r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
@@ -250,20 +266,21 @@ SDL_GetCurrentDisplayMode(displayIndex:int):any = \
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
-/*
-SDL_GetClosestDisplayMode(displayIndex:int, mode:const_SDL_DisplayMode_p, closest:SDL_DisplayMode_p):SDL_DisplayMode_p
+//SDL_GetClosestDisplayMode(displayIndex:int, mode:const_SDL_DisplayMode_p, closest:SDL_DisplayMode_p):SDL_DisplayMode_p
 
 SDL_GetWindowDisplayIndex(window:SDL_Window_p):int
 
+/*
 SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
 
 SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int
+*/
 
 SDL_GetWindowPixelFormat(window:SDL_Window_p):Uint32
 
 SDL_CreateWindow(title:const_char_p, x:int, y:int, w:int, h:int, flags:Uint32):SDL_Window_p
 
-SDL_CreateWindowFrom(data:const_void_p):SDL_Window_p
+//SDL_CreateWindowFrom(data:const_void_p):SDL_Window_p
 
 SDL_GetWindowID(window:SDL_Window_p):Uint32
 
@@ -277,27 +294,37 @@ SDL_GetWindowTitle(window:SDL_Window_p):const_char_p
 
 SDL_SetWindowIcon(window:SDL_Window_p, icon:SDL_Surface_p):void
 
-SDL_SetWindowData(window:SDL_Window_p, name:const_char_p, userdata:void_p):void_p
+//SDL_SetWindowData(window:SDL_Window_p, name:const_char_p, userdata:void_p):void_p
 
-SDL_GetWindowData(window:SDL_Window_p, name:const_char_p):void_p
+//SDL_GetWindowData(window:SDL_Window_p, name:const_char_p):void_p
 
 SDL_SetWindowPosition(window:SDL_Window_p, x:int, y:int):void
 
-SDL_GetWindowPosition(window:SDL_Window_p, x:int_p, y:int_p):void
+SDL_GetWindowPosition(window:SDL_Window_p):any = \
+	R'''
+	int x, y;
+	SDL_GetWindowPosition(window, &x, &y);
+	return Value_List::Create(new Value_Number(x), new Value_Number(y));
+	'''
 
 SDL_SetWindowSize(window:SDL_Window_p, w:int, h:int):void
 
-SDL_GetWindowSize(window:SDL_Window_p, w:int_p, h:int_p):void
+SDL_GetWindowSize(window:SDL_Window_p):any = \
+	R'''
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	return Value_List::Create(new Value_Number(w), new Value_Number(h));
+	'''
 
-SDL_GetWindowBordersSize(window:SDL_Window_p, top:int_p, left:int_p, bottom:int_p, right:int_p):int
+//SDL_GetWindowBordersSize(window:SDL_Window_p, top:int_p, left:int_p, bottom:int_p, right:int_p):int
 
 SDL_SetWindowMinimumSize(window:SDL_Window_p, min_w:int, min_h:int):void
 
-SDL_GetWindowMinimumSize(window:SDL_Window_p, w:int_p, h:int_p):void
+//SDL_GetWindowMinimumSize(window:SDL_Window_p, w:int_p, h:int_p):void
 
 SDL_SetWindowMaximumSize(window:SDL_Window_p, max_w:int, max_h:int):void
 
-SDL_GetWindowMaximumSize(window:SDL_Window_p, w:int_p, h:int_p):void
+//SDL_GetWindowMaximumSize(window:SDL_Window_p, w:int_p, h:int_p):void
 
 SDL_SetWindowBordered(window:SDL_Window_p, bordered:SDL_bool):void
 
@@ -315,6 +342,7 @@ SDL_MinimizeWindow(window:SDL_Window_p):void
 
 SDL_RestoreWindow(window:SDL_Window_p):void
 
+/*
 SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int
 
 SDL_GetWindowSurface(window:SDL_Window_p):SDL_Surface_p
