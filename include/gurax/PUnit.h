@@ -1209,6 +1209,91 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_CreateTuple
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_CreateTuple : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _sizeReserve;
+public:
+	// Constructor
+	explicit PUnit_CreateTuple(size_t sizeReserve, Expr* pExprSrc) :
+								PUnit(pExprSrc), _sizeReserve(sizeReserve)  {}
+public:
+	size_t GetSizeReserve() const { return _sizeReserve; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_CreateTuple : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_CreateTuple");
+private:
+	size_t _sizeReserve;
+public:
+	PUnitFactory_CreateTuple(size_t sizeReserve, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _sizeReserve(sizeReserve) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_CreateTuple<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_TupleElem
+//------------------------------------------------------------------------------
+template<bool discardValueFlag, bool expandFlag>
+class GURAX_DLLDECLARE PUnit_TupleElem : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
+public:
+	// Constructor
+	explicit PUnit_TupleElem(size_t offset, Expr* pExprSrc) :
+									PUnit(pExprSrc), _offset(offset)  {}
+public:
+	size_t GetOffset() const { return _offset; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_TupleElem : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_TupleElem");
+private:
+	size_t _offset;
+	bool _expandFlag;
+public:
+	PUnitFactory_TupleElem(size_t offset, bool expandFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _offset(offset), _expandFlag(expandFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_TupleElem<false, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_CreateDict
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

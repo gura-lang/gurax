@@ -1095,7 +1095,7 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 	RefPtr<Value> pValueElem(processor.PopValue());
 	ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 	if (pValueElem->IsIterator()) {
-		if (expandFlag) {
+		if constexpr (expandFlag) {
 			Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
 			if (!iterator.MustBeFinite()) {
 				processor.ErrorDone();
@@ -1110,7 +1110,7 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 			valueTypedOwner.Add(pValueElem.release());
 		}
 	} else if (pValueElem->IsList()) {
-		if (expandFlag) {
+		if constexpr (expandFlag) {
 			if (xlistFlag) {
 				valueTypedOwner.AddX(Value_List::GetValueTypedOwner(*pValueElem));
 			} else {
@@ -1120,7 +1120,7 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 			valueTypedOwner.Add(pValueElem.release());
 		}
 	} else if (pValueElem->IsType(VTYPE_Array)) {
-		if (expandFlag) {
+		if constexpr (expandFlag) {
 			const Array& array = Value_Array::GetArray(*pValueElem);
 			array.ExtractElems(valueTypedOwner.GetValueOwnerToModify());
 			if (array.IsMultidemensional()) {
@@ -1178,6 +1178,116 @@ PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 			} else {
 				_pPUnitCreated = new PUnit_ListElem<false, false, false>(_offset, _pExprSrc.Reference());
 			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_CreateTuple
+// Stack View: [] -> [Tuple] (continue)
+//                -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_CreateTuple<discardValueFlag>::Exec(Processor& processor) const
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (GetSizeReserve() > 0) pValueOwner->reserve(GetSizeReserve());
+	if constexpr (!discardValueFlag) processor.PushValue(new Value_List(pValueOwner.release()));
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_CreateTuple<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "CreateTuple()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_CreateTuple::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_CreateTuple<true>(_sizeReserve, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_CreateTuple<false>(_sizeReserve, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_TupleElem
+// Stack View: [Tuple .. Elem] -> [Tuple ..] (continue)
+//                            -> []        (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag, bool expandFlag>
+void PUnit_TupleElem<discardValueFlag, expandFlag>::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValueElem(processor.PopValue());
+	ValueOwner& valueOwner = Value_Tuple::GetValueOwner(processor.PeekValue(GetOffset()));
+	valueOwner.push_back(pValueElem.release());
+#if 0
+	if (pValueElem->IsIterator()) {
+		if constexpr (expandFlag) {
+			Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
+			if (!iterator.MustBeFinite()) {
+				processor.ErrorDone();
+				return;
+			}
+			valueTypedOwner.Add(iterator);
+		} else {
+			valueTypedOwner.Add(pValueElem.release());
+		}
+	} else if (pValueElem->IsList()) {
+		if constexpr (expandFlag) {
+			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+		} else {
+			valueTypedOwner.Add(pValueElem.release());
+		}
+	} else if (pValueElem->IsType(VTYPE_Array)) {
+		if constexpr (expandFlag) {
+			const Array& array = Value_Array::GetArray(*pValueElem);
+			array.ExtractElems(valueTypedOwner.GetValueOwnerToModify());
+			if (array.IsMultidemensional()) {
+				valueTypedOwner.UpdateVTypeOfElems(VTYPE_Tuple);
+			} else {
+				valueTypedOwner.UpdateVTypeOfElems(VTYPE_Number);
+			}
+		} else {
+			valueTypedOwner.Add(pValueElem.release());
+		}
+	} else {
+		valueTypedOwner.Add(pValueElem.release());
+	}
+#endif
+	if constexpr (discardValueFlag) processor.RemoveValues(0, GetOffset() + 1);
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag, bool expandFlag>
+String PUnit_TupleElem<discardValueFlag, expandFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Format("TupleElem(offsetToTuple=%zu)", GetOffset());
+	if constexpr (expandFlag) str += ":expand";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_TupleElem::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		if (_expandFlag) {
+			_pPUnitCreated = new PUnit_TupleElem<true, true>(_offset, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_TupleElem<true, false>(_offset, _pExprSrc.Reference());
+		}
+	} else {
+		if (_expandFlag) {
+			_pPUnitCreated = new PUnit_TupleElem<false, true>(_offset, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_TupleElem<false, false>(_offset, _pExprSrc.Reference());
 		}
 	}
 	return _pPUnitCreated;

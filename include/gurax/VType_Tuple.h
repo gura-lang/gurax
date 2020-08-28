@@ -48,8 +48,12 @@ protected:
 	// Destructor
 	~Value_Tuple() = default;
 public:
+	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 public:
+	static ValueOwner& GetValueOwner(Value& value) {
+		return dynamic_cast<Value_Tuple&>(value).GetValueOwner();
+	}
 	static const ValueOwner& GetValueOwner(const Value& value) {
 		return dynamic_cast<const Value_Tuple&>(value).GetValueOwner();
 	}
