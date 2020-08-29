@@ -42,9 +42,8 @@ Gurax_ImplementConstructor(Tuple)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	//RefPtr<Tuple> pTuple(new Tuple());
-	//return argument.ReturnValue(processor, new Value_Tuple(pTuple.release()));
-	return Value::nil();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	return argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
 }
 
 //-----------------------------------------------------------------------------
