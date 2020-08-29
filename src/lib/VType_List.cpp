@@ -1616,7 +1616,8 @@ String Value_List::ToString(const StringStyle& ss) const
 	if (ss.IsBracket()) {
 		return ToStringGeneric(ss, String().Format("%zuitems", GetValueOwner().size()));
 	}
-	return GetValueOwner().ToString(StringStyle::Quote_NilVisible);
+	return GetValueOwner().ToString(StringStyle(StringStyle::Flag::Quote |
+					StringStyle::Flag::NilVisible | StringStyle::Flag::WithSquare));
 }
 
 bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const

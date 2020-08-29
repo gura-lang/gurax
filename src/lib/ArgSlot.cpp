@@ -70,7 +70,8 @@ void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value>
 String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 {
 	return String().Format("%s%s%s", GetDeclArg().GetSymbol()->GetName(),
-		ss.IsCram()? "=" : " = ", GetValue().GetValueOwner().ToString(ss).c_str());
+		ss.IsCram()? "=" : " = ", GetValue().GetValueOwner().
+					ToString(StringStyle(ss).SetWithSquare()).c_str());
 }
 
 //------------------------------------------------------------------------------

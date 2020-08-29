@@ -118,7 +118,8 @@ String Value_Tuple::ToString(const StringStyle& ss) const
 	if (ss.IsBracket()) {
 		return ToStringGeneric(ss, String().Format("%zuitems", GetValueOwner().size()));
 	}
-	return GetValueOwner().ToString(StringStyle::Quote_NilVisible);
+	return GetValueOwner().ToString(StringStyle(StringStyle::Flag::Quote |
+				StringStyle::Flag::NilVisible | StringStyle::Flag::WithParenthesis));
 }
 
 }

@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-StringStyle ss = StringStyle::Quote_InvalidVisible;
+StringStyle ss(StringStyle::Flag::Quote | StringStyle::Flag::InvalidVisible | StringStyle::Flag::WithSquare);
 
 void Test_ValueMap()
 {

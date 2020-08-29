@@ -184,12 +184,12 @@ String ValueList::ToString(const StringStyle& ss) const
 	StringStyle ssMod(ss);
 	ssMod.SetQuoteString();
 	ssMod.SetQuoteSymbol();
-	str += "[";
+	str += ss.GetOpening();
 	for (auto ppValue = begin(); ppValue != end(); ++ppValue) {
 		if (ppValue != begin()) str += ssMod.GetComma();
 		str += (*ppValue)->ToString(ssMod);
 	}
-	str += "]";
+	str += ss.GetClosing();
 	return str;
 }
 
