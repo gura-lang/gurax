@@ -36,6 +36,8 @@ public:
 	size_t CountFalse() const;
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
+	Value* Get(Int pos) const { return at(pos); }
+	bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const;
 	template<typename T_Num>
 	NumList<T_Num> ToNumList() const { return Value_Number::GetNumList<T_Num>(*this); }
 	template<typename T_Num>

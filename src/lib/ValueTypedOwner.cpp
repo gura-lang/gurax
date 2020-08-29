@@ -106,6 +106,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 	return false;
 }
 
+#if 0
 bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
@@ -149,6 +150,7 @@ bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
 	}
 	return false;
 }
+#endif
 
 void ValueTypedOwner::Add(Value* pValue)
 {

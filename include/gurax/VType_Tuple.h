@@ -48,6 +48,19 @@ protected:
 	// Destructor
 	~Value_Tuple() = default;
 public:
+	static Value_Tuple* Create(Value* pValue) {
+		return new Value_Tuple(ValueOwner::Create(pValue));
+	}
+	static Value_Tuple* Create(Value* pValue1, Value* pValue2) {
+		return new Value_Tuple(ValueOwner::Create(pValue1, pValue2));
+	}
+	static Value_Tuple* Create(Value* pValue1, Value* pValue2, Value* pValue3) {
+		return new Value_Tuple(ValueOwner::Create(pValue1, pValue2, pValue3));
+	}
+	static Value_Tuple* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4) {
+		return new Value_Tuple(ValueOwner::Create(pValue1, pValue2, pValue3, pValue4));
+	}
+public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 public:
@@ -76,6 +89,7 @@ public:
 public:
 	virtual bool IsIterableOrTuple() const override { return true; }
 	virtual bool IsTuple() const override { return true; }
+	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual Iterator* DoGenIterator() const override;
 };
 

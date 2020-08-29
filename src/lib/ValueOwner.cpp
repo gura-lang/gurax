@@ -49,6 +49,44 @@ ValueOwner* ValueOwner::CloneDeep() const
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::Create(Value* pValue)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(1);
+	pValueOwner->push_back(pValue);
+	return pValueOwner.release();
+}
+
+ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(2);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	return pValueOwner.release();
+}
+
+ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2, Value* pValue3)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(3);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	return pValueOwner.release();
+}
+
+ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(4);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	pValueOwner->push_back(pValue4);
+	return pValueOwner.release();
+}
+
 ValueOwner* ValueOwner::CreateFromIterator(Iterator& iterator, bool skipNilFlag)
 {
 	if (!iterator.MustBeFinite()) return nullptr;

@@ -49,45 +49,57 @@ Gurax_ImplementConstructor(Tuple)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Tuple#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Tuple, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Tuple, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Tuple#propSkeleton
-Gurax_DeclareProperty_R(Tuple, propSkeleton)
+// Tuple#first
+Gurax_DeclareProperty_R(Tuple, first)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The first element in the tuple, or `nil` if the tuple is empty.");
+}
+
+Gurax_ImplementPropertyGetter(Tuple, first)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
+	if (valueOwner.empty()) return Value::nil();
+	return valueOwner.front()->Reference();
+}
+
+// Tuple#last
+Gurax_DeclareProperty_R(Tuple, last)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The last element in the tuple, or `nil` if the tuple is empty.");
+}
+
+Gurax_ImplementPropertyGetter(Tuple, last)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
+	if (valueOwner.empty()) return Value::nil();
+	return valueOwner.back()->Reference();
+}
+
+// Tuple#len
+Gurax_DeclareProperty_R(Tuple, len)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"The number of elements in the tuple.");
 }
 
-Gurax_ImplementPropertyGetter(Tuple, propSkeleton)
+Gurax_ImplementPropertyGetter(Tuple, len)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetValueOwner().size());
 }
 
 //------------------------------------------------------------------------------
@@ -102,9 +114,10 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Tuple));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Tuple, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Tuple, propSkeleton));
+	Assign(Gurax_CreateProperty(Tuple, first));
+	Assign(Gurax_CreateProperty(Tuple, last));
+	Assign(Gurax_CreateProperty(Tuple, len));
 }
 
 //------------------------------------------------------------------------------
@@ -119,6 +132,28 @@ String Value_Tuple::ToString(const StringStyle& ss) const
 	}
 	return GetValueOwner().ToString(StringStyle(StringStyle::Flag::Quote |
 				StringStyle::Flag::NilVisible | StringStyle::Flag::WithParenthesis));
+}
+
+Value* Value_Tuple::DoIndexGet(const Index& index) const
+{
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		return Clone();
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		Value* pValue = nullptr;
+		if (!GetValueOwner().IndexGet(valueIndex, &pValue, true)) return Value::nil();
+		return pValue;
+	} else {
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			Value* pValue = nullptr;
+			if (!GetValueOwner().IndexGet(*pValueIndex, &pValue, true)) return Value::nil();
+			pValuesRtn->push_back(pValue);
+		}
+		return new Value_Tuple(pValuesRtn.release());
+	}
 }
 
 Iterator* Value_Tuple::DoGenIterator() const

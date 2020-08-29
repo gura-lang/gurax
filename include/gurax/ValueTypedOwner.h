@@ -74,7 +74,9 @@ public:
 	bool Set(Int pos, Value* pValue);
 	Value* Get(Int pos) const;
 	bool IndexSet(const Value& valueIndex, Value* pValue);
-	bool IndexGet(const Value& valueIndex, Value** ppValue) const;
+	bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const {
+		return GetValueOwner().IndexGet(valueIndex, ppValue, tupleResultFlag);
+	}
 	void Add(Value* pValue);
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);

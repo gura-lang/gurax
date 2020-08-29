@@ -34,13 +34,16 @@ public:
 	ValueOwner* Extract(NumList<T_Num>& indices, size_t n) const;
 	ValueOwner* CloneDeep() const;
 public:
+	static ValueOwner* Create(Value* pValue);
+	static ValueOwner* Create(Value* pValue1, Value* pValue2);
+	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3);
+	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
 	template<typename T_Num>
 	static ValueOwner* CreateFromNumList(const NumList<T_Num>& nums);
 	static ValueOwner* CreateFromStringList(const StringList& strs);
 public:
 	void Set(Int pos, Value* pValue);
-	Value* Get(Int pos) const { return at(pos); }
 	void Add(Value* pValue) { push_back(pValue); }
 	void Add(const ValueList& values);
 	void AddX(const ValueList& values);

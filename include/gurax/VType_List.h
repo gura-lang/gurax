@@ -57,10 +57,18 @@ protected:
 	// Destructor
 	~Value_List() = default;
 public:
-	static Value_List* Create(Value* pValue);
-	static Value_List* Create(Value* pValue1, Value* pValue2);
-	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3);
-	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
+	static Value_List* Create(Value* pValue) {
+		return new Value_List(ValueOwner::Create(pValue));
+	}
+	static Value_List* Create(Value* pValue1, Value* pValue2) {
+		return new Value_List(ValueOwner::Create(pValue1, pValue2));
+	}
+	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3) {
+		return new Value_List(ValueOwner::Create(pValue1, pValue2, pValue3));
+	}
+	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4) {
+		return new Value_List(ValueOwner::Create(pValue1, pValue2, pValue3, pValue4));
+	}
 	template<typename T>
 	static Value_List* Create(const T* tbl, size_t n) {
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());

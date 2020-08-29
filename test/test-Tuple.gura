@@ -10,6 +10,22 @@ TestCase('PUnit') {
 	exprs::PrintPUnitWithLabel()
 }
 
+TestCase('Property') {
+	Tuple.PrintPropSlots()
+}
+
+TestCase('IndexGet') {
+	tbl = ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten')
+	Tester(`tbl)
+	Tester(`tbl[0])
+	Tester(`tbl[1])
+	Tester(`tbl[2])
+	Tester(`tbl[10])
+	Tester(`tbl[11])
+	Tester(`tbl[0, 1]);
+	Tester(`tbl[0, 1, 4, 10]);
+}
+
 TestCase('for statement') {
 	for (x in ('hello', 'world', 3, 4, 5)) {
 		Println(x)

@@ -127,6 +127,57 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	return cnt;
 }
 
+bool ValueList::IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const
+{
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int pos = valueIndexEx.GetNumber<Int>();
+		if (!FixPosition(&pos)) return false;
+		*ppValue = Get(pos)->Reference();
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		int pos = static_cast<int>(valueIndexEx.GetBool());
+		if (!FixPosition(&pos)) return false;
+		*ppValue = Get(pos)->Reference();
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
+		Value* pValue = nullptr;
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
+		for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
+			if (!IndexGet(*pValueIndexEach, &pValue, tupleResultFlag)) return false;
+			pValueOwner->push_back(pValue->Reference());
+		}
+		if (tupleResultFlag) {
+			*ppValue = new Value_Tuple(pValueOwner.release());
+		} else {
+			*ppValue = new Value_List(pValueOwner.release());
+		}
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_Iterator)) {
+		Value* pValue = nullptr;
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		const Value_Iterator& valueIndexEx = dynamic_cast<const Value_Iterator&>(valueIndex);
+		Iterator& iteratorIndex = valueIndexEx.GetIterator();
+		for (;;) {
+			RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
+			if (!pValueIndexEach) break;
+			if (!IndexGet(*pValueIndexEach, &pValue, tupleResultFlag)) return false;
+			pValueOwner->push_back(pValue->Reference());
+		}
+		if (tupleResultFlag) {
+			*ppValue = new Value_Tuple(pValueOwner.release());
+		} else {
+			*ppValue = new Value_List(pValueOwner.release());
+		}
+		return true;
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	return false;
+}
+
 DimSizes ValueList::GetShape() const
 {
 	DimSizes dimSizes;
