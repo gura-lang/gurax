@@ -60,6 +60,10 @@ public:
 	static Value_Tuple* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4) {
 		return new Value_Tuple(ValueOwner::Create(pValue1, pValue2, pValue3, pValue4));
 	}
+	template<typename T>
+	static Value_Tuple* Create(const T* tbl, size_t n) {
+		return new Value_Tuple(ValueOwner::Create(tbl, n));
+	}
 public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }

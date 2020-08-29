@@ -38,6 +38,13 @@ public:
 	static ValueOwner* Create(Value* pValue1, Value* pValue2);
 	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3);
 	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
+	template<typename T>
+	static ValueOwner* Create(const T* tbl, size_t n) {
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		pValueOwner->reserve(n);
+		for (size_t i = 0; i < n; i++) pValueOwner->push_back(new Value_Number(tbl[i]));
+		return pValueOwner.release();
+	}
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
 	template<typename T_Num>
 	static ValueOwner* CreateFromNumList(const NumList<T_Num>& nums);

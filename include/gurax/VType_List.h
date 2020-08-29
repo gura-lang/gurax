@@ -71,10 +71,7 @@ public:
 	}
 	template<typename T>
 	static Value_List* Create(const T* tbl, size_t n) {
-		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-		pValueOwner->reserve(n);
-		for (size_t i = 0; i < n; i++) pValueOwner->push_back(new Value_Number(tbl[i]));
-		return new Value_List(pValueOwner.release());
+		return new Value_List(ValueOwner::Create(tbl, n));
 	}
 public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }

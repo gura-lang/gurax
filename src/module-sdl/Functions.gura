@@ -199,7 +199,6 @@ SDL_GetNumVideoDisplays():int
 
 SDL_GetDisplayName(displayIndex:int):const_char_p
 
-//SDL_GetDisplayBounds(displayIndex:int, rect:SDL_Rect_p):int
 SDL_GetDisplayBounds(displayIndex:int):any = \
 	R'''
 	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
@@ -210,7 +209,6 @@ SDL_GetDisplayBounds(displayIndex:int):any = \
 	return pValue.release();
 	'''
 
-//SDL_GetDisplayUsableBounds(displayIndex:int, rect:SDL_Rect_p):int
 SDL_GetDisplayUsableBounds(displayIndex:int):any = \
 	R'''
 	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
@@ -221,7 +219,6 @@ SDL_GetDisplayUsableBounds(displayIndex:int):any = \
 	return pValue.release();
 	'''
 
-//SDL_GetDisplayDPI(displayIndex:int, ddpi:float_p, hdpi:float_p, vdpi:float_p):int
 SDL_GetDisplayDPI(displayIndex:int):any = \
 	R'''
 	float ddpi, hdpi, vdpi;
@@ -229,7 +226,7 @@ SDL_GetDisplayDPI(displayIndex:int):any = \
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value_List::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
+	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
 	'''
 
 SDL_GetDisplayOrientation(displayIndex:int):SDL_DisplayOrientation
@@ -270,11 +267,9 @@ SDL_GetCurrentDisplayMode(displayIndex:int):any = \
 
 SDL_GetWindowDisplayIndex(window:SDL_Window_p):int
 
-/*
-SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
+//SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
 
-SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int
-*/
+//SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int
 
 SDL_GetWindowPixelFormat(window:SDL_Window_p):Uint32
 
@@ -304,7 +299,7 @@ SDL_GetWindowPosition(window:SDL_Window_p):any = \
 	R'''
 	int x, y;
 	SDL_GetWindowPosition(window, &x, &y);
-	return Value_List::Create(new Value_Number(x), new Value_Number(y));
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 	'''
 
 SDL_SetWindowSize(window:SDL_Window_p, w:int, h:int):void
@@ -313,7 +308,7 @@ SDL_GetWindowSize(window:SDL_Window_p):any = \
 	R'''
 	int w, h;
 	SDL_GetWindowSize(window, &w, &h);
-	return Value_List::Create(new Value_Number(w), new Value_Number(h));
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
 SDL_GetWindowBordersSize(window:SDL_Window_p) = \
@@ -323,16 +318,26 @@ SDL_GetWindowBordersSize(window:SDL_Window_p) = \
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value_List::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
+	return Value_Tuple::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
 	'''
 
 SDL_SetWindowMinimumSize(window:SDL_Window_p, min_w:int, min_h:int):void
 
-//SDL_GetWindowMinimumSize(window:SDL_Window_p, w:int_p, h:int_p):void
+SDL_GetWindowMinimumSize(window:SDL_Window_p) = \
+	R'''
+	int w, h;
+	SDL_GetWindowMinimumSize(window, &w, &h);
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	'''
 
 SDL_SetWindowMaximumSize(window:SDL_Window_p, max_w:int, max_h:int):void
 
-//SDL_GetWindowMaximumSize(window:SDL_Window_p, w:int_p, h:int_p):void
+SDL_GetWindowMaximumSize(window:SDL_Window_p) = \
+	R'''
+	int w, h;
+	SDL_GetWindowMaximumSize(window, &w, &h);
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	'''
 
 SDL_SetWindowBordered(window:SDL_Window_p, bordered:SDL_bool):void
 
@@ -350,14 +355,13 @@ SDL_MinimizeWindow(window:SDL_Window_p):void
 
 SDL_RestoreWindow(window:SDL_Window_p):void
 
-/*
 SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int
 
 SDL_GetWindowSurface(window:SDL_Window_p):SDL_Surface_p
 
 SDL_UpdateWindowSurface(window:SDL_Window_p):int
 
-SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects:const_SDL_Rect_p, numrects:int):int
+//SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects:const_SDL_Rect_p, numrects:int):int
 
 SDL_SetWindowGrab(window:SDL_Window_p, grabbed:SDL_bool):void
 
@@ -371,17 +375,17 @@ SDL_GetWindowBrightness(window:SDL_Window_p):float
 
 SDL_SetWindowOpacity(window:SDL_Window_p, opacity:float):int
 
-SDL_GetWindowOpacity(window:SDL_Window_p, out_opacity:float_p):int
+//SDL_GetWindowOpacity(window:SDL_Window_p, out_opacity:float_p):int
 
 SDL_SetWindowModalFor(modal_window:SDL_Window_p, parent_window:SDL_Window_p):int
 
 SDL_SetWindowInputFocus(window:SDL_Window_p):int
 
-SDL_SetWindowGammaRamp(window:SDL_Window_p, red:const_Uint16_p, green:const_Uint16_p, blue:const_Uint16_p):int
+//SDL_SetWindowGammaRamp(window:SDL_Window_p, red:const_Uint16_p, green:const_Uint16_p, blue:const_Uint16_p):int
 
-SDL_GetWindowGammaRamp(window:SDL_Window_p, red:Uint16_p, green:Uint16_p, blue:Uint16_p):int
+//SDL_GetWindowGammaRamp(window:SDL_Window_p, red:Uint16_p, green:Uint16_p, blue:Uint16_p):int
 
-SDL_SetWindowHitTest(window:SDL_Window_p, callback:SDL_HitTest, callback_data:void_p):int
+//SDL_SetWindowHitTest(window:SDL_Window_p, callback:SDL_HitTest, callback_data:void_p):int
 
 SDL_DestroyWindow(window:SDL_Window_p):void
 
@@ -391,6 +395,7 @@ SDL_EnableScreenSaver():void
 
 SDL_DisableScreenSaver():void
 
+/*
 SDL_GL_LoadLibrary(path:const_char_p):int
 
 SDL_GL_GetProcAddress(proc:const_char_p):void_p
