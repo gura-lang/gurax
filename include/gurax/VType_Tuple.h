@@ -73,6 +73,10 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	virtual bool IsIterableOrTuple() const override { return true; }
+	virtual bool IsTuple() const override { return true; }
+	virtual Iterator* DoGenIterator() const override;
 };
 
 }

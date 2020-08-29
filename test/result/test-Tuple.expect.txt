@@ -1,0 +1,25 @@
+======== PUnit ========
+()
+  ##0 CreateTuple()
+(1,)
+  ##0 CreateTuple()
+  ##1 Value(1)
+  ##2 TupleElem(offsetToTuple=0)
+(1, 2, 3)
+  ##0 CreateTuple()
+  ##1 Value(1)
+  ##2 TupleElem(offsetToTuple=0)
+  ##3 Value(2)
+  ##4 TupleElem(offsetToTuple=0)
+  ##5 Value(3)
+  ##6 TupleElem(offsetToTuple=0)
+======== for statement ========
+hello
+world
+3
+4
+5
+======== assignment ========
+3 4 5
+======== not affected by implicit mapping ========
+(3, 4, 5)

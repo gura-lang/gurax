@@ -1,0 +1,27 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('PUnit') {
+	exprs = [
+		`()
+		`(1,)
+		`(1, 2, 3)
+	]
+	exprs::PrintPUnitWithLabel()
+}
+
+TestCase('for statement') {
+	for (x in ('hello', 'world', 3, 4, 5)) {
+		Println(x)
+	}
+}
+
+TestCase('assignment') {
+	[a, b, c] = (3, 4, 5)
+	Printf('%d %d %d\n', a, b, c)
+}
+
+TestCase('not affected by implicit mapping') {
+	f(x):map = Println(x)
+	f((3, 4, 5))
+}

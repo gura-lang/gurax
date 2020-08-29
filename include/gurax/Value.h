@@ -208,8 +208,10 @@ public:
 	virtual bool IsNil() const { return false; }
 	virtual bool IsZero() const { return false; }
 	virtual bool IsIterable() const { return false; }
+	virtual bool IsIterableOrTuple() const { return false; }
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsList() const { return false; }
+	virtual bool IsTuple() const { return false; }
 	virtual bool IsVType() const { return false; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const { return false; }
 	virtual bool IsAsDictKey() const { return false; }

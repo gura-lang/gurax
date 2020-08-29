@@ -100,6 +100,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	virtual bool IsIterable() const override { return true; }
+	virtual bool IsIterableOrTuple() const override { return true; }
 	virtual bool IsList() const override { return true; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
 	virtual void UpdateMapMode(Argument& argument) const override;

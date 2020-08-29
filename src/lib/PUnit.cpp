@@ -591,7 +591,7 @@ void PUnit_GenIterator_ForLister<discardValueFlag>::Exec(Processor& processor) c
 {
 	Value& value(processor.PeekValue(0));
 	RefPtr<Iterator> pIterator;
-	if (value.IsIterable()) {
+	if (value.IsIterableOrTuple()) {
 		pIterator.reset(value.GenIterator());
 	} else {
 		pIterator.reset(new Iterator_Const(value.Reference()));

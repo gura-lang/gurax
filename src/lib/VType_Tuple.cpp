@@ -122,4 +122,9 @@ String Value_Tuple::ToString(const StringStyle& ss) const
 				StringStyle::Flag::NilVisible | StringStyle::Flag::WithParenthesis));
 }
 
+Iterator* Value_Tuple::DoGenIterator() const
+{
+	return new Iterator_Each(GetValueOwner().Reference());
+}
+
 }
