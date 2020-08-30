@@ -63,14 +63,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetArgSlot().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetArgSlot().IsEqualTo(Value_ArgSlot::GetArgSlot(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetArgSlot().IsEqualTo(Value_ArgSlot::GetArgSlot(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetArgSlot().IsLessThan(Value_ArgSlot::GetArgSlot(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetArgSlot().IsLessThan(Value_ArgSlot::GetArgSlot(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

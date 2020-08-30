@@ -83,14 +83,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetTag().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetTag().IsEqualTo(Value_Tag::GetTag(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetTag().IsEqualTo(Value_Tag::GetTag(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetTag().IsLessThan(Value_Tag::GetTag(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetTag().IsLessThan(Value_Tag::GetTag(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -69,13 +69,13 @@ public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return static_cast<size_t>(GetComplex().real()); }
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetComplex() == Value_Complex::GetComplex(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) && GetComplex() == Value_Complex::GetComplex(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetComplex().real() < Value_Complex::GetComplex(*pValue).real() :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetComplex().real() < Value_Complex::GetComplex(value).real() :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	//virtual bool IsAsDictKey() const override { return true; }

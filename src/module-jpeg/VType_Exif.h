@@ -60,14 +60,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetExif().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetExif().IsEqualTo(Value_Exif::GetExif(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetExif().IsEqualTo(Value_Exif::GetExif(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetExif().IsLessThan(Value_Exif::GetExif(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetExif().IsLessThan(Value_Exif::GetExif(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

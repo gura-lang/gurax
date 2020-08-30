@@ -59,8 +59,8 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetExpr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override;
-	virtual bool IsLessThan(const Value* pValue) const override;
+	virtual bool IsEqualTo(const Value& value) const override;
+	virtual bool IsLessThan(const Value& value) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

@@ -64,14 +64,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetDateTime().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetDateTime().IsEqualTo(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetDateTime().IsEqualTo(dynamic_cast<const Value_DateTime&>(value).GetDateTime());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetDateTime().IsLessThan(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetDateTime().IsLessThan(dynamic_cast<const Value_DateTime&>(value).GetDateTime()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

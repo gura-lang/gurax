@@ -86,13 +86,13 @@ public:
 	virtual bool IsZero() const override { return _num == 0.; }
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetNumber<size_t>(); }
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetNumber<Double>() == Value_Number::GetNumber<Double>(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) && GetNumber<Double>() == Value_Number::GetNumber<Double>(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetNumber<Double>() < Value_Number::GetNumber<Double>(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetNumber<Double>() < Value_Number::GetNumber<Double>(value) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }

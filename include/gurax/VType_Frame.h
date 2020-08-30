@@ -59,14 +59,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetFrame().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetFrame().IsEqualTo(dynamic_cast<const Value_Frame*>(pValue)->GetFrame());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetFrame().IsEqualTo(dynamic_cast<const Value_Frame&>(value).GetFrame());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetFrame().IsLessThan(dynamic_cast<const Value_Frame*>(pValue)->GetFrame()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetFrame().IsLessThan(dynamic_cast<const Value_Frame&>(value).GetFrame()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 public:
 	// Virtual functions for runtime process

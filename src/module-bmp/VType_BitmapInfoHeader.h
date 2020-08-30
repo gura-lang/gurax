@@ -63,14 +63,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetContent().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetContent().IsEqualTo(Value_BitmapInfoHeader::GetContent(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetContent().IsEqualTo(Value_BitmapInfoHeader::GetContent(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetContent().IsLessThan(Value_BitmapInfoHeader::GetContent(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetContent().IsLessThan(Value_BitmapInfoHeader::GetContent(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

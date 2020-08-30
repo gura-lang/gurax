@@ -63,14 +63,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetPropSlot().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetPropSlot().IsEqualTo(Value_PropSlot::GetPropSlot(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetPropSlot().IsEqualTo(Value_PropSlot::GetPropSlot(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetPropSlot().IsLessThan(Value_PropSlot::GetPropSlot(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetPropSlot().IsLessThan(Value_PropSlot::GetPropSlot(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process

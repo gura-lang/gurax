@@ -63,14 +63,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return reinterpret_cast<size_t>(&GetOperator());
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			&GetOperator() == &Value_Operator::GetOperator(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			&GetOperator() == &Value_Operator::GetOperator(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			&GetOperator() < &Value_Operator::GetOperator(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			&GetOperator() < &Value_Operator::GetOperator(value) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:

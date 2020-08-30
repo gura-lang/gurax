@@ -62,14 +62,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetAccumulator().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetAccumulator().IsEqualTo(Value_Accumulator::GetAccumulator(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetAccumulator().IsEqualTo(Value_Accumulator::GetAccumulator(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetAccumulator().IsLessThan(Value_Accumulator::GetAccumulator(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetAccumulator().IsLessThan(Value_Accumulator::GetAccumulator(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

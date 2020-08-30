@@ -46,7 +46,7 @@ template<typename T_Compare> Value* Iterator::FindMinMax(NumList<Int>& idxFoundL
 	for (Int idx = 1; ; idx++) {
 		RefPtr<Value> pValue(NextValue());
 		if (!pValue) break;
-		if (pValueFound->IsEqualTo(pValue.get())) {
+		if (pValueFound->IsEqualTo(*pValue)) {
 			idxFoundList.push_back(idx);
 		} else if (T_Compare()(pValueFound.get(), pValue.get())) {
 			idxFoundList.clear();

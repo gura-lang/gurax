@@ -83,14 +83,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetSegment().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetSegment().IsEqualTo(Value_Segment::GetSegment(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetSegment().IsEqualTo(Value_Segment::GetSegment(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetSegment().IsLessThan(Value_Segment::GetSegment(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetSegment().IsLessThan(Value_Segment::GetSegment(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

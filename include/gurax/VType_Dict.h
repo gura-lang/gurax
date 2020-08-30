@@ -62,14 +62,14 @@ public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return new Value_Dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetValueDict().CalcHash(); }
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetValueDict().IsEqualTo(dynamic_cast<const Value_Dict*>(pValue)->GetValueDict());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetValueDict().IsEqualTo(dynamic_cast<const Value_Dict&>(value).GetValueDict());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetValueDict().IsLessThan(dynamic_cast<const Value_Dict*>(pValue)->GetValueDict()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetValueDict().IsLessThan(dynamic_cast<const Value_Dict&>(value).GetValueDict()) :
+			GetVType().IsLessThan(value.GetVType());
 		
 	}
 	virtual String ToString(const StringStyle& ss) const override;

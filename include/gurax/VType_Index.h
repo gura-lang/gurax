@@ -63,14 +63,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetIndex().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetIndex().IsEqualTo(dynamic_cast<const Value_Index*>(pValue)->GetIndex());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetIndex().IsEqualTo(dynamic_cast<const Value_Index&>(value).GetIndex());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetIndex().IsLessThan(dynamic_cast<const Value_Index*>(pValue)->GetIndex()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetIndex().IsLessThan(dynamic_cast<const Value_Index&>(value).GetIndex()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

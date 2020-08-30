@@ -64,14 +64,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetPointer().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetPointer().IsEqualTo(Value_Pointer::GetPointer(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetPointer().IsEqualTo(Value_Pointer::GetPointer(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetPointer().IsLessThan(Value_Pointer::GetPointer(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetPointer().IsLessThan(Value_Pointer::GetPointer(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

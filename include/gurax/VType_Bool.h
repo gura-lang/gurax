@@ -56,13 +56,13 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return static_cast<size_t>(GetBool_());
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetBool_() == dynamic_cast<const Value_Bool*>(pValue)->GetBool_();
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) && GetBool_() == dynamic_cast<const Value_Bool&>(value).GetBool_();
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetBool_() < dynamic_cast<const Value_Bool*>(pValue)->GetBool_() :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetBool_() < dynamic_cast<const Value_Bool&>(value).GetBool_() :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual String ToString(const StringStyle& ss) const override;

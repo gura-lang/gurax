@@ -64,13 +64,13 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetTimeDelta().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return GetTimeDelta().IsEqualTo(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return GetTimeDelta().IsEqualTo(dynamic_cast<const Value_TimeDelta&>(value).GetTimeDelta());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetTimeDelta().IsLessThan(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetTimeDelta().IsLessThan(dynamic_cast<const Value_TimeDelta&>(value).GetTimeDelta()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

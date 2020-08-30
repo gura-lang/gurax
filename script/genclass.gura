@@ -185,13 +185,13 @@ public:
 		return Get${entityName}().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			Get${entityName}().IsEqualTo(Value_${className}::Get${entityName}(*pValue));
+		return IsSameType(value) &&
+			Get${entityName}().IsEqualTo(Value_${className}::Get${entityName}(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			Get${entityName}().IsLessThan(Value_${className}::Get${entityName}(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			Get${entityName}().IsLessThan(Value_${className}::Get${entityName}(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

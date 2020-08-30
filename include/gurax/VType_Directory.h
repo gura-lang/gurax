@@ -64,14 +64,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetDirectory().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetDirectory().IsEqualTo(Value_Directory::GetDirectory(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetDirectory().IsEqualTo(Value_Directory::GetDirectory(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetDirectory().IsLessThan(Value_Directory::GetDirectory(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetDirectory().IsLessThan(Value_Directory::GetDirectory(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -64,14 +64,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetIFD().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetIFD().IsEqualTo(Value_IFD::GetIFD(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetIFD().IsEqualTo(Value_IFD::GetIFD(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetIFD().IsLessThan(Value_IFD::GetIFD(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetIFD().IsLessThan(Value_IFD::GetIFD(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:

@@ -77,14 +77,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetPalette().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetPalette().IsEqualTo(Value_Palette::GetPalette(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetPalette().IsEqualTo(Value_Palette::GetPalette(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetPalette().IsLessThan(Value_Palette::GetPalette(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetPalette().IsLessThan(Value_Palette::GetPalette(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

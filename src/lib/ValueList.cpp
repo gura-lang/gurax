@@ -81,7 +81,7 @@ bool ValueList::FixPosition(Int* pPos) const
 bool ValueList::Contains(const Value& value) const
 {
 	for (const Value* pValue : *this) {
-		if (pValue->IsEqualTo(&value)) return true;
+		if (pValue->IsEqualTo(value)) return true;
 	}
 	return false;
 }
@@ -90,7 +90,7 @@ size_t ValueList::Count(const Value& value) const
 {
 	size_t cnt = 0;
 	for (const Value* pValue : *this) {
-		if (pValue->IsEqualTo(&value)) cnt++;
+		if (pValue->IsEqualTo(value)) cnt++;
 	}
 	return cnt;
 }
@@ -233,7 +233,7 @@ bool ValueList::IsEqualTo(const ValueList& valueList) const
 {
 	auto ppValue1 = begin(), ppValue2 = valueList.begin();
 	for ( ; ppValue1 != end() && ppValue2 != valueList.end(); ppValue1++, ppValue2++) {
-		if (!(*ppValue1)->IsEqualTo(*ppValue2)) return false;
+		if (!(*ppValue1)->IsEqualTo(**ppValue2)) return false;
 	}
 	return ppValue1 == end() && ppValue2 == valueList.end();
 }
@@ -242,8 +242,8 @@ bool ValueList::IsLessThan(const ValueList& valueList) const
 {
 	auto ppValue1 = begin(), ppValue2 = valueList.begin();
 	for ( ; ppValue1 != end() && ppValue2 != valueList.end(); ppValue1++, ppValue2++) {
-		if ((*ppValue2)->IsLessThan(*ppValue1)) return false;
-		if ((*ppValue1)->IsLessThan(*ppValue2)) return true;
+		if ((*ppValue2)->IsLessThan(**ppValue1)) return false;
+		if ((*ppValue1)->IsLessThan(**ppValue2)) return true;
 	}
 	return ppValue1 == end() && ppValue2 != valueList.end();
 }

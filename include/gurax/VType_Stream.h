@@ -64,14 +64,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetStream().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetStream().IsEqualTo(Value_Stream::GetStream(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetStream().IsEqualTo(Value_Stream::GetStream(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetStream().IsLessThan(Value_Stream::GetStream(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetStream().IsLessThan(Value_Stream::GetStream(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

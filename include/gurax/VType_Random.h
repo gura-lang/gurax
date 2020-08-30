@@ -134,14 +134,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetRandom().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetRandom().IsEqualTo(dynamic_cast<const Value_Random*>(pValue)->GetRandom());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetRandom().IsEqualTo(dynamic_cast<const Value_Random&>(value).GetRandom());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetRandom().IsLessThan(dynamic_cast<const Value_Random*>(pValue)->GetRandom()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetRandom().IsLessThan(dynamic_cast<const Value_Random&>(value).GetRandom()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

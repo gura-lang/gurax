@@ -62,14 +62,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetIterator().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetIterator().IsEqualTo(Value_ArgMapper::GetIterator(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetIterator().IsEqualTo(Value_ArgMapper::GetIterator(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetIterator().IsLessThan(Value_ArgMapper::GetIterator(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetIterator().IsLessThan(Value_ArgMapper::GetIterator(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual Iterator* DoGenIterator() const override;

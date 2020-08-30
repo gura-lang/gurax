@@ -59,14 +59,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetStatEx().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetStatEx().IsEqualTo(Value_StatEx::GetStatEx(*pValue));
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetStatEx().IsEqualTo(Value_StatEx::GetStatEx(value));
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetStatEx().IsLessThan(Value_StatEx::GetStatEx(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetStatEx().IsLessThan(Value_StatEx::GetStatEx(value)) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 };
 

@@ -80,14 +80,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetValueOwner().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetValueOwner().IsEqualTo(dynamic_cast<const Value_Tuple*>(pValue)->GetValueOwner());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetValueOwner().IsEqualTo(dynamic_cast<const Value_Tuple&>(value).GetValueOwner());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetValueOwner().IsLessThan(dynamic_cast<const Value_Tuple*>(pValue)->GetValueOwner()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetValueOwner().IsLessThan(dynamic_cast<const Value_Tuple&>(value).GetValueOwner()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:

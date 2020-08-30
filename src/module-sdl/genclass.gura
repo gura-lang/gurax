@@ -204,27 +204,27 @@ ${if (entityPointerFlag)}
 	virtual size_t DoCalcHash() const override {
 		return reinterpret_cast<size_t>(_entity);
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			_entity == Value_${className}::GetEntity(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			_entity == Value_${className}::GetEntity(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			_entity < Value_${className}::GetEntity(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			_entity < Value_${className}::GetEntity(value) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 ${else}
 	virtual size_t DoCalcHash() const override {
 		return reinterpret_cast<size_t>(&_entity);
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			&_entity == &Value_${className}::GetEntity(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			&_entity == &Value_${className}::GetEntity(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			&_entity < &Value_${className}::GetEntity(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			&_entity < &Value_${className}::GetEntity(value) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 ${end}
 	virtual String ToString(const StringStyle& ss) const override;

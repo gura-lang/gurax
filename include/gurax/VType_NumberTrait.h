@@ -68,11 +68,11 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return 0;
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return this == pValue;
+	virtual bool IsEqualTo(const Value& value) const override {
+		return this == &value;
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return this < pValue;
+	virtual bool IsLessThan(const Value& value) const override {
+		return this < &value;
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

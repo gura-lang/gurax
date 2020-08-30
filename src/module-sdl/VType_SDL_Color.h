@@ -61,14 +61,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return reinterpret_cast<size_t>(&_entity);
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			&_entity == &Value_SDL_Color::GetEntity(*pValue);
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			&_entity == &Value_SDL_Color::GetEntity(value);
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			&_entity < &Value_SDL_Color::GetEntity(*pValue) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			&_entity < &Value_SDL_Color::GetEntity(value) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

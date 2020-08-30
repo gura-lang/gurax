@@ -33,7 +33,7 @@ bool Iterator::Contains(const Value& value)
 	for (;;) {
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;
-		if (pValueElem->IsEqualTo(&value)) return true;
+		if (pValueElem->IsEqualTo(value)) return true;
 	}
 	return false;
 }
@@ -44,7 +44,7 @@ size_t Iterator::Count(const Value& value)
 	for (;;) {
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;
-		if (pValueElem->IsEqualTo(&value)) cnt++;
+		if (pValueElem->IsEqualTo(value)) cnt++;
 	}
 	return cnt;
 }

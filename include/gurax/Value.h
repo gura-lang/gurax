@@ -28,27 +28,27 @@ public:
 	// Algorithm operators
 	struct GURAX_DLLDECLARE EqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->IsEqualTo(pValue2);
+			return pValue1->IsEqualTo(*pValue2);
 		}
 	};
 	struct GURAX_DLLDECLARE LessThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->IsLessThan(pValue2);
+			return pValue1->IsLessThan(*pValue2);
 		}
 	};
 	struct GURAX_DLLDECLARE LessThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue2->IsLessThan(pValue1);
+			return !pValue2->IsLessThan(*pValue1);
 		}
 	};
 	struct GURAX_DLLDECLARE GreaterThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue2->IsLessThan(pValue1);
+			return pValue2->IsLessThan(*pValue1);
 		}
 	};
 	struct GURAX_DLLDECLARE GreaterThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue1->IsLessThan(pValue2);
+			return !pValue1->IsLessThan(*pValue2);
 		}
 	};
 	struct GURAX_DLLDECLARE CustomCompare {
@@ -63,27 +63,27 @@ public:
 	};
 	struct GURAX_DLLDECLARE KeyEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->GetValueKey().IsEqualTo(&pValue2->GetValueKey());
+			return pValue1->GetValueKey().IsEqualTo(pValue2->GetValueKey());
 		}
 	};
 	struct GURAX_DLLDECLARE KeyLessThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
+			return pValue1->GetValueKey().IsLessThan(pValue2->GetValueKey());
 		}
 	};
 	struct GURAX_DLLDECLARE KeyLessThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
+			return !pValue2->GetValueKey().IsLessThan(pValue1->GetValueKey());
 		}
 	};
 	struct GURAX_DLLDECLARE KeyGreaterThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
+			return pValue2->GetValueKey().IsLessThan(pValue1->GetValueKey());
 		}
 	};
 	struct GURAX_DLLDECLARE KeyGreaterThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
+			return !pValue1->GetValueKey().IsLessThan(pValue2->GetValueKey());
 		}
 	};
 	struct GURAX_DLLDECLARE KeyCustomCompare {
@@ -137,8 +137,9 @@ public:
 		return pValue1? pValue1->IsIdentical(pValue2) : (!pValue1 && !pValue2);
 	}
 	bool IsSameType(const Value* pValue) const { return GetVType().IsIdentical(pValue->GetVType()); }
+	bool IsSameType(const Value& value) const { return GetVType().IsIdentical(value.GetVType()); }
 	static bool IsSameType(const Value* pValue1, const Value* pValue2) {
-		return pValue1 && pValue1->IsSameType(pValue2);
+		return pValue1 && pValue1->IsSameType(*pValue2);
 	}
 	bool IsType(const VType& vtype) const { return GetVType().IsIdentical(vtype); }
 	static bool IsType(const Value* pValue, const VType& vtype) { return pValue && pValue->IsType(vtype); }
@@ -194,8 +195,8 @@ public:
 	// Virtual functions
 	virtual Value* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
-	virtual bool IsEqualTo(const Value* pValue) const = 0;
-	virtual bool IsLessThan(const Value* pValue) const = 0;
+	virtual bool IsEqualTo(const Value& value) const = 0;
+	virtual bool IsLessThan(const Value& value) const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 public:
 	// Virtual functions for runtime process

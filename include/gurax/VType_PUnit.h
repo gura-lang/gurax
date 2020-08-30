@@ -59,14 +59,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetPUnit()->CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetPUnit()->IsEqualTo(dynamic_cast<const Value_PUnit*>(pValue)->GetPUnit());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetPUnit()->IsEqualTo(dynamic_cast<const Value_PUnit&>(value).GetPUnit());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetPUnit()->IsLessThan(dynamic_cast<const Value_PUnit*>(pValue)->GetPUnit()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetPUnit()->IsLessThan(dynamic_cast<const Value_PUnit&>(value).GetPUnit()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -84,21 +84,21 @@ Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Symbol::vtype = VTYPE_Symbol;
 
-bool Value_Symbol::IsEqualTo(const Value* pValue) const
+bool Value_Symbol::IsEqualTo(const Value& value) const
 {
-	if (IsSameType(pValue)) {
-		return GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
-	} else if (pValue->IsType(VTYPE_Expr)) {
-		return dynamic_cast<const Value_Expr*>(pValue)->GetExpr().HasPureSymbol(GetSymbol());
+	if (IsSameType(value)) {
+		return GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol&>(value).GetSymbol());
+	} else if (value.IsType(VTYPE_Expr)) {
+		return dynamic_cast<const Value_Expr&>(value).GetExpr().HasPureSymbol(GetSymbol());
 	}
 	return false;
 }
 
-bool Value_Symbol::IsLessThan(const Value* pValue) const
+bool Value_Symbol::IsLessThan(const Value& value) const
 {
-	return IsSameType(pValue)?
-		GetSymbol()->IsLessThan_UniqId(Value_Symbol::GetSymbol(*pValue)) :
-		GetVType().IsLessThan(pValue->GetVType());
+	return IsSameType(value)?
+		GetSymbol()->IsLessThan_UniqId(Value_Symbol::GetSymbol(value)) :
+		GetVType().IsLessThan(value.GetVType());
 }
 
 String Value_Symbol::ToString(const StringStyle& ss) const

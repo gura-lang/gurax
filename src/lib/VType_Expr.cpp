@@ -852,21 +852,21 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Expr::vtype = VTYPE_Expr;
 
-bool Value_Expr::IsEqualTo(const Value* pValue) const
+bool Value_Expr::IsEqualTo(const Value& value) const
 {
-	if (IsSameType(pValue)) {
-		return GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
-	} else if (pValue->IsType(VTYPE_Symbol)) {
-		return GetExpr().HasPureSymbol(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
+	if (IsSameType(value)) {
+		return GetExpr().IsEqualTo(dynamic_cast<const Value_Expr&>(value).GetExpr());
+	} else if (value.IsType(VTYPE_Symbol)) {
+		return GetExpr().HasPureSymbol(dynamic_cast<const Value_Symbol&>(value).GetSymbol());
 	}
 	return false;
 }
 
-bool Value_Expr::IsLessThan(const Value* pValue) const
+bool Value_Expr::IsLessThan(const Value& value) const
 {
-	return IsSameType(pValue)?
-		GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
-		GetVType().IsLessThan(pValue->GetVType());
+	return IsSameType(value)?
+		GetExpr().IsLessThan(dynamic_cast<const Value_Expr&>(value).GetExpr()) :
+		GetVType().IsLessThan(value.GetVType());
 }
 
 String Value_Expr::ToString(const StringStyle& ss) const

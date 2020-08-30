@@ -54,8 +54,8 @@ public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Value* pValue) const override { return this == pValue; }
-	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
+	virtual bool IsEqualTo(const Value& value) const override { return this == &value; }
+	virtual bool IsLessThan(const Value& value) const override { return this < &value; }
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool CanBeCallableMember() const override { return true; }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;

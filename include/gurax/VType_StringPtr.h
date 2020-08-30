@@ -56,14 +56,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return String::CalcHash(GetString());
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			String::IsEqualTo(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString());
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			String::IsEqualTo(GetString(), dynamic_cast<const Value_StringPtr&>(value).GetString());
 	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			String::IsLessThan(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString()) :
-			GetVType().IsLessThan(pValue->GetVType());
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			String::IsLessThan(GetString(), dynamic_cast<const Value_StringPtr&>(value).GetString()) :
+			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
