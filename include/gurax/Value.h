@@ -136,7 +136,6 @@ public:
 	static bool IsIdentical(const Value* pValue1, const Value* pValue2) {
 		return pValue1? pValue1->IsIdentical(pValue2) : (!pValue1 && !pValue2);
 	}
-	bool IsSameType(const Value* pValue) const { return GetVType().IsIdentical(pValue->GetVType()); }
 	bool IsSameType(const Value& value) const { return GetVType().IsIdentical(value.GetVType()); }
 	static bool IsSameType(const Value* pValue1, const Value* pValue2) {
 		return pValue1 && pValue1->IsSameType(*pValue2);
@@ -217,6 +216,7 @@ public:
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const { return false; }
 	virtual bool IsAsDictKey() const { return false; }
 	virtual void UpdateMapMode(Argument& argument) const {}
+	virtual bool FeedExpandToArgument(Frame& frame, Argument& argument);
 	virtual bool ReadyToPickValue(Frame& frame, DeclArg& declArg) { return true; }
 	virtual bool ReadyToPickValueWithoutCast() { return true; }
 	virtual Value* PickValue() { return Reference(); }

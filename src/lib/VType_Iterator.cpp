@@ -1673,6 +1673,19 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
+bool Value_Iterator::FeedExpandToArgument(Frame& frame, Argument& argument)
+{
+	Iterator& iterator = GetIterator();
+	for (;;) {
+		RefPtr<Value> pValueElem(iterator.NextValue());
+		if (!pValueElem) break;
+		if (!argument.CheckArgSlotToFeed()) return false;
+		argument.FeedValue(frame, pValueElem.release());
+		if (Error::IsIssued()) return false;
+	}
+	return !Error::IsIssued();
+}
+
 const DeclCallable* Value_Iterator::GetDeclCallable()
 {
 	RefPtr<Value> pValueElem(GetIterator().PeekValue());

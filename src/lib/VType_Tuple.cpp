@@ -192,6 +192,17 @@ String Value_Tuple::ToString(const StringStyle& ss) const
 				StringStyle::Flag::NilVisible | StringStyle::Flag::WithParenthesis));
 }
 
+bool Value_Tuple::FeedExpandToArgument(Frame& frame, Argument& argument)
+{
+	const ValueOwner& valueOwner = GetValueOwner();
+	for (const Value* pValueElem : valueOwner) {
+		if (!argument.CheckArgSlotToFeed()) return false;
+		argument.FeedValue(frame, pValueElem->Reference());
+		if (Error::IsIssued()) return false;
+	}
+	return true;
+}
+
 Value* Value_Tuple::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();

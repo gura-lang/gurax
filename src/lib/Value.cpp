@@ -62,6 +62,12 @@ void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	Stream::COut->Println("no help");
 }
 
+bool Value::FeedExpandToArgument(Frame& frame, Argument& argument)
+{
+	argument.FeedValue(frame, Reference());
+	return !Error::IsIssued();
+}
+
 bool Value::CanEvalAsMethod(const Function& function) const
 {
 	if (function.IsTypeMethod() || function.IsTypeConstructor()) return true;

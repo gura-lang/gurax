@@ -2427,65 +2427,12 @@ PUnit* PUnitFactory_ArgSlotEnd::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlotEnd_Expand<discardValueFlag>::Exec(Processor& processor) const
 {
-	auto CheckArgSlot = [](Argument& argument) {
-		ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-		if (!pArgSlot) {
-			if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
-				Error::Issue(ErrorType::ArgumentError, "too many arguments");
-				return false;
-			}
-		} else if (!pArgSlot->IsVacant()) {
-			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
-			return false;
-		} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-			Error::Issue(ErrorType::ArgumentError, "invalid argument assignment");
-			return false;
-		}
-		return true;
-	};
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
-	if (pValue->IsList()) {
-		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValue);
-		for (const Value* pValueElem : valueOwner) {
-			if (!CheckArgSlot(argument)) {
-				processor.ErrorDone();
-				return;
-			}
-			argument.FeedValue(frame, pValueElem->Reference());
-			if (Error::IsIssued()) {
-				processor.ErrorDone();
-				return;
-			}
-		}
-	} else if (pValue->IsIterator()) {
-		Iterator& iterator = Value_Iterator::GetIterator(*pValue);
-		for (;;) {
-			RefPtr<Value> pValueElem(iterator.NextValue());
-			if (!pValueElem) {
-				if (Error::IsIssued()) {
-					processor.ErrorDone();
-					return;
-				}
-				break;
-			}
-			if (!CheckArgSlot(argument)) {
-				processor.ErrorDone();
-				return;
-			}
-			argument.FeedValue(frame, pValueElem.release());
-			if (Error::IsIssued()) {
-				processor.ErrorDone();
-				return;
-			}
-		}
-	} else {
-		argument.FeedValue(frame, pValue.release());
-		if (Error::IsIssued()) {
-			processor.ErrorDone();
-			return;
-		}
+	if (!pValue->FeedExpandToArgument(frame, argument)) {
+		processor.ErrorDone();
+		return;
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }

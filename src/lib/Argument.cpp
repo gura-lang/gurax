@@ -43,6 +43,24 @@ Function* Argument::CreateBlockFunction(const Symbol* pSymbol) const
 	return _pExprOfBlock? Function::CreateBlockFunction(pSymbol, *_pExprOfBlock) : nullptr;
 }
 
+bool Argument::CheckArgSlotToFeed() const
+{
+	//ArgSlot* pArgSlot = GetArgSlotToFeed(); // this may be nullptr
+	if (!_pArgSlotToFeed) {
+		if (!IsSet(DeclCallable::Flag::CutExtraArgs)) {
+			Error::Issue(ErrorType::ArgumentError, "too many arguments");
+			return false;
+		}
+	} else if (!_pArgSlotToFeed->IsVacant()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		return false;
+	} else if (_pArgSlotToFeed->IsVType(VTYPE_Quote)) {
+		Error::Issue(ErrorType::ArgumentError, "invalid argument assignment");
+		return false;
+	}
+	return true;
+};
+
 void Argument::ResetAllValues()
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {

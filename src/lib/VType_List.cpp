@@ -1591,6 +1591,17 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
+bool Value_List::FeedExpandToArgument(Frame& frame, Argument& argument)
+{
+	const ValueOwner& valueOwner = GetValueOwner();
+	for (const Value* pValueElem : valueOwner) {
+		if (!argument.CheckArgSlotToFeed()) return false;
+		argument.FeedValue(frame, pValueElem->Reference());
+		if (Error::IsIssued()) return false;
+	}
+	return true;
+}
+
 const DeclCallable* Value_List::GetDeclCallable()
 {
 	const ValueOwner& valueOwner = GetValueOwner();

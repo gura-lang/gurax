@@ -84,6 +84,7 @@ public:
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
+	bool CheckArgSlotToFeed() const;
 public:
 	void ResetAllValues();
 	void FeedValue(Frame& frame, Value* pValue) {

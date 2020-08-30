@@ -318,6 +318,26 @@ f1(x.Each()*) .. a=1 b=[2,3,4,5,6,7,8,9,10]
 f2(x.Each()*) .. a=1 b=2 c=3 d=4 e=[5,6,7,8,9,10]
 f3(x.Each()*) .. too many arguments
 f4(x.Each()*) .. a=[1,2,3,4,5,6,7,8,9,10]
+f1(x*) .. lacking value for argument 'a'
+f2(x*) .. lacking value for argument 'a'
+f3(x*) .. lacking value for argument 'a'
+f4(x*) .. a=[]
+f1(x*) .. a=1 b=[2,3,4]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[]
+f3(x*) .. lacking value for argument 'e'
+f4(x*) .. a=[1,2,3,4]
+f1(x*) .. a=1 b=[2,3,4,5]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5]
+f3(x*) .. a=1 b=2 c=3 d=4 e=5
+f4(x*) .. a=[1,2,3,4,5]
+f1(x*) .. a=1 b=[2,3,4,5,6]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5,6]
+f3(x*) .. too many arguments
+f4(x*) .. a=[1,2,3,4,5,6]
+f1(x*) .. a=1 b=[2,3,4,5,6,7,8,9,10]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5,6,7,8,9,10]
+f3(x*) .. too many arguments
+f4(x*) .. a=[1,2,3,4,5,6,7,8,9,10]
 ======== Block delegation ========
 g1 {|str| Format('type = %s', str)} .. type = function
 g1() .. (no block)

@@ -93,6 +93,7 @@ public:
 public:
 	virtual bool IsIterableOrTuple() const override { return true; }
 	virtual bool IsTuple() const override { return true; }
+	virtual bool FeedExpandToArgument(Frame& frame, Argument& argument) override;
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual Iterator* DoGenIterator() const override;
 };
