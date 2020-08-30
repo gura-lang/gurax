@@ -103,6 +103,57 @@ Gurax_ImplementPropertyGetter(Tuple, len)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Tuple == Tuple
+Gurax_ImplementOpBinary(Eq, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(valuesL.IsEqualTo(valuesR));
+}
+
+// Tuple >= Tuple
+Gurax_ImplementOpBinary(Ge, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(!valuesL.IsLessThan(valuesR));
+}
+
+// Tuple > Tuple
+Gurax_ImplementOpBinary(Gt, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(valuesR.IsLessThan(valuesL));
+}
+
+// Tuple <= Tuple
+Gurax_ImplementOpBinary(Le, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(!valuesR.IsLessThan(valuesL));
+}
+
+// Tuple < Tuple
+Gurax_ImplementOpBinary(Lt, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(valuesL.IsLessThan(valuesR));
+}
+
+// Tuple != Tuple
+Gurax_ImplementOpBinary(Ne, Tuple, Tuple)
+{
+	const ValueList& valuesL = Value_Tuple::GetValueOwner(valueL);
+	const ValueList& valuesR = Value_Tuple::GetValueOwner(valueR);
+	return new Value_Bool(!valuesL.IsEqualTo(valuesR));
+}
+
+//------------------------------------------------------------------------------
 // VType_Tuple
 //------------------------------------------------------------------------------
 VType_Tuple VTYPE_Tuple("Tuple");
@@ -118,6 +169,13 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Tuple, first));
 	Assign(Gurax_CreateProperty(Tuple, last));
 	Assign(Gurax_CreateProperty(Tuple, len));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Eq, Tuple, Tuple);
+	Gurax_AssignOpBinary(Ge, Tuple, Tuple);
+	Gurax_AssignOpBinary(Gt, Tuple, Tuple);
+	Gurax_AssignOpBinary(Le, Tuple, Tuple);
+	Gurax_AssignOpBinary(Lt, Tuple, Tuple);
+	Gurax_AssignOpBinary(Ne, Tuple, Tuple);
 }
 
 //------------------------------------------------------------------------------

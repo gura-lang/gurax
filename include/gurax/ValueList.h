@@ -36,7 +36,7 @@ public:
 	size_t CountFalse() const;
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
-	Value* Get(Int pos) const { return at(pos); }
+	Value& Get(Int pos) const { return *at(pos); }
 	bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const;
 	template<typename T_Num>
 	NumList<T_Num> ToNumList() const { return Value_Number::GetNumList<T_Num>(*this); }
@@ -62,8 +62,8 @@ public:
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }
-	bool IsEqualTo(const ValueList& valueList) const { return IsIdentical(valueList); }
-	bool IsLessThan(const ValueList& valueList) const { return this < &valueList; }
+	bool IsEqualTo(const ValueList& valueList) const;
+	bool IsLessThan(const ValueList& valueList) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	void IssueError_IndexOutOfRange(Int pos) const;

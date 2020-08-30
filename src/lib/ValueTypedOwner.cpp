@@ -29,13 +29,6 @@ bool ValueTypedOwner::Set(Int pos, Value* pValue)
 	return true;
 }
 
-Value* ValueTypedOwner::Get(Int pos) const
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (!valueOwner.FixPosition(&pos)) return nullptr;
-	return valueOwner.Get(pos);
-}
-
 bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
@@ -105,52 +98,6 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 	Value::Delete(pValue);
 	return false;
 }
-
-#if 0
-bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
-		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
-		Int pos = valueIndexEx.GetNumber<Int>();
-		if (!valueOwner.FixPosition(&pos)) return false;
-		*ppValue = valueOwner.Get(pos)->Reference();
-		return true;
-	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
-		int pos = static_cast<int>(valueIndexEx.GetBool());
-		if (!valueOwner.FixPosition(&pos)) return false;
-		*ppValue = valueOwner.Get(pos)->Reference();
-		return true;
-	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
-		Value* pValue = nullptr;
-		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
-		for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
-			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
-			pValueOwner->push_back(pValue->Reference());
-		}
-		*ppValue = new Value_List(pValueOwner.release());
-		return true;
-	} else if (valueIndex.IsInstanceOf(VTYPE_Iterator)) {
-		Value* pValue = nullptr;
-		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-		const Value_Iterator& valueIndexEx = dynamic_cast<const Value_Iterator&>(valueIndex);
-		Iterator& iteratorIndex = valueIndexEx.GetIterator();
-		for (;;) {
-			RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
-			if (!pValueIndexEach) break;
-			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
-			pValueOwner->push_back(pValue->Reference());
-		}
-		*ppValue = new Value_List(pValueOwner.release());
-		return true;
-	} else {
-		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
-	}
-	return false;
-}
-#endif
 
 void ValueTypedOwner::Add(Value* pValue)
 {

@@ -62,7 +62,7 @@ Gurax_DeclareFunction(GetWinSize)
 	Declare(VTYPE_List, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the screen size as a list `[width, height]`.");
+		"Returns the screen size as a tuple `(width, height)`.");
 }
 
 Gurax_ImplementFunction(GetWinSize)
@@ -70,7 +70,7 @@ Gurax_ImplementFunction(GetWinSize)
 	// Function body
 	size_t width, height;
 	GetWinSize(&width, &height);
-	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 }
 
 // conio.MoveTo(x:Number, y:Number):map {block?}

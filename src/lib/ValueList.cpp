@@ -133,13 +133,13 @@ bool ValueList::IndexGet(const Value& valueIndex, Value** ppValue, bool tupleRes
 		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
 		Int pos = valueIndexEx.GetNumber<Int>();
 		if (!FixPosition(&pos)) return false;
-		*ppValue = Get(pos)->Reference();
+		*ppValue = Get(pos).Reference();
 		return true;
 	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
 		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
 		int pos = static_cast<int>(valueIndexEx.GetBool());
 		if (!FixPosition(&pos)) return false;
-		*ppValue = Get(pos)->Reference();
+		*ppValue = Get(pos).Reference();
 		return true;
 	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		Value* pValue = nullptr;
@@ -227,6 +227,24 @@ bool ValueList::CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
 		}
 	}
 	return true;
+}
+
+bool ValueList::IsEqualTo(const ValueList& valueList) const
+{
+	auto ppValue1 = begin(), ppValue2 = valueList.begin();
+	for ( ; ppValue1 != end() && ppValue2 != valueList.end(); ppValue1++, ppValue2++) {
+		if (!(*ppValue1)->IsEqualTo(*ppValue2)) return false;
+	}
+	return ppValue1 == end() && ppValue2 == valueList.end();
+}
+
+bool ValueList::IsLessThan(const ValueList& valueList) const
+{
+	auto ppValue1 = begin(), ppValue2 = valueList.begin();
+	for ( ; ppValue1 != end() && ppValue2 != valueList.end(); ppValue1++, ppValue2++) {
+		if (!(*ppValue1)->IsLessThan(*ppValue2)) return false;
+	}
+	return ppValue1 == end() && ppValue2 != valueList.end();
 }
 
 String ValueList::ToString(const StringStyle& ss) const

@@ -55,7 +55,7 @@ Gurax_ImplementOpUnary(Not, Any)
 // Any => Any
 Gurax_ImplementOpBinary(Pair, Any, Any)
 {
-	return Value_List::Create(valueL.Reference(), valueR.Reference());
+	return Value_Tuple::Create(valueL.Reference(), valueR.Reference());
 }
 
 //------------------------------------------------------------------------------

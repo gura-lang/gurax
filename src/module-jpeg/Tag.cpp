@@ -236,7 +236,7 @@ template<typename TypeDef> bool Tag_SHORT::DoDeserialize(
 	} else if (count == 2) {
 		UInt16 num1 = Gurax_UnpackUInt16(variable.SHORT.num);
 		UInt16 num2 = Gurax_UnpackUInt16(variable.SHORT.num2nd);
-		SetValue(Value_List::Create(new Value_Number(num1), new Value_Number(num2)));
+		SetValue(Value_Tuple::Create(new Value_Number(num1), new Value_Number(num2)));
 	} else {
 		UInt32 offsetToValue = Gurax_UnpackUInt32(variable.LONG.num);
 		_orderHint = offsetToValue;

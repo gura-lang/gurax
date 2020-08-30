@@ -399,7 +399,7 @@ Gurax_DeclareFunction(Split)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Splits a pathname by a directory separator and returns a list containing\n"
+		"Splits a pathname by a directory separator and returns a tuple containing\n"
 		"a directory name as the first element and a base name as the second one.\n"
 		"\n"
 		"Calling this function has the same result as calling `path.DirName()` and `path.FileName()`.\n"
@@ -407,8 +407,8 @@ Gurax_DeclareFunction(Split)
 		"\n"
 		"Example:\n"
 		"```\n"
-		"path.Split('/foo/bar/file.txt')         # Returns ['/foo/bar/', 'file.txt']\n"
-		"path.Split('/foo/bar/dir/')             # Returns ['/foo/bar/dir/', '']\n"
+		"path.Split('/foo/bar/file.txt')         # Returns ('/foo/bar/', 'file.txt')\n"
+		"path.Split('/foo/bar/dir/')             # Returns ('/foo/bar/dir/', '')\n"
 		"```\n");
 }
 
@@ -420,7 +420,7 @@ Gurax_ImplementFunction(Split)
 	// Function body
 	String dirName, fileName;
 	pathName.SplitFileName(&dirName, &fileName);
-	return Value_List::Create(new Value_String(dirName), new Value_String(fileName));
+	return Value_Tuple::Create(new Value_String(dirName), new Value_String(fileName));
 }
 
 // path.SplitBottom(pathName:String):map
@@ -430,15 +430,15 @@ Gurax_DeclareFunction(SplitBottom)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Splits a pathname by a directory separator and returns a list containing\n"
+		"Splits a pathname by a directory separator and returns a tuple containing\n"
 		"a directory name as the first element and a base name as the second one.\n"
 		"\n"
 		"Calling this function has the same result as calling `path.HeadName()` and `path.BottomName()`.\n"
 		"\n"
 		"Example:\n"
 		"```\n"
-		"path.SplitBottom('/foo/bar/file.txt'):bottom  # Returns ['/foo/bar/', 'file.txt']\n"
-		"path.SplitBottom('/foo/bar/dir/'):bottom      # Returns ['/foo/bar/', 'dir']\n"
+		"path.SplitBottom('/foo/bar/file.txt'):bottom  # Returns ('/foo/bar/', 'file.txt')\n"
+		"path.SplitBottom('/foo/bar/dir/'):bottom      # Returns ('/foo/bar/', 'dir')\n"
 		"```\n");
 }
 
@@ -450,7 +450,7 @@ Gurax_ImplementFunction(SplitBottom)
 	// Function body
 	String headName, bottomName;
 	pathName.SplitBottomName(&headName, &bottomName);
-	return Value_List::Create(new Value_String(headName), new Value_String(bottomName));
+	return Value_Tuple::Create(new Value_String(headName), new Value_String(bottomName));
 }
 
 // path.SplitExt(pathName:String):map
@@ -461,15 +461,15 @@ Gurax_DeclareFunction(SplitExt)
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Splits a pathname by a dot character indicating a beginning of an extension\n"
-		"and returns a list containing a path name without an extention\n"
+		"and returns a tuple containing a path name without an extention\n"
 		"and an extention part."
 		"\n"
 		"Calling this function has the same result as calling `path.BaseName()` and `path.ExtName()`.\n"
 		"\n"
 		"Example:\n"
 		"```\n"
-		"path.SplitExt('/foo/bar/file.txt'):bottom  # Returns ['/foo/bar/file', 'txt']\n"
-		"path.SplitExt('/foo/bar/file'):bottom      # Returns ['/foo/bar/file', '']\n"
+		"path.SplitExt('/foo/bar/file.txt'):bottom  # Returns ('/foo/bar/file', 'txt')\n"
+		"path.SplitExt('/foo/bar/file'):bottom      # Returns ('/foo/bar/file', '')\n"
 		"```\n");
 }
 
@@ -481,7 +481,7 @@ Gurax_ImplementFunction(SplitExt)
 	// Function body
 	String baseName, extName;
 	pathName.SplitExtName(&baseName, &extName);
-	return Value_List::Create(new Value_String(baseName), new Value_String(extName));
+	return Value_Tuple::Create(new Value_String(baseName), new Value_String(extName));
 }
 
 // path.Stat(directory:Directory):map {block?}

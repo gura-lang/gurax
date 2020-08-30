@@ -152,7 +152,7 @@ Gurax_ImplementFunctionEx(glfwGetVersion_gurax, processor_gurax, argument_gurax)
 	// Function body
 	int major, minor, rev;
 	glfwGetVersion(&major, &minor, &rev);
-	return Value_List::Create(new Value_Number(major), new Value_Number(minor), new Value_Number(rev));
+	return Value_Tuple::Create(new Value_Number(major), new Value_Number(minor), new Value_Number(rev));
 }
 
 // glfw.glfwGetVersionString()
@@ -378,7 +378,7 @@ Gurax_ImplementFunctionEx(glfwGetCursorPos_gurax, processor_gurax, argument_gura
 	// Function body
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
 // glfw.glfwSetCursorPos(window:glfw.GLFWwindow, xpos:Number, ypos:Number)
@@ -735,7 +735,7 @@ Gurax_ImplementFunctionEx(glfwGetJoystickAxes_gurax, processor_gurax, argument_g
 	// Function body
 	int count;
 	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
-		return Value_List::Create(rtn, count);
+		return Value_Tuple::Create(rtn, count);
 	}
 	return Value::nil();
 }
@@ -758,7 +758,7 @@ Gurax_ImplementFunctionEx(glfwGetJoystickButtons_gurax, processor_gurax, argumen
 	// Function body
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
-		return Value_List::Create(rtn, count);
+		return Value_Tuple::Create(rtn, count);
 	}
 	return Value::nil();
 }
@@ -781,7 +781,7 @@ Gurax_ImplementFunctionEx(glfwGetJoystickHats_gurax, processor_gurax, argument_g
 	// Function body
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
-		return Value_List::Create(rtn, count);
+		return Value_Tuple::Create(rtn, count);
 	}
 	return Value::nil();
 }
@@ -1087,7 +1087,7 @@ Gurax_ImplementFunctionEx(glfwGetMonitorPos_gurax, processor_gurax, argument_gur
 	// Function body
 	int xpos, ypos;
 	glfwGetMonitorPos(monitor, &xpos, &ypos);
-	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
 // glfw.glfwGetMonitorWorkarea(monitor:glfw.GLFWmonitor)
@@ -1108,7 +1108,7 @@ Gurax_ImplementFunctionEx(glfwGetMonitorWorkarea_gurax, processor_gurax, argumen
 	// Function body
 	int xpos, ypos, width, height;
 	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &width, &height);
-	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos),
+	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos),
 						new Value_Number(width), new Value_Number(height));
 }
 
@@ -1130,7 +1130,7 @@ Gurax_ImplementFunctionEx(glfwGetMonitorPhysicalSize_gurax, processor_gurax, arg
 	// Function body
 	int widthMM, heightMM;
 	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
-	return Value_List::Create(new Value_Number(widthMM), new Value_Number(heightMM));
+	return Value_Tuple::Create(new Value_Number(widthMM), new Value_Number(heightMM));
 }
 
 // glfw.glfwGetMonitorContentScale(monitor:glfw.GLFWmonitor)
@@ -1151,7 +1151,7 @@ Gurax_ImplementFunctionEx(glfwGetMonitorContentScale_gurax, processor_gurax, arg
 	// Function body
 	float xscale, yscale;
 	glfwGetMonitorContentScale(monitor, &xscale, &yscale);
-	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
+	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 }
 
 // glfw.glfwGetMonitorName(monitor:glfw.GLFWmonitor)
@@ -1567,7 +1567,7 @@ Gurax_ImplementFunctionEx(glfwGetWindowPos_gurax, processor_gurax, argument_gura
 	// Function body
 	int xpos, ypos;
 	glfwGetWindowPos(window, &xpos, &ypos);
-	return Value_List::Create(new Value_Number(xpos), new Value_Number(ypos));
+	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 }
 
 // glfw.glfwSetWindowPos(window:glfw.GLFWwindow, xpos:Number, ypos:Number)
@@ -1612,7 +1612,7 @@ Gurax_ImplementFunctionEx(glfwGetWindowSize_gurax, processor_gurax, argument_gur
 	// Function body
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
-	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 }
 
 // glfw.glfwSetWindowSizeLimits(window:glfw.GLFWwindow, minwidth:Number, minheight:Number, maxwidth:Number, maxheight:Number)
@@ -1709,7 +1709,7 @@ Gurax_ImplementFunctionEx(glfwGetFramebufferSize_gurax, processor_gurax, argumen
 	// Function body
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
-	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 }
 
 // glfw.glfwGetWindowFrameSize(window:glfw.GLFWwindow)
@@ -1730,7 +1730,7 @@ Gurax_ImplementFunctionEx(glfwGetWindowFrameSize_gurax, processor_gurax, argumen
 	// Function body
 	int left, top, right, bottom;
 	glfwGetWindowFrameSize(window, &left, &top, &right, &bottom);
-	return Value_List::Create(new Value_Number(left), new Value_Number(top),
+	return Value_Tuple::Create(new Value_Number(left), new Value_Number(top),
 							new Value_Number(right), new Value_Number(bottom));
 }
 
@@ -1752,7 +1752,7 @@ Gurax_ImplementFunctionEx(glfwGetWindowContentScale_gurax, processor_gurax, argu
 	// Function body
 	float xscale, yscale;
 	glfwGetWindowContentScale(window, &xscale, &yscale);
-	return Value_List::Create(new Value_Number(xscale), new Value_Number(yscale));
+	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 }
 
 // glfw.glfwGetWindowOpacity(window:glfw.GLFWwindow)

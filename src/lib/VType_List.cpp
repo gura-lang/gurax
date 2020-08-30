@@ -200,15 +200,14 @@ Gurax_ImplementMethod(List, Get)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
 	// Arguments
 	ArgPicker args(argument);
 	Int pos = args.PickNumber<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	Value* pValue = valueTypedOwner.Get(pos);
-	if (!pValue) return Value::nil();
-	return pValue->Reference();
+	if (!valueOwner.FixPosition(&pos)) return Value::nil();
+	return valueOwner.Get(pos).Reference();
 }
 
 // List#Insert(pos:Number, values+):reduce
