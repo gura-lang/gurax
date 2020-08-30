@@ -242,7 +242,8 @@ bool ValueList::IsLessThan(const ValueList& valueList) const
 {
 	auto ppValue1 = begin(), ppValue2 = valueList.begin();
 	for ( ; ppValue1 != end() && ppValue2 != valueList.end(); ppValue1++, ppValue2++) {
-		if (!(*ppValue1)->IsLessThan(*ppValue2)) return false;
+		if ((*ppValue2)->IsLessThan(*ppValue1)) return false;
+		if ((*ppValue1)->IsLessThan(*ppValue2)) return true;
 	}
 	return ppValue1 == end() && ppValue2 != valueList.end();
 }
@@ -258,6 +259,7 @@ String ValueList::ToString(const StringStyle& ss) const
 		if (ppValue != begin()) str += ssMod.GetComma();
 		str += (*ppValue)->ToString(ssMod);
 	}
+	if (size() == 1 && ss.IsWithParenthesis()) str += ',';
 	str += ss.GetClosing();
 	return str;
 }
