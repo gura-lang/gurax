@@ -4369,6 +4369,684 @@ Gurax_ImplementFunctionEx(SDL_ShowCursor_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_LockJoysticks()
+Gurax_DeclareFunctionAlias(SDL_LockJoysticks_gurax, "SDL_LockJoysticks")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_LockJoysticks_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_LockJoysticks();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_UnlockJoysticks()
+Gurax_DeclareFunctionAlias(SDL_UnlockJoysticks_gurax, "SDL_UnlockJoysticks")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UnlockJoysticks_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_UnlockJoysticks();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_NumJoysticks()
+Gurax_DeclareFunctionAlias(SDL_NumJoysticks_gurax, "SDL_NumJoysticks")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_NumJoysticks_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_NumJoysticks();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickNameForIndex(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickNameForIndex_gurax, "SDL_JoystickNameForIndex")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickNameForIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_JoystickNameForIndex(device_index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_JoystickGetDevicePlayerIndex(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDevicePlayerIndex_gurax, "SDL_JoystickGetDevicePlayerIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDevicePlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_JoystickGetDevicePlayerIndex(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetDeviceVendor(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceVendor_gurax, "SDL_JoystickGetDeviceVendor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceVendor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetDeviceVendor(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetDeviceProduct(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProduct_gurax, "SDL_JoystickGetDeviceProduct")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceProduct_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetDeviceProduct(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetDeviceProductVersion(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProductVersion_gurax, "SDL_JoystickGetDeviceProductVersion")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceProductVersion_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetDeviceProductVersion(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetDeviceType(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceType_gurax, "SDL_JoystickGetDeviceType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_JoystickType rtn = SDL_JoystickGetDeviceType(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetDeviceInstanceID(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceInstanceID_gurax, "SDL_JoystickGetDeviceInstanceID")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_JoystickID rtn = SDL_JoystickGetDeviceInstanceID(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickOpen(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickOpen_gurax, "SDL_JoystickOpen")
+{
+	Declare(VTYPE_SDL_Joystick, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickOpen_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Joystick* rtn = SDL_JoystickOpen(device_index);
+	return new Value_SDL_Joystick(rtn);
+}
+
+// sdl.SDL_JoystickFromInstanceID(instance_id:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickFromInstanceID_gurax, "SDL_JoystickFromInstanceID")
+{
+	Declare(VTYPE_SDL_Joystick, Flag::None);
+	DeclareArg("instance_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickFromInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_JoystickID instance_id = args_gurax.PickNumber<SDL_JoystickID>();
+	// Function body
+	SDL_Joystick* rtn = SDL_JoystickFromInstanceID(instance_id);
+	return new Value_SDL_Joystick(rtn);
+}
+
+// sdl.SDL_JoystickFromPlayerIndex(player_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickFromPlayerIndex_gurax, "SDL_JoystickFromPlayerIndex")
+{
+	Declare(VTYPE_SDL_Joystick, Flag::None);
+	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickFromPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int player_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Joystick* rtn = SDL_JoystickFromPlayerIndex(player_index);
+	return new Value_SDL_Joystick(rtn);
+}
+
+// sdl.SDL_JoystickName(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickName_gurax, "SDL_JoystickName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	const char* rtn = SDL_JoystickName(joystick);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_JoystickGetPlayerIndex(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetPlayerIndex_gurax, "SDL_JoystickGetPlayerIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickGetPlayerIndex(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickSetPlayerIndex(joystick:SDL_Joystick, player_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickSetPlayerIndex_gurax, "SDL_JoystickSetPlayerIndex")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickSetPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	int player_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_JoystickSetPlayerIndex(joystick, player_index);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_JoystickGetVendor(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetVendor_gurax, "SDL_JoystickGetVendor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetVendor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetVendor(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetProduct(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetProduct_gurax, "SDL_JoystickGetProduct")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetProduct_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetProduct(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetProductVersion(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetProductVersion_gurax, "SDL_JoystickGetProductVersion")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetProductVersion_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_JoystickGetProductVersion(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetType(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetType_gurax, "SDL_JoystickGetType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_JoystickType rtn = SDL_JoystickGetType(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetAttached(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetAttached_gurax, "SDL_JoystickGetAttached")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetAttached_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_JoystickGetAttached(joystick);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_JoystickInstanceID(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickInstanceID_gurax, "SDL_JoystickInstanceID")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_JoystickID rtn = SDL_JoystickInstanceID(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickNumAxes(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickNumAxes_gurax, "SDL_JoystickNumAxes")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickNumAxes_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickNumAxes(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickNumBalls(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickNumBalls_gurax, "SDL_JoystickNumBalls")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickNumBalls_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickNumBalls(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickNumHats(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickNumHats_gurax, "SDL_JoystickNumHats")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickNumHats_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickNumHats(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickNumButtons(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickNumButtons_gurax, "SDL_JoystickNumButtons")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickNumButtons_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickNumButtons(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickUpdate()
+Gurax_DeclareFunctionAlias(SDL_JoystickUpdate_gurax, "SDL_JoystickUpdate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickUpdate_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_JoystickUpdate();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_JoystickEventState(state:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickEventState_gurax, "SDL_JoystickEventState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickEventState_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int state = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_JoystickEventState(state);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetAxis(joystick:SDL_Joystick, axis:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetAxis_gurax, "SDL_JoystickGetAxis")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetAxis_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	int axis = args_gurax.PickNumber<int>();
+	// Function body
+	Sint16 rtn = SDL_JoystickGetAxis(joystick, axis);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetHat(joystick:SDL_Joystick, hat:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetHat_gurax, "SDL_JoystickGetHat")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetHat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	int hat = args_gurax.PickNumber<int>();
+	// Function body
+	Uint8 rtn = SDL_JoystickGetHat(joystick, hat);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetButton(joystick:SDL_Joystick, button:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetButton_gurax, "SDL_JoystickGetButton")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetButton_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	int button = args_gurax.PickNumber<int>();
+	// Function body
+	Uint8 rtn = SDL_JoystickGetButton(joystick, button);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickRumble(joystick:SDL_Joystick, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickRumble_gurax, "SDL_JoystickRumble")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("low_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("high_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("duration_ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickRumble_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	Uint16 low_frequency_rumble = args_gurax.PickNumber<Uint16>();
+	Uint16 high_frequency_rumble = args_gurax.PickNumber<Uint16>();
+	Uint32 duration_ms = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_JoystickRumble(joystick, low_frequency_rumble, high_frequency_rumble, duration_ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickClose(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickClose_gurax, "SDL_JoystickClose")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickClose_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_JoystickClose(joystick);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_JoystickCurrentPowerLevel(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickCurrentPowerLevel_gurax, "SDL_JoystickCurrentPowerLevel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickCurrentPowerLevel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_JoystickPowerLevel rtn = SDL_JoystickCurrentPowerLevel(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -4578,6 +5256,40 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetDefaultCursor_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_FreeCursor_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_ShowCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_LockJoysticks_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UnlockJoysticks_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_NumJoysticks_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickNameForIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDevicePlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceVendor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceProduct_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceProductVersion_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickOpen_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickFromInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickFromPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickSetPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetVendor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProduct_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProductVersion_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetAttached_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickNumAxes_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickNumBalls_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickNumHats_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickNumButtons_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickUpdate_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickEventState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetAxis_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetHat_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetButton_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickRumble_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickClose_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickCurrentPowerLevel_gurax));
 }
 
 Gurax_EndModuleScope(sdl)
