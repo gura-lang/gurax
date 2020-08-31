@@ -84,6 +84,8 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	return new Gurax::Value_Bool(!!rtn);
 	''')
 
+r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
+
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
@@ -561,13 +563,13 @@ SDL_GetTextureScaleMode(texture:SDL_Texture_p):int = \
 
 SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:const_void_p, pitch:int):int
 
-/*
 SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int
 
-SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:void_pp, pitch:int_p):int
+//SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:void_pp, pitch:int_p):int
 
-SDL_LockTextureToSurface(texture:SDL_Texture_p, rect:const_SDL_Rect_p, surface:SDL_Surface_pp):int
+//SDL_LockTextureToSurface(texture:SDL_Texture_p, rect:const_SDL_Rect_p, surface:SDL_Surface_pp):int
 
+/*
 SDL_UnlockTexture(texture:SDL_Texture_p):void
 
 SDL_RenderTargetSupported(renderer:SDL_Renderer_p):SDL_bool

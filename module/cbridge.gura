@@ -370,6 +370,7 @@ Renderer.__init__() = {
 		}
 		return Gurax::Value::nil();
 		''')
+	/*
 	this.DeclareType('const_void_p', 'const void*', 'Pointer',
 		codePicker = R'''
 		${this.cType} ${varName} = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cType}>();
@@ -382,4 +383,5 @@ Renderer.__init__() = {
 			return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cType}>();
 		});
 		''')
+	*/
 }

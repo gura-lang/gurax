@@ -2301,10 +2301,44 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>();
+	const void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
 	int pitch = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_UpdateTexture(texture, rect, pixels, pitch);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_UpdateYUVTexture(texture:SDL_Texture, rect:SDL_Rect, Yplane:Pointer, Ypitch:Number, Uplane:Pointer, Upitch:Number, Vplane:Pointer, Vpitch:Number)
+Gurax_DeclareFunctionAlias(SDL_UpdateYUVTexture_gurax, "SDL_UpdateYUVTexture")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Yplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Ypitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Uplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Upitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Vplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Vpitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const Uint8* Yplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	int Ypitch = args_gurax.PickNumber<int>();
+	const Uint8* Uplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	int Upitch = args_gurax.PickNumber<int>();
+	const Uint8* Vplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	int Vpitch = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_UpdateYUVTexture(texture, rect, Yplane, Ypitch, Uplane, Upitch, Vplane, Vpitch);
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -2421,6 +2455,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SetTextureScaleMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetTextureScaleMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UpdateYUVTexture_gurax));
 }
 
 Gurax_EndModuleScope(sdl)
