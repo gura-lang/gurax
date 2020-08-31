@@ -2342,6 +2342,690 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_UnlockTexture(texture:SDL_Texture)
+Gurax_DeclareFunctionAlias(SDL_UnlockTexture_gurax, "SDL_UnlockTexture")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UnlockTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	// Function body
+	SDL_UnlockTexture(texture);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_RenderTargetSupported(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderTargetSupported_gurax, "SDL_RenderTargetSupported")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderTargetSupported_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_RenderTargetSupported(renderer);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_SetRenderTarget(renderer:SDL_Renderer, texture:SDL_Texture)
+Gurax_DeclareFunctionAlias(SDL_SetRenderTarget_gurax, "SDL_SetRenderTarget")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetRenderTarget_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_SetRenderTarget(renderer, texture);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetRenderTarget(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_GetRenderTarget_gurax, "SDL_GetRenderTarget")
+{
+	Declare(VTYPE_SDL_Texture, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRenderTarget_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_Texture* rtn = SDL_GetRenderTarget(renderer);
+	return new Value_SDL_Texture(rtn);
+}
+
+// sdl.SDL_RenderSetLogicalSize(renderer:SDL_Renderer, w:Number, h:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderSetLogicalSize_gurax, "SDL_RenderSetLogicalSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderSetLogicalSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	int w = args_gurax.PickNumber<int>();
+	int h = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_RenderSetLogicalSize(renderer, w, h);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderSetIntegerScale(renderer:SDL_Renderer, enable:Bool)
+Gurax_DeclareFunctionAlias(SDL_RenderSetIntegerScale_gurax, "SDL_RenderSetIntegerScale")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderSetIntegerScale_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_bool enable = static_cast<SDL_bool>(args_gurax.PickBool());
+	// Function body
+	int rtn = SDL_RenderSetIntegerScale(renderer, enable);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderGetIntegerScale(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderGetIntegerScale_gurax, "SDL_RenderGetIntegerScale")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderGetIntegerScale_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_RenderGetIntegerScale(renderer);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_RenderSetViewport(renderer:SDL_Renderer, rect:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderSetViewport_gurax, "SDL_RenderSetViewport")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderSetViewport_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderSetViewport(renderer, rect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderSetClipRect(renderer:SDL_Renderer, rect:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderSetClipRect_gurax, "SDL_RenderSetClipRect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderSetClipRect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderSetClipRect(renderer, rect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderIsClipEnabled(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderIsClipEnabled_gurax, "SDL_RenderIsClipEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderIsClipEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_RenderIsClipEnabled(renderer);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_RenderSetScale(renderer:SDL_Renderer, scaleX:Number, scaleY:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderSetScale_gurax, "SDL_RenderSetScale")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("scaleX", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("scaleY", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderSetScale_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	float scaleX = args_gurax.PickNumber<float>();
+	float scaleY = args_gurax.PickNumber<float>();
+	// Function body
+	int rtn = SDL_RenderSetScale(renderer, scaleX, scaleY);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetRenderDrawColor(renderer:SDL_Renderer, r:Number, g:Number, b:Number, a:Number)
+Gurax_DeclareFunctionAlias(SDL_SetRenderDrawColor_gurax, "SDL_SetRenderDrawColor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetRenderDrawColor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	Uint8 r = args_gurax.PickNumber<Uint8>();
+	Uint8 g = args_gurax.PickNumber<Uint8>();
+	Uint8 b = args_gurax.PickNumber<Uint8>();
+	Uint8 a = args_gurax.PickNumber<Uint8>();
+	// Function body
+	int rtn = SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer, blendMode:Number)
+Gurax_DeclareFunctionAlias(SDL_SetRenderDrawBlendMode_gurax, "SDL_SetRenderDrawBlendMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetRenderDrawBlendMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_BlendMode blendMode = args_gurax.PickNumber<SDL_BlendMode>();
+	// Function body
+	int rtn = SDL_SetRenderDrawBlendMode(renderer, blendMode);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderClear(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderClear_gurax, "SDL_RenderClear")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderClear_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderClear(renderer);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawPoint(renderer:SDL_Renderer, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawPoint_gurax, "SDL_RenderDrawPoint")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_RenderDrawPoint(renderer, x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawLine(renderer:SDL_Renderer, x1:Number, y1:Number, x2:Number, y2:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawLine_gurax, "SDL_RenderDrawLine")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawLine_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	int x1 = args_gurax.PickNumber<int>();
+	int y1 = args_gurax.PickNumber<int>();
+	int x2 = args_gurax.PickNumber<int>();
+	int y2 = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawRect(renderer:SDL_Renderer, rect:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawRect_gurax, "SDL_RenderDrawRect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawRect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderDrawRect(renderer, rect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderFillRect(renderer:SDL_Renderer, rect:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderFillRect_gurax, "SDL_RenderFillRect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderFillRect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderFillRect(renderer, rect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderFillRects(renderer:SDL_Renderer, rects:SDL_Rect, count:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderFillRects_gurax, "SDL_RenderFillRects")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rects = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	int count = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_RenderFillRects(renderer, rects, count);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderCopy(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect, dstrect:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderCopy_gurax, "SDL_RenderCopy")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderCopy_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	const SDL_Rect* srcrect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* dstrect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderCopy(renderer, texture, srcrect, dstrect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawPointF(renderer:SDL_Renderer, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawPointF_gurax, "SDL_RenderDrawPointF")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawPointF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	float x = args_gurax.PickNumber<float>();
+	float y = args_gurax.PickNumber<float>();
+	// Function body
+	int rtn = SDL_RenderDrawPointF(renderer, x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawLineF(renderer:SDL_Renderer, x1:Number, y1:Number, x2:Number, y2:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawLineF_gurax, "SDL_RenderDrawLineF")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawLineF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	float x1 = args_gurax.PickNumber<float>();
+	float y1 = args_gurax.PickNumber<float>();
+	float x2 = args_gurax.PickNumber<float>();
+	float y2 = args_gurax.PickNumber<float>();
+	// Function body
+	int rtn = SDL_RenderDrawLineF(renderer, x1, y1, x2, y2);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderReadPixels(renderer:SDL_Renderer, rect:SDL_Rect, format:Number, pixels:Pointer, pitch:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderReadPixels_gurax, "SDL_RenderReadPixels")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderReadPixels_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	Uint32 format = args_gurax.PickNumber<Uint32>();
+	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!pixels) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	int pitch = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_RenderReadPixels(renderer, rect, format, pixels, pitch);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderPresent(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderPresent_gurax, "SDL_RenderPresent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderPresent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_RenderPresent(renderer);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_DestroyTexture(texture:SDL_Texture)
+Gurax_DeclareFunctionAlias(SDL_DestroyTexture_gurax, "SDL_DestroyTexture")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_DestroyTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	// Function body
+	SDL_DestroyTexture(texture);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_DestroyRenderer(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_DestroyRenderer_gurax, "SDL_DestroyRenderer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_DestroyRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_DestroyRenderer(renderer);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_RenderFlush(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_RenderFlush_gurax, "SDL_RenderFlush")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderFlush_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_RenderFlush(renderer);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GL_UnbindTexture(texture:SDL_Texture)
+Gurax_DeclareFunctionAlias(SDL_GL_UnbindTexture_gurax, "SDL_GL_UnbindTexture")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GL_UnbindTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_GL_UnbindTexture(texture);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetPixelFormatName(format:Number)
+Gurax_DeclareFunctionAlias(SDL_GetPixelFormatName_gurax, "SDL_GetPixelFormatName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetPixelFormatName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 format = args_gurax.PickNumber<Uint32>();
+	// Function body
+	const char* rtn = SDL_GetPixelFormatName(format);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_MasksToPixelFormatEnum(bpp:Number, Rmask:Number, Gmask:Number, Bmask:Number, Amask:Number)
+Gurax_DeclareFunctionAlias(SDL_MasksToPixelFormatEnum_gurax, "SDL_MasksToPixelFormatEnum")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("bpp", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Rmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Gmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Bmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("Amask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MasksToPixelFormatEnum_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int bpp = args_gurax.PickNumber<int>();
+	Uint32 Rmask = args_gurax.PickNumber<Uint32>();
+	Uint32 Gmask = args_gurax.PickNumber<Uint32>();
+	Uint32 Bmask = args_gurax.PickNumber<Uint32>();
+	Uint32 Amask = args_gurax.PickNumber<Uint32>();
+	// Function body
+	Uint32 rtn = SDL_MasksToPixelFormatEnum(bpp, Rmask, Gmask, Bmask, Amask);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -2456,6 +3140,36 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetTextureScaleMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateYUVTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UnlockTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderTargetSupported_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetRenderTarget_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRenderTarget_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderSetLogicalSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderSetIntegerScale_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderGetIntegerScale_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderSetViewport_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderSetClipRect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderIsClipEnabled_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderSetScale_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetRenderDrawColor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetRenderDrawBlendMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderClear_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoint_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLine_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRects_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderCopy_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPointF_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLineF_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderReadPixels_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderPresent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_DestroyTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_DestroyRenderer_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderFlush_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GL_UnbindTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetPixelFormatName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MasksToPixelFormatEnum_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

@@ -569,7 +569,6 @@ SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, Yplane:const_
 
 //SDL_LockTextureToSurface(texture:SDL_Texture_p, rect:const_SDL_Rect_p, surface:SDL_Surface_pp):int
 
-/*
 SDL_UnlockTexture(texture:SDL_Texture_p):void
 
 SDL_RenderTargetSupported(renderer:SDL_Renderer_p):SDL_bool
@@ -580,7 +579,7 @@ SDL_GetRenderTarget(renderer:SDL_Renderer_p):SDL_Texture_p
 
 SDL_RenderSetLogicalSize(renderer:SDL_Renderer_p, w:int, h:int):int
 
-SDL_RenderGetLogicalSize(renderer:SDL_Renderer_p, w:int_p, h:int_p):void
+//SDL_RenderGetLogicalSize(renderer:SDL_Renderer_p, w:int_p, h:int_p):void
 
 SDL_RenderSetIntegerScale(renderer:SDL_Renderer_p, enable:SDL_bool):int
 
@@ -588,39 +587,39 @@ SDL_RenderGetIntegerScale(renderer:SDL_Renderer_p):SDL_bool
 
 SDL_RenderSetViewport(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
-SDL_RenderGetViewport(renderer:SDL_Renderer_p, rect:SDL_Rect_p):void
+//SDL_RenderGetViewport(renderer:SDL_Renderer_p, rect:SDL_Rect_p):void
 
 SDL_RenderSetClipRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
-SDL_RenderGetClipRect(renderer:SDL_Renderer_p, rect:SDL_Rect_p):void
+//SDL_RenderGetClipRect(renderer:SDL_Renderer_p, rect:SDL_Rect_p):void
 
 SDL_RenderIsClipEnabled(renderer:SDL_Renderer_p):SDL_bool
 
 SDL_RenderSetScale(renderer:SDL_Renderer_p, scaleX:float, scaleY:float):int
 
-SDL_RenderGetScale(renderer:SDL_Renderer_p, scaleX:float_p, scaleY:float_p):void
+//SDL_RenderGetScale(renderer:SDL_Renderer_p, scaleX:float_p, scaleY:float_p):void
 
 SDL_SetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):int
 
-SDL_GetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):int
+//SDL_GetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):int
 
 SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode):int
 
-SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode_p):int
+//SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode_p):int
 
 SDL_RenderClear(renderer:SDL_Renderer_p):int
 
 SDL_RenderDrawPoint(renderer:SDL_Renderer_p, x:int, y:int):int
 
-SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
+//SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
 
 SDL_RenderDrawLine(renderer:SDL_Renderer_p, x1:int, y1:int, x2:int, y2:int):int
 
-SDL_RenderDrawLines(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
+//SDL_RenderDrawLines(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
 
 SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
-SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects:const_SDL_Rect_p, count:int):int
+//SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects:const_SDL_Rect_p, count:int):int
 
 SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
@@ -628,27 +627,27 @@ SDL_RenderFillRects(renderer:SDL_Renderer_p, rects:const_SDL_Rect_p, count:int):
 
 SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p):int
 
-SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p, angle:const_double, center:const_SDL_Point_p, flip:const_SDL_RendererFlip):int
+//SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p, angle:const_double, center:const_SDL_Point_p, flip:const_SDL_RendererFlip):int
 
 SDL_RenderDrawPointF(renderer:SDL_Renderer_p, x:float, y:float):int
 
-SDL_RenderDrawPointsF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
+//SDL_RenderDrawPointsF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
 
 SDL_RenderDrawLineF(renderer:SDL_Renderer_p, x1:float, y1:float, x2:float, y2:float):int
 
-SDL_RenderDrawLinesF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
+//SDL_RenderDrawLinesF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
 
-SDL_RenderDrawRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
+//SDL_RenderDrawRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
-SDL_RenderDrawRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
+//SDL_RenderDrawRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
 
-SDL_RenderFillRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
+//SDL_RenderFillRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
-SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
+//SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
 
-SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p):int
+//SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p):int
 
-SDL_RenderCopyExF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p, angle:const_double, center:const_SDL_FPoint_p, flip:const_SDL_RendererFlip):int
+//SDL_RenderCopyExF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p, angle:const_double, center:const_SDL_FPoint_p, flip:const_SDL_RendererFlip):int
 
 SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p, format:Uint32, pixels:void_p, pitch:int):int
 
@@ -660,44 +659,45 @@ SDL_DestroyRenderer(renderer:SDL_Renderer_p):void
 
 SDL_RenderFlush(renderer:SDL_Renderer_p):int
 
-SDL_GL_BindTexture(texture:SDL_Texture_p, texw:float_p, texh:float_p):int
+//SDL_GL_BindTexture(texture:SDL_Texture_p, texw:float_p, texh:float_p):int
 
 SDL_GL_UnbindTexture(texture:SDL_Texture_p):int
 
-SDL_RenderGetMetalLayer(renderer:SDL_Renderer_p):void_p
+//SDL_RenderGetMetalLayer(renderer:SDL_Renderer_p):void_p
 
-SDL_RenderGetMetalCommandEncoder(renderer:SDL_Renderer_p):void_p
+//SDL_RenderGetMetalCommandEncoder(renderer:SDL_Renderer_p):void_p
 
 //======== Pixel Formats and Conversion Routines (SDL_pixels.h) ========
 
 SDL_GetPixelFormatName(format:Uint32):const_char_p
 
-SDL_PixelFormatEnumToMasks(format:Uint32, bpp:int_p, Rmask:Uint32_p, Gmask:Uint32_p, Bmask:Uint32_p, Amask:Uint32_p):SDL_bool
+//SDL_PixelFormatEnumToMasks(format:Uint32, bpp:int_p, Rmask:Uint32_p, Gmask:Uint32_p, Bmask:Uint32_p, Amask:Uint32_p):SDL_bool
 
 SDL_MasksToPixelFormatEnum(bpp:int, Rmask:Uint32, Gmask:Uint32, Bmask:Uint32, Amask:Uint32):Uint32
 
-SDL_AllocFormat(pixel_format:Uint32):SDL_PixelFormat_p
+//SDL_AllocFormat(pixel_format:Uint32):SDL_PixelFormat_p
 
-SDL_FreeFormat(format:SDL_PixelFormat_p):void
+//SDL_FreeFormat(format:SDL_PixelFormat_p):void
 
-SDL_AllocPalette(ncolors:int):SDL_Palette_p
+//SDL_AllocPalette(ncolors:int):SDL_Palette_p
 
-SDL_SetPixelFormatPalette(format:SDL_PixelFormat_p, palette:SDL_Palette_p):int
+//SDL_SetPixelFormatPalette(format:SDL_PixelFormat_p, palette:SDL_Palette_p):int
 
-SDL_SetPaletteColors(palette:SDL_Palette_p, colors:const_SDL_Color_p, firstcolor:int, ncolors:int):int
+//SDL_SetPaletteColors(palette:SDL_Palette_p, colors:const_SDL_Color_p, firstcolor:int, ncolors:int):int
 
-SDL_FreePalette(palette:SDL_Palette_p):void
+//SDL_FreePalette(palette:SDL_Palette_p):void
 
-SDL_MapRGB(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8):Uint32
+//SDL_MapRGB(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8):Uint32
 
-SDL_MapRGBA(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):Uint32
+//SDL_MapRGBA(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):Uint32
 
-SDL_GetRGB(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p):void
+//SDL_GetRGB(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p):void
 
-SDL_GetRGBA(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):void
+//SDL_GetRGBA(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):void
 
-SDL_CalculateGammaRamp(gamma:float, ramp:Uint16_p):void
+//SDL_CalculateGammaRamp(gamma:float, ramp:Uint16_p):void
 
+/*
 //======== Rectangle Functions (SDL_rect.h) ========
 
 SDL_HasIntersection(A:const_SDL_Rect_p, B:const_SDL_Rect_p):SDL_bool
