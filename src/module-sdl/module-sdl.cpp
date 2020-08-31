@@ -75,8 +75,12 @@ Gurax_ModulePrepare()
 	// Assignment of VType
     Assign(VTYPE_SDL_Color);
     Assign(VTYPE_SDL_DisplayMode);
+    Assign(VTYPE_SDL_GLContext);
     Assign(VTYPE_SDL_Rect);
+    Assign(VTYPE_SDL_Renderer);
+    Assign(VTYPE_SDL_RendererInfo);
     Assign(VTYPE_SDL_Surface);
+    Assign(VTYPE_SDL_Texture);
     Assign(VTYPE_SDL_Window);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));

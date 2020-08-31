@@ -9,10 +9,10 @@ r = cbridge.Renderer()
 cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
 	'''
 	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : nullptr;
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
@@ -58,6 +58,7 @@ r.DeclareType_Number('SDL_RendererFlags')
 r.DeclareType_Number('SDL_RendererFlip')
 r.DeclareType_Number('SDL_SYSWM_TYPE')
 r.DeclareType_Number('SDL_Scancode')
+r.DeclareType_Number('SDL_ScaleMode')
 r.DeclareType_Number('SDL_TextureAccess')
 r.DeclareType_Number('SDL_TextureModulate')
 r.DeclareType_Number('SDL_ThreadPriority')
@@ -83,8 +84,12 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	return new Gurax::Value_Bool(!!rtn);
 	''')
 
-r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
+r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
+r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
+r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
+r.DeclareType_EntityPtr('SDL_Texture_p', 'SDL_Texture*', 'SDL_Texture')
+r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
 
 //------------------------------------------------------------------------------
 // Function Registration: Context
@@ -201,22 +206,22 @@ SDL_GetDisplayName(displayIndex:int):const_char_p
 
 SDL_GetDisplayBounds(displayIndex:int):any = \
 	R'''
-	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
-	if (SDL_GetDisplayBounds(displayIndex, &pValue->GetEntity()) != 0) {
+	SDL_Rect rect;
+	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) {
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return pValue.release();
+	return new Value_SDL_Rect(rect);
 	'''
 
 SDL_GetDisplayUsableBounds(displayIndex:int):any = \
 	R'''
-	RefPtr<Value_SDL_Rect> pValue(new Value_SDL_Rect());
-	if (SDL_GetDisplayUsableBounds(displayIndex, &pValue->GetEntity()) != 0) {
+	SDL_Rect rect;
+	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) {
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return pValue.release();
+	return new Value_SDL_Rect(rect);
 	'''
 
 SDL_GetDisplayDPI(displayIndex:int):any = \
@@ -395,10 +400,9 @@ SDL_EnableScreenSaver():void
 
 SDL_DisableScreenSaver():void
 
-/*
 SDL_GL_LoadLibrary(path:const_char_p):int
 
-SDL_GL_GetProcAddress(proc:const_char_p):void_p
+//SDL_GL_GetProcAddress(proc:const_char_p):void_p
 
 SDL_GL_UnloadLibrary():void
 
@@ -408,7 +412,15 @@ SDL_GL_ResetAttributes():void
 
 SDL_GL_SetAttribute(attr:SDL_GLattr, value:int):int
 
-SDL_GL_GetAttribute(attr:SDL_GLattr, value:int_p):int
+SDL_GL_GetAttribute(attr:SDL_GLattr) = \
+	R'''
+	int value;
+	if (SDL_GL_GetAttribute(attr, &value) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(value);
+	'''
 
 SDL_GL_CreateContext(window:SDL_Window_p):SDL_GLContext
 
@@ -418,7 +430,12 @@ SDL_GL_GetCurrentWindow():SDL_Window_p
 
 SDL_GL_GetCurrentContext():SDL_GLContext
 
-SDL_GL_GetDrawableSize(window:SDL_Window_p, w:int_p, h:int_p):void
+SDL_GL_GetDrawableSize(window:SDL_Window_p) = \
+	R'''
+	int w, h;
+	SDL_GL_GetDrawableSize(window, &w, &h);
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	'''
 
 SDL_GL_SetSwapInterval(interval:int):int
 
@@ -432,9 +449,26 @@ SDL_GL_DeleteContext(context:SDL_GLContext):void
 
 SDL_GetNumRenderDrivers():int
 
-SDL_GetRenderDriverInfo(index:int, info:SDL_RendererInfo_p):int
+SDL_GetRenderDriverInfo(index:int) = \
+	R'''
+	SDL_RendererInfo info;
+	if (SDL_GetRenderDriverInfo(index, &info) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_RendererInfo(info);
+	'''
 
-SDL_CreateWindowAndRenderer(width:int, height:int, window_flags:Uint32, window:SDL_Window_pp, renderer:SDL_Renderer_pp):int
+SDL_CreateWindowAndRenderer(width:int, height:int, window_flags:Uint32) = \
+	R'''
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+	if (SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_SDL_Window(window), new Value_SDL_Renderer(renderer));
+	'''
 
 SDL_CreateRenderer(window:SDL_Window_p, index:int, flags:Uint32):SDL_Renderer_p
 
@@ -442,34 +476,92 @@ SDL_CreateSoftwareRenderer(surface:SDL_Surface_p):SDL_Renderer_p
 
 SDL_GetRenderer(window:SDL_Window_p):SDL_Renderer_p
 
-SDL_GetRendererInfo(renderer:SDL_Renderer_p, info:SDL_RendererInfo_p):int
+SDL_GetRendererInfo(renderer:SDL_Renderer_p) = \
+	R'''
+	SDL_RendererInfo info;
+	if (SDL_GetRendererInfo(renderer, &info) != 0) {
+		IssueError_SDL();
+		return Value::nil();       
+	}
+	return new Value_SDL_RendererInfo(info);
+	'''
 
-SDL_GetRendererOutputSize(renderer:SDL_Renderer_p, w:int_p, h:int_p):int
+SDL_GetRendererOutputSize(renderer:SDL_Renderer_p) = \
+	R'''
+	int w, h;
+	if (SDL_GetRendererOutputSize(renderer, &w, &h) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	'''
 
 SDL_CreateTexture(renderer:SDL_Renderer_p, format:Uint32, access:int, w:int, h:int):SDL_Texture_p
 
 SDL_CreateTextureFromSurface(renderer:SDL_Renderer_p, surface:SDL_Surface_p):SDL_Texture_p
 
-SDL_QueryTexture(texture:SDL_Texture_p, format:Uint32_p, access:int_p, w:int_p, h:int_p):int
+SDL_QueryTexture(texture:SDL_Texture_p) = \
+	R'''
+	Uint32 format;
+	int access, w, h;
+	if (SDL_QueryTexture(texture, &format, &access, &w, &h) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(format), new Value_Number(access), new Value_Number(w), new Value_Number(h));
+	'''
 
 SDL_SetTextureColorMod(texture:SDL_Texture_p, r:Uint8, g:Uint8, b:Uint8):int
 
-SDL_GetTextureColorMod(texture:SDL_Texture_p, r:Uint8_p, g:Uint8_p, b:Uint8_p):int
+SDL_GetTextureColorMod(texture:SDL_Texture_p) = \
+	R'''
+	Uint8 r, g, b;
+	if (SDL_GetTextureColorMod(texture, &r, &g, &b) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	'''
 
 SDL_SetTextureAlphaMod(texture:SDL_Texture_p, alpha:Uint8):int
 
-SDL_GetTextureAlphaMod(texture:SDL_Texture_p, alpha:Uint8_p):int
+SDL_GetTextureAlphaMod(texture:SDL_Texture_p) = \
+	R'''
+	Uint8 alpha;
+	if (SDL_GetTextureAlphaMod(texture, &alpha) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(alpha);
+	'''
 
 SDL_SetTextureBlendMode(texture:SDL_Texture_p, blendMode:SDL_BlendMode):int
 
-SDL_GetTextureBlendMode(texture:SDL_Texture_p, blendMode:SDL_BlendMode_p):int
+SDL_GetTextureBlendMode(texture:SDL_Texture_p) = \
+	R'''
+	SDL_BlendMode blendMode;
+	if (SDL_GetTextureBlendMode(texture, &blendMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(blendMode);
+	'''
 
 SDL_SetTextureScaleMode(texture:SDL_Texture_p, scaleMode:SDL_ScaleMode):int
 
-SDL_GetTextureScaleMode(texture:SDL_Texture_p, scaleMode:SDL_ScaleMode_p):int
+SDL_GetTextureScaleMode(texture:SDL_Texture_p):int = \
+	R'''
+	SDL_ScaleMode scaleMode;
+	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(scaleMode);
+	'''
 
 SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:const_void_p, pitch:int):int
 
+/*
 SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int
 
 SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:void_pp, pitch:int_p):int

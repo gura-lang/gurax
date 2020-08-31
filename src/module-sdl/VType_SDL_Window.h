@@ -46,28 +46,36 @@ protected:
 	// Destructor
 	~Value_SDL_Window() = default;
 public:
-	SDL_Window* GetEntity() { return _entity; }
-	const SDL_Window* GetEntity() const { return _entity; }
+	SDL_Window& GetEntity() { return *_entity; }
+	const SDL_Window& GetEntity() const { return *_entity; }
+	SDL_Window* GetEntityPtr() { return _entity; }
+	const SDL_Window* GetEntityPtr() const { return _entity; }
 public:
-	static SDL_Window* GetEntity(Value& value) {
+	static SDL_Window& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_Window&>(value).GetEntity();
 	}
-	static const SDL_Window* GetEntity(const Value& value) {
+	static const SDL_Window& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_SDL_Window&>(value).GetEntity();
+	}
+	static SDL_Window* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_SDL_Window&>(value).GetEntityPtr();
+	}
+	static const SDL_Window* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_SDL_Window&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(_entity);
+		return reinterpret_cast<size_t>(GetEntityPtr());
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
-			_entity == Value_SDL_Window::GetEntity(value);
+			GetEntityPtr() == Value_SDL_Window::GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			_entity < Value_SDL_Window::GetEntity(value) :
+			GetEntityPtr() < Value_SDL_Window::GetEntityPtr(value) :
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

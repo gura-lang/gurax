@@ -48,6 +48,8 @@ protected:
 public:
 	SDL_Color& GetEntity() { return _entity; }
 	const SDL_Color& GetEntity() const { return _entity; }
+	SDL_Color* GetEntityPtr() { return &_entity; }
+	const SDL_Color* GetEntityPtr() const { return &_entity; }
 public:
 	static SDL_Color& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_Color&>(value).GetEntity();
@@ -55,19 +57,25 @@ public:
 	static const SDL_Color& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_SDL_Color&>(value).GetEntity();
 	}
+	static SDL_Color* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_SDL_Color&>(value).GetEntityPtr();
+	}
+	static const SDL_Color* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_SDL_Color&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&_entity);
+		return reinterpret_cast<size_t>(GetEntityPtr());
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
-			&_entity == &Value_SDL_Color::GetEntity(value);
+			GetEntityPtr() == Value_SDL_Color::GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			&_entity < &Value_SDL_Color::GetEntity(value) :
+			GetEntityPtr() < Value_SDL_Color::GetEntityPtr(value) :
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

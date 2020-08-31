@@ -9,8 +9,12 @@
 #include "Functions.h"
 #include "VType_SDL_Color.h"
 #include "VType_SDL_DisplayMode.h"
+#include "VType_SDL_GLContext.h"
 #include "VType_SDL_Rect.h"
+#include "VType_SDL_Renderer.h"
+#include "VType_SDL_RendererInfo.h"
 #include "VType_SDL_Surface.h"
+#include "VType_SDL_Texture.h"
 #include "VType_SDL_Window.h"
 
 Gurax_BeginModuleHeader(sdl)

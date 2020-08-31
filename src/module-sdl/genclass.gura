@@ -175,58 +175,44 @@ protected:
 	~Value_${className}() = default;
 public:
 ${if (entityPointerFlag)}
-	${entityName}* GetEntity() { return _entity; }
-	const ${entityName}* GetEntity() const { return _entity; }
+	${entityName}& GetEntity() { return *_entity; }
+	const ${entityName}& GetEntity() const { return *_entity; }
+	${entityName}* GetEntityPtr() { return _entity; }
+	const ${entityName}* GetEntityPtr() const { return _entity; }
 ${else}
 	${entityName}& GetEntity() { return _entity; }
 	const ${entityName}& GetEntity() const { return _entity; }
+	${entityName}* GetEntityPtr() { return &_entity; }
+	const ${entityName}* GetEntityPtr() const { return &_entity; }
 ${end}
 public:
-${if (entityPointerFlag)}
-	static ${entityName}* GetEntity(Value& value) {
-		return dynamic_cast<Value_${entityName}&>(value).GetEntity();
-	}
-	static const ${entityName}* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_${entityName}&>(value).GetEntity();
-	}
-${else}
 	static ${entityName}& GetEntity(Value& value) {
 		return dynamic_cast<Value_${entityName}&>(value).GetEntity();
 	}
 	static const ${entityName}& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_${entityName}&>(value).GetEntity();
 	}
-${end}
+	static ${entityName}* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_${entityName}&>(value).GetEntityPtr();
+	}
+	static const ${entityName}* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_${entityName}&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
-${if (entityPointerFlag)}
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(_entity);
+		return reinterpret_cast<size_t>(GetEntityPtr());
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
-			_entity == Value_${className}::GetEntity(value);
+			GetEntityPtr() == Value_${className}::GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			_entity < Value_${className}::GetEntity(value) :
+			GetEntityPtr() < Value_${className}::GetEntityPtr(value) :
 			GetVType().IsLessThan(value.GetVType());
 	}
-${else}
-	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&_entity);
-	}
-	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) &&
-			&_entity == &Value_${className}::GetEntity(value);
-	}
-	virtual bool IsLessThan(const Value& value) const override {
-		return IsSameType(value)?
-			&_entity < &Value_${className}::GetEntity(value) :
-			GetVType().IsLessThan(value.GetVType());
-	}
-${end}
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
