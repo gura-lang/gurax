@@ -36,6 +36,7 @@ r.DeclareType_Number('SDL_AudioStatus')
 r.DeclareType_Number('SDL_BlendFactor')
 r.DeclareType_Number('SDL_BlendMode')
 r.DeclareType_Number('SDL_BlendOperation')
+r.DeclareType_Number('SDL_eventaction')
 r.DeclareType_Number('SDL_EventType')
 r.DeclareType_Number('SDL_GLattr')
 r.DeclareType_Number('SDL_GLcontextFlag')
@@ -59,6 +60,7 @@ r.DeclareType_Number('SDL_RendererFlip')
 r.DeclareType_Number('SDL_SYSWM_TYPE')
 r.DeclareType_Number('SDL_Scancode')
 r.DeclareType_Number('SDL_ScaleMode')
+r.DeclareType_Number('SDL_SystemCursor')
 r.DeclareType_Number('SDL_TextureAccess')
 r.DeclareType_Number('SDL_TextureModulate')
 r.DeclareType_Number('SDL_ThreadPriority')
@@ -90,6 +92,8 @@ r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
+r.DeclareType_EntityPtr('SDL_Cursor_p', 'SDL_Cursor*', 'SDL_Cursor')
+r.DeclareType_EntityPtr('SDL_Event_p', 'SDL_Event*', 'SDL_Event')
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
@@ -783,32 +787,43 @@ SDL_SetClipRect(surface:SDL_Surface_p, rect:const_SDL_Rect_p):SDL_bool
 
 SDL_DuplicateSurface(surface:SDL_Surface_p):SDL_Surface_p
 
-/*
 //======== Platform-specific Window Management (SDL_syswm.h) ========
 
-SDL_GetWindowWMInfo(window:SDL_Window_p, info:SDL_SysWMinfo_p):SDL_bool
+SDL_GetWindowWMInfo(window:SDL_Window_p) = \
+	R'''
+	SDL_SysWMinfo info;
+	if (!SDL_GetWindowWMInfo(window, &info)) return Value::nil();
+	return new Value_SDL_SysWMinfo(info);
+	'''
 
 //======== Clipboard Handling (SDL_clipboard.h) ========
 
 SDL_SetClipboardText(text:const_char_p):int
 
-SDL_GetClipboardText():char_p
+SDL_GetClipboardText() = \
+	R'''
+	char* rtn = SDL_GetClipboardText();
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+	'''
 
 SDL_HasClipboardText():SDL_bool
 
 //======== Vulkan Support (SDL_vulkan.h) ========
-
+/*
 SDL_Vulkan_LoadLibrary(path:const_char_p):int
 
-SDL_Vulkan_GetVkGetInstanceProcAddr():void_p
+//SDL_Vulkan_GetVkGetInstanceProcAddr():void_p
 
 SDL_Vulkan_UnloadLibrary():void
 
-SDL_Vulkan_GetInstanceExtensions(window:SDL_Window_p, pCount:unsigned_int_p, pNames:const_char_pp):SDL_bool
+//SDL_Vulkan_GetInstanceExtensions(window:SDL_Window_p, pCount:unsigned_int_p, pNames:const_char_pp):SDL_bool
 
-SDL_Vulkan_CreateSurface(window:SDL_Window_p, instance:VkInstance, surface:VkSurfaceKHR_p):SDL_bool
+//SDL_Vulkan_CreateSurface(window:SDL_Window_p, instance:VkInstance, surface:VkSurfaceKHR_p):SDL_bool
 
-SDL_Vulkan_GetDrawableSize(window:SDL_Window_p, w:int_p, h:int_p):void
+//SDL_Vulkan_GetDrawableSize(window:SDL_Window_p, w:int_p, h:int_p):void
+*/
 
 //======== Event Handling (SDL_events.h) ========
 
@@ -832,15 +847,15 @@ SDL_WaitEventTimeout(event:SDL_Event_p, timeout:int):int
 
 SDL_PushEvent(event:SDL_Event_p):int
 
-SDL_SetEventFilter(filter:SDL_EventFilter, userdata:void_p):void
+//SDL_SetEventFilter(filter:SDL_EventFilter, userdata:void_p):void
 
-SDL_GetEventFilter(filter:SDL_EventFilter_p, userdata:void_pp):SDL_bool
+//SDL_GetEventFilter(filter:SDL_EventFilter_p, userdata:void_pp):SDL_bool
 
-SDL_AddEventWatch(filter:SDL_EventFilter, userdata:void_p):void
+//SDL_AddEventWatch(filter:SDL_EventFilter, userdata:void_p):void
 
-SDL_DelEventWatch(filter:SDL_EventFilter, userdata:void_p):void
+//SDL_DelEventWatch(filter:SDL_EventFilter, userdata:void_p):void
 
-SDL_FilterEvents(filter:SDL_EventFilter, userdata:void_p):void
+//SDL_FilterEvents(filter:SDL_EventFilter, userdata:void_p):void
 
 SDL_EventState(type:Uint32, state:int):Uint8
 
@@ -850,7 +865,7 @@ SDL_RegisterEvents(numevents:int):Uint32
 
 SDL_GetKeyboardFocus():SDL_Window_p
 
-SDL_GetKeyboardState(numkeys:int_p):const_Uint8_p
+//SDL_GetKeyboardState(numkeys:int_p):const_Uint8_p
 
 SDL_GetModState():SDL_Keymod
 
@@ -874,7 +889,7 @@ SDL_IsTextInputActive():SDL_bool
 
 SDL_StopTextInput():void
 
-SDL_SetTextInputRect(rect:SDL_Rect_p):void
+//SDL_SetTextInputRect(rect:SDL_Rect_p):void
 
 SDL_HasScreenKeyboardSupport():SDL_bool
 
@@ -888,11 +903,11 @@ SDL_IsScreenKeyboardShown(window:SDL_Window_p):SDL_bool
 
 SDL_GetMouseFocus():SDL_Window_p
 
-SDL_GetMouseState(x:int_p, y:int_p):Uint32
+//SDL_GetMouseState(x:int_p, y:int_p):Uint32
 
-SDL_GetGlobalMouseState(x:int_p, y:int_p):Uint32
+//SDL_GetGlobalMouseState(x:int_p, y:int_p):Uint32
 
-SDL_GetRelativeMouseState(x:int_p, y:int_p):Uint32
+//SDL_GetRelativeMouseState(x:int_p, y:int_p):Uint32
 
 SDL_WarpMouseInWindow(window:SDL_Window_p, x:int, y:int):void
 
@@ -920,6 +935,7 @@ SDL_FreeCursor(cursor:SDL_Cursor_p):void
 
 SDL_ShowCursor(toggle:int):int
 
+/*
 //======== Joystick Support (SDL_joystick.h) ========
 
 SDL_LockJoysticks():void

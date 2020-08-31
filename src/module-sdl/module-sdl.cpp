@@ -74,10 +74,13 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
     Assign(VTYPE_SDL_Color);
+    Assign(VTYPE_SDL_Cursor);
     Assign(VTYPE_SDL_DisplayMode);
+    Assign(VTYPE_SDL_Event);
     Assign(VTYPE_SDL_FPoint);
     Assign(VTYPE_SDL_FRect);
     Assign(VTYPE_SDL_GLContext);
+    Assign(VTYPE_SDL_Joystick);
     Assign(VTYPE_SDL_Rect);
     Assign(VTYPE_SDL_Renderer);
     Assign(VTYPE_SDL_RendererInfo);

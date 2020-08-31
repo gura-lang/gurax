@@ -3502,6 +3502,873 @@ Gurax_ImplementFunctionEx(SDL_DuplicateSurface_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
+// sdl.SDL_GetWindowWMInfo(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_GetWindowWMInfo_gurax, "SDL_GetWindowWMInfo")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	// Function body
+	SDL_SysWMinfo info;
+	if (!SDL_GetWindowWMInfo(window, &info)) return Value::nil();
+	return new Value_SDL_SysWMinfo(info);
+}
+
+// sdl.SDL_SetClipboardText(text:String)
+Gurax_DeclareFunctionAlias(SDL_SetClipboardText_gurax, "SDL_SetClipboardText")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetClipboardText_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	int rtn = SDL_SetClipboardText(text);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetClipboardText()
+Gurax_DeclareFunctionAlias(SDL_GetClipboardText_gurax, "SDL_GetClipboardText")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetClipboardText_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	char* rtn = SDL_GetClipboardText();
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+}
+
+// sdl.SDL_HasClipboardText()
+Gurax_DeclareFunctionAlias(SDL_HasClipboardText_gurax, "SDL_HasClipboardText")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasClipboardText_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasClipboardText();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_PumpEvents()
+Gurax_DeclareFunctionAlias(SDL_PumpEvents_gurax, "SDL_PumpEvents")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PumpEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_PumpEvents();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_PeepEvents(events:SDL_Event, numevents:Number, action:Number, minType:Number, maxType:Number)
+Gurax_DeclareFunctionAlias(SDL_PeepEvents_gurax, "SDL_PeepEvents")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("events", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numevents", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("action", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PeepEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Event* events = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	int numevents = args_gurax.PickNumber<int>();
+	SDL_eventaction action = args_gurax.PickNumber<SDL_eventaction>();
+	Uint32 minType = args_gurax.PickNumber<Uint32>();
+	Uint32 maxType = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_PeepEvents(events, numevents, action, minType, maxType);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HasEvent(type:Number)
+Gurax_DeclareFunctionAlias(SDL_HasEvent_gurax, "SDL_HasEvent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 type = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_bool rtn = SDL_HasEvent(type);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasEvents(minType:Number, maxType:Number)
+Gurax_DeclareFunctionAlias(SDL_HasEvents_gurax, "SDL_HasEvents")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 minType = args_gurax.PickNumber<Uint32>();
+	Uint32 maxType = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_bool rtn = SDL_HasEvents(minType, maxType);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_FlushEvent(type:Number)
+Gurax_DeclareFunctionAlias(SDL_FlushEvent_gurax, "SDL_FlushEvent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FlushEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 type = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_FlushEvent(type);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_FlushEvents(minType:Number, maxType:Number)
+Gurax_DeclareFunctionAlias(SDL_FlushEvents_gurax, "SDL_FlushEvents")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FlushEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 minType = args_gurax.PickNumber<Uint32>();
+	Uint32 maxType = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_FlushEvents(minType, maxType);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_PollEvent(event:SDL_Event)
+Gurax_DeclareFunctionAlias(SDL_PollEvent_gurax, "SDL_PollEvent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PollEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_PollEvent(event);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_WaitEvent(event:SDL_Event)
+Gurax_DeclareFunctionAlias(SDL_WaitEvent_gurax, "SDL_WaitEvent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_WaitEvent(event);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_WaitEventTimeout(event:SDL_Event, timeout:Number)
+Gurax_DeclareFunctionAlias(SDL_WaitEventTimeout_gurax, "SDL_WaitEventTimeout")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	int timeout = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_WaitEventTimeout(event, timeout);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_PushEvent(event:SDL_Event)
+Gurax_DeclareFunctionAlias(SDL_PushEvent_gurax, "SDL_PushEvent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PushEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_PushEvent(event);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_EventState(type:Number, state:Number)
+Gurax_DeclareFunctionAlias(SDL_EventState_gurax, "SDL_EventState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_EventState_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 type = args_gurax.PickNumber<Uint32>();
+	int state = args_gurax.PickNumber<int>();
+	// Function body
+	Uint8 rtn = SDL_EventState(type, state);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RegisterEvents(numevents:Number)
+Gurax_DeclareFunctionAlias(SDL_RegisterEvents_gurax, "SDL_RegisterEvents")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("numevents", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RegisterEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int numevents = args_gurax.PickNumber<int>();
+	// Function body
+	Uint32 rtn = SDL_RegisterEvents(numevents);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetKeyboardFocus()
+Gurax_DeclareFunctionAlias(SDL_GetKeyboardFocus_gurax, "SDL_GetKeyboardFocus")
+{
+	Declare(VTYPE_SDL_Window, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetKeyboardFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Window* rtn = SDL_GetKeyboardFocus();
+	return new Value_SDL_Window(rtn);
+}
+
+// sdl.SDL_GetModState()
+Gurax_DeclareFunctionAlias(SDL_GetModState_gurax, "SDL_GetModState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetModState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Keymod rtn = SDL_GetModState();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetModState(modstate:Number)
+Gurax_DeclareFunctionAlias(SDL_SetModState_gurax, "SDL_SetModState")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("modstate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetModState_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Keymod modstate = args_gurax.PickNumber<SDL_Keymod>();
+	// Function body
+	SDL_SetModState(modstate);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetKeyFromScancode(scancode:Number)
+Gurax_DeclareFunctionAlias(SDL_GetKeyFromScancode_gurax, "SDL_GetKeyFromScancode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("scancode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetKeyFromScancode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Scancode scancode = args_gurax.PickNumber<SDL_Scancode>();
+	// Function body
+	SDL_Keycode rtn = SDL_GetKeyFromScancode(scancode);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetScancodeFromKey(key:Number)
+Gurax_DeclareFunctionAlias(SDL_GetScancodeFromKey_gurax, "SDL_GetScancodeFromKey")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetScancodeFromKey_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Keycode key = args_gurax.PickNumber<SDL_Keycode>();
+	// Function body
+	SDL_Scancode rtn = SDL_GetScancodeFromKey(key);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetScancodeName(scancode:Number)
+Gurax_DeclareFunctionAlias(SDL_GetScancodeName_gurax, "SDL_GetScancodeName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("scancode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetScancodeName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Scancode scancode = args_gurax.PickNumber<SDL_Scancode>();
+	// Function body
+	const char* rtn = SDL_GetScancodeName(scancode);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GetScancodeFromName(name:String)
+Gurax_DeclareFunctionAlias(SDL_GetScancodeFromName_gurax, "SDL_GetScancodeFromName")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetScancodeFromName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	SDL_Scancode rtn = SDL_GetScancodeFromName(name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetKeyName(key:Number)
+Gurax_DeclareFunctionAlias(SDL_GetKeyName_gurax, "SDL_GetKeyName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetKeyName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Keycode key = args_gurax.PickNumber<SDL_Keycode>();
+	// Function body
+	const char* rtn = SDL_GetKeyName(key);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GetKeyFromName(name:String)
+Gurax_DeclareFunctionAlias(SDL_GetKeyFromName_gurax, "SDL_GetKeyFromName")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetKeyFromName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	SDL_Keycode rtn = SDL_GetKeyFromName(name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_StartTextInput()
+Gurax_DeclareFunctionAlias(SDL_StartTextInput_gurax, "SDL_StartTextInput")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_StartTextInput_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_StartTextInput();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_IsTextInputActive()
+Gurax_DeclareFunctionAlias(SDL_IsTextInputActive_gurax, "SDL_IsTextInputActive")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_IsTextInputActive_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_IsTextInputActive();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_StopTextInput()
+Gurax_DeclareFunctionAlias(SDL_StopTextInput_gurax, "SDL_StopTextInput")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_StopTextInput_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_StopTextInput();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_HasScreenKeyboardSupport()
+Gurax_DeclareFunctionAlias(SDL_HasScreenKeyboardSupport_gurax, "SDL_HasScreenKeyboardSupport")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasScreenKeyboardSupport_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasScreenKeyboardSupport();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_IsScreenKeyboardShown(window:SDL_Window)
+Gurax_DeclareFunctionAlias(SDL_IsScreenKeyboardShown_gurax, "SDL_IsScreenKeyboardShown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_IsScreenKeyboardShown_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_IsScreenKeyboardShown(window);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GetMouseFocus()
+Gurax_DeclareFunctionAlias(SDL_GetMouseFocus_gurax, "SDL_GetMouseFocus")
+{
+	Declare(VTYPE_SDL_Window, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetMouseFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Window* rtn = SDL_GetMouseFocus();
+	return new Value_SDL_Window(rtn);
+}
+
+// sdl.SDL_WarpMouseInWindow(window:SDL_Window, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(SDL_WarpMouseInWindow_gurax, "SDL_WarpMouseInWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_WarpMouseInWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_WarpMouseInWindow(window, x, y);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_WarpMouseGlobal(x:Number, y:Number)
+Gurax_DeclareFunctionAlias(SDL_WarpMouseGlobal_gurax, "SDL_WarpMouseGlobal")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_WarpMouseGlobal_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_WarpMouseGlobal(x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetRelativeMouseMode(enabled:Bool)
+Gurax_DeclareFunctionAlias(SDL_SetRelativeMouseMode_gurax, "SDL_SetRelativeMouseMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetRelativeMouseMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_bool enabled = static_cast<SDL_bool>(args_gurax.PickBool());
+	// Function body
+	int rtn = SDL_SetRelativeMouseMode(enabled);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_CaptureMouse(enabled:Bool)
+Gurax_DeclareFunctionAlias(SDL_CaptureMouse_gurax, "SDL_CaptureMouse")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CaptureMouse_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_bool enabled = static_cast<SDL_bool>(args_gurax.PickBool());
+	// Function body
+	int rtn = SDL_CaptureMouse(enabled);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetRelativeMouseMode()
+Gurax_DeclareFunctionAlias(SDL_GetRelativeMouseMode_gurax, "SDL_GetRelativeMouseMode")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRelativeMouseMode_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_GetRelativeMouseMode();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_CreateCursor(data:Pointer, mask:Pointer, w:Number, h:Number, hot_x:Number, hot_y:Number)
+Gurax_DeclareFunctionAlias(SDL_CreateCursor_gurax, "SDL_CreateCursor")
+{
+	Declare(VTYPE_SDL_Cursor, Flag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hot_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hot_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CreateCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Uint8* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* mask = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	int w = args_gurax.PickNumber<int>();
+	int h = args_gurax.PickNumber<int>();
+	int hot_x = args_gurax.PickNumber<int>();
+	int hot_y = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Cursor* rtn = SDL_CreateCursor(data, mask, w, h, hot_x, hot_y);
+	return new Value_SDL_Cursor(rtn);
+}
+
+// sdl.SDL_CreateColorCursor(surface:SDL_Surface, hot_x:Number, hot_y:Number)
+Gurax_DeclareFunctionAlias(SDL_CreateColorCursor_gurax, "SDL_CreateColorCursor")
+{
+	Declare(VTYPE_SDL_Cursor, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hot_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hot_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CreateColorCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	int hot_x = args_gurax.PickNumber<int>();
+	int hot_y = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Cursor* rtn = SDL_CreateColorCursor(surface, hot_x, hot_y);
+	return new Value_SDL_Cursor(rtn);
+}
+
+// sdl.SDL_CreateSystemCursor(id:Number)
+Gurax_DeclareFunctionAlias(SDL_CreateSystemCursor_gurax, "SDL_CreateSystemCursor")
+{
+	Declare(VTYPE_SDL_Cursor, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CreateSystemCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_SystemCursor id = args_gurax.PickNumber<SDL_SystemCursor>();
+	// Function body
+	SDL_Cursor* rtn = SDL_CreateSystemCursor(id);
+	return new Value_SDL_Cursor(rtn);
+}
+
+// sdl.SDL_SetCursor(cursor:SDL_Cursor)
+Gurax_DeclareFunctionAlias(SDL_SetCursor_gurax, "SDL_SetCursor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Cursor* cursor = args_gurax.Pick<Value_SDL_Cursor>().GetEntityPtr();
+	// Function body
+	SDL_SetCursor(cursor);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetCursor()
+Gurax_DeclareFunctionAlias(SDL_GetCursor_gurax, "SDL_GetCursor")
+{
+	Declare(VTYPE_SDL_Cursor, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Cursor* rtn = SDL_GetCursor();
+	return new Value_SDL_Cursor(rtn);
+}
+
+// sdl.SDL_GetDefaultCursor()
+Gurax_DeclareFunctionAlias(SDL_GetDefaultCursor_gurax, "SDL_GetDefaultCursor")
+{
+	Declare(VTYPE_SDL_Cursor, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetDefaultCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Cursor* rtn = SDL_GetDefaultCursor();
+	return new Value_SDL_Cursor(rtn);
+}
+
+// sdl.SDL_FreeCursor(cursor:SDL_Cursor)
+Gurax_DeclareFunctionAlias(SDL_FreeCursor_gurax, "SDL_FreeCursor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FreeCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Cursor* cursor = args_gurax.Pick<Value_SDL_Cursor>().GetEntityPtr();
+	// Function body
+	SDL_FreeCursor(cursor);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_ShowCursor(toggle:Number)
+Gurax_DeclareFunctionAlias(SDL_ShowCursor_gurax, "SDL_ShowCursor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("toggle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_ShowCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int toggle = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_ShowCursor(toggle);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -3667,6 +4534,50 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetClipRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_DuplicateSurface_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowWMInfo_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetClipboardText_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetClipboardText_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasClipboardText_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PumpEvents_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PeepEvents_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasEvent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasEvents_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FlushEvent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FlushEvents_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PollEvent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_WaitEvent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_WaitEventTimeout_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PushEvent_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_EventState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RegisterEvents_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetKeyboardFocus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetModState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetModState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetKeyFromScancode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetScancodeFromKey_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetScancodeName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetScancodeFromName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetKeyName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetKeyFromName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_StartTextInput_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_IsTextInputActive_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_StopTextInput_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasScreenKeyboardSupport_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_IsScreenKeyboardShown_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetMouseFocus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_WarpMouseInWindow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_WarpMouseGlobal_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetRelativeMouseMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CaptureMouse_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRelativeMouseMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CreateCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CreateColorCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CreateSystemCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetDefaultCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FreeCursor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_ShowCursor_gurax));
 }
 
 Gurax_EndModuleScope(sdl)
