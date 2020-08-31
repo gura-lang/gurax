@@ -37,11 +37,14 @@ target_sources(sdl.gurd PRIVATE
 	Functions.cpp
 	VTYPE_SDL_Color.cpp
 	VTYPE_SDL_DisplayMode.cpp
+	VTYPE_SDL_FPoint.cpp
+	VTYPE_SDL_FRect.cpp
 	VTYPE_SDL_GLContext.cpp
 	VTYPE_SDL_Rect.cpp
 	VTYPE_SDL_Renderer.cpp
 	VTYPE_SDL_RendererInfo.cpp
 	VTYPE_SDL_Surface.cpp
+	VTYPE_SDL_SysWMinfo.cpp
 	VTYPE_SDL_Texture.cpp
 	VTYPE_SDL_Window.cpp)
 
