@@ -989,7 +989,7 @@ SDL_JoystickGetPlayerIndex(joystick:SDL_Joystick_p):int
 
 SDL_JoystickSetPlayerIndex(joystick:SDL_Joystick_p, player_index:int):void
 
-//SDL_JoystickGetGUID(joystick:SDL_Joystick_p):SDL_JoystickGUID
+SDL_JoystickGetGUID(joystick:SDL_Joystick_p):SDL_JoystickGUID
 
 SDL_JoystickGetVendor(joystick:SDL_Joystick_p):Uint16
 
@@ -1001,7 +1001,7 @@ SDL_JoystickGetType(joystick:SDL_Joystick_p):SDL_JoystickType
 
 //SDL_JoystickGetGUIDString(guid:SDL_JoystickGUID, pszGUID:char_p, cbGUID:int):void
 
-//SDL_JoystickGetGUIDFromString(pchGUID:const_char_p):SDL_JoystickGUID
+SDL_JoystickGetGUIDFromString(pchGUID:const_char_p):SDL_JoystickGUID
 
 SDL_JoystickGetAttached(joystick:SDL_Joystick_p):SDL_bool
 

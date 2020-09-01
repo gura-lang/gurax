@@ -4699,6 +4699,26 @@ Gurax_ImplementFunctionEx(SDL_JoystickSetPlayerIndex_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
+// sdl.SDL_JoystickGetGUID(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetGUID_gurax, "SDL_JoystickGetGUID")
+{
+	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetGUID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_JoystickGUID rtn = SDL_JoystickGetGUID(joystick);
+	return new Value_SDL_JoystickGUID(rtn);
+}
+
 // sdl.SDL_JoystickGetVendor(joystick:SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetVendor_gurax, "SDL_JoystickGetVendor")
 {
@@ -4777,6 +4797,26 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_g
 	// Function body
 	SDL_JoystickType rtn = SDL_JoystickGetType(joystick);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_JoystickGetGUIDFromString(pchGUID:String)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDFromString_gurax, "SDL_JoystickGetGUIDFromString")
+{
+	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
+	DeclareArg("pchGUID", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDFromString_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* pchGUID = args_gurax.PickString();
+	// Function body
+	SDL_JoystickGUID rtn = SDL_JoystickGetGUIDFromString(pchGUID);
+	return new Value_SDL_JoystickGUID(rtn);
 }
 
 // sdl.SDL_JoystickGetAttached(joystick:SDL_Joystick)
@@ -5881,10 +5921,12 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickName_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetPlayerIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickSetPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetGUID_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetVendor_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProduct_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProductVersion_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetGUIDFromString_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetAttached_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickInstanceID_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickNumAxes_gurax));
