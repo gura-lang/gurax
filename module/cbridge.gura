@@ -212,6 +212,18 @@ Renderer = class {
 		''')
 	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
 	RegisterExpr(moduleName:String, expr:Expr):map:void = {
+		if (expr.IsAssign() && expr.right.IsCaller() && expr.right.car == `class) {
+			this.RegisterClass(moduleName, expr)
+		} else {
+			this.RegisterFunction(moduleName, expr)
+		}
+	}
+	RegisterClass(moduleName:String, expr:Expr):map:void = {
+		!expr.left.IsIdentifier() && ErrorDone(expr.left, 'Identifier is expected for class name')
+		className = expr.left.symbolName
+		Println(className)
+	}
+	RegisterFunction(moduleName:String, expr:Expr):map:void = {
 		codeFunctionBody = nil
 		if (expr.IsAssign()) {
 			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
