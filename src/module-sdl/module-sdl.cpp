@@ -73,6 +73,9 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
+    Assign(VTYPE_SDL_AudioCVT);
+    Assign(VTYPE_SDL_AudioSpec);
+    Assign(VTYPE_SDL_AudioStream);
     Assign(VTYPE_SDL_Color);
     Assign(VTYPE_SDL_Cursor);
     Assign(VTYPE_SDL_DisplayMode);
@@ -81,11 +84,14 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_FRect);
     Assign(VTYPE_SDL_GameController);
     Assign(VTYPE_SDL_GLContext);
+    Assign(VTYPE_SDL_Haptic);
+    Assign(VTYPE_SDL_HapticEffect);
     Assign(VTYPE_SDL_Joystick);
     Assign(VTYPE_SDL_JoystickGUID);
     Assign(VTYPE_SDL_Rect);
     Assign(VTYPE_SDL_Renderer);
     Assign(VTYPE_SDL_RendererInfo);
+    Assign(VTYPE_SDL_Sensor);
     Assign(VTYPE_SDL_Surface);
     Assign(VTYPE_SDL_SysWMinfo);
     Assign(VTYPE_SDL_Texture);

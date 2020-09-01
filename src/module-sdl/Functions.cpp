@@ -5206,7 +5206,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerTypeForIndex_gurax, processor_gurax,
 // sdl.SDL_GameControllerOpen(joystick_index:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerOpen_gurax, "SDL_GameControllerOpen")
 {
-	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5219,14 +5219,14 @@ Gurax_ImplementFunctionEx(SDL_GameControllerOpen_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int joystick_index = args_gurax.PickNumber<int>();
 	// Function body
-	SDL_GameController_p rtn = SDL_GameControllerOpen(joystick_index);
-	return new Value_SDL_GameController_p(rtn);
+	SDL_GameController* rtn = SDL_GameControllerOpen(joystick_index);
+	return new Value_SDL_GameController(rtn);
 }
 
 // sdl.SDL_GameControllerFromInstanceID(joyid:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerFromInstanceID_gurax, "SDL_GameControllerFromInstanceID")
 {
-	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("joyid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5239,14 +5239,14 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromInstanceID_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_JoystickID joyid = args_gurax.PickNumber<SDL_JoystickID>();
 	// Function body
-	SDL_GameController_p rtn = SDL_GameControllerFromInstanceID(joyid);
-	return new Value_SDL_GameController_p(rtn);
+	SDL_GameController* rtn = SDL_GameControllerFromInstanceID(joyid);
+	return new Value_SDL_GameController(rtn);
 }
 
 // sdl.SDL_GameControllerFromPlayerIndex(player_index:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerFromPlayerIndex_gurax, "SDL_GameControllerFromPlayerIndex")
 {
-	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5259,15 +5259,15 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromPlayerIndex_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
-	SDL_GameController_p rtn = SDL_GameControllerFromPlayerIndex(player_index);
-	return new Value_SDL_GameController_p(rtn);
+	SDL_GameController* rtn = SDL_GameControllerFromPlayerIndex(player_index);
+	return new Value_SDL_GameController(rtn);
 }
 
-// sdl.SDL_GameControllerName(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerName(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerName_gurax, "SDL_GameControllerName")
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5277,17 +5277,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerName_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	const char* rtn = SDL_GameControllerName(gamecontroller);
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetType(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetType(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetType_gurax, "SDL_GameControllerGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5297,17 +5297,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetType_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	SDL_GameControllerType rtn = SDL_GameControllerGetType(gamecontroller);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetPlayerIndex(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetPlayerIndex(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetPlayerIndex_gurax, "SDL_GameControllerGetPlayerIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5317,17 +5317,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetPlayerIndex_gurax, processor_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	int rtn = SDL_GameControllerGetPlayerIndex(gamecontroller);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerSetPlayerIndex(gamecontroller:SDL_GameController_p, player_index:Number)
+// sdl.SDL_GameControllerSetPlayerIndex(gamecontroller:SDL_GameController, player_index:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerSetPlayerIndex_gurax, "SDL_GameControllerSetPlayerIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5338,18 +5338,18 @@ Gurax_ImplementFunctionEx(SDL_GameControllerSetPlayerIndex_gurax, processor_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_GameControllerSetPlayerIndex(gamecontroller, player_index);
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GameControllerGetVendor(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetVendor(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetVendor_gurax, "SDL_GameControllerGetVendor")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5359,17 +5359,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetVendor_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetVendor(gamecontroller);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetProduct(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetProduct(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetProduct_gurax, "SDL_GameControllerGetProduct")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5379,17 +5379,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProduct_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetProduct(gamecontroller);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetProductVersion(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetProductVersion(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetProductVersion_gurax, "SDL_GameControllerGetProductVersion")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5399,17 +5399,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProductVersion_gurax, processor_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetProductVersion(gamecontroller);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetAttached(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetAttached(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetAttached_gurax, "SDL_GameControllerGetAttached")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5419,17 +5419,17 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAttached_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_GameControllerGetAttached(gamecontroller);
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GameControllerGetJoystick(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerGetJoystick(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetJoystick_gurax, "SDL_GameControllerGetJoystick")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5439,7 +5439,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetJoystick_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	SDL_Joystick* rtn = SDL_GameControllerGetJoystick(gamecontroller);
 	return new Value_SDL_Joystick(rtn);
@@ -5521,33 +5521,11 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForAxis_gurax, processor_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetBindForAxis(gamecontroller:SDL_GameController_p, axis:Number)
-Gurax_DeclareFunctionAlias(SDL_GameControllerGetBindForAxis_gurax, "SDL_GameControllerGetBindForAxis")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementFunctionEx(SDL_GameControllerGetBindForAxis_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
-	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
-	// Function body
-	SDL_GameControllerButtonBind rtn = SDL_GameControllerGetBindForAxis(gamecontroller, axis);
-	return new Gurax::Value_Number(rtn);
-}
-
-// sdl.SDL_GameControllerGetAxis(gamecontroller:SDL_GameController_p, axis:Number)
+// sdl.SDL_GameControllerGetAxis(gamecontroller:SDL_GameController, axis:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxis_gurax, "SDL_GameControllerGetAxis")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5558,7 +5536,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAxis_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
 	// Function body
 	Sint16 rtn = SDL_GameControllerGetAxis(gamecontroller, axis);
@@ -5605,33 +5583,11 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForButton_gurax, processor_
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetBindForButton(gamecontroller:SDL_GameController_p, button:Number)
-Gurax_DeclareFunctionAlias(SDL_GameControllerGetBindForButton_gurax, "SDL_GameControllerGetBindForButton")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementFunctionEx(SDL_GameControllerGetBindForButton_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
-	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
-	// Function body
-	SDL_GameControllerButtonBind rtn = SDL_GameControllerGetBindForButton(gamecontroller, button);
-	return new Gurax::Value_Number(rtn);
-}
-
-// sdl.SDL_GameControllerGetButton(gamecontroller:SDL_GameController_p, button:Number)
+// sdl.SDL_GameControllerGetButton(gamecontroller:SDL_GameController, button:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetButton_gurax, "SDL_GameControllerGetButton")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5642,18 +5598,18 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetButton_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
 	// Function body
 	Uint8 rtn = SDL_GameControllerGetButton(gamecontroller, button);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerRumble(gamecontroller:SDL_GameController_p, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
+// sdl.SDL_GameControllerRumble(gamecontroller:SDL_GameController, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerRumble_gurax, "SDL_GameControllerRumble")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("low_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("high_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("duration_ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -5666,7 +5622,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerRumble_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	Uint16 low_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint16 high_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint32 duration_ms = args_gurax.PickNumber<Uint32>();
@@ -5675,11 +5631,11 @@ Gurax_ImplementFunctionEx(SDL_GameControllerRumble_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerClose(gamecontroller:SDL_GameController_p)
+// sdl.SDL_GameControllerClose(gamecontroller:SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerClose_gurax, "SDL_GameControllerClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5689,9 +5645,1517 @@ Gurax_ImplementFunctionEx(SDL_GameControllerClose_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	SDL_GameControllerClose(gamecontroller);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_NumSensors()
+Gurax_DeclareFunctionAlias(SDL_NumSensors_gurax, "SDL_NumSensors")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_NumSensors_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_NumSensors();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorGetDeviceName(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceName_gurax, "SDL_SensorGetDeviceName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetDeviceName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_SensorGetDeviceName(device_index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_SensorGetDeviceType(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceType_gurax, "SDL_SensorGetDeviceType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetDeviceType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SensorType rtn = SDL_SensorGetDeviceType(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorGetDeviceNonPortableType(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceNonPortableType_gurax, "SDL_SensorGetDeviceNonPortableType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetDeviceNonPortableType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_SensorGetDeviceNonPortableType(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorGetDeviceInstanceID(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceInstanceID_gurax, "SDL_SensorGetDeviceInstanceID")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetDeviceInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_SensorID rtn = SDL_SensorGetDeviceInstanceID(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorOpen(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorOpen_gurax, "SDL_SensorOpen")
+{
+	Declare(VTYPE_SDL_Sensor, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorOpen_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Sensor* rtn = SDL_SensorOpen(device_index);
+	return new Value_SDL_Sensor(rtn);
+}
+
+// sdl.SDL_SensorFromInstanceID(instance_id:Number)
+Gurax_DeclareFunctionAlias(SDL_SensorFromInstanceID_gurax, "SDL_SensorFromInstanceID")
+{
+	Declare(VTYPE_SDL_Sensor, Flag::None);
+	DeclareArg("instance_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorFromInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_SensorID instance_id = args_gurax.PickNumber<SDL_SensorID>();
+	// Function body
+	SDL_Sensor* rtn = SDL_SensorFromInstanceID(instance_id);
+	return new Value_SDL_Sensor(rtn);
+}
+
+// sdl.SDL_SensorGetName(sensor:SDL_Sensor)
+Gurax_DeclareFunctionAlias(SDL_SensorGetName_gurax, "SDL_SensorGetName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	// Function body
+	const char* rtn = SDL_SensorGetName(sensor);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_SensorGetType(sensor:SDL_Sensor)
+Gurax_DeclareFunctionAlias(SDL_SensorGetType_gurax, "SDL_SensorGetType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	// Function body
+	SDL_SensorType rtn = SDL_SensorGetType(sensor);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorGetNonPortableType(sensor:SDL_Sensor)
+Gurax_DeclareFunctionAlias(SDL_SensorGetNonPortableType_gurax, "SDL_SensorGetNonPortableType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetNonPortableType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_SensorGetNonPortableType(sensor);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorGetInstanceID(sensor:SDL_Sensor)
+Gurax_DeclareFunctionAlias(SDL_SensorGetInstanceID_gurax, "SDL_SensorGetInstanceID")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorGetInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	// Function body
+	SDL_SensorID rtn = SDL_SensorGetInstanceID(sensor);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SensorClose(sensor:SDL_Sensor)
+Gurax_DeclareFunctionAlias(SDL_SensorClose_gurax, "SDL_SensorClose")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorClose_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	// Function body
+	SDL_SensorClose(sensor);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SensorUpdate()
+Gurax_DeclareFunctionAlias(SDL_SensorUpdate_gurax, "SDL_SensorUpdate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SensorUpdate_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_SensorUpdate();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_NumHaptics()
+Gurax_DeclareFunctionAlias(SDL_NumHaptics_gurax, "SDL_NumHaptics")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_NumHaptics_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_NumHaptics();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticName(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticName_gurax, "SDL_HapticName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_HapticName(device_index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_HapticOpen(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticOpen_gurax, "SDL_HapticOpen")
+{
+	Declare(VTYPE_SDL_Haptic, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticOpen_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Haptic* rtn = SDL_HapticOpen(device_index);
+	return new Value_SDL_Haptic(rtn);
+}
+
+// sdl.SDL_HapticOpened(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticOpened_gurax, "SDL_HapticOpened")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticOpened_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_HapticOpened(device_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticIndex(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticIndex_gurax, "SDL_HapticIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticIndex(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_MouseIsHaptic()
+Gurax_DeclareFunctionAlias(SDL_MouseIsHaptic_gurax, "SDL_MouseIsHaptic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MouseIsHaptic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_MouseIsHaptic();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticOpenFromMouse()
+Gurax_DeclareFunctionAlias(SDL_HapticOpenFromMouse_gurax, "SDL_HapticOpenFromMouse")
+{
+	Declare(VTYPE_SDL_Haptic, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticOpenFromMouse_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_Haptic* rtn = SDL_HapticOpenFromMouse();
+	return new Value_SDL_Haptic(rtn);
+}
+
+// sdl.SDL_JoystickIsHaptic(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_JoystickIsHaptic_gurax, "SDL_JoystickIsHaptic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickIsHaptic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_JoystickIsHaptic(joystick);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticOpenFromJoystick(joystick:SDL_Joystick)
+Gurax_DeclareFunctionAlias(SDL_HapticOpenFromJoystick_gurax, "SDL_HapticOpenFromJoystick")
+{
+	Declare(VTYPE_SDL_Haptic, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticOpenFromJoystick_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	// Function body
+	SDL_Haptic* rtn = SDL_HapticOpenFromJoystick(joystick);
+	return new Value_SDL_Haptic(rtn);
+}
+
+// sdl.SDL_HapticClose(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticClose_gurax, "SDL_HapticClose")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticClose_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	SDL_HapticClose(haptic);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_HapticNumEffects(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticNumEffects_gurax, "SDL_HapticNumEffects")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticNumEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticNumEffects(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticNumEffectsPlaying(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticNumEffectsPlaying_gurax, "SDL_HapticNumEffectsPlaying")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticNumEffectsPlaying_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticNumEffectsPlaying(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticQuery(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticQuery_gurax, "SDL_HapticQuery")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticQuery_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	unsigned int rtn = SDL_HapticQuery(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticNumAxes(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticNumAxes_gurax, "SDL_HapticNumAxes")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticNumAxes_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticNumAxes(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticEffectSupported(haptic:SDL_Haptic, effect:SDL_HapticEffect)
+Gurax_DeclareFunctionAlias(SDL_HapticEffectSupported_gurax, "SDL_HapticEffectSupported")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticEffectSupported_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	SDL_HapticEffect* effect = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticEffectSupported(haptic, effect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticNewEffect(haptic:SDL_Haptic, effect:SDL_HapticEffect)
+Gurax_DeclareFunctionAlias(SDL_HapticNewEffect_gurax, "SDL_HapticNewEffect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticNewEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	SDL_HapticEffect* effect = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticNewEffect(haptic, effect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticUpdateEffect(haptic:SDL_Haptic, effect:Number, data:SDL_HapticEffect)
+Gurax_DeclareFunctionAlias(SDL_HapticUpdateEffect_gurax, "SDL_HapticUpdateEffect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticUpdateEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int effect = args_gurax.PickNumber<int>();
+	SDL_HapticEffect* data = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticUpdateEffect(haptic, effect, data);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticRunEffect(haptic:SDL_Haptic, effect:Number, iterations:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticRunEffect_gurax, "SDL_HapticRunEffect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iterations", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticRunEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int effect = args_gurax.PickNumber<int>();
+	Uint32 iterations = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_HapticRunEffect(haptic, effect, iterations);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticStopEffect(haptic:SDL_Haptic, effect:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticStopEffect_gurax, "SDL_HapticStopEffect")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticStopEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int effect = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_HapticStopEffect(haptic, effect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticDestroyEffect(haptic:SDL_Haptic, effect:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticDestroyEffect_gurax, "SDL_HapticDestroyEffect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticDestroyEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int effect = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_HapticDestroyEffect(haptic, effect);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_HapticGetEffectStatus(haptic:SDL_Haptic, effect:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticGetEffectStatus_gurax, "SDL_HapticGetEffectStatus")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticGetEffectStatus_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int effect = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_HapticGetEffectStatus(haptic, effect);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticSetGain(haptic:SDL_Haptic, gain:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticSetGain_gurax, "SDL_HapticSetGain")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("gain", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticSetGain_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int gain = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_HapticSetGain(haptic, gain);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticSetAutocenter(haptic:SDL_Haptic, autocenter:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticSetAutocenter_gurax, "SDL_HapticSetAutocenter")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("autocenter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticSetAutocenter_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	int autocenter = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_HapticSetAutocenter(haptic, autocenter);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticPause(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticPause_gurax, "SDL_HapticPause")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticPause_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticPause(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticUnpause(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticUnpause_gurax, "SDL_HapticUnpause")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticUnpause_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticUnpause(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticStopAll(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticStopAll_gurax, "SDL_HapticStopAll")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticStopAll_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticStopAll(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticRumbleSupported(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticRumbleSupported_gurax, "SDL_HapticRumbleSupported")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticRumbleSupported_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticRumbleSupported(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticRumbleInit(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticRumbleInit_gurax, "SDL_HapticRumbleInit")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticRumbleInit_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticRumbleInit(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticRumblePlay(haptic:SDL_Haptic, strength:Number, length:Number)
+Gurax_DeclareFunctionAlias(SDL_HapticRumblePlay_gurax, "SDL_HapticRumblePlay")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("strength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticRumblePlay_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	float strength = args_gurax.PickNumber<float>();
+	Uint32 length = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_HapticRumblePlay(haptic, strength, length);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HapticRumbleStop(haptic:SDL_Haptic)
+Gurax_DeclareFunctionAlias(SDL_HapticRumbleStop_gurax, "SDL_HapticRumbleStop")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HapticRumbleStop_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_HapticRumbleStop(haptic);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetNumAudioDrivers()
+Gurax_DeclareFunctionAlias(SDL_GetNumAudioDrivers_gurax, "SDL_GetNumAudioDrivers")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetNumAudioDrivers_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_GetNumAudioDrivers();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetAudioDriver(index:Number)
+Gurax_DeclareFunctionAlias(SDL_GetAudioDriver_gurax, "SDL_GetAudioDriver")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetAudioDriver_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_GetAudioDriver(index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_AudioInit(driver_name:String)
+Gurax_DeclareFunctionAlias(SDL_AudioInit_gurax, "SDL_AudioInit")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("driver_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioInit_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* driver_name = args_gurax.PickString();
+	// Function body
+	int rtn = SDL_AudioInit(driver_name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioQuit()
+Gurax_DeclareFunctionAlias(SDL_AudioQuit_gurax, "SDL_AudioQuit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioQuit_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_AudioQuit();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GetCurrentAudioDriver()
+Gurax_DeclareFunctionAlias(SDL_GetCurrentAudioDriver_gurax, "SDL_GetCurrentAudioDriver")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetCurrentAudioDriver_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const char* rtn = SDL_GetCurrentAudioDriver();
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_OpenAudio(desired:SDL_AudioSpec, obtained:SDL_AudioSpec)
+Gurax_DeclareFunctionAlias(SDL_OpenAudio_gurax, "SDL_OpenAudio")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("obtained", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_OpenAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioSpec* desired = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	SDL_AudioSpec* obtained = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_OpenAudio(desired, obtained);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetNumAudioDevices(iscapture:Number)
+Gurax_DeclareFunctionAlias(SDL_GetNumAudioDevices_gurax, "SDL_GetNumAudioDevices")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetNumAudioDevices_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int iscapture = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_GetNumAudioDevices(iscapture);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetAudioDeviceName(index:Number, iscapture:Number)
+Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceName_gurax, "SDL_GetAudioDeviceName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetAudioDeviceName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	int iscapture = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_GetAudioDeviceName(index, iscapture);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_OpenAudioDevice(device:String, iscapture:Number, desired:SDL_AudioSpec, obtained:SDL_AudioSpec, allowed_changes:Number)
+Gurax_DeclareFunctionAlias(SDL_OpenAudioDevice_gurax, "SDL_OpenAudioDevice")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("obtained", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("allowed_changes", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_OpenAudioDevice_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* device = args_gurax.PickString();
+	int iscapture = args_gurax.PickNumber<int>();
+	const SDL_AudioSpec* desired = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	SDL_AudioSpec* obtained = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	int allowed_changes = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_AudioDeviceID rtn = SDL_OpenAudioDevice(device, iscapture, desired, obtained, allowed_changes);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetAudioStatus()
+Gurax_DeclareFunctionAlias(SDL_GetAudioStatus_gurax, "SDL_GetAudioStatus")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetAudioStatus_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_AudioStatus rtn = SDL_GetAudioStatus();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetAudioDeviceStatus(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceStatus_gurax, "SDL_GetAudioDeviceStatus")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetAudioDeviceStatus_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	SDL_AudioStatus rtn = SDL_GetAudioDeviceStatus(dev);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_PauseAudio(pause_on:Number)
+Gurax_DeclareFunctionAlias(SDL_PauseAudio_gurax, "SDL_PauseAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pause_on", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PauseAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pause_on = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_PauseAudio(pause_on);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_PauseAudioDevice(dev:Number, pause_on:Number)
+Gurax_DeclareFunctionAlias(SDL_PauseAudioDevice_gurax, "SDL_PauseAudioDevice")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pause_on", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_PauseAudioDevice_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	int pause_on = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_PauseAudioDevice(dev, pause_on);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_BuildAudioCVT(cvt:SDL_AudioCVT, src_format:Number, src_channels:Number, src_rate:Number, dst_format:Number, dst_channels:Number, dst_rate:Number)
+Gurax_DeclareFunctionAlias(SDL_BuildAudioCVT_gurax, "SDL_BuildAudioCVT")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cvt", VTYPE_SDL_AudioCVT, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("src_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("src_channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("src_rate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dst_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dst_channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dst_rate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_BuildAudioCVT_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioCVT* cvt = args_gurax.Pick<Value_SDL_AudioCVT>().GetEntityPtr();
+	SDL_AudioFormat src_format = args_gurax.PickNumber<SDL_AudioFormat>();
+	Uint8 src_channels = args_gurax.PickNumber<Uint8>();
+	int src_rate = args_gurax.PickNumber<int>();
+	SDL_AudioFormat dst_format = args_gurax.PickNumber<SDL_AudioFormat>();
+	Uint8 dst_channels = args_gurax.PickNumber<Uint8>();
+	int dst_rate = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_BuildAudioCVT(cvt, src_format, src_channels, src_rate, dst_format, dst_channels, dst_rate);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_ConvertAudio(cvt:SDL_AudioCVT)
+Gurax_DeclareFunctionAlias(SDL_ConvertAudio_gurax, "SDL_ConvertAudio")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cvt", VTYPE_SDL_AudioCVT, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_ConvertAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioCVT* cvt = args_gurax.Pick<Value_SDL_AudioCVT>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_ConvertAudio(cvt);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioStreamPut(stream:SDL_AudioStream, buf:Pointer, len:Number)
+Gurax_DeclareFunctionAlias(SDL_AudioStreamPut_gurax, "SDL_AudioStreamPut")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioStreamPut_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	const void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	int len = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_AudioStreamPut(stream, buf, len);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioStreamGet(stream:SDL_AudioStream, buf:Pointer, len:Number)
+Gurax_DeclareFunctionAlias(SDL_AudioStreamGet_gurax, "SDL_AudioStreamGet")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioStreamGet_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!buf) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	int len = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_AudioStreamGet(stream, buf, len);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioStreamAvailable(stream:SDL_AudioStream)
+Gurax_DeclareFunctionAlias(SDL_AudioStreamAvailable_gurax, "SDL_AudioStreamAvailable")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioStreamAvailable_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_AudioStreamAvailable(stream);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioStreamFlush(stream:SDL_AudioStream)
+Gurax_DeclareFunctionAlias(SDL_AudioStreamFlush_gurax, "SDL_AudioStreamFlush")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioStreamFlush_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_AudioStreamFlush(stream);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_AudioStreamClear(stream:SDL_AudioStream)
+Gurax_DeclareFunctionAlias(SDL_AudioStreamClear_gurax, "SDL_AudioStreamClear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AudioStreamClear_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	// Function body
+	SDL_AudioStreamClear(stream);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_FreeAudioStream(stream:SDL_AudioStream)
+Gurax_DeclareFunctionAlias(SDL_FreeAudioStream_gurax, "SDL_FreeAudioStream")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FreeAudioStream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	// Function body
+	SDL_FreeAudioStream(stream);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_QueueAudio(dev:Number, data:Pointer, len:Number)
+Gurax_DeclareFunctionAlias(SDL_QueueAudio_gurax, "SDL_QueueAudio")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_QueueAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	const void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	Uint32 len = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_QueueAudio(dev, data, len);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_DequeueAudio(dev:Number, data:Pointer, len:Number)
+Gurax_DeclareFunctionAlias(SDL_DequeueAudio_gurax, "SDL_DequeueAudio")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_DequeueAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	Uint32 len = args_gurax.PickNumber<Uint32>();
+	// Function body
+	Uint32 rtn = SDL_DequeueAudio(dev, data, len);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetQueuedAudioSize(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_GetQueuedAudioSize_gurax, "SDL_GetQueuedAudioSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetQueuedAudioSize_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	Uint32 rtn = SDL_GetQueuedAudioSize(dev);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_ClearQueuedAudio(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_ClearQueuedAudio_gurax, "SDL_ClearQueuedAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_ClearQueuedAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	SDL_ClearQueuedAudio(dev);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_LockAudio()
+Gurax_DeclareFunctionAlias(SDL_LockAudio_gurax, "SDL_LockAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_LockAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_LockAudio();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_LockAudioDevice(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_LockAudioDevice_gurax, "SDL_LockAudioDevice")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_LockAudioDevice_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	SDL_LockAudioDevice(dev);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_UnlockAudio()
+Gurax_DeclareFunctionAlias(SDL_UnlockAudio_gurax, "SDL_UnlockAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UnlockAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_UnlockAudio();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_UnlockAudioDevice(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_UnlockAudioDevice_gurax, "SDL_UnlockAudioDevice")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UnlockAudioDevice_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	SDL_UnlockAudioDevice(dev);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_CloseAudio()
+Gurax_DeclareFunctionAlias(SDL_CloseAudio_gurax, "SDL_CloseAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CloseAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_CloseAudio();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_CloseAudioDevice(dev:Number)
+Gurax_DeclareFunctionAlias(SDL_CloseAudioDevice_gurax, "SDL_CloseAudioDevice")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CloseAudioDevice_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
+	// Function body
+	SDL_CloseAudioDevice(dev);
 	return Gurax::Value::nil();
 }
 
@@ -5962,14 +7426,86 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerUpdate_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetAxisFromString_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetStringForAxis_gurax));
-	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetBindForAxis_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetAxis_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetButtonFromString_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetStringForButton_gurax));
-	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetBindForButton_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetButton_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerRumble_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerClose_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_NumSensors_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetDeviceName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetDeviceType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetDeviceNonPortableType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetDeviceInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorOpen_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorFromInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetNonPortableType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorGetInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorClose_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SensorUpdate_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_NumHaptics_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticOpen_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticOpened_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MouseIsHaptic_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticOpenFromMouse_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickIsHaptic_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticOpenFromJoystick_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticClose_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticNumEffects_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticNumEffectsPlaying_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticQuery_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticNumAxes_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticEffectSupported_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticNewEffect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticUpdateEffect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticRunEffect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticStopEffect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticDestroyEffect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticGetEffectStatus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticSetGain_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticSetAutocenter_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticPause_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticUnpause_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticStopAll_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticRumbleSupported_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticRumbleInit_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticRumblePlay_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HapticRumbleStop_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetNumAudioDrivers_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetAudioDriver_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioInit_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioQuit_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentAudioDriver_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_OpenAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetNumAudioDevices_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetAudioDeviceName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_OpenAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetAudioStatus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetAudioDeviceStatus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PauseAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_PauseAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_BuildAudioCVT_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_ConvertAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioStreamPut_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioStreamGet_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioStreamAvailable_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioStreamFlush_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AudioStreamClear_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FreeAudioStream_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_QueueAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_DequeueAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetQueuedAudioSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_ClearQueuedAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_LockAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_LockAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UnlockAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UnlockAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CloseAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CloseAudioDevice_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

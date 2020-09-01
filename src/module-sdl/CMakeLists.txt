@@ -35,6 +35,9 @@ target_sources(sdl.gurd PRIVATE
 	module-sdl.cpp
 	Util.cpp
 	Functions.cpp
+	VTYPE_SDL_AudioCVT.cpp
+	VTYPE_SDL_AudioSpec.cpp
+	VTYPE_SDL_AudioStream.cpp
 	VTYPE_SDL_Color.cpp
 	VTYPE_SDL_Cursor.cpp
 	VTYPE_SDL_DisplayMode.cpp
@@ -43,11 +46,14 @@ target_sources(sdl.gurd PRIVATE
 	VTYPE_SDL_FRect.cpp
 	VTYPE_SDL_GameController.cpp
 	VTYPE_SDL_GLContext.cpp
+	VTYPE_SDL_Haptic.cpp
+	VTYPE_SDL_HapticEffect.cpp
 	VTYPE_SDL_Joystick.cpp
 	VTYPE_SDL_JoystickGUID.cpp
 	VTYPE_SDL_Rect.cpp
 	VTYPE_SDL_Renderer.cpp
 	VTYPE_SDL_RendererInfo.cpp
+	VTYPE_SDL_Sensor.cpp
 	VTYPE_SDL_Surface.cpp
 	VTYPE_SDL_SysWMinfo.cpp
 	VTYPE_SDL_Texture.cpp

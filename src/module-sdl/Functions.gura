@@ -41,6 +41,7 @@ r.DeclareType_Number('Uint64')
 r.DeclareType_Number('SDL_errorcode')
 
 r.DeclareType_Number('SDL_AssertState')
+r.DeclareType_Number('SDL_AudioDeviceID')
 r.DeclareType_Number('SDL_AudioFormat')
 r.DeclareType_Number('SDL_AudioStatus')
 r.DeclareType_Number('SDL_BlendFactor')
@@ -54,7 +55,6 @@ r.DeclareType_Number('SDL_GLprofile')
 r.DeclareType_Number('SDL_GameControllerType')
 r.DeclareType_Number('SDL_GameControllerAxis')
 r.DeclareType_Number('SDL_GameControllerButton')
-r.DeclareType_Number('SDL_GameControllerButtonBind')
 r.DeclareType_Number('SDL_HintPriority')
 r.DeclareType_Number('SDL_HitTestResult')
 r.DeclareType_Number('SDL_JoystickID')
@@ -74,6 +74,8 @@ r.DeclareType_Number('SDL_RendererFlip')
 r.DeclareType_Number('SDL_SYSWM_TYPE')
 r.DeclareType_Number('SDL_Scancode')
 r.DeclareType_Number('SDL_ScaleMode')
+r.DeclareType_Number('SDL_SensorID')
+r.DeclareType_Number('SDL_SensorType')
 r.DeclareType_Number('SDL_SystemCursor')
 r.DeclareType_Number('SDL_TextureAccess')
 r.DeclareType_Number('SDL_TextureModulate')
@@ -104,16 +106,23 @@ r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
 
+r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
+r.DeclareType_EntityPtr('SDL_AudioCVT_p', 'SDL_AudioCVT*', 'SDL_AudioCVT')
+r.DeclareType_EntityPtr('SDL_AudioStream_p', 'SDL_AudioStream*', 'SDL_AudioStream')
+r.DeclareType_EntityPtr('SDL_AudioSpec_p', 'SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('SDL_Cursor_p', 'SDL_Cursor*', 'SDL_Cursor')
 r.DeclareType_EntityPtr('SDL_Event_p', 'SDL_Event*', 'SDL_Event')
-r.DeclareType_EntityPtr('SDL_GameController_p', 'SDL_GameController_p', 'SDL_GameController_p')
+r.DeclareType_EntityPtr('SDL_GameController_p', 'SDL_GameController*', 'SDL_GameController')
+r.DeclareType_EntityPtr('SDL_Haptic_p', 'SDL_Haptic*', 'SDL_Haptic')
+r.DeclareType_EntityPtr('SDL_HapticEffect_p', 'SDL_HapticEffect*', 'SDL_HapticEffect')
 r.DeclareType_EntityPtr('SDL_Joystick_p', 'SDL_Joystick*', 'SDL_Joystick')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
+r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
 r.DeclareType_EntityPtr('SDL_Texture_p', 'SDL_Texture*', 'SDL_Texture')
 r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
@@ -1089,7 +1098,7 @@ SDL_GameControllerGetAxisFromString(pchString:const_char_p):SDL_GameControllerAx
 
 SDL_GameControllerGetStringForAxis(axis:SDL_GameControllerAxis):const_char_p
 
-SDL_GameControllerGetBindForAxis(gamecontroller:SDL_GameController_p, axis:SDL_GameControllerAxis):SDL_GameControllerButtonBind
+//SDL_GameControllerGetBindForAxis(gamecontroller:SDL_GameController_p, axis:SDL_GameControllerAxis):SDL_GameControllerButtonBind
 
 SDL_GameControllerGetAxis(gamecontroller:SDL_GameController_p, axis:SDL_GameControllerAxis):Sint16
 
@@ -1097,7 +1106,7 @@ SDL_GameControllerGetButtonFromString(pchString:const_char_p):SDL_GameController
 
 SDL_GameControllerGetStringForButton(button:SDL_GameControllerButton):const_char_p
 
-SDL_GameControllerGetBindForButton(gamecontroller:SDL_GameController_p, button:SDL_GameControllerButton):SDL_GameControllerButtonBind
+//SDL_GameControllerGetBindForButton(gamecontroller:SDL_GameController_p, button:SDL_GameControllerButton):SDL_GameControllerButtonBind
 
 SDL_GameControllerGetButton(gamecontroller:SDL_GameController_p, button:SDL_GameControllerButton):Uint8
 
@@ -1105,7 +1114,6 @@ SDL_GameControllerRumble(gamecontroller:SDL_GameController_p, low_frequency_rumb
 
 SDL_GameControllerClose(gamecontroller:SDL_GameController_p):void
 
-/*
 //======== Sensors (SDL_sensor.h) ========
 
 SDL_NumSensors():int
@@ -1130,7 +1138,7 @@ SDL_SensorGetNonPortableType(sensor:SDL_Sensor_p):int
 
 SDL_SensorGetInstanceID(sensor:SDL_Sensor_p):SDL_SensorID
 
-SDL_SensorGetData(sensor:SDL_Sensor_p, data:float_p, num_values:int):int
+//SDL_SensorGetData(sensor:SDL_Sensor_p, data:float_p, num_values:int):int
 
 SDL_SensorClose(sensor:SDL_Sensor_p):void
 
@@ -1226,15 +1234,15 @@ SDL_PauseAudio(pause_on:int):void
 
 SDL_PauseAudioDevice(dev:SDL_AudioDeviceID, pause_on:int):void
 
-SDL_LoadWAV_RW(src:SDL_RWops_p, freesrc:int, spec:SDL_AudioSpec_p, audio_buf:Uint8_pp, audio_len:Uint32_p):SDL_AudioSpec_p
+//SDL_LoadWAV_RW(src:SDL_RWops_p, freesrc:int, spec:SDL_AudioSpec_p, audio_buf:Uint8_pp, audio_len:Uint32_p):SDL_AudioSpec_p
 
-SDL_FreeWAV(audio_buf:Uint8_p):void
+//SDL_FreeWAV(audio_buf:Uint8_p):void
 
 SDL_BuildAudioCVT(cvt:SDL_AudioCVT_p, src_format:SDL_AudioFormat, src_channels:Uint8, src_rate:int, dst_format:SDL_AudioFormat, dst_channels:Uint8, dst_rate:int):int
 
 SDL_ConvertAudio(cvt:SDL_AudioCVT_p):int
 
-SDL_NewAudioStream(src_format:const_SDL_AudioFormat, src_channels:const_Uint8, src_rate:const_int, dst_format:const_SDL_AudioFormat, dst_channels:const_Uint8, dst_rate:const_int):SDL_AudioStream_p
+//SDL_NewAudioStream(src_format:SDL_AudioFormat, src_channels:const_Uint8, src_rate:const_int, dst_format:const_SDL_AudioFormat, dst_channels:const_Uint8, dst_rate:const_int):SDL_AudioStream_p
 
 SDL_AudioStreamPut(stream:SDL_AudioStream_p, buf:const_void_p, len:int):int
 
@@ -1248,9 +1256,9 @@ SDL_AudioStreamClear(stream:SDL_AudioStream_p):void
 
 SDL_FreeAudioStream(stream:SDL_AudioStream_p):void
 
-SDL_MixAudio(dst:Uint8_p, src:const_Uint8_p, len:Uint32, volume:int):void
+//SDL_MixAudio(dst:Uint8_p, src:const_Uint8_p, len:Uint32, volume:int):void
 
-SDL_MixAudioFormat(dst:Uint8_p, src:const_Uint8_p, format:SDL_AudioFormat, len:Uint32, volume:int):void
+//SDL_MixAudioFormat(dst:Uint8_p, src:const_Uint8_p, format:SDL_AudioFormat, len:Uint32, volume:int):void
 
 SDL_QueueAudio(dev:SDL_AudioDeviceID, data:const_void_p, len:Uint32):int
 
@@ -1272,6 +1280,7 @@ SDL_CloseAudio():void
 
 SDL_CloseAudioDevice(dev:SDL_AudioDeviceID):void
 
+/*
 //======== Thread Management (SDL_thread.h) ========
 
 SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
