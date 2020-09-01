@@ -305,6 +305,7 @@ Renderer.__init__() = {
 	this.DeclareType_Number('unsigned_long', 'unsigned long')
 	this.DeclareType_Number('unsigned_int', 'unsigned int')
 	this.DeclareType_Number('unsigned_long_long', 'unsigned long long')
+	this.DeclareType_Number('size_t')
 	this.DeclareType_Number('int8_t')
 	this.DeclareType_Number('int16_t')
 	this.DeclareType_Number('int32_t')

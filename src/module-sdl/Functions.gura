@@ -80,6 +80,8 @@ r.DeclareType_Number('SDL_SystemCursor')
 r.DeclareType_Number('SDL_TextureAccess')
 r.DeclareType_Number('SDL_TextureModulate')
 r.DeclareType_Number('SDL_ThreadPriority')
+r.DeclareType_Number('SDL_TimerID')
+r.DeclareType_Number('SDL_WinRT_DeviceFamily')
 r.DeclareType_Number('SDL_WinRT_Path')
 r.DeclareType_Number('SDL_WindowEventID')
 r.DeclareType_Number('SDL_WindowFlags')
@@ -663,11 +665,27 @@ SDL_RenderGetScale(renderer:SDL_Renderer_p) = \
 
 SDL_SetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):int
 
-//SDL_GetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):int
+SDL_GetRenderDrawColor(renderer:SDL_Renderer_p) = \
+	R'''
+	Uint8 r, g, b, a;
+	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	'''
 
 SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode):int
 
-//SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode_p):int
+SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer_p) = \
+	R'''
+	SDL_BlendMode blendMode;
+	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(blendMode);
+	'''
 
 SDL_RenderClear(renderer:SDL_Renderer_p):int
 
@@ -1280,102 +1298,101 @@ SDL_CloseAudio():void
 
 SDL_CloseAudioDevice(dev:SDL_AudioDeviceID):void
 
-/*
 //======== Thread Management (SDL_thread.h) ========
 
-SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
 
-SDL_CreateThreadWithStackSize(*:int_SDLCALL_p_fn_void):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(*:int_SDLCALL_p_fn_void):SDL_Thread_p
 
-SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
 
-SDL_CreateThreadWithStackSize(fn:SDL_ThreadFunction, name:const_char_p, stacksize:const_size_t, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(fn:SDL_ThreadFunction, name:const_char_p, stacksize:const_size_t, data:void_p, pfnBeginThread:pfnSDL_CurrentBeginThread, pfnEndThread:pfnSDL_CurrentEndThread):SDL_Thread_p
 
-SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p):SDL_Thread_p
+//SDL_CreateThread(fn:SDL_ThreadFunction, name:const_char_p, data:void_p):SDL_Thread_p
 
-SDL_CreateThreadWithStackSize(fn:SDL_ThreadFunction, name:const_char_p, stacksize:const_size_t, data:void_p):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(fn:SDL_ThreadFunction, name:const_char_p, stacksize:const_size_t, data:void_p):SDL_Thread_p
 
-SDL_GetThreadName(thread:SDL_Thread_p):const_char_p
+//SDL_GetThreadName(thread:SDL_Thread_p):const_char_p
 
-SDL_ThreadID():SDL_threadID
+//SDL_ThreadID():SDL_threadID
 
-SDL_GetThreadID(thread:SDL_Thread_p):SDL_threadID
+//SDL_GetThreadID(thread:SDL_Thread_p):SDL_threadID
 
-SDL_SetThreadPriority(priority:SDL_ThreadPriority):int
+//SDL_SetThreadPriority(priority:SDL_ThreadPriority):int
 
-SDL_WaitThread(thread:SDL_Thread_p, status:int_p):void
+//SDL_WaitThread(thread:SDL_Thread_p, status:int_p):void
 
-SDL_DetachThread(thread:SDL_Thread_p):void
+//SDL_DetachThread(thread:SDL_Thread_p):void
 
-SDL_TLSCreate():SDL_TLSID
+//SDL_TLSCreate():SDL_TLSID
 
-SDL_TLSGet(id:SDL_TLSID):void_p
+//SDL_TLSGet(id:SDL_TLSID):void_p
 
-SDL_TLSSet(id:SDL_TLSID, value:const_void_p, *:void_SDLCALL_p_destructor_void):int
+//SDL_TLSSet(id:SDL_TLSID, value:const_void_p, *:void_SDLCALL_p_destructor_void):int
 
 //======== Thread Synchronization Primitives (SDL_mutex.h) ========
 
-SDL_CreateMutex():SDL_mutex_p
+//SDL_CreateMutex():SDL_mutex_p
 
-SDL_LockMutex(mutex:SDL_mutex_p):int
+//SDL_LockMutex(mutex:SDL_mutex_p):int
 
-SDL_TryLockMutex(mutex:SDL_mutex_p):int
+//SDL_TryLockMutex(mutex:SDL_mutex_p):int
 
-SDL_UnlockMutex(mutex:SDL_mutex_p):int
+//SDL_UnlockMutex(mutex:SDL_mutex_p):int
 
-SDL_DestroyMutex(mutex:SDL_mutex_p):void
+//SDL_DestroyMutex(mutex:SDL_mutex_p):void
 
-SDL_CreateSemaphore(initial_value:Uint32):SDL_sem_p
+//SDL_CreateSemaphore(initial_value:Uint32):SDL_sem_p
 
-SDL_DestroySemaphore(sem:SDL_sem_p):void
+//SDL_DestroySemaphore(sem:SDL_sem_p):void
 
-SDL_SemWait(sem:SDL_sem_p):int
+//SDL_SemWait(sem:SDL_sem_p):int
 
-SDL_SemTryWait(sem:SDL_sem_p):int
+//SDL_SemTryWait(sem:SDL_sem_p):int
 
-SDL_SemWaitTimeout(sem:SDL_sem_p, ms:Uint32):int
+//SDL_SemWaitTimeout(sem:SDL_sem_p, ms:Uint32):int
 
-SDL_SemPost(sem:SDL_sem_p):int
+//SDL_SemPost(sem:SDL_sem_p):int
 
-SDL_SemValue(sem:SDL_sem_p):Uint32
+//SDL_SemValue(sem:SDL_sem_p):Uint32
 
-SDL_CreateCond():SDL_cond_p
+//SDL_CreateCond():SDL_cond_p
 
-SDL_DestroyCond(cond:SDL_cond_p):void
+//SDL_DestroyCond(cond:SDL_cond_p):void
 
-SDL_CondSignal(cond:SDL_cond_p):int
+//SDL_CondSignal(cond:SDL_cond_p):int
 
-SDL_CondBroadcast(cond:SDL_cond_p):int
+//SDL_CondBroadcast(cond:SDL_cond_p):int
 
-SDL_CondWait(cond:SDL_cond_p, mutex:SDL_mutex_p):int
+//SDL_CondWait(cond:SDL_cond_p, mutex:SDL_mutex_p):int
 
-SDL_CondWaitTimeout(cond:SDL_cond_p, mutex:SDL_mutex_p, ms:Uint32):int
+//SDL_CondWaitTimeout(cond:SDL_cond_p, mutex:SDL_mutex_p, ms:Uint32):int
 
 //======== Atomic Operations (SDL_atomic.h) ========
 
-SDL_AtomicTryLock(lock:SDL_SpinLock_p):SDL_bool
+//SDL_AtomicTryLock(lock:SDL_SpinLock_p):SDL_bool
 
-SDL_AtomicLock(lock:SDL_SpinLock_p):void
+//SDL_AtomicLock(lock:SDL_SpinLock_p):void
 
-SDL_AtomicUnlock(lock:SDL_SpinLock_p):void
+//SDL_AtomicUnlock(lock:SDL_SpinLock_p):void
 
-SDL_MemoryBarrierReleaseFunction():void
+//SDL_MemoryBarrierReleaseFunction():void
 
-SDL_MemoryBarrierAcquireFunction():void
+//SDL_MemoryBarrierAcquireFunction():void
 
-SDL_AtomicCAS(a:SDL_atomic_t_p, oldval:int, newval:int):SDL_bool
+//SDL_AtomicCAS(a:SDL_atomic_t_p, oldval:int, newval:int):SDL_bool
 
-SDL_AtomicSet(a:SDL_atomic_t_p, v:int):int
+//SDL_AtomicSet(a:SDL_atomic_t_p, v:int):int
 
-SDL_AtomicGet(a:SDL_atomic_t_p):int
+//SDL_AtomicGet(a:SDL_atomic_t_p):int
 
-SDL_AtomicAdd(a:SDL_atomic_t_p, v:int):int
+//SDL_AtomicAdd(a:SDL_atomic_t_p, v:int):int
 
-SDL_AtomicCASPtr(a:void_pp, oldval:void_p, newval:void_p):SDL_bool
+//SDL_AtomicCASPtr(a:void_pp, oldval:void_p, newval:void_p):SDL_bool
 
-SDL_AtomicSetPtr(a:void_pp, v:void_p):void_p
+//SDL_AtomicSetPtr(a:void_pp, v:void_p):void_p
 
-SDL_AtomicGetPtr(a:void_pp):void_p
+//SDL_AtomicGetPtr(a:void_pp):void_p
 
 //======== Timer Support (SDL_timer.h) ========
 
@@ -1387,16 +1404,17 @@ SDL_GetPerformanceFrequency():Uint64
 
 SDL_Delay(ms:Uint32):void
 
-SDL_AddTimer(interval:Uint32, callback:SDL_TimerCallback, param:void_p):SDL_TimerID
+//SDL_AddTimer(interval:Uint32, callback:SDL_TimerCallback, param:void_p):SDL_TimerID
 
 SDL_RemoveTimer(id:SDL_TimerID):SDL_bool
 
 //======== Filesystem Paths (SDL_filesystem.h) ========
 
-SDL_GetBasePath():char_p
+//SDL_GetBasePath():char_p
 
-SDL_GetPrefPath(org:const_char_p, app:const_char_p):char_p
+//SDL_GetPrefPath(org:const_char_p, app:const_char_p):char_p
 
+/*
 //======== File I/O Abstraction (SDL_rwops.h) ========
 
 SDL_RWFromFile(file:const_char_p, mode:const_char_p):SDL_RWops_p
@@ -1456,14 +1474,15 @@ SDL_WriteBE32(dst:SDL_RWops_p, value:Uint32):size_t
 SDL_WriteLE64(dst:SDL_RWops_p, value:Uint64):size_t
 
 SDL_WriteBE64(dst:SDL_RWops_p, value:Uint64):size_t
+*/
 
 //======== Shared Object Loading and Function Lookup (SDL_loadso.h) ========
 
-SDL_LoadObject(sofile:const_char_p):void_p
+//SDL_LoadObject(sofile:const_char_p):void_p
 
-SDL_LoadFunction(handle:void_p, name:const_char_p):void_p
+//SDL_LoadFunction(handle:void_p, name:const_char_p):void_p
 
-SDL_UnloadObject(handle:void_p):void
+//SDL_UnloadObject(handle:void_p):void
 
 //======== Platform Detection (SDL_platform.h) ========
 
@@ -1505,7 +1524,7 @@ SDL_GetSystemRAM():int
 
 SDL_SIMDGetAlignment():size_t
 
-SDL_SIMDAlloc(len:const_size_t):void_p
+//SDL_SIMDAlloc(len:size_t):void_p
 
 SDL_SIMDFree(ptr:void_p):void
 
@@ -1515,273 +1534,271 @@ SDL_SIMDFree(ptr:void_p):void
 
 //======== Power Management Status (SDL_power.h) ========
 
-SDL_GetPowerInfo(secs:int_p, pct:int_p):SDL_PowerState
+//SDL_GetPowerInfo(secs:int_p, pct:int_p):SDL_PowerState
 
 //======== Platform-specific Functionality (SDL_system.h) ========
 
-SDL_SetWindowsMessageHook(callback:SDL_WindowsMessageHook, userdata:void_p):void
+//SDL_SetWindowsMessageHook(callback:SDL_WindowsMessageHook, userdata:void_p):void
 
-SDL_Direct3D9GetAdapterIndex(displayIndex:int):int
+//SDL_Direct3D9GetAdapterIndex(displayIndex:int):int
 
-SDL_RenderGetD3D9Device(renderer:SDL_Renderer_p):IDirect3DDevice9_p
+//SDL_RenderGetD3D9Device(renderer:SDL_Renderer_p):IDirect3DDevice9_p
 
-SDL_DXGIGetOutputInfo(displayIndex:int, adapterIndex:int_p, outputIndex:int_p):SDL_bool
+//SDL_DXGIGetOutputInfo(displayIndex:int, adapterIndex:int_p, outputIndex:int_p):SDL_bool
 
-SDL_LinuxSetThreadPriority(threadID:Sint64, priority:int):int
+//SDL_LinuxSetThreadPriority(threadID:Sint64, priority:int):int
 
-SDL_iPhoneSetAnimationCallback(window:SDL_Window_p, interval:int, *:void_callback_void, callbackParam:void_p):int
+//SDL_iPhoneSetAnimationCallback(window:SDL_Window_p, interval:int, *:void_callback_void, callbackParam:void_p):int
 
-SDL_iPhoneSetEventPump(enabled:SDL_bool):void
+//SDL_iPhoneSetEventPump(enabled:SDL_bool):void
 
-SDL_AndroidGetJNIEnv():void_p
+//SDL_AndroidGetJNIEnv():void_p
 
-SDL_AndroidGetActivity():void_p
+//SDL_AndroidGetActivity():void_p
 
-SDL_GetAndroidSDKVersion():int
+//SDL_GetAndroidSDKVersion():int
 
-SDL_IsAndroidTV():SDL_bool
+//SDL_IsAndroidTV():SDL_bool
 
-SDL_IsChromebook():SDL_bool
+//SDL_IsChromebook():SDL_bool
 
-SDL_IsDeXMode():SDL_bool
+//SDL_IsDeXMode():SDL_bool
 
-SDL_AndroidBackButton():void
+//SDL_AndroidBackButton():void
 
-SDL_AndroidGetInternalStoragePath():const_char_p
+//SDL_AndroidGetInternalStoragePath():const_char_p
 
-SDL_AndroidGetExternalStorageState():int
+//SDL_AndroidGetExternalStorageState():int
 
-SDL_AndroidGetExternalStoragePath():const_char_p
+//SDL_AndroidGetExternalStoragePath():const_char_p
 
-SDL_WinRTGetFSPathUNICODE(pathType:SDL_WinRT_Path):const_wchar_t_p
+//SDL_WinRTGetFSPathUNICODE(pathType:SDL_WinRT_Path):const_wchar_t_p
 
-SDL_WinRTGetFSPathUTF8(pathType:SDL_WinRT_Path):const_char_p
+//SDL_WinRTGetFSPathUTF8(pathType:SDL_WinRT_Path):const_char_p
 
-SDL_WinRTGetDeviceFamily():SDL_WinRT_DeviceFamily
+//SDL_WinRTGetDeviceFamily():SDL_WinRT_DeviceFamily
 
-SDL_IsTablet():SDL_bool
+//SDL_IsTablet():SDL_bool
 
-SDL_OnApplicationWillTerminate():void
+//SDL_OnApplicationWillTerminate():void
 
-SDL_OnApplicationDidReceiveMemoryWarning():void
+//SDL_OnApplicationDidReceiveMemoryWarning():void
 
-SDL_OnApplicationWillResignActive():void
+//SDL_OnApplicationWillResignActive():void
 
-SDL_OnApplicationDidEnterBackground():void
+//SDL_OnApplicationDidEnterBackground():void
 
-SDL_OnApplicationWillEnterForeground():void
+//SDL_OnApplicationWillEnterForeground():void
 
-SDL_OnApplicationDidBecomeActive():void
+//SDL_OnApplicationDidBecomeActive():void
 
-SDL_OnApplicationDidChangeStatusBarOrientation():void
+//SDL_OnApplicationDidChangeStatusBarOrientation():void
 
 //======== Standard Library Functionality (SDL_stdinc.h) ========
 
-SDL_malloc(size:size_t):void_p
+//SDL_malloc(size:size_t):void_p
 
-SDL_calloc(nmemb:size_t, size:size_t):void_p
+//SDL_calloc(nmemb:size_t, size:size_t):void_p
 
-SDL_realloc(mem:void_p, size:size_t):void_p
+//SDL_realloc(mem:void_p, size:size_t):void_p
 
-SDL_free(mem:void_p):void
+//SDL_free(mem:void_p):void
 
-SDL_GetMemoryFunctions(malloc_func:SDL_malloc_func_p, calloc_func:SDL_calloc_func_p, realloc_func:SDL_realloc_func_p, free_func:SDL_free_func_p):void
+//SDL_GetMemoryFunctions(malloc_func:SDL_malloc_func_p, calloc_func:SDL_calloc_func_p, realloc_func:SDL_realloc_func_p, free_func:SDL_free_func_p):void
 
-SDL_SetMemoryFunctions(malloc_func:SDL_malloc_func, calloc_func:SDL_calloc_func, realloc_func:SDL_realloc_func, free_func:SDL_free_func):int
+//SDL_SetMemoryFunctions(malloc_func:SDL_malloc_func, calloc_func:SDL_calloc_func, realloc_func:SDL_realloc_func, free_func:SDL_free_func):int
 
-SDL_GetNumAllocations():int
+//SDL_GetNumAllocations():int
 
-SDL_getenv(name:const_char_p):char_p
+//SDL_getenv(name:const_char_p):char_p
 
-SDL_setenv(name:const_char_p, value:const_char_p, overwrite:int):int
+//SDL_setenv(name:const_char_p, value:const_char_p, overwrite:int):int
 
-SDL_qsort(base:void_p, nmemb:size_t, size:size_t, *:int_compare_const_void, *:const_void):void
+//SDL_qsort(base:void_p, nmemb:size_t, size:size_t, *:int_compare_const_void, *:const_void):void
 
-SDL_abs(x:int):int
+//SDL_abs(x:int):int
 
-SDL_isdigit(x:int):int
+//SDL_isdigit(x:int):int
 
-SDL_isspace(x:int):int
+//SDL_isspace(x:int):int
 
-SDL_isupper(x:int):int
+//SDL_isupper(x:int):int
 
-SDL_islower(x:int):int
+//SDL_islower(x:int):int
 
-SDL_toupper(x:int):int
+//SDL_toupper(x:int):int
 
-SDL_tolower(x:int):int
+//SDL_tolower(x:int):int
 
-SDL_memset(dst:SDL_OUT_BYTECAP_len_void_p, c:int, len:size_t):void_p
+//SDL_memset(dst:SDL_OUT_BYTECAP_len_void_p, c:int, len:size_t):void_p
 
-SDL_memcpy(dst:SDL_OUT_BYTECAP_len_void_p, src:SDL_IN_BYTECAP_len_const_void_p, len:size_t):void_p
+//SDL_memcpy(dst:SDL_OUT_BYTECAP_len_void_p, src:SDL_IN_BYTECAP_len_const_void_p, len:size_t):void_p
 
-SDL_memmove(dst:SDL_OUT_BYTECAP_len_void_p, src:SDL_IN_BYTECAP_len_const_void_p, len:size_t):void_p
+//SDL_memmove(dst:SDL_OUT_BYTECAP_len_void_p, src:SDL_IN_BYTECAP_len_const_void_p, len:size_t):void_p
 
-SDL_memcmp(s1:const_void_p, s2:const_void_p, len:size_t):int
+//SDL_memcmp(s1:const_void_p, s2:const_void_p, len:size_t):int
 
-SDL_wcslen(wstr:const_wchar_t_p):size_t
+//SDL_wcslen(wstr:const_wchar_t_p):size_t
 
-SDL_wcslcpy(dst:SDL_OUT_Z_CAP_maxlen_wchar_t_p, src:const_wchar_t_p, maxlen:size_t):size_t
+//SDL_wcslcpy(dst:SDL_OUT_Z_CAP_maxlen_wchar_t_p, src:const_wchar_t_p, maxlen:size_t):size_t
 
-SDL_wcslcat(dst:SDL_INOUT_Z_CAP_maxlen_wchar_t_p, src:const_wchar_t_p, maxlen:size_t):size_t
+//SDL_wcslcat(dst:SDL_INOUT_Z_CAP_maxlen_wchar_t_p, src:const_wchar_t_p, maxlen:size_t):size_t
 
-SDL_wcsdup(wstr:const_wchar_t_p):wchar_t_p
+//SDL_wcsdup(wstr:const_wchar_t_p):wchar_t_p
 
-SDL_wcsstr(haystack:const_wchar_t_p, needle:const_wchar_t_p):wchar_t_p
+//SDL_wcsstr(haystack:const_wchar_t_p, needle:const_wchar_t_p):wchar_t_p
 
-SDL_wcscmp(str1:const_wchar_t_p, str2:const_wchar_t_p):int
+//SDL_wcscmp(str1:const_wchar_t_p, str2:const_wchar_t_p):int
 
-SDL_wcsncmp(str1:const_wchar_t_p, str2:const_wchar_t_p, maxlen:size_t):int
+//SDL_wcsncmp(str1:const_wchar_t_p, str2:const_wchar_t_p, maxlen:size_t):int
 
-SDL_strlen(str:const_char_p):size_t
+//SDL_strlen(str:const_char_p):size_t
 
-SDL_strlcpy(dst:SDL_OUT_Z_CAP_maxlen_char_p, src:const_char_p, maxlen:size_t):size_t
+//SDL_strlcpy(dst:SDL_OUT_Z_CAP_maxlen_char_p, src:const_char_p, maxlen:size_t):size_t
 
-SDL_utf8strlcpy(dst:SDL_OUT_Z_CAP_dst_bytes_char_p, src:const_char_p, dst_bytes:size_t):size_t
+//SDL_utf8strlcpy(dst:SDL_OUT_Z_CAP_dst_bytes_char_p, src:const_char_p, dst_bytes:size_t):size_t
 
-SDL_strlcat(dst:SDL_INOUT_Z_CAP_maxlen_char_p, src:const_char_p, maxlen:size_t):size_t
+//SDL_strlcat(dst:SDL_INOUT_Z_CAP_maxlen_char_p, src:const_char_p, maxlen:size_t):size_t
 
-SDL_strdup(str:const_char_p):char_p
+//SDL_strdup(str:const_char_p):char_p
 
-SDL_strrev(str:char_p):char_p
+//SDL_strrev(str:char_p):char_p
 
-SDL_strupr(str:char_p):char_p
+//SDL_strupr(str:char_p):char_p
 
-SDL_strlwr(str:char_p):char_p
+//SDL_strlwr(str:char_p):char_p
 
-SDL_strchr(str:const_char_p, c:int):char_p
+//SDL_strchr(str:const_char_p, c:int):char_p
 
-SDL_strrchr(str:const_char_p, c:int):char_p
+//SDL_strrchr(str:const_char_p, c:int):char_p
 
-SDL_strstr(haystack:const_char_p, needle:const_char_p):char_p
+//SDL_strstr(haystack:const_char_p, needle:const_char_p):char_p
 
-SDL_strtokr(s1:char_p, s2:const_char_p, saveptr:char_pp):char_p
+//SDL_strtokr(s1:char_p, s2:const_char_p, saveptr:char_pp):char_p
 
-SDL_utf8strlen(str:const_char_p):size_t
+//SDL_utf8strlen(str:const_char_p):size_t
 
-SDL_itoa(value:int, str:char_p, radix:int):char_p
+//SDL_itoa(value:int, str:char_p, radix:int):char_p
 
-SDL_uitoa(value:unsigned_int, str:char_p, radix:int):char_p
+//SDL_uitoa(value:unsigned_int, str:char_p, radix:int):char_p
 
-SDL_ltoa(value:long, str:char_p, radix:int):char_p
+//SDL_ltoa(value:long, str:char_p, radix:int):char_p
 
-SDL_ultoa(value:unsigned_long, str:char_p, radix:int):char_p
+//SDL_ultoa(value:unsigned_long, str:char_p, radix:int):char_p
 
-SDL_lltoa(value:Sint64, str:char_p, radix:int):char_p
+//SDL_lltoa(value:Sint64, str:char_p, radix:int):char_p
 
-SDL_ulltoa(value:Uint64, str:char_p, radix:int):char_p
+//SDL_ulltoa(value:Uint64, str:char_p, radix:int):char_p
 
-SDL_atoi(str:const_char_p):int
+//SDL_atoi(str:const_char_p):int
 
-SDL_atof(str:const_char_p):double
+//SDL_atof(str:const_char_p):double
 
-SDL_strtol(str:const_char_p, endp:char_pp, base:int):long
+//SDL_strtol(str:const_char_p, endp:char_pp, base:int):long
 
-SDL_strtoul(str:const_char_p, endp:char_pp, base:int):unsigned_long
+//SDL_strtoul(str:const_char_p, endp:char_pp, base:int):unsigned_long
 
-SDL_strtoll(str:const_char_p, endp:char_pp, base:int):Sint64
+//SDL_strtoll(str:const_char_p, endp:char_pp, base:int):Sint64
 
-SDL_strtoull(str:const_char_p, endp:char_pp, base:int):Uint64
+//SDL_strtoull(str:const_char_p, endp:char_pp, base:int):Uint64
 
-SDL_strtod(str:const_char_p, endp:char_pp):double
+//SDL_strtod(str:const_char_p, endp:char_pp):double
 
-SDL_strcmp(str1:const_char_p, str2:const_char_p):int
+//SDL_strcmp(str1:const_char_p, str2:const_char_p):int
 
-SDL_strncmp(str1:const_char_p, str2:const_char_p, maxlen:size_t):int
+//SDL_strncmp(str1:const_char_p, str2:const_char_p, maxlen:size_t):int
 
-SDL_strcasecmp(str1:const_char_p, str2:const_char_p):int
+//SDL_strcasecmp(str1:const_char_p, str2:const_char_p):int
 
-SDL_strncasecmp(str1:const_char_p, str2:const_char_p, len:size_t):int
+//SDL_strncasecmp(str1:const_char_p, str2:const_char_p, len:size_t):int
 
-SDL_sscanf(text:const_char_p, fmt:SDL_SCANF_FORMAT_STRING_const_char_p, 2:SDL_SCANF_VARARG_FUNC):int
+//SDL_sscanf(text:const_char_p, fmt:SDL_SCANF_FORMAT_STRING_const_char_p, 2:SDL_SCANF_VARARG_FUNC):int
 
-SDL_vsscanf(text:const_char_p, fmt:const_char_p, ap:va_list):int
+//SDL_vsscanf(text:const_char_p, fmt:const_char_p, ap:va_list):int
 
-SDL_snprintf(text:SDL_OUT_Z_CAP_maxlen_char_p, maxlen:size_t, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 3:SDL_PRINTF_VARARG_FUNC):int
+//SDL_snprintf(text:SDL_OUT_Z_CAP_maxlen_char_p, maxlen:size_t, fmt:SDL_PRINTF_FORMAT_STRING_const_char_p, 3:SDL_PRINTF_VARARG_FUNC):int
 
-SDL_vsnprintf(text:SDL_OUT_Z_CAP_maxlen_char_p, maxlen:size_t, fmt:const_char_p, ap:va_list):int
+//SDL_vsnprintf(text:SDL_OUT_Z_CAP_maxlen_char_p, maxlen:size_t, fmt:const_char_p, ap:va_list):int
 
-SDL_acos(x:double):double
+//SDL_acos(x:double):double
 
-SDL_acosf(x:float):float
+//SDL_acosf(x:float):float
 
-SDL_asin(x:double):double
+//SDL_asin(x:double):double
 
-SDL_asinf(x:float):float
+//SDL_asinf(x:float):float
 
-SDL_atan(x:double):double
+//SDL_atan(x:double):double
 
-SDL_atanf(x:float):float
+//SDL_atanf(x:float):float
 
-SDL_atan2(x:double, y:double):double
+//SDL_atan2(x:double, y:double):double
 
-SDL_atan2f(x:float, y:float):float
+//SDL_atan2f(x:float, y:float):float
 
-SDL_ceil(x:double):double
+//SDL_ceil(x:double):double
 
-SDL_ceilf(x:float):float
+//SDL_ceilf(x:float):float
 
-SDL_copysign(x:double, y:double):double
+//SDL_copysign(x:double, y:double):double
 
-SDL_copysignf(x:float, y:float):float
+//SDL_copysignf(x:float, y:float):float
 
-SDL_cos(x:double):double
+//SDL_cos(x:double):double
 
-SDL_cosf(x:float):float
+//SDL_cosf(x:float):float
 
-SDL_exp(x:double):double
+//SDL_exp(x:double):double
 
-SDL_expf(x:float):float
+//SDL_expf(x:float):float
 
-SDL_fabs(x:double):double
+//SDL_fabs(x:double):double
 
-SDL_fabsf(x:float):float
+//SDL_fabsf(x:float):float
 
-SDL_floor(x:double):double
+//SDL_floor(x:double):double
 
-SDL_floorf(x:float):float
+//SDL_floorf(x:float):float
 
-SDL_fmod(x:double, y:double):double
+//SDL_fmod(x:double, y:double):double
 
-SDL_fmodf(x:float, y:float):float
+//SDL_fmodf(x:float, y:float):float
 
-SDL_log(x:double):double
+//SDL_log(x:double):double
 
-SDL_logf(x:float):float
+//SDL_logf(x:float):float
 
-SDL_log10(x:double):double
+//SDL_log10(x:double):double
 
-SDL_log10f(x:float):float
+//SDL_log10f(x:float):float
 
-SDL_pow(x:double, y:double):double
+//SDL_pow(x:double, y:double):double
 
-SDL_powf(x:float, y:float):float
+//SDL_powf(x:float, y:float):float
 
-SDL_scalbn(x:double, n:int):double
+//SDL_scalbn(x:double, n:int):double
 
-SDL_scalbnf(x:float, n:int):float
+//SDL_scalbnf(x:float, n:int):float
 
-SDL_sin(x:double):double
+//SDL_sin(x:double):double
 
-SDL_sinf(x:float):float
+//SDL_sinf(x:float):float
 
-SDL_sqrt(x:double):double
+//SDL_sqrt(x:double):double
 
-SDL_sqrtf(x:float):float
+//SDL_sqrtf(x:float):float
 
-SDL_tan(x:double):double
+//SDL_tan(x:double):double
 
-SDL_tanf(x:float):float
+//SDL_tanf(x:float):float
 
-SDL_iconv_open(tocode:const_char_p, fromcode:const_char_p):SDL_iconv_t
+//SDL_iconv_open(tocode:const_char_p, fromcode:const_char_p):SDL_iconv_t
 
-SDL_iconv_close(cd:SDL_iconv_t):int
+//SDL_iconv_close(cd:SDL_iconv_t):int
 
-SDL_iconv(cd:SDL_iconv_t, inbuf:const_char_pp, inbytesleft:size_t_p, outbuf:char_pp, outbytesleft:size_t_p):size_t
+//SDL_iconv(cd:SDL_iconv_t, inbuf:const_char_pp, inbytesleft:size_t_p, outbuf:char_pp, outbytesleft:size_t_p):size_t
 
-SDL_iconv_string(tocode:const_char_p, fromcode:const_char_p, inbuf:const_char_p, inbytesleft:size_t):char_p
-
-*/
+//SDL_iconv_string(tocode:const_char_p, fromcode:const_char_p, inbuf:const_char_p, inbytesleft:size_t):char_p
 
 }
 

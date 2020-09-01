@@ -2714,6 +2714,30 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawColor_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GetRenderDrawColor(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_GetRenderDrawColor_gurax, "SDL_GetRenderDrawColor")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	Uint8 r, g, b, a;
+	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+}
+
 // sdl.SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer, blendMode:Number)
 Gurax_DeclareFunctionAlias(SDL_SetRenderDrawBlendMode_gurax, "SDL_SetRenderDrawBlendMode")
 {
@@ -2734,6 +2758,30 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawBlendMode_gurax, processor_gurax, arg
 	// Function body
 	int rtn = SDL_SetRenderDrawBlendMode(renderer, blendMode);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer)
+Gurax_DeclareFunctionAlias(SDL_GetRenderDrawBlendMode_gurax, "SDL_GetRenderDrawBlendMode")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	// Function body
+	SDL_BlendMode blendMode;
+	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(blendMode);
 }
 
 // sdl.SDL_RenderClear(renderer:SDL_Renderer)
@@ -7159,6 +7207,406 @@ Gurax_ImplementFunctionEx(SDL_CloseAudioDevice_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
+// sdl.SDL_GetTicks()
+Gurax_DeclareFunctionAlias(SDL_GetTicks_gurax, "SDL_GetTicks")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetTicks_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Uint32 rtn = SDL_GetTicks();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetPerformanceCounter()
+Gurax_DeclareFunctionAlias(SDL_GetPerformanceCounter_gurax, "SDL_GetPerformanceCounter")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetPerformanceCounter_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Uint64 rtn = SDL_GetPerformanceCounter();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetPerformanceFrequency()
+Gurax_DeclareFunctionAlias(SDL_GetPerformanceFrequency_gurax, "SDL_GetPerformanceFrequency")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetPerformanceFrequency_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Uint64 rtn = SDL_GetPerformanceFrequency();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_Delay(ms:Number)
+Gurax_DeclareFunctionAlias(SDL_Delay_gurax, "SDL_Delay")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_Delay_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 ms = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_Delay(ms);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_RemoveTimer(id:Number)
+Gurax_DeclareFunctionAlias(SDL_RemoveTimer_gurax, "SDL_RemoveTimer")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RemoveTimer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_TimerID id = args_gurax.PickNumber<SDL_TimerID>();
+	// Function body
+	SDL_bool rtn = SDL_RemoveTimer(id);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GetCPUCount()
+Gurax_DeclareFunctionAlias(SDL_GetCPUCount_gurax, "SDL_GetCPUCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetCPUCount_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_GetCPUCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetCPUCacheLineSize()
+Gurax_DeclareFunctionAlias(SDL_GetCPUCacheLineSize_gurax, "SDL_GetCPUCacheLineSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetCPUCacheLineSize_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_GetCPUCacheLineSize();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_HasRDTSC()
+Gurax_DeclareFunctionAlias(SDL_HasRDTSC_gurax, "SDL_HasRDTSC")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasRDTSC_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasRDTSC();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasAltiVec()
+Gurax_DeclareFunctionAlias(SDL_HasAltiVec_gurax, "SDL_HasAltiVec")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasAltiVec_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasAltiVec();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasMMX()
+Gurax_DeclareFunctionAlias(SDL_HasMMX_gurax, "SDL_HasMMX")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasMMX_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasMMX();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_Has3DNow()
+Gurax_DeclareFunctionAlias(SDL_Has3DNow_gurax, "SDL_Has3DNow")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_Has3DNow_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_Has3DNow();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasSSE()
+Gurax_DeclareFunctionAlias(SDL_HasSSE_gurax, "SDL_HasSSE")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasSSE_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasSSE();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasSSE2()
+Gurax_DeclareFunctionAlias(SDL_HasSSE2_gurax, "SDL_HasSSE2")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasSSE2_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasSSE2();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasSSE3()
+Gurax_DeclareFunctionAlias(SDL_HasSSE3_gurax, "SDL_HasSSE3")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasSSE3_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasSSE3();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasSSE41()
+Gurax_DeclareFunctionAlias(SDL_HasSSE41_gurax, "SDL_HasSSE41")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasSSE41_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasSSE41();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasSSE42()
+Gurax_DeclareFunctionAlias(SDL_HasSSE42_gurax, "SDL_HasSSE42")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasSSE42_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasSSE42();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasAVX()
+Gurax_DeclareFunctionAlias(SDL_HasAVX_gurax, "SDL_HasAVX")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasAVX_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasAVX();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasAVX2()
+Gurax_DeclareFunctionAlias(SDL_HasAVX2_gurax, "SDL_HasAVX2")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasAVX2_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasAVX2();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasAVX512F()
+Gurax_DeclareFunctionAlias(SDL_HasAVX512F_gurax, "SDL_HasAVX512F")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasAVX512F_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasAVX512F();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasARMSIMD()
+Gurax_DeclareFunctionAlias(SDL_HasARMSIMD_gurax, "SDL_HasARMSIMD")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasARMSIMD_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasARMSIMD();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_HasNEON()
+Gurax_DeclareFunctionAlias(SDL_HasNEON_gurax, "SDL_HasNEON")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_HasNEON_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_bool rtn = SDL_HasNEON();
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GetSystemRAM()
+Gurax_DeclareFunctionAlias(SDL_GetSystemRAM_gurax, "SDL_GetSystemRAM")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetSystemRAM_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_GetSystemRAM();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SIMDGetAlignment()
+Gurax_DeclareFunctionAlias(SDL_SIMDGetAlignment_gurax, "SDL_SIMDGetAlignment")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SIMDGetAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	size_t rtn = SDL_SIMDGetAlignment();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SIMDFree(ptr:Pointer)
+Gurax_DeclareFunctionAlias(SDL_SIMDFree_gurax, "SDL_SIMDFree")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SIMDFree_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!ptr) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	SDL_SIMDFree(ptr);
+	return Gurax::Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -7290,7 +7738,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_RenderSetScale_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderGetScale_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetRenderDrawColor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRenderDrawColor_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetRenderDrawBlendMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRenderDrawBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderClear_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoint_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLine_gurax));
@@ -7506,6 +7956,30 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_UnlockAudioDevice_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_CloseAudio_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_CloseAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetTicks_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetPerformanceCounter_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetPerformanceFrequency_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_Delay_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RemoveTimer_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetCPUCount_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetCPUCacheLineSize_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasRDTSC_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasAltiVec_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasMMX_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_Has3DNow_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasSSE_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasSSE2_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasSSE3_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasSSE41_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasSSE42_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasAVX_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasAVX2_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasAVX512F_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasARMSIMD_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_HasNEON_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetSystemRAM_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SIMDGetAlignment_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SIMDFree_gurax));
 }
 
 Gurax_EndModuleScope(sdl)
