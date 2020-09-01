@@ -4457,6 +4457,26 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDevicePlayerIndex_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_JoystickGetDeviceGUID(device_index:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceGUID_gurax, "SDL_JoystickGetDeviceGUID")
+{
+	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
+	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceGUID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int device_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_JoystickGUID rtn = SDL_JoystickGetDeviceGUID(device_index);
+	return new Value_SDL_JoystickGUID(rtn);
+}
+
 // sdl.SDL_JoystickGetDeviceVendor(device_index:Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceVendor_gurax, "SDL_JoystickGetDeviceVendor")
 {
@@ -5047,6 +5067,594 @@ Gurax_ImplementFunctionEx(SDL_JoystickCurrentPowerLevel_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GameControllerAddMapping(mappingString:String)
+Gurax_DeclareFunctionAlias(SDL_GameControllerAddMapping_gurax, "SDL_GameControllerAddMapping")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("mappingString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerAddMapping_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* mappingString = args_gurax.PickString();
+	// Function body
+	int rtn = SDL_GameControllerAddMapping(mappingString);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerNumMappings()
+Gurax_DeclareFunctionAlias(SDL_GameControllerNumMappings_gurax, "SDL_GameControllerNumMappings")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerNumMappings_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = SDL_GameControllerNumMappings();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_IsGameController(joystick_index:Number)
+Gurax_DeclareFunctionAlias(SDL_IsGameController_gurax, "SDL_IsGameController")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_IsGameController_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int joystick_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_bool rtn = SDL_IsGameController(joystick_index);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GameControllerNameForIndex(joystick_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerNameForIndex_gurax, "SDL_GameControllerNameForIndex")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerNameForIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int joystick_index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = SDL_GameControllerNameForIndex(joystick_index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GameControllerTypeForIndex(joystick_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerTypeForIndex_gurax, "SDL_GameControllerTypeForIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerTypeForIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int joystick_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_GameControllerType rtn = SDL_GameControllerTypeForIndex(joystick_index);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerOpen(joystick_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerOpen_gurax, "SDL_GameControllerOpen")
+{
+	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerOpen_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int joystick_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_GameController_p rtn = SDL_GameControllerOpen(joystick_index);
+	return new Value_SDL_GameController_p(rtn);
+}
+
+// sdl.SDL_GameControllerFromInstanceID(joyid:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerFromInstanceID_gurax, "SDL_GameControllerFromInstanceID")
+{
+	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	DeclareArg("joyid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerFromInstanceID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_JoystickID joyid = args_gurax.PickNumber<SDL_JoystickID>();
+	// Function body
+	SDL_GameController_p rtn = SDL_GameControllerFromInstanceID(joyid);
+	return new Value_SDL_GameController_p(rtn);
+}
+
+// sdl.SDL_GameControllerFromPlayerIndex(player_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerFromPlayerIndex_gurax, "SDL_GameControllerFromPlayerIndex")
+{
+	Declare(VTYPE_SDL_GameController_p, Flag::None);
+	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerFromPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int player_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_GameController_p rtn = SDL_GameControllerFromPlayerIndex(player_index);
+	return new Value_SDL_GameController_p(rtn);
+}
+
+// sdl.SDL_GameControllerName(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerName_gurax, "SDL_GameControllerName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	const char* rtn = SDL_GameControllerName(gamecontroller);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GameControllerGetType(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetType_gurax, "SDL_GameControllerGetType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	SDL_GameControllerType rtn = SDL_GameControllerGetType(gamecontroller);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetPlayerIndex(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetPlayerIndex_gurax, "SDL_GameControllerGetPlayerIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_GameControllerGetPlayerIndex(gamecontroller);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerSetPlayerIndex(gamecontroller:SDL_GameController_p, player_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerSetPlayerIndex_gurax, "SDL_GameControllerSetPlayerIndex")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerSetPlayerIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	int player_index = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_GameControllerSetPlayerIndex(gamecontroller, player_index);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GameControllerGetVendor(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetVendor_gurax, "SDL_GameControllerGetVendor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetVendor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_GameControllerGetVendor(gamecontroller);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetProduct(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetProduct_gurax, "SDL_GameControllerGetProduct")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetProduct_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_GameControllerGetProduct(gamecontroller);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetProductVersion(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetProductVersion_gurax, "SDL_GameControllerGetProductVersion")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetProductVersion_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	Uint16 rtn = SDL_GameControllerGetProductVersion(gamecontroller);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetAttached(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetAttached_gurax, "SDL_GameControllerGetAttached")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetAttached_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	SDL_bool rtn = SDL_GameControllerGetAttached(gamecontroller);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GameControllerGetJoystick(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetJoystick_gurax, "SDL_GameControllerGetJoystick")
+{
+	Declare(VTYPE_SDL_Joystick, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetJoystick_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	SDL_Joystick* rtn = SDL_GameControllerGetJoystick(gamecontroller);
+	return new Value_SDL_Joystick(rtn);
+}
+
+// sdl.SDL_GameControllerEventState(state:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerEventState_gurax, "SDL_GameControllerEventState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerEventState_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int state = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = SDL_GameControllerEventState(state);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerUpdate()
+Gurax_DeclareFunctionAlias(SDL_GameControllerUpdate_gurax, "SDL_GameControllerUpdate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerUpdate_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_GameControllerUpdate();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_GameControllerGetAxisFromString(pchString:String)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxisFromString_gurax, "SDL_GameControllerGetAxisFromString")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pchString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetAxisFromString_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* pchString = args_gurax.PickString();
+	// Function body
+	SDL_GameControllerAxis rtn = SDL_GameControllerGetAxisFromString(pchString);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetStringForAxis(axis:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForAxis_gurax, "SDL_GameControllerGetStringForAxis")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForAxis_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
+	// Function body
+	const char* rtn = SDL_GameControllerGetStringForAxis(axis);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GameControllerGetBindForAxis(gamecontroller:SDL_GameController_p, axis:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetBindForAxis_gurax, "SDL_GameControllerGetBindForAxis")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetBindForAxis_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
+	// Function body
+	SDL_GameControllerButtonBind rtn = SDL_GameControllerGetBindForAxis(gamecontroller, axis);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetAxis(gamecontroller:SDL_GameController_p, axis:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxis_gurax, "SDL_GameControllerGetAxis")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetAxis_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
+	// Function body
+	Sint16 rtn = SDL_GameControllerGetAxis(gamecontroller, axis);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetButtonFromString(pchString:String)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetButtonFromString_gurax, "SDL_GameControllerGetButtonFromString")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pchString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetButtonFromString_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* pchString = args_gurax.PickString();
+	// Function body
+	SDL_GameControllerButton rtn = SDL_GameControllerGetButtonFromString(pchString);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetStringForButton(button:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForButton_gurax, "SDL_GameControllerGetStringForButton")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForButton_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
+	// Function body
+	const char* rtn = SDL_GameControllerGetStringForButton(button);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.SDL_GameControllerGetBindForButton(gamecontroller:SDL_GameController_p, button:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetBindForButton_gurax, "SDL_GameControllerGetBindForButton")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetBindForButton_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
+	// Function body
+	SDL_GameControllerButtonBind rtn = SDL_GameControllerGetBindForButton(gamecontroller, button);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerGetButton(gamecontroller:SDL_GameController_p, button:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerGetButton_gurax, "SDL_GameControllerGetButton")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerGetButton_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
+	// Function body
+	Uint8 rtn = SDL_GameControllerGetButton(gamecontroller, button);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerRumble(gamecontroller:SDL_GameController_p, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerRumble_gurax, "SDL_GameControllerRumble")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("low_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("high_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("duration_ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerRumble_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	Uint16 low_frequency_rumble = args_gurax.PickNumber<Uint16>();
+	Uint16 high_frequency_rumble = args_gurax.PickNumber<Uint16>();
+	Uint32 duration_ms = args_gurax.PickNumber<Uint32>();
+	// Function body
+	int rtn = SDL_GameControllerRumble(gamecontroller, low_frequency_rumble, high_frequency_rumble, duration_ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerClose(gamecontroller:SDL_GameController_p)
+Gurax_DeclareFunctionAlias(SDL_GameControllerClose_gurax, "SDL_GameControllerClose")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController_p, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerClose_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController_p gamecontroller = args_gurax.Pick<Value_SDL_GameController_p>().GetEntityPtr();
+	// Function body
+	SDL_GameControllerClose(gamecontroller);
+	return Gurax::Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -5261,6 +5869,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_NumJoysticks_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickNameForIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDevicePlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceGUID_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceVendor_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceProduct_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetDeviceProductVersion_gurax));
@@ -5290,6 +5899,35 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickRumble_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickClose_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickCurrentPowerLevel_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerAddMapping_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerNumMappings_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_IsGameController_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerNameForIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerTypeForIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerOpen_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerFromInstanceID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerFromPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerName_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerSetPlayerIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetVendor_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetProduct_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetProductVersion_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetAttached_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetJoystick_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerEventState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerUpdate_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetAxisFromString_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetStringForAxis_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetBindForAxis_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetAxis_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetButtonFromString_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetStringForButton_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetBindForButton_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerGetButton_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerRumble_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerClose_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

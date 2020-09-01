@@ -6,6 +6,16 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
+cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
+this.DeclareType(decl, cType, vtypeFullName,
+	codePicker = R'''
+	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(rtn);
+	''')
+
 cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
@@ -41,8 +51,10 @@ r.DeclareType_Number('SDL_EventType')
 r.DeclareType_Number('SDL_GLattr')
 r.DeclareType_Number('SDL_GLcontextFlag')
 r.DeclareType_Number('SDL_GLprofile')
+r.DeclareType_Number('SDL_GameControllerType')
 r.DeclareType_Number('SDL_GameControllerAxis')
 r.DeclareType_Number('SDL_GameControllerButton')
+r.DeclareType_Number('SDL_GameControllerButtonBind')
 r.DeclareType_Number('SDL_HintPriority')
 r.DeclareType_Number('SDL_HitTestResult')
 r.DeclareType_Number('SDL_JoystickID')
@@ -90,13 +102,16 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 
 r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
+r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
+
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
+r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
 r.DeclareType_EntityPtr('SDL_Cursor_p', 'SDL_Cursor*', 'SDL_Cursor')
 r.DeclareType_EntityPtr('SDL_Event_p', 'SDL_Event*', 'SDL_Event')
-r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
+r.DeclareType_EntityPtr('SDL_GameController_p', 'SDL_GameController_p', 'SDL_GameController_p')
 r.DeclareType_EntityPtr('SDL_Joystick_p', 'SDL_Joystick*', 'SDL_Joystick')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
@@ -950,7 +965,7 @@ SDL_JoystickNameForIndex(device_index:int):const_char_p
 
 SDL_JoystickGetDevicePlayerIndex(device_index:int):int
 
-//SDL_JoystickGetDeviceGUID(device_index:int):SDL_JoystickGUID
+SDL_JoystickGetDeviceGUID(device_index:int):SDL_JoystickGUID
 
 SDL_JoystickGetDeviceVendor(device_index:int):Uint16
 
@@ -1020,20 +1035,19 @@ SDL_JoystickClose(joystick:SDL_Joystick_p):void
 
 SDL_JoystickCurrentPowerLevel(joystick:SDL_Joystick_p):SDL_JoystickPowerLevel
 
-/*
 //======== Game Controller Support (SDL_gamecontroller.h) ========
 
-SDL_GameControllerAddMappingsFromRW(rw:SDL_RWops_p, freerw:int):int
+//SDL_GameControllerAddMappingsFromRW(rw:SDL_RWops_p, freerw:int):int
 
 SDL_GameControllerAddMapping(mappingString:const_char_p):int
 
 SDL_GameControllerNumMappings():int
 
-SDL_GameControllerMappingForIndex(mapping_index:int):char_p
+//SDL_GameControllerMappingForIndex(mapping_index:int):char_p
 
-SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID):char_p
+//SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID):char_p
 
-SDL_GameControllerMapping(gamecontroller:SDL_GameController_p):char_p
+//SDL_GameControllerMapping(gamecontroller:SDL_GameController_p):char_p
 
 SDL_IsGameController(joystick_index:int):SDL_bool
 
@@ -1041,7 +1055,7 @@ SDL_GameControllerNameForIndex(joystick_index:int):const_char_p
 
 SDL_GameControllerTypeForIndex(joystick_index:int):SDL_GameControllerType
 
-SDL_GameControllerMappingForDeviceIndex(joystick_index:int):char_p
+//SDL_GameControllerMappingForDeviceIndex(joystick_index:int):char_p
 
 SDL_GameControllerOpen(joystick_index:int):SDL_GameController_p
 
@@ -1091,6 +1105,7 @@ SDL_GameControllerRumble(gamecontroller:SDL_GameController_p, low_frequency_rumb
 
 SDL_GameControllerClose(gamecontroller:SDL_GameController_p):void
 
+/*
 //======== Sensors (SDL_sensor.h) ========
 
 SDL_NumSensors():int

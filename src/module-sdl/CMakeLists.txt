@@ -41,8 +41,10 @@ target_sources(sdl.gurd PRIVATE
 	VTYPE_SDL_Event.cpp
 	VTYPE_SDL_FPoint.cpp
 	VTYPE_SDL_FRect.cpp
+	VTYPE_SDL_GameController.cpp
 	VTYPE_SDL_GLContext.cpp
 	VTYPE_SDL_Joystick.cpp
+	VTYPE_SDL_JoystickGUID.cpp
 	VTYPE_SDL_Rect.cpp
 	VTYPE_SDL_Renderer.cpp
 	VTYPE_SDL_RendererInfo.cpp

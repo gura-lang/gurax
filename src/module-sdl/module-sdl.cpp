@@ -79,8 +79,10 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Event);
     Assign(VTYPE_SDL_FPoint);
     Assign(VTYPE_SDL_FRect);
+    Assign(VTYPE_SDL_GameController);
     Assign(VTYPE_SDL_GLContext);
     Assign(VTYPE_SDL_Joystick);
+    Assign(VTYPE_SDL_JoystickGUID);
     Assign(VTYPE_SDL_Rect);
     Assign(VTYPE_SDL_Renderer);
     Assign(VTYPE_SDL_RendererInfo);
