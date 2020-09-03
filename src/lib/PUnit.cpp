@@ -1011,7 +1011,8 @@ template<bool discardValueFlag>
 void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 {
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
-	RefPtr<PropSlotOwner> pPropSlotOwner(vtypeCustom.GetPropSlotMap().CreatePropSlotOwner());
+	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
+	vtypeCustom.GetPropSlotMap().GatherPropSlotOfInstance(*pPropSlotOwner);
 	pPropSlotOwner->SortBySeqId();
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);

@@ -131,11 +131,20 @@ void PropSlotMap::Assign(PropSlot* pPropSlot)
 	}
 }
 
-PropSlotOwner* PropSlotMap::CreatePropSlotOwner() const
+void PropSlotMap::GatherPropSlot(PropSlotOwner& propSlotOwner) const
 {
-	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
-	for (auto iter : *this) pPropSlotOwner->push_back(iter.second->Reference());
-	return pPropSlotOwner.release();
+	for (auto iter : *this) {
+		const PropSlot* pPropSlot = iter.second;
+		propSlotOwner.push_back(pPropSlot->Reference());
+	}
+}
+
+void PropSlotMap::GatherPropSlotOfInstance(PropSlotOwner& propSlotOwner) const
+{
+	for (auto iter : *this) {
+		const PropSlot* pPropSlot = iter.second;
+		if (!pPropSlot->IsOfClass()) propSlotOwner.push_back(pPropSlot->Reference());
+	}
 }
 
 void PropSlotMap::GatherSymbol(SymbolList& symbolList) const

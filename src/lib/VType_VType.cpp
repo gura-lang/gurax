@@ -66,12 +66,7 @@ Gurax_ImplementClassMethod(VType, __EachPropSlot__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
-	for (auto iter : valueThis.GetVTypeThis().GetPropSlotMap()) {
-		pPropSlotOwner->push_back(iter.second->Reference());
-	}
-	for (auto iter : valueThis.GetVTypeThis().GetPropSlotMapOfClass()) {
-		pPropSlotOwner->push_back(iter.second->Reference());
-	}
+	valueThis.GetVTypeThis().GetPropSlotMap().GatherPropSlot(*pPropSlotOwner);
 	pPropSlotOwner->SortBySymbolName();
 	RefPtr<Iterator> pIterator(new Iterator_PropSlot(pPropSlotOwner.release()));
 	return argument.ReturnIterator(processor, pIterator.release());

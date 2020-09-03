@@ -38,7 +38,7 @@ protected:
 	Flags _flags;
 	RefPtr<Frame_Scope> _pFrame;
 	RefPtr<PropSlotMap> _pPropSlotMap;
-	RefPtr<PropSlotMap> _pPropSlotMapOfClass;
+	//RefPtr<PropSlotMap> _pPropSlotMapOfClass;
 	RefPtr<Function> _pConstructor;
 private:
 	static UniqId _uniqIdNext;
@@ -81,9 +81,9 @@ public:
 	Frame& GetFrameOfMember() { return *_pFrame->GetFrameLocal(); }
 	const Frame& GetFrameOfMember() const { return *_pFrame->GetFrameLocal(); }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
-	PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
+	//PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
 	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }
-	const PropSlotMap& GetPropSlotMapOfClass() const { return *_pPropSlotMapOfClass; }
+	//const PropSlotMap& GetPropSlotMapOfClass() const { return *_pPropSlotMapOfClass; }
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
@@ -92,10 +92,7 @@ public:
 	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }
 	void Assign(Function* pFunction);
-	void Assign(PropSlot* pPropSlot) {
-		(pPropSlot->IsSet(PropSlot::Flag::OfClass)?
-		 GetPropSlotMapOfClass() : GetPropSlotMap()).Assign(pPropSlot);
-	}
+	void Assign(PropSlot* pPropSlot) { GetPropSlotMap().Assign(pPropSlot); }
 	void GatherMemberSymbol(SymbolList& symbolList) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:

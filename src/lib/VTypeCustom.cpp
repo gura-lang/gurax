@@ -57,7 +57,7 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const Dott
 	if (ofClassFlag) {
 		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Class(pSymbol, iProp));
 		pPropSlot->Declare(*pVType, flags);
-		GetPropSlotMapOfClass().Assign(pPropSlot.release());
+		GetPropSlotMap().Assign(pPropSlot.release());
 	} else {
 		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Instance(pSymbol, iProp));
 		pPropSlot->Declare(*pVType, flags);
@@ -111,8 +111,6 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 								   *this, pFunction->GetDeclCallable().Reference(),
 								   pFunction->GetExprBody().Reference(), nullptr));
 		}
-		//RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
-		//pConstructor->SetFrameOuter(*pFrameOuter);
 		pConstructor->SetFrameOuter(GetFrame());
 		SetConstructor(pConstructor.release());
 		return true;

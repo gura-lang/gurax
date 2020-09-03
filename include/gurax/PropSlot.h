@@ -260,6 +260,8 @@ public:
 	VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
 	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
+	bool IsOfClass() const { return IsSet(Flag::OfClass); }
+	bool IsOfInstance() const { return IsSet(Flag::OfInstance); }
 	Value* GetValue(Value& valueTarget, const Attribute& attr) const {
 		return DoGetValue(valueTarget, attr);
 	}
@@ -330,6 +332,8 @@ public:
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	PropSlotOwner* CreatePropSlotOwner() const;
+	void GatherPropSlot(PropSlotOwner& propSlotOwner) const;
+	void GatherPropSlotOfInstance(PropSlotOwner& propSlotOwner) const;
 	void GatherSymbol(SymbolList& symbolList) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
