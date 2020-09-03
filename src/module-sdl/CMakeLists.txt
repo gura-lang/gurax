@@ -35,6 +35,7 @@ target_sources(sdl.gurd PRIVATE
 	module-sdl.cpp
 	Util.cpp
 	Functions.cpp
+	Consts.cpp
 	VTYPE_SDL_AudioCVT.cpp
 	VTYPE_SDL_AudioSpec.cpp
 	VTYPE_SDL_AudioStream.cpp

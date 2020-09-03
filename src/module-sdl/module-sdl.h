@@ -8,6 +8,7 @@
 #include <SDL_syswm.h>
 #include "Util.h"
 #include "Functions.h"
+#include "Consts.h"
 #include "VType_SDL_AudioCVT.h"
 #include "VType_SDL_AudioSpec.h"
 #include "VType_SDL_AudioStream.h"

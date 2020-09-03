@@ -97,7 +97,10 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Texture);
     Assign(VTYPE_SDL_Window);
 	// Assignment of function
+    AssignFunctions(GetFrame());
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of constant
+    AssignConsts(GetFrame());
 	return true;
 }
 
