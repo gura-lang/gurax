@@ -11,6 +11,9 @@ this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
 	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Value_${this.vtype}(rtn);
@@ -107,6 +110,7 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
+r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
@@ -691,7 +695,15 @@ SDL_RenderClear(renderer:SDL_Renderer_p):int
 
 SDL_RenderDrawPoint(renderer:SDL_Renderer_p, x:int, y:int):int
 
-//SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
+SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
+	R'''
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawPoints(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderDrawLine(renderer:SDL_Renderer_p, x1:int, y1:int, x2:int, y2:int):int
 

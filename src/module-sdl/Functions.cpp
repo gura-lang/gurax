@@ -2828,6 +2828,32 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoint_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RenderDrawPoints(renderer:SDL_Renderer, points[]:SDL_Point)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawPoints_gurax, "SDL_RenderDrawPoints")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("points", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawPoints_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
+	// Function body
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawPoints(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
 // sdl.SDL_RenderDrawLine(renderer:SDL_Renderer, x1:Number, y1:Number, x2:Number, y2:Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawLine_gurax, "SDL_RenderDrawLine")
 {
@@ -7743,6 +7769,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetRenderDrawBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderClear_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoint_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoints_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLine_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRect_gurax));
