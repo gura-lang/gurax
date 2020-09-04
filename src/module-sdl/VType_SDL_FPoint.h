@@ -51,6 +51,7 @@ public:
 	SDL_FPoint* GetEntityPtr() { return &_entity; }
 	const SDL_FPoint* GetEntityPtr() const { return &_entity; }
 public:
+	static SDL_FPoint ValueForVector(Value& value) { return GetEntity(value); }
 	static SDL_FPoint& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_FPoint&>(value).GetEntity();
 	}

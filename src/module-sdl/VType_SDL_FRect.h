@@ -51,6 +51,7 @@ public:
 	SDL_FRect* GetEntityPtr() { return &_entity; }
 	const SDL_FRect* GetEntityPtr() const { return &_entity; }
 public:
+	static SDL_FRect ValueForVector(Value& value) { return GetEntity(value); }
 	static SDL_FRect& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_FRect&>(value).GetEntity();
 	}

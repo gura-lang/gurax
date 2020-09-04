@@ -51,6 +51,7 @@ public:
 	SDL_Rect* GetEntityPtr() { return &_entity; }
 	const SDL_Rect* GetEntityPtr() const { return &_entity; }
 public:
+	static SDL_Rect ValueForVector(Value& value) { return GetEntity(value); }
 	static SDL_Rect& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_Rect&>(value).GetEntity();
 	}

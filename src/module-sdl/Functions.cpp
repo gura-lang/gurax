@@ -1317,6 +1317,32 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurface_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_UpdateWindowSurfaceRects(window:SDL_Window, rects[]:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurfaceRects_gurax, "SDL_UpdateWindowSurfaceRects")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_UpdateWindowSurfaceRects_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
+	// Function body
+	int numrects = rects.sizeT<int>();
+	if (SDL_UpdateWindowSurfaceRects(window, rects, numrects) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
 // sdl.SDL_SetWindowGrab(window:SDL_Window, grabbed:Bool)
 Gurax_DeclareFunctionAlias(SDL_SetWindowGrab_gurax, "SDL_SetWindowGrab")
 {
@@ -2882,6 +2908,32 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLine_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RenderDrawLines(renderer:SDL_Renderer, points[]:SDL_Point)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawLines_gurax, "SDL_RenderDrawLines")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("points", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawLines_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
+	// Function body
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawLines(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
 // sdl.SDL_RenderDrawRect(renderer:SDL_Renderer, rect:SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRect_gurax, "SDL_RenderDrawRect")
 {
@@ -2902,6 +2954,32 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRect_gurax, processor_gurax, argument_gu
 	// Function body
 	int rtn = SDL_RenderDrawRect(renderer, rect);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderDrawRects(renderer:SDL_Renderer, rects[]:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawRects_gurax, "SDL_RenderDrawRects")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawRects_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
+	// Function body
+	int count = rects.sizeT<int>();
+	if (SDL_RenderDrawRects(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
 }
 
 // sdl.SDL_RenderFillRect(renderer:SDL_Renderer, rect:SDL_Rect)
@@ -2926,13 +3004,12 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRect_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderFillRects(renderer:SDL_Renderer, rects:SDL_Rect, count:Number)
+// sdl.SDL_RenderFillRects(renderer:SDL_Renderer, rects[]:SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRects_gurax, "SDL_RenderFillRects")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2943,11 +3020,14 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rects = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	int count = args_gurax.PickNumber<int>();
+	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
-	int rtn = SDL_RenderFillRects(renderer, rects, count);
-	return new Gurax::Value_Number(rtn);
+	int count = rects.sizeT<int>();
+	if (SDL_RenderFillRects(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
 }
 
 // sdl.SDL_RenderCopy(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect, dstrect:SDL_Rect)
@@ -3052,6 +3132,32 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLineF_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RenderDrawLinesF(renderer:SDL_Renderer, points[]:SDL_FPoint)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawLinesF_gurax, "SDL_RenderDrawLinesF")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("points", VTYPE_SDL_FPoint, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawLinesF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto points = args_gurax.PickListT<SDL_FPoint>(Value_SDL_FPoint::ValueForVector);
+	// Function body
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawLinesF(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
 // sdl.SDL_RenderDrawRectF(renderer:SDL_Renderer, rect:SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRectF_gurax, "SDL_RenderDrawRectF")
 {
@@ -3074,6 +3180,32 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectF_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RenderDrawRectsF(renderer:SDL_Renderer, rects[]:SDL_FRect)
+Gurax_DeclareFunctionAlias(SDL_RenderDrawRectsF_gurax, "SDL_RenderDrawRectsF")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderDrawRectsF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
+	// Function body
+	int count = rects.sizeT<int>();
+	if (SDL_RenderDrawRectsF(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
 // sdl.SDL_RenderFillRectF(renderer:SDL_Renderer, rect:SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRectF_gurax, "SDL_RenderFillRectF")
 {
@@ -3094,6 +3226,32 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectF_gurax, processor_gurax, argument_g
 	// Function body
 	int rtn = SDL_RenderFillRectF(renderer, rect);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_RenderFillRectsF(renderer:SDL_Renderer, rects[]:SDL_FRect)
+Gurax_DeclareFunctionAlias(SDL_RenderFillRectsF_gurax, "SDL_RenderFillRectsF")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderFillRectsF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
+	// Function body
+	int count = rects.sizeT<int>();
+	if (SDL_RenderFillRectsF(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
 }
 
 // sdl.SDL_RenderCopyF(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect, dstrect:SDL_FRect)
@@ -7699,6 +7857,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowFullscreen_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowSurface_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateWindowSurface_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_UpdateWindowSurfaceRects_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetWindowGrab_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowGrab_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetGrabbedWindow_gurax));
@@ -7771,15 +7930,20 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoint_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPoints_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLine_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLines_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRects_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRects_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderCopy_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPointF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPointsF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLineF_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLinesF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRectF_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawRectsF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRectF_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRectsF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderCopyF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderReadPixels_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderPresent_gurax));

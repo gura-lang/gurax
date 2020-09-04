@@ -109,8 +109,11 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 
 r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
+r.DeclareType_Entity('SDL_FPoint', 'SDL_FPoint', 'SDL_FPoint')
+r.DeclareType_Entity('SDL_FRect', 'SDL_FRect', 'SDL_FRect')
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
 r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
+r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
@@ -408,7 +411,15 @@ SDL_GetWindowSurface(window:SDL_Window_p):SDL_Surface_p
 
 SDL_UpdateWindowSurface(window:SDL_Window_p):int
 
-//SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects:const_SDL_Rect_p, numrects:int):int
+SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects[]:SDL_Rect) = \
+	R'''
+	int numrects = rects.sizeT<int>();
+	if (SDL_UpdateWindowSurfaceRects(window, rects, numrects) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_SetWindowGrab(window:SDL_Window_p, grabbed:SDL_bool):void
 
@@ -707,15 +718,39 @@ SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
 
 SDL_RenderDrawLine(renderer:SDL_Renderer_p, x1:int, y1:int, x2:int, y2:int):int
 
-//SDL_RenderDrawLines(renderer:SDL_Renderer_p, points:const_SDL_Point_p, count:int):int
+SDL_RenderDrawLines(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
+	R'''
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawLines(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
-//SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects:const_SDL_Rect_p, count:int):int
+SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
+	R'''
+	int count = rects.sizeT<int>();
+	if (SDL_RenderDrawRects(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int
 
-SDL_RenderFillRects(renderer:SDL_Renderer_p, rects:const_SDL_Rect_p, count:int):int
+SDL_RenderFillRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
+	R'''
+	int count = rects.sizeT<int>();
+	if (SDL_RenderFillRects(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p):int
 
@@ -727,15 +762,39 @@ SDL_RenderDrawPointsF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:
 
 SDL_RenderDrawLineF(renderer:SDL_Renderer_p, x1:float, y1:float, x2:float, y2:float):int
 
-//SDL_RenderDrawLinesF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
+SDL_RenderDrawLinesF(renderer:SDL_Renderer_p, points[]:SDL_FPoint) = \
+	R'''
+	int count = points.sizeT<int>();
+	if (SDL_RenderDrawLinesF(renderer, points, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderDrawRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
-//SDL_RenderDrawRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
+SDL_RenderDrawRectsF(renderer:SDL_Renderer_p, rects[]:SDL_FRect) = \
+	R'''
+	int count = rects.sizeT<int>();
+	if (SDL_RenderDrawRectsF(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderFillRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
-//SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects:const_SDL_FRect_p, count:int):int
+SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects[]:SDL_FRect) = \
+	R'''
+	int count = rects.sizeT<int>();
+	if (SDL_RenderFillRectsF(renderer, rects, count) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p):int
 
