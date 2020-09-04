@@ -3460,6 +3460,236 @@ Gurax_ImplementFunctionEx(SDL_MasksToPixelFormatEnum_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_AllocFormat(pixel_format:Number)
+Gurax_DeclareFunctionAlias(SDL_AllocFormat_gurax, "SDL_AllocFormat")
+{
+	Declare(VTYPE_SDL_PixelFormat, Flag::None);
+	DeclareArg("pixel_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AllocFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 pixel_format = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_PixelFormat* rtn = SDL_AllocFormat(pixel_format);
+	return new Value_SDL_PixelFormat(rtn);
+}
+
+// sdl.SDL_FreeFormat(format:SDL_PixelFormat)
+Gurax_DeclareFunctionAlias(SDL_FreeFormat_gurax, "SDL_FreeFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FreeFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	// Function body
+	SDL_FreeFormat(format);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_AllocPalette(ncolors:Number)
+Gurax_DeclareFunctionAlias(SDL_AllocPalette_gurax, "SDL_AllocPalette")
+{
+	Declare(VTYPE_SDL_Palette, Flag::None);
+	DeclareArg("ncolors", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AllocPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int ncolors = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Palette* rtn = SDL_AllocPalette(ncolors);
+	return new Value_SDL_Palette(rtn);
+}
+
+// sdl.SDL_SetPixelFormatPalette(format:SDL_PixelFormat, palette:SDL_Palette)
+Gurax_DeclareFunctionAlias(SDL_SetPixelFormatPalette_gurax, "SDL_SetPixelFormatPalette")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetPixelFormatPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_SetPixelFormatPalette(format, palette);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetPaletteColors(palette:SDL_Palette, colors[]:SDL_Color, firstcolor:Number)
+Gurax_DeclareFunctionAlias(SDL_SetPaletteColors_gurax, "SDL_SetPaletteColors")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colors", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("firstcolor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetPaletteColors_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	auto colors = args_gurax.PickListT<SDL_Color>(Value_SDL_Color::ValueForVector);
+	int firstcolor = args_gurax.PickNumber<int>();
+	// Function body
+	int ncolors = colors.sizeT<int>();
+	if (SDL_SetPaletteColors(palette, colors, firstcolor, ncolors) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+}
+
+// sdl.SDL_FreePalette(palette:SDL_Palette)
+Gurax_DeclareFunctionAlias(SDL_FreePalette_gurax, "SDL_FreePalette")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_FreePalette_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	// Function body
+	SDL_FreePalette(palette);
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_MapRGB(format:SDL_PixelFormat, r:Number, g:Number, b:Number)
+Gurax_DeclareFunctionAlias(SDL_MapRGB_gurax, "SDL_MapRGB")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MapRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	Uint8 r = args_gurax.PickNumber<Uint8>();
+	Uint8 g = args_gurax.PickNumber<Uint8>();
+	Uint8 b = args_gurax.PickNumber<Uint8>();
+	// Function body
+	Uint32 rtn = SDL_MapRGB(format, r, g, b);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_MapRGBA(format:SDL_PixelFormat, r:Number, g:Number, b:Number, a:Number)
+Gurax_DeclareFunctionAlias(SDL_MapRGBA_gurax, "SDL_MapRGBA")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_MapRGBA_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	Uint8 r = args_gurax.PickNumber<Uint8>();
+	Uint8 g = args_gurax.PickNumber<Uint8>();
+	Uint8 b = args_gurax.PickNumber<Uint8>();
+	Uint8 a = args_gurax.PickNumber<Uint8>();
+	// Function body
+	Uint32 rtn = SDL_MapRGBA(format, r, g, b, a);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetRGB(pixel:Number, format:SDL_PixelFormat)
+Gurax_DeclareFunctionAlias(SDL_GetRGB_gurax, "SDL_GetRGB")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 pixel = args_gurax.PickNumber<Uint32>();
+	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	// Function body
+	Uint8 r, g, b;
+	SDL_GetRGB(pixel, format, &r, &g, &b);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+}
+
+// sdl.SDL_GetRGBA(pixel:Number, format:SDL_PixelFormat)
+Gurax_DeclareFunctionAlias(SDL_GetRGBA_gurax, "SDL_GetRGBA")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Uint32 pixel = args_gurax.PickNumber<Uint32>();
+	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	// Function body
+	Uint8 r, g, b, a;
+	SDL_GetRGBA(pixel, format, &r, &g, &b, &a);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+}
+
 // sdl.SDL_HasIntersection(A:SDL_Rect, B:SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_HasIntersection_gurax, "SDL_HasIntersection")
 {
@@ -3622,6 +3852,30 @@ Gurax_ImplementFunctionEx(SDL_HasColorKey_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
+// sdl.SDL_GetColorKey(surface:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_GetColorKey_gurax, "SDL_GetColorKey")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	// Function body
+	Uint32 key;
+	if (SDL_GetColorKey(surface, &key) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(key);
+}
+
 // sdl.SDL_SetSurfaceColorMod(surface:SDL_Surface, r:Number, g:Number, b:Number)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceColorMod_gurax, "SDL_SetSurfaceColorMod")
 {
@@ -3646,6 +3900,30 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceColorMod_gurax, processor_gurax, argumen
 	// Function body
 	int rtn = SDL_SetSurfaceColorMod(surface, r, g, b);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetSurfaceColorMod(surface:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_GetSurfaceColorMod_gurax, "SDL_GetSurfaceColorMod")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	// Function body
+	Uint8 r, g, b;
+	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Tuple(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
 // sdl.SDL_SetSurfaceAlphaMod(surface:SDL_Surface, alpha:Number)
@@ -7953,6 +8231,16 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GL_UnbindTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetPixelFormatName_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_MasksToPixelFormatEnum_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AllocFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FreeFormat_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AllocPalette_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetPixelFormatPalette_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetPaletteColors_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_FreePalette_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MapRGB_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_MapRGBA_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRGB_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRGBA_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_HasIntersection_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_IntersectRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UnionRect_gurax));
@@ -7960,7 +8248,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceRLE_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetColorKey_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_HasColorKey_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetColorKey_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceColorMod_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetSurfaceColorMod_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceAlphaMod_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetClipRect_gurax));

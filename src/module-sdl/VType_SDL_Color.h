@@ -51,6 +51,7 @@ public:
 	SDL_Color* GetEntityPtr() { return &_entity; }
 	const SDL_Color* GetEntityPtr() const { return &_entity; }
 public:
+	static SDL_Color ValueForVector(Value& value) { return GetEntity(value); }
 	static SDL_Color& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_Color&>(value).GetEntity();
 	}

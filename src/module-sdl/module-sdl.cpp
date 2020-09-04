@@ -88,6 +88,8 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_HapticEffect);
     Assign(VTYPE_SDL_Joystick);
     Assign(VTYPE_SDL_JoystickGUID);
+    Assign(VTYPE_SDL_Palette);
+    Assign(VTYPE_SDL_PixelFormat);
     Assign(VTYPE_SDL_Point);
     Assign(VTYPE_SDL_Rect);
     Assign(VTYPE_SDL_Renderer);

@@ -109,6 +109,7 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 
 r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
+r.DeclareType_Entity('SDL_Color', 'SDL_Color', 'SDL_Color')
 r.DeclareType_Entity('SDL_FPoint', 'SDL_FPoint', 'SDL_FPoint')
 r.DeclareType_Entity('SDL_FRect', 'SDL_FRect', 'SDL_FRect')
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
@@ -118,6 +119,7 @@ r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
+r.DeclareType_EntityPtr('const_SDL_PixelFormat_p', 'const SDL_PixelFormat*', 'SDL_PixelFormat')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
@@ -130,6 +132,8 @@ r.DeclareType_EntityPtr('SDL_GameController_p', 'SDL_GameController*', 'SDL_Game
 r.DeclareType_EntityPtr('SDL_Haptic_p', 'SDL_Haptic*', 'SDL_Haptic')
 r.DeclareType_EntityPtr('SDL_HapticEffect_p', 'SDL_HapticEffect*', 'SDL_HapticEffect')
 r.DeclareType_EntityPtr('SDL_Joystick_p', 'SDL_Joystick*', 'SDL_Joystick')
+r.DeclareType_EntityPtr('SDL_Palette_p', 'SDL_Palette*', 'SDL_Palette')
+r.DeclareType_EntityPtr('SDL_PixelFormat_p', 'SDL_PixelFormat*', 'SDL_PixelFormat')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
 r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
@@ -826,25 +830,43 @@ SDL_GetPixelFormatName(format:Uint32):const_char_p
 
 SDL_MasksToPixelFormatEnum(bpp:int, Rmask:Uint32, Gmask:Uint32, Bmask:Uint32, Amask:Uint32):Uint32
 
-//SDL_AllocFormat(pixel_format:Uint32):SDL_PixelFormat_p
+SDL_AllocFormat(pixel_format:Uint32):SDL_PixelFormat_p
 
-//SDL_FreeFormat(format:SDL_PixelFormat_p):void
+SDL_FreeFormat(format:SDL_PixelFormat_p):void
 
-//SDL_AllocPalette(ncolors:int):SDL_Palette_p
+SDL_AllocPalette(ncolors:int):SDL_Palette_p
 
-//SDL_SetPixelFormatPalette(format:SDL_PixelFormat_p, palette:SDL_Palette_p):int
+SDL_SetPixelFormatPalette(format:SDL_PixelFormat_p, palette:SDL_Palette_p):int
 
-//SDL_SetPaletteColors(palette:SDL_Palette_p, colors:const_SDL_Color_p, firstcolor:int, ncolors:int):int
+SDL_SetPaletteColors(palette:SDL_Palette_p, colors[]:SDL_Color, firstcolor:int) = \
+	R'''
+	int ncolors = colors.sizeT<int>();
+	if (SDL_SetPaletteColors(palette, colors, firstcolor, ncolors) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
-//SDL_FreePalette(palette:SDL_Palette_p):void
+SDL_FreePalette(palette:SDL_Palette_p):void
 
-//SDL_MapRGB(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8):Uint32
+SDL_MapRGB(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8):Uint32
 
-//SDL_MapRGBA(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):Uint32
+SDL_MapRGBA(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):Uint32
 
-//SDL_GetRGB(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p):void
+SDL_GetRGB(pixel:Uint32, format:const_SDL_PixelFormat_p) = \
+	R'''
+	Uint8 r, g, b;
+	SDL_GetRGB(pixel, format, &r, &g, &b);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	'''
 
-//SDL_GetRGBA(pixel:Uint32, format:const_SDL_PixelFormat_p, r:Uint8_p, g:Uint8_p, b:Uint8_p, a:Uint8_p):void
+SDL_GetRGBA(pixel:Uint32, format:const_SDL_PixelFormat_p) = \
+	R'''
+	Uint8 r, g, b, a;
+	SDL_GetRGBA(pixel, format, &r, &g, &b, &a);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	'''
 
 //SDL_CalculateGammaRamp(gamma:float, ramp:Uint16_p):void
 
@@ -883,11 +905,27 @@ SDL_SetColorKey(surface:SDL_Surface_p, flag:int, key:Uint32):int
 
 SDL_HasColorKey(surface:SDL_Surface_p):SDL_bool
 
-//SDL_GetColorKey(surface:SDL_Surface_p, key:Uint32_p):int
+SDL_GetColorKey(surface:SDL_Surface_p) = \
+	R'''
+	Uint32 key;
+	if (SDL_GetColorKey(surface, &key) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(key);
+	'''
 
 SDL_SetSurfaceColorMod(surface:SDL_Surface_p, r:Uint8, g:Uint8, b:Uint8):int
 
-//SDL_GetSurfaceColorMod(surface:SDL_Surface_p, r:Uint8_p, g:Uint8_p, b:Uint8_p):int
+SDL_GetSurfaceColorMod(surface:SDL_Surface_p) = \
+	R'''
+	Uint8 r, g, b;
+	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Tuple(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	'''
 
 SDL_SetSurfaceAlphaMod(surface:SDL_Surface_p, alpha:Uint8):int
 
