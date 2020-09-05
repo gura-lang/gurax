@@ -243,7 +243,12 @@ SDL_ResetAssertionReport():void
 
 //======== Querying SDL Version (SDL_version.h) ========
 
-//SDL_GetVersion(ver:SDL_version_p):void
+SDL_GetVersion() = \
+	R'''
+	SDL_version ver;
+	SDL_GetVersion(&ver);
+	return new Value_SDL_version(ver);
+	'''
 
 SDL_GetRevision():const_char_p
 

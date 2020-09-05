@@ -61,6 +61,7 @@ target_sources(sdl.gurd PRIVATE
 	VTYPE_SDL_Surface.cpp
 	VTYPE_SDL_SysWMinfo.cpp
 	VTYPE_SDL_Texture.cpp
+	VTYPE_SDL_version.cpp
 	VTYPE_SDL_Window.cpp)
 
 #-------------------------------------------------------------------------------

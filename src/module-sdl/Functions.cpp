@@ -359,6 +359,23 @@ Gurax_ImplementFunctionEx(SDL_ResetAssertionReport_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
+// sdl.SDL_GetVersion()
+Gurax_DeclareFunctionAlias(SDL_GetVersion_gurax, "SDL_GetVersion")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetVersion_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	SDL_version ver;
+	SDL_GetVersion(&ver);
+	return new Value_SDL_version(ver);
+}
+
 // sdl.SDL_GetRevision()
 Gurax_DeclareFunctionAlias(SDL_GetRevision_gurax, "SDL_GetRevision")
 {
@@ -8313,6 +8330,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_LogGetPriority_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_LogResetPriorities_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_ResetAssertionReport_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetVersion_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetRevision_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetRevisionNumber_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetNumVideoDrivers_gurax));

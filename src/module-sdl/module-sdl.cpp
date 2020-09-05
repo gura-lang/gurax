@@ -98,6 +98,7 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Surface);
     Assign(VTYPE_SDL_SysWMinfo);
     Assign(VTYPE_SDL_Texture);
+    Assign(VTYPE_SDL_version);
     Assign(VTYPE_SDL_Window);
 	// Assignment of function
     AssignFunctions(GetFrame());

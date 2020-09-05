@@ -34,6 +34,7 @@
 #include "VType_SDL_Surface.h"
 #include "VType_SDL_SysWMinfo.h"
 #include "VType_SDL_Texture.h"
+#include "VType_SDL_version.h"
 #include "VType_SDL_Window.h"
 
 Gurax_BeginModuleHeader(sdl)
