@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 // sdl.SDL_Init(flags:Number)
 Gurax_DeclareFunctionAlias(SDL_Init_gurax, "SDL_Init")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -21,14 +21,18 @@ Gurax_ImplementFunctionEx(SDL_Init_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
-	int rtn = SDL_Init(flags);
+	int rtn;
+	if ((rtn = SDL_Init(flags)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
 // sdl.SDL_InitSubSystem(flags:Number)
 Gurax_DeclareFunctionAlias(SDL_InitSubSystem_gurax, "SDL_InitSubSystem")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -41,7 +45,11 @@ Gurax_ImplementFunctionEx(SDL_InitSubSystem_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
-	int rtn = SDL_InitSubSystem(flags);
+	int rtn;
+	if ((rtn = SDL_InitSubSystem(flags)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -422,7 +430,7 @@ Gurax_ImplementFunctionEx(SDL_GetVideoDriver_gurax, processor_gurax, argument_gu
 // sdl.SDL_VideoInit(driver_name:String)
 Gurax_DeclareFunctionAlias(SDL_VideoInit_gurax, "SDL_VideoInit")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("driver_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -435,7 +443,11 @@ Gurax_ImplementFunctionEx(SDL_VideoInit_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* driver_name = args_gurax.PickString();
 	// Function body
-	int rtn = SDL_VideoInit(driver_name);
+	int rtn;
+	if ((rtn = SDL_VideoInit(driver_name)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -710,6 +722,54 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayIndex_gurax, processor_gurax, argu
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
 	int rtn = SDL_GetWindowDisplayIndex(window);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_SetWindowDisplayMode(window:SDL_Window, mode:SDL_DisplayMode)
+Gurax_DeclareFunctionAlias(SDL_SetWindowDisplayMode_gurax, "SDL_SetWindowDisplayMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetWindowDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	const SDL_DisplayMode* mode = args_gurax.Pick<Value_SDL_DisplayMode>().GetEntityPtr();
+	// Function body
+	int rtn = SDL_SetWindowDisplayMode(window, mode);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GetWindowDisplayMode(window:SDL_Window, mode:SDL_DisplayMode)
+Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayMode_gurax, "SDL_GetWindowDisplayMode")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	SDL_DisplayMode* mode = args_gurax.Pick<Value_SDL_DisplayMode>().GetEntityPtr();
+	// Function body
+	int rtn;
+	if ((rtn = SDL_GetWindowDisplayMode(window, mode)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1258,7 +1318,7 @@ Gurax_ImplementFunctionEx(SDL_RestoreWindow_gurax, processor_gurax, argument_gur
 // sdl.SDL_SetWindowFullscreen(window:SDL_Window, flags:Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowFullscreen_gurax, "SDL_SetWindowFullscreen")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1273,7 +1333,11 @@ Gurax_ImplementFunctionEx(SDL_SetWindowFullscreen_gurax, processor_gurax, argume
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
-	int rtn = SDL_SetWindowFullscreen(window, flags);
+	int rtn;
+	if ((rtn = SDL_SetWindowFullscreen(window, flags)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1300,7 +1364,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSurface_gurax, processor_gurax, argument_
 // sdl.SDL_UpdateWindowSurface(window:SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurface_gurax, "SDL_UpdateWindowSurface")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1313,7 +1377,11 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurface_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
-	int rtn = SDL_UpdateWindowSurface(window);
+	int rtn;
+	if ((rtn = SDL_UpdateWindowSurface(window)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1404,7 +1472,7 @@ Gurax_ImplementFunctionEx(SDL_GetGrabbedWindow_gurax, processor_gurax, argument_
 // sdl.SDL_SetWindowBrightness(window:SDL_Window, brightness:Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowBrightness_gurax, "SDL_SetWindowBrightness")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1419,7 +1487,11 @@ Gurax_ImplementFunctionEx(SDL_SetWindowBrightness_gurax, processor_gurax, argume
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	float brightness = args_gurax.PickNumber<float>();
 	// Function body
-	int rtn = SDL_SetWindowBrightness(window, brightness);
+	int rtn;
+	if ((rtn = SDL_SetWindowBrightness(window, brightness)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1446,7 +1518,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBrightness_gurax, processor_gurax, argume
 // sdl.SDL_SetWindowOpacity(window:SDL_Window, opacity:Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowOpacity_gurax, "SDL_SetWindowOpacity")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("opacity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1461,7 +1533,11 @@ Gurax_ImplementFunctionEx(SDL_SetWindowOpacity_gurax, processor_gurax, argument_
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	float opacity = args_gurax.PickNumber<float>();
 	// Function body
-	int rtn = SDL_SetWindowOpacity(window, opacity);
+	int rtn;
+	if ((rtn = SDL_SetWindowOpacity(window, opacity)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1492,7 +1568,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowOpacity_gurax, processor_gurax, argument_
 // sdl.SDL_SetWindowModalFor(modal_window:SDL_Window, parent_window:SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_SetWindowModalFor_gurax, "SDL_SetWindowModalFor")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modal_window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("parent_window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1507,14 +1583,18 @@ Gurax_ImplementFunctionEx(SDL_SetWindowModalFor_gurax, processor_gurax, argument
 	SDL_Window* modal_window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	SDL_Window* parent_window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
-	int rtn = SDL_SetWindowModalFor(modal_window, parent_window);
+	int rtn;
+	if ((rtn = SDL_SetWindowModalFor(modal_window, parent_window)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
 // sdl.SDL_SetWindowInputFocus(window:SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_SetWindowInputFocus_gurax, "SDL_SetWindowInputFocus")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1527,7 +1607,11 @@ Gurax_ImplementFunctionEx(SDL_SetWindowInputFocus_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
-	int rtn = SDL_SetWindowInputFocus(window);
+	int rtn;
+	if ((rtn = SDL_SetWindowInputFocus(window)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1602,7 +1686,7 @@ Gurax_ImplementFunctionEx(SDL_DisableScreenSaver_gurax, processor_gurax, argumen
 // sdl.SDL_GL_LoadLibrary(path:String)
 Gurax_DeclareFunctionAlias(SDL_GL_LoadLibrary_gurax, "SDL_GL_LoadLibrary")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1615,7 +1699,11 @@ Gurax_ImplementFunctionEx(SDL_GL_LoadLibrary_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* path = args_gurax.PickString();
 	// Function body
-	int rtn = SDL_GL_LoadLibrary(path);
+	int rtn;
+	if ((rtn = SDL_GL_LoadLibrary(path)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1674,7 +1762,7 @@ Gurax_ImplementFunctionEx(SDL_GL_ResetAttributes_gurax, processor_gurax, argumen
 // sdl.SDL_GL_SetAttribute(attr:Number, value:Number)
 Gurax_DeclareFunctionAlias(SDL_GL_SetAttribute_gurax, "SDL_GL_SetAttribute")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attr", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1689,7 +1777,11 @@ Gurax_ImplementFunctionEx(SDL_GL_SetAttribute_gurax, processor_gurax, argument_g
 	SDL_GLattr attr = args_gurax.PickNumber<SDL_GLattr>();
 	int value = args_gurax.PickNumber<int>();
 	// Function body
-	int rtn = SDL_GL_SetAttribute(attr, value);
+	int rtn;
+	if ((rtn = SDL_GL_SetAttribute(attr, value)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1740,7 +1832,7 @@ Gurax_ImplementFunctionEx(SDL_GL_CreateContext_gurax, processor_gurax, argument_
 // sdl.SDL_GL_MakeCurrent(window:SDL_Window, context:SDL_GLContext)
 Gurax_DeclareFunctionAlias(SDL_GL_MakeCurrent_gurax, "SDL_GL_MakeCurrent")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("context", VTYPE_SDL_GLContext, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -1755,7 +1847,11 @@ Gurax_ImplementFunctionEx(SDL_GL_MakeCurrent_gurax, processor_gurax, argument_gu
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	SDL_GLContext context = args_gurax.Pick<Value_SDL_GLContext>().GetEntityPtr();
 	// Function body
-	int rtn = SDL_GL_MakeCurrent(window, context);
+	int rtn;
+	if ((rtn = SDL_GL_MakeCurrent(window, context)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -1815,7 +1911,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetDrawableSize_gurax, processor_gurax, argumen
 // sdl.SDL_GL_SetSwapInterval(interval:Number)
 Gurax_DeclareFunctionAlias(SDL_GL_SetSwapInterval_gurax, "SDL_GL_SetSwapInterval")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("interval", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1828,14 +1924,18 @@ Gurax_ImplementFunctionEx(SDL_GL_SetSwapInterval_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int interval = args_gurax.PickNumber<int>();
 	// Function body
-	int rtn = SDL_GL_SetSwapInterval(interval);
+	int rtn;
+	if ((rtn = SDL_GL_SetSwapInterval(interval)) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
 // sdl.SDL_GL_GetSwapInterval()
 Gurax_DeclareFunctionAlias(SDL_GL_GetSwapInterval_gurax, "SDL_GL_GetSwapInterval")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1844,7 +1944,11 @@ Gurax_DeclareFunctionAlias(SDL_GL_GetSwapInterval_gurax, "SDL_GL_GetSwapInterval
 Gurax_ImplementFunctionEx(SDL_GL_GetSwapInterval_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	int rtn = SDL_GL_GetSwapInterval();
+	int rtn;
+	if ((rtn = SDL_GL_GetSwapInterval()) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -3923,7 +4027,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return new Value_Tuple(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
 // sdl.SDL_SetSurfaceAlphaMod(surface:SDL_Surface, alpha:Number)
@@ -3948,6 +4052,30 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GetSurfaceAlphaMod(surface:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_GetSurfaceAlphaMod_gurax, "SDL_GetSurfaceAlphaMod")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	// Function body
+	Uint8 alpha;
+	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(alpha);
+}
+
 // sdl.SDL_SetSurfaceBlendMode(surface:SDL_Surface, blendMode:Number)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceBlendMode_gurax, "SDL_SetSurfaceBlendMode")
 {
@@ -3970,6 +4098,30 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceBlendMode_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GetSurfaceBlendMode(surface:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_GetSurfaceBlendMode_gurax, "SDL_GetSurfaceBlendMode")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	// Function body
+	SDL_BlendMode blendMode;
+	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(blendMode);
+}
+
 // sdl.SDL_SetClipRect(surface:SDL_Surface, rect:SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_SetClipRect_gurax, "SDL_SetClipRect")
 {
@@ -3990,6 +4142,27 @@ Gurax_ImplementFunctionEx(SDL_SetClipRect_gurax, processor_gurax, argument_gurax
 	// Function body
 	SDL_bool rtn = SDL_SetClipRect(surface, rect);
 	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.SDL_GetClipRect(surface:SDL_Surface)
+Gurax_DeclareFunctionAlias(SDL_GetClipRect_gurax, "SDL_GetClipRect")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	// Function body
+	SDL_Rect rect;
+	SDL_GetClipRect(surface, &rect);
+	return new Value_SDL_Rect(rect);
 }
 
 // sdl.SDL_DuplicateSurface(surface:SDL_Surface)
@@ -4609,6 +4782,57 @@ Gurax_ImplementFunctionEx(SDL_GetMouseFocus_gurax, processor_gurax, argument_gur
 	// Function body
 	SDL_Window* rtn = SDL_GetMouseFocus();
 	return new Value_SDL_Window(rtn);
+}
+
+// sdl.SDL_GetMouseState()
+Gurax_DeclareFunctionAlias(SDL_GetMouseState_gurax, "SDL_GetMouseState")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetMouseState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int x, y;
+	Uint32 state = SDL_GetMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+}
+
+// sdl.SDL_GetGlobalMouseState()
+Gurax_DeclareFunctionAlias(SDL_GetGlobalMouseState_gurax, "SDL_GetGlobalMouseState")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetGlobalMouseState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int x, y;
+	Uint32 state = SDL_GetGlobalMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+}
+
+// sdl.SDL_GetRelativeMouseState()
+Gurax_DeclareFunctionAlias(SDL_GetRelativeMouseState_gurax, "SDL_GetRelativeMouseState")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetRelativeMouseState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int x, y;
+	Uint32 state = SDL_GetRelativeMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
 }
 
 // sdl.SDL_WarpMouseInWindow(window:SDL_Window, x:Number, y:Number)
@@ -8107,6 +8331,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetDesktopDisplayMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentDisplayMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowDisplayIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetWindowDisplayMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetWindowDisplayMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowPixelFormat_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_CreateWindow_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowID_gurax));
@@ -8252,8 +8478,11 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceColorMod_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetSurfaceColorMod_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceAlphaMod_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetSurfaceAlphaMod_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfaceBlendMode_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetSurfaceBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetClipRect_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetClipRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_DuplicateSurface_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetWindowWMInfo_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetClipboardText_gurax));
@@ -8286,6 +8515,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_HasScreenKeyboardSupport_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_IsScreenKeyboardShown_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetMouseFocus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetMouseState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetGlobalMouseState_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetRelativeMouseState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_WarpMouseInWindow_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_WarpMouseGlobal_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetRelativeMouseMode_gurax));

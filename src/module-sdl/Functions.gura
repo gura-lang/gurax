@@ -32,6 +32,16 @@ this.DeclareType(decl, cType, vtypeFullName,
 	return new Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType('int_ErrorIfNeg', 'int', 'Nil',
+	codeFunctionBody = R'''
+	int rtn;
+	if ((rtn = ${caller}) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+	''')
+
 r.DeclareType_Number('Sint8')
 r.DeclareType_Number('Uint8')
 r.DeclareType_Number('Sint16')
@@ -117,6 +127,7 @@ r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
 r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
+r.DeclareType_EntityPtr('const_SDL_DisplayMode_p', 'const SDL_DisplayMode*', 'SDL_DisplayMode')
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
 r.DeclareType_EntityPtr('const_SDL_PixelFormat_p', 'const SDL_PixelFormat*', 'SDL_PixelFormat')
@@ -127,6 +138,7 @@ r.DeclareType_EntityPtr('SDL_AudioCVT_p', 'SDL_AudioCVT*', 'SDL_AudioCVT')
 r.DeclareType_EntityPtr('SDL_AudioStream_p', 'SDL_AudioStream*', 'SDL_AudioStream')
 r.DeclareType_EntityPtr('SDL_AudioSpec_p', 'SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('SDL_Cursor_p', 'SDL_Cursor*', 'SDL_Cursor')
+r.DeclareType_EntityPtr('SDL_DisplayMode_p', 'SDL_DisplayMode*', 'SDL_DisplayMode')
 r.DeclareType_EntityPtr('SDL_Event_p', 'SDL_Event*', 'SDL_Event')
 r.DeclareType_EntityPtr('SDL_GameController_p', 'SDL_GameController*', 'SDL_GameController')
 r.DeclareType_EntityPtr('SDL_Haptic_p', 'SDL_Haptic*', 'SDL_Haptic')
@@ -147,9 +159,9 @@ r.Register('sdl') {
 
 //======== Initialization and Shutdown (SDL.h) ========
 
-SDL_Init(flags:Uint32):int
+SDL_Init(flags:Uint32):int_ErrorIfNeg
 
-SDL_InitSubSystem(flags:Uint32):int
+SDL_InitSubSystem(flags:Uint32):int_ErrorIfNeg
 
 SDL_QuitSubSystem(flags:Uint32):void
 
@@ -243,7 +255,7 @@ SDL_GetNumVideoDrivers():int
 
 SDL_GetVideoDriver(index:int):const_char_p
 
-SDL_VideoInit(driver_name:const_char_p):int
+SDL_VideoInit(driver_name:const_char_p):int_ErrorIfNeg
 
 SDL_VideoQuit():void
 
@@ -321,9 +333,9 @@ SDL_GetCurrentDisplayMode(displayIndex:int):any = \
 
 SDL_GetWindowDisplayIndex(window:SDL_Window_p):int
 
-//SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
+SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
 
-//SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int
+SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int_ErrorIfNeg
 
 SDL_GetWindowPixelFormat(window:SDL_Window_p):Uint32
 
@@ -409,11 +421,11 @@ SDL_MinimizeWindow(window:SDL_Window_p):void
 
 SDL_RestoreWindow(window:SDL_Window_p):void
 
-SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int
+SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int_ErrorIfNeg
 
 SDL_GetWindowSurface(window:SDL_Window_p):SDL_Surface_p
 
-SDL_UpdateWindowSurface(window:SDL_Window_p):int
+SDL_UpdateWindowSurface(window:SDL_Window_p):int_ErrorIfNeg
 
 SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects[]:SDL_Rect) = \
 	R'''
@@ -431,11 +443,11 @@ SDL_GetWindowGrab(window:SDL_Window_p):SDL_bool
 
 SDL_GetGrabbedWindow():SDL_Window_p
 
-SDL_SetWindowBrightness(window:SDL_Window_p, brightness:float):int
+SDL_SetWindowBrightness(window:SDL_Window_p, brightness:float):int_ErrorIfNeg
 
 SDL_GetWindowBrightness(window:SDL_Window_p):float
 
-SDL_SetWindowOpacity(window:SDL_Window_p, opacity:float):int
+SDL_SetWindowOpacity(window:SDL_Window_p, opacity:float):int_ErrorIfNeg
 
 SDL_GetWindowOpacity(window:SDL_Window_p) = \
 	R'''
@@ -447,15 +459,15 @@ SDL_GetWindowOpacity(window:SDL_Window_p) = \
 	return new Value_Number(out_opacity);
 	'''
 
-SDL_SetWindowModalFor(modal_window:SDL_Window_p, parent_window:SDL_Window_p):int
+SDL_SetWindowModalFor(modal_window:SDL_Window_p, parent_window:SDL_Window_p):int_ErrorIfNeg
 
-SDL_SetWindowInputFocus(window:SDL_Window_p):int
+SDL_SetWindowInputFocus(window:SDL_Window_p):int_ErrorIfNeg
 
-//SDL_SetWindowGammaRamp(window:SDL_Window_p, red:const_Uint16_p, green:const_Uint16_p, blue:const_Uint16_p):int
+//SDL_SetWindowGammaRamp(window:SDL_Window_p, red:const_Uint16_p, green:const_Uint16_p, blue:const_Uint16_p):int_ErrorIfNeg
 
-//SDL_GetWindowGammaRamp(window:SDL_Window_p, red:Uint16_p, green:Uint16_p, blue:Uint16_p):int
+//SDL_GetWindowGammaRamp(window:SDL_Window_p, red:Uint16_p, green:Uint16_p, blue:Uint16_p):int_ErrorIfNeg
 
-//SDL_SetWindowHitTest(window:SDL_Window_p, callback:SDL_HitTest, callback_data:void_p):int
+//SDL_SetWindowHitTest(window:SDL_Window_p, callback:SDL_HitTest, callback_data:void_p):int_ErrorIfNeg
 
 SDL_DestroyWindow(window:SDL_Window_p):void
 
@@ -465,7 +477,7 @@ SDL_EnableScreenSaver():void
 
 SDL_DisableScreenSaver():void
 
-SDL_GL_LoadLibrary(path:const_char_p):int
+SDL_GL_LoadLibrary(path:const_char_p):int_ErrorIfNeg
 
 //SDL_GL_GetProcAddress(proc:const_char_p):void_p
 
@@ -475,7 +487,7 @@ SDL_GL_ExtensionSupported(extension:const_char_p):SDL_bool
 
 SDL_GL_ResetAttributes():void
 
-SDL_GL_SetAttribute(attr:SDL_GLattr, value:int):int
+SDL_GL_SetAttribute(attr:SDL_GLattr, value:int):int_ErrorIfNeg
 
 SDL_GL_GetAttribute(attr:SDL_GLattr) = \
 	R'''
@@ -489,7 +501,7 @@ SDL_GL_GetAttribute(attr:SDL_GLattr) = \
 
 SDL_GL_CreateContext(window:SDL_Window_p):SDL_GLContext
 
-SDL_GL_MakeCurrent(window:SDL_Window_p, context:SDL_GLContext):int
+SDL_GL_MakeCurrent(window:SDL_Window_p, context:SDL_GLContext):int_ErrorIfNeg
 
 SDL_GL_GetCurrentWindow():SDL_Window_p
 
@@ -502,15 +514,16 @@ SDL_GL_GetDrawableSize(window:SDL_Window_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_GL_SetSwapInterval(interval:int):int
+SDL_GL_SetSwapInterval(interval:int):int_ErrorIfNeg
 
-SDL_GL_GetSwapInterval():int
+SDL_GL_GetSwapInterval():int_ErrorIfNeg
 
 SDL_GL_SwapWindow(window:SDL_Window_p):void
 
 SDL_GL_DeleteContext(context:SDL_GLContext):void
 
 //======== 2D Accelerated Rendering (SDL_render.h) ========
+// :int maybe :int_ErrorIfNeg
 
 SDL_GetNumRenderDrivers():int
 
@@ -924,20 +937,41 @@ SDL_GetSurfaceColorMod(surface:SDL_Surface_p) = \
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return new Value_Tuple(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 	'''
 
 SDL_SetSurfaceAlphaMod(surface:SDL_Surface_p, alpha:Uint8):int
 
-//SDL_GetSurfaceAlphaMod(surface:SDL_Surface_p, alpha:Uint8_p):int
+SDL_GetSurfaceAlphaMod(surface:SDL_Surface_p) = \
+	R'''
+	Uint8 alpha;
+	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(alpha);
+	'''
 
 SDL_SetSurfaceBlendMode(surface:SDL_Surface_p, blendMode:SDL_BlendMode):int
 
-//SDL_GetSurfaceBlendMode(surface:SDL_Surface_p, blendMode:SDL_BlendMode_p):int
+SDL_GetSurfaceBlendMode(surface:SDL_Surface_p) = \
+	R'''
+	SDL_BlendMode blendMode;
+	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Value_Number(blendMode);
+	'''
 
 SDL_SetClipRect(surface:SDL_Surface_p, rect:const_SDL_Rect_p):SDL_bool
 
-//SDL_GetClipRect(surface:SDL_Surface_p, rect:SDL_Rect_p):void
+SDL_GetClipRect(surface:SDL_Surface_p) = \
+	R'''
+	SDL_Rect rect;
+	SDL_GetClipRect(surface, &rect);
+	return new Value_SDL_Rect(rect);
+	'''
 
 SDL_DuplicateSurface(surface:SDL_Surface_p):SDL_Surface_p
 
@@ -1057,11 +1091,26 @@ SDL_IsScreenKeyboardShown(window:SDL_Window_p):SDL_bool
 
 SDL_GetMouseFocus():SDL_Window_p
 
-//SDL_GetMouseState(x:int_p, y:int_p):Uint32
+SDL_GetMouseState() = \
+	R'''
+	int x, y;
+	Uint32 state = SDL_GetMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	'''
 
-//SDL_GetGlobalMouseState(x:int_p, y:int_p):Uint32
+SDL_GetGlobalMouseState() = \
+	R'''
+	int x, y;
+	Uint32 state = SDL_GetGlobalMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	'''
 
-//SDL_GetRelativeMouseState(x:int_p, y:int_p):Uint32
+SDL_GetRelativeMouseState() = \
+	R'''
+	int x, y;
+	Uint32 state = SDL_GetRelativeMouseState(&x, &y);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	'''
 
 SDL_WarpMouseInWindow(window:SDL_Window_p, x:int, y:int):void
 
