@@ -4408,7 +4408,7 @@ Gurax_ImplementFunctionEx(SDL_FlushEvents_gurax, processor_gurax, argument_gurax
 // sdl.SDL_PollEvent(event:SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_PollEvent_gurax, "SDL_PollEvent")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -4422,13 +4422,13 @@ Gurax_ImplementFunctionEx(SDL_PollEvent_gurax, processor_gurax, argument_gurax)
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	// Function body
 	int rtn = SDL_PollEvent(event);
-	return new Gurax::Value_Number(rtn);
+	return (rtn == 0)? Value::false_() : Value::true_();
 }
 
 // sdl.SDL_WaitEvent(event:SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_WaitEvent_gurax, "SDL_WaitEvent")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -4441,14 +4441,17 @@ Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	// Function body
-	int rtn = SDL_WaitEvent(event);
-	return new Gurax::Value_Number(rtn);
+	if (SDL_WaitEvent(event) == 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::true_();
 }
 
 // sdl.SDL_WaitEventTimeout(event:SDL_Event, timeout:Number)
 Gurax_DeclareFunctionAlias(SDL_WaitEventTimeout_gurax, "SDL_WaitEventTimeout")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -4463,8 +4466,11 @@ Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	int timeout = args_gurax.PickNumber<int>();
 	// Function body
-	int rtn = SDL_WaitEventTimeout(event, timeout);
-	return new Gurax::Value_Number(rtn);
+	if (SDL_WaitEventTimeout(event, timeout) == 0) {
+		if (*SDL_GetError()) IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::true_();
 }
 
 // sdl.SDL_PushEvent(event:SDL_Event)
@@ -4746,6 +4752,26 @@ Gurax_ImplementFunctionEx(SDL_StopTextInput_gurax, processor_gurax, argument_gur
 {
 	// Function body
 	SDL_StopTextInput();
+	return Gurax::Value::nil();
+}
+
+// sdl.SDL_SetTextInputRect(rect?:SDL_Rect)
+Gurax_DeclareFunctionAlias(SDL_SetTextInputRect_gurax, "SDL_SetTextInputRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_SetTextInputRect_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	// Function body
+	SDL_SetTextInputRect(rect);
 	return Gurax::Value::nil();
 }
 
@@ -5550,6 +5576,27 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_JoystickGetGUIDString(guid:SDL_JoystickGUID)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDString_gurax, "SDL_JoystickGetGUIDString")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("guid", VTYPE_SDL_JoystickGUID, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_JoystickGUID& guid = args_gurax.Pick<Value_SDL_JoystickGUID>().GetEntity();
+	// Function body
+	char szGUID[64]; // requires at least 33 bytes
+	SDL_JoystickGetGUIDString(guid, szGUID, sizeof(szGUID));
+	return new Value_String(szGUID);
+}
+
 // sdl.SDL_JoystickGetGUIDFromString(pchGUID:String)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDFromString_gurax, "SDL_JoystickGetGUIDFromString")
 {
@@ -5770,6 +5817,32 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetHat_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_JoystickGetBall(joystick:SDL_Joystick, ball:Number)
+Gurax_DeclareFunctionAlias(SDL_JoystickGetBall_gurax, "SDL_JoystickGetBall")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ball", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	int ball = args_gurax.PickNumber<int>();
+	// Function body
+	int dx, dy;
+	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+}
+
 // sdl.SDL_JoystickGetButton(joystick:SDL_Joystick, button:Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetButton_gurax, "SDL_JoystickGetButton")
 {
@@ -5894,6 +5967,84 @@ Gurax_ImplementFunctionEx(SDL_GameControllerNumMappings_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_GameControllerMappingForIndex(mapping_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForIndex_gurax, "SDL_GameControllerMappingForIndex")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("mapping_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerMappingForIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int mapping_index = args_gurax.PickNumber<int>();
+	// Function body
+	char* rtn = SDL_GameControllerMappingForIndex(mapping_index);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+}
+
+// sdl.SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID)
+Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForGUID_gurax, "SDL_GameControllerMappingForGUID")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("guid", VTYPE_SDL_JoystickGUID, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerMappingForGUID_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_JoystickGUID& guid = args_gurax.Pick<Value_SDL_JoystickGUID>().GetEntity();
+	// Function body
+	char* rtn = SDL_GameControllerMappingForGUID(guid);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+}
+
+// sdl.SDL_GameControllerMapping(gamecontroller:SDL_GameController)
+Gurax_DeclareFunctionAlias(SDL_GameControllerMapping_gurax, "SDL_GameControllerMapping")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerMapping_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	// Function body
+	char* rtn = SDL_GameControllerMapping(gamecontroller);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+}
+
 // sdl.SDL_IsGameController(joystick_index:Number)
 Gurax_DeclareFunctionAlias(SDL_IsGameController_gurax, "SDL_IsGameController")
 {
@@ -5952,6 +6103,32 @@ Gurax_ImplementFunctionEx(SDL_GameControllerTypeForIndex_gurax, processor_gurax,
 	// Function body
 	SDL_GameControllerType rtn = SDL_GameControllerTypeForIndex(joystick_index);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.SDL_GameControllerMappingForDeviceIndex(joystick_index:Number)
+Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForDeviceIndex_gurax, "SDL_GameControllerMappingForDeviceIndex")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GameControllerMappingForDeviceIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int joystick_index = args_gurax.PickNumber<int>();
+	// Function body
+	char* rtn = SDL_GameControllerMappingForDeviceIndex(joystick_index);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
 }
 
 // sdl.SDL_GameControllerOpen(joystick_index:Number)
@@ -8530,6 +8707,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_StartTextInput_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_IsTextInputActive_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_StopTextInput_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_SetTextInputRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_HasScreenKeyboardSupport_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_IsScreenKeyboardShown_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetMouseFocus_gurax));
@@ -8571,6 +8749,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProduct_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetProductVersion_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetType_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetGUIDString_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetGUIDFromString_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetAttached_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickInstanceID_gurax));
@@ -8582,15 +8761,20 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickEventState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetAxis_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetHat_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetBall_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickGetButton_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickRumble_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickClose_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_JoystickCurrentPowerLevel_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerAddMapping_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerNumMappings_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerMappingForIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerMappingForGUID_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerMapping_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_IsGameController_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerNameForIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerTypeForIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GameControllerMappingForDeviceIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerOpen_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerFromInstanceID_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GameControllerFromPlayerIndex_gurax));

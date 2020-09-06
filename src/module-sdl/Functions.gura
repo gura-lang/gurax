@@ -146,6 +146,7 @@ r.DeclareType_EntityPtr('SDL_HapticEffect_p', 'SDL_HapticEffect*', 'SDL_HapticEf
 r.DeclareType_EntityPtr('SDL_Joystick_p', 'SDL_Joystick*', 'SDL_Joystick')
 r.DeclareType_EntityPtr('SDL_Palette_p', 'SDL_Palette*', 'SDL_Palette')
 r.DeclareType_EntityPtr('SDL_PixelFormat_p', 'SDL_PixelFormat*', 'SDL_PixelFormat')
+r.DeclareType_EntityPtr('SDL_Rect_p', 'SDL_Rect*', 'SDL_Rect')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
 r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
@@ -1004,19 +1005,23 @@ SDL_GetClipboardText() = \
 SDL_HasClipboardText():SDL_bool
 
 //======== Vulkan Support (SDL_vulkan.h) ========
-/*
-SDL_Vulkan_LoadLibrary(path:const_char_p):int
+
+//SDL_Vulkan_LoadLibrary(path:const_char_p):int
 
 //SDL_Vulkan_GetVkGetInstanceProcAddr():void_p
 
-SDL_Vulkan_UnloadLibrary():void
+//SDL_Vulkan_UnloadLibrary()
 
-//SDL_Vulkan_GetInstanceExtensions(window:SDL_Window_p, pCount:unsigned_int_p, pNames:const_char_pp):SDL_bool
+//SDL_Vulkan_GetInstanceExtensions(window:SDL_Window_p, pCount:unsigned_int_p, pNames:const_char_pp)
 
 //SDL_Vulkan_CreateSurface(window:SDL_Window_p, instance:VkInstance, surface:VkSurfaceKHR_p):SDL_bool
 
-//SDL_Vulkan_GetDrawableSize(window:SDL_Window_p, w:int_p, h:int_p):void
-*/
+//SDL_Vulkan_GetDrawableSize(window:SDL_Window_p) = \
+//	R'''
+//	int w, h;
+//	SDL_Vulkan_GetDrawableSize(window, &w, &h);
+//	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+//	'''
 
 //======== Event Handling (SDL_events.h) ========
 
@@ -1032,12 +1037,29 @@ SDL_FlushEvent(type:Uint32):void
 
 SDL_FlushEvents(minType:Uint32, maxType:Uint32):void
 
-SDL_PollEvent(event:SDL_Event_p):int
+SDL_PollEvent(event:SDL_Event_p) = \
+	R'''
+	int rtn = SDL_PollEvent(event);
+	return (rtn == 0)? Value::false_() : Value::true_();
+	'''
 
-SDL_WaitEvent(event:SDL_Event_p):int
+SDL_WaitEvent(event:SDL_Event_p) = \
+	R'''
+	if (SDL_WaitEvent(event) == 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::true_();
+	'''
 
-SDL_WaitEventTimeout(event:SDL_Event_p, timeout:int):int
-
+SDL_WaitEventTimeout(event:SDL_Event_p, timeout:int) = \
+	R'''
+	if (SDL_WaitEventTimeout(event, timeout) == 0) {
+		if (*SDL_GetError()) IssueError_SDL();
+		return Value::nil();
+	}
+	return Value::true_();
+	'''
 SDL_PushEvent(event:SDL_Event_p):int
 
 //SDL_SetEventFilter(filter:SDL_EventFilter, userdata:void_p):void
@@ -1082,7 +1104,7 @@ SDL_IsTextInputActive():SDL_bool
 
 SDL_StopTextInput():void
 
-//SDL_SetTextInputRect(rect:SDL_Rect_p):void
+SDL_SetTextInputRect(rect?:SDL_Rect_p):void
 
 SDL_HasScreenKeyboardSupport():SDL_bool
 
@@ -1189,7 +1211,12 @@ SDL_JoystickGetProductVersion(joystick:SDL_Joystick_p):Uint16
 
 SDL_JoystickGetType(joystick:SDL_Joystick_p):SDL_JoystickType
 
-//SDL_JoystickGetGUIDString(guid:SDL_JoystickGUID, pszGUID:char_p, cbGUID:int):void
+SDL_JoystickGetGUIDString(guid:SDL_JoystickGUID) = \
+	R'''
+	char szGUID[64]; // requires at least 33 bytes
+	SDL_JoystickGetGUIDString(guid, szGUID, sizeof(szGUID));
+	return new Value_String(szGUID);
+	'''
 
 SDL_JoystickGetGUIDFromString(pchGUID:const_char_p):SDL_JoystickGUID
 
@@ -1215,7 +1242,15 @@ SDL_JoystickGetAxis(joystick:SDL_Joystick_p, axis:int):Sint16
 
 SDL_JoystickGetHat(joystick:SDL_Joystick_p, hat:int):Uint8
 
-//SDL_JoystickGetBall(joystick:SDL_Joystick_p, ball:int, dx:int_p, dy:int_p):int
+SDL_JoystickGetBall(joystick:SDL_Joystick_p, ball:int) = \
+	R'''
+	int dx, dy;
+	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	'''
 
 SDL_JoystickGetButton(joystick:SDL_Joystick_p, button:int):Uint8
 
@@ -1233,11 +1268,41 @@ SDL_GameControllerAddMapping(mappingString:const_char_p):int
 
 SDL_GameControllerNumMappings():int
 
-//SDL_GameControllerMappingForIndex(mapping_index:int):char_p
+SDL_GameControllerMappingForIndex(mapping_index:int) = \
+	R'''
+	char* rtn = SDL_GameControllerMappingForIndex(mapping_index);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+	'''
 
-//SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID):char_p
+SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID) = \
+	R'''
+	char* rtn = SDL_GameControllerMappingForGUID(guid);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+	'''
 
-//SDL_GameControllerMapping(gamecontroller:SDL_GameController_p):char_p
+SDL_GameControllerMapping(gamecontroller:SDL_GameController_p) = \
+	R'''
+	char* rtn = SDL_GameControllerMapping(gamecontroller);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+	'''
 
 SDL_IsGameController(joystick_index:int):SDL_bool
 
@@ -1245,7 +1310,17 @@ SDL_GameControllerNameForIndex(joystick_index:int):const_char_p
 
 SDL_GameControllerTypeForIndex(joystick_index:int):SDL_GameControllerType
 
-//SDL_GameControllerMappingForDeviceIndex(joystick_index:int):char_p
+SDL_GameControllerMappingForDeviceIndex(joystick_index:int) = \
+	R'''
+	char* rtn = SDL_GameControllerMappingForDeviceIndex(joystick_index);
+	if (!rtn) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(new Value_String(rtn));
+	SDL_free(rtn);
+	return pValue.release();
+	'''
 
 SDL_GameControllerOpen(joystick_index:int):SDL_GameController_p
 
