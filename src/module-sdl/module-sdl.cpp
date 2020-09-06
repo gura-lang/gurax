@@ -94,6 +94,7 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Rect);
     Assign(VTYPE_SDL_Renderer);
     Assign(VTYPE_SDL_RendererInfo);
+    Assign(VTYPE_SDL_RWops);
     Assign(VTYPE_SDL_Sensor);
     Assign(VTYPE_SDL_Surface);
     Assign(VTYPE_SDL_SysWMinfo);

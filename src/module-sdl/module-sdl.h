@@ -30,6 +30,7 @@
 #include "VType_SDL_Rect.h"
 #include "VType_SDL_Renderer.h"
 #include "VType_SDL_RendererInfo.h"
+#include "VType_SDL_RWops.h"
 #include "VType_SDL_Sensor.h"
 #include "VType_SDL_Surface.h"
 #include "VType_SDL_SysWMinfo.h"

@@ -34,8 +34,8 @@ this.DeclareType(decl, cType, vtypeFullName,
 
 r.DeclareType('int_ErrorIfNeg', 'int', 'Nil',
 	codeFunctionBody = R'''
-	int rtn;
-	if ((rtn = ${caller}) != 0) {
+	int rtn = ${caller};
+	if (rtn < 0) {
 		IssueError_SDL();
 		return Value::nil();
 	}
@@ -148,6 +148,7 @@ r.DeclareType_EntityPtr('SDL_Palette_p', 'SDL_Palette*', 'SDL_Palette')
 r.DeclareType_EntityPtr('SDL_PixelFormat_p', 'SDL_PixelFormat*', 'SDL_PixelFormat')
 r.DeclareType_EntityPtr('SDL_Rect_p', 'SDL_Rect*', 'SDL_Rect')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
+r.DeclareType_EntityPtr('SDL_RWops_p', 'SDL_RWops*', 'SDL_RWops')
 r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
 r.DeclareType_EntityPtr('SDL_Texture_p', 'SDL_Texture*', 'SDL_Texture')
@@ -916,7 +917,17 @@ SDL_IntersectRectAndLine(rect:const_SDL_Rect_p, X1:int, Y1:int, X2:int, Y2:int) 
 
 //======== Surface Creation and Simple Drawing (SDL_surface.h) ========
 
-//SDL_SaveBMP_RW(:surface, file:SDL_RWFromFile, :wb, :1):SDL_Surface_p
+SDL_SaveBMP(surface:SDL_Surface_p, file:const_char_p):int
+
+SDL_SaveBMP_RW(surface:SDL_Surface_p, dst:SDL_RWops_p, freedst:bool) = \
+	R'''
+	int rtn = SDL_SaveBMP_RW(surface, dst, freedst? 1 : 0);
+	if (rtn < 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+	'''
 
 SDL_SetSurfaceRLE(surface:SDL_Surface_p, flag:int):int
 
@@ -1652,18 +1663,17 @@ SDL_RemoveTimer(id:SDL_TimerID):SDL_bool
 
 //SDL_GetPrefPath(org:const_char_p, app:const_char_p):char_p
 
-/*
 //======== File I/O Abstraction (SDL_rwops.h) ========
 
 SDL_RWFromFile(file:const_char_p, mode:const_char_p):SDL_RWops_p
 
-SDL_RWFromFP(fp:FILE_p, autoclose:SDL_bool):SDL_RWops_p
+//SDL_RWFromFP(fp:FILE_p, autoclose:SDL_bool):SDL_RWops_p
 
-SDL_RWFromFP(fp:void_p, autoclose:SDL_bool):SDL_RWops_p
+//SDL_RWFromFP(fp:void_p, autoclose:SDL_bool):SDL_RWops_p
 
-SDL_RWFromMem(mem:void_p, size:int):SDL_RWops_p
+//SDL_RWFromMem(mem:void_p, size:int):SDL_RWops_p
 
-SDL_RWFromConstMem(mem:const_void_p, size:int):SDL_RWops_p
+//SDL_RWFromConstMem(mem:const_void_p, size:int):SDL_RWops_p
 
 SDL_AllocRW():SDL_RWops_p
 
@@ -1675,15 +1685,15 @@ SDL_RWseek(context:SDL_RWops_p, offset:Sint64, whence:int):Sint64
 
 SDL_RWtell(context:SDL_RWops_p):Sint64
 
-SDL_RWread(context:SDL_RWops_p, ptr:void_p, size:size_t, maxnum:size_t):size_t
+//SDL_RWread(context:SDL_RWops_p, ptr:void_p, size:size_t, maxnum:size_t):size_t
 
 SDL_RWwrite(context:SDL_RWops_p, ptr:const_void_p, size:size_t, num:size_t):size_t
 
 SDL_RWclose(context:SDL_RWops_p):int
 
-SDL_LoadFile_RW(src:SDL_RWops_p, datasize:size_t_p, freesrc:int):void_p
+//SDL_LoadFile_RW(src:SDL_RWops_p, datasize:size_t_p, freesrc:int):void_p
 
-SDL_LoadFile(file:const_char_p, datasize:size_t_p):void_p
+//SDL_LoadFile(file:const_char_p, datasize:size_t_p):void_p
 
 SDL_ReadU8(src:SDL_RWops_p):Uint8
 
@@ -1712,7 +1722,6 @@ SDL_WriteBE32(dst:SDL_RWops_p, value:Uint32):size_t
 SDL_WriteLE64(dst:SDL_RWops_p, value:Uint64):size_t
 
 SDL_WriteBE64(dst:SDL_RWops_p, value:Uint64):size_t
-*/
 
 //======== Shared Object Loading and Function Lookup (SDL_loadso.h) ========
 
@@ -1771,8 +1780,12 @@ SDL_SIMDFree(ptr:void_p):void
 //======== Bit Manipulation (SDL_bits.h) ========
 
 //======== Power Management Status (SDL_power.h) ========
-
-//SDL_GetPowerInfo(secs:int_p, pct:int_p):SDL_PowerState
+SDL_GetPowerInfo() = \
+	R'''
+	int secs, pct;
+	SDL_PowerState state = SDL_GetPowerInfo(&secs, &pct);
+	return Value_Tuple::Create(new Value_Number(state), new Value_Number(secs), new Value_Number(pct));
+	'''
 
 //======== Platform-specific Functionality (SDL_system.h) ========
 

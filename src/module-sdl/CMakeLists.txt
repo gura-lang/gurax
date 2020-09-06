@@ -57,6 +57,7 @@ target_sources(sdl.gurd PRIVATE
 	VTYPE_SDL_Rect.cpp
 	VTYPE_SDL_Renderer.cpp
 	VTYPE_SDL_RendererInfo.cpp
+	VTYPE_SDL_RWops.cpp
 	VTYPE_SDL_Sensor.cpp
 	VTYPE_SDL_Surface.cpp
 	VTYPE_SDL_SysWMinfo.cpp
