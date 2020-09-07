@@ -22,7 +22,7 @@ Sint64 RWseek_Stream(SDL_RWops* context, Sint64 offset, int whence)
 	return pStream->Seek(offset, seekMode)? 0 : -1;
 }
 
-size_t RWread_Stream(SDL_RWops* context, void *ptr, size_t size, size_t maxnum)
+size_t RWread_Stream(SDL_RWops* context, void* ptr, size_t size, size_t maxnum)
 {
 	Stream* pStream = reinterpret_cast<Stream*>(context->hidden.unknown.data1);
 	size_t bytes = size * maxnum;
@@ -30,7 +30,7 @@ size_t RWread_Stream(SDL_RWops* context, void *ptr, size_t size, size_t maxnum)
 	return pStream->Read(ptr, size * maxnum) / size;
 }
 
-size_t RWwrite_Stream(SDL_RWops* context, const void *ptr, size_t size, size_t num)
+size_t RWwrite_Stream(SDL_RWops* context, const void* ptr, size_t size, size_t num)
 {
 	Stream* pStream = reinterpret_cast<Stream*>(context->hidden.unknown.data1);
 	size_t bytes = size * num;
