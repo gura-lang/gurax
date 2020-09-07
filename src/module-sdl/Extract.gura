@@ -123,9 +123,26 @@ Extract(stream:Stream):map = {
 				funcName = m[2]
 				declArgJoined = m[3]
 				stat = `args
+			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL\s+(\w+)')) {
+				declRtn = m[1]
+				funcName = m[2]
+				declArgJoined = ''
+				stat = `argsTop
 			} elsif (m = line.Match(r'^extern DECLSPEC\s*(.+)\s*SDLCALL')) {
 				declRtn = m[1]
 				stat = `entryCont
+			}
+		} elsif (stat == `argsTop) {
+			if (m = line.Match(r'\((.*)\)')) {
+				declArgJoined = m[1]
+				AddFuncInfo(declRtn, funcName, declArgJoined)
+				stat = `entry
+			} elsif (m = line.Match(r'\((.*)')) {
+				declArgJoined = m[1]
+				stat = `args
+			} else {
+				sys.cerr.Println('argument list not found')
+				sys.Exit(1)
 			}
 		} elsif (stat == `args) {
 			if (m = line.Match(r'(.*)\)')) {
