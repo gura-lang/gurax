@@ -28,6 +28,7 @@ add_subdirectory(module-opengl)
 #add_subdirectory(module-path)				# built-in module
 add_subdirectory(module-png)
 add_subdirectory(module-re)
+add_subdirectory(module-sdl)
 #add_subdirectory(module-sys)				# built-in module
 add_subdirectory(module-zip)
 endif ()

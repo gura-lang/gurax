@@ -840,6 +840,25 @@ void AssignConsts(Frame& frame)
 	// SDL_bool
 	frame.Assign("SDL_TRUE", Value::true_());
 	frame.Assign("SDL_FALSE", Value::false_());
+	// SDL_Init()
+	AssignConst(SDL_INIT_TIMER);
+	AssignConst(SDL_INIT_AUDIO);
+	AssignConst(SDL_INIT_VIDEO);
+	AssignConst(SDL_INIT_JOYSTICK);
+	AssignConst(SDL_INIT_HAPTIC);
+	AssignConst(SDL_INIT_GAMECONTROLLER);
+	AssignConst(SDL_INIT_EVENTS);
+	AssignConst(SDL_INIT_EVERYTHING);
+	AssignConst(SDL_INIT_NOPARACHUTE);
+	// Window Position
+	AssignConst(SDL_WINDOWPOS_UNDEFINED);
+	AssignConst(SDL_WINDOWPOS_CENTERED);
+	// SDL_DisplayOrientation
+	AssignConst(SDL_ORIENTATION_UNKNOWN);
+	AssignConst(SDL_ORIENTATION_LANDSCAPE);
+	AssignConst(SDL_ORIENTATION_LANDSCAPE_FLIPPED);
+	AssignConst(SDL_ORIENTATION_PORTRAIT);
+	AssignConst(SDL_ORIENTATION_PORTRAIT_FLIPPED);
 }
 
 Gurax_EndModuleScope(sdl)
