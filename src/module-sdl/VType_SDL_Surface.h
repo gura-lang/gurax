@@ -29,6 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Value_SDL_Surface");
 protected:
 	SDL_Surface* _entity;
+	RefPtr<Image> _pImage;
 public:
 	static VType& vtype;
 public:
@@ -36,6 +37,8 @@ public:
 	explicit Value_SDL_Surface(VType& vtype = VTYPE_SDL_Surface) : Value_Object(vtype) {}
 	explicit Value_SDL_Surface(SDL_Surface* entity, VType& vtype = VTYPE_SDL_Surface) :
 		Value_Object(vtype), _entity(entity) {}
+	explicit Value_SDL_Surface(SDL_Surface* entity, Image* pImage, VType& vtype = VTYPE_SDL_Surface) :
+		Value_Object(vtype), _entity(entity), _pImage(pImage) {}
 	// Copy constructor/operator
 	Value_SDL_Surface(const Value_SDL_Surface& src) = delete;
 	Value_SDL_Surface& operator=(const Value_SDL_Surface& src) = delete;
@@ -50,6 +53,8 @@ public:
 	const SDL_Surface& GetEntity() const { return *_entity; }
 	SDL_Surface* GetEntityPtr() { return _entity; }
 	const SDL_Surface* GetEntityPtr() const { return _entity; }
+	Image* GetImage() { return _pImage.get(); }
+	const Image* GetImage() const { return _pImage.get(); }
 public:
 	static SDL_Surface& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_Surface&>(value).GetEntity();

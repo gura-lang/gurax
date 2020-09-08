@@ -4155,6 +4155,33 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormatFrom_gurax, processor_gu
 	return new Value_SDL_Surface(rtn);
 }
 
+// sdl.SDL_CreateRGBSurfaceFromImage(image:Image)
+Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceFromImage_gurax, "SDL_CreateRGBSurfaceFromImage")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFromImage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Gurax::Image& image = args_gurax.Pick<Value_Image>().GetImage();
+	// Function body
+	RefPtr<Image> pImage(image.Reference());
+	void* pixels = pImage->GetPointerC();
+	int width = static_cast<int>(pImage->GetWidth());
+	int height = static_cast<int>(pImage->GetHeight());
+	int depth = pImage->IsFormat(Image::Format::RGB)? 24 : 32;
+	int pitch = static_cast<int>(pImage->GetBytesPerLine());
+	Uint32 format = pImage->IsFormat(Image::Format::RGB)? SDL_PIXELFORMAT_BGR24 : SDL_PIXELFORMAT_BGRA32;
+	SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, width, height, depth, pitch, format);
+	return new Value_SDL_Surface(surface, pImage.release());
+}
+
 // sdl.SDL_FreeSurface(surface:SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_FreeSurface_gurax, "SDL_FreeSurface")
 {
@@ -9939,6 +9966,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_CreateRGBSurfaceWithFormat_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_CreateRGBSurfaceFrom_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_CreateRGBSurfaceWithFormatFrom_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_CreateRGBSurfaceFromImage_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_FreeSurface_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetSurfacePalette_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_LockSurface_gurax));
