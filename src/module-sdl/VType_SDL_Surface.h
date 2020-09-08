@@ -14,6 +14,7 @@ class GURAX_DLLDECLARE VType_SDL_Surface : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern GURAX_DLLDECLARE VType_SDL_Surface VTYPE_SDL_Surface;
@@ -48,6 +49,8 @@ public:
 protected:
 	// Destructor
 	~Value_SDL_Surface() = default;
+public:
+	static Value_SDL_Surface* Create(Image* pImage);
 public:
 	SDL_Surface& GetEntity() { return *_entity; }
 	const SDL_Surface& GetEntity() const { return *_entity; }

@@ -85,10 +85,30 @@ void VType_SDL_Surface::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(SDL_Surface, propSkeleton));
 }
 
+Value* VType_SDL_Surface::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Image)) {
+		return Value_SDL_Surface::Create(Value_Image::GetImage(value).Reference());
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_SDL_Surface
 //------------------------------------------------------------------------------
 VType& Value_SDL_Surface::vtype = VTYPE_SDL_Surface;
+
+Value_SDL_Surface* Value_SDL_Surface::Create(Image* pImage)
+{
+	void* pixels = pImage->GetPointerC();
+	int width = static_cast<int>(pImage->GetWidth());
+	int height = static_cast<int>(pImage->GetHeight());
+	int depth = pImage->IsFormat(Image::Format::RGB)? 24 : 32;
+	int pitch = static_cast<int>(pImage->GetBytesPerLine());
+	Uint32 format = pImage->IsFormat(Image::Format::RGB)? SDL_PIXELFORMAT_BGR24 : SDL_PIXELFORMAT_BGRA32;
+	SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, width, height, depth, pitch, format);
+	return new Value_SDL_Surface(surface, pImage);
+}
 
 String Value_SDL_Surface::ToString(const StringStyle& ss) const
 {
