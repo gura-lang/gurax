@@ -5199,7 +5199,7 @@ Gurax_ImplementFunctionEx(SDL_FlushEvents_gurax, processor_gurax, argument_gurax
 // sdl.SDL_PollEvent(event:SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_PollEvent_gurax, "SDL_PollEvent")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -5213,7 +5213,7 @@ Gurax_ImplementFunctionEx(SDL_PollEvent_gurax, processor_gurax, argument_gurax)
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	// Function body
 	int rtn = SDL_PollEvent(event);
-	return (rtn == 0)? Value::false_() : Value::true_();
+	return new Gurax::Value_Number(rtn);
 }
 
 // sdl.SDL_WaitEvent(event:SDL_Event)
@@ -5232,11 +5232,12 @@ Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	// Function body
-	if (SDL_WaitEvent(event) == 0) {
+	int rtn = SDL_WaitEvent(event);
+	if (rtn == 0) {
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value::true_();
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_WaitEventTimeout(event:SDL_Event, timeout:Number)
@@ -5257,11 +5258,12 @@ Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_
 	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
 	int timeout = args_gurax.PickNumber<int>();
 	// Function body
-	if (SDL_WaitEventTimeout(event, timeout) == 0) {
-		if (*SDL_GetError()) IssueError_SDL();
+	int rtn = SDL_WaitEventTimeout(event, timeout);
+	if (rtn == 0 && *SDL_GetError()) {
+		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value::true_();
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_PushEvent(event:SDL_Event)

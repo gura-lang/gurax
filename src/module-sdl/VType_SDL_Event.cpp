@@ -24,6 +24,25 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// SDL_Event() {block?}
+Gurax_DeclareConstructor(SDL_Event)
+{
+	Declare(VTYPE_SDL_Event, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `sdl.SDL_Event` instance.\n");
+}
+
+Gurax_ImplementConstructor(SDL_Event)
+{
+	// Function body
+	return argument.ReturnValue(processor, new Value_SDL_Event());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -78,7 +97,7 @@ void VType_SDL_Event::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SDL_Event));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SDL_Event, MethodSkeleton));
 	// Assignment of property

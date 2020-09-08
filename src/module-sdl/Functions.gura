@@ -1107,29 +1107,28 @@ SDL_FlushEvent(type:Uint32):void
 
 SDL_FlushEvents(minType:Uint32, maxType:Uint32):void
 
-SDL_PollEvent(event:SDL_Event_p) = \
-	R'''
-	int rtn = SDL_PollEvent(event);
-	return (rtn == 0)? Value::false_() : Value::true_();
-	'''
+SDL_PollEvent(event:SDL_Event_p):int
 
 SDL_WaitEvent(event:SDL_Event_p) = \
 	R'''
-	if (SDL_WaitEvent(event) == 0) {
+	int rtn = SDL_WaitEvent(event);
+	if (rtn == 0) {
 		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value::true_();
+	return new Value_Number(rtn);
 	'''
 
 SDL_WaitEventTimeout(event:SDL_Event_p, timeout:int) = \
 	R'''
-	if (SDL_WaitEventTimeout(event, timeout) == 0) {
-		if (*SDL_GetError()) IssueError_SDL();
+	int rtn = SDL_WaitEventTimeout(event, timeout);
+	if (rtn == 0 && *SDL_GetError()) {
+		IssueError_SDL();
 		return Value::nil();
 	}
-	return Value::true_();
+	return new Value_Number(rtn);
 	'''
+
 SDL_PushEvent(event:SDL_Event_p):int
 
 //SDL_SetEventFilter(filter:SDL_EventFilter, userdata:void_p):void
