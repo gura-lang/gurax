@@ -36,35 +36,35 @@ target_sources(sdl.gurd PRIVATE
 	Util.cpp
 	Functions.cpp
 	Consts.cpp
-	VTYPE_SDL_AudioCVT.cpp
-	VTYPE_SDL_AudioSpec.cpp
-	VTYPE_SDL_AudioStream.cpp
-	VTYPE_SDL_Color.cpp
-	VTYPE_SDL_Cursor.cpp
-	VTYPE_SDL_DisplayMode.cpp
-	VTYPE_SDL_Event.cpp
-	VTYPE_SDL_FPoint.cpp
-	VTYPE_SDL_FRect.cpp
-	VTYPE_SDL_GameController.cpp
-	VTYPE_SDL_GLContext.cpp
-	VTYPE_SDL_Haptic.cpp
-	VTYPE_SDL_HapticEffect.cpp
-	VTYPE_SDL_Joystick.cpp
-	VTYPE_SDL_JoystickGUID.cpp
-	VTYPE_SDL_Palette.cpp
-	VTYPE_SDL_PixelFormat.cpp
-	VTYPE_SDL_Point.cpp
-	VTYPE_SDL_Rect.cpp
-	VTYPE_SDL_Renderer.cpp
-	VTYPE_SDL_RendererInfo.cpp
-	VTYPE_SDL_RWops.cpp
-	VTYPE_SDL_Sensor.cpp
-	VTYPE_SDL_Surface.cpp
-	VTYPE_SDL_SysWMinfo.cpp
-	VTYPE_SDL_Texture.cpp
-	VTYPE_SDL_version.cpp
-	VTYPE_SDL_Window.cpp
-	VTYPE_SDL_WindowEvent.cpp)
+	VType_SDL_AudioCVT.cpp
+	VType_SDL_AudioSpec.cpp
+	VType_SDL_AudioStream.cpp
+	VType_SDL_Color.cpp
+	VType_SDL_Cursor.cpp
+	VType_SDL_DisplayMode.cpp
+	VType_SDL_Event.cpp
+	VType_SDL_FPoint.cpp
+	VType_SDL_FRect.cpp
+	VType_SDL_GameController.cpp
+	VType_SDL_GLContext.cpp
+	VType_SDL_Haptic.cpp
+	VType_SDL_HapticEffect.cpp
+	VType_SDL_Joystick.cpp
+	VType_SDL_JoystickGUID.cpp
+	VType_SDL_Palette.cpp
+	VType_SDL_PixelFormat.cpp
+	VType_SDL_Point.cpp
+	VType_SDL_Rect.cpp
+	VType_SDL_Renderer.cpp
+	VType_SDL_RendererInfo.cpp
+	VType_SDL_RWops.cpp
+	VType_SDL_Sensor.cpp
+	VType_SDL_Surface.cpp
+	VType_SDL_SysWMinfo.cpp
+	VType_SDL_Texture.cpp
+	VType_SDL_version.cpp
+	VType_SDL_Window.cpp
+	VType_SDL_WindowEvent.cpp)
 
 #-------------------------------------------------------------------------------
 # Link
