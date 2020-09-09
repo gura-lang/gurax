@@ -12,30 +12,6 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_SDL_Event : public VType {
 public:
-	RefPtr<PropSlotMap> pPropSlotMap_window;
-	RefPtr<PropSlotMap> pPropSlotMap_key;
-	RefPtr<PropSlotMap> pPropSlotMap_edit;
-	RefPtr<PropSlotMap> pPropSlotMap_text;
-	RefPtr<PropSlotMap> pPropSlotMap_motion;
-	RefPtr<PropSlotMap> pPropSlotMap_button;
-	RefPtr<PropSlotMap> pPropSlotMap_wheel;
-	RefPtr<PropSlotMap> pPropSlotMap_jaxis;
-	RefPtr<PropSlotMap> pPropSlotMap_jball;
-	RefPtr<PropSlotMap> pPropSlotMap_jhat;
-	RefPtr<PropSlotMap> pPropSlotMap_jbutton;
-	RefPtr<PropSlotMap> pPropSlotMap_jdevice;
-	RefPtr<PropSlotMap> pPropSlotMap_caxis;
-	RefPtr<PropSlotMap> pPropSlotMap_cbutton;
-	RefPtr<PropSlotMap> pPropSlotMap_cdevice;
-	RefPtr<PropSlotMap> pPropSlotMap_adevice;
-	RefPtr<PropSlotMap> pPropSlotMap_quit;
-	RefPtr<PropSlotMap> pPropSlotMap_user;
-	RefPtr<PropSlotMap> pPropSlotMap_syswm;
-	RefPtr<PropSlotMap> pPropSlotMap_tfinger;
-	RefPtr<PropSlotMap> pPropSlotMap_mgesture;
-	RefPtr<PropSlotMap> pPropSlotMap_dgesture;
-	RefPtr<PropSlotMap> pPropSlotMap_drop;
-public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
@@ -103,9 +79,6 @@ public:
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
-public:
-	// Virtual functions for runtime process
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 };
 
 Gurax_EndModuleScope(sdl)
