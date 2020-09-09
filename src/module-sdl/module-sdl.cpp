@@ -102,6 +102,28 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_version);
     Assign(VTYPE_SDL_Window);
     Assign(VTYPE_SDL_WindowEvent);
+    Assign(VTYPE_SDL_KeyboardEvent);
+    Assign(VTYPE_SDL_TextEditingEvent);
+    Assign(VTYPE_SDL_TextInputEvent);
+    Assign(VTYPE_SDL_MouseMotionEvent);
+    Assign(VTYPE_SDL_MouseButtonEvent);
+    Assign(VTYPE_SDL_MouseWheelEvent);
+    Assign(VTYPE_SDL_JoyAxisEvent);
+    Assign(VTYPE_SDL_JoyBallEvent);
+    Assign(VTYPE_SDL_JoyHatEvent);
+    Assign(VTYPE_SDL_JoyButtonEvent);
+    Assign(VTYPE_SDL_JoyDeviceEvent);
+    Assign(VTYPE_SDL_ControllerAxisEvent);
+    Assign(VTYPE_SDL_ControllerButtonEvent);
+    Assign(VTYPE_SDL_ControllerDeviceEvent);
+    Assign(VTYPE_SDL_AudioDeviceEvent);
+    Assign(VTYPE_SDL_QuitEvent);
+    Assign(VTYPE_SDL_UserEvent);
+    Assign(VTYPE_SDL_SysWMEvent);
+    Assign(VTYPE_SDL_TouchFingerEvent);
+    Assign(VTYPE_SDL_MultiGestureEvent);
+    Assign(VTYPE_SDL_DollarGestureEvent);
+    Assign(VTYPE_SDL_DropEvent);
 	// Assignment of function
     AssignFunctions(GetFrame());
 	Assign(Gurax_CreateFunction(Test));

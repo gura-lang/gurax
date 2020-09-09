@@ -64,7 +64,29 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_Texture.cpp
 	VType_SDL_version.cpp
 	VType_SDL_Window.cpp
-	VType_SDL_WindowEvent.cpp)
+	VType_SDL_WindowEvent.cpp
+	VType_SDL_KeyboardEvent.cpp
+	VType_SDL_TextEditingEvent.cpp
+	VType_SDL_TextInputEvent.cpp
+	VType_SDL_MouseMotionEvent.cpp
+	VType_SDL_MouseButtonEvent.cpp
+	VType_SDL_MouseWheelEvent.cpp
+	VType_SDL_JoyAxisEvent.cpp
+	VType_SDL_JoyBallEvent.cpp
+	VType_SDL_JoyHatEvent.cpp
+	VType_SDL_JoyButtonEvent.cpp
+	VType_SDL_JoyDeviceEvent.cpp
+	VType_SDL_ControllerAxisEvent.cpp
+	VType_SDL_ControllerButtonEvent.cpp
+	VType_SDL_ControllerDeviceEvent.cpp
+	VType_SDL_AudioDeviceEvent.cpp
+	VType_SDL_QuitEvent.cpp
+	VType_SDL_UserEvent.cpp
+	VType_SDL_SysWMEvent.cpp
+	VType_SDL_TouchFingerEvent.cpp
+	VType_SDL_MultiGestureEvent.cpp
+	VType_SDL_DollarGestureEvent.cpp
+	VType_SDL_DropEvent.cpp)
 
 #-------------------------------------------------------------------------------
 # Link
