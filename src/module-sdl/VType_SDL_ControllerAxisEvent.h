@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_ControllerAxisEvent() = default;
 public:
-	SDL_ControllerAxisEvent& GetEntity() { return reinterpret_cast<SDL_ControllerAxisEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerAxisEvent& GetEntity() const { return reinterpret_cast<SDL_ControllerAxisEvent&>(_pValue->GetEntity()); }
-	SDL_ControllerAxisEvent* GetEntityPtr() { return &reinterpret_cast<SDL_ControllerAxisEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerAxisEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_ControllerAxisEvent&>(_pValue->GetEntity()); }
+	SDL_ControllerAxisEvent& GetEntity() { return _pValue->GetEntity().caxis; }
+	const SDL_ControllerAxisEvent& GetEntity() const { return _pValue->GetEntity().caxis; }
+	SDL_ControllerAxisEvent* GetEntityPtr() { return &_pValue->GetEntity().caxis; }
+	const SDL_ControllerAxisEvent* GetEntityPtr() const { return &_pValue->GetEntity().caxis; }
 public:
 	static SDL_ControllerAxisEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_ControllerAxisEvent&>(value).GetEntity();

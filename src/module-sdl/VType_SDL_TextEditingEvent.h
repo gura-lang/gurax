@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_TextEditingEvent() = default;
 public:
-	SDL_TextEditingEvent& GetEntity() { return reinterpret_cast<SDL_TextEditingEvent&>(_pValue->GetEntity()); }
-	const SDL_TextEditingEvent& GetEntity() const { return reinterpret_cast<SDL_TextEditingEvent&>(_pValue->GetEntity()); }
-	SDL_TextEditingEvent* GetEntityPtr() { return &reinterpret_cast<SDL_TextEditingEvent&>(_pValue->GetEntity()); }
-	const SDL_TextEditingEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_TextEditingEvent&>(_pValue->GetEntity()); }
+	SDL_TextEditingEvent& GetEntity() { return _pValue->GetEntity().edit; }
+	const SDL_TextEditingEvent& GetEntity() const { return _pValue->GetEntity().edit; }
+	SDL_TextEditingEvent* GetEntityPtr() { return &_pValue->GetEntity().edit; }
+	const SDL_TextEditingEvent* GetEntityPtr() const { return &_pValue->GetEntity().edit; }
 public:
 	static SDL_TextEditingEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_TextEditingEvent&>(value).GetEntity();

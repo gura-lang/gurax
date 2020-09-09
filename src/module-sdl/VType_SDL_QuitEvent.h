@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_QuitEvent() = default;
 public:
-	SDL_QuitEvent& GetEntity() { return reinterpret_cast<SDL_QuitEvent&>(_pValue->GetEntity()); }
-	const SDL_QuitEvent& GetEntity() const { return reinterpret_cast<SDL_QuitEvent&>(_pValue->GetEntity()); }
-	SDL_QuitEvent* GetEntityPtr() { return &reinterpret_cast<SDL_QuitEvent&>(_pValue->GetEntity()); }
-	const SDL_QuitEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_QuitEvent&>(_pValue->GetEntity()); }
+	SDL_QuitEvent& GetEntity() { return _pValue->GetEntity().quit; }
+	const SDL_QuitEvent& GetEntity() const { return _pValue->GetEntity().quit; }
+	SDL_QuitEvent* GetEntityPtr() { return &_pValue->GetEntity().quit; }
+	const SDL_QuitEvent* GetEntityPtr() const { return &_pValue->GetEntity().quit; }
 public:
 	static SDL_QuitEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_QuitEvent&>(value).GetEntity();

@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_WindowEvent() = default;
 public:
-	SDL_WindowEvent& GetEntity() { return reinterpret_cast<SDL_WindowEvent&>(_pValue->GetEntity()); }
-	const SDL_WindowEvent& GetEntity() const { return reinterpret_cast<SDL_WindowEvent&>(_pValue->GetEntity()); }
-	SDL_WindowEvent* GetEntityPtr() { return &reinterpret_cast<SDL_WindowEvent&>(_pValue->GetEntity()); }
-	const SDL_WindowEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_WindowEvent&>(_pValue->GetEntity()); }
+	SDL_WindowEvent& GetEntity() { return _pValue->GetEntity().window; }
+	const SDL_WindowEvent& GetEntity() const { return _pValue->GetEntity().window; }
+	SDL_WindowEvent* GetEntityPtr() { return &_pValue->GetEntity().window; }
+	const SDL_WindowEvent* GetEntityPtr() const { return &_pValue->GetEntity().window; }
 public:
 	static SDL_WindowEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_WindowEvent&>(value).GetEntity();

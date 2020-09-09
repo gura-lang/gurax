@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_UserEvent() = default;
 public:
-	SDL_UserEvent& GetEntity() { return reinterpret_cast<SDL_UserEvent&>(_pValue->GetEntity()); }
-	const SDL_UserEvent& GetEntity() const { return reinterpret_cast<SDL_UserEvent&>(_pValue->GetEntity()); }
-	SDL_UserEvent* GetEntityPtr() { return &reinterpret_cast<SDL_UserEvent&>(_pValue->GetEntity()); }
-	const SDL_UserEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_UserEvent&>(_pValue->GetEntity()); }
+	SDL_UserEvent& GetEntity() { return _pValue->GetEntity().user; }
+	const SDL_UserEvent& GetEntity() const { return _pValue->GetEntity().user; }
+	SDL_UserEvent* GetEntityPtr() { return &_pValue->GetEntity().user; }
+	const SDL_UserEvent* GetEntityPtr() const { return &_pValue->GetEntity().user; }
 public:
 	static SDL_UserEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_UserEvent&>(value).GetEntity();

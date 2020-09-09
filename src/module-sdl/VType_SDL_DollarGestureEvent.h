@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_DollarGestureEvent() = default;
 public:
-	SDL_DollarGestureEvent& GetEntity() { return reinterpret_cast<SDL_DollarGestureEvent&>(_pValue->GetEntity()); }
-	const SDL_DollarGestureEvent& GetEntity() const { return reinterpret_cast<SDL_DollarGestureEvent&>(_pValue->GetEntity()); }
-	SDL_DollarGestureEvent* GetEntityPtr() { return &reinterpret_cast<SDL_DollarGestureEvent&>(_pValue->GetEntity()); }
-	const SDL_DollarGestureEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_DollarGestureEvent&>(_pValue->GetEntity()); }
+	SDL_DollarGestureEvent& GetEntity() { return _pValue->GetEntity().dgesture; }
+	const SDL_DollarGestureEvent& GetEntity() const { return _pValue->GetEntity().dgesture; }
+	SDL_DollarGestureEvent* GetEntityPtr() { return &_pValue->GetEntity().dgesture; }
+	const SDL_DollarGestureEvent* GetEntityPtr() const { return &_pValue->GetEntity().dgesture; }
 public:
 	static SDL_DollarGestureEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_DollarGestureEvent&>(value).GetEntity();

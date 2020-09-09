@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_JoyAxisEvent() = default;
 public:
-	SDL_JoyAxisEvent& GetEntity() { return reinterpret_cast<SDL_JoyAxisEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyAxisEvent& GetEntity() const { return reinterpret_cast<SDL_JoyAxisEvent&>(_pValue->GetEntity()); }
-	SDL_JoyAxisEvent* GetEntityPtr() { return &reinterpret_cast<SDL_JoyAxisEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyAxisEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_JoyAxisEvent&>(_pValue->GetEntity()); }
+	SDL_JoyAxisEvent& GetEntity() { return _pValue->GetEntity().jaxis; }
+	const SDL_JoyAxisEvent& GetEntity() const { return _pValue->GetEntity().jaxis; }
+	SDL_JoyAxisEvent* GetEntityPtr() { return &_pValue->GetEntity().jaxis; }
+	const SDL_JoyAxisEvent* GetEntityPtr() const { return &_pValue->GetEntity().jaxis; }
 public:
 	static SDL_JoyAxisEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_JoyAxisEvent&>(value).GetEntity();

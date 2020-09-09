@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_TextInputEvent() = default;
 public:
-	SDL_TextInputEvent& GetEntity() { return reinterpret_cast<SDL_TextInputEvent&>(_pValue->GetEntity()); }
-	const SDL_TextInputEvent& GetEntity() const { return reinterpret_cast<SDL_TextInputEvent&>(_pValue->GetEntity()); }
-	SDL_TextInputEvent* GetEntityPtr() { return &reinterpret_cast<SDL_TextInputEvent&>(_pValue->GetEntity()); }
-	const SDL_TextInputEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_TextInputEvent&>(_pValue->GetEntity()); }
+	SDL_TextInputEvent& GetEntity() { return _pValue->GetEntity().text; }
+	const SDL_TextInputEvent& GetEntity() const { return _pValue->GetEntity().text; }
+	SDL_TextInputEvent* GetEntityPtr() { return &_pValue->GetEntity().text; }
+	const SDL_TextInputEvent* GetEntityPtr() const { return &_pValue->GetEntity().text; }
 public:
 	static SDL_TextInputEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_TextInputEvent&>(value).GetEntity();

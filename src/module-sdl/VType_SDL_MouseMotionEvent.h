@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_MouseMotionEvent() = default;
 public:
-	SDL_MouseMotionEvent& GetEntity() { return reinterpret_cast<SDL_MouseMotionEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseMotionEvent& GetEntity() const { return reinterpret_cast<SDL_MouseMotionEvent&>(_pValue->GetEntity()); }
-	SDL_MouseMotionEvent* GetEntityPtr() { return &reinterpret_cast<SDL_MouseMotionEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseMotionEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_MouseMotionEvent&>(_pValue->GetEntity()); }
+	SDL_MouseMotionEvent& GetEntity() { return _pValue->GetEntity().motion; }
+	const SDL_MouseMotionEvent& GetEntity() const { return _pValue->GetEntity().motion; }
+	SDL_MouseMotionEvent* GetEntityPtr() { return &_pValue->GetEntity().motion; }
+	const SDL_MouseMotionEvent* GetEntityPtr() const { return &_pValue->GetEntity().motion; }
 public:
 	static SDL_MouseMotionEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_MouseMotionEvent&>(value).GetEntity();

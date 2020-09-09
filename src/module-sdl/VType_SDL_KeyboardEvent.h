@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_KeyboardEvent() = default;
 public:
-	SDL_KeyboardEvent& GetEntity() { return reinterpret_cast<SDL_KeyboardEvent&>(_pValue->GetEntity()); }
-	const SDL_KeyboardEvent& GetEntity() const { return reinterpret_cast<SDL_KeyboardEvent&>(_pValue->GetEntity()); }
-	SDL_KeyboardEvent* GetEntityPtr() { return &reinterpret_cast<SDL_KeyboardEvent&>(_pValue->GetEntity()); }
-	const SDL_KeyboardEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_KeyboardEvent&>(_pValue->GetEntity()); }
+	SDL_KeyboardEvent& GetEntity() { return _pValue->GetEntity().key; }
+	const SDL_KeyboardEvent& GetEntity() const { return _pValue->GetEntity().key; }
+	SDL_KeyboardEvent* GetEntityPtr() { return &_pValue->GetEntity().key; }
+	const SDL_KeyboardEvent* GetEntityPtr() const { return &_pValue->GetEntity().key; }
 public:
 	static SDL_KeyboardEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_KeyboardEvent&>(value).GetEntity();

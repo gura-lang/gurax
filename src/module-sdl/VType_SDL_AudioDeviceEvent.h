@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_AudioDeviceEvent() = default;
 public:
-	SDL_AudioDeviceEvent& GetEntity() { return reinterpret_cast<SDL_AudioDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_AudioDeviceEvent& GetEntity() const { return reinterpret_cast<SDL_AudioDeviceEvent&>(_pValue->GetEntity()); }
-	SDL_AudioDeviceEvent* GetEntityPtr() { return &reinterpret_cast<SDL_AudioDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_AudioDeviceEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_AudioDeviceEvent&>(_pValue->GetEntity()); }
+	SDL_AudioDeviceEvent& GetEntity() { return _pValue->GetEntity().adevice; }
+	const SDL_AudioDeviceEvent& GetEntity() const { return _pValue->GetEntity().adevice; }
+	SDL_AudioDeviceEvent* GetEntityPtr() { return &_pValue->GetEntity().adevice; }
+	const SDL_AudioDeviceEvent* GetEntityPtr() const { return &_pValue->GetEntity().adevice; }
 public:
 	static SDL_AudioDeviceEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_AudioDeviceEvent&>(value).GetEntity();

@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_JoyDeviceEvent() = default;
 public:
-	SDL_JoyDeviceEvent& GetEntity() { return reinterpret_cast<SDL_JoyDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyDeviceEvent& GetEntity() const { return reinterpret_cast<SDL_JoyDeviceEvent&>(_pValue->GetEntity()); }
-	SDL_JoyDeviceEvent* GetEntityPtr() { return &reinterpret_cast<SDL_JoyDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyDeviceEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_JoyDeviceEvent&>(_pValue->GetEntity()); }
+	SDL_JoyDeviceEvent& GetEntity() { return _pValue->GetEntity().jdevice; }
+	const SDL_JoyDeviceEvent& GetEntity() const { return _pValue->GetEntity().jdevice; }
+	SDL_JoyDeviceEvent* GetEntityPtr() { return &_pValue->GetEntity().jdevice; }
+	const SDL_JoyDeviceEvent* GetEntityPtr() const { return &_pValue->GetEntity().jdevice; }
 public:
 	static SDL_JoyDeviceEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_JoyDeviceEvent&>(value).GetEntity();

@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_MultiGestureEvent() = default;
 public:
-	SDL_MultiGestureEvent& GetEntity() { return reinterpret_cast<SDL_MultiGestureEvent&>(_pValue->GetEntity()); }
-	const SDL_MultiGestureEvent& GetEntity() const { return reinterpret_cast<SDL_MultiGestureEvent&>(_pValue->GetEntity()); }
-	SDL_MultiGestureEvent* GetEntityPtr() { return &reinterpret_cast<SDL_MultiGestureEvent&>(_pValue->GetEntity()); }
-	const SDL_MultiGestureEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_MultiGestureEvent&>(_pValue->GetEntity()); }
+	SDL_MultiGestureEvent& GetEntity() { return _pValue->GetEntity().mgesture; }
+	const SDL_MultiGestureEvent& GetEntity() const { return _pValue->GetEntity().mgesture; }
+	SDL_MultiGestureEvent* GetEntityPtr() { return &_pValue->GetEntity().mgesture; }
+	const SDL_MultiGestureEvent* GetEntityPtr() const { return &_pValue->GetEntity().mgesture; }
 public:
 	static SDL_MultiGestureEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_MultiGestureEvent&>(value).GetEntity();

@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_JoyHatEvent() = default;
 public:
-	SDL_JoyHatEvent& GetEntity() { return reinterpret_cast<SDL_JoyHatEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyHatEvent& GetEntity() const { return reinterpret_cast<SDL_JoyHatEvent&>(_pValue->GetEntity()); }
-	SDL_JoyHatEvent* GetEntityPtr() { return &reinterpret_cast<SDL_JoyHatEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyHatEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_JoyHatEvent&>(_pValue->GetEntity()); }
+	SDL_JoyHatEvent& GetEntity() { return _pValue->GetEntity().jhat; }
+	const SDL_JoyHatEvent& GetEntity() const { return _pValue->GetEntity().jhat; }
+	SDL_JoyHatEvent* GetEntityPtr() { return &_pValue->GetEntity().jhat; }
+	const SDL_JoyHatEvent* GetEntityPtr() const { return &_pValue->GetEntity().jhat; }
 public:
 	static SDL_JoyHatEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_JoyHatEvent&>(value).GetEntity();

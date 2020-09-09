@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_DropEvent() = default;
 public:
-	SDL_DropEvent& GetEntity() { return reinterpret_cast<SDL_DropEvent&>(_pValue->GetEntity()); }
-	const SDL_DropEvent& GetEntity() const { return reinterpret_cast<SDL_DropEvent&>(_pValue->GetEntity()); }
-	SDL_DropEvent* GetEntityPtr() { return &reinterpret_cast<SDL_DropEvent&>(_pValue->GetEntity()); }
-	const SDL_DropEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_DropEvent&>(_pValue->GetEntity()); }
+	SDL_DropEvent& GetEntity() { return _pValue->GetEntity().drop; }
+	const SDL_DropEvent& GetEntity() const { return _pValue->GetEntity().drop; }
+	SDL_DropEvent* GetEntityPtr() { return &_pValue->GetEntity().drop; }
+	const SDL_DropEvent* GetEntityPtr() const { return &_pValue->GetEntity().drop; }
 public:
 	static SDL_DropEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_DropEvent&>(value).GetEntity();

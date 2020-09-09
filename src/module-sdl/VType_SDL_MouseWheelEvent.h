@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_MouseWheelEvent() = default;
 public:
-	SDL_MouseWheelEvent& GetEntity() { return reinterpret_cast<SDL_MouseWheelEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseWheelEvent& GetEntity() const { return reinterpret_cast<SDL_MouseWheelEvent&>(_pValue->GetEntity()); }
-	SDL_MouseWheelEvent* GetEntityPtr() { return &reinterpret_cast<SDL_MouseWheelEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseWheelEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_MouseWheelEvent&>(_pValue->GetEntity()); }
+	SDL_MouseWheelEvent& GetEntity() { return _pValue->GetEntity().wheel; }
+	const SDL_MouseWheelEvent& GetEntity() const { return _pValue->GetEntity().wheel; }
+	SDL_MouseWheelEvent* GetEntityPtr() { return &_pValue->GetEntity().wheel; }
+	const SDL_MouseWheelEvent* GetEntityPtr() const { return &_pValue->GetEntity().wheel; }
 public:
 	static SDL_MouseWheelEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_MouseWheelEvent&>(value).GetEntity();

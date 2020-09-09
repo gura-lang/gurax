@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_MouseButtonEvent() = default;
 public:
-	SDL_MouseButtonEvent& GetEntity() { return reinterpret_cast<SDL_MouseButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseButtonEvent& GetEntity() const { return reinterpret_cast<SDL_MouseButtonEvent&>(_pValue->GetEntity()); }
-	SDL_MouseButtonEvent* GetEntityPtr() { return &reinterpret_cast<SDL_MouseButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_MouseButtonEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_MouseButtonEvent&>(_pValue->GetEntity()); }
+	SDL_MouseButtonEvent& GetEntity() { return _pValue->GetEntity().button; }
+	const SDL_MouseButtonEvent& GetEntity() const { return _pValue->GetEntity().button; }
+	SDL_MouseButtonEvent* GetEntityPtr() { return &_pValue->GetEntity().button; }
+	const SDL_MouseButtonEvent* GetEntityPtr() const { return &_pValue->GetEntity().button; }
 public:
 	static SDL_MouseButtonEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_MouseButtonEvent&>(value).GetEntity();

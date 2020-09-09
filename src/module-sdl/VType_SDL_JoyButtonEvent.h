@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_JoyButtonEvent() = default;
 public:
-	SDL_JoyButtonEvent& GetEntity() { return reinterpret_cast<SDL_JoyButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyButtonEvent& GetEntity() const { return reinterpret_cast<SDL_JoyButtonEvent&>(_pValue->GetEntity()); }
-	SDL_JoyButtonEvent* GetEntityPtr() { return &reinterpret_cast<SDL_JoyButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_JoyButtonEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_JoyButtonEvent&>(_pValue->GetEntity()); }
+	SDL_JoyButtonEvent& GetEntity() { return _pValue->GetEntity().jbutton; }
+	const SDL_JoyButtonEvent& GetEntity() const { return _pValue->GetEntity().jbutton; }
+	SDL_JoyButtonEvent* GetEntityPtr() { return &_pValue->GetEntity().jbutton; }
+	const SDL_JoyButtonEvent* GetEntityPtr() const { return &_pValue->GetEntity().jbutton; }
 public:
 	static SDL_JoyButtonEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_JoyButtonEvent&>(value).GetEntity();

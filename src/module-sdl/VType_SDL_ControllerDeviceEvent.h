@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_ControllerDeviceEvent() = default;
 public:
-	SDL_ControllerDeviceEvent& GetEntity() { return reinterpret_cast<SDL_ControllerDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerDeviceEvent& GetEntity() const { return reinterpret_cast<SDL_ControllerDeviceEvent&>(_pValue->GetEntity()); }
-	SDL_ControllerDeviceEvent* GetEntityPtr() { return &reinterpret_cast<SDL_ControllerDeviceEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerDeviceEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_ControllerDeviceEvent&>(_pValue->GetEntity()); }
+	SDL_ControllerDeviceEvent& GetEntity() { return _pValue->GetEntity().cdevice; }
+	const SDL_ControllerDeviceEvent& GetEntity() const { return _pValue->GetEntity().cdevice; }
+	SDL_ControllerDeviceEvent* GetEntityPtr() { return &_pValue->GetEntity().cdevice; }
+	const SDL_ControllerDeviceEvent* GetEntityPtr() const { return &_pValue->GetEntity().cdevice; }
 public:
 	static SDL_ControllerDeviceEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_ControllerDeviceEvent&>(value).GetEntity();

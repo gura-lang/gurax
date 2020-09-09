@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_SysWMEvent() = default;
 public:
-	SDL_SysWMEvent& GetEntity() { return reinterpret_cast<SDL_SysWMEvent&>(_pValue->GetEntity()); }
-	const SDL_SysWMEvent& GetEntity() const { return reinterpret_cast<SDL_SysWMEvent&>(_pValue->GetEntity()); }
-	SDL_SysWMEvent* GetEntityPtr() { return &reinterpret_cast<SDL_SysWMEvent&>(_pValue->GetEntity()); }
-	const SDL_SysWMEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_SysWMEvent&>(_pValue->GetEntity()); }
+	SDL_SysWMEvent& GetEntity() { return _pValue->GetEntity().syswm; }
+	const SDL_SysWMEvent& GetEntity() const { return _pValue->GetEntity().syswm; }
+	SDL_SysWMEvent* GetEntityPtr() { return &_pValue->GetEntity().syswm; }
+	const SDL_SysWMEvent* GetEntityPtr() const { return &_pValue->GetEntity().syswm; }
 public:
 	static SDL_SysWMEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_SysWMEvent&>(value).GetEntity();

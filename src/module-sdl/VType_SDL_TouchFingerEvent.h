@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_TouchFingerEvent() = default;
 public:
-	SDL_TouchFingerEvent& GetEntity() { return reinterpret_cast<SDL_TouchFingerEvent&>(_pValue->GetEntity()); }
-	const SDL_TouchFingerEvent& GetEntity() const { return reinterpret_cast<SDL_TouchFingerEvent&>(_pValue->GetEntity()); }
-	SDL_TouchFingerEvent* GetEntityPtr() { return &reinterpret_cast<SDL_TouchFingerEvent&>(_pValue->GetEntity()); }
-	const SDL_TouchFingerEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_TouchFingerEvent&>(_pValue->GetEntity()); }
+	SDL_TouchFingerEvent& GetEntity() { return _pValue->GetEntity().tfinger; }
+	const SDL_TouchFingerEvent& GetEntity() const { return _pValue->GetEntity().tfinger; }
+	SDL_TouchFingerEvent* GetEntityPtr() { return &_pValue->GetEntity().tfinger; }
+	const SDL_TouchFingerEvent* GetEntityPtr() const { return &_pValue->GetEntity().tfinger; }
 public:
 	static SDL_TouchFingerEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_TouchFingerEvent&>(value).GetEntity();

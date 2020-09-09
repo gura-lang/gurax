@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_ControllerButtonEvent() = default;
 public:
-	SDL_ControllerButtonEvent& GetEntity() { return reinterpret_cast<SDL_ControllerButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerButtonEvent& GetEntity() const { return reinterpret_cast<SDL_ControllerButtonEvent&>(_pValue->GetEntity()); }
-	SDL_ControllerButtonEvent* GetEntityPtr() { return &reinterpret_cast<SDL_ControllerButtonEvent&>(_pValue->GetEntity()); }
-	const SDL_ControllerButtonEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_ControllerButtonEvent&>(_pValue->GetEntity()); }
+	SDL_ControllerButtonEvent& GetEntity() { return _pValue->GetEntity().cbutton; }
+	const SDL_ControllerButtonEvent& GetEntity() const { return _pValue->GetEntity().cbutton; }
+	SDL_ControllerButtonEvent* GetEntityPtr() { return &_pValue->GetEntity().cbutton; }
+	const SDL_ControllerButtonEvent* GetEntityPtr() const { return &_pValue->GetEntity().cbutton; }
 public:
 	static SDL_ControllerButtonEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_ControllerButtonEvent&>(value).GetEntity();

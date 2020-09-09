@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_SDL_CommonEvent() = default;
 public:
-	SDL_CommonEvent& GetEntity() { return reinterpret_cast<SDL_CommonEvent&>(_pValue->GetEntity()); }
-	const SDL_CommonEvent& GetEntity() const { return reinterpret_cast<SDL_CommonEvent&>(_pValue->GetEntity()); }
-	SDL_CommonEvent* GetEntityPtr() { return &reinterpret_cast<SDL_CommonEvent&>(_pValue->GetEntity()); }
-	const SDL_CommonEvent* GetEntityPtr() const { return &reinterpret_cast<SDL_CommonEvent&>(_pValue->GetEntity()); }
+	SDL_CommonEvent& GetEntity() { return _pValue->GetEntity().common; }
+	const SDL_CommonEvent& GetEntity() const { return _pValue->GetEntity().common; }
+	SDL_CommonEvent* GetEntityPtr() { return &_pValue->GetEntity().common; }
+	const SDL_CommonEvent* GetEntityPtr() const { return &_pValue->GetEntity().common; }
 public:
 	static SDL_CommonEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_SDL_CommonEvent&>(value).GetEntity();
