@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_TextInputEvent#data1
-Gurax_DeclareProperty_R(SDL_TextInputEvent, data1)
+// sdl.SDL_TextInputEvent#type
+Gurax_DeclareProperty_R(SDL_TextInputEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -36,11 +36,25 @@ Gurax_DeclareProperty_R(SDL_TextInputEvent, data1)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_TextInputEvent, data1)
+Gurax_ImplementPropertyGetter(SDL_TextInputEvent, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	//return new Value_Number(valueThis.GetEntity().data1);
-	return Value::nil();
+	return new Value_Number(valueThis.GetEntity().type);
+}
+
+// sdl.SDL_TextInputEvent#timestamp
+Gurax_DeclareProperty_R(SDL_TextInputEvent, timestamp)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
 //------------------------------------------------------------------------------
@@ -55,7 +69,8 @@ void VType_SDL_TextInputEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_SDL_Event, Flag::Mutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_TextInputEvent, data1));
+	Assign(Gurax_CreateProperty(SDL_TextInputEvent, type));
+	Assign(Gurax_CreateProperty(SDL_TextInputEvent, timestamp));
 }
 
 //------------------------------------------------------------------------------

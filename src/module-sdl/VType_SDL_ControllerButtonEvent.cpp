@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_ControllerButtonEvent#data1
-Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, data1)
+// sdl.SDL_ControllerButtonEvent#type
+Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -36,11 +36,25 @@ Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, data1)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, data1)
+Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	//return new Value_Number(valueThis.GetEntity().data1);
-	return Value::nil();
+	return new Value_Number(valueThis.GetEntity().type);
+}
+
+// sdl.SDL_ControllerButtonEvent#timestamp
+Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, timestamp)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, timestamp)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
 //------------------------------------------------------------------------------
@@ -55,7 +69,8 @@ void VType_SDL_ControllerButtonEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_SDL_Event, Flag::Mutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, data1));
+	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, type));
+	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, timestamp));
 }
 
 //------------------------------------------------------------------------------

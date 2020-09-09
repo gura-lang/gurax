@@ -37,6 +37,7 @@
 #include "VType_SDL_Texture.h"
 #include "VType_SDL_version.h"
 #include "VType_SDL_Window.h"
+#include "VType_SDL_CommonEvent.h"
 #include "VType_SDL_WindowEvent.h"
 #include "VType_SDL_KeyboardEvent.h"
 #include "VType_SDL_TextEditingEvent.h"

@@ -64,6 +64,7 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_Texture.cpp
 	VType_SDL_version.cpp
 	VType_SDL_Window.cpp
+	VType_SDL_CommonEvent.cpp
 	VType_SDL_WindowEvent.cpp
 	VType_SDL_KeyboardEvent.cpp
 	VType_SDL_TextEditingEvent.cpp

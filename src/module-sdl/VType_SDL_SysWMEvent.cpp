@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_SysWMEvent#data1
-Gurax_DeclareProperty_R(SDL_SysWMEvent, data1)
+// sdl.SDL_SysWMEvent#type
+Gurax_DeclareProperty_R(SDL_SysWMEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -36,11 +36,25 @@ Gurax_DeclareProperty_R(SDL_SysWMEvent, data1)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_SysWMEvent, data1)
+Gurax_ImplementPropertyGetter(SDL_SysWMEvent, type)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	//return new Value_Number(valueThis.GetEntity().data1);
-	return Value::nil();
+	return new Value_Number(valueThis.GetEntity().type);
+}
+
+// sdl.SDL_SysWMEvent#timestamp
+Gurax_DeclareProperty_R(SDL_SysWMEvent, timestamp)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_SysWMEvent, timestamp)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
 //------------------------------------------------------------------------------
@@ -55,7 +69,8 @@ void VType_SDL_SysWMEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_SDL_Event, Flag::Mutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_SysWMEvent, data1));
+	Assign(Gurax_CreateProperty(SDL_SysWMEvent, type));
+	Assign(Gurax_CreateProperty(SDL_SysWMEvent, timestamp));
 }
 
 //------------------------------------------------------------------------------

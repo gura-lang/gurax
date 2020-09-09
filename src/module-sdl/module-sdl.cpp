@@ -101,6 +101,7 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Texture);
     Assign(VTYPE_SDL_version);
     Assign(VTYPE_SDL_Window);
+    Assign(VTYPE_SDL_CommonEvent);
     Assign(VTYPE_SDL_WindowEvent);
     Assign(VTYPE_SDL_KeyboardEvent);
     Assign(VTYPE_SDL_TextEditingEvent);
