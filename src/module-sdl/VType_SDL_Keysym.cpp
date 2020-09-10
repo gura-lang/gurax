@@ -25,36 +25,10 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// sdl.SDL_Keysym#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(SDL_Keysym, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(SDL_Keysym, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_Keysym#propSkeleton
-Gurax_DeclareProperty_R(SDL_Keysym, propSkeleton)
+// sdl.SDL_Keysym#scancode
+Gurax_DeclareProperty_R(SDL_Keysym, scancode)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +36,40 @@ Gurax_DeclareProperty_R(SDL_Keysym, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_Keysym, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_Keysym, scancode)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().scancode);
+}
+
+// sdl.SDL_Keysym#sym
+Gurax_DeclareProperty_R(SDL_Keysym, sym)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Keysym, sym)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().sym);
+}
+
+// sdl.SDL_Keysym#mod
+Gurax_DeclareProperty_R(SDL_Keysym, mod)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Keysym, mod)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().mod);
 }
 
 //------------------------------------------------------------------------------
@@ -79,10 +83,10 @@ void VType_SDL_Keysym::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(SDL_Keysym, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_Keysym, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_Keysym, scancode));
+	Assign(Gurax_CreateProperty(SDL_Keysym, sym));
+	Assign(Gurax_CreateProperty(SDL_Keysym, mod));
 }
 
 //------------------------------------------------------------------------------
