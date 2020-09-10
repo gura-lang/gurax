@@ -57,10 +57,35 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;                            /**< The window with keyboard focus, if any */
-char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
-#endif
+// sdl.SDL_TextInputEvent#windowID
+Gurax_DeclareProperty_R(SDL_TextInputEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextInputEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_TextInputEvent#text
+Gurax_DeclareProperty_R(SDL_TextInputEvent, text)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextInputEvent, text)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetEntity().text);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_TextInputEvent
@@ -76,6 +101,8 @@ void VType_SDL_TextInputEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_TextInputEvent, type));
 	Assign(Gurax_CreateProperty(SDL_TextInputEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_TextInputEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_TextInputEvent, text));
 }
 
 //------------------------------------------------------------------------------

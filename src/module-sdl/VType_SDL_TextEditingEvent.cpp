@@ -57,12 +57,65 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;                            /**< The window with keyboard focus, if any */
-char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
-Sint32 start;                               /**< The start cursor of selected editing text */
-Sint32 length;                              /**< The length of selected editing text */
-#endif
+// sdl.SDL_TextEditingEvent#windowID
+Gurax_DeclareProperty_R(SDL_TextEditingEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_TextEditingEvent#text
+Gurax_DeclareProperty_R(SDL_TextEditingEvent, text)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, text)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetEntity().text);
+}
+
+// sdl.SDL_TextEditingEvent#start
+Gurax_DeclareProperty_R(SDL_TextEditingEvent, start)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, start)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().start);
+}
+
+// sdl.SDL_TextEditingEvent#length
+Gurax_DeclareProperty_R(SDL_TextEditingEvent, length)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, length)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().length);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_TextEditingEvent
@@ -78,6 +131,10 @@ void VType_SDL_TextEditingEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, type));
 	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, text));
+	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, start));
+	Assign(Gurax_CreateProperty(SDL_TextEditingEvent, length));
 }
 
 //------------------------------------------------------------------------------

@@ -57,15 +57,67 @@ Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
+// sdl.SDL_JoyBallEvent#which
+Gurax_DeclareProperty_R(SDL_JoyBallEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
 SDL_JoystickID which; /**< The joystick instance id */
+// sdl.SDL_JoyBallEvent#ball
+Gurax_DeclareProperty_R(SDL_JoyBallEvent, ball)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, ball)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().ball);
+}
+
 Uint8 ball;         /**< The joystick trackball index */
-Uint8 padding1;
-Uint8 padding2;
-Uint8 padding3;
-Sint16 xrel;        /**< The relative motion in the X direction */
-Sint16 yrel;        /**< The relative motion in the Y direction */
-#endif
+// sdl.SDL_JoyBallEvent#xrel
+Gurax_DeclareProperty_R(SDL_JoyBallEvent, xrel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, xrel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().xrel);
+}
+
+// sdl.SDL_JoyBallEvent#yrel
+Gurax_DeclareProperty_R(SDL_JoyBallEvent, yrel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, yrel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().yrel);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_JoyBallEvent

@@ -57,15 +57,110 @@ Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;    /**< The window with mouse focus, if any */
-Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
-Uint32 state;       /**< The current button state */
-Sint32 x;           /**< X coordinate, relative to window */
-Sint32 y;           /**< Y coordinate, relative to window */
-Sint32 xrel;        /**< The relative motion in the X direction */
-Sint32 yrel;        /**< The relative motion in the Y direction */
-#endif
+// sdl.SDL_MouseMotionEvent#windowID
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_MouseMotionEvent#which
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_MouseMotionEvent#state
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, state)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, state)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().state);
+}
+
+// sdl.SDL_MouseMotionEvent#x
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+// sdl.SDL_MouseMotionEvent#y
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+// sdl.SDL_MouseMotionEvent#xrel
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, xrel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, xrel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().xrel);
+}
+
+// sdl.SDL_MouseMotionEvent#yrel
+Gurax_DeclareProperty_R(SDL_MouseMotionEvent, yrel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseMotionEvent, yrel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().yrel);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_MouseMotionEvent
@@ -81,6 +176,13 @@ void VType_SDL_MouseMotionEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, which));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, state));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, x));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, y));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, xrel));
+	Assign(Gurax_CreateProperty(SDL_MouseMotionEvent, yrel));
 }
 
 //------------------------------------------------------------------------------

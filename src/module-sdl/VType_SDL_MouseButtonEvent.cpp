@@ -57,16 +57,125 @@ Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;    /**< The window with mouse focus, if any */
-Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
-Uint8 button;       /**< The mouse button index */
-Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
-Uint8 clicks;       /**< 1 for single-click, 2 for double-click, etc. */
-Uint8 padding1;
-Sint32 x;           /**< X coordinate, relative to window */
-Sint32 y;           /**< Y coordinate, relative to window */
-#endif
+// sdl.SDL_MouseButtonEvent#windowID
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_MouseButtonEvent#which
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_MouseButtonEvent#button
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, button)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, button)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().button);
+}
+
+// sdl.SDL_MouseButtonEvent#state
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, state)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, state)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().state);
+}
+
+// sdl.SDL_MouseButtonEvent#clicks
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, clicks)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, clicks)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().clicks);
+}
+
+// sdl.SDL_MouseButtonEvent#padding1
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, padding1)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, padding1)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().padding1);
+}
+
+// sdl.SDL_MouseButtonEvent#x
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+// sdl.SDL_MouseButtonEvent#y
+Gurax_DeclareProperty_R(SDL_MouseButtonEvent, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_MouseButtonEvent
@@ -82,6 +191,13 @@ void VType_SDL_MouseButtonEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, which));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, button));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, state));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, clicks));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, x));
+	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, y));
 }
 
 //------------------------------------------------------------------------------

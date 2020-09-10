@@ -57,13 +57,80 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;    /**< The window with mouse focus, if any */
-Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
-Sint32 x;           /**< The amount scrolled horizontally, positive to the right and negative to the left */
-Sint32 y;           /**< The amount scrolled vertically, positive away from the user and negative toward the user */
-Uint32 direction;   /**< Set to one of the SDL_MOUSEWHEEL_* defines. When FLIPPED the values in X and Y will be opposite. Multiply by -1 to change them back */
-#endif
+// sdl.SDL_MouseWheelEvent#windowID
+Gurax_DeclareProperty_R(SDL_MouseWheelEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_MouseWheelEvent#which
+Gurax_DeclareProperty_R(SDL_MouseWheelEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_MouseWheelEvent#x
+Gurax_DeclareProperty_R(SDL_MouseWheelEvent, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+// sdl.SDL_MouseWheelEvent#y
+Gurax_DeclareProperty_R(SDL_MouseWheelEvent, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+// sdl.SDL_MouseWheelEvent#direction
+Gurax_DeclareProperty_R(SDL_MouseWheelEvent, direction)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, direction)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().direction);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_MouseWheelEvent
@@ -79,6 +146,11 @@ void VType_SDL_MouseWheelEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, which));
+	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, x));
+	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, y));
+	Assign(Gurax_CreateProperty(SDL_MouseWheelEvent, direction));
 }
 
 //------------------------------------------------------------------------------
