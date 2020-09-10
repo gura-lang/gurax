@@ -57,6 +57,15 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_TouchID touchId; /**< The touch device id */
+SDL_GestureID gestureId;
+Uint32 numFingers;
+float error;
+float x;            /**< Normalized center of gesture */
+float y;            /**< Normalized center of gesture */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_DollarGestureEvent
 //------------------------------------------------------------------------------
@@ -67,7 +76,7 @@ void VType_SDL_DollarGestureEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_DollarGestureEvent, type));
 	Assign(Gurax_CreateProperty(SDL_DollarGestureEvent, timestamp));

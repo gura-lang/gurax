@@ -67,7 +67,7 @@ void VType_SDL_SysWMEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_SysWMEvent, type));
 	Assign(Gurax_CreateProperty(SDL_SysWMEvent, timestamp));

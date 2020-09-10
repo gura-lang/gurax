@@ -57,6 +57,16 @@ Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_JoystickID which; /**< The joystick instance id */
+Uint8 axis;         /**< The joystick axis index */
+Uint8 padding1;
+Uint8 padding2;
+Uint8 padding3;
+Sint16 value;       /**< The axis value (range: -32768 to 32767) */
+Uint16 padding4;
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_JoyAxisEvent
 //------------------------------------------------------------------------------
@@ -67,7 +77,7 @@ void VType_SDL_JoyAxisEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_JoyAxisEvent, type));
 	Assign(Gurax_CreateProperty(SDL_JoyAxisEvent, timestamp));

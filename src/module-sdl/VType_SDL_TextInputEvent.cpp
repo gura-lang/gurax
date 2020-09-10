@@ -57,6 +57,11 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+Uint32 windowID;                            /**< The window with keyboard focus, if any */
+char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_TextInputEvent
 //------------------------------------------------------------------------------
@@ -67,7 +72,7 @@ void VType_SDL_TextInputEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_TextInputEvent, type));
 	Assign(Gurax_CreateProperty(SDL_TextInputEvent, timestamp));

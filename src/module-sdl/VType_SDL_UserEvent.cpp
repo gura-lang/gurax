@@ -57,6 +57,13 @@ Gurax_ImplementPropertyGetter(SDL_UserEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+Uint32 windowID;    /**< The associated window if any */
+Sint32 code;        /**< User defined event code */
+void *data1;        /**< User defined data pointer */
+void *data2;        /**< User defined data pointer */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_UserEvent
 //------------------------------------------------------------------------------
@@ -67,7 +74,7 @@ void VType_SDL_UserEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_UserEvent, type));
 	Assign(Gurax_CreateProperty(SDL_UserEvent, timestamp));

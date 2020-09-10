@@ -57,6 +57,16 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_TouchID touchId; /**< The touch device id */
+float dTheta;
+float dDist;
+float x;
+float y;
+Uint16 numFingers;
+Uint16 padding;
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_MultiGestureEvent
 //------------------------------------------------------------------------------
@@ -67,7 +77,7 @@ void VType_SDL_MultiGestureEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, timestamp));

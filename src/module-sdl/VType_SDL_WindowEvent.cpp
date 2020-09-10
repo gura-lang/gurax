@@ -57,6 +57,16 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+Uint32 windowID;    /**< The associated window */
+Uint8 event;        /**< ::SDL_WindowEventID */
+Uint8 padding1;
+Uint8 padding2;
+Uint8 padding3;
+Sint32 data1;       /**< event dependent data */
+Sint32 data2;       /**< event dependent data */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_WindowEvent
 //------------------------------------------------------------------------------
@@ -67,7 +77,7 @@ void VType_SDL_WindowEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_WindowEvent, type));
 	Assign(Gurax_CreateProperty(SDL_WindowEvent, timestamp));

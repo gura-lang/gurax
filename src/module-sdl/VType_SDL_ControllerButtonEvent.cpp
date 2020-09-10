@@ -57,6 +57,14 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_JoystickID which; /**< The joystick instance id */
+Uint8 button;       /**< The controller button (SDL_GameControllerButton) */
+Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+Uint8 padding1;
+Uint8 padding2;
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_ControllerButtonEvent
 //------------------------------------------------------------------------------
@@ -67,7 +75,7 @@ void VType_SDL_ControllerButtonEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, type));
 	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, timestamp));

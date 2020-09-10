@@ -57,6 +57,15 @@ Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+Uint32 windowID;    /**< The window with keyboard focus, if any */
+Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+Uint8 repeat;       /**< Non-zero if this is a key repeat */
+Uint8 padding2;
+Uint8 padding3;
+SDL_Keysym keysym;  /**< The key that was pressed or released */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_KeyboardEvent
 //------------------------------------------------------------------------------
@@ -67,7 +76,7 @@ void VType_SDL_KeyboardEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, type));
 	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, timestamp));

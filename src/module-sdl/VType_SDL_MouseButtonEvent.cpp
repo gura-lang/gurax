@@ -57,6 +57,17 @@ Gurax_ImplementPropertyGetter(SDL_MouseButtonEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+Uint32 windowID;    /**< The window with mouse focus, if any */
+Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
+Uint8 button;       /**< The mouse button index */
+Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+Uint8 clicks;       /**< 1 for single-click, 2 for double-click, etc. */
+Uint8 padding1;
+Sint32 x;           /**< X coordinate, relative to window */
+Sint32 y;           /**< Y coordinate, relative to window */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_MouseButtonEvent
 //------------------------------------------------------------------------------
@@ -67,7 +78,7 @@ void VType_SDL_MouseButtonEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MouseButtonEvent, timestamp));

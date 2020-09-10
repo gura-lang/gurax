@@ -57,6 +57,11 @@ Gurax_ImplementPropertyGetter(SDL_DropEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+char *file;         /**< The file name, which should be freed with SDL_free(), is NULL on begin/complete */
+Uint32 windowID;    /**< The window that was dropped on, if any */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_DropEvent
 //------------------------------------------------------------------------------
@@ -67,7 +72,7 @@ void VType_SDL_DropEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_DropEvent, type));
 	Assign(Gurax_CreateProperty(SDL_DropEvent, timestamp));

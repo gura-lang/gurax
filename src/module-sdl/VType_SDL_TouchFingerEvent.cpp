@@ -57,6 +57,17 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_TouchID touchId; /**< The touch device id */
+SDL_FingerID fingerId;
+float x;            /**< Normalized in the range 0...1 */
+float y;            /**< Normalized in the range 0...1 */
+float dx;           /**< Normalized in the range -1...1 */
+float dy;           /**< Normalized in the range -1...1 */
+float pressure;     /**< Normalized in the range 0...1 */
+Uint32 windowID;    /**< The window underneath the finger, if any */
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_TouchFingerEvent
 //------------------------------------------------------------------------------
@@ -67,7 +78,7 @@ void VType_SDL_TouchFingerEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, type));
 	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, timestamp));

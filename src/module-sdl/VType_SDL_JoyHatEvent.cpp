@@ -57,6 +57,20 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
+#if 0
+SDL_JoystickID which; /**< The joystick instance id */
+Uint8 hat;          /**< The joystick hat index */
+Uint8 value;        /**< The hat position value.
+						*   \sa ::SDL_HAT_LEFTUP ::SDL_HAT_UP ::SDL_HAT_RIGHTUP
+						*   \sa ::SDL_HAT_LEFT ::SDL_HAT_CENTERED ::SDL_HAT_RIGHT
+						*   \sa ::SDL_HAT_LEFTDOWN ::SDL_HAT_DOWN ::SDL_HAT_RIGHTDOWN
+						*
+						*   Note that zero means the POV is centered.
+						*/
+Uint8 padding1;
+Uint8 padding2;
+#endif
+
 //------------------------------------------------------------------------------
 // VType_SDL_JoyHatEvent
 //------------------------------------------------------------------------------
@@ -67,7 +81,7 @@ void VType_SDL_JoyHatEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_SDL_Event, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, type));
 	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, timestamp));
