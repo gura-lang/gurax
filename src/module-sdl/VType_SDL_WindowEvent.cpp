@@ -57,15 +57,65 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;    /**< The associated window */
-Uint8 event;        /**< ::SDL_WindowEventID */
-Uint8 padding1;
-Uint8 padding2;
-Uint8 padding3;
-Sint32 data1;       /**< event dependent data */
-Sint32 data2;       /**< event dependent data */
-#endif
+// sdl.SDL_WindowEvent#windowID
+Gurax_DeclareProperty_R(SDL_WindowEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_WindowEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_WindowEvent#event
+Gurax_DeclareProperty_R(SDL_WindowEvent, event)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_WindowEvent, event)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().event);
+}
+
+// sdl.SDL_WindowEvent#data1
+Gurax_DeclareProperty_R(SDL_WindowEvent, data1)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_WindowEvent, data1)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().data1);
+}
+
+// sdl.SDL_WindowEvent#data2
+Gurax_DeclareProperty_R(SDL_WindowEvent, data2)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_WindowEvent, data2)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().data2);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_WindowEvent
@@ -81,6 +131,10 @@ void VType_SDL_WindowEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_WindowEvent, type));
 	Assign(Gurax_CreateProperty(SDL_WindowEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_WindowEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_WindowEvent, event));
+	Assign(Gurax_CreateProperty(SDL_WindowEvent, data1));
+	Assign(Gurax_CreateProperty(SDL_WindowEvent, data2));
 }
 
 //------------------------------------------------------------------------------

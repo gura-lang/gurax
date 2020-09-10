@@ -24,6 +24,7 @@
 #include "VType_SDL_HapticEffect.h"
 #include "VType_SDL_Joystick.h"
 #include "VType_SDL_JoystickGUID.h"
+#include "VType_SDL_Keysym.h"
 #include "VType_SDL_Palette.h"
 #include "VType_SDL_PixelFormat.h"
 #include "VType_SDL_Point.h"

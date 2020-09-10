@@ -51,6 +51,7 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_HapticEffect.cpp
 	VType_SDL_Joystick.cpp
 	VType_SDL_JoystickGUID.cpp
+	VType_SDL_Keysym.cpp
 	VType_SDL_Palette.cpp
 	VType_SDL_PixelFormat.cpp
 	VType_SDL_Point.cpp

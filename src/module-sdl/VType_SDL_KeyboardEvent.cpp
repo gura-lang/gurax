@@ -57,14 +57,65 @@ Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 windowID;    /**< The window with keyboard focus, if any */
-Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
-Uint8 repeat;       /**< Non-zero if this is a key repeat */
-Uint8 padding2;
-Uint8 padding3;
-SDL_Keysym keysym;  /**< The key that was pressed or released */
-#endif
+// sdl.SDL_KeyboardEvent#windowID
+Gurax_DeclareProperty_R(SDL_KeyboardEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
+
+// sdl.SDL_KeyboardEvent#state
+Gurax_DeclareProperty_R(SDL_KeyboardEvent, state)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, state)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().state);
+}
+
+// sdl.SDL_KeyboardEvent#repeat
+Gurax_DeclareProperty_R(SDL_KeyboardEvent, repeat)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, repeat)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().repeat);
+}
+
+// sdl.SDL_KeyboardEvent#keysym
+Gurax_DeclareProperty_R(SDL_KeyboardEvent, keysym)
+{
+	Declare(VTYPE_SDL_Keysym, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_KeyboardEvent, keysym)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_SDL_Keysym(valueThis.GetEntity().keysym);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_KeyboardEvent
@@ -80,6 +131,10 @@ void VType_SDL_KeyboardEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, type));
 	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, windowID));
+	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, state));
+	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, repeat));
+	Assign(Gurax_CreateProperty(SDL_KeyboardEvent, keysym));
 }
 
 //------------------------------------------------------------------------------
