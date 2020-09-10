@@ -25,36 +25,10 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// sdl.SDL_Rect#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(SDL_Rect, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(SDL_Rect, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_Rect#propSkeleton
-Gurax_DeclareProperty_R(SDL_Rect, propSkeleton)
+// sdl.SDL_Rect#x
+Gurax_DeclareProperty_RW(SDL_Rect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +36,79 @@ Gurax_DeclareProperty_R(SDL_Rect, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_Rect, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_Rect, x)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+Gurax_ImplementPropertySetter(SDL_Rect, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().x = Value_Number::GetNumber<int>(value);
+}
+
+// sdl.SDL_Rect#y
+Gurax_DeclareProperty_RW(SDL_Rect, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Rect, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+Gurax_ImplementPropertySetter(SDL_Rect, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().y = Value_Number::GetNumber<int>(value);
+}
+
+// sdl.SDL_Rect#w
+Gurax_DeclareProperty_RW(SDL_Rect, w)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Rect, w)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().w);
+}
+
+Gurax_ImplementPropertySetter(SDL_Rect, w)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().w = Value_Number::GetNumber<int>(value);
+}
+
+// sdl.SDL_Rect#h
+Gurax_DeclareProperty_RW(SDL_Rect, h)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Rect, h)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().h);
+}
+
+Gurax_ImplementPropertySetter(SDL_Rect, h)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().h = Value_Number::GetNumber<int>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -79,10 +122,11 @@ void VType_SDL_Rect::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(SDL_Rect, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_Rect, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_Rect, x));
+	Assign(Gurax_CreateProperty(SDL_Rect, y));
+	Assign(Gurax_CreateProperty(SDL_Rect, w));
+	Assign(Gurax_CreateProperty(SDL_Rect, h));
 }
 
 //------------------------------------------------------------------------------
