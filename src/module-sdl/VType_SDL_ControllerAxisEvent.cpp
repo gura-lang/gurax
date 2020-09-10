@@ -57,15 +57,50 @@ Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_JoystickID which; /**< The joystick instance id */
-Uint8 axis;         /**< The controller axis (SDL_GameControllerAxis) */
-Uint8 padding1;
-Uint8 padding2;
-Uint8 padding3;
-Sint16 value;       /**< The axis value (range: -32768 to 32767) */
-Uint16 padding4;
-#endif
+// sdl.SDL_ControllerAxisEvent#which
+Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_ControllerAxisEvent#axis
+Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, axis)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, axis)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().axis);
+}
+
+// sdl.SDL_ControllerAxisEvent#value
+Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, value)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().value);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_ControllerAxisEvent
@@ -81,6 +116,9 @@ void VType_SDL_ControllerAxisEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_ControllerAxisEvent, type));
 	Assign(Gurax_CreateProperty(SDL_ControllerAxisEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_ControllerAxisEvent, which));
+	Assign(Gurax_CreateProperty(SDL_ControllerAxisEvent, axis));
+	Assign(Gurax_CreateProperty(SDL_ControllerAxisEvent, value));
 }
 
 //------------------------------------------------------------------------------

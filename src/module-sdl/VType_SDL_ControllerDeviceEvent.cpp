@@ -57,9 +57,20 @@ Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Sint32 which;       /**< The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
-#endif
+// sdl.SDL_ControllerDeviceEvent#which
+Gurax_DeclareProperty_R(SDL_ControllerDeviceEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_ControllerDeviceEvent
@@ -75,6 +86,7 @@ void VType_SDL_ControllerDeviceEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_ControllerDeviceEvent, type));
 	Assign(Gurax_CreateProperty(SDL_ControllerDeviceEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_ControllerDeviceEvent, which));
 }
 
 //------------------------------------------------------------------------------

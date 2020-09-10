@@ -57,19 +57,50 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_JoystickID which; /**< The joystick instance id */
-Uint8 hat;          /**< The joystick hat index */
-Uint8 value;        /**< The hat position value.
-						*   \sa ::SDL_HAT_LEFTUP ::SDL_HAT_UP ::SDL_HAT_RIGHTUP
-						*   \sa ::SDL_HAT_LEFT ::SDL_HAT_CENTERED ::SDL_HAT_RIGHT
-						*   \sa ::SDL_HAT_LEFTDOWN ::SDL_HAT_DOWN ::SDL_HAT_RIGHTDOWN
-						*
-						*   Note that zero means the POV is centered.
-						*/
-Uint8 padding1;
-Uint8 padding2;
-#endif
+// sdl.SDL_JoyHatEvent#which
+Gurax_DeclareProperty_R(SDL_JoyHatEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_JoyHatEvent#hat
+Gurax_DeclareProperty_R(SDL_JoyHatEvent, hat)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, hat)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().hat);
+}
+
+// sdl.SDL_JoyHatEvent#value
+Gurax_DeclareProperty_R(SDL_JoyHatEvent, value)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().value);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_JoyHatEvent
@@ -85,6 +116,9 @@ void VType_SDL_JoyHatEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, type));
 	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, which));
+	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, hat));
+	Assign(Gurax_CreateProperty(SDL_JoyHatEvent, value));
 }
 
 //------------------------------------------------------------------------------

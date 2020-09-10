@@ -57,16 +57,125 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_TouchID touchId; /**< The touch device id */
-SDL_FingerID fingerId;
-float x;            /**< Normalized in the range 0...1 */
-float y;            /**< Normalized in the range 0...1 */
-float dx;           /**< Normalized in the range -1...1 */
-float dy;           /**< Normalized in the range -1...1 */
-float pressure;     /**< Normalized in the range 0...1 */
-Uint32 windowID;    /**< The window underneath the finger, if any */
-#endif
+// sdl.SDL_TouchFingerEvent#touchId
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, touchId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, touchId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().touchId);
+}
+
+// sdl.SDL_TouchFingerEvent#fingerId
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, fingerId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, fingerId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().fingerId);
+}
+
+// sdl.SDL_TouchFingerEvent#x
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+// sdl.SDL_TouchFingerEvent#y
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+// sdl.SDL_TouchFingerEvent#dx
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, dx)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dx)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().dx);
+}
+
+// sdl.SDL_TouchFingerEvent#dy
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, dy)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dy)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().dy);
+}
+
+// sdl.SDL_TouchFingerEvent#pressure
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, pressure)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, pressure)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().pressure);
+}
+
+// sdl.SDL_TouchFingerEvent#windowID
+Gurax_DeclareProperty_R(SDL_TouchFingerEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_TouchFingerEvent
@@ -82,6 +191,14 @@ void VType_SDL_TouchFingerEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, type));
 	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, touchId));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, fingerId));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, x));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, y));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, dx));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, dy));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, pressure));
+	Assign(Gurax_CreateProperty(SDL_TouchFingerEvent, windowID));
 }
 
 //------------------------------------------------------------------------------

@@ -57,10 +57,39 @@ Gurax_ImplementPropertyGetter(SDL_DropEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-char *file;         /**< The file name, which should be freed with SDL_free(), is NULL on begin/complete */
-Uint32 windowID;    /**< The window that was dropped on, if any */
-#endif
+// sdl.SDL_DropEvent#file
+Gurax_DeclareProperty_R(SDL_DropEvent, file)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_DropEvent, file)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	char* file = valueThis.GetEntity().file;
+	valueThis.GetEntity().file = nullptr;
+	RefPtr<Value> pValue(new Value_Number(file));
+	SDL_free(file);
+	return pValue.release();
+}
+
+// sdl.SDL_DropEvent#windowID
+Gurax_DeclareProperty_R(SDL_DropEvent, windowID)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_DropEvent, windowID)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().windowID);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_DropEvent
@@ -76,6 +105,8 @@ void VType_SDL_DropEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_DropEvent, type));
 	Assign(Gurax_CreateProperty(SDL_DropEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_DropEvent, file));
+	Assign(Gurax_CreateProperty(SDL_DropEvent, windowID));
 }
 
 //------------------------------------------------------------------------------

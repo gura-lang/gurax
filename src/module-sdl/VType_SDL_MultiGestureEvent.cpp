@@ -57,15 +57,95 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_TouchID touchId; /**< The touch device id */
-float dTheta;
-float dDist;
-float x;
-float y;
-Uint16 numFingers;
-Uint16 padding;
-#endif
+// sdl.SDL_MultiGestureEvent#touchId
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, touchId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, touchId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().touchId);
+}
+
+// sdl.SDL_MultiGestureEvent#dTheta
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, dTheta)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dTheta)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().dTheta);
+}
+
+// sdl.SDL_MultiGestureEvent#dDist
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, dDist)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dDist)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().dDist);
+}
+
+// sdl.SDL_MultiGestureEvent#x
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+// sdl.SDL_MultiGestureEvent#y
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+// sdl.SDL_MultiGestureEvent#numFingers
+Gurax_DeclareProperty_R(SDL_MultiGestureEvent, numFingers)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, numFingers)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().numFingers);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_MultiGestureEvent
@@ -81,6 +161,12 @@ void VType_SDL_MultiGestureEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, type));
 	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, touchId));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, dTheta));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, dDist));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, x));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, y));
+	Assign(Gurax_CreateProperty(SDL_MultiGestureEvent, numFingers));
 }
 
 //------------------------------------------------------------------------------

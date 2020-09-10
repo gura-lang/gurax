@@ -57,13 +57,35 @@ Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-Uint32 which;       /**< The audio device index for the ADDED event (valid until next SDL_GetNumAudioDevices() call), SDL_AudioDeviceID for the REMOVED event */
-Uint8 iscapture;    /**< zero if an output device, non-zero if a capture device. */
-Uint8 padding1;
-Uint8 padding2;
-Uint8 padding3;
-#endif
+// sdl.SDL_AudioDeviceEvent#which
+Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_AudioDeviceEvent#iscapture
+Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, iscapture)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, iscapture)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().iscapture);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_AudioDeviceEvent
@@ -79,6 +101,8 @@ void VType_SDL_AudioDeviceEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_AudioDeviceEvent, type));
 	Assign(Gurax_CreateProperty(SDL_AudioDeviceEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_AudioDeviceEvent, which));
+	Assign(Gurax_CreateProperty(SDL_AudioDeviceEvent, iscapture));
 }
 
 //------------------------------------------------------------------------------

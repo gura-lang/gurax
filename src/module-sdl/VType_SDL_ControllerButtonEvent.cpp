@@ -57,13 +57,50 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_JoystickID which; /**< The joystick instance id */
-Uint8 button;       /**< The controller button (SDL_GameControllerButton) */
-Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
-Uint8 padding1;
-Uint8 padding2;
-#endif
+// sdl.SDL_ControllerButtonEvent#which
+Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_ControllerButtonEvent#button
+Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, button)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, button)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().button);
+}
+
+// sdl.SDL_ControllerButtonEvent#state
+Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, state)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, state)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().state);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_ControllerButtonEvent
@@ -79,6 +116,9 @@ void VType_SDL_ControllerButtonEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, type));
 	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, which));
+	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, button));
+	Assign(Gurax_CreateProperty(SDL_ControllerButtonEvent, state));
 }
 
 //------------------------------------------------------------------------------

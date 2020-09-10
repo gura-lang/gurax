@@ -57,13 +57,50 @@ Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, timestamp)
 	return new Value_Number(valueThis.GetEntity().timestamp);
 }
 
-#if 0
-SDL_JoystickID which; /**< The joystick instance id */
-Uint8 button;       /**< The joystick button index */
-Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
-Uint8 padding1;
-Uint8 padding2;
-#endif
+// sdl.SDL_JoyButtonEvent#which
+Gurax_DeclareProperty_R(SDL_JoyButtonEvent, which)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, which)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().which);
+}
+
+// sdl.SDL_JoyButtonEvent#button
+Gurax_DeclareProperty_R(SDL_JoyButtonEvent, button)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, button)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().button);
+}
+
+// sdl.SDL_JoyButtonEvent#state
+Gurax_DeclareProperty_R(SDL_JoyButtonEvent, state)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, state)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().state);
+}
 
 //------------------------------------------------------------------------------
 // VType_SDL_JoyButtonEvent
@@ -79,6 +116,9 @@ void VType_SDL_JoyButtonEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_JoyButtonEvent, type));
 	Assign(Gurax_CreateProperty(SDL_JoyButtonEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_JoyButtonEvent, which));
+	Assign(Gurax_CreateProperty(SDL_JoyButtonEvent, button));
+	Assign(Gurax_CreateProperty(SDL_JoyButtonEvent, state));
 }
 
 //------------------------------------------------------------------------------
