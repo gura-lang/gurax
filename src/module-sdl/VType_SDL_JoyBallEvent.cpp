@@ -72,7 +72,6 @@ Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, which)
 	return new Value_Number(valueThis.GetEntity().which);
 }
 
-SDL_JoystickID which; /**< The joystick instance id */
 // sdl.SDL_JoyBallEvent#ball
 Gurax_DeclareProperty_R(SDL_JoyBallEvent, ball)
 {
@@ -88,7 +87,6 @@ Gurax_ImplementPropertyGetter(SDL_JoyBallEvent, ball)
 	return new Value_Number(valueThis.GetEntity().ball);
 }
 
-Uint8 ball;         /**< The joystick trackball index */
 // sdl.SDL_JoyBallEvent#xrel
 Gurax_DeclareProperty_R(SDL_JoyBallEvent, xrel)
 {
@@ -133,6 +131,10 @@ void VType_SDL_JoyBallEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, type));
 	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, timestamp));
+	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, which));
+	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, ball));
+	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, xrel));
+	Assign(Gurax_CreateProperty(SDL_JoyBallEvent, yrel));
 }
 
 //------------------------------------------------------------------------------
