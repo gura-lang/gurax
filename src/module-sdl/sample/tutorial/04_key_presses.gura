@@ -1,0 +1,93 @@
+#!/usr/bin/env gurax
+import(sdl) {*}
+
+SCREEN_WIDTH = 640;
+SCREEN_HEIGHT = 480;
+
+gWindow = nil
+gScreenSurface = nil
+gKeyPressSurfaces = %{}
+gCurrentSurface = nil
+
+init() = {
+	//Initialize SDL
+	SDL_Init(SDL_INIT_VIDEO)
+ 	//Create window
+ 	gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	//Get window surface
+	gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
+}
+
+loadMedia() = {
+	//Load default surface
+	gKeyPressSurfaces[0] = loadSurface("04_key_presses/press.bmp");
+
+	//Load up surface
+	gKeyPressSurfaces[SDLK_UP] = loadSurface("04_key_presses/up.bmp");
+
+	//Load down surface
+	gKeyPressSurfaces[SDLK_DOWN] = loadSurface("04_key_presses/down.bmp");
+
+	//Load left surface
+	gKeyPressSurfaces[SDLK_LEFT] = loadSurface("04_key_presses/left.bmp");
+
+	//Load right surface
+	gKeyPressSurfaces[SDLK_RIGHT] = loadSurface("04_key_presses/right.bmp");
+
+	gCurrentSurface:extern = gKeyPressSurfaces[0]
+}
+
+close() = {
+	//Deallocate surface
+
+	//Destroy window
+	SDL_DestroyWindow(gWindow);
+	gWindow = nil;
+	//Quit SDL subsystems
+	SDL_Quit();
+}
+
+loadSurface(path:String) = {
+	//Load image at specified path
+	SDL_LoadBMP(path);
+}
+
+main() = {
+	//Start up SDL and create window
+	init()
+	//Load media
+	loadMedia()
+
+	quit = false
+
+	//Event handler
+	e = SDL_Event()
+
+	//While application is running
+	while (!quit) {
+		//Handle events on queue
+		while (SDL_PollEvent(e) != 0) {
+			//User requests quit
+			if (e.type == SDL_QUIT) {
+				quit = true;
+			} elsif (e.type == SDL_KEYDOWN) {
+				if (surface = gKeyPressSurfaces.Get(e.key.keysym.sym)) {
+					gCurrentSurface = surface
+				} else {
+					gCurrentSurface = gKeyPressSurfaces[0]
+				}
+			}
+		}
+
+		//Apply the image
+		SDL_BlitSurface(gCurrentSurface, nil, gScreenSurface, nil);
+	
+		//Update the surface
+		SDL_UpdateWindowSurface( gWindow );
+	}
+
+	//Free resources and close SDL
+	close();
+}
+
+main()
