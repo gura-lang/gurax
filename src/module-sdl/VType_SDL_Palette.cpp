@@ -53,8 +53,8 @@ Gurax_ImplementMethod(SDL_Palette, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_Palette#propSkeleton
-Gurax_DeclareProperty_R(SDL_Palette, propSkeleton)
+// sdl.SDL_Palette#ncolors
+Gurax_DeclareProperty_R(SDL_Palette, ncolors)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,32 @@ Gurax_DeclareProperty_R(SDL_Palette, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_Palette, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_Palette, ncolors)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().ncolors);
+}
+
+// sdl.SDL_Palette#colors
+Gurax_DeclareProperty_R(SDL_Palette, colors)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_Palette, colors)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	int ncolors = valueThis.GetEntity().ncolors;
+	SDL_Color* colors = valueThis.GetEntity().colors;
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	pValues->reserve(ncolors);
+	for (int i = 0; i < ncolors; i++) {
+		pValues->push_back(new Value_SDL_Color(colors[i]));
+	}
+	return new Value_List(pValues.release());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +104,8 @@ void VType_SDL_Palette::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SDL_Palette, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_Palette, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_Palette, ncolors));
+	Assign(Gurax_CreateProperty(SDL_Palette, colors));
 }
 
 //------------------------------------------------------------------------------

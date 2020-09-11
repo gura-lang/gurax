@@ -53,8 +53,8 @@ Gurax_ImplementMethod(SDL_DisplayMode, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_DisplayMode#propSkeleton
-Gurax_DeclareProperty_R(SDL_DisplayMode, propSkeleton)
+// sdl.SDL_DisplayMode#format
+Gurax_DeclareProperty_R(SDL_DisplayMode, format)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,55 @@ Gurax_DeclareProperty_R(SDL_DisplayMode, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_DisplayMode, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_DisplayMode, format)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().format);
+}
+
+// sdl.SDL_DisplayMode#w
+Gurax_DeclareProperty_R(SDL_DisplayMode, w)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_DisplayMode, w)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().w);
+}
+
+// sdl.SDL_DisplayMode#h
+Gurax_DeclareProperty_R(SDL_DisplayMode, h)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_DisplayMode, h)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().h);
+}
+
+// sdl.SDL_DisplayMode#refresh_rate
+Gurax_DeclareProperty_R(SDL_DisplayMode, refresh_rate)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_DisplayMode, refresh_rate)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().refresh_rate);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +127,10 @@ void VType_SDL_DisplayMode::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SDL_DisplayMode, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_DisplayMode, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_DisplayMode, format));
+	Assign(Gurax_CreateProperty(SDL_DisplayMode, w));
+	Assign(Gurax_CreateProperty(SDL_DisplayMode, h));
+	Assign(Gurax_CreateProperty(SDL_DisplayMode, refresh_rate));
 }
 
 //------------------------------------------------------------------------------

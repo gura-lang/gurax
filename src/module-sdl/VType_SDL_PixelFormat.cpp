@@ -53,8 +53,8 @@ Gurax_ImplementMethod(SDL_PixelFormat, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_PixelFormat#propSkeleton
-Gurax_DeclareProperty_R(SDL_PixelFormat, propSkeleton)
+// sdl.SDL_PixelFormat#format
+Gurax_DeclareProperty_R(SDL_PixelFormat, format)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,117 @@ Gurax_DeclareProperty_R(SDL_PixelFormat, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_PixelFormat, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, format)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().format);
+}
+
+// sdl.SDL_PixelFormat#palette
+Gurax_DeclareProperty_R(SDL_PixelFormat, palette)
+{
+	Declare(VTYPE_SDL_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, palette)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	SDL_Palette* palette = valueThis.GetEntity().palette;
+	if (!palette) return Value::nil();
+	return new Value_SDL_Palette(palette);
+}
+
+// sdl.SDL_PixelFormat#BitsPerPixel
+Gurax_DeclareProperty_R(SDL_PixelFormat, BitsPerPixel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, BitsPerPixel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().BitsPerPixel);
+}
+
+// sdl.SDL_PixelFormat#BytesPerPixel
+Gurax_DeclareProperty_R(SDL_PixelFormat, BytesPerPixel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, BytesPerPixel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().BytesPerPixel);
+}
+
+// sdl.SDL_PixelFormat#Rmask
+Gurax_DeclareProperty_R(SDL_PixelFormat, Rmask)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, Rmask)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().Rmask);
+}
+
+// sdl.SDL_PixelFormat#Gmask
+Gurax_DeclareProperty_R(SDL_PixelFormat, Gmask)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, Gmask)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().Gmask);
+}
+
+// sdl.SDL_PixelFormat#Bmask
+Gurax_DeclareProperty_R(SDL_PixelFormat, Bmask)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, Bmask)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().Bmask);
+}
+
+// sdl.SDL_PixelFormat#Amask
+Gurax_DeclareProperty_R(SDL_PixelFormat, Amask)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_PixelFormat, Amask)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().Amask);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +189,14 @@ void VType_SDL_PixelFormat::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SDL_PixelFormat, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_PixelFormat, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, format));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, palette));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, BitsPerPixel));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, BytesPerPixel));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, Rmask));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, Gmask));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, Bmask));
+	Assign(Gurax_CreateProperty(SDL_PixelFormat, Amask));
 }
 
 //------------------------------------------------------------------------------
