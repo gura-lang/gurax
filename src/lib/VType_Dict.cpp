@@ -321,7 +321,7 @@ Gurax_ImplementPropertyGetter(Dict, keys)
 	auto& valueThis = GetValueThis(valueTarget);
 	RefPtr<ValueOwner> pValueOwner(valueThis.GetValueDict().GetKeys());
 	pValueOwner->Sort();
-	return new Value_List(new ValueTypedOwner(pValueOwner.release()));
+	return new Value_List(pValueOwner.release());
 }
 
 // Dict#len
