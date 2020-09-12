@@ -4883,6 +4883,32 @@ Gurax_ImplementFunctionEx(SDL_SoftStretch_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_BlitScaled(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+Gurax_DeclareFunctionAlias(SDL_BlitScaled_gurax, "SDL_BlitScaled")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_BlitScaled_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	// Function body
+	int rtn = SDL_BlitScaled(src, srcrect, dst, dstrect);
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_UpperBlitScaled(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_UpperBlitScaled_gurax, "SDL_UpperBlitScaled")
 {
@@ -10017,6 +10043,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_UpperBlit_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_LowerBlit_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SoftStretch_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_BlitScaled_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpperBlitScaled_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_LowerBlitScaled_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetYUVConversionMode_gurax));

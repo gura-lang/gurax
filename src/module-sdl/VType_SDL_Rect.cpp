@@ -24,6 +24,25 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// SDL_Rect() {block?}
+Gurax_DeclareConstructor(SDL_Rect)
+{
+	Declare(VTYPE_Color, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `SDL_Rect` instance.\n");
+}
+
+Gurax_ImplementConstructor(SDL_Rect)
+{
+	// Function body
+	return argument.ReturnValue(processor, new Value_SDL_Rect());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -121,7 +140,7 @@ void VType_SDL_Rect::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SDL_Rect));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_Rect, x));
 	Assign(Gurax_CreateProperty(SDL_Rect, y));

@@ -1041,6 +1041,8 @@ SDL_LowerBlit(src:SDL_Surface_p, srcrect:SDL_Rect_p:nil, dst:SDL_Surface_p, dstr
 
 SDL_SoftStretch(src:SDL_Surface_p, srcrect:const_SDL_Rect_p:nil, dst:SDL_Surface_p, dstrect:const_SDL_Rect_p:nil):int
 
+SDL_BlitScaled(src:SDL_Surface_p, srcrect:const_SDL_Rect_p:nil, dst:SDL_Surface_p, dstrect:SDL_Rect_p:nil):int
+
 SDL_UpperBlitScaled(src:SDL_Surface_p, srcrect:const_SDL_Rect_p:nil, dst:SDL_Surface_p, dstrect:SDL_Rect_p:nil):int
 
 SDL_LowerBlitScaled(src:SDL_Surface_p, srcrect:SDL_Rect_p:nil, dst:SDL_Surface_p, dstrect:SDL_Rect_p:nil):int
