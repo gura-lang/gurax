@@ -16,7 +16,25 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(ValueDict);
 public:
-	enum StoreMode { None, Strict, Overwrite, Timid, };
+	enum class StoreMode { None, Strict, Overwrite, Timid, };
+	enum class IterItem { Pair, Key, Value, };
+public:
+	template<IterItem iterItem>
+	class Iterator_Each : public Iterator {
+	private:
+		RefPtr<ValueDict> _pValueDict;
+		ValueDict::const_iterator _iter;
+	public:
+		Iterator_Each(ValueDict* pValueDict) : _pValueDict(pValueDict), _iter(pValueDict->begin()) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenDetermined;
+		}
+		virtual size_t GetLength() const override { return _pValueDict->size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 protected:
 	~ValueDict() { Clear(); }
 public:
@@ -41,6 +59,33 @@ public:
 public:
 	static void IssueError_KeyNotFound(const Value& valueKey);
 };
+
+//------------------------------------------------------------------------------
+// ValueDict::Iterator_Each
+//------------------------------------------------------------------------------
+template<ValueDict::IterItem iterItem>
+Value* ValueDict::Iterator_Each<iterItem>::DoNextValue()
+{
+	if (_iter == _pValueDict->end()) return nullptr;
+	auto iter = _iter++;
+	if constexpr (iterItem == IterItem::Pair) {
+		RefPtr<ValueOwner> pValues(new ValueOwner());
+		pValues->reserve(2);
+		pValues->push_back(iter->first->Reference());
+		pValues->push_back(iter->second->Reference());
+		return new Value_Tuple(pValues.release());
+	} else if constexpr(iterItem == IterItem::Key) {
+		return iter->first->Reference();
+	} else { // iterItem == IterItem::Value
+		return iter->second->Reference();
+	}
+}
+
+template<ValueDict::IterItem iterItem>
+String ValueDict::Iterator_Each<iterItem>::ToString(const StringStyle& ss) const
+{
+	return "Dict.Each";
+}
 
 }
 

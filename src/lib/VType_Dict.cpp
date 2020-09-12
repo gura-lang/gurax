@@ -146,6 +146,66 @@ Gurax_ImplementMethod(Dict, Clear)
 	return argument.GetValueThis().Reference();
 }
 
+// Dict#Each() {block?}
+Gurax_DeclareMethod(Dict, Each)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new ValueDict::
+		Iterator_Each<ValueDict::IterItem::Pair>(valueThis.GetValueDict().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Dict#EachKey() {block?}
+Gurax_DeclareMethod(Dict, EachKey)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, EachKey)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new ValueDict::
+		Iterator_Each<ValueDict::IterItem::Key>(valueThis.GetValueDict().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Dict#EachValue() {block?}
+Gurax_DeclareMethod(Dict, EachValue)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, EachValue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new ValueDict::
+		Iterator_Each<ValueDict::IterItem::Value>(valueThis.GetValueDict().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Dict#Erase(key):map
 Gurax_DeclareMethod(Dict, Erase)
 {
@@ -293,37 +353,6 @@ Gurax_ImplementMethod(Dict, Put)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Dict#items
-Gurax_DeclareProperty_R(Dict, items)
-{
-	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A list of key-value pairs.");
-}
-
-Gurax_ImplementPropertyGetter(Dict, items)
-{
-	return Value::nil();
-}
-
-// Dict#keys
-Gurax_DeclareProperty_R(Dict, keys)
-{
-	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A list of keys.");
-}
-
-Gurax_ImplementPropertyGetter(Dict, keys)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<ValueOwner> pValueOwner(valueThis.GetValueDict().GetKeys());
-	pValueOwner->Sort();
-	return new Value_List(pValueOwner.release());
-}
-
 // Dict#len
 Gurax_DeclareProperty_R(Dict, len)
 {
@@ -337,27 +366,6 @@ Gurax_ImplementPropertyGetter(Dict, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetValueDict().size());
-}
-
-// Dict#values
-Gurax_DeclareProperty_R(Dict, values)
-{
-	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A list of values.");
-}
-
-Gurax_ImplementPropertyGetter(Dict, values)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-#if 0
-	RefPtr<ValueOwner> pValueOwner(valueThis.GetValueDict().GetKeys());
-	pValueOwner->Sort();
-	VType* pVType = pValueOwner->GetVTypeOfElems();
-	return new Value_List(new ValueTypedOwner(pVType, pValueOwner.release()));
-#endif
-	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -376,16 +384,16 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Dict, Append));
 	Assign(Gurax_CreateMethod(Dict, Clear));
+	Assign(Gurax_CreateMethod(Dict, Each));
+	Assign(Gurax_CreateMethod(Dict, EachKey));
+	Assign(Gurax_CreateMethod(Dict, EachValue));
 	Assign(Gurax_CreateMethod(Dict, Erase));
 	Assign(Gurax_CreateMethod(Dict, Get));
 	Assign(Gurax_CreateMethod(Dict, HasKey));
 	Assign(Gurax_CreateMethod(Dict, IsEmpty));
 	Assign(Gurax_CreateMethod(Dict, Put));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Dict, items));
-	Assign(Gurax_CreateProperty(Dict, keys));
 	Assign(Gurax_CreateProperty(Dict, len));
-	Assign(Gurax_CreateProperty(Dict, values));
 }
 
 //------------------------------------------------------------------------------

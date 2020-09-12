@@ -39,7 +39,9 @@ loadMedia() = {
 
 close() = {
 	//Deallocate surface
-
+	gKeyPressSurfaces.EachValue {|keyPressSurface|
+		SDL_FreeSurface(keyPressSurface);
+	}
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
 	gWindow = nil;

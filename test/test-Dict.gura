@@ -75,6 +75,30 @@ TestCase('Dict#Clear()') {
 	Tester(`d.Clear())
 }
 
+TestCase('Dict#Each()') {
+	d = %{
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+	}
+	Tester(`(d.Each():list).Sort())
+}
+
+TestCase('Dict#EachKey()') {
+	d = %{
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+	}
+	Tester(`(d.EachKey():list).Sort())
+}
+
+TestCase('Dict#EachValue()') {
+	d = %{
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+	}
+	Tester(`(d.EachValue():list).Sort())
+}
+
 TestCase('Dict#Erase()') {
 	d = %{
 		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
@@ -128,12 +152,11 @@ TestCase('Dict#Put()') {
 	Tester(`d.Put([1, 2, 3], [4, 5, 6]))
 }
 
-TestCase('Dict#len and Dict#keys') {
+TestCase('Dict#len') {
 	d = %{
 		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
 		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
 	}
 	Tester(`d)
 	Tester(`d.len)
-	Tester(`d.keys)
 }
