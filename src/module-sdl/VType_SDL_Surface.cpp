@@ -113,11 +113,10 @@ Gurax_ImplementPropertyGetter(SDL_Surface, pitch)
 	return new Value_Number(valueThis.GetEntity().pitch);
 }
 
-#if 0
 // sdl.SDL_Surface#pixels
 Gurax_DeclareProperty_R(SDL_Surface, pixels)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Array, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -126,9 +125,14 @@ Gurax_DeclareProperty_R(SDL_Surface, pixels)
 Gurax_ImplementPropertyGetter(SDL_Surface, pixels)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetEntity().pixels);
+	SDL_Surface& surface = valueThis.GetEntity();
+	size_t bytes = surface.h * surface.pitch;
+	RefPtr<Memory> pMemory(new MemorySloth(surface.pixels));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(bytes)));
+	return new Value_Array(pArray.release());
 }
 
+#if 0
 // sdl.SDL_Surface#userdata
 Gurax_DeclareProperty_R(SDL_Surface, userdata)
 {

@@ -133,7 +133,7 @@ protected:
 	static ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
 	static MapSymbolToElemType _mapAtSymbolToElemType;
-protected:
+public:
 	// Constructor
 	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
 	// Copy constructor/operator
