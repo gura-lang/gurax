@@ -25,36 +25,10 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// sdl.SDL_RendererInfo#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(SDL_RendererInfo, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(SDL_RendererInfo, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// sdl.SDL_RendererInfo#propSkeleton
-Gurax_DeclareProperty_R(SDL_RendererInfo, propSkeleton)
+// sdl.SDL_RendererInfo#name
+Gurax_DeclareProperty_R(SDL_RendererInfo, name)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,12 +36,87 @@ Gurax_DeclareProperty_R(SDL_RendererInfo, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(SDL_RendererInfo, propSkeleton)
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetEntity().name);
 }
 
+// sdl.SDL_RendererInfo#flags
+Gurax_DeclareProperty_R(SDL_RendererInfo, flags)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, flags)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().flags);
+}
+
+// sdl.SDL_RendererInfo#num_texture_formats
+Gurax_DeclareProperty_R(SDL_RendererInfo, num_texture_formats)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, num_texture_formats)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().num_texture_formats);
+}
+
+// sdl.SDL_RendererInfo#texture_formats
+Gurax_DeclareProperty_R(SDL_RendererInfo, texture_formats)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, texture_formats)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const SDL_RendererInfo& info = valueThis.GetEntity();
+	return Value_List::Create<Uint32>(info.texture_formats, info.num_texture_formats);
+}
+
+// sdl.SDL_RendererInfo#max_texture_width
+Gurax_DeclareProperty_R(SDL_RendererInfo, max_texture_width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, max_texture_width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().max_texture_width);
+}
+
+// sdl.SDL_RendererInfo#max_texture_height
+Gurax_DeclareProperty_R(SDL_RendererInfo, max_texture_height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(SDL_RendererInfo, max_texture_height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().max_texture_height);
+}
 //------------------------------------------------------------------------------
 // VType_SDL_RendererInfo
 //------------------------------------------------------------------------------
@@ -79,10 +128,13 @@ void VType_SDL_RendererInfo::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(SDL_RendererInfo, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_RendererInfo, propSkeleton));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, name));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, flags));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, num_texture_formats));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, texture_formats));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, max_texture_width));
+	Assign(Gurax_CreateProperty(SDL_RendererInfo, max_texture_height));
 }
 
 //------------------------------------------------------------------------------

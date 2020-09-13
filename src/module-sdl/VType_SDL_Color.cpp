@@ -24,30 +24,34 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// sdl.SDL_Color#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(SDL_Color, MethodSkeleton)
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// SDL_Color(r?:Number, g?:Number, b?:Number, a?:Number) {block?}
+Gurax_DeclareConstructor(SDL_Color)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Color, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("a", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Creates a `SDL_Color` instance.\n");
 }
 
-Gurax_ImplementMethod(SDL_Color, MethodSkeleton)
+Gurax_ImplementConstructor(SDL_Color)
 {
-	// Target
-	//auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	SDL_Color color;
+	color.r = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
+	color.g = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
+	color.b = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
+	color.a = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
 	// Function body
-	return new Value_Number(num1 + num2);
+	return argument.ReturnValue(processor, new Value_SDL_Color(color));
 }
 
 //-----------------------------------------------------------------------------
@@ -147,9 +151,7 @@ void VType_SDL_Color::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(SDL_Color, MethodSkeleton));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SDL_Color));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_Color, r));
 	Assign(Gurax_CreateProperty(SDL_Color, g));

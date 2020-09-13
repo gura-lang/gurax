@@ -27,10 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// SDL_Point() {block?}
+// SDL_Point(x?:Number, y?:Number) {block?}
 Gurax_DeclareConstructor(SDL_Point)
 {
 	Declare(VTYPE_Color, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -39,8 +41,13 @@ Gurax_DeclareConstructor(SDL_Point)
 
 Gurax_ImplementConstructor(SDL_Point)
 {
+	// Arguments
+	ArgPicker args(argument);
+	SDL_Point point;
+	point.x = args.IsValid()? args.PickNumber<int>() : 0;
+	point.y = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	return argument.ReturnValue(processor, new Value_SDL_Rect());
+	return argument.ReturnValue(processor, new Value_SDL_Point(point));
 }
 
 //-----------------------------------------------------------------------------

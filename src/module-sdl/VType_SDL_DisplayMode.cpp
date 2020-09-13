@@ -25,32 +25,6 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// sdl.SDL_DisplayMode#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(SDL_DisplayMode, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(SDL_DisplayMode, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // sdl.SDL_DisplayMode#format
@@ -124,8 +98,6 @@ void VType_SDL_DisplayMode::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(SDL_DisplayMode, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SDL_DisplayMode, format));
 	Assign(Gurax_CreateProperty(SDL_DisplayMode, w));
