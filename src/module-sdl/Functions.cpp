@@ -4348,12 +4348,12 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_RW_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetSurfaceRLE(surface:SDL_Surface, flag:Number)
+// sdl.SDL_SetSurfaceRLE(surface:SDL_Surface, flag:Bool)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceRLE_gurax, "SDL_SetSurfaceRLE")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4364,18 +4364,18 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceRLE_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	int flag = args_gurax.PickNumber<int>();
+	bool flag = args_gurax.PickBool();
 	// Function body
 	int rtn = SDL_SetSurfaceRLE(surface, flag);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetColorKey(surface:SDL_Surface, flag:Number, key:Number)
+// sdl.SDL_SetColorKey(surface:SDL_Surface, flag:Bool, key:Number)
 Gurax_DeclareFunctionAlias(SDL_SetColorKey_gurax, "SDL_SetColorKey")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -4387,7 +4387,7 @@ Gurax_ImplementFunctionEx(SDL_SetColorKey_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	int flag = args_gurax.PickNumber<int>();
+	bool flag = args_gurax.PickBool();
 	Uint32 key = args_gurax.PickNumber<Uint32>();
 	// Function body
 	int rtn = SDL_SetColorKey(surface, flag, key);

@@ -960,9 +960,9 @@ SDL_SaveBMP_RW(surface:SDL_Surface_p, dst:SDL_RWops_p, freedst:bool) = \
 	return new Gurax::Value_Number(rtn);
 	'''
 
-SDL_SetSurfaceRLE(surface:SDL_Surface_p, flag:int):int
+SDL_SetSurfaceRLE(surface:SDL_Surface_p, flag:bool):int
 
-SDL_SetColorKey(surface:SDL_Surface_p, flag:int, key:Uint32):int
+SDL_SetColorKey(surface:SDL_Surface_p, flag:bool, key:Uint32):int
 
 SDL_HasColorKey(surface:SDL_Surface_p):SDL_bool
 
