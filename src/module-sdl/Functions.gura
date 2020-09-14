@@ -649,13 +649,13 @@ SDL_GetTextureScaleMode(texture:SDL_Texture_p):int = \
 	return new Value_Number(scaleMode);
 	'''
 
-SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:const_void_p, pitch:int):int_ErrorIfNeg
+SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, pixels:const_void_p, pitch:int):int_ErrorIfNeg
 
-SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int_ErrorIfNeg
+SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int_ErrorIfNeg
 
-//SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p, pixels:void_pp, pitch:int_p):int
+//SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, pixels:void_pp, pitch:int_p):int
 
-//SDL_LockTextureToSurface(texture:SDL_Texture_p, rect:const_SDL_Rect_p, surface:SDL_Surface_pp):int
+//SDL_LockTextureToSurface(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, surface:SDL_Surface_pp):int
 
 SDL_UnlockTexture(texture:SDL_Texture_p):void
 
@@ -678,7 +678,7 @@ SDL_RenderSetIntegerScale(renderer:SDL_Renderer_p, enable:SDL_bool):int_ErrorIfN
 
 SDL_RenderGetIntegerScale(renderer:SDL_Renderer_p):SDL_bool
 
-SDL_RenderSetViewport(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int_ErrorIfNeg
+SDL_RenderSetViewport(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
 SDL_RenderGetViewport(renderer:SDL_Renderer_p) = \
 	R'''
@@ -687,7 +687,7 @@ SDL_RenderGetViewport(renderer:SDL_Renderer_p) = \
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_RenderSetClipRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int_ErrorIfNeg
+SDL_RenderSetClipRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
 SDL_RenderGetClipRect(renderer:SDL_Renderer_p) = \
 	R'''
@@ -757,7 +757,7 @@ SDL_RenderDrawLines(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
 	return Value::nil();
 	'''
 
-SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int_ErrorIfNeg
+SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
 SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	R'''
@@ -769,7 +769,7 @@ SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	return Value::nil();
 	'''
 
-SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p):int_ErrorIfNeg
+SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
 SDL_RenderFillRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	R'''
@@ -781,9 +781,9 @@ SDL_RenderFillRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	return Value::nil();
 	'''
 
-SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p):int_ErrorIfNeg
+SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
-//SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_Rect_p, angle:const_double, center:const_SDL_Point_p, flip:const_SDL_RendererFlip):int
+//SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil, angle:const_double, center:const_SDL_Point_p, flip:const_SDL_RendererFlip):int
 
 SDL_RenderDrawPointF(renderer:SDL_Renderer_p, x:float, y:float):int_ErrorIfNeg
 
@@ -825,11 +825,11 @@ SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects[]:SDL_FRect) = \
 	return Value::nil();
 	'''
 
-SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p):int_ErrorIfNeg
+SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_FRect_p):int_ErrorIfNeg
 
-//SDL_RenderCopyExF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p, dstrect:const_SDL_FRect_p, angle:const_double, center:const_SDL_FPoint_p, flip:const_SDL_RendererFlip):int
+//SDL_RenderCopyExF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_FRect_p, angle:const_double, center:const_SDL_FPoint_p, flip:const_SDL_RendererFlip):int
 
-SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p, format:Uint32, pixels:void_p, pitch:int):int_ErrorIfNeg
+SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil, format:Uint32, pixels:void_p, pitch:int):int_ErrorIfNeg
 
 SDL_RenderPresent(renderer:SDL_Renderer_p):void
 
@@ -1012,7 +1012,7 @@ SDL_GetSurfaceBlendMode(surface:SDL_Surface_p) = \
 	return new Value_Number(blendMode);
 	'''
 
-SDL_SetClipRect(surface:SDL_Surface_p, rect:const_SDL_Rect_p):SDL_bool
+SDL_SetClipRect(surface:SDL_Surface_p, rect:const_SDL_Rect_p:nil):SDL_bool
 
 SDL_GetClipRect(surface:SDL_Surface_p) = \
 	R'''
@@ -1029,9 +1029,9 @@ SDL_ConvertSurfaceFormat(src:SDL_Surface_p, pixel_format:Uint32, flags:Uint32):S
 
 SDL_ConvertPixels(width:int, height:int, src_format:Uint32, src:const_void_p, src_pitch:int, dst_format:Uint32, dst:void_p, dst_pitch:int):int
 
-SDL_FillRect(dst:SDL_Surface_p, rect:const_SDL_Rect_p, color:Uint32):int
+SDL_FillRect(dst:SDL_Surface_p, rect:const_SDL_Rect_p:nil, color:Uint32):int
 
-SDL_FillRects(dst:SDL_Surface_p, rects:const_SDL_Rect_p, count:int, color:Uint32):int
+SDL_FillRects(dst:SDL_Surface_p, rects:const_SDL_Rect_p:nil, count:int, color:Uint32):int
 
 SDL_BlitSurface(src:SDL_Surface_p, srcrect:const_SDL_Rect_p:nil, dst:SDL_Surface_p, dstrect:SDL_Rect_p:nil):int
 

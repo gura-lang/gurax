@@ -2469,12 +2469,12 @@ Gurax_ImplementFunctionEx(SDL_GetTextureScaleMode_gurax, processor_gurax, argume
 	return new Value_Number(scaleMode);
 }
 
-// sdl.SDL_UpdateTexture(texture:SDL_Texture, rect:SDL_Rect, pixels:Pointer, pitch:Number)
+// sdl.SDL_UpdateTexture(texture:SDL_Texture, rect:SDL_Rect:nil, pixels:Pointer, pitch:Number)
 Gurax_DeclareFunctionAlias(SDL_UpdateTexture_gurax, "SDL_UpdateTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -2487,7 +2487,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
 	int pitch = args_gurax.PickNumber<int>();
 	// Function body
@@ -2499,12 +2499,12 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UpdateYUVTexture(texture:SDL_Texture, rect:SDL_Rect, Yplane:Pointer, Ypitch:Number, Uplane:Pointer, Upitch:Number, Vplane:Pointer, Vpitch:Number)
+// sdl.SDL_UpdateYUVTexture(texture:SDL_Texture, rect:SDL_Rect:nil, Yplane:Pointer, Ypitch:Number, Uplane:Pointer, Upitch:Number, Vplane:Pointer, Vpitch:Number)
 Gurax_DeclareFunctionAlias(SDL_UpdateYUVTexture_gurax, "SDL_UpdateYUVTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("Yplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Ypitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Uplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
@@ -2521,7 +2521,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const Uint8* Yplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int Ypitch = args_gurax.PickNumber<int>();
 	const Uint8* Uplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
@@ -2718,12 +2718,12 @@ Gurax_ImplementFunctionEx(SDL_RenderGetIntegerScale_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_RenderSetViewport(renderer:SDL_Renderer, rect:SDL_Rect)
+// sdl.SDL_RenderSetViewport(renderer:SDL_Renderer, rect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_RenderSetViewport_gurax, "SDL_RenderSetViewport")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2734,7 +2734,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetViewport_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderSetViewport(renderer, rect);
 	if (rtn < 0) {
@@ -2765,12 +2765,12 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_RenderSetClipRect(renderer:SDL_Renderer, rect:SDL_Rect)
+// sdl.SDL_RenderSetClipRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_RenderSetClipRect_gurax, "SDL_RenderSetClipRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2781,7 +2781,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetClipRect_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderSetClipRect(renderer, rect);
 	if (rtn < 0) {
@@ -3123,12 +3123,12 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLines_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// sdl.SDL_RenderDrawRect(renderer:SDL_Renderer, rect:SDL_Rect)
+// sdl.SDL_RenderDrawRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRect_gurax, "SDL_RenderDrawRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3139,7 +3139,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRect_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderDrawRect(renderer, rect);
 	if (rtn < 0) {
@@ -3175,12 +3175,12 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRects_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// sdl.SDL_RenderFillRect(renderer:SDL_Renderer, rect:SDL_Rect)
+// sdl.SDL_RenderFillRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRect_gurax, "SDL_RenderFillRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3191,7 +3191,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRect_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderFillRect(renderer, rect);
 	if (rtn < 0) {
@@ -3227,14 +3227,14 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// sdl.SDL_RenderCopy(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect, dstrect:SDL_Rect)
+// sdl.SDL_RenderCopy(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_RenderCopy_gurax, "SDL_RenderCopy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3246,8 +3246,8 @@ Gurax_ImplementFunctionEx(SDL_RenderCopy_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
 	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
-	const SDL_Rect* srcrect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	const SDL_Rect* dstrect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	const SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderCopy(renderer, texture, srcrect, dstrect);
 	if (rtn < 0) {
@@ -3475,13 +3475,13 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectsF_gurax, processor_gurax, argument_
 	return Value::nil();
 }
 
-// sdl.SDL_RenderCopyF(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect, dstrect:SDL_FRect)
+// sdl.SDL_RenderCopyF(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderCopyF_gurax, "SDL_RenderCopyF")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dstrect", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -3494,7 +3494,7 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyF_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
 	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
-	const SDL_Rect* srcrect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const SDL_FRect* dstrect = args_gurax.Pick<Value_SDL_FRect>().GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderCopyF(renderer, texture, srcrect, dstrect);
@@ -3505,12 +3505,12 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyF_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderReadPixels(renderer:SDL_Renderer, rect:SDL_Rect, format:Number, pixels:Pointer, pitch:Number)
+// sdl.SDL_RenderReadPixels(renderer:SDL_Renderer, rect:SDL_Rect:nil, format:Number, pixels:Pointer, pitch:Number)
 Gurax_DeclareFunctionAlias(SDL_RenderReadPixels_gurax, "SDL_RenderReadPixels")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -3524,7 +3524,7 @@ Gurax_ImplementFunctionEx(SDL_RenderReadPixels_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	Uint32 format = args_gurax.PickNumber<Uint32>();
 	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!pixels) {
@@ -4580,12 +4580,12 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 	return new Value_Number(blendMode);
 }
 
-// sdl.SDL_SetClipRect(surface:SDL_Surface, rect:SDL_Rect)
+// sdl.SDL_SetClipRect(surface:SDL_Surface, rect:SDL_Rect:nil)
 Gurax_DeclareFunctionAlias(SDL_SetClipRect_gurax, "SDL_SetClipRect")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4596,7 +4596,7 @@ Gurax_ImplementFunctionEx(SDL_SetClipRect_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_bool rtn = SDL_SetClipRect(surface, rect);
 	return new Gurax::Value_Bool(!!rtn);
@@ -4729,12 +4729,12 @@ Gurax_ImplementFunctionEx(SDL_ConvertPixels_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_FillRect(dst:SDL_Surface, rect:SDL_Rect, color:Number)
+// sdl.SDL_FillRect(dst:SDL_Surface, rect:SDL_Rect:nil, color:Number)
 Gurax_DeclareFunctionAlias(SDL_FillRect_gurax, "SDL_FillRect")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -4746,19 +4746,19 @@ Gurax_ImplementFunctionEx(SDL_FillRect_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	Uint32 color = args_gurax.PickNumber<Uint32>();
 	// Function body
 	int rtn = SDL_FillRect(dst, rect, color);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_FillRects(dst:SDL_Surface, rects:SDL_Rect, count:Number, color:Number)
+// sdl.SDL_FillRects(dst:SDL_Surface, rects:SDL_Rect:nil, count:Number, color:Number)
 Gurax_DeclareFunctionAlias(SDL_FillRects_gurax, "SDL_FillRects")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
@@ -4771,7 +4771,7 @@ Gurax_ImplementFunctionEx(SDL_FillRects_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	const SDL_Rect* rects = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	const SDL_Rect* rects = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	int count = args_gurax.PickNumber<int>();
 	Uint32 color = args_gurax.PickNumber<Uint32>();
 	// Function body

@@ -25,10 +25,10 @@ loadMedia() = {
 close() = {
 	//Deallocate surface
 	SDL_FreeSurface(gStretchedSurface);
-	gStretchedSurface = nil;
+	gStretchedSurface:extern = nil;
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
-	gWindow = nil;
+	gWindow:extern = nil;
 	//Quit SDL subsystems
 	SDL_Quit();
 }

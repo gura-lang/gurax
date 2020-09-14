@@ -44,7 +44,7 @@ close() = {
 	}
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
-	gWindow = nil;
+	gWindow:extern = nil;
 	//Quit SDL subsystems
 	SDL_Quit();
 }
