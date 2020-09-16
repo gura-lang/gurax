@@ -1,0 +1,226 @@
+#!/usr/bin/env gurax
+/*This source code copyrighted by Lazy Foo' Productions (2004-2020)
+and may not be redistributed without written permission.*/
+
+import(sdl) {*}
+import(png)
+
+SCREEN_WIDTH = 640;
+SCREEN_HEIGHT = 480;
+
+//Texture wrapper class
+LTexture = class {
+	//Initializes variables
+	__init__() = {
+		//Initialize
+		this.mTexture = nil;
+		this.mWidth = 0;
+		this.mHeight = 0;
+	}
+
+	//Deallocates memory
+	__del__() = {
+		this.free()
+	};
+
+	//Loads image at specified path
+	loadFromFile(path:String) = {
+		//Get rid of preexisting texture
+		this.free();
+
+		//The final texture
+		newTexture = nil;
+
+		//Load image at specified path
+		loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
+		//Color key image
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+
+		//Create texture from surface pixels
+		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		//Get image dimensions
+		this.mWidth = loadedSurface.w;
+		this.mHeight = loadedSurface.h;
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+
+		//Return success
+		this.mTexture = newTexture;
+	}
+
+	//Deallocates texture
+	free() = {
+		if (this.mTexture) {
+			SDL_DestroyTexture(this.mTexture);
+			this.mTexture = nil;
+			this.mWidth = 0;
+			this.mHeight = 0;
+		}
+	}
+
+	//Set color modulation
+	setColor(red:Number, green:Number, blue:Number) = {
+		//Modulate texture
+		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
+	}
+
+	setBlendMode(blending:Number) = {
+		//Set blending function
+		SDL_SetTextureBlendMode(this.mTexture, blending);
+	}
+			
+	setAlpha(alpha:Number) = {
+		//Modulate texture alpha
+		SDL_SetTextureAlphaMod(this.mTexture, alpha);
+	}
+
+	//Renders texture at given point
+	render(x:Number, y:Number, clip?:SDL_Rect) = {
+		//Set rendering space and render to screen
+		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
+
+		//Set clip rendering dimensions
+		if (clip) {
+			renderQuad.w = clip.w;
+			renderQuad.h = clip.h;
+		}
+
+		//Render to screen
+		SDL_RenderCopy(gRenderer, this.mTexture, clip, renderQuad);
+	}
+
+	//Gets image dimensions
+	getWidth() = this.mWidth;
+	getHeight() = this.mHeight;
+
+	//The actual hardware texture
+	mTexture:SDL_Texture;
+
+	//Image dimensions
+	mWidth:Number;
+	mHeight:Number;
+};
+
+//The window we'll be rendering to
+gWindow = nil
+
+//The window renderer
+gRenderer = nil
+
+//Scene sprites
+gSpriteClips = Dim(4) {SDL_Rect()};
+gModulatedTexture = LTexture();
+gBackgroundTexture = LTexture();
+
+
+init() = {
+	//Initialize SDL
+	SDL_Init(SDL_INIT_VIDEO)
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+		Printf("Warning: Linear texture filtering not enabled!");
+	}
+ 	//Create window
+	gWindow:extern = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	//Create renderer for window
+	gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+}
+
+loadMedia() = {
+	//Load front alpha texture
+	gModulatedTexture.loadFromFile("13_alpha_blending/fadeout.png")
+	gModulatedTexture.setBlendMode(SDL_BLENDMODE_BLEND);
+	//Load background texture
+	gBackgroundTexture.loadFromFile("13_alpha_blending/fadein.png")
+}
+
+close() = {
+	//Free loaded images
+	gModulatedTexture.free();
+	gBackgroundTexture.free();
+
+	//Destroy window
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow:extern = nil;
+	gRenderer:extern = nil;
+
+	//Quit SDL subsystems
+	SDL_Quit();
+}
+
+loadTexture(path:String) = {
+	//Load image at specified path
+	loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
+	//Create texture from surface pixels
+	newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+	//Get rid of old loaded surface
+	SDL_FreeSurface(loadedSurface);
+	newTexture
+}
+
+main() = {
+	//Start up SDL and create window
+	init()
+	//Load media
+	loadMedia()
+
+	quit = false
+
+	//Event handler
+	e = SDL_Event()
+
+	//Modulation component
+	a = 255;
+
+	//While application is running
+	while (!quit) {
+		//Handle events on queue
+		while (SDL_PollEvent(e) != 0) {
+			//User requests quit
+			if (e.type == SDL_QUIT) {
+				quit = true;
+			} elsif (e.type == SDL_KEYDOWN) {
+				if (e.key.keysym.sym == SDLK_w) {
+					//Increase alpha on w
+					//Cap if over 255
+					if (a + 32 > 255) {
+						a = 255;
+					} else {
+						//Increment otherwise
+						a += 32;
+					}
+				} elsif (e.key.keysym.sym == SDLK_s) {
+					//Decrease alpha on s
+					//Cap if below 0
+					if (a - 32 < 0) {
+						a = 0;
+					} else {
+						//Decrement otherwise
+						a -= 32;
+					}
+				}
+			}
+		}
+
+		//Clear screen
+		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(gRenderer);
+
+		//Render background
+		gBackgroundTexture.render(0, 0);
+
+		//Render front blended
+		gModulatedTexture.setAlpha(a);
+		gModulatedTexture.render(0, 0);
+
+		//Update screen
+		SDL_RenderPresent(gRenderer);
+	}
+
+	//Free resources and close SDL
+	close();
+}
+
+main()
