@@ -137,6 +137,7 @@ r.DeclareType_EntityPtr('const_SDL_DisplayMode_p', 'const SDL_DisplayMode*', 'SD
 r.DeclareType_EntityPtr('const_SDL_FPoint_p', 'const SDL_FPoint*', 'SDL_FPoint')
 r.DeclareType_EntityPtr('const_SDL_FRect_p', 'const SDL_FRect*', 'SDL_FRect')
 r.DeclareType_EntityPtr('const_SDL_PixelFormat_p', 'const SDL_PixelFormat*', 'SDL_PixelFormat')
+r.DeclareType_EntityPtr('const_SDL_Point_p', 'const SDL_Point*', 'SDL_Point')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
@@ -783,7 +784,7 @@ SDL_RenderFillRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 
 SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil):int_ErrorIfNeg
 
-//SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil, angle:const_double, center:const_SDL_Point_p, flip:const_SDL_RendererFlip):int
+SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil, angle:double, center:const_SDL_Point_p:nil, flip:SDL_RendererFlip):int_ErrorIfNeg
 
 SDL_RenderDrawPointF(renderer:SDL_Renderer_p, x:float, y:float):int_ErrorIfNeg
 

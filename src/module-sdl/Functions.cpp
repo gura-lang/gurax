@@ -3257,6 +3257,42 @@ Gurax_ImplementFunctionEx(SDL_RenderCopy_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RenderCopyEx(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_Rect:nil, angle:Number, center:SDL_Point:nil, flip:Number)
+Gurax_DeclareFunctionAlias(SDL_RenderCopyEx_gurax, "SDL_RenderCopyEx")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("center", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("flip", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RenderCopyEx_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	const SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	double angle = args_gurax.PickNumber<double>();
+	const SDL_Point* center = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Point>().GetEntityPtr() : nullptr;
+	SDL_RendererFlip flip = args_gurax.PickNumber<SDL_RendererFlip>();
+	// Function body
+	int rtn = SDL_RenderCopyEx(renderer, texture, srcrect, dstrect, angle, center, flip);
+	if (rtn < 0) {
+		IssueError_SDL();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_RenderDrawPointF(renderer:SDL_Renderer, x:Number, y:Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawPointF_gurax, "SDL_RenderDrawPointF")
 {
@@ -9977,6 +10013,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRect_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderFillRects_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderCopy_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RenderCopyEx_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPointF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawPointsF_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderDrawLineF_gurax));
