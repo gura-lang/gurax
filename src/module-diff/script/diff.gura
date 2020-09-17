@@ -19,7 +19,7 @@ Edit.Present():void = {
 		Println(' ', this.source)
 	} else {
 		clr = cond(this.type == `add, `brightGreen, `brightRed)
-		conio.SetColor(`white, clr) { Printf('%s', this.mark) }
+		conio.SetColor(`white, clr) { __root__.Print(this.mark) }
 		conio.SetColor(clr) { Println(this.source) }
 	}
 }

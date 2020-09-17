@@ -73,6 +73,9 @@ public:
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
 		GetFrame().GatherSymbol(symbolList);
 	}
+	virtual bool CanEvalAsMethod(const Function& function) const override;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 }
