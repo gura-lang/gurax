@@ -5,34 +5,36 @@
 import(conio)
 import(diff):binary {*}
 
-Diff.Present() = {
+Diff.Present():void = {
 	this.EachHunk()::Present()
 }
 
-Hunk.Present() = {
+Hunk.Present():void = {
 	Printf('@@ %s @@\n', this.range)
 	this.EachEdit()::Present()
 }
 
-Edit.Present() = {
+Edit.Present():void = {
 	if (this.type == `common) {
 		Println(' ', this.source)
 	} else {
 		clr = cond(this.type == `add, `brightGreen, `brightRed)
-		conio.SetColor(`white, clr) { Print(this.mark) }
+		conio.SetColor(`white, clr) { Printf('%s', this.mark) }
 		conio.SetColor(clr) { Println(this.source) }
 	}
 }
 
-Diff.Print() = {
+Diff.Print():void = {
 	this.EachHunk()::Print()
 }
 
-Hunk.Print() = {
+Hunk.Print():void = {
 	Printf('@@ %s @@\n', this.range)
 	this.EachEdit()::Print()
 }
 
-Edit.Print() = {
+Edit.Print():void = {
 	Println(this.mark, this.source)
 }
+
+File(src1:Stream, src2:Stream) = Diff(src1, src2).Present()
