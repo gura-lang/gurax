@@ -5406,6 +5406,25 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardFocus_gurax, processor_gurax, argument_
 	return new Value_SDL_Window(rtn);
 }
 
+// sdl.SDL_GetKeyboardState()
+Gurax_DeclareFunctionAlias(SDL_GetKeyboardState_gurax, "SDL_GetKeyboardState")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_GetKeyboardState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int numkeys;
+	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
+	RefPtr<Memory> pMemory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn)));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(numkeys)));
+	return new Value_Array(pArray.release());
+}
+
 // sdl.SDL_GetModState()
 Gurax_DeclareFunctionAlias(SDL_GetModState_gurax, "SDL_GetModState")
 {
@@ -10103,6 +10122,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_EventState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RegisterEvents_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetKeyboardFocus_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_GetKeyboardState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetModState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetModState_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetKeyFromScancode_gurax));

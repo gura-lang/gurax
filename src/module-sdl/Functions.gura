@@ -1152,7 +1152,14 @@ SDL_RegisterEvents(numevents:int):Uint32
 
 SDL_GetKeyboardFocus():SDL_Window_p
 
-//SDL_GetKeyboardState(numkeys:int_p):const_Uint8_p
+SDL_GetKeyboardState() = \
+	R'''
+	int numkeys;
+	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
+	RefPtr<Memory> pMemory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn)));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(numkeys)));
+	return new Value_Array(pArray.release());
+	'''
 
 SDL_GetModState():SDL_Keymod
 
