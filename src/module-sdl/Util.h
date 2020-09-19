@@ -8,6 +8,7 @@
 Gurax_BeginModuleScope(sdl)
 
 void IssueError_SDL();
+void IssueError_SDL_image();
 
 Gurax_EndModuleScope(sdl)
 

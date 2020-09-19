@@ -9884,6 +9884,652 @@ Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gura
 	return Value_Tuple::Create(new Value_Number(state), new Value_Number(secs), new Value_Number(pct));
 }
 
+// sdl.IMG_Init(flags:Number)
+Gurax_DeclareFunctionAlias(IMG_Init_gurax, "IMG_Init")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_Init_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int flags = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = IMG_Init(flags);
+	if (rtn < 0) {
+		IssueError_SDL_image();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_Quit()
+Gurax_DeclareFunctionAlias(IMG_Quit_gurax, "IMG_Quit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_Quit_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	IMG_Quit();
+	return Gurax::Value::nil();
+}
+
+// sdl.IMG_Load(file:String)
+Gurax_DeclareFunctionAlias(IMG_Load_gurax, "IMG_Load")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_Load_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* file = args_gurax.PickString();
+	// Function body
+	SDL_Surface* rtn = IMG_Load(file);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_Load_RW(src:SDL_RWops, freesrc:Number)
+Gurax_DeclareFunctionAlias(IMG_Load_RW_gurax, "IMG_Load_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_Load_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	// Function body
+	SDL_Surface* rtn = IMG_Load_RW(src, freesrc);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadTyped_RW(src:SDL_RWops, freesrc:Number, type:String)
+Gurax_DeclareFunctionAlias(IMG_LoadTyped_RW_gurax, "IMG_LoadTyped_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadTyped_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	const char* type = args_gurax.PickString();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadTyped_RW(src, freesrc, type);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadCUR_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadCUR_RW_gurax, "IMG_LoadCUR_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadCUR_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadCUR_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadICO_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadICO_RW_gurax, "IMG_LoadICO_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadICO_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadICO_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadBMP_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadBMP_RW_gurax, "IMG_LoadBMP_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadBMP_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadPNM_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadPNM_RW_gurax, "IMG_LoadPNM_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadPNM_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadPNM_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadXPM_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadXPM_RW_gurax, "IMG_LoadXPM_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadXPM_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadXPM_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadXCF_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadXCF_RW_gurax, "IMG_LoadXCF_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadXCF_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadXCF_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadPCX_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadPCX_RW_gurax, "IMG_LoadPCX_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadPCX_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadPCX_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadGIF_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadGIF_RW_gurax, "IMG_LoadGIF_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadGIF_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadGIF_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadJPG_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadJPG_RW_gurax, "IMG_LoadJPG_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadJPG_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadJPG_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadTIF_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadTIF_RW_gurax, "IMG_LoadTIF_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadTIF_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadTIF_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadPNG_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadPNG_RW_gurax, "IMG_LoadPNG_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadPNG_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadPNG_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadTGA_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadTGA_RW_gurax, "IMG_LoadTGA_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadTGA_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadTGA_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadLBM_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadLBM_RW_gurax, "IMG_LoadLBM_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadLBM_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadLBM_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_LoadXV_RW(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_LoadXV_RW_gurax, "IMG_LoadXV_RW")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_LoadXV_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	SDL_Surface* rtn = IMG_LoadXV_RW(src);
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.IMG_isCUR(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isCUR_gurax, "IMG_isCUR")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isCUR_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isCUR(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isICO(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isICO_gurax, "IMG_isICO")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isICO_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isICO(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isBMP(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isBMP_gurax, "IMG_isBMP")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isBMP_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isBMP(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isPNM(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isPNM_gurax, "IMG_isPNM")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isPNM_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isPNM(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isXPM(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isXPM_gurax, "IMG_isXPM")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isXPM_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isXPM(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isXCF(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isXCF_gurax, "IMG_isXCF")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isXCF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isXCF(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isPCX(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isPCX_gurax, "IMG_isPCX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isPCX_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isPCX(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isGIF(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isGIF_gurax, "IMG_isGIF")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isGIF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isGIF(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isJPG(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isJPG_gurax, "IMG_isJPG")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isJPG_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isJPG(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isTIF(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isTIF_gurax, "IMG_isTIF")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isTIF_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isTIF(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isPNG(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isPNG_gurax, "IMG_isPNG")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isPNG_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isPNG(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isLBM(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isLBM_gurax, "IMG_isLBM")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isLBM_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isLBM(src);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.IMG_isXV(src:SDL_RWops)
+Gurax_DeclareFunctionAlias(IMG_isXV_gurax, "IMG_isXV")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	// Function body
+	int rtn = IMG_isXV(src);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -10347,6 +10993,38 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SIMDGetAlignment_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SIMDFree_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetPowerInfo_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_Init_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_Quit_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_Load_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_Load_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadTyped_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadCUR_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadICO_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadBMP_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadPNM_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadXPM_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadXCF_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadPCX_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadGIF_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadJPG_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadTIF_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadPNG_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadTGA_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadLBM_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_LoadXV_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isCUR_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isICO_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isBMP_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isPNM_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isXPM_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isXCF_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isPCX_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isGIF_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isJPG_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isTIF_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isPNG_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isLBM_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_isXV_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

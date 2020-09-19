@@ -47,6 +47,16 @@ r.DeclareType('int_ErrorIfNeg', 'int', 'Nil',
 	return new Gurax::Value_Number(rtn);
 	''')
 
+r.DeclareType('int_ErrorIfNeg_image', 'int', 'Nil',
+	codeFunctionBody = R'''
+	int rtn = ${caller};
+	if (rtn < 0) {
+		IssueError_SDL_image();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+	''')
+
 r.DeclareType_Number('Sint8')
 r.DeclareType_Number('Uint8')
 r.DeclareType_Number('Sint16')
@@ -2118,6 +2128,74 @@ SDL_GetPowerInfo() = \
 //SDL_iconv(cd:SDL_iconv_t, inbuf:const_char_pp, inbytesleft:size_t_p, outbuf:char_pp, outbytesleft:size_t_p):size_t
 
 //SDL_iconv_string(tocode:const_char_p, fromcode:const_char_p, inbuf:const_char_p, inbytesleft:size_t):char_p
+
+IMG_Init(flags:int):int_ErrorIfNeg_image
+
+IMG_Quit():void
+
+IMG_Load(file:const_char_p):SDL_Surface_p
+
+IMG_Load_RW(src:SDL_RWops_p, freesrc:int):SDL_Surface_p
+
+IMG_LoadTyped_RW(src:SDL_RWops_p, freesrc:int, type:const_char_p):SDL_Surface_p
+
+IMG_LoadCUR_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadICO_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadBMP_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadPNM_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadXPM_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadXCF_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadPCX_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadGIF_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadJPG_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadTIF_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadPNG_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadTGA_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadLBM_RW(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_LoadXV_RW(src:SDL_RWops_p):SDL_Surface_p
+
+//IMG_ReadXPMFromArray(src:SDL_RWops_p):SDL_Surface_p
+
+IMG_isCUR(src:SDL_RWops_p):int
+
+IMG_isICO(src:SDL_RWops_p):int
+
+IMG_isBMP(src:SDL_RWops_p):int
+
+IMG_isPNM(src:SDL_RWops_p):int
+
+IMG_isXPM(src:SDL_RWops_p):int
+
+IMG_isXCF(src:SDL_RWops_p):int
+
+IMG_isPCX(src:SDL_RWops_p):int
+
+IMG_isGIF(src:SDL_RWops_p):int
+
+IMG_isJPG(src:SDL_RWops_p):int
+
+IMG_isTIF(src:SDL_RWops_p):int
+
+IMG_isPNG(src:SDL_RWops_p):int
+
+//IMG_isTGA(src:SDL_RWops_p):int
+
+IMG_isLBM(src:SDL_RWops_p):int
+
+IMG_isXV(src:SDL_RWops_p):int
 
 }
 
