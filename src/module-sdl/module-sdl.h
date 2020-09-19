@@ -5,6 +5,8 @@
 #define GURAX_MODULE_SDL_H
 #include <gurax.h>
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_syswm.h>
 #include "Util.h"
 #include "Functions.h"

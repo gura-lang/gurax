@@ -11,11 +11,15 @@ add_library(sdl.gurd SHARED)
 target_include_directories(sdl.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2-2.0.12/include>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_image-2.0.5>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_mixer-2.0.4>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(sdl.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2-2.0.12/VisualC/x64/Release>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_image-2.0.5/VisualC/x64/Release>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_mixer-2.0.4/VisualC/x64/Release>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
@@ -97,6 +101,8 @@ set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_libraries(sdl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:SDL2.lib>
+	$<$<PLATFORM_ID:Windows>:SDL2_image.lib>
+	$<$<PLATFORM_ID:Windows>:SDL2_mixer.lib>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

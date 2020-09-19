@@ -279,6 +279,38 @@ class Package_sdl {
 $packages += [Package_sdl]::new()
 
 #---------------------------------------------------------------------------------
+# Package: sdl_image
+#---------------------------------------------------------------------------------
+class Package_sdl_image {
+	[String] $name = "sdl_image"
+	[String] $ver = "2.0.5"
+	[String] $baseName = "SDL2_image-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		ExecCommand msbuild 'VisualC\SDL_image.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64'
+		copy VisualC\x64\Release\SDL2_image.dll ..\..\bin
+	}
+}
+$packages += [Package_sdl_image]::new()
+
+#---------------------------------------------------------------------------------
+# Package: sdl_mixer
+#---------------------------------------------------------------------------------
+class Package_sdl_mixer {
+	[String] $name = "sdl_mixer"
+	[String] $ver = "2.0.4"
+	[String] $baseName = "SDL2_mixer-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		ExecCommand msbuild 'VisualC\SDL_mixer.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64'
+		copy VisualC\x64\Release\SDL2_mixer.dll ..\..\bin
+	}
+}
+$packages += [Package_sdl_mixer]::new()
+
+#---------------------------------------------------------------------------------
 # Package: zlib
 #---------------------------------------------------------------------------------
 class Package_zlib {
