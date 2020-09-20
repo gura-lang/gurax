@@ -908,6 +908,13 @@ void AssignConsts(Frame& frame)
 	AssignConst(SDL_ORIENTATION_LANDSCAPE_FLIPPED);
 	AssignConst(SDL_ORIENTATION_PORTRAIT);
 	AssignConst(SDL_ORIENTATION_PORTRAIT_FLIPPED);
+	// SDL_image
+	AssignConst(SDL_IMAGE_MAJOR_VERSION);
+	AssignConst(SDL_IMAGE_MINOR_VERSION);
+	AssignConst(SDL_IMAGE_PATCHLEVEL);
+	AssignConst(IMG_INIT_JPG);
+	AssignConst(IMG_INIT_PNG);
+	AssignConst(IMG_INIT_TIF);
 }
 
 Gurax_EndModuleScope(sdl)
