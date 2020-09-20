@@ -68,4 +68,9 @@ void IssueError_SDL_image()
 	Error::Issue(ErrorType::GuestError, "%s", IMG_GetError());
 }
 
+void IssueError_SDL_mixer()
+{
+	Error::Issue(ErrorType::GuestError, "%s", Mix_GetError());
+}
+
 Gurax_EndModuleScope(sdl)

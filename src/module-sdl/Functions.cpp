@@ -10530,6 +10530,114 @@ Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.Mix_Init(flags:Number)
+Gurax_DeclareFunctionAlias(Mix_Init_gurax, "Mix_Init")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Init_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int flags = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_Init(flags);
+	if (rtn < 0) {
+		IssueError_SDL_mixer();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_Quit()
+Gurax_DeclareFunctionAlias(Mix_Quit_gurax, "Mix_Quit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Quit_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_Quit();
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_OpenAudio(frequency:Number, format:Number, channels:Number, chunksize:Number)
+Gurax_DeclareFunctionAlias(Mix_OpenAudio_gurax, "Mix_OpenAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("frequency", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunksize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_OpenAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int frequency = args_gurax.PickNumber<int>();
+	Uint16 format = args_gurax.PickNumber<Uint16>();
+	int channels = args_gurax.PickNumber<int>();
+	int chunksize = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_OpenAudio(frequency, format, channels, chunksize);
+	if (rtn < 0) {
+		IssueError_SDL_mixer();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_CloseAudio()
+Gurax_DeclareFunctionAlias(Mix_CloseAudio_gurax, "Mix_CloseAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_CloseAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_CloseAudio();
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_QuerySpec()
+Gurax_DeclareFunctionAlias(Mix_QuerySpec_gurax, "Mix_QuerySpec")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int frequency;
+	Uint16 format;
+	int channels;
+	if (Mix_QuerySpec(&frequency, &format, &channels) == 0) {
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(frequency),
+					new Value_Number(format), new Value_Number(channels));
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -11025,6 +11133,11 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(IMG_isPNG_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_isLBM_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_isXV_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Init_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Quit_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_OpenAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_CloseAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_QuerySpec_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

@@ -9,6 +9,7 @@ Gurax_BeginModuleScope(sdl)
 
 void IssueError_SDL();
 void IssueError_SDL_image();
+void IssueError_SDL_mixer();
 
 Gurax_EndModuleScope(sdl)
 

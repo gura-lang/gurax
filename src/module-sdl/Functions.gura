@@ -57,6 +57,16 @@ r.DeclareType('int_ErrorIfNeg_image', 'int', 'Nil',
 	return new Gurax::Value_Number(rtn);
 	''')
 
+r.DeclareType('int_ErrorIfNeg_mixer', 'int', 'Nil',
+	codeFunctionBody = R'''
+	int rtn = ${caller};
+	if (rtn < 0) {
+		IssueError_SDL_mixer();
+		return Value::nil();
+	}
+	return new Gurax::Value_Number(rtn);
+	''')
+
 r.DeclareType_Number('Sint8')
 r.DeclareType_Number('Uint8')
 r.DeclareType_Number('Sint16')
@@ -172,7 +182,7 @@ r.DeclareType_EntityPtr('SDL_Texture_p', 'SDL_Texture*', 'SDL_Texture')
 r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
 
 //------------------------------------------------------------------------------
-// Function Registration: Context
+// Function Registration: SDL2
 //------------------------------------------------------------------------------
 r.Register('sdl') {
 
@@ -2129,6 +2139,13 @@ SDL_GetPowerInfo() = \
 
 //SDL_iconv_string(tocode:const_char_p, fromcode:const_char_p, inbuf:const_char_p, inbytesleft:size_t):char_p
 
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: SDL2_image
+//------------------------------------------------------------------------------
+r.Register('sdl') {
+
 IMG_Init(flags:int):int_ErrorIfNeg_image
 
 IMG_Quit():void
@@ -2196,6 +2213,33 @@ IMG_isPNG(src:SDL_RWops_p):int
 IMG_isLBM(src:SDL_RWops_p):int
 
 IMG_isXV(src:SDL_RWops_p):int
+
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: SDL2_mixer
+//------------------------------------------------------------------------------
+r.Register('sdl') {
+
+Mix_Init(flags:int):int_ErrorIfNeg_mixer
+
+Mix_Quit():void
+
+Mix_OpenAudio(frequency:int, format:Uint16, channels:int, chunksize:int):int_ErrorIfNeg_mixer
+
+Mix_CloseAudio():void
+
+Mix_QuerySpec() = \
+	R'''
+	int frequency;
+	Uint16 format;
+	int channels;
+	if (Mix_QuerySpec(&frequency, &format, &channels) == 0) {
+		return Value::nil();
+	}
+	return Value_Tuple::Create(new Value_Number(frequency),
+					new Value_Number(format), new Value_Number(channels));
+	'''
 
 }
 
