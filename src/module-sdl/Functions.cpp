@@ -10533,7 +10533,7 @@ Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
 // sdl.Mix_Init(flags:Number)
 Gurax_DeclareFunctionAlias(Mix_Init_gurax, "Mix_Init")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -10547,10 +10547,6 @@ Gurax_ImplementFunctionEx(Mix_Init_gurax, processor_gurax, argument_gurax)
 	int flags = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_Init(flags);
-	if (rtn < 0) {
-		IssueError_SDL_mixer();
-		return Value::nil();
-	}
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -10573,7 +10569,7 @@ Gurax_ImplementFunctionEx(Mix_Quit_gurax, processor_gurax, argument_gurax)
 // sdl.Mix_OpenAudio(frequency:Number, format:Number, channels:Number, chunksize:Number)
 Gurax_DeclareFunctionAlias(Mix_OpenAudio_gurax, "Mix_OpenAudio")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("frequency", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -10593,27 +10589,57 @@ Gurax_ImplementFunctionEx(Mix_OpenAudio_gurax, processor_gurax, argument_gurax)
 	int chunksize = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_OpenAudio(frequency, format, channels, chunksize);
-	if (rtn < 0) {
-		IssueError_SDL_mixer();
-		return Value::nil();
-	}
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_CloseAudio()
-Gurax_DeclareFunctionAlias(Mix_CloseAudio_gurax, "Mix_CloseAudio")
+// sdl.Mix_OpenAudioDevice(frequency:Number, format:Number, channels:Number, chunksize:Number, device:String, allowed_changes:Number)
+Gurax_DeclareFunctionAlias(Mix_OpenAudioDevice_gurax, "Mix_OpenAudioDevice")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("frequency", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunksize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("allowed_changes", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementFunctionEx(Mix_CloseAudio_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementFunctionEx(Mix_OpenAudioDevice_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int frequency = args_gurax.PickNumber<int>();
+	Uint16 format = args_gurax.PickNumber<Uint16>();
+	int channels = args_gurax.PickNumber<int>();
+	int chunksize = args_gurax.PickNumber<int>();
+	const char* device = args_gurax.PickString();
+	int allowed_changes = args_gurax.PickNumber<int>();
 	// Function body
-	Mix_CloseAudio();
-	return Gurax::Value::nil();
+	int rtn = Mix_OpenAudioDevice(frequency, format, channels, chunksize, device, allowed_changes);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_AllocateChannels(numchans:Number)
+Gurax_DeclareFunctionAlias(Mix_AllocateChannels_gurax, "Mix_AllocateChannels")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("numchans", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_AllocateChannels_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int numchans = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_AllocateChannels(numchans);
+	return new Gurax::Value_Number(rtn);
 }
 
 // sdl.Mix_QuerySpec()
@@ -10636,6 +10662,1180 @@ Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 	}
 	return Value_Tuple::Create(new Value_Number(frequency),
 					new Value_Number(format), new Value_Number(channels));
+}
+
+// sdl.Mix_LoadWAV_RW(src:SDL_RWops, freesrc:Number)
+Gurax_DeclareFunctionAlias(Mix_LoadWAV_RW_gurax, "Mix_LoadWAV_RW")
+{
+	Declare(VTYPE_Mix_Chunk, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_LoadWAV_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Chunk* rtn = Mix_LoadWAV_RW(src, freesrc);
+	return new Value_Mix_Chunk(rtn);
+}
+
+// sdl.Mix_LoadMUS(file:String)
+Gurax_DeclareFunctionAlias(Mix_LoadMUS_gurax, "Mix_LoadMUS")
+{
+	Declare(VTYPE_Mix_Music, Flag::None);
+	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_LoadMUS_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* file = args_gurax.PickString();
+	// Function body
+	Mix_Music* rtn = Mix_LoadMUS(file);
+	return new Value_Mix_Music(rtn);
+}
+
+// sdl.Mix_LoadMUS_RW(src:SDL_RWops, freesrc:Number)
+Gurax_DeclareFunctionAlias(Mix_LoadMUS_RW_gurax, "Mix_LoadMUS_RW")
+{
+	Declare(VTYPE_Mix_Music, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_LoadMUS_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Music* rtn = Mix_LoadMUS_RW(src, freesrc);
+	return new Value_Mix_Music(rtn);
+}
+
+// sdl.Mix_LoadMUSType_RW(src:SDL_RWops, type:Number, freesrc:Number)
+Gurax_DeclareFunctionAlias(Mix_LoadMUSType_RW_gurax, "Mix_LoadMUSType_RW")
+{
+	Declare(VTYPE_Mix_Music, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_LoadMUSType_RW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	Mix_MusicType type = args_gurax.PickNumber<Mix_MusicType>();
+	int freesrc = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Music* rtn = Mix_LoadMUSType_RW(src, type, freesrc);
+	return new Value_Mix_Music(rtn);
+}
+
+// sdl.Mix_FreeChunk(chunk:Mix_Chunk)
+Gurax_DeclareFunctionAlias(Mix_FreeChunk_gurax, "Mix_FreeChunk")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FreeChunk_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	// Function body
+	Mix_FreeChunk(chunk);
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_FreeMusic(music:Mix_Music)
+Gurax_DeclareFunctionAlias(Mix_FreeMusic_gurax, "Mix_FreeMusic")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FreeMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	// Function body
+	Mix_FreeMusic(music);
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_GetNumChunkDecoders()
+Gurax_DeclareFunctionAlias(Mix_GetNumChunkDecoders_gurax, "Mix_GetNumChunkDecoders")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetNumChunkDecoders_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_GetNumChunkDecoders();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GetChunkDecoder(index:Number)
+Gurax_DeclareFunctionAlias(Mix_GetChunkDecoder_gurax, "Mix_GetChunkDecoder")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetChunkDecoder_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = Mix_GetChunkDecoder(index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.Mix_HasChunkDecoder(name:String)
+Gurax_DeclareFunctionAlias(Mix_HasChunkDecoder_gurax, "Mix_HasChunkDecoder")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_HasChunkDecoder_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	SDL_bool rtn = Mix_HasChunkDecoder(name);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// sdl.Mix_GetNumMusicDecoders()
+Gurax_DeclareFunctionAlias(Mix_GetNumMusicDecoders_gurax, "Mix_GetNumMusicDecoders")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetNumMusicDecoders_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_GetNumMusicDecoders();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GetMusicDecoder(index:Number)
+Gurax_DeclareFunctionAlias(Mix_GetMusicDecoder_gurax, "Mix_GetMusicDecoder")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetMusicDecoder_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	const char* rtn = Mix_GetMusicDecoder(index);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.Mix_GetMusicType(music:Mix_Music)
+Gurax_DeclareFunctionAlias(Mix_GetMusicType_gurax, "Mix_GetMusicType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetMusicType_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	// Function body
+	Mix_MusicType rtn = Mix_GetMusicType(music);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_UnregisterAllEffects(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_UnregisterAllEffects_gurax, "Mix_UnregisterAllEffects")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_UnregisterAllEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_UnregisterAllEffects(channel);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetPanning(channel:Number, left:Number, right:Number)
+Gurax_DeclareFunctionAlias(Mix_SetPanning_gurax, "Mix_SetPanning")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetPanning_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Uint8 left = args_gurax.PickNumber<Uint8>();
+	Uint8 right = args_gurax.PickNumber<Uint8>();
+	// Function body
+	int rtn = Mix_SetPanning(channel, left, right);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetPosition(channel:Number, angle:Number, distance:Number)
+Gurax_DeclareFunctionAlias(Mix_SetPosition_gurax, "Mix_SetPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("distance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Sint16 angle = args_gurax.PickNumber<Sint16>();
+	Uint8 distance = args_gurax.PickNumber<Uint8>();
+	// Function body
+	int rtn = Mix_SetPosition(channel, angle, distance);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetDistance(channel:Number, distance:Number)
+Gurax_DeclareFunctionAlias(Mix_SetDistance_gurax, "Mix_SetDistance")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("distance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetDistance_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Uint8 distance = args_gurax.PickNumber<Uint8>();
+	// Function body
+	int rtn = Mix_SetDistance(channel, distance);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetReverseStereo(channel:Number, flip:Number)
+Gurax_DeclareFunctionAlias(Mix_SetReverseStereo_gurax, "Mix_SetReverseStereo")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flip", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetReverseStereo_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	int flip = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_SetReverseStereo(channel, flip);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_ReserveChannels(num:Number)
+Gurax_DeclareFunctionAlias(Mix_ReserveChannels_gurax, "Mix_ReserveChannels")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_ReserveChannels_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int num = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_ReserveChannels(num);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupChannel(which:Number, tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupChannel_gurax, "Mix_GroupChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int which = args_gurax.PickNumber<int>();
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupChannel(which, tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupChannels(from:Number, to:Number, tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupChannels_gurax, "Mix_GroupChannels")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupChannels_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int from = args_gurax.PickNumber<int>();
+	int to = args_gurax.PickNumber<int>();
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupChannels(from, to, tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupAvailable(tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupAvailable_gurax, "Mix_GroupAvailable")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupAvailable_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupAvailable(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupCount(tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupCount_gurax, "Mix_GroupCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupCount_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupCount(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupOldest(tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupOldest_gurax, "Mix_GroupOldest")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupOldest_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupOldest(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GroupNewer(tag:Number)
+Gurax_DeclareFunctionAlias(Mix_GroupNewer_gurax, "Mix_GroupNewer")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GroupNewer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_GroupNewer(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_PlayChannelTimed(channel:Number, chunk:Mix_Chunk, loops:Number, ticks:Number)
+Gurax_DeclareFunctionAlias(Mix_PlayChannelTimed_gurax, "Mix_PlayChannelTimed")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PlayChannelTimed_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	int ticks = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_PlayChannelTimed(channel, chunk, loops, ticks);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_PlayMusic(music:Mix_Music, loops:Number)
+Gurax_DeclareFunctionAlias(Mix_PlayMusic_gurax, "Mix_PlayMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PlayMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_PlayMusic(music, loops);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeInMusic(music:Mix_Music, loops:Number, ms:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeInMusic_gurax, "Mix_FadeInMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeInMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	int ms = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_FadeInMusic(music, loops, ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeInMusicPos(music:Mix_Music, loops:Number, ms:Number, position:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeInMusicPos_gurax, "Mix_FadeInMusicPos")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeInMusicPos_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	int ms = args_gurax.PickNumber<int>();
+	double position = args_gurax.PickNumber<double>();
+	// Function body
+	int rtn = Mix_FadeInMusicPos(music, loops, ms, position);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeInChannelTimed(channel:Number, chunk:Mix_Chunk, loops:Number, ms:Number, ticks:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeInChannelTimed_gurax, "Mix_FadeInChannelTimed")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeInChannelTimed_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	int ms = args_gurax.PickNumber<int>();
+	int ticks = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_FadeInChannelTimed(channel, chunk, loops, ms, ticks);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_Volume(channel:Number, volume:Number)
+Gurax_DeclareFunctionAlias(Mix_Volume_gurax, "Mix_Volume")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Volume_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	int volume = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_Volume(channel, volume);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_VolumeChunk(chunk:Mix_Chunk, volume:Number)
+Gurax_DeclareFunctionAlias(Mix_VolumeChunk_gurax, "Mix_VolumeChunk")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_VolumeChunk_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	int volume = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_VolumeChunk(chunk, volume);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_VolumeMusic(volume:Number)
+Gurax_DeclareFunctionAlias(Mix_VolumeMusic_gurax, "Mix_VolumeMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_VolumeMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int volume = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_VolumeMusic(volume);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_HaltChannel(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_HaltChannel_gurax, "Mix_HaltChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_HaltChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_HaltChannel(channel);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_HaltGroup(tag:Number)
+Gurax_DeclareFunctionAlias(Mix_HaltGroup_gurax, "Mix_HaltGroup")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_HaltGroup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_HaltGroup(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_HaltMusic()
+Gurax_DeclareFunctionAlias(Mix_HaltMusic_gurax, "Mix_HaltMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_HaltMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_HaltMusic();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_ExpireChannel(channel:Number, ticks:Number)
+Gurax_DeclareFunctionAlias(Mix_ExpireChannel_gurax, "Mix_ExpireChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_ExpireChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	int ticks = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_ExpireChannel(channel, ticks);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeOutChannel(which:Number, ms:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeOutChannel_gurax, "Mix_FadeOutChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeOutChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int which = args_gurax.PickNumber<int>();
+	int ms = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_FadeOutChannel(which, ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeOutGroup(tag:Number, ms:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeOutGroup_gurax, "Mix_FadeOutGroup")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeOutGroup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tag = args_gurax.PickNumber<int>();
+	int ms = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_FadeOutGroup(tag, ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadeOutMusic(ms:Number)
+Gurax_DeclareFunctionAlias(Mix_FadeOutMusic_gurax, "Mix_FadeOutMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadeOutMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int ms = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_FadeOutMusic(ms);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadingMusic()
+Gurax_DeclareFunctionAlias(Mix_FadingMusic_gurax, "Mix_FadingMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadingMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_Fading rtn = Mix_FadingMusic();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_FadingChannel(which:Number)
+Gurax_DeclareFunctionAlias(Mix_FadingChannel_gurax, "Mix_FadingChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_FadingChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int which = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Fading rtn = Mix_FadingChannel(which);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_Pause(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_Pause_gurax, "Mix_Pause")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Pause_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Pause(channel);
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_Resume(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_Resume_gurax, "Mix_Resume")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Resume_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Resume(channel);
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_Paused(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_Paused_gurax, "Mix_Paused")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Paused_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_Paused(channel);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_PauseMusic()
+Gurax_DeclareFunctionAlias(Mix_PauseMusic_gurax, "Mix_PauseMusic")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PauseMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_PauseMusic();
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_ResumeMusic()
+Gurax_DeclareFunctionAlias(Mix_ResumeMusic_gurax, "Mix_ResumeMusic")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_ResumeMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_ResumeMusic();
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_RewindMusic()
+Gurax_DeclareFunctionAlias(Mix_RewindMusic_gurax, "Mix_RewindMusic")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_RewindMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_RewindMusic();
+	return Gurax::Value::nil();
+}
+
+// sdl.Mix_PausedMusic()
+Gurax_DeclareFunctionAlias(Mix_PausedMusic_gurax, "Mix_PausedMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PausedMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_PausedMusic();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetMusicPosition(position:Number)
+Gurax_DeclareFunctionAlias(Mix_SetMusicPosition_gurax, "Mix_SetMusicPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetMusicPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double position = args_gurax.PickNumber<double>();
+	// Function body
+	int rtn = Mix_SetMusicPosition(position);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_Playing(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_Playing_gurax, "Mix_Playing")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Playing_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_Playing(channel);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_PlayingMusic()
+Gurax_DeclareFunctionAlias(Mix_PlayingMusic_gurax, "Mix_PlayingMusic")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PlayingMusic_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_PlayingMusic();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetMusicCMD(command:String)
+Gurax_DeclareFunctionAlias(Mix_SetMusicCMD_gurax, "Mix_SetMusicCMD")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("command", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetMusicCMD_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* command = args_gurax.PickString();
+	// Function body
+	int rtn = Mix_SetMusicCMD(command);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetSynchroValue(value:Number)
+Gurax_DeclareFunctionAlias(Mix_SetSynchroValue_gurax, "Mix_SetSynchroValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetSynchroValue_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int value = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_SetSynchroValue(value);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GetSynchroValue()
+Gurax_DeclareFunctionAlias(Mix_GetSynchroValue_gurax, "Mix_GetSynchroValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetSynchroValue_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = Mix_GetSynchroValue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_SetSoundFonts(paths:String)
+Gurax_DeclareFunctionAlias(Mix_SetSoundFonts_gurax, "Mix_SetSoundFonts")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("paths", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_SetSoundFonts_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* paths = args_gurax.PickString();
+	// Function body
+	int rtn = Mix_SetSoundFonts(paths);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_GetSoundFonts()
+Gurax_DeclareFunctionAlias(Mix_GetSoundFonts_gurax, "Mix_GetSoundFonts")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetSoundFonts_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const char* rtn = Mix_GetSoundFonts();
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.Mix_GetChunk(channel:Number)
+Gurax_DeclareFunctionAlias(Mix_GetChunk_gurax, "Mix_GetChunk")
+{
+	Declare(VTYPE_Mix_Chunk, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_GetChunk_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	// Function body
+	Mix_Chunk* rtn = Mix_GetChunk(channel);
+	return new Value_Mix_Chunk(rtn);
+}
+
+// sdl.Mix_CloseAudio()
+Gurax_DeclareFunctionAlias(Mix_CloseAudio_gurax, "Mix_CloseAudio")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_CloseAudio_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	Mix_CloseAudio();
+	return Gurax::Value::nil();
 }
 
 void AssignFunctions(Frame& frame)
@@ -11136,8 +12336,67 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Mix_Init_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_Quit_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_OpenAudio_gurax));
-	frame.Assign(Gurax_CreateFunction(Mix_CloseAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_OpenAudioDevice_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_AllocateChannels_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_QuerySpec_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_LoadWAV_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_LoadMUS_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_LoadMUS_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_LoadMUSType_RW_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FreeChunk_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FreeMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetNumChunkDecoders_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetChunkDecoder_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_HasChunkDecoder_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetNumMusicDecoders_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetMusicDecoder_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetMusicType_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_UnregisterAllEffects_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetPanning_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetPosition_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetDistance_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetReverseStereo_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_ReserveChannels_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupChannel_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupChannels_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupAvailable_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupCount_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupOldest_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GroupNewer_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PlayChannelTimed_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PlayMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeInMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeInMusicPos_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeInChannelTimed_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Volume_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_VolumeChunk_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_VolumeMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_HaltChannel_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_HaltGroup_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_HaltMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_ExpireChannel_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeOutChannel_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeOutGroup_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadeOutMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadingMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_FadingChannel_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Pause_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Resume_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Paused_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PauseMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_ResumeMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_RewindMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PausedMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetMusicPosition_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Playing_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PlayingMusic_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetMusicCMD_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetSynchroValue_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetSynchroValue_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_SetSoundFonts_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetSoundFonts_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_GetChunk_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_CloseAudio_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

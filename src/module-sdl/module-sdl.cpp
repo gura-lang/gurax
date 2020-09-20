@@ -126,6 +126,8 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_MultiGestureEvent);
     Assign(VTYPE_SDL_DollarGestureEvent);
     Assign(VTYPE_SDL_DropEvent);
+    Assign(VTYPE_Mix_Chunk);
+    Assign(VTYPE_Mix_Music);
 	// Assignment of function
     AssignFunctions(GetFrame());
 	Assign(Gurax_CreateFunction(Test));

@@ -92,7 +92,9 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_TouchFingerEvent.cpp
 	VType_SDL_MultiGestureEvent.cpp
 	VType_SDL_DollarGestureEvent.cpp
-	VType_SDL_DropEvent.cpp)
+	VType_SDL_DropEvent.cpp
+	VType_Mix_Chunk.cpp
+	VType_Mix_Music.cpp)
 
 #-------------------------------------------------------------------------------
 # Link

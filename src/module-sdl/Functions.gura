@@ -126,6 +126,9 @@ r.DeclareType_Number('SDL_WindowFlags')
 r.DeclareType_Number('SDL_DisplayOrientation')
 r.DeclareType_Number('SDL_YUV_CONVERSION_MODE')
 
+r.DeclareType_Number('Mix_Fading')
+r.DeclareType_Number('Mix_MusicType')
+
 r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	codePicker = R'''
 	${this.cType} ${varName} = static_cast<SDL_bool>(args_gurax.PickBool());
@@ -160,6 +163,9 @@ r.DeclareType_EntityPtr('const_SDL_PixelFormat_p', 'const SDL_PixelFormat*', 'SD
 r.DeclareType_EntityPtr('const_SDL_Point_p', 'const SDL_Point*', 'SDL_Point')
 r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 
+r.DeclareType_EntityPtr('const_Mix_Chunk_p', 'const Mix_Chunk*', 'Mix_Chunk')
+r.DeclareType_EntityPtr('const_Mix_Music_p', 'const Mix_Music*', 'Mix_Music')
+
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
 r.DeclareType_EntityPtr('SDL_AudioCVT_p', 'SDL_AudioCVT*', 'SDL_AudioCVT')
 r.DeclareType_EntityPtr('SDL_AudioStream_p', 'SDL_AudioStream*', 'SDL_AudioStream')
@@ -180,6 +186,9 @@ r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
 r.DeclareType_EntityPtr('SDL_Texture_p', 'SDL_Texture*', 'SDL_Texture')
 r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
+
+r.DeclareType_EntityPtr('Mix_Chunk_p', 'Mix_Chunk*', 'Mix_Chunk')
+r.DeclareType_EntityPtr('Mix_Music_p', 'Mix_Music*', 'Mix_Music')
 
 //------------------------------------------------------------------------------
 // Function Registration: SDL2
@@ -2221,13 +2230,17 @@ IMG_isXV(src:SDL_RWops_p):int
 //------------------------------------------------------------------------------
 r.Register('sdl') {
 
-Mix_Init(flags:int):int_ErrorIfNeg_mixer
+//Mix_Linked_Version():const_SDL_version_p
+
+Mix_Init(flags:int):int
 
 Mix_Quit():void
 
-Mix_OpenAudio(frequency:int, format:Uint16, channels:int, chunksize:int):int_ErrorIfNeg_mixer
+Mix_OpenAudio(frequency:int, format:Uint16, channels:int, chunksize:int):int
 
-Mix_CloseAudio():void
+Mix_OpenAudioDevice(frequency:int, format:Uint16, channels:int, chunksize:int, device:const_char_p, allowed_changes:int):int
+
+Mix_AllocateChannels(numchans:int):int
 
 Mix_QuerySpec() = \
 	R'''
@@ -2240,6 +2253,144 @@ Mix_QuerySpec() = \
 	return Value_Tuple::Create(new Value_Number(frequency),
 					new Value_Number(format), new Value_Number(channels));
 	'''
+
+Mix_LoadWAV_RW(src:SDL_RWops_p, freesrc:int):Mix_Chunk_p
+
+Mix_LoadMUS(file:const_char_p):Mix_Music_p
+
+Mix_LoadMUS_RW(src:SDL_RWops_p, freesrc:int):Mix_Music_p
+
+Mix_LoadMUSType_RW(src:SDL_RWops_p, type:Mix_MusicType, freesrc:int):Mix_Music_p
+
+//Mix_QuickLoad_WAV(mem:Uint8_p):Mix_Chunk_p
+
+//Mix_QuickLoad_RAW(mem:Uint8_p, len:Uint32):Mix_Chunk_p
+
+Mix_FreeChunk(chunk:Mix_Chunk_p):void
+
+Mix_FreeMusic(music:Mix_Music_p):void
+
+Mix_GetNumChunkDecoders():int
+
+Mix_GetChunkDecoder(index:int):const_char_p
+
+Mix_HasChunkDecoder(name:const_char_p):SDL_bool
+
+Mix_GetNumMusicDecoders():int
+
+Mix_GetMusicDecoder(index:int):const_char_p
+
+//Mix_HasMusicDecoder(name:const_char_p):SDL_bool
+
+Mix_GetMusicType(music:const_Mix_Music_p):Mix_MusicType
+
+//Mix_SetPostMix(udata:void_SDLCALL_p_mix_func_void_p, stream:Uint8_p, len:int, arg:void_p):void
+
+//Mix_HookMusic(udata:void_SDLCALL_p_mix_func_void_p, stream:Uint8_p, len:int, arg:void_p):void
+
+//Mix_HookMusicFinished(void:void_SDLCALL_p_music_finished):void
+
+//Mix_GetMusicHookData():void_p
+
+//Mix_ChannelFinished(channel:void_SDLCALL_p_channel_finished_int):void
+
+//Mix_RegisterEffect(chan:int, f:Mix_EffectFunc_t, d:Mix_EffectDone_t, arg:void_p):int
+
+//Mix_UnregisterEffect(channel:int, f:Mix_EffectFunc_t):int
+
+Mix_UnregisterAllEffects(channel:int):int
+
+Mix_SetPanning(channel:int, left:Uint8, right:Uint8):int
+
+Mix_SetPosition(channel:int, angle:Sint16, distance:Uint8):int
+
+Mix_SetDistance(channel:int, distance:Uint8):int
+
+Mix_SetReverseStereo(channel:int, flip:int):int
+
+Mix_ReserveChannels(num:int):int
+
+Mix_GroupChannel(which:int, tag:int):int
+
+Mix_GroupChannels(from:int, to:int, tag:int):int
+
+Mix_GroupAvailable(tag:int):int
+
+Mix_GroupCount(tag:int):int
+
+Mix_GroupOldest(tag:int):int
+
+Mix_GroupNewer(tag:int):int
+
+Mix_PlayChannelTimed(channel:int, chunk:Mix_Chunk_p, loops:int, ticks:int):int
+
+Mix_PlayMusic(music:Mix_Music_p, loops:int):int
+
+Mix_FadeInMusic(music:Mix_Music_p, loops:int, ms:int):int
+
+Mix_FadeInMusicPos(music:Mix_Music_p, loops:int, ms:int, position:double):int
+
+Mix_FadeInChannelTimed(channel:int, chunk:Mix_Chunk_p, loops:int, ms:int, ticks:int):int
+
+Mix_Volume(channel:int, volume:int):int
+
+Mix_VolumeChunk(chunk:Mix_Chunk_p, volume:int):int
+
+Mix_VolumeMusic(volume:int):int
+
+Mix_HaltChannel(channel:int):int
+
+Mix_HaltGroup(tag:int):int
+
+Mix_HaltMusic():int
+
+Mix_ExpireChannel(channel:int, ticks:int):int
+
+Mix_FadeOutChannel(which:int, ms:int):int
+
+Mix_FadeOutGroup(tag:int, ms:int):int
+
+Mix_FadeOutMusic(ms:int):int
+
+Mix_FadingMusic():Mix_Fading
+
+Mix_FadingChannel(which:int):Mix_Fading
+
+Mix_Pause(channel:int):void
+
+Mix_Resume(channel:int):void
+
+Mix_Paused(channel:int):int
+
+Mix_PauseMusic():void
+
+Mix_ResumeMusic():void
+
+Mix_RewindMusic():void
+
+Mix_PausedMusic():int
+
+Mix_SetMusicPosition(position:double):int
+
+Mix_Playing(channel:int):int
+
+Mix_PlayingMusic():int
+
+Mix_SetMusicCMD(command:const_char_p):int
+
+Mix_SetSynchroValue(value:int):int
+
+Mix_GetSynchroValue():int
+
+Mix_SetSoundFonts(paths:const_char_p):int
+
+Mix_GetSoundFonts():const_char_p
+
+//Mix_EachSoundFont(*:int_SDLCALL_p_function_const_char, *:void, data:void_p):int
+
+Mix_GetChunk(channel:int):Mix_Chunk_p
+
+Mix_CloseAudio():void
 
 }
 

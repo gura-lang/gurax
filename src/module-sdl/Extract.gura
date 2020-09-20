@@ -8,6 +8,11 @@ FileInfo = struct {
 }
 
 fileInfoTbl = @(FileInfo) {
+	{ 'SDL_mixer.h',			'Mixer' }
+}
+
+/*
+fileInfoTbl = @(FileInfo) {
 	{ 'SDL.h',					'Initialization and Shutdown' }
 	{ 'SDL_hints.h',			'Configuration Variables' }
 	{ 'SDL_error.h',			'Error Handling' }
@@ -47,6 +52,7 @@ fileInfoTbl = @(FileInfo) {
 	{ 'SDL_system.h',			'Platform-specific Functionality' }
 	{ 'SDL_stdinc.h',			'Standard Library Functionality' }
 }
+*/
 
 ExtractFromDecl(decl:String):map = {
 	fields = []
@@ -168,7 +174,8 @@ Extract(stream:Stream):map = {
 	funcInfoTbl
 }
 
-dirName = '../../guest/SDL2-2.0.12/include/'
+//dirName = '../../guest/SDL2-2.0.12/include/'
+dirName = '../../guest/SDL2_mixer-2.0.4/'
 
 fileInfoTbl.Each {|fileInfo|
 	fileInfo.funcInfoTbl = Extract(path.Join(dirName, fileInfo.fileName))

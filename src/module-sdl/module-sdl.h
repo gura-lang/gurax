@@ -64,6 +64,8 @@
 #include "VType_SDL_MultiGestureEvent.h"
 #include "VType_SDL_DollarGestureEvent.h"
 #include "VType_SDL_DropEvent.h"
+#include "VType_Mix_Chunk.h"
+#include "VType_Mix_Music.h"
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)
