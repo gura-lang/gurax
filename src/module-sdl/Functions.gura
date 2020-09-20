@@ -2155,6 +2155,12 @@ SDL_GetPowerInfo() = \
 //------------------------------------------------------------------------------
 r.Register('sdl') {
 
+IMG_Linked_Version() = \
+	R'''
+	const SDL_version* ver = IMG_Linked_Version();
+	return new Value_SDL_version(*ver);
+	'''
+
 IMG_Init(flags:int):int_ErrorIfNeg_image
 
 IMG_Quit():void
@@ -2230,7 +2236,11 @@ IMG_isXV(src:SDL_RWops_p):int
 //------------------------------------------------------------------------------
 r.Register('sdl') {
 
-//Mix_Linked_Version():const_SDL_version_p
+Mix_Linked_Version() = \
+	R'''
+	const SDL_version* ver = Mix_Linked_Version();
+	return new Value_SDL_version(*ver);
+	'''
 
 Mix_Init(flags:int):int
 

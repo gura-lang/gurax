@@ -9884,6 +9884,22 @@ Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gura
 	return Value_Tuple::Create(new Value_Number(state), new Value_Number(secs), new Value_Number(pct));
 }
 
+// sdl.IMG_Linked_Version()
+Gurax_DeclareFunctionAlias(IMG_Linked_Version_gurax, "IMG_Linked_Version")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(IMG_Linked_Version_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const SDL_version* ver = IMG_Linked_Version();
+	return new Value_SDL_version(*ver);
+}
+
 // sdl.IMG_Init(flags:Number)
 Gurax_DeclareFunctionAlias(IMG_Init_gurax, "IMG_Init")
 {
@@ -10528,6 +10544,22 @@ Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
 	// Function body
 	int rtn = IMG_isXV(src);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_Linked_Version()
+Gurax_DeclareFunctionAlias(Mix_Linked_Version_gurax, "Mix_Linked_Version")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_Linked_Version_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const SDL_version* ver = Mix_Linked_Version();
+	return new Value_SDL_version(*ver);
 }
 
 // sdl.Mix_Init(flags:Number)
@@ -12301,6 +12333,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_SIMDGetAlignment_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SIMDFree_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetPowerInfo_gurax));
+	frame.Assign(Gurax_CreateFunction(IMG_Linked_Version_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_Init_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_Quit_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_Load_gurax));
@@ -12333,6 +12366,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(IMG_isPNG_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_isLBM_gurax));
 	frame.Assign(Gurax_CreateFunction(IMG_isXV_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_Linked_Version_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_Init_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_Quit_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_OpenAudio_gurax));
