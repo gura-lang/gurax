@@ -272,7 +272,7 @@ class Package_sdl {
 	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand msbuild 'VisualC\SDL.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64'
+		msbuild VisualC\SDL.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
 		copy VisualC\x64\Release\SDL2.dll ..\..\bin
 	}
 }
@@ -288,8 +288,8 @@ class Package_sdl_image {
 	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand msbuild 'VisualC\SDL_image.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64'
-		copy VisualC\x64\Release\SDL2_image.dll ..\..\bin
+		msbuild VisualC\SDL_image.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
+		copy VisualC\x64\Release\*.dll ..\..\bin
 	}
 }
 $packages += [Package_sdl_image]::new()
@@ -304,8 +304,8 @@ class Package_sdl_mixer {
 	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand msbuild 'VisualC\SDL_mixer.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64'
-		copy VisualC\x64\Release\SDL2_mixer.dll ..\..\bin
+		msbuild VisualC\SDL_mixer.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
+		copy VisualC\x64\Release\*.dll ..\..\bin
 	}
 }
 $packages += [Package_sdl_mixer]::new()
