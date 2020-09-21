@@ -15,8 +15,11 @@ gPNGSurface = nil
 init() = {
 	//Initialize SDL
 	SDL_Init(SDL_INIT_VIDEO)
- 	//Create window
+	imgFlags = IMG_INIT_PNG;
+	//Create window
  	gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	//Initialize PNG loading
+	IMG_Init(imgFlags);
 	//Get window surface
 	gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
 }
@@ -34,12 +37,13 @@ close() = {
 	SDL_DestroyWindow(gWindow);
 	gWindow:extern = nil;
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
 }
 
 loadSurface(path:String) = {
 	//Load image at specified path
-	loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
+	loadedSurface = IMG_Load(path);
 	optimizedSurface = SDL_ConvertSurface(loadedSurface, gScreenSurface.format, 0);
 	//Get rid of old loaded surface
 	SDL_FreeSurface(loadedSurface);

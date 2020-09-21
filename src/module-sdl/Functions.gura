@@ -29,6 +29,7 @@ this.DeclareType(decl, cType, vtypeFullName,
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
+	if (!rtn) return Value::nil();
 	return new Value_${this.vtype}(rtn);
 	''')
 
@@ -2161,7 +2162,14 @@ IMG_Linked_Version() = \
 	return new Value_SDL_version(*ver);
 	'''
 
-IMG_Init(flags:int):int_ErrorIfNeg_image
+IMG_Init(flags:int):void = \
+	R'''
+	if ((IMG_Init(flags) & flags) == 0) {
+		IssueError_SDL_image();
+		return Value::nil();
+	}
+	return Value::nil();
+	'''
 
 IMG_Quit():void
 

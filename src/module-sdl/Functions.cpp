@@ -837,6 +837,7 @@ Gurax_ImplementFunctionEx(SDL_CreateWindow_gurax, processor_gurax, argument_gura
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Window* rtn = SDL_CreateWindow(title, x, y, w, h, flags);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -877,6 +878,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowFromID_gurax, processor_gurax, argument_g
 	Uint32 id = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Window* rtn = SDL_GetWindowFromID(id);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -1375,6 +1377,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSurface_gurax, processor_gurax, argument_
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = SDL_GetWindowSurface(window);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -1483,6 +1486,7 @@ Gurax_ImplementFunctionEx(SDL_GetGrabbedWindow_gurax, processor_gurax, argument_
 {
 	// Function body
 	SDL_Window* rtn = SDL_GetGrabbedWindow();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -1843,6 +1847,7 @@ Gurax_ImplementFunctionEx(SDL_GL_CreateContext_gurax, processor_gurax, argument_
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
 	SDL_GLContext rtn = SDL_GL_CreateContext(window);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_GLContext(rtn);
 }
 
@@ -1885,6 +1890,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetCurrentWindow_gurax, processor_gurax, argume
 {
 	// Function body
 	SDL_Window* rtn = SDL_GL_GetCurrentWindow();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -1901,6 +1907,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetCurrentContext_gurax, processor_gurax, argum
 {
 	// Function body
 	SDL_GLContext rtn = SDL_GL_GetCurrentContext();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_GLContext(rtn);
 }
 
@@ -2099,6 +2106,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRenderer_gurax, processor_gurax, argument_gu
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Renderer* rtn = SDL_CreateRenderer(window, index, flags);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Renderer(rtn);
 }
 
@@ -2119,6 +2127,7 @@ Gurax_ImplementFunctionEx(SDL_CreateSoftwareRenderer_gurax, processor_gurax, arg
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
 	// Function body
 	SDL_Renderer* rtn = SDL_CreateSoftwareRenderer(surface);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Renderer(rtn);
 }
 
@@ -2139,6 +2148,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderer_gurax, processor_gurax, argument_gurax
 	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
 	// Function body
 	SDL_Renderer* rtn = SDL_GetRenderer(window);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Renderer(rtn);
 }
 
@@ -2215,6 +2225,7 @@ Gurax_ImplementFunctionEx(SDL_CreateTexture_gurax, processor_gurax, argument_gur
 	int h = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Texture* rtn = SDL_CreateTexture(renderer, format, access, w, h);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Texture(rtn);
 }
 
@@ -2237,6 +2248,7 @@ Gurax_ImplementFunctionEx(SDL_CreateTextureFromSurface_gurax, processor_gurax, a
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
 	// Function body
 	SDL_Texture* rtn = SDL_CreateTextureFromSurface(renderer, surface);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Texture(rtn);
 }
 
@@ -2620,6 +2632,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderTarget_gurax, processor_gurax, argument_g
 	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
 	// Function body
 	SDL_Texture* rtn = SDL_GetRenderTarget(renderer);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Texture(rtn);
 }
 
@@ -3746,6 +3759,7 @@ Gurax_ImplementFunctionEx(SDL_AllocFormat_gurax, processor_gurax, argument_gurax
 	Uint32 pixel_format = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_PixelFormat* rtn = SDL_AllocFormat(pixel_format);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_PixelFormat(rtn);
 }
 
@@ -3786,6 +3800,7 @@ Gurax_ImplementFunctionEx(SDL_AllocPalette_gurax, processor_gurax, argument_gura
 	int ncolors = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Palette* rtn = SDL_AllocPalette(ncolors);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Palette(rtn);
 }
 
@@ -4086,6 +4101,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurface_gurax, processor_gurax, argument_
 	Uint32 Amask = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_CreateRGBSurface(flags, width, height, depth, Rmask, Gmask, Bmask, Amask);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4114,6 +4130,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormat_gurax, processor_gurax,
 	Uint32 format = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_CreateRGBSurfaceWithFormat(flags, width, height, depth, format);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4154,6 +4171,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFrom_gurax, processor_gurax, argum
 	Uint32 Amask = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_CreateRGBSurfaceFrom(pixels, width, height, depth, pitch, Rmask, Gmask, Bmask, Amask);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4188,6 +4206,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormatFrom_gurax, processor_gu
 	Uint32 format = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_CreateRGBSurfaceWithFormatFrom(pixels, width, height, depth, pitch, format);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4309,6 +4328,7 @@ Gurax_ImplementFunctionEx(SDL_LoadBMP_gurax, processor_gurax, argument_gurax)
 	const char* file = args_gurax.PickString();
 	// Function body
 	SDL_Surface* rtn = SDL_LoadBMP(file);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4331,6 +4351,7 @@ Gurax_ImplementFunctionEx(SDL_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Surface* rtn = SDL_LoadBMP_RW(src, freesrc);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4676,6 +4697,7 @@ Gurax_ImplementFunctionEx(SDL_DuplicateSurface_gurax, processor_gurax, argument_
 	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = SDL_DuplicateSurface(surface);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4700,6 +4722,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurface_gurax, processor_gurax, argument_gu
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_ConvertSurface(src, fmt, flags);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -4724,6 +4747,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurfaceFormat_gurax, processor_gurax, argum
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_ConvertSurfaceFormat(src, pixel_format, flags);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -5403,6 +5427,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardFocus_gurax, processor_gurax, argument_
 {
 	// Function body
 	SDL_Window* rtn = SDL_GetKeyboardFocus();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -5698,6 +5723,7 @@ Gurax_ImplementFunctionEx(SDL_GetMouseFocus_gurax, processor_gurax, argument_gur
 {
 	// Function body
 	SDL_Window* rtn = SDL_GetMouseFocus();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Window(rtn);
 }
 
@@ -5881,6 +5907,7 @@ Gurax_ImplementFunctionEx(SDL_CreateCursor_gurax, processor_gurax, argument_gura
 	int hot_y = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Cursor* rtn = SDL_CreateCursor(data, mask, w, h, hot_x, hot_y);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Cursor(rtn);
 }
 
@@ -5905,6 +5932,7 @@ Gurax_ImplementFunctionEx(SDL_CreateColorCursor_gurax, processor_gurax, argument
 	int hot_y = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Cursor* rtn = SDL_CreateColorCursor(surface, hot_x, hot_y);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Cursor(rtn);
 }
 
@@ -5925,6 +5953,7 @@ Gurax_ImplementFunctionEx(SDL_CreateSystemCursor_gurax, processor_gurax, argumen
 	SDL_SystemCursor id = args_gurax.PickNumber<SDL_SystemCursor>();
 	// Function body
 	SDL_Cursor* rtn = SDL_CreateSystemCursor(id);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Cursor(rtn);
 }
 
@@ -5961,6 +5990,7 @@ Gurax_ImplementFunctionEx(SDL_GetCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	SDL_Cursor* rtn = SDL_GetCursor();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Cursor(rtn);
 }
 
@@ -5977,6 +6007,7 @@ Gurax_ImplementFunctionEx(SDL_GetDefaultCursor_gurax, processor_gurax, argument_
 {
 	// Function body
 	SDL_Cursor* rtn = SDL_GetDefaultCursor();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Cursor(rtn);
 }
 
@@ -6245,6 +6276,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickOpen_gurax, processor_gurax, argument_gura
 	int device_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Joystick* rtn = SDL_JoystickOpen(device_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Joystick(rtn);
 }
 
@@ -6265,6 +6297,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickFromInstanceID_gurax, processor_gurax, arg
 	SDL_JoystickID instance_id = args_gurax.PickNumber<SDL_JoystickID>();
 	// Function body
 	SDL_Joystick* rtn = SDL_JoystickFromInstanceID(instance_id);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Joystick(rtn);
 }
 
@@ -6285,6 +6318,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickFromPlayerIndex_gurax, processor_gurax, ar
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Joystick* rtn = SDL_JoystickFromPlayerIndex(player_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Joystick(rtn);
 }
 
@@ -7044,6 +7078,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerOpen_gurax, processor_gurax, argumen
 	int joystick_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_GameController* rtn = SDL_GameControllerOpen(joystick_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_GameController(rtn);
 }
 
@@ -7064,6 +7099,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromInstanceID_gurax, processor_gura
 	SDL_JoystickID joyid = args_gurax.PickNumber<SDL_JoystickID>();
 	// Function body
 	SDL_GameController* rtn = SDL_GameControllerFromInstanceID(joyid);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_GameController(rtn);
 }
 
@@ -7084,6 +7120,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromPlayerIndex_gurax, processor_gur
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_GameController* rtn = SDL_GameControllerFromPlayerIndex(player_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_GameController(rtn);
 }
 
@@ -7266,6 +7303,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetJoystick_gurax, processor_gurax, 
 	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
 	// Function body
 	SDL_Joystick* rtn = SDL_GameControllerGetJoystick(gamecontroller);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Joystick(rtn);
 }
 
@@ -7588,6 +7626,7 @@ Gurax_ImplementFunctionEx(SDL_SensorOpen_gurax, processor_gurax, argument_gurax)
 	int device_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Sensor* rtn = SDL_SensorOpen(device_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Sensor(rtn);
 }
 
@@ -7608,6 +7647,7 @@ Gurax_ImplementFunctionEx(SDL_SensorFromInstanceID_gurax, processor_gurax, argum
 	SDL_SensorID instance_id = args_gurax.PickNumber<SDL_SensorID>();
 	// Function body
 	SDL_Sensor* rtn = SDL_SensorFromInstanceID(instance_id);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Sensor(rtn);
 }
 
@@ -7780,6 +7820,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpen_gurax, processor_gurax, argument_gurax)
 	int device_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Haptic* rtn = SDL_HapticOpen(device_index);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Haptic(rtn);
 }
 
@@ -7852,6 +7893,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpenFromMouse_gurax, processor_gurax, argume
 {
 	// Function body
 	SDL_Haptic* rtn = SDL_HapticOpenFromMouse();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Haptic(rtn);
 }
 
@@ -7892,6 +7934,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpenFromJoystick_gurax, processor_gurax, arg
 	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
 	// Function body
 	SDL_Haptic* rtn = SDL_HapticOpenFromJoystick(joystick);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Haptic(rtn);
 }
 
@@ -9090,6 +9133,7 @@ Gurax_ImplementFunctionEx(SDL_RWFromFile_gurax, processor_gurax, argument_gurax)
 	const char* mode = args_gurax.PickString();
 	// Function body
 	SDL_RWops* rtn = SDL_RWFromFile(file, mode);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_RWops(rtn);
 }
 
@@ -9112,6 +9156,7 @@ Gurax_ImplementFunctionEx(SDL_RWFromConstMem_gurax, processor_gurax, argument_gu
 	int size = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_RWops* rtn = SDL_RWFromConstMem(mem, size);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_RWops(rtn);
 }
 
@@ -9128,6 +9173,7 @@ Gurax_ImplementFunctionEx(SDL_AllocRW_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	SDL_RWops* rtn = SDL_AllocRW();
+	if (!rtn) return Value::nil();
 	return new Value_SDL_RWops(rtn);
 }
 
@@ -9916,12 +9962,11 @@ Gurax_ImplementFunctionEx(IMG_Init_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int flags = args_gurax.PickNumber<int>();
 	// Function body
-	int rtn = IMG_Init(flags);
-	if (rtn < 0) {
+	if ((IMG_Init(flags) & flags) == 0) {
 		IssueError_SDL_image();
 		return Value::nil();
 	}
-	return new Gurax::Value_Number(rtn);
+	return Value::nil();
 }
 
 // sdl.IMG_Quit()
@@ -9957,6 +10002,7 @@ Gurax_ImplementFunctionEx(IMG_Load_gurax, processor_gurax, argument_gurax)
 	const char* file = args_gurax.PickString();
 	// Function body
 	SDL_Surface* rtn = IMG_Load(file);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -9979,6 +10025,7 @@ Gurax_ImplementFunctionEx(IMG_Load_RW_gurax, processor_gurax, argument_gurax)
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Surface* rtn = IMG_Load_RW(src, freesrc);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10003,6 +10050,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTyped_RW_gurax, processor_gurax, argument_gura
 	const char* type = args_gurax.PickString();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadTyped_RW(src, freesrc, type);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10023,6 +10071,7 @@ Gurax_ImplementFunctionEx(IMG_LoadCUR_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadCUR_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10043,6 +10092,7 @@ Gurax_ImplementFunctionEx(IMG_LoadICO_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadICO_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10063,6 +10113,7 @@ Gurax_ImplementFunctionEx(IMG_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadBMP_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10083,6 +10134,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPNM_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPNM_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10103,6 +10155,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXPM_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXPM_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10123,6 +10176,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXCF_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXCF_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10143,6 +10197,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPCX_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPCX_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10163,6 +10218,7 @@ Gurax_ImplementFunctionEx(IMG_LoadGIF_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadGIF_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10183,6 +10239,7 @@ Gurax_ImplementFunctionEx(IMG_LoadJPG_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadJPG_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10203,6 +10260,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTIF_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadTIF_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10223,6 +10281,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPNG_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPNG_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10243,6 +10302,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTGA_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadTGA_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10263,6 +10323,7 @@ Gurax_ImplementFunctionEx(IMG_LoadLBM_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadLBM_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10283,6 +10344,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXV_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXV_RW(src);
+	if (!rtn) return Value::nil();
 	return new Value_SDL_Surface(rtn);
 }
 
@@ -10715,6 +10777,7 @@ Gurax_ImplementFunctionEx(Mix_LoadWAV_RW_gurax, processor_gurax, argument_gurax)
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Chunk* rtn = Mix_LoadWAV_RW(src, freesrc);
+	if (!rtn) return Value::nil();
 	return new Value_Mix_Chunk(rtn);
 }
 
@@ -10735,6 +10798,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUS_gurax, processor_gurax, argument_gurax)
 	const char* file = args_gurax.PickString();
 	// Function body
 	Mix_Music* rtn = Mix_LoadMUS(file);
+	if (!rtn) return Value::nil();
 	return new Value_Mix_Music(rtn);
 }
 
@@ -10757,6 +10821,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUS_RW_gurax, processor_gurax, argument_gurax)
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Music* rtn = Mix_LoadMUS_RW(src, freesrc);
+	if (!rtn) return Value::nil();
 	return new Value_Mix_Music(rtn);
 }
 
@@ -10781,6 +10846,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUSType_RW_gurax, processor_gurax, argument_gu
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Music* rtn = Mix_LoadMUSType_RW(src, type, freesrc);
+	if (!rtn) return Value::nil();
 	return new Value_Mix_Music(rtn);
 }
 
@@ -11851,6 +11917,7 @@ Gurax_ImplementFunctionEx(Mix_GetChunk_gurax, processor_gurax, argument_gurax)
 	int channel = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Chunk* rtn = Mix_GetChunk(channel);
+	if (!rtn) return Value::nil();
 	return new Value_Mix_Chunk(rtn);
 }
 
