@@ -12,17 +12,40 @@ gScreenSurface = nil
 gXOut = nil
 
 init() = {
+	//Initialization flag
+	success = true;
+
 	//Initialize SDL
-	SDL_Init(SDL_INIT_VIDEO)
- 	//Create window
- 	gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Get window surface
-	gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Get window surface
+			gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
+		}
+	}
+
+	success
 }
 
 loadMedia() = {
+	//Loading success flag
+	success = true;
+
 	//Load splash image
 	gXOut:extern = SDL_LoadBMP("03_event_driven_programming/x.bmp");
+	if (!gXOut) {
+		Printf("Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError());
+		success = false;
+	}
+
+	success
 }
 
 close() = {
@@ -38,30 +61,36 @@ close() = {
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
 
-	quit = false
+			//Event handler
+			e = SDL_Event()
 
-	//Event handler
-	e = SDL_Event()
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					}
+				}
 
-	//While application is running
-	while (!quit) {
-		//Handle events on queue
-		while (SDL_PollEvent(e) != 0) {
-			//User requests quit
-			if (e.type == SDL_QUIT) {
-				quit = true;
+				//Apply the image
+				SDL_BlitSurface(gXOut, nil, gScreenSurface, nil);
+			
+				//Update the surface
+				SDL_UpdateWindowSurface( gWindow );
 			}
 		}
-
-		//Apply the image
-		SDL_BlitSurface(gXOut, nil, gScreenSurface, nil);
-	
-		//Update the surface
-		SDL_UpdateWindowSurface( gWindow );
 	}
 
 	//Free resources and close SDL
