@@ -1569,11 +1569,11 @@ Gurax_ImplementFunctionEx(SDL_SetWindowInputFocus_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_DestroyWindow(window:SDL_Window)
+// sdl.SDL_DestroyWindow(window:SDL_Window:nil)
 Gurax_DeclareFunctionAlias(SDL_DestroyWindow_gurax, "SDL_DestroyWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1583,7 +1583,7 @@ Gurax_ImplementFunctionEx(SDL_DestroyWindow_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	SDL_Window* window = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Window>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_DestroyWindow(window);
 	return Gurax::Value::nil();
@@ -3354,11 +3354,11 @@ Gurax_ImplementFunctionEx(SDL_RenderPresent_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_DestroyTexture(texture:SDL_Texture)
+// sdl.SDL_DestroyTexture(texture:SDL_Texture:nil)
 Gurax_DeclareFunctionAlias(SDL_DestroyTexture_gurax, "SDL_DestroyTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3368,17 +3368,17 @@ Gurax_ImplementFunctionEx(SDL_DestroyTexture_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	SDL_Texture* texture = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_DestroyTexture(texture);
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_DestroyRenderer(renderer:SDL_Renderer)
+// sdl.SDL_DestroyRenderer(renderer:SDL_Renderer:nil)
 Gurax_DeclareFunctionAlias(SDL_DestroyRenderer_gurax, "SDL_DestroyRenderer")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3388,7 +3388,7 @@ Gurax_ImplementFunctionEx(SDL_DestroyRenderer_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	SDL_Renderer* renderer = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_DestroyRenderer(renderer);
 	return Gurax::Value::nil();
@@ -3503,11 +3503,11 @@ Gurax_ImplementFunctionEx(SDL_AllocFormat_gurax, processor_gurax, argument_gurax
 	return new Value_SDL_PixelFormat(rtn);
 }
 
-// sdl.SDL_FreeFormat(format:SDL_PixelFormat)
+// sdl.SDL_FreeFormat(format:SDL_PixelFormat:nil)
 Gurax_DeclareFunctionAlias(SDL_FreeFormat_gurax, "SDL_FreeFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3517,7 +3517,7 @@ Gurax_ImplementFunctionEx(SDL_FreeFormat_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	SDL_PixelFormat* format = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreeFormat(format);
 	return Gurax::Value::nil();
@@ -3591,11 +3591,11 @@ Gurax_ImplementFunctionEx(SDL_SetPaletteColors_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_FreePalette(palette:SDL_Palette)
+// sdl.SDL_FreePalette(palette:SDL_Palette:nil)
 Gurax_DeclareFunctionAlias(SDL_FreePalette_gurax, "SDL_FreePalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3605,7 +3605,7 @@ Gurax_ImplementFunctionEx(SDL_FreePalette_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	SDL_Palette* palette = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreePalette(palette);
 	return Gurax::Value::nil();
@@ -3966,11 +3966,11 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFromImage_gurax, processor_gurax, 
 	return Value_SDL_Surface::Create(image.Reference());
 }
 
-// sdl.SDL_FreeSurface(surface:SDL_Surface)
+// sdl.SDL_FreeSurface(surface:SDL_Surface:nil)
 Gurax_DeclareFunctionAlias(SDL_FreeSurface_gurax, "SDL_FreeSurface")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3980,7 +3980,7 @@ Gurax_ImplementFunctionEx(SDL_FreeSurface_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	SDL_Surface* surface = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreeSurface(surface);
 	return Gurax::Value::nil();
@@ -5724,11 +5724,11 @@ Gurax_ImplementFunctionEx(SDL_GetDefaultCursor_gurax, processor_gurax, argument_
 	return new Value_SDL_Cursor(rtn);
 }
 
-// sdl.SDL_FreeCursor(cursor:SDL_Cursor)
+// sdl.SDL_FreeCursor(cursor:SDL_Cursor:nil)
 Gurax_DeclareFunctionAlias(SDL_FreeCursor_gurax, "SDL_FreeCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5738,7 +5738,7 @@ Gurax_ImplementFunctionEx(SDL_FreeCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Cursor* cursor = args_gurax.Pick<Value_SDL_Cursor>().GetEntityPtr();
+	SDL_Cursor* cursor = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Cursor>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreeCursor(cursor);
 	return Gurax::Value::nil();
@@ -8504,11 +8504,11 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamClear_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_FreeAudioStream(stream:SDL_AudioStream)
+// sdl.SDL_FreeAudioStream(stream:SDL_AudioStream:nil)
 Gurax_DeclareFunctionAlias(SDL_FreeAudioStream_gurax, "SDL_FreeAudioStream")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8518,7 +8518,7 @@ Gurax_ImplementFunctionEx(SDL_FreeAudioStream_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	SDL_AudioStream* stream = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreeAudioStream(stream);
 	return Gurax::Value::nil();
@@ -8875,11 +8875,11 @@ Gurax_ImplementFunctionEx(SDL_AllocRW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_RWops(rtn);
 }
 
-// sdl.SDL_FreeRW(area:SDL_RWops)
+// sdl.SDL_FreeRW(area:SDL_RWops:nil)
 Gurax_DeclareFunctionAlias(SDL_FreeRW_gurax, "SDL_FreeRW")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("area", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("area", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8889,7 +8889,7 @@ Gurax_ImplementFunctionEx(SDL_FreeRW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* area = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	SDL_RWops* area = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_FreeRW(area);
 	return Gurax::Value::nil();
@@ -9587,11 +9587,11 @@ Gurax_ImplementFunctionEx(SDL_SIMDGetAlignment_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SIMDFree(ptr:Pointer)
+// sdl.SDL_SIMDFree(ptr:Pointer:nil)
 Gurax_DeclareFunctionAlias(SDL_SIMDFree_gurax, "SDL_SIMDFree")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9601,11 +9601,7 @@ Gurax_ImplementFunctionEx(SDL_SIMDFree_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
-	if (!ptr) {
-		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
-		return Value::nil();
-	}
+	void* ptr = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	SDL_SIMDFree(ptr);
 	return Gurax::Value::nil();
@@ -10577,11 +10573,11 @@ Gurax_ImplementFunctionEx(Mix_LoadMUSType_RW_gurax, processor_gurax, argument_gu
 	return new Value_Mix_Music(rtn);
 }
 
-// sdl.Mix_FreeChunk(chunk:Mix_Chunk)
+// sdl.Mix_FreeChunk(chunk:Mix_Chunk:nil)
 Gurax_DeclareFunctionAlias(Mix_FreeChunk_gurax, "Mix_FreeChunk")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10591,17 +10587,17 @@ Gurax_ImplementFunctionEx(Mix_FreeChunk_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	Mix_Chunk* chunk = args_gurax.IsValid()? args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr() : nullptr;
 	// Function body
 	Mix_FreeChunk(chunk);
 	return Gurax::Value::nil();
 }
 
-// sdl.Mix_FreeMusic(music:Mix_Music)
+// sdl.Mix_FreeMusic(music:Mix_Music:nil)
 Gurax_DeclareFunctionAlias(Mix_FreeMusic_gurax, "Mix_FreeMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -10611,7 +10607,7 @@ Gurax_ImplementFunctionEx(Mix_FreeMusic_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	Mix_Music* music = args_gurax.IsValid()? args_gurax.Pick<Value_Mix_Music>().GetEntityPtr() : nullptr;
 	// Function body
 	Mix_FreeMusic(music);
 	return Gurax::Value::nil();

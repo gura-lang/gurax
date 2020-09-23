@@ -456,7 +456,7 @@ SDL_SetWindowInputFocus(window:SDL_Window_p):int
 
 //SDL_SetWindowHitTest(window:SDL_Window_p, callback:SDL_HitTest, callback_data:void_p):int
 
-SDL_DestroyWindow(window:SDL_Window_p):void
+SDL_DestroyWindow(window:SDL_Window_p:nil):void
 
 SDL_IsScreenSaverEnabled():SDL_bool
 
@@ -750,9 +750,9 @@ SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil, format:
 
 SDL_RenderPresent(renderer:SDL_Renderer_p):void
 
-SDL_DestroyTexture(texture:SDL_Texture_p):void
+SDL_DestroyTexture(texture:SDL_Texture_p:nil):void
 
-SDL_DestroyRenderer(renderer:SDL_Renderer_p):void
+SDL_DestroyRenderer(renderer:SDL_Renderer_p:nil):void
 
 SDL_RenderFlush(renderer:SDL_Renderer_p):int
 
@@ -775,7 +775,7 @@ SDL_MasksToPixelFormatEnum(bpp:int, Rmask:Uint32, Gmask:Uint32, Bmask:Uint32, Am
 
 SDL_AllocFormat(pixel_format:Uint32):SDL_PixelFormat_p
 
-SDL_FreeFormat(format:SDL_PixelFormat_p):void
+SDL_FreeFormat(format:SDL_PixelFormat_p:nil):void
 
 SDL_AllocPalette(ncolors:int):SDL_Palette_p
 
@@ -788,7 +788,7 @@ SDL_SetPaletteColors(palette:SDL_Palette_p, colors[]:SDL_Color, firstcolor:int) 
 	return new Value_Number(rtn);
 	'''
 
-SDL_FreePalette(palette:SDL_Palette_p):void
+SDL_FreePalette(palette:SDL_Palette_p:nil):void
 
 SDL_MapRGB(format:const_SDL_PixelFormat_p, r:Uint8, g:Uint8, b:Uint8):Uint32
 
@@ -850,7 +850,7 @@ SDL_CreateRGBSurfaceFromImage(image:Gurax_Image):SDL_Surface_p = \
 	return Value_SDL_Surface::Create(image.Reference());
 	'''
 
-SDL_FreeSurface(surface:SDL_Surface_p):void
+SDL_FreeSurface(surface:SDL_Surface_p:nil):void
 
 SDL_SetSurfacePalette(surface:SDL_Surface_p, palette:SDL_Palette_p):int
 
@@ -1129,7 +1129,7 @@ SDL_GetCursor():SDL_Cursor_p
 
 SDL_GetDefaultCursor():SDL_Cursor_p
 
-SDL_FreeCursor(cursor:SDL_Cursor_p):void
+SDL_FreeCursor(cursor:SDL_Cursor_p:nil):void
 
 SDL_ShowCursor(toggle:int):int
 
@@ -1463,7 +1463,7 @@ SDL_AudioStreamFlush(stream:SDL_AudioStream_p):int
 
 SDL_AudioStreamClear(stream:SDL_AudioStream_p):void
 
-SDL_FreeAudioStream(stream:SDL_AudioStream_p):void
+SDL_FreeAudioStream(stream:SDL_AudioStream_p:nil):void
 
 //SDL_MixAudio(dst:Uint8_p, src:const_Uint8_p, len:Uint32, volume:int):void
 
@@ -1531,11 +1531,11 @@ SDL_CloseAudioDevice(dev:SDL_AudioDeviceID):void
 
 //SDL_UnlockMutex(mutex:SDL_mutex_p):int
 
-//SDL_DestroyMutex(mutex:SDL_mutex_p):void
+//SDL_DestroyMutex(mutex:SDL_mutex_p:nil):void
 
 //SDL_CreateSemaphore(initial_value:Uint32):SDL_sem_p
 
-//SDL_DestroySemaphore(sem:SDL_sem_p):void
+//SDL_DestroySemaphore(sem:SDL_sem_p:nil):void
 
 //SDL_SemWait(sem:SDL_sem_p):int
 
@@ -1549,7 +1549,7 @@ SDL_CloseAudioDevice(dev:SDL_AudioDeviceID):void
 
 //SDL_CreateCond():SDL_cond_p
 
-//SDL_DestroyCond(cond:SDL_cond_p):void
+//SDL_DestroyCond(cond:SDL_cond_p:nil):void
 
 //SDL_CondSignal(cond:SDL_cond_p):int
 
@@ -1619,7 +1619,7 @@ SDL_RWFromConstMem(mem:const_void_p, size:int):SDL_RWops_p
 
 SDL_AllocRW():SDL_RWops_p
 
-SDL_FreeRW(area:SDL_RWops_p):void
+SDL_FreeRW(area:SDL_RWops_p:nil):void
 
 SDL_RWsize(context:SDL_RWops_p):Sint64
 
@@ -1715,7 +1715,7 @@ SDL_SIMDGetAlignment():size_t
 
 //SDL_SIMDAlloc(len:size_t):void_p
 
-SDL_SIMDFree(ptr:void_p):void
+SDL_SIMDFree(ptr:void_p:nil):void
 
 //======== Byte Order and Byte Swapping (SDL_endian.h) ========
 
@@ -1795,7 +1795,7 @@ SDL_GetPowerInfo() = \
 
 //SDL_realloc(mem:void_p, size:size_t):void_p
 
-//SDL_free(mem:void_p):void
+//SDL_free(mem:void_p:nil):void
 
 //SDL_GetMemoryFunctions(malloc_func:SDL_malloc_func_p, calloc_func:SDL_calloc_func_p, realloc_func:SDL_realloc_func_p, free_func:SDL_free_func_p):void
 
@@ -2129,9 +2129,9 @@ Mix_LoadMUSType_RW(src:SDL_RWops_p, type:Mix_MusicType, freesrc:int):Mix_Music_p
 
 //Mix_QuickLoad_RAW(mem:Uint8_p, len:Uint32):Mix_Chunk_p
 
-Mix_FreeChunk(chunk:Mix_Chunk_p):void
+Mix_FreeChunk(chunk:Mix_Chunk_p:nil):void
 
-Mix_FreeMusic(music:Mix_Music_p):void
+Mix_FreeMusic(music:Mix_Music_p:nil):void
 
 Mix_GetNumChunkDecoders():int
 

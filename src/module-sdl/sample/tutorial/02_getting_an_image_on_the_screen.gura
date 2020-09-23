@@ -61,15 +61,25 @@ close() = {
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
-	//Apply the image
-	SDL_BlitSurface(gHelloWorld, nil, gScreenSurface, nil);
-	//Update the surface
-	SDL_UpdateWindowSurface(gWindow);
-	//Wait two seconds
-	SDL_Delay(2000);
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Apply the image
+			SDL_BlitSurface(gHelloWorld, nil, gScreenSurface, nil);
+
+			//Update the surface
+			SDL_UpdateWindowSurface(gWindow);
+
+			//Wait two seconds
+			SDL_Delay(2000);
+		}
+	}
+
+	//Free resources and close SDL
 	close();
 }
 
