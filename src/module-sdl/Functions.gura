@@ -38,36 +38,6 @@ r.DeclareType('Gurax_Image', 'Gurax::Image', 'Image',
 	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetImage();
 	''')
 
-r.DeclareType('int_ErrorIfNeg', 'int', 'Nil',
-	codeFunctionBody = R'''
-	int rtn = ${caller};
-	if (rtn < 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return new Gurax::Value_Number(rtn);
-	''')
-
-r.DeclareType('int_ErrorIfNeg_image', 'int', 'Nil',
-	codeFunctionBody = R'''
-	int rtn = ${caller};
-	if (rtn < 0) {
-		IssueError_SDL_image();
-		return Value::nil();
-	}
-	return new Gurax::Value_Number(rtn);
-	''')
-
-r.DeclareType('int_ErrorIfNeg_mixer', 'int', 'Nil',
-	codeFunctionBody = R'''
-	int rtn = ${caller};
-	if (rtn < 0) {
-		IssueError_SDL_mixer();
-		return Value::nil();
-	}
-	return new Gurax::Value_Number(rtn);
-	''')
-
 r.DeclareType_Number('Sint8')
 r.DeclareType_Number('Uint8')
 r.DeclareType_Number('Sint16')
@@ -198,9 +168,9 @@ r.Register('sdl') {
 
 //======== Initialization and Shutdown (SDL.h) ========
 
-SDL_Init(flags:Uint32):int_ErrorIfNeg
+SDL_Init(flags:Uint32):int
 
-SDL_InitSubSystem(flags:Uint32):int_ErrorIfNeg
+SDL_InitSubSystem(flags:Uint32):int
 
 SDL_QuitSubSystem(flags:Uint32):void
 
@@ -299,7 +269,7 @@ SDL_GetNumVideoDrivers():int
 
 SDL_GetVideoDriver(index:int):const_char_p
 
-SDL_VideoInit(driver_name:const_char_p):int_ErrorIfNeg
+SDL_VideoInit(driver_name:const_char_p):int
 
 SDL_VideoQuit():void
 
@@ -312,30 +282,21 @@ SDL_GetDisplayName(displayIndex:int):const_char_p
 SDL_GetDisplayBounds(displayIndex:int):any = \
 	R'''
 	SDL_Rect rect;
-	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) return Value::nil();
 	return new Value_SDL_Rect(rect);
 	'''
 
 SDL_GetDisplayUsableBounds(displayIndex:int):any = \
 	R'''
 	SDL_Rect rect;
-	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) return Value::nil();
 	return new Value_SDL_Rect(rect);
 	'''
 
 SDL_GetDisplayDPI(displayIndex:int):any = \
 	R'''
 	float ddpi, hdpi, vdpi;
-	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
 	'''
 
@@ -346,30 +307,21 @@ SDL_GetNumDisplayModes(displayIndex:int):int
 SDL_GetDisplayMode(displayIndex:int, modeIndex:int):any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) {
-		IssueError_SDL();
-		return Value::nil();       
-	}
+	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
 SDL_GetDesktopDisplayMode(displayIndex:int):any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) {
-		IssueError_SDL();
-		return Value::nil();       
-	}
+	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
 SDL_GetCurrentDisplayMode(displayIndex:int):any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) {
-		IssueError_SDL();
-		return Value::nil();       
-	}
+	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
@@ -379,7 +331,7 @@ SDL_GetWindowDisplayIndex(window:SDL_Window_p):int
 
 SDL_SetWindowDisplayMode(window:SDL_Window_p, mode:const_SDL_DisplayMode_p):int
 
-SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int_ErrorIfNeg
+SDL_GetWindowDisplayMode(window:SDL_Window_p, mode:SDL_DisplayMode_p):int
 
 SDL_GetWindowPixelFormat(window:SDL_Window_p):Uint32
 
@@ -424,10 +376,7 @@ SDL_GetWindowSize(window:SDL_Window_p):any = \
 SDL_GetWindowBordersSize(window:SDL_Window_p) = \
 	R'''
 	int top, left, bottom, right;
-	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
 	'''
 
@@ -465,20 +414,17 @@ SDL_MinimizeWindow(window:SDL_Window_p):void
 
 SDL_RestoreWindow(window:SDL_Window_p):void
 
-SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int_ErrorIfNeg
+SDL_SetWindowFullscreen(window:SDL_Window_p, flags:Uint32):int
 
 SDL_GetWindowSurface(window:SDL_Window_p):SDL_Surface_p
 
-SDL_UpdateWindowSurface(window:SDL_Window_p):int_ErrorIfNeg
+SDL_UpdateWindowSurface(window:SDL_Window_p):int
 
 SDL_UpdateWindowSurfaceRects(window:SDL_Window_p, rects[]:SDL_Rect) = \
 	R'''
 	int numrects = rects.sizeT<int>();
-	if (SDL_UpdateWindowSurfaceRects(window, rects, numrects) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_UpdateWindowSurfaceRects(window, rects, numrects);
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetWindowGrab(window:SDL_Window_p, grabbed:SDL_bool):void
@@ -487,25 +433,22 @@ SDL_GetWindowGrab(window:SDL_Window_p):SDL_bool
 
 SDL_GetGrabbedWindow():SDL_Window_p
 
-SDL_SetWindowBrightness(window:SDL_Window_p, brightness:float):int_ErrorIfNeg
+SDL_SetWindowBrightness(window:SDL_Window_p, brightness:float):int
 
 SDL_GetWindowBrightness(window:SDL_Window_p):float
 
-SDL_SetWindowOpacity(window:SDL_Window_p, opacity:float):int_ErrorIfNeg
+SDL_SetWindowOpacity(window:SDL_Window_p, opacity:float):int
 
 SDL_GetWindowOpacity(window:SDL_Window_p) = \
 	R'''
 	float out_opacity;
-	if (SDL_GetWindowOpacity(window, &out_opacity) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetWindowOpacity(window, &out_opacity) != 0) return Value::nil();
 	return new Value_Number(out_opacity);
 	'''
 
-SDL_SetWindowModalFor(modal_window:SDL_Window_p, parent_window:SDL_Window_p):int_ErrorIfNeg
+SDL_SetWindowModalFor(modal_window:SDL_Window_p, parent_window:SDL_Window_p):int
 
-SDL_SetWindowInputFocus(window:SDL_Window_p):int_ErrorIfNeg
+SDL_SetWindowInputFocus(window:SDL_Window_p):int
 
 //SDL_SetWindowGammaRamp(window:SDL_Window_p, red:const_Uint16_p, green:const_Uint16_p, blue:const_Uint16_p):int
 
@@ -521,7 +464,7 @@ SDL_EnableScreenSaver():void
 
 SDL_DisableScreenSaver():void
 
-SDL_GL_LoadLibrary(path:const_char_p):int_ErrorIfNeg
+SDL_GL_LoadLibrary(path:const_char_p):int
 
 //SDL_GL_GetProcAddress(proc:const_char_p):void_p
 
@@ -531,21 +474,18 @@ SDL_GL_ExtensionSupported(extension:const_char_p):SDL_bool
 
 SDL_GL_ResetAttributes():void
 
-SDL_GL_SetAttribute(attr:SDL_GLattr, value:int):int_ErrorIfNeg
+SDL_GL_SetAttribute(attr:SDL_GLattr, value:int):int
 
 SDL_GL_GetAttribute(attr:SDL_GLattr) = \
 	R'''
 	int value;
-	if (SDL_GL_GetAttribute(attr, &value) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GL_GetAttribute(attr, &value) != 0) return Value::nil();
 	return new Value_Number(value);
 	'''
 
 SDL_GL_CreateContext(window:SDL_Window_p):SDL_GLContext
 
-SDL_GL_MakeCurrent(window:SDL_Window_p, context:SDL_GLContext):int_ErrorIfNeg
+SDL_GL_MakeCurrent(window:SDL_Window_p, context:SDL_GLContext):int
 
 SDL_GL_GetCurrentWindow():SDL_Window_p
 
@@ -558,9 +498,9 @@ SDL_GL_GetDrawableSize(window:SDL_Window_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_GL_SetSwapInterval(interval:int):int_ErrorIfNeg
+SDL_GL_SetSwapInterval(interval:int):int
 
-SDL_GL_GetSwapInterval():int_ErrorIfNeg
+SDL_GL_GetSwapInterval():int
 
 SDL_GL_SwapWindow(window:SDL_Window_p):void
 
@@ -573,10 +513,7 @@ SDL_GetNumRenderDrivers():int
 SDL_GetRenderDriverInfo(index:int) = \
 	R'''
 	SDL_RendererInfo info;
-	if (SDL_GetRenderDriverInfo(index, &info) != 0) {
-		IssueError_SDL();
-		return Value::nil();       
-	}
+	if (SDL_GetRenderDriverInfo(index, &info) != 0) return Value::nil();
 	return new Value_SDL_RendererInfo(info);
 	'''
 
@@ -584,10 +521,7 @@ SDL_CreateWindowAndRenderer(width:int, height:int, window_flags:Uint32) = \
 	R'''
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	if (SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_SDL_Window(window), new Value_SDL_Renderer(renderer));
 	'''
 
@@ -600,20 +534,14 @@ SDL_GetRenderer(window:SDL_Window_p):SDL_Renderer_p
 SDL_GetRendererInfo(renderer:SDL_Renderer_p) = \
 	R'''
 	SDL_RendererInfo info;
-	if (SDL_GetRendererInfo(renderer, &info) != 0) {
-		IssueError_SDL();
-		return Value::nil();       
-	}
+	if (SDL_GetRendererInfo(renderer, &info) != 0) return Value::nil();
 	return new Value_SDL_RendererInfo(info);
 	'''
 
 SDL_GetRendererOutputSize(renderer:SDL_Renderer_p) = \
 	R'''
 	int w, h;
-	if (SDL_GetRendererOutputSize(renderer, &w, &h) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetRendererOutputSize(renderer, &w, &h) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
@@ -625,64 +553,49 @@ SDL_QueryTexture(texture:SDL_Texture_p) = \
 	R'''
 	Uint32 format;
 	int access, w, h;
-	if (SDL_QueryTexture(texture, &format, &access, &w, &h) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_QueryTexture(texture, &format, &access, &w, &h) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(format), new Value_Number(access), new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_SetTextureColorMod(texture:SDL_Texture_p, r:Uint8, g:Uint8, b:Uint8):int_ErrorIfNeg
+SDL_SetTextureColorMod(texture:SDL_Texture_p, r:Uint8, g:Uint8, b:Uint8):int
 
 SDL_GetTextureColorMod(texture:SDL_Texture_p) = \
 	R'''
 	Uint8 r, g, b;
-	if (SDL_GetTextureColorMod(texture, &r, &g, &b) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetTextureColorMod(texture, &r, &g, &b) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 	'''
 
-SDL_SetTextureAlphaMod(texture:SDL_Texture_p, alpha:Uint8):int_ErrorIfNeg
+SDL_SetTextureAlphaMod(texture:SDL_Texture_p, alpha:Uint8):int
 
 SDL_GetTextureAlphaMod(texture:SDL_Texture_p) = \
 	R'''
 	Uint8 alpha;
-	if (SDL_GetTextureAlphaMod(texture, &alpha) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetTextureAlphaMod(texture, &alpha) != 0) return Value::nil();
 	return new Value_Number(alpha);
 	'''
 
-SDL_SetTextureBlendMode(texture:SDL_Texture_p, blendMode:SDL_BlendMode):int_ErrorIfNeg
+SDL_SetTextureBlendMode(texture:SDL_Texture_p, blendMode:SDL_BlendMode):int
 
 SDL_GetTextureBlendMode(texture:SDL_Texture_p) = \
 	R'''
 	SDL_BlendMode blendMode;
-	if (SDL_GetTextureBlendMode(texture, &blendMode) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetTextureBlendMode(texture, &blendMode) != 0) return Value::nil();
 	return new Value_Number(blendMode);
 	'''
 
-SDL_SetTextureScaleMode(texture:SDL_Texture_p, scaleMode:SDL_ScaleMode):int_ErrorIfNeg
+SDL_SetTextureScaleMode(texture:SDL_Texture_p, scaleMode:SDL_ScaleMode):int
 
 SDL_GetTextureScaleMode(texture:SDL_Texture_p):int = \
 	R'''
 	SDL_ScaleMode scaleMode;
-	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) return Value::nil();
 	return new Value_Number(scaleMode);
 	'''
 
-SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, pixels:const_void_p, pitch:int):int_ErrorIfNeg
+SDL_UpdateTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, pixels:const_void_p, pitch:int):int
 
-SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int_ErrorIfNeg
+SDL_UpdateYUVTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, Yplane:const_Uint8_p, Ypitch:int, Uplane:const_Uint8_p, Upitch:int, Vplane:const_Uint8_p, Vpitch:int):int
 
 //SDL_LockTexture(texture:SDL_Texture_p, rect:const_SDL_Rect_p:nil, pixels:void_pp, pitch:int_p):int
 
@@ -692,11 +605,11 @@ SDL_UnlockTexture(texture:SDL_Texture_p):void
 
 SDL_RenderTargetSupported(renderer:SDL_Renderer_p):SDL_bool
 
-SDL_SetRenderTarget(renderer:SDL_Renderer_p, texture:SDL_Texture_p):int_ErrorIfNeg
+SDL_SetRenderTarget(renderer:SDL_Renderer_p, texture:SDL_Texture_p):int
 
 SDL_GetRenderTarget(renderer:SDL_Renderer_p):SDL_Texture_p
 
-SDL_RenderSetLogicalSize(renderer:SDL_Renderer_p, w:int, h:int):int_ErrorIfNeg
+SDL_RenderSetLogicalSize(renderer:SDL_Renderer_p, w:int, h:int):int
 
 SDL_RenderGetLogicalSize(renderer:SDL_Renderer_p) = \
 	R'''
@@ -705,11 +618,11 @@ SDL_RenderGetLogicalSize(renderer:SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_RenderSetIntegerScale(renderer:SDL_Renderer_p, enable:SDL_bool):int_ErrorIfNeg
+SDL_RenderSetIntegerScale(renderer:SDL_Renderer_p, enable:SDL_bool):int
 
 SDL_RenderGetIntegerScale(renderer:SDL_Renderer_p):SDL_bool
 
-SDL_RenderSetViewport(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
+SDL_RenderSetViewport(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int
 
 SDL_RenderGetViewport(renderer:SDL_Renderer_p) = \
 	R'''
@@ -718,7 +631,7 @@ SDL_RenderGetViewport(renderer:SDL_Renderer_p) = \
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_RenderSetClipRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
+SDL_RenderSetClipRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int
 
 SDL_RenderGetClipRect(renderer:SDL_Renderer_p) = \
 	R'''
@@ -729,7 +642,7 @@ SDL_RenderGetClipRect(renderer:SDL_Renderer_p) = \
 
 SDL_RenderIsClipEnabled(renderer:SDL_Renderer_p):SDL_bool
 
-SDL_RenderSetScale(renderer:SDL_Renderer_p, scaleX:float, scaleY:float):int_ErrorIfNeg
+SDL_RenderSetScale(renderer:SDL_Renderer_p, scaleX:float, scaleY:float):int
 
 SDL_RenderGetScale(renderer:SDL_Renderer_p) = \
 	R'''
@@ -738,129 +651,102 @@ SDL_RenderGetScale(renderer:SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(scaleX), new Value_Number(scaleY));
 	'''
 
-SDL_SetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):int_ErrorIfNeg
+SDL_SetRenderDrawColor(renderer:SDL_Renderer_p, r:Uint8, g:Uint8, b:Uint8, a:Uint8):int
 
 SDL_GetRenderDrawColor(renderer:SDL_Renderer_p) = \
 	R'''
 	Uint8 r, g, b, a;
-	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
 	'''
 
-SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode):int_ErrorIfNeg
+SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer_p, blendMode:SDL_BlendMode):int
 
 SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer_p) = \
 	R'''
 	SDL_BlendMode blendMode;
-	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) return Value::nil();
 	return new Value_Number(blendMode);
 	'''
 
-SDL_RenderClear(renderer:SDL_Renderer_p):int_ErrorIfNeg
+SDL_RenderClear(renderer:SDL_Renderer_p):int
 
-SDL_RenderDrawPoint(renderer:SDL_Renderer_p, x:int, y:int):int_ErrorIfNeg
+SDL_RenderDrawPoint(renderer:SDL_Renderer_p, x:int, y:int):int
 
 SDL_RenderDrawPoints(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
 	R'''
 	int count = points.sizeT<int>();
-	if (SDL_RenderDrawPoints(renderer, points, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderDrawPoints(renderer, points, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawLine(renderer:SDL_Renderer_p, x1:int, y1:int, x2:int, y2:int):int_ErrorIfNeg
+SDL_RenderDrawLine(renderer:SDL_Renderer_p, x1:int, y1:int, x2:int, y2:int):int
 
 SDL_RenderDrawLines(renderer:SDL_Renderer_p, points[]:SDL_Point) = \
 	R'''
 	int count = points.sizeT<int>();
-	if (SDL_RenderDrawLines(renderer, points, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderDrawLines(renderer, points, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
+SDL_RenderDrawRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int
 
 SDL_RenderDrawRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	R'''
 	int count = rects.sizeT<int>();
-	if (SDL_RenderDrawRects(renderer, rects, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderDrawRects(renderer, rects, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int_ErrorIfNeg
+SDL_RenderFillRect(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil):int
 
 SDL_RenderFillRects(renderer:SDL_Renderer_p, rects[]:SDL_Rect) = \
 	R'''
 	int count = rects.sizeT<int>();
-	if (SDL_RenderFillRects(renderer, rects, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderFillRects(renderer, rects, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil):int_ErrorIfNeg
+SDL_RenderCopy(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil):int
 
-SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil, angle:double, center:const_SDL_Point_p:nil, flip:SDL_RendererFlip):int_ErrorIfNeg
+SDL_RenderCopyEx(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_Rect_p:nil, angle:double, center:const_SDL_Point_p:nil, flip:SDL_RendererFlip):int
 
-SDL_RenderDrawPointF(renderer:SDL_Renderer_p, x:float, y:float):int_ErrorIfNeg
+SDL_RenderDrawPointF(renderer:SDL_Renderer_p, x:float, y:float):int
 
-SDL_RenderDrawPointsF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int_ErrorIfNeg
+SDL_RenderDrawPointsF(renderer:SDL_Renderer_p, points:const_SDL_FPoint_p, count:int):int
 
-SDL_RenderDrawLineF(renderer:SDL_Renderer_p, x1:float, y1:float, x2:float, y2:float):int_ErrorIfNeg
+SDL_RenderDrawLineF(renderer:SDL_Renderer_p, x1:float, y1:float, x2:float, y2:float):int
 
 SDL_RenderDrawLinesF(renderer:SDL_Renderer_p, points[]:SDL_FPoint) = \
 	R'''
 	int count = points.sizeT<int>();
-	if (SDL_RenderDrawLinesF(renderer, points, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderDrawLinesF(renderer, points, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int_ErrorIfNeg
+SDL_RenderDrawRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
 SDL_RenderDrawRectsF(renderer:SDL_Renderer_p, rects[]:SDL_FRect) = \
 	R'''
 	int count = rects.sizeT<int>();
-	if (SDL_RenderDrawRectsF(renderer, rects, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderDrawRectsF(renderer, rects, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderFillRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int_ErrorIfNeg
+SDL_RenderFillRectF(renderer:SDL_Renderer_p, rect:const_SDL_FRect_p):int
 
 SDL_RenderFillRectsF(renderer:SDL_Renderer_p, rects[]:SDL_FRect) = \
 	R'''
 	int count = rects.sizeT<int>();
-	if (SDL_RenderFillRectsF(renderer, rects, count) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_RenderFillRectsF(renderer, rects, count);
+	return new Value_Number(rtn);
 	'''
 
-SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_FRect_p):int_ErrorIfNeg
+SDL_RenderCopyF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_FRect_p):int
 
 //SDL_RenderCopyExF(renderer:SDL_Renderer_p, texture:SDL_Texture_p, srcrect:const_SDL_Rect_p:nil, dstrect:const_SDL_FRect_p, angle:const_double, center:const_SDL_FPoint_p, flip:const_SDL_RendererFlip):int
 
-SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil, format:Uint32, pixels:void_p, pitch:int):int_ErrorIfNeg
+SDL_RenderReadPixels(renderer:SDL_Renderer_p, rect:const_SDL_Rect_p:nil, format:Uint32, pixels:void_p, pitch:int):int
 
 SDL_RenderPresent(renderer:SDL_Renderer_p):void
 
@@ -872,14 +758,14 @@ SDL_RenderFlush(renderer:SDL_Renderer_p):int
 
 //SDL_GL_BindTexture(texture:SDL_Texture_p, texw:float_p, texh:float_p):int
 
-SDL_GL_UnbindTexture(texture:SDL_Texture_p):int_ErrorIfNeg
+SDL_GL_UnbindTexture(texture:SDL_Texture_p):int
 
 //SDL_RenderGetMetalLayer(renderer:SDL_Renderer_p):void_p
 
 //SDL_RenderGetMetalCommandEncoder(renderer:SDL_Renderer_p):void_p
 
 //======== Pixel Formats and Conversion Routines (SDL_pixels.h) ========
-// int_ErrorIfNeg
+// int
 
 SDL_GetPixelFormatName(format:Uint32):const_char_p
 
@@ -898,11 +784,8 @@ SDL_SetPixelFormatPalette(format:SDL_PixelFormat_p, palette:SDL_Palette_p):int
 SDL_SetPaletteColors(palette:SDL_Palette_p, colors[]:SDL_Color, firstcolor:int) = \
 	R'''
 	int ncolors = colors.sizeT<int>();
-	if (SDL_SetPaletteColors(palette, colors, firstcolor, ncolors) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = SDL_SetPaletteColors(palette, colors, firstcolor, ncolors);
+	return new Value_Number(rtn);
 	'''
 
 SDL_FreePalette(palette:SDL_Palette_p):void
@@ -984,10 +867,6 @@ SDL_SaveBMP(surface:SDL_Surface_p, file:const_char_p):int
 SDL_SaveBMP_RW(surface:SDL_Surface_p, dst:SDL_RWops_p, freedst:bool) = \
 	R'''
 	int rtn = SDL_SaveBMP_RW(surface, dst, freedst? 1 : 0);
-	if (rtn < 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
 	return new Gurax::Value_Number(rtn);
 	'''
 
@@ -1000,10 +879,7 @@ SDL_HasColorKey(surface:SDL_Surface_p):SDL_bool
 SDL_GetColorKey(surface:SDL_Surface_p) = \
 	R'''
 	Uint32 key;
-	if (SDL_GetColorKey(surface, &key) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetColorKey(surface, &key) != 0) return Value::nil();
 	return new Value_Number(key);
 	'''
 
@@ -1012,10 +888,7 @@ SDL_SetSurfaceColorMod(surface:SDL_Surface_p, r:Uint8, g:Uint8, b:Uint8):int
 SDL_GetSurfaceColorMod(surface:SDL_Surface_p) = \
 	R'''
 	Uint8 r, g, b;
-	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 	'''
 
@@ -1024,10 +897,7 @@ SDL_SetSurfaceAlphaMod(surface:SDL_Surface_p, alpha:Uint8):int
 SDL_GetSurfaceAlphaMod(surface:SDL_Surface_p) = \
 	R'''
 	Uint8 alpha;
-	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) return Value::nil();
 	return new Value_Number(alpha);
 	'''
 
@@ -1036,10 +906,7 @@ SDL_SetSurfaceBlendMode(surface:SDL_Surface_p, blendMode:SDL_BlendMode):int
 SDL_GetSurfaceBlendMode(surface:SDL_Surface_p) = \
 	R'''
 	SDL_BlendMode blendMode;
-	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) return Value::nil();
 	return new Value_Number(blendMode);
 	'''
 
@@ -1145,20 +1012,12 @@ SDL_PollEvent(event:SDL_Event_p):int
 SDL_WaitEvent(event:SDL_Event_p) = \
 	R'''
 	int rtn = SDL_WaitEvent(event);
-	if (rtn == 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
 	return new Value_Number(rtn);
 	'''
 
 SDL_WaitEventTimeout(event:SDL_Event_p, timeout:int) = \
 	R'''
 	int rtn = SDL_WaitEventTimeout(event, timeout);
-	if (rtn == 0 && *SDL_GetError()) {
-		IssueError_SDL();
-		return Value::nil();
-	}
 	return new Value_Number(rtn);
 	'''
 
@@ -1354,10 +1213,7 @@ SDL_JoystickGetHat(joystick:SDL_Joystick_p, hat:int):Uint8
 SDL_JoystickGetBall(joystick:SDL_Joystick_p, ball:int) = \
 	R'''
 	int dx, dy;
-	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 	'''
 
@@ -1380,10 +1236,7 @@ SDL_GameControllerNumMappings():int
 SDL_GameControllerMappingForIndex(mapping_index:int) = \
 	R'''
 	char* rtn = SDL_GameControllerMappingForIndex(mapping_index);
-	if (!rtn) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
 	SDL_free(rtn);
 	return pValue.release();
@@ -1392,10 +1245,7 @@ SDL_GameControllerMappingForIndex(mapping_index:int) = \
 SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID) = \
 	R'''
 	char* rtn = SDL_GameControllerMappingForGUID(guid);
-	if (!rtn) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
 	SDL_free(rtn);
 	return pValue.release();
@@ -1404,10 +1254,7 @@ SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID) = \
 SDL_GameControllerMapping(gamecontroller:SDL_GameController_p) = \
 	R'''
 	char* rtn = SDL_GameControllerMapping(gamecontroller);
-	if (!rtn) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
 	SDL_free(rtn);
 	return pValue.release();
@@ -1422,10 +1269,7 @@ SDL_GameControllerTypeForIndex(joystick_index:int):SDL_GameControllerType
 SDL_GameControllerMappingForDeviceIndex(joystick_index:int) = \
 	R'''
 	char* rtn = SDL_GameControllerMappingForDeviceIndex(joystick_index);
-	if (!rtn) {
-		IssueError_SDL();
-		return Value::nil();
-	}
+	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
 	SDL_free(rtn);
 	return pValue.release();
@@ -2164,14 +2008,13 @@ IMG_Linked_Version() = \
 
 IMG_Init(flags:int):void = \
 	R'''
-	if ((IMG_Init(flags) & flags) == 0) {
-		IssueError_SDL_image();
-		return Value::nil();
-	}
-	return Value::nil();
+	int rtn = IMG_Init(flags);
+	return new Value_Number(rtn);
 	'''
 
 IMG_Quit():void
+
+IMG_GetError():const_char_p
 
 IMG_Load(file:const_char_p):SDL_Surface_p
 
@@ -2259,6 +2102,8 @@ Mix_OpenAudio(frequency:int, format:Uint16, channels:int, chunksize:int):int
 Mix_OpenAudioDevice(frequency:int, format:Uint16, channels:int, chunksize:int, device:const_char_p, allowed_changes:int):int
 
 Mix_AllocateChannels(numchans:int):int
+
+Mix_GetError():const_char_p
 
 Mix_QuerySpec() = \
 	R'''
