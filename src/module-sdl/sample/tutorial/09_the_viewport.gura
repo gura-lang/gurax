@@ -73,12 +73,15 @@ close() = {
 	//Deallocate surface
 	SDL_DestroyTexture(gTexture);
 	gTexture:extern = nil;
+
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow:extern = nil;
 	gRenderer:extern = nil;
+
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
 }
 
