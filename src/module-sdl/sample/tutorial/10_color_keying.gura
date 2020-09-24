@@ -32,21 +32,30 @@ LTexture = class {
 		newTexture = nil;
 
 		//Load image at specified path
-		loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
-		//Color key image
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+		loadedSurface = IMG_Load(path);
+		if (!loadedSurface) {
+			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		} else {
+			//Color key image
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
 
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		//Get image dimensions
-		this.mWidth = loadedSurface.w;
-		this.mHeight = loadedSurface.h;
+			//Create texture from surface pixels
+			newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+			if (!newTexture) {
+				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = loadedSurface.w;
+				this.mHeight = loadedSurface.h;
+			}
 
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
+			//Get rid of old loaded surface
+			SDL_FreeSurface(loadedSurface);
+		}
 
 		//Return success
 		this.mTexture = newTexture;
+		this.mTexture != nil;
 	}
 
 	//Deallocates texture
