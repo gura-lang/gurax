@@ -13,21 +13,60 @@ gRenderer = nil
 gTexture = nil
 
 init() = {
+	//Initialization flag
+	success = true;
+
 	//Initialize SDL
-	SDL_Init(SDL_INIT_VIDEO)
-	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-		Printf("Warning: Linear texture filtering not enabled!");
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Set texture filtering to linear
+		if (!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Printf("Warning: Linear texture filtering not enabled!");
+		}
+
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Create renderer for window
+			gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			if (!gRenderer) {
+				Printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				success = false;
+			} else {
+				//Initialize renderer color
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+				//Initialize PNG loading
+				imgFlags = IMG_INIT_PNG;
+				if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+					Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+			}
+		}
 	}
- 	//Create window
-	gWindow:extern = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Create renderer for window
-	gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	success
 }
 
 loadMedia() = {
-	//Load PNG surface
+	//Loading success flag
+	success = true;
+
+	//Load texture
 	gTexture:extern = loadTexture("09_the_viewport/viewport.png");
+	if (!gTexture) {
+		Printf("Failed to load texture image!\n");
+		success = false;
+	}
+
+	//Nothing to load
+	success;
 }
 
 close() = {
@@ -44,79 +83,97 @@ close() = {
 }
 
 loadTexture(path:String) = {
+	//The final texture
+	newTexture = nil;
+
 	//Load image at specified path
-	loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
-	//Create texture from surface pixels
-	newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
-	newTexture
+	loadedSurface = IMG_Load(path);
+	if (!loadedSurface) {
+		printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+	} else {
+		//Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		if (!newTexture) {
+			printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	newTexture;
 }
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
 
-	quit = false
+			//Event handler
+			e = SDL_Event()
 
-	//Event handler
-	e = SDL_Event()
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					}
+				}
 
-	//While application is running
-	while (!quit) {
-		//Handle events on queue
-		while (SDL_PollEvent(e) != 0) {
-			//User requests quit
-			if (e.type == SDL_QUIT) {
-				quit = true;
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//Top left corner viewport
+				topLeftViewport = SDL_Rect();
+				topLeftViewport.x = 0;
+				topLeftViewport.y = 0;
+				topLeftViewport.w = SCREEN_WIDTH / 2;
+				topLeftViewport.h = SCREEN_HEIGHT / 2;
+				SDL_RenderSetViewport(gRenderer, topLeftViewport);
+		
+				//Render texture to screen
+				SDL_RenderCopy(gRenderer, gTexture, nil, nil);
+
+
+				//Top right viewport
+				topRightViewport = SDL_Rect();
+				topRightViewport.x = SCREEN_WIDTH / 2;
+				topRightViewport.y = 0;
+				topRightViewport.w = SCREEN_WIDTH / 2;
+				topRightViewport.h = SCREEN_HEIGHT / 2;
+				SDL_RenderSetViewport(gRenderer, topRightViewport);
+		
+				//Render texture to screen
+				SDL_RenderCopy(gRenderer, gTexture, nil, nil);
+
+
+				//Bottom viewport
+				bottomViewport = SDL_Rect();
+				bottomViewport.x = 0;
+				bottomViewport.y = SCREEN_HEIGHT / 2;
+				bottomViewport.w = SCREEN_WIDTH;
+				bottomViewport.h = SCREEN_HEIGHT / 2;
+				SDL_RenderSetViewport(gRenderer, bottomViewport);
+
+		
+				//Render texture to screen
+				SDL_RenderCopy(gRenderer, gTexture, nil, nil);
+
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
 			}
 		}
-
-		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(gRenderer);
-
-		//Top left corner viewport
-		topLeftViewport = SDL_Rect();
-		topLeftViewport.x = 0;
-		topLeftViewport.y = 0;
-		topLeftViewport.w = SCREEN_WIDTH / 2;
-		topLeftViewport.h = SCREEN_HEIGHT / 2;
-		SDL_RenderSetViewport(gRenderer, topLeftViewport);
-		
-		//Render texture to screen
-		SDL_RenderCopy(gRenderer, gTexture, nil, nil);
-
-
-		//Top right viewport
-		topRightViewport = SDL_Rect();
-		topRightViewport.x = SCREEN_WIDTH / 2;
-		topRightViewport.y = 0;
-		topRightViewport.w = SCREEN_WIDTH / 2;
-		topRightViewport.h = SCREEN_HEIGHT / 2;
-		SDL_RenderSetViewport(gRenderer, topRightViewport);
-		
-		//Render texture to screen
-		SDL_RenderCopy(gRenderer, gTexture, nil, nil);
-
-
-		//Bottom viewport
-		bottomViewport = SDL_Rect();
-		bottomViewport.x = 0;
-		bottomViewport.y = SCREEN_HEIGHT / 2;
-		bottomViewport.w = SCREEN_WIDTH;
-		bottomViewport.h = SCREEN_HEIGHT / 2;
-		SDL_RenderSetViewport(gRenderer, bottomViewport);
-
-		
-		//Render texture to screen
-		SDL_RenderCopy(gRenderer, gTexture, nil, nil);
-
-
-		//Update screen
-		SDL_RenderPresent(gRenderer);
 	}
 
 	//Free resources and close SDL
