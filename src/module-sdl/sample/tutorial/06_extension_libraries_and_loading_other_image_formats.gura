@@ -34,7 +34,7 @@ init() = {
 				success = false;
 			} else {
 				//Get window surface
-				gScreenSurface:extern = SDL_GetWindowSurface( gWindow );
+				gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
 			}
 		}
 	}
@@ -117,11 +117,14 @@ main() = {
 					}
 				}
 
-				//Apply the image stretched
-				SDL_BlitSurface(gPNGSurface, nil, gScreenSurface, nil);
+				//Clear screen
+				SDL_RenderClear(gRenderer);
 
-				//Update the surface
-				SDL_UpdateWindowSurface( gWindow );
+				//Render texture to screen
+				SDL_RenderCopy(gRenderer, gTexture, nil, nil);
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
 			}
 		}
 	}
