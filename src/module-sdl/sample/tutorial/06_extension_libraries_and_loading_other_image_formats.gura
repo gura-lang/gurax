@@ -13,69 +13,117 @@ gScreenSurface = nil
 gPNGSurface = nil
 
 init() = {
+	//Initialization flag
+	success = true;
+
 	//Initialize SDL
-	SDL_Init(SDL_INIT_VIDEO)
-	imgFlags = IMG_INIT_PNG;
-	//Create window
- 	gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Initialize PNG loading
-	IMG_Init(imgFlags);
-	//Get window surface
-	gScreenSurface:extern = SDL_GetWindowSurface(gWindow);
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Initialize PNG loading
+			imgFlags = IMG_INIT_PNG;
+			if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+				Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+				success = false;
+			} else {
+				//Get window surface
+				gScreenSurface:extern = SDL_GetWindowSurface( gWindow );
+			}
+		}
+	}
+
+	success
 }
 
 loadMedia() = {
-	//Load PNG surface
+	//Loading success flag
+	success = true;
+
+	//Load splash image
 	gPNGSurface:extern = loadSurface("06_extension_libraries_and_loading_other_image_formats/loaded.png");
+	if (!gPNGSurface) {
+		Printf("Failed to load PNG image!\n");
+		success = false;
+	}
+
+	success
 }
 
 close() = {
 	//Deallocate surface
 	SDL_FreeSurface(gPNGSurface);
 	gPNGSurface:extern = nil;
+
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
 	gWindow:extern = nil;
+
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
 }
 
 loadSurface(path:String) = {
+	//The final optimized image
+	optimizedSurface = nil;
+
 	//Load image at specified path
 	loadedSurface = IMG_Load(path);
-	optimizedSurface = SDL_ConvertSurface(loadedSurface, gScreenSurface.format, 0);
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
-	optimizedSurface
+	if (!loadedSurface) {
+		Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+	} else {
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface(loadedSurface, gScreenSurface.format, 0);
+		if (!optimizedSurface) {
+			Printf("Unable to optimize image %s! SDL Error: %s\n", path, SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	optimizedSurface;
 }
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
 
-	quit = false
+			//Event handler
+			e = SDL_Event()
 
-	//Event handler
-	e = SDL_Event()
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					}
+				}
 
-	//While application is running
-	while (!quit) {
-		//Handle events on queue
-		while (SDL_PollEvent(e) != 0) {
-			//User requests quit
-			if (e.type == SDL_QUIT) {
-				quit = true;
+				//Apply the image stretched
+				SDL_BlitSurface(gPNGSurface, nil, gScreenSurface, nil);
+
+				//Update the surface
+				SDL_UpdateWindowSurface( gWindow );
 			}
 		}
-
-		//Apply the image stretched
-		SDL_BlitSurface(gPNGSurface, nil, gScreenSurface, nil);
-	
-		//Update the surface
-		SDL_UpdateWindowSurface( gWindow );
 	}
 
 	//Free resources and close SDL
