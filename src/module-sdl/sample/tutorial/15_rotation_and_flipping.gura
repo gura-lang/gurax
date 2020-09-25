@@ -32,21 +32,30 @@ LTexture = class {
 		newTexture = nil;
 
 		//Load image at specified path
-		loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
-		//Color key image
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+		loadedSurface = IMG_Load(path);
+		if (!loadedSurface) {
+			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		} else {
+			//Color key image
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
 
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		//Get image dimensions
-		this.mWidth = loadedSurface.w;
-		this.mHeight = loadedSurface.h;
+			//Create texture from surface pixels
+			newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+			if (!newTexture) {
+				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = loadedSurface.w;
+				this.mHeight = loadedSurface.h;
+			}
 
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
+			//Get rid of old loaded surface
+			SDL_FreeSurface(loadedSurface);
+		}
 
 		//Return success
 		this.mTexture = newTexture;
+		this.mTexture != nil;
 	}
 
 	//Deallocates texture
@@ -65,18 +74,20 @@ LTexture = class {
 		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
 	}
 
+	//Set blending
 	setBlendMode(blending:Number) = {
 		//Set blending function
 		SDL_SetTextureBlendMode(this.mTexture, blending);
 	}
 			
+	//Set alpha modulation
 	setAlpha(alpha:Number) = {
 		//Modulate texture alpha
 		SDL_SetTextureAlphaMod(this.mTexture, alpha);
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0, center?:SDL_Point, flip:Number = 0) = {
+	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
@@ -113,21 +124,58 @@ gArrowTexture = LTexture();
 
 
 init() = {
+	//Initialization flag
+	success = true;
+
 	//Initialize SDL
-	SDL_Init(SDL_INIT_VIDEO)
-	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-		Printf("Warning: Linear texture filtering not enabled!");
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Set texture filtering to linear
+		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Printf("Warning: Linear texture filtering not enabled!");
+		}
+
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Create renderer for window
+			gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (!gRenderer) {
+				Printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				success = false;
+			} else {
+				//Initialize renderer color
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+				//Initialize PNG loading
+				imgFlags = IMG_INIT_PNG;
+				if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+					Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+			}
+		}
 	}
- 	//Create window
-	gWindow:extern = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Create renderer for window
-	gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	success
 }
 
 loadMedia() = {
-	//Load front alpha texture
-	gArrowTexture.loadFromFile("15_rotation_and_flipping/arrow.png")
+	//Loading success flag
+	success = true;
+
+	//Load arrow
+	if (!gArrowTexture.loadFromFile("15_rotation_and_flipping/arrow.png")) {
+		Printf("Failed to load arrow texture!\n");
+		success = false;
+	}
+
+	success;
 }
 
 close() = {
@@ -141,67 +189,64 @@ close() = {
 	gRenderer:extern = nil;
 
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
-}
-
-loadTexture(path:String) = {
-	//Load image at specified path
-	loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
-	//Create texture from surface pixels
-	newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
-	newTexture
 }
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
 
-	quit = false
+			//Event handler
+			e = SDL_Event()
 
-	//Event handler
-	e = SDL_Event()
+			//Angle of rotation
+			degrees = 0;
 
-	//Angle of rotation
-	degrees = 0;
+			//Flip type
+			flipType = SDL_FLIP_NONE;
 
-	//Flip type
-	flipType = SDL_FLIP_NONE;
-
-	//While application is running
-	while (!quit) {
-		//Handle events on queue
-		while (SDL_PollEvent(e) != 0) {
-			//User requests quit
-			if (e.type == SDL_QUIT) {
-				quit = true;
-			} elsif (e.type == SDL_KEYDOWN) {
-				if (e.key.keysym.sym == SDLK_a) {
-					degrees -= 60;
-				} elsif (e.key.keysym.sym == SDLK_d) {
-					degrees += 60;
-				} elsif (e.key.keysym.sym == SDLK_q) {
-					flipType = SDL_FLIP_HORIZONTAL;
-				} elsif (e.key.keysym.sym == SDLK_w) {
-					flipType = SDL_FLIP_NONE;
-				} elsif (e.key.keysym.sym == SDLK_e) {
-					flipType = SDL_FLIP_VERTICAL;
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					} elsif (e.type == SDL_KEYDOWN) {
+						if (e.key.keysym.sym == SDLK_a) {
+							degrees -= 60;
+						} elsif (e.key.keysym.sym == SDLK_d) {
+							degrees += 60;
+						} elsif (e.key.keysym.sym == SDLK_q) {
+							flipType = SDL_FLIP_HORIZONTAL;
+						} elsif (e.key.keysym.sym == SDLK_w) {
+							flipType = SDL_FLIP_NONE;
+						} elsif (e.key.keysym.sym == SDLK_e) {
+							flipType = SDL_FLIP_VERTICAL;
+						}
+					}
 				}
+
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//Render arrow
+				gArrowTexture.render((SCREEN_WIDTH - gArrowTexture.getWidth()) / 2, (SCREEN_HEIGHT - gArrowTexture.getHeight()) / 2, nil, degrees, nil, flipType);
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
 			}
 		}
-
-		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(gRenderer);
-
-		//Render arrow
-		gArrowTexture.render((SCREEN_WIDTH - gArrowTexture.getWidth()) / 2, (SCREEN_HEIGHT - gArrowTexture.getHeight()) / 2, nil, degrees, nil, flipType);
-
-		//Update screen
-		SDL_RenderPresent(gRenderer);
 	}
 
 	//Free resources and close SDL
