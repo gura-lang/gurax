@@ -2117,6 +2117,8 @@ Mix_QuerySpec() = \
 					new Value_Number(format), new Value_Number(channels));
 	'''
 
+Mix_LoadWAV(file:const_char_p):Mix_Chunk_p
+
 Mix_LoadWAV_RW(src:SDL_RWops_p, freesrc:int):Mix_Chunk_p
 
 Mix_LoadMUS(file:const_char_p):Mix_Music_p
@@ -2184,6 +2186,8 @@ Mix_GroupCount(tag:int):int
 Mix_GroupOldest(tag:int):int
 
 Mix_GroupNewer(tag:int):int
+
+Mix_PlayChannel(channel:int, chunk:Mix_Chunk_p, loops:int):int
 
 Mix_PlayChannelTimed(channel:int, chunk:Mix_Chunk_p, loops:int, ticks:int):int
 

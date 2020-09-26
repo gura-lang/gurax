@@ -10481,6 +10481,27 @@ Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 					new Value_Number(format), new Value_Number(channels));
 }
 
+// sdl.Mix_LoadWAV(file:String)
+Gurax_DeclareFunctionAlias(Mix_LoadWAV_gurax, "Mix_LoadWAV")
+{
+	Declare(VTYPE_Mix_Chunk, Flag::None);
+	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_LoadWAV_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* file = args_gurax.PickString();
+	// Function body
+	Mix_Chunk* rtn = Mix_LoadWAV(file);
+	if (!rtn) return Value::nil();
+	return new Value_Mix_Chunk(rtn);
+}
+
 // sdl.Mix_LoadWAV_RW(src:SDL_RWops, freesrc:Number)
 Gurax_DeclareFunctionAlias(Mix_LoadWAV_RW_gurax, "Mix_LoadWAV_RW")
 {
@@ -10980,6 +11001,30 @@ Gurax_ImplementFunctionEx(Mix_GroupNewer_gurax, processor_gurax, argument_gurax)
 	int tag = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_GroupNewer(tag);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.Mix_PlayChannel(channel:Number, chunk:Mix_Chunk, loops:Number)
+Gurax_DeclareFunctionAlias(Mix_PlayChannel_gurax, "Mix_PlayChannel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(Mix_PlayChannel_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int channel = args_gurax.PickNumber<int>();
+	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	int loops = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = Mix_PlayChannel(channel, chunk, loops);
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -12165,6 +12210,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Mix_AllocateChannels_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_GetError_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_QuerySpec_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_LoadWAV_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_LoadWAV_RW_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_LoadMUS_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_LoadMUS_RW_gurax));
@@ -12189,6 +12235,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Mix_GroupCount_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_GroupOldest_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_GroupNewer_gurax));
+	frame.Assign(Gurax_CreateFunction(Mix_PlayChannel_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_PlayChannelTimed_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_PlayMusic_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_FadeInMusic_gurax));
