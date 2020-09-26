@@ -915,6 +915,17 @@ void AssignConsts(Frame& frame)
 	AssignConst(IMG_INIT_JPG);
 	AssignConst(IMG_INIT_PNG);
 	AssignConst(IMG_INIT_TIF);
+	// SDL_mixer
+	AssignConst(SDL_MIXER_MAJOR_VERSION);
+	AssignConst(SDL_MIXER_MINOR_VERSION);
+	AssignConst(SDL_MIXER_PATCHLEVEL);
+	AssignConst(MIX_CHANNELS);
+	AssignConst(MIX_DEFAULT_FREQUENCY);
+	AssignConst(MIX_DEFAULT_FORMAT);
+	AssignConst(MIX_DEFAULT_CHANNELS);
+	AssignConst(MIX_MAX_VOLUME);
+	AssignConst(MIX_CHANNEL_POST);
+	AssignConst(MIX_EFFECTSMAXSPEED);
 }
 
 Gurax_EndModuleScope(sdl)
