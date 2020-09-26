@@ -44,21 +44,30 @@ LTexture = class {
 		newTexture = nil;
 
 		//Load image at specified path
-		loadedSurface = SDL_CreateRGBSurfaceFromImage(path);
-		//Color key image
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+		loadedSurface = IMG_Load(path);
+		if (!loadedSurface) {
+			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		} else {
+			//Color key image
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
 
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		//Get image dimensions
-		this.mWidth = loadedSurface.w;
-		this.mHeight = loadedSurface.h;
+			//Create texture from surface pixels
+			newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+			if (!newTexture) {
+				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = loadedSurface.w;
+				this.mHeight = loadedSurface.h;
+			}
 
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
+			//Get rid of old loaded surface
+			SDL_FreeSurface(loadedSurface);
+		}
 
 		//Return success
 		this.mTexture = newTexture;
+		this.mTexture != nil;
 	}
 
 	//Deallocates texture
@@ -77,18 +86,20 @@ LTexture = class {
 		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
 	}
 
+	//Set blending
 	setBlendMode(blending:Number) = {
 		//Set blending function
 		SDL_SetTextureBlendMode(this.mTexture, blending);
 	}
 			
+	//Set alpha modulation
 	setAlpha(alpha:Number) = {
 		//Modulate texture alpha
 		SDL_SetTextureAlphaMod(this.mTexture, alpha);
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0, center?:SDL_Point, flip:Number = 0) = {
+	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
@@ -128,33 +139,82 @@ gLeftTexture = LTexture();
 gRightTexture = LTexture();
 
 init() = {
+	//Initialization flag
+	success = true;
+
 	//Initialize SDL
-	SDL_Init(SDL_INIT_VIDEO)
-	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-		Printf("Warning: Linear texture filtering not enabled!");
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Set texture filtering to linear
+		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Printf("Warning: Linear texture filtering not enabled!");
+		}
+
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Create renderer for window
+			gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (!gRenderer) {
+				Printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				success = false;
+			} else {
+				//Initialize renderer color
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+				//Initialize PNG loading
+				imgFlags = IMG_INIT_PNG;
+				if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+					Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+			}
+		}
 	}
- 	//Create window
-	gWindow:extern = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Create renderer for window
-	gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	success
 }
 
 loadMedia() = {
-	//Load press texture
-	gPressTexture.loadFromFile("18_key_states/press.png");
+	//Loading success flag
+	success = true;
 
+	//Load press texture
+	if (!gPressTexture.loadFromFile("18_key_states/press.png")) {
+		Printf("Failed to load press texture!\n");
+		success = false;
+	}
+	
 	//Load up texture
-	gUpTexture.loadFromFile("18_key_states/up.png");
+	if (!gUpTexture.loadFromFile("18_key_states/up.png")) {
+		Printf("Failed to load up texture!\n");
+		success = false;
+	}
 
 	//Load down texture
-	gDownTexture.loadFromFile("18_key_states/down.png");
+	if (!gDownTexture.loadFromFile("18_key_states/down.png")) {
+		Printf("Failed to load down texture!\n");
+		success = false;
+	}
 
 	//Load left texture
-	gLeftTexture.loadFromFile("18_key_states/left.png");
+	if (!gLeftTexture.loadFromFile("18_key_states/left.png")) {
+		Printf("Failed to load left texture!\n");
+		success = false;
+	}
 
 	//Load right texture
-	gRightTexture.loadFromFile("18_key_states/right.png");
+	if (!gRightTexture.loadFromFile("18_key_states/right.png")) {
+		Printf("Failed to load right texture!\n");
+		success = false;
+	}
+
+	success;
 }
 
 close() = {
@@ -172,6 +232,7 @@ close() = {
 	gRenderer:extern = nil;
 
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -187,54 +248,57 @@ loadTexture(path:String) = {
 
 main() = {
 	//Start up SDL and create window
-	init()
-	//Load media
-	loadMedia()
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
 
-	quit = false
+			//Event handler
+			e = SDL_Event()
 
-	//Event handler
-	e = SDL_Event()
+			//Current rendered texture
+			currentTexture = nil;
 
-	//Angle of rotation
-	degrees = 0;
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					}
+				}
 
-	//Flip type
-	flipType = SDL_FLIP_NONE;
+				//Set texture based on current keystate
+				currentKeyStates = SDL_GetKeyboardState();
+				if (currentKeyStates[SDL_SCANCODE_UP] != 0) {
+					currentTexture = gUpTexture;
+				} elsif (currentKeyStates[SDL_SCANCODE_DOWN] != 0) {
+					currentTexture = gDownTexture;
+				} elsif (currentKeyStates[SDL_SCANCODE_LEFT] != 0) {
+					currentTexture = gLeftTexture;
+				} elsif (currentKeyStates[SDL_SCANCODE_RIGHT] != 0) {
+					currentTexture = gRightTexture;
+				} else {
+					currentTexture = gPressTexture;
+				}
 
-	//While application is running
-	while (!quit) {
-		//Handle events on queue
-		while (SDL_PollEvent(e) != 0) {
-			//User requests quit
-			if (e.type == SDL_QUIT) {
-				quit = true;
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//Render current texture
+				currentTexture.render(0, 0);
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
 			}
 		}
-
-		//Set texture based on current keystate
-		currentKeyStates = SDL_GetKeyboardState();
-		if (currentKeyStates[SDL_SCANCODE_UP] != 0) {
-			currentTexture = gUpTexture;
-		} elsif (currentKeyStates[SDL_SCANCODE_DOWN] != 0) {
-			currentTexture = gDownTexture;
-		} elsif (currentKeyStates[SDL_SCANCODE_LEFT] != 0) {
-			currentTexture = gLeftTexture;
-		} elsif (currentKeyStates[SDL_SCANCODE_RIGHT] != 0) {
-			currentTexture = gRightTexture;
-		} else {
-			currentTexture = gPressTexture;
-		}
-
-		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(gRenderer);
-
-		//Render current texture
-		currentTexture.render(0, 0);
-
-		//Update screen
-		SDL_RenderPresent(gRenderer);
 	}
 
 	//Free resources and close SDL
