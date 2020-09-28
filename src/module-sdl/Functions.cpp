@@ -11705,6 +11705,805 @@ Gurax_ImplementFunctionEx(Mix_CloseAudio_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// sdl.TTF_Linked_Version()
+Gurax_DeclareFunctionAlias(TTF_Linked_Version_gurax, "TTF_Linked_Version")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_Linked_Version_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const SDL_version* ver = TTF_Linked_Version();
+	return new Value_SDL_version(*ver);
+}
+
+// sdl.TTF_ByteSwappedUNICODE(swapped:Number)
+Gurax_DeclareFunctionAlias(TTF_ByteSwappedUNICODE_gurax, "TTF_ByteSwappedUNICODE")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("swapped", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_ByteSwappedUNICODE_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int swapped = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_ByteSwappedUNICODE(swapped);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_Init()
+Gurax_DeclareFunctionAlias(TTF_Init_gurax, "TTF_Init")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_Init_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = TTF_Init();
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_OpenFont(file:String, ptsize:Number)
+Gurax_DeclareFunctionAlias(TTF_OpenFont_gurax, "TTF_OpenFont")
+{
+	Declare(VTYPE_TTF_Font, Flag::None);
+	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_OpenFont_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* file = args_gurax.PickString();
+	int ptsize = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_Font* rtn = TTF_OpenFont(file, ptsize);
+	if (!rtn) return Value::nil();
+	return new Value_TTF_Font(rtn);
+}
+
+// sdl.TTF_OpenFontIndex(file:String, ptsize:Number, index:Number)
+Gurax_DeclareFunctionAlias(TTF_OpenFontIndex_gurax, "TTF_OpenFontIndex")
+{
+	Declare(VTYPE_TTF_Font, Flag::None);
+	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_OpenFontIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* file = args_gurax.PickString();
+	int ptsize = args_gurax.PickNumber<int>();
+	long index = args_gurax.PickNumber<long>();
+	// Function body
+	TTF_Font* rtn = TTF_OpenFontIndex(file, ptsize, index);
+	if (!rtn) return Value::nil();
+	return new Value_TTF_Font(rtn);
+}
+
+// sdl.TTF_OpenFontRW(src:SDL_RWops, freesrc:Number, ptsize:Number)
+Gurax_DeclareFunctionAlias(TTF_OpenFontRW_gurax, "TTF_OpenFontRW")
+{
+	Declare(VTYPE_TTF_Font, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_OpenFontRW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	int ptsize = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_Font* rtn = TTF_OpenFontRW(src, freesrc, ptsize);
+	if (!rtn) return Value::nil();
+	return new Value_TTF_Font(rtn);
+}
+
+// sdl.TTF_OpenFontIndexRW(src:SDL_RWops, freesrc:Number, ptsize:Number, index:Number)
+Gurax_DeclareFunctionAlias(TTF_OpenFontIndexRW_gurax, "TTF_OpenFontIndexRW")
+{
+	Declare(VTYPE_TTF_Font, Flag::None);
+	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_OpenFontIndexRW_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	int freesrc = args_gurax.PickNumber<int>();
+	int ptsize = args_gurax.PickNumber<int>();
+	long index = args_gurax.PickNumber<long>();
+	// Function body
+	TTF_Font* rtn = TTF_OpenFontIndexRW(src, freesrc, ptsize, index);
+	if (!rtn) return Value::nil();
+	return new Value_TTF_Font(rtn);
+}
+
+// sdl.TTF_GetFontStyle(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_GetFontStyle_gurax, "TTF_GetFontStyle")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GetFontStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_GetFontStyle(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_SetFontStyle(font:TTF_Font, style:Number)
+Gurax_DeclareFunctionAlias(TTF_SetFontStyle_gurax, "TTF_SetFontStyle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_SetFontStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	int style = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_SetFontStyle(font, style);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_GetFontOutline(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_GetFontOutline_gurax, "TTF_GetFontOutline")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GetFontOutline_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_GetFontOutline(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_SetFontOutline(font:TTF_Font, outline:Number)
+Gurax_DeclareFunctionAlias(TTF_SetFontOutline_gurax, "TTF_SetFontOutline")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("outline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_SetFontOutline_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	int outline = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_SetFontOutline(font, outline);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_GetFontHinting(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_GetFontHinting_gurax, "TTF_GetFontHinting")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GetFontHinting_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_GetFontHinting(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_SetFontHinting(font:TTF_Font, hinting:Number)
+Gurax_DeclareFunctionAlias(TTF_SetFontHinting_gurax, "TTF_SetFontHinting")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hinting", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_SetFontHinting_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	int hinting = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_SetFontHinting(font, hinting);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_FontHeight(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontHeight_gurax, "TTF_FontHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_FontHeight(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_FontAscent(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontAscent_gurax, "TTF_FontAscent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontAscent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_FontAscent(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_FontDescent(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontDescent_gurax, "TTF_FontDescent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontDescent_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_FontDescent(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_FontLineSkip(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontLineSkip_gurax, "TTF_FontLineSkip")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontLineSkip_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_FontLineSkip(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_GetFontKerning(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_GetFontKerning_gurax, "TTF_GetFontKerning")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GetFontKerning_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_GetFontKerning(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_SetFontKerning(font:TTF_Font, allowed:Number)
+Gurax_DeclareFunctionAlias(TTF_SetFontKerning_gurax, "TTF_SetFontKerning")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("allowed", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_SetFontKerning_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	int allowed = args_gurax.PickNumber<int>();
+	// Function body
+	TTF_SetFontKerning(font, allowed);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_FontFaces(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontFaces_gurax, "TTF_FontFaces")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontFaces_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	long rtn = TTF_FontFaces(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_FontFaceIsFixedWidth(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontFaceIsFixedWidth_gurax, "TTF_FontFaceIsFixedWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_FontFaceIsFixedWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	int rtn = TTF_FontFaceIsFixedWidth(font);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_GlyphIsProvided(font:TTF_Font, ch:Number)
+Gurax_DeclareFunctionAlias(TTF_GlyphIsProvided_gurax, "TTF_GlyphIsProvided")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GlyphIsProvided_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	Uint16 ch = args_gurax.PickNumber<Uint16>();
+	// Function body
+	int rtn = TTF_GlyphIsProvided(font, ch);
+	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_RenderText_Solid(font:TTF_Font, text:String, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderText_Solid_gurax, "TTF_RenderText_Solid")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderText_Solid_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderText_Solid(font, text, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderUTF8_Solid(font:TTF_Font, text:String, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Solid_gurax, "TTF_RenderUTF8_Solid")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderUTF8_Solid_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderUTF8_Solid(font, text, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderGlyph_Solid(font:TTF_Font, ch:Number, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Solid_gurax, "TTF_RenderGlyph_Solid")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderGlyph_Solid_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	Uint16 ch = args_gurax.PickNumber<Uint16>();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderGlyph_Solid(font, ch, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderText_Shaded(font:TTF_Font, text:String, fg:SDL_Color, bg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderText_Shaded_gurax, "TTF_RenderText_Shaded")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderText_Shaded_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderText_Shaded(font, text, fg, bg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderUTF8_Shaded(font:TTF_Font, text:String, fg:SDL_Color, bg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Shaded_gurax, "TTF_RenderUTF8_Shaded")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderUTF8_Shaded_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderUTF8_Shaded(font, text, fg, bg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderGlyph_Shaded(font:TTF_Font, ch:Number, fg:SDL_Color, bg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Shaded_gurax, "TTF_RenderGlyph_Shaded")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderGlyph_Shaded_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	Uint16 ch = args_gurax.PickNumber<Uint16>();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderGlyph_Shaded(font, ch, fg, bg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderText_Blended(font:TTF_Font, text:String, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_gurax, "TTF_RenderText_Blended")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderText_Blended_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderText_Blended(font, text, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderUTF8_Blended(font:TTF_Font, text:String, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_gurax, "TTF_RenderUTF8_Blended")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderUTF8_Blended(font, text, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderText_Blended_Wrapped(font:TTF_Font, text:String, fg:SDL_Color, wrapLength:Number)
+Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_Wrapped_gurax, "TTF_RenderText_Blended_Wrapped")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("wrapLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderText_Blended_Wrapped_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	Uint32 wrapLength = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderText_Blended_Wrapped(font, text, fg, wrapLength);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderUTF8_Blended_Wrapped(font:TTF_Font, text:String, fg:SDL_Color, wrapLength:Number)
+Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_Wrapped_gurax, "TTF_RenderUTF8_Blended_Wrapped")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("wrapLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_Wrapped_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	Uint32 wrapLength = args_gurax.PickNumber<Uint32>();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderUTF8_Blended_Wrapped(font, text, fg, wrapLength);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_RenderGlyph_Blended(font:TTF_Font, ch:Number, fg:SDL_Color)
+Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Blended_gurax, "TTF_RenderGlyph_Blended")
+{
+	Declare(VTYPE_SDL_Surface, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_RenderGlyph_Blended_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	Uint16 ch = args_gurax.PickNumber<Uint16>();
+	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	// Function body
+	SDL_Surface* rtn = TTF_RenderGlyph_Blended(font, ch, fg);
+	if (!rtn) return Value::nil();
+	return new Value_SDL_Surface(rtn);
+}
+
+// sdl.TTF_CloseFont(font:TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_CloseFont_gurax, "TTF_CloseFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_CloseFont_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	// Function body
+	TTF_CloseFont(font);
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_Quit()
+Gurax_DeclareFunctionAlias(TTF_Quit_gurax, "TTF_Quit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_Quit_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	TTF_Quit();
+	return Gurax::Value::nil();
+}
+
+// sdl.TTF_WasInit()
+Gurax_DeclareFunctionAlias(TTF_WasInit_gurax, "TTF_WasInit")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_WasInit_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = TTF_WasInit();
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(SDL_Init_gurax));
@@ -12270,6 +13069,42 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Mix_GetSoundFonts_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_GetChunk_gurax));
 	frame.Assign(Gurax_CreateFunction(Mix_CloseAudio_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_Linked_Version_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_ByteSwappedUNICODE_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_Init_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_OpenFont_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_OpenFontIndex_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_OpenFontRW_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_OpenFontIndexRW_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GetFontStyle_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SetFontStyle_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GetFontOutline_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SetFontOutline_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GetFontHinting_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SetFontHinting_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontHeight_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontAscent_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontDescent_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontLineSkip_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GetFontKerning_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SetFontKerning_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontFaces_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontFaceIsFixedWidth_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GlyphIsProvided_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderText_Solid_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderUTF8_Solid_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderGlyph_Solid_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderText_Shaded_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderUTF8_Shaded_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderGlyph_Shaded_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderText_Blended_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderUTF8_Blended_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderText_Blended_Wrapped_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderUTF8_Blended_Wrapped_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_RenderGlyph_Blended_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_CloseFont_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_Quit_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_WasInit_gurax));
 }
 
 Gurax_EndModuleScope(sdl)

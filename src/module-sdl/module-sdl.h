@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 #include <SDL_syswm.h>
 #include "Util.h"
 #include "Functions.h"
@@ -66,6 +67,7 @@
 #include "VType_SDL_DropEvent.h"
 #include "VType_Mix_Chunk.h"
 #include "VType_Mix_Music.h"
+#include "VType_TTF_Font.h"
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)

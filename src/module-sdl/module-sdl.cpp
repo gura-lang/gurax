@@ -128,6 +128,7 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_DropEvent);
     Assign(VTYPE_Mix_Chunk);
     Assign(VTYPE_Mix_Music);
+    Assign(VTYPE_TTF_Font);
 	// Assignment of function
     AssignFunctions(GetFrame());
 	Assign(Gurax_CreateFunction(Test));

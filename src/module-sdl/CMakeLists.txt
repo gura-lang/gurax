@@ -13,6 +13,7 @@ target_include_directories(sdl.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2-2.0.12/include>
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_image-2.0.5>
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_mixer-2.0.4>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_ttf-2.0.15>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(sdl.gurd PRIVATE
@@ -20,6 +21,7 @@ target_link_directories(sdl.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2-2.0.12/VisualC/x64/Release>
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_image-2.0.5/VisualC/x64/Release>
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_mixer-2.0.4/VisualC/x64/Release>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/SDL2_ttf-2.0.15/VisualC/x64/Release>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
@@ -94,7 +96,8 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_DollarGestureEvent.cpp
 	VType_SDL_DropEvent.cpp
 	VType_Mix_Chunk.cpp
-	VType_Mix_Music.cpp)
+	VType_Mix_Music.cpp
+	VType_TTF_Font.cpp)
 
 #-------------------------------------------------------------------------------
 # Link
@@ -105,6 +108,7 @@ target_link_libraries(sdl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:SDL2.lib>
 	$<$<PLATFORM_ID:Windows>:SDL2_image.lib>
 	$<$<PLATFORM_ID:Windows>:SDL2_mixer.lib>
+	$<$<PLATFORM_ID:Windows>:SDL2_ttf.lib>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

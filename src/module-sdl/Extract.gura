@@ -8,8 +8,14 @@ FileInfo = struct {
 }
 
 fileInfoTbl = @(FileInfo) {
+	{ 'SDL_ttf.h',			'TTF' }
+}
+
+/*
+fileInfoTbl = @(FileInfo) {
 	{ 'SDL_mixer.h',			'Mixer' }
 }
+*/
 
 /*
 fileInfoTbl = @(FileInfo) {
@@ -175,7 +181,8 @@ Extract(stream:Stream):map = {
 }
 
 //dirName = '../../guest/SDL2-2.0.12/include/'
-dirName = '../../guest/SDL2_mixer-2.0.4/'
+//dirName = '../../guest/SDL2_mixer-2.0.4/'
+dirName = '../../guest/SDL2_ttf-2.0.15/'
 
 fileInfoTbl.Each {|fileInfo|
 	fileInfo.funcInfoTbl = Extract(path.Join(dirName, fileInfo.fileName))

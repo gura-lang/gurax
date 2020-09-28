@@ -137,6 +137,8 @@ r.DeclareType_EntityPtr('const_SDL_Rect_p', 'const SDL_Rect*', 'SDL_Rect')
 r.DeclareType_EntityPtr('const_Mix_Chunk_p', 'const Mix_Chunk*', 'Mix_Chunk')
 r.DeclareType_EntityPtr('const_Mix_Music_p', 'const Mix_Music*', 'Mix_Music')
 
+r.DeclareType_EntityPtr('const_TTF_Font_p', 'const TTF_Font*', 'TTF_Font')
+
 r.DeclareType_EntityPtr('SDL_GLContext', 'SDL_GLContext', 'SDL_GLContext')
 r.DeclareType_EntityPtr('SDL_AudioCVT_p', 'SDL_AudioCVT*', 'SDL_AudioCVT')
 r.DeclareType_EntityPtr('SDL_AudioStream_p', 'SDL_AudioStream*', 'SDL_AudioStream')
@@ -160,6 +162,8 @@ r.DeclareType_EntityPtr('SDL_Window_p', 'SDL_Window*', 'SDL_Window')
 
 r.DeclareType_EntityPtr('Mix_Chunk_p', 'Mix_Chunk*', 'Mix_Chunk')
 r.DeclareType_EntityPtr('Mix_Music_p', 'Mix_Music*', 'Mix_Music')
+
+r.DeclareType_EntityPtr('TTF_Font_p', 'TTF_Font*', 'TTF_Font')
 
 //------------------------------------------------------------------------------
 // Function Registration: SDL2
@@ -2258,6 +2262,111 @@ Mix_GetSoundFonts():const_char_p
 Mix_GetChunk(channel:int):Mix_Chunk_p
 
 Mix_CloseAudio():void
+
+}
+
+//------------------------------------------------------------------------------
+// Function Registration: SDL2_ttf
+//------------------------------------------------------------------------------
+r.Register('sdl') {
+
+//======== TTF (SDL_ttf.h) ========
+
+TTF_Linked_Version() = \
+	R'''
+	const SDL_version* ver = TTF_Linked_Version();
+	return new Value_SDL_version(*ver);
+	'''
+
+TTF_ByteSwappedUNICODE(swapped:int):void
+
+TTF_Init():int
+
+TTF_OpenFont(file:const_char_p, ptsize:int):TTF_Font_p
+
+TTF_OpenFontIndex(file:const_char_p, ptsize:int, index:long):TTF_Font_p
+
+TTF_OpenFontRW(src:SDL_RWops_p, freesrc:int, ptsize:int):TTF_Font_p
+
+TTF_OpenFontIndexRW(src:SDL_RWops_p, freesrc:int, ptsize:int, index:long):TTF_Font_p
+
+TTF_GetFontStyle(font:const_TTF_Font_p):int
+
+TTF_SetFontStyle(font:TTF_Font_p, style:int):void
+
+TTF_GetFontOutline(font:const_TTF_Font_p):int
+
+TTF_SetFontOutline(font:TTF_Font_p, outline:int):void
+
+TTF_GetFontHinting(font:const_TTF_Font_p):int
+
+TTF_SetFontHinting(font:TTF_Font_p, hinting:int):void
+
+TTF_FontHeight(font:const_TTF_Font_p):int
+
+TTF_FontAscent(font:const_TTF_Font_p):int
+
+TTF_FontDescent(font:const_TTF_Font_p):int
+
+TTF_FontLineSkip(font:const_TTF_Font_p):int
+
+TTF_GetFontKerning(font:const_TTF_Font_p):int
+
+TTF_SetFontKerning(font:TTF_Font_p, allowed:int):void
+
+TTF_FontFaces(font:const_TTF_Font_p):long
+
+TTF_FontFaceIsFixedWidth(font:const_TTF_Font_p):int
+
+//TTF_FontFaceFamilyName(font:const_TTF_Font_p):char_p
+
+//TTF_FontFaceStyleName(font:const_TTF_Font_p):char_p
+
+TTF_GlyphIsProvided(font:const_TTF_Font_p, ch:Uint16):int
+
+//TTF_GlyphMetrics(font:TTF_Font_p, ch:Uint16, minx:int_p, maxx:int_p, miny:int_p, maxy:int_p, advance:int_p):int
+
+//TTF_SizeText(font:TTF_Font_p, text:const_char_p, w:int_p, h:int_p):int
+
+//TTF_SizeUTF8(font:TTF_Font_p, text:const_char_p, w:int_p, h:int_p):int
+
+//TTF_SizeUNICODE(font:TTF_Font_p, text:const_Uint16_p, w:int_p, h:int_p):int
+
+TTF_RenderText_Solid(font:TTF_Font_p, text:const_char_p, fg:SDL_Color):SDL_Surface_p
+
+TTF_RenderUTF8_Solid(font:TTF_Font_p, text:const_char_p, fg:SDL_Color):SDL_Surface_p
+
+//TTF_RenderUNICODE_Solid(font:TTF_Font_p, text:const_Uint16_p, fg:SDL_Color):SDL_Surface_p
+
+TTF_RenderGlyph_Solid(font:TTF_Font_p, ch:Uint16, fg:SDL_Color):SDL_Surface_p
+
+TTF_RenderText_Shaded(font:TTF_Font_p, text:const_char_p, fg:SDL_Color, bg:SDL_Color):SDL_Surface_p
+
+TTF_RenderUTF8_Shaded(font:TTF_Font_p, text:const_char_p, fg:SDL_Color, bg:SDL_Color):SDL_Surface_p
+
+//TTF_RenderUNICODE_Shaded(font:TTF_Font_p, text:const_Uint16_p, fg:SDL_Color, bg:SDL_Color):SDL_Surface_p
+
+TTF_RenderGlyph_Shaded(font:TTF_Font_p, ch:Uint16, fg:SDL_Color, bg:SDL_Color):SDL_Surface_p
+
+TTF_RenderText_Blended(font:TTF_Font_p, text:const_char_p, fg:SDL_Color):SDL_Surface_p
+
+TTF_RenderUTF8_Blended(font:TTF_Font_p, text:const_char_p, fg:SDL_Color):SDL_Surface_p
+
+//TTF_RenderUNICODE_Blended(font:TTF_Font_p, text:const_Uint16_p, fg:SDL_Color):SDL_Surface_p
+
+TTF_RenderText_Blended_Wrapped(font:TTF_Font_p, text:const_char_p, fg:SDL_Color, wrapLength:Uint32):SDL_Surface_p
+
+TTF_RenderUTF8_Blended_Wrapped(font:TTF_Font_p, text:const_char_p, fg:SDL_Color, wrapLength:Uint32):SDL_Surface_p
+
+//TTF_RenderUNICODE_Blended_Wrapped(font:TTF_Font_p, text:const_Uint16_p, fg:SDL_Color, wrapLength:Uint32):SDL_Surface_p
+
+TTF_RenderGlyph_Blended(font:TTF_Font_p, ch:Uint16, fg:SDL_Color):SDL_Surface_p
+
+TTF_CloseFont(font:TTF_Font_p):void
+
+TTF_Quit():void
+
+TTF_WasInit():int
 
 }
 
