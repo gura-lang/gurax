@@ -1,0 +1,302 @@
+#!/usr/bin/env gurax
+/*This source code copyrighted by Lazy Foo' Productions (2004-2020)
+and may not be redistributed without written permission.*/
+
+import(sdl) {*}
+import(png)
+
+SCREEN_WIDTH = 640;
+SCREEN_HEIGHT = 480;
+
+//Texture wrapper class
+LTexture = class {
+	//Initializes variables
+	__init__() = {
+		//Initialize
+		this.mTexture = nil;
+		this.mWidth = 0;
+		this.mHeight = 0;
+	}
+
+	//Deallocates memory
+	__del__() = {
+		this.free()
+	};
+
+	//Loads image at specified path
+	loadFromFile(path:String) = {
+		//Get rid of preexisting texture
+		this.free();
+
+		//The final texture
+		newTexture = nil;
+
+		//Load image at specified path
+		loadedSurface = IMG_Load(path);
+		if (!loadedSurface) {
+			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		} else {
+			//Color key image
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+
+			//Create texture from surface pixels
+			newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+			if (!newTexture) {
+				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = loadedSurface.w;
+				this.mHeight = loadedSurface.h;
+			}
+
+			//Get rid of old loaded surface
+			SDL_FreeSurface(loadedSurface);
+		}
+
+		//Return success
+		this.mTexture = newTexture;
+		this.mTexture != nil;
+	}
+
+	//Creates image from font string
+	loadFromRenderedText(textureText:String, textColor:SDL_Color) = {
+		//Get rid of preexisting texture
+		this.free();
+
+		//Render text surface
+		textSurface = TTF_RenderText_Solid(gFont, textureText, textColor);
+		if (!textSurface) {
+			Printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		} else {
+			//Create texture from surface pixels
+			this.mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+			if (!this.mTexture) {
+				Printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = textSurface.w;
+				this.mHeight = textSurface.h;
+			}
+
+			//Get rid of old surface
+			SDL_FreeSurface(textSurface);
+		}
+		
+		//Return success
+		this.mTexture != nil;
+	}
+
+	//Deallocates texture
+	free() = {
+		if (this.mTexture) {
+			SDL_DestroyTexture(this.mTexture);
+			this.mTexture = nil;
+			this.mWidth = 0;
+			this.mHeight = 0;
+		}
+	}
+
+	//Set color modulation
+	setColor(red:Number, green:Number, blue:Number) = {
+		//Modulate texture
+		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
+	}
+
+	//Set blending
+	setBlendMode(blending:Number) = {
+		//Set blending function
+		SDL_SetTextureBlendMode(this.mTexture, blending);
+	}
+			
+	//Set alpha modulation
+	setAlpha(alpha:Number) = {
+		//Modulate texture alpha
+		SDL_SetTextureAlphaMod(this.mTexture, alpha);
+	}
+
+	//Renders texture at given point
+	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
+		//Set rendering space and render to screen
+		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
+
+		//Set clip rendering dimensions
+		if (clip) {
+			renderQuad.w = clip.w;
+			renderQuad.h = clip.h;
+		}
+
+		//Render to screen
+		SDL_RenderCopyEx(gRenderer, this.mTexture, clip, renderQuad, angle, center, flip);
+	}
+
+	//Gets image dimensions
+	getWidth() = this.mWidth;
+	getHeight() = this.mHeight;
+
+	//The actual hardware texture
+	mTexture:SDL_Texture;
+
+	//Image dimensions
+	mWidth:Number;
+	mHeight:Number;
+};
+
+//The window we'll be rendering to
+gWindow = nil;
+
+//The window renderer
+gRenderer = nil;
+
+//Globally used font
+gFont = nil;
+
+//Scene sprites
+gTextTexture = LTexture();
+
+
+init() = {
+	//Initialization flag
+	success = true;
+
+	//Initialize SDL
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Set texture filtering to linear
+		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Printf("Warning: Linear texture filtering not enabled!");
+		}
+
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Create renderer for window
+			gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (!gRenderer) {
+				Printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				success = false;
+			} else {
+				//Initialize renderer color
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+				//Initialize PNG loading
+				imgFlags = IMG_INIT_PNG;
+				if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+					Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+	
+				 //Initialize SDL_ttf
+				if (TTF_Init() == -1) {
+					Printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+					success = false;
+				}
+			}
+		}
+	}
+
+	success
+}
+
+loadMedia() = {
+	//Loading success flag
+	success = true;
+
+	//Open the font
+	gFont:extern = TTF_OpenFont("16_true_type_fonts/lazy.ttf", 28);
+	if (!gFont) {
+		Printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	} else {
+		//Render text
+		textColor = SDL_Color(0, 0, 0);
+		if (!gTextTexture.loadFromRenderedText("The quick brown fox jumps over the lazy dog", textColor)) {
+			Printf("Failed to render text texture!\n");
+			success = false;
+		}
+	}
+
+	success;
+}
+
+close() = {
+	//Free loaded images
+	gTextTexture.free();
+
+	//Destroy window
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow:extern = nil;
+	gRenderer:extern = nil;
+
+	//Quit SDL subsystems
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
+main() = {
+	//Start up SDL and create window
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
+
+			//Event handler
+			e = SDL_Event()
+
+			//Angle of rotation
+			degrees = 0;
+
+			//Flip type
+			flipType = SDL_FLIP_NONE;
+
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					} elsif (e.type == SDL_KEYDOWN) {
+						if (e.key.keysym.sym == SDLK_a) {
+							degrees -= 60;
+						} elsif (e.key.keysym.sym == SDLK_d) {
+							degrees += 60;
+						} elsif (e.key.keysym.sym == SDLK_q) {
+							flipType = SDL_FLIP_HORIZONTAL;
+						} elsif (e.key.keysym.sym == SDLK_w) {
+							flipType = SDL_FLIP_NONE;
+						} elsif (e.key.keysym.sym == SDLK_e) {
+							flipType = SDL_FLIP_VERTICAL;
+						}
+					}
+				}
+
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//Render current frame
+				gTextTexture.render((SCREEN_WIDTH - gTextTexture.getWidth()) / 2, (SCREEN_HEIGHT - gTextTexture.getHeight()) / 2);
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
+			}
+		}
+	}
+
+	//Free resources and close SDL
+	close();
+}
+
+main()
