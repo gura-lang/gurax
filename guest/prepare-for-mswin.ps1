@@ -311,6 +311,22 @@ class Package_sdl_mixer {
 $packages += [Package_sdl_mixer]::new()
 
 #---------------------------------------------------------------------------------
+# Package: sdl_ttf
+#---------------------------------------------------------------------------------
+class Package_sdl_ttf {
+	[String] $name = "sdl_ttf"
+	[String] $ver = "2.0.15"
+	[String] $baseName = "SDL2_ttf-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		msbuild VisualC\SDL_ttf.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
+		copy VisualC\x64\Release\*.dll ..\..\bin
+	}
+}
+$packages += [Package_sdl_ttf]::new()
+
+#---------------------------------------------------------------------------------
 # Package: zlib
 #---------------------------------------------------------------------------------
 class Package_zlib {
