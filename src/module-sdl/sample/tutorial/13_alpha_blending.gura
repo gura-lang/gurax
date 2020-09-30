@@ -1,6 +1,8 @@
 #!/usr/bin/env gurax
 /*This source code copyrighted by Lazy Foo' Productions (2004-2020)
 and may not be redistributed without written permission.*/
+// Translated to Gura by ypsitau.
+// Don't make this public outside Git repository since it hasn't received permission by the author.
 
 import(sdl) {*}
 import(png)
