@@ -2282,6 +2282,8 @@ TTF_ByteSwappedUNICODE(swapped:int):void
 
 TTF_Init():int
 
+TTF_GetError():const_char_p
+
 TTF_OpenFont(file:const_char_p, ptsize:int):TTF_Font_p
 
 TTF_OpenFontIndex(file:const_char_p, ptsize:int, index:long):TTF_Font_p

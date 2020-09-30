@@ -188,7 +188,7 @@ g() .. 3
 ======== nil attribute ========
 f .. <Function:f(a:Number)>
 g .. <Function:g(a:Number:nil)>
-f(nil) .. can't accept nil value
+f(nil) .. a can't accept nil value
 g(nil) .. <Nil>
 ======== dynamicScope ========
 [static]  a = external
@@ -341,7 +341,7 @@ f4(x*) .. a=[1,2,3,4,5,6,7,8,9,10]
 ======== Block delegation ========
 g1 {|str| Format('type = %s', str)} .. type = function
 g1() .. (no block)
-g2 {|str| Format('type = %s', str)} .. failed to cast from Function to Expr
+g2 {|str| Format('type = %s', str)} .. can't cast from Function to Expr
 g3() .. block expression must be specified for delegation
 ======== Attribute :void ========
 <Nil>

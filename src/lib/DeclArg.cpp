@@ -140,7 +140,7 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 		return nullptr;
 	}
 	if (value.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) return value.Reference();
-	return GetVType().Cast(value, GetFlags());
+	return GetVType().Cast(value, GetSymbol(), GetFlags());
 }
 
 bool DeclArg::CheckFlagConfliction(Flags flags)

@@ -85,16 +85,26 @@ const PropSlot* VType::LookupPropSlot(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
+Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags flags) const
 {
-	auto IssueError = [](const VType& vtype, const Value& value) {
+	auto IssueError = [](const VType& vtype, const Symbol* pSymbol, const Value& value) {
 		if (Error::IsIssued()) {
 			// nothing to do
 		} else if (value.IsNil()) {
-			Error::Issue(ErrorType::ValueError, "can't accept nil value");
+			if (pSymbol) {
+				Error::Issue(ErrorType::ValueError, "%s can't accept nil value", pSymbol->GetName());
+			} else {
+				Error::Issue(ErrorType::ValueError, "can't accept nil value");
+			}
 		} else {
-			Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
-				value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+			if (pSymbol) {
+				Error::Issue(ErrorType::ValueError, "%s can't cast from %s to %s",
+					pSymbol->GetName(),
+					value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+			} else {
+				Error::Issue(ErrorType::ValueError, "can't cast from %s to %s",
+					value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+			}
 		}
 	};
 	if (flags & DeclArg::Flag::ListVar) {
@@ -108,7 +118,7 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 				} else {
 					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
 					if (!pValueElemCasted) {
-						IssueError(*this, *pValueElem);
+						IssueError(*this, pSymbol, *pValueElem);
 						return nullptr;
 					}
 					pValuesCasted->push_back(pValueElemCasted.release());
@@ -124,14 +134,18 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 				} else {
 					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
 					if (!pValueElemCasted) {
-						IssueError(*this, *pValueElem);
+						IssueError(*this, pSymbol, *pValueElem);
 						return nullptr;
 					}
 					pValuesCasted->push_back(pValueElemCasted.release());
 				}
 			}
 		} else {
-			Error::Issue(ErrorType::ValueError, "a list or an iterator is acceptable");
+			if (pSymbol) {
+				Error::Issue(ErrorType::ValueError, "%s can accept a list or an iterator", pSymbol->GetName());
+			} else {
+				Error::Issue(ErrorType::ValueError, "a list or an iterator is acceptable");
+			}
 			return nullptr;
 		}
 		return new Value_List(pValuesCasted.release());
@@ -140,7 +154,7 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 	} else {
 		RefPtr<Value> pValueCasted(DoCastFrom(value, flags));
 		if (!pValueCasted) {
-			IssueError(*this, value);
+			IssueError(*this, pSymbol, value);
 			return nullptr;
 		}
 		return pValueCasted.release();

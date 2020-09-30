@@ -88,17 +88,17 @@ a.a1 = 3 .. 3
 a.a1 = 'world' .. world
 a.a1 = nil .. <Nil>
 a.n1 = 3 .. 3
-a.n1 = 'world' .. failed to cast from String to Number
-a.n1 = nil .. can't accept nil value
+a.n1 = 'world' .. n1 can't cast from String to Number
+a.n1 = nil .. n1 can't accept nil value
 a.n2 = 3 .. 3
-a.n2 = 'world' .. failed to cast from String to Number
+a.n2 = 'world' .. n2 can't cast from String to Number
 a.n2 = nil .. <Nil>
 a.n3 = 3 .. 3
-a.n3 = 'world' .. failed to cast from String to Number
+a.n3 = 'world' .. n3 can't cast from String to Number
 a.n3 = nil .. <Nil>
 a.n4 = 3 .. 3
-a.n4 = 'world' .. failed to cast from String to Number
-a.n4 = nil .. can't accept nil value
+a.n4 = 'world' .. n4 can't cast from String to Number
+a.n4 = nil .. n4 can't accept nil value
 a.s1 = 3 .. 3
 a.s1 = 'world' .. world
 a.s1 = nil .. <Nil>
@@ -173,13 +173,13 @@ a.ds .. %{'apple' => 100, 'grape' => 200, 'orange' => 80}
 A.ds .. %{'apple' => 100, 'grape' => 230, 'orange' => 80}
 a.ds .. %{'apple' => 100, 'grape' => 230, 'orange' => 80}
 ======== Error in Property Declaration ========
-A = class {a:Number = 'hello'} .. failed to cast from String to Number
+A = class {a:Number = 'hello'} .. a can't cast from String to Number
 A = class {a:Number = nil} .. <VType:A(){block?}>
 A = class {a[] = nil} .. <VType:A(){block?}>
 A = class {a[] = 3} .. must be initialized by a list
 A = class {a[] = []} .. <VType:A(){block?}>
 A = class {a[]:Number = []} .. <VType:A(){block?}>
-A = class {a[]:Number = ['h']} .. failed to cast from String to Number
+A = class {a[]:Number = ['h']} .. a can't cast from String to Number
 ======== Example ========
 <VType:Person(name:String,age:Number){block?}>
 Taro is 10 years old.

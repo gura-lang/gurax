@@ -40,4 +40,4 @@ f(x):xlist:flat .. [0, 0, 0, 2, 4, 6, 4, 8, 12]
 10
 ======== Type cast while mapping ========
 Ord([1]) .. [49]
-Chr(['a']) .. failed to cast from String to Number
+Chr(['a']) .. code can't cast from String to Number

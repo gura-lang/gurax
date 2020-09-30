@@ -496,15 +496,16 @@ Gurax_ImplementMethod(String, Foldw)
 		processor, new VType_String::Iterator_Foldw(str.Reference(), widthPerFold, padding? *padding : '\0'));
 }
 
-// String#Format(values*):String:map
+#if 0
+// String#Format(format:String, values*):String:map
 Gurax_DeclareMethod(String, Format)
 {
 	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Taking the string instance as a printf-styled formatter string,\n"
-		"it converts `values` into a string depending on formatter specifiers in it.\n");
+		"");
 }
 
 Gurax_ImplementMethod(String, Format)
@@ -513,13 +514,15 @@ Gurax_ImplementMethod(String, Format)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	const char* format = args.PickString();
 	const ValueList& values = args.PickList();
 	// Function body
-	String str;
+	String& str = valueThis.GetStringSTL();
 	str.FormatValueList(valueThis.GetString(), values);
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_String(str);
 }
+#endif
 
 // String#IsAlnum()
 Gurax_DeclareMethod(String, IsAlnum)
@@ -1387,7 +1390,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Find));
 	Assign(Gurax_CreateMethod(String, Fold));
 	Assign(Gurax_CreateMethod(String, Foldw));
-	Assign(Gurax_CreateMethod(String, Format));
+	//Assign(Gurax_CreateMethod(String, Format));
 	Assign(Gurax_CreateMethod(String, IsAlnum));
 	Assign(Gurax_CreateMethod(String, IsAlpha));
 	Assign(Gurax_CreateMethod(String, IsDigit));

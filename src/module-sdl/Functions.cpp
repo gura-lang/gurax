@@ -11757,6 +11757,22 @@ Gurax_ImplementFunctionEx(TTF_Init_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.TTF_GetError()
+Gurax_DeclareFunctionAlias(TTF_GetError_gurax, "TTF_GetError")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(TTF_GetError_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const char* rtn = TTF_GetError();
+	return new Gurax::Value_String(rtn);
+}
+
 // sdl.TTF_OpenFont(file:String, ptsize:Number)
 Gurax_DeclareFunctionAlias(TTF_OpenFont_gurax, "TTF_OpenFont")
 {
@@ -13072,6 +13088,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(TTF_Linked_Version_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_ByteSwappedUNICODE_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_Init_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GetError_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_OpenFont_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_OpenFontIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_OpenFontRW_gurax));

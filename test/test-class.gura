@@ -441,11 +441,11 @@ TestCase('Constructor Inheritance (2)') {
 }
 
 TestCase('Post-definition of method') {
-	String.Test() = '%s:%d'.Format(this, this.len)
+	String.Test() = Format('%s:%d', this, this.len)
 	Tester(`String.Test)
 	Tester(`'Hello'.Test())
 	A = struct { p1, p2, p3 }
-	A.Test() = '%s %s %s'.Format(this.p1, this.p2, this.p3)
+	A.Test() = Format('%s %s %s', this.p1, this.p2, this.p3)
 	Tester(`A.Test)
 	a = A('first', 'second', 'third')
 	Tester(`a.Test())

@@ -87,7 +87,7 @@ public:
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
-	Value* Cast(const Value& value, DeclArg::Flags flags = DeclArg::Flag::None) const;
+	Value* Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags flags) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrameOfMember().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }

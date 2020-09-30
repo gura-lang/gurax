@@ -450,7 +450,7 @@ template<bool discardValueFlag>
 void PUnit_Cast<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetFlags()));
+	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, nullptr, GetFlags()));
 	if (!pValueCasted) {
 		processor.ErrorDone();
 		return;

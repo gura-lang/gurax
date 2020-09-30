@@ -46,7 +46,7 @@ bool PropSlot::SetValue(Value& valueTarget, const Value& value, const Attribute&
 		DoSetValue(valueTarget, value, attr);
 		return true;
 	}
-	RefPtr<Value> pValueCasted(GetVType().Cast(value, GetFlags()));
+	RefPtr<Value> pValueCasted(GetVType().Cast(value, GetSymbol(), GetFlags()));
 	if (!pValueCasted) return false;
 	DoSetValue(valueTarget, *pValueCasted, attr);
 	return true;

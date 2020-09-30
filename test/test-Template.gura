@@ -211,9 +211,9 @@ TestCase('Template script that handles template internally') {
 	(not defined)
 	"""}}
 	[Products]
-	${R"""
+	${Format(R"""
 	- %s
-	""".Format(products)}
+	""", products)}
 	'''
 	scope {
 		company = 'hoge'

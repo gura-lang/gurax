@@ -37,7 +37,7 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const Dott
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType&>(*pValue).GetVTypeThis();
 		if (!pValueInit->IsNil()) {
-			pValueInit.reset(pVType->Cast(*pValueInit, flags));
+			pValueInit.reset(pVType->Cast(*pValueInit, pSymbol, flags));
 			if (!pValueInit) return false;
 		}
 	} else if (flags & PropSlot::Flag::ListVar) {
