@@ -197,28 +197,12 @@ Value* Frame_ValueMap::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc
 
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 {
-	for (auto pair : *_pValueMap) {
-		const Symbol* pSymbol = pair.first;
-		const Value* pValue = pair.second;
-		if (pSymbol->StartsWith('_')) {
-			// nothing to do
-		} else if (overwriteFlag || !frameDst.IsAssignedLocal(pSymbol)) {
-			frameDst.Assign(pSymbol, pValue->Reference());
-		} else {
-			Error::Issue(ErrorType::ValueError,
-							"can't overwrite the symbol: %s", pSymbol->GetName());
-			return false;
-		}
-	}
-	return true;
+	return _pValueMap->ExportTo(frameDst, overwriteFlag);
 }
 
 void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
 {
-	for (auto pair : *_pValueMap) {
-		const Symbol* pSymbol = pair.first;
-		symbolList.push_back(pSymbol);
-	}
+	_pValueMap->GatherSymbol(symbolList);
 }
 
 //------------------------------------------------------------------------------

@@ -27,35 +27,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-#if 0
-// ********************
-// Module#__prop__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(Module, __prop__)
-{
-	Declare(VTYPE_PropSlot, Flag::Map);
-	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(Module, __prop__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const Symbol* pSymbol = args.PickSymbol();
-	// Function body
-	const PropSlot* pPropSlot = valueThis.GetModule().LookupPropSlot(pSymbol);
-	if (!pPropSlot) {
-		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
-		return Value::nil();
-	}
-	return argument.ReturnValue(processor, new Value_PropSlot(pPropSlot->Reference()));
-}
-#endif
 
 //------------------------------------------------------------------------------
 // VType_Module
@@ -68,8 +39,6 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
-	// Assignment of method
-	//Assign(Gurax_CreateMethod(Module, __prop__));
 }
 
 //------------------------------------------------------------------------------

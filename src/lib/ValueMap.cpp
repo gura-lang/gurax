@@ -25,6 +25,32 @@ void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 	}
 }
 
+bool ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
+{
+	for (auto pair : *this) {
+		const Symbol* pSymbol = pair.first;
+		const Value* pValue = pair.second;
+		if (pSymbol->StartsWith('_')) {
+			// nothing to do
+		} else if (overwriteFlag || !frameDst.IsAssignedLocal(pSymbol)) {
+			frameDst.Assign(pSymbol, pValue->Reference());
+		} else {
+			Error::Issue(ErrorType::ValueError,
+							"can't overwrite the symbol: %s", pSymbol->GetName());
+			return false;
+		}
+	}
+	return true;
+}
+
+void ValueMap::GatherSymbol(SymbolList& symbolList) const
+{
+	for (auto pair : *this) {
+		const Symbol* pSymbol = pair.first;
+		symbolList.push_back(pSymbol);
+	}
+}
+
 String ValueMap::ToString(const StringStyle& ss) const
 {
 	String str;
