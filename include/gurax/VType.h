@@ -38,7 +38,6 @@ protected:
 	Flags _flags;
 	RefPtr<Frame_Scope> _pFrame;
 	RefPtr<PropSlotMap> _pPropSlotMap;
-	//RefPtr<PropSlotMap> _pPropSlotMapOfClass;
 	RefPtr<Function> _pConstructor;
 private:
 	static UniqId _uniqIdNext;
@@ -81,9 +80,7 @@ public:
 	Frame& GetFrameOfMember() { return *_pFrame->GetFrameLocal(); }
 	const Frame& GetFrameOfMember() const { return *_pFrame->GetFrameLocal(); }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
-	//PropSlotMap& GetPropSlotMapOfClass() { return *_pPropSlotMapOfClass; }
 	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }
-	//const PropSlotMap& GetPropSlotMapOfClass() const { return *_pPropSlotMapOfClass; }
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
