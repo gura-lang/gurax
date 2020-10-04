@@ -25,6 +25,57 @@ void VTypeCustom::Inherit()
 	}
 }
 
+bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVType,
+									PropSlot::Flags flags, RefPtr<Value> pValueInit)
+{
+	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);
+	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
+	size_t iProp = valuesProp.size();
+	if (pValueInit->IsNil()) flags |= PropSlot::Flag::Nil;
+	if (pVType) {
+		if (!pValueInit->IsNil()) {
+			pValueInit.reset(pVType->Cast(*pValueInit, pSymbol, flags));
+			if (!pValueInit) return false;
+		}
+	} else if (flags & PropSlot::Flag::ListVar) {
+		pVType = &VTYPE_Any;
+		if (pValueInit->IsType(VTYPE_List)) {
+			const ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(*pValueInit);
+			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
+				pVType = &valueTypedOwner.GetVTypeOfElems();
+			}
+		} else if (!pValueInit->IsNil()) {
+			Error::Issue(ErrorType::PropertyError, "must be initialized by a list");
+			return false;
+		}
+	} else if (pValueInit->IsNil()) {
+		pVType = &VTYPE_Any;
+	} else {
+		pVType = &pValueInit->GetVType();
+	}
+	valuesProp.push_back(pValueInit.release());
+	if (ofClassFlag) {
+		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Class(pSymbol, iProp));
+		pPropSlot->Declare(*pVType, flags);
+		GetPropSlotMap().Assign(pPropSlot.release());
+	} else {
+		RefPtr<PropSlot> pPropSlot(new PropSlotCustom_Instance(pSymbol, iProp));
+		pPropSlot->Declare(*pVType, flags);
+		GetPropSlotMap().Assign(pPropSlot.release());
+	}
+	return true;
+}
+
+bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
+									PropSlot::Flags flags, RefPtr<Value> pValueInit)
+{
+	RefPtr<Value> pValue(frame.Retrieve(dottedSymbol));
+	VType* pVType = (pValue && pValue->IsType(VTYPE_VType))?
+					&dynamic_cast<Value_VType&>(*pValue).GetVTypeThis() : nullptr;
+	return AssignPropSlot(frame, pSymbol, pVType, flags, pValueInit.release());
+}
+
+#if 0
 bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
@@ -65,6 +116,7 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const Dott
 	}
 	return true;
 }
+#endif
 
 void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymbol)
 {
