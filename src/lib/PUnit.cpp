@@ -374,17 +374,17 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_AssignPropSlot
-// Stack View: initByNilFlag=false .. [VType ValueInit] -> [VType ValueInit] (continue)
-//                                                      -> [VType]           (discard)
-//             initByNilFlag=true ..  [VType]           -> [VType]           (continue)
-//                                                      -> [VType]           (discard)
+// Stack View: initializerFlag=true .. [VType ValueInit] -> [VType ValueInit] (continue)
+//                                                       -> [VType]           (discard)
+//             initializerFlag=false ..  [VType]         -> [VType]           (continue)
+//                                                       -> [VType]           (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag, bool initByNilFlag>
-void PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool initializerFlag>
+void PUnit_AssignPropSlot<discardValueFlag, initializerFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	bool rtn;
-	if constexpr (initByNilFlag) {
+	if constexpr (!initializerFlag) {
 		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
 				Value_VType::GetVTypeThis(processor.PeekValue(0)));
 		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
@@ -407,13 +407,13 @@ void PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::Exec(Processor& proc
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
-template<bool discardValueFlag, bool initByNilFlag>
-String PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool initializerFlag>
+String PUnit_AssignPropSlot<discardValueFlag, initializerFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("AssignPropSlot(%s,cont=%s,initByNil=%s)",
+	str.Format("AssignPropSlot(%s,cont=%s,initializer=%s)",
 			   GetSymbol()->GetName(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initByNilFlag? "true" : "false");
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initializerFlag? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -421,7 +421,7 @@ String PUnit_AssignPropSlot<discardValueFlag, initByNilFlag>::ToString(const Str
 PUnit* PUnitFactory_AssignPropSlot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		if (_initByNilFlag) {
+		if (_initializerFlag) {
 			_pPUnitCreated = new PUnit_AssignPropSlot<true, true>(
 				_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 		} else {
@@ -429,7 +429,7 @@ PUnit* PUnitFactory_AssignPropSlot::Create(bool discardValueFlag)
 				_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 		}
 	} else {
-		if (_initByNilFlag) {
+		if (_initializerFlag) {
 			_pPUnitCreated = new PUnit_AssignPropSlot<false, true>(
 				_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 		} else {

@@ -73,7 +73,7 @@ Iterator* Composer::EachPUnit() const
 }
 
 void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
-									 const Attribute& attr, bool initByNilFlag, const Expr& exprSrc)
+									 const Attribute& attr, bool initializerFlag, const Expr& exprSrc)
 {
 	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
 	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
@@ -97,7 +97,7 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 		}
 	}
 	SetFactory(new PUnitFactory_AssignPropSlot(
-				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, exprSrc.Reference()));
+				   pSymbol, pDottedSymbol->Reference(), flags, initializerFlag, exprSrc.Reference()));
 }
 
 //------------------------------------------------------------------------------

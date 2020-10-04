@@ -446,7 +446,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_AssignPropSlot
 //------------------------------------------------------------------------------
-template<bool discardValueFlag, bool initByNilFlag>
+template<bool discardValueFlag, bool initializerFlag>
 class GURAX_DLLDECLARE PUnit_AssignPropSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -482,10 +482,10 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	PropSlot::Flags _flags;
-	bool _initByNilFlag;
+	bool _initializerFlag;
 public:
-	PUnitFactory_AssignPropSlot(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropSlot::Flags flags, bool initByNilFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _initByNilFlag(initByNilFlag) {}
+	PUnitFactory_AssignPropSlot(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropSlot::Flags flags, bool initializerFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _initializerFlag(initializerFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_AssignPropSlot<false, false>);
 	}

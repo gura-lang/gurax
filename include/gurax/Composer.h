@@ -155,7 +155,7 @@ public:
 		SetFactory(new PUnitFactory_AssignMethod(pFunction, keepTargetFlag, exprSrc.Reference()));
 	}
 	void Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
-							   const Attribute& attr, bool initByNilFlag, const Expr& exprSrc);
+							   const Attribute& attr, bool initializerFlag, const Expr& exprSrc);
 	void Add_Cast(const VType& vtype, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Cast(vtype, DeclArg::Flag::None, exprSrc.Reference()));
 	}
