@@ -11,6 +11,7 @@ class DeclArg;
 class Frame;
 class Function;
 class Module;
+class PropSlotMap;
 class VType;
 class Value;
 class ValueMap;
@@ -94,7 +95,7 @@ public:
 public:
 	// Virtual functions
 	virtual bool IsFrameOfBasement() const { return false; }
-	virtual bool IsFrameOfVType() const { return false; }
+	virtual bool IsFrameOfMember() const { return false; }
 	virtual bool IsFrameOfModule() const { return false; }
 	virtual bool IsFrameOfScope() const { return false; }
 	virtual bool IsFrameOfBlock() const { return false; }
@@ -188,7 +189,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_OfMember");
 protected:
-	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h isn't included yet.
+	ValueMap* _pValueMap;		// RefPtr can not be used here because Value.h isn't included yet.
+	PropSlotMap* _pPropSlotMap;	// RefPtr can not be used here because PropSlot.h isn't included yet.
 public:
 	static const char* name;
 public:
@@ -198,8 +200,10 @@ protected:
 	// Destructor
 	virtual ~Frame_OfMember() override;
 public:
+	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
+public:
 	// Virtual functions of Frame
-	virtual bool IsFrameOfVType() const override { return true; }
+	virtual bool IsFrameOfMember() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;

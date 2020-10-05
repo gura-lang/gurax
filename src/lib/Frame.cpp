@@ -214,13 +214,15 @@ void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
 //------------------------------------------------------------------------------
 const char* Frame_OfMember::name = "OfMember";
 
-Frame_OfMember::Frame_OfMember(Frame* pFrameOuter) : Frame(pFrameOuter), _pValueMap(new ValueMap())
+Frame_OfMember::Frame_OfMember(Frame* pFrameOuter) :
+	Frame(pFrameOuter), _pValueMap(new ValueMap()), _pPropSlotMap(new PropSlotMap())
 {
 }
 
 Frame_OfMember::~Frame_OfMember()
 {
 	ValueMap::Delete(_pValueMap);
+	PropSlotMap::Delete(_pPropSlotMap);
 }
 
 void Frame_OfMember::DoAssign(const Symbol* pSymbol, Value* pValue)
@@ -261,6 +263,7 @@ bool Frame_OfMember::ExportTo(Frame& frameDst, bool overwriteFlag) const
 void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
 {
 	_pValueMap->GatherSymbol(symbolList);
+	_pPropSlotMap->GatherSymbol(symbolList);
 }
 
 //------------------------------------------------------------------------------

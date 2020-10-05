@@ -14,8 +14,7 @@ VType VType::Empty("");
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0),
-	_pFrame(new Frame_Scope(nullptr, new Frame_OfMember(nullptr))),
-	_pPropSlotMap(new PropSlotMap())
+	_pFrame(new Frame_Scope(nullptr, new Frame_OfMember(nullptr)))
 {
 }
 
@@ -29,7 +28,7 @@ void VType::GatherMemberSymbol(SymbolList& symbolList) const
 {
 	GetFrameOfMember().GatherSymbol(symbolList);
 	if (_pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList);
-	GetPropSlotMap().GatherSymbol(symbolList);
+	//GetPropSlotMap().GatherSymbol(symbolList);
 }
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
