@@ -181,18 +181,22 @@ void Frame_ValueMap::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 Value* Frame_ValueMap::DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc)
 {
 	Value* pValue = _pValueMap->Lookup(pSymbol);
-	if (!pValue) return nullptr;
-	*ppFrameSrc = this;
-	return pValue->Reference();
+	if (pValue) {
+		*ppFrameSrc = this;
+		return pValue->Reference();
+	}
+	return nullptr;
 }
 
 Value* Frame_ValueMap::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc)
 {
 	// Lookup a frame in which DoAssign() assigns values.
 	Value* pValue = _pValueMap->Lookup(pSymbol);
-	if (!pValue) return nullptr;
-	*ppFrameSrc = this;
-	return pValue->Reference();
+	if (pValue) {
+		*ppFrameSrc = this;
+		return pValue->Reference();
+	}
+	return nullptr;
 }
 
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
@@ -201,6 +205,60 @@ bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 }
 
 void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
+{
+	_pValueMap->GatherSymbol(symbolList);
+}
+
+//------------------------------------------------------------------------------
+// Frame_OfMember
+//------------------------------------------------------------------------------
+const char* Frame_OfMember::name = "OfMember";
+
+Frame_OfMember::Frame_OfMember(Frame* pFrameOuter) : Frame(pFrameOuter), _pValueMap(new ValueMap())
+{
+}
+
+Frame_OfMember::~Frame_OfMember()
+{
+	ValueMap::Delete(_pValueMap);
+}
+
+void Frame_OfMember::DoAssign(const Symbol* pSymbol, Value* pValue)
+{
+	_pValueMap->Assign(pSymbol, pValue);
+}
+
+void Frame_OfMember::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+{
+	Value::Delete(pValue);
+}
+
+Value* Frame_OfMember::DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc)
+{
+	Value* pValue = _pValueMap->Lookup(pSymbol);
+	if (pValue) {
+		*ppFrameSrc = this;
+		return pValue->Reference();
+	}
+	return _pFrameOuter? _pFrameOuter->DoRetrieve(pSymbol, ppFrameSrc) : nullptr;
+}
+
+Value* Frame_OfMember::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc)
+{
+	Value* pValue = _pValueMap->Lookup(pSymbol);
+	if (pValue) {
+		*ppFrameSrc = this;
+		return pValue->Reference();
+	}
+	return nullptr;
+}
+
+bool Frame_OfMember::ExportTo(Frame& frameDst, bool overwriteFlag) const
+{
+	return _pValueMap->ExportTo(frameDst, overwriteFlag);
+}
+
+void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
 {
 	_pValueMap->GatherSymbol(symbolList);
 }
@@ -244,43 +302,6 @@ Value* Frame_Basement::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc
 void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
 {
 	_pFrameOuter->GatherSymbol(symbolList);
-}
-
-//------------------------------------------------------------------------------
-// Frame_OfMember
-//------------------------------------------------------------------------------
-const char* Frame_OfMember::name = "Inheritance";
-
-Frame_OfMember::Frame_OfMember(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Frame_ValueMap())
-{
-}
-
-void Frame_OfMember::DoAssign(const Symbol* pSymbol, Value* pValue)
-{
-	_pFrameLocal->DoAssign(pSymbol, pValue);
-}
-
-void Frame_OfMember::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
-{
-	Value::Delete(pValue);
-}
-
-Value* Frame_OfMember::DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc)
-{
-	RefPtr<Value> pValue(_pFrameLocal->DoRetrieve(pSymbol, ppFrameSrc));
-	if (pValue) return pValue.release();
-	return _pFrameOuter? _pFrameOuter->DoRetrieve(pSymbol, ppFrameSrc) : nullptr;
-}
-
-Value* Frame_OfMember::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc)
-{
-	// Lookup a frame in which DoAssign() assigns values.
-	return _pFrameLocal->DoRetrieve(pSymbol, ppFrameSrc);
-}
-
-void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
-{
-	_pFrameLocal->GatherSymbol(symbolList);
 }
 
 //------------------------------------------------------------------------------

@@ -179,6 +179,37 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Frame_OfMember
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_OfMember : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_OfMember);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_OfMember");
+protected:
+	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h isn't included yet.
+public:
+	static const char* name;
+public:
+	// Constructor
+	explicit Frame_OfMember(Frame* pFrameOuter);
+protected:
+	// Destructor
+	virtual ~Frame_OfMember() override;
+public:
+	// Virtual functions of Frame
+	virtual bool IsFrameOfVType() const override { return true; }
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
+	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
+	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
+};
+
+//------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Frame_Branch : public Frame {
@@ -225,31 +256,6 @@ public:
 public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfBasement() const override { return true; }
-	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
-	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
-	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual const char* GetTypeName() const override { return name; }
-};
-
-//------------------------------------------------------------------------------
-// Frame_OfMember
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_OfMember : public Frame_Branch {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Frame_OfMember);
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_OfMember");
-public:
-	static const char* name;
-public:
-	// Constructor
-	explicit Frame_OfMember(Frame* pFrameOuter);
-public:
-	// Virtual functions of Frame
-	virtual bool IsFrameOfVType() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
