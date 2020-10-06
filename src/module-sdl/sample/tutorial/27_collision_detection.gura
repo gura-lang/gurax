@@ -265,7 +265,7 @@ Dot = class {
 		this.mPosY = 0;
 
 		//Set collision box dimension
-		this.mCollider = SDL_Rect(this.DOT_WIDTH, this.DOT_HEIGHT);
+		this.mCollider = SDL_Rect(0, 0, this.DOT_WIDTH, this.DOT_HEIGHT);
 
 		//Initialize the velocity
 		this.mVelX = 0;
