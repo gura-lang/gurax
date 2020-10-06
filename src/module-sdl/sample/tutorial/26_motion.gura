@@ -275,25 +275,25 @@ Dot = class {
 			//If a key was pressed
 			//Adjust the velocity
 			if (e.key.keysym.sym == SDLK_UP) {
-				this.mVelY -= DOT_VEL;
+				this.mVelY -= this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_DOWN) {
-				this.mVelY += DOT_VEL;
+				this.mVelY += this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_LEFT) {
-				this.mVelX -= DOT_VEL;
+				this.mVelX -= this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_RIGHT) {
-				this.mVelX += DOT_VEL;
+				this.mVelX += this.DOT_VEL;
 			}
 		} elsif (e.type == SDL_KEYUP && e.key.repeat == 0) {
 			//If a key was released
 			//Adjust the velocity
 			if (e.key.keysym.sym == SDLK_UP) {
-				this.mVelY += DOT_VEL;
+				this.mVelY += this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_DOWN) {
-				this.mVelY -= DOT_VEL;
+				this.mVelY -= this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_LEFT) {
-				this.mVelX += DOT_VEL;
+				this.mVelX += this.DOT_VEL;
 			} elsif (e.key.keysym.sym == SDLK_RIGHT) {
-				this.mVelX -= DOT_VEL;
+				this.mVelX -= this.DOT_VEL;
 			}
 		}
 	}
@@ -304,7 +304,7 @@ Dot = class {
 		this.mPosX += this.mVelX;
 
 		//If the dot went too far to the left or right
-		if ((this.mPosX < 0) || (this.mPosX + DOT_WIDTH > SCREEN_WIDTH)) {
+		if ((this.mPosX < 0) || (this.mPosX + this.DOT_WIDTH > SCREEN_WIDTH)) {
 			//Move back
 			this.mPosX -= this.mVelX;
 		}
@@ -313,7 +313,7 @@ Dot = class {
 		this.mPosY += this.mVelY;
 
 		//If the dot went too far up or down
-		if((this.mPosY < 0) || (this.mPosY + DOT_HEIGHT > SCREEN_HEIGHT)) {
+		if((this.mPosY < 0) || (this.mPosY + this.DOT_HEIGHT > SCREEN_HEIGHT)) {
 			//Move back
 			this.mPosY -= this.mVelY;
 		}
