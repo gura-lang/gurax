@@ -166,7 +166,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		argument.SetValueThis(pValueThis.Reference());
 	}
 	bool dynamicScopeFlag = false;
-	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
+	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag));
 	if (_pConstructorInh) {
 		const Expr& exprBody = GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));
@@ -179,7 +179,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
 	}
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
-	processor.PopFrame();
+	processor.EndFunction();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
 	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.

@@ -3290,7 +3290,7 @@ void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 {
 	const PUnit* pPUnit = processor.PopPUnit();
 	if (pPUnit) {
-		processor.PopFrame();
+		processor.EndFunction();
 		if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
 		processor.SetPUnitCur(pPUnit->GetPUnitCont());
 	} else {

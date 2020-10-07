@@ -25,11 +25,16 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
-Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicScopeFlag)
+Frame& Processor::BeginFunction(const Function& function, bool dynamicScopeFlag)
 {
 	return dynamicScopeFlag?
 		PushFrame<Frame_Scope>() :
 		PushFrame(new Frame_Scope(function.LockFrameOuter()));
+}
+
+void Processor::EndFunction()
+{
+	PopFrame();
 }
 
 Value* Processor::ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel)

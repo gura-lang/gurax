@@ -93,7 +93,8 @@ public:
 	Frame& PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); return *pFrame; }
 	template<typename T_Frame> Frame* CreateFrame() { return new T_Frame(GetFrameCur().Reference()); }
 	template<typename T_Frame> Frame& PushFrame() { return PushFrame(CreateFrame<T_Frame>()); }
-	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
+	Frame& BeginFunction(const Function& function, bool dynamicScopeFlag);
+	void EndFunction();
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:
