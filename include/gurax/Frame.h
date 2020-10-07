@@ -98,6 +98,7 @@ public:
 	virtual bool IsFrameOfMember() const { return false; }
 	virtual bool IsFrameOfModule() const { return false; }
 	virtual bool IsFrameOfScope() const { return false; }
+	virtual bool IsFrameOfFunction() const { return false; }
 	virtual bool IsFrameOfBlock() const { return false; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
@@ -320,6 +321,26 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
+	virtual const char* GetTypeName() const override { return name; }
+};
+
+//------------------------------------------------------------------------------
+// Frame_Function
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Function : public Frame_Scope {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Function);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Function");
+public:
+	static const char* name;
+public:
+	// Constructor
+	explicit Frame_Function(Frame* pFrameOuter, Frame* pFrameLocal = nullptr);
+public:
+	// Virtual functions of Frame
+	virtual bool IsFrameOfFunction() const override { return true; }
 	virtual const char* GetTypeName() const override { return name; }
 };
 

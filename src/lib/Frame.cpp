@@ -392,6 +392,16 @@ void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
 }
 
 //------------------------------------------------------------------------------
+// Frame_Function
+//------------------------------------------------------------------------------
+const char* Frame_Function::name = "Function";
+
+Frame_Function::Frame_Function(Frame* pFrameOuter, Frame* pFrameLocal) :
+									Frame_Scope(pFrameOuter, pFrameLocal)
+{
+}
+
+//------------------------------------------------------------------------------
 // Frame_Block
 //------------------------------------------------------------------------------
 const char* Frame_Block::name = "Block";
