@@ -50,8 +50,13 @@ String VType::ToString(const StringStyle& ss) const
 	String str;
 	str += "VType:";
 	const Function& constructor = GetConstructor();
-	str += constructor.IsEmpty()?
+	String name = constructor.IsEmpty()?
 			MakeFullName() : constructor.ToString(StringStyle().SetCram());
+	if (name.empty()) {
+		str += "(noname)";
+	} else {
+		str += name;
+	}
 	return str;
 }
 
