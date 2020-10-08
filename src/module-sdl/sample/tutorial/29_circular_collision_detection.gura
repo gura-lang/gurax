@@ -11,6 +11,13 @@ import(png)
 SCREEN_WIDTH = 640;
 SCREEN_HEIGHT = 480;
 
+//A circle stucture
+Circle = struct {
+	x:Number;
+	y:Number;
+	r:Number;
+};
+
 //Texture wrapper class
 LTexture = class {
 	//Initializes variables
@@ -159,46 +166,12 @@ Dot = class {
 		this.mPosX = x;
 		this.mPosY = y;
 
-		//Create the necessary SDL_Rects
-		this.mColliders = Dim(11) { SDL_Rect() }
+		//Set collision circle size
+		this.mCollider = Circle(0, 0, this.DOT_WIDTH / 2);
 
 		//Initialize the velocity
 		this.mVelX = 0;
 		this.mVelY = 0;
-
-		//Initialize the collision boxes' width and height
-		this.mColliders[0].w = 6;
-		this.mColliders[0].h = 1;
-
-		this.mColliders[1].w = 10;
-		this.mColliders[1].h = 1;
-
-		this.mColliders[2].w = 14;
-		this.mColliders[2].h = 1;
-
-		this.mColliders[3].w = 16;
-		this.mColliders[3].h = 2;
-
-		this.mColliders[4].w = 18;
-		this.mColliders[4].h = 2;
-
-		this.mColliders[5].w = 20;
-		this.mColliders[5].h = 6;
-
-		this.mColliders[6].w = 18;
-		this.mColliders[6].h = 2;
-
-		this.mColliders[7].w = 16;
-		this.mColliders[7].h = 2;
-
-		this.mColliders[8].w = 14;
-		this.mColliders[8].h = 1;
-
-		this.mColliders[9].w = 10;
-		this.mColliders[9].h = 1;
-
-		this.mColliders[10].w = 6;
-		this.mColliders[10].h = 1;
 
 		//Initialize colliders relative to position
 		this.shiftColliders();
@@ -234,13 +207,14 @@ Dot = class {
 	}
 
 	//Moves the dot
-	move(otherColliders[]:SDL_Rect):void = {
+	move(square:SDL_Rect, circle:Circle):void = {
 		//Move the dot left or right
 		this.mPosX += this.mVelX;
 		this.shiftColliders();
 
 		//If the dot went too far to the left or right
-		if ((this.mPosX < 0) || (this.mPosX + this.DOT_WIDTH > SCREEN_WIDTH) || checkCollision(this.mColliders, otherColliders)) {
+		if ((this.mPosX < 0) || (this.mPosX + this.DOT_WIDTH > SCREEN_WIDTH) || \
+			checkCollision_Circle_Rect(this.mCollider, square) || checkCollision_Circle_Circle(this.mCollider, circle)) {
 			//Move back
 			this.mPosX -= this.mVelX;
 			this.shiftColliders();
@@ -251,7 +225,8 @@ Dot = class {
 		this.shiftColliders();
 
 		//If the dot went too far up or down
-		if ((this.mPosY < 0) || (this.mPosY + this.DOT_HEIGHT > SCREEN_HEIGHT) || checkCollision(this.mColliders, otherColliders)) {
+		if ((this.mPosY < 0) || (this.mPosY + this.DOT_HEIGHT > SCREEN_HEIGHT) || \
+			checkCollision_Circle_Rect(this.mCollider, square) || checkCollision_Circle_Circle(this.mCollider, circle)) {
 			//Move back
 			this.mPosY -= this.mVelY;
 			this.shiftColliders();
@@ -261,27 +236,16 @@ Dot = class {
 	//Shows the dot on the screen
 	render():void = {
 		//Show the dot
-		gDotTexture.render(this.mPosX, this.mPosY);
+		gDotTexture.render(this.mPosX - this.mCollider.r, this.mPosY - this.mCollider.r);
 	}
+
+	getCollider() = { this.mCollider; }
 
 	shiftColliders():void = {
-		//The row offset
-		r = 0;
-
-		//Go through the dot's collision boxes
-		repeat (this.mColliders.len) {|set|
-			//Center the collision box
-			this.mColliders[set].x = this.mPosX + (this.DOT_WIDTH - this.mColliders[set].w) / 2;
-
-			//Set the collision box at its row offset
-			this.mColliders[set].y = this.mPosY + r;
-
-			//Move the row offset down the height of the collision box
-			r += this.mColliders[set].h;
-		}
+		//Align collider to center of dot
+		this.mCollider.x = this.mPosX;
+		this.mCollider.y = this.mPosY;
 	}
-
-	getColliders() = { this.mColliders; }
 
 	//The X and Y offsets of the dot
 	mPosX:Number;
@@ -291,8 +255,8 @@ Dot = class {
 	mVelX:Number;
 	mVelY:Number;
 
-	//Dot's collision box
-	mColliders[]:SDL_Rect;
+	//Dot's collision circle
+	mCollider:Circle;
 };
 
 //The window we'll be rendering to
@@ -374,31 +338,54 @@ close() = {
 	SDL_Quit();
 }
 
-checkCollision(as[]:SDL_Rect, bs[]:SDL_Rect) = {
-	for (a in as) { // as.Each() doesn't work with return
-		//Calculate the sides of rect A
-		leftA = a.x;
-		rightA = a.x + a.w;
-		topA = a.y;
-		bottomA = a.y + a.h;
+checkCollision_Circle_Circle(a:Circle, b:Circle) = {
+	//Calculate total radius squared
+	totalRadiusSquared = a.r + b.r;
+	totalRadiusSquared = totalRadiusSquared * totalRadiusSquared;
 
-		for (b in bs) { // bs.Each() doesn't work with return
-			//Calculate the sides of rect B
-			leftB = b.x;
-			rightB = b.x + b.w;
-			topB = b.y;
-			bottomB = b.y + b.h;
-
-            //If no sides from A are outside of B
-			if (!((bottomA <= topB) || (topA >= bottomB || (rightA <= leftB) || (leftA >= rightB)))) {
-                //A collision is detected
-				return(true);
-			}
-		}
+	//If the distance between the centers of the circles is less than the sum of their radii
+	if (distanceSquared(a.x, a.y, b.x, b.y) < (totalRadiusSquared)) {
+		//The circles have collided
+		return(true);
 	}
 
-	//If none of the sides from A are outside B
+	//If not
 	false;
+}
+
+checkCollision_Circle_Rect(a:Circle, b:SDL_Rect) = {
+	//Find closest x offset
+	if (a.x < b.x) {
+		cX = b.x;
+	} elsif (a.x > b.x + b.w) {
+		cX = b.x + b.w;
+	} else {
+		cX = a.x;
+	}
+
+	//Find closest y offset
+	if (a.y < b.y) {
+		cY = b.y;
+	} elsif (a.y > b.y + b.h) {
+		cY = b.y + b.h;
+	} else {
+		cY = a.y;
+	}
+
+	//If the closest point is inside the circle
+	if (distanceSquared(a.x, a.y, cX, cY) < a.r * a.r) {
+		//This box and the circle have collided
+		return(true);
+	}
+
+	//If the shapes have not collided
+	false;
+}
+
+distanceSquared(x1:Number, y1:Number, x2:Number, y2:Number) = {
+	deltaX = x2 - x1;
+	deltaY = y2 - y1;
+	deltaX * deltaX + deltaY * deltaY;
 }
 
 main() = {
@@ -417,10 +404,15 @@ main() = {
 			e = SDL_Event()
 
 			//The dot that will be moving around on the screen
-			dot = Dot(0, 0);
-
-			//The dot that will be collided against
+			dot = Dot(Dot.DOT_WIDTH / 2, Dot.DOT_HEIGHT / 2);
 			otherDot = Dot(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+
+			//Set the wall
+			wall = SDL_Rect();
+			wall.x = 300;
+			wall.y = 40;
+			wall.w = 40;
+			wall.h = 400;
 
 			//While application is running
 			while (!quit) {
@@ -436,11 +428,15 @@ main() = {
 				}
 
 				//Move the dot
-				dot.move(otherDot.getColliders());
+				dot.move(wall, otherDot.getCollider());
 
 				//Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(gRenderer);
+
+				//Render wall
+				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);		
+				SDL_RenderDrawRect(gRenderer, wall);
 
 				//Render dots
 				dot.render();
