@@ -179,7 +179,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
 	}
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
-	processor.EndFunction();
+	processor.EndFunction(true);
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
 	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.

@@ -3290,8 +3290,8 @@ void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 {
 	const PUnit* pPUnit = processor.PopPUnit();
 	if (pPUnit) {
-		processor.EndFunction();
-		if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
+		processor.EndFunction(pPUnit->GetDiscardValueFlag());
+		//if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
 		processor.SetPUnitCur(pPUnit->GetPUnitCont());
 	} else {
 		// Since nullptr means the end of the processor loop, there's no need to

@@ -27,20 +27,30 @@ Processor* Processor::Create(bool debugFlag)
 
 Frame& Processor::BeginFunction(const Function& function, bool dynamicScopeFlag)
 {
+	_pValueStack->push_back(nullptr);
 	return dynamicScopeFlag?
 		PushFrame<Frame_Function>() :
 		PushFrame(new Frame_Function(function.LockFrameOuter()));
 }
 
-void Processor::EndFunction()
+void Processor::EndFunction(bool discardFlag)
 {
 	//PopFrame();
-	FrameStack& frameStack = GetFrameStack();
 	for (;;) {
-		bool doneFlag = frameStack.GetCur()->IsFrameOfFunction();
-		frameStack.Pop();
+		bool doneFlag = _pFrameStack->GetCur()->IsFrameOfFunction();
+		_pFrameStack->Pop();
 		if (doneFlag) break;
 	}
+#if 1
+	RefPtr<Value> pValueRtn(_pValueStack->Pop());
+	if (pValueRtn) {
+		for (;;) {
+			RefPtr<Value> pValue(_pValueStack->Pop());
+			if (!pValue) break;
+		}
+		if (!discardFlag) _pValueStack->push_back(pValueRtn.release());
+	}
+#endif
 }
 
 Value* Processor::ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel)

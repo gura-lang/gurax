@@ -94,7 +94,7 @@ public:
 	template<typename T_Frame> Frame* CreateFrame() { return new T_Frame(GetFrameCur().Reference()); }
 	template<typename T_Frame> Frame& PushFrame() { return PushFrame(CreateFrame<T_Frame>()); }
 	Frame& BeginFunction(const Function& function, bool dynamicScopeFlag);
-	void EndFunction();
+	void EndFunction(bool discardFlag);
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:

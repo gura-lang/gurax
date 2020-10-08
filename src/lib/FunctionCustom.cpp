@@ -30,7 +30,7 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag));
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitBody()));
-	processor.EndFunction();
+	processor.EndFunction(true);
 	processor.ClearEvent();
 	return pValue.release();
 }
