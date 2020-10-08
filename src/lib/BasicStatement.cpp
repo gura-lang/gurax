@@ -898,14 +898,6 @@ Gurax_ImplementStatement(return_)
 		if (tryInfo.IsWithinFinally()) {
 			Error::IssueWith(ErrorType::UnimplementedError, exprCaller,
 					"return statement within finally is not allowed");
-#if 0
-			if (pExprParam) {
-				pExprParam->ComposeOrNil(composer);								// [Any]
-			} else {
-				composer.Add_Value(Value::nil(), exprCaller);					// [nil]
-			}
-			composer.Add_Return(exprCaller);
-#endif
 		} else {
 			if (pExprParam) {
 				pExprParam->ComposeOrNil(composer);								// [Any]
