@@ -2408,6 +2408,63 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_LockTexture(texture:SDL_Texture, rect:SDL_Rect:nil)
+Gurax_DeclareFunctionAlias(SDL_LockTexture_gurax, "SDL_LockTexture")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	// Function body
+	void* pixels;
+	int pitch;
+	if (SDL_LockTexture(texture, rect, &pixels, &pitch) != 0) return Value::nil();
+	size_t bytes;
+	if (rect) {
+		bytes = pitch * rect->h;
+	} else {
+		int w, h;
+		if (SDL_QueryTexture(texture, nullptr, nullptr, &w, &h) != 0) return Value::nil();
+		bytes = pitch * h;
+	}
+	RefPtr<Memory> pMemory(new MemorySloth(bytes, pixels));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(bytes)));
+	return Value_Tuple::Create(new Value_Array(pArray.release()), new Value_Number(pitch));
+}
+
+// sdl.SDL_LockTextureToSurface(texture:SDL_Texture, rect:SDL_Rect:nil)
+Gurax_DeclareFunctionAlias(SDL_LockTextureToSurface_gurax, "SDL_LockTextureToSurface")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_LockTextureToSurface_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
+	// Function body
+	SDL_Surface* surface;
+	if (SDL_LockTextureToSurface(texture, rect, &surface) != 0) return Value::nil();
+	return new Value_SDL_Surface(surface);
+}
+
 // sdl.SDL_UnlockTexture(texture:SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_UnlockTexture_gurax, "SDL_UnlockTexture")
 {
@@ -12639,6 +12696,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetTextureScaleMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UpdateYUVTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_LockTexture_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_LockTextureToSurface_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_UnlockTexture_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RenderTargetSupported_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_SetRenderTarget_gurax));
