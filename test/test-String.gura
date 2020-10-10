@@ -499,3 +499,25 @@ TestCase('Operator') {
 	Tester(`('abcdefg' != 'hijklmn'))
 	Tester(`('hijklmn' != 'abcdefg'))
 }
+
+TestCase('Indexing') {
+	Tester(`'abcdef'[0])
+	Tester(`'abcdef'[1])
+	Tester(`'abcdef'[2])
+	Tester(`'abcdef'[3])
+	Tester(`'abcdef'[4])
+	Tester(`'abcdef'[5])
+	Tester(`'abcdef'[6])
+	Tester(`'abcdef'[7])
+	Tester(`'abcdef'[-1])
+	Tester(`'abcdef'[-2])
+	Tester(`'abcdef'[-3])
+	Tester(`'abcdef'[-4])
+	Tester(`'abcdef'[-5])
+	Tester(`'abcdef'[-6])
+	Tester(`'abcdef'[-7])
+}
+
+TestCase('Iteration') {
+	Tester(`for (ch in 'abcdefg'):list {ch})
+}

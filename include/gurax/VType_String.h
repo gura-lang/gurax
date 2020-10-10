@@ -191,6 +191,9 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+public:
+	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual Iterator* DoGenIterator() const override;
 };
 
 //------------------------------------------------------------------------------

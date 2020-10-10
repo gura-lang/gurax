@@ -1596,4 +1596,47 @@ bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
 
+Value* Value_String::DoIndexGet(const Index& index) const
+{
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		return Clone();
+	} else if (valuesIndex.size() == 1) {
+		const String& str = GetString();
+		const Value& valueIndex = *valuesIndex.front();
+		if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::IndexError, "number is expected for string indexing");
+			return nullptr;
+		}
+		int pos = Value_Number::GetNumber<int>(valueIndex);
+		if (!str.FixPosition(&pos)) return nullptr;
+		String strChar = str.PickChar(pos);
+		return new Value_String(strChar);
+	} else {
+		const String& str = GetString();
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			if (!pValueIndex->IsInstanceOf(VTYPE_Number)) {
+				Error::Issue(ErrorType::IndexError, "number is expected for string indexing");
+				return nullptr;
+			}
+			int pos = Value_Number::GetNumber<int>(*pValueIndex);
+			if (!str.FixPosition(&pos)) return nullptr;
+			String strChar = str.PickChar(pos);
+			pValuesRtn->push_back(new Value_String(strChar));
+		}
+		return new Value_List(pValuesRtn.release());
+	}
+}
+
+Iterator* Value_String::DoGenIterator() const
+{
+	// Arguments
+	VType_String::Iterator_Each::Type type = VType_String::Iterator_Each::Type::String;
+	// Function body
+	const StringReferable& str = GetStringReferable();
+	return new VType_String::Iterator_Each(str.Reference(), type);
+}
+
 }
