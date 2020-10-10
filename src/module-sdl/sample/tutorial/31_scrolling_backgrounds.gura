@@ -1,0 +1,383 @@
+#!/usr/bin/env gurax
+/*This source code copyrighted by Lazy Foo' Productions (2004-2020)
+and may not be redistributed without written permission.*/
+// Translated to Gura by ypsitau.
+// Don't make this public outside Git repository since it hasn't received permission by the author.
+
+import(sdl) {*}
+import(png)
+
+//Screen dimension constants
+SCREEN_WIDTH = 640;
+SCREEN_HEIGHT = 480;
+
+//Texture wrapper class
+LTexture = class {
+	//Initializes variables
+	__init__() = {
+		//Initialize
+		this.mTexture = nil;
+		this.mWidth = 0;
+		this.mHeight = 0;
+	}
+
+	//Deallocates memory
+	__del__() = {
+		this.free()
+	};
+
+	//Loads image at specified path
+	loadFromFile(path:String) = {
+		//Get rid of preexisting texture
+		this.free();
+
+		//The final texture
+		newTexture = nil;
+
+		//Load image at specified path
+		loadedSurface = IMG_Load(path);
+		if (!loadedSurface) {
+			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
+		} else {
+			//Color key image
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
+
+			//Create texture from surface pixels
+			newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+			if (!newTexture) {
+				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = loadedSurface.w;
+				this.mHeight = loadedSurface.h;
+			}
+
+			//Get rid of old loaded surface
+			SDL_FreeSurface(loadedSurface);
+		}
+
+		//Return success
+		this.mTexture = newTexture;
+		this.mTexture != nil;
+	}
+
+	//Creates image from font string
+	loadFromRenderedText(textureText:String, textColor:SDL_Color) = {
+		//Get rid of preexisting texture
+		this.free();
+
+		//Render text surface
+		textSurface = TTF_RenderText_Solid(gFont, textureText, textColor);
+		if (!textSurface) {
+			Printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		} else {
+			//Create texture from surface pixels
+			this.mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+			if (!this.mTexture) {
+				Printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			} else {
+				//Get image dimensions
+				this.mWidth = textSurface.w;
+				this.mHeight = textSurface.h;
+			}
+
+			//Get rid of old surface
+			SDL_FreeSurface(textSurface);
+		}
+		
+		//Return success
+		this.mTexture != nil;
+	}
+
+	//Deallocates texture
+	free() = {
+		if (this.mTexture) {
+			SDL_DestroyTexture(this.mTexture);
+			this.mTexture = nil;
+			this.mWidth = 0;
+			this.mHeight = 0;
+		}
+	}
+
+	//Set color modulation
+	setColor(red:Number, green:Number, blue:Number) = {
+		//Modulate texture
+		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
+	}
+
+	//Set blending
+	setBlendMode(blending:Number) = {
+		//Set blending function
+		SDL_SetTextureBlendMode(this.mTexture, blending);
+	}
+			
+	//Set alpha modulation
+	setAlpha(alpha:Number) = {
+		//Modulate texture alpha
+		SDL_SetTextureAlphaMod(this.mTexture, alpha);
+	}
+
+	//Renders texture at given point
+	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
+		//Set rendering space and render to screen
+		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
+
+		//Set clip rendering dimensions
+		if (clip) {
+			renderQuad.w = clip.w;
+			renderQuad.h = clip.h;
+		}
+
+		//Render to screen
+		SDL_RenderCopyEx(gRenderer, this.mTexture, clip, renderQuad, angle, center, flip);
+	}
+
+	//Gets image dimensions
+	getWidth() = this.mWidth;
+	getHeight() = this.mHeight;
+
+	//The actual hardware texture
+	mTexture:SDL_Texture;
+
+	//Image dimensions
+	mWidth:Number;
+	mHeight:Number;
+};
+
+//The dot that will move around on the screen
+Dot = class {
+	//The dimensions of the dot
+	DOT_WIDTH:static = 20;
+	DOT_HEIGHT:static = 20;
+
+	//Maximum axis velocity of the dot
+	DOT_VEL:static = 10;
+
+	//Initializes the variables
+	__init__() = {
+		//Initialize the offsets
+		this.mPosX = 0;
+		this.mPosY = 0;
+
+		//Initialize the velocity
+		this.mVelX = 0;
+		this.mVelY = 0;
+	}
+
+	//Takes key presses and adjusts the dot's velocity
+	handleEvent(e:SDL_Event):void = {
+		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+			//If a key was pressed
+			//Adjust the velocity
+			if (e.key.keysym.sym == SDLK_UP) {
+				this.mVelY -= this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_DOWN) {
+				this.mVelY += this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_LEFT) {
+				this.mVelX -= this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_RIGHT) {
+				this.mVelX += this.DOT_VEL;
+			}
+		} elsif (e.type == SDL_KEYUP && e.key.repeat == 0) {
+			//If a key was released
+			//Adjust the velocity
+			if (e.key.keysym.sym == SDLK_UP) {
+				this.mVelY += this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_DOWN) {
+				this.mVelY -= this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_LEFT) {
+				this.mVelX += this.DOT_VEL;
+			} elsif (e.key.keysym.sym == SDLK_RIGHT) {
+				this.mVelX -= this.DOT_VEL;
+			}
+		}
+	}
+
+	//Moves the dot
+	move():void = {
+		//Move the dot left or right
+		this.mPosX += this.mVelX;
+
+		//If the dot went too far to the left or right
+		if ((this.mPosX < 0) || (this.mPosX + this.DOT_WIDTH > SCREEN_WIDTH)) {
+			//Move back
+			this.mPosX -= this.mVelX;
+		}
+
+		//Move the dot up or down
+		this.mPosY += this.mVelY;
+
+		//If the dot went too far up or down
+		if((this.mPosY < 0) || (this.mPosY + this.DOT_HEIGHT > SCREEN_HEIGHT)) {
+			//Move back
+			this.mPosY -= this.mVelY;
+		}
+	}
+
+	//Shows the dot on the screen
+	render():void = {
+		//Show the dot
+		gDotTexture.render(this.mPosX, this.mPosY);
+	}
+
+	//The X and Y offsets of the dot
+	mPosX:Number;
+	mPosY:Number;
+
+	//The velocity of the dot
+	mVelX:Number;
+	mVelY:Number;
+};
+
+//The window we'll be rendering to
+gWindow = nil
+
+//The window renderer
+gRenderer = nil
+
+//Scene textures
+gDotTexture = LTexture();
+gBGTexture = LTexture();
+
+init() = {
+	//Initialization flag
+	success = true;
+
+	//Initialize SDL
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		Printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		success = false;
+	} else {
+		//Set texture filtering to linear
+		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Printf("Warning: Linear texture filtering not enabled!");
+		}
+
+		//Create window
+		gWindow:extern = gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (!gWindow)  {
+			Printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			success = false;
+		} else {
+			//Create renderer for window
+			gRenderer:extern = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (!gRenderer) {
+				Printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				success = false;
+			} else {
+				//Initialize renderer color
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+				//Initialize PNG loading
+				imgFlags = IMG_INIT_PNG;
+				if ((IMG_Init(imgFlags) & imgFlags) == 0) {
+					Printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					success = false;
+				}
+			}
+		}
+	}
+
+	success
+}
+
+loadMedia() = {
+	//Loading success flag
+	success = true;
+
+	//Load dot texture
+	if (!gDotTexture.loadFromFile("31_scrolling_backgrounds/dot.bmp")) {
+		Printf("Failed to load dot texture!\n");
+		success = false;
+	}
+
+	//Load background texture
+	if (!gBGTexture.loadFromFile("31_scrolling_backgrounds/bg.png")) {
+		Printf("Failed to load background texture!\n");
+		success = false;
+	}
+
+	success;
+}
+
+close() = {
+	//Free loaded images
+	gDotTexture.free();
+	gBGTexture.free();
+
+	//Destroy window
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow:extern = nil;
+	gRenderer:extern = nil;
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	SDL_Quit();
+}
+
+main() = {
+	//Start up SDL and create window
+	if (!init()) {
+		Printf("Failed to initialize!\n");
+	} else {
+		//Load media
+		if (!loadMedia()) {
+			Printf("Failed to load media!\n");
+		} else {
+			//Main loop flag
+			quit = false
+
+			//Event handler
+			e = SDL_Event()
+
+			//The dot that will be moving around on the screen
+			dot = Dot();
+
+			//The background scrolling offset
+			scrollingOffset = 0;
+
+			//While application is running
+			while (!quit) {
+				//Handle events on queue
+				while (SDL_PollEvent(e) != 0) {
+					//User requests quit
+					if (e.type == SDL_QUIT) {
+						quit = true;
+					}
+
+					//Handle input for the dot
+					dot.handleEvent(e);
+				}
+
+				//Move the dot
+				dot.move();
+
+				//Scroll background
+				scrollingOffset -= 1;
+				if (scrollingOffset < -gBGTexture.getWidth()) {
+					scrollingOffset = 0;
+				}
+
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//Render background
+				gBGTexture.render(scrollingOffset, 0);
+				gBGTexture.render(scrollingOffset + gBGTexture.getWidth(), 0);
+
+				//Render objects
+				dot.render();
+
+				//Update screen
+				SDL_RenderPresent(gRenderer);
+			}
+		}
+	}
+
+	//Free resources and close SDL
+	close();
+}
+
+main()
