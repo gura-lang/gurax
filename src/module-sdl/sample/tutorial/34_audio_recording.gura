@@ -314,7 +314,7 @@ close() = {
 
 audioRecordingCallback(userdata, stream:Pointer) = {
 	//Copy audio from stream
-	//memcpy( &gRecordingBuffer[ gBufferBytePosition ], stream, len );
+	//memcpy(&gRecordingBuffer[ gBufferBytePosition ], stream, len);
 
 	//Move along buffer
 	gBufferBytePosition += len;
@@ -322,7 +322,7 @@ audioRecordingCallback(userdata, stream:Pointer) = {
 
 audioPlaybackCallback(userdata, stream:Pointer) = {
 	//Copy audio to stream
-	//memcpy( stream, &gRecordingBuffer[ gBufferBytePosition ], len );
+	//memcpy(stream, &gRecordingBuffer[ gBufferBytePosition ], len);
 
 	//Move along buffer
 	gBufferBytePosition += len;
@@ -360,49 +360,197 @@ main() = {
 					//User requests quit
 					if (e.type == SDL_QUIT) {
 						quit = true;
-					} elsif (e.type == SDL_KEYDOWN) {
-						if (e.key.keysym.sym == SDLK_UP) {
-							//Previous data entry
-							//Rerender previous entry input point
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], textColor);
-							currentData -= 1;
-							if (currentData < 0) {
-								currentData = TOTAL_DATA - 1;
+					}
+
+					//Do current state event handling
+					if (currentState == `SELECTING_DEVICE) {
+						//User is selecting recording device
+
+						//On key press
+						if (e.type == SDL_KEYDOWN) {
+							//Handle key press from 0 to 9 
+							if (e.key.keysym.sym >= SDLK_0 && e.key.keysym.sym <= SDLK_9) {
+								//Get selection index
+								int index = e.key.keysym.sym - SDLK_0;
+
+								//Index is valid
+								if (index < gRecordingDeviceCount) {
+									//Default audio spec
+									desiredRecordingSpec = SDL_AudioSpec();
+									desiredRecordingSpec.freq = 44100;
+									desiredRecordingSpec.format = AUDIO_F32;
+									desiredRecordingSpec.channels = 2;
+									desiredRecordingSpec.samples = 4096;
+									//desiredRecordingSpec.callback = audioRecordingCallback;
+
+									//Open recording device
+									recordingDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(index, SDL_TRUE), SDL_TRUE, desiredRecordingSpec, gReceivedRecordingSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+									
+									if (recordingDeviceId == 0) {
+										//Device failed to open
+										//Report error
+										Printf("Failed to open recording device! SDL Error: %s", SDL_GetError());
+										gPromptTexture.loadFromRenderedText("Failed to open recording device!", gTextColor);
+										currentState = ERROR;
+									} else {
+										//Device opened successfully
+										//Default audio spec
+										desiredPlaybackSpec = SDL_AudioSpec();
+										desiredPlaybackSpec.freq = 44100;
+										desiredPlaybackSpec.format = AUDIO_F32;
+										desiredPlaybackSpec.channels = 2;
+										desiredPlaybackSpec.samples = 4096;
+										//desiredPlaybackSpec.callback = audioPlaybackCallback;
+
+										//Open playback device
+										playbackDeviceId = SDL_OpenAudioDevice(nil, SDL_FALSE, desiredPlaybackSpec, gReceivedPlaybackSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+
+										if (playbackDeviceId == 0) {
+											//Device failed to open
+											//Report error
+											Printf("Failed to open playback device! SDL Error: %s", SDL_GetError());
+											gPromptTexture.loadFromRenderedText("Failed to open playback device!", gTextColor);
+											currentState = ERROR;
+										} else {
+											//Device opened successfully
+											//Calculate per sample bytes
+											int bytesPerSample = gReceivedRecordingSpec.channels * (SDL_AUDIO_BITSIZE(gReceivedRecordingSpec.format) / 8);
+
+											//Calculate bytes per second
+											int bytesPerSecond = gReceivedRecordingSpec.freq * bytesPerSample;
+
+											//Calculate buffer size
+											gBufferByteSize = RECORDING_BUFFER_SECONDS * bytesPerSecond;
+
+											//Calculate max buffer use
+											gBufferByteMaxPosition = MAX_RECORDING_SECONDS * bytesPerSecond;
+
+											//Allocate and initialize byte buffer
+											gRecordingBuffer = new Uint8[ gBufferByteSize ];
+											memset(gRecordingBuffer, 0, gBufferByteSize);
+
+											//Go on to next state
+											gPromptTexture.loadFromRenderedText("Press 1 to record for 5 seconds.", gTextColor);
+											currentState = STOPPED;
+										}
+									}
+								}
 							}
-							
-							//Rerender current entry input point
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], highlightColor);
-						} elsif (e.key.keysym.sym == SDLK_DOWN) {
-							//Next data entry
-							//Rerender previous entry input point
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], textColor);
-							currentData += 1;
-							if (currentData == TOTAL_DATA) {
-								currentData = 0;
+						}
+					} elsif (currentState == `STOPPED) {
+						//User getting ready to record
+
+						//On key press
+						if (e.type == SDL_KEYDOWN)
+						{
+							//Start recording
+							if (e.key.keysym.sym == SDLK_1)
+							{
+								//Go back to beginning of buffer
+								gBufferBytePosition = 0;
+
+								//Start recording
+								SDL_PauseAudioDevice(recordingDeviceId, SDL_FALSE);
+
+								//Go on to next state
+								gPromptTexture.loadFromRenderedText("Recording...", gTextColor);
+								currentState = RECORDING;
 							}
-							
-							//Rerender current entry input point
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], highlightColor);
-						} elsif (e.key.keysym.sym == SDLK_LEFT) {
-							//Decrement input point
-							gData[currentData] -= 1;
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], highlightColor);
-						} elsif (e.key.keysym.sym == SDLK_RIGHT) {
-							//Increment input point
-							gData[currentData] += 1;
-							gDataTextures[currentData].loadFromRenderedText(gData[currentData], highlightColor);
+						}
+					} elsif (currentState == `RECORDED) {
+						//User has finished recording
+						//On key press
+						if (e.type == SDL_KEYDOWN)
+						{
+							//Start playback
+							if (e.key.keysym.sym == SDLK_1)
+							{
+								//Go back to beginning of buffer
+								gBufferBytePosition = 0;
+
+								//Start playback
+								SDL_PauseAudioDevice(playbackDeviceId, SDL_FALSE);
+
+								//Go on to next state
+								gPromptTexture.loadFromRenderedText("Playing...", gTextColor);
+								currentState = PLAYBACK;
+							}
+							//Record again
+							if (e.key.keysym.sym == SDLK_2)
+							{
+								//Reset the buffer
+								gBufferBytePosition = 0;
+								memset(gRecordingBuffer, 0, gBufferByteSize);
+
+								//Start recording
+								SDL_PauseAudioDevice(recordingDeviceId, SDL_FALSE);
+
+								//Go on to next state
+								gPromptTexture.loadFromRenderedText("Recording...", gTextColor);
+								currentState = RECORDING;
+							}
 						}
 					}
+				}
+
+				//Updating recording
+				if (currentState == RECORDING)
+				{
+					//Lock callback
+					SDL_LockAudioDevice(recordingDeviceId);
+
+					//Finished recording
+					if (gBufferBytePosition > gBufferByteMaxPosition)
+					{
+						//Stop recording audio
+						SDL_PauseAudioDevice(recordingDeviceId, SDL_TRUE);
+
+						//Go on to next state
+						gPromptTexture.loadFromRenderedText("Press 1 to play back. Press 2 to record again.", gTextColor);
+						currentState = RECORDED;
+					}
+
+					//Unlock callback
+					SDL_UnlockAudioDevice(recordingDeviceId);
+				}
+				//Updating playback
+				else if (currentState == PLAYBACK)
+				{
+					//Lock callback
+					SDL_LockAudioDevice(playbackDeviceId);
+
+					//Finished playback
+					if (gBufferBytePosition > gBufferByteMaxPosition)
+					{
+						//Stop playing audio
+						SDL_PauseAudioDevice(playbackDeviceId, SDL_TRUE);
+
+						//Go on to next state
+						gPromptTexture.loadFromRenderedText("Press 1 to play back. Press 2 to record again.", gTextColor);
+						currentState = RECORDED;
+					}
+
+					//Unlock callback
+					SDL_UnlockAudioDevice(playbackDeviceId);
 				}
 
 				//Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(gRenderer);
 
-				//Render text textures
+				//Render prompt centered at the top of the screen
 				gPromptTexture.render((SCREEN_WIDTH - gPromptTexture.getWidth()) / 2, 0);
-				repeat (TOTAL_DATA) {|i|
-					gDataTextures[i].render((SCREEN_WIDTH - gDataTextures[i].getWidth()) / 2, gPromptTexture.getHeight() + gDataTextures[0].getHeight() * i);
+
+				//User is selecting 
+				if (currentState == SELECTING_DEVICE)
+				{
+					//Render device names
+					int yOffset = gPromptTexture.getHeight() * 2;
+					for(int i = 0; i < gRecordingDeviceCount; ++i)
+					{
+						gDeviceTextures[ i ].render(0, yOffset);
+						yOffset += gDeviceTextures[ i ].getHeight() + 1;
+					}
 				}
 
 				//Update screen

@@ -1458,7 +1458,7 @@ SDL_GetNumAudioDevices(iscapture:int):int
 
 SDL_GetAudioDeviceName(index:int, iscapture:int):const_char_p
 
-SDL_OpenAudioDevice(device:const_char_p, iscapture:int, desired:const_SDL_AudioSpec_p, obtained:SDL_AudioSpec_p, allowed_changes:int):SDL_AudioDeviceID
+SDL_OpenAudioDevice(device:const_char_p:nil, iscapture:bool, desired:const_SDL_AudioSpec_p, obtained:SDL_AudioSpec_p, allowed_changes:int):SDL_AudioDeviceID
 
 SDL_GetAudioStatus():SDL_AudioStatus
 

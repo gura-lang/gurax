@@ -65,6 +65,24 @@ void AssignConsts(Frame& frame)
 	AssignConst(SDL_ASSERTION_IGNORE);
 	AssignConst(SDL_ASSERTION_ALWAYS_IGNORE);
 	// SDL_AudioFormat	
+	AssignConst(AUDIO_S8);
+	AssignConst(AUDIO_U8);
+	AssignConst(AUDIO_S16LSB);
+	AssignConst(AUDIO_S16MSB);
+	AssignConst(AUDIO_S16SYS);
+	AssignConst(AUDIO_S16);
+	AssignConst(AUDIO_U16LSB);
+	AssignConst(AUDIO_U16MSB);
+	AssignConst(AUDIO_U16SYS);
+	AssignConst(AUDIO_U16);
+	AssignConst(AUDIO_S32LSB);
+	AssignConst(AUDIO_S32MSB);
+	AssignConst(AUDIO_S32SYS);
+	AssignConst(AUDIO_S32);
+	AssignConst(AUDIO_F32LSB);
+	AssignConst(AUDIO_F32MSB);
+	AssignConst(AUDIO_F32SYS);
+	AssignConst(AUDIO_F32);
 	// SDL_AudioStatus
 	AssignConst(SDL_AUDIO_STOPPED);
 	AssignConst(SDL_AUDIO_PLAYING);

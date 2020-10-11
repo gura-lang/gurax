@@ -8291,12 +8291,12 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceName_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_OpenAudioDevice(device:String, iscapture:Number, desired:SDL_AudioSpec, obtained:SDL_AudioSpec, allowed_changes:Number)
+// sdl.SDL_OpenAudioDevice(device:String:nil, iscapture:Bool, desired:SDL_AudioSpec, obtained:SDL_AudioSpec, allowed_changes:Number)
 Gurax_DeclareFunctionAlias(SDL_OpenAudioDevice_gurax, "SDL_OpenAudioDevice")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("obtained", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("allowed_changes", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -8309,8 +8309,8 @@ Gurax_ImplementFunctionEx(SDL_OpenAudioDevice_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* device = args_gurax.PickString();
-	int iscapture = args_gurax.PickNumber<int>();
+	const char* device = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
+	bool iscapture = args_gurax.PickBool();
 	const SDL_AudioSpec* desired = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
 	SDL_AudioSpec* obtained = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
 	int allowed_changes = args_gurax.PickNumber<int>();
