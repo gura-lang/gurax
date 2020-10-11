@@ -9016,6 +9016,36 @@ Gurax_ImplementFunctionEx(SDL_RWtell_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.SDL_RWread(context:SDL_RWops, ptr:Pointer, size:Number, maxnum:Number)
+Gurax_DeclareFunctionAlias(SDL_RWread_gurax, "SDL_RWread")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("context", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxnum", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_RWread_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!ptr) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	size_t size = args_gurax.PickNumber<size_t>();
+	size_t maxnum = args_gurax.PickNumber<size_t>();
+	// Function body
+	size_t rtn = SDL_RWread(context, ptr, size, maxnum);
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_RWwrite(context:SDL_RWops, ptr:Pointer, size:Number, num:Number)
 Gurax_DeclareFunctionAlias(SDL_RWwrite_gurax, "SDL_RWwrite")
 {
@@ -13006,6 +13036,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_RWsize_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RWseek_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RWtell_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_RWread_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RWwrite_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_RWclose_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_ReadU8_gurax));

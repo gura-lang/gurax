@@ -1652,7 +1652,7 @@ SDL_RWseek(context:SDL_RWops_p, offset:Sint64, whence:int):Sint64
 
 SDL_RWtell(context:SDL_RWops_p):Sint64
 
-//SDL_RWread(context:SDL_RWops_p, ptr:void_p, size:size_t, maxnum:size_t):size_t
+SDL_RWread(context:SDL_RWops_p, ptr:void_p, size:size_t, maxnum:size_t):size_t
 
 SDL_RWwrite(context:SDL_RWops_p, ptr:const_void_p, size:size_t, num:size_t):size_t
 
