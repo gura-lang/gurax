@@ -317,7 +317,7 @@ audioRecordingCallback(userdata, stream:Pointer) = {
 	//memcpy(&gRecordingBuffer[gBufferBytePosition], stream, len);
 
 	//Move along buffer
-	gBufferBytePosition += len;
+	gBufferBytePosition:extern += len;
 }
 
 audioPlaybackCallback(userdata, stream:Pointer) = {
@@ -325,7 +325,7 @@ audioPlaybackCallback(userdata, stream:Pointer) = {
 	//memcpy(stream, &gRecordingBuffer[gBufferBytePosition], len);
 
 	//Move along buffer
-	gBufferBytePosition += len;
+	gBufferBytePosition:extern += len;
 }
 
 main() = {
@@ -420,14 +420,13 @@ main() = {
 											bytesPerSecond = gReceivedRecordingSpec.freq * bytesPerSample;
 
 											//Calculate buffer size
-											gBufferByteSize = RECORDING_BUFFER_SECONDS * bytesPerSecond;
+											gBufferByteSize:extern = RECORDING_BUFFER_SECONDS * bytesPerSecond;
 
 											//Calculate max buffer use
-											gBufferByteMaxPosition = MAX_RECORDING_SECONDS * bytesPerSecond;
+											gBufferByteMaxPosition:extern = MAX_RECORDING_SECONDS * bytesPerSecond;
 
 											//Allocate and initialize byte buffer
-											gRecordingBuffer = new Uint8[gBufferByteSize];
-											//memset(gRecordingBuffer, 0, gBufferByteSize);
+											gRecordingBuffer:extern = Array(`uint8, gBufferByteSize);
 
 											//Go on to next state
 											gPromptTexture.loadFromRenderedText("Press 1 to record for 5 seconds.", gTextColor);

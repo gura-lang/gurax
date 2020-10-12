@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class Pointer;
+
 //------------------------------------------------------------------------------
 // Packer
 //------------------------------------------------------------------------------
@@ -23,6 +25,8 @@ public:
 	template<typename T, bool bigEndianFlag> bool Put(T num);
 	template<typename T, bool bigEndianFlag> bool Get(T* pNum, bool exceedErrorFlag);
 	bool PutBuffer(const void* buff, size_t bytes);
+	bool PutPointer(const Pointer& pointer);
+	bool PutPointer(const Pointer& pointer, size_t bytes);
 public:
 	virtual bool StorePrepare(size_t bytes) = 0;
 	virtual void StoreBuffer(const void* buff, size_t bytes) = 0;

@@ -61,6 +61,7 @@ public:
 	bool PutValue(ElemType elemType, bool bigEndianFlag, const Value& value);
 	bool PutValues(ElemType elemType, bool bigEndianFlag, const ValueList& valList);
 	bool PutValues(ElemType elemType, bool bigEndianFlag, Iterator& iterator);
+	bool Append(const Pointer& pointer);
 	bool CheckWritable() const;
 	bool IsTargetIdentical(const Pointer& pointer) const {
 		return GetPointerToTarget() == pointer.GetPointerToTarget();

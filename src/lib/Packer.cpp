@@ -575,4 +575,14 @@ bool Packer::PutBuffer(const void* buff, size_t bytes)
 	return true;
 }
 
+bool Packer::PutPointer(const Pointer& pointer)
+{
+	return PutBuffer(pointer.GetPointerC<void>(), pointer.GetBytesAvailable());
+}
+
+bool Packer::PutPointer(const Pointer& pointer, size_t bytes)
+{
+	return PutBuffer(pointer.GetPointerC<void>(), bytes);
+}
+
 }

@@ -88,6 +88,36 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Pointer#Append(pointer:Pointer):reduce:[stay]
+Gurax_DeclareMethod(Pointer, Append)
+{
+	Declare(VTYPE_Pointer, Flag::Reduce);
+	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(stay));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Pointer, Append)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Pointer& pointerSrc = args.Pick<Value_Pointer>().GetPointer();
+	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
+	// Function body
+	Pointer& pointer = valueThis.GetPointer();
+	size_t offset = pointer.GetOffset();
+	if (!pointer.PutPointer(pointerSrc)) {
+		Error::Issue(ErrorType::MemoryError, "failed to write data into the pointer");
+		return Value::nil();
+	}
+	if (stayFlag) pointer.SetOffset(offset);
+	return valueThis.Reference();
+}
+
 // Pointer#Dump(stream?:Stream:w):void:[addr,upper]
 Gurax_DeclareMethod(Pointer, Dump)
 {
@@ -651,6 +681,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pointer));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Pointer, Append));
 	Assign(Gurax_CreateMethod(Pointer, Dump));
 	Assign(Gurax_CreateMethod(Pointer, Pack));
 	Assign(Gurax_CreateMethod(Pointer, Put));
