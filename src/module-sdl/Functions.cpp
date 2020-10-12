@@ -8429,6 +8429,26 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDriver_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
+// sdl.SDL_AUDIO_BITSIZE(format:Number)
+Gurax_DeclareFunctionAlias(SDL_AUDIO_BITSIZE_gurax, "SDL_AUDIO_BITSIZE")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(SDL_AUDIO_BITSIZE_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_AudioFormat format = args_gurax.PickNumber<SDL_AudioFormat>();
+	// Function body
+	int rtn = SDL_AUDIO_BITSIZE(format);
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_AudioInit(driver_name:String)
 Gurax_DeclareFunctionAlias(SDL_AudioInit_gurax, "SDL_AudioInit")
 {
@@ -13365,6 +13385,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_HapticRumbleStop_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetNumAudioDrivers_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetAudioDriver_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_AUDIO_BITSIZE_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_AudioInit_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_AudioQuit_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetCurrentAudioDriver_gurax));

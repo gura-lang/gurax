@@ -1448,6 +1448,8 @@ SDL_GetNumAudioDrivers():int
 
 SDL_GetAudioDriver(index:int):const_char_p
 
+SDL_AUDIO_BITSIZE(format:SDL_AudioFormat):int
+
 SDL_AudioInit(driver_name:const_char_p):int
 
 SDL_AudioQuit():void
