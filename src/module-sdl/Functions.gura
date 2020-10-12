@@ -9,7 +9,8 @@ r = cbridge.Renderer()
 cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
-	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+	${this.cType}& ${varName} = value_${varName}.GetEntity();
 	'''
 	codePickerVec = R'''
 	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
@@ -22,7 +23,8 @@ this.DeclareType(decl, cType, vtypeFullName,
 cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+	${this.cType} ${varName} = value_${varName}.GetEntityPtr();
 	'''
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
@@ -1458,7 +1460,13 @@ SDL_GetNumAudioDevices(iscapture:int):int
 
 SDL_GetAudioDeviceName(index:int, iscapture:int):const_char_p
 
-SDL_OpenAudioDevice(device:const_char_p:nil, iscapture:bool, desired:const_SDL_AudioSpec_p, obtained:SDL_AudioSpec_p, allowed_changes:int):SDL_AudioDeviceID
+SDL_OpenAudioDevice(device:const_char_p:nil, iscapture:bool, desired:const_SDL_AudioSpec_p, obtained:SDL_AudioSpec_p, allowed_changes:int) = \
+	R'''
+	value_obtained.SetFuncAudioCallback(Function::Reference(value_desired.GetFuncAudioCallback()));
+	value_obtained.SetValueUserdata(value_desired.GetValueUserdata().Reference());
+	SDL_AudioDeviceID rtn = SDL_OpenAudioDevice(device, iscapture, desired, obtained, allowed_changes);
+	return new Value_Number(rtn);
+	'''
 
 SDL_GetAudioStatus():SDL_AudioStatus
 

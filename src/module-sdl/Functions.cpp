@@ -706,7 +706,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayIndex_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int rtn = SDL_GetWindowDisplayIndex(window);
 	return new Gurax::Value_Number(rtn);
@@ -727,8 +728,10 @@ Gurax_ImplementFunctionEx(SDL_SetWindowDisplayMode_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
-	const SDL_DisplayMode* mode = args_gurax.Pick<Value_SDL_DisplayMode>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
+	auto& value_mode = args_gurax.Pick<Value_SDL_DisplayMode>();
+	const SDL_DisplayMode* mode = value_mode.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetWindowDisplayMode(window, mode);
 	return new Gurax::Value_Number(rtn);
@@ -749,8 +752,10 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
-	SDL_DisplayMode* mode = args_gurax.Pick<Value_SDL_DisplayMode>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
+	auto& value_mode = args_gurax.Pick<Value_SDL_DisplayMode>();
+	SDL_DisplayMode* mode = value_mode.GetEntityPtr();
 	// Function body
 	int rtn = SDL_GetWindowDisplayMode(window, mode);
 	return new Gurax::Value_Number(rtn);
@@ -770,7 +775,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPixelFormat_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	Uint32 rtn = SDL_GetWindowPixelFormat(window);
 	return new Gurax::Value_Number(rtn);
@@ -821,7 +827,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowID_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	Uint32 rtn = SDL_GetWindowID(window);
 	return new Gurax::Value_Number(rtn);
@@ -862,7 +869,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowFlags_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	Uint32 rtn = SDL_GetWindowFlags(window);
 	return new Gurax::Value_Number(rtn);
@@ -883,7 +891,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowTitle_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	const char* title = args_gurax.PickString();
 	// Function body
 	SDL_SetWindowTitle(window, title);
@@ -904,7 +913,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowTitle_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	const char* rtn = SDL_GetWindowTitle(window);
 	return new Gurax::Value_String(rtn);
@@ -925,8 +935,10 @@ Gurax_ImplementFunctionEx(SDL_SetWindowIcon_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
-	SDL_Surface* icon = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
+	auto& value_icon = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* icon = value_icon.GetEntityPtr();
 	// Function body
 	SDL_SetWindowIcon(window, icon);
 	return Gurax::Value::nil();
@@ -948,7 +960,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowPosition_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int x = args_gurax.PickNumber<int>();
 	int y = args_gurax.PickNumber<int>();
 	// Function body
@@ -970,7 +983,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int x, y;
 	SDL_GetWindowPosition(window, &x, &y);
@@ -993,7 +1007,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowSize_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int w = args_gurax.PickNumber<int>();
 	int h = args_gurax.PickNumber<int>();
 	// Function body
@@ -1015,7 +1030,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int w, h;
 	SDL_GetWindowSize(window, &w, &h);
@@ -1036,7 +1052,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int top, left, bottom, right;
 	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) return Value::nil();
@@ -1059,7 +1076,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMinimumSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int min_w = args_gurax.PickNumber<int>();
 	int min_h = args_gurax.PickNumber<int>();
 	// Function body
@@ -1081,7 +1099,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int w, h;
 	SDL_GetWindowMinimumSize(window, &w, &h);
@@ -1104,7 +1123,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMaximumSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int max_w = args_gurax.PickNumber<int>();
 	int max_h = args_gurax.PickNumber<int>();
 	// Function body
@@ -1126,7 +1146,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int w, h;
 	SDL_GetWindowMaximumSize(window, &w, &h);
@@ -1148,7 +1169,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowBordered_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	SDL_bool bordered = static_cast<SDL_bool>(args_gurax.PickBool());
 	// Function body
 	SDL_SetWindowBordered(window, bordered);
@@ -1170,7 +1192,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowResizable_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	SDL_bool resizable = static_cast<SDL_bool>(args_gurax.PickBool());
 	// Function body
 	SDL_SetWindowResizable(window, resizable);
@@ -1191,7 +1214,8 @@ Gurax_ImplementFunctionEx(SDL_ShowWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_ShowWindow(window);
 	return Gurax::Value::nil();
@@ -1211,7 +1235,8 @@ Gurax_ImplementFunctionEx(SDL_HideWindow_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_HideWindow(window);
 	return Gurax::Value::nil();
@@ -1231,7 +1256,8 @@ Gurax_ImplementFunctionEx(SDL_RaiseWindow_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_RaiseWindow(window);
 	return Gurax::Value::nil();
@@ -1251,7 +1277,8 @@ Gurax_ImplementFunctionEx(SDL_MaximizeWindow_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_MaximizeWindow(window);
 	return Gurax::Value::nil();
@@ -1271,7 +1298,8 @@ Gurax_ImplementFunctionEx(SDL_MinimizeWindow_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_MinimizeWindow(window);
 	return Gurax::Value::nil();
@@ -1291,7 +1319,8 @@ Gurax_ImplementFunctionEx(SDL_RestoreWindow_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_RestoreWindow(window);
 	return Gurax::Value::nil();
@@ -1312,7 +1341,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowFullscreen_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	int rtn = SDL_SetWindowFullscreen(window, flags);
@@ -1333,7 +1363,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSurface_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = SDL_GetWindowSurface(window);
 	if (!rtn) return Value::nil();
@@ -1354,7 +1385,8 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurface_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int rtn = SDL_UpdateWindowSurface(window);
 	return new Gurax::Value_Number(rtn);
@@ -1375,7 +1407,8 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurfaceRects_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
 	int numrects = rects.sizeT<int>();
@@ -1398,7 +1431,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowGrab_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	SDL_bool grabbed = static_cast<SDL_bool>(args_gurax.PickBool());
 	// Function body
 	SDL_SetWindowGrab(window, grabbed);
@@ -1419,7 +1453,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowGrab_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_GetWindowGrab(window);
 	return new Gurax::Value_Bool(!!rtn);
@@ -1457,7 +1492,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowBrightness_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	float brightness = args_gurax.PickNumber<float>();
 	// Function body
 	int rtn = SDL_SetWindowBrightness(window, brightness);
@@ -1478,7 +1514,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBrightness_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	float rtn = SDL_GetWindowBrightness(window);
 	return new Gurax::Value_Number(rtn);
@@ -1499,7 +1536,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowOpacity_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	float opacity = args_gurax.PickNumber<float>();
 	// Function body
 	int rtn = SDL_SetWindowOpacity(window, opacity);
@@ -1520,7 +1558,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowOpacity_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	float out_opacity;
 	if (SDL_GetWindowOpacity(window, &out_opacity) != 0) return Value::nil();
@@ -1542,8 +1581,10 @@ Gurax_ImplementFunctionEx(SDL_SetWindowModalFor_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* modal_window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
-	SDL_Window* parent_window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_modal_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* modal_window = value_modal_window.GetEntityPtr();
+	auto& value_parent_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* parent_window = value_parent_window.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetWindowModalFor(modal_window, parent_window);
 	return new Gurax::Value_Number(rtn);
@@ -1563,7 +1604,8 @@ Gurax_ImplementFunctionEx(SDL_SetWindowInputFocus_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetWindowInputFocus(window);
 	return new Gurax::Value_Number(rtn);
@@ -1766,7 +1808,8 @@ Gurax_ImplementFunctionEx(SDL_GL_CreateContext_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_GLContext rtn = SDL_GL_CreateContext(window);
 	if (!rtn) return Value::nil();
@@ -1788,8 +1831,10 @@ Gurax_ImplementFunctionEx(SDL_GL_MakeCurrent_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
-	SDL_GLContext context = args_gurax.Pick<Value_SDL_GLContext>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_GLContext>();
+	SDL_GLContext context = value_context.GetEntityPtr();
 	// Function body
 	int rtn = SDL_GL_MakeCurrent(window, context);
 	return new Gurax::Value_Number(rtn);
@@ -1843,7 +1888,8 @@ Gurax_ImplementFunctionEx(SDL_GL_GetDrawableSize_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	int w, h;
 	SDL_GL_GetDrawableSize(window, &w, &h);
@@ -1900,7 +1946,8 @@ Gurax_ImplementFunctionEx(SDL_GL_SwapWindow_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_GL_SwapWindow(window);
 	return Gurax::Value::nil();
@@ -1920,7 +1967,8 @@ Gurax_ImplementFunctionEx(SDL_GL_DeleteContext_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GLContext context = args_gurax.Pick<Value_SDL_GLContext>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_GLContext>();
+	SDL_GLContext context = value_context.GetEntityPtr();
 	// Function body
 	SDL_GL_DeleteContext(context);
 	return Gurax::Value::nil();
@@ -2005,7 +2053,8 @@ Gurax_ImplementFunctionEx(SDL_CreateRenderer_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int index = args_gurax.PickNumber<int>();
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -2028,7 +2077,8 @@ Gurax_ImplementFunctionEx(SDL_CreateSoftwareRenderer_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_Renderer* rtn = SDL_CreateSoftwareRenderer(surface);
 	if (!rtn) return Value::nil();
@@ -2049,7 +2099,8 @@ Gurax_ImplementFunctionEx(SDL_GetRenderer_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_Renderer* rtn = SDL_GetRenderer(window);
 	if (!rtn) return Value::nil();
@@ -2070,7 +2121,8 @@ Gurax_ImplementFunctionEx(SDL_GetRendererInfo_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(renderer, &info) != 0) return Value::nil();
@@ -2091,7 +2143,8 @@ Gurax_ImplementFunctionEx(SDL_GetRendererOutputSize_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	int w, h;
 	if (SDL_GetRendererOutputSize(renderer, &w, &h) != 0) return Value::nil();
@@ -2116,7 +2169,8 @@ Gurax_ImplementFunctionEx(SDL_CreateTexture_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	Uint32 format = args_gurax.PickNumber<Uint32>();
 	int access = args_gurax.PickNumber<int>();
 	int w = args_gurax.PickNumber<int>();
@@ -2142,8 +2196,10 @@ Gurax_ImplementFunctionEx(SDL_CreateTextureFromSurface_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_Texture* rtn = SDL_CreateTextureFromSurface(renderer, surface);
 	if (!rtn) return Value::nil();
@@ -2164,7 +2220,8 @@ Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	Uint32 format;
 	int access, w, h;
@@ -2189,7 +2246,8 @@ Gurax_ImplementFunctionEx(SDL_SetTextureColorMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	Uint8 r = args_gurax.PickNumber<Uint8>();
 	Uint8 g = args_gurax.PickNumber<Uint8>();
 	Uint8 b = args_gurax.PickNumber<Uint8>();
@@ -2212,7 +2270,8 @@ Gurax_ImplementFunctionEx(SDL_GetTextureColorMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	Uint8 r, g, b;
 	if (SDL_GetTextureColorMod(texture, &r, &g, &b) != 0) return Value::nil();
@@ -2234,7 +2293,8 @@ Gurax_ImplementFunctionEx(SDL_SetTextureAlphaMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	Uint8 alpha = args_gurax.PickNumber<Uint8>();
 	// Function body
 	int rtn = SDL_SetTextureAlphaMod(texture, alpha);
@@ -2255,7 +2315,8 @@ Gurax_ImplementFunctionEx(SDL_GetTextureAlphaMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	Uint8 alpha;
 	if (SDL_GetTextureAlphaMod(texture, &alpha) != 0) return Value::nil();
@@ -2277,7 +2338,8 @@ Gurax_ImplementFunctionEx(SDL_SetTextureBlendMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	SDL_BlendMode blendMode = args_gurax.PickNumber<SDL_BlendMode>();
 	// Function body
 	int rtn = SDL_SetTextureBlendMode(texture, blendMode);
@@ -2298,7 +2360,8 @@ Gurax_ImplementFunctionEx(SDL_GetTextureBlendMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	SDL_BlendMode blendMode;
 	if (SDL_GetTextureBlendMode(texture, &blendMode) != 0) return Value::nil();
@@ -2320,7 +2383,8 @@ Gurax_ImplementFunctionEx(SDL_SetTextureScaleMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	SDL_ScaleMode scaleMode = args_gurax.PickNumber<SDL_ScaleMode>();
 	// Function body
 	int rtn = SDL_SetTextureScaleMode(texture, scaleMode);
@@ -2341,7 +2405,8 @@ Gurax_ImplementFunctionEx(SDL_GetTextureScaleMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	SDL_ScaleMode scaleMode;
 	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) return Value::nil();
@@ -2365,7 +2430,8 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
 	int pitch = args_gurax.PickNumber<int>();
@@ -2395,7 +2461,8 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const Uint8* Yplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int Ypitch = args_gurax.PickNumber<int>();
@@ -2423,7 +2490,8 @@ Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	void* pixels;
@@ -2457,7 +2525,8 @@ Gurax_ImplementFunctionEx(SDL_LockTextureToSurface_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_Surface* surface;
@@ -2479,7 +2548,8 @@ Gurax_ImplementFunctionEx(SDL_UnlockTexture_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	SDL_UnlockTexture(texture);
 	return Gurax::Value::nil();
@@ -2499,7 +2569,8 @@ Gurax_ImplementFunctionEx(SDL_RenderTargetSupported_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_RenderTargetSupported(renderer);
 	return new Gurax::Value_Bool(!!rtn);
@@ -2520,8 +2591,10 @@ Gurax_ImplementFunctionEx(SDL_SetRenderTarget_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetRenderTarget(renderer, texture);
 	return new Gurax::Value_Number(rtn);
@@ -2541,7 +2614,8 @@ Gurax_ImplementFunctionEx(SDL_GetRenderTarget_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_Texture* rtn = SDL_GetRenderTarget(renderer);
 	if (!rtn) return Value::nil();
@@ -2564,7 +2638,8 @@ Gurax_ImplementFunctionEx(SDL_RenderSetLogicalSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	int w = args_gurax.PickNumber<int>();
 	int h = args_gurax.PickNumber<int>();
 	// Function body
@@ -2586,7 +2661,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	int w, h;
 	SDL_RenderGetLogicalSize(renderer, &w, &h);
@@ -2608,7 +2684,8 @@ Gurax_ImplementFunctionEx(SDL_RenderSetIntegerScale_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	SDL_bool enable = static_cast<SDL_bool>(args_gurax.PickBool());
 	// Function body
 	int rtn = SDL_RenderSetIntegerScale(renderer, enable);
@@ -2629,7 +2706,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetIntegerScale_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_RenderGetIntegerScale(renderer);
 	return new Gurax::Value_Bool(!!rtn);
@@ -2650,7 +2728,8 @@ Gurax_ImplementFunctionEx(SDL_RenderSetViewport_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderSetViewport(renderer, rect);
@@ -2671,7 +2750,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_Rect rect;
 	SDL_RenderGetViewport(renderer, &rect);
@@ -2693,7 +2773,8 @@ Gurax_ImplementFunctionEx(SDL_RenderSetClipRect_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderSetClipRect(renderer, rect);
@@ -2714,7 +2795,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_Rect rect;
 	SDL_RenderGetClipRect(renderer, &rect);
@@ -2735,7 +2817,8 @@ Gurax_ImplementFunctionEx(SDL_RenderIsClipEnabled_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_RenderIsClipEnabled(renderer);
 	return new Gurax::Value_Bool(!!rtn);
@@ -2757,7 +2840,8 @@ Gurax_ImplementFunctionEx(SDL_RenderSetScale_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	float scaleX = args_gurax.PickNumber<float>();
 	float scaleY = args_gurax.PickNumber<float>();
 	// Function body
@@ -2779,7 +2863,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	float scaleX, scaleY;
 	SDL_RenderGetScale(renderer, &scaleX, &scaleY);
@@ -2804,7 +2889,8 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawColor_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	Uint8 r = args_gurax.PickNumber<Uint8>();
 	Uint8 g = args_gurax.PickNumber<Uint8>();
 	Uint8 b = args_gurax.PickNumber<Uint8>();
@@ -2828,7 +2914,8 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	Uint8 r, g, b, a;
 	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) return Value::nil();
@@ -2850,7 +2937,8 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawBlendMode_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	SDL_BlendMode blendMode = args_gurax.PickNumber<SDL_BlendMode>();
 	// Function body
 	int rtn = SDL_SetRenderDrawBlendMode(renderer, blendMode);
@@ -2871,7 +2959,8 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_BlendMode blendMode;
 	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) return Value::nil();
@@ -2892,7 +2981,8 @@ Gurax_ImplementFunctionEx(SDL_RenderClear_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderClear(renderer);
 	return new Gurax::Value_Number(rtn);
@@ -2914,7 +3004,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoint_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	int x = args_gurax.PickNumber<int>();
 	int y = args_gurax.PickNumber<int>();
 	// Function body
@@ -2937,7 +3028,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoints_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
 	// Function body
 	int count = points.sizeT<int>();
@@ -2963,7 +3055,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLine_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	int x1 = args_gurax.PickNumber<int>();
 	int y1 = args_gurax.PickNumber<int>();
 	int x2 = args_gurax.PickNumber<int>();
@@ -2988,7 +3081,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLines_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
 	// Function body
 	int count = points.sizeT<int>();
@@ -3011,7 +3105,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRect_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderDrawRect(renderer, rect);
@@ -3033,7 +3128,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRects_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
 	int count = rects.sizeT<int>();
@@ -3056,7 +3152,8 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRect_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_RenderFillRect(renderer, rect);
@@ -3078,7 +3175,8 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
 	int count = rects.sizeT<int>();
@@ -3103,8 +3201,10 @@ Gurax_ImplementFunctionEx(SDL_RenderCopy_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
@@ -3132,8 +3232,10 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyEx_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	const SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	double angle = args_gurax.PickNumber<double>();
@@ -3160,7 +3262,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPointF_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	float x = args_gurax.PickNumber<float>();
 	float y = args_gurax.PickNumber<float>();
 	// Function body
@@ -3184,8 +3287,10 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPointsF_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_FPoint* points = args_gurax.Pick<Value_SDL_FPoint>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_points = args_gurax.Pick<Value_SDL_FPoint>();
+	const SDL_FPoint* points = value_points.GetEntityPtr();
 	int count = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_RenderDrawPointsF(renderer, points, count);
@@ -3210,7 +3315,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLineF_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	float x1 = args_gurax.PickNumber<float>();
 	float y1 = args_gurax.PickNumber<float>();
 	float x2 = args_gurax.PickNumber<float>();
@@ -3235,7 +3341,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLinesF_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_FPoint>(Value_SDL_FPoint::ValueForVector);
 	// Function body
 	int count = points.sizeT<int>();
@@ -3258,8 +3365,10 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectF_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_FRect* rect = args_gurax.Pick<Value_SDL_FRect>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_rect = args_gurax.Pick<Value_SDL_FRect>();
+	const SDL_FRect* rect = value_rect.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderDrawRectF(renderer, rect);
 	return new Gurax::Value_Number(rtn);
@@ -3280,7 +3389,8 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectsF_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
 	// Function body
 	int count = rects.sizeT<int>();
@@ -3303,8 +3413,10 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectF_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	const SDL_FRect* rect = args_gurax.Pick<Value_SDL_FRect>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_rect = args_gurax.Pick<Value_SDL_FRect>();
+	const SDL_FRect* rect = value_rect.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderFillRectF(renderer, rect);
 	return new Gurax::Value_Number(rtn);
@@ -3325,7 +3437,8 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectsF_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
 	// Function body
 	int count = rects.sizeT<int>();
@@ -3350,10 +3463,13 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyF_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	const SDL_FRect* dstrect = args_gurax.Pick<Value_SDL_FRect>().GetEntityPtr();
+	auto& value_dstrect = args_gurax.Pick<Value_SDL_FRect>();
+	const SDL_FRect* dstrect = value_dstrect.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderCopyF(renderer, texture, srcrect, dstrect);
 	return new Gurax::Value_Number(rtn);
@@ -3377,7 +3493,8 @@ Gurax_ImplementFunctionEx(SDL_RenderReadPixels_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	Uint32 format = args_gurax.PickNumber<Uint32>();
 	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
@@ -3405,7 +3522,8 @@ Gurax_ImplementFunctionEx(SDL_RenderPresent_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	SDL_RenderPresent(renderer);
 	return Gurax::Value::nil();
@@ -3465,7 +3583,8 @@ Gurax_ImplementFunctionEx(SDL_RenderFlush_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Renderer* renderer = args_gurax.Pick<Value_SDL_Renderer>().GetEntityPtr();
+	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
+	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RenderFlush(renderer);
 	return new Gurax::Value_Number(rtn);
@@ -3485,7 +3604,8 @@ Gurax_ImplementFunctionEx(SDL_GL_UnbindTexture_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Texture* texture = args_gurax.Pick<Value_SDL_Texture>().GetEntityPtr();
+	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
+	SDL_Texture* texture = value_texture.GetEntityPtr();
 	// Function body
 	int rtn = SDL_GL_UnbindTexture(texture);
 	return new Gurax::Value_Number(rtn);
@@ -3616,8 +3736,10 @@ Gurax_ImplementFunctionEx(SDL_SetPixelFormatPalette_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
-	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
+	SDL_PixelFormat* format = value_format.GetEntityPtr();
+	auto& value_palette = args_gurax.Pick<Value_SDL_Palette>();
+	SDL_Palette* palette = value_palette.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetPixelFormatPalette(format, palette);
 	return new Gurax::Value_Number(rtn);
@@ -3639,7 +3761,8 @@ Gurax_ImplementFunctionEx(SDL_SetPaletteColors_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	auto& value_palette = args_gurax.Pick<Value_SDL_Palette>();
+	SDL_Palette* palette = value_palette.GetEntityPtr();
 	auto colors = args_gurax.PickListT<SDL_Color>(Value_SDL_Color::ValueForVector);
 	int firstcolor = args_gurax.PickNumber<int>();
 	// Function body
@@ -3685,7 +3808,8 @@ Gurax_ImplementFunctionEx(SDL_MapRGB_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
+	const SDL_PixelFormat* format = value_format.GetEntityPtr();
 	Uint8 r = args_gurax.PickNumber<Uint8>();
 	Uint8 g = args_gurax.PickNumber<Uint8>();
 	Uint8 b = args_gurax.PickNumber<Uint8>();
@@ -3712,7 +3836,8 @@ Gurax_ImplementFunctionEx(SDL_MapRGBA_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
+	const SDL_PixelFormat* format = value_format.GetEntityPtr();
 	Uint8 r = args_gurax.PickNumber<Uint8>();
 	Uint8 g = args_gurax.PickNumber<Uint8>();
 	Uint8 b = args_gurax.PickNumber<Uint8>();
@@ -3738,7 +3863,8 @@ Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Uint32 pixel = args_gurax.PickNumber<Uint32>();
-	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
+	const SDL_PixelFormat* format = value_format.GetEntityPtr();
 	// Function body
 	Uint8 r, g, b;
 	SDL_GetRGB(pixel, format, &r, &g, &b);
@@ -3761,7 +3887,8 @@ Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Uint32 pixel = args_gurax.PickNumber<Uint32>();
-	const SDL_PixelFormat* format = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
+	const SDL_PixelFormat* format = value_format.GetEntityPtr();
 	// Function body
 	Uint8 r, g, b, a;
 	SDL_GetRGBA(pixel, format, &r, &g, &b, &a);
@@ -3783,8 +3910,10 @@ Gurax_ImplementFunctionEx(SDL_HasIntersection_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_Rect* A = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	const SDL_Rect* B = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	auto& value_A = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* A = value_A.GetEntityPtr();
+	auto& value_B = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* B = value_B.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_HasIntersection(A, B);
 	return new Gurax::Value_Bool(!!rtn);
@@ -3805,8 +3934,10 @@ Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_Rect* A = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	const SDL_Rect* B = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	auto& value_A = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* A = value_A.GetEntityPtr();
+	auto& value_B = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* B = value_B.GetEntityPtr();
 	// Function body
 	SDL_Rect result;
 	if (!SDL_IntersectRect(A, B, &result)) return Value::nil();
@@ -3828,8 +3959,10 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_Rect* A = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
-	const SDL_Rect* B = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	auto& value_A = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* A = value_A.GetEntityPtr();
+	auto& value_B = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* B = value_B.GetEntityPtr();
 	// Function body
 	SDL_Rect result;
 	SDL_UnionRect(A, B, &result);
@@ -3854,7 +3987,8 @@ Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const SDL_Rect* rect = args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr();
+	auto& value_rect = args_gurax.Pick<Value_SDL_Rect>();
+	const SDL_Rect* rect = value_rect.GetEntityPtr();
 	int X1 = args_gurax.PickNumber<int>();
 	int Y1 = args_gurax.PickNumber<int>();
 	int X2 = args_gurax.PickNumber<int>();
@@ -4058,8 +4192,10 @@ Gurax_ImplementFunctionEx(SDL_SetSurfacePalette_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	SDL_Palette* palette = args_gurax.Pick<Value_SDL_Palette>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
+	auto& value_palette = args_gurax.Pick<Value_SDL_Palette>();
+	SDL_Palette* palette = value_palette.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SetSurfacePalette(surface, palette);
 	return new Gurax::Value_Number(rtn);
@@ -4079,7 +4215,8 @@ Gurax_ImplementFunctionEx(SDL_LockSurface_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	int rtn = SDL_LockSurface(surface);
 	return new Gurax::Value_Number(rtn);
@@ -4099,7 +4236,8 @@ Gurax_ImplementFunctionEx(SDL_UnlockSurface_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_UnlockSurface(surface);
 	return Gurax::Value::nil();
@@ -4141,7 +4279,8 @@ Gurax_ImplementFunctionEx(SDL_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Surface* rtn = SDL_LoadBMP_RW(src, freesrc);
@@ -4164,7 +4303,8 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	const char* file = args_gurax.PickString();
 	// Function body
 	int rtn = SDL_SaveBMP(surface, file);
@@ -4187,8 +4327,10 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	bool freedst = args_gurax.PickBool();
 	// Function body
 	int rtn = SDL_SaveBMP_RW(surface, dst, freedst? 1 : 0);
@@ -4210,7 +4352,8 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceRLE_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	bool flag = args_gurax.PickBool();
 	// Function body
 	int rtn = SDL_SetSurfaceRLE(surface, flag);
@@ -4233,7 +4376,8 @@ Gurax_ImplementFunctionEx(SDL_SetColorKey_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	bool flag = args_gurax.PickBool();
 	Uint32 key = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -4255,7 +4399,8 @@ Gurax_ImplementFunctionEx(SDL_HasColorKey_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_HasColorKey(surface);
 	return new Gurax::Value_Bool(!!rtn);
@@ -4275,7 +4420,8 @@ Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	Uint32 key;
 	if (SDL_GetColorKey(surface, &key) != 0) return Value::nil();
@@ -4299,7 +4445,8 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceColorMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	Uint8 r = args_gurax.PickNumber<Uint8>();
 	Uint8 g = args_gurax.PickNumber<Uint8>();
 	Uint8 b = args_gurax.PickNumber<Uint8>();
@@ -4322,7 +4469,8 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	Uint8 r, g, b;
 	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) return Value::nil();
@@ -4344,7 +4492,8 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceAlphaMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	Uint8 alpha = args_gurax.PickNumber<Uint8>();
 	// Function body
 	int rtn = SDL_SetSurfaceAlphaMod(surface, alpha);
@@ -4365,7 +4514,8 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	Uint8 alpha;
 	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) return Value::nil();
@@ -4387,7 +4537,8 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceBlendMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	SDL_BlendMode blendMode = args_gurax.PickNumber<SDL_BlendMode>();
 	// Function body
 	int rtn = SDL_SetSurfaceBlendMode(surface, blendMode);
@@ -4408,7 +4559,8 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_BlendMode blendMode;
 	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) return Value::nil();
@@ -4430,7 +4582,8 @@ Gurax_ImplementFunctionEx(SDL_SetClipRect_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	SDL_bool rtn = SDL_SetClipRect(surface, rect);
@@ -4451,7 +4604,8 @@ Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_Rect rect;
 	SDL_GetClipRect(surface, &rect);
@@ -4472,7 +4626,8 @@ Gurax_ImplementFunctionEx(SDL_DuplicateSurface_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = SDL_DuplicateSurface(surface);
 	if (!rtn) return Value::nil();
@@ -4495,8 +4650,10 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurface_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
-	const SDL_PixelFormat* fmt = args_gurax.Pick<Value_SDL_PixelFormat>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
+	auto& value_fmt = args_gurax.Pick<Value_SDL_PixelFormat>();
+	const SDL_PixelFormat* fmt = value_fmt.GetEntityPtr();
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = SDL_ConvertSurface(src, fmt, flags);
@@ -4520,7 +4677,8 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurfaceFormat_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	Uint32 pixel_format = args_gurax.PickNumber<Uint32>();
 	Uint32 flags = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -4583,7 +4741,8 @@ Gurax_ImplementFunctionEx(SDL_FillRect_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	Uint32 color = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -4608,7 +4767,8 @@ Gurax_ImplementFunctionEx(SDL_FillRects_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	const SDL_Rect* rects = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	int count = args_gurax.PickNumber<int>();
 	Uint32 color = args_gurax.PickNumber<Uint32>();
@@ -4634,9 +4794,11 @@ Gurax_ImplementFunctionEx(SDL_BlitSurface_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_BlitSurface(src, srcrect, dst, dstrect);
@@ -4660,9 +4822,11 @@ Gurax_ImplementFunctionEx(SDL_UpperBlit_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_UpperBlit(src, srcrect, dst, dstrect);
@@ -4686,9 +4850,11 @@ Gurax_ImplementFunctionEx(SDL_LowerBlit_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_LowerBlit(src, srcrect, dst, dstrect);
@@ -4712,9 +4878,11 @@ Gurax_ImplementFunctionEx(SDL_SoftStretch_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	const SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_SoftStretch(src, srcrect, dst, dstrect);
@@ -4738,9 +4906,11 @@ Gurax_ImplementFunctionEx(SDL_BlitScaled_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_BlitScaled(src, srcrect, dst, dstrect);
@@ -4764,9 +4934,11 @@ Gurax_ImplementFunctionEx(SDL_UpperBlitScaled_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	const SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_UpperBlitScaled(src, srcrect, dst, dstrect);
@@ -4790,9 +4962,11 @@ Gurax_ImplementFunctionEx(SDL_LowerBlitScaled_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* src = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* src = value_src.GetEntityPtr();
 	SDL_Rect* srcrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	SDL_Surface* dst = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* dst = value_dst.GetEntityPtr();
 	SDL_Rect* dstrect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	// Function body
 	int rtn = SDL_LowerBlitScaled(src, srcrect, dst, dstrect);
@@ -4871,7 +5045,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_SysWMinfo info;
 	if (!SDL_GetWindowWMInfo(window, &info)) return Value::nil();
@@ -4966,7 +5141,8 @@ Gurax_ImplementFunctionEx(SDL_PeepEvents_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Event* events = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	auto& value_events = args_gurax.Pick<Value_SDL_Event>();
+	SDL_Event* events = value_events.GetEntityPtr();
 	int numevents = args_gurax.PickNumber<int>();
 	SDL_eventaction action = args_gurax.PickNumber<SDL_eventaction>();
 	Uint32 minType = args_gurax.PickNumber<Uint32>();
@@ -5074,7 +5250,8 @@ Gurax_ImplementFunctionEx(SDL_PollEvent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	auto& value_event = args_gurax.Pick<Value_SDL_Event>();
+	SDL_Event* event = value_event.GetEntityPtr();
 	// Function body
 	int rtn = SDL_PollEvent(event);
 	return new Gurax::Value_Number(rtn);
@@ -5094,7 +5271,8 @@ Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	auto& value_event = args_gurax.Pick<Value_SDL_Event>();
+	SDL_Event* event = value_event.GetEntityPtr();
 	// Function body
 	int rtn = SDL_WaitEvent(event);
 	return new Value_Number(rtn);
@@ -5115,7 +5293,8 @@ Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	auto& value_event = args_gurax.Pick<Value_SDL_Event>();
+	SDL_Event* event = value_event.GetEntityPtr();
 	int timeout = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_WaitEventTimeout(event, timeout);
@@ -5136,7 +5315,8 @@ Gurax_ImplementFunctionEx(SDL_PushEvent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Event* event = args_gurax.Pick<Value_SDL_Event>().GetEntityPtr();
+	auto& value_event = args_gurax.Pick<Value_SDL_Event>();
+	SDL_Event* event = value_event.GetEntityPtr();
 	// Function body
 	int rtn = SDL_PushEvent(event);
 	return new Gurax::Value_Number(rtn);
@@ -5474,7 +5654,8 @@ Gurax_ImplementFunctionEx(SDL_IsScreenKeyboardShown_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_IsScreenKeyboardShown(window);
 	return new Gurax::Value_Bool(!!rtn);
@@ -5564,7 +5745,8 @@ Gurax_ImplementFunctionEx(SDL_WarpMouseInWindow_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Window* window = args_gurax.Pick<Value_SDL_Window>().GetEntityPtr();
+	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
+	SDL_Window* window = value_window.GetEntityPtr();
 	int x = args_gurax.PickNumber<int>();
 	int y = args_gurax.PickNumber<int>();
 	// Function body
@@ -5697,7 +5879,8 @@ Gurax_ImplementFunctionEx(SDL_CreateColorCursor_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Surface* surface = args_gurax.Pick<Value_SDL_Surface>().GetEntityPtr();
+	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
+	SDL_Surface* surface = value_surface.GetEntityPtr();
 	int hot_x = args_gurax.PickNumber<int>();
 	int hot_y = args_gurax.PickNumber<int>();
 	// Function body
@@ -5741,7 +5924,8 @@ Gurax_ImplementFunctionEx(SDL_SetCursor_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Cursor* cursor = args_gurax.Pick<Value_SDL_Cursor>().GetEntityPtr();
+	auto& value_cursor = args_gurax.Pick<Value_SDL_Cursor>();
+	SDL_Cursor* cursor = value_cursor.GetEntityPtr();
 	// Function body
 	SDL_SetCursor(cursor);
 	return Gurax::Value::nil();
@@ -6106,7 +6290,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickName_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	const char* rtn = SDL_JoystickName(joystick);
 	return new Gurax::Value_String(rtn);
@@ -6126,7 +6311,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetPlayerIndex_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickGetPlayerIndex(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6147,7 +6333,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickSetPlayerIndex_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_JoystickSetPlayerIndex(joystick, player_index);
@@ -6168,7 +6355,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUID_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_JoystickGUID rtn = SDL_JoystickGetGUID(joystick);
 	return new Value_SDL_JoystickGUID(rtn);
@@ -6188,7 +6376,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetVendor_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_JoystickGetVendor(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6208,7 +6397,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetProduct_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_JoystickGetProduct(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6228,7 +6418,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetProductVersion_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_JoystickGetProductVersion(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6248,7 +6439,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_JoystickType rtn = SDL_JoystickGetType(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6268,7 +6460,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_JoystickGUID& guid = args_gurax.Pick<Value_SDL_JoystickGUID>().GetEntity();
+	auto& value_guid = args_gurax.Pick<Value_SDL_JoystickGUID>();
+	SDL_JoystickGUID& guid = value_guid.GetEntity();
 	// Function body
 	char szGUID[64]; // requires at least 33 bytes
 	SDL_JoystickGetGUIDString(guid, szGUID, sizeof(szGUID));
@@ -6309,7 +6502,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetAttached_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_JoystickGetAttached(joystick);
 	return new Gurax::Value_Bool(!!rtn);
@@ -6329,7 +6523,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickInstanceID_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_JoystickID rtn = SDL_JoystickInstanceID(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6349,7 +6544,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumAxes_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickNumAxes(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6369,7 +6565,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumBalls_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickNumBalls(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6389,7 +6586,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumHats_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickNumHats(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6409,7 +6607,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumButtons_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickNumButtons(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6466,7 +6665,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetAxis_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int axis = args_gurax.PickNumber<int>();
 	// Function body
 	Sint16 rtn = SDL_JoystickGetAxis(joystick, axis);
@@ -6488,7 +6688,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetHat_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int hat = args_gurax.PickNumber<int>();
 	// Function body
 	Uint8 rtn = SDL_JoystickGetHat(joystick, hat);
@@ -6510,7 +6711,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int ball = args_gurax.PickNumber<int>();
 	// Function body
 	int dx, dy;
@@ -6533,7 +6735,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetButton_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int button = args_gurax.PickNumber<int>();
 	// Function body
 	Uint8 rtn = SDL_JoystickGetButton(joystick, button);
@@ -6557,7 +6760,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickRumble_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	Uint16 low_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint16 high_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint32 duration_ms = args_gurax.PickNumber<Uint32>();
@@ -6580,7 +6784,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickClose_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_JoystickClose(joystick);
 	return Gurax::Value::nil();
@@ -6600,7 +6805,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickCurrentPowerLevel_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_JoystickPowerLevel rtn = SDL_JoystickCurrentPowerLevel(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -6621,7 +6827,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerAddMappingsFromRW_gurax, processor_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* rw = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_rw = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* rw = value_rw.GetEntityPtr();
 	int freerw = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_GameControllerAddMappingsFromRW(rw, freerw);
@@ -6701,7 +6908,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForGUID_gurax, processor_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_JoystickGUID& guid = args_gurax.Pick<Value_SDL_JoystickGUID>().GetEntity();
+	auto& value_guid = args_gurax.Pick<Value_SDL_JoystickGUID>();
+	SDL_JoystickGUID& guid = value_guid.GetEntity();
 	// Function body
 	char* rtn = SDL_GameControllerMappingForGUID(guid);
 	if (!rtn) return Value::nil();
@@ -6724,7 +6932,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMapping_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	char* rtn = SDL_GameControllerMapping(gamecontroller);
 	if (!rtn) return Value::nil();
@@ -6893,7 +7102,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerName_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	const char* rtn = SDL_GameControllerName(gamecontroller);
 	return new Gurax::Value_String(rtn);
@@ -6913,7 +7123,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetType_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	SDL_GameControllerType rtn = SDL_GameControllerGetType(gamecontroller);
 	return new Gurax::Value_Number(rtn);
@@ -6933,7 +7144,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetPlayerIndex_gurax, processor_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	int rtn = SDL_GameControllerGetPlayerIndex(gamecontroller);
 	return new Gurax::Value_Number(rtn);
@@ -6954,7 +7166,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerSetPlayerIndex_gurax, processor_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	int player_index = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_GameControllerSetPlayerIndex(gamecontroller, player_index);
@@ -6975,7 +7188,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetVendor_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetVendor(gamecontroller);
 	return new Gurax::Value_Number(rtn);
@@ -6995,7 +7209,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProduct_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetProduct(gamecontroller);
 	return new Gurax::Value_Number(rtn);
@@ -7015,7 +7230,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProductVersion_gurax, processor_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_GameControllerGetProductVersion(gamecontroller);
 	return new Gurax::Value_Number(rtn);
@@ -7035,7 +7251,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAttached_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	SDL_bool rtn = SDL_GameControllerGetAttached(gamecontroller);
 	return new Gurax::Value_Bool(!!rtn);
@@ -7055,7 +7272,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetJoystick_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	SDL_Joystick* rtn = SDL_GameControllerGetJoystick(gamecontroller);
 	if (!rtn) return Value::nil();
@@ -7153,7 +7371,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAxis_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	SDL_GameControllerAxis axis = args_gurax.PickNumber<SDL_GameControllerAxis>();
 	// Function body
 	Sint16 rtn = SDL_GameControllerGetAxis(gamecontroller, axis);
@@ -7215,7 +7434,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetButton_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	SDL_GameControllerButton button = args_gurax.PickNumber<SDL_GameControllerButton>();
 	// Function body
 	Uint8 rtn = SDL_GameControllerGetButton(gamecontroller, button);
@@ -7239,7 +7459,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerRumble_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	Uint16 low_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint16 high_frequency_rumble = args_gurax.PickNumber<Uint16>();
 	Uint32 duration_ms = args_gurax.PickNumber<Uint32>();
@@ -7262,7 +7483,8 @@ Gurax_ImplementFunctionEx(SDL_GameControllerClose_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_GameController* gamecontroller = args_gurax.Pick<Value_SDL_GameController>().GetEntityPtr();
+	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
+	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
 	SDL_GameControllerClose(gamecontroller);
 	return Gurax::Value::nil();
@@ -7420,7 +7642,8 @@ Gurax_ImplementFunctionEx(SDL_SensorGetName_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	auto& value_sensor = args_gurax.Pick<Value_SDL_Sensor>();
+	SDL_Sensor* sensor = value_sensor.GetEntityPtr();
 	// Function body
 	const char* rtn = SDL_SensorGetName(sensor);
 	return new Gurax::Value_String(rtn);
@@ -7440,7 +7663,8 @@ Gurax_ImplementFunctionEx(SDL_SensorGetType_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	auto& value_sensor = args_gurax.Pick<Value_SDL_Sensor>();
+	SDL_Sensor* sensor = value_sensor.GetEntityPtr();
 	// Function body
 	SDL_SensorType rtn = SDL_SensorGetType(sensor);
 	return new Gurax::Value_Number(rtn);
@@ -7460,7 +7684,8 @@ Gurax_ImplementFunctionEx(SDL_SensorGetNonPortableType_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	auto& value_sensor = args_gurax.Pick<Value_SDL_Sensor>();
+	SDL_Sensor* sensor = value_sensor.GetEntityPtr();
 	// Function body
 	int rtn = SDL_SensorGetNonPortableType(sensor);
 	return new Gurax::Value_Number(rtn);
@@ -7480,7 +7705,8 @@ Gurax_ImplementFunctionEx(SDL_SensorGetInstanceID_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	auto& value_sensor = args_gurax.Pick<Value_SDL_Sensor>();
+	SDL_Sensor* sensor = value_sensor.GetEntityPtr();
 	// Function body
 	SDL_SensorID rtn = SDL_SensorGetInstanceID(sensor);
 	return new Gurax::Value_Number(rtn);
@@ -7500,7 +7726,8 @@ Gurax_ImplementFunctionEx(SDL_SensorClose_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Sensor* sensor = args_gurax.Pick<Value_SDL_Sensor>().GetEntityPtr();
+	auto& value_sensor = args_gurax.Pick<Value_SDL_Sensor>();
+	SDL_Sensor* sensor = value_sensor.GetEntityPtr();
 	// Function body
 	SDL_SensorClose(sensor);
 	return Gurax::Value::nil();
@@ -7613,7 +7840,8 @@ Gurax_ImplementFunctionEx(SDL_HapticIndex_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticIndex(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -7666,7 +7894,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickIsHaptic_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	int rtn = SDL_JoystickIsHaptic(joystick);
 	return new Gurax::Value_Number(rtn);
@@ -7686,7 +7915,8 @@ Gurax_ImplementFunctionEx(SDL_HapticOpenFromJoystick_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Joystick* joystick = args_gurax.Pick<Value_SDL_Joystick>().GetEntityPtr();
+	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
+	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	// Function body
 	SDL_Haptic* rtn = SDL_HapticOpenFromJoystick(joystick);
 	if (!rtn) return Value::nil();
@@ -7707,7 +7937,8 @@ Gurax_ImplementFunctionEx(SDL_HapticClose_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	SDL_HapticClose(haptic);
 	return Gurax::Value::nil();
@@ -7727,7 +7958,8 @@ Gurax_ImplementFunctionEx(SDL_HapticNumEffects_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticNumEffects(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -7747,7 +7979,8 @@ Gurax_ImplementFunctionEx(SDL_HapticNumEffectsPlaying_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticNumEffectsPlaying(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -7767,7 +8000,8 @@ Gurax_ImplementFunctionEx(SDL_HapticQuery_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	unsigned int rtn = SDL_HapticQuery(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -7787,7 +8021,8 @@ Gurax_ImplementFunctionEx(SDL_HapticNumAxes_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticNumAxes(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -7808,8 +8043,10 @@ Gurax_ImplementFunctionEx(SDL_HapticEffectSupported_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
-	SDL_HapticEffect* effect = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
+	auto& value_effect = args_gurax.Pick<Value_SDL_HapticEffect>();
+	SDL_HapticEffect* effect = value_effect.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticEffectSupported(haptic, effect);
 	return new Gurax::Value_Number(rtn);
@@ -7830,8 +8067,10 @@ Gurax_ImplementFunctionEx(SDL_HapticNewEffect_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
-	SDL_HapticEffect* effect = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
+	auto& value_effect = args_gurax.Pick<Value_SDL_HapticEffect>();
+	SDL_HapticEffect* effect = value_effect.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticNewEffect(haptic, effect);
 	return new Gurax::Value_Number(rtn);
@@ -7853,9 +8092,11 @@ Gurax_ImplementFunctionEx(SDL_HapticUpdateEffect_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int effect = args_gurax.PickNumber<int>();
-	SDL_HapticEffect* data = args_gurax.Pick<Value_SDL_HapticEffect>().GetEntityPtr();
+	auto& value_data = args_gurax.Pick<Value_SDL_HapticEffect>();
+	SDL_HapticEffect* data = value_data.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticUpdateEffect(haptic, effect, data);
 	return new Gurax::Value_Number(rtn);
@@ -7877,7 +8118,8 @@ Gurax_ImplementFunctionEx(SDL_HapticRunEffect_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int effect = args_gurax.PickNumber<int>();
 	Uint32 iterations = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -7900,7 +8142,8 @@ Gurax_ImplementFunctionEx(SDL_HapticStopEffect_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int effect = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_HapticStopEffect(haptic, effect);
@@ -7922,7 +8165,8 @@ Gurax_ImplementFunctionEx(SDL_HapticDestroyEffect_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int effect = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_HapticDestroyEffect(haptic, effect);
@@ -7944,7 +8188,8 @@ Gurax_ImplementFunctionEx(SDL_HapticGetEffectStatus_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int effect = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_HapticGetEffectStatus(haptic, effect);
@@ -7966,7 +8211,8 @@ Gurax_ImplementFunctionEx(SDL_HapticSetGain_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int gain = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_HapticSetGain(haptic, gain);
@@ -7988,7 +8234,8 @@ Gurax_ImplementFunctionEx(SDL_HapticSetAutocenter_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	int autocenter = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_HapticSetAutocenter(haptic, autocenter);
@@ -8009,7 +8256,8 @@ Gurax_ImplementFunctionEx(SDL_HapticPause_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticPause(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8029,7 +8277,8 @@ Gurax_ImplementFunctionEx(SDL_HapticUnpause_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticUnpause(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8049,7 +8298,8 @@ Gurax_ImplementFunctionEx(SDL_HapticStopAll_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticStopAll(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8069,7 +8319,8 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleSupported_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticRumbleSupported(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8089,7 +8340,8 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleInit_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticRumbleInit(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8111,7 +8363,8 @@ Gurax_ImplementFunctionEx(SDL_HapticRumblePlay_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	float strength = args_gurax.PickNumber<float>();
 	Uint32 length = args_gurax.PickNumber<Uint32>();
 	// Function body
@@ -8133,7 +8386,8 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleStop_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_Haptic* haptic = args_gurax.Pick<Value_SDL_Haptic>().GetEntityPtr();
+	auto& value_haptic = args_gurax.Pick<Value_SDL_Haptic>();
+	SDL_Haptic* haptic = value_haptic.GetEntityPtr();
 	// Function body
 	int rtn = SDL_HapticRumbleStop(haptic);
 	return new Gurax::Value_Number(rtn);
@@ -8242,8 +8496,10 @@ Gurax_ImplementFunctionEx(SDL_OpenAudio_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioSpec* desired = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
-	SDL_AudioSpec* obtained = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	auto& value_desired = args_gurax.Pick<Value_SDL_AudioSpec>();
+	SDL_AudioSpec* desired = value_desired.GetEntityPtr();
+	auto& value_obtained = args_gurax.Pick<Value_SDL_AudioSpec>();
+	SDL_AudioSpec* obtained = value_obtained.GetEntityPtr();
 	// Function body
 	int rtn = SDL_OpenAudio(desired, obtained);
 	return new Gurax::Value_Number(rtn);
@@ -8294,7 +8550,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceName_gurax, processor_gurax, argumen
 // sdl.SDL_OpenAudioDevice(device:String:nil, iscapture:Bool, desired:SDL_AudioSpec, obtained:SDL_AudioSpec, allowed_changes:Number)
 Gurax_DeclareFunctionAlias(SDL_OpenAudioDevice_gurax, "SDL_OpenAudioDevice")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
@@ -8311,12 +8567,16 @@ Gurax_ImplementFunctionEx(SDL_OpenAudioDevice_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* device = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
 	bool iscapture = args_gurax.PickBool();
-	const SDL_AudioSpec* desired = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
-	SDL_AudioSpec* obtained = args_gurax.Pick<Value_SDL_AudioSpec>().GetEntityPtr();
+	auto& value_desired = args_gurax.Pick<Value_SDL_AudioSpec>();
+	const SDL_AudioSpec* desired = value_desired.GetEntityPtr();
+	auto& value_obtained = args_gurax.Pick<Value_SDL_AudioSpec>();
+	SDL_AudioSpec* obtained = value_obtained.GetEntityPtr();
 	int allowed_changes = args_gurax.PickNumber<int>();
 	// Function body
+	value_obtained.SetFuncAudioCallback(Function::Reference(value_desired.GetFuncAudioCallback()));
+	value_obtained.SetValueUserdata(value_desired.GetValueUserdata().Reference());
 	SDL_AudioDeviceID rtn = SDL_OpenAudioDevice(device, iscapture, desired, obtained, allowed_changes);
-	return new Gurax::Value_Number(rtn);
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_GetAudioStatus()
@@ -8417,7 +8677,8 @@ Gurax_ImplementFunctionEx(SDL_BuildAudioCVT_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioCVT* cvt = args_gurax.Pick<Value_SDL_AudioCVT>().GetEntityPtr();
+	auto& value_cvt = args_gurax.Pick<Value_SDL_AudioCVT>();
+	SDL_AudioCVT* cvt = value_cvt.GetEntityPtr();
 	SDL_AudioFormat src_format = args_gurax.PickNumber<SDL_AudioFormat>();
 	Uint8 src_channels = args_gurax.PickNumber<Uint8>();
 	int src_rate = args_gurax.PickNumber<int>();
@@ -8443,7 +8704,8 @@ Gurax_ImplementFunctionEx(SDL_ConvertAudio_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioCVT* cvt = args_gurax.Pick<Value_SDL_AudioCVT>().GetEntityPtr();
+	auto& value_cvt = args_gurax.Pick<Value_SDL_AudioCVT>();
+	SDL_AudioCVT* cvt = value_cvt.GetEntityPtr();
 	// Function body
 	int rtn = SDL_ConvertAudio(cvt);
 	return new Gurax::Value_Number(rtn);
@@ -8465,7 +8727,8 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamPut_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
+	SDL_AudioStream* stream = value_stream.GetEntityPtr();
 	const void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
 	int len = args_gurax.PickNumber<int>();
 	// Function body
@@ -8489,7 +8752,8 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamGet_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
+	SDL_AudioStream* stream = value_stream.GetEntityPtr();
 	void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!buf) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
@@ -8515,7 +8779,8 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamAvailable_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
+	SDL_AudioStream* stream = value_stream.GetEntityPtr();
 	// Function body
 	int rtn = SDL_AudioStreamAvailable(stream);
 	return new Gurax::Value_Number(rtn);
@@ -8535,7 +8800,8 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamFlush_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
+	SDL_AudioStream* stream = value_stream.GetEntityPtr();
 	// Function body
 	int rtn = SDL_AudioStreamFlush(stream);
 	return new Gurax::Value_Number(rtn);
@@ -8555,7 +8821,8 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamClear_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_AudioStream* stream = args_gurax.Pick<Value_SDL_AudioStream>().GetEntityPtr();
+	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
+	SDL_AudioStream* stream = value_stream.GetEntityPtr();
 	// Function body
 	SDL_AudioStreamClear(stream);
 	return Gurax::Value::nil();
@@ -8966,7 +9233,8 @@ Gurax_ImplementFunctionEx(SDL_RWsize_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	// Function body
 	Sint64 rtn = SDL_RWsize(context);
 	return new Gurax::Value_Number(rtn);
@@ -8988,7 +9256,8 @@ Gurax_ImplementFunctionEx(SDL_RWseek_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	Sint64 offset = args_gurax.PickNumber<Sint64>();
 	int whence = args_gurax.PickNumber<int>();
 	// Function body
@@ -9010,7 +9279,8 @@ Gurax_ImplementFunctionEx(SDL_RWtell_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	// Function body
 	Sint64 rtn = SDL_RWtell(context);
 	return new Gurax::Value_Number(rtn);
@@ -9033,7 +9303,8 @@ Gurax_ImplementFunctionEx(SDL_RWread_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!ptr) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
@@ -9063,7 +9334,8 @@ Gurax_ImplementFunctionEx(SDL_RWwrite_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	const void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
 	size_t size = args_gurax.PickNumber<size_t>();
 	size_t num = args_gurax.PickNumber<size_t>();
@@ -9086,7 +9358,8 @@ Gurax_ImplementFunctionEx(SDL_RWclose_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* context = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* context = value_context.GetEntityPtr();
 	// Function body
 	int rtn = SDL_RWclose(context);
 	return new Gurax::Value_Number(rtn);
@@ -9106,7 +9379,8 @@ Gurax_ImplementFunctionEx(SDL_ReadU8_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint8 rtn = SDL_ReadU8(src);
 	return new Gurax::Value_Number(rtn);
@@ -9126,7 +9400,8 @@ Gurax_ImplementFunctionEx(SDL_ReadLE16_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_ReadLE16(src);
 	return new Gurax::Value_Number(rtn);
@@ -9146,7 +9421,8 @@ Gurax_ImplementFunctionEx(SDL_ReadBE16_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint16 rtn = SDL_ReadBE16(src);
 	return new Gurax::Value_Number(rtn);
@@ -9166,7 +9442,8 @@ Gurax_ImplementFunctionEx(SDL_ReadLE32_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint32 rtn = SDL_ReadLE32(src);
 	return new Gurax::Value_Number(rtn);
@@ -9186,7 +9463,8 @@ Gurax_ImplementFunctionEx(SDL_ReadBE32_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint32 rtn = SDL_ReadBE32(src);
 	return new Gurax::Value_Number(rtn);
@@ -9206,7 +9484,8 @@ Gurax_ImplementFunctionEx(SDL_ReadLE64_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint64 rtn = SDL_ReadLE64(src);
 	return new Gurax::Value_Number(rtn);
@@ -9226,7 +9505,8 @@ Gurax_ImplementFunctionEx(SDL_ReadBE64_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	Uint64 rtn = SDL_ReadBE64(src);
 	return new Gurax::Value_Number(rtn);
@@ -9247,7 +9527,8 @@ Gurax_ImplementFunctionEx(SDL_WriteU8_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint8 value = args_gurax.PickNumber<Uint8>();
 	// Function body
 	size_t rtn = SDL_WriteU8(dst, value);
@@ -9269,7 +9550,8 @@ Gurax_ImplementFunctionEx(SDL_WriteLE16_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint16 value = args_gurax.PickNumber<Uint16>();
 	// Function body
 	size_t rtn = SDL_WriteLE16(dst, value);
@@ -9291,7 +9573,8 @@ Gurax_ImplementFunctionEx(SDL_WriteBE16_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint16 value = args_gurax.PickNumber<Uint16>();
 	// Function body
 	size_t rtn = SDL_WriteBE16(dst, value);
@@ -9313,7 +9596,8 @@ Gurax_ImplementFunctionEx(SDL_WriteLE32_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint32 value = args_gurax.PickNumber<Uint32>();
 	// Function body
 	size_t rtn = SDL_WriteLE32(dst, value);
@@ -9335,7 +9619,8 @@ Gurax_ImplementFunctionEx(SDL_WriteBE32_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint32 value = args_gurax.PickNumber<Uint32>();
 	// Function body
 	size_t rtn = SDL_WriteBE32(dst, value);
@@ -9357,7 +9642,8 @@ Gurax_ImplementFunctionEx(SDL_WriteLE64_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint64 value = args_gurax.PickNumber<Uint64>();
 	// Function body
 	size_t rtn = SDL_WriteLE64(dst, value);
@@ -9379,7 +9665,8 @@ Gurax_ImplementFunctionEx(SDL_WriteBE64_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* dst = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_dst = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* dst = value_dst.GetEntityPtr();
 	Uint64 value = args_gurax.PickNumber<Uint64>();
 	// Function body
 	size_t rtn = SDL_WriteBE64(dst, value);
@@ -9815,7 +10102,8 @@ Gurax_ImplementFunctionEx(IMG_Load_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_Surface* rtn = IMG_Load_RW(src, freesrc);
@@ -9839,7 +10127,8 @@ Gurax_ImplementFunctionEx(IMG_LoadTyped_RW_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	const char* type = args_gurax.PickString();
 	// Function body
@@ -9862,7 +10151,8 @@ Gurax_ImplementFunctionEx(IMG_LoadCUR_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadCUR_RW(src);
 	if (!rtn) return Value::nil();
@@ -9883,7 +10173,8 @@ Gurax_ImplementFunctionEx(IMG_LoadICO_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadICO_RW(src);
 	if (!rtn) return Value::nil();
@@ -9904,7 +10195,8 @@ Gurax_ImplementFunctionEx(IMG_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadBMP_RW(src);
 	if (!rtn) return Value::nil();
@@ -9925,7 +10217,8 @@ Gurax_ImplementFunctionEx(IMG_LoadPNM_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPNM_RW(src);
 	if (!rtn) return Value::nil();
@@ -9946,7 +10239,8 @@ Gurax_ImplementFunctionEx(IMG_LoadXPM_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXPM_RW(src);
 	if (!rtn) return Value::nil();
@@ -9967,7 +10261,8 @@ Gurax_ImplementFunctionEx(IMG_LoadXCF_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXCF_RW(src);
 	if (!rtn) return Value::nil();
@@ -9988,7 +10283,8 @@ Gurax_ImplementFunctionEx(IMG_LoadPCX_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPCX_RW(src);
 	if (!rtn) return Value::nil();
@@ -10009,7 +10305,8 @@ Gurax_ImplementFunctionEx(IMG_LoadGIF_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadGIF_RW(src);
 	if (!rtn) return Value::nil();
@@ -10030,7 +10327,8 @@ Gurax_ImplementFunctionEx(IMG_LoadJPG_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadJPG_RW(src);
 	if (!rtn) return Value::nil();
@@ -10051,7 +10349,8 @@ Gurax_ImplementFunctionEx(IMG_LoadTIF_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadTIF_RW(src);
 	if (!rtn) return Value::nil();
@@ -10072,7 +10371,8 @@ Gurax_ImplementFunctionEx(IMG_LoadPNG_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadPNG_RW(src);
 	if (!rtn) return Value::nil();
@@ -10093,7 +10393,8 @@ Gurax_ImplementFunctionEx(IMG_LoadTGA_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadTGA_RW(src);
 	if (!rtn) return Value::nil();
@@ -10114,7 +10415,8 @@ Gurax_ImplementFunctionEx(IMG_LoadLBM_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadLBM_RW(src);
 	if (!rtn) return Value::nil();
@@ -10135,7 +10437,8 @@ Gurax_ImplementFunctionEx(IMG_LoadXV_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	SDL_Surface* rtn = IMG_LoadXV_RW(src);
 	if (!rtn) return Value::nil();
@@ -10156,7 +10459,8 @@ Gurax_ImplementFunctionEx(IMG_isCUR_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isCUR(src);
 	return new Gurax::Value_Number(rtn);
@@ -10176,7 +10480,8 @@ Gurax_ImplementFunctionEx(IMG_isICO_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isICO(src);
 	return new Gurax::Value_Number(rtn);
@@ -10196,7 +10501,8 @@ Gurax_ImplementFunctionEx(IMG_isBMP_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isBMP(src);
 	return new Gurax::Value_Number(rtn);
@@ -10216,7 +10522,8 @@ Gurax_ImplementFunctionEx(IMG_isPNM_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isPNM(src);
 	return new Gurax::Value_Number(rtn);
@@ -10236,7 +10543,8 @@ Gurax_ImplementFunctionEx(IMG_isXPM_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isXPM(src);
 	return new Gurax::Value_Number(rtn);
@@ -10256,7 +10564,8 @@ Gurax_ImplementFunctionEx(IMG_isXCF_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isXCF(src);
 	return new Gurax::Value_Number(rtn);
@@ -10276,7 +10585,8 @@ Gurax_ImplementFunctionEx(IMG_isPCX_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isPCX(src);
 	return new Gurax::Value_Number(rtn);
@@ -10296,7 +10606,8 @@ Gurax_ImplementFunctionEx(IMG_isGIF_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isGIF(src);
 	return new Gurax::Value_Number(rtn);
@@ -10316,7 +10627,8 @@ Gurax_ImplementFunctionEx(IMG_isJPG_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isJPG(src);
 	return new Gurax::Value_Number(rtn);
@@ -10336,7 +10648,8 @@ Gurax_ImplementFunctionEx(IMG_isTIF_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isTIF(src);
 	return new Gurax::Value_Number(rtn);
@@ -10356,7 +10669,8 @@ Gurax_ImplementFunctionEx(IMG_isPNG_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isPNG(src);
 	return new Gurax::Value_Number(rtn);
@@ -10376,7 +10690,8 @@ Gurax_ImplementFunctionEx(IMG_isLBM_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isLBM(src);
 	return new Gurax::Value_Number(rtn);
@@ -10396,7 +10711,8 @@ Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	// Function body
 	int rtn = IMG_isXV(src);
 	return new Gurax::Value_Number(rtn);
@@ -10604,7 +10920,8 @@ Gurax_ImplementFunctionEx(Mix_LoadWAV_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Chunk* rtn = Mix_LoadWAV_RW(src, freesrc);
@@ -10648,7 +10965,8 @@ Gurax_ImplementFunctionEx(Mix_LoadMUS_RW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
 	Mix_Music* rtn = Mix_LoadMUS_RW(src, freesrc);
@@ -10672,7 +10990,8 @@ Gurax_ImplementFunctionEx(Mix_LoadMUSType_RW_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	Mix_MusicType type = args_gurax.PickNumber<Mix_MusicType>();
 	int freesrc = args_gurax.PickNumber<int>();
 	// Function body
@@ -10827,7 +11146,8 @@ Gurax_ImplementFunctionEx(Mix_GetMusicType_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	auto& value_music = args_gurax.Pick<Value_Mix_Music>();
+	const Mix_Music* music = value_music.GetEntityPtr();
 	// Function body
 	Mix_MusicType rtn = Mix_GetMusicType(music);
 	return new Gurax::Value_Number(rtn);
@@ -11108,7 +11428,8 @@ Gurax_ImplementFunctionEx(Mix_PlayChannel_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int channel = args_gurax.PickNumber<int>();
-	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	auto& value_chunk = args_gurax.Pick<Value_Mix_Chunk>();
+	Mix_Chunk* chunk = value_chunk.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_PlayChannel(channel, chunk, loops);
@@ -11133,7 +11454,8 @@ Gurax_ImplementFunctionEx(Mix_PlayChannelTimed_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int channel = args_gurax.PickNumber<int>();
-	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	auto& value_chunk = args_gurax.Pick<Value_Mix_Chunk>();
+	Mix_Chunk* chunk = value_chunk.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	int ticks = args_gurax.PickNumber<int>();
 	// Function body
@@ -11156,7 +11478,8 @@ Gurax_ImplementFunctionEx(Mix_PlayMusic_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	auto& value_music = args_gurax.Pick<Value_Mix_Music>();
+	Mix_Music* music = value_music.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_PlayMusic(music, loops);
@@ -11179,7 +11502,8 @@ Gurax_ImplementFunctionEx(Mix_FadeInMusic_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	auto& value_music = args_gurax.Pick<Value_Mix_Music>();
+	Mix_Music* music = value_music.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	int ms = args_gurax.PickNumber<int>();
 	// Function body
@@ -11204,7 +11528,8 @@ Gurax_ImplementFunctionEx(Mix_FadeInMusicPos_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Music* music = args_gurax.Pick<Value_Mix_Music>().GetEntityPtr();
+	auto& value_music = args_gurax.Pick<Value_Mix_Music>();
+	Mix_Music* music = value_music.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	int ms = args_gurax.PickNumber<int>();
 	double position = args_gurax.PickNumber<double>();
@@ -11232,7 +11557,8 @@ Gurax_ImplementFunctionEx(Mix_FadeInChannelTimed_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int channel = args_gurax.PickNumber<int>();
-	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	auto& value_chunk = args_gurax.Pick<Value_Mix_Chunk>();
+	Mix_Chunk* chunk = value_chunk.GetEntityPtr();
 	int loops = args_gurax.PickNumber<int>();
 	int ms = args_gurax.PickNumber<int>();
 	int ticks = args_gurax.PickNumber<int>();
@@ -11278,7 +11604,8 @@ Gurax_ImplementFunctionEx(Mix_VolumeChunk_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Mix_Chunk* chunk = args_gurax.Pick<Value_Mix_Chunk>().GetEntityPtr();
+	auto& value_chunk = args_gurax.Pick<Value_Mix_Chunk>();
+	Mix_Chunk* chunk = value_chunk.GetEntityPtr();
 	int volume = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = Mix_VolumeChunk(chunk, volume);
@@ -11924,7 +12251,8 @@ Gurax_ImplementFunctionEx(TTF_OpenFontRW_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	int ptsize = args_gurax.PickNumber<int>();
 	// Function body
@@ -11950,7 +12278,8 @@ Gurax_ImplementFunctionEx(TTF_OpenFontIndexRW_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	SDL_RWops* src = args_gurax.Pick<Value_SDL_RWops>().GetEntityPtr();
+	auto& value_src = args_gurax.Pick<Value_SDL_RWops>();
+	SDL_RWops* src = value_src.GetEntityPtr();
 	int freesrc = args_gurax.PickNumber<int>();
 	int ptsize = args_gurax.PickNumber<int>();
 	long index = args_gurax.PickNumber<long>();
@@ -11974,7 +12303,8 @@ Gurax_ImplementFunctionEx(TTF_GetFontStyle_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_GetFontStyle(font);
 	return new Gurax::Value_Number(rtn);
@@ -11995,7 +12325,8 @@ Gurax_ImplementFunctionEx(TTF_SetFontStyle_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	int style = args_gurax.PickNumber<int>();
 	// Function body
 	TTF_SetFontStyle(font, style);
@@ -12016,7 +12347,8 @@ Gurax_ImplementFunctionEx(TTF_GetFontOutline_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_GetFontOutline(font);
 	return new Gurax::Value_Number(rtn);
@@ -12037,7 +12369,8 @@ Gurax_ImplementFunctionEx(TTF_SetFontOutline_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	int outline = args_gurax.PickNumber<int>();
 	// Function body
 	TTF_SetFontOutline(font, outline);
@@ -12058,7 +12391,8 @@ Gurax_ImplementFunctionEx(TTF_GetFontHinting_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_GetFontHinting(font);
 	return new Gurax::Value_Number(rtn);
@@ -12079,7 +12413,8 @@ Gurax_ImplementFunctionEx(TTF_SetFontHinting_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	int hinting = args_gurax.PickNumber<int>();
 	// Function body
 	TTF_SetFontHinting(font, hinting);
@@ -12100,7 +12435,8 @@ Gurax_ImplementFunctionEx(TTF_FontHeight_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_FontHeight(font);
 	return new Gurax::Value_Number(rtn);
@@ -12120,7 +12456,8 @@ Gurax_ImplementFunctionEx(TTF_FontAscent_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_FontAscent(font);
 	return new Gurax::Value_Number(rtn);
@@ -12140,7 +12477,8 @@ Gurax_ImplementFunctionEx(TTF_FontDescent_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_FontDescent(font);
 	return new Gurax::Value_Number(rtn);
@@ -12160,7 +12498,8 @@ Gurax_ImplementFunctionEx(TTF_FontLineSkip_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_FontLineSkip(font);
 	return new Gurax::Value_Number(rtn);
@@ -12180,7 +12519,8 @@ Gurax_ImplementFunctionEx(TTF_GetFontKerning_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_GetFontKerning(font);
 	return new Gurax::Value_Number(rtn);
@@ -12201,7 +12541,8 @@ Gurax_ImplementFunctionEx(TTF_SetFontKerning_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	int allowed = args_gurax.PickNumber<int>();
 	// Function body
 	TTF_SetFontKerning(font, allowed);
@@ -12222,7 +12563,8 @@ Gurax_ImplementFunctionEx(TTF_FontFaces_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	long rtn = TTF_FontFaces(font);
 	return new Gurax::Value_Number(rtn);
@@ -12242,7 +12584,8 @@ Gurax_ImplementFunctionEx(TTF_FontFaceIsFixedWidth_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	int rtn = TTF_FontFaceIsFixedWidth(font);
 	return new Gurax::Value_Number(rtn);
@@ -12263,7 +12606,8 @@ Gurax_ImplementFunctionEx(TTF_GlyphIsProvided_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
 	Uint16 ch = args_gurax.PickNumber<Uint16>();
 	// Function body
 	int rtn = TTF_GlyphIsProvided(font, ch);
@@ -12286,9 +12630,11 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Solid_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderText_Solid(font, text, fg);
 	if (!rtn) return Value::nil();
@@ -12311,9 +12657,11 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Solid_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderUTF8_Solid(font, text, fg);
 	if (!rtn) return Value::nil();
@@ -12336,9 +12684,11 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Solid_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	Uint16 ch = args_gurax.PickNumber<Uint16>();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderGlyph_Solid(font, ch, fg);
 	if (!rtn) return Value::nil();
@@ -12362,10 +12712,13 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Shaded_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
-	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
+	auto& value_bg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& bg = value_bg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderText_Shaded(font, text, fg, bg);
 	if (!rtn) return Value::nil();
@@ -12389,10 +12742,13 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Shaded_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
-	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
+	auto& value_bg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& bg = value_bg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderUTF8_Shaded(font, text, fg, bg);
 	if (!rtn) return Value::nil();
@@ -12416,10 +12772,13 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Shaded_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	Uint16 ch = args_gurax.PickNumber<Uint16>();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
-	SDL_Color& bg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
+	auto& value_bg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& bg = value_bg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderGlyph_Shaded(font, ch, fg, bg);
 	if (!rtn) return Value::nil();
@@ -12442,9 +12801,11 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Blended_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderText_Blended(font, text, fg);
 	if (!rtn) return Value::nil();
@@ -12467,9 +12828,11 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderUTF8_Blended(font, text, fg);
 	if (!rtn) return Value::nil();
@@ -12493,9 +12856,11 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Blended_Wrapped_gurax, processor_gurax,
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	Uint32 wrapLength = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderText_Blended_Wrapped(font, text, fg, wrapLength);
@@ -12520,9 +12885,11 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_Wrapped_gurax, processor_gurax,
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	const char* text = args_gurax.PickString();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	Uint32 wrapLength = args_gurax.PickNumber<Uint32>();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderUTF8_Blended_Wrapped(font, text, fg, wrapLength);
@@ -12546,9 +12913,11 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Blended_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	Uint16 ch = args_gurax.PickNumber<Uint16>();
-	SDL_Color& fg = args_gurax.Pick<Value_SDL_Color>().GetEntity();
+	auto& value_fg = args_gurax.Pick<Value_SDL_Color>();
+	SDL_Color& fg = value_fg.GetEntity();
 	// Function body
 	SDL_Surface* rtn = TTF_RenderGlyph_Blended(font, ch, fg);
 	if (!rtn) return Value::nil();
@@ -12569,7 +12938,8 @@ Gurax_ImplementFunctionEx(TTF_CloseFont_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	TTF_Font* font = args_gurax.Pick<Value_TTF_Font>().GetEntityPtr();
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
 	// Function body
 	TTF_CloseFont(font);
 	return Gurax::Value::nil();
