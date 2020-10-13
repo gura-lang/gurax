@@ -83,6 +83,11 @@ void AssignConsts(Frame& frame)
 	AssignConst(AUDIO_F32MSB);
 	AssignConst(AUDIO_F32SYS);
 	AssignConst(AUDIO_F32);
+	// allowed_changes
+	AssignConst(SDL_AUDIO_ALLOW_FREQUENCY_CHANGE);
+	AssignConst(SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	AssignConst(SDL_AUDIO_ALLOW_CHANNELS_CHANGE);
+	AssignConst(SDL_AUDIO_ALLOW_ANY_CHANGE);
 	// SDL_AudioStatus
 	AssignConst(SDL_AUDIO_STOPPED);
 	AssignConst(SDL_AUDIO_PLAYING);

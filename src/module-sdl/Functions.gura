@@ -1474,9 +1474,9 @@ SDL_GetAudioStatus():SDL_AudioStatus
 
 SDL_GetAudioDeviceStatus(dev:SDL_AudioDeviceID):SDL_AudioStatus
 
-SDL_PauseAudio(pause_on:int):void
+SDL_PauseAudio(pause_on:bool):void
 
-SDL_PauseAudioDevice(dev:SDL_AudioDeviceID, pause_on:int):void
+SDL_PauseAudioDevice(dev:SDL_AudioDeviceID, pause_on:bool):void
 
 //SDL_LoadWAV_RW(src:SDL_RWops_p, freesrc:int, spec:SDL_AudioSpec_p, audio_buf:Uint8_pp, audio_len:Uint32_p):SDL_AudioSpec_p
 

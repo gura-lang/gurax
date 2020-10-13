@@ -262,7 +262,7 @@ loadMedia() = {
 		gPromptTexture.loadFromRenderedText("Select your recording device:", gTextColor);
 
 		//Get capture device count
-		gRecordingDeviceCount = SDL_GetNumAudioDevices(SDL_TRUE);
+		gRecordingDeviceCount:extern = SDL_GetNumAudioDevices(SDL_TRUE);
 
 		//No recording devices
 		if (gRecordingDeviceCount < 1) {
@@ -315,6 +315,7 @@ close() = {
 audioRecordingCallback(userdata, stream:Pointer) = {
 	//Copy audio from stream
 	//memcpy(&gRecordingBuffer[gBufferBytePosition], stream, len);
+	len = stream.bytesAvail
 	(gRecordingBuffer.p + gBufferBytePosition).Append(stream)
 
 	//Move along buffer
@@ -324,7 +325,8 @@ audioRecordingCallback(userdata, stream:Pointer) = {
 audioPlaybackCallback(userdata, stream:Pointer) = {
 	//Copy audio to stream
 	//memcpy(stream, &gRecordingBuffer[gBufferBytePosition], len);
-	stream.Append(gRecordingBuffer.p + gBufferBytePosition, stream.bytesAvail)
+	len = stream.bytesAvail
+	stream.Append(gRecordingBuffer.p + gBufferBytePosition, len)
 
 	//Move along buffer
 	gBufferBytePosition:extern += len;

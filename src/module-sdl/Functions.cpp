@@ -8635,11 +8635,11 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceStatus_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_PauseAudio(pause_on:Number)
+// sdl.SDL_PauseAudio(pause_on:Bool)
 Gurax_DeclareFunctionAlias(SDL_PauseAudio_gurax, "SDL_PauseAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pause_on", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pause_on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8649,18 +8649,18 @@ Gurax_ImplementFunctionEx(SDL_PauseAudio_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int pause_on = args_gurax.PickNumber<int>();
+	bool pause_on = args_gurax.PickBool();
 	// Function body
 	SDL_PauseAudio(pause_on);
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_PauseAudioDevice(dev:Number, pause_on:Number)
+// sdl.SDL_PauseAudioDevice(dev:Number, pause_on:Bool)
 Gurax_DeclareFunctionAlias(SDL_PauseAudioDevice_gurax, "SDL_PauseAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pause_on", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pause_on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8671,7 +8671,7 @@ Gurax_ImplementFunctionEx(SDL_PauseAudioDevice_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
-	int pause_on = args_gurax.PickNumber<int>();
+	bool pause_on = args_gurax.PickBool();
 	// Function body
 	SDL_PauseAudioDevice(dev, pause_on);
 	return Gurax::Value::nil();

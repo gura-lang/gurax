@@ -268,8 +268,9 @@ void Value_SDL_AudioSpec::AudioCallback(void* userdata, Uint8* stream, int len)
 	Function* pFunc = valueThis.GetFuncAudioCallback();
 	if (!pFunc) return;
 	RefPtr<Memory> pMemory(new MemorySloth(len, stream));
-	pFunc->EvalEasy(valueThis.GetProcessor(), valueThis.GetValueUserdata().Reference(),
-					new Value_Pointer(new Pointer_Memory(pMemory.release())));
+	Value::Delete(pFunc->EvalEasy(valueThis.GetProcessor(),
+				valueThis.GetValueUserdata().Reference(),
+				new Value_Pointer(new Pointer_Memory(pMemory.release()))));
 }
 
 String Value_SDL_AudioSpec::ToString(const StringStyle& ss) const
