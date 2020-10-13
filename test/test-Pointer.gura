@@ -169,3 +169,20 @@ TestCase('Operators') {
 	Tester(`(p2 - p1))
 	Tester(`(p3 - p1))
 }
+
+TestCase('Pointer#Append()') {
+	f(buff) = {
+		p = buff.p
+		p.Append(b'abcdefgh')
+		p.Append(b'ijklmnop')
+		buff.p.Dump()
+		Println()
+		(p + 32).Append(b'ABCDEFGH')
+		buff.p.Dump()
+		Println()
+	}
+	Println('The source is Binary')
+	f(B'')
+	Println('The source is Array')
+	f(Array(`uint8, 64))
+}
