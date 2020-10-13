@@ -88,11 +88,12 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pointer#Append(pointer:Pointer):reduce:[stay]
+// Pointer#Append(pointer:Pointer, bytes?:Number):reduce:[stay]
 Gurax_DeclareMethod(Pointer, Append)
 {
 	Declare(VTYPE_Pointer, Flag::Reduce);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -106,11 +107,15 @@ Gurax_ImplementMethod(Pointer, Append)
 	// Arguments
 	ArgPicker args(argument);
 	Pointer& pointerSrc = args.Pick<Value_Pointer>().GetPointer();
+	size_t bytes = args.IsValid()?
+		std::min(args.PickNumberNonNeg<size_t>(), pointerSrc.GetBytesAvailable()) :
+		pointerSrc.GetBytesAvailable();
 	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	Pointer& pointer = valueThis.GetPointer();
 	size_t offset = pointer.GetOffset();
-	if (!pointer.PutPointer(pointerSrc)) {
+	if (!pointer.PutPointer(pointerSrc, bytes)) {
 		Error::Issue(ErrorType::MemoryError, "failed to write data into the pointer");
 		return Value::nil();
 	}

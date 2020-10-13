@@ -267,8 +267,7 @@ void Value_SDL_AudioSpec::AudioCallback(void* userdata, Uint8* stream, int len)
 	auto& valueThis = *reinterpret_cast<Value_SDL_AudioSpec*>(userdata);
 	Function* pFunc = valueThis.GetFuncAudioCallback();
 	if (!pFunc) return;
-	RefPtr<Memory> pMemory(new MemoryHeap(len));
-	::memcpy(pMemory->GetPointerC<void>(), stream, len);
+	RefPtr<Memory> pMemory(new MemorySloth(len, stream));
 	pFunc->EvalEasy(valueThis.GetProcessor(), valueThis.GetValueUserdata().Reference(),
 					new Value_Pointer(new Pointer_Memory(pMemory.release())));
 }

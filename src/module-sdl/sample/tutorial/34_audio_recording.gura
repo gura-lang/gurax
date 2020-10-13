@@ -315,6 +315,7 @@ close() = {
 audioRecordingCallback(userdata, stream:Pointer) = {
 	//Copy audio from stream
 	//memcpy(&gRecordingBuffer[gBufferBytePosition], stream, len);
+	(gRecordingBuffer.p + gBufferBytePosition).Append(stream)
 
 	//Move along buffer
 	gBufferBytePosition:extern += len;
@@ -323,6 +324,7 @@ audioRecordingCallback(userdata, stream:Pointer) = {
 audioPlaybackCallback(userdata, stream:Pointer) = {
 	//Copy audio to stream
 	//memcpy(stream, &gRecordingBuffer[gBufferBytePosition], len);
+	stream.Append(gRecordingBuffer.p + gBufferBytePosition, stream.bytesAvail)
 
 	//Move along buffer
 	gBufferBytePosition:extern += len;
@@ -384,7 +386,8 @@ main() = {
 									desiredRecordingSpec.callback = audioRecordingCallback;
 
 									//Open recording device
-									recordingDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(index, SDL_TRUE), SDL_TRUE, desiredRecordingSpec, gReceivedRecordingSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+									recordingDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(index, SDL_TRUE),
+										SDL_TRUE, desiredRecordingSpec, gReceivedRecordingSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 									
 									if (recordingDeviceId == 0) {
 										//Device failed to open
@@ -403,7 +406,8 @@ main() = {
 										desiredPlaybackSpec.callback = audioPlaybackCallback;
 
 										//Open playback device
-										playbackDeviceId = SDL_OpenAudioDevice(nil, SDL_FALSE, desiredPlaybackSpec, gReceivedPlaybackSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+										playbackDeviceId = SDL_OpenAudioDevice(nil,
+											SDL_FALSE, desiredPlaybackSpec, gReceivedPlaybackSpec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 
 										if (playbackDeviceId == 0) {
 											//Device failed to open

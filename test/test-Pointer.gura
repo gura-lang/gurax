@@ -174,7 +174,8 @@ TestCase('Pointer#Append()') {
 	f(buff) = {
 		p = buff.p
 		p.Append(b'abcdefgh')
-		p.Append(b'ijklmnop')
+		p.Append(b'ijklmnopqrstu', 8)
+		p.Append(b'vwxyz', 8)
 		buff.p.Dump()
 		Println()
 		(p + 32).Append(b'ABCDEFGH')
