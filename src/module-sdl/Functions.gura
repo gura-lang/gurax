@@ -1458,9 +1458,9 @@ SDL_GetCurrentAudioDriver():const_char_p
 
 SDL_OpenAudio(desired:SDL_AudioSpec_p, obtained:SDL_AudioSpec_p):int
 
-SDL_GetNumAudioDevices(iscapture:int):int
+SDL_GetNumAudioDevices(iscapture:bool):int
 
-SDL_GetAudioDeviceName(index:int, iscapture:int):const_char_p
+SDL_GetAudioDeviceName(index:int, iscapture:bool):const_char_p
 
 SDL_OpenAudioDevice(device:const_char_p:nil, iscapture:bool, desired:const_SDL_AudioSpec_p, obtained:SDL_AudioSpec_p, allowed_changes:int) = \
 	R'''

@@ -8525,11 +8525,11 @@ Gurax_ImplementFunctionEx(SDL_OpenAudio_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetNumAudioDevices(iscapture:Number)
+// sdl.SDL_GetNumAudioDevices(iscapture:Bool)
 Gurax_DeclareFunctionAlias(SDL_GetNumAudioDevices_gurax, "SDL_GetNumAudioDevices")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8539,18 +8539,18 @@ Gurax_ImplementFunctionEx(SDL_GetNumAudioDevices_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int iscapture = args_gurax.PickNumber<int>();
+	bool iscapture = args_gurax.PickBool();
 	// Function body
 	int rtn = SDL_GetNumAudioDevices(iscapture);
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetAudioDeviceName(index:Number, iscapture:Number)
+// sdl.SDL_GetAudioDeviceName(index:Number, iscapture:Bool)
 Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceName_gurax, "SDL_GetAudioDeviceName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("iscapture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8561,7 +8561,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceName_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
-	int iscapture = args_gurax.PickNumber<int>();
+	bool iscapture = args_gurax.PickBool();
 	// Function body
 	const char* rtn = SDL_GetAudioDeviceName(index, iscapture);
 	return new Gurax::Value_String(rtn);

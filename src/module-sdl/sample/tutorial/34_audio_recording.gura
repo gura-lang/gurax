@@ -537,7 +537,7 @@ main() = {
 				//User is selecting 
 				if (currentState == `SELECTING_DEVICE) {
 					//Render device names
-					int yOffset = gPromptTexture.getHeight() * 2;
+					yOffset = gPromptTexture.getHeight() * 2;
 					repeat (gRecordingDeviceCount) {|i|
 						gDeviceTextures[i].render(0, yOffset);
 						yOffset += gDeviceTextures[i].getHeight() + 1;
