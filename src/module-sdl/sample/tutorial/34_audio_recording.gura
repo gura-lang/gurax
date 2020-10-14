@@ -195,10 +195,14 @@ gRecordingBuffer = nil;
 gBufferByteSize = 0;
 
 //Position in data buffer
-gBufferBytePosition = 0;
+//userdata.bufferBytePosition = 0;
 
 //Maximum position in data buffer for recording
 gBufferByteMaxPosition = 0;
+
+UserData = struct {
+	bufferBytePosition:Number = 0
+}
 
 init() = {
 	//Initialization flag
@@ -314,22 +318,24 @@ close() = {
 
 audioRecordingCallback(userdata, stream:Pointer) = {
 	//Copy audio from stream
-	//memcpy(&gRecordingBuffer[gBufferBytePosition], stream, len);
+	//memcpy(&gRecordingBuffer[userdata.bufferBytePosition], stream, len);
 	len = stream.bytesAvail
-	(gRecordingBuffer.p + gBufferBytePosition).Append(stream)
-
+	if (userdata.bufferBytePosition + len < gBufferByteMaxPosition) {
+		(gRecordingBuffer.p + userdata.bufferBytePosition).Append(stream)
+	}
 	//Move along buffer
-	gBufferBytePosition:extern += len;
+	userdata.bufferBytePosition += len;
+	//Printf('Sub: %s\n', userdata.__id__)
 }
 
 audioPlaybackCallback(userdata, stream:Pointer) = {
 	//Copy audio to stream
-	//memcpy(stream, &gRecordingBuffer[gBufferBytePosition], len);
+	//memcpy(stream, &gRecordingBuffer[userdata.bufferBytePosition], len);
 	len = stream.bytesAvail
-	stream.Append(gRecordingBuffer.p + gBufferBytePosition, len)
+	stream.Append(gRecordingBuffer.p + userdata.bufferBytePosition, len)
 
 	//Move along buffer
-	gBufferBytePosition:extern += len;
+	userdata.bufferBytePosition += len;
 }
 
 main() = {
@@ -341,6 +347,8 @@ main() = {
 		if (!loadMedia()) {
 			Printf("Failed to load media!\n");
 		} else {
+			userdata = UserData()
+
 			//Main loop flag
 			quit = false
 
@@ -386,6 +394,7 @@ main() = {
 									desiredRecordingSpec.channels = 2;
 									desiredRecordingSpec.samples = 4096;
 									desiredRecordingSpec.callback = audioRecordingCallback;
+									desiredRecordingSpec.userdata = userdata
 
 									//Open recording device
 									recordingDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(index, SDL_TRUE),
@@ -406,6 +415,7 @@ main() = {
 										desiredPlaybackSpec.channels = 2;
 										desiredPlaybackSpec.samples = 4096;
 										desiredPlaybackSpec.callback = audioPlaybackCallback;
+										desiredPlaybackSpec.userdata = userdata
 
 										//Open playback device
 										playbackDeviceId = SDL_OpenAudioDevice(nil,
@@ -450,7 +460,7 @@ main() = {
 							//Start recording
 							if (e.key.keysym.sym == SDLK_1) {
 								//Go back to beginning of buffer
-								gBufferBytePosition = 0;
+								userdata.bufferBytePosition = 0;
 
 								//Start recording
 								SDL_PauseAudioDevice(recordingDeviceId, SDL_FALSE);
@@ -467,7 +477,7 @@ main() = {
 							//Start playback
 							if (e.key.keysym.sym == SDLK_1) {
 								//Go back to beginning of buffer
-								gBufferBytePosition = 0;
+								userdata.bufferBytePosition = 0;
 
 								//Start playback
 								SDL_PauseAudioDevice(playbackDeviceId, SDL_FALSE);
@@ -479,8 +489,8 @@ main() = {
 							//Record again
 							if (e.key.keysym.sym == SDLK_2) {
 								//Reset the buffer
-								gBufferBytePosition = 0;
-								memset(gRecordingBuffer, 0, gBufferByteSize);
+								userdata.bufferBytePosition = 0;
+								//memset(gRecordingBuffer, 0, gBufferByteSize);
 
 								//Start recording
 								SDL_PauseAudioDevice(recordingDeviceId, SDL_FALSE);
@@ -495,11 +505,13 @@ main() = {
 
 				//Updating recording
 				if (currentState == `RECORDING) {
+					Printf('%d\n', userdata.bufferBytePosition)
+					//Printf('Main:%s\n', desiredRecordingSpec.userdata.__id__)
 					//Lock callback
 					SDL_LockAudioDevice(recordingDeviceId);
 
 					//Finished recording
-					if (gBufferBytePosition > gBufferByteMaxPosition) {
+					if (userdata.bufferBytePosition > gBufferByteMaxPosition) {
 						//Stop recording audio
 						SDL_PauseAudioDevice(recordingDeviceId, SDL_TRUE);
 
@@ -516,7 +528,7 @@ main() = {
 					SDL_LockAudioDevice(playbackDeviceId);
 
 					//Finished playback
-					if (gBufferBytePosition > gBufferByteMaxPosition) {
+					if (userdata.bufferBytePosition > gBufferByteMaxPosition) {
 						//Stop playing audio
 						SDL_PauseAudioDevice(playbackDeviceId, SDL_TRUE);
 

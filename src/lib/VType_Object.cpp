@@ -115,6 +115,21 @@ Gurax_ImplementClassMethod(Object, __ToString__)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Object#__id__
+Gurax_DeclareProperty_R(Object, __id__)
+{
+	Declare(VTYPE_VType, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The object ID.");
+}
+
+Gurax_ImplementPropertyGetter(Object, __id__)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(String().Format("#%p", &valueThis));
+}
+
 // Object#__vtype__
 Gurax_DeclareProperty_R(Object, __vtype__)
 {
@@ -147,6 +162,7 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
 	Assign(Gurax_CreateMethod(Object, __ToString__));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Object, __id__));
 	Assign(Gurax_CreateProperty(Object, __vtype__));
 }
 

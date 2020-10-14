@@ -44,7 +44,7 @@ Gurax_ImplementConstructor(SDL_AudioSpec)
 	SDL_AudioSpec audioSpec = {};
 	// Function body
 	return argument.ReturnValue(processor,
-				new Value_SDL_AudioSpec(audioSpec, processor.Reference()));
+			new Value_SDL_AudioSpec(audioSpec, processor.CreateSubProcessor()));
 }
 
 //-----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, callback)
 // sdl.SDL_AudioSpec#userdata
 Gurax_DeclareProperty_RW(SDL_AudioSpec, userdata)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
