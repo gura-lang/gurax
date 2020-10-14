@@ -57,7 +57,7 @@ protected:
 	Event _event;
 public:
 	// Constructor
-	Processor();
+	Processor(Frame* pFrame);
 	// Copy constructor/operator
 	Processor(const Processor& src) = delete;
 	Processor& operator=(const Processor& src) = delete;
@@ -131,6 +131,7 @@ public:
 public:
 	Value* ProcessPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel = nullptr);
 	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel) = 0;
+	virtual Processor* CreateSubProcessor() = 0;
 public:
 	void Print() const;
 };
@@ -139,9 +140,13 @@ public:
 // Processor_Normal
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Processor_Normal : public Processor {
+public:
+	// Constructor
+	Processor_Normal(Frame* pFrame) : Processor(pFrame) {}
 protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPunitSentinel) override;
+	virtual Processor* CreateSubProcessor() override;
 };
 
 //------------------------------------------------------------------------------
@@ -152,10 +157,11 @@ private:
 	int _nestLevel;
 public:
 	// Constructor
-	Processor_Debug() : _nestLevel(-1) {}
+	Processor_Debug(Frame* pFrame, int nestLevel = -1) : Processor(pFrame), _nestLevel(nestLevel) {}
 protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit, const PUnit* pPunitSentinel) override;
+	virtual Processor* CreateSubProcessor() override;
 };
 
 }

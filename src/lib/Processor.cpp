@@ -8,21 +8,24 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Processor
 //------------------------------------------------------------------------------
-Processor::Processor() :
+Processor::Processor(Frame* pFrame) :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
 	_pPUnitCur(nullptr), _contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
-	PushFrame(Basement::Inst.GetFrame().Reference());
+	PushFrame(pFrame);
 }
 
 Processor* Processor::Create(bool debugFlag)
 {
-	return debugFlag?
-		dynamic_cast<Processor*>(new Processor_Debug()) :
-		dynamic_cast<Processor*>(new Processor_Normal());
+	RefPtr<Frame> pFrame(Basement::Inst.GetFrame().Reference());
+	if (debugFlag) {
+		return new Processor_Debug(pFrame.release());
+	} else {
+		return new Processor_Normal(pFrame.release());
+	}
 }
 
 Frame& Processor::BeginFunction(const Function& function, bool dynamicScopeFlag)
@@ -186,6 +189,11 @@ void Processor::ExceptionInfoStack::Print() const
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
+Processor* Processor_Normal::CreateSubProcessor()
+{
+	return new Processor_Normal(GetFrameCur().Reference());
+}
+
 void Processor_Normal::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 {
 	_pPUnitCur = pPUnit;
@@ -231,6 +239,11 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 //------------------------------------------------------------------------------
 // Processor_Debug
 //------------------------------------------------------------------------------
+Processor* Processor_Debug::CreateSubProcessor()
+{
+	return new Processor_Debug(GetFrameCur().Reference(), _nestLevel);
+}
+
 void Processor_Debug::RunLoop(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 {
 	auto PrintPUnit = [](Stream& stream, int nestLevel, const PUnit* pPUnit) {
