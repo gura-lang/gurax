@@ -729,6 +729,58 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 	return pFunc;
 }
 
+//-----------------------------------------------------------------------------
+// Thread (MSWIN)
+//-----------------------------------------------------------------------------
+static DWORD WINAPI ThreadProc(LPVOID lpParameter)
+{
+	std::unique_ptr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(lpParameter));
+	pThread->Run();
+	//delete pThread;
+	return 0;
+}
+
+OAL::Thread::Thread() : _hThread(nullptr), _threadId(0)
+{
+}
+
+OAL::Thread::~Thread()
+{
+}
+
+void OAL::Thread::Start()
+{
+	_hThread = ::CreateThread(nullptr, 0, ThreadProc, this, 0, &_threadId);
+}
+
+void OAL::Thread::Wait()
+{
+	::WaitForSingleObject(_hThread, INFINITE);
+}
+
+//-----------------------------------------------------------------------------
+// Semaphore (MSWIN)
+//-----------------------------------------------------------------------------
+OAL::Semaphore::Semaphore()
+{
+	_hMutex = ::CreateMutex(nullptr, FALSE, nullptr);
+}
+
+OAL::Semaphore::~Semaphore()
+{
+	::CloseHandle(_hMutex);
+}
+
+void OAL::Semaphore::Wait()
+{
+	::WaitForSingleObject(_hMutex, INFINITE);
+}
+
+void OAL::Semaphore::Release()
+{
+	::ReleaseMutex(_hMutex);
+}
+
 #else
 
 //------------------------------------------------------------------------------
@@ -1221,6 +1273,58 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 		return nullptr;
 	}
 	return pFunc;
+}
+
+//-----------------------------------------------------------------------------
+// OAL::Thread (POSIX)
+//-----------------------------------------------------------------------------
+static void *start_routine(void *arg)
+{
+	std::unique_ptr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(arg));
+	::pthread_detach(::pthread_self());
+	pThread->Run();
+	//delete pThread;
+	return 0;
+}
+
+OAL::Thread::Thread()
+{
+}
+
+OAL::Thread::~Thread()
+{
+}
+
+void OAL::Thread::Start()
+{
+	::pthread_create(&_pt, nullptr, &start_routine, this);
+}
+
+void OAL::Thread::Wait()
+{
+}
+
+//-----------------------------------------------------------------------------
+// OAL::Semaphore (POSIX)
+//-----------------------------------------------------------------------------
+OAL::Semaphore::Semaphore()
+{
+	::sem_init(&_sem, 0, 1);
+}
+
+OAL::Semaphore::~Semaphore()
+{
+	::sem_destroy(&_sem);
+}
+
+void OAL::Semaphore::Wait()
+{
+	::sem_wait(&_sem);
+}
+
+void OAL::Semaphore::Release()
+{
+	::sem_post(&_sem);
 }
 
 #endif

@@ -114,6 +114,36 @@ public:
 		void* GetEntry(const char* funcName);
 	};
 public:
+	class GURAX_DLLDECLARE Thread {
+	private:
+#if defined(GURAX_ON_MSWIN)
+		HANDLE _hThread;
+		DWORD _threadId;
+#else
+		pthread_t _pt;
+#endif
+	public:
+		Thread();
+		virtual ~Thread();
+		void Start();
+		void Wait();
+		virtual void Run() = 0;
+	};
+public:
+	class GURAX_DLLDECLARE Semaphore {
+	private:
+#if defined(GURAX_ON_MSWIN)
+		HANDLE _hMutex;
+#else
+		sem_t _sem;
+#endif
+	public:
+		Semaphore();
+		~Semaphore();
+		void Wait();
+		void Release();
+	};
+public:
 	class GURAX_DLLDECLARE FILECloser {
 	private:
 		FILE* _fp;
