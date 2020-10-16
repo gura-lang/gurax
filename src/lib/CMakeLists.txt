@@ -93,6 +93,7 @@ target_sources(guraxcore PRIVATE
 	Symbol.cpp
 	Symbols.cpp
 	Template.cpp
+	ThreadCustom.cpp
 	TimeDelta.cpp
 	Token.cpp
 	Tokenizer.cpp
@@ -156,6 +157,7 @@ target_sources(guraxcore PRIVATE
 	VType_StringPtr.cpp
 	VType_Symbol.cpp
 	VType_Template.cpp
+	VType_Thread.cpp
 	VType_TimeDelta.cpp
 	VType_Tuple.cpp
 	VType_Undefined.cpp

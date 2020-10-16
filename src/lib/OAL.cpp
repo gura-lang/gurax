@@ -734,9 +734,8 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 //-----------------------------------------------------------------------------
 static DWORD WINAPI ThreadProc(LPVOID lpParameter)
 {
-	std::unique_ptr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(lpParameter));
+	RefPtr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(lpParameter));
 	pThread->Run();
-	//delete pThread;
 	return 0;
 }
 
@@ -750,12 +749,17 @@ OAL::Thread::~Thread()
 
 void OAL::Thread::Start()
 {
-	_hThread = ::CreateThread(nullptr, 0, ThreadProc, this, 0, &_threadId);
+	_hThread = ::CreateThread(nullptr, 0, ThreadProc, Reference(), 0, &_threadId);
 }
 
 void OAL::Thread::Wait()
 {
 	::WaitForSingleObject(_hThread, INFINITE);
+}
+
+String OAL::Thread::ToString(const StringStyle& ss) const
+{
+	return "Thread";
 }
 
 //-----------------------------------------------------------------------------
@@ -1280,10 +1284,9 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 //-----------------------------------------------------------------------------
 static void *start_routine(void *arg)
 {
-	std::unique_ptr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(arg));
+	RefPtr<OAL::Thread> pThread(reinterpret_cast<OAL::Thread*>(arg));
 	::pthread_detach(::pthread_self());
 	pThread->Run();
-	//delete pThread;
 	return 0;
 }
 
@@ -1297,11 +1300,16 @@ OAL::Thread::~Thread()
 
 void OAL::Thread::Start()
 {
-	::pthread_create(&_pt, nullptr, &start_routine, this);
+	::pthread_create(&_pt, nullptr, &start_routine, Reference());
 }
 
 void OAL::Thread::Wait()
 {
+}
+
+String OAL::Thread::ToString(const StringStyle& ss) const
+{
+	return "Thread";
 }
 
 //-----------------------------------------------------------------------------

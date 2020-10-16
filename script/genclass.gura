@@ -176,15 +176,15 @@ public:
 	static const ${entityName}& Get${entityName}(const Value& value) {
 		return dynamic_cast<const Value_${entityName}&>(value).Get${entityName}();
 	}
-	static ${entityName}* GetEntityPtr(Value& value) { return Get${entityName}(value); }
-	static const ${entityName}* GetEntityPtr(const Value& value) { return Get${entityName}(value); }
+	static ${entityName}* GetEntityPtr(Value& value) { return &Get${entityName}(value); }
+	static const ${entityName}* GetEntityPtr(const Value& value) { return &Get${entityName}(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return Get${entityName}().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
+	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
 			Get${entityName}().IsEqualTo(Value_${className}::Get${entityName}(value));
 	}

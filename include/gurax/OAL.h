@@ -4,6 +4,7 @@
 #ifndef GURAX_OAL_H
 #define GURAX_OAL_H
 #include "Common.h"
+#include "Referable.h"
 #include "StringPicker.h"
 
 #if defined(GURAX_ON_MSWIN)
@@ -114,7 +115,10 @@ public:
 		void* GetEntry(const char* funcName);
 	};
 public:
-	class GURAX_DLLDECLARE Thread {
+	class GURAX_DLLDECLARE Thread : public Referable {
+	public:
+		// Referable declaration
+		Gurax_DeclareReferable(Thread);
 	private:
 #if defined(GURAX_ON_MSWIN)
 		HANDLE _hThread;
@@ -123,11 +127,27 @@ public:
 		pthread_t _pt;
 #endif
 	public:
+		// Constructor
 		Thread();
+		// Copy constructor/operator
+		Thread(const Thread& src) = delete;
+		Thread& operator=(const Thread& src) = delete;
+		// Move constructor/operator
+		Thread(Thread&& src) = delete;
+		Thread& operator=(Thread&& src) noexcept = delete;
+	protected:
+		// Destructor
 		virtual ~Thread();
+	public:
 		void Start();
 		void Wait();
 		virtual void Run() = 0;
+	public:
+		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+		bool IsIdentical(const Thread& thread) const { return this == &thread; }
+		bool IsEqualTo(const Thread& thread) const { return IsIdentical(thread); }
+		bool IsLessThan(const Thread& thread) const { return this < &thread; }
+		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
 public:
 	class GURAX_DLLDECLARE Semaphore {
