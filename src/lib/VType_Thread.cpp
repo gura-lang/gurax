@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Thread() {block?}
+// Thread(func:Function) {block?}
 Gurax_DeclareConstructor(Thread)
 {
 	Declare(VTYPE_Thread, Flag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,37 +41,51 @@ Gurax_DeclareConstructor(Thread)
 Gurax_ImplementConstructor(Thread)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Function& func = args.PickFunction();
 	// Function body
-	//RefPtr<OAL::Thread> pThread(new OAL::Thread());
-	//return argument.ReturnValue(processor, new Value_Thread(pThread.release()));
-	return Value::nil();
+	RefPtr<Argument> pArgument(new Argument(func));
+	RefPtr<OAL::Thread> pThread(new ThreadCustom(processor, func.Reference(), pArgument.release()));
+	return argument.ReturnValue(processor, new Value_Thread(pThread.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Thread#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Thread, MethodSkeleton)
+// Thread#Start()
+Gurax_DeclareMethod(Thread, Start)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Starts the thread.\n");
 }
 
-Gurax_ImplementMethod(Thread, MethodSkeleton)
+Gurax_ImplementMethod(Thread, Start)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	valueThis.GetThread().Start();
+	return Value::nil();
+}
+
+// Thread#Wait()
+Gurax_DeclareMethod(Thread, Wait)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Waits for the thread to end.\n");
+}
+
+Gurax_ImplementMethod(Thread, Wait)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetThread().Wait();
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -103,7 +118,8 @@ void VType_Thread::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Thread));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Thread, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Thread, Start));
+	Assign(Gurax_CreateMethod(Thread, Wait));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Thread, propSkeleton));
 }
