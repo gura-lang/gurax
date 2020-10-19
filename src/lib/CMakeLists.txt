@@ -151,6 +151,7 @@ target_sources(guraxcore PRIVATE
 	VType_Quote.cpp
 	VType_Random.cpp
 	VType_Rational.cpp
+	VType_Semaphore.cpp
 	VType_Stat.cpp
 	VType_Stream.cpp
 	VType_String.cpp

@@ -54,6 +54,7 @@ void BasicVType::Prepare(Frame& frame)
 	VTYPE_Quote.Prepare(frame);
 	VTYPE_Rational.Prepare(frame);
 	VTYPE_Random.Prepare(frame);
+	VTYPE_Semaphore.Prepare(frame);
 	VTYPE_Stat.Prepare(frame);
 	VTYPE_Stream.Prepare(frame);
 	VTYPE_String.Prepare(frame);

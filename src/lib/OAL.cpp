@@ -785,6 +785,11 @@ void OAL::Semaphore::Release()
 	::ReleaseMutex(_hMutex);
 }
 
+String OAL::Semaphore::ToString(const StringStyle& ss) const
+{
+	return "Semaphore";
+}
+
 #else
 
 //------------------------------------------------------------------------------
@@ -1333,6 +1338,11 @@ void OAL::Semaphore::Wait()
 void OAL::Semaphore::Release()
 {
 	::sem_post(&_sem);
+}
+
+String OAL::Semaphore::ToString(const StringStyle& ss) const
+{
+	return "Semaphore";
 }
 
 #endif

@@ -130,6 +130,7 @@
 #include "gurax/VType_Quote.h"
 #include "gurax/VType_Random.h"
 #include "gurax/VType_Rational.h"
+#include "gurax/VType_Semaphore.h"
 #include "gurax/VType_Stat.h"
 #include "gurax/VType_Stream.h"
 #include "gurax/VType_String.h"

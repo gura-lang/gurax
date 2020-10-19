@@ -150,7 +150,10 @@ public:
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
 public:
-	class GURAX_DLLDECLARE Semaphore {
+	class GURAX_DLLDECLARE Semaphore : public Referable {
+	public:
+		// Referable declaration
+		Gurax_DeclareReferable(Semaphore);
 	private:
 #if defined(GURAX_ON_MSWIN)
 		HANDLE _hMutex;
@@ -162,6 +165,12 @@ public:
 		~Semaphore();
 		void Wait();
 		void Release();
+	public:
+		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+		bool IsIdentical(const Semaphore& semaphore) const { return this == &semaphore; }
+		bool IsEqualTo(const Semaphore& semaphore) const { return IsIdentical(semaphore); }
+		bool IsLessThan(const Semaphore& semaphore) const { return this < &semaphore; }
+		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
 public:
 	class GURAX_DLLDECLARE FILECloser {
