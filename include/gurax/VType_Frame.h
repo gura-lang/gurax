@@ -68,14 +68,6 @@ public:
 			GetFrame().IsLessThan(dynamic_cast<const Value_Frame&>(value).GetFrame()) :
 			GetVType().IsLessThan(value.GetVType());
 	}
-public:
-	// Virtual functions for runtime process
-	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
-		GetFrame().GatherSymbol(symbolList);
-	}
-	virtual bool CanEvalAsMethod(const Function& function) const override;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
-	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 }

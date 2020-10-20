@@ -12,6 +12,7 @@ class Frame;
 class Function;
 class Module;
 class PropSlotMap;
+class Stream;
 class VType;
 class Value;
 class ValueMap;
@@ -94,6 +95,7 @@ public:
 	static String MakeFullName(const Frame* pFrame, const char* name);
 public:
 	// Virtual functions
+	virtual Frame* DoGetFrameLocal() { return nullptr; }
 	virtual bool IsFrameOfBasement() const { return false; }
 	virtual bool IsFrameOfMember() const { return false; }
 	virtual bool IsFrameOfModule() const { return false; }
@@ -108,10 +110,7 @@ public:
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
 	virtual const char* GetTypeName() const = 0;
-	virtual void PrintTree(int indentLevel = 0) const {
-		::printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
-		if (_pFrameOuter) _pFrameOuter->PrintTree(indentLevel + 1);
-	}
+	virtual void PrintTree(Stream& stream, int indentLevel = 0) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Frame& frame) const { return this == &frame; }
@@ -237,11 +236,8 @@ public:
 		return _pFrameLocal? _pFrameLocal->Retrieve(pSymbol) : nullptr;
 	}
 	Value* RetrieveLocal(const char* name) { return RetrieveLocal(Symbol::Add(name)); }
-	virtual void PrintTree(int indentLevel) const override {
-		::printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
-		if (_pFrameOuter) _pFrameOuter->PrintTree(indentLevel + 1);
-		if (_pFrameLocal) _pFrameLocal->PrintTree(indentLevel + 1);
-	}
+	virtual Frame* DoGetFrameLocal() override { return GetFrameLocal(); }
+	virtual void PrintTree(Stream& stream, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------

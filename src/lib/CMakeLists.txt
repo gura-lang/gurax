@@ -127,6 +127,7 @@ target_sources(guraxcore PRIVATE
 	VType_ErrorType.cpp
 	VType_Expr.cpp
 	VType_Frame.cpp
+	VType_FrameThis.cpp
 	VType_Function.cpp
 	VType_Help.cpp
 	VType_Image.cpp

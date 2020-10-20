@@ -128,6 +128,12 @@ String Frame::MakeFullName(const Frame* pFrame, const char* name)
 	return str;
 }
 
+void Frame::PrintTree(Stream& stream, int indentLevel) const
+{
+	stream.Printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+	if (_pFrameOuter) _pFrameOuter->PrintTree(stream, indentLevel + 1);
+}
+
 //------------------------------------------------------------------------------
 // FrameList
 //------------------------------------------------------------------------------
@@ -270,6 +276,13 @@ void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
 // Frame_Branch
 //------------------------------------------------------------------------------
 const char* Frame_Branch::name = "Branch";
+
+void Frame_Branch::PrintTree(Stream& stream, int indentLevel) const
+{
+	stream.Printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+	if (_pFrameOuter) _pFrameOuter->PrintTree(stream, indentLevel + 1);
+	if (_pFrameLocal) _pFrameLocal->PrintTree(stream, indentLevel + 1);
+}
 
 //------------------------------------------------------------------------------
 // Frame_Basement

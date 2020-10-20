@@ -3364,7 +3364,7 @@ template<bool discardValueFlag>
 void PUnit_PushFrameFromStack<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	processor.PushFrame(Value_Frame::GetFrame(*pValue).Reference());
+	processor.PushFrame(Value_FrameThis::GetFrame(*pValue).Reference());
 	if constexpr (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitCur(_GetPUnitCont());
 }
