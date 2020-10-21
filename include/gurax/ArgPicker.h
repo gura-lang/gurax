@@ -109,7 +109,6 @@ public:
 	const Expr& PickExpr()			{ return Pick<Value_Expr>().GetExpr(); }
 	const Error& PickError()		{ return Pick<Value_Error>().GetError(); }
 	const ErrorType& PickErrorType(){ return Pick<Value_ErrorType>().GetErrorType(); }
-	Frame& PickFrame()				{ return Pick<Value_Frame>().GetFrame(); }
 	Function& PickFunction();
 	Help& PickHelp()				{ return Pick<Value_Help>().GetHelp(); }
 	Image& PickImage()				{ return Pick<Value_Image>().GetImage(); }

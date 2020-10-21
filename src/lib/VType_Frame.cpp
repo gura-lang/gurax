@@ -25,6 +25,28 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Frame() {block?}
+Gurax_DeclareConstructor(Frame)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Frame` instance.");
+}
+
+Gurax_ImplementConstructor(Frame)
+{
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+	RefPtr<Value> pValueRtn(new Value_Frame(processor.GetFrameCur().Reference()));
+	return argument.ReturnValue(processor, pValueRtn.release());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
 // Frame.Current() {block?}
@@ -169,7 +191,7 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Frame));
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Frame, Current));
 	Assign(Gurax_CreateClassMethod(Frame, Where));
