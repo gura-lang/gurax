@@ -977,11 +977,11 @@ Gurax_ImplementStatement(import)
 						binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag, exprCaller);
 }
 
-// scope(frame?:FrameThis) {`block}
+// scope(scp?:Scope) {`block}
 Gurax_DeclareStatement(scope)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("frame", VTYPE_FrameThis, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("scp", VTYPE_Scope, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
@@ -990,7 +990,7 @@ Gurax_ImplementStatement(scope)
 	Expr* pExprParam = exprCaller.GetExprParamFirst();
 	if (pExprParam) {
 		pExprParam->ComposeOrNil(composer);										// [Any]
-		composer.Add_Cast(VTYPE_FrameThis, exprCaller);							// [Frame]
+		composer.Add_Cast(VTYPE_Scope, exprCaller);								// [Frame]
 		composer.Add_PushFrameFromStack(exprCaller);							// []
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Any]
 		composer.Add_PopFrame(exprCaller);										// [Any]

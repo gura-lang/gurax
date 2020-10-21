@@ -106,7 +106,7 @@
 #include "gurax/VType_ErrorType.h"
 #include "gurax/VType_Expr.h"
 #include "gurax/VType_Frame.h"
-#include "gurax/VType_FrameThis.h"
+#include "gurax/VType_Scope.h"
 #include "gurax/VType_Function.h"
 #include "gurax/VType_Help.h"
 #include "gurax/VType_Image.h"

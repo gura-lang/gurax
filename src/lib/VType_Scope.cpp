@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_FrameThis.cpp
+// VType_Scope.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -25,11 +25,11 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
-// VType_FrameThis
+// VType_Scope
 //------------------------------------------------------------------------------
-VType_FrameThis VTYPE_FrameThis("Frame");
+VType_Scope VTYPE_Scope("Frame");
 
-void VType_FrameThis::DoPrepare(Frame& frameOuter)
+void VType_Scope::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -38,11 +38,11 @@ void VType_FrameThis::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_FrameThis
+// Value_Scope
 //------------------------------------------------------------------------------
-VType& Value_FrameThis::vtype = VTYPE_FrameThis;
+VType& Value_Scope::vtype = VTYPE_Scope;
 
-bool Value_FrameThis::CanEvalAsMethod(const Function& function) const
+bool Value_Scope::CanEvalAsMethod(const Function& function) const
 {
 	if (function.IsTypeMethod() || function.IsTypeFunction() ||
 			function.IsTypeConstructor() || function.IsTypeStatement()) {
@@ -53,7 +53,7 @@ bool Value_FrameThis::CanEvalAsMethod(const Function& function) const
 	return false;
 }
 
-Value* Value_FrameThis::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_Scope::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	RefPtr<Value> pValue(GetFrame().Retrieve(pSymbol));
 	if (pValue) return pValue.release();
@@ -64,7 +64,7 @@ Value* Value_FrameThis::DoGetProperty(const Symbol* pSymbol, const Attribute& at
 	return nullptr;
 }
 
-bool Value_FrameThis::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Scope::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	GetFrame().Assign(pSymbol, pValue.release());
 	return true;
