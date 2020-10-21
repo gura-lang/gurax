@@ -31,7 +31,6 @@ void BasicVType::Prepare(Frame& frame)
 	VTYPE_ErrorType.Prepare(frame);
 	VTYPE_Expr.Prepare(frame);
 	VTYPE_Frame.Prepare(frame);
-	VTYPE_Scope.Prepare(frame);
 	VTYPE_Function.Prepare(frame);
 	VTYPE_Help.Prepare(frame);
 	VTYPE_Iterator.Prepare(frame);
@@ -55,6 +54,7 @@ void BasicVType::Prepare(Frame& frame)
 	VTYPE_Quote.Prepare(frame);
 	VTYPE_Rational.Prepare(frame);
 	VTYPE_Random.Prepare(frame);
+	VTYPE_Scope.Prepare(frame);
 	VTYPE_Semaphore.Prepare(frame);
 	VTYPE_Stat.Prepare(frame);
 	VTYPE_Stream.Prepare(frame);

@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // VType_Scope
 //------------------------------------------------------------------------------
-VType_Scope VTYPE_Scope("Frame");
+VType_Scope VTYPE_Scope("Scope");
 
 void VType_Scope::DoPrepare(Frame& frameOuter)
 {
@@ -59,7 +59,7 @@ Value* Value_Scope::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, 
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
-					 "the frame doesn't have a property '%s'", pSymbol->GetName());
+					 "the scope doesn't have a property '%s'", pSymbol->GetName());
 	}
 	return nullptr;
 }
