@@ -25,19 +25,19 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
-// Implementation of class method
+// Implementation of constructor
 //------------------------------------------------------------------------------
-// Frame.Current() {block?}
-Gurax_DeclareClassMethod(Frame, Current)
+// Frame() {block?}
+Gurax_DeclareConstructor(Frame)
 {
 	Declare(VTYPE_Frame, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns a `Frame` instance of the current scope.\n");
+		"Creates a `Frame` instance of the current scope.\n");
 }
 
-Gurax_ImplementClassMethod(Frame, Current)
+Gurax_ImplementConstructor(Frame)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -46,11 +46,15 @@ Gurax_ImplementClassMethod(Frame, Current)
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
+//------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
 // Frame.Where(symbol:Symbol) {block?}
 Gurax_DeclareClassMethod(Frame, Where)
 {
 	Declare(VTYPE_Frame, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -63,11 +67,17 @@ Gurax_ImplementClassMethod(Frame, Where)
 	// Arguments
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
 	// Function body
 	Frame* pFrameSrc = nullptr;
 	RefPtr<Value> pValue(processor.GetFrameCur().DoRetrieve(pSymbol, &pFrameSrc));
 	RefPtr<Value> pValueRtn(Value::nil());
-	if (pValue) pValueRtn.reset(new Value_Frame(pFrameSrc->Reference()));
+	if (pValue) {
+		pValueRtn.reset(new Value_Frame(pFrameSrc->Reference()));
+	} else if (raiseFlag) {
+		Error::Issue(ErrorType::SymbolError, "symbol is not found: %s", pSymbol->GetName());
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
@@ -144,6 +154,29 @@ Gurax_ImplementPropertyGetter(Frame, outer)
 	return new Value_Frame(pFrame->Reference());
 }
 
+// Frame#symbols
+Gurax_DeclareProperty_R(Frame, symbols)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Frame, symbols)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	SymbolList symbols;
+	valueThis.GetFrame().GatherSymbol(symbols);
+	symbols.Sort();
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	pValues->reserve(symbols.size());
+	for (const Symbol* pSymbol : symbols) {
+		pValues->push_back(new Value_Symbol(pSymbol));
+	}
+	return new Value_List(VTYPE_Symbol, pValues.release());
+}
+
 // Frame#typeName
 Gurax_DeclareProperty_R(Frame, typeName)
 {
@@ -169,15 +202,15 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Frame));
 	// Assignment of class method
-	Assign(Gurax_CreateClassMethod(Frame, Current));
 	Assign(Gurax_CreateClassMethod(Frame, Where));
 	// Assignment of class method
 	Assign(Gurax_CreateMethod(Frame, Print));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Frame, id));
 	Assign(Gurax_CreateProperty(Frame, outer));
+	Assign(Gurax_CreateProperty(Frame, symbols));
 	Assign(Gurax_CreateProperty(Frame, typeName));
 }
 
@@ -185,5 +218,10 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 // Value_Frame
 //------------------------------------------------------------------------------
 VType& Value_Frame::vtype = VTYPE_Frame;
+
+String Value_Frame::ToString(const StringStyle& ss) const
+{
+	return ToStringGeneric(ss, GetFrame().ToString(ss));
+}
 
 }

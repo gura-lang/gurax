@@ -68,6 +68,7 @@ public:
 			GetFrame().IsLessThan(dynamic_cast<const Value_Frame&>(value).GetFrame()) :
 			GetVType().IsLessThan(value.GetVType());
 	}
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

@@ -134,6 +134,11 @@ void Frame::PrintTree(Stream& stream, int indentLevel) const
 	if (_pFrameOuter) _pFrameOuter->PrintTree(stream, indentLevel + 1);
 }
 
+String Frame::ToString(const StringStyle& ss) const
+{
+	return String().Format("Frame:%s", GetTypeName());
+}
+
 //------------------------------------------------------------------------------
 // FrameList
 //------------------------------------------------------------------------------

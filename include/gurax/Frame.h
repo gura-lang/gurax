@@ -13,6 +13,7 @@ class Function;
 class Module;
 class PropSlotMap;
 class Stream;
+class StringStyle;
 class VType;
 class Value;
 class ValueMap;
@@ -116,7 +117,7 @@ public:
 	bool IsIdentical(const Frame& frame) const { return this == &frame; }
 	bool IsEqualTo(const Frame& frame) const { return IsIdentical(frame); }
 	bool IsLessThan(const Frame& frame) const { return this < &frame; }
-	//String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
