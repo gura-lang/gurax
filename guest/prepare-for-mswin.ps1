@@ -170,6 +170,22 @@ class Package_bzip2 {
 $packages += [Package_bzip2]::new()
 
 #---------------------------------------------------------------------------------
+# Package: curl
+#---------------------------------------------------------------------------------
+class Package_curl {
+	[String] $name = "curl"
+	[String] $ver = "7.73.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		cd winbuild
+		nmake /f makefile.vc mode=static
+	}
+}
+$packages += [Package_curl]::new()
+
+#---------------------------------------------------------------------------------
 # Package: dtl
 #---------------------------------------------------------------------------------
 class Package_dtl {
