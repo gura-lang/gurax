@@ -7,6 +7,7 @@
 #include <gurax.h>
 #include <curl/curl.h>
 #include "Util.h"
+#include "Functions.h"
 
 Gurax_BeginModuleHeader(curl)
 Gurax_EndModuleHeader(curl)

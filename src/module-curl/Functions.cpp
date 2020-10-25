@@ -1,10 +1,15 @@
-#!/usr/bin/env gurax
 //==============================================================================
-// test-curl.gura
+// Functions.cpp
 //==============================================================================
-import(util.tester) {*}
-import(curl)
+#include "stdafx.h"
 
-TestCase('Basic test') {
-	curl.Test()
+Gurax_BeginModuleScope(curl)
+
+
+
+void AssignFunctions(Frame& frame)
+{
+	
 }
+
+Gurax_EndModuleScope(curl)
