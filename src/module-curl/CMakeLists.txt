@@ -30,7 +30,8 @@ target_compile_options(curl.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-W3>
 	$<$<PLATFORM_ID:Linux>:-Wall -O2>
 	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
-target_compile_definitions(curl.gurd PRIVATE GURAX_MODULE_SEPARATED)
+target_compile_definitions(curl.gurd PRIVATE GURAX_MODULE_SEPARATED
+	$<$<PLATFORM_ID:Windows>:CURL_STATICLIB>)
 target_sources(curl.gurd PRIVATE
 	module-curl.cpp
 	Util.cpp
@@ -40,6 +41,10 @@ target_sources(curl.gurd PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(curl.gurd PRIVATE
+	$<$<PLATFORM_ID:Windows>:/NODEFAULTLIB:msvcrt>
+	$<$<PLATFORM_ID:Linux>:>
+	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(curl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:libcurl_a.lib>
 	$<$<PLATFORM_ID:Windows>:ws2_32.lib>

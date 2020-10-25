@@ -45,7 +45,10 @@ target_compile_options(${fileName_gurd} PRIVATE
 	$<$<PLATFORM_ID:Windows>:-W3>
 	$<$<PLATFORM_ID:Linux>:-Wall -O2>
 	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
-target_compile_definitions(${fileName_gurd} PRIVATE GURAX_MODULE_SEPARATED)
+target_compile_definitions(${fileName_gurd} PRIVATE GURAX_MODULE_SEPARATED
+	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Linux>:>
+	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(${fileName_gurd} PRIVATE
 	${fileName_mainSrc}
 	${fileName_utilSrc})
@@ -54,6 +57,10 @@ target_sources(${fileName_gurd} PRIVATE
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
+target_link_options(${fileName_gurd} PRIVATE
+	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Linux>:>
+	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(${fileName_gurd} PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
