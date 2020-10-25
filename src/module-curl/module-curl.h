@@ -8,6 +8,7 @@
 #include <curl/curl.h>
 #include "Util.h"
 #include "Functions.h"
+#include "VTYPE_CURL.h"
 
 Gurax_BeginModuleHeader(curl)
 Gurax_EndModuleHeader(curl)
