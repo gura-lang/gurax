@@ -272,6 +272,9 @@ Renderer.__init__() = {
 		return Gurax::Value::nil();
 		''')
 	this.DeclareType('any', '', 'Any',
+		codePicker = R'''
+		Gurax::Value& ${varName} = args_gurax.PickValue();
+		'''
 		codeFunctionBody = R'''
 		${caller};
 		return Gurax::Value::nil();

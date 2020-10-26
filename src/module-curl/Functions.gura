@@ -36,6 +36,8 @@ this.DeclareType(decl, cType, vtypeFullName,
 	''')
 
 r.DeclareType_Number('CURLcode')
+r.DeclareType_Number('CURLoption')
+r.DeclareType_Number('CURLINFO')
 
 r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 	codePicker = R'''
@@ -60,6 +62,32 @@ r.DeclareType_EntityPtr('CURL_p', 'CURL*', 'CURL')
 // Function Registration
 //------------------------------------------------------------------------------
 r.Register('curl') {
+
+curl_easy_init():CURL_p
+
+curl_easy_setopt(curl:CURL_p, option:CURLoption, value:any) = \
+	R'''
+	long optType = option & 0xf0000;
+	CURLcode code;
+	if (optType == CURLOPTTYPE_LONG) {
+		code = curl_easy_setopt(curl, option, Value_Number::GetNumber<long>(value));
+	} else if (optType == CURLOPTTYPE_OBJECTPOINT) {
+	} else if (optType == CURLOPTTYPE_FUNCTIONPOINT) {
+	} else if (optType == CURLOPTTYPE_OFF_T) {
+	} else if (optType == CURLOPTTYPE_BLOB) {
+	}
+	return new Value_Number(code);
+	'''
+
+curl_easy_perform(curl:CURL_p):CURLcode
+
+curl_easy_cleanup(curl:CURL_p):void
+
+curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
+	R'''
+	return Value::nil();
+	'''
+
 }
 
 tR'''
