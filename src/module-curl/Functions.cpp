@@ -173,6 +173,70 @@ Gurax_ImplementFunctionEx(curl_easy_strerror_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
+// curl.curl_easy_duphandle(curl:CURL)
+Gurax_DeclareFunctionAlias(curl_easy_duphandle_gurax, "curl_easy_duphandle")
+{
+	Declare(VTYPE_CURL, Flag::None);
+	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_easy_duphandle_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_curl = args_gurax.Pick<Value_CURL>();
+	CURL* curl = value_curl.GetEntityPtr();
+	// Function body
+	CURL* rtn = curl_easy_duphandle(curl);
+	if (!rtn) return Value::nil();
+	return new Value_CURL(rtn);
+}
+
+// curl.curl_easy_reset(curl:CURL)
+Gurax_DeclareFunctionAlias(curl_easy_reset_gurax, "curl_easy_reset")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_easy_reset_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_curl = args_gurax.Pick<Value_CURL>();
+	CURL* curl = value_curl.GetEntityPtr();
+	// Function body
+	curl_easy_reset(curl);
+	return Gurax::Value::nil();
+}
+
+// curl.curl_easy_upkeep(curl:CURL)
+Gurax_DeclareFunctionAlias(curl_easy_upkeep_gurax, "curl_easy_upkeep")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_easy_upkeep_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_curl = args_gurax.Pick<Value_CURL>();
+	CURL* curl = value_curl.GetEntityPtr();
+	// Function body
+	CURLcode rtn = curl_easy_upkeep(curl);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(curl_easy_init_gurax));
@@ -181,6 +245,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_easy_cleanup_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_getinfo_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_easy_duphandle_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_easy_reset_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_easy_upkeep_gurax));
 }
 
 Gurax_EndModuleScope(curl)

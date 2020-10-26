@@ -124,6 +124,15 @@ curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
 
 curl_easy_strerror(code:CURLcode):const_char_p
 
+curl_easy_duphandle(curl:CURL_p):CURL_p
+
+curl_easy_reset(curl:CURL_p):void
+
+//CURLcode curl_easy_recv(CURL *curl, void *buffer, size_t buflen, size_t *n);
+
+//CURLcode curl_easy_send(CURL *curl, const void *buffer, size_t buflen, size_t *n);
+
+curl_easy_upkeep(curl:CURL_p):CURLcode;
 
 }
 
