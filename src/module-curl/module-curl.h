@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <curl/curl.h>
 #include "Util.h"
+#include "Consts.h"
 #include "Functions.h"
 #include "VTYPE_CURL.h"
 

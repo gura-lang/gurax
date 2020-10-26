@@ -51,6 +51,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of const
+	AssignConsts(GetFrame());
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	AssignFunctions(GetFrame());

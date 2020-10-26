@@ -35,8 +35,9 @@ target_compile_definitions(curl.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(curl.gurd PRIVATE
 	module-curl.cpp
 	Util.cpp
-	VTYPE_CURL.cpp
-	Functions.cpp)
+	Consts.cpp
+	Functions.cpp
+	VTYPE_CURL.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

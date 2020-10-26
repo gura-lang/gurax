@@ -67,13 +67,28 @@ curl_easy_init():CURL_p
 
 curl_easy_setopt(curl:CURL_p, option:CURLoption, value:any) = \
 	R'''
-	long optType = option & 0xf0000;
-	CURLcode code;
+	long optType = static_cast<long>(option) / 10000 * 10000;
+	CURLcode code = CURLE_OK;
 	if (optType == CURLOPTTYPE_LONG) {
+		if (!value.IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the option accepts Number value");
+			return Value::nil();
+		}
 		code = curl_easy_setopt(curl, option, Value_Number::GetNumber<long>(value));
 	} else if (optType == CURLOPTTYPE_OBJECTPOINT) {
+		if (!value.IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the option accepts String value");
+			return Value::nil();
+		}
+		code = curl_easy_setopt(curl, option, Value_String::GetString(value));
 	} else if (optType == CURLOPTTYPE_FUNCTIONPOINT) {
+
 	} else if (optType == CURLOPTTYPE_OFF_T) {
+		if (!value.IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the option accepts Number value");
+			return Value::nil();
+		}
+		code = curl_easy_setopt(curl, option, Value_Number::GetNumber<size_t>(value));
 	} else if (optType == CURLOPTTYPE_BLOB) {
 	}
 	return new Value_Number(code);
@@ -85,8 +100,30 @@ curl_easy_cleanup(curl:CURL_p):void
 
 curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
 	R'''
-	return Value::nil();
+	RefPtr<Value> pValueRtn(Value::nil());
+	long infoType = info & CURLINFO_TYPEMASK;
+	if (infoType == CURLINFO_STRING) {
+		const char* value;
+		curl_easy_getinfo(curl, info, &value);
+		pValueRtn.reset(new Value_String(value));
+	} else if (infoType == CURLINFO_LONG) {
+		long value;
+		curl_easy_getinfo(curl, info, &value);
+		pValueRtn.reset(new Value_Number(value));
+	} else if (infoType == CURLINFO_DOUBLE) {
+		double value;
+		curl_easy_getinfo(curl, info, &value);
+		pValueRtn.reset(new Value_Number(value));
+	} else if (infoType == CURLINFO_SLIST) {
+	} else if (infoType == CURLINFO_PTR) {
+	} else if (infoType == CURLINFO_SOCKET) {
+	} else if (infoType == CURLINFO_OFF_T) {
+	}
+	return pValueRtn.release();
 	'''
+
+curl_easy_strerror(code:CURLcode):const_char_p
+
 
 }
 
