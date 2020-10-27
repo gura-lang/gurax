@@ -6,6 +6,10 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(curl)
+
+curl_slist* CreateSListFromValueList(const ValueList& values);
+ValueOwner* CreateValueOwnerFromSList(const curl_slist* slist);
+
 Gurax_EndModuleScope(curl)
 
 #endif

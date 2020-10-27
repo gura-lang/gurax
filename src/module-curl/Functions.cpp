@@ -66,6 +66,7 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 		}
 		code = curl_easy_setopt(curl, option, Value_Number::GetNumber<size_t>(value));
 	} else if (optType == CURLOPTTYPE_BLOB) {
+	
 	}
 	return new Value_Number(code);
 }
@@ -146,9 +147,17 @@ Gurax_ImplementFunctionEx(curl_easy_getinfo_gurax, processor_gurax, argument_gur
 		curl_easy_getinfo(curl, info, &value);
 		pValueRtn.reset(new Value_Number(value));
 	} else if (infoType == CURLINFO_SLIST) {
+		curl_slist* slist = nullptr;
+		curl_easy_getinfo(curl, info, &slist);
+		RefPtr<ValueOwner> pValues(CreateValueOwnerFromSList(slist));
+		curl_free(slist);
+		pValueRtn.reset(new Value_List(VTYPE_String, pValues.release()));
 	} else if (infoType == CURLINFO_PTR) {
 	} else if (infoType == CURLINFO_SOCKET) {
 	} else if (infoType == CURLINFO_OFF_T) {
+		curl_off_t value;
+		curl_easy_getinfo(curl, info, &value);
+		pValueRtn.reset(new Value_Number(value));
 	}
 	return pValueRtn.release();
 }
