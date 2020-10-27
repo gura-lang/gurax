@@ -51,6 +51,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VTYPE
+	Assign(VTYPE_CURL);
+	Assign(VTYPE_curl_mime);
 	// Assignment of const
 	AssignConsts(GetFrame());
 	// Assignment of function

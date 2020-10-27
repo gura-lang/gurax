@@ -37,7 +37,8 @@ target_sources(curl.gurd PRIVATE
 	Util.cpp
 	Consts.cpp
 	Functions.cpp
-	VTYPE_CURL.cpp)
+	VTYPE_CURL.cpp
+	VTYPE_curl_mime.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

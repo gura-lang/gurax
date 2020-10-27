@@ -162,26 +162,6 @@ Gurax_ImplementFunctionEx(curl_easy_getinfo_gurax, processor_gurax, argument_gur
 	return pValueRtn.release();
 }
 
-// curl.curl_easy_strerror(code:Number)
-Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
-{
-	Declare(VTYPE_String, Flag::None);
-	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementFunctionEx(curl_easy_strerror_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	CURLcode code = args_gurax.PickNumber<CURLcode>();
-	// Function body
-	const char* rtn = curl_easy_strerror(code);
-	return new Gurax::Value_String(rtn);
-}
-
 // curl.curl_easy_duphandle(curl:CURL)
 Gurax_DeclareFunctionAlias(curl_easy_duphandle_gurax, "curl_easy_duphandle")
 {
@@ -246,6 +226,69 @@ Gurax_ImplementFunctionEx(curl_easy_upkeep_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
+// curl.curl_easy_strerror(code:Number)
+Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_easy_strerror_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	CURLcode code = args_gurax.PickNumber<CURLcode>();
+	// Function body
+	const char* rtn = curl_easy_strerror(code);
+	return new Gurax::Value_String(rtn);
+}
+
+// curl.curl_share_strerror(code:Number)
+Gurax_DeclareFunctionAlias(curl_share_strerror_gurax, "curl_share_strerror")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_share_strerror_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	CURLSHcode code = args_gurax.PickNumber<CURLSHcode>();
+	// Function body
+	const char* rtn = curl_share_strerror(code);
+	return new Gurax::Value_String(rtn);
+}
+
+// curl.curl_easy_pause(handle:CURL, bitmask:Number)
+Gurax_DeclareFunctionAlias(curl_easy_pause_gurax, "curl_easy_pause")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("handle", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_easy_pause_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_handle = args_gurax.Pick<Value_CURL>();
+	CURL* handle = value_handle.GetEntityPtr();
+	int bitmask = args_gurax.PickNumber<int>();
+	// Function body
+	CURLcode rtn = curl_easy_pause(handle, bitmask);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(curl_easy_init_gurax));
@@ -253,10 +296,12 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_easy_perform_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_cleanup_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_getinfo_gurax));
-	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_duphandle_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_reset_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_upkeep_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_share_strerror_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_easy_pause_gurax));
 }
 
 Gurax_EndModuleScope(curl)
