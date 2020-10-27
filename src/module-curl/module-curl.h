@@ -10,6 +10,7 @@
 #include "Functions.h"
 #include "VTYPE_CURL.h"
 #include "VTYPE_curl_mime.h"
+#include "VTYPE_curl_mimepart.h"
 
 Gurax_BeginModuleHeader(curl)
 Gurax_EndModuleHeader(curl)
