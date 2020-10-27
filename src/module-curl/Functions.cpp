@@ -226,6 +226,210 @@ Gurax_ImplementFunctionEx(curl_easy_upkeep_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
+// curl.curl_mime_init(easy:CURL)
+Gurax_DeclareFunctionAlias(curl_mime_init_gurax, "curl_mime_init")
+{
+	Declare(VTYPE_curl_mime, Flag::None);
+	DeclareArg("easy", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_init_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_easy = args_gurax.Pick<Value_CURL>();
+	CURL* easy = value_easy.GetEntityPtr();
+	// Function body
+	curl_mime* rtn = curl_mime_init(easy);
+	if (!rtn) return Value::nil();
+	return new Value_curl_mime(rtn);
+}
+
+// curl.curl_mime_free(mime:curl_mime)
+Gurax_DeclareFunctionAlias(curl_mime_free_gurax, "curl_mime_free")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mime", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_free_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_mime = args_gurax.Pick<Value_curl_mime>();
+	curl_mime* mime = value_mime.GetEntityPtr();
+	// Function body
+	curl_mime_free(mime);
+	return Gurax::Value::nil();
+}
+
+// curl.curl_mime_addpart(mime:curl_mime)
+Gurax_DeclareFunctionAlias(curl_mime_addpart_gurax, "curl_mime_addpart")
+{
+	Declare(VTYPE_curl_mimepart, Flag::None);
+	DeclareArg("mime", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_addpart_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_mime = args_gurax.Pick<Value_curl_mime>();
+	curl_mime* mime = value_mime.GetEntityPtr();
+	// Function body
+	curl_mimepart* rtn = curl_mime_addpart(mime);
+	if (!rtn) return Value::nil();
+	return new Value_curl_mimepart(rtn);
+}
+
+// curl.curl_mime_name(part:curl_mimepart, name:String)
+Gurax_DeclareFunctionAlias(curl_mime_name_gurax, "curl_mime_name")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_name_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* name = args_gurax.PickString();
+	// Function body
+	CURLcode rtn = curl_mime_name(part, name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_filename(part:curl_mimepart, filename:String)
+Gurax_DeclareFunctionAlias(curl_mime_filename_gurax, "curl_mime_filename")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_filename_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* filename = args_gurax.PickString();
+	// Function body
+	CURLcode rtn = curl_mime_filename(part, filename);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_type(part:curl_mimepart, mimetype:String)
+Gurax_DeclareFunctionAlias(curl_mime_type_gurax, "curl_mime_type")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_type_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* mimetype = args_gurax.PickString();
+	// Function body
+	CURLcode rtn = curl_mime_type(part, mimetype);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_encoder(part:curl_mimepart, encoding:String)
+Gurax_DeclareFunctionAlias(curl_mime_encoder_gurax, "curl_mime_encoder")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("encoding", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_encoder_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* encoding = args_gurax.PickString();
+	// Function body
+	CURLcode rtn = curl_mime_encoder(part, encoding);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_filedata(part:curl_mimepart, filename:String)
+Gurax_DeclareFunctionAlias(curl_mime_filedata_gurax, "curl_mime_filedata")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_filedata_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* filename = args_gurax.PickString();
+	// Function body
+	CURLcode rtn = curl_mime_filedata(part, filename);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_subparts(part:curl_mimepart, subparts:curl_mime)
+Gurax_DeclareFunctionAlias(curl_mime_subparts_gurax, "curl_mime_subparts")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("subparts", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_subparts_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	auto& value_subparts = args_gurax.Pick<Value_curl_mime>();
+	curl_mime* subparts = value_subparts.GetEntityPtr();
+	// Function body
+	CURLcode rtn = curl_mime_subparts(part, subparts);
+	return new Gurax::Value_Number(rtn);
+}
+
 // curl.curl_easy_strerror(code:Number)
 Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
 {
@@ -299,6 +503,15 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_easy_duphandle_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_reset_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_upkeep_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_init_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_free_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_addpart_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_name_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_filename_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_type_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_encoder_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_filedata_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_subparts_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_share_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_pause_gurax));
