@@ -52,13 +52,156 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 		}
 		code = curl_easy_setopt(curl, option, Value_Number::GetNumber<long>(value));
 	} else if (optType == CURLOPTTYPE_OBJECTPOINT) {
-		if (!value.IsInstanceOf(VTYPE_String)) {
-			Error::Issue(ErrorType::TypeError, "the option accepts String value");
+		switch (option) {
+		case CURLOPT_WRITEDATA:
+			value_curl.pValue_WRITE.reset(value.Reference());
+			break;
+		case CURLOPT_READDATA:
+			value_curl.pValue_READ.reset(value.Reference());
+			break;
+		case CURLOPT_PROGRESSDATA:
+			value_curl.pValue_PROGRESS.reset(value.Reference());
+			break;
+		case CURLOPT_HEADERDATA:
+			value_curl.pValue_HEADER.reset(value.Reference());
+			break;
+		case CURLOPT_DEBUGDATA:
+			value_curl.pValue_DEBUG.reset(value.Reference());
+			break;
+		case CURLOPT_SSL_CTX_DATA:
+			value_curl.pValue_SSL_CTX.reset(value.Reference());
+			break;
+		case CURLOPT_IOCTLDATA:
+			value_curl.pValue_IOCTL.reset(value.Reference());
+			break;
+		//case CURLOPT_CONV_FROM_NETWORK_DATA:
+		//	value_curl.pValue_CONV_FROM_NETWORK.reset(value.Reference());
+		//	break;
+		//case CURLOPT_CONV_TO_NETWORK_DATA:
+		//	value_curl.pValue_CONV_TO_NETWORK.reset(value.Reference());
+		//	break;
+		//case CURLOPT_CONV_FROM_UTF8_DATA:
+		//	value_curl.pValue_CONV_FROM_UTF8.reset(value.Reference());
+		//	break;
+		case CURLOPT_SOCKOPTDATA:
+			value_curl.pValue_SOCKOPT.reset(value.Reference());
+			break;
+		case CURLOPT_OPENSOCKETDATA:
+			value_curl.pValue_OPENSOCKET.reset(value.Reference());
+			break;
+		case CURLOPT_SEEKDATA:
+			value_curl.pValue_SEEK.reset(value.Reference());
+			break;
+		case CURLOPT_SSH_KEYDATA:
+			value_curl.pValue_SSH_KEY.reset(value.Reference());
+			break;
+		case CURLOPT_INTERLEAVEDATA:
+			value_curl.pValue_INTERLEAVE.reset(value.Reference());
+			break;
+		//case CURLOPT_CHUNK_BGN_DATA:
+		//	value_curl.pValue_CHUNK_BGN.reset(value.Reference());
+		//	break;
+		//case CURLOPT_CHUNK_END_DATA:
+		//	value_curl.pValue_CHUNK_END.reset(value.Reference());
+		//	break;
+		case CURLOPT_FNMATCH_DATA:
+			value_curl.pValue_FNMATCH.reset(value.Reference());
+			break;
+		case CURLOPT_CLOSESOCKETDATA:
+			value_curl.pValue_CLOSESOCKET.reset(value.Reference());
+			break;
+		//case CURLOPT_XFERINFODATA:
+		//	value_curl.pValue_XFERINFO.reset(value.Reference());
+		//	break;
+		case CURLOPT_RESOLVER_START_DATA:
+			value_curl.pValue_RESOLVER_START.reset(value.Reference());
+			break;
+		case CURLOPT_TRAILERDATA:
+			value_curl.pValue_TRAILER.reset(value.Reference());
+			break;
+		default:
+			if (!value.IsInstanceOf(VTYPE_String)) {
+				Error::Issue(ErrorType::TypeError, "the option accepts String value");
+				return Value::nil();
+			}
+			code = curl_easy_setopt(curl, option, Value_String::GetString(value));
+		}
+	} else if (optType == CURLOPTTYPE_FUNCTIONPOINT) {
+		if (!value.IsInstanceOf(VTYPE_Function)) {
+			Error::Issue(ErrorType::TypeError, "the option accepts Function value");
 			return Value::nil();
 		}
-		code = curl_easy_setopt(curl, option, Value_String::GetString(value));
-	} else if (optType == CURLOPTTYPE_FUNCTIONPOINT) {
-	
+		const Function& func = Value_Function::GetFunction(value);
+		switch (option) {
+		case CURLOPT_WRITEFUNCTION:
+			value_curl.pFunc_WRITE.reset(func.Reference());
+			break;
+		case CURLOPT_READFUNCTION:
+			value_curl.pFunc_READ.reset(func.Reference());
+			break;
+		case CURLOPT_PROGRESSFUNCTION:
+			value_curl.pFunc_PROGRESS.reset(func.Reference());
+			break;
+		case CURLOPT_HEADERFUNCTION:
+			value_curl.pFunc_HEADER.reset(func.Reference());
+			break;
+		case CURLOPT_DEBUGFUNCTION:
+			value_curl.pFunc_DEBUG.reset(func.Reference());
+			break;
+		case CURLOPT_SSL_CTX_FUNCTION:
+			value_curl.pFunc_SSL_CTX.reset(func.Reference());
+			break;
+		case CURLOPT_IOCTLFUNCTION:
+			value_curl.pFunc_IOCTL.reset(func.Reference());
+			break;
+		case CURLOPT_CONV_FROM_NETWORK_FUNCTION:
+			value_curl.pFunc_CONV_FROM_NETWORK.reset(func.Reference());
+			break;
+		case CURLOPT_CONV_TO_NETWORK_FUNCTION:
+			value_curl.pFunc_CONV_TO_NETWORK.reset(func.Reference());
+			break;
+		case CURLOPT_CONV_FROM_UTF8_FUNCTION:
+			value_curl.pFunc_CONV_FROM_UTF8.reset(func.Reference());
+			break;
+		case CURLOPT_SOCKOPTFUNCTION:
+			value_curl.pFunc_SOCKOPT.reset(func.Reference());
+			break;
+		case CURLOPT_OPENSOCKETFUNCTION:
+			value_curl.pFunc_OPENSOCKET.reset(func.Reference());
+			break;
+		case CURLOPT_SEEKFUNCTION:
+			value_curl.pFunc_SEEK.reset(func.Reference());
+			break;
+		case CURLOPT_SSH_KEYFUNCTION:
+			value_curl.pFunc_SSH_KEY.reset(func.Reference());
+			break;
+		case CURLOPT_INTERLEAVEFUNCTION:
+			value_curl.pFunc_INTERLEAVE.reset(func.Reference());
+			break;
+		case CURLOPT_CHUNK_BGN_FUNCTION:
+			value_curl.pFunc_CHUNK_BGN.reset(func.Reference());
+			break;
+		case CURLOPT_CHUNK_END_FUNCTION:
+			value_curl.pFunc_CHUNK_END.reset(func.Reference());
+			break;
+		case CURLOPT_FNMATCH_FUNCTION:
+			value_curl.pFunc_FNMATCH.reset(func.Reference());
+			break;
+		case CURLOPT_CLOSESOCKETFUNCTION:
+			value_curl.pFunc_CLOSESOCKET.reset(func.Reference());
+			break;
+		case CURLOPT_XFERINFOFUNCTION:
+			value_curl.pFunc_XFERINFO.reset(func.Reference());
+			break;
+		case CURLOPT_RESOLVER_START_FUNCTION:
+			value_curl.pFunc_RESOLVER_START.reset(func.Reference());
+			break;
+		case CURLOPT_TRAILERFUNCTION:
+			value_curl.pFunc_TRAILER.reset(func.Reference());
+			break;
+		default:
+			break;
+		}
 	} else if (optType == CURLOPTTYPE_OFF_T) {
 		if (!value.IsInstanceOf(VTYPE_Number)) {
 			Error::Issue(ErrorType::TypeError, "the option accepts Number value");

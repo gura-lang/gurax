@@ -113,6 +113,10 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_CURL::vtype = VTYPE_CURL;
 
+void Value_CURL::SetupCallback()
+{
+}
+
 String Value_CURL::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "curl.CURL");
