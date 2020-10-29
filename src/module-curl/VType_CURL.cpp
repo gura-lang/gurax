@@ -115,11 +115,143 @@ VType& Value_CURL::vtype = VTYPE_CURL;
 
 void Value_CURL::SetupCallback()
 {
+	curl_easy_setopt(_pCURL, CURLOPT_WRITEFUNCTION, Callback_WRITE);
+	curl_easy_setopt(_pCURL, CURLOPT_READFUNCTION, Callback_READ);
+	curl_easy_setopt(_pCURL, CURLOPT_PROGRESSFUNCTION, Callback_PROGRESS);
+	curl_easy_setopt(_pCURL, CURLOPT_HEADERFUNCTION, Callback_HEADER);
+	curl_easy_setopt(_pCURL, CURLOPT_DEBUGFUNCTION, Callback_DEBUG);
+	curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_FUNCTION, Callback_SSL_CTX);
+	curl_easy_setopt(_pCURL, CURLOPT_IOCTLFUNCTION, Callback_IOCTL);
+	curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_FUNCTION, Callback_CONV_FROM_NETWORK);
+	curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_FUNCTION, Callback_CONV_TO_NETWORK);
+	curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_FUNCTION, Callback_CONV_FROM_UTF8);
+	curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTFUNCTION, Callback_SOCKOPT);
+	curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETFUNCTION, Callback_OPENSOCKET);
+	curl_easy_setopt(_pCURL, CURLOPT_SEEKFUNCTION, Callback_SEEK);
+	curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYFUNCTION, Callback_SSH_KEY);
+	curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEFUNCTION, Callback_INTERLEAVE);
+	curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_FUNCTION, Callback_CHUNK_BGN);
+	curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_FUNCTION, Callback_CHUNK_END);
+	curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_FUNCTION, Callback_FNMATCH);
+	curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETFUNCTION, Callback_CLOSESOCKET);
+	curl_easy_setopt(_pCURL, CURLOPT_XFERINFOFUNCTION, Callback_XFERINFO);
+	curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_FUNCTION, Callback_RESOLVER_START);
+	curl_easy_setopt(_pCURL, CURLOPT_TRAILERFUNCTION, Callback_TRAILER	);
+	curl_easy_setopt(_pCURL, CURLOPT_WRITEDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_READDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_PROGRESSDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_HEADERDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_DEBUGDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_DATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_IOCTLDATA, this);
+	//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_DATA, this);
+	//curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_DATA, this);
+	//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_DATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_SEEKDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEDATA, this);
+	//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_DATA, this);
+	//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_DATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_DATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_XFERINFODATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_DATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_TRAILERDATA, this);
 }
 
 String Value_CURL::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "curl.CURL");
+}
+
+void Value_CURL::Callback_WRITE()
+{
+}
+
+void Value_CURL::Callback_READ()
+{
+}
+
+void Value_CURL::Callback_PROGRESS()
+{
+}
+
+void Value_CURL::Callback_HEADER()
+{
+}
+
+void Value_CURL::Callback_DEBUG()
+{
+}
+
+void Value_CURL::Callback_SSL_CTX()
+{
+}
+
+void Value_CURL::Callback_IOCTL()
+{
+}
+
+void Value_CURL::Callback_CONV_FROM_NETWORK()
+{
+}
+
+void Value_CURL::Callback_CONV_TO_NETWORK()
+{
+}
+
+void Value_CURL::Callback_CONV_FROM_UTF8()
+{
+}
+
+void Value_CURL::Callback_SOCKOPT()
+{
+}
+
+void Value_CURL::Callback_OPENSOCKET()
+{
+}
+
+void Value_CURL::Callback_SEEK()
+{
+}
+
+void Value_CURL::Callback_SSH_KEY()
+{
+}
+
+void Value_CURL::Callback_INTERLEAVE()
+{
+}
+
+void Value_CURL::Callback_CHUNK_BGN()
+{
+}
+
+void Value_CURL::Callback_CHUNK_END()
+{
+}
+
+void Value_CURL::Callback_FNMATCH()
+{
+}
+
+void Value_CURL::Callback_CLOSESOCKET()
+{
+}
+
+void Value_CURL::Callback_XFERINFO()
+{
+}
+
+void Value_CURL::Callback_RESOLVER_START()
+{
+}
+
+void Value_CURL::Callback_TRAILER()
+{
 }
 
 Gurax_EndModuleScope(curl)
