@@ -19,7 +19,7 @@ Gurax_ImplementFunctionEx(curl_easy_init_gurax, processor_gurax, argument_gurax)
 	// Function body
 	CURL* rtn = curl_easy_init();
 	if (!rtn) return Value::nil();
-	return new Value_CURL(rtn);
+	return new Value_CURL(processor_gurax.Reference(), rtn);
 }
 
 // curl.curl_easy_setopt(curl:CURL, option:Number, value:Any)
@@ -140,63 +140,103 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 			value_curl.pFunc_READ.reset(func.Reference());
 			break;
 		case CURLOPT_PROGRESSFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, Value_CURL::Callback_PROGRESS);
+			curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
 			value_curl.pFunc_PROGRESS.reset(func.Reference());
 			break;
 		case CURLOPT_HEADERFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, Value_CURL::Callback_HEADER);
+			curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
 			value_curl.pFunc_HEADER.reset(func.Reference());
 			break;
 		case CURLOPT_DEBUGFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_DEBUGFUNCTION, Value_CURL::Callback_DEBUG);
+			curl_easy_setopt(curl, CURLOPT_DEBUGDATA, this);
 			value_curl.pFunc_DEBUG.reset(func.Reference());
 			break;
 		case CURLOPT_SSL_CTX_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_SSL_CTX_FUNCTION, Value_CURL::Callback_SSL_CTX);
+			curl_easy_setopt(curl, CURLOPT_SSL_CTX_DATA, this);
 			value_curl.pFunc_SSL_CTX.reset(func.Reference());
 			break;
 		case CURLOPT_IOCTLFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, Value_CURL::Callback_IOCTL);
+			curl_easy_setopt(curl, CURLOPT_IOCTLDATA, this);
 			value_curl.pFunc_IOCTL.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_FROM_NETWORK_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CONV_FROM_NETWORK_FUNCTION, Value_CURL::Callback_CONV_FROM_NETWORK);
+			//curl_easy_setopt(curl, CURLOPT_CONV_FROM_NETWORK_DATA, this);
 			value_curl.pFunc_CONV_FROM_NETWORK.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_TO_NETWORK_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CONV_TO_NETWORK_FUNCTION, Value_CURL::Callback_CONV_TO_NETWORK);
+			//curl_easy_setopt(curl, CURLOPT_CONV_TO_NETWORK_DATA, this);
 			value_curl.pFunc_CONV_TO_NETWORK.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_FROM_UTF8_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CONV_FROM_UTF8_FUNCTION, Value_CURL::Callback_CONV_FROM_UTF8);
+			//curl_easy_setopt(curl, CURLOPT_CONV_FROM_UTF8_DATA, this);
 			value_curl.pFunc_CONV_FROM_UTF8.reset(func.Reference());
 			break;
 		case CURLOPT_SOCKOPTFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_SOCKOPTFUNCTION, Value_CURL::Callback_SOCKOPT);
+			curl_easy_setopt(curl, CURLOPT_SOCKOPTDATA, this);
 			value_curl.pFunc_SOCKOPT.reset(func.Reference());
 			break;
 		case CURLOPT_OPENSOCKETFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_OPENSOCKETFUNCTION, Value_CURL::Callback_OPENSOCKET);
+			curl_easy_setopt(curl, CURLOPT_OPENSOCKETDATA, this);
 			value_curl.pFunc_OPENSOCKET.reset(func.Reference());
 			break;
 		case CURLOPT_SEEKFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, Value_CURL::Callback_SEEK);
+			curl_easy_setopt(curl, CURLOPT_SEEKDATA, this);
 			value_curl.pFunc_SEEK.reset(func.Reference());
 			break;
 		case CURLOPT_SSH_KEYFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_SSH_KEYFUNCTION, Value_CURL::Callback_SSH_KEY);
+			curl_easy_setopt(curl, CURLOPT_SSH_KEYDATA, this);
 			value_curl.pFunc_SSH_KEY.reset(func.Reference());
 			break;
 		case CURLOPT_INTERLEAVEFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_INTERLEAVEFUNCTION, Value_CURL::Callback_INTERLEAVE);
+			curl_easy_setopt(curl, CURLOPT_INTERLEAVEDATA, this);
 			value_curl.pFunc_INTERLEAVE.reset(func.Reference());
 			break;
 		case CURLOPT_CHUNK_BGN_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CHUNK_BGN_FUNCTION, Value_CURL::Callback_CHUNK_BGN);
+			//curl_easy_setopt(curl, CURLOPT_CHUNK_BGN_DATA, this);
 			value_curl.pFunc_CHUNK_BGN.reset(func.Reference());
 			break;
 		case CURLOPT_CHUNK_END_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CHUNK_END_FUNCTION, Value_CURL::Callback_CHUNK_END);
+			//curl_easy_setopt(curl, CURLOPT_CHUNK_END_DATA, this);
 			value_curl.pFunc_CHUNK_END.reset(func.Reference());
 			break;
 		case CURLOPT_FNMATCH_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_FNMATCH_FUNCTION, Value_CURL::Callback_FNMATCH);
+			curl_easy_setopt(curl, CURLOPT_FNMATCH_DATA, this);
 			value_curl.pFunc_FNMATCH.reset(func.Reference());
 			break;
 		case CURLOPT_CLOSESOCKETFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_CLOSESOCKETFUNCTION, Value_CURL::Callback_CLOSESOCKET);
+			curl_easy_setopt(curl, CURLOPT_CLOSESOCKETDATA, this);
 			value_curl.pFunc_CLOSESOCKET.reset(func.Reference());
 			break;
 		case CURLOPT_XFERINFOFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, Value_CURL::Callback_XFERINFO);
+			curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
 			value_curl.pFunc_XFERINFO.reset(func.Reference());
 			break;
 		case CURLOPT_RESOLVER_START_FUNCTION:
+			curl_easy_setopt(curl, CURLOPT_RESOLVER_START_FUNCTION, Value_CURL::Callback_RESOLVER_START);
+			curl_easy_setopt(curl, CURLOPT_RESOLVER_START_DATA, this);
 			value_curl.pFunc_RESOLVER_START.reset(func.Reference());
 			break;
 		case CURLOPT_TRAILERFUNCTION:
+			curl_easy_setopt(curl, CURLOPT_TRAILERFUNCTION, Value_CURL::Callback_TRAILER);
+			curl_easy_setopt(curl, CURLOPT_TRAILERDATA, this);
 			value_curl.pFunc_TRAILER.reset(func.Reference());
 			break;
 		default:
@@ -324,7 +364,7 @@ Gurax_ImplementFunctionEx(curl_easy_duphandle_gurax, processor_gurax, argument_g
 	// Function body
 	CURL* rtn = curl_easy_duphandle(curl);
 	if (!rtn) return Value::nil();
-	return new Value_CURL(rtn);
+	return new Value_CURL(processor_gurax.Reference(), rtn);
 }
 
 // curl.curl_easy_reset(curl:CURL)

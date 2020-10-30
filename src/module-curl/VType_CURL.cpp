@@ -141,8 +141,8 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_CURL::vtype = VTYPE_CURL;
 
-Value_CURL::Value_CURL(CURL* pCURL, VType& vtype) :
-		Value_Object(vtype), _pCURL(pCURL),
+Value_CURL::Value_CURL(Processor* pProcessor, CURL* pCURL, VType& vtype) :
+		Value_Object(vtype), _pProcessor(pProcessor), _pCURL(pCURL),
 		_pStreamWrite(Stream::COut->Reference()),
 		_pStreamRead(Stream::CIn->Reference()),
 		pValue_WRITE(Value::nil()),

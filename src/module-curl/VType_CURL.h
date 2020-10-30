@@ -29,6 +29,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_CURL");
 protected:
+	RefPtr<Processor> _pProcessor;
 	CURL* _pCURL;
 	RefPtr<Stream> _pStreamWrite;
 	RefPtr<Stream> _pStreamRead;
@@ -82,7 +83,7 @@ public:
 public:
 	// Constructor
 	Value_CURL() = delete;
-	explicit Value_CURL(CURL* pCURL, VType& vtype = VTYPE_CURL);
+	explicit Value_CURL(Processor* pProcessor, CURL* pCURL, VType& vtype = VTYPE_CURL);
 	// Copy constructor/operator
 	Value_CURL(const Value_CURL& src) = delete;
 	Value_CURL& operator=(const Value_CURL& src) = delete;
