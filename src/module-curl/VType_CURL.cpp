@@ -76,19 +76,46 @@ Gurax_ImplementMethod(CURL, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// curl.CURL#propSkeleton
-Gurax_DeclareProperty_R(CURL, propSkeleton)
+// curl.CURL#streamR
+Gurax_DeclareProperty_RW(CURL, streamR)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Stream, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(CURL, propSkeleton)
+Gurax_ImplementPropertyGetter(CURL, streamR)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Stream(valueThis.GetStreamRead().Reference());
+}
+
+Gurax_ImplementPropertySetter(CURL, streamR)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.SetStreamRead(Value_Stream::GetStream(value).Reference());
+}
+
+// curl.CURL#streamW
+Gurax_DeclareProperty_RW(CURL, streamW)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(CURL, streamW)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Stream(valueThis.GetStreamWrite().Reference());
+}
+
+Gurax_ImplementPropertySetter(CURL, streamW)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.SetStreamWrite(Value_Stream::GetStream(value).Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -105,7 +132,8 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(CURL, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(CURL, propSkeleton));
+	Assign(Gurax_CreateProperty(CURL, streamR));
+	Assign(Gurax_CreateProperty(CURL, streamW));
 }
 
 //------------------------------------------------------------------------------
@@ -146,52 +174,8 @@ void Value_CURL::SetupCallback()
 {
 	curl_easy_setopt(_pCURL, CURLOPT_WRITEFUNCTION, Callback_WRITE);
 	curl_easy_setopt(_pCURL, CURLOPT_READFUNCTION, Callback_READ);
-#if 0
-	curl_easy_setopt(_pCURL, CURLOPT_PROGRESSFUNCTION, Callback_PROGRESS);
-	curl_easy_setopt(_pCURL, CURLOPT_HEADERFUNCTION, Callback_HEADER);
-	curl_easy_setopt(_pCURL, CURLOPT_DEBUGFUNCTION, Callback_DEBUG);
-	curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_FUNCTION, Callback_SSL_CTX);
-	curl_easy_setopt(_pCURL, CURLOPT_IOCTLFUNCTION, Callback_IOCTL);
-	curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_FUNCTION, Callback_CONV_FROM_NETWORK);
-	curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_FUNCTION, Callback_CONV_TO_NETWORK);
-	curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_FUNCTION, Callback_CONV_FROM_UTF8);
-	curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTFUNCTION, Callback_SOCKOPT);
-	curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETFUNCTION, Callback_OPENSOCKET);
-	curl_easy_setopt(_pCURL, CURLOPT_SEEKFUNCTION, Callback_SEEK);
-	curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYFUNCTION, Callback_SSH_KEY);
-	curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEFUNCTION, Callback_INTERLEAVE);
-	curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_FUNCTION, Callback_CHUNK_BGN);
-	curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_FUNCTION, Callback_CHUNK_END);
-	curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_FUNCTION, Callback_FNMATCH);
-	curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETFUNCTION, Callback_CLOSESOCKET);
-	curl_easy_setopt(_pCURL, CURLOPT_XFERINFOFUNCTION, Callback_XFERINFO);
-	curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_FUNCTION, Callback_RESOLVER_START);
-	curl_easy_setopt(_pCURL, CURLOPT_TRAILERFUNCTION, Callback_TRAILER	);
-#endif
 	curl_easy_setopt(_pCURL, CURLOPT_WRITEDATA, this);
 	curl_easy_setopt(_pCURL, CURLOPT_READDATA, this);
-#if 0
-	curl_easy_setopt(_pCURL, CURLOPT_PROGRESSDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_HEADERDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_DEBUGDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_DATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_IOCTLDATA, this);
-	//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_DATA, this);
-	//curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_DATA, this);
-	//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_DATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_SEEKDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEDATA, this);
-	//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_DATA, this);
-	//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_DATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_DATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_XFERINFODATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_DATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_TRAILERDATA, this);
-#endif
 }
 
 String Value_CURL::ToString(const StringStyle& ss) const

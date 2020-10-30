@@ -169,63 +169,103 @@ curl_easy_setopt(curl:CURL_p, option:CURLoption, value:any) = \
 			value_curl.pFunc_READ.reset(func.Reference());
 			break;
 		case CURLOPT_PROGRESSFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_PROGRESSFUNCTION, Callback_PROGRESS);
+			curl_easy_setopt(_pCURL, CURLOPT_PROGRESSDATA, this);
 			value_curl.pFunc_PROGRESS.reset(func.Reference());
 			break;
 		case CURLOPT_HEADERFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_HEADERFUNCTION, Callback_HEADER);
+			curl_easy_setopt(_pCURL, CURLOPT_HEADERDATA, this);
 			value_curl.pFunc_HEADER.reset(func.Reference());
 			break;
 		case CURLOPT_DEBUGFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_DEBUGFUNCTION, Callback_DEBUG);
+			curl_easy_setopt(_pCURL, CURLOPT_DEBUGDATA, this);
 			value_curl.pFunc_DEBUG.reset(func.Reference());
 			break;
 		case CURLOPT_SSL_CTX_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_FUNCTION, Callback_SSL_CTX);
+			curl_easy_setopt(_pCURL, CURLOPT_SSL_CTX_DATA, this);
 			value_curl.pFunc_SSL_CTX.reset(func.Reference());
 			break;
 		case CURLOPT_IOCTLFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_IOCTLFUNCTION, Callback_IOCTL);
+			curl_easy_setopt(_pCURL, CURLOPT_IOCTLDATA, this);
 			value_curl.pFunc_IOCTL.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_FROM_NETWORK_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_FUNCTION, Callback_CONV_FROM_NETWORK);
+			//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_NETWORK_DATA, this);
 			value_curl.pFunc_CONV_FROM_NETWORK.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_TO_NETWORK_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_FUNCTION, Callback_CONV_TO_NETWORK);
+			//curl_easy_setopt(_pCURL, CURLOPT_CONV_TO_NETWORK_DATA, this);
 			value_curl.pFunc_CONV_TO_NETWORK.reset(func.Reference());
 			break;
 		case CURLOPT_CONV_FROM_UTF8_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_FUNCTION, Callback_CONV_FROM_UTF8);
+			//curl_easy_setopt(_pCURL, CURLOPT_CONV_FROM_UTF8_DATA, this);
 			value_curl.pFunc_CONV_FROM_UTF8.reset(func.Reference());
 			break;
 		case CURLOPT_SOCKOPTFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTFUNCTION, Callback_SOCKOPT);
+			curl_easy_setopt(_pCURL, CURLOPT_SOCKOPTDATA, this);
 			value_curl.pFunc_SOCKOPT.reset(func.Reference());
 			break;
 		case CURLOPT_OPENSOCKETFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETFUNCTION, Callback_OPENSOCKET);
+			curl_easy_setopt(_pCURL, CURLOPT_OPENSOCKETDATA, this);
 			value_curl.pFunc_OPENSOCKET.reset(func.Reference());
 			break;
 		case CURLOPT_SEEKFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_SEEKFUNCTION, Callback_SEEK);
+			curl_easy_setopt(_pCURL, CURLOPT_SEEKDATA, this);
 			value_curl.pFunc_SEEK.reset(func.Reference());
 			break;
 		case CURLOPT_SSH_KEYFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYFUNCTION, Callback_SSH_KEY);
+			curl_easy_setopt(_pCURL, CURLOPT_SSH_KEYDATA, this);
 			value_curl.pFunc_SSH_KEY.reset(func.Reference());
 			break;
 		case CURLOPT_INTERLEAVEFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEFUNCTION, Callback_INTERLEAVE);
+			curl_easy_setopt(_pCURL, CURLOPT_INTERLEAVEDATA, this);
 			value_curl.pFunc_INTERLEAVE.reset(func.Reference());
 			break;
 		case CURLOPT_CHUNK_BGN_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_FUNCTION, Callback_CHUNK_BGN);
+			//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_BGN_DATA, this);
 			value_curl.pFunc_CHUNK_BGN.reset(func.Reference());
 			break;
 		case CURLOPT_CHUNK_END_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_FUNCTION, Callback_CHUNK_END);
+			//curl_easy_setopt(_pCURL, CURLOPT_CHUNK_END_DATA, this);
 			value_curl.pFunc_CHUNK_END.reset(func.Reference());
 			break;
 		case CURLOPT_FNMATCH_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_FUNCTION, Callback_FNMATCH);
+			curl_easy_setopt(_pCURL, CURLOPT_FNMATCH_DATA, this);
 			value_curl.pFunc_FNMATCH.reset(func.Reference());
 			break;
 		case CURLOPT_CLOSESOCKETFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETFUNCTION, Callback_CLOSESOCKET);
+			curl_easy_setopt(_pCURL, CURLOPT_CLOSESOCKETDATA, this);
 			value_curl.pFunc_CLOSESOCKET.reset(func.Reference());
 			break;
 		case CURLOPT_XFERINFOFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_XFERINFOFUNCTION, Callback_XFERINFO);
+			curl_easy_setopt(_pCURL, CURLOPT_XFERINFODATA, this);
 			value_curl.pFunc_XFERINFO.reset(func.Reference());
 			break;
 		case CURLOPT_RESOLVER_START_FUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_FUNCTION, Callback_RESOLVER_START);
+			curl_easy_setopt(_pCURL, CURLOPT_RESOLVER_START_DATA, this);
 			value_curl.pFunc_RESOLVER_START.reset(func.Reference());
 			break;
 		case CURLOPT_TRAILERFUNCTION:
+			curl_easy_setopt(_pCURL, CURLOPT_TRAILERFUNCTION, Callback_TRAILER	);
+			curl_easy_setopt(_pCURL, CURLOPT_TRAILERDATA, this	);
 			value_curl.pFunc_TRAILER.reset(func.Reference());
 			break;
 		default:
