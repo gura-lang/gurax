@@ -539,322 +539,265 @@ void AssignConsts(Frame& frame)
 	AssignConst(CURLCLOSEPOLICY_CALLBACK);
 	AssignConst(CURLCLOSEPOLICY_LAST);
 	// curl_sslbackend;
-  CURLSSLBACKEND_NONE = 0,
-  CURLSSLBACKEND_OPENSSL = 1,
-  CURLSSLBACKEND_GNUTLS = 2,
-  CURLSSLBACKEND_NSS = 3,
-  CURLSSLBACKEND_OBSOLETE4 = 4,  /* Was QSOSSL. */
-  CURLSSLBACKEND_GSKIT = 5,
-  CURLSSLBACKEND_POLARSSL = 6,
-  CURLSSLBACKEND_WOLFSSL = 7,
-  CURLSSLBACKEND_SCHANNEL = 8,
-  CURLSSLBACKEND_SECURETRANSPORT = 9,
-  CURLSSLBACKEND_AXTLS = 10, /* never used since 7.63.0 */
-  CURLSSLBACKEND_MBEDTLS = 11,
-  CURLSSLBACKEND_MESALINK = 12,
-  CURLSSLBACKEND_BEARSSL = 13
-
+	AssignConst(CURLSSLBACKEND_NONE);
+	AssignConst(CURLSSLBACKEND_OPENSSL);
+	AssignConst(CURLSSLBACKEND_GNUTLS);
+	AssignConst(CURLSSLBACKEND_NSS);
+	AssignConst(CURLSSLBACKEND_OBSOLETE4);
+	AssignConst(CURLSSLBACKEND_GSKIT);
+	AssignConst(CURLSSLBACKEND_POLARSSL);
+	AssignConst(CURLSSLBACKEND_WOLFSSL);
+	AssignConst(CURLSSLBACKEND_SCHANNEL);
+	AssignConst(CURLSSLBACKEND_SECURETRANSPORT);
+	AssignConst(CURLSSLBACKEND_AXTLS);
+	AssignConst(CURLSSLBACKEND_MBEDTLS);
+	AssignConst(CURLSSLBACKEND_MESALINK);
+	AssignConst(CURLSSLBACKEND_BEARSSL);
 	// curlfiletype
-  CURLFILETYPE_FILE = 0,
-  CURLFILETYPE_DIRECTORY,
-  CURLFILETYPE_SYMLINK,
-  CURLFILETYPE_DEVICE_BLOCK,
-  CURLFILETYPE_DEVICE_CHAR,
-  CURLFILETYPE_NAMEDPIPE,
-  CURLFILETYPE_SOCKET,
-  CURLFILETYPE_DOOR, /* is possible only on Sun Solaris now */
-  CURLFILETYPE_UNKNOWN /* should never occur */
-
+	AssignConst(CURLFILETYPE_FILE);
+	AssignConst(CURLFILETYPE_DIRECTORY);
+	AssignConst(CURLFILETYPE_SYMLINK);
+	AssignConst(CURLFILETYPE_DEVICE_BLOCK);
+	AssignConst(CURLFILETYPE_DEVICE_CHAR);
+	AssignConst(CURLFILETYPE_NAMEDPIPE);
+	AssignConst(CURLFILETYPE_SOCKET);
+	AssignConst(CURLFILETYPE_DOOR);
+	AssignConst(CURLFILETYPE_UNKNOWN);
 	// curlsocktype
-  CURLSOCKTYPE_IPCXN,  /* socket created for a specific IP connection */
-  CURLSOCKTYPE_ACCEPT, /* socket created by accept() call */
-  CURLSOCKTYPE_LAST    /* never use */
-
+	AssignConst(CURLSOCKTYPE_IPCXN);
+	AssignConst(CURLSOCKTYPE_ACCEPT);
+	AssignConst(CURLSOCKTYPE_LAST);
 	// curlioerr
-  CURLIOE_OK,            /* I/O operation successful */
-  CURLIOE_UNKNOWNCMD,    /* command was unknown to callback */
-  CURLIOE_FAILRESTART,   /* failed to restart the read */
-  CURLIOE_LAST           /* never use */
-
+	AssignConst(CURLIOE_OK);
+	AssignConst(CURLIOE_UNKNOWNCMD);
+	AssignConst(CURLIOE_FAILRESTART);
+	AssignConst(CURLIOE_LAST);
 	// curliocmd	
-  CURLIOCMD_NOP,         /* no operation */
-  CURLIOCMD_RESTARTREAD, /* restart the read stream from start */
-  CURLIOCMD_LAST         /* never use */
-
+	AssignConst(CURLIOCMD_NOP);
+	AssignConst(CURLIOCMD_RESTARTREAD);
+	AssignConst(CURLIOCMD_LAST);
 	// curlinfotype
-  CURLINFO_TEXT = 0,
-  CURLINFO_HEADER_IN,    /* 1 */
-  CURLINFO_HEADER_OUT,   /* 2 */
-  CURLINFO_DATA_IN,      /* 3 */
-  CURLINFO_DATA_OUT,     /* 4 */
-  CURLINFO_SSL_DATA_IN,  /* 5 */
-  CURLINFO_SSL_DATA_OUT, /* 6 */
-  CURLINFO_END
-
+	AssignConst(CURLINFO_TEXT);
+	AssignConst(CURLINFO_HEADER_IN);
+	AssignConst(CURLINFO_HEADER_OUT);
+	AssignConst(CURLINFO_DATA_IN);
+	AssignConst(CURLINFO_DATA_OUT);
+	AssignConst(CURLINFO_SSL_DATA_IN);
+	AssignConst(CURLINFO_SSL_DATA_OUT);
+	AssignConst(CURLINFO_END);
 	// CURLproxycode
-  CURLPX_OK,
-  CURLPX_BAD_ADDRESS_TYPE,
-  CURLPX_BAD_VERSION,
-  CURLPX_CLOSED,
-  CURLPX_GSSAPI,
-  CURLPX_GSSAPI_PERMSG,
-  CURLPX_GSSAPI_PROTECTION,
-  CURLPX_IDENTD,
-  CURLPX_IDENTD_DIFFER,
-  CURLPX_LONG_HOSTNAME,
-  CURLPX_LONG_PASSWD,
-  CURLPX_LONG_USER,
-  CURLPX_NO_AUTH,
-  CURLPX_RECV_ADDRESS,
-  CURLPX_RECV_AUTH,
-  CURLPX_RECV_CONNECT,
-  CURLPX_RECV_REQACK,
-  CURLPX_REPLY_ADDRESS_TYPE_NOT_SUPPORTED,
-  CURLPX_REPLY_COMMAND_NOT_SUPPORTED,
-  CURLPX_REPLY_CONNECTION_REFUSED,
-  CURLPX_REPLY_GENERAL_SERVER_FAILURE,
-  CURLPX_REPLY_HOST_UNREACHABLE,
-  CURLPX_REPLY_NETWORK_UNREACHABLE,
-  CURLPX_REPLY_NOT_ALLOWED,
-  CURLPX_REPLY_TTL_EXPIRED,
-  CURLPX_REPLY_UNASSIGNED,
-  CURLPX_REQUEST_FAILED,
-  CURLPX_RESOLVE_HOST,
-  CURLPX_SEND_AUTH,
-  CURLPX_SEND_CONNECT,
-  CURLPX_SEND_REQUEST,
-  CURLPX_UNKNOWN_FAIL,
-  CURLPX_UNKNOWN_MODE,
-  CURLPX_USER_REJECTED,
-  CURLPX_LAST /* never use */
-
+	AssignConst(CURLPX_OK);
+	AssignConst(CURLPX_BAD_ADDRESS_TYPE);
+	AssignConst(CURLPX_BAD_VERSION);
+	AssignConst(CURLPX_CLOSED);
+	AssignConst(CURLPX_GSSAPI);
+	AssignConst(CURLPX_GSSAPI_PERMSG);
+	AssignConst(CURLPX_GSSAPI_PROTECTION);
+	AssignConst(CURLPX_IDENTD);
+	AssignConst(CURLPX_IDENTD_DIFFER);
+	AssignConst(CURLPX_LONG_HOSTNAME);
+	AssignConst(CURLPX_LONG_PASSWD);
+	AssignConst(CURLPX_LONG_USER);
+	AssignConst(CURLPX_NO_AUTH);
+	AssignConst(CURLPX_RECV_ADDRESS);
+	AssignConst(CURLPX_RECV_AUTH);
+	AssignConst(CURLPX_RECV_CONNECT);
+	AssignConst(CURLPX_RECV_REQACK);
+	AssignConst(CURLPX_REPLY_ADDRESS_TYPE_NOT_SUPPORTED);
+	AssignConst(CURLPX_REPLY_COMMAND_NOT_SUPPORTED);
+	AssignConst(CURLPX_REPLY_CONNECTION_REFUSED);
+	AssignConst(CURLPX_REPLY_GENERAL_SERVER_FAILURE);
+	AssignConst(CURLPX_REPLY_HOST_UNREACHABLE);
+	AssignConst(CURLPX_REPLY_NETWORK_UNREACHABLE);
+	AssignConst(CURLPX_REPLY_NOT_ALLOWED);
+	AssignConst(CURLPX_REPLY_TTL_EXPIRED);
+	AssignConst(CURLPX_REPLY_UNASSIGNED);
+	AssignConst(CURLPX_REQUEST_FAILED);
+	AssignConst(CURLPX_RESOLVE_HOST);
+	AssignConst(CURLPX_SEND_AUTH);
+	AssignConst(CURLPX_SEND_CONNECT);
+	AssignConst(CURLPX_SEND_REQUEST);
+	AssignConst(CURLPX_UNKNOWN_FAIL);
+	AssignConst(CURLPX_UNKNOWN_MODE);
+	AssignConst(CURLPX_USER_REJECTED);
+	AssignConst(CURLPX_LAST);
 	// curl_proxytype
-  CURLPROXY_HTTP = 0,   /* added in 7.10, new in 7.19.4 default is to use
-                           CONNECT HTTP/1.1 */
-  CURLPROXY_HTTP_1_0 = 1,   /* added in 7.19.4, force to use CONNECT
-                               HTTP/1.0  */
-  CURLPROXY_HTTPS = 2, /* added in 7.52.0 */
-  CURLPROXY_SOCKS4 = 4, /* support added in 7.15.2, enum existed already
-                           in 7.10 */
-  CURLPROXY_SOCKS5 = 5, /* added in 7.10 */
-  CURLPROXY_SOCKS4A = 6, /* added in 7.18.0 */
-  CURLPROXY_SOCKS5_HOSTNAME = 7 /* Use the SOCKS5 protocol but pass along the
-
+	AssignConst(CURLPROXY_HTTP);
+	AssignConst(CURLPROXY_HTTP_1_0);
+	AssignConst(CURLPROXY_HTTPS);
+	AssignConst(CURLPROXY_SOCKS4);
+	AssignConst(CURLPROXY_SOCKS5);
+	AssignConst(CURLPROXY_SOCKS4A);
+	AssignConst(CURLPROXY_SOCKS5_HOSTNAME);
 	// curl_usesssl
-  CURLUSESSL_NONE,    /* do not attempt to use SSL */
-  CURLUSESSL_TRY,     /* try using SSL, proceed anyway otherwise */
-  CURLUSESSL_CONTROL, /* SSL for the control connection or fail */
-  CURLUSESSL_ALL,     /* SSL for all communication or fail */
-  CURLUSESSL_LAST     /* not an option, never use */
-
+	AssignConst(CURLUSESSL_NONE);
+	AssignConst(CURLUSESSL_TRY);
+	AssignConst(CURLUSESSL_CONTROL);
+	AssignConst(CURLUSESSL_ALL);
+	AssignConst(CURLUSESSL_LAST);
 	// curl_ftpccc
-  CURLFTPSSL_CCC_NONE,    /* do not send CCC */
-  CURLFTPSSL_CCC_PASSIVE, /* Let the server initiate the shutdown */
-  CURLFTPSSL_CCC_ACTIVE,  /* Initiate the shutdown */
-  CURLFTPSSL_CCC_LAST     /* not an option, never use */
-
+	AssignConst(CURLFTPSSL_CCC_NONE);
+	AssignConst(CURLFTPSSL_CCC_PASSIVE);
+	AssignConst(CURLFTPSSL_CCC_ACTIVE);
+	AssignConst(CURLFTPSSL_CCC_LAST);
 	// curl_ftpauth
-  CURLFTPAUTH_DEFAULT, /* let libcurl decide */
-  CURLFTPAUTH_SSL,     /* use "AUTH SSL" */
-  CURLFTPAUTH_TLS,     /* use "AUTH TLS" */
-  CURLFTPAUTH_LAST /* not an option, never use */
-
+	AssignConst(CURLFTPAUTH_DEFAULT);
+	AssignConst(CURLFTPAUTH_SSL);
+	AssignConst(CURLFTPAUTH_TLS);
+	AssignConst(CURLFTPAUTH_LAST);
 	// curl_ftpcreatedir
-  CURLFTP_CREATE_DIR_NONE,  /* do NOT create missing dirs! */
-  CURLFTP_CREATE_DIR,       /* (FTP/SFTP) if CWD fails, try MKD and then CWD
-                               again if MKD succeeded, for SFTP this does
-                               similar magic */
-  CURLFTP_CREATE_DIR_RETRY, /* (FTP only) if CWD fails, try MKD and then CWD
-                               again even if MKD failed! */
-  CURLFTP_CREATE_DIR_LAST   /* not an option, never use */
-
+	AssignConst(CURLFTP_CREATE_DIR_NONE);
+	AssignConst(CURLFTP_CREATE_DIR);
+	AssignConst(CURLFTP_CREATE_DIR_RETRY);
+	AssignConst(CURLFTP_CREATE_DIR_LAST);
 	// curl_ftpmethod
-  CURLFTPMETHOD_DEFAULT,   /* let libcurl pick */
-  CURLFTPMETHOD_MULTICWD,  /* single CWD operation for each path part */
-  CURLFTPMETHOD_NOCWD,     /* no CWD at all */
-  CURLFTPMETHOD_SINGLECWD, /* one CWD to full dir, then work on file */
-  CURLFTPMETHOD_LAST       /* not an option, never use */
-
+	AssignConst(CURLFTPMETHOD_DEFAULT);
+	AssignConst(CURLFTPMETHOD_MULTICWD);
+	AssignConst(CURLFTPMETHOD_NOCWD);
+	AssignConst(CURLFTPMETHOD_SINGLECWD);
+	AssignConst(CURLFTPMETHOD_LAST);
 	// CURLOPT_HTTP_VERSION
-  CURL_HTTP_VERSION_NONE, /* setting this means we don't care, and that we'd
-                             like the library to choose the best possible
-                             for us! */
-  CURL_HTTP_VERSION_1_0,  /* please use HTTP 1.0 in the request */
-  CURL_HTTP_VERSION_1_1,  /* please use HTTP 1.1 in the request */
-  CURL_HTTP_VERSION_2_0,  /* please use HTTP 2 in the request */
-  CURL_HTTP_VERSION_2TLS, /* use version 2 for HTTPS, version 1.1 for HTTP */
-  CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE,  /* please use HTTP 2 without HTTP/1.1
-                                           Upgrade */
-  CURL_HTTP_VERSION_3 = 30, /* Makes use of explicit HTTP/3 without fallback.
-                               Use CURLOPT_ALTSVC to enable HTTP/3 upgrade */
-  CURL_HTTP_VERSION_LAST /* *ILLEGAL* http version */
-
+	AssignConst(CURL_HTTP_VERSION_NONE);
+	AssignConst(CURL_HTTP_VERSION_1_0);
+	AssignConst(CURL_HTTP_VERSION_1_1);
+	AssignConst(CURL_HTTP_VERSION_2_0);
+	AssignConst(CURL_HTTP_VERSION_2TLS);
+	AssignConst(CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE);
+	AssignConst(CURL_HTTP_VERSION_3);
+	AssignConst(CURL_HTTP_VERSION_LAST);
 	// RTSP requests
-    CURL_RTSPREQ_NONE, /* first in list */
-    CURL_RTSPREQ_OPTIONS,
-    CURL_RTSPREQ_DESCRIBE,
-    CURL_RTSPREQ_ANNOUNCE,
-    CURL_RTSPREQ_SETUP,
-    CURL_RTSPREQ_PLAY,
-    CURL_RTSPREQ_PAUSE,
-    CURL_RTSPREQ_TEARDOWN,
-    CURL_RTSPREQ_GET_PARAMETER,
-    CURL_RTSPREQ_SET_PARAMETER,
-    CURL_RTSPREQ_RECORD,
-    CURL_RTSPREQ_RECEIVE,
-    CURL_RTSPREQ_LAST /* last in list */
-
+	AssignConst(CURL_RTSPREQ_NONE);
+	AssignConst(CURL_RTSPREQ_OPTIONS);
+	AssignConst(CURL_RTSPREQ_DESCRIBE);
+	AssignConst(CURL_RTSPREQ_ANNOUNCE);
+	AssignConst(CURL_RTSPREQ_SETUP);
+	AssignConst(CURL_RTSPREQ_PLAY);
+	AssignConst(CURL_RTSPREQ_PAUSE);
+	AssignConst(CURL_RTSPREQ_TEARDOWN);
+	AssignConst(CURL_RTSPREQ_GET_PARAMETER);
+	AssignConst(CURL_RTSPREQ_SET_PARAMETER);
+	AssignConst(CURL_RTSPREQ_RECORD);
+	AssignConst(CURL_RTSPREQ_RECEIVE);
+	AssignConst(CURL_RTSPREQ_LAST);
 	// CURL_NETRC_OPTION
-  CURL_NETRC_IGNORED,     /* The .netrc will never be read.
-  CURL_NETRC_OPTIONAL,    /* A user:password in the URL will be preferred
-  CURL_NETRC_REQUIRED,    /* A user:password in the URL will be ignored.
-  CURL_NETRC_LAST
-
+	AssignConst(CURL_NETRC_IGNORED);
+	AssignConst(CURL_NETRC_OPTIONAL);
+	AssignConst(CURL_NETRC_REQUIRED);
+	AssignConst(CURL_NETRC_LAST);
 	// CURL_SSLVERSION
-  CURL_SSLVERSION_DEFAULT,
-  CURL_SSLVERSION_TLSv1, /* TLS 1.x */
-  CURL_SSLVERSION_SSLv2,
-  CURL_SSLVERSION_SSLv3,
-  CURL_SSLVERSION_TLSv1_0,
-  CURL_SSLVERSION_TLSv1_1,
-  CURL_SSLVERSION_TLSv1_2,
-  CURL_SSLVERSION_TLSv1_3,
-
-  CURL_SSLVERSION_LAST /* never use, keep last */
-
+	AssignConst(CURL_SSLVERSION_DEFAULT);
+	AssignConst(CURL_SSLVERSION_TLSv1);
+	AssignConst(CURL_SSLVERSION_SSLv2);
+	AssignConst(CURL_SSLVERSION_SSLv3);
+	AssignConst(CURL_SSLVERSION_TLSv1_0);
+	AssignConst(CURL_SSLVERSION_TLSv1_1);
+	AssignConst(CURL_SSLVERSION_TLSv1_2);
+	AssignConst(CURL_SSLVERSION_TLSv1_3);
+	AssignConst(CURL_SSLVERSION_LAST);
 	// CURL_SSLVERSION_MAX
-  CURL_SSLVERSION_MAX_NONE =     0,
-  CURL_SSLVERSION_MAX_DEFAULT =  (CURL_SSLVERSION_TLSv1   << 16),
-  CURL_SSLVERSION_MAX_TLSv1_0 =  (CURL_SSLVERSION_TLSv1_0 << 16),
-  CURL_SSLVERSION_MAX_TLSv1_1 =  (CURL_SSLVERSION_TLSv1_1 << 16),
-  CURL_SSLVERSION_MAX_TLSv1_2 =  (CURL_SSLVERSION_TLSv1_2 << 16),
-  CURL_SSLVERSION_MAX_TLSv1_3 =  (CURL_SSLVERSION_TLSv1_3 << 16),
-
-  /* never use, keep last */
-  CURL_SSLVERSION_MAX_LAST =     (CURL_SSLVERSION_LAST    << 16)
-
+	AssignConst(CURL_SSLVERSION_MAX_NONE);
+	AssignConst(CURL_SSLVERSION_MAX_DEFAULT);
+	AssignConst(CURL_SSLVERSION_MAX_TLSv1_0);
+	AssignConst(CURL_SSLVERSION_MAX_TLSv1_1);
+	AssignConst(CURL_SSLVERSION_MAX_TLSv1_2);
+	AssignConst(CURL_SSLVERSION_MAX_TLSv1_3);
+	AssignConst(CURL_SSLVERSION_MAX_LAST);
 	// CURL_TLSAUTH
-  CURL_TLSAUTH_NONE,
-  CURL_TLSAUTH_SRP,
-  CURL_TLSAUTH_LAST /* never use, keep last */
-
+	AssignConst(CURL_TLSAUTH_NONE);
+	AssignConst(CURL_TLSAUTH_SRP);
+	AssignConst(CURL_TLSAUTH_LAST);
 	// curl_TimeCond
-  CURL_TIMECOND_NONE,
-
-  CURL_TIMECOND_IFMODSINCE,
-  CURL_TIMECOND_IFUNMODSINCE,
-  CURL_TIMECOND_LASTMOD,
-
-  CURL_TIMECOND_LAST
-
+	AssignConst(CURL_TIMECOND_NONE);
+	AssignConst(CURL_TIMECOND_IFMODSINCE);
+	AssignConst(CURL_TIMECOND_IFUNMODSINCE);
+	AssignConst(CURL_TIMECOND_LASTMOD);
+	AssignConst(CURL_TIMECOND_LAST);
 	// CURLformoption
-  CURLFORM_NOTHING,        /********* the first one is unused ************/
-  CURLFORM_COPYNAME,
-  CURLFORM_PTRNAME,
-  CURLFORM_NAMELENGTH,
-  CURLFORM_COPYCONTENTS,
-  CURLFORM_PTRCONTENTS,
-  CURLFORM_CONTENTSLENGTH,
-  CURLFORM_FILECONTENT,
-  CURLFORM_ARRAY,
-  CURLFORM_OBSOLETE,
-  CURLFORM_FILE,
-
-  CURLFORM_BUFFER,
-  CURLFORM_BUFFERPTR,
-  CURLFORM_BUFFERLENGTH,
-
-  CURLFORM_CONTENTTYPE,
-  CURLFORM_CONTENTHEADER,
-  CURLFORM_FILENAME,
-  CURLFORM_END,
-  CURLFORM_OBSOLETE2,
-
-  CURLFORM_STREAM,
-  CURLFORM_CONTENTLEN, /* added in 7.46.0, provide a curl_off_t length */
-
-  CURLFORM_LASTENTRY /* the last unused */
-
+	AssignConst(CURLFORM_NOTHING);
+	AssignConst(CURLFORM_COPYNAME);
+	AssignConst(CURLFORM_PTRNAME);
+	AssignConst(CURLFORM_NAMELENGTH);
+	AssignConst(CURLFORM_COPYCONTENTS);
+	AssignConst(CURLFORM_PTRCONTENTS);
+	AssignConst(CURLFORM_CONTENTSLENGTH);
+	AssignConst(CURLFORM_FILECONTENT);
+	AssignConst(CURLFORM_ARRAY);
+	AssignConst(CURLFORM_OBSOLETE);
+	AssignConst(CURLFORM_FILE);
+	AssignConst(CURLFORM_BUFFER);
+	AssignConst(CURLFORM_BUFFERPTR);
+	AssignConst(CURLFORM_BUFFERLENGTH);
+	AssignConst(CURLFORM_CONTENTTYPE);
+	AssignConst(CURLFORM_CONTENTHEADER);
+	AssignConst(CURLFORM_FILENAME);
+	AssignConst(CURLFORM_END);
+	AssignConst(CURLFORM_OBSOLETE2);
+	AssignConst(CURLFORM_STREAM);
+	AssignConst(CURLFORM_CONTENTLEN);
+	AssignConst(CURLFORM_LASTENTRY);
 	// CURLFORMCode
-  CURL_FORMADD_OK, /* first, no error */
-
-  CURL_FORMADD_MEMORY,
-  CURL_FORMADD_OPTION_TWICE,
-  CURL_FORMADD_NULL,
-  CURL_FORMADD_UNKNOWN_OPTION,
-  CURL_FORMADD_INCOMPLETE,
-  CURL_FORMADD_ILLEGAL_ARRAY,
-  CURL_FORMADD_DISABLED, /* libcurl was built with this disabled */
-
-  CURL_FORMADD_LAST /* last */
-
+	AssignConst(CURL_FORMADD_OK);
+	AssignConst(CURL_FORMADD_MEMORY);
+	AssignConst(CURL_FORMADD_OPTION_TWICE);
+	AssignConst(CURL_FORMADD_NULL);
+	AssignConst(CURL_FORMADD_UNKNOWN_OPTION);
+	AssignConst(CURL_FORMADD_INCOMPLETE);
+	AssignConst(CURL_FORMADD_ILLEGAL_ARRAY);
+	AssignConst(CURL_FORMADD_DISABLED);
+	AssignConst(CURL_FORMADD_LAST);
 	// CURLsslset
-  CURLSSLSET_OK = 0,
-  CURLSSLSET_UNKNOWN_BACKEND,
-  CURLSSLSET_TOO_LATE,
-  CURLSSLSET_NO_BACKENDS /* libcurl was built without any SSL support */
-
+	AssignConst(CURLSSLSET_OK);
+	AssignConst(CURLSSLSET_UNKNOWN_BACKEND);
+	AssignConst(CURLSSLSET_TOO_LATE);
+	AssignConst(CURLSSLSET_NO_BACKENDS);
 	// curl_closepolicy
-  CURLCLOSEPOLICY_NONE, /* first, never use this */
-
-  CURLCLOSEPOLICY_OLDEST,
-  CURLCLOSEPOLICY_LEAST_RECENTLY_USED,
-  CURLCLOSEPOLICY_LEAST_TRAFFIC,
-  CURLCLOSEPOLICY_SLOWEST,
-  CURLCLOSEPOLICY_CALLBACK,
-
-  CURLCLOSEPOLICY_LAST /* last, never use this */
-
+	AssignConst(CURLCLOSEPOLICY_NONE);
+	AssignConst(CURLCLOSEPOLICY_OLDEST);
+	AssignConst(CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
+	AssignConst(CURLCLOSEPOLICY_LEAST_TRAFFIC);
+	AssignConst(CURLCLOSEPOLICY_SLOWEST);
+	AssignConst(CURLCLOSEPOLICY_CALLBACK);
+	AssignConst(CURLCLOSEPOLICY_LAST);
 	// curl_lock_data
-  CURL_LOCK_DATA_NONE = 0,
-  /*  CURL_LOCK_DATA_SHARE is used internally to say that
-   *  the locking is just made to change the internal state of the share
-   *  itself.
-   */
-  CURL_LOCK_DATA_SHARE,
-  CURL_LOCK_DATA_COOKIE,
-  CURL_LOCK_DATA_DNS,
-  CURL_LOCK_DATA_SSL_SESSION,
-  CURL_LOCK_DATA_CONNECT,
-  CURL_LOCK_DATA_PSL,
-  CURL_LOCK_DATA_LAST
+	AssignConst(CURL_LOCK_DATA_NONE);
+	AssignConst(CURL_LOCK_DATA_SHARE);
+	AssignConst(CURL_LOCK_DATA_COOKIE);
+	AssignConst(CURL_LOCK_DATA_DNS);
+	AssignConst(CURL_LOCK_DATA_SSL_SESSION);
+	AssignConst(CURL_LOCK_DATA_CONNECT);
+	AssignConst(CURL_LOCK_DATA_PSL);
+	AssignConst(CURL_LOCK_DATA_LAST);
 	// curl_lock_accesss
-  CURL_LOCK_ACCESS_NONE = 0,   /* unspecified action */
-  CURL_LOCK_ACCESS_SHARED = 1, /* for read perhaps */
-  CURL_LOCK_ACCESS_SINGLE = 2, /* for write perhaps */
-  CURL_LOCK_ACCESS_LAST        /* never use */
-
+	AssignConst(CURL_LOCK_ACCESS_NONE);
+	AssignConst(CURL_LOCK_ACCESS_SHARED);
+	AssignConst(CURL_LOCK_ACCESS_SINGLE);
+	AssignConst(CURL_LOCK_ACCESS_LAST);
 	// CURLSHcode
-  CURLSHE_OK,  /* all is fine */
-  CURLSHE_BAD_OPTION, /* 1 */
-  CURLSHE_IN_USE,     /* 2 */
-  CURLSHE_INVALID,    /* 3 */
-  CURLSHE_NOMEM,      /* 4 out of memory */
-  CURLSHE_NOT_BUILT_IN, /* 5 feature not present in lib */
-  CURLSHE_LAST        /* never use */
-
+	AssignConst(CURLSHE_OK);
+	AssignConst(CURLSHE_BAD_OPTION);
+	AssignConst(CURLSHE_IN_USE);
+	AssignConst(CURLSHE_INVALID);
+	AssignConst(CURLSHE_NOMEM);
+	AssignConst(CURLSHE_NOT_BUILT_IN);
+	AssignConst(CURLSHE_LAST);
 	// CURLSHoption
-  CURLSHOPT_NONE,  /* don't use */
-  CURLSHOPT_SHARE,   /* specify a data type to share */
-  CURLSHOPT_UNSHARE, /* specify which data type to stop sharing */
-  CURLSHOPT_LOCKFUNC,   /* pass in a 'curl_lock_function' pointer */
-  CURLSHOPT_UNLOCKFUNC, /* pass in a 'curl_unlock_function' pointer */
-  CURLSHOPT_USERDATA,   /* pass in a user data pointer used in the lock/unlock
-                           callback functions */
-  CURLSHOPT_LAST  /* never use */
-
+	AssignConst(CURLSHOPT_NONE);
+	AssignConst(CURLSHOPT_SHARE);
+	AssignConst(CURLSHOPT_UNSHARE);
+	AssignConst(CURLSHOPT_LOCKFUNC);
+	AssignConst(CURLSHOPT_UNLOCKFUNC);
+	AssignConst(CURLSHOPT_USERDATA);
+	AssignConst(CURLSHOPT_LAST);
 	// CURLversion
-  CURLVERSION_FIRST,
-  CURLVERSION_SECOND,
-  CURLVERSION_THIRD,
-  CURLVERSION_FOURTH,
-  CURLVERSION_FIFTH,
-  CURLVERSION_SIXTH,
-  CURLVERSION_SEVENTH,
-  CURLVERSION_EIGHTH,
-  CURLVERSION_LAST /* never actually use this */
+	AssignConst(CURLVERSION_FIRST);
+	AssignConst(CURLVERSION_SECOND);
+	AssignConst(CURLVERSION_THIRD);
+	AssignConst(CURLVERSION_FOURTH);
+	AssignConst(CURLVERSION_FIFTH);
+	AssignConst(CURLVERSION_SIXTH);
+	AssignConst(CURLVERSION_SEVENTH);
+	AssignConst(CURLVERSION_EIGHTH);
+	AssignConst(CURLVERSION_LAST);
 }
-
-
 
 Gurax_EndModuleScope(curl)
