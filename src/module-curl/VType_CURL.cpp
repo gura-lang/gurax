@@ -48,38 +48,12 @@ Gurax_ImplementConstructor(CURL)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//-----------------------------------------------------------------------------
-// curl.CURL#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(CURL, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(CURL, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // curl.CURL#streamR
 Gurax_DeclareProperty_RW(CURL, streamR)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Stream, Flag::StreamR);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -100,7 +74,7 @@ Gurax_ImplementPropertySetter(CURL, streamR)
 // curl.CURL#streamW
 Gurax_DeclareProperty_RW(CURL, streamW)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Stream, Flag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -129,8 +103,6 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(CURL));
-	// Assignment of method
-	Assign(Gurax_CreateMethod(CURL, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(CURL, streamR));
 	Assign(Gurax_CreateProperty(CURL, streamW));
@@ -183,29 +155,29 @@ String Value_CURL::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "curl.CURL");
 }
 
-size_t Value_CURL::Callback_WRITE(char* ptr, size_t size, size_t nmemb, void* userdata)
+size_t Value_CURL::Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata)
 {
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
 	if (pThis->pFunc_WRITE) {
-		//RefPtr<Memory> pMemory(new Memory_Sloth(ptr, nmemb));
+		//RefPtr<Memory> pMemory(new Memory_Sloth(buffer, nitems));
 		//pThis->pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
 		return 0;
 	} else {
-		return pThis->GetStreamWrite().Write(ptr, size * nmemb)? size * nmemb : 0;
+		return pThis->GetStreamWrite().Write(ptr, size * nitems)? size * nitems : 0;
 	}
 }
 
-size_t Value_CURL::Callback_READ(char* ptr, size_t size, size_t nmemb, void* userdata)
+size_t Value_CURL::Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata)
 {
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
 	if (pThis->pFunc_READ) {
 		return 0;
 	} else {
-		return pThis->GetStreamRead().Read(ptr, size * nmemb);
+		return pThis->GetStreamRead().Read(ptr, size * nitems);
 	}
 }
 
-void Value_CURL::Callback_PROGRESS()
+curlioerr Value_CURL::Callback_PROGRESS(CURL* curl, int cmd, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -213,9 +185,10 @@ void Value_CURL::Callback_PROGRESS()
 	} else {
 	}
 #endif
+	return CURLIOE_OK;
 }
 
-void Value_CURL::Callback_HEADER()
+size_t Value_CURL::Callback_HEADER(char* buffer, size_t size,   size_t nitems, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -223,9 +196,10 @@ void Value_CURL::Callback_HEADER()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_DEBUG()
+int Value_CURL::Callback_DEBUG(CURL* curl, curl_infotype type, char* data, size_t size, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -233,9 +207,10 @@ void Value_CURL::Callback_DEBUG()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_SSL_CTX()
+CURLcode Value_CURL::Callback_SSL_CTX(CURL* curl, void* ssl_ctx, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -243,9 +218,10 @@ void Value_CURL::Callback_SSL_CTX()
 	} else {
 	}
 #endif
+	return CURLE_OK;
 }
 
-void Value_CURL::Callback_IOCTL()
+curlioerr Value_CURL::Callback_IOCTL(CURL* curl, int cmd, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -253,9 +229,10 @@ void Value_CURL::Callback_IOCTL()
 	} else {
 	}
 #endif
+	return CURLIOE_OK;
 }
 
-void Value_CURL::Callback_CONV_FROM_NETWORK()
+CURLcode Value_CURL::Callback_CONV_FROM_NETWORK(char* ptr, size_t length)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -263,9 +240,10 @@ void Value_CURL::Callback_CONV_FROM_NETWORK()
 	} else {
 	}
 #endif
+	return CURLE_OK;
 }
 
-void Value_CURL::Callback_CONV_TO_NETWORK()
+CURLcode Value_CURL::Callback_CONV_TO_NETWORK(char* ptr, size_t length)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -273,9 +251,10 @@ void Value_CURL::Callback_CONV_TO_NETWORK()
 	} else {
 	}
 #endif
+	return CURLE_OK;
 }
 
-void Value_CURL::Callback_CONV_FROM_UTF8()
+CURLcode Value_CURL::Callback_CONV_FROM_UTF8(char* ptr, size_t length)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -283,9 +262,10 @@ void Value_CURL::Callback_CONV_FROM_UTF8()
 	} else {
 	}
 #endif
+	return CURLE_OK;
 }
 
-void Value_CURL::Callback_SOCKOPT()
+int Value_CURL::Callback_SOCKOPT(void* userdata, curl_socket_t curlfd, curlsocktype purpose)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -293,9 +273,10 @@ void Value_CURL::Callback_SOCKOPT()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_OPENSOCKET()
+curl_socket_t Value_CURL::Callback_OPENSOCKET(void* userdata, curlsocktype purpose, curl_sockaddr* address)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -303,9 +284,10 @@ void Value_CURL::Callback_OPENSOCKET()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_SEEK()
+int Value_CURL::Callback_SEEK(void* userdata, curl_off_t offset, int origin)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -313,9 +295,10 @@ void Value_CURL::Callback_SEEK()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_SSH_KEY()
+int Value_CURL::Callback_SSH_KEY(CURL* curl, const curl_khkey* knownkey, const curl_khkey* foundkey, curl_khmatch match, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -323,9 +306,10 @@ void Value_CURL::Callback_SSH_KEY()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_INTERLEAVE()
+size_t Value_CURL::Callback_INTERLEAVE(void* ptr, size_t size, size_t nitems, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -333,9 +317,10 @@ void Value_CURL::Callback_INTERLEAVE()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_CHUNK_BGN()
+long Value_CURL::Callback_CHUNK_BGN(const void* transfer_info, void* userdata, int remains)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -343,9 +328,10 @@ void Value_CURL::Callback_CHUNK_BGN()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_CHUNK_END()
+long Value_CURL::Callback_CHUNK_END(void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -353,9 +339,10 @@ void Value_CURL::Callback_CHUNK_END()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_FNMATCH()
+int Value_CURL::Callback_FNMATCH(void* userdata, const char* pattern, const char* string)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -363,9 +350,10 @@ void Value_CURL::Callback_FNMATCH()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_CLOSESOCKET()
+int Value_CURL::Callback_CLOSESOCKET(void* userdata, curl_socket_t item)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -373,9 +361,10 @@ void Value_CURL::Callback_CLOSESOCKET()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_XFERINFO()
+int Value_CURL::Callback_XFERINFO(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -383,9 +372,10 @@ void Value_CURL::Callback_XFERINFO()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_RESOLVER_START()
+int Value_CURL::Callback_RESOLVER_START(void* resover_state, void* reserved, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -393,9 +383,10 @@ void Value_CURL::Callback_RESOLVER_START()
 	} else {
 	}
 #endif
+	return 0;
 }
 
-void Value_CURL::Callback_TRAILER()
+int Value_CURL::Callback_TRAILER(struct curl_slist** list, void* userdata)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
@@ -403,6 +394,7 @@ void Value_CURL::Callback_TRAILER()
 	} else {
 	}
 #endif
+	return 0;
 }
 
 Gurax_EndModuleScope(curl)
