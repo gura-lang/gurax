@@ -50,8 +50,8 @@ Gurax_ImplementConstructor(CURL)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// curl.CURL#streamR
-Gurax_DeclareProperty_RW(CURL, streamR)
+// curl.CURL#streamSrc
+Gurax_DeclareProperty_RW(CURL, streamSrc)
 {
 	Declare(VTYPE_Stream, Flag::StreamR);
 	AddHelp(
@@ -59,20 +59,20 @@ Gurax_DeclareProperty_RW(CURL, streamR)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(CURL, streamR)
+Gurax_ImplementPropertyGetter(CURL, streamSrc)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Stream(valueThis.GetStreamRead().Reference());
 }
 
-Gurax_ImplementPropertySetter(CURL, streamR)
+Gurax_ImplementPropertySetter(CURL, streamSrc)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.SetStreamRead(Value_Stream::GetStream(value).Reference());
 }
 
-// curl.CURL#streamW
-Gurax_DeclareProperty_RW(CURL, streamW)
+// curl.CURL#streamDst
+Gurax_DeclareProperty_RW(CURL, streamDst)
 {
 	Declare(VTYPE_Stream, Flag::StreamW);
 	AddHelp(
@@ -80,13 +80,13 @@ Gurax_DeclareProperty_RW(CURL, streamW)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(CURL, streamW)
+Gurax_ImplementPropertyGetter(CURL, streamDst)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Stream(valueThis.GetStreamWrite().Reference());
 }
 
-Gurax_ImplementPropertySetter(CURL, streamW)
+Gurax_ImplementPropertySetter(CURL, streamDst)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.SetStreamWrite(Value_Stream::GetStream(value).Reference());
@@ -104,8 +104,8 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(CURL));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(CURL, streamR));
-	Assign(Gurax_CreateProperty(CURL, streamW));
+	Assign(Gurax_CreateProperty(CURL, streamSrc));
+	Assign(Gurax_CreateProperty(CURL, streamDst));
 }
 
 //------------------------------------------------------------------------------
