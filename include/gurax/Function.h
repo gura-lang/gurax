@@ -247,6 +247,10 @@ public:
 	Value* Eval(Processor& processor, Argument& argument) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1,
+						RefPtr<Value> pValueArg2, RefPtr<Value> pValueArg3) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4) const;
 	void Call(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
