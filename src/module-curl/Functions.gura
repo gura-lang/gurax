@@ -81,7 +81,7 @@ curl_easy_cleanup(curl:CURL_p):void
 
 curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
 	R'''
-	return curl_value.GetInfo(info);
+	return value_curl.GetInfo(info);
 	'''
 
 curl_easy_duphandle(curl:CURL_p):CURL_p
@@ -148,7 +148,12 @@ char *curl_easy_unescape(handle:CURL_p, string:const_char_p, int length, int *ou
 
 char *curl_unescape(string:const_char_p, int length);
 */
-//curl_free(void *p):void
+
+curl_free(value:any):void = \
+	R'''
+	return Value::nil();
+	'''
+
 /*
 curl_global_init(long flags):CURLcode
 
