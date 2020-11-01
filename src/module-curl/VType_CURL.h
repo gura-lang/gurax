@@ -126,6 +126,9 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	void SetupCallback();
+	bool SetOpt(CURLoption option, const Value& value, CURLcode* pCode);
+	Value* GetInfo(CURLINFO info);
+public:
 	static size_t Callback_WRITE(char* ptr, size_t size, size_t nmemb, void* userdata);
 	static size_t Callback_READ(char* ptr, size_t size, size_t nmemb, void* userdata);
 	static curlioerr Callback_PROGRESS(CURL* curl, int cmd, void* userdata);
