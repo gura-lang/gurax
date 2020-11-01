@@ -454,6 +454,7 @@ TestCase('String#len, String#width') {
 		`str
 		`str.len
 		`str.width
+		`str.bytes
 	]
 	str = 'abcdefghijklmn'
 	Tester(exprs)

@@ -1,5 +1,6 @@
 ======== Property ========
 String
+  #bytes            Number       R
   #first            String       R
   #last             String       R
   #len              Number       R
@@ -501,9 +502,11 @@ str.Split(':', 10):list .. ['abc', 'def', 'ghi', 'jkl', 'mno']
 str .. abcdefghijklmn
 str.len .. 14
 str.width .. 14
+str.bytes .. 14
 str .. あいうえおかきくけこ
 str.len .. 10
 str.width .. 20
+str.bytes .. 30
 ======== String#first ========
 ''.first .. ''
 'a'.first .. 'a'

@@ -1213,6 +1213,21 @@ Gurax_ImplementMethod(String, ZenToHan)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// String#bytes
+Gurax_DeclareProperty_R(String, bytes)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The string's memory size in bytes.");
+}
+
+Gurax_ImplementPropertyGetter(String, bytes)
+{
+	const String& str = GetValueThis(valueTarget).GetStringSTL();
+	return new Value_Number(str.size());
+}
+
 // String#first
 Gurax_DeclareProperty_R(String, first)
 {
@@ -1419,6 +1434,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Upper));
 	Assign(Gurax_CreateMethod(String, ZenToHan));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(String, bytes));
 	Assign(Gurax_CreateProperty(String, first));
 	Assign(Gurax_CreateProperty(String, last));
 	Assign(Gurax_CreateProperty(String, len));
