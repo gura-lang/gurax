@@ -92,6 +92,27 @@ Gurax_ImplementPropertySetter(CURL, streamDst)
 	valueThis.SetStreamWrite(Value_Stream::GetStream(value).Reference());
 }
 
+// curl.CURL#streamHeader
+Gurax_DeclareProperty_RW(CURL, streamHeader)
+{
+	Declare(VTYPE_Stream, Flag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(CURL, streamHeader)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Stream(valueThis.GetStreamHeader().Reference());
+}
+
+Gurax_ImplementPropertySetter(CURL, streamHeader)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.SetStreamHeader(Value_Stream::GetStream(value).Reference());
+}
+
 //------------------------------------------------------------------------------
 // VType_CURL
 //------------------------------------------------------------------------------
@@ -106,6 +127,7 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(CURL, streamSrc));
 	Assign(Gurax_CreateProperty(CURL, streamDst));
+	Assign(Gurax_CreateProperty(CURL, streamHeader));
 }
 
 //------------------------------------------------------------------------------
@@ -146,8 +168,10 @@ void Value_CURL::SetupCallback()
 {
 	curl_easy_setopt(_pCURL, CURLOPT_WRITEFUNCTION, Callback_WRITE);
 	curl_easy_setopt(_pCURL, CURLOPT_READFUNCTION, Callback_READ);
+	curl_easy_setopt(_pCURL, CURLOPT_HEADERFUNCTION, Callback_HEADER);
 	curl_easy_setopt(_pCURL, CURLOPT_WRITEDATA, this);
 	curl_easy_setopt(_pCURL, CURLOPT_READDATA, this);
+	curl_easy_setopt(_pCURL, CURLOPT_HEADERDATA, this);
 }
 
 bool Value_CURL::SetOpt(CURLoption option, const Value& value, CURLcode* pCode)
@@ -484,7 +508,8 @@ size_t Value_CURL::Callback_WRITE(char* ptr, size_t size, size_t nitems, void* u
 		//pThis->pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
 		return 0;
 	} else {
-		return pThis->GetStreamWrite().Write(ptr, size * nitems)? size * nitems : 0;
+		return (!pThis->IsValidStreamWrite() ||
+			pThis->GetStreamWrite().Write(ptr, size * nitems))? size * nitems : 0;
 	}
 }
 
@@ -494,7 +519,8 @@ size_t Value_CURL::Callback_READ(char* ptr, size_t size, size_t nitems, void* us
 	if (pThis->pFunc_READ) {
 		return 0;
 	} else {
-		return pThis->GetStreamRead().Read(ptr, size * nitems);
+		return pThis->IsValidStreamRead()?
+			pThis->GetStreamRead().Read(ptr, size * nitems) : 0;
 	}
 }
 
@@ -509,15 +535,17 @@ curlioerr Value_CURL::Callback_PROGRESS(CURL* curl, int cmd, void* userdata)
 	return CURLIOE_OK;
 }
 
-size_t Value_CURL::Callback_HEADER(char* buffer, size_t size,   size_t nitems, void* userdata)
+size_t Value_CURL::Callback_HEADER(char* ptr, size_t size,   size_t nitems, void* userdata)
 {
-#if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
 	if (pThis->pFunc_HEADER) {
+		//RefPtr<Memory> pMemory(new Memory_Sloth(buffer, nitems));
+		//pThis->pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
+		return 0;
 	} else {
+		return (!pThis->IsValidStreamHeader() ||
+			pThis->GetStreamHeader().Write(ptr, size * nitems))? size * nitems : 0;
 	}
-#endif
-	return 0;
 }
 
 int Value_CURL::Callback_DEBUG(CURL* curl, curl_infotype type, char* data, size_t size, void* userdata)

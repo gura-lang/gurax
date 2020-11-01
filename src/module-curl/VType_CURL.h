@@ -33,6 +33,7 @@ protected:
 	CURL* _pCURL;
 	RefPtr<Stream> _pStreamWrite;
 	RefPtr<Stream> _pStreamRead;
+	RefPtr<Stream> _pStreamHeader;
 public:
 	RefPtr<Function> pFunc_WRITE;
 	RefPtr<Function> pFunc_READ;
@@ -106,8 +107,13 @@ public:
 public:
 	void SetStreamWrite(Stream* pStream) { _pStreamWrite.reset(pStream); }
 	void SetStreamRead(Stream* pStream) { _pStreamRead.reset(pStream); }
+	void SetStreamHeader(Stream* pStream) { _pStreamHeader.reset(pStream); }
+	bool IsValidStreamWrite() { return !!_pStreamWrite; }
+	bool IsValidStreamRead() { return !!_pStreamRead; }
+	bool IsValidStreamHeader() { return !!_pStreamHeader; }
 	Stream& GetStreamWrite() { return *_pStreamWrite; }
 	Stream& GetStreamRead() { return *_pStreamRead; }
+	Stream& GetStreamHeader() { return *_pStreamHeader; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -129,10 +135,10 @@ public:
 	bool SetOpt(CURLoption option, const Value& value, CURLcode* pCode);
 	Value* GetInfo(CURLINFO info);
 public:
-	static size_t Callback_WRITE(char* ptr, size_t size, size_t nmemb, void* userdata);
-	static size_t Callback_READ(char* ptr, size_t size, size_t nmemb, void* userdata);
+	static size_t Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata);
+	static size_t Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata);
 	static curlioerr Callback_PROGRESS(CURL* curl, int cmd, void* userdata);
-	static size_t Callback_HEADER(char* buffer, size_t size,   size_t nitems, void* userdata);
+	static size_t Callback_HEADER(char* ptr, size_t size,   size_t nitems, void* userdata);
 	static int Callback_DEBUG(CURL* curl, curl_infotype type, char* data, size_t size, void* userdata);
 	static CURLcode Callback_SSL_CTX(CURL* curl, void* ssl_ctx, void* userdata);
 	static curlioerr Callback_IOCTL(CURL* curl, int cmd, void* userdata);
