@@ -36,10 +36,14 @@ target_sources(curl.gurd PRIVATE
 	module-curl.cpp
 	Util.cpp
 	Consts.cpp
+	Info.cpp
+	Opt.cpp
 	Functions.cpp
 	VTYPE_CURL.cpp
 	VTYPE_curl_mime.cpp
-	VTYPE_curl_mimepart.cpp)
+	VTYPE_curl_mimepart.cpp
+	VTYPE_Info.cpp
+	VTYPE_Opt.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

@@ -71,7 +71,7 @@ curl_easy_init():CURL_p
 curl_easy_setopt(curl:CURL_p, option:CURLoption, value:any) = \
 	R'''
 	CURLcode code = CURLE_OK;
-	if (!value_curl.SetOpt(option, value, &code)) return Value::nil();
+	if (!value_curl.SetOptEntry(option, value, &code)) return Value::nil();
 	return new Value_Number(code);
 	'''
 
@@ -81,7 +81,7 @@ curl_easy_cleanup(curl:CURL_p):void
 
 curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
 	R'''
-	return value_curl.GetInfo(info);
+	return value_curl.GetInfoEntry(info);
 	'''
 
 curl_easy_duphandle(curl:CURL_p):CURL_p

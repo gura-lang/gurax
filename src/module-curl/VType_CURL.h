@@ -5,6 +5,8 @@
 #define GURAX_MODULE_CURL_VTYPE_CURL_H
 #include <gurax.h>
 #include <curl/curl.h>
+#include "Info.h"
+#include "Opt.h"
 
 Gurax_BeginModuleScope(curl)
 
@@ -31,54 +33,11 @@ public:
 protected:
 	RefPtr<Processor> _pProcessor;
 	CURL* _pCURL;
+	RefPtr<Info> _pInfo;
+	RefPtr<Opt> _pOpt;
 	RefPtr<Stream> _pStreamWrite;
 	RefPtr<Stream> _pStreamRead;
 	RefPtr<Stream> _pStreamHeader;
-public:
-	RefPtr<Function> pFunc_WRITE;
-	RefPtr<Function> pFunc_READ;
-	RefPtr<Function> pFunc_PROGRESS;
-	RefPtr<Function> pFunc_HEADER;
-	RefPtr<Function> pFunc_DEBUG;
-	RefPtr<Function> pFunc_SSL_CTX;
-	RefPtr<Function> pFunc_IOCTL;
-	RefPtr<Function> pFunc_CONV_FROM_NETWORK;
-	RefPtr<Function> pFunc_CONV_TO_NETWORK;
-	RefPtr<Function> pFunc_CONV_FROM_UTF8;
-	RefPtr<Function> pFunc_SOCKOPT;
-	RefPtr<Function> pFunc_OPENSOCKET;
-	RefPtr<Function> pFunc_SEEK;
-	RefPtr<Function> pFunc_SSH_KEY;
-	RefPtr<Function> pFunc_INTERLEAVE;
-	RefPtr<Function> pFunc_CHUNK_BGN;
-	RefPtr<Function> pFunc_CHUNK_END;
-	RefPtr<Function> pFunc_FNMATCH;
-	RefPtr<Function> pFunc_CLOSESOCKET;
-	RefPtr<Function> pFunc_XFERINFO;
-	RefPtr<Function> pFunc_RESOLVER_START;
-	RefPtr<Function> pFunc_TRAILER;
-	RefPtr<Value> pValue_WRITE;
-	RefPtr<Value> pValue_READ;
-	RefPtr<Value> pValue_PROGRESS;
-	RefPtr<Value> pValue_HEADER;
-	RefPtr<Value> pValue_DEBUG;
-	RefPtr<Value> pValue_SSL_CTX;
-	RefPtr<Value> pValue_IOCTL;
-	RefPtr<Value> pValue_CONV_FROM_NETWORK;
-	RefPtr<Value> pValue_CONV_TO_NETWORK;
-	RefPtr<Value> pValue_CONV_FROM_UTF8;
-	RefPtr<Value> pValue_SOCKOPT;
-	RefPtr<Value> pValue_OPENSOCKET;
-	RefPtr<Value> pValue_SEEK;
-	RefPtr<Value> pValue_SSH_KEY;
-	RefPtr<Value> pValue_INTERLEAVE;
-	RefPtr<Value> pValue_CHUNK_BGN;
-	RefPtr<Value> pValue_CHUNK_END;
-	RefPtr<Value> pValue_FNMATCH;
-	RefPtr<Value> pValue_CLOSESOCKET;
-	RefPtr<Value> pValue_XFERINFO;
-	RefPtr<Value> pValue_RESOLVER_START;
-	RefPtr<Value> pValue_TRAILER;
 public:
 	static VType& vtype;
 public:
@@ -132,8 +91,9 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	void SetupCallback();
-	bool SetOpt(CURLoption option, const Value& value, CURLcode* pCode);
-	Value* GetInfo(CURLINFO info);
+	Info& GetInfo() { return *_pInfo; }
+	Opt& GetOpt() { return *_pOpt; }
+	Value* GetInfoEntry(CURLINFO info);
 public:
 	static size_t Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata);
 	static size_t Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata);

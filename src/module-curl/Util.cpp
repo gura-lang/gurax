@@ -5,7 +5,6 @@
 
 Gurax_BeginModuleScope(curl)
 
-
 curl_slist* CreateSListFromValueList(const ValueList& values)
 {
 	curl_slist* slist = nullptr;

@@ -44,7 +44,7 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 	Gurax::Value& value = args_gurax.PickValue();
 	// Function body
 	CURLcode code = CURLE_OK;
-	if (!value_curl.SetOpt(option, value, &code)) return Value::nil();
+	if (!value_curl.GetOpt().SetItem(option, value, &code)) return Value::nil();
 	return new Value_Number(code);
 }
 
@@ -109,7 +109,7 @@ Gurax_ImplementFunctionEx(curl_easy_getinfo_gurax, processor_gurax, argument_gur
 	CURL* curl = value_curl.GetEntityPtr();
 	CURLINFO info = args_gurax.PickNumber<CURLINFO>();
 	// Function body
-	return value_curl.GetInfo(info);
+	return value_curl.GetInfoEntry(info);
 }
 
 // curl.curl_easy_duphandle(curl:CURL)
