@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(curl)
 //------------------------------------------------------------------------------
 // Info
 //------------------------------------------------------------------------------
+Info::Map Info::_map;
+
 Value* Info::GetEntry(CURLINFO info)
 {
 	CURLcode code = CURLE_OK;
@@ -48,6 +50,14 @@ Value* Info::GetEntry(CURLINFO info)
 String Info::ToString(const StringStyle& ss) const
 {
 	return String().Format("curl.Info");
+}
+
+const Info::Pair Info::_pairTbl[] = {
+	{ "EFFECTIVE_URL", CURLINFO_EFFECTIVE_URL },
+};
+
+void Info::Bootup()
+{
 }
 
 Gurax_EndModuleScope(curl)

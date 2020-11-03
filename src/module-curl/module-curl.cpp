@@ -15,6 +15,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialize tables
+	Info::Bootup();
+	Opt::Bootup();
 	// Assignment of VTYPE
 	Assign(VTYPE_CURL);
 	Assign(VTYPE_curl_mime);

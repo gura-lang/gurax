@@ -16,8 +16,17 @@ public:
 	Gurax_DeclareReferable(Opt);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("curl.Opt");
+public:
+	struct Pair {
+		const char* name;
+		CURLoption option;
+	};
+	using Map = std::unordered_map<const Symbol*, CURLINFO, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 private:
 	CURL* _curl;
+private:
+	static const Pair _pairTbl[];
+	static Map _map;
 public:
 	RefPtr<Function> pFunc_WRITE;
 	RefPtr<Function> pFunc_READ;
@@ -75,6 +84,7 @@ public:
 protected:
 	~Opt() = default;
 public:
+	static void Bootup();
 	bool SetItem(CURLoption option, const Value& value, CURLcode* pCode);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

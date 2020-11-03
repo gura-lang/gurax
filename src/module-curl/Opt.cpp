@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(curl)
 //------------------------------------------------------------------------------
 // Opt
 //------------------------------------------------------------------------------
+Opt::Map Opt::_map;
+
 Opt::Opt(CURL* curl) : _curl(curl),
 		pValue_WRITE(Value::nil()),
 		pValue_READ(Value::nil()),
@@ -322,6 +324,14 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 String Opt::ToString(const StringStyle& ss) const
 {
 	return String().Format("curl.Opt");
+}
+
+const Opt::Pair Opt::_pairTbl[] = {
+	{ "WRITEDATA", CURLOPT_WRITEDATA },
+};
+
+void Opt::Bootup()
+{
 }
 
 Gurax_EndModuleScope(curl)
