@@ -61,8 +61,8 @@ Gurax_DeclareProperty_R(CURL, info)
 
 Gurax_ImplementPropertyGetter(CURL, info)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Info(valueThis.GetInfo().Reference());
 }
 
 // curl.CURL#opt
@@ -76,8 +76,8 @@ Gurax_DeclareProperty_R(CURL, opt)
 
 Gurax_ImplementPropertyGetter(CURL, opt)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Opt(valueThis.GetOpt().Reference());
 }
 
 // curl.CURL#streamSrc
@@ -155,7 +155,8 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(CURL));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(CURL, streamSrc));
+	Assign(Gurax_CreateProperty(CURL, info));
+	Assign(Gurax_CreateProperty(CURL, opt));
 	Assign(Gurax_CreateProperty(CURL, streamDst));
 	Assign(Gurax_CreateProperty(CURL, streamHeader));
 }

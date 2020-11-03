@@ -95,4 +95,9 @@ String Value_Info::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetInfo().ToString(ss));
 }
 
+Value* Value_Info::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	return GetInfo().GetProperty(pSymbol);
+}
+
 Gurax_EndModuleScope(curl)

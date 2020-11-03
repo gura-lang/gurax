@@ -40,7 +40,8 @@ protected:
 	~Info() = default;
 public:
 	static void Bootup();
-	Value* GetEntry(CURLINFO info);
+	Value* GetProperty(const Symbol* pSymbol);
+	Value* GetItem(CURLINFO info);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Info& other) const { return this == &other; }

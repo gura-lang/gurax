@@ -75,6 +75,8 @@ public:
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 };
 
 Gurax_EndModuleScope(curl)

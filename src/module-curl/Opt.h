@@ -21,7 +21,7 @@ public:
 		const char* name;
 		CURLoption option;
 	};
-	using Map = std::unordered_map<const Symbol*, CURLINFO, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	using Map = std::unordered_map<const Symbol*, CURLoption, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 private:
 	CURL* _curl;
 private:
@@ -85,6 +85,7 @@ protected:
 	~Opt() = default;
 public:
 	static void Bootup();
+	bool SetProperty(const Symbol* pSymbol, const Value& value);
 	bool SetItem(CURLoption option, const Value& value, CURLcode* pCode);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
