@@ -32,7 +32,7 @@ public:
 	Gurax_MemoryPoolAllocator("Value_CURL");
 protected:
 	RefPtr<Processor> _pProcessor;
-	CURL* _pCURL;
+	CURL* _curl;
 	RefPtr<Info> _pInfo;
 	RefPtr<Opt> _pOpt;
 	RefPtr<Stream> _pStreamWrite;
@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_CURL() = delete;
-	explicit Value_CURL(Processor* pProcessor, CURL* pCURL, VType& vtype = VTYPE_CURL);
+	explicit Value_CURL(Processor* pProcessor, CURL* curl, VType& vtype = VTYPE_CURL);
 	// Copy constructor/operator
 	Value_CURL(const Value_CURL& src) = delete;
 	Value_CURL& operator=(const Value_CURL& src) = delete;
@@ -54,8 +54,8 @@ protected:
 	// Destructor
 	~Value_CURL() = default;
 public:
-	CURL* GetEntityPtr() { return _pCURL; }
-	const CURL* GetEntityPtr() const { return _pCURL; }
+	CURL* GetEntityPtr() { return _curl; }
+	const CURL* GetEntityPtr() const { return _curl; }
 public:
 	static CURL* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_CURL&>(value).GetEntityPtr();
@@ -93,7 +93,6 @@ public:
 	void SetupCallback();
 	Info& GetInfo() { return *_pInfo; }
 	Opt& GetOpt() { return *_pOpt; }
-	Value* GetInfoEntry(CURLINFO info);
 public:
 	static size_t Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata);
 	static size_t Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata);

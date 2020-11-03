@@ -42,8 +42,8 @@ Gurax_ImplementConstructor(CURL)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	//RefPtr<CURL> pCURL(new CURL());
-	//return argument.ReturnValue(processor, new Value_CURL(pCURL.release()));
+	//RefPtr<CURL> curl(new CURL());
+	//return argument.ReturnValue(processor, new Value_CURL(curl.release()));
 	return Value::nil();
 }
 
@@ -165,9 +165,9 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_CURL::vtype = VTYPE_CURL;
 
-Value_CURL::Value_CURL(Processor* pProcessor, CURL* pCURL, VType& vtype) :
-		Value_Object(vtype), _pProcessor(pProcessor), _pCURL(pCURL),
-		_pInfo(new Info(pCURL)), _pOpt(new Opt(pCURL)),
+Value_CURL::Value_CURL(Processor* pProcessor, CURL* curl, VType& vtype) :
+		Value_Object(vtype), _pProcessor(pProcessor), _curl(curl),
+		_pInfo(new Info(curl)), _pOpt(new Opt(curl)),
 		_pStreamWrite(Stream::COut->Reference()),
 		_pStreamRead(Stream::CIn->Reference())
 {
@@ -176,50 +176,12 @@ Value_CURL::Value_CURL(Processor* pProcessor, CURL* pCURL, VType& vtype) :
 
 void Value_CURL::SetupCallback()
 {
-	curl_easy_setopt(_pCURL, CURLOPT_WRITEFUNCTION, Callback_WRITE);
-	curl_easy_setopt(_pCURL, CURLOPT_READFUNCTION, Callback_READ);
-	curl_easy_setopt(_pCURL, CURLOPT_HEADERFUNCTION, Callback_HEADER);
-	curl_easy_setopt(_pCURL, CURLOPT_WRITEDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_READDATA, this);
-	curl_easy_setopt(_pCURL, CURLOPT_HEADERDATA, this);
-}
-
-Value* Value_CURL::GetInfoEntry(CURLINFO info)
-{
-	CURL* curl = GetEntityPtr();
-	CURLcode code = CURLE_OK;
-	RefPtr<Value> pValueRtn(Value::nil());
-	long infoType = info & CURLINFO_TYPEMASK;
-	if (infoType == CURLINFO_STRING) {
-		const char* value;
-		code = curl_easy_getinfo(curl, info, &value);
-		pValueRtn.reset(new Value_String(value));
-	} else if (infoType == CURLINFO_LONG) {
-		long value;
-		code = curl_easy_getinfo(curl, info, &value);
-		pValueRtn.reset(new Value_Number(value));
-	} else if (infoType == CURLINFO_DOUBLE) {
-		double value;
-		code = curl_easy_getinfo(curl, info, &value);
-		pValueRtn.reset(new Value_Number(value));
-	} else if (infoType == CURLINFO_SLIST) {
-		curl_slist* slist = nullptr;
-		code = curl_easy_getinfo(curl, info, &slist);
-		RefPtr<ValueOwner> pValues(CreateValueOwnerFromSList(slist));
-		curl_free(slist);
-		pValueRtn.reset(new Value_List(VTYPE_String, pValues.release()));
-	} else if (infoType == CURLINFO_PTR) {
-	} else if (infoType == CURLINFO_SOCKET) {
-	} else if (infoType == CURLINFO_OFF_T) {
-		curl_off_t value;
-		code = curl_easy_getinfo(curl, info, &value);
-		pValueRtn.reset(new Value_Number(value));
-	}
-	if (code != CURLE_OK) {
-		Error::Issue(ErrorType::GuestError, "%s", curl_easy_strerror(code));		
-		return Value::nil();
-	}
-	return pValueRtn.release();
+	curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, Callback_WRITE);
+	curl_easy_setopt(_curl, CURLOPT_READFUNCTION, Callback_READ);
+	curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Callback_HEADER);
+	curl_easy_setopt(_curl, CURLOPT_WRITEDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_READDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_HEADERDATA, this);
 }
 
 String Value_CURL::ToString(const StringStyle& ss) const

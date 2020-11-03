@@ -109,7 +109,7 @@ Gurax_ImplementFunctionEx(curl_easy_getinfo_gurax, processor_gurax, argument_gur
 	CURL* curl = value_curl.GetEntityPtr();
 	CURLINFO info = args_gurax.PickNumber<CURLINFO>();
 	// Function body
-	return value_curl.GetInfoEntry(info);
+	return value_curl.GetInfo().GetEntry(info);
 }
 
 // curl.curl_easy_duphandle(curl:CURL)

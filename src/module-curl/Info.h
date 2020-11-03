@@ -17,10 +17,10 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("curl.Info");
 private:
-	CURL* _pCURL;
+	CURL* _curl;
 public:
 	// Constructor
-	Info(CURL* pCURL) : _pCURL(pCURL) {}
+	Info(CURL* curl) : _curl(curl) {}
 	// Copy constructor/operator
 	Info(const Info& src) = delete;
 	Info& operator=(const Info& src) = delete;
@@ -29,6 +29,8 @@ public:
 	Info& operator=(Info&& src) noexcept = delete;
 protected:
 	~Info() = default;
+public:
+	Value* GetEntry(CURLINFO info);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Info& other) const { return this == &other; }

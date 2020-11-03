@@ -42,8 +42,8 @@ Gurax_ImplementConstructor(curl_mimepart)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	//RefPtr<curl_mimepart> pcurl_mimepart(new curl_mimepart());
-	//return argument.ReturnValue(processor, new Value_curl_mimepart(pcurl_mimepart.release()));
+	//RefPtr<curl_mimepart> curl_mimepart(new curl_mimepart());
+	//return argument.ReturnValue(processor, new Value_curl_mimepart(curl_mimepart.release()));
 	return Value::nil();
 }
 

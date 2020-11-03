@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("curl.Opt");
 private:
-	CURL* _pCURL;
+	CURL* _curl;
 public:
 	RefPtr<Function> pFunc_WRITE;
 	RefPtr<Function> pFunc_READ;
@@ -65,7 +65,7 @@ public:
 	RefPtr<Value> pValue_TRAILER;
 public:
 	// Constructor
-	Opt(CURL* pCURL);
+	Opt(CURL* curl);
 	// Copy constructor/operator
 	Opt(const Opt& src) = delete;
 	Opt& operator=(const Opt& src) = delete;

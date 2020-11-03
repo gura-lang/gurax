@@ -42,8 +42,8 @@ Gurax_ImplementConstructor(curl_mime)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	//RefPtr<curl_mime> pcurl_mime(new curl_mime());
-	//return argument.ReturnValue(processor, new Value_curl_mime(pcurl_mime.release()));
+	//RefPtr<curl_mime> curl_mime(new curl_mime());
+	//return argument.ReturnValue(processor, new Value_curl_mime(curl_mime.release()));
 	return Value::nil();
 }
 
