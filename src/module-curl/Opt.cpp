@@ -175,7 +175,7 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 				slist = curl_slist_append(slist, Value_String::GetString(*pValue));
 			}
 			code = curl_easy_setopt(_curl, option, slist);
-			curl_slist_free_all(slist);
+			//curl_slist_free_all(slist);
 			break;
 		}
 		default: {

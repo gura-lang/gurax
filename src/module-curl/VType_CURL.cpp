@@ -158,6 +158,7 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(CURL, info));
 	Assign(Gurax_CreateProperty(CURL, opt));
 	Assign(Gurax_CreateProperty(CURL, streamDst));
+	Assign(Gurax_CreateProperty(CURL, streamSrc));
 	Assign(Gurax_CreateProperty(CURL, streamHeader));
 }
 
