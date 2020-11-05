@@ -399,6 +399,50 @@ Gurax_ImplementFunctionEx(curl_free_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
+// curl.curl_slist_append(slist:curl_slist:nil, str:String)
+Gurax_DeclareFunctionAlias(curl_slist_append_gurax, "curl_slist_append")
+{
+	Declare(VTYPE_curl_slist, Flag::None);
+	DeclareArg("slist", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_slist_append_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	curl_slist* slist = args_gurax.IsValid()? args_gurax.Pick<Value_curl_slist>().GetEntityPtr() : nullptr;
+	const char* str = args_gurax.PickString();
+	// Function body
+	curl_slist* rtn = curl_slist_append(slist, str);
+	if (!rtn) return Value::nil();
+	return new Value_curl_slist(rtn);
+}
+
+// curl.curl_slist_free_all(slist:curl_slist)
+Gurax_DeclareFunctionAlias(curl_slist_free_all_gurax, "curl_slist_free_all")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("slist", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_slist_free_all_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_slist = args_gurax.Pick<Value_curl_slist>();
+	curl_slist* slist = value_slist.GetEntityPtr();
+	// Function body
+	curl_slist_free_all(slist);
+	return Gurax::Value::nil();
+}
+
 // curl.curl_easy_strerror(code:Number)
 Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
 {
@@ -482,6 +526,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_mime_filedata_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_subparts_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_free_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_slist_append_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_slist_free_all_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_share_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_pause_gurax));

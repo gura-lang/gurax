@@ -59,6 +59,7 @@ r.DeclareType_Number('CURLINFO')
 r.DeclareType_EntityPtrEx('CURL_p', 'CURL*', 'CURL')
 r.DeclareType_EntityPtr('curl_mime_p', 'curl_mime*', 'curl_mime')
 r.DeclareType_EntityPtr('curl_mimepart_p', 'curl_mimepart*', 'curl_mimepart')
+r.DeclareType_EntityPtr('curl_slist_p', 'curl_slist*', 'curl_slist')
 
 //------------------------------------------------------------------------------
 // Function Registration
@@ -71,7 +72,7 @@ curl_easy_init():CURL_p
 curl_easy_setopt(curl:CURL_p, option:CURLoption, value:any) = \
 	R'''
 	CURLcode code = CURLE_OK;
-	if (!value_curl.SetOptEntry(option, value, &code)) return Value::nil();
+	if (!value_curl.GetOpt().SetItem(option, value, &code)) return Value::nil();
 	return new Value_Number(code);
 	'''
 
@@ -81,7 +82,7 @@ curl_easy_cleanup(curl:CURL_p):void
 
 curl_easy_getinfo(curl:CURL_p, info:CURLINFO) = \
 	R'''
-	return value_curl.GetInfoEntry(info);
+	return value_curl.GetInfo().GetItem(info);
 	'''
 
 curl_easy_duphandle(curl:CURL_p):CURL_p
@@ -162,11 +163,13 @@ curl_global_init_mem(long flags, curl_malloc_callback m, curl_free_callback f, c
 curl_global_cleanup(void):void
 
 CURLsslset curl_global_sslset(curl_sslbackend id, const char *name, const curl_ssl_backend ***avail);
+*/
 
-struct curl_slist *curl_slist_append(struct curl_slist *, const char *);
+curl_slist_append(slist:curl_slist_p:nil, str:const_char_p):curl_slist_p
 
-curl_slist_free_all(struct curl_slist *):void
+curl_slist_free_all(slist:curl_slist_p):void
 
+/*
 time_t curl_getdate(p:const_char_p, const time_t *unused);
 
 CURLSH *curl_share_init(void);
