@@ -162,20 +162,11 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 		case CURLOPT_RESOLVE:
 		case CURLOPT_PROXYHEADER:
 		case CURLOPT_CONNECT_TO: {
-			if (!value.IsInstanceOf(VTYPE_List)) {
-				Error::Issue(ErrorType::TypeError, "the option accepts List value");
+			if (!value.IsInstanceOf(VTYPE_curl_slist)) {
+				Error::Issue(ErrorType::TypeError, "the option accepts curl_slist value");
 				return false;
 			}
-			curl_slist* slist = nullptr;
-			for (const Value* pValue : Value_List::GetValueOwner(value)) {
-				if (!pValue->IsInstanceOf(VTYPE_String)) {
-					Error::Issue(ErrorType::TypeError, "the option accepts String value");
-					return false;
-				}
-				slist = curl_slist_append(slist, Value_String::GetString(*pValue));
-			}
-			code = curl_easy_setopt(_curl, option, slist);
-			//curl_slist_free_all(slist);
+			code = curl_easy_setopt(_curl, option, Value_curl_slist::GetEntityPtr(value));
 			break;
 		}
 		default: {

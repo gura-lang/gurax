@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// curl.curl_slist() {block?}
+// curl.curl_slist(src:Iterator) {block?}
 Gurax_DeclareConstructor(curl_slist)
 {
 	Declare(VTYPE_curl_slist, Flag::None);
+	DeclareArg("src", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,11 +41,21 @@ Gurax_DeclareConstructor(curl_slist)
 Gurax_ImplementConstructor(curl_slist)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Iterator& iter = args.PickIterator();
 	// Function body
-	//RefPtr<curl_slist> curl_slist(new curl_slist());
-	//return argument.ReturnValue(processor, new Value_curl_slist(curl_slist.release()));
-	return Value::nil();
+	curl_slist* slist = nullptr;
+	for (;;) {
+		RefPtr<Value> pValue(iter.NextValue());
+		if (!pValue) break;
+		if (!pValue->IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the elements must be String values");
+			return Value::nil();
+		}
+		slist = curl_slist_append(slist, Value_String::GetString(*pValue));
+	}
+	if (Error::IsIssued()) return Value::nil();
+	return argument.ReturnValue(processor, new Value_curl_slist(slist));
 }
 
 //-----------------------------------------------------------------------------
