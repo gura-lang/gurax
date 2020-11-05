@@ -22,6 +22,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_CURL);
 	Assign(VTYPE_curl_mime);
 	Assign(VTYPE_curl_mimepart);
+	Assign(VTYPE_curl_slist);
 	Assign(VTYPE_Info);
 	Assign(VTYPE_Opt);
 	// Assignment of const

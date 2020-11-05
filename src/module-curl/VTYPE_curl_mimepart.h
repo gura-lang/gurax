@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_curl_mimepart.h
 //==============================================================================
-#ifndef GURAX_MODULE_CURL_VTYPE_CURL_MIMEpart_H
-#define GURAX_MODULE_CURL_VTYPE_CURL_MIMEpart_H
+#ifndef GURAX_MODULE_CURL_VTYPE_CURL_MIMEPART_H
+#define GURAX_MODULE_CURL_VTYPE_CURL_MIMEPART_H
 #include <gurax.h>
 #include <curl/curl.h>
 

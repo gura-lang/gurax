@@ -13,6 +13,7 @@
 #include "VTYPE_CURL.h"
 #include "VTYPE_curl_mime.h"
 #include "VTYPE_curl_mimepart.h"
+#include "VTYPE_curl_slist.h"
 #include "VTYPE_Opt.h"
 #include "VTYPE_Info.h"
 
