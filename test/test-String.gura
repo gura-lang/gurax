@@ -91,7 +91,6 @@ TestCase('String#Encode()') {
 	str = 'あいうえおかきくけこ'
 	str.Encode('shift_jis').p.Dump()
 	str.Encode('jis').p.Dump()
-	str.Encode('utf32').p.Dump()
 }
 
 TestCase('String#EncodeURI()') {
