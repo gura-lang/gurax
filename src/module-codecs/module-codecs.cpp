@@ -21,7 +21,7 @@ Gurax_ImplementFunction(GetEncodings)
 {
 	RefPtr<ValueOwner> pValues(new ValueOwner());
 	for (CodecFactory* pCodecFactory : CodecFactory::GetList()) {
-		pValues->push_back(new Value_String(pCodecFactory->GetEncoding()));
+		pValues->push_back(new Value_String(pCodecFactory->GetName()));
 	}
 	return new Value_List(pValues.release());
 }

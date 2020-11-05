@@ -12,7 +12,7 @@ namespace Gurax {
 CodecFactoryList CodecFactory::_codecFactoryList;
 CodecFactory* CodecFactory::Dumb = nullptr;
 
-CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
+CodecFactory::CodecFactory(String name) : _name(std::move(name))
 {
 }
 
@@ -21,11 +21,11 @@ void CodecFactory::Register(CodecFactory* pCodecFactory)
 	GetList().push_back(pCodecFactory);
 }
 
-CodecFactory* CodecFactory::Lookup(const char* encoding)
+CodecFactory* CodecFactory::Lookup(const char* name)
 {
-	if (encoding == nullptr) return nullptr;
+	if (!name) return nullptr;
 	for (CodecFactory* pCodecFactory : GetList()) {
-		if (::strcasecmp(pCodecFactory->GetEncoding(), encoding) == 0) {
+		if (::strcasecmp(pCodecFactory->GetName(), name) == 0) {
 			return pCodecFactory;
 		}
 	}
@@ -47,14 +47,14 @@ Codec* Codec::Duplicate() const
 	return _pCodecFactory->CreateCodec(_pDecoder->GetDelcrFlag(), _pEncoder->GetAddcrFlag());
 }
 
-Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
+Codec* Codec::Create(const char* name, bool delcrFlag, bool addcrFlag)
 {
-	if (encoding == nullptr) {
+	if (!name) {
 		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
 	}
-	CodecFactory* pCodecFactory = CodecFactory::Lookup(encoding);
-	if (pCodecFactory == nullptr) {
-		Error::Issue(ErrorType::CodecError, "unsupported encoding: %s", encoding);
+	CodecFactory* pCodecFactory = CodecFactory::Lookup(name);
+	if (!pCodecFactory) {
+		Error::Issue(ErrorType::CodecError, "unsupported encoding: %s", name);
 		return nullptr;
 	}
 	return pCodecFactory->CreateCodec(delcrFlag, addcrFlag);
@@ -88,7 +88,7 @@ UInt16 Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDB
 UInt16 Codec::UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap)
 {
 	Map* pMap = *ppMap;
-	if (*ppMap == nullptr) {
+	if (!*ppMap) {
 		*ppMap = new Map();
 		pMap = *ppMap;
 		const CodeRow* pCodeRow = codeRows;
@@ -128,7 +128,7 @@ Codec::WidthProp Codec::GetWidthProp(UInt32 codeUTF32)
 
 String Codec::ToString(const StringStyle& ss) const
 {
-	return String().Format("Codec:%s", GetEncoding());
+	return String().Format("Codec:%s", GetName());
 }
 
 //-----------------------------------------------------------------------------
@@ -326,8 +326,8 @@ Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 //-----------------------------------------------------------------------------
 // CodecFactory_SBCS
 //-----------------------------------------------------------------------------
-CodecFactory_SBCS::CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16) :
-	CodecFactory(std::move(encoding)), _tblToUTF16(tblToUTF16)
+CodecFactory_SBCS::CodecFactory_SBCS(String name, const UInt16* tblToUTF16) :
+	CodecFactory(std::move(name)), _tblToUTF16(tblToUTF16)
 {
 	for (int codeSBCS = 0; codeSBCS < 256; codeSBCS++) {
 		UInt16 codeUTF16 = _tblToUTF16[codeSBCS];

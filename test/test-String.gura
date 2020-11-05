@@ -88,6 +88,10 @@ TestCase('String#Embed()') {
 }
 
 TestCase('String#Encode()') {
+	str = 'あいうえおかきくけこ'
+	str.Encode('shift_jis').p.Dump()
+	str.Encode('jis').p.Dump()
+	str.Encode('utf32').p.Dump()
 }
 
 TestCase('String#EncodeURI()') {
@@ -428,6 +432,8 @@ TestCase('String#StripRight()') {
 }
 
 TestCase('String#ToBinary()') {
+	str = 'あいうえおかきくけこ'
+	str.ToBinary().p.Dump()
 }
 
 TestCase('String#ToReader()') {

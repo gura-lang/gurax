@@ -262,7 +262,7 @@ Gurax_ImplementMethod(String, EachLine)
 Gurax_DeclareMethod(String, Encode)
 {
 	Declare(VTYPE_String, Flag::None);
-	//DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -271,16 +271,16 @@ Gurax_DeclareMethod(String, Encode)
 
 Gurax_ImplementMethod(String, Encode)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	Codec& codec = args.Pick<Value_Codec>().GetCodec();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	Binary dst;
+	codec.GetEncoder().Encode(dst, str);
+	return new Value_Binary(dst);
 }
 
 // String#EncodeURI():String
@@ -495,34 +495,6 @@ Gurax_ImplementMethod(String, Foldw)
 	return argument.ReturnIterator(
 		processor, new VType_String::Iterator_Foldw(str.Reference(), widthPerFold, padding? *padding : '\0'));
 }
-
-#if 0
-// String#Format(format:String, values*):String:map
-Gurax_DeclareMethod(String, Format)
-{
-	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(String, Format)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const char* format = args.PickString();
-	const ValueList& values = args.PickList();
-	// Function body
-	String& str = valueThis.GetStringSTL();
-	str.FormatValueList(valueThis.GetString(), values);
-	if (Error::IsIssued()) return Value::nil();
-	return new Value_String(str);
-}
-#endif
 
 // String#IsAlnum()
 Gurax_DeclareMethod(String, IsAlnum)
@@ -1062,16 +1034,11 @@ Gurax_DeclareMethod(String, ToBinary)
 
 Gurax_ImplementMethod(String, ToBinary)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_Binary(Binary(str.data(), str.size()));
 }
 
 // String#ToReader():Stream {block?}
@@ -1405,7 +1372,6 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Find));
 	Assign(Gurax_CreateMethod(String, Fold));
 	Assign(Gurax_CreateMethod(String, Foldw));
-	//Assign(Gurax_CreateMethod(String, Format));
 	Assign(Gurax_CreateMethod(String, IsAlnum));
 	Assign(Gurax_CreateMethod(String, IsAlpha));
 	Assign(Gurax_CreateMethod(String, IsDigit));

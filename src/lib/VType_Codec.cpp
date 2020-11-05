@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Codec(encoding:name):map {block?}
+// Codec(name:name):map {block?}
 Gurax_DeclareConstructor(Codec)
 {
 	Declare(VTYPE_Codec, Flag::Map);
-	DeclareArg("encoding", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,11 +42,11 @@ Gurax_ImplementConstructor(Codec)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* encoding = args.PickString();
+	const char* name = args.PickString();
 	// Function body
 	bool delcrFlag = true;
 	bool addcrFlag = false;
-	RefPtr<Codec> pCodec(Codec::Create(encoding, delcrFlag, addcrFlag));
+	RefPtr<Codec> pCodec(Codec::Create(name, delcrFlag, addcrFlag));
 	if (!pCodec) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Codec(pCodec.release()));
 }
@@ -54,6 +54,24 @@ Gurax_ImplementConstructor(Codec)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Codec#name
+Gurax_DeclareProperty_R(Codec, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Codec, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetCodec().GetName());
+}
 
 //------------------------------------------------------------------------------
 // VType_Codec
@@ -66,15 +84,17 @@ void VType_Codec::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Codec, name));
 }
 
 Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
-		const char* encoding = Value_String::GetString(value);
+		const char* name = Value_String::GetString(value);
 		bool delcrFlag = true;
 		bool addcrFlag = false;
-		RefPtr<Codec> pCodec(Codec::Create(encoding, delcrFlag, addcrFlag));
+		RefPtr<Codec> pCodec(Codec::Create(name, delcrFlag, addcrFlag));
 		if (!pCodec) return Value::nil();
 		return new Value_Codec(pCodec.release());
 	}

@@ -20,13 +20,13 @@ using CodecFactoryList = std::vector<CodecFactory*>;
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE CodecFactory {
 private:
-	String _encoding;
+	String _name;
 	static CodecFactoryList _codecFactoryList;
 public:
 	static CodecFactory* Dumb;
 public:
-	CodecFactory(String encoding);
-	const char* GetEncoding() const { return _encoding.c_str(); }
+	CodecFactory(String name);
+	const char* GetName() const { return _name.c_str(); }
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) = 0;
 public:
 	static CodecFactoryList& GetList() { return _codecFactoryList; }
@@ -116,7 +116,7 @@ protected:
 public:
 	CodecFactory& GetCodecFactory() { return *_pCodecFactory; }
 	const CodecFactory& GetCodecFactory() const { return *_pCodecFactory; }
-	const char* GetEncoding() const { return GetCodecFactory().GetEncoding(); }
+	const char* GetName() const { return GetCodecFactory().GetName(); }
 	Decoder& GetDecoder() { return *_pDecoder; }
 	Encoder& GetEncoder() { return *_pEncoder; }
 	const Decoder& GetDecoder() const { return *_pDecoder; }
@@ -126,7 +126,7 @@ public:
 	void SetDelcrFlag(bool delcrFlag) { GetDecoder().SetDelcrFlag(delcrFlag); }
 	void SetAddcrFlag(bool addcrFlag) { GetEncoder().SetAddcrFlag(addcrFlag); }
 	Codec* Duplicate() const;
-	static Codec* Create(const char* encoding, bool delcrFlag, bool addcrFlag);
+	static Codec* Create(const char* name, bool delcrFlag, bool addcrFlag);
 	static Codec* CreateDumb(bool delcrFlag, bool addcrFlag) {
 		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
 	}
@@ -134,8 +134,6 @@ public:
 	static UInt16 DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS);
 	static UInt16 UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap);
 	static WidthProp GetWidthProp(UInt32 codeUTF32);
-public:
-	static const char* EncodingFromLANG();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Codec& codec) const { return this == &codec; }
@@ -150,7 +148,7 @@ public:
 template<typename T>
 class CodecFactory_Generic : public CodecFactory {
 public:
-	explicit CodecFactory_Generic(const char* encoding) : CodecFactory(encoding) {}
+	explicit CodecFactory_Generic(const char* name) : CodecFactory(name) {}
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
 		return new Codec(this, new typename T::Decoder(delcrFlag), new typename T::Encoder(addcrFlag));
 	}
@@ -233,7 +231,7 @@ public:
 	const UInt16* _tblToUTF16;
 	Codec::Map _mapToSBCS;
 public:
-	CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16);
+	CodecFactory_SBCS(String name, const UInt16* tblToUTF16);
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override;
 };
 
