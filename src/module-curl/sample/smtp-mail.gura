@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 // Send e-mail on behalf of another user with SMTP
 import(curl) {*}
-import(mailauth)
+import(auth_mailtrap)
 
 FROM_ADDR =	"<sender@example.org>"
 TO_ADDR =	"<addressee@example.net>"
@@ -33,8 +33,8 @@ main() = {
 		curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.mailtrap.io:2525");
  
 		/* Set the username and password */ 
-		curl_easy_setopt(curl, CURLOPT_USERNAME, mailauth.USERNAME);
-		curl_easy_setopt(curl, CURLOPT_PASSWORD, mailauth.PASSWORD);
+		curl_easy_setopt(curl, CURLOPT_USERNAME, auth_mailtrap.USERNAME);
+		curl_easy_setopt(curl, CURLOPT_PASSWORD, auth_mailtrap.PASSWORD);
 
 		/* Note that this option isn't strictly required, omitting it will result
 		* in libcurl sending the MAIL FROM command with empty sender data. All

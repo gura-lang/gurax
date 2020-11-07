@@ -1,0 +1,8 @@
+try { import(auth_mailtrap.p) {*} } catch {
+	Print('USERNAME: '), USERNAME = sys.cin.ReadLine().Chop()
+	Print('PASSWORD: '), PASSWORD = sys.cin.ReadLine().Chop()
+	tR'''
+	USERNAME = '${USERNAME}'
+	PASSWORD = '${PASSWORD}'
+	'''.Render('auth_mailtrap.p.gura')
+}
