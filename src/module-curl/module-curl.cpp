@@ -20,6 +20,7 @@ Gurax_ModulePrepare()
 	Opt::Bootup();
 	// Assignment of VTYPE
 	Assign(VTYPE_CURL);
+	Assign(VTYPE_CURLU);
 	Assign(VTYPE_curl_mime);
 	Assign(VTYPE_curl_mimepart);
 	Assign(VTYPE_curl_slist);

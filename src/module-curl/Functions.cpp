@@ -557,6 +557,125 @@ Gurax_ImplementFunctionEx(curl_easy_pause_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
+// curl.curl_url()
+Gurax_DeclareFunctionAlias(curl_url_gurax, "curl_url")
+{
+	Declare(VTYPE_CURLU, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_url_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	CURLU* rtn = curl_url();
+	if (!rtn) return Value::nil();
+	return new Value_CURLU(rtn);
+}
+
+// curl.curl_url_cleanup(handle:CURLU)
+Gurax_DeclareFunctionAlias(curl_url_cleanup_gurax, "curl_url_cleanup")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handle", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_url_cleanup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_handle = args_gurax.Pick<Value_CURLU>();
+	CURLU* handle = value_handle.GetEntityPtr();
+	// Function body
+	curl_url_cleanup(handle);
+	return Gurax::Value::nil();
+}
+
+// curl.curl_url_dup(inhandle:CURLU)
+Gurax_DeclareFunctionAlias(curl_url_dup_gurax, "curl_url_dup")
+{
+	Declare(VTYPE_CURLU, Flag::None);
+	DeclareArg("inhandle", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_url_dup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_inhandle = args_gurax.Pick<Value_CURLU>();
+	CURLU* inhandle = value_inhandle.GetEntityPtr();
+	// Function body
+	CURLU* rtn = curl_url_dup(inhandle);
+	if (!rtn) return Value::nil();
+	return new Value_CURLU(rtn);
+}
+
+// curl.curl_url_get(url:CURLU, what:Number, flags:Number)
+Gurax_DeclareFunctionAlias(curl_url_get_gurax, "curl_url_get")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("url", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("what", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_url_get_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_url = args_gurax.Pick<Value_CURLU>();
+	CURLU* url = value_url.GetEntityPtr();
+	CURLUPart what = args_gurax.PickNumber<CURLUPart>();
+	unsigned int flags = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	char* part;
+	CURLUcode code = curl_url_get(url, what, &part, flags);
+	if (code != CURLE_OK) {
+		Error::Issue(ErrorType::GuestError, "error in handling URL");
+		return Value::nil();
+	}
+	RefPtr<Value> pValueRtn(new Value_String(part));
+	curl_free(part);
+	return pValueRtn.release();
+}
+
+// curl.curl_url_set(url:CURLU, part:Number, content:String, flags:Number)
+Gurax_DeclareFunctionAlias(curl_url_set_gurax, "curl_url_set")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("url", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("part", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("content", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_url_set_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_url = args_gurax.Pick<Value_CURLU>();
+	CURLU* url = value_url.GetEntityPtr();
+	CURLUPart part = args_gurax.PickNumber<CURLUPart>();
+	const char* content = args_gurax.PickString();
+	unsigned int flags = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	CURLUcode rtn = curl_url_set(url, part, content, flags);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(curl_easy_init_gurax));
@@ -584,6 +703,11 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_share_strerror_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_pause_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_url_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_url_cleanup_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_url_dup_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_url_get_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_url_set_gurax));
 }
 
 Gurax_EndModuleScope(curl)

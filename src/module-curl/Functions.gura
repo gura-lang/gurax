@@ -51,6 +51,7 @@ this.DeclareType(decl, cType, vtypeFullName,
 	''')
 
 r.DeclareType_Number('CURLcode')
+r.DeclareType_Number('CURLUcode')
 r.DeclareType_Number('CURLSHcode')
 r.DeclareType_Number('CURLFORMcode')
 r.DeclareType_Number('CURLoption')
@@ -194,14 +195,14 @@ curl_url():CURLU_p
 
 curl_url_cleanup(handle:CURLU_p):void
 
-curl_url_dup(inhandle:CURLU_p):CURUL_p
+curl_url_dup(inhandle:CURLU_p):CURLU_p
 
 curl_url_get(url:CURLU_p, what:CURLUPart, flags:unsigned_int) = \
 	R'''
 	char* part;
-	CURLcode code = curl_url_get(url, what, &part, flags);
+	CURLUcode code = curl_url_get(url, what, &part, flags);
 	if (code != CURLE_OK) {
-		Error::Issue(ErrorType::GuestError, "%s", curl_easy_strerror(code));
+		Error::Issue(ErrorType::GuestError, "error in handling URL");
 		return Value::nil();
 	}
 	RefPtr<Value> pValueRtn(new Value_String(part));
