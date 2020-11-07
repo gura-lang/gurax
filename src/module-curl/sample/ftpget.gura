@@ -1,0 +1,29 @@
+#!/usr/bin/env gurax
+// Get a single file from an FTP server.
+import(curl) {*}
+
+main() = {
+	curl = curl_easy_init();
+	if (curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, "ftp://speedtest.tele2.net/100KB.zip");
+		/* example.com is redirected, so we tell libcurl to follow redirection */ 
+		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+		/* set the destination stream  */
+		curl.streamDst = '100KB.zip'
+
+		/* Switch on full protocol/debug output */
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
+
+		res = curl_easy_perform(curl);
+
+		/* always cleanup */ 
+		curl_easy_cleanup(curl);
+
+		if (res != CURLE_OK) {
+			sys.cerr.Printf("curl_easy_perform() failed: %s\n",
+							curl_easy_strerror(res));
+		}
+	}
+}
+
+main()

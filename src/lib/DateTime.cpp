@@ -103,6 +103,12 @@ Int8 DateTime::GetDaysOfMonth(Int16 year, Int8 month)
 	return (IsLeapYear(year)? daysTbl_Leap : daysTbl_Normal)[static_cast<int>(month)];
 }
 
+DateTime* DateTime::CreateFromUnixTime(UInt64 unixTime)
+{
+	//RefPtr<DateTime> pDt(new DateTime(1970, 1, 1, 0, 0));
+	return nullptr;
+}
+
 void DateTime::DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay)
 {
 	static const Int16 offsetTbl_Normal[] = {

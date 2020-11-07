@@ -104,7 +104,7 @@ Gurax_ImplementPropertySetter(CURL, streamSrc)
 // curl.CURL#streamDst
 Gurax_DeclareProperty_RW(CURL, streamDst)
 {
-	Declare(VTYPE_Stream, Flag::StreamW);
+	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -113,19 +113,20 @@ Gurax_DeclareProperty_RW(CURL, streamDst)
 Gurax_ImplementPropertyGetter(CURL, streamDst)
 {
 	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.IsValidStreamWrite()) return Value::nil();
 	return new Value_Stream(valueThis.GetStreamWrite().Reference());
 }
 
 Gurax_ImplementPropertySetter(CURL, streamDst)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.SetStreamWrite(Value_Stream::GetStream(value).Reference());
+	valueThis.SetStreamWrite(value.IsValid()? Value_Stream::GetStream(value).Reference() : nullptr);
 }
 
 // curl.CURL#streamHeader
 Gurax_DeclareProperty_RW(CURL, streamHeader)
 {
-	Declare(VTYPE_Stream, Flag::StreamW);
+	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -134,13 +135,14 @@ Gurax_DeclareProperty_RW(CURL, streamHeader)
 Gurax_ImplementPropertyGetter(CURL, streamHeader)
 {
 	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.IsValidStreamHeader()) return Value::nil();
 	return new Value_Stream(valueThis.GetStreamHeader().Reference());
 }
 
 Gurax_ImplementPropertySetter(CURL, streamHeader)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.SetStreamHeader(Value_Stream::GetStream(value).Reference());
+	valueThis.SetStreamHeader(value.IsValid()? Value_Stream::GetStream(value).Reference() : nullptr);
 }
 
 //------------------------------------------------------------------------------

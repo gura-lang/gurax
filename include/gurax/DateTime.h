@@ -127,6 +127,7 @@ public:
 	static const Symbol* GetSymbolOfWeek(Int16 year, Int8 month, Int8 day);
 	static const Symbol* GetSymbolShortOfWeek(Int16 year, Int8 month, Int8 day);
 	static Int8 GetDaysOfMonth(Int16 year, Int8 month);
+	static DateTime* CreateFromUnixTime(UInt64 unixTime);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DateTime& dateTime) const { return this == &dateTime; }
