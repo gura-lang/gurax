@@ -450,6 +450,42 @@ Gurax_ImplementFunctionEx(curl_free_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
+// curl.curl_global_init(flags:Number)
+Gurax_DeclareFunctionAlias(curl_global_init_gurax, "curl_global_init")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_global_init_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long flags = args_gurax.PickNumber<long>();
+	// Function body
+	CURLcode rtn = curl_global_init(flags);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_global_cleanup()
+Gurax_DeclareFunctionAlias(curl_global_cleanup_gurax, "curl_global_cleanup")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_global_cleanup_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	curl_global_cleanup();
+	return Gurax::Value::nil();
+}
+
 // curl.curl_slist_append(slist:curl_slist:nil, str:String)
 Gurax_DeclareFunctionAlias(curl_slist_append_gurax, "curl_slist_append")
 {
@@ -698,6 +734,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_mime_subparts_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_headers_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_free_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_global_init_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_global_cleanup_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_slist_append_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_slist_free_all_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_easy_strerror_gurax));
