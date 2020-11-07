@@ -333,6 +333,31 @@ Gurax_ImplementFunctionEx(curl_mime_encoder_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
+// curl.curl_mime_data(part:curl_mimepart, data:Pointer, datasize:Number)
+Gurax_DeclareFunctionAlias(curl_mime_data_gurax, "curl_mime_data")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("datasize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_data_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	const char* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<char>();
+	size_t datasize = args_gurax.PickNumber<size_t>();
+	// Function body
+	CURLcode rtn = curl_mime_data(part, data, datasize);
+	return new Gurax::Value_Number(rtn);
+}
+
 // curl.curl_mime_filedata(part:curl_mimepart, filename:String)
 Gurax_DeclareFunctionAlias(curl_mime_filedata_gurax, "curl_mime_filedata")
 {
@@ -377,6 +402,32 @@ Gurax_ImplementFunctionEx(curl_mime_subparts_gurax, processor_gurax, argument_gu
 	curl_mime* subparts = value_subparts.GetEntityPtr();
 	// Function body
 	CURLcode rtn = curl_mime_subparts(part, subparts);
+	return new Gurax::Value_Number(rtn);
+}
+
+// curl.curl_mime_headers(part:curl_mimepart, headers:curl_slist, take_ownership:Number)
+Gurax_DeclareFunctionAlias(curl_mime_headers_gurax, "curl_mime_headers")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("headers", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("take_ownership", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(curl_mime_headers_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
+	curl_mimepart* part = value_part.GetEntityPtr();
+	auto& value_headers = args_gurax.Pick<Value_curl_slist>();
+	curl_slist* headers = value_headers.GetEntityPtr();
+	int take_ownership = args_gurax.PickNumber<int>();
+	// Function body
+	CURLcode rtn = curl_mime_headers(part, headers, take_ownership);
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -523,8 +574,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(curl_mime_filename_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_type_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_encoder_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_data_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_filedata_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_mime_subparts_gurax));
+	frame.Assign(Gurax_CreateFunction(curl_mime_headers_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_free_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_slist_append_gurax));
 	frame.Assign(Gurax_CreateFunction(curl_slist_free_all_gurax));

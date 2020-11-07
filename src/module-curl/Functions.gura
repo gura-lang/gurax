@@ -55,8 +55,11 @@ r.DeclareType_Number('CURLSHcode')
 r.DeclareType_Number('CURLFORMcode')
 r.DeclareType_Number('CURLoption')
 r.DeclareType_Number('CURLINFO')
+r.DeclareType_Number('CURLUPart')
+r.DeclareType_Pointer('const_char_p_data', 'const char*')
 
 r.DeclareType_EntityPtrEx('CURL_p', 'CURL*', 'CURL')
+r.DeclareType_EntityPtr('CURLU_p', 'CURLU*', 'CURLU')
 r.DeclareType_EntityPtr('curl_mime_p', 'curl_mime*', 'curl_mime')
 r.DeclareType_EntityPtr('curl_mimepart_p', 'curl_mimepart*', 'curl_mimepart')
 r.DeclareType_EntityPtr('curl_slist_p', 'curl_slist*', 'curl_slist')
@@ -118,7 +121,7 @@ curl_mime_type(part:curl_mimepart_p, mimetype:const_char_p):CURLcode
 
 curl_mime_encoder(part:curl_mimepart_p, encoding:const_char_p):CURLcode
 
-//curl_mime_data(part:curl_mimepart_p, data:const_char_p, size_t datasize):CURLcode
+curl_mime_data(part:curl_mimepart_p, data:const_char_p_data, datasize:size_t):CURLcode
 
 curl_mime_filedata(part:curl_mimepart_p, filename:const_char_p):CURLcode
 
@@ -126,7 +129,7 @@ curl_mime_filedata(part:curl_mimepart_p, filename:const_char_p):CURLcode
 
 curl_mime_subparts(part:curl_mimepart_p, subparts:curl_mime_p):CURLcode
 
-//curl_mime_headers(part:curl_mimepart_p, struct curl_slist *headers, int take_ownership):CURLcode
+curl_mime_headers(part:curl_mimepart_p, headers:curl_slist_p, take_ownership:int):CURLcode
 
 /*
 curl_formadd(struct curl_httppost **httppost, struct curl_httppost **last_post, ...):CURLFORMcode
@@ -186,6 +189,27 @@ curl_easy_strerror(code:CURLcode):const_char_p
 curl_share_strerror(code:CURLSHcode):const_char_p
 
 curl_easy_pause(handle:CURL_p, bitmask:int):CURLcode
+
+curl_url():CURLU_p
+
+curl_url_cleanup(handle:CURLU_p):void
+
+curl_url_dup(inhandle:CURLU_p):CURUL_p
+
+curl_url_get(url:CURLU_p, what:CURLUPart, flags:unsigned_int) = \
+	R'''
+	char* part;
+	CURLcode code = curl_url_get(url, what, &part, flags);
+	if (code != CURLE_OK) {
+		Error::Issue(ErrorType::GuestError, "%s", curl_easy_strerror(code));
+		return Value::nil();
+	}
+	RefPtr<Value> pValueRtn(new Value_String(part));
+	curl_free(part);
+	return pValueRtn.release();
+	'''
+
+curl_url_set(url:CURLU_p, part:CURLUPart, content:const_char_p, flags:unsigned_int):CURLUcode
 
 }
 

@@ -40,6 +40,7 @@ target_sources(curl.gurd PRIVATE
 	Opt.cpp
 	Functions.cpp
 	VTYPE_CURL.cpp
+	VTYPE_CURLU.cpp
 	VTYPE_curl_mime.cpp
 	VTYPE_curl_mimepart.cpp
 	VTYPE_curl_slist.cpp

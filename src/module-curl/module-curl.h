@@ -11,6 +11,7 @@
 #include "Opt.h"
 #include "Info.h"
 #include "VTYPE_CURL.h"
+#include "VTYPE_CURLU.h"
 #include "VTYPE_curl_mime.h"
 #include "VTYPE_curl_mimepart.h"
 #include "VTYPE_curl_slist.h"
