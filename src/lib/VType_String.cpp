@@ -156,14 +156,11 @@ Gurax_ImplementMethod(String, Center)
 	return new Value_String(str.Center(width, padding));
 }
 
-// String#Chop(suffix*:String):String:[eol,icase] {block?}
+// String#Chop():String:[eol]
 Gurax_DeclareMethod(String, Chop)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareArg("suffix", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(eol));
-	DeclareAttrOpt(Gurax_Symbol(icase));
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string that removes a last character.\n"
@@ -175,16 +172,13 @@ Gurax_DeclareMethod(String, Chop)
 
 Gurax_ImplementMethod(String, Chop)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	bool eolOnlyFlag = argument.IsSet(Gurax_Symbol(eol));
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.Chop(eolOnlyFlag));
 }
 
 // String#DecodeURI():String

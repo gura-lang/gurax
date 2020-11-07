@@ -103,6 +103,10 @@ entertaining
 ..demonic.
 entertaining
 ======== String#Chop() ========
+'ABCDEFG'.Chop() .. 'ABCDEF'
+'ABCDEFG'.Chop():eol .. 'ABCDEFG'
+'ABCDEFG\n'.Chop() .. 'ABCDEFG'
+'ABCDEFG\n'.Chop():eol .. 'ABCDEFG'
 ======== String#DecodeURI() ========
  !"#$%&'()*+,-./
 0123456789:;<=>?

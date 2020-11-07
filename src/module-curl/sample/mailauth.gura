@@ -1,0 +1,13 @@
+R'''
+USERNAME = '${USERNAME}'
+PASSWORD = '${PASSWORD}'
+'''
+try { import(mailauth.secret) {*} } catch {
+	Print('USERNAME: '), USERNAME = sys.cin.ReadLine().Chop()
+	Print(R'''
+	You need to create a file named 'mailauth.secret.gura' with the following content:
+	USERNAME = 'username'
+	PASSWORD = 'password'
+	''')
+	sys.Exit()
+}

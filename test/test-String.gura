@@ -44,6 +44,10 @@ TestCase('String#Center()') {
 }
 
 TestCase('String#Chop()') {
+	Tester(`'ABCDEFG'.Chop()):quote
+	Tester(`'ABCDEFG'.Chop():eol):quote
+	Tester(`'ABCDEFG\n'.Chop()):quote
+	Tester(`'ABCDEFG\n'.Chop():eol):quote
 }
 
 TestCase('String#DecodeURI()') {

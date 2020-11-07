@@ -1,0 +1,84 @@
+#!/usr/bin/env gurax
+// Send e-mail on behalf of another user with SMTP
+import(curl) {*}
+import(mailauth)
+
+FROM_ADDR =	"<sender@example.org>"
+TO_ADDR =	"<addressee@example.net>"
+CC_ADDR = 	"<info@example.org>"
+ 
+FROM_MAIL =	"Sender Person " + FROM_ADDR
+TO_MAIL =	"A Receiver " + TO_ADDR
+CC_MAIL =	"John CC Smith " + CC_ADDR
+
+payload_text = eR'''
+Date: Mon, 29 Nov 2010 21:54:29 +1100
+To: ${TO_MAIL}
+From: ${FROM_MAIL}
+Cc: ${CC_MAIL}
+Message-ID: <dcd7cb36-11db-487a-9f3a-e652a9458efd@rfcpedant.example.org>
+Subject: SMTP example message
+
+The body of the message starts here.
+
+It could be a lot of lines, could be MIME encoded, whatever.
+Check RFC5322.
+'''.Encode('utf-8')
+
+main() = {
+	curl = curl_easy_init();
+	if (curl) {
+		/* This is the URL for your mailserver. In this example we connect to the
+			 smtp-submission port as we require an authenticated connection. */ 
+		curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.mailtrap.io:2525");
+ 
+		/* Set the username and password */ 
+		curl_easy_setopt(curl, CURLOPT_USERNAME, mailauth.USERNAME);
+		curl_easy_setopt(curl, CURLOPT_PASSWORD, mailauth.PASSWORD);
+
+		/* Note that this option isn't strictly required, omitting it will result
+		* in libcurl sending the MAIL FROM command with empty sender data. All
+		* autoresponses should have an empty reverse-path, and should be directed
+		* to the address in the reverse-path which triggered them. Otherwise,
+		* they could cause an endless loop. See RFC 5321 Section 4.5.5 for more
+		* details.
+		*/ 
+		curl_easy_setopt(curl, CURLOPT_MAIL_FROM, FROM_ADDR);
+	
+		/* Add two recipients, in this particular case they correspond to the
+		* To: and Cc: addressees in the header, but they could be any kind of
+		* recipient. */ 
+		recipients = curl_slist([TO_ADDR, CC_ADDR]);
+		curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
+	
+		/* We're using a callback function to specify the payload (the headers and
+		* body of the message). You could just use the CURLOPT_READDATA option to
+		* specify a FILE pointer to read from. */ 
+		curl.streamSrc = payload_text;
+		curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+	
+		/* Send the message */ 
+		res = curl_easy_perform(curl);
+
+		/* Check for errors */ 
+		if (res != CURLE_OK) {
+			sys.cerr.Printf("curl_easy_perform() failed: %s\n",
+					curl_easy_strerror(res));
+		}
+	
+		/* Free the list of recipients */
+		curl_slist_free_all(recipients);
+
+		/* curl won't send the QUIT command until you call cleanup, so you should
+		* be able to re-use this connection for additional messages (setting
+		* CURLOPT_MAIL_FROM and CURLOPT_MAIL_RCPT as required, and calling
+		* curl_easy_perform() again. It may not be a good idea to keep the
+		* connection open for a very long time though (more than a few minutes
+		* may result in the server timing out the connection), and you do want to
+		* clean up in the end.
+		*/ 
+		curl_easy_cleanup(curl);
+	}
+}
+
+main()
