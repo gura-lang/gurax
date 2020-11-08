@@ -177,3 +177,21 @@ TestCase('Property') {
 		Tester(`dt.utc.utc)
 	}
 }
+
+TestCase('DateTime.FromUnixTime()') {
+	Tester(`DateTime.FromUnixTime(0):utc)
+	Tester(`DateTime.FromUnixTime(100000000):utc)
+	Tester(`DateTime.FromUnixTime(1000000000):utc)
+	Tester(`DateTime.FromUnixTime(1234567890):utc)
+	Tester(`DateTime.FromUnixTime(0x7fffffff):utc)
+	Tester(`DateTime.FromUnixTime(0x80000000):utc)
+	Tester(`DateTime.FromUnixTime(0xffffffff):utc)
+	Tester(`DateTime.FromUnixTime(0x100000000):utc)
+	Tester(`DateTime.FromUnixTime(0x700000000):utc)
+	Tester(`DateTime.FromUnixTime(100000000).unixTime)
+	Tester(`DateTime.FromUnixTime(1000000000).unixTime)
+	Tester(`DateTime.FromUnixTime(0x80000000).unixTime)
+	Tester(`DateTime.FromUnixTime(0xffffffff).unixTime)
+	Tester(`DateTime.FromUnixTime(0x100000000).unixTime)
+	Tester(`DateTime.FromUnixTime(0x700000000).unixTime)
+}

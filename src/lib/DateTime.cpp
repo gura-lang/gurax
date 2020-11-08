@@ -87,7 +87,7 @@ UInt64 DateTime::ToUnixTime() const
 	RefPtr<DateTime> pDt(new DateTime(1970, 1, 1, 0, 0));
 	RefPtr<TimeDelta> pTd(*this - *pDt);
 	UInt64 rtn = pTd->GetSecsPacked();
-	rtn += pTd->GetDays() * 60 * 60 * 24;
+	rtn += static_cast<UInt64>(pTd->GetDays()) * 60 * 60 * 24;
 	return rtn;
 }
 
@@ -101,12 +101,6 @@ Int8 DateTime::GetDaysOfMonth(Int16 year, Int8 month)
 	};
 	if (month < 1 || month > 12) return -1;
 	return (IsLeapYear(year)? daysTbl_Leap : daysTbl_Normal)[static_cast<int>(month)];
-}
-
-DateTime* DateTime::CreateFromUnixTime(UInt64 unixTime)
-{
-	//RefPtr<DateTime> pDt(new DateTime(1970, 1, 1, 0, 0));
-	return nullptr;
 }
 
 void DateTime::DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay)

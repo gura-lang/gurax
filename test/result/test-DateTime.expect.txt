@@ -172,3 +172,19 @@ dt.utc.week .. `Monday
 dt.utc.weekShort .. `Mon
 dt.utc.yday .. 139
 dt.utc.utc .. 2019-05-20 23:23:42.234765Z
+======== DateTime.FromUnixTime() ========
+DateTime.FromUnixTime(0):utc .. 1970-01-01 00:00:00.000Z
+DateTime.FromUnixTime(100000000):utc .. 1973-03-03 09:46:40.000Z
+DateTime.FromUnixTime(1000000000):utc .. 2001-09-09 01:46:40.000Z
+DateTime.FromUnixTime(1234567890):utc .. 2009-02-13 23:31:30.000Z
+DateTime.FromUnixTime(0x7fffffff):utc .. 2038-01-19 03:14:07.000Z
+DateTime.FromUnixTime(0x80000000):utc .. 2038-01-19 03:14:08.000Z
+DateTime.FromUnixTime(0xffffffff):utc .. 2106-02-07 06:28:15.000Z
+DateTime.FromUnixTime(0x100000000):utc .. 2106-02-07 06:28:16.000Z
+DateTime.FromUnixTime(0x700000000):utc .. 2922-09-18 21:17:52.000Z
+DateTime.FromUnixTime(100000000).unixTime .. 100000000
+DateTime.FromUnixTime(1000000000).unixTime .. 1000000000
+DateTime.FromUnixTime(0x80000000).unixTime .. 2147483648
+DateTime.FromUnixTime(0xffffffff).unixTime .. 4294967295
+DateTime.FromUnixTime(0x100000000).unixTime .. 4294967296
+DateTime.FromUnixTime(0x700000000).unixTime .. 30064771072

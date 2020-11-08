@@ -95,6 +95,29 @@ Gurax_ImplementClassMethod(DateTime, Now)
 	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
 }
 
+// DateTime.FromUnixTime(unixTime:Number):[utc] {block?}
+Gurax_DeclareClassMethod(DateTime, FromUnixTime)
+{
+	Declare(VTYPE_DateTime, Flag::None);
+	DeclareArg("unixTime", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(utc));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(DateTime, FromUnixTime)
+{
+	// Arguments
+	ArgPicker args(argument);
+	time_t unixTime = args.PickNumberNonNeg<time_t>();
+	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
+	// Function body
+	RefPtr<DateTime> pDateTime(OAL::CreateDateTime(unixTime, utcFlag));
+	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -512,6 +535,7 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DateTime));
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(DateTime, Now));
+	Assign(Gurax_CreateClassMethod(DateTime, FromUnixTime));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
 	Assign(Gurax_CreateProperty(DateTime, month));
