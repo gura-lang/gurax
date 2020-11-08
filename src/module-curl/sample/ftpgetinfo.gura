@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+// Get a single file from an FTP server.
+import(curl) {*}
+
+main() = {
+	ftpurl = "ftp://speedtest.tele2.net/100KB.zip";
+	curl = curl_easy_init();
+	if (curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, ftpurl);
+		/* No download if the file */
+		curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
+		/* Ask for filetime */
+		curl_easy_setopt(curl, CURLOPT_FILETIME, 1);
+		curl.streamHeader = nil;
+		/* Switch on full protocol/debug output */
+		/* curl_easy_setopt(curl, CURLOPT_VERBOSE, 1); */
+
+		res = curl_easy_perform(curl);
+
+		/* always cleanup */ 
+		curl_easy_cleanup(curl);
+
+		if (res == CURLE_OK) {
+			filetime = curl.info.FILETIME
+			if (filetime >= 0) {
+				Printf('filetime %s: %s\n', path.FileName(ftpurl), DateTime.FromUnixTime(filetime));
+			}
+		} else {
+			sys.cerr.Printf("curl_easy_perform() failed: %s\n",
+							curl_easy_strerror(res));
+		}
+	}
+}
+
+main()

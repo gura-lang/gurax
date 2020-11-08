@@ -6,8 +6,6 @@ main() = {
 	curl = curl_easy_init();
 	if (curl) {
 		curl_easy_setopt(curl, CURLOPT_URL, "ftp://speedtest.tele2.net/100KB.zip");
-		/* example.com is redirected, so we tell libcurl to follow redirection */ 
-		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
 		/* set the destination stream  */
 		curl.streamDst = '100KB.zip'
 
