@@ -32,6 +32,7 @@ target_sources(unittest PRIVATE
 	test-DeclCallable.cpp
 	test-Directory.cpp
 	test-Error.cpp
+	test-FIFO.cpp
 	test-Formatter.cpp
 	test-Function.cpp
 	test-Half.cpp
