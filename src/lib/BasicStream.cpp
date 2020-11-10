@@ -6,33 +6,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Stream_FIFO
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stream_FIFO : public Stream {
-public:
-	Stream_FIFO() : Stream(Flag::Readable | Flag::Writable) {}
-public:
-	virtual const char* GetName() const override { return "FIFO"; };
-	virtual const char* GetIdentifier() const override { return ""; }
-	virtual bool DoClose() override { return true; }
-	virtual int DoGetChar() override { return 0; }
-	virtual bool DoPutChar(char ch) override { return true; }
-	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoWrite(const void* buff, size_t len) override;
-	virtual bool DoFlush() override { return true; }
-};
-
-size_t Stream_FIFO::DoRead(void* buff, size_t len)
-{
-	return 0;
-}
-
-bool Stream_FIFO::DoWrite(const void* buff, size_t len)
-{
-	return false;
-}
-
-//------------------------------------------------------------------------------
 // Stream_Console
 //------------------------------------------------------------------------------
 
@@ -187,5 +160,92 @@ bool Stream_Pointer::DoSeek(size_t offset, size_t offsetPrev)
 	return true;
 }
 #endif
+
+//------------------------------------------------------------------------------
+// Stream_FIFO
+//------------------------------------------------------------------------------
+Stream_FIFO::Stream_FIFO(size_t bytesBuff) : Stream(Flag::Readable | Flag::Writable),
+	_pMemory(new MemoryHeap(bytesBuff)), _offsetWrite(0), _offsetRead(0), _bytesAvail(0),
+	_brokenFlag(false)
+{
+}
+
+size_t Stream_FIFO::DoRead(void* buff, size_t len)
+{
+	char *buffp = reinterpret_cast<char *>(buff);
+	_semaphore.Wait();
+	//::printf("+DoRead(%zu) bytesAvail=%zu\n", len, _bytesAvail);
+	if (_brokenFlag && _bytesAvail == 0) {
+		_semaphore.Release();
+		return 0;
+	}
+	size_t offset = 0;
+	while (offset < len) {
+		size_t bytesSpace = len - offset;
+		while (_bytesAvail == 0 && !_brokenFlag) {
+			_semaphore.Release();
+			OAL::Sleep(.001); // sleep for 1 msec
+			_semaphore.Wait();
+		}
+		if (_bytesAvail > 0) {
+			size_t bytesCopy = std::min(bytesSpace, _bytesAvail);
+			if (_offsetRead + bytesCopy <= _pMemory->GetBytes()) {
+				::memcpy(buffp + offset, _pMemory->GetPointerC<void>(_offsetRead), bytesCopy);
+				offset += bytesCopy;
+				_offsetRead += bytesCopy;
+				_bytesAvail -= bytesCopy;
+				if (_offsetRead == _pMemory->GetBytes()) _offsetRead = 0;
+			} else {
+				size_t bytesPart = _pMemory->GetBytes() - _offsetRead;
+				::memcpy(buffp + offset, _pMemory->GetPointerC<void>(_offsetRead), bytesPart);
+				::memcpy(buffp + offset + bytesPart, _pMemory->GetPointerC<void>(), bytesCopy - bytesPart);
+				offset += bytesCopy;
+				_offsetRead = bytesCopy - bytesPart;
+				_bytesAvail -= bytesCopy;
+			}
+		}
+		if (_brokenFlag) {
+			//::printf("-DoRead(%zu) rtn=%zu\n", len, offset);
+			_semaphore.Release();
+			return offset;
+		}
+	}
+	//::printf("-DoRead(%zu) rtn=%zu\n", len, offset);
+	_semaphore.Release();
+	return offset;
+}
+
+bool Stream_FIFO::DoWrite(const void* buff, size_t len)
+{
+	const char* buffp = reinterpret_cast<const char*>(buff);
+	_semaphore.Wait();
+	//::printf("DoWrite(%zu) bytesAvail=%zu\n", len, _bytesAvail);
+	for (size_t offset = 0; offset < len; ) {
+		size_t bytesRest = len - offset;
+		while (_bytesAvail == _pMemory->GetBytes()) {
+			_semaphore.Release();
+			OAL::Sleep(.001); // sleep for 1 msec
+			_semaphore.Wait();
+		}
+		size_t bytesSpace = _pMemory->GetBytes() - _bytesAvail;
+		size_t bytesCopy = std::min(bytesRest, bytesSpace);
+		if (_offsetWrite + bytesCopy <= _pMemory->GetBytes()) {
+			::memcpy(_pMemory->GetPointerC<void>(_offsetWrite), buffp + offset, bytesCopy);
+			offset += bytesCopy;
+			_offsetWrite += bytesCopy;
+			_bytesAvail += bytesCopy;
+			if (_offsetRead == _pMemory->GetBytes()) _offsetRead = 0;
+		} else {
+			size_t bytesPart = _pMemory->GetBytes() - _offsetWrite;
+			::memcpy(_pMemory->GetPointerC<void>(_offsetWrite), buffp + offset, bytesPart);
+			::memcpy(_pMemory->GetPointerC<void>(), buffp + offset + bytesPart, bytesCopy - bytesPart);
+			offset += bytesCopy;
+			_offsetWrite = bytesCopy - bytesPart;
+			_bytesAvail += bytesCopy;
+		}
+	}
+	_semaphore.Release();
+	return true;
+}
 
 }

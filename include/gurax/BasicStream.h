@@ -100,6 +100,30 @@ public:
 };
 #endif
 
+//------------------------------------------------------------------------------
+// Stream_FIFO
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Stream_FIFO : public Stream {
+private:
+	RefPtr<Memory> _pMemory;
+	size_t _offsetWrite;
+	size_t _offsetRead;
+	size_t _bytesAvail;
+	bool _brokenFlag;
+	OAL::Semaphore _semaphore;
+public:
+	Stream_FIFO(size_t bytesBuff);
+public:
+	virtual const char* GetName() const override { return "FIFO"; };
+	virtual const char* GetIdentifier() const override { return ""; }
+	virtual bool DoClose() override { return true; }
+	virtual int DoGetChar() override { return 0; }
+	virtual bool DoPutChar(char ch) override { return true; }
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override;
+	virtual bool DoFlush() override { return true; }
+};
+
 }
 
 #endif
