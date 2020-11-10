@@ -38,6 +38,7 @@ target_sources(curl.gurd PRIVATE
 	Consts.cpp
 	Info.cpp
 	Opt.cpp
+	PathExtension.cpp
 	Functions.cpp
 	VTYPE_CURL.cpp
 	VTYPE_CURLU.cpp
