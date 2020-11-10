@@ -2,9 +2,9 @@
 // module-opengl.cpp
 //==============================================================================
 #include "stdafx.h"
-#include "ref/glm/glm/glm.hpp"
-#include "ref/glm/glm/gtc/matrix_transform.hpp"
-#include "ref/glm/glm/gtc/type_ptr.hpp"
+//#include "ref/glm/glm/glm.hpp"
+//#include "ref/glm/glm/gtc/matrix_transform.hpp"
+//#include "ref/glm/glm/gtc/type_ptr.hpp"
 
 Gurax_BeginModule(opengl)
 
@@ -63,6 +63,7 @@ Gurax_DeclareFunction(Test)
 
 Gurax_ImplementFunction(Test)
 {
+#if 0
 	glm::mat4 mat = glm::mat4(1.0f);
 	//mat = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
 	//mat = glm::rotate(mat, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -73,6 +74,7 @@ Gurax_ImplementFunction(Test)
 		}
 		::printf("\n");
 	}
+#endif
 	return Value::nil();
 }
 
