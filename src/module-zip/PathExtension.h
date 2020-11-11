@@ -71,7 +71,6 @@ public:
 		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
 			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()),
 			_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-		Type GetType() const { return _type; }
 		Stream& GetStreamSrc() { return *_pStreamSrc; }
 		StatEx* GetStatEx() { return _pStatEx.get(); }
 	public:

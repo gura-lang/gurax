@@ -9,6 +9,7 @@
 #include "Consts.h"
 #include "Functions.h"
 #include "Opt.h"
+#include "PathExtension.h"
 #include "Info.h"
 #include "VTYPE_CURL.h"
 #include "VTYPE_CURLU.h"

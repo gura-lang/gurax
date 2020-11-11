@@ -7,7 +7,6 @@
 
 Gurax_BeginModuleScope(curl)
 	
-#if 0
 //------------------------------------------------------------------------------
 // PathMgrEx
 //------------------------------------------------------------------------------
@@ -19,6 +18,7 @@ protected:
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) override;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
@@ -55,6 +55,7 @@ public:
 	void Clear();
 	bool ReadCentralDirectory(Stream& streamSrc);
 };
+#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
@@ -64,16 +65,9 @@ public:
 	class CoreEx : public Core {
 	public:
 		Gurax_DeclareReferable(CoreEx);
-	private:
-		RefPtr<Stream> _pStreamSrc;
-		RefPtr<StatEx> _pStatEx;	// may be nullptr
 	public:
-		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
-			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()),
-			_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-		Type GetType() const { return _type; }
-		Stream& GetStreamSrc() { return *_pStreamSrc; }
-		StatEx* GetStatEx() { return _pStatEx.get(); }
+		CoreEx(Type type) :
+			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()) {}
 	public:
 		virtual Directory* GenerateDirectory() override { return new DirectoryEx(Reference()); }
 	};
@@ -84,8 +78,8 @@ public:
 public:
 	static Directory* CreateTop(Stream& streamSrc);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
-	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
-	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
+	//Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
+	//StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
 	bool ReadCentralDirectory();
 protected:
 	virtual void DoRewindChild() override;
@@ -93,38 +87,6 @@ protected:
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value_Stat* DoCreateStatValue() override;
 };
-
-//-----------------------------------------------------------------------------
-// Stream_Reader
-//-----------------------------------------------------------------------------
-class Stream_Reader : public Stream {
-protected:
-	RefPtr<Stream> _pStreamSrc;
-	RefPtr<StatEx> _pStatEx;
-	String _name;
-	size_t _bytesUncompressed;
-	size_t _bytesCompressed;
-	UInt32 _crc32Expected;
-	bool _seekedFlag;
-	CRC32 _crc32;
-public:
-	Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx);
-public:
-	size_t CheckCRC32(const void* buff, size_t bytesRead);
-public:
-	static Stream* Create(Stream& streamSrc, const StatEx& statEx);
-public:
-	virtual bool Initialize() = 0;
-	virtual const char* GetName() const override { return _name.c_str(); }
-	virtual const char* GetIdentifier() const override { return _name.c_str(); }
-	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
-	virtual bool DoFlush() override { return false; }
-	virtual bool DoClose() override { return true; }
-	virtual size_t DoGetBytes() override { return _bytesUncompressed; }
-	virtual Value_Stat* DoCreateStatValue() override;
-};
-
-#endif
 
 Gurax_EndModuleScope(curl)
 

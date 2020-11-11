@@ -5,7 +5,6 @@
 
 Gurax_BeginModuleScope(curl)
 
-#if 0
 //------------------------------------------------------------------------------
 // PathMgrEx
 //------------------------------------------------------------------------------
@@ -15,11 +14,13 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 		(String::StartsWith<CharCase>(pDirectoryParent->GetName(), "http:") ||
 		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "https:") ||
 		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftp:") ||
-		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftps:"));
+		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftps:") ||
+		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "sftp:"));
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+#if 0
 	const char* pathName = *pPathName;
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
@@ -35,15 +36,21 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		return nullptr;
 	}
 	return pDirectoryFound->Reference();
+#endif
+	return nullptr;
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
+#if 0
 	RefPtr<Directory> pDirectory(DoOpenDirectory(pDirectoryParent, pPathName, Directory::Type::None));
 	Error::Clear();
 	return pDirectory? Existence::Exist : Existence::None;
+#endif
+	return Existence::None;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
@@ -133,19 +140,20 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 	}
 	return true;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
 Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 {
-	RefPtr<DirectoryEx> pDirectoryEx(
-		new DirectoryEx(new CoreEx(Type::Boundary, streamSrc.Reference(), nullptr)));
+	RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary)));
 	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
 }
 
 bool DirectoryEx::ReadCentralDirectory()
 {
+#if 0
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
 	for (StatEx* pStatEx : statExOwner) {
@@ -155,6 +163,7 @@ bool DirectoryEx::ReadCentralDirectory()
 		//pStatEx->GetCentralFileHeader().Print(*Stream::COut);
 	}
 	//GetCoreEx().Print(*Stream::COut);
+#endif
 	return true;
 }
 
@@ -165,116 +174,33 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
+#if 0
 	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
 	if (_idxChild >= coreOwner.size()) return nullptr;
 	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
+#endif
+	return nullptr;
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
+#if 0
 	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
+#endif
+	return nullptr;
 }
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
+#if 0
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
-}
-
-//-----------------------------------------------------------------------------
-// Stream_Reader
-//-----------------------------------------------------------------------------
-Stream_Reader::Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx) :
-	Stream(Flag::Readable), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx),
-	_name(pStatEx->GetCentralFileHeader().GetFileName()),
-	_bytesUncompressed(pStatEx->GetCentralFileHeader().GetUncompressedSize()),
-	_bytesCompressed(pStatEx->GetCentralFileHeader().GetCompressedSize()),
-	_crc32Expected(pStatEx->GetCentralFileHeader().GetCrc32()),
-	_seekedFlag(false)
-{
-}
-
-Stream* Stream_Reader::Create(Stream& streamSrc, const StatEx& statEx)
-{
-	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
-	size_t offset = hdr.GetRelativeOffsetOfLocalHeader();
-	streamSrc.SetOffset(offset);
-	if (Error::IsIssued()) return nullptr;
-	do {
-		UInt32 signature;
-		if (!ReadStream(streamSrc, &signature)) return nullptr;
-		if (signature != LocalFileHeader::Signature) {
-			Error::Issue(ErrorType::FormatError, "invalid ZIP format");
-			return nullptr;
-		}
-		LocalFileHeader hdr;
-		if (!hdr.Read(streamSrc)) return nullptr;
-	} while (0);
-	UInt16 compressionMethod = hdr.GetCompressionMethod();
-	RefPtr<Stream_Reader> pStream;
-	if (compressionMethod == CompressionMethod::Store) {
-		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Shrink) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor2) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor3) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor4) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Implode) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Deflate) {
-		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Deflate64) {
-		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::PKWARE) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::BZIP2) {
-		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::LZMA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::TERSA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::LZ77) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::WavPack) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::PPMd) {
-		// unsupported
-	}
-	if (!pStream) {
-		Error::Issue(ErrorType::FormatError, "unsupported compression method %d", compressionMethod);
-		return nullptr;
-	}
-	if (!pStream->Initialize()) return nullptr;
-	return pStream.release();
-}
-
-size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
-{
-	if (_seekedFlag) return bytesRead;
-	_crc32.Update(buff, bytesRead);
-	if (bytesRead == 0 && _crc32Expected != _crc32.GetResult()) {
-		Error::Issue(ErrorType::FormatError, "CRC error");
-		return 0;
-	}
-	return bytesRead;
-}
-
-Value_Stat* Stream_Reader::DoCreateStatValue()
-{
-	return new Value_StatEx(_pStatEx->Reference());
-}
-
 #endif
+	return nullptr;
+}
 
 Gurax_EndModuleScope(curl)
