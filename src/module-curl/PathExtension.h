@@ -78,9 +78,6 @@ public:
 public:
 	static Directory* CreateTop(Stream& streamSrc);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
-	//Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
-	//StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
-	bool ReadCentralDirectory();
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;

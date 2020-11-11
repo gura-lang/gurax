@@ -5,6 +5,20 @@
 
 Gurax_BeginModule(curl)
 
+// curl.Test()
+Gurax_DeclareFunction(Test)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Test)
+{
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -30,6 +44,7 @@ Gurax_ModulePrepare()
 	AssignConsts(GetFrame());
 	// Assignment of function
 	AssignFunctions(GetFrame());
+	Assign(Gurax_CreateFunction(Test));
 	return true;
 }
 

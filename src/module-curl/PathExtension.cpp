@@ -147,24 +147,11 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 //-----------------------------------------------------------------------------
 Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 {
+#if 0
 	RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary)));
 	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
-}
-
-bool DirectoryEx::ReadCentralDirectory()
-{
-#if 0
-	StatExOwner statExOwner;
-	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
-	for (StatEx* pStatEx : statExOwner) {
-		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
-		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
-		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
-		//pStatEx->GetCentralFileHeader().Print(*Stream::COut);
-	}
-	//GetCoreEx().Print(*Stream::COut);
 #endif
-	return true;
+	return nullptr;
 }
 
 void DirectoryEx::DoRewindChild()
