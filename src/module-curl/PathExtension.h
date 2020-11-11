@@ -76,7 +76,6 @@ private:
 public:
 	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx), _idxChild(0) {}
 public:
-	static Directory* CreateTop(Stream& streamSrc);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 protected:
 	virtual void DoRewindChild() override;

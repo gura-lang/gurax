@@ -145,15 +145,6 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
-Directory* DirectoryEx::CreateTop(Stream& streamSrc)
-{
-#if 0
-	RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary)));
-	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
-#endif
-	return nullptr;
-}
-
 void DirectoryEx::DoRewindChild()
 {
 	_idxChild = 0;
