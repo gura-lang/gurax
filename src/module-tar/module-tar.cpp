@@ -8,12 +8,11 @@ Gurax_BeginModule(tar)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// tar.Test()
+// tar.Test(stream:Stream)
 Gurax_DeclareFunction(Test)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Adds up the given two numbers and returns the result.");
@@ -23,10 +22,13 @@ Gurax_ImplementFunction(Test)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	Stream& stream = args.PickStream();
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+	for (;;) {
+		std::unique_ptr<Header> pHdr(Header::Read(stream));
+		if (!pHdr) break;
+	}
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------

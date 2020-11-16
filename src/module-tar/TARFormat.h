@@ -60,11 +60,13 @@ struct star_header
 						// 500
 };
 
-#if 0
 //-----------------------------------------------------------------------------
-// Header declaration
+// Header
 //-----------------------------------------------------------------------------
 class Header {
+public:
+	static Header* Read(Stream& stream);
+#if 0
 private:
 	size_t _offset;
 	char _name[100 + 1];
@@ -131,8 +133,8 @@ public:
 	UInt32 CalcBlocks() const {
 		return (_size + BLOCKSIZE - 1) / BLOCKSIZE;
 	}
-};
 #endif
+};
 
 Gurax_EndModuleScope(tar)
 
