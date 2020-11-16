@@ -20,24 +20,12 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-#if 0
-	const char* pathName = *pPathName;
-	if (!pDirectoryParent) return nullptr;
-	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
-	if (!pStream) return nullptr;
-	pStream.reset(pStream->CreateBwdSeekable());
-	if (!pStream) return nullptr;
-	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
-	if (!pDirectory) return nullptr;
-	pDirectory->SetDirectoryParent(Directory::Reference(pDirectoryParent));
-	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
-	if (!pDirectoryFound) {
-		Error::Issue(ErrorType::PathError, "specified path is not found: %s", pathName);
-		return nullptr;
-	}
-	return pDirectoryFound->Reference();
-#endif
-	return nullptr;
+	const char* uri = *pPathName;
+	size_t len = ::strlen(uri);
+	Directory::Type type = (len > 0 && uri[len - 1] == '/')? Directory::Type::Folder : Directory::Type::Item;
+	RefPtr<Directory> pDirectory(new DirectoryEx(type, uri));
+	*pPathName = uri + len;
+	return pDirectory.release();
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)

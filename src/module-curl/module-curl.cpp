@@ -44,6 +44,8 @@ Gurax_ImplementFunction(Test)
 	/* turn on wildcard matching */ 
 	curl_easy_setopt(handle, CURLOPT_WILDCARDMATCH, 1L);
  
+	//curl_easy_setopt(handle, CURLOPT_NOBODY, 1L);
+
 	/* callback is called before download of concrete file started */ 
 	curl_easy_setopt(handle, CURLOPT_CHUNK_BGN_FUNCTION, OnChunkBgn);
 	curl_easy_setopt(handle, CURLOPT_CHUNK_END_FUNCTION, OnChunkEnd);
@@ -59,6 +61,7 @@ Gurax_ImplementFunction(Test)
  
 	/* set an URL containing wildcard pattern (only in the last part) */ 
 	curl_easy_setopt(handle, CURLOPT_URL, "ftp://speedtest.tele2.net/*");
+	//curl_easy_setopt(handle, CURLOPT_URL, "http://example.com/*");
  
 	/* and start transfer! */
 	curl_easy_perform(handle);

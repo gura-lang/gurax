@@ -61,22 +61,11 @@ public:
 // DirectoryEx
 //-----------------------------------------------------------------------------
 class DirectoryEx : public Directory {
-public:
-	class CoreEx : public Core {
-	public:
-		Gurax_DeclareReferable(CoreEx);
-	public:
-		CoreEx(Type type) :
-			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()) {}
-	public:
-		virtual Directory* GenerateDirectory() override { return new DirectoryEx(Reference()); }
-	};
 private:
 	size_t _idxChild;
 public:
-	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx), _idxChild(0) {}
-public:
-	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
+	DirectoryEx(Type type, String name) :
+		Directory(type, std::move(name), '/', true), _idxChild(0) {}
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
