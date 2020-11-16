@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(tar)
+
 #if 0
 //------------------------------------------------------------------------------
 // PathMgrEx
@@ -41,7 +42,9 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 	Error::Clear();
 	return pDirectory? Existence::Exist : Existence::None;
 }
+#endif
 
+#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------

@@ -2,7 +2,11 @@
 // TARFormat.h
 // http://www.gnu.org/software/tar/manual/html_node/Standard.html
 //==============================================================================
+#ifndef GURAX_MODULE_TAR_TARFORMAT_H
+#define GURAX_MODULE_TAR_TARFORMAT_H
 #include <gurax.h>
+
+Gurax_BeginModuleScope(tar)
 
 extern const int BLOCKSIZE;
 
@@ -56,6 +60,7 @@ struct star_header
 						// 500
 };
 
+#if 0
 //-----------------------------------------------------------------------------
 // Header declaration
 //-----------------------------------------------------------------------------
@@ -127,3 +132,8 @@ public:
 		return (_size + BLOCKSIZE - 1) / BLOCKSIZE;
 	}
 };
+#endif
+
+Gurax_EndModuleScope(tar)
+
+#endif
