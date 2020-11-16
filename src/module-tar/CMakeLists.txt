@@ -36,7 +36,9 @@ target_compile_definitions(tar.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(tar.gurd PRIVATE
 	module-tar.cpp
-	Util.cpp)
+	Util.cpp
+	PathExtension.cpp
+	TARFormat.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

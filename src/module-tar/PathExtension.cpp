@@ -3,8 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModuleScope(zip)
-
+Gurax_BeginModuleScope(tar)
+#if 0
 //------------------------------------------------------------------------------
 // PathMgrEx
 //------------------------------------------------------------------------------
@@ -379,5 +379,6 @@ bool Stream_Reader_Deflate64::DoSeek(size_t offset, size_t offsetPrev)
 {
 	return false;
 }
+#endif
 
-Gurax_EndModuleScope(zip)
+Gurax_EndModuleScope(tar)

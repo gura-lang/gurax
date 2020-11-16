@@ -7,7 +7,7 @@
 #include "TARFormat.h"
 
 Gurax_BeginModuleScope(tar)
-	
+#if 0	
 //------------------------------------------------------------------------------
 // PathMgrEx
 //------------------------------------------------------------------------------
@@ -92,6 +92,7 @@ protected:
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value_Stat* DoCreateStatValue() override;
 };
+#endif
 
 Gurax_EndModuleScope(tar)
 
