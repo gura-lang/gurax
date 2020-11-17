@@ -10,12 +10,16 @@ add_library(tar.gurd SHARED)
 #-------------------------------------------------------------------------------
 target_include_directories(tar.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Windows>:
+		${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11
+		${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(tar.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest>
+	$<$<PLATFORM_ID:Windows>:
+		${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11
+		${PROJECT_SOURCE_DIR}/../../guest/bzip2-1.0.8>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
@@ -45,13 +49,16 @@ target_sources(tar.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_options(tar.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(tar.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:>
-	$<$<PLATFORM_ID:Linux>:>
-	$<$<PLATFORM_ID:Darwin>:>)
+	$<$<PLATFORM_ID:Windows>:zlib>
+	$<$<PLATFORM_ID:Windows>:libbz2>
+	$<$<PLATFORM_ID:Linx>:z>
+	$<$<PLATFORM_ID:Linx>:bz2>
+	$<$<PLATFORM_ID:Darwin>:z>
+	$<$<PLATFORM_ID:Darwin>:bz2>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------

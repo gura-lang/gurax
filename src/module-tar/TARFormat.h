@@ -64,9 +64,6 @@ struct star_header
 // Header
 //-----------------------------------------------------------------------------
 class Header {
-public:
-	static Header* Read(Stream& stream);
-#if 0
 private:
 	size_t _offset;
 	char _name[100 + 1];
@@ -77,37 +74,37 @@ private:
 	UInt32 _uid;
 	UInt32 _gid;
 	size_t _size;
-	DateTime _mtime;
-	DateTime _atime;
-	DateTime _ctime;
+	RefPtr<DateTime> _pMtime;
+	RefPtr<DateTime> _pAtime;
+	RefPtr<DateTime> _pCtime;
 	UInt32 _chksum;
 	char _typeflag;
 	UInt32 _devmajor;
 	UInt32 _devminor;
 public:
-	Header();
-	Header(const Header &hdr);
+	Header() {}
+	Header(const Header& hdr);
 	void Initialize();
-	bool SetRawHeader(Signal &sig, const star_header &rawHdr);
-	void ComposeHeaderBlock(void *memBlock) const;
+	bool SetRawHeader(const star_header& rawHdr);
+	void ComposeHeaderBlock(void* memBlock) const;
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
-	void SetName(const char *name) {
+	void SetName(const char* name) {
 		::memset(_name, 0x00, sizeof(_name)), ::strcpy(_name, name);
 	}
-	const char *GetName() const { return _name; }
-	void SetLinkName(const char *linkname) {
+	const char* GetName() const { return _name; }
+	void SetLinkName(const char* linkname) {
 		::memset(_linkname, 0x00, sizeof(_linkname)), ::strcpy(_linkname, linkname);
 	}
-	const char *GetLinkName() const { return _linkname; }
-	void SetUName(const char *uname) {
+	const char* GetLinkName() const { return _linkname; }
+	void SetUName(const char* uname) {
 		::memset(_uname, 0x00, sizeof(_uname)), ::strcpy(_uname, uname);
 	}
-	const char *GetUName() const { return _uname; }
-	void SetGName(const char *gname) {
+	const char* GetUName() const { return _uname; }
+	void SetGName(const char* gname) {
 		::memset(_gname, 0x00, sizeof(_gname)), ::strcpy(_gname, gname);
 	}
-	const char *GetGName() const { return _gname; }
+	const char* GetGName() const { return _gname; }
 	void SetMode(UInt32 mode) { _mode = mode; }
 	UInt32 GetMode() const { return _mode; }
 	void SetUid(UInt32 uid) { _uid = uid; }
@@ -116,12 +113,12 @@ public:
 	UInt32 GetGid() const { return _gid; }
 	void SetSize(size_t size) { _size = size; }
 	size_t GetSize() const { return _size; }
-	void SetMTime(const DateTime &mtime) { _mtime = mtime; }
-	DateTime GetMTime() const { return _mtime; }
-	void SetATime(const DateTime &atime) { _atime = atime; }
-	DateTime GetATime() const { return _atime; }
-	void SetCTime(const DateTime &ctime) { _ctime = ctime; }
-	DateTime GetCTime() const { return _ctime; }
+	void SetMTime(DateTime* pMtime) { _pMtime.reset(pMtime); }
+	const DateTime& GetMTime() const { return *_pMtime; }
+	void SetATime(DateTime* pAtime) { _pAtime.reset(pAtime); }
+	const DateTime& GetATime() const { return *_pAtime; }
+	void SetCTime(DateTime* pCtime) { _pCtime.reset(pCtime); }
+	const DateTime& GetCTime() const { return *_pCtime; }
 	void SetChksum(UInt32 chksum) { _chksum = chksum; }
 	UInt32 GetChksum() const { return _chksum; }
 	void SetTypeFlag(char typeflag) { _typeflag = typeflag; }
@@ -130,10 +127,13 @@ public:
 	UInt32 GetDevMajor() const { return _devmajor; }
 	void SetDevMinor(UInt32 devminor) { _devminor = devminor; }
 	UInt32 GetDevMinor() const { return _devminor; }
-	UInt32 CalcBlocks() const {
-		return (_size + BLOCKSIZE - 1) / BLOCKSIZE;
+	UInt32 CalcBlocks() const { return (_size + BLOCKSIZE - 1) / BLOCKSIZE; }
+public:
+	static Header* Read(Stream& stream);
+	static UInt64 OctetToUInt64(const char* octet, size_t len);
+	static UInt32 OctetToUInt32(const char* octet, size_t len) {
+		return static_cast<UInt32>(OctetToUInt64(octet, len));
 	}
-#endif
 };
 
 Gurax_EndModuleScope(tar)

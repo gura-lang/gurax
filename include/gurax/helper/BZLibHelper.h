@@ -25,7 +25,7 @@ private:
 	char* _buffIn;
 	bool _doneFlag;
 public:
-	Stream_Reader(Stream* pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
+	Stream_Reader(Stream* pStream, size_t bytesSrc = -1, size_t bytesBuff = 32768) :
 		Stream(Flag::Readable), _pStream(pStream), _bytesSrc(bytesSrc), _bytesBuff(bytesBuff), _bytesOut(0),
 		_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
 		SetCodec(pStream->GetCodec().Duplicate());
