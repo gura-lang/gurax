@@ -56,6 +56,7 @@ public:
 	void Clear();
 	bool ReadCentralDirectory(Stream& streamSrc);
 };
+#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
@@ -93,7 +94,6 @@ protected:
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value_Stat* DoCreateStatValue() override;
 };
-#endif
 
 Gurax_EndModuleScope(tar)
 

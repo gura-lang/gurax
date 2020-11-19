@@ -19,7 +19,6 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-#if 0
 	const char* pathName = *pPathName;
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
@@ -35,8 +34,6 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		return nullptr;
 	}
 	return pDirectoryFound->Reference();
-#endif
-	return nullptr;
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
@@ -136,6 +133,7 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 	}
 	return true;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
@@ -149,6 +147,7 @@ Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 
 bool DirectoryEx::ReadCentralDirectory()
 {
+#if 0
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
 	for (StatEx* pStatEx : statExOwner) {
@@ -158,6 +157,7 @@ bool DirectoryEx::ReadCentralDirectory()
 		//pStatEx->GetCentralFileHeader().Print(*Stream::COut);
 	}
 	//GetCoreEx().Print(*Stream::COut);
+#endif
 	return true;
 }
 
@@ -168,26 +168,36 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
+#if 0
 	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
 	if (_idxChild >= coreOwner.size()) return nullptr;
 	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
+#endif
+	return nullptr;
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
+#if 0
 	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
+#endif
+	return nullptr;
 }
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
+#if 0
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
+#endif
+	return nullptr;
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Stream_Reader
 //-----------------------------------------------------------------------------
