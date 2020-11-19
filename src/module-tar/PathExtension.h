@@ -37,7 +37,6 @@ public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-#if 0	
 //-----------------------------------------------------------------------------
 // StatExList
 //-----------------------------------------------------------------------------
@@ -54,9 +53,8 @@ class GURAX_DLLDECLARE StatExOwner : public StatExList {
 public:
 	~StatExOwner() { Clear(); }
 	void Clear();
-	bool ReadCentralDirectory(Stream& streamSrc);
+	bool ReadDirectory(Stream& streamSrc);
 };
-#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
@@ -87,7 +85,7 @@ public:
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
 	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
-	bool ReadCentralDirectory();
+	bool ReadDirectory();
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;

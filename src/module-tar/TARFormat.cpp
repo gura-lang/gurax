@@ -149,6 +149,11 @@ void Header::ComposeHeaderBlock(void *memBlock) const
 	::sprintf(rawHdr.chksum,		"%6o ", chksum);
 }
 
+bool Header::Write(Stream& stream)
+{
+	return true;
+}
+
 Header* Header::Read(Stream& stream)
 {
 	char buffBlock[BLOCKSIZE];

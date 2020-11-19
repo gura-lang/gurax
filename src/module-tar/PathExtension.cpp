@@ -64,7 +64,6 @@ String StatEx::ToString(const StringStyle& ss) const
 	return str;
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // StatExList
 //------------------------------------------------------------------------------
@@ -72,7 +71,7 @@ StatEx* StatExList::FindByName(const char* fileName) const
 {
 	PathName pathName(fileName);
 	for (StatEx* pStatEx : *this) {
-		if (pathName.DoesMatch(pStatEx->GetCentralFileHeader().GetFileName())) return pStatEx;
+		if (pathName.DoesMatch(pStatEx->GetHeader().GetFileName())) return pStatEx;
 	}
 	return nullptr;
 }
@@ -80,7 +79,7 @@ StatEx* StatExList::FindByName(const char* fileName) const
 bool StatExList::Write(Stream& streamDst) const
 {
 	for (StatEx* pStatEx : *this) {
-		if (!pStatEx->GetCentralFileHeader().Write(streamDst)) return false;
+		if (!pStatEx->GetHeader().Write(streamDst)) return false;
 	}
 	return true;
 }
@@ -94,8 +93,9 @@ void StatExOwner::Clear()
 	clear();
 }
 
-bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
+bool StatExOwner::ReadDirectory(Stream& streamSrc)
 {
+#if 0
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
 	if (Error::IsIssued()) return false;
 	if (!streamSrc.SetOffset(offsetCentralDirectory)) return false;
@@ -131,9 +131,9 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 			return false;
 		}
 	}
+#endif
 	return true;
 }
-#endif
 
 //-----------------------------------------------------------------------------
 // DirectoryEx
@@ -142,14 +142,14 @@ Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 {
 	RefPtr<DirectoryEx> pDirectoryEx(
 		new DirectoryEx(new CoreEx(Type::Boundary, streamSrc.Reference(), nullptr)));
-	return pDirectoryEx->ReadCentralDirectory()? pDirectoryEx.release() : nullptr;
+	return pDirectoryEx->ReadDirectory()? pDirectoryEx.release() : nullptr;
 }
 
-bool DirectoryEx::ReadCentralDirectory()
+bool DirectoryEx::ReadDirectory()
 {
 #if 0
 	StatExOwner statExOwner;
-	if (!statExOwner.ReadCentralDirectory(GetStreamSrc())) return false;
+	if (!statExOwner.ReadDirectory(GetStreamSrc())) return false;
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;

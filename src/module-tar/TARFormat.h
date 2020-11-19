@@ -126,6 +126,7 @@ public:
 		::memset(_name, 0x00, sizeof(_name)), ::strcpy(_name, name);
 	}
 	const char* GetName() const { return _name; }
+	const char* GetFileName() const { return _name; }
 	void SetLinkName(const char* linkname) {
 		::memset(_linkname, 0x00, sizeof(_linkname)), ::strcpy(_linkname, linkname);
 	}
@@ -162,6 +163,7 @@ public:
 	void SetDevMinor(UInt32 devminor) { _devminor = devminor; }
 	UInt32 GetDevMinor() const { return _devminor; }
 	UInt32 CalcBlocks() const { return (_size + BLOCKSIZE - 1) / BLOCKSIZE; }
+	bool Write(Stream& stream);
 public:
 	static Header* Read(Stream& stream);
 	static UInt64 OctetToUInt64(const char* octet, size_t len);
