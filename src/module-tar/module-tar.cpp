@@ -20,6 +20,7 @@ Gurax_DeclareFunction(Test)
 
 Gurax_ImplementFunction(Test)
 {
+#if 0
 	// Arguments
 	ArgPicker args(argument);
 	RefPtr<Stream> pStream(args.PickStream().Reference());
@@ -44,6 +45,7 @@ Gurax_ImplementFunction(Test)
 		::printf("%s\n", pHeader->GetName());
 		pStream->Seek(pHeader->CalcBlocks() * BLOCKSIZE, Stream::SeekMode::Cur);
 	}
+#endif
 	return Value::nil();
 }
 

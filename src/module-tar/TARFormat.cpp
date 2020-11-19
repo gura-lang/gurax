@@ -154,36 +154,6 @@ bool Header::Write(Stream& stream)
 	return true;
 }
 
-Header* Header::Read(Stream& stream)
-{
-	char buffBlock[BLOCKSIZE];
-	int nTerminator = 0;
-	for (;;) {
-		size_t bytesRead = stream.Read(buffBlock, BLOCKSIZE);
-		if (Error::IsIssued()) return nullptr;
-		if (bytesRead < BLOCKSIZE) {
-			Error::Issue(ErrorType::FormatError, "failed to read a block");
-			return nullptr;
-		}
-		bool zeroBlockFlag = true;
-		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock);
-		for (int i = 0; i < BLOCKSIZE / sizeof(UInt32); i++, p++) {
-			if (*p != 0x00000000) {
-				zeroBlockFlag = false;
-				break;
-			}
-		}
-		if (!zeroBlockFlag) break;
-		nTerminator++;
-		if (nTerminator == 2) return nullptr;
-	}
-	star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock);
-	std::unique_ptr<Header> pHdr(new Header());
-	pHdr->SetOffset(stream.GetOffset());
-	if (!pHdr->SetRawHeader(hdrRaw)) return nullptr;
-	return pHdr.release();
-}
-
 UInt64 Header::OctetToUInt64(const char *octet, size_t len)
 {
 	UInt64 num = 0;

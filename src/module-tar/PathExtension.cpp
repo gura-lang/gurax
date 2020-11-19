@@ -95,43 +95,34 @@ void StatExOwner::Clear()
 
 bool StatExOwner::ReadDirectory(Stream& streamSrc)
 {
-#if 0
-	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
-	if (Error::IsIssued()) return false;
-	if (!streamSrc.SetOffset(offsetCentralDirectory)) return false;
-	UInt32 signature;
-	while (ReadStream(streamSrc, &signature)) {
-		//::printf("%08x\n", signature);
-		if (signature == LocalFileHeader::Signature) {
-			LocalFileHeader hdr;
-			if (!hdr.Read(streamSrc)) return false;
-			if (!hdr.SkipFileData(streamSrc)) return false;
-		} else if (signature == ArchiveExtraDataRecord::Signature) {
-			ArchiveExtraDataRecord record;
-			if (!record.Read(streamSrc)) return false;
-		} else if (signature == CentralFileHeader::Signature) {
-			std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
-			if (!pCentralFileHeader->Read(streamSrc)) return false;
-			push_back(new StatEx(pCentralFileHeader.release()));
-		} else if (signature == DigitalSignature::Signature) {
-			DigitalSignature signature;
-			if (!signature.Read(streamSrc)) return false;
-		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
-			Zip64EndOfCentralDirectory dir;
-			if (!dir.Read(streamSrc)) return false;
-		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
-			Zip64EndOfCentralDirectoryLocator loc;
-			if (!loc.Read(streamSrc)) return false;
-		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
-			EndOfCentralDirectoryRecord record;
-			if (!record.Read(streamSrc)) return false;
-			break;
-		} else {
-			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
+	std::unique_ptr<char []> buffBlock(new char [BLOCKSIZE]);
+	int nTerminator = 0;
+	for (;;) {
+		size_t bytesRead = streamSrc.Read(buffBlock.get(), BLOCKSIZE);
+		if (Error::IsIssued()) return false;
+		if (bytesRead < BLOCKSIZE) {
+			Error::Issue(ErrorType::FormatError, "failed to read a block");
 			return false;
 		}
+		bool zeroBlockFlag = true;
+		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock.get());
+		for (int i = 0; i < BLOCKSIZE / sizeof(UInt32); i++, p++) {
+			if (*p != 0x00000000) {
+				zeroBlockFlag = false;
+				break;
+			}
+		}
+		if (zeroBlockFlag) {
+			nTerminator++;
+			if (nTerminator == 2) break;
+		}
+		nTerminator = 0;
+		star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock.get());
+		std::unique_ptr<Header> pHdr(new Header());
+		pHdr->SetOffset(streamSrc.GetOffset());
+		if (!pHdr->SetRawHeader(hdrRaw)) return nullptr;
+		push_back(new StatEx(pHdr.release()));
 	}
-#endif
 	return true;
 }
 
@@ -147,9 +138,9 @@ Directory* DirectoryEx::CreateTop(Stream& streamSrc)
 
 bool DirectoryEx::ReadDirectory()
 {
-#if 0
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadDirectory(GetStreamSrc())) return false;
+#if 0
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
@@ -168,14 +159,11 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
-#if 0
 	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
 	if (_idxChild >= coreOwner.size()) return nullptr;
 	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
-#endif
-	return nullptr;
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
