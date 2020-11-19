@@ -5,20 +5,21 @@
 
 Gurax_BeginModuleScope(tar)
 
-#if 0
 //------------------------------------------------------------------------------
 // PathMgrEx
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
 	return pDirectoryParent && //!pDirectoryParent->IsFolder() &&
-		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".zip") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
+		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar") ||
+		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar.gz") ||
+		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tgz") ||
+		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar.bz2"));
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+#if 0
 	const char* pathName = *pPathName;
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
@@ -34,38 +35,39 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		return nullptr;
 	}
 	return pDirectoryFound->Reference();
+#endif
+	return nullptr;
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
+#if 0
 	RefPtr<Directory> pDirectory(DoOpenDirectory(pDirectoryParent, pPathName, Directory::Type::None));
 	Error::Clear();
 	return pDirectory? Existence::Exist : Existence::None;
-}
 #endif
+	return Existence::None;
+}
 
-#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
-StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
-	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->GetFileName(),
-		 pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
-		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
-	_pCentralFileHeader(pCentralFileHeader)
+StatEx::StatEx(Header* pHeader) :
+	Stat(pHeader->GetMTime().Reference(), pHeader->GetName(),
+		 pHeader->IsFolder()? Flag::Dir : Flag::Reg,
+		 pHeader->GetMode(), pHeader->GetSize(), pHeader->GetUid(), pHeader->GetGid()),
+	_pHeader(pHeader)
 {
 }
 
 String StatEx::ToString(const StringStyle& ss) const
 {
 	String str = Stat::ToString(ss);
-	str += ":zip";
-	str += ":";
-	const Symbol* pSymbol = CompressionMethodToSymbol(_pCentralFileHeader->GetCompressionMethod());
-	str += pSymbol->GetName();
+	str += ":tar";
 	return str;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // StatExList
 //------------------------------------------------------------------------------

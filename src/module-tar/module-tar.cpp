@@ -22,10 +22,10 @@ Gurax_ImplementFunction(Test)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
+	RefPtr<Stream> pStream(args.PickStream().Reference());
 	// Function body
-	RefPtr<Stream> pStream(stream.Reference());
-	if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".gz")) {
+	if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".gz") ||
+		String::EndsWith<CharICase>(pStream->GetIdentifier(), ".tgz")) {
 		ZLib::GZHeader hdr;
 		if (!hdr.Read(*pStream)) return Value::nil();
 		RefPtr<ZLib::Stream_Reader> pStreamGZ(new ZLib::Stream_Reader(pStream.release()));
@@ -38,10 +38,11 @@ Gurax_ImplementFunction(Test)
 		pStream.reset(pStreamBZ2.release());
 	}
 	for (;;) {
-		std::unique_ptr<Header> pHdr(Header::Read(*pStream));
-		if (!pHdr) break;
-		::printf("%s\n", pHdr->GetName());
-		pStream->Seek(pHdr->CalcBlocks() * BLOCKSIZE, Stream::SeekMode::Cur);
+		std::unique_ptr<Header> pHeader(Header::Read(*pStream));
+		if (!pHeader) break;
+		pHeader->SetOffset(pStream->GetOffset());
+		::printf("%s\n", pHeader->GetName());
+		pStream->Seek(pHeader->CalcBlocks() * BLOCKSIZE, Stream::SeekMode::Cur);
 	}
 	return Value::nil();
 }
@@ -58,6 +59,8 @@ Gurax_ModulePrepare()
 {
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of path manager
+	PathMgr::Assign(new PathMgrEx());
 	return true;
 }
 

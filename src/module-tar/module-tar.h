@@ -8,6 +8,7 @@
 #include <gurax/helper/ZLibHelper.h>
 #include "Util.h"
 #include "TARFormat.h"
+#include "PathExtension.h"
 
 Gurax_BeginModuleHeader(tar)
 Gurax_EndModuleHeader(tar)

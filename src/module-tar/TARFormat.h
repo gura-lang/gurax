@@ -10,6 +10,39 @@ Gurax_BeginModuleScope(tar)
 
 extern const int BLOCKSIZE;
 
+extern const char *TMAGIC;
+extern const int TMAGLEN;
+extern const char *TVERSION;
+extern const int TVERSLEN;
+
+// Values used in typeflag field.
+extern const char REGTYPE;
+extern const char AREGTYPE;
+extern const char LNKTYPE;
+extern const char SYMTYPE;
+extern const char CHRTYPE;
+extern const char BLKTYPE;
+extern const char DIRTYPE;
+extern const char FIFOTYPE;
+extern const char CONTTYPE;
+extern const char XHDTYPE;
+extern const char XGLTYPE;
+
+// Bits used in the mode field, values in octal. 
+extern const UInt32 TSUID;
+extern const UInt32 TSGID;
+extern const UInt32 TSVTX;
+										// file permissions
+extern const UInt32 TUREAD;
+extern const UInt32 TUWRITE;
+extern const UInt32 TUEXEC;
+extern const UInt32 TGREAD;
+extern const UInt32 TGWRITE;
+extern const UInt32 TGEXEC;
+extern const UInt32 TOREAD;
+extern const UInt32 TOWRITE;
+extern const UInt32 TOEXEC;
+
 //-----------------------------------------------------------------------------
 // posix_header
 //-----------------------------------------------------------------------------
@@ -123,6 +156,7 @@ public:
 	UInt32 GetChksum() const { return _chksum; }
 	void SetTypeFlag(char typeflag) { _typeflag = typeflag; }
 	char GetTypeFlag() const { return _typeflag; }
+	bool IsFolder() const { return GetTypeFlag() == DIRTYPE; }
 	void SetDevMajor(UInt32 devmajor) { _devmajor = devmajor; }
 	UInt32 GetDevMajor() const { return _devmajor; }
 	void SetDevMinor(UInt32 devminor) { _devminor = devminor; }

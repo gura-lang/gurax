@@ -19,7 +19,6 @@ protected:
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) override;
 };
 
-#if 0	
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
@@ -28,16 +27,17 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(StatEx);
 private:
-	std::unique_ptr<CentralFileHeader> _pCentralFileHeader;
+	std::unique_ptr<Header> _pHeader;
 public:
-	StatEx(CentralFileHeader* pCentralFileHeader);
+	StatEx(Header* pHeader);
 public:
-	CentralFileHeader& GetCentralFileHeader() { return *_pCentralFileHeader; }
-	const CentralFileHeader& GetCentralFileHeader() const { return *_pCentralFileHeader; }
+	Header& GetHeader() { return *_pHeader; }
+	const Header& GetHeader() const { return *_pHeader; }
 public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+#if 0	
 //-----------------------------------------------------------------------------
 // StatExList
 //-----------------------------------------------------------------------------
