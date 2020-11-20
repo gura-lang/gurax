@@ -41,9 +41,6 @@ public:
 // StatExList
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE StatExList : public ListBase<StatEx*> {
-public:
-	StatEx* FindByName(const char* fileName) const;
-	bool Write(Stream& streamDst) const;
 };
 
 //-----------------------------------------------------------------------------
@@ -104,8 +101,6 @@ protected:
 	CRC32 _crc32;
 public:
 	Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx);
-public:
-	//size_t CheckCRC32(const void* buff, size_t bytesRead);
 public:
 	static Stream* Create(Stream& streamSrc, const StatEx& statEx);
 public:

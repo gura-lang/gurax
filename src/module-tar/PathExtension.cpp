@@ -23,6 +23,19 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
+	if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".gz") ||
+		String::EndsWith<CharICase>(pStream->GetIdentifier(), ".tgz")) {
+		ZLib::GZHeader hdr;
+		if (!hdr.Read(*pStream)) return nullptr;
+		RefPtr<ZLib::Stream_Reader> pStreamGZ(new ZLib::Stream_Reader(pStream.release()));
+		if (!pStreamGZ->Initialize(-MAX_WBITS)) return nullptr;
+		pStream.reset(pStreamGZ.release());
+	} else if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".bz2")) {
+		int verbosity = 0, small = 0;
+		RefPtr<BZLib::Stream_Reader> pStreamBZ2(new BZLib::Stream_Reader(pStream.release()));
+		if (!pStreamBZ2->Initialize(verbosity, small)) return nullptr;
+		pStream.reset(pStreamBZ2.release());
+	}
 	pStream.reset(pStream->CreateBwdSeekable());
 	if (!pStream) return nullptr;
 	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
@@ -38,12 +51,9 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
-#if 0
 	RefPtr<Directory> pDirectory(DoOpenDirectory(pDirectoryParent, pPathName, Directory::Type::None));
 	Error::Clear();
 	return pDirectory? Existence::Exist : Existence::None;
-#endif
-	return Existence::None;
 }
 
 //------------------------------------------------------------------------------
@@ -67,22 +77,6 @@ String StatEx::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // StatExList
 //------------------------------------------------------------------------------
-StatEx* StatExList::FindByName(const char* fileName) const
-{
-	PathName pathName(fileName);
-	for (StatEx* pStatEx : *this) {
-		if (pathName.DoesMatch(pStatEx->GetHeader().GetFileName())) return pStatEx;
-	}
-	return nullptr;
-}
-
-bool StatExList::Write(Stream& streamDst) const
-{
-	for (StatEx* pStatEx : *this) {
-		if (!pStatEx->GetHeader().Write(streamDst)) return false;
-	}
-	return true;
-}
 
 //------------------------------------------------------------------------------
 // StatExOwner
@@ -211,6 +205,7 @@ size_t Stream_Reader::DoRead(void* buff, size_t bytes)
 	size_t bytesRest = _pStatEx->GetBytes() - (_pStreamSrc->GetOffset() - _offsetTop);
 	if (bytes > bytesRest) bytes = bytesRest;
 	size_t bytesRead = _pStreamSrc->Read(buff, bytes);
+	_crc32.Update(buff, bytesRead);
 	return bytesRead;
 }
 
