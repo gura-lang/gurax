@@ -98,7 +98,6 @@ protected:
 	RefPtr<Stream> _pStreamSrc;
 	RefPtr<StatEx> _pStatEx;
 	size_t _offsetTop;
-	CRC32 _crc32;
 public:
 	Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx);
 public:

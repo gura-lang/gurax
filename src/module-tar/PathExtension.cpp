@@ -187,25 +187,11 @@ Stream* Stream_Reader::Create(Stream& streamSrc, const StatEx& statEx)
 	return new Stream_Reader(streamSrc.Reference(), statEx.Reference());
 }
 
-#if 0
-size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
-{
-	if (_seekedFlag) return bytesRead;
-	_crc32.Update(buff, bytesRead);
-	if (bytesRead == 0 && _crc32Expected != _crc32.GetResult()) {
-		Error::Issue(ErrorType::FormatError, "CRC error");
-		return 0;
-	}
-	return bytesRead;
-}
-#endif
-
 size_t Stream_Reader::DoRead(void* buff, size_t bytes)
 {
 	size_t bytesRest = _pStatEx->GetBytes() - (_pStreamSrc->GetOffset() - _offsetTop);
 	if (bytes > bytesRest) bytes = bytesRest;
 	size_t bytesRead = _pStreamSrc->Read(buff, bytes);
-	_crc32.Update(buff, bytesRead);
 	return bytesRead;
 }
 
