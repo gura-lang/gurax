@@ -42,7 +42,8 @@ target_sources(tar.gurd PRIVATE
 	module-tar.cpp
 	Util.cpp
 	PathExtension.cpp
-	TARFormat.cpp)
+	TARFormat.cpp
+	VType_StatEx.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

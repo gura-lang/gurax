@@ -167,98 +167,33 @@ Directory* DirectoryEx::DoNextChild()
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
-#if 0
 	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
-#endif
-	return nullptr;
 }
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
-#if 0
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
 	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
-#endif
-	return nullptr;
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // Stream_Reader
 //-----------------------------------------------------------------------------
 Stream_Reader::Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx) :
 	Stream(Flag::Readable), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx),
-	_name(pStatEx->GetCentralFileHeader().GetFileName()),
-	_bytesUncompressed(pStatEx->GetCentralFileHeader().GetUncompressedSize()),
-	_bytesCompressed(pStatEx->GetCentralFileHeader().GetCompressedSize()),
-	_crc32Expected(pStatEx->GetCentralFileHeader().GetCrc32()),
-	_seekedFlag(false)
+	_offsetTop(pStreamSrc->GetOffset())
 {
 }
 
 Stream* Stream_Reader::Create(Stream& streamSrc, const StatEx& statEx)
 {
-	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
-	size_t offset = hdr.GetRelativeOffsetOfLocalHeader();
-	streamSrc.SetOffset(offset);
-	if (Error::IsIssued()) return nullptr;
-	do {
-		UInt32 signature;
-		if (!ReadStream(streamSrc, &signature)) return nullptr;
-		if (signature != LocalFileHeader::Signature) {
-			Error::Issue(ErrorType::FormatError, "invalid ZIP format");
-			return nullptr;
-		}
-		LocalFileHeader hdr;
-		if (!hdr.Read(streamSrc)) return nullptr;
-	} while (0);
-	UInt16 compressionMethod = hdr.GetCompressionMethod();
-	RefPtr<Stream_Reader> pStream;
-	if (compressionMethod == CompressionMethod::Store) {
-		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Shrink) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor2) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor3) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor4) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Implode) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Factor1) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::Deflate) {
-		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::Deflate64) {
-		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::PKWARE) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::BZIP2) {
-		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), statEx.Reference()));
-	} else if (compressionMethod == CompressionMethod::LZMA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::TERSA) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::LZ77) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::WavPack) {
-		// unsupported
-	} else if (compressionMethod == CompressionMethod::PPMd) {
-		// unsupported
-	}
-	if (!pStream) {
-		Error::Issue(ErrorType::FormatError, "unsupported compression method %d", compressionMethod);
-		return nullptr;
-	}
-	if (!pStream->Initialize()) return nullptr;
-	return pStream.release();
+	streamSrc.SetOffset(statEx.GetHeader().GetOffset());
+	return new Stream_Reader(streamSrc.Reference(), statEx.Reference());
 }
 
+#if 0
 size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 {
 	if (_seekedFlag) return bytesRead;
@@ -269,118 +204,24 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 	}
 	return bytesRead;
 }
+#endif
 
-Value_Stat* Stream_Reader::DoCreateStatValue()
+size_t Stream_Reader::DoRead(void* buff, size_t bytes)
 {
-	return new Value_StatEx(_pStatEx->Reference());
-}
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_Store
-// Compression method #0: stored (no compression)
-//-----------------------------------------------------------------------------
-Stream_Reader_Store::Stream_Reader_Store(Stream* pStreamSrc, StatEx* pStatEx) :
-	Stream_Reader(pStreamSrc, pStatEx), _offsetTop(pStreamSrc->GetOffset())
-{
-}
-
-bool Stream_Reader_Store::Initialize()
-{
-	return true;
-}
-	
-size_t Stream_Reader_Store::DoRead(void* buff, size_t bytes)
-{
-	size_t bytesRest = _bytesUncompressed - (_pStreamSrc->GetOffset() - _offsetTop);
+	size_t bytesRest = _pStatEx->GetBytes() - (_pStreamSrc->GetOffset() - _offsetTop);
 	if (bytes > bytesRest) bytes = bytesRest;
 	size_t bytesRead = _pStreamSrc->Read(buff, bytes);
-	return CheckCRC32(buff, bytesRead);
+	return bytesRead;
 }
 
-bool Stream_Reader_Store::DoSeek(size_t offset, size_t offsetPrev)
+bool Stream_Reader::DoSeek(size_t offset, size_t offsetPrev)
 {
 	return _pStreamSrc->SetOffset(_offsetTop + offset);
 }
 
-//-----------------------------------------------------------------------------
-// Stream_Reader_Deflate
-// Compression method #8: Deflated
-//-----------------------------------------------------------------------------
-Stream_Reader_Deflate::Stream_Reader_Deflate(Stream* pStreamSrc, StatEx* pStatEx) :
-	Stream_Reader(pStreamSrc, pStatEx)
+Value_Stat* Stream_Reader::DoCreateStatValue()
 {
+	return new Value_StatEx(_pStatEx.Reference());
 }
-
-bool Stream_Reader_Deflate::Initialize()
-{
-	_pStreamReader.reset(new ZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
-	return _pStreamReader->Initialize(-MAX_WBITS);
-}
-	
-size_t Stream_Reader_Deflate::DoRead(void* buff, size_t bytes)
-{
-	size_t bytesRead = _pStreamReader->Read(buff, bytes);
-	return CheckCRC32(buff, bytesRead);
-}
-
-bool Stream_Reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
-{
-	_seekedFlag = true;
-	return _pStreamReader->SetOffset(offset);
-}
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_BZIP2
-// Compression method #12: BZIP2
-//-----------------------------------------------------------------------------
-Stream_Reader_BZIP2::Stream_Reader_BZIP2(Stream* pStreamSrc, StatEx* pStatEx) :
-	Stream_Reader(pStreamSrc, pStatEx)
-{
-}
-
-bool Stream_Reader_BZIP2::Initialize()
-{
-	_pStreamReader.reset(new BZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
-	int verbosity = 0, small = 0;
-	return _pStreamReader->Initialize(verbosity, small);
-}
-	
-size_t Stream_Reader_BZIP2::DoRead(void* buff, size_t bytes)
-{
-	size_t bytesRead = _pStreamReader->Read(buff, bytes);
-	return CheckCRC32(buff, bytesRead);
-}
-
-bool Stream_Reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
-{
-	_seekedFlag = true;
-	return _pStreamReader->SetOffset(offset);
-}
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_Deflate64
-// Compression method #9: Enhanced Deflating using Deflate64(tm)
-//-----------------------------------------------------------------------------
-Stream_Reader_Deflate64::Stream_Reader_Deflate64(Stream* pStreamSrc, StatEx* pStatEx) :
-	Stream_Reader(pStreamSrc, pStatEx)
-{
-}
-
-bool Stream_Reader_Deflate64::Initialize()
-{
-	Error::Issue(ErrorType::UnimplementedError, "this compression method is not implemented yet");
-	return false;
-}
-	
-size_t Stream_Reader_Deflate64::DoRead(void* buff, size_t bytes)
-{
-	return 0;
-}
-
-bool Stream_Reader_Deflate64::DoSeek(size_t offset, size_t offsetPrev)
-{
-	return false;
-}
-#endif
 
 Gurax_EndModuleScope(tar)

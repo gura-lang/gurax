@@ -59,6 +59,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_StatEx);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	// Assignment of path manager

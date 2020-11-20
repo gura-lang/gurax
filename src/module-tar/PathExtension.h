@@ -93,6 +93,33 @@ protected:
 	virtual Value_Stat* DoCreateStatValue() override;
 };
 
+//-----------------------------------------------------------------------------
+// Stream_Reader
+//-----------------------------------------------------------------------------
+class Stream_Reader : public Stream {
+protected:
+	RefPtr<Stream> _pStreamSrc;
+	RefPtr<StatEx> _pStatEx;
+	size_t _offsetTop;
+	CRC32 _crc32;
+public:
+	Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx);
+public:
+	//size_t CheckCRC32(const void* buff, size_t bytesRead);
+public:
+	static Stream* Create(Stream& streamSrc, const StatEx& statEx);
+public:
+	virtual const char* GetName() const override { return _pStatEx->GetPathName(); }
+	virtual const char* GetIdentifier() const override { return _pStatEx->GetPathName(); }
+	virtual size_t DoRead(void* buff, size_t bytes) override;
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
+	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
+	virtual bool DoFlush() override { return false; }
+	virtual bool DoClose() override { return true; }
+	virtual size_t DoGetBytes() override { return _pStatEx->GetBytes(); }
+	virtual Value_Stat* DoCreateStatValue() override;
+};
+
 Gurax_EndModuleScope(tar)
 
 #endif

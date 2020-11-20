@@ -9,6 +9,7 @@
 #include "Util.h"
 #include "TARFormat.h"
 #include "PathExtension.h"
+#include "VType_StatEx.h"
 
 Gurax_BeginModuleHeader(tar)
 Gurax_EndModuleHeader(tar)
