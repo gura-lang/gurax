@@ -115,13 +115,15 @@ bool StatExOwner::ReadDirectory(Stream& streamSrc)
 		if (zeroBlockFlag) {
 			nTerminator++;
 			if (nTerminator == 2) break;
+			continue;
 		}
 		nTerminator = 0;
 		star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock.get());
-		std::unique_ptr<Header> pHdr(new Header());
-		pHdr->SetOffset(streamSrc.GetOffset());
-		if (!pHdr->SetRawHeader(hdrRaw)) return nullptr;
-		push_back(new StatEx(pHdr.release()));
+		std::unique_ptr<Header> pHeader(new Header());
+		if (!pHeader->SetRawHeader(hdrRaw)) return nullptr;
+		pHeader->SetOffset(streamSrc.GetOffset());
+		streamSrc.Seek(pHeader->CalcBlocks() * BLOCKSIZE, Stream::SeekMode::Cur);
+		push_back(new StatEx(pHeader.release()));
 	}
 	return true;
 }
@@ -140,15 +142,12 @@ bool DirectoryEx::ReadDirectory()
 {
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadDirectory(GetStreamSrc())) return false;
-#if 0
 	for (StatEx* pStatEx : statExOwner) {
-		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
-		Type type = String::EndsWithPathSep(pathName)? Type::Folder : Type::Item;
+		const char* pathName = pStatEx->GetHeader().GetName();
+		Type type = (pStatEx->GetHeader().GetTypeFlag() == DIRTYPE)? Type::Folder : Type::Item;
 		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 		//pStatEx->GetCentralFileHeader().Print(*Stream::COut);
 	}
-	//GetCoreEx().Print(*Stream::COut);
-#endif
 	return true;
 }
 
