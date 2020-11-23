@@ -15,6 +15,7 @@ add_subdirectory(module-bzip2)
 #add_subdirectory(module-codecs_iso8859)	# built-in module
 #add_subdirectory(module-codecs_japanese)	# built-in module
 add_subdirectory(module-conio)
+add_subdirectory(module-curl)
 add_subdirectory(module-diff)
 #add_subdirectory(module-fs)				# built-in module
 add_subdirectory(module-glfw)
@@ -30,5 +31,6 @@ add_subdirectory(module-png)
 add_subdirectory(module-re)
 add_subdirectory(module-sdl)
 #add_subdirectory(module-sys)				# built-in module
+add_subdirectory(module-tar)
 add_subdirectory(module-zip)
 endif ()
