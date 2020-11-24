@@ -23,6 +23,8 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	if (!pDirectoryParent) return nullptr;
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
+	pStream.reset(CreateUncompressingStream(*pStream));
+#if 0
 	if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".gz") ||
 		String::EndsWith<CharICase>(pStream->GetIdentifier(), ".tgz")) {
 		ZLib::GZHeader hdr;
@@ -36,6 +38,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		if (!pStreamBZ2->Initialize(verbosity, small)) return nullptr;
 		pStream.reset(pStreamBZ2.release());
 	}
+#endif
 	pStream.reset(pStream->CreateBwdSeekable());
 	if (!pStream) return nullptr;
 	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));

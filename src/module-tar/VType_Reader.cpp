@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// tar.Reader() {block?}
+// tar.Reader(stream:Stream) {block?}
 Gurax_DeclareConstructor(Reader)
 {
 	Declare(VTYPE_Reader, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,36 +41,37 @@ Gurax_DeclareConstructor(Reader)
 Gurax_ImplementConstructor(Reader)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& streamSrc = args.PickStream();
 	// Function body
-	RefPtr<Reader> pReader(new Reader());
+	RefPtr<Reader> pReader(new Reader(streamSrc.Reference()));
 	return argument.ReturnValue(processor, new Value_Reader(pReader.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// tar.Reader#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Reader, MethodSkeleton)
+// tar.Reader#EachEntry():[all] {block?}
+Gurax_DeclareMethod(Reader, EachEntry)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(all));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"");
 }
 
-Gurax_ImplementMethod(Reader, MethodSkeleton)
+Gurax_ImplementMethod(Reader, EachEntry)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
+	Reader& reader = valueThis.GetReader();
+	// Attribute
+	bool skipDirFlag = !argument.IsSet(Gurax_Symbol(all));
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_Entry(reader.Reference(), skipDirFlag));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +104,7 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Reader, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Reader, EachEntry));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Reader, propSkeleton));
 }

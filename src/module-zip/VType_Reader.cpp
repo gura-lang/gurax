@@ -87,8 +87,8 @@ Gurax_ImplementMethod(Reader, Entry)
 	return pStream? new Value_Stream(pStream.release()) : nullptr;
 }
 
-// zip.Reader#Entries():[all] {block?}
-Gurax_DeclareMethod(Reader, Entries)
+// zip.Reader#EachEntry():[all] {block?}
+Gurax_DeclareMethod(Reader, EachEntry)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(all));
@@ -102,7 +102,7 @@ Gurax_DeclareMethod(Reader, Entries)
 		"Specify `:all` attribute to include them.\n");
 }
 
-Gurax_ImplementMethod(Reader, Entries)
+Gurax_ImplementMethod(Reader, EachEntry)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -127,7 +127,7 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Reader, Entry));
-	Assign(Gurax_CreateMethod(Reader, Entries));
+	Assign(Gurax_CreateMethod(Reader, EachEntry));
 }
 
 //------------------------------------------------------------------------------

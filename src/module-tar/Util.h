@@ -6,6 +6,9 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(tar)
+
+Stream* CreateUncompressingStream(Stream& stream);
+
 Gurax_EndModuleScope(tar)
 
 #endif
