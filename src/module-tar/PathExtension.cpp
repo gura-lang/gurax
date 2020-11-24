@@ -24,21 +24,6 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
 	pStream.reset(CreateUncompressingStream(*pStream));
-#if 0
-	if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".gz") ||
-		String::EndsWith<CharICase>(pStream->GetIdentifier(), ".tgz")) {
-		ZLib::GZHeader hdr;
-		if (!hdr.Read(*pStream)) return nullptr;
-		RefPtr<ZLib::Stream_Reader> pStreamGZ(new ZLib::Stream_Reader(pStream.release()));
-		if (!pStreamGZ->Initialize(-MAX_WBITS)) return nullptr;
-		pStream.reset(pStreamGZ.release());
-	} else if (String::EndsWith<CharICase>(pStream->GetIdentifier(), ".bz2")) {
-		int verbosity = 0, small = 0;
-		RefPtr<BZLib::Stream_Reader> pStreamBZ2(new BZLib::Stream_Reader(pStream.release()));
-		if (!pStreamBZ2->Initialize(verbosity, small)) return nullptr;
-		pStream.reset(pStreamBZ2.release());
-	}
-#endif
 	pStream.reset(pStream->CreateBwdSeekable());
 	if (!pStream) return nullptr;
 	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
