@@ -5,44 +5,12 @@
 
 Gurax_BeginModuleScope(tar)
 
-const int BLOCKSIZE			= 512;
-
-const char *TMAGIC			= "ustar";	// ustar and a null
-const int TMAGLEN			= 6;
-const char *TVERSION		= "00";		// 00 and no null
-const int TVERSLEN			= 2;
-
-// Values used in typeflag field.
-const char REGTYPE			= '0';		// regular file
-const char AREGTYPE			= '\0';		// regular file
-const char LNKTYPE			= '1';		// link
-const char SYMTYPE			= '2';		// reserved
-const char CHRTYPE			= '3';		// character special
-const char BLKTYPE			= '4';		// block special
-const char DIRTYPE			= '5';		// directory
-const char FIFOTYPE			= '6';		// FIFO special
-const char CONTTYPE			= '7';		// reserved
-const char XHDTYPE			= 'x';		// Extended header referring to the next file in the archive
-const char XGLTYPE			= 'g';		// Global extended header
-
-// Bits used in the mode field, values in octal. 
-const UInt32 TSUID			= 04000;	// set UID on execution
-const UInt32 TSGID			= 02000;	// set GID on execution
-const UInt32 TSVTX			= 01000;	// reserved
-										// file permissions
-const UInt32 TUREAD			= 00400;	// read by owner
-const UInt32 TUWRITE		= 00200;	// write by owner
-const UInt32 TUEXEC			= 00100;	// execute/search by owner
-const UInt32 TGREAD			= 00040;	// read by group
-const UInt32 TGWRITE		= 00020;	// write by group
-const UInt32 TGEXEC			= 00010;	// execute/search by group
-const UInt32 TOREAD			= 00004;	// read by other
-const UInt32 TOWRITE		= 00002;	// write by other
-const UInt32 TOEXEC			= 00001;	// execute/search by other
-
 //-----------------------------------------------------------------------------
 // Header
 //-----------------------------------------------------------------------------
+const char *Header::TMAGIC			= "ustar";	// ustar and a null
+const char *Header::TVERSION		= "00";		// 00 and no null
+
 Header::Header(const Header& hdr) :
 	_offset(hdr._offset), _mode(hdr._mode), _uid(hdr._uid), _gid(hdr._gid), _size(hdr._size),
 	_pMtime(hdr._pMtime->Reference()), _pAtime(hdr._pAtime->Reference()), _pCtime(hdr._pCtime->Reference()),

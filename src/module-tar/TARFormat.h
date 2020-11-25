@@ -8,40 +8,6 @@
 
 Gurax_BeginModuleScope(tar)
 
-extern const int BLOCKSIZE;
-
-extern const char *TMAGIC;
-extern const int TMAGLEN;
-extern const char *TVERSION;
-extern const int TVERSLEN;
-
-// Values used in typeflag field.
-extern const char REGTYPE;
-extern const char AREGTYPE;
-extern const char LNKTYPE;
-extern const char SYMTYPE;
-extern const char CHRTYPE;
-extern const char BLKTYPE;
-extern const char DIRTYPE;
-extern const char FIFOTYPE;
-extern const char CONTTYPE;
-extern const char XHDTYPE;
-extern const char XGLTYPE;
-
-// Bits used in the mode field, values in octal. 
-extern const UInt32 TSUID;
-extern const UInt32 TSGID;
-extern const UInt32 TSVTX;
-										// file permissions
-extern const UInt32 TUREAD;
-extern const UInt32 TUWRITE;
-extern const UInt32 TUEXEC;
-extern const UInt32 TGREAD;
-extern const UInt32 TGWRITE;
-extern const UInt32 TGEXEC;
-extern const UInt32 TOREAD;
-extern const UInt32 TOWRITE;
-extern const UInt32 TOEXEC;
 
 //-----------------------------------------------------------------------------
 // posix_header
@@ -97,6 +63,39 @@ struct star_header
 // Header
 //-----------------------------------------------------------------------------
 class Header {
+public:
+	// General information
+	static const int BLOCKSIZE		= 512;
+	static const char *TMAGIC;					// ustar and a null
+	static const int TMAGLEN		= 6;
+	static const char *TVERSION;				// 00 and no null
+	static const int TVERSLEN		= 2;
+	// Values used in typeflag field.
+	static const char REGTYPE		= '0';		// regular file
+	static const char AREGTYPE		= '\0';		// regular file
+	static const char LNKTYPE		= '1';		// link
+	static const char SYMTYPE		= '2';		// reserved
+	static const char CHRTYPE		= '3';		// character special
+	static const char BLKTYPE		= '4';		// block special
+	static const char DIRTYPE		= '5';		// directory
+	static const char FIFOTYPE		= '6';		// FIFO special
+	static const char CONTTYPE		= '7';		// reserved
+	static const char XHDTYPE		= 'x';		// Extended header referring to the next file in the archive
+	static const char XGLTYPE		= 'g';		// Global extended header
+	// Bits used in the mode field, values in octal. 
+	static const UInt32 TSUID		= 04000;	// set UID on execution
+	static const UInt32 TSGID		= 02000;	// set GID on execution
+	static const UInt32 TSVTX		= 01000;	// reserved
+												// file permissions
+	static const UInt32 TUREAD		= 00400;	// read by owner
+	static const UInt32 TUWRITE		= 00200;	// write by owner
+	static const UInt32 TUEXEC		= 00100;	// execute/search by owner
+	static const UInt32 TGREAD		= 00040;	// read by group
+	static const UInt32 TGWRITE		= 00020;	// write by group
+	static const UInt32 TGEXEC		= 00010;	// execute/search by group
+	static const UInt32 TOREAD		= 00004;	// read by other
+	static const UInt32 TOWRITE		= 00002;	// write by other
+	static const UInt32 TOEXEC		= 00001;	// execute/search by other
 private:
 	size_t _offset;
 	char _name[100 + 1];
