@@ -55,6 +55,36 @@ StatEx::StatEx(Header* pHeader) :
 {
 }
 
+StatEx* StatEx::ReadDirectory(Stream& streamSrc)
+{
+	std::unique_ptr<Header> pHeader(new Header());
+	char buffBlock[Header::BLOCKSIZE];
+	int nTerminator = 0;
+	for (;;) {
+		size_t bytesRead = streamSrc.Read(buffBlock, Header::BLOCKSIZE);
+		if (Error::IsIssued()) return nullptr;
+		if (bytesRead < Header::BLOCKSIZE) {
+			Error::Issue(ErrorType::FormatError, "failed to read a block");
+			return nullptr;
+		}
+		bool zeroBlockFlag = true;
+		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock);
+		for (int i = 0; i < Header::BLOCKSIZE / sizeof(UInt32); i++, p++) {
+			if (*p != 0x00000000) {
+				zeroBlockFlag = false;
+				break;
+			}
+		}
+		if (!zeroBlockFlag) break;
+		nTerminator++;
+		if (nTerminator == 2) return nullptr;
+	}
+	star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock);
+	if (!pHeader->SetRawHeader(hdrRaw)) return nullptr;
+	pHeader->SetOffset(streamSrc.GetOffset());
+	return new StatEx(pHeader.release());
+}
+
 String StatEx::ToString(const StringStyle& ss) const
 {
 	String str = Stat::ToString(ss);
@@ -77,37 +107,13 @@ void StatExOwner::Clear()
 
 bool StatExOwner::ReadDirectory(Stream& streamSrc)
 {
-	std::unique_ptr<char []> buffBlock(new char [Header::BLOCKSIZE]);
-	int nTerminator = 0;
 	for (;;) {
-		size_t bytesRead = streamSrc.Read(buffBlock.get(), Header::BLOCKSIZE);
-		if (Error::IsIssued()) return false;
-		if (bytesRead < Header::BLOCKSIZE) {
-			Error::Issue(ErrorType::FormatError, "failed to read a block");
-			return false;
-		}
-		bool zeroBlockFlag = true;
-		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock.get());
-		for (int i = 0; i < Header::BLOCKSIZE / sizeof(UInt32); i++, p++) {
-			if (*p != 0x00000000) {
-				zeroBlockFlag = false;
-				break;
-			}
-		}
-		if (zeroBlockFlag) {
-			nTerminator++;
-			if (nTerminator == 2) break;
-			continue;
-		}
-		nTerminator = 0;
-		star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock.get());
-		std::unique_ptr<Header> pHeader(new Header());
-		if (!pHeader->SetRawHeader(hdrRaw)) return nullptr;
-		pHeader->SetOffset(streamSrc.GetOffset());
-		streamSrc.Seek(pHeader->CalcBlocks() * Header::BLOCKSIZE, Stream::SeekMode::Cur);
-		push_back(new StatEx(pHeader.release()));
+		RefPtr<StatEx> pStatEx(StatEx::ReadDirectory(streamSrc));
+		if (!pStatEx) break;
+		streamSrc.Seek(pStatEx->GetHeader().CalcBlocks() * Header::BLOCKSIZE, Stream::SeekMode::Cur);
+		push_back(pStatEx.release());
 	}
-	return true;
+	return !Error::IsIssued();
 }
 
 //-----------------------------------------------------------------------------
@@ -126,7 +132,7 @@ bool DirectoryEx::ReadDirectory()
 	if (!statExOwner.ReadDirectory(GetStreamSrc())) return false;
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetHeader().GetName();
-		Type type = (pStatEx->GetHeader().GetTypeFlag() == Header::DIRTYPE)? Type::Folder : Type::Item;
+		Type type = pStatEx->IsDir()? Type::Folder : Type::Item;
 		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 	}
 	return true;

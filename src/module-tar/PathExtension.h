@@ -33,7 +33,9 @@ public:
 public:
 	Header& GetHeader() { return *_pHeader; }
 	const Header& GetHeader() const { return *_pHeader; }
+	bool IsDir() const { return GetHeader().GetTypeFlag() == Header::DIRTYPE; }
 public:
+	static StatEx* ReadDirectory(Stream& streamSrc);
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
