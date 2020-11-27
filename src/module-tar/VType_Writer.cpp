@@ -96,6 +96,24 @@ Gurax_ImplementMethod(Writer, Add)
 	return valueThis.Reference();
 }
 
+// tar.Writer#Close():reduce
+Gurax_DeclareMethod(Writer, Close)
+{
+	Declare(VTYPE_Writer, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Close the tar.Writer instance.\n");
+}
+
+Gurax_ImplementMethod(Writer, Close)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Writer& writer = valueThis.GetWriter();
+	writer.Close();
+	return valueThis.Reference();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
