@@ -112,6 +112,8 @@ Gurax_RealizeSymbol(brightYellow);
 Gurax_RealizeSymbol(byte);
 Gurax_RealizeSymbol(bytes);
 Gurax_RealizeSymbol(bytesPerSample);
+Gurax_RealizeSymbol(bz2);
+Gurax_RealizeSymbol(bzip2);
 Gurax_RealizeSymbol(c);
 Gurax_RealizeSymbol(C);
 Gurax_RealizeSymbol(car);
@@ -226,6 +228,8 @@ Gurax_RealizeSymbol(gear);
 Gurax_RealizeSymbol(gnuc);
 Gurax_RealizeSymbol(gray);
 Gurax_RealizeSymbol(green);
+Gurax_RealizeSymbol(gz);
+Gurax_RealizeSymbol(gzip);
 Gurax_RealizeSymbol(h);
 Gurax_RealizeSymbol(H);
 Gurax_RealizeSymbol(half);
@@ -602,6 +606,7 @@ Gurax_RealizeSymbol(z);
 Gurax_RealizeSymbol(Z);
 Gurax_RealizeSymbol(zero);
 Gurax_RealizeSymbol(zh);
+Gurax_RealizeSymbol(zip);
 
 //------------------------------------------------------------------------------
 // Predefined Symbol Marks

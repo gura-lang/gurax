@@ -27,49 +27,73 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// tar.Writer() {block?}
+// zip.Writer(stream:Stream:w, compression?:Symbol) {block?}
 Gurax_DeclareConstructor(Writer)
 {
 	Declare(VTYPE_Writer, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `tar.Writer` instance.");
+		"Creates a `Writer` instance from the speicifed stream.");
 }
 
 Gurax_ImplementConstructor(Writer)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	RefPtr<Stream> pStream(args.PickStream().Reference());
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	if (!pSymbol) {
+		// nothing to do
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(gz)) || pSymbol->IsIdentical(Gurax_Symbol(gzip))) {
+		int level = 0, windowBits = 0, memLevel = 0, strategy = 0;
+		ZLib::GZHeader hdr;
+		//if (!hdr.Read(stream)) return nullptr;
+		RefPtr<ZLib::Stream_Writer> pStreamGZ(new ZLib::Stream_Writer(pStream.Reference()));
+		if (!pStreamGZ->Initialize(level, windowBits, memLevel, strategy)) return Value::nil();
+		pStream.reset(pStreamGZ.release());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(bz2)) || pSymbol->IsIdentical(Gurax_Symbol(bzip2))) {
+		int blockSize100k = 0, verbosity = 0, workFactor = 0;
+		RefPtr<BZLib::Stream_Writer> pStreamBZ2(new BZLib::Stream_Writer(pStream.Reference()));
+		if (!pStreamBZ2->Initialize(blockSize100k, verbosity, workFactor)) return Value::nil();
+		pStream.reset(pStreamBZ2.release());
+	} else {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method");
+		return Value::nil();
+	}
 	// Function body
-	RefPtr<Writer> pWriter(new Writer());
+	RefPtr<Writer> pWriter(new Writer(pStream.release()));
 	return argument.ReturnValue(processor, new Value_Writer(pWriter.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// tar.Writer#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Writer, MethodSkeleton)
+// tar.Writer#Add(fileName:String, stream:Stream:r):map:reduce
+Gurax_DeclareMethod(Writer, Add)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
+	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Reads data from `stream` and adds it to the zip file with the specified file name.\n");
 }
 
-Gurax_ImplementMethod(Writer, MethodSkeleton)
+Gurax_ImplementMethod(Writer, Add)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
+	Writer& writer = valueThis.GetWriter();
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* fileName = args.PickString();
+	Stream& stream = args.PickStream();
 	// Function body
-	return new Value_Number(num1 + num2);
+	if (!writer.Add(fileName, stream)) return Value::nil();
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +126,7 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Writer));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Writer, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Writer, Add));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Writer, propSkeleton));
 }

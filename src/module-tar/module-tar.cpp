@@ -8,6 +8,28 @@ Gurax_BeginModule(tar)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// tar.Directory(stream:Stream) {block?}
+Gurax_DeclareFunction(Directory)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `Directory` instance that browses the contents in a TAR stream.");
+}
+
+Gurax_ImplementFunction(Directory)
+{
+	// Arguments
+	ArgPicker args(argument);
+	RefPtr<Stream> pStream(args.PickStream().CreateBwdSeekable());
+	if (!pStream) return nullptr;
+	// Function body
+	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
+	if (!pDirectory) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
+}
+
 // tar.Test(stream:Stream)
 Gurax_DeclareFunction(Test)
 {
@@ -51,6 +73,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_StatEx);
 	Assign(VTYPE_Writer);
 	// Assignment of function
+	Assign(Gurax_CreateFunction(Directory));
 	Assign(Gurax_CreateFunction(Test));
 	// Assignment of path manager
 	PathMgr::Assign(new PathMgrEx());
