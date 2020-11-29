@@ -10,11 +10,15 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return pDirectoryParent && //!pDirectoryParent->IsFolder() &&
-		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar.gz") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tgz") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".tar.bz2"));
+	if (!pDirectoryParent) return false;
+	const char* name = pDirectoryParent->GetName();
+	return
+		String::EndsWith<CharICase>(name, ".tar") ||
+		String::EndsWith<CharICase>(name, ".tar.gz") ||
+		String::EndsWith<CharICase>(name, ".tgz") ||
+		String::EndsWith<CharICase>(name, ".tar.bz2") ||
+		String::EndsWith<CharICase>(name, ".tb2") ||
+		String::EndsWith<CharICase>(name, ".tbz2");
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)

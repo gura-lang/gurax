@@ -41,27 +41,42 @@ Gurax_DeclareConstructor(Writer)
 
 Gurax_ImplementConstructor(Writer)
 {
+	enum class Compress { None, Gzip, Bzip2 };
 	// Arguments
 	ArgPicker args(argument);
 	RefPtr<Stream> pStream(args.PickStream().Reference());
 	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
-	if (!pSymbol) {
-		// nothing to do
+	Compress compress = Compress::None;
+	if (!pSymbol || pSymbol->IsIdentical(Gurax_Symbol(auto_))) {
+		const char* identifier = pStream->GetIdentifier();
+		if (String::EndsWith<CharICase>(identifier, ".tar.gz") ||
+			String::EndsWith<CharICase>(identifier, ".tgz")) {
+			compress = Compress::Gzip;
+		} else if (String::EndsWith<CharICase>(identifier, ".tar.bz2") ||
+			String::EndsWith<CharICase>(identifier, ".tb2") ||
+			String::EndsWith<CharICase>(identifier, ".tbz2")) {
+			compress = Compress::Bzip2;
+		}
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(gz)) || pSymbol->IsIdentical(Gurax_Symbol(gzip))) {
+		compress = Compress::Gzip;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(bz2)) || pSymbol->IsIdentical(Gurax_Symbol(bzip2))) {
+		compress = Compress::Bzip2;
+	} else {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method");
+		return Value::nil();
+	}
+	if (compress == Compress::Gzip) {
 		int level = 0, windowBits = 0, memLevel = 0, strategy = 0;
 		ZLib::GZHeader hdr;
-		//if (!hdr.Read(stream)) return nullptr;
+		if (!hdr.Write(*pStream)) return nullptr;
 		RefPtr<ZLib::Stream_Writer> pStreamGZ(new ZLib::Stream_Writer(pStream.Reference()));
 		if (!pStreamGZ->Initialize(level, windowBits, memLevel, strategy)) return Value::nil();
 		pStream.reset(pStreamGZ.release());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(bz2)) || pSymbol->IsIdentical(Gurax_Symbol(bzip2))) {
+	} else if (compress == Compress::Bzip2) {
 		int blockSize100k = 0, verbosity = 0, workFactor = 0;
 		RefPtr<BZLib::Stream_Writer> pStreamBZ2(new BZLib::Stream_Writer(pStream.Reference()));
 		if (!pStreamBZ2->Initialize(blockSize100k, verbosity, workFactor)) return Value::nil();
 		pStream.reset(pStreamBZ2.release());
-	} else {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method");
-		return Value::nil();
 	}
 	// Function body
 	RefPtr<Writer> pWriter(new Writer(pStream.release()));
