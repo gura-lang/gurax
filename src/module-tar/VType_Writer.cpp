@@ -66,14 +66,12 @@ Gurax_ImplementConstructor(Writer)
 		return Value::nil();
 	}
 	if (compress == Compress::Gzip) {
-		int level = 0, windowBits = 0, memLevel = 0, strategy = 0;
-		ZLib::GZHeader hdr;
-		if (!hdr.Write(*pStream)) return nullptr;
+		int level = Z_DEFAULT_COMPRESSION, windowBits = 31, memLevel = 8, strategy = Z_DEFAULT_STRATEGY;
 		RefPtr<ZLib::Stream_Writer> pStreamGZ(new ZLib::Stream_Writer(pStream.Reference()));
 		if (!pStreamGZ->Initialize(level, windowBits, memLevel, strategy)) return Value::nil();
 		pStream.reset(pStreamGZ.release());
 	} else if (compress == Compress::Bzip2) {
-		int blockSize100k = 0, verbosity = 0, workFactor = 0;
+		int blockSize100k = 9, verbosity = 0, workFactor = 0;
 		RefPtr<BZLib::Stream_Writer> pStreamBZ2(new BZLib::Stream_Writer(pStream.Reference()));
 		if (!pStreamBZ2->Initialize(blockSize100k, verbosity, workFactor)) return Value::nil();
 		pStream.reset(pStreamBZ2.release());
@@ -91,7 +89,7 @@ Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
 	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from `stream` and adds it to the zip file with the specified file name.\n");

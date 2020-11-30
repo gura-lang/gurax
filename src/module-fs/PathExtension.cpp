@@ -92,7 +92,8 @@ StatEx::StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
 		OAL::CreateDateTime(attrData.ftLastAccessTime),
-		pathName, MakeFlags(attrData.dwFileAttributes), 0, attrData.nFileSizeLow, 0, 0)
+		pathName, MakeFlags(attrData.dwFileAttributes),
+		MakeMode(attrData.dwFileAttributes), attrData.nFileSizeLow, 0, 0)
 {
 }
 
@@ -100,7 +101,8 @@ StatEx::StatEx(String pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
 		OAL::CreateDateTime(attrData.ftLastAccessTime),
-		pathName, MakeFlags(attrData.dwFileAttributes), 0, attrData.nFileSizeLow, 0, 0)
+		pathName, MakeFlags(attrData.dwFileAttributes),
+		MakeMode(attrData.dwFileAttributes), attrData.nFileSizeLow, 0, 0)
 {
 }
 
@@ -108,7 +110,8 @@ StatEx::StatEx(String pathName, const WIN32_FIND_DATA& findData) :
 	Stat(OAL::CreateDateTime(findData.ftCreationTime),
 		OAL::CreateDateTime(findData.ftLastWriteTime),
 		OAL::CreateDateTime(findData.ftLastAccessTime),
-		pathName, MakeFlags(findData.dwFileAttributes), 0, findData.nFileSizeLow, 0, 0)
+		pathName, MakeFlags(findData.dwFileAttributes),
+		MakeMode(findData.dwFileAttributes), findData.nFileSizeLow, 0, 0)
 {
 }
 
@@ -130,12 +133,18 @@ UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)
 	} else {
 		flags |= Flag::Reg;
 	}
-	if (dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
-		flags |= 0666;
-	} else {
-		flags |= 0777;
-	}
 	return flags;
+}
+
+UInt16 StatEx::MakeMode(DWORD dwFileAttributes)
+{
+	UInt16 mode = 0;
+	if (dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		mode |= 0666;
+	} else {
+		mode |= 0777;
+	}
+	return mode;
 }
 
 #else
@@ -144,16 +153,9 @@ StatEx::StatEx(String pathName, struct stat& sb) :
 	Stat(OAL::CreateDateTime(sb.st_ctime),
 		OAL::CreateDateTime(sb.st_mtime),
 		OAL::CreateDateTime(sb.st_atime),
-	pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
+	pathName, MakeFlags(sb), sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
-	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
-	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
-	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
-	if (S_ISREG(sb.st_mode))  _flags |= Flag::Reg;
-	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
-	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
-	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
-}
+
 
 StatEx* StatEx::Create(const char* pathName)
 {
@@ -162,6 +164,19 @@ StatEx* StatEx::Create(const char* pathName)
 	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
 	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
 	return new StatEx(pathNameAbs, sb);
+}
+
+UInt32 StatEx::MakeFlags(struct stat& sb)
+{
+	UInt32 flags = 0;
+	if (S_ISDIR(sb.st_mode))  flags |= Flag::Dir;
+	if (S_ISCHR(sb.st_mode))  flags |= Flag::Chr;
+	if (S_ISBLK(sb.st_mode))  flags |= Flag::Blk;
+	if (S_ISREG(sb.st_mode))  flags |= Flag::Reg;
+	if (S_ISFIFO(sb.st_mode)) flags |= Flag::Fifo;
+	if (S_ISLNK(sb.st_mode))  flags |= Flag::Lnk;
+	if (S_ISSOCK(sb.st_mode)) flags |= Flag::Sock;
+	return flags;
 }
 
 #endif

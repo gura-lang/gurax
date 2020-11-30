@@ -46,12 +46,28 @@ bool Writer::Add(const char* fileName, Stream& stream)
 	hdr.SetTypeFlag(0x00);
 	hdr.SetDevMajor(0);
 	hdr.SetDevMinor(0);
-	//if (!pThis->Add(streamSrc, hdr)) return Value::Nil;
-	return false;
+	return Add(hdr, stream);
+}
+
+bool Writer::Add(const Header& hdr, Stream& stream)
+{
+	char buffBlock[Header::BLOCKSIZE];
+	size_t bytesBody = stream.GetBytes();
+	size_t bytesPadding = (bytesBody + Header::BLOCKSIZE - 1) /
+							Header::BLOCKSIZE * Header::BLOCKSIZE - bytesBody;
+	hdr.ComposeHeaderBlock(buffBlock);
+	if (!_pStreamDst->Write(buffBlock, Header::BLOCKSIZE)) return false;
+	if (!_pStreamDst->PipeFromStream(stream)) return false;
+	::memset(buffBlock, 0x00, bytesPadding);
+	return _pStreamDst->Write(buffBlock, bytesPadding);
 }
 
 void Writer::Close()
 {
+	char buffBlock[Header::BLOCKSIZE * 2];
+	::memset(buffBlock, 0x00, Header::BLOCKSIZE * 2);
+	_pStreamDst->Write(buffBlock, Header::BLOCKSIZE * 2);
+	_pStreamDst->Close();
 }
 
 String Writer::ToString(const StringStyle& ss) const
