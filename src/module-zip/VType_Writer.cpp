@@ -58,12 +58,12 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Writer#Add(fileName:String, stream:Stream:r, compression?:Symbol):map:reduce
+// zip.Writer#Add(stream:Stream:r, fileName?:String, compression?:Symbol):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
-	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -83,8 +83,18 @@ Gurax_ImplementMethod(Writer, Add)
 	Writer& writer = valueThis.GetWriter();
 	// Arguments
 	ArgPicker args(argument);
-	const char* fileName = args.PickString();
 	Stream& stream = args.PickStream();
+	String fileName;
+	if (args.IsValid()) {
+		fileName = args.PickStringSTL();
+	} else {
+		const char* identifier = stream.GetIdentifier();
+		if (!identifier) {
+			Error::Issue(ErrorType::StreamError, "the Stream doesn't have identifier information");
+			return Value::nil();
+		}
+		fileName = PathName(identifier).ExtractFileName();
+	}
 	UInt16 compressionMethod = args.IsValid()?
 		SymbolToCompressionMethod(args.PickSymbol()) : writer.GetCompressionMethod();
 	if (compressionMethod == CompressionMethod::Invalid) {
@@ -92,7 +102,7 @@ Gurax_ImplementMethod(Writer, Add)
 		return Value::nil();
 	}
 	// Function body
-	if (!writer.Add(fileName, stream, compressionMethod)) return Value::nil();
+	if (!writer.Add(stream, fileName.c_str(), compressionMethod)) return Value::nil();
 	return valueThis.Reference();
 }
 

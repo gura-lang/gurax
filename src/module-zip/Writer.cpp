@@ -13,7 +13,7 @@ Writer::~Writer()
 	Finish();
 }
 
-bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod)
+bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
 {
 	//compressionMethod = CompressionMethod::Store;
 	const size_t bytesThreshold = 256;

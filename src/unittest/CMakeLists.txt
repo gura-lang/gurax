@@ -17,7 +17,7 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
 #-------------------------------------------------------------------------------
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-target_compile_features(guraxcore PRIVATE cxx_std_17)
+target_compile_features(unittest PRIVATE cxx_std_17)
 target_precompile_headers(unittest PRIVATE stdafx.h)
 target_compile_options(unittest PRIVATE
 	$<$<PLATFORM_ID:Windows>:-W3>
