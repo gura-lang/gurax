@@ -465,10 +465,26 @@ Gurax_ImplementMethod(Stream, Write)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
+// Stream#identifier
+Gurax_DeclareProperty_R(Stream, identifier)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Stream, identifier)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.GetStream().HasIdentifier()) return Value::nil();
+	return new Value_String(valueThis.GetStream().GetIdentifier());
+}
+
 // Stream#stat
 Gurax_DeclareProperty_R(Stream, stat)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Stat, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An instance that provides status information of the Stream.");
@@ -554,6 +570,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Stream, identifier));
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Shl, Stream, Binary);

@@ -22,6 +22,20 @@ const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagPlatform	= false;
 #endif
 
+String PathName::ReplaceSep(const char* sep) const
+{
+	String pathNameRtn;
+	const char* p = _pathName;
+	for ( ; *p; p++) {
+		if (IsSep(*p)) {
+			pathNameRtn += sep;
+		} else {
+			pathNameRtn += *p;
+		}
+	}
+	return pathNameRtn;
+}
+
 void PathName::SplitIntoFields(String* pDriveLetter, String* pPrefix, StringList& fields) const
 {
 	enum class Stat { Field, Sep } stat = Stat::Field;

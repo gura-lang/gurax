@@ -37,12 +37,12 @@ public:
 	enum class SeekMode { Set, Cur, End };
 	using Flags = UInt32;
 	struct GURAX_DLLDECLARE Flag {
-		static const Flags None			= 0;
-		static const Flags Readable		= (1 << 0);
-		static const Flags Writable		= (1 << 1);
-		static const Flags BwdSeekable	= (1 << 2);
-		static const Flags FwdSeekable	= (1 << 3);
-		static const Flags Infinite		= (1 << 4);
+		static const Flags None				= 0;
+		static const Flags Readable			= (1 << 0);
+		static const Flags Writable			= (1 << 1);
+		static const Flags BwdSeekable		= (1 << 2);
+		static const Flags FwdSeekable		= (1 << 3);
+		static const Flags Infinite			= (1 << 4);
 	};
 	using OpenFlags = UInt32;
 	struct GURAX_DLLDECLARE OpenFlag {
@@ -137,6 +137,7 @@ public:
 	bool PipeFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
 		return streamSrc.PipeToStream(*this, bytesUnit);
 	}
+	bool HasIdentifier() const { return *GetIdentifier() != '\0'; }
 public:
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;

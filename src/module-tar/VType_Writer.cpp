@@ -84,12 +84,12 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// tar.Writer#Add(fileName:String, stream:Stream:r):map:reduce
+// tar.Writer#Add(stream:Stream:r, fileName:String):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
-	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("fileName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from `stream` and adds it to the zip file with the specified file name.\n");
@@ -102,10 +102,19 @@ Gurax_ImplementMethod(Writer, Add)
 	Writer& writer = valueThis.GetWriter();
 	// Arguments
 	ArgPicker args(argument);
-	const char* fileName = args.PickString();
 	Stream& stream = args.PickStream();
+	String fileName;
+	if (args.IsValid()) {
+		fileName = args.PickStringSTL();
+	} else {
+		if (!stream.HasIdentifier()) {
+			Error::Issue(ErrorType::StreamError, "the Stream doesn't have identifier information");
+			return Value::nil();
+		}
+		fileName = PathName(stream.GetIdentifier()).ExtractFileName();
+	}
 	// Function body
-	if (!writer.Add(fileName, stream)) return Value::nil();
+	if (!writer.Add(stream, fileName.c_str())) return Value::nil();
 	return valueThis.Reference();
 }
 

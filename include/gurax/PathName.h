@@ -47,6 +47,7 @@ public:
 	PathName& ICase() { _caseFlag = false; return *this; }
 	char GetSep() const { return _sep; }
 	bool GetCaseFlag() const { return _caseFlag; }
+	String ReplaceSep(const char* sep) const;
 public:
 	void SplitIntoFields(String* pDriveLetter, String* pPrefix, StringList& fields) const;
 	String Regulate() const;

@@ -6,10 +6,10 @@ PrintStat(st:Stat):map = Printf('%-32s %8d %8d %s\n', st.pathName, st.size, st.c
 
 TestCase('zip.Reader()') {
 	zip.Reader('test-zip/small.zip') {|reader|
-		Println('Reader#Entries()')
-		PrintStat(reader.Entries():*stat)
-		Println('Reader#Entries():all')
-		PrintStat((reader.Entries():all):*stat)
+		Println('Reader#EachEntry()')
+		PrintStat(reader.EachEntry():*stat)
+		Println('Reader#EachEntry():all')
+		PrintStat((reader.EachEntry():all):*stat)
 		Tester(`reader.Entry('foo/dir1/file1-1'))
 		Tester(`reader.Entry('foo/dir1'))
 		Tester(`reader.Entry('foo/dir1/'))
@@ -23,12 +23,12 @@ TestCase('zip.Writer()') {
 		r.IntSeq(3000, 30) {|n, i|
 			bytes = 1000 + n
 			(buff = Binary()).p.Put(`uint8, r.IntSeq(256, bytes))
-			writer.Add(Format('entry%02d.bin', i), buff)
+			writer.Add(buff, Format('entry%02d.bin', i))
 		}
 		//writer.Close()
 	}
 	zip.Reader(buffZip) {|reader|
-		PrintStat(reader.Entries()::stat)
+		PrintStat(reader.EachEntry()::stat)
 	}
 }
 
@@ -41,5 +41,13 @@ TestCase('zip.Directory()') {
 TestCase('Path manager extension') {
 	path.Walk('test-zip/small.zip/'):stat {|st|
 		Println(st.pathName)
+	}
+}
+
+TestCase('zip.Writer#Add() issues error when a Stream without identifier is passed') {
+	buffZip = Binary()
+	zip.Writer(buffZip) {|writer|
+		(buff = Binary()).p.Put(`uint8, Range(256))
+		Tester(`writer.Add(buff))
 	}
 }

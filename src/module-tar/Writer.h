@@ -30,8 +30,8 @@ public:
 protected:
 	~Writer() = default;
 public:
-	bool Add(const char* fileName, Stream& stream);
-	bool Add(const Header& hdr, Stream& stream);
+	bool Add(Stream& stream, const char* fileName);
+	bool Add(Stream& stream, const Header& hdr);
 	void Close();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

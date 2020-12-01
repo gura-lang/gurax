@@ -12,10 +12,10 @@ Writer::Writer(Stream* pStreamDst) : _pStreamDst(pStreamDst)
 {
 }
 
-bool Writer::Add(const char* fileName, Stream& stream)
+bool Writer::Add(Stream& stream, const char* fileName)
 {
 	Header hdr;
-	hdr.SetName(fileName);
+	hdr.SetName(PathName(fileName).ReplaceSep("/").c_str());
 	hdr.SetLinkName("");
 	hdr.SetSize(stream.GetBytes());
 	RefPtr<Stat> pStat(stream.CreateStat());
@@ -46,10 +46,10 @@ bool Writer::Add(const char* fileName, Stream& stream)
 	hdr.SetTypeFlag(0x00);
 	hdr.SetDevMajor(0);
 	hdr.SetDevMinor(0);
-	return Add(hdr, stream);
+	return Add(stream, hdr);
 }
 
-bool Writer::Add(const Header& hdr, Stream& stream)
+bool Writer::Add(Stream& stream, const Header& hdr)
 {
 	char buffBlock[Header::BLOCKSIZE];
 	size_t bytesBody = stream.GetBytes();
