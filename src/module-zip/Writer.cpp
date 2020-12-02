@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
+Writer::GzipInfo Writer::gzipInfo;
+Writer::Bzip2Info Writer::bzip2Info;
 Writer::~Writer()
 {
 	Finish();
@@ -21,7 +23,6 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
 	if (pStat && (pStat->GetBytes() < bytesThreshold)) compressionMethod = CompressionMethod::Store;
 	if (!AddParentFolders(fileName, *pDateTime)) return false;
-	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
 	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
 	UInt16 lastModFileTime = GetDosTime(*pDateTime);
@@ -71,18 +72,18 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	} else if (compressionMethod == CompressionMethod::Factor1) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::Deflate) {
+		const GzipInfo& v = gzipInfo;
 		RefPtr<ZLib::Stream_Writer> pStream(new ZLib::Stream_Writer(_pStreamDst->Reference()));
-		if (!pStream->Initialize(Z_DEFAULT_COMPRESSION,
-								 -MAX_WBITS, memLevel, Z_DEFAULT_STRATEGY)) return false;
+		if (!pStream->Initialize(v.level, v.windowBits, v.memLevel, v.strategy)) return false;
 		pStreamContent.reset(pStream.release());
 	} else if (compressionMethod == CompressionMethod::Deflate64) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::PKWARE) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::BZIP2) {
+		const Bzip2Info& v = bzip2Info;
 		RefPtr<BZLib::Stream_Writer> pStream(new BZLib::Stream_Writer(_pStreamDst->Reference()));
-		int blockSize100k = 9, verbosity = 0, workFactor = 0;
-		if (!pStream->Initialize(blockSize100k, verbosity, workFactor)) return false;
+		if (!pStream->Initialize(v.blockSize100k, v.verbosity, v.workFactor)) return false;
 		pStreamContent.reset(pStream.release());
 	} else if (compressionMethod == CompressionMethod::LZMA) {
 		// unsupported

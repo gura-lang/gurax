@@ -8,6 +8,9 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
+Writer::GzipInfo Writer::gzipInfo;
+Writer::Bzip2Info Writer::bzip2Info;
+
 Writer::Writer(Stream* pStreamDst) : _pStreamDst(pStreamDst)
 {
 }

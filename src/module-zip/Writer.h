@@ -13,8 +13,27 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Writer : public Referable {
 public:
+	struct GzipInfo {
+		int level;
+		int windowBits;
+		int memLevel;
+		int strategy;
+		GzipInfo() :
+			level(Z_DEFAULT_COMPRESSION), windowBits(-MAX_WBITS),
+			memLevel(8), strategy(Z_DEFAULT_STRATEGY) {}
+	};
+	struct Bzip2Info {
+		int blockSize100k;
+		int verbosity;
+		int workFactor;
+		Bzip2Info() : blockSize100k(9), verbosity(0), workFactor(0) {}
+	};
+public:
 	// Referable declaration
 	Gurax_DeclareReferable(Writer);
+public:
+	static GzipInfo gzipInfo;
+	static Bzip2Info bzip2Info;
 private:
 	RefPtr<Stream> _pStreamDst;
 	UInt16 _compressionMethod;

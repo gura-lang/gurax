@@ -66,14 +66,14 @@ Gurax_ImplementConstructor(Writer)
 		return Value::nil();
 	}
 	if (compress == Compress::Gzip) {
-		int level = Z_DEFAULT_COMPRESSION, windowBits = 31, memLevel = 8, strategy = Z_DEFAULT_STRATEGY;
+		const Writer::GzipInfo& v = Writer::gzipInfo;
 		RefPtr<ZLib::Stream_Writer> pStreamGZ(new ZLib::Stream_Writer(pStream.Reference()));
-		if (!pStreamGZ->Initialize(level, windowBits, memLevel, strategy)) return Value::nil();
+		if (!pStreamGZ->Initialize(v.level, v.windowBits, v.memLevel, v.strategy)) return Value::nil();
 		pStream.reset(pStreamGZ.release());
 	} else if (compress == Compress::Bzip2) {
-		int blockSize100k = 9, verbosity = 0, workFactor = 0;
+		const Writer::Bzip2Info& v = Writer::bzip2Info;
 		RefPtr<BZLib::Stream_Writer> pStreamBZ2(new BZLib::Stream_Writer(pStream.Reference()));
-		if (!pStreamBZ2->Initialize(blockSize100k, verbosity, workFactor)) return Value::nil();
+		if (!pStreamBZ2->Initialize(v.blockSize100k, v.verbosity, v.workFactor)) return Value::nil();
 		pStream.reset(pStreamBZ2.release());
 	}
 	// Function body
