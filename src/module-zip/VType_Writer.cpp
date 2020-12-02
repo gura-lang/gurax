@@ -87,11 +87,10 @@ Gurax_ImplementMethod(Writer, Add)
 	String fileName;
 	if (args.IsValid()) {
 		fileName = args.PickStringSTL();
+	} else if (!stream.HasIdentifier()) {
+		Error::Issue(ErrorType::StreamError, "the Stream doesn't have identifier information");
+		return Value::nil();
 	} else {
-		if (!stream.HasIdentifier()) {
-			Error::Issue(ErrorType::StreamError, "the Stream doesn't have identifier information");
-			return Value::nil();
-		}
 		fileName = PathName(stream.GetIdentifier()).ExtractFileName();
 	}
 	UInt16 compressionMethod = args.IsValid()?
