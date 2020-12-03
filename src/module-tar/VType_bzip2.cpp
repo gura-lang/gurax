@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
-// tar.bzip2.propSkeleton
-Gurax_DeclareClassProperty_RW(bzip2, propSkeleton)
+// tar.bzip2.blockSize100k
+Gurax_DeclareClassProperty_RW(bzip2, blockSize100k)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -36,15 +36,52 @@ Gurax_DeclareClassProperty_RW(bzip2, propSkeleton)
 		"");
 }
 
-Gurax_ImplementClassPropertyGetter(bzip2, propSkeleton)
+Gurax_ImplementClassPropertyGetter(bzip2, blockSize100k)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	return new Value_Number(Writer::bzip2Info.blockSize100k);
 }
 
-Gurax_ImplementClassPropertySetter(bzip2, propSkeleton)
+Gurax_ImplementClassPropertySetter(bzip2, blockSize100k)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
+	Writer::bzip2Info.blockSize100k = Value_Number::GetNumber<int>(value);
+}
+
+// tar.bzip2.verbosity
+Gurax_DeclareClassProperty_RW(bzip2, verbosity)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(bzip2, verbosity)
+{
+	return new Value_Number(Writer::bzip2Info.verbosity);
+}
+
+Gurax_ImplementClassPropertySetter(bzip2, verbosity)
+{
+	Writer::bzip2Info.verbosity = Value_Number::GetNumber<int>(value);
+}
+
+// tar.bzip2.workFactor
+Gurax_DeclareClassProperty_RW(bzip2, workFactor)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(bzip2, workFactor)
+{
+	return new Value_Number(Writer::bzip2Info.workFactor);
+}
+
+Gurax_ImplementClassPropertySetter(bzip2, workFactor)
+{
+	Writer::bzip2Info.workFactor = Value_Number::GetNumber<int>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +96,9 @@ void VType_bzip2::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(bzip2, propSkeleton));
+	Assign(Gurax_CreateProperty(bzip2, blockSize100k));
+	Assign(Gurax_CreateProperty(bzip2, verbosity));
+	Assign(Gurax_CreateProperty(bzip2, workFactor));
 }
 
 Gurax_EndModuleScope(tar)
