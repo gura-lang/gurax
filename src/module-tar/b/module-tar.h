@@ -14,8 +14,6 @@
 #include "VType_Reader.h"
 #include "VType_StatEx.h"
 #include "VType_Writer.h"
-#include "VType_bzip2.h"
-#include "VType_gzip.h"
 
 Gurax_BeginModuleHeader(tar)
 Gurax_EndModuleHeader(tar)

@@ -47,7 +47,9 @@ target_sources(tar.gurd PRIVATE
 	Writer.cpp
 	VType_Reader.cpp
 	VType_StatEx.cpp
-	VType_Writer.cpp)
+	VType_Writer.cpp
+	VType_bzip2.cpp
+	VType_gzip.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

@@ -57,8 +57,8 @@ void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& 
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
 	PropSlot_##nameVType##_##name(const char* name_ = strName); \
-	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
-		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	static VType_##nameVType& GetVTypeThis(Value& valueTarget) { \
+		return dynamic_cast<VType_##nameVType&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()); \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
@@ -73,8 +73,8 @@ PropSlot(name_, Flag::OfClass | Flag::Readable)
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
 	PropSlot_##nameVType##_##name(const char* name_ = strName); \
-	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
-		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	static VType_##nameVType& GetVTypeThis(Value& valueTarget) { \
+		return dynamic_cast<VType_##nameVType&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()); \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \

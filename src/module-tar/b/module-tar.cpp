@@ -72,8 +72,6 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Reader);
 	Assign(VTYPE_StatEx);
 	Assign(VTYPE_Writer);
-	Assign(VTYPE_bzip2);
-	Assign(VTYPE_gzip);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Directory));
 	Assign(Gurax_CreateFunction(Test));
