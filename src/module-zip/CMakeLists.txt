@@ -41,7 +41,8 @@ target_sources(zip.gurd PRIVATE
 	VType_Reader.cpp
 	VType_Writer.cpp
 	VType_StatEx.cpp
-)
+	VType_bzip2.cpp
+	VType_gzip.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
