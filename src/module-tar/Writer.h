@@ -49,7 +49,8 @@ public:
 protected:
 	~Writer() = default;
 public:
-	bool Add(Stream& stream, const char* fileName);
+	bool Add(Stream& stream, const char* fileName, RefPtr<DateTime> pDateTimeM,
+					RefPtr<DateTime> pDateTimeA, RefPtr<DateTime> pDateTimeC);
 	bool Add(Stream& stream, const Header& hdr);
 	void Close();
 public:

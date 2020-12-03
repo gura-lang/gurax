@@ -15,12 +15,13 @@ Writer::~Writer()
 	Finish();
 }
 
-bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
+bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod, RefPtr<DateTime> pDateTime)
 {
-	//compressionMethod = CompressionMethod::Store;
 	const size_t bytesThreshold = 256;
 	RefPtr<Stat> pStat(streamSrc.CreateStat());
-	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
+	if (!pDateTime) {
+		pDateTime.reset(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
+	}
 	if (pStat && (pStat->GetBytes() < bytesThreshold)) compressionMethod = CompressionMethod::Store;
 	if (!AddParentFolders(fileName, *pDateTime)) return false;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0

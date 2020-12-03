@@ -58,13 +58,14 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Writer#Add(stream:Stream:r, fileName?:String, compression?:Symbol):map:reduce
+// zip.Writer#Add(stream:Stream:r, fileName?:String, compression?:Symbol, timeStamp?:DateTime):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("fileName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("timeStamp", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from `stream` and adds it to the zip file with the specified file name.\n"
@@ -99,8 +100,9 @@ Gurax_ImplementMethod(Writer, Add)
 		Error::Issue(ErrorType::ValueError, "invalid compression method");
 		return Value::nil();
 	}
+	RefPtr<DateTime> pTimeStamp(args.IsValid()? args.PickDateTime().Reference() : nullptr);
 	// Function body
-	if (!writer.Add(stream, fileName.c_str(), compressionMethod)) return Value::nil();
+	if (!writer.Add(stream, fileName.c_str(), compressionMethod, pTimeStamp.release())) return Value::nil();
 	return valueThis.Reference();
 }
 

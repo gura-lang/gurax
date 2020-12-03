@@ -15,7 +15,8 @@ Writer::Writer(Stream* pStreamDst) : _pStreamDst(pStreamDst)
 {
 }
 
-bool Writer::Add(Stream& stream, const char* fileName)
+bool Writer::Add(Stream& stream, const char* fileName, RefPtr<DateTime> pDateTimeM,
+			RefPtr<DateTime> pDateTimeA, RefPtr<DateTime> pDateTimeC)
 {
 	Header hdr;
 	hdr.SetName(PathName(fileName).ReplaceSep("/").c_str());
@@ -25,9 +26,9 @@ bool Writer::Add(Stream& stream, const char* fileName)
 	if (pStat) {
 		char buff[80];
 		hdr.SetMode(0100000 | (pStat->GetMode() & 0777));
-		hdr.SetMTime(pStat->GetDateTimeM().Reference());
-		hdr.SetATime(pStat->GetDateTimeA().Reference());
-		hdr.SetCTime(pStat->GetDateTimeC().Reference());
+		if (!pDateTimeM) pDateTimeM.reset(pStat->GetDateTimeM().Reference());
+		if (!pDateTimeA) pDateTimeA.reset(pStat->GetDateTimeA().Reference());
+		if (!pDateTimeC) pDateTimeC.reset(pStat->GetDateTimeC().Reference());
 		hdr.SetUid(pStat->GetUid());
 		hdr.SetGid(pStat->GetGid());
 		::sprintf(buff, "%d", pStat->GetUid());
@@ -37,14 +38,17 @@ bool Writer::Add(Stream& stream, const char* fileName)
 	} else {
 		hdr.SetMode(0100666);
 		RefPtr<DateTime> pDt(OAL::CreateDateTimeCur(false));
-		hdr.SetMTime(pDt->Reference());
-		hdr.SetATime(pDt->Reference());
-		hdr.SetCTime(pDt->Reference());
+		if (!pDateTimeM) pDateTimeM.reset(pDt->Reference());
+		if (!pDateTimeA) pDateTimeA.reset(pDt->Reference());
+		if (!pDateTimeC) pDateTimeC.reset(pDt->Reference());
 		hdr.SetUid(0);
 		hdr.SetGid(0);
 		hdr.SetUName("0");
 		hdr.SetGName("0");
 	}
+	hdr.SetMTime(pDateTimeM.release());
+	hdr.SetATime(pDateTimeA.release());
+	hdr.SetCTime(pDateTimeC.release());
 	hdr.SetChksum(0);
 	hdr.SetTypeFlag(0x00);
 	hdr.SetDevMajor(0);

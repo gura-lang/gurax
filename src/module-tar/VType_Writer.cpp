@@ -84,12 +84,15 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// tar.Writer#Add(stream:Stream:r, fileName:String):map:reduce
+// tar.Writer#Add(stream:Stream:r, fileName:String, mtime?:DateTime, atime?:DateTime, ctime?:DateTime):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("fileName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("mtime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("atime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ctime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from `stream` and adds it to the zip file with the specified file name.\n");
@@ -112,8 +115,11 @@ Gurax_ImplementMethod(Writer, Add)
 	} else {
 		fileName = PathName(stream.GetIdentifier()).ExtractFileName();
 	}
+	RefPtr<DateTime> pDateTimeM(args.IsValid()? args.PickDateTime().Reference() : nullptr);
+	RefPtr<DateTime> pDateTimeA(args.IsValid()? args.PickDateTime().Reference() : nullptr);
+	RefPtr<DateTime> pDateTimeC(args.IsValid()? args.PickDateTime().Reference() : nullptr);
 	// Function body
-	if (!writer.Add(stream, fileName.c_str())) return Value::nil();
+	if (!writer.Add(stream, fileName.c_str(), pDateTimeM.release(), pDateTimeA.release(), pDateTimeC.release())) return Value::nil();
 	return valueThis.Reference();
 }
 
