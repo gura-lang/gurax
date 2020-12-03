@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
-// tar.gzip.propSkeleton
-Gurax_DeclareClassProperty_RW(gzip, propSkeleton)
+// tar.gzip.level
+Gurax_DeclareClassProperty_RW(gzip, level)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -36,15 +36,71 @@ Gurax_DeclareClassProperty_RW(gzip, propSkeleton)
 		"");
 }
 
-Gurax_ImplementClassPropertyGetter(gzip, propSkeleton)
+Gurax_ImplementClassPropertyGetter(gzip, level)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	return new Value_Number(Writer::gzipInfo.level);
 }
 
-Gurax_ImplementClassPropertySetter(gzip, propSkeleton)
+Gurax_ImplementClassPropertySetter(gzip, level)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
+	Writer::gzipInfo.level = Value_Number::GetNumber<int>(value);
+}
+
+// tar.gzip.windowBits
+Gurax_DeclareClassProperty_RW(gzip, windowBits)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(gzip, windowBits)
+{
+	return new Value_Number(Writer::gzipInfo.windowBits);
+}
+
+Gurax_ImplementClassPropertySetter(gzip, windowBits)
+{
+	Writer::gzipInfo.windowBits = Value_Number::GetNumber<int>(value);
+}
+
+// tar.gzip.memLevel
+Gurax_DeclareClassProperty_RW(gzip, memLevel)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(gzip, memLevel)
+{
+	return new Value_Number(Writer::gzipInfo.memLevel);
+}
+
+Gurax_ImplementClassPropertySetter(gzip, memLevel)
+{
+	Writer::gzipInfo.memLevel = Value_Number::GetNumber<int>(value);
+}
+
+// tar.gzip.strategy
+Gurax_DeclareClassProperty_RW(gzip, strategy)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(gzip, strategy)
+{
+	return new Value_Number(Writer::gzipInfo.strategy);
+}
+
+Gurax_ImplementClassPropertySetter(gzip, strategy)
+{
+	Writer::gzipInfo.strategy = Value_Number::GetNumber<int>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +115,10 @@ void VType_gzip::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(gzip, propSkeleton));
+	Assign(Gurax_CreateProperty(gzip, level));
+	Assign(Gurax_CreateProperty(gzip, windowBits));
+	Assign(Gurax_CreateProperty(gzip, memLevel));
+	Assign(Gurax_CreateProperty(gzip, strategy));
 }
 
 Gurax_EndModuleScope(tar)
