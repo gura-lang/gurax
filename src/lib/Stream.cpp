@@ -18,6 +18,11 @@ Stream::Stream(Flags flags, size_t offset) :
 {
 }
 
+Stream::Stream(Flags flags, Codec* pCodec, size_t offset) :
+	_flags(flags), _offset(offset), _pCodec(pCodec)
+{
+}
+
 void Stream::Bootup()
 {
 	Dumb.reset(new Stream_Dumb());

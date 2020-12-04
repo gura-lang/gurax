@@ -224,6 +224,8 @@ public:
 public:
 	static void PutEnv(const char* name, const char* value);
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
+	static const char* GetEncodingForConsole();
+	static const Symbol* GetLangCode();
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
 	static bool DoesExist(const char* pathName) {

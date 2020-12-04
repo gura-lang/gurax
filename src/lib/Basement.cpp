@@ -39,6 +39,7 @@ bool Basement::Initialize(int argc, char** argv)
 	PreparePathList();
 	PrepareConsoleStream();
 	if (!Module::ImportAllBuiltIns(processor)) return false;
+	SetConsoleStreamCodec();
 	if (!_cmdLine.GetBool("naked")) {
 		if (!Module::ImportByName(processor, "markdown")) return false;
 		if (!Module::ImportByName(processor, "zip")) return false;
@@ -81,6 +82,17 @@ void Basement::PrepareConsoleStream()
 	SetStreamCIn(Stream::CIn->Reference());
 	SetStreamCOut(Stream::COut->Reference());
 	SetStreamCErr(Stream::CErr->Reference());
+}
+
+void Basement::SetConsoleStreamCodec()
+{
+	CodecFactory* pCodecFactory = CodecFactory::Lookup(OAL::GetEncodingForConsole());
+	if (pCodecFactory) {
+		RefPtr<Codec> pCodec(pCodecFactory->CreateCodec(true, true));
+		Stream::CIn->SetCodec(pCodec.Reference());
+		Stream::COut->SetCodec(pCodec.Reference());
+		Stream::CErr->SetCodec(pCodec.Reference());
+	}
 }
 
 void Basement::AppendPathList(const String& str)

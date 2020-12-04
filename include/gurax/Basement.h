@@ -52,6 +52,7 @@ public:
 	void PrepareValue();
 	void PreparePathList();
 	void PrepareConsoleStream();
+	void SetConsoleStreamCodec();
 	void AppendPathList(const String& str);
 	void AppendPathList(const StringList& strs);
 	Frame& GetFrame() { return *_pFrame; }

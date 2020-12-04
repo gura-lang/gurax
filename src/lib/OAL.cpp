@@ -339,6 +339,38 @@ void OAL::PutEnv(const char* name, const char* value)
 	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
 }
 
+const char* OAL::GetEncodingForConsole()
+{
+	UINT codePage = ::GetConsoleOutputCP();
+	if (codePage == 0) codePage = ::GetACP();
+	return
+		(codePage == 1252)?		"iso-8859-1" :
+		(codePage == 28592)?	"iso-8859-2" :
+		(codePage == 1255)?		"iso-8859-8" :
+		(codePage == 932)?		"shift_jis" :
+		(codePage == 936)?		"gbk" :
+		(codePage == 949)?		"euc-kr" :
+		(codePage == 950)?		"big5" :
+		(codePage == 65001)?	"utf-8" :
+		"iso-8859-1";
+}
+
+const Symbol *GetLangCode()
+{
+	// http://www.loc.gov/standards/iso639-2/php/code_list.php
+	UINT codePage = ::GetConsoleOutputCP();
+	if (codePage == 0) codePage = ::GetACP();
+	return
+		(codePage == 1252)?		Gurax_Symbol(en) :
+		(codePage == 28592)?	Gurax_Symbol(en) :
+		(codePage == 1255)?		Gurax_Symbol(en) :
+		(codePage == 932)?		Gurax_Symbol(ja) :
+		(codePage == 936)?		Gurax_Symbol(zh) :
+		(codePage == 949)?		Gurax_Symbol(ko) :
+		(codePage == 950)?		Gurax_Symbol(zh) :
+		Gurax_Symbol(en);
+}
+
 String OAL::ToNativeString(const char* str)
 {
 	return ConvCodePage(str, CP_UTF8, CP_THREAD_ACP);
@@ -814,6 +846,111 @@ void OAL::PutEnv(const char* name, const char* value)
 	::setenv(ToNativeString(name).c_str(), ToNativeString(value).c_str(), overwrite);
 }
 
+const char* OAL::GetEncodingForConsole()
+{
+	const char* encodingDefault = "utf-8";
+	struct AssocInfo {
+		const char* key;
+		const char* value;
+	};
+	String str = GetEnv("LANG");
+	if (str.empty()) return encodingDefault;
+	const char* strp = str.c_str();
+	const char* p = ::strchr(strp, '.');
+	String langLeft, langRight;
+	if (p == nullptr) {
+		langLeft = strp;
+	} else {
+		langLeft = String(strp, p - strp);
+		langRight = p + 1;
+	}
+	if (langRight.empty()) {
+		static const AssocInfo assocInfoTbl[] = {
+			{ "C",		"us-ascii"	},
+			{ "en_US",	"us-ascii"	},
+			{ "ja",	 	"euc-jp"	},
+			{ "ja_JP",	"euc-jp"	},
+			{ "zh_CN",	"gbk"		},	// CP936
+			{ "ko_KR",	"euc-kr"	},	// CP949
+			{ "zh_TW",	"big5"		},	// CP950
+		};
+		for (size_t i = 0; i < ArraySizeOf(assocInfoTbl); i++) {
+			if (::strcasecmp(langLeft.c_str(), assocInfoTbl[i].key) == 0) {
+				return assocInfoTbl[i].value;
+			}
+		}
+	} else {
+		static const AssocInfo assocInfoTbl[] = {
+			{ "eucJP",	"euc-jp"	},
+			{ "ujis",	"euc-jp"	},
+			{ "utf-8",	"utf-8"		},
+			{ "utf8",	"utf-8"		},
+			{ "utf-16",	"utf-16"	},
+			{ "utf16",	"utf-16"	},
+			{ "SJIS",	"shift_jis"	},	// CP932
+			{ "gbk",	"gbk"		},	// CP936
+			{ "eucKR",	"euc-kr"	},	// CP949
+			{ "big5",	"big5"		},	// CP950
+		};
+		for (size_t i = 0; i < ArraySizeOf(assocInfoTbl); i++) {
+			if (::strcasecmp(langRight.c_str(), assocInfoTbl[i].key) == 0) {
+				return assocInfoTbl[i].value;
+			}
+		}
+	}
+	return encodingDefault;
+}
+
+#if 0
+const Symbol* OAL::GetLangCodeFromCFUserTextEncoding()
+{
+	struct AssocInfo {
+		ULong key;
+		const char* value;
+	};
+	static const AssocInfo assocInfoTbl[] = {
+		{ 0,		"en"	},	// English
+		{ 1,		"fr"	},	// French (not confirmed)
+		{ 2,		"ru"	},	// Russian (not confirmed)
+		{ 3,		"de"	},	// German (not confirmed)
+		{ 4,		"it"	},	// Italian (not confirmed)
+		{ 14,		"ja"	},	// Japanese
+		{ 51,		"ko"	},	// Korean (not confirmed)
+		{ 52,		"zh"	},	// Chinese (not confirmed)
+	};
+	String strLine = GetEnv("__CF_USER_TEXT_ENCODING");
+	const char* strp = ::strchr(strLine.c_str(), ':');
+	if (strp == nullptr) return Gurax_Symbol(en);
+	strp++;
+	strp = ::strchr(strp, ':');
+	if (strp == nullptr) return Gurax_Symbol(en);
+	strp++;
+	ULong key = ::strtoul(strp, nullptr, 0); // returns zero for invalid format
+	for (size_t i = 0; i < ArraySizeOf(assocInfoTbl); i++) {
+		if (assocInfoTbl[i].key == key) {
+			return Symbol::Add(assocInfoTbl[i].value);
+		}
+	}
+	return Gurax_Symbol(en);
+}
+#endif
+
+const Symbol* OAL::GetLangCode()
+{
+	String str = GetEnv("LANG");
+	const char* strp = str.c_str();
+	const char* p = strp;
+	while (*p != '\0' && *p != '_' && *p != '.') p++;
+	String lang = String(strp, p - strp);
+	if (lang.empty()) {
+		//return GetLangCodeFromCFUserTextEncoding();	// for Mac environment
+		return Gurax_Symbol(en);
+	} else if (lang == "C") {
+		return Gurax_Symbol(en);
+	}
+	return Symbol::Add(lang.c_str());
+}
+
 String OAL::ToNativeString(const char* str)
 {
 	return str;
@@ -917,7 +1054,7 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 			//if (!Remove(pathNameTmp.c_str())) return false;
 			return false;
 		}
-		char *tgt = new char [statSrc.st_size];
+		char* tgt = new char [statSrc.st_size];
 		if (::readlink(pathNameSrcN.c_str(), tgt, statSrc.st_size) < 0) return false;
 		if (::symlink(tgt, pathNameDstN.c_str()) < 0) return false;
 		delete[] tgt;

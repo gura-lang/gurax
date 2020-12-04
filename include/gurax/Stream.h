@@ -65,6 +65,7 @@ public:
 public:
 	// Constructor
 	Stream(Flags flags, size_t offset = 0);
+	Stream(Flags flags, Codec* pCodec, size_t offset = 0);
 	// Copy constructor/operator
 	Stream(const Stream& src) = delete;
 	Stream& operator=(const Stream& src) = delete;
