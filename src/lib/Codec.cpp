@@ -128,7 +128,9 @@ Codec::WidthProp Codec::GetWidthProp(UInt32 codeUTF32)
 
 String Codec::ToString(const StringStyle& ss) const
 {
-	return String().Format("Codec:%s", GetName());
+	return String().Format("Codec:%s%s%s", GetName(),
+				GetDecoder().GetDelcrFlag()? ":delcr" : "",
+				GetEncoder().GetAddcrFlag()? ":addcr" : "");
 }
 
 //-----------------------------------------------------------------------------

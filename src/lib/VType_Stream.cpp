@@ -465,6 +465,33 @@ Gurax_ImplementMethod(Stream, Write)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
+// Stream#codec
+Gurax_DeclareProperty_RW(Stream, codec)
+{
+	Declare(VTYPE_Codec, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Stream, codec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Codec> pCodec(valueThis.GetStream().GetCodec().Reference());
+	if (pCodec->IsDumb()) return Value::nil();
+	return new Value_Codec(pCodec.release());
+}
+
+Gurax_ImplementPropertySetter(Stream, codec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (value.IsValid()) {
+		valueThis.GetStream().SetCodec(Value_Codec::GetCodec(value).Reference());
+	} else {
+		valueThis.GetStream().SetCodec(CodecFactory::Dumb->CreateCodec(true, true));
+	}
+}
+
 // Stream#identifier
 Gurax_DeclareProperty_R(Stream, identifier)
 {
@@ -570,6 +597,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Stream, codec));
 	Assign(Gurax_CreateProperty(Stream, identifier));
 	Assign(Gurax_CreateProperty(Stream, stat));
 	// Assignment of operator

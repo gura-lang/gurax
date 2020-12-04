@@ -119,10 +119,10 @@ StatEx* StatEx::Create(const char* fileName)
 {
 	ULong attr = 0;
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
-	String pathNameAbs = PathName(fileName).MakeAbsName();
-	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
-	if (::GetFileAttributesEx(pathNameAbsN.c_str(), GetFileExInfoStandard, &attrData) == 0) return nullptr;
-	return new StatEx(pathNameAbs.c_str(), attrData);
+	String pathName = PathName(fileName).MakeAbsName();
+	if (::GetFileAttributesEx(OAL::ToNativeString(pathName.c_str()).c_str(),
+						GetFileExInfoStandard, &attrData) == 0) return nullptr;
+	return new StatEx(pathName.c_str(), attrData);
 }
 
 UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)
@@ -160,10 +160,9 @@ StatEx::StatEx(String pathName, struct stat& sb) :
 StatEx* StatEx::Create(const char* pathName)
 {
 	struct stat sb;
-	String pathNameAbs = PathName(pathName).MakeAbsName();
-	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
-	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
-	return new StatEx(pathNameAbs, sb);
+	String pathName = PathName(pathName).MakeAbsName();
+	if (::stat(OAL::ToNativeString(pathName.c_str()).c_str(), &sb) < 0) return nullptr;
+	return new StatEx(pathName, sb);
 }
 
 UInt32 StatEx::MakeFlags(struct stat& sb)
@@ -226,7 +225,6 @@ Directory* DirectoryEx::DoNextChild()
 		}
 	}
 	Type type = (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)? Type::Folder : Type::Item;
-	String fileName = OAL::FromNativeString(findData.cFileName);
 	RefPtr<Directory> pDirectory(new DirectoryEx(type, OAL::FromNativeString(findData.cFileName).c_str(), nullptr));
 	pDirectory->SetDirectoryParent(Reference());
 	return pDirectory.release();
@@ -257,8 +255,7 @@ Directory* DirectoryEx::DoNextChild()
 {
 	if (!_pDir) {
 		String pathName(MakeFullPathName(false));
-		String pathNameEnc = OAL::ToNativeString(pathName.c_str());
-		_pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
+		_pDir = opendir(pathName.empty()? "." : OAL::ToNativeString(pathName.c_str()).c_str());
 		if (!_pDir) return nullptr;
 	}
 	struct dirent* pEnt = nullptr;
@@ -292,7 +289,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
 		"rb";
 	String pathName = MakeFullPathName(false);
-	FILE* fp = ::fopen(pathName.c_str(), mode);
+	FILE* fp = ::fopen(OAL::ToNativeString(pathName.c_str()).c_str(), mode);
 	if (!fp) {
 		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName.c_str());
 		return nullptr;

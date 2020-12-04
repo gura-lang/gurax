@@ -114,6 +114,7 @@ protected:
 	// Destructor
 	virtual ~Codec() = default;
 public:
+	virtual bool IsDumb() const { return false; }
 	CodecFactory& GetCodecFactory() { return *_pCodecFactory; }
 	const CodecFactory& GetCodecFactory() const { return *_pCodecFactory; }
 	const char* GetName() const { return GetCodecFactory().GetName(); }
@@ -171,6 +172,8 @@ public:
 		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
+public:
+	virtual bool IsDumb() const { return true; }
 };
 
 //-----------------------------------------------------------------------------
