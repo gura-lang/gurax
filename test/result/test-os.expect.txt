@@ -1,10 +1,10 @@
-======== Property ========
-======== Streams ========
-os.cin .. <Stream:CIn:r:encoding=dumb:delcr>
-os.cout .. <Stream:COut:w:encoding=dumb:delcr>
-os.cerr .. <Stream:CErr:w:encoding=dumb:delcr>
-print message on os.cout
-======== os.Redirect() ========
-os.cin .. <Nil>
-os.cout .. <Nil>
-os.cerr .. <Nil>
+======== Property ========
+======== Streams ========
+os.cin .. <Stream:CIn:r:encoding=shift_jis:addcr:delcr>
+os.cout .. <Stream:COut:w:encoding=shift_jis:addcr:delcr>
+os.cerr .. <Stream:CErr:w:encoding=shift_jis:addcr:delcr>
+print message on os.cout
+======== os.Redirect() ========
+os.cin .. <Nil>
+os.cout .. <Nil>
+os.cerr .. <Nil>

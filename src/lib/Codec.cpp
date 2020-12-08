@@ -144,21 +144,6 @@ const char* const Codec::BOM::UTF32BE	= "\x00\x00\xfe\xff";
 const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 
 //-----------------------------------------------------------------------------
-// Codec::DecEncBase
-//-----------------------------------------------------------------------------
-bool Codec::DecEncBase::FollowChar(char& chConv)
-{
-	if (_idxBuff <= 0) return false;
-	chConv = _buffOut[--_idxBuff];
-	return true;
-}
-
-Codec::Result Codec::DecEncBase::Flush(char& chConv)
-{
-	return Result::None;
-}
-
-//-----------------------------------------------------------------------------
 // Codec::Decoder
 //-----------------------------------------------------------------------------
 bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
@@ -178,6 +163,13 @@ bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 		dst.push_back(ch);
 		while (FollowChar(ch)) dst.push_back(ch);
 	}
+	return true;
+}
+
+bool Codec::Decoder::FollowChar(char& chConv)
+{
+	if (_idxBuff <= 0) return false;
+	chConv = _buffOut[--_idxBuff];
 	return true;
 }
 
@@ -201,6 +193,13 @@ bool Codec::Encoder::Encode(Binary& dst, const char* src)
 		dst.push_back(ch);
 		while (FollowChar(ch)) dst.push_back(ch);
 	}
+	return true;
+}
+
+bool Codec::Encoder::FollowChar(char& chConv)
+{
+	if (_idxBuff <= 0) return false;
+	chConv = _buffOut[--_idxBuff];
 	return true;
 }
 
@@ -384,6 +383,56 @@ Codec::Result Codec_DBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 	} else {
 		StoreChar(static_cast<char>(codeDBCS & 0xff));
 		chConv = static_cast<char>(codeDBCS >> 8);
+	}
+	return Result::Complete;
+}
+
+//-----------------------------------------------------------------------------
+// Codec_UTF32LE
+//-----------------------------------------------------------------------------
+class Codec_UTF32LE : public Codec_UTF {
+public:
+	class Decoder : public Codec_UTF::Decoder {
+	private:
+		size_t _nChars;
+		UInt32 _codeUTF32;
+	public:
+		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF32(0x00000000) {}
+		virtual Result FeedChar(char ch, char& chConv);
+	};
+	class Encoder : public Codec_UTF::Encoder {
+	public:
+		Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
+		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv);
+	};
+};
+
+Codec::Result Codec_UTF32LE::Decoder::FeedChar(char ch, char& chConv)
+{
+	if (GetDelcrFlag() && ch == '\r') return Codec::Result::None;
+	_codeUTF32 |= static_cast<UInt32>(static_cast<UInt8>(ch)) << (_nChars * 8);
+	_nChars++;
+	if (_nChars < 4) return Codec::Result::None;
+	_nChars = 0;
+	return FeedUTF32(_codeUTF32, chConv);
+}
+
+Codec::Result Codec_UTF32LE::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
+{
+	if (GetAddcrFlag() && codeUTF32 == '\n') {
+		StoreChar('\0');	// 7th
+		StoreChar('\0');	// 6th
+		StoreChar('\0');	// 5th
+		StoreChar('\n');	// 4th
+		StoreChar('\0');	// 3rd
+		StoreChar('\0');	// 2nd
+		StoreChar('\0');	// 1st
+		chConv = '\r';		// 0th
+	} else {
+		StoreChar(static_cast<char>(static_cast<UInt8>(codeUTF32 >> 24)));	// 3rd
+		StoreChar(static_cast<char>(static_cast<UInt8>(codeUTF32 >> 16)));	// 2nd
+		StoreChar(static_cast<char>(static_cast<UInt8>(codeUTF32 >> 8)));	// 1st
+		chConv = static_cast<char>(static_cast<UInt8>(codeUTF32 >> 0));		// 0th
 	}
 	return Result::Complete;
 }

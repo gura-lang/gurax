@@ -62,37 +62,41 @@ public:
 		WidthProp widthProp;
 	};
 public:
-	class GURAX_DLLDECLARE DecEncBase {
+	class GURAX_DLLDECLARE Decoder {
 	protected:
+		bool _delcrFlag;
 		int _idxBuff;
 		char _buffOut[8];
 	public:
-		DecEncBase() : _idxBuff(0), _buffOut{0} {}
-		bool FollowChar(char& chConv);		
-		virtual Result FeedChar(char ch, char& chConv) = 0;
-		virtual Result Flush(char& chConv);
-	protected:
-		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
-	};
-	class GURAX_DLLDECLARE Decoder : public DecEncBase {
-	private:
-		bool _delcrFlag;
-	public:
-		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
+		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag), _idxBuff(0), _buffOut{0} {}
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
 		bool Decode(String& dst, const UInt8* src, size_t bytes);
 		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
-	};
-	class GURAX_DLLDECLARE Encoder : public DecEncBase {
-	private:
-		bool _addcrFlag;
 	public:
-		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
+		bool FollowChar(char& chConv);		
+		virtual Result FeedChar(char ch, char& chConv) = 0;
+		virtual Result Flush(char& chConv) { return Result::None; }
+	protected:
+		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
+	};
+	class GURAX_DLLDECLARE Encoder {
+	protected:
+		bool _addcrFlag;
+		int _idxBuff;
+		char _buffOut[8];
+	public:
+		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag), _idxBuff(0), _buffOut{0} {}
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
 		bool GetAddcrFlag() const { return _addcrFlag; }
 		bool Encode(Binary& dst, const char* src);
 		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
+	public:
+		bool FollowChar(char& chConv);		
+		virtual Result FeedChar(char ch, char& chConv) = 0;
+		virtual Result Flush(char& chConv) { return Result::None; }
+	protected:
+		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
 	};
 private:
 	CodecFactory* _pCodecFactory;
