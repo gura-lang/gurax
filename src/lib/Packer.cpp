@@ -216,18 +216,18 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 			const char* str = GetString(valListArg, ppValueArg);
 			if (!str) return false;
 			int nPacked = 0;
-			char chConv;
+			UInt8 dataConv;
 			for (const char* p = str; nPacked < nRepeat && *p; p++) {
-				Codec::Result result = pCodec->GetEncoder().FeedChar(*p, chConv);
+				Codec::Result result = pCodec->GetEncoder().FeedChar(*p, dataConv);
 				if (result == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError,
 						"encoding error. specify a proper coding name by {coding}");
 					return false;
 				} else if (result == Codec::Result::Complete) {
-					Store<UInt8, false>(chConv);
+					Store<UInt8, false>(dataConv);
 					nPacked++;
-					for ( ; pCodec->GetEncoder().FollowChar(chConv) && nPacked < nRepeat; nPacked++) {
-						Store<UInt8, false>(chConv);
+					for ( ; pCodec->GetEncoder().CollectData(dataConv) && nPacked < nRepeat; nPacked++) {
+						Store<UInt8, false>(dataConv);
 					}
 				}
 			}
@@ -538,13 +538,13 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			str.reserve(nRepeat);
 			char chConv;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
-				Codec::Result result = pCodec->GetDecoder().FeedChar(*pByte, chConv);
+				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, chConv);
 				if (result == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
 					return Value::nil();
 				} else if (result == Codec::Result::Complete) {
 					str.push_back(chConv);
-					while (pCodec->GetDecoder().FollowChar(chConv)) str.push_back(chConv);
+					while (pCodec->GetDecoder().CollectChar(chConv)) str.push_back(chConv);
 				}
 			}
 			// flush unprocessed characters

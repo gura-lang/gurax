@@ -76,7 +76,7 @@ public:
 		Decoder(bool delcrFlag) :
 			Codec_UTF::Decoder(delcrFlag),
 			_mode(Mode::ASCII), _stat(Stat::Start), _codeJIS(0x0000) {}
-		virtual Result FeedChar(char ch, char& chConv);
+		virtual Result FeedData(UInt8 data, char& chConv);
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
@@ -84,34 +84,34 @@ public:
 	public:
 		Encoder(bool addcrFlag) :
 			Codec_UTF::Encoder(addcrFlag), _mode(Mode::ASCII) {}
-		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv);
+		virtual Result FeedUTF32(UInt32 codeUTF32, UInt8& dataConv);
 	};
 };
 
-Codec::Result Codec_JIS::Decoder::FeedChar(char ch, char& chConv)
+Codec::Result Codec_JIS::Decoder::FeedData(UInt8 data, char& chConv)
 {
 	if (_stat == Stat::Start) {
-		if (ch == 0x1b) {
+		if (data == 0x1b) {
 			_codeJIS = 0x0000;
 			_stat = Stat::Escape;
 			return Result::None;
 		}
 	} else if (_stat == Stat::Escape) {
-		if (ch == '$') {
+		if (data == '$') {
 			_stat = Stat::Dollar;
-		} else if (ch == '&') {
+		} else if (data == '&') {
 			_stat = Stat::Ampersand;
-		} else if (ch == '(') {
+		} else if (data == '(') {
 			_stat = Stat::LParenthesis;
 		} else {
 			return Result::Error;
 		}
 		return Result::None;
 	} else if (_stat == Stat::Dollar) {
-		if (ch == '@') {
+		if (data == '@') {
 			_mode = Mode::JISC;
 			_stat = Stat::Start;
-		} else if (ch == 'B') {
+		} else if (data == 'B') {
 			_mode = Mode::JISX1983;
 			_stat = Stat::Start;
 		} else {
@@ -119,20 +119,20 @@ Codec::Result Codec_JIS::Decoder::FeedChar(char ch, char& chConv)
 		}
 		return Result::None;
 	} else if (_stat == Stat::Ampersand) {
-		if (ch == '@') {
+		if (data == '@') {
 			_stat = Stat::JISX1990;
 		} else {
 			return Result::Error;
 		}
 		return Result::None;
 	} else if (_stat == Stat::LParenthesis) {
-		if (ch == 'B') {
+		if (data == 'B') {
 			_mode = Mode::ASCII;
 			_stat = Stat::Start;
-		} else if (ch == 'J') {
+		} else if (data == 'J') {
 			_mode = Mode::JISROMA;
 			_stat = Stat::Start;
-		} else if (ch == 'I') {
+		} else if (data == 'I') {
 			_mode = Mode::JISKANA;
 			_stat = Stat::Start;
 		} else {
@@ -140,21 +140,21 @@ Codec::Result Codec_JIS::Decoder::FeedChar(char ch, char& chConv)
 		}
 		return Result::None;
 	} else if (_stat == Stat::JISX1990) {
-		if (ch == 0x1b) {
+		if (data == 0x1b) {
 			_stat = Stat::Escape2nd;
 		} else {
 			return Result::Error;
 		}
 		return Result::None;
 	} else if (_stat == Stat::Escape2nd) {
-		if (ch == '$') {
+		if (data == '$') {
 			_stat = Stat::Dollar2nd;
 		} else {
 			return Result::Error;
 		}
 		return Result::None;
 	} else if (_stat == Stat::Dollar2nd) {
-		if (ch == 'B') {
+		if (data == 'B') {
 			_mode = Mode::JISX1990;
 			_stat = Stat::Start;
 		} else {
@@ -165,18 +165,18 @@ Codec::Result Codec_JIS::Decoder::FeedChar(char ch, char& chConv)
 	UInt16 codeCP932 = 0x0000;
 	if (_mode == Mode::JISC || _mode == Mode::JISX1983 || _mode == Mode::JISX1990) {
 		if (_codeJIS == 0x0000) {
-			_codeJIS = ch;
+			_codeJIS = data;
 			return Result::None;
 		}
-		_codeJIS = (_codeJIS << 8) | ch;
+		_codeJIS = (_codeJIS << 8) | data;
 		codeCP932 = JISToCP932(_codeJIS);
 	} else if (_mode == Mode::ASCII) {
-		codeCP932 = ch;
+		codeCP932 = data;
 	} else if (_mode == Mode::JISROMA) {
-		codeCP932 = ch;	// incorrect process
+		codeCP932 = data;	// incorrect process
 	} else if (_mode == Mode::JISKANA) {
-		if (0x20 < ch && ch < 0x60) {
-			codeCP932 = static_cast<UChar>(ch) + 0x80;
+		if (0x20 < data && data < 0x60) {
+			codeCP932 = static_cast<UChar>(data) + 0x80;
 		} else {
 			return Result::Error;
 		}
@@ -187,55 +187,55 @@ Codec::Result Codec_JIS::Decoder::FeedChar(char ch, char& chConv)
 	return FeedUTF32(codeUTF32, chConv);
 }
 
-Codec::Result Codec_JIS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
+Codec::Result Codec_JIS::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8& dataConv)
 {
 	UInt16 codeCP932 = UTF16ToCP932(static_cast<UInt16>(codeUTF32));
 	if (codeCP932 < 0x80) {
 		char ch = static_cast<char>(codeCP932 & 0xff);
 		if (_mode == Mode::ASCII) {
 			if (GetAddcrFlag() && ch == '\n') {
-				StoreChar('\n');
-				chConv = '\r';
+				StoreData('\n');
+				dataConv = '\r';
 			} else {
-				chConv = ch;
+				dataConv = ch;
 			}
 		} else {
 			if (GetAddcrFlag() && ch == '\n') {
-				StoreChar('\n');
-				StoreChar('\r');
+				StoreData('\n');
+				StoreData('\r');
 			} else {
-				StoreChar(ch);
+				StoreData(ch);
 			}
-			StoreChar('B');
-			StoreChar('(');
-			chConv = 0x1b;
+			StoreData('B');
+			StoreData('(');
+			dataConv = 0x1b;
 			_mode = Mode::ASCII;
 		}
 	} else if (0xa0 < codeCP932 && codeCP932 < 0xe0) {
 		if (_mode != Mode::JISKANA) {
-			StoreChar('I');
-			StoreChar('(');
-			chConv = 0x1b;
+			StoreData('I');
+			StoreData('(');
+			dataConv = 0x1b;
 			_mode = Mode::JISKANA;
 		}
-		chConv = static_cast<UChar>(codeCP932 - 0x80);
+		dataConv = static_cast<UChar>(codeCP932 - 0x80);
 	} else if (codeCP932 < 0x100) {
 		return Result::Error;
 	} else {
 		UInt16 codeJIS = CP932ToJIS(codeCP932);
 		if (codeJIS == 0x0000) {
-			chConv = '\0';
+			dataConv = '\0';
 			return Result::Error;
 		}
 		if (_mode == Mode::JISC) {
-			StoreChar(static_cast<char>(codeJIS & 0xff));
-			chConv = static_cast<char>(codeJIS >> 8);
+			StoreData(static_cast<UInt8>(codeJIS & 0xff));
+			dataConv = static_cast<UInt8>(codeJIS >> 8);
 		} else {
-			StoreChar(static_cast<char>(codeJIS & 0xff));
-			StoreChar(static_cast<char>(codeJIS >> 8));
-			StoreChar('@');
-			StoreChar('$');
-			chConv = 0x1b;
+			StoreData(static_cast<UInt8>(codeJIS & 0xff));
+			StoreData(static_cast<UInt8>(codeJIS >> 8));
+			StoreData('@');
+			StoreData('$');
+			dataConv = 0x1b;
 			_mode = Mode::JISC;
 		}
 	}

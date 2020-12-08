@@ -74,8 +74,8 @@ public:
 		bool Decode(String& dst, const UInt8* src, size_t bytes);
 		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
 	public:
-		bool FollowChar(char& chConv);		
-		virtual Result FeedChar(char ch, char& chConv) = 0;
+		bool CollectChar(char& chConv);		
+		virtual Result FeedData(UInt8 data, char& chConv) = 0;
 		virtual Result Flush(char& chConv) { return Result::None; }
 	protected:
 		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
@@ -84,7 +84,7 @@ public:
 	protected:
 		bool _addcrFlag;
 		int _idxBuff;
-		char _buffOut[8];
+		UInt8 _buffOut[8];
 	public:
 		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag), _idxBuff(0), _buffOut{0} {}
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
@@ -92,11 +92,11 @@ public:
 		bool Encode(Binary& dst, const char* src);
 		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	public:
-		bool FollowChar(char& chConv);		
-		virtual Result FeedChar(char ch, char& chConv) = 0;
-		virtual Result Flush(char& chConv) { return Result::None; }
+		bool CollectData(UInt8& dataConv);		
+		virtual Result FeedChar(char ch, UInt8& dataConv) = 0;
+		virtual Result Flush(UInt8& dataConv) { return Result::None; }
 	protected:
-		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
+		void StoreData(UInt8 data) { _buffOut[_idxBuff++] = data; }
 	};
 private:
 	CodecFactory* _pCodecFactory;
@@ -169,12 +169,12 @@ public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
 		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
-		virtual Result FeedChar(char ch, char& chConv) override;
+		virtual Result FeedData(UInt8 data, char& chConv) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	public:
 		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
-		virtual Result FeedChar(char ch, char& chConv) override;
+		virtual Result FeedChar(char ch, UInt8& dataConv) override;
 	};
 public:
 	virtual bool IsDumb() const { return true; }
@@ -200,8 +200,8 @@ public:
 		explicit Encoder(bool addcrFlag) :
 			Codec::Encoder(addcrFlag), _cntChars(0), _codeUTF32(0x00000000) {}
 		UInt32 GetUTF32() const { return _codeUTF32; }
-		virtual Result FeedChar(char ch, char& chConv) override;
-		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) = 0;
+		virtual Result FeedChar(char ch, UInt8& dataConv) override;
+		virtual Result FeedUTF32(UInt32 codeUTF32, UInt8& dataConv) = 0;
 	};
 };
 
@@ -218,7 +218,7 @@ public:
 	public:
 		Decoder(bool delcrFlag, const UInt16* tblToUTF16) :
 			Codec_UTF::Decoder(delcrFlag), _tblToUTF16(tblToUTF16) {}
-		virtual Result FeedChar(char ch, char& chConv) override;
+		virtual Result FeedData(UInt8 data, char& chConv) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
@@ -226,7 +226,7 @@ public:
 	public:
 		Encoder(bool addcrFlag, const Map& mapToSBCS) :
 			Codec_UTF::Encoder(addcrFlag), _mapToSBCS(mapToSBCS) {}
-		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
+		virtual Result FeedUTF32(UInt32 codeUTF32, UInt8& dataConv) override;
 	};
 };
 
@@ -254,14 +254,14 @@ public:
 		UInt16 _codeDBCS;
 	public:
 		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
-		virtual Result FeedChar(char ch, char& chConv) override;
+		virtual Result FeedData(UInt8 data, char& chConv) override;
 		virtual bool IsLeadByte(UChar ch) { return ch >= 0x80; }
 		virtual UInt16 DBCSToUTF16(UInt16 codeDBCS) = 0;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
 		explicit Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
-		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
+		virtual Result FeedUTF32(UInt32 codeUTF32, UInt8& dataConv) override;
 		virtual UInt16 UTF16ToDBCS(UInt16 codeUTF16) = 0;
 	};
 };
