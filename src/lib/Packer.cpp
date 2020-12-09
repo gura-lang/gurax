@@ -225,7 +225,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 						"encoding error. specify a proper coding name by {coding}");
 					return false;
 				} else if (result == Codec::Result::Complete) {
-					for (size_t i = 0; i < cnt && nPacked < nRepeat; nPacked++) {
+					for (size_t i = 0; i < cnt && nPacked < nRepeat; i++, nPacked++) {
 						Store<UInt8, false>(buffRtn[i]);
 					}
 				}
