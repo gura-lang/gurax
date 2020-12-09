@@ -66,6 +66,8 @@ public:
 	protected:
 		bool _delcrFlag;
 	public:
+		static const size_t BuffSize = 16;
+	public:
 		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
@@ -78,17 +80,15 @@ public:
 	class GURAX_DLLDECLARE Encoder {
 	protected:
 		bool _addcrFlag;
-		int _idxBuff;
-		UInt8 _buffOut[8];
 	public:
-		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag), _idxBuff(0), _buffOut{0} {}
+		static const size_t BuffSize = 16;
+	public:
+		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
 		bool GetAddcrFlag() const { return _addcrFlag; }
 		bool Encode(Binary& dst, const char* src);
 		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	public:
-		void StoreData(UInt8 data) { _buffOut[_idxBuff++] = data; }
-		bool CollectData(UInt8* buffRtn, size_t* pCnt);		
 		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) = 0;
 		virtual Result Flush(UInt8* buffRtn, size_t* pCnt) { return Result::None; }
 	protected:

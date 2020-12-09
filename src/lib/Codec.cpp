@@ -148,7 +148,7 @@ const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 //-----------------------------------------------------------------------------
 bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 {
-	char buffRtn[8];
+	char buffRtn[BuffSize];
 	size_t cnt = 0;
 	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
 		Codec::Result rslt = FeedData(*p, buffRtn, &cnt);
@@ -170,7 +170,7 @@ bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 //-----------------------------------------------------------------------------
 bool Codec::Encoder::Encode(Binary& dst, const char* src)
 {
-	UInt8 buffRtn[8];
+	UInt8 buffRtn[BuffSize];
 	size_t cnt = 0;
 	for (const char* p = src; *p != '\0'; p++) {
 		Codec::Result rslt = FeedChar(*p, buffRtn, &cnt);
@@ -220,7 +220,7 @@ Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char* buffRtn, siz
 		*pCnt = 1;
 		return Codec::Result::Complete;
 	}
-	char buffTmp[8];
+	char buffTmp[BuffSize];
 	buffTmp[0] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
 	if ((codeUTF32 & ~0x1f) == 0) {
 		buffRtn[0] = 0xc0 | static_cast<char>(codeUTF32);

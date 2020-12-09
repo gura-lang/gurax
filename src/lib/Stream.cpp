@@ -14,13 +14,15 @@ RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
 Stream::Stream(Flags flags, size_t offset) :
-	_flags(flags), _offset(offset), _pCodec(CodecFactory::Dumb->CreateCodec(true, false))
+	Stream(flags, CodecFactory::Dumb->CreateCodec(true, false), offset)
 {
 }
 
 Stream::Stream(Flags flags, Codec* pCodec, size_t offset) :
 	_flags(flags), _offset(offset), _pCodec(pCodec)
 {
+	_decodeBuff.cnt = 0;
+	_decodeBuff.idx = 0;
 }
 
 void Stream::Bootup()
@@ -64,27 +66,26 @@ bool Stream::CheckWritable() const
 char Stream::GetChar()
 {
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
-	char buffRtn[8];
-	size_t cnt = 0;
-	//if (decoder.CollectChar(chConv)) return chConv;
+	if (_decodeBuff.idx < _decodeBuff.cnt) return _decodeBuff.buff[_decodeBuff.idx++];
+	_decodeBuff.idx = 0;
 	for (;;) {
 		int chRaw = DoGetChar();
 		if (chRaw < 0) return '\0';
-		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), buffRtn, &cnt);
+		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), _decodeBuff.buff, &_decodeBuff.cnt);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return -1;
 		}
 		if (rtn == Codec::Result::Complete) break;
 	}
-	return buffRtn[0];
+	return _decodeBuff.buff[_decodeBuff.idx++];
 }
 
 String Stream::ReadChar()
 {
 	String str;
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
-	char buffRtn[8];
+	char buffRtn[Codec::Decoder::BuffSize];
 	size_t cnt = 0;
 	for (;;) {
 		int chRaw = DoGetChar();
@@ -102,7 +103,7 @@ String Stream::ReadChar()
 
 bool Stream::PutChar(char ch)
 {
-	UInt8 buffRtn[8];
+	UInt8 buffRtn[Codec::Encoder::BuffSize];
 	size_t cnt = 0;
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
 	Codec::Result rtn = encoder.FeedChar(ch, buffRtn, &cnt);
@@ -117,7 +118,7 @@ bool Stream::PutChar(char ch)
 
 Stream& Stream::Print(const char* str)
 {
-	UInt8 buffRtn[8];
+	UInt8 buffRtn[Codec::Encoder::BuffSize];
 	size_t cnt = 0;
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
 	for (const char* p = str; *p != '\0'; ++p) {
@@ -365,7 +366,7 @@ String Stream::ToString(const StringStyle& ss) const
 	str += GetName();
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";
-	str.Format(":encoding=%s", GetCodec().GetName());
+	str.Format(":codec=%s", GetCodec().GetName());
 	if (GetCodec().GetAddcrFlag()) str += ":addcr";
 	if (GetCodec().GetDelcrFlag()) str += ":delcr";
 	return str;

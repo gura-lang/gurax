@@ -60,6 +60,11 @@ protected:
 	Flags _flags;
 	size_t _offset;
 	RefPtr<Codec> _pCodec;
+	struct {
+		char buff[Codec::Decoder::BuffSize];
+		size_t cnt;
+		size_t idx;
+	} _decodeBuff;
 public:
 	static void Bootup();
 public:

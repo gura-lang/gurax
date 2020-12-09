@@ -1,6 +1,8 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+sys.cout.codec = 'utf8'
+
 words10 = [
 	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining'
 ]

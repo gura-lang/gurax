@@ -216,7 +216,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 			const char* str = GetString(valListArg, ppValueArg);
 			if (!str) return false;
 			int nPacked = 0;
-			UInt8 buffRtn[8];
+			UInt8 buffRtn[Codec::Encoder::BuffSize];
 			size_t cnt = 0;
 			for (const char* p = str; nPacked < nRepeat && *p; p++) {
 				Codec::Result result = pCodec->GetEncoder().FeedChar(*p, buffRtn, &cnt);
@@ -535,7 +535,7 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			}
 			String str;
 			str.reserve(nRepeat);
-			char buffRtn[8];
+			char buffRtn[Codec::Decoder::BuffSize];
 			size_t cnt = 0;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
 				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, buffRtn, &cnt);
