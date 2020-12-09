@@ -64,53 +64,52 @@ bool Stream::CheckWritable() const
 char Stream::GetChar()
 {
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
-	char chConv = '\0';
-	if (decoder.CollectChar(chConv)) return chConv;
+	char buffRtn[8];
+	size_t cnt = 0;
+	//if (decoder.CollectChar(chConv)) return chConv;
 	for (;;) {
 		int chRaw = DoGetChar();
 		if (chRaw < 0) return '\0';
-		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), chConv);
+		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), buffRtn, &cnt);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return -1;
 		}
 		if (rtn == Codec::Result::Complete) break;
 	}
-	return chConv;
+	return buffRtn[0];
 }
 
 String Stream::ReadChar()
 {
 	String str;
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
-	char chConv = '\0';
+	char buffRtn[8];
+	size_t cnt = 0;
 	for (;;) {
 		int chRaw = DoGetChar();
 		if (chRaw < 0) break;
-		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), chConv);
+		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), buffRtn, &cnt);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return String::Empty;
 		}
-		if (rtn == Codec::Result::Complete) {
-			str += chConv;
-			break;
-		}
+		if (rtn == Codec::Result::Complete) break;
 	}
-	while (decoder.CollectChar(chConv)) str += chConv;
+	for (size_t i = 0; i < cnt; i++) str += buffRtn[i];
 	return str;
 }
 
 bool Stream::PutChar(char ch)
 {
-	UInt8 dataConv = '\0';
+	UInt8 buffRtn[8];
+	size_t cnt = 0;
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
-	Codec::Result rtn = encoder.FeedChar(ch, dataConv);
+	Codec::Result rtn = encoder.FeedChar(ch, buffRtn, &cnt);
 	if (rtn == Codec::Result::Error) return false;
 	if (rtn == Codec::Result::Complete) {
-		if (!DoPutChar(dataConv)) return false;
-		while (encoder.CollectData(dataConv)) {
-			if (!DoPutChar(dataConv)) return false;
+		for (size_t i = 0; i < cnt; i++) {
+			if (!DoPutChar(buffRtn[i])) return false;
 		}
 	}
 	return true;
@@ -118,16 +117,16 @@ bool Stream::PutChar(char ch)
 
 Stream& Stream::Print(const char* str)
 {
-	UInt8 dataConv = '\0';
+	UInt8 buffRtn[8];
+	size_t cnt = 0;
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
 	for (const char* p = str; *p != '\0'; ++p) {
 		char ch = *p;
-		Codec::Result rtn = encoder.FeedChar(ch, dataConv);
+		Codec::Result rtn = encoder.FeedChar(ch, buffRtn, &cnt);
 		if (rtn == Codec::Result::Error) return *this;
 		if (rtn == Codec::Result::Complete) {
-			if (!DoPutChar(dataConv)) return *this;
-			while (encoder.CollectData(dataConv)) {
-				if (!DoPutChar(dataConv)) return *this;
+			for (size_t i = 0; i < cnt; i++) {
+				if (!DoPutChar(buffRtn[i])) return *this;
 			}
 		}
 	}
