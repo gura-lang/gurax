@@ -36,7 +36,17 @@ bool Parser::FeedStream(Stream& stream)
 		char ch = stream.GetChar();
 		if (!ch) break;
 		FeedChar(ch);
-		if (Error::IsIssued()) return false;
+		if (!Error::IsIssued()) {
+			// nothing to do
+		} else if (Error::GetLastError()->GetErrorType().IsIdentical(ErrorType::DetectEncoding)) {
+			String codecName = Error::GetLastError()->GetText();
+			Error::Clear();
+			RefPtr<Codec> pCodec(Codec::Create(codecName.c_str(), true, false));
+			if (!pCodec) return false;
+			stream.SetCodec(pCodec.release());
+		} else {		
+			return false;
+		}
 	}
 	return true;
 }
@@ -45,7 +55,13 @@ bool Parser::FeedString(const char* str)
 {
 	for (const char* p = str; *p; p++) {
 		FeedChar(*p);
-		if (Error::IsIssued()) return false;
+		if (!Error::IsIssued()) {
+			// nothing to do
+		} else if (Error::GetLastError()->GetErrorType().IsIdentical(ErrorType::DetectEncoding)) {
+			Error::Clear();
+		} else {		
+			return false;
+		}
 	}
 	return true;
 }
@@ -54,7 +70,13 @@ bool Parser::FeedString(const char* str, size_t len)
 {
 	for (const char* p = str; len > 0; p++, len--) {
 		FeedChar(*p);
-		if (Error::IsIssued()) return false;
+		if (!Error::IsIssued()) {
+			// nothing to do
+		} else if (Error::GetLastError()->GetErrorType().IsIdentical(ErrorType::DetectEncoding)) {
+			Error::Clear();
+		} else {		
+			return false;
+		}
 	}
 	return true;
 }

@@ -179,7 +179,7 @@ Gurax_DeclareProperty_R(Binary, p)
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns a `pointer` instance that accesses the binary.\n"
-		"This result is equivalent to that of calling the method `binary#pointer()`");
+		"This result is equivalent to that of calling the method `binary#Pointer()`");
 }
 
 Gurax_ImplementPropertyGetter(Binary, p)

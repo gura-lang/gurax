@@ -6,6 +6,49 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Pointer_String
+//------------------------------------------------------------------------------
+Pointer_String::Pointer_String(StringReferable* pString, size_t offset) : Pointer(offset), _pString(pString)
+{
+}
+
+Pointer_String::Pointer_String(const Pointer_String& src) :
+	Pointer_String(src._pString->Reference(), src._offset)
+{
+}
+
+const UInt8* Pointer_String::ExtractPrepare(size_t bytes)
+{
+	const String& String = GetStringSTL();
+	if (_offset + bytes <= String.size()) {
+		const UInt8* p = reinterpret_cast<const UInt8*>(String.data() + _offset);
+		_offset += bytes;
+		return p;
+	}
+	return nullptr;
+}
+
+const void* Pointer_String::DoGetPointerC() const
+{
+	return GetStringSTL().data() + _offset;
+}
+
+void* Pointer_String::DoGetWritablePointerC() const
+{
+	return nullptr;
+}
+
+size_t Pointer_String::GetBytesEntire() const
+{
+	return GetStringSTL().size();
+}
+
+bool Pointer_String::IsWritable() const
+{
+	return false;
+}
+
+//------------------------------------------------------------------------------
 // Pointer_Binary
 //------------------------------------------------------------------------------
 Pointer_Binary::Pointer_Binary(BinaryReferable* pBinary, size_t offset) : Pointer(offset), _pBinary(pBinary)

@@ -1,6 +1,6 @@
 ======== Streams ========
-sys.cin .. <Stream:CIn:r:encoding=shift_jis:addcr:delcr>
-sys.cout .. <Stream:COut:w:encoding=shift_jis:addcr:delcr>
-sys.cerr .. <Stream:CErr:w:encoding=shift_jis:addcr:delcr>
+sys.cin .. <Stream:CIn:r:codec=shift_jis:addcr:delcr>
+sys.cout .. <Stream:COut:w:codec=shift_jis:addcr:delcr>
+sys.cerr .. <Stream:CErr:w:codec=shift_jis:addcr:delcr>
 print message on sys.cout
 ======== sys.Exit() ========

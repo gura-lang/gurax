@@ -435,7 +435,8 @@ Gurax_ImplementPropertySetter(Pointer, offset)
 Gurax_DeclareProperty_RW(Pointer, int8)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of signed 8-bit integer.");
@@ -455,7 +456,8 @@ Gurax_ImplementPropertySetter(Pointer, int8)
 Gurax_DeclareProperty_RW(Pointer, int16)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of signed 16-bit integer.");
@@ -475,7 +477,8 @@ Gurax_ImplementPropertySetter(Pointer, int16)
 Gurax_DeclareProperty_RW(Pointer, int32)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of signed 32-bit integer.");
@@ -495,7 +498,8 @@ Gurax_ImplementPropertySetter(Pointer, int32)
 Gurax_DeclareProperty_RW(Pointer, int64)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of signed 64-bit integer.");
@@ -515,7 +519,8 @@ Gurax_ImplementPropertySetter(Pointer, int64)
 Gurax_DeclareProperty_RW(Pointer, uint8)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 8-bit integer.");
@@ -535,7 +540,8 @@ Gurax_ImplementPropertySetter(Pointer, uint8)
 Gurax_DeclareProperty_RW(Pointer, uint16)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 16-bit integer.");
@@ -555,7 +561,8 @@ Gurax_ImplementPropertySetter(Pointer, uint16)
 Gurax_DeclareProperty_RW(Pointer, uint32)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 32-bit integer.");
@@ -575,7 +582,8 @@ Gurax_ImplementPropertySetter(Pointer, uint32)
 Gurax_DeclareProperty_RW(Pointer, uint64)
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 64-bit integer.");
@@ -595,7 +603,8 @@ Gurax_ImplementPropertySetter(Pointer, uint64)
 Gurax_DeclarePropertyAlias_RW(Pointer, float_, "float")
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 64-bit integer.");
@@ -615,7 +624,8 @@ Gurax_ImplementPropertySetter(Pointer, float_)
 Gurax_DeclarePropertyAlias_RW(Pointer, double_, "double")
 {
 	Declare(VTYPE_Number, Flag::None);
-	//DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
 		"read or write a number stored in a format of unsigned 64-bit integer.");

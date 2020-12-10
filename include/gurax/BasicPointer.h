@@ -9,6 +9,33 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Pointer_String
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Pointer_String : public Pointer {
+protected:
+	RefPtr<StringReferable> _pString;
+public:
+	Pointer_String(StringReferable* pString, size_t offset = 0);
+	Pointer_String(const Pointer_String& src);
+public:
+	const char* GetString() const { return _pString->GetString(); }
+	const String& GetStringSTL() const { return _pString->GetStringSTL(); }
+public:
+	// Virtual functions of Packer
+	virtual bool StorePrepare(size_t bytes) override { return false; }
+	virtual void StoreBuffer(const void* buff, size_t bytes) override {}
+	virtual const UInt8* ExtractPrepare(size_t bytes) override;
+public:
+	// Virtual functions of Pointer
+	virtual Pointer* Clone() const override { return new Pointer_String(*this); }
+	virtual const void* GetPointerToTarget() const override { return _pString.get(); }
+	virtual const void* DoGetPointerC() const override;
+	virtual void* DoGetWritablePointerC() const override;
+	virtual size_t GetBytesEntire() const override;
+	virtual bool IsWritable() const override;
+};
+
+//------------------------------------------------------------------------------
 // Pointer_Binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Pointer_Binary : public Pointer {

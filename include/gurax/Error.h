@@ -47,6 +47,7 @@ public:
 	static const ErrorType TypeError;
 	static const ErrorType UnimplementedError;
 	static const ErrorType ValueError;
+	static const ErrorType DetectEncoding;
 public:
 	ErrorType(const String& name, const String& dispName) : _name(name), _dispName(dispName) {}
 	const char* GetName() const { return _name.c_str(); }

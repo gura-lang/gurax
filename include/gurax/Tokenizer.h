@@ -121,7 +121,8 @@ public:
 	const StringReferable& GetPathNameSrcReferable() const { return *_pPathNameSrc; }
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) {
-		Error::Issue(errorType, format, args...);
+		Error::IssueAt(errorType, GetPathNameSrcReferable().Reference(),
+					   GetLineNo(), GetLineNo(), format, args...);
 	}
 	TokenStack& GetTokenStack() { return *_pTokenStack; }
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);

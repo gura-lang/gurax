@@ -4,8 +4,8 @@ Stream
   #identifier       String       R,nil
   #stat             Stat         R
 ======== Cast ========
-f(b'') .. <Stream:binary:r:encoding=dumb:delcr>
-g(B'') .. <Stream:binary:w:encoding=dumb:delcr>
+f(b'') .. <Stream:binary:r:codec=dumb:delcr>
+g(B'') .. <Stream:binary:w:codec=dumb:delcr>
 g(b'') .. the binary is not writable
 ======== Stream#Addcr() ========
 ======== Stream#Delcr() ========

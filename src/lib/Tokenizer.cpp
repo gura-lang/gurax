@@ -799,10 +799,10 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::MagicCommentLine: {
 		if (_magicCommentParser.FeedChar(ch)) {
-			//const char* encoding = _magicCommentParser.GetEncoding();
-			//sig.SetSignal(SIGTYPE_DetectEncoding, Value(encoding));
-		}
-		if (ch == '\n' || ch == '\0') {
+			const char* encoding = _magicCommentParser.GetEncoding();
+			IssueError(ErrorType::DetectEncoding, "%s", encoding);
+			Gurax_PushbackEx(ch);
+		} else if (ch == '\n' || ch == '\0') {
 			int lineNo = GetLineNo();
 			if (_verboseFlag) {
 				_tokenWatcher.FeedToken(new Token(TokenType::CommentLine, _lineNoTop, lineNo, _segment));
@@ -1236,7 +1236,7 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 //-----------------------------------------------------------------------------
 bool Tokenizer::MagicCommentParser::FeedChar(char ch)
 {
-	bool rslt = false;
+	bool rtn = false;
 	switch (_stat) {
 	case Stat::Idle: {
 		// nothing to do
@@ -1272,13 +1272,13 @@ bool Tokenizer::MagicCommentParser::FeedChar(char ch)
 		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
 			_segment += ch;
 		} else {
-			rslt = true;
+			rtn = true;
 			_stat = Stat::Idle;
 		}
 		break;
 	}
 	}
-	return rslt;
+	return rtn;
 }
 
 }

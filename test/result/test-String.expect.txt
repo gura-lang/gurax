@@ -4,6 +4,7 @@ String
   #first            String       R
   #last             String       R
   #len              Number       R
+  #p                Pointer      R
   #width            Number       R
 ======== String#Align() ========
   bubble  
@@ -508,6 +509,17 @@ e3 81 82 e3 81 84 e3 81 86 e3 81 88 e3 81 8a e3  ................
 ======== String#Translator() ========
 ======== String#UnescapeHTML() ========
 ======== String#ZenToHan() ========
+======== String#p ========
+20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
+50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
+60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
+70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
+offset=0, bytesAvail=96, bytesEntire=96, 32
+offset=6, bytesAvail=90, bytesEntire=96, 38
+offset=96, bytesAvail=0, bytesEntire=96, nil
+offset=97, bytesAvail=0, bytesEntire=96, nil
 ======== String#len, String#width ========
 str .. abcdefghijklmn
 str.len .. 14

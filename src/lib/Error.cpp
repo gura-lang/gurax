@@ -35,6 +35,7 @@ const ErrorType ErrorType::SyntaxError			("SyntaxError",			"syntax error");
 const ErrorType ErrorType::TypeError			("TypeError",			"type error");
 const ErrorType ErrorType::UnimplementedError	("UnimplementedError",	"unimplemented error");
 const ErrorType ErrorType::ValueError			("ValueError",			"value error");
+const ErrorType ErrorType::DetectEncoding		("DetectEncoding",		"detect encoding");
 
 //------------------------------------------------------------------------------
 // Error

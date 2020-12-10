@@ -1237,6 +1237,21 @@ Gurax_ImplementPropertyGetter(String, len)
 	return new Value_Number(str.Length());
 }
 
+// String#p
+Gurax_DeclareProperty_R(String, p)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `pointer` instance that accesses the string.\n");
+}
+
+Gurax_ImplementPropertyGetter(String, p)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Pointer(new Pointer_String(valueThis.GetStringReferable().Reference()));
+}
+
 // String#width
 Gurax_DeclareProperty_R(String, width)
 {
@@ -1398,6 +1413,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, first));
 	Assign(Gurax_CreateProperty(String, last));
 	Assign(Gurax_CreateProperty(String, len));
+	Assign(Gurax_CreateProperty(String, p));
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, String, String);
