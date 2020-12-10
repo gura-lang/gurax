@@ -76,7 +76,7 @@ public:
 		Decoder(bool delcrFlag) :
 			Codec_UTF::Decoder(delcrFlag),
 			_mode(Mode::ASCII), _stat(Stat::Start), _codeJIS(0x0000) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt);
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32);
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
@@ -88,7 +88,7 @@ public:
 	};
 };
 
-Codec::Result Codec_JIS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_JIS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (_stat == Stat::Start) {
 		if (data == 0x1b) {
@@ -182,9 +182,9 @@ Codec::Result Codec_JIS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pC
 		}
 	}
 	if (GetDelcrFlag() && codeCP932 == '\r') return Result::None;
-	UInt32 codeUTF32 = CP932ToUTF16(codeCP932);
+	*pCodeUTF32 = CP932ToUTF16(codeCP932);
 	_codeJIS = 0x0000;
-	return FeedUTF32(codeUTF32, buffRtn, pCnt);
+	return FeedUTF32(*pCodeUTF32, buffRtn, pCnt);
 }
 
 Codec::Result Codec_JIS::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* buffRtn, size_t* pCnt)

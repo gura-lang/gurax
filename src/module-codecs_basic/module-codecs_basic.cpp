@@ -17,7 +17,7 @@ public:
 		UInt16 _codeUTF16;
 	public:
 		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF16(0) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) override;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
@@ -27,7 +27,7 @@ public:
 };
 
 template<Endian endian>
-Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {
@@ -103,7 +103,7 @@ public:
 		UInt32 _codeUTF32;
 	public:
 		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF32(0) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) override;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
@@ -113,7 +113,7 @@ public:
 };
 
 template<Endian endian>
-Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {

@@ -74,7 +74,7 @@ public:
 		bool Decode(String& dst, const UInt8* src, size_t bytes);
 		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
 	public:
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) = 0;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) = 0;
 		virtual Result Flush(char* buffRtn, size_t* pCnt) { return Result::None; }
 	};
 	class GURAX_DLLDECLARE Encoder {
@@ -91,7 +91,6 @@ public:
 	public:
 		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) = 0;
 		virtual Result Flush(UInt8* buffRtn, size_t* pCnt) { return Result::None; }
-	protected:
 	};
 private:
 	CodecFactory* _pCodecFactory;
@@ -164,7 +163,7 @@ public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
 		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) override;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	public:
@@ -213,7 +212,7 @@ public:
 	public:
 		Decoder(bool delcrFlag, const UInt16* tblToUTF16) :
 			Codec_UTF::Decoder(delcrFlag), _tblToUTF16(tblToUTF16) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) override;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
@@ -249,7 +248,7 @@ public:
 		UInt16 _codeDBCS;
 	public:
 		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt) override;
+		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
 		virtual bool IsLeadByte(UChar ch) { return ch >= 0x80; }
 		virtual UInt16 DBCSToUTF16(UInt16 codeDBCS) = 0;
 	};

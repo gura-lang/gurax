@@ -14,7 +14,7 @@ RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
 Stream::Stream(Flags flags, size_t offset) :
-	Stream(flags, CodecFactory::Dumb->CreateCodec(true, false), offset)
+	Stream(flags, Codec::CreateDumb(true, false), offset)
 {
 }
 
@@ -68,10 +68,12 @@ char Stream::GetChar()
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
 	if (_decodeBuff.idx < _decodeBuff.cnt) return _decodeBuff.buff[_decodeBuff.idx++];
 	_decodeBuff.idx = 0;
+	UInt32 codeUTF32;
 	for (;;) {
 		int chRaw = DoGetChar();
 		if (chRaw < 0) return '\0';
-		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), _decodeBuff.buff, &_decodeBuff.cnt);
+		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw),
+								_decodeBuff.buff, &_decodeBuff.cnt, &codeUTF32);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return -1;
@@ -87,10 +89,11 @@ String Stream::ReadChar()
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
 	char buffRtn[Codec::Decoder::BuffSize];
 	size_t cnt = 0;
+	UInt32 codeUTF32 = 0;
 	for (;;) {
 		int chRaw = DoGetChar();
 		if (chRaw < 0) break;
-		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), buffRtn, &cnt);
+		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), buffRtn, &cnt, &codeUTF32);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return String::Empty;

@@ -49,9 +49,7 @@ Codec* Codec::Duplicate() const
 
 Codec* Codec::Create(const char* name, bool delcrFlag, bool addcrFlag)
 {
-	if (!name) {
-		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
-	}
+	if (!name) return CreateDumb(delcrFlag, addcrFlag);
 	CodecFactory* pCodecFactory = CodecFactory::Lookup(name);
 	if (!pCodecFactory) {
 		Error::Issue(ErrorType::CodecError, "unsupported encoding: %s", name);
@@ -66,7 +64,7 @@ void Codec::Bootup()
 	CodecFactory::Register(CodecFactory::Dumb);
 	bool delcrFlag = true;
 	bool addcrFlag = false;
-	Dumb.reset(CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag));
+	Dumb.reset(CreateDumb(delcrFlag, addcrFlag));
 }
 
 UInt16 Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS)
@@ -148,10 +146,11 @@ const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 //-----------------------------------------------------------------------------
 bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 {
+	UInt32 codeUTF32;
 	char buffRtn[BuffSize];
 	size_t cnt = 0;
 	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
-		Codec::Result rslt = FeedData(*p, buffRtn, &cnt);
+		Codec::Result rslt = FeedData(*p, buffRtn, &cnt, &codeUTF32);
 		if (rslt == Codec::Result::Complete) {
 			for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
 		} else if (rslt == Codec::Result::Error) {
@@ -190,10 +189,11 @@ bool Codec::Encoder::Encode(Binary& dst, const char* src)
 //-----------------------------------------------------------------------------
 // Codec_Dumb
 //-----------------------------------------------------------------------------
-Codec::Result Codec_Dumb::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_Dumb::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	buffRtn[0] = static_cast<char>(data);
+	*pCodeUTF32 = data;
 	*pCnt = 1;
 	return Codec::Result::Complete;
 }
@@ -216,38 +216,38 @@ Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCn
 Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char* buffRtn, size_t* pCnt)
 {
 	if ((codeUTF32 & ~0x7f) == 0) {
-		buffRtn[0] = static_cast<char>(codeUTF32);
+		buffRtn[0] = static_cast<UInt8>(codeUTF32);
 		*pCnt = 1;
 		return Codec::Result::Complete;
 	}
 	char buffTmp[BuffSize];
-	buffTmp[0] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
+	buffTmp[0] = 0x80 | static_cast<UInt8>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
 	if ((codeUTF32 & ~0x1f) == 0) {
-		buffRtn[0] = 0xc0 | static_cast<char>(codeUTF32);
+		buffRtn[0] = 0xc0 | static_cast<UInt8>(codeUTF32);
 		buffRtn[1] = buffTmp[0];
 		*pCnt = 2;
 		return Codec::Result::Complete;
 	}
-	buffTmp[1] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
+	buffTmp[1] = 0x80 | static_cast<UInt8>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
 	if ((codeUTF32 & ~0x0f) == 0) {
-		buffRtn[0] = 0xe0 | static_cast<char>(codeUTF32);
+		buffRtn[0] = 0xe0 | static_cast<UInt8>(codeUTF32);
 		buffRtn[1] = buffTmp[1];
 		buffRtn[2] = buffTmp[0];
 		*pCnt = 3;
 		return Codec::Result::Complete;
 	}
-	buffTmp[2] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
+	buffTmp[2] = 0x80 | static_cast<UInt8>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
 	if ((codeUTF32 & ~0x07) == 0) {
-		buffRtn[0] = 0xf0 | static_cast<char>(codeUTF32);
+		buffRtn[0] = 0xf0 | static_cast<UInt8>(codeUTF32);
 		buffRtn[1] = buffTmp[2];
 		buffRtn[2] = buffTmp[1];
 		buffRtn[3] = buffTmp[0];
 		*pCnt = 4;
 		return Codec::Result::Complete;
 	}
-	buffTmp[3] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
+	buffTmp[3] = 0x80 | static_cast<UInt8>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
 	if ((codeUTF32 & ~0x03) == 0) {
-		buffRtn[0] = 0xf8 | static_cast<char>(codeUTF32);
+		buffRtn[0] = 0xf8 | static_cast<UInt8>(codeUTF32);
 		buffRtn[1] = buffTmp[3];
 		buffRtn[2] = buffTmp[2];
 		buffRtn[3] = buffTmp[1];
@@ -255,8 +255,8 @@ Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char* buffRtn, siz
 		*pCnt = 5;
 		return Codec::Result::Complete;
 	}
-	buffTmp[4] = 0x80 | static_cast<char>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
-	buffRtn[0] = 0xfc | static_cast<char>(codeUTF32);
+	buffTmp[4] = 0x80 | static_cast<UInt8>(codeUTF32 & 0x3f); codeUTF32 >>= 6;
+	buffRtn[0] = 0xfc | static_cast<UInt8>(codeUTF32);
 	buffRtn[1] = buffTmp[4];
 	buffRtn[2] = buffTmp[3];
 	buffRtn[3] = buffTmp[2];
@@ -318,10 +318,12 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt
 //-----------------------------------------------------------------------------
 // Codec_SBCS
 //-----------------------------------------------------------------------------
-Codec::Result Codec_SBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_SBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
-	buffRtn[0] = static_cast<UChar>(_tblToUTF16[data]);
+	UInt16 codeUTF16 = _tblToUTF16[data];
+	buffRtn[0] = static_cast<UChar>(codeUTF16);
+	*pCodeUTF32 = codeUTF16;
 	*pCnt = 1;
 	return (buffRtn[0] == '\0')? Result::Error : Result::Complete;
 }
@@ -357,7 +359,7 @@ Codec* CodecFactory_SBCS::CreateCodec(bool delcrFlag, bool addcrFlag)
 //-----------------------------------------------------------------------------
 // Codec_DBCS
 //-----------------------------------------------------------------------------
-Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt)
+Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	//UChar _ch = data;
@@ -374,6 +376,7 @@ Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* p
 		_codeDBCS = 0x0000;
 	}
 	if (GetDelcrFlag() && codeUTF32 == '\r') return Result::None;
+	*pCodeUTF32 = codeUTF32;
 	return FeedUTF32(codeUTF32, buffRtn, pCnt);
 }
 
