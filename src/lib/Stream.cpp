@@ -73,14 +73,17 @@ char Stream::GetChar()
 		int chRaw = DoGetChar();
 		if (chRaw < 0) return '\0';
 		Codec::Result rtn = decoder.FeedData(static_cast<UInt8>(chRaw), &codeUTF32);
-		if (rtn == Codec::Result::Error) {
+		if (rtn == Codec::Result::Complete) {
+			String::UTF32ToUTF8(codeUTF32, _decodeBuff.buff, &_decodeBuff.cnt);
+			return _decodeBuff.buff[_decodeBuff.idx++];
+		} else if (rtn == Codec::Result::CompleteSingle) {
+			return static_cast<char>(codeUTF32 & 0xff);
+		} else if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetName());
 			return -1;
 		}
-		if (rtn == Codec::Result::Complete) break;
 	}
-	String::UTF32ToUTF8(codeUTF32, _decodeBuff.buff, &_decodeBuff.cnt);
-	return _decodeBuff.buff[_decodeBuff.idx++];
+	return '\0';
 }
 
 bool Stream::PutChar(char ch)

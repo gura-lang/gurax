@@ -368,9 +368,9 @@ String& String::AppendUTF32(UInt32 codeUTF32)
 void String::UTF32ToUTF8(UInt32 codeUTF32, char buff[], size_t *pCnt)
 {
 	char buffRaw[8];
-	size_t i = 0;
-	UTF32ToUTF8_Unsorted(codeUTF32, buffRaw, &i);
-	for (size_t j = 0; i > 0; j++) buff[j] = buffRaw[--i];
+	UTF32ToUTF8_Unsorted(codeUTF32, buffRaw, pCnt);
+	size_t i = *pCnt, j = 0;
+	for ( ; i > 0; j++) buff[j] = buffRaw[--i];
 }
 
 void String::UTF32ToUTF8_Unsorted(UInt32 codeUTF32, char buff[], size_t *pCnt)
@@ -408,8 +408,6 @@ void String::UTF32ToUTF8_Unsorted(UInt32 codeUTF32, char buff[], size_t *pCnt)
 		}
 	}
 	*pCnt = i;
-	//while (i > 0) push_back(buff[--i]);
-	//return *this;
 }
 
 String& String::FormatV(const char* format, va_list ap)

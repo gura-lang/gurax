@@ -538,11 +538,13 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			UInt32 codeUTF32 = 0;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
 				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, &codeUTF32);
-				if (result == Codec::Result::Error) {
+				if (result == Codec::Result::Complete) {
+					str.AppendUTF32(codeUTF32);
+				} else if (result == Codec::Result::CompleteSingle) {
+					str += static_cast<char>(codeUTF32 & 0xff);
+				} else if (result == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
 					return Value::nil();
-				} else if (result == Codec::Result::Complete) {
-					str.AppendUTF32(codeUTF32);
 				}
 			}
 			// flush unprocessed characters

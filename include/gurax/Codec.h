@@ -42,7 +42,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Codec);
 public:
-	enum class Result { None, Complete, Error };
+	enum class Result { None, Complete, CompleteSingle, Error };
 	enum class WidthProp { N, A, H, W, F, Na };
 	struct BOM {
 		// Byte Order Mark of Unicode
