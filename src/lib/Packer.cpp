@@ -535,16 +535,14 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			}
 			String str;
 			str.reserve(nRepeat);
-			char buffRtn[Codec::Decoder::BuffSize];
-			size_t cnt = 0;
 			UInt32 codeUTF32 = 0;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
-				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, buffRtn, &cnt, &codeUTF32);
+				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, &codeUTF32);
 				if (result == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
 					return Value::nil();
 				} else if (result == Codec::Result::Complete) {
-					for (size_t i = 0; i < cnt; i++) str.push_back(buffRtn[i]);
+					str.AppendUTF32(codeUTF32);
 				}
 			}
 			// flush unprocessed characters

@@ -61,7 +61,7 @@ protected:
 	size_t _offset;
 	RefPtr<Codec> _pCodec;
 	struct {
-		char buff[Codec::Decoder::BuffSize];
+		char buff[8];
 		size_t cnt;
 		size_t idx;
 	} _decodeBuff;
@@ -93,7 +93,6 @@ public:
 	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
 	Codec& GetCodec() const { return *_pCodec; }
 	virtual char GetChar() override;
-	String ReadChar();
 	bool PutChar(char ch);
 	Stream& Print(const char* str);
 	Stream& Print(const String& str) { return Print(str.c_str()); }

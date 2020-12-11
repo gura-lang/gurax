@@ -159,6 +159,8 @@ public:
 	String& AppendNChars(const char* str, size_t len);
 	String& AppendUTF8(UInt64 codeUTF8);
 	String& AppendUTF32(UInt32 codeUTF32);
+	static void UTF32ToUTF8(UInt32 codeUTF32, char buff[], size_t *pCnt);
+	static void UTF32ToUTF8_Unsorted(UInt32 codeUTF32, char buff[], size_t *pCnt);
 public:
 	String& FormatV(const char* format, va_list ap);
 	String& Format(const char* format, ...);

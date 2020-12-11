@@ -17,7 +17,7 @@ public:
 		UInt16 _codeUTF16;
 	public:
 		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF16(0) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
@@ -27,7 +27,7 @@ public:
 };
 
 template<Endian endian>
-Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
+Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {
@@ -36,11 +36,10 @@ Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, 
 		_codeUTF16 = (_codeUTF16 << 8) + data;
 	}
 	_nChars++;
-	if (_nChars < 2) return Codec::Result::None;
-	UInt32 codeUTF32 = _codeUTF16;
-	Codec::Result rtn = FeedUTF32(codeUTF32, buffRtn, pCnt);
+	if (_nChars < 2) return Result::None;
+	*pCodeUTF32 = _codeUTF16;
 	_nChars = 0, _codeUTF16 = 0;
-	return rtn;
+	return Result::Complete;
 }
 
 template<Endian endian>
@@ -103,7 +102,7 @@ public:
 		UInt32 _codeUTF32;
 	public:
 		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF32(0) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
@@ -113,7 +112,7 @@ public:
 };
 
 template<Endian endian>
-Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
+Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {
@@ -122,10 +121,10 @@ Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, char* buffRtn, 
 		_codeUTF32 = (_codeUTF32 << 8) + data;
 	}
 	_nChars++;
-	if (_nChars < 4) return Codec::Result::None;
-	Codec::Result rtn = FeedUTF32(_codeUTF32, buffRtn, pCnt);
+	if (_nChars < 4) return Result::None;
+	*pCodeUTF32 = _codeUTF32;
 	_nChars = 0, _codeUTF32 = 0;
-	return rtn;
+	return Result::Complete;
 }
 
 template<Endian endian>

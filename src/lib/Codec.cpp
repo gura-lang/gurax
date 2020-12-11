@@ -146,20 +146,19 @@ const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 //-----------------------------------------------------------------------------
 bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 {
-	UInt32 codeUTF32;
-	char buffRtn[BuffSize];
-	size_t cnt = 0;
+	UInt32 codeUTF32 = 0;
 	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
-		Codec::Result rslt = FeedData(*p, buffRtn, &cnt, &codeUTF32);
+		Codec::Result rslt = FeedData(*p, &codeUTF32);
 		if (rslt == Codec::Result::Complete) {
-			for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
+			//for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
+			dst.AppendUTF32(codeUTF32);
 		} else if (rslt == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "failed to decode a binary");
 			return false;
 		}
 	}
-	if (Flush(buffRtn, &cnt) == Codec::Result::Complete) {
-		for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
+	if (Flush(&codeUTF32) == Codec::Result::Complete) {
+		dst.AppendUTF32(codeUTF32);
 	}
 	return true;
 }
@@ -189,12 +188,10 @@ bool Codec::Encoder::Encode(Binary& dst, const char* src)
 //-----------------------------------------------------------------------------
 // Codec_Dumb
 //-----------------------------------------------------------------------------
-Codec::Result Codec_Dumb::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
+Codec::Result Codec_Dumb::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
-	buffRtn[0] = static_cast<char>(data);
 	*pCodeUTF32 = data;
-	*pCnt = 1;
 	return Codec::Result::Complete;
 }
 
@@ -213,6 +210,7 @@ Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCn
 //-----------------------------------------------------------------------------
 // Codec_UTF
 //-----------------------------------------------------------------------------
+#if 0
 Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char* buffRtn, size_t* pCnt)
 {
 	if ((codeUTF32 & ~0x7f) == 0) {
@@ -265,6 +263,7 @@ Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char* buffRtn, siz
 	*pCnt = 6;
 	return Codec::Result::Complete;
 }
+#endif
 
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
 {
@@ -318,14 +317,11 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt
 //-----------------------------------------------------------------------------
 // Codec_SBCS
 //-----------------------------------------------------------------------------
-Codec::Result Codec_SBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
+Codec::Result Codec_SBCS::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
-	UInt16 codeUTF16 = _tblToUTF16[data];
-	buffRtn[0] = static_cast<UChar>(codeUTF16);
-	*pCodeUTF32 = codeUTF16;
-	*pCnt = 1;
-	return (buffRtn[0] == '\0')? Result::Error : Result::Complete;
+	*pCodeUTF32 = _tblToUTF16[data];
+	return (*pCodeUTF32 == 0)? Result::Error : Result::Complete;
 }
 
 Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* buffRtn, size_t* pCnt)
@@ -359,7 +355,7 @@ Codec* CodecFactory_SBCS::CreateCodec(bool delcrFlag, bool addcrFlag)
 //-----------------------------------------------------------------------------
 // Codec_DBCS
 //-----------------------------------------------------------------------------
-Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32)
+Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	//UChar _ch = data;
@@ -377,7 +373,7 @@ Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, char* buffRtn, size_t* p
 	}
 	if (GetDelcrFlag() && codeUTF32 == '\r') return Result::None;
 	*pCodeUTF32 = codeUTF32;
-	return FeedUTF32(codeUTF32, buffRtn, pCnt);
+	return Result::Complete;
 }
 
 Codec::Result Codec_DBCS::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* buffRtn, size_t* pCnt)

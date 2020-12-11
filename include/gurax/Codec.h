@@ -66,16 +66,14 @@ public:
 	protected:
 		bool _delcrFlag;
 	public:
-		static const size_t BuffSize = 16;
-	public:
 		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
 		bool Decode(String& dst, const UInt8* src, size_t bytes);
 		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
 	public:
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) = 0;
-		virtual Result Flush(char* buffRtn, size_t* pCnt) { return Result::None; }
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) = 0;
+		virtual Result Flush(UInt32* pCodeUTF32) { return Result::None; }
 	};
 	class GURAX_DLLDECLARE Encoder {
 	protected:
@@ -163,7 +161,7 @@ public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
 		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	public:
@@ -184,7 +182,7 @@ public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
 		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
-		Result FeedUTF32(UInt32 codeUTF32, char* buffRtn, size_t* pCnt);
+		//Result FeedUTF32(UInt32 codeUTF32, char* buffRtn, size_t* pCnt);
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	protected:
@@ -212,7 +210,7 @@ public:
 	public:
 		Decoder(bool delcrFlag, const UInt16* tblToUTF16) :
 			Codec_UTF::Decoder(delcrFlag), _tblToUTF16(tblToUTF16) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
@@ -248,7 +246,7 @@ public:
 		UInt16 _codeDBCS;
 	public:
 		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
-		virtual Result FeedData(UInt8 data, char* buffRtn, size_t* pCnt, UInt32* pCodeUTF32) override;
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 		virtual bool IsLeadByte(UChar ch) { return ch >= 0x80; }
 		virtual UInt16 DBCSToUTF16(UInt16 codeDBCS) = 0;
 	};
