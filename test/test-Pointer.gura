@@ -106,6 +106,22 @@ TestCase('Pointer#Dump()') {
 	buff = B'', buff.p.Put(`uint8, 0..255), buff.p.Dump():addr, Println()
 	buff = B'', buff.p.Put(`uint8, 0..256), buff.p.Dump():addr, Println()
 	buff = B'', buff.p.Put(`uint8, 0..300), buff.p.Dump():addr, Println()
+	buff = B'', buff.p.Put(`uint8, 0..63)
+	buff.p.Dump():addr8, Println()
+	buff.p.Dump():addr16, Println()
+	buff.p.Dump():addr24, Println()
+	buff.p.Dump():addr32, Println()
+	buff.p.Dump():addr40, Println()
+	buff.p.Dump():addr48, Println()
+	buff.p.Dump():addr56, Println()
+	buff.p.Dump():addr64, Println()
+	buff.p.Dump(addrOffset = 0x100):addr, Println()
+	buff.p.Dump(addrOffset = 0x10000):addr, Println()
+	buff.p.Dump(addrOffset = 0x1000000):addr, Println()
+	buff.p.Dump(addrOffset = 0x100000000):addr, Println()
+	buff.p.Dump(addrOffset = 0x10000000000):addr, Println()
+	buff.p.Dump(addrOffset = 0x1000000000000):addr, Println()
+	buff.p.Dump(addrOffset = 0x100000000000000):addr, Println()
 }
 
 TestCase('Pointer#Pack()') {

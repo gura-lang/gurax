@@ -2,4 +2,5 @@
 import(util.tester) {*}
 
 TestCase('Property') {
+	Codec.PrintPropSlots()
 }

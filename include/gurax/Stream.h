@@ -139,8 +139,12 @@ public:
 	bool SetOffset(size_t offset);
 	bool ReadToBinary(Binary& buff, size_t bytesUnit = 65536);
 	bool PipeToStream(Stream& streamDst, size_t bytesUnit = 65536);
+	bool PipeToStreamCooked(Stream& streamDst);
 	bool PipeFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
 		return streamSrc.PipeToStream(*this, bytesUnit);
+	}
+	bool PipeFromStreamCooked(Stream& streamSrc) {
+		return streamSrc.PipeToStreamCooked(*this);
 	}
 	bool HasIdentifier() const { return *GetIdentifier() != '\0'; }
 public:

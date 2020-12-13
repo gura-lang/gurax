@@ -63,12 +63,13 @@ Gurax_ImplementConstructor(Stream)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Stream.Pipe(streamSrc:Stream:r, streamDst:Stream:w):void
+// Stream.Pipe(streamSrc:Stream:r, streamDst:Stream:w):void:[cooked]
 Gurax_DeclareClassMethod(Stream, Pipe)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(cooked));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the `streamSrc` and writes it into `streamDst`.");
@@ -80,13 +81,18 @@ Gurax_ImplementClassMethod(Stream, Pipe)
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
 	Stream& streamDst = args.PickStream();
+	bool cookedFlag = argument.IsSet(Gurax_Symbol(cooked));
 	// Function body
 	if (streamSrc.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
-	if (!streamSrc.PipeToStream(streamDst)) return Value::nil();
+	if (cookedFlag) {
+		streamSrc.PipeToStreamCooked(streamDst);
+	} else {
+		streamSrc.PipeToStream(streamDst);
+	}
 	return Value::nil();
 }
 
@@ -158,17 +164,18 @@ Gurax_ImplementMethod(Stream, Flush)
 	return valueThis.Reference();
 }
 
-// Stream#PipeFromStream(streamSrc:Stream):Stream:reduce
-Gurax_DeclareMethod(Stream, PipeFromStream)
+// Stream#PipeFrom(streamSrc:Stream):Stream:reduce:[cooked]
+Gurax_DeclareMethod(Stream, PipeFrom)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareAttrOpt(Gurax_Symbol(cooked));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");
 }
 
-Gurax_ImplementMethod(Stream, PipeFromStream)
+Gurax_ImplementMethod(Stream, PipeFrom)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -176,27 +183,33 @@ Gurax_ImplementMethod(Stream, PipeFromStream)
 	// Arguments
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
+	bool cookedFlag = argument.IsSet(Gurax_Symbol(cooked));
 	// Function body
 	if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
-	if (!stream.PipeFromStream(streamSrc)) return Value::nil();
+	if (cookedFlag) {
+		if (!stream.PipeFromStreamCooked(streamSrc)) return Value::nil();
+	} else {
+		if (!stream.PipeFromStream(streamSrc)) return Value::nil();
+	}
 	return valueThis.Reference();
 }
 
-// Stream#PipeToStream(streamDst:Stream:w):Stream:reduce
-Gurax_DeclareMethod(Stream, PipeToStream)
+// Stream#PipeTo(streamDst:Stream:w):Stream:reduce:[cooked]
+Gurax_DeclareMethod(Stream, PipeTo)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(cooked));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the target `Stream` instance and writes it into `streamDst`.");
 }
 
-Gurax_ImplementMethod(Stream, PipeToStream)
+Gurax_ImplementMethod(Stream, PipeTo)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -204,13 +217,18 @@ Gurax_ImplementMethod(Stream, PipeToStream)
 	// Arguments
 	ArgPicker args(argument);
 	Stream& streamDst = args.PickStream();
+	bool cookedFlag = argument.IsSet(Gurax_Symbol(cooked));
 	// Function body
 	if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
-	if (!stream.PipeToStream(streamDst)) return Value::nil();
+	if (cookedFlag) {
+		if (!stream.PipeToStreamCooked(streamDst)) return Value::nil();
+	} else {
+		if (!stream.PipeToStream(streamDst)) return Value::nil();
+	}
 	return valueThis.Reference();
 }
 
@@ -585,8 +603,8 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
 	Assign(Gurax_CreateMethod(Stream, Flush));
-	Assign(Gurax_CreateMethod(Stream, PipeFromStream));
-	Assign(Gurax_CreateMethod(Stream, PipeToStream));
+	Assign(Gurax_CreateMethod(Stream, PipeFrom));
+	Assign(Gurax_CreateMethod(Stream, PipeTo));
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));
 	Assign(Gurax_CreateMethod(Stream, Println));

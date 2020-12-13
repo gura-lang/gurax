@@ -250,9 +250,9 @@ void Stream::Dump(const void* buff, size_t bytes, const DumpStyle& ds)
 	const int nCols = 16;
 	int iCol = 0;
 	size_t addrOffset = ds.GetAddrOffset();
-	size_t addrUnitSize = ds.GetAddrUnitSize();
-	size_t nDigitsAddr = (String().Format("%llx", addrOffset + bytes - 1).size() + 1) /
-											addrUnitSize * addrUnitSize;
+	size_t nDigitsAddrMin = ds.GetDigitsAddrMin();
+	size_t nDigitsAddr = (String().Format("%llx", addrOffset + bytes - 1).size() + 1) / 2 * 2;
+	if (nDigitsAddr < nDigitsAddrMin) nDigitsAddr = nDigitsAddrMin;
 	String strLine, strASCII;
 	const UInt8* p = reinterpret_cast<const UInt8*>(buff);
 	for (size_t i = 0; i < bytes; ++i, ++p) {
@@ -326,6 +326,16 @@ bool Stream::PipeToStream(Stream& streamDst, size_t bytesUnit)
 	size_t bytesRead;
 	while ((bytesRead = Read(buffWork, bytesUnit)) > 0) {
 		if (!streamDst.Write(buffWork, bytesRead)) break;
+	}
+	return !Error::IsIssued();
+}
+
+bool Stream::PipeToStreamCooked(Stream& streamDst)
+{
+	for (;;) {
+		char ch = GetChar();
+		if (ch == '\0') break;
+		streamDst.PutChar(ch);
 	}
 	return !Error::IsIssued();
 }

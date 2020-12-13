@@ -88,10 +88,9 @@ void Basement::SetConsoleStreamCodec()
 {
 	CodecFactory* pCodecFactory = CodecFactory::Lookup(OAL::GetEncodingForConsole());
 	if (pCodecFactory) {
-		RefPtr<Codec> pCodec(pCodecFactory->CreateCodec(true, true));
-		Stream::CIn->SetCodec(pCodec.Reference());
-		Stream::COut->SetCodec(pCodec.Reference());
-		Stream::CErr->SetCodec(pCodec.Reference());
+		Stream::CIn->SetCodec(pCodecFactory->CreateCodec(true, false));
+		Stream::COut->SetCodec(pCodecFactory->CreateCodec(true, false));
+		Stream::CErr->SetCodec(pCodecFactory->CreateCodec(true, false));
 	}
 }
 

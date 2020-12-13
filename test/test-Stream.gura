@@ -29,20 +29,20 @@ TestCase('Stream.Pipe()') {
 	buffDst.Dump()
 }
 
-TestCase('Stream#PipeFromStream()') {
+TestCase('Stream#PipeFrom()') {
 	(buffSrc = B'').p.Put(`uint8, Range(256))
 	buffDst = B''
 	buffDst.Writer {|streamDst|
-		streamDst.PipeFromStream(buffSrc)
+		streamDst.PipeFrom(buffSrc)
 	}
 	buffDst.Dump()
 }
 
-TestCase('Stream#PipeToStream()') {
+TestCase('Stream#PipeTo()') {
 	(buffSrc = B'').p.Put(`uint8, Range(256))
 	buffDst = B''
 	buffSrc.Reader {|streamSrc|
-		streamSrc.PipeToStream(buffDst)
+		streamSrc.PipeTo(buffDst)
 	}
 	buffDst.Dump()
 }

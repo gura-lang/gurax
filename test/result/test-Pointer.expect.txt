@@ -1,537 +1,612 @@
-======== Property ========
-Pointer
-  #bytesAvail       Number       R
-  #bytesEntire      Number       R
-  #double           Number       R/W
-  #float            Number       R/W
-  #int16            Number       R/W
-  #int32            Number       R/W
-  #int64            Number       R/W
-  #int8             Number       R/W
-  #offset           Number       R/W
-  #uint16           Number       R/W
-  #uint32           Number       R/W
-  #uint64           Number       R/W
-  #uint8            Number       R/W
-======== Basic test of pack/unpack ========
----
-buff.p.Pack('bbbb', 0, -128, 127, 18)
-00 80 7f 12                                      ....
-buff.p.Pack('b', -129) .. the number must be between -128 and 127
-buff.p.Pack('b', 128) .. the number must be between -128 and 127
-Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
----
-buff.p.Pack('BBB', 0, 255, 18)
-00 ff 12                                         ...
-buff.p.Pack('B', -1) .. the number must be between 0 and 255
-buff.p.Pack('B', 256) .. the number must be between 0 and 255
-Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
----
-buff.p.Pack('hhhh', 0, -32768, 32767, 4660)
-00 00 00 80 ff 7f 34 12                          ......4.
-buff.p.Pack('h', -32769) .. the number must be between -32768 and 32767
-buff.p.Pack('h', 32768) .. the number must be between -32768 and 32767
-Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
----
-buff.p.Pack('HHHH', 0, 32768, 65535, 4660)
-00 00 00 80 ff ff 34 12                          ......4.
-buff.p.Pack('H', -1) .. the number must be between 0 and 65535
-buff.p.Pack('H', 65536) .. the number must be between 0 and 65535
-Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
----
-buff.p.Pack('iiii', 0, -2147483648, 2147483647, 305419896)
-00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
-buff.p.Pack('i', -2147483649) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack('i', 2147483648) .. the number must be between -2147483648 and 2147483647
-Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
----
-buff.p.Pack('III', 0, 4294967295, 305419896)
-00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
-buff.p.Pack('I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack('I', 4294967296) .. the number must be between 0 and 4294967295
-Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
----
-buff.p.Pack('fff', 0, 1, 0.5)
-00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
-Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('ddd', 0, 1, 0.5)
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
-00 00 00 00 00 00 e0 3f                          .......?
-Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('20s', Hello World)
-48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
-00 00 00 00                                      ....
-Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
----
-buff.p.Pack('>bbbb', 0, -128, 127, 18)
-00 80 7f 12                                      ....
-buff.p.Pack('>b', -129) .. the number must be between -128 and 127
-buff.p.Pack('>b', 128) .. the number must be between -128 and 127
-Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
----
-buff.p.Pack('>BBB', 0, 255, 18)
-00 ff 12                                         ...
-buff.p.Pack('>B', -1) .. the number must be between 0 and 255
-buff.p.Pack('>B', 256) .. the number must be between 0 and 255
-Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
----
-buff.p.Pack('>hhhh', 0, -32768, 32767, 4660)
-00 00 80 00 7f ff 12 34                          .......4
-buff.p.Pack('>h', -32769) .. the number must be between -32768 and 32767
-buff.p.Pack('>h', 32768) .. the number must be between -32768 and 32767
-Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
----
-buff.p.Pack('>HHHH', 0, 32768, 65535, 4660)
-00 00 80 00 ff ff 12 34                          .......4
-buff.p.Pack('>H', -1) .. the number must be between 0 and 65535
-buff.p.Pack('>H', 65536) .. the number must be between 0 and 65535
-Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
----
-buff.p.Pack('>iiii', 0, -2147483648, 2147483647, 305419896)
-00 00 00 00 80 00 00 00 7f ff ff ff 12 34 56 78  .............4Vx
-buff.p.Pack('>i', -2147483649) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack('>i', 2147483648) .. the number must be between -2147483648 and 2147483647
-Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
----
-buff.p.Pack('>III', 0, 4294967295, 305419896)
-00 00 00 00 ff ff ff ff 12 34 56 78              .........4Vx
-buff.p.Pack('>I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack('>I', 4294967296) .. the number must be between 0 and 4294967295
-Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
----
-buff.p.Pack('>fff', 0, 1, 0.5)
-00 00 00 00 3f 80 00 00 3f 00 00 00              ....?...?...
-Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('>ddd', 0, 1, 0.5)
-00 00 00 00 00 00 00 00 3f f0 00 00 00 00 00 00  ........?.......
-3f e0 00 00 00 00 00 00                          ?.......
-Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('>20s', Hello World)
-48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
-00 00 00 00                                      ....
-Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
----
-buff.p.Pack('<bbbb', 0, -128, 127, 18)
-00 80 7f 12                                      ....
-buff.p.Pack('<b', -129) .. the number must be between -128 and 127
-buff.p.Pack('<b', 128) .. the number must be between -128 and 127
-Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
----
-buff.p.Pack('<BBB', 0, 255, 18)
-00 ff 12                                         ...
-buff.p.Pack('<B', -1) .. the number must be between 0 and 255
-buff.p.Pack('<B', 256) .. the number must be between 0 and 255
-Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
----
-buff.p.Pack('<hhhh', 0, -32768, 32767, 4660)
-00 00 00 80 ff 7f 34 12                          ......4.
-buff.p.Pack('<h', -32769) .. the number must be between -32768 and 32767
-buff.p.Pack('<h', 32768) .. the number must be between -32768 and 32767
-Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
----
-buff.p.Pack('<HHHH', 0, 32768, 65535, 4660)
-00 00 00 80 ff ff 34 12                          ......4.
-buff.p.Pack('<H', -1) .. the number must be between 0 and 65535
-buff.p.Pack('<H', 65536) .. the number must be between 0 and 65535
-Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
----
-buff.p.Pack('<iiii', 0, -2147483648, 2147483647, 305419896)
-00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
-buff.p.Pack('<i', -2147483649) .. the number must be between -2147483648 and 2147483647
-buff.p.Pack('<i', 2147483648) .. the number must be between -2147483648 and 2147483647
-Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
----
-buff.p.Pack('<III', 0, 4294967295, 305419896)
-00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
-buff.p.Pack('<I', -1) .. the number must be between 0 and 4294967295
-buff.p.Pack('<I', 4294967296) .. the number must be between 0 and 4294967295
-Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
----
-buff.p.Pack('<fff', 0, 1, 0.5)
-00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
-Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('<ddd', 0, 1, 0.5)
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
-00 00 00 00 00 00 e0 3f                          .......?
-Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
----
-buff.p.Pack('<20s', Hello World)
-48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
-00 00 00 00                                      ....
-Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
-======== Pointer#Dump() ========
-00                                               .
-
-00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e     ...............
-
-00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-
-00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
-20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
-30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
-40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
-50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
-60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
-70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
-80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
-90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
-a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
-b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
-c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
-d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
-e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
-f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
-
-00  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-10  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
-20  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
-30  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
-40  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
-50  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
-60  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
-70  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
-80  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
-90  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
-a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
-b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
-c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
-d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
-e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
-f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
-
-0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
-0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
-0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
-0040  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
-0050  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
-0060  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
-0070  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
-0080  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
-0090  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
-00a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
-00b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
-00c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
-00d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
-00e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
-00f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
-0100  00                                               .
-
-0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
-0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
-0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
-0040  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
-0050  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
-0060  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
-0070  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
-0080  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
-0090  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
-00a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
-00b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
-00c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
-00d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
-00e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
-00f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
-0100  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
-0110  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
-0120  20 21 22 23 24 25 26 27 28 29 2a 2b 2c            !"#$%&'()*+,
-
-======== Pointer#Pack() ========
-======== Pointer#Put() ========
---------
-int8:
-1 element
-00                                               .
-2 elements
-00 11                                            ..
-6 elements
-00 11 22 33 44 55                                .."3DU
-0 element in list
-1 element in list
-00                                               .
-2 elements in list
-00 11                                            ..
-6 elements in list
-00 11 22 33 44 55                                .."3DU
-0 element in iterator
-1 element in iterator
-00                                               .
-2 elements in iterator
-00 11                                            ..
-6 elements in iterator
-00 11 22 33 44 55                                .."3DU
---------
-uint8:
-1 element
-00                                               .
-2 elements
-00 11                                            ..
-6 elements
-00 11 22 33 44 55                                .."3DU
-0 element in list
-1 element in list
-00                                               .
-2 elements in list
-00 11                                            ..
-6 elements in list
-00 11 22 33 44 55                                .."3DU
-0 element in iterator
-1 element in iterator
-00                                               .
-2 elements in iterator
-00 11                                            ..
-6 elements in iterator
-00 11 22 33 44 55                                .."3DU
---------
-int16:
-1 element
-00 00                                            ..
-2 elements
-00 00 11 00                                      ....
-6 elements
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
-0 element in list
-1 element in list
-00 00                                            ..
-2 elements in list
-00 00 11 00                                      ....
-6 elements in list
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
-0 element in iterator
-1 element in iterator
-00 00                                            ..
-2 elements in iterator
-00 00 11 00                                      ....
-6 elements in iterator
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
---------
-uint16:
-1 element
-00 00                                            ..
-2 elements
-00 00 11 00                                      ....
-6 elements
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
-0 element in list
-1 element in list
-00 00                                            ..
-2 elements in list
-00 00 11 00                                      ....
-6 elements in list
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
-0 element in iterator
-1 element in iterator
-00 00                                            ..
-2 elements in iterator
-00 00 11 00                                      ....
-6 elements in iterator
-00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
---------
-int32:
-1 element
-00 00 00 00                                      ....
-2 elements
-00 00 00 00 11 00 00 00                          ........
-6 elements
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
-0 element in list
-1 element in list
-00 00 00 00                                      ....
-2 elements in list
-00 00 00 00 11 00 00 00                          ........
-6 elements in list
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
-0 element in iterator
-1 element in iterator
-00 00 00 00                                      ....
-2 elements in iterator
-00 00 00 00 11 00 00 00                          ........
-6 elements in iterator
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
---------
-uint32:
-1 element
-00 00 00 00                                      ....
-2 elements
-00 00 00 00 11 00 00 00                          ........
-6 elements
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
-0 element in list
-1 element in list
-00 00 00 00                                      ....
-2 elements in list
-00 00 00 00 11 00 00 00                          ........
-6 elements in list
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
-0 element in iterator
-1 element in iterator
-00 00 00 00                                      ....
-2 elements in iterator
-00 00 00 00 11 00 00 00                          ........
-6 elements in iterator
-00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
-44 00 00 00 55 00 00 00                          D...U...
---------
-int64:
-1 element
-00 00 00 00 00 00 00 00                          ........
-2 elements
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in list
-1 element in list
-00 00 00 00 00 00 00 00                          ........
-2 elements in list
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements in list
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in iterator
-1 element in iterator
-00 00 00 00 00 00 00 00                          ........
-2 elements in iterator
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements in iterator
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
---------
-uint64:
-1 element
-00 00 00 00 00 00 00 00                          ........
-2 elements
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in list
-1 element in list
-00 00 00 00 00 00 00 00                          ........
-2 elements in list
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements in list
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in iterator
-1 element in iterator
-00 00 00 00 00 00 00 00                          ........
-2 elements in iterator
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-6 elements in iterator
-00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
-22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
---------
-float:
-1 element
-00 00 00 00 00 00 00 00                          ........
-2 elements
-00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
-6 elements
-00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
-00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in list
-1 element in list
-00 00 00 00 00 00 00 00                          ........
-2 elements in list
-00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
-6 elements in list
-00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
-00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
-0 element in iterator
-1 element in iterator
-00 00 00 00 00 00 00 00                          ........
-2 elements in iterator
-00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
-6 elements in iterator
-00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
-00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
-44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
---------
-double:
-1 element
-00 00 00 00 00 00 00 00                          ........
-2 elements
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-6 elements
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
-00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
-0 element in list
-1 element in list
-00 00 00 00 00 00 00 00                          ........
-2 elements in list
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-6 elements in list
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
-00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
-0 element in iterator
-1 element in iterator
-00 00 00 00 00 00 00 00                          ........
-2 elements in iterator
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-6 elements in iterator
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
-00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
-00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
-======== Pointer#Unpack() ========
-buff.Pointer {|p| while (tbl = p.Unpack('B')):list {Format('%02x', tbl[0])}.Join(',')} .. 00,01,02,03,04,05,06,07,08,09,0a,0b,0c,0d,0e
-buff.Pointer {|p| while (tbl = p.Unpack('H')):list {Format('%04x', tbl[0])}.Join(',')} .. 0100,0302,0504,0706,0908,0b0a,0d0c
-buff.Pointer {|p| while (tbl = p.Unpack('I')):list {Format('%08x', tbl[0])}.Join(',')} .. 03020100,07060504,0b0a0908
-buff.Pointer {|p| while (tbl = p.Unpack('>B')):list {Format('%02x', tbl[0])}.Join(',')} .. 00,01,02,03,04,05,06,07,08,09,0a,0b,0c,0d,0e
-buff.Pointer {|p| while (tbl = p.Unpack('>H')):list {Format('%04x', tbl[0])}.Join(',')} .. 0001,0203,0405,0607,0809,0a0b,0c0d
-buff.Pointer {|p| while (tbl = p.Unpack('>I')):list {Format('%08x', tbl[0])}.Join(',')} .. 00010203,04050607,08090a0b
-buff.Pointer {|p| while (tbl = p.Unpack('4s')):list {tbl[0]}.Join(',')} .. abcd,efgh,ijkl,mnop,qrst,uvwx
-======== Operators ========
-p1 .. <Pointer:10/26>
-p2 .. <Pointer:23/26>
-p1 + 7 .. <Pointer:17/26>
-7 + p1 .. <Pointer:17/26>
-p1 - 7 .. <Pointer:3/26>
-p1 - 10 .. <Pointer:0/26>
-p1 - 11 .. pointer offset is out of range
-p1 - p2 .. -13
-p2 - p1 .. 13
-p3 - p1 .. pointers must have the same target when the offset difference is calculated
-======== Pointer#Append() ========
-The source is Binary
-61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
-76 77 78 79 7a                                   vwxyz
-
-61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
-76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-00 00 00 00 00 41 42 43 44 45 46 47 48           .....ABCDEFGH
-
-The source is Array
-61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
-76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-
-61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
-76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-00 00 00 00 00 41 42 43 44 45 46 47 48 00 00 00  .....ABCDEFGH...
-
+======== Property ========
+Pointer
+  #bytesAvail       Number       R
+  #bytesEntire      Number       R
+  #double           Number       R/W
+  #float            Number       R/W
+  #int16            Number       R/W
+  #int32            Number       R/W
+  #int64            Number       R/W
+  #int8             Number       R/W
+  #offset           Number       R/W
+  #uint16           Number       R/W
+  #uint32           Number       R/W
+  #uint64           Number       R/W
+  #uint8            Number       R/W
+======== Basic test of pack/unpack ========
+---
+buff.p.Pack('bbbb', 0, -128, 127, 18)
+00 80 7f 12                                      ....
+buff.p.Pack('b', -129) .. the number must be between -128 and 127
+buff.p.Pack('b', 128) .. the number must be between -128 and 127
+Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
+---
+buff.p.Pack('BBB', 0, 255, 18)
+00 ff 12                                         ...
+buff.p.Pack('B', -1) .. the number must be between 0 and 255
+buff.p.Pack('B', 256) .. the number must be between 0 and 255
+Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
+---
+buff.p.Pack('hhhh', 0, -32768, 32767, 4660)
+00 00 00 80 ff 7f 34 12                          ......4.
+buff.p.Pack('h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('h', 32768) .. the number must be between -32768 and 32767
+Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
+---
+buff.p.Pack('HHHH', 0, 32768, 65535, 4660)
+00 00 00 80 ff ff 34 12                          ......4.
+buff.p.Pack('H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('H', 65536) .. the number must be between 0 and 65535
+Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
+---
+buff.p.Pack('iiii', 0, -2147483648, 2147483647, 305419896)
+00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
+buff.p.Pack('i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('i', 2147483648) .. the number must be between -2147483648 and 2147483647
+Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
+---
+buff.p.Pack('III', 0, 4294967295, 305419896)
+00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
+buff.p.Pack('I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('I', 4294967296) .. the number must be between 0 and 4294967295
+Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
+---
+buff.p.Pack('fff', 0, 1, 0.5)
+00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
+Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('ddd', 0, 1, 0.5)
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
+00 00 00 00 00 00 e0 3f                          .......?
+Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('20s', Hello World)
+48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
+00 00 00 00                                      ....
+Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
+---
+buff.p.Pack('>bbbb', 0, -128, 127, 18)
+00 80 7f 12                                      ....
+buff.p.Pack('>b', -129) .. the number must be between -128 and 127
+buff.p.Pack('>b', 128) .. the number must be between -128 and 127
+Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
+---
+buff.p.Pack('>BBB', 0, 255, 18)
+00 ff 12                                         ...
+buff.p.Pack('>B', -1) .. the number must be between 0 and 255
+buff.p.Pack('>B', 256) .. the number must be between 0 and 255
+Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
+---
+buff.p.Pack('>hhhh', 0, -32768, 32767, 4660)
+00 00 80 00 7f ff 12 34                          .......4
+buff.p.Pack('>h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('>h', 32768) .. the number must be between -32768 and 32767
+Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
+---
+buff.p.Pack('>HHHH', 0, 32768, 65535, 4660)
+00 00 80 00 ff ff 12 34                          .......4
+buff.p.Pack('>H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('>H', 65536) .. the number must be between 0 and 65535
+Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
+---
+buff.p.Pack('>iiii', 0, -2147483648, 2147483647, 305419896)
+00 00 00 00 80 00 00 00 7f ff ff ff 12 34 56 78  .............4Vx
+buff.p.Pack('>i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('>i', 2147483648) .. the number must be between -2147483648 and 2147483647
+Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
+---
+buff.p.Pack('>III', 0, 4294967295, 305419896)
+00 00 00 00 ff ff ff ff 12 34 56 78              .........4Vx
+buff.p.Pack('>I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('>I', 4294967296) .. the number must be between 0 and 4294967295
+Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
+---
+buff.p.Pack('>fff', 0, 1, 0.5)
+00 00 00 00 3f 80 00 00 3f 00 00 00              ....?...?...
+Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('>ddd', 0, 1, 0.5)
+00 00 00 00 00 00 00 00 3f f0 00 00 00 00 00 00  ........?.......
+3f e0 00 00 00 00 00 00                          ?.......
+Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('>20s', Hello World)
+48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
+00 00 00 00                                      ....
+Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
+---
+buff.p.Pack('<bbbb', 0, -128, 127, 18)
+00 80 7f 12                                      ....
+buff.p.Pack('<b', -129) .. the number must be between -128 and 127
+buff.p.Pack('<b', 128) .. the number must be between -128 and 127
+Format('%d', buff.p.Unpack(strPre + 'bbbb')) .. ['0', '-128', '127', '18']
+---
+buff.p.Pack('<BBB', 0, 255, 18)
+00 ff 12                                         ...
+buff.p.Pack('<B', -1) .. the number must be between 0 and 255
+buff.p.Pack('<B', 256) .. the number must be between 0 and 255
+Format('%d', buff.p.Unpack(strPre + 'BBB')) .. ['0', '255', '18']
+---
+buff.p.Pack('<hhhh', 0, -32768, 32767, 4660)
+00 00 00 80 ff 7f 34 12                          ......4.
+buff.p.Pack('<h', -32769) .. the number must be between -32768 and 32767
+buff.p.Pack('<h', 32768) .. the number must be between -32768 and 32767
+Format('%d', buff.p.Unpack(strPre + 'hhhh')) .. ['0', '-32768', '32767', '4660']
+---
+buff.p.Pack('<HHHH', 0, 32768, 65535, 4660)
+00 00 00 80 ff ff 34 12                          ......4.
+buff.p.Pack('<H', -1) .. the number must be between 0 and 65535
+buff.p.Pack('<H', 65536) .. the number must be between 0 and 65535
+Format('%d', buff.p.Unpack(strPre + 'HHHH')) .. ['0', '32768', '65535', '4660']
+---
+buff.p.Pack('<iiii', 0, -2147483648, 2147483647, 305419896)
+00 00 00 00 00 00 00 80 ff ff ff 7f 78 56 34 12  ............xV4.
+buff.p.Pack('<i', -2147483649) .. the number must be between -2147483648 and 2147483647
+buff.p.Pack('<i', 2147483648) .. the number must be between -2147483648 and 2147483647
+Format('%d', buff.p.Unpack(strPre + 'iiii')) .. ['0', '-2147483648', '2147483647', '305419896']
+---
+buff.p.Pack('<III', 0, 4294967295, 305419896)
+00 00 00 00 ff ff ff ff 78 56 34 12              ........xV4.
+buff.p.Pack('<I', -1) .. the number must be between 0 and 4294967295
+buff.p.Pack('<I', 4294967296) .. the number must be between 0 and 4294967295
+Format('%d', buff.p.Unpack(strPre + 'III')) .. ['0', '4294967295', '305419896']
+---
+buff.p.Pack('<fff', 0, 1, 0.5)
+00 00 00 00 00 00 80 3f 00 00 00 3f              .......?...?
+Format('%f', buff.p.Unpack(strPre + 'fff')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('<ddd', 0, 1, 0.5)
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 f0 3f  ...............?
+00 00 00 00 00 00 e0 3f                          .......?
+Format('%f', buff.p.Unpack(strPre + 'ddd')) .. ['0.000000', '1.000000', '0.500000']
+---
+buff.p.Pack('<20s', Hello World)
+48 65 6c 6c 6f 20 57 6f 72 6c 64 00 00 00 00 00  Hello World.....
+00 00 00 00                                      ....
+Format('%s', buff.p.Unpack(strPre + '20s')) .. ['Hello World']
+======== Pointer#Dump() ========
+00                                               .
+
+00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e     ...............
+
+00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+
+00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
+50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
+60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
+70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
+80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
+90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
+a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
+b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
+c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
+d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
+e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
+f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
+
+0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+0040  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
+0050  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
+0060  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
+0070  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
+0080  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
+0090  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
+00a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
+00b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
+00c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
+00d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
+00e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
+00f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
+
+0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+0040  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
+0050  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
+0060  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
+0070  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
+0080  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
+0090  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
+00a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
+00b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
+00c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
+00d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
+00e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
+00f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
+0100  00                                               .
+
+0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+0040  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f  @ABCDEFGHIJKLMNO
+0050  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f  PQRSTUVWXYZ[\]^_
+0060  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f  `abcdefghijklmno
+0070  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f  pqrstuvwxyz{|}~.
+0080  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
+0090  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f  ................
+00a0  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af  ................
+00b0  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf  ................
+00c0  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf  ................
+00d0  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df  ................
+00e0  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef  ................
+00f0  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff  ................
+0100  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0110  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0120  20 21 22 23 24 25 26 27 28 29 2a 2b 2c            !"#$%&'()*+,
+
+00  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+10  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+20  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+30  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+00000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+00000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+00000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+00000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+000000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+000000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+000000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+000000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+00000000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+00000000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+00000000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+00000000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0000000000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0000000000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0000000000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0000000000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0100  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0110  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0120  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0130  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+010000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+010010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+010020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+010030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+01000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+01000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+01000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+01000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0100000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0100000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0100000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0100000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+010000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+010000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+010000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+010000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+01000000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+01000000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+01000000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+01000000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+0100000000000000  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+0100000000000010  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+0100000000000020  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&'()*+,-./
+0100000000000030  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f  0123456789:;<=>?
+
+======== Pointer#Pack() ========
+======== Pointer#Put() ========
+--------
+int8:
+1 element
+00                                               .
+2 elements
+00 11                                            ..
+6 elements
+00 11 22 33 44 55                                .."3DU
+0 element in list
+1 element in list
+00                                               .
+2 elements in list
+00 11                                            ..
+6 elements in list
+00 11 22 33 44 55                                .."3DU
+0 element in iterator
+1 element in iterator
+00                                               .
+2 elements in iterator
+00 11                                            ..
+6 elements in iterator
+00 11 22 33 44 55                                .."3DU
+--------
+uint8:
+1 element
+00                                               .
+2 elements
+00 11                                            ..
+6 elements
+00 11 22 33 44 55                                .."3DU
+0 element in list
+1 element in list
+00                                               .
+2 elements in list
+00 11                                            ..
+6 elements in list
+00 11 22 33 44 55                                .."3DU
+0 element in iterator
+1 element in iterator
+00                                               .
+2 elements in iterator
+00 11                                            ..
+6 elements in iterator
+00 11 22 33 44 55                                .."3DU
+--------
+int16:
+1 element
+00 00                                            ..
+2 elements
+00 00 11 00                                      ....
+6 elements
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+0 element in list
+1 element in list
+00 00                                            ..
+2 elements in list
+00 00 11 00                                      ....
+6 elements in list
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+0 element in iterator
+1 element in iterator
+00 00                                            ..
+2 elements in iterator
+00 00 11 00                                      ....
+6 elements in iterator
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+--------
+uint16:
+1 element
+00 00                                            ..
+2 elements
+00 00 11 00                                      ....
+6 elements
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+0 element in list
+1 element in list
+00 00                                            ..
+2 elements in list
+00 00 11 00                                      ....
+6 elements in list
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+0 element in iterator
+1 element in iterator
+00 00                                            ..
+2 elements in iterator
+00 00 11 00                                      ....
+6 elements in iterator
+00 00 11 00 22 00 33 00 44 00 55 00              ....".3.D.U.
+--------
+int32:
+1 element
+00 00 00 00                                      ....
+2 elements
+00 00 00 00 11 00 00 00                          ........
+6 elements
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+0 element in list
+1 element in list
+00 00 00 00                                      ....
+2 elements in list
+00 00 00 00 11 00 00 00                          ........
+6 elements in list
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+0 element in iterator
+1 element in iterator
+00 00 00 00                                      ....
+2 elements in iterator
+00 00 00 00 11 00 00 00                          ........
+6 elements in iterator
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+--------
+uint32:
+1 element
+00 00 00 00                                      ....
+2 elements
+00 00 00 00 11 00 00 00                          ........
+6 elements
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+0 element in list
+1 element in list
+00 00 00 00                                      ....
+2 elements in list
+00 00 00 00 11 00 00 00                          ........
+6 elements in list
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+0 element in iterator
+1 element in iterator
+00 00 00 00                                      ....
+2 elements in iterator
+00 00 00 00 11 00 00 00                          ........
+6 elements in iterator
+00 00 00 00 11 00 00 00 22 00 00 00 33 00 00 00  ........"...3...
+44 00 00 00 55 00 00 00                          D...U...
+--------
+int64:
+1 element
+00 00 00 00 00 00 00 00                          ........
+2 elements
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in list
+1 element in list
+00 00 00 00 00 00 00 00                          ........
+2 elements in list
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements in list
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in iterator
+1 element in iterator
+00 00 00 00 00 00 00 00                          ........
+2 elements in iterator
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements in iterator
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+--------
+uint64:
+1 element
+00 00 00 00 00 00 00 00                          ........
+2 elements
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in list
+1 element in list
+00 00 00 00 00 00 00 00                          ........
+2 elements in list
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements in list
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in iterator
+1 element in iterator
+00 00 00 00 00 00 00 00                          ........
+2 elements in iterator
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+6 elements in iterator
+00 00 00 00 00 00 00 00 11 00 00 00 00 00 00 00  ................
+22 00 00 00 00 00 00 00 33 00 00 00 00 00 00 00  ".......3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+--------
+float:
+1 element
+00 00 00 00 00 00 00 00                          ........
+2 elements
+00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
+6 elements
+00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
+00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in list
+1 element in list
+00 00 00 00 00 00 00 00                          ........
+2 elements in list
+00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
+6 elements in list
+00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
+00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+0 element in iterator
+1 element in iterator
+00 00 00 00 00 00 00 00                          ........
+2 elements in iterator
+00 00 00 00 00 00 88 41 11 00 00 00 00 00 00 00  .......A........
+6 elements in iterator
+00 00 00 00 00 00 88 41 00 00 08 42 00 00 4c 42  .......A...B..LB
+00 00 88 42 00 00 aa 42 33 00 00 00 00 00 00 00  ...B...B3.......
+44 00 00 00 00 00 00 00 55 00 00 00 00 00 00 00  D.......U.......
+--------
+double:
+1 element
+00 00 00 00 00 00 00 00                          ........
+2 elements
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+6 elements
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
+00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
+0 element in list
+1 element in list
+00 00 00 00 00 00 00 00                          ........
+2 elements in list
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+6 elements in list
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
+00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
+0 element in iterator
+1 element in iterator
+00 00 00 00 00 00 00 00                          ........
+2 elements in iterator
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+6 elements in iterator
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 31 40  ..............1@
+00 00 00 00 00 00 41 40 00 00 00 00 00 80 49 40  ......A@......I@
+00 00 00 00 00 00 51 40 00 00 00 00 00 40 55 40  ......Q@.....@U@
+======== Pointer#Unpack() ========
+buff.Pointer {|p| while (tbl = p.Unpack('B')):list {Format('%02x', tbl[0])}.Join(',')} .. 00,01,02,03,04,05,06,07,08,09,0a,0b,0c,0d,0e
+buff.Pointer {|p| while (tbl = p.Unpack('H')):list {Format('%04x', tbl[0])}.Join(',')} .. 0100,0302,0504,0706,0908,0b0a,0d0c
+buff.Pointer {|p| while (tbl = p.Unpack('I')):list {Format('%08x', tbl[0])}.Join(',')} .. 03020100,07060504,0b0a0908
+buff.Pointer {|p| while (tbl = p.Unpack('>B')):list {Format('%02x', tbl[0])}.Join(',')} .. 00,01,02,03,04,05,06,07,08,09,0a,0b,0c,0d,0e
+buff.Pointer {|p| while (tbl = p.Unpack('>H')):list {Format('%04x', tbl[0])}.Join(',')} .. 0001,0203,0405,0607,0809,0a0b,0c0d
+buff.Pointer {|p| while (tbl = p.Unpack('>I')):list {Format('%08x', tbl[0])}.Join(',')} .. 00010203,04050607,08090a0b
+buff.Pointer {|p| while (tbl = p.Unpack('4s')):list {tbl[0]}.Join(',')} .. abcd,efgh,ijkl,mnop,qrst,uvwx
+======== Operators ========
+p1 .. <Pointer:10/26>
+p2 .. <Pointer:23/26>
+p1 + 7 .. <Pointer:17/26>
+7 + p1 .. <Pointer:17/26>
+p1 - 7 .. <Pointer:3/26>
+p1 - 10 .. <Pointer:0/26>
+p1 - 11 .. pointer offset is out of range
+p1 - p2 .. -13
+p2 - p1 .. 13
+p3 - p1 .. pointers must have the same target when the offset difference is calculated
+======== Pointer#Append() ========
+The source is Binary
+61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
+76 77 78 79 7a                                   vwxyz
+
+61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
+76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00 00 00 00 00 41 42 43 44 45 46 47 48           .....ABCDEFGH
+
+The source is Array
+61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
+76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+
+61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
+76 77 78 79 7a 00 00 00 00 00 00 00 00 00 00 00  vwxyz...........
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00 00 00 00 00 41 42 43 44 45 46 47 48 00 00 00  .....ABCDEFGH...
+

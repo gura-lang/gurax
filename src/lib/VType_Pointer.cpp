@@ -157,7 +157,7 @@ Gurax_ImplementMethod(Pointer, Dump)
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
 	size_t addrOffset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
-	DumpStyle ds(DumpStyle::ToFlags(argument), addrOffset);
+	DumpStyle ds(argument, addrOffset);
 	// Function body
 	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ds);
 	return Value::nil();

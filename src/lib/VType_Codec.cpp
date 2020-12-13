@@ -58,6 +58,48 @@ Gurax_ImplementConstructor(Codec)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Codec#addcr
+Gurax_DeclareProperty_RW(Codec, addcr)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Codec, addcr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetCodec().GetAddcrFlag());
+}
+
+Gurax_ImplementPropertySetter(Codec, addcr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetCodec().SetAddcrFlag(value.GetBool());
+}
+
+// Codec#delcr
+Gurax_DeclareProperty_RW(Codec, delcr)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Codec, delcr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetCodec().GetDelcrFlag());
+}
+
+Gurax_ImplementPropertySetter(Codec, delcr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetCodec().SetDelcrFlag(value.GetBool());
+}
+
 // Codec#name
 Gurax_DeclareProperty_R(Codec, name)
 {
@@ -85,6 +127,8 @@ void VType_Codec::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Codec, addcr));
+	Assign(Gurax_CreateProperty(Codec, delcr));
 	Assign(Gurax_CreateProperty(Codec, name));
 }
 
