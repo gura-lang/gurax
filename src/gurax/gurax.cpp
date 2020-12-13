@@ -152,9 +152,8 @@ bool ReadLine(const char* prompt, String& strLine)
 	strLine.clear();
 	::printf("%s", prompt);
 	for (;;) {
-		int chRaw = ::fgetc(stdin);
-		if (chRaw < 0) return false;
-		char ch = static_cast<UChar>(chRaw);
+		char ch = Stream::CIn->GetChar();
+		if (ch == '\0') break;
 		strLine += ch;
 		if (ch == '\n') break;
 	}
