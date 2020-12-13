@@ -219,12 +219,12 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 			UInt8 buffRtn[Codec::Encoder::BuffSize];
 			size_t cnt = 0;
 			for (const char* p = str; nPacked < nRepeat && *p; p++) {
-				Codec::Result result = pCodec->GetEncoder().FeedChar(*p, buffRtn, &cnt);
-				if (result == Codec::Result::Error) {
+				Codec::Result rtn = pCodec->GetEncoder().FeedChar(*p, buffRtn, &cnt);
+				if (rtn == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError,
 						"encoding error. specify a proper coding name by {coding}");
 					return false;
-				} else if (result == Codec::Result::Complete) {
+				} else if (rtn == Codec::Result::Complete) {
 					for (size_t i = 0; i < cnt && nPacked < nRepeat; i++, nPacked++) {
 						Store<UInt8, false>(buffRtn[i]);
 					}
@@ -537,12 +537,12 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			str.reserve(nRepeat);
 			UInt32 codeUTF32 = 0;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
-				Codec::Result result = pCodec->GetDecoder().FeedData(*pByte, &codeUTF32);
-				if (result == Codec::Result::Complete) {
+				Codec::Result rtn = pCodec->GetDecoder().FeedData(*pByte, &codeUTF32);
+				if (rtn == Codec::Result::Complete) {
 					str.AppendUTF32(codeUTF32);
-				} else if (result == Codec::Result::CompleteSingle) {
+				} else if (rtn == Codec::Result::CompleteSingle) {
 					str += static_cast<char>(codeUTF32 & 0xff);
-				} else if (result == Codec::Result::Error) {
+				} else if (rtn == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
 					return Value::nil();
 				}

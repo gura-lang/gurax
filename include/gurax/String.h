@@ -4,6 +4,7 @@
 #ifndef GURAX_STRING_H
 #define GURAX_STRING_H
 #include "Referable.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

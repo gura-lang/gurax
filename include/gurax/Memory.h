@@ -4,7 +4,7 @@
 #ifndef GURAX_MEMORY_H
 #define GURAX_MEMORY_H
 #include "Common.h"
-
+#include "ListBase.h"
 namespace Gurax {
 
 //------------------------------------------------------------------------------

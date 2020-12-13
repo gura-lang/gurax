@@ -5,6 +5,7 @@
 #define GURAX_VALUELIST_H
 #include "Value.h"
 #include "Array.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

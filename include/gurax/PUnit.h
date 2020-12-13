@@ -6,6 +6,7 @@
 #include "Common.h"
 #include "Expr.h"
 #include "Error.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

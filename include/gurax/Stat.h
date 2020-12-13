@@ -4,6 +4,7 @@
 #ifndef GURAX_STAT_H
 #define GURAX_STAT_H
 #include "Referable.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

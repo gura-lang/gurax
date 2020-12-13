@@ -6,6 +6,7 @@
 #include "Referable.h"
 #include "Help.h"
 #include "Frame.h"
+#include "ListBase.h"
 
 //------------------------------------------------------------------------------
 // Macros

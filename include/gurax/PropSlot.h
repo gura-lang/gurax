@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "Symbols.h"
 #include "DeclArg.h"
+#include "ListBase.h"
 
 //------------------------------------------------------------------------------
 // Macros to declare PropSlot for instance

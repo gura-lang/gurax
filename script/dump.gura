@@ -1,0 +1,18 @@
+#!/usr/bin/env gurax
+import(argopt)
+
+argopt.Parser {|p|
+	argv = []
+	try {[argv, cfg] = p.Parse(sys.argv)} catch {|e| Println(e)}
+	if (argv.len < 1) {
+		sys.cerr.Println('usage: gurax dump.gura file')
+		sys.Exit(1)
+	}
+}
+s = Stream(argv[0])
+addrOffset = 0
+bytesUnit = 0x10000
+while (buff = s.Read(bytesUnit)) {
+	buff.p.Dump(addrOffset = addrOffset):addr
+	addrOffset += bytesUnit
+}

@@ -45,12 +45,14 @@ target_sources(guraxcore PRIVATE
 	Common.cpp
 	Complex.cpp
 	Composer.cpp
+	CRC32.cpp
 	DateTime.cpp
 	DeclArg.cpp
 	DeclBlock.cpp
 	DeclCallable.cpp
 	Directory.cpp
 	DottedSymbol.cpp
+	DumpStyle.cpp
 	Error.cpp
 	Expr.cpp
 	Formatter.cpp

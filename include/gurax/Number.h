@@ -4,6 +4,7 @@
 #ifndef GURAX_NUMBER_H
 #define GURAX_NUMBER_H
 #include "MemoryPool.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

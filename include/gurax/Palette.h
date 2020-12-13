@@ -5,6 +5,7 @@
 #define GURAX_PALETTE_H
 #include "Referable.h"
 #include "Color.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

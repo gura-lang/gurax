@@ -5,6 +5,7 @@
 #define GURAX_BINARY_H
 #include "String.h"
 #include "StringStyle.h"
+#include "DumpStyle.h"
 
 namespace Gurax {
 
@@ -64,7 +65,6 @@ public:
 	String ConvertToString() { return String(reinterpret_cast<const char*>(data()), size()); }
 	String Enquote(char chQuote = '\'') const;
 	bool CheckWritable() const;
-	void Dump(Stream& stream, const DumpStyle& ds = DumpStyle::Empty) const;
 public:
 	Binary& Append(const void* p, size_t bytes) {
 		append(reinterpret_cast<const UInt8*>(p), bytes);

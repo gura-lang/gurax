@@ -5,6 +5,7 @@
 #define GURAX_TOKEN_H
 #include "Referable.h"
 #include "Operator.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

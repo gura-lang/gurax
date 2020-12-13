@@ -123,11 +123,12 @@ Gurax_ImplementMethod(Pointer, Append)
 	return valueThis.Reference();
 }
 
-// Pointer#Dump(stream?:Stream:w):void:[addr,upper]
+// Pointer#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
 Gurax_DeclareMethod(Pointer, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -154,7 +155,9 @@ Gurax_ImplementMethod(Pointer, Dump)
 	// Argument
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	DumpStyle ds(DumpStyle::ToFlags(argument));
+	size_t addrOffset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	DumpStyle ds(DumpStyle::ToFlags(argument), addrOffset);
 	// Function body
 	stream.Dump(pointer.GetPointerC<UInt8>(), pointer.GetBytesAvailable(), ds);
 	return Value::nil();

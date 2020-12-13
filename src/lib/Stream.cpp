@@ -249,7 +249,10 @@ void Stream::Dump(const void* buff, size_t bytes, const DumpStyle& ds)
 	if (bytes == 0) return;
 	const int nCols = 16;
 	int iCol = 0;
-	size_t nDigitsAddr = (String().Format("%x", bytes - 1).size() + 1) / 2 * 2;
+	size_t addrOffset = ds.GetAddrOffset();
+	size_t addrUnitSize = ds.GetAddrUnitSize();
+	size_t nDigitsAddr = (String().Format("%llx", addrOffset + bytes - 1).size() + 1) /
+											addrUnitSize * addrUnitSize;
 	String strLine, strASCII;
 	const UInt8* p = reinterpret_cast<const UInt8*>(buff);
 	for (size_t i = 0; i < bytes; ++i, ++p) {
@@ -257,7 +260,7 @@ void Stream::Dump(const void* buff, size_t bytes, const DumpStyle& ds)
 		if (iCol > 0) {
 			strLine += ' ';
 		} else if (ds.IsAddrInfo()) {
-			strLine.Format("%0*x  ", nDigitsAddr, i);
+			strLine.Format("%0*llx  ", nDigitsAddr, addrOffset + i);
 		}
 		strLine.Format(ds.IsUpperCase()? "%02X" : "%02x", data);
 		strASCII += (0x20 <= data && data < 0x7f)? data : '.';

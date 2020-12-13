@@ -3,9 +3,11 @@
 //==============================================================================
 #ifndef GURAX_SYMBOL_H
 #define GURAX_SYMBOL_H
+#include "ListBase.h"
 #include "Referable.h"
 #include "String.h"
 #include "StringStyle.h"
+#include "ListBase.h"
 
 #define Gurax_DeclareSymbol(name) \
 extern GURAX_DLLDECLARE const Symbol* g_pSymbol_##name;

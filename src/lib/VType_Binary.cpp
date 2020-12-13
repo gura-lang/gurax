@@ -49,11 +49,12 @@ Gurax_ImplementConstructor(Binary)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Binary#Dump(stream?:Stream:w):void:[addr,upper]
+// Binary#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
 Gurax_DeclareMethod(Binary, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -76,13 +77,15 @@ Gurax_ImplementMethod(Binary, Dump)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	const Binary& binary = valueThis.GetBinaryReferable().GetBinary();
 	// Argument
 	ArgPicker args(argument);
 	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
-	DumpStyle ds(DumpStyle::ToFlags(argument));
+	size_t addrOffset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	DumpStyle ds(DumpStyle::ToFlags(argument), addrOffset);
 	// Function body
-	binary.GetBinary().Dump(stream, ds);
+	stream.Dump(binary.data(), binary.size(), ds);
 	return Value::nil();
 }
 

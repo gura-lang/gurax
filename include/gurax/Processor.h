@@ -4,6 +4,7 @@
 #ifndef GURAX_PROCESSOR_H
 #define GURAX_PROCESSOR_H
 #include "Composer.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

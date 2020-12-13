@@ -4,6 +4,7 @@
 #ifndef GURAX_PATHMGR_H
 #define GURAX_PATHMGR_H
 #include "Directory.h"
+#include "ListBase.h"
 
 namespace Gurax {
 

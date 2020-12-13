@@ -384,11 +384,11 @@ public:
 		s.Printf("ExternalFileAttributes      %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
 		s.Printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
 		s.Printf("File Name\n");
-		_fileName.Dump(s);
+		s.Dump(_fileName.data(), _fileName.size());
 		s.Printf("External Fields\n");
-		_extraField.Dump(s);
+		s.Dump(_extraField.data(), _extraField.size());
 		s.Printf("File Comment\n");
-		_fileComment.Dump(s);
+		s.Dump(_fileComment.data(), _fileComment.size());
 	}
 };
 
