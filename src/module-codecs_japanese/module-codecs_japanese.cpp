@@ -265,9 +265,13 @@ Gurax_ModulePrepare()
 {
 	// Registration of CodecFactory
 	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("cp932"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("shift-jis"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("shift_jis"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("sjis"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("ms-kanji"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("ms_kanji"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_EUCJP>("euc-jp"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_EUCJP>("euc_jp"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_JIS>("jis"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_JIS>("iso-2022-jp"));
 	return true;

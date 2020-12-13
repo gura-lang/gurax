@@ -184,11 +184,17 @@ Gurax_ModulePrepare()
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf8"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf-8"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf_8"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf-16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf_16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf16be"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf-16be"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf_16be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf32le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf32be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf-32le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf-32be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf_32le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf32be"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf-32be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf_32be"));
 	return true;
 }

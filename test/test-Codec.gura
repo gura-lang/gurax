@@ -4,3 +4,9 @@ import(util.tester) {*}
 TestCase('Property') {
 	Codec.PrintPropSlots()
 }
+
+TestCase('') {
+	Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('a.txt', 'w', 'cp932')):cooked
+	Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-8')):cooked
+	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-16le')):cooked
+}

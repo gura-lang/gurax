@@ -27,11 +27,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Codec(name:name):map {block?}
+// Codec(name:String, delcr?:Bool, addcr?:Bool):map {block?}
 Gurax_DeclareConstructor(Codec)
 {
 	Declare(VTYPE_Codec, Flag::Map);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("delcr", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("addcr", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -43,9 +45,9 @@ Gurax_ImplementConstructor(Codec)
 	// Arguments
 	ArgPicker args(argument);
 	const char* name = args.PickString();
+	bool delcrFlag = args.IsValid()? args.PickBool() : true;
+	bool addcrFlag = args.IsValid()? args.PickBool() : false;
 	// Function body
-	bool delcrFlag = true;
-	bool addcrFlag = false;
 	RefPtr<Codec> pCodec(Codec::Create(name, delcrFlag, addcrFlag));
 	if (!pCodec) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Codec(pCodec.release()));
@@ -54,6 +56,23 @@ Gurax_ImplementConstructor(Codec)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
+// Codec.names
+Gurax_DeclareClassProperty_R(Codec, names)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, names)
+{
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	for (CodecFactory* pCodecFactory : CodecFactory::GetList()) {
+		pValues->push_back(new Value_String(pCodecFactory->GetName()));
+	}
+	return new Value_List(pValues.release());
+}
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -126,6 +145,8 @@ void VType_Codec::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
+	// Assignment of class property
+	Assign(Gurax_CreateProperty(Codec, names));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Codec, addcr));
 	Assign(Gurax_CreateProperty(Codec, delcr));
