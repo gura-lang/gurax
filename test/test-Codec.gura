@@ -6,8 +6,11 @@ TestCase('Property') {
 }
 
 TestCase('') {
-	
+	str = '\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86\xe3\x81\x88\xe3\x81\x8a' // a-i-u-e-o in Japanese
 	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('a.txt', 'w', 'cp932')):cooked
 	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-8')):cooked
-	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-16le')):cooked
+	Stream('c.txt', 'w', 'utf-16le') {|out|
+		//out.Write(Codec.bom@utf16le)
+		out.PipeFrom(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932')):cooked
+	}
 }

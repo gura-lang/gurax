@@ -219,17 +219,6 @@ Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCn
 //-----------------------------------------------------------------------------
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
 {
-	if (ch == '\n') {
-		if (GetAddcrFlag()) {
-			buffRtn[0] = '\r';
-			buffRtn[1] = '\n';
-			*pCnt = 2;
-		} else {
-			buffRtn[0] = ch;
-			*pCnt = 1;
-		}
-		return Result::Complete;
-	}
 	Codec::Result rtn = Result::None;
 	UChar _ch = static_cast<UChar>(ch);
 	if ((_ch & 0x80) == 0x00) {

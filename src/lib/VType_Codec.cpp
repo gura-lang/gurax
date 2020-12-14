@@ -56,6 +56,86 @@ Gurax_ImplementConstructor(Codec)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
+// Codec.bom@utf8
+Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf8, "bom@utf8")
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf8)
+{
+	Binary binary(Codec::BOM::UTF8);
+	binary.SetWritableFlag(false);
+	return new Value_Binary(binary);
+}
+
+// Codec.bom@utf16be
+Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16be, "bom@utf16be")
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16be)
+{
+	Binary binary(Codec::BOM::UTF16BE);
+	binary.SetWritableFlag(false);
+	return new Value_Binary(binary);
+}
+
+// Codec.bom@utf16le
+Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16le, "bom@utf16le")
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16le)
+{
+	Binary binary(Codec::BOM::UTF16LE);
+	binary.SetWritableFlag(false);
+	return new Value_Binary(binary);
+}
+
+// Codec.bom@utf32be
+Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32be, "bom@utf32be")
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32be)
+{
+	Binary binary(Codec::BOM::UTF32BE, 4);
+	binary.SetWritableFlag(false);
+	return new Value_Binary(binary);
+}
+
+// Codec.bom@utf32le
+Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32le, "bom@utf32le")
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32le)
+{
+	Binary binary(Codec::BOM::UTF32LE, 4);
+	binary.SetWritableFlag(false);
+	return new Value_Binary(binary);
+}
+
 // Codec.names
 Gurax_DeclareClassProperty_R(Codec, names)
 {
@@ -146,6 +226,11 @@ void VType_Codec::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
 	// Assignment of class property
+	Assign(Gurax_CreateProperty(Codec, bom_at_utf8));
+	Assign(Gurax_CreateProperty(Codec, bom_at_utf16be));
+	Assign(Gurax_CreateProperty(Codec, bom_at_utf16le));
+	Assign(Gurax_CreateProperty(Codec, bom_at_utf32be));
+	Assign(Gurax_CreateProperty(Codec, bom_at_utf32le));
 	Assign(Gurax_CreateProperty(Codec, names));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Codec, addcr));

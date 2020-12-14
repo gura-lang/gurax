@@ -113,10 +113,11 @@ Gurax_ImplementMethod(Binary, Pointer)
 	return argument.ReturnValue(processor, pValue.release());
 }
 
-// Binary#Reader() {block?}
+// Binary#Reader(codec?:Codec) {block?}
 Gurax_DeclareMethod(Binary, Reader)
 {
 	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -128,16 +129,21 @@ Gurax_ImplementMethod(Binary, Reader)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	// Argument
+	ArgPicker args(argument);
+	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb(true, false));
 	// Function body
 	size_t offset = 0;
-	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset)));
+	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(
+			Stream::Flag::Readable, pCodec.release(), binary.Reference(), offset)));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
-// Binary#Writer() {block?}
+// Binary#Writer(codec?:Codec) {block?}
 Gurax_DeclareMethod(Binary, Writer)
 {
 	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -149,10 +155,14 @@ Gurax_ImplementMethod(Binary, Writer)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	// Argument
+	ArgPicker args(argument);
+	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb(true, false));
 	// Function body
 	if (!binary.GetBinary().CheckWritable()) return Value::nil();
 	size_t offset = binary.GetBinary().size();
-	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset)));
+	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(
+			Stream::Flag::Writable, pCodec.release(), binary.Reference(), offset)));
 	return argument.ReturnValue(processor, pValue.release());
 }
 

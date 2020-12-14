@@ -57,7 +57,9 @@ private:
 	RefPtr<BinaryReferable> _pBuff;
 public:
 	Stream_Binary(Flags flags, BinaryReferable* pBuff, size_t offset = 0);
+	Stream_Binary(Flags flags, Codec* pCodec, BinaryReferable* pBuff, size_t offset = 0);
 	Stream_Binary(Flags flags);
+	Stream_Binary(Flags flags, Codec* pCodec);
 public:
 	Binary& GetBuff() { return _pBuff->GetBinary(); }
 	BinaryReferable& GetBuffReferable() { return *_pBuff; }
