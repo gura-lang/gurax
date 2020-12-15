@@ -49,6 +49,26 @@ Gurax_ImplementConstructor(Binary)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Binary#Clear():reduce
+Gurax_DeclareMethod(Binary, Clear)
+{
+	Declare(VTYPE_Binary, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Clear the content of the Binary.");
+}
+
+Gurax_ImplementMethod(Binary, Clear)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Binary& buff = valueThis.GetBinary();
+	// Function body
+	if (!buff.CheckWritable()) return Value::nil();
+	buff.clear();
+	return argument.GetValueThis().Reference();
+}
+
 // Binary#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
 Gurax_DeclareMethod(Binary, Dump)
 {
@@ -265,6 +285,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Binary, Clear));
 	Assign(Gurax_CreateMethod(Binary, Dump));
 	Assign(Gurax_CreateMethod(Binary, Pointer));
 	Assign(Gurax_CreateMethod(Binary, Reader));

@@ -39,6 +39,15 @@ TestCase('Binary#writable') {
 	Tester(`Binary().writable)
 }
 
+TestCase('Binary#Clear()') {
+	buff = B'', buff.p.Put(`uint8, 0..63)
+	Tester(`buff)
+	buff.Clear()
+	Tester(`buff)
+	buff = b'abcdefg'
+	Tester(`buff.Clear())
+}
+
 TestCase('Binary#Dump()') {
 	buff = B'', buff.p.Put(`uint8, 0), buff.Dump(), Println()
 	buff = B'', buff.p.Put(`uint8, 0..14), buff.Dump(), Println()

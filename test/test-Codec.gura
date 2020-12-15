@@ -6,24 +6,14 @@ TestCase('Property') {
 	Codec.PrintPropSlots()
 }
 
-//Println(b'\x30\x42'.Reader('utf-16be').ReadText())
-//Println(Stream('d.txt').ReadText())
-
-Print(Stream('UTF16BE.txt', 'r', 'utf16be').ReadText())
-sys.Exit()
 TestCase('') {
 	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
-	//buffSrc = Stream('UTF16BE.txt', 'r', 'utf16be').ReadText().ToBinary()
-	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('a.txt', 'w', 'cp932')):cooked
-	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-8')):cooked
-	Binary {|buff|
-		buff.Writer('utf-16be').PipeFrom(buffSrc.Reader()):cooked
-		//Println(hash.MD5().PipeFrom(buff).digestHex)
-		Stream('UTF16BE.txt', 'w').Write(buff)
-		//buffConv = buff.Reader('utf-16be').ReadText().ToBinary()
-		//Stream('d.txt', 'w').Write(buffConv)
-		//Println(hash.MD5().PipeFrom(buffSrc).digestHex)
-		//Println(hash.MD5().PipeFrom(buffConv).digestHex)
+	codecNames = ['sjis', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
+	codecNames.Each {|codecName|
+		buff = Binary()
+		buff.Writer(codecName).PipeFrom(buffSrc.Reader()):cooked
+		buffRev = buff.Reader(codecName).ReadText().ToBinary()
+		Printf('%-20s %s %s\n', codecName, hash.MD5().PipeFrom(buff).digestHex,
+									cond(buffSrc == buffRev, 'OK', '*NG*'))
 	}
 }
-
