@@ -1,16 +1,29 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
+import(hash)
 
 TestCase('Property') {
 	Codec.PrintPropSlots()
 }
 
+//Println(b'\x30\x42'.Reader('utf-16be').ReadText())
+//Println(Stream('d.txt').ReadText())
+
+Print(Stream('UTF16BE.txt', 'r', 'utf16be').ReadText())
+sys.Exit()
 TestCase('') {
-	str = '\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86\xe3\x81\x88\xe3\x81\x8a' // a-i-u-e-o in Japanese
+	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
+	//buffSrc = Stream('UTF16BE.txt', 'r', 'utf16be').ReadText().ToBinary()
 	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('a.txt', 'w', 'cp932')):cooked
 	//Stream.Pipe(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932'), Stream('b.txt', 'w', 'utf-8')):cooked
-	Stream('c.txt', 'w', 'utf-16le') {|out|
-		//out.Write(Codec.bom@utf16le)
-		out.PipeFrom(Stream('test-Codec/chars-cp932.txt', 'r', 'cp932')):cooked
+	Binary {|buff|
+		buff.Writer('utf-16be').PipeFrom(buffSrc.Reader()):cooked
+		//Println(hash.MD5().PipeFrom(buff).digestHex)
+		Stream('UTF16BE.txt', 'w').Write(buff)
+		//buffConv = buff.Reader('utf-16be').ReadText().ToBinary()
+		//Stream('d.txt', 'w').Write(buffConv)
+		//Println(hash.MD5().PipeFrom(buffSrc).digestHex)
+		//Println(hash.MD5().PipeFrom(buffConv).digestHex)
 	}
 }
+

@@ -14,9 +14,11 @@ public:
 	class Decoder : public Codec_UTF::Decoder {
 	private:
 		size_t _nChars;
-		UInt16 _codeUTF16;
+		UInt32 _codeUTF16;
+		UInt32 _codeUTF16Pair;
 	public:
-		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _nChars(0), _codeUTF16(0) {}
+		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag),
+							_nChars(0), _codeUTF16(0), _codeUTF16Pair(0) {}
 		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
@@ -29,17 +31,29 @@ public:
 template<Endian endian>
 Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
-	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {
-		_codeUTF16 = (_codeUTF16 >> 8) + (static_cast<UInt16>(data) << 8);
+		_codeUTF16 = (_codeUTF16 >> 8) + (static_cast<UInt32>(data) << 8);
 	} else { // endian == Endian::Big
 		_codeUTF16 = (_codeUTF16 << 8) + data;
 	}
 	_nChars++;
 	if (_nChars < 2) return Result::None;
-	*pCodeUTF32 = _codeUTF16;
-	_nChars = 0, _codeUTF16 = 0;
-	return Result::Complete;
+	UInt32 codeUTF16 = _codeUTF16;
+	_nChars = 0, _codeUTF16 = 0;;
+	if (codeUTF16 == 0xfeff || (GetDelcrFlag() && codeUTF16 == '\r')) {
+		return Codec::Result::None;
+	} else if (_codeUTF16Pair) {
+		*pCodeUTF32 = ((_codeUTF16Pair & 0x03c0) << 3) +
+				((_codeUTF16Pair & 0x003f) << 10) + 0x10000 + (codeUTF16 & 0x03ff);
+		_codeUTF16Pair = 0;
+		return Result::Complete;
+	} else if ((codeUTF16 & 0xf800) == 0xd800) {
+		_codeUTF16Pair = codeUTF16;
+		return Result::None;
+	} else {
+		*pCodeUTF32 = codeUTF16;
+		return Result::Complete;
+	}
 }
 
 template<Endian endian>
@@ -60,9 +74,8 @@ Codec::Result Codec_UTF16<endian>::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* b
 			*pCnt = 4;
 		}
 	} else if (0x00010000 <= codeUTF32 && codeUTF32 <= 0x0010ffff) {
-		UInt16 codePair1 = 0xd800 + static_cast<UInt16>((codeUTF32 - 0x10000) >> 16) +
-								static_cast<UInt16>(codeUTF32 >> 10);
-		UInt16 codePair2 = 0xdc00 + static_cast<UInt16>(codeUTF32 & 0x03ff);
+		UInt32 codePair1 = 0xd800 + ((codeUTF32 - 0x10000) >> 16) + (codeUTF32 >> 10);
+		UInt32 codePair2 = 0xdc00 + (codeUTF32 & 0x03ff);
 		if constexpr (endian == Endian::Little) {
 			buffRtn[0] = static_cast<UInt8>(codePair1 >> 0);
 			buffRtn[1] = static_cast<UInt8>(codePair1 >> 8);
@@ -114,7 +127,6 @@ public:
 template<Endian endian>
 Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
-	if (GetDelcrFlag() && data == '\r') return Codec::Result::None;
 	if constexpr (endian == Endian::Little) {
 		_codeUTF32 = (_codeUTF32 >> 8) + (static_cast<UInt32>(data) << 24);
 	} else { // endian == Endian::Big
@@ -122,9 +134,14 @@ Codec::Result Codec_UTF32<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUT
 	}
 	_nChars++;
 	if (_nChars < 4) return Result::None;
-	*pCodeUTF32 = _codeUTF32;
+	UInt32 codeUTF32 = _codeUTF32;
 	_nChars = 0, _codeUTF32 = 0;
-	return Result::Complete;
+	if (codeUTF32 == 0xfeff || (GetDelcrFlag() && codeUTF32 == '\r')) {
+		return Codec::Result::None;
+	} else {
+		*pCodeUTF32 = codeUTF32;
+		return Result::Complete;
+	}
 }
 
 template<Endian endian>
