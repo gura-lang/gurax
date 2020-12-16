@@ -6,19 +6,15 @@ TestCase('Property') {
 	Codec.PrintPropSlots()
 }
 
-buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
-Stream('a.txt', 'w', 'eucjp').PipeFrom(buffSrc.Reader()):cooked
-
-/*
 TestCase('Japanese') {
 	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
 	codecNames = ['sjis', 'jis', 'eucjp', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
 	codecNames.Each {|codecName|
-		buff = Binary()
-		buff.Writer(codecName).PipeFrom(buffSrc.Reader()):cooked
-		buffRev = buff.Reader(codecName).ReadText().ToBinary()
-		Printf('%-20s %s %s\n', codecName, hash.MD5().PipeFrom(buff).digestHex,
-									cond(buffSrc == buffRev, 'OK', '*NG*'))
+		buffCoded = Binary()
+		buffCoded.Writer(codecName).PipeFrom(buffSrc.Reader()):cooked
+		buffRev = buffCoded.Reader(codecName).ReadText().ToBinary()
+		Printf('%-20s %s All:%s Partial:%s\n', codecName, hash.MD5().PipeFrom(buffCoded).digestHex,
+			cond(buffSrc == buffRev, 'OK', '*NG*'),
+			cond(Pointer.HasSame(buffSrc.p + 0x014a, buffRev.p + 0x014a), 'OK', '*NG*'))
 	}
 }
-*/

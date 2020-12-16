@@ -119,6 +119,7 @@ public:
 	}
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
+	Stream& SkipLines(size_t nLines);
 	String ReadText();
 	Binary Read(size_t len);
 	BinaryReferable* ReadAsReferable(size_t len);

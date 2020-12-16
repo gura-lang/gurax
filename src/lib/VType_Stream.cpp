@@ -445,6 +445,29 @@ Gurax_ImplementMethod(Stream, Seek)
 	return valueThis.Reference();
 }
 
+// Stream#SkipLines(nLines:Number)
+Gurax_DeclareMethod(Stream, SkipLines)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("nLines", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skips by the specified number of lines.");
+}
+
+Gurax_ImplementMethod(Stream, SkipLines)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t nLines = args.PickNumberNonNeg<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	valueThis.GetStream().SkipLines(nLines);
+	return valueThis.Reference();
+}
+
 // Stream#Write(ptr:Pointer, bytes?:Number):reduce
 Gurax_DeclareMethod(Stream, Write)
 {
@@ -613,6 +636,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
 	Assign(Gurax_CreateMethod(Stream, ReadText));
 	Assign(Gurax_CreateMethod(Stream, Seek));
+	Assign(Gurax_CreateMethod(Stream, SkipLines));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stream, codec));

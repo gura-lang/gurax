@@ -82,6 +82,28 @@ TestCase('Stream#ReadText()') {
 TestCase('Stream#Seek()') {
 }
 
+TestCase('Stream#SkipLines()') {
+	buffSrc = bR'''
+	line.1 abcdefghijklmn
+	line.2 opqrstu
+	line.3 vwxyz
+	line.4 0123456789
+	'''
+	Print(buffSrc.Reader().ReadText())
+	Println('SkipLines(0)')
+	Print(buffSrc.Reader().SkipLines(0).ReadText())
+	Println('SkipLines(1)')
+	Print(buffSrc.Reader().SkipLines(1).ReadText())
+	Println('SkipLines(2)')
+	Print(buffSrc.Reader().SkipLines(2).ReadText())
+	Println('SkipLines(3)')
+	Print(buffSrc.Reader().SkipLines(3).ReadText())
+	Println('SkipLines(4)')
+	Print(buffSrc.Reader().SkipLines(4).ReadText())
+	Println('SkipLines(5)')
+	Print(buffSrc.Reader().SkipLines(5).ReadText())
+}
+
 TestCase('Stream#Write()') {
 }
 

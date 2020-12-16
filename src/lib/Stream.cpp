@@ -184,6 +184,18 @@ Iterator* Stream::ReadLines(bool includeEOLFlag)
 	return new Iterator_ReadLines(Reference(), includeEOLFlag);
 }
 
+Stream& Stream::SkipLines(size_t nLines)
+{
+	if (nLines == 0) return *this;
+	while (char ch = GetChar()) {
+		if (ch == '\n') {
+			nLines--;
+			if (nLines == 0) break;
+		}
+	}
+	return *this;
+}
+
 String Stream::ReadText()
 {
 	String str;
