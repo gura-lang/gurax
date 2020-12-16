@@ -203,3 +203,11 @@ TestCase('Pointer#Append()') {
 	Println('The source is Array')
 	f(Array(`uint8, 64))
 }
+
+TestCase('Pointer.HasSame()') {
+	Tester(`Pointer.HasSame(b''.p, b''.p))
+	Tester(`Pointer.HasSame(b''.p, b'A'.p))
+	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'abcdefghij'.p))
+	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p))
+	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p + 1))
+}

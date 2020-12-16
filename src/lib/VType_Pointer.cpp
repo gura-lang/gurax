@@ -86,6 +86,33 @@ Gurax_ImplementConstructor(Pointer)
 }
 
 //-----------------------------------------------------------------------------
+// Implementation of class method
+//-----------------------------------------------------------------------------
+// Pointer.HasSame(p1:Pointer, p2:Pointer)
+Gurax_DeclareClassMethod(Pointer, HasSame)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("p1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("p2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Compares contents pointed by the specified by the two given pointers and returns\n"
+		"`true` if they are identical and `false` otherwise.\n");
+}
+
+Gurax_ImplementClassMethod(Pointer, HasSame)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Pointer& p1 = args.PickPointer();
+	const Pointer& p2 = args.PickPointer();
+	// Function body
+	bool rtn = (p1.GetBytesAvailable() == p2.GetBytesAvailable()) &&
+		(::memcmp(p1.GetPointerC<void>(), p2.GetPointerC<void>(), p1.GetBytesAvailable()) == 0);
+	return new Value_Bool(rtn);
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
 // Pointer#Append(pointer:Pointer, bytes?:Number):reduce:[stay]
@@ -698,6 +725,8 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pointer));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Pointer, HasSame));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pointer, Append));
 	Assign(Gurax_CreateMethod(Pointer, Dump));

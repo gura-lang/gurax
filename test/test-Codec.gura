@@ -6,9 +6,13 @@ TestCase('Property') {
 	Codec.PrintPropSlots()
 }
 
-TestCase('') {
+buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
+Stream('a.txt', 'w', 'eucjp').PipeFrom(buffSrc.Reader()):cooked
+
+/*
+TestCase('Japanese') {
 	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
-	codecNames = ['sjis', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
+	codecNames = ['sjis', 'jis', 'eucjp', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
 	codecNames.Each {|codecName|
 		buff = Binary()
 		buff.Writer(codecName).PipeFrom(buffSrc.Reader()):cooked
@@ -17,3 +21,4 @@ TestCase('') {
 									cond(buffSrc == buffRev, 'OK', '*NG*'))
 	}
 }
+*/
