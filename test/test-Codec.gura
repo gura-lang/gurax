@@ -8,13 +8,17 @@ TestCase('Property') {
 
 TestCase('Japanese') {
 	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
+	buffSrcP = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').SkipLines(6).ReadText().ToBinary()
 	codecNames = ['sjis', 'jis', 'eucjp', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
 	codecNames.Each {|codecName|
 		buffCoded = Binary()
 		buffCoded.Writer(codecName).PipeFrom(buffSrc.Reader()):cooked
 		buffRev = buffCoded.Reader(codecName).ReadText().ToBinary()
+		buffCodedP = Binary()
+		buffCodedP.Writer(codecName).PipeFrom(buffSrcP.Reader()):cooked
+		buffRevP = buffCodedP.Reader(codecName).ReadText().ToBinary()
 		Printf('%-20s %s All:%s Partial:%s\n', codecName, hash.MD5().PipeFrom(buffCoded).digestHex,
 			cond(buffSrc == buffRev, 'OK', '*NG*'),
-			cond(Pointer.HasSame(buffSrc.p + 0x014a, buffRev.p + 0x014a), 'OK', '*NG*'))
+			cond(buffSrcP == buffRevP, 'OK', '*NG*'))
 	}
 }
