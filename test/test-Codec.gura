@@ -8,7 +8,12 @@ TestCase('Property') {
 
 TestCase('Japanese') {
 	buffSrc = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').ReadText().ToBinary()
-	buffSrcP = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').SkipLines(6).ReadText().ToBinary()
+	Stream('test-Codec/chars-cp932.txt', 'r', 'cp932') {|src|
+		text = src.ReadLines(4).Join()
+		src.SkipLines(2)
+		text += src.ReadText()
+		buffSrcP = text.ToBinary()
+	}
 	codecNames = ['sjis', 'jis', 'eucjp', 'utf8', 'utf16le', 'utf16be', 'utf32le', 'utf32be']
 	codecNames.Each {|codecName|
 		buffCoded = Binary()

@@ -179,9 +179,9 @@ bool Stream::ReadLine(String& str, bool includeEOLFlag)
 	return true;
 }
 
-Iterator* Stream::ReadLines(bool includeEOLFlag)
+Iterator* Stream::ReadLines(size_t nLines, bool includeEOLFlag)
 {
-	return new Iterator_ReadLines(Reference(), includeEOLFlag);
+	return new Iterator_ReadLines(Reference(), nLines, includeEOLFlag);
 }
 
 Stream& Stream::SkipLines(size_t nLines)
@@ -398,14 +398,14 @@ Stream::Attribute::Attribute(const struct stat& sb) :
 //------------------------------------------------------------------------------
 // Iterator_ReadLines
 //------------------------------------------------------------------------------
-Iterator_ReadLines::Iterator_ReadLines(Stream* pStream, bool includeEOLFlag) :
-	_pStream(pStream), _includeEOLFlag(includeEOLFlag), _doneFlag(false)
+Iterator_ReadLines::Iterator_ReadLines(Stream* pStream, size_t nLines, bool includeEOLFlag) :
+	_pStream(pStream), _nLines(nLines), _includeEOLFlag(includeEOLFlag), _doneFlag(false)
 {
 }
 
 Value* Iterator_ReadLines::DoNextValue()
 {
-	if (_doneFlag) return nullptr;
+	if (_doneFlag || _idxCur >= _nLines) return nullptr;
 	String str;
 	if (!GetStream().ReadLine(str, _includeEOLFlag)) {
 		_doneFlag = true;
@@ -416,7 +416,9 @@ Value* Iterator_ReadLines::DoNextValue()
 
 String Iterator_ReadLines::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str = "ReadlLines";
+	if (_nLines != -1) str.Format(":nLines=%zu", _nLines);
+	return str;
 }
 
 }

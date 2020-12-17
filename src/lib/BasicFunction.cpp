@@ -405,11 +405,12 @@ Gurax_ImplementFunction(Range)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ReadLines(stream:Stream):[chop] {block?}
+// ReadLines(stream:Stream, nLines?:Number):[chop] {block?}
 Gurax_DeclareFunction(ReadLines)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -422,9 +423,11 @@ Gurax_ImplementFunction(ReadLines)
 	// Arguments
 	ArgPicker args(argument);
 	Stream& stream = args.PickStream();
+	size_t nLines = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
+	return argument.ReturnIterator(processor, stream.ReadLines(nLines, includeEOLFlag));
 }
 
 #if 0

@@ -1,1 +1,20 @@
 ======== Property ========
+Codec
+  #addcr            Bool         R/W
+  .bom@utf16be      Binary       R
+  .bom@utf16le      Binary       R
+  .bom@utf32be      Binary       R
+  .bom@utf32le      Binary       R
+  .bom@utf8         Binary       R
+  #delcr            Bool         R/W
+  #name             String       R
+  .names            List         R
+======== Japanese ========
+sjis                 cd2b4289f598a46aa44a87976de7a8d9 All:OK Partial:OK
+jis                  79c6dd28658f62973fec1e8954a22eb2 All:OK Partial:OK
+eucjp                fd9871ed5aa873db1d1f550b7b5d7580 All:*NG* Partial:OK
+utf8                 1f7321b75caf75a35f5747492467f539 All:OK Partial:OK
+utf16le              89e9c2dbe0649181a60990e1fc11ab57 All:OK Partial:OK
+utf16be              2d0dca26011015a19df4e51e578b197f All:OK Partial:OK
+utf32le              c98ae49c8c3200f733ab21fc6a4e7483 All:OK Partial:OK
+utf32be              fc52a80fde2919ea776dc57c95832db8 All:OK Partial:OK

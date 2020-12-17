@@ -118,7 +118,7 @@ public:
 		return PrintValueList(format.c_str(), valueList);
 	}
 	bool ReadLine(String& str, bool includeEOLFlag);
-	Iterator* ReadLines(bool includeEOLFlag);
+	Iterator* ReadLines(size_t nLines, bool includeEOLFlag);
 	Stream& SkipLines(size_t nLines);
 	String ReadText();
 	Binary Read(size_t len);
@@ -177,10 +177,11 @@ public:
 class GURAX_DLLDECLARE Iterator_ReadLines : public Iterator {
 private:
 	RefPtr<Stream> _pStream;
+	size_t _nLines;
 	bool _includeEOLFlag;
 	bool _doneFlag;
 public:
-	Iterator_ReadLines(Stream* pStream, bool includeEOLFlag);
+	Iterator_ReadLines(Stream* pStream, size_t nLines, bool includeEOLFlag);
 public:
 	Stream& GetStream() { return *_pStream; }
 	const Stream& GetStream() const { return *_pStream; }

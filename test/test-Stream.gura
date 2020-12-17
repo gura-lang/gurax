@@ -90,6 +90,20 @@ TestCase('Stream#SkipLines()') {
 	line.4 0123456789
 	'''
 	Print(buffSrc.Reader().ReadText())
+	Println('SkipLine()')
+	Print(buffSrc.Reader().SkipLine().ReadText())
+	Println('SkipLine() two times')
+	Print(buffSrc.Reader().SkipLine().SkipLine().ReadText())
+}
+
+TestCase('Stream#SkipLines()') {
+	buffSrc = bR'''
+	line.1 abcdefghijklmn
+	line.2 opqrstu
+	line.3 vwxyz
+	line.4 0123456789
+	'''
+	Print(buffSrc.Reader().ReadText())
 	Println('SkipLines(0)')
 	Print(buffSrc.Reader().SkipLines(0).ReadText())
 	Println('SkipLines(1)')

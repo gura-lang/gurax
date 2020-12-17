@@ -368,10 +368,11 @@ Gurax_ImplementMethod(Stream, ReadLine)
 	return argument.ReturnValue(processor, new Value_String(std::move(str)));
 }
 
-// Stream#ReadLines():[chop] {block?}
+// Stream#ReadLines(nLines?:Number):[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLines)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -385,9 +386,12 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	auto& valueThis = GetValueThis(argument);
 	Stream& stream = valueThis.GetStream();
 	// Arguments
+	ArgPicker args(argument);
+	size_t nLines = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
+	return argument.ReturnIterator(processor, stream.ReadLines(nLines, includeEOLFlag));
 }
 
 // Stream#ReadText() {block?}
@@ -442,6 +446,24 @@ Gurax_ImplementMethod(Stream, Seek)
 		Stream::SeekMode::Cur : Stream::SeekMode::Set;
 	// Function body
 	if (!stream.Seek(offset, whence)) return Value::nil();
+	return valueThis.Reference();
+}
+
+// Stream#SkipLine()
+Gurax_DeclareMethod(Stream, SkipLine)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skip one line.");
+}
+
+Gurax_ImplementMethod(Stream, SkipLine)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetStream().SkipLines(1);
 	return valueThis.Reference();
 }
 
@@ -636,6 +658,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
 	Assign(Gurax_CreateMethod(Stream, ReadText));
 	Assign(Gurax_CreateMethod(Stream, Seek));
+	Assign(Gurax_CreateMethod(Stream, SkipLine));
 	Assign(Gurax_CreateMethod(Stream, SkipLines));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	// Assignment of property

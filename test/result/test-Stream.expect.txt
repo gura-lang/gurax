@@ -155,6 +155,18 @@ line.1 abcdefghijklmn
 line.2 opqrstu
 line.3 vwxyz
 line.4 0123456789
+SkipLine()
+line.2 opqrstu
+line.3 vwxyz
+line.4 0123456789
+SkipLine() two times
+line.3 vwxyz
+line.4 0123456789
+======== Stream#SkipLines() ========
+line.1 abcdefghijklmn
+line.2 opqrstu
+line.3 vwxyz
+line.4 0123456789
 SkipLines(0)
 line.1 abcdefghijklmn
 line.2 opqrstu
