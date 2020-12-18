@@ -40,6 +40,8 @@ private:
 	StatExOwner _statExOwner_Folder;
 	StatExOwner _statExOwner_File;
 public:
+	static RefPtr<Codec> pCodec;
+public:
 	// Constructor
 	Writer(Stream* pStreamDst, UInt16 compressionMethod) :
 		_pStreamDst(pStreamDst), _compressionMethod(compressionMethod) {}

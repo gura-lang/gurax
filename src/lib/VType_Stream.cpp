@@ -551,7 +551,7 @@ Gurax_ImplementPropertySetter(Stream, codec)
 	if (value.IsValid()) {
 		valueThis.GetStream().SetCodec(Value_Codec::GetCodec(value).Reference());
 	} else {
-		valueThis.GetStream().SetCodec(Codec::CreateDumb(true, false));
+		valueThis.GetStream().SetCodec(Codec::CreateDumb());
 	}
 }
 

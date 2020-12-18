@@ -14,7 +14,7 @@ RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
 Stream::Stream(Flags flags, size_t offset) :
-	Stream(flags, Codec::CreateDumb(true, false), offset)
+	Stream(flags, Codec::CreateDumb(), offset)
 {
 }
 

@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 // Reader
 //------------------------------------------------------------------------------
+RefPtr<Codec> Reader::pCodec;
+
 bool Reader::ReadCentralDirectory()
 {
 	return _statExOwner.ReadCentralDirectory(*_pStreamSrc);

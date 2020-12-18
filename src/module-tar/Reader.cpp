@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Reader
 //------------------------------------------------------------------------------
+RefPtr<Codec> Reader::pCodec;
+
 String Reader::ToString(const StringStyle& ss) const
 {
 	return String().Format("tar.Reader");

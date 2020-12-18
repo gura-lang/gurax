@@ -19,6 +19,8 @@ private:
 	RefPtr<Stream> _pStreamSrc;
 	StatExOwner _statExOwner;
 public:
+	static RefPtr<Codec> pCodec;
+public:
 	// Constructor
 	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
 	// Copy constructor/operator

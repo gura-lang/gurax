@@ -38,6 +38,8 @@ public:
 private:
 	RefPtr<Stream> _pStreamDst;
 public:
+	static RefPtr<Codec> pCodec;
+public:
 	// Constructor
 	Writer(Stream* pStreamDst);
 	// Copy constructor/operator

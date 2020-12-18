@@ -124,7 +124,7 @@ public:
 	bool Encode(Binary& dst, const char* src);
 	bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	static Codec* Create(const char* name, bool delcrFlag, bool addcrFlag);
-	static Codec* CreateDumb(bool delcrFlag, bool addcrFlag) {
+	static Codec* CreateDumb(bool delcrFlag = true, bool addcrFlag = false) {
 		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
 	}
 	static void Bootup();

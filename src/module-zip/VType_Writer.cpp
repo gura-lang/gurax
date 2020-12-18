@@ -125,6 +125,34 @@ Gurax_ImplementMethod(Writer, Close)
 	return Value::nil();
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of class property
+//-----------------------------------------------------------------------------
+// zip.Writer.codec
+Gurax_DeclareClassProperty_RW(Writer, codec)
+{
+	Declare(VTYPE_Codec, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(Writer, codec)
+{
+	RefPtr<Codec> pCodec(Writer::pCodec.Reference());
+	if (pCodec->IsDumb()) return Value::nil();
+	return new Value_Codec(pCodec.release());
+}
+
+Gurax_ImplementClassPropertySetter(Writer, codec)
+{
+	if (value.IsValid()) {
+		Writer::pCodec.reset(Value_Codec::GetCodec(value).Reference());
+	} else {
+		Writer::pCodec.reset(Codec::CreateDumb());
+	}
+}
+
 //------------------------------------------------------------------------------
 // VType_Writer
 //------------------------------------------------------------------------------
@@ -139,6 +167,8 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Writer, Add));
 	Assign(Gurax_CreateMethod(Writer, Close));
+	// Assignment of method
+	Assign(Gurax_CreateClassProperty(Writer, codec));
 }
 
 //------------------------------------------------------------------------------

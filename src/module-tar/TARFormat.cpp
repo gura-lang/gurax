@@ -48,12 +48,18 @@ bool Header::SetRawHeader(const star_header& rawHdr)
 	_linkname[sizeof(_linkname) - 1] = '\0';
 	_uname[sizeof(_uname) - 1] = '\0';
 	_gname[sizeof(_gname) - 1] = '\0';
-	
-	::memcpy(_name, rawHdr.name, sizeof(rawHdr.name));
-	::memcpy(_linkname, rawHdr.linkname, sizeof(rawHdr.linkname));
-	::memcpy(_uname, rawHdr.uname, sizeof(rawHdr.uname));
-	::memcpy(_gname, rawHdr.gname, sizeof(rawHdr.gname));
-	
+	do {
+		::memcpy(_name, rawHdr.name, sizeof(rawHdr.name));
+	} while (0);
+	do {
+		::memcpy(_linkname, rawHdr.linkname, sizeof(rawHdr.linkname));
+	} while (0);
+	do {
+		::memcpy(_uname, rawHdr.uname, sizeof(rawHdr.uname));
+	} while (0);
+	do {
+		::memcpy(_gname, rawHdr.gname, sizeof(rawHdr.gname));
+	} while (0);
 	_mode = OctetToUInt32(rawHdr.mode, sizeof(rawHdr.mode));
 	if (Error::IsIssued()) return false;
 	_uid = OctetToUInt32(rawHdr.uid, sizeof(rawHdr.uid));
@@ -91,7 +97,9 @@ void Header::ComposeHeaderBlock(void *memBlock) const
 {
 	star_header& rawHdr = *reinterpret_cast<star_header *>(memBlock);
 	::memset(memBlock, 0x00, BLOCKSIZE);
-	::memcpy(rawHdr.name,			_name, sizeof(rawHdr.name));
+	do {
+		::memcpy(rawHdr.name,		_name, sizeof(rawHdr.name));
+	} while (0);
 	::sprintf(rawHdr.mode,			"%06o ", _mode);
 	::sprintf(rawHdr.uid,			"%06o ", _uid);
 	::sprintf(rawHdr.gid,			"%06o ", _gid);
@@ -101,11 +109,17 @@ void Header::ComposeHeaderBlock(void *memBlock) const
 	rawHdr.mtime[11] = ' ';
 	::memset(rawHdr.chksum,			' ', 8);
 	rawHdr.typeflag = _typeflag;
-	::memcpy(rawHdr.linkname,		_linkname, sizeof(rawHdr.linkname));
+	do {
+		::memcpy(rawHdr.linkname,	_linkname, sizeof(rawHdr.linkname));
+	} while (0);
 	::memcpy(rawHdr.magic,			"ustar ", 6);
 	::memcpy(rawHdr.version,		" \x00", 2);
-	::memcpy(rawHdr.uname,			_uname, sizeof(rawHdr.uname));
-	::memcpy(rawHdr.gname,			_gname, sizeof(rawHdr.gname));
+	do {
+		::memcpy(rawHdr.uname,		_uname, sizeof(rawHdr.uname));
+	} while (0);
+	do {
+		::memcpy(rawHdr.gname,		_gname, sizeof(rawHdr.gname));
+	} while (0);
 	//::sprintf(rawHdr.devmajor,	"%06o ", _devmajor);
 	//::sprintf(rawHdr.devminor,	"%06o ", _devminor);
 	//::memset(rawHdr.prefix,		0x00, sizeof(rawHdr.prefix));

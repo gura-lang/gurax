@@ -151,7 +151,7 @@ Gurax_ImplementMethod(Binary, Reader)
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
 	// Argument
 	ArgPicker args(argument);
-	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb(true, false));
+	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb());
 	// Function body
 	size_t offset = 0;
 	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(
@@ -177,7 +177,7 @@ Gurax_ImplementMethod(Binary, Writer)
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
 	// Argument
 	ArgPicker args(argument);
-	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb(true, false));
+	RefPtr<Codec> pCodec(args.IsValid()? args.PickCodec().Reference() : Codec::CreateDumb());
 	// Function body
 	if (!binary.GetBinary().CheckWritable()) return Value::nil();
 	size_t offset = binary.GetBinary().size();

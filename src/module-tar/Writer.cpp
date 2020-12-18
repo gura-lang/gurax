@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
+RefPtr<Codec> Writer::pCodec;
+
 Writer::GzipInfo Writer::gzipInfo;
 Writer::Bzip2Info Writer::bzip2Info;
 

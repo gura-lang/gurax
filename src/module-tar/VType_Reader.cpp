@@ -75,21 +75,31 @@ Gurax_ImplementMethod(Reader, EachEntry)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of property
+// Implementation of class property
 //-----------------------------------------------------------------------------
-// tar.Reader#propSkeleton
-Gurax_DeclareProperty_R(Reader, propSkeleton)
+// tar.Reader.codec
+Gurax_DeclareClassProperty_RW(Reader, codec)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Codec, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Reader, propSkeleton)
+Gurax_ImplementClassPropertyGetter(Reader, codec)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	RefPtr<Codec> pCodec(Reader::pCodec.Reference());
+	if (pCodec->IsDumb()) return Value::nil();
+	return new Value_Codec(pCodec.release());
+}
+
+Gurax_ImplementClassPropertySetter(Reader, codec)
+{
+	if (value.IsValid()) {
+		Reader::pCodec.reset(Value_Codec::GetCodec(value).Reference());
+	} else {
+		Reader::pCodec.reset(Codec::CreateDumb());
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -106,7 +116,7 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Reader, EachEntry));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Reader, propSkeleton));
+	Assign(Gurax_CreateClassProperty(Reader, codec));
 }
 
 //------------------------------------------------------------------------------
