@@ -241,7 +241,9 @@ Gurax_ImplementMethod(Array, ToString)
 	// Function body
 	Array& array = valueThis.GetArray();
 	String str;
-	codec.GetDecoder().Decode(str, array.GetPointerC<UInt8>(), array.GetDimSizes().CalcLength());
+	if (!codec.Decode(str, array.GetPointerC<UInt8>(), array.GetDimSizes().CalcLength())) {
+		return Value::nil();
+	}
 	return new Value_String(str);
 }
 

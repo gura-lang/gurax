@@ -273,7 +273,7 @@ Gurax_ImplementMethod(String, Encode)
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	Binary dst;
-	codec.GetEncoder().Encode(dst, str);
+	if (!codec.Encode(dst, str)) return Value::nil();
 	return new Value_Binary(dst);
 }
 

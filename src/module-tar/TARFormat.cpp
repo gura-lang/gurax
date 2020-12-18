@@ -48,10 +48,12 @@ bool Header::SetRawHeader(const star_header& rawHdr)
 	_linkname[sizeof(_linkname) - 1] = '\0';
 	_uname[sizeof(_uname) - 1] = '\0';
 	_gname[sizeof(_gname) - 1] = '\0';
+	
 	::memcpy(_name, rawHdr.name, sizeof(rawHdr.name));
 	::memcpy(_linkname, rawHdr.linkname, sizeof(rawHdr.linkname));
 	::memcpy(_uname, rawHdr.uname, sizeof(rawHdr.uname));
 	::memcpy(_gname, rawHdr.gname, sizeof(rawHdr.gname));
+	
 	_mode = OctetToUInt32(rawHdr.mode, sizeof(rawHdr.mode));
 	if (Error::IsIssued()) return false;
 	_uid = OctetToUInt32(rawHdr.uid, sizeof(rawHdr.uid));

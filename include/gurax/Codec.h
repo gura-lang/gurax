@@ -69,8 +69,6 @@ public:
 		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
-		bool Decode(String& dst, const UInt8* src, size_t bytes);
-		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
 	public:
 		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) = 0;
 		virtual Result Flush(UInt32* pCodeUTF32) { return Result::None; }
@@ -84,8 +82,6 @@ public:
 		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
 		bool GetAddcrFlag() const { return _addcrFlag; }
-		bool Encode(Binary& dst, const char* src);
-		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	public:
 		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) = 0;
 		virtual Result Flush(UInt8* buffRtn, size_t* pCnt) { return Result::None; }
@@ -123,6 +119,10 @@ public:
 	void SetDelcrFlag(bool delcrFlag) { GetDecoder().SetDelcrFlag(delcrFlag); }
 	void SetAddcrFlag(bool addcrFlag) { GetEncoder().SetAddcrFlag(addcrFlag); }
 	Codec* Duplicate() const;
+	bool Decode(String& dst, const void* src, size_t bytes);
+	bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
+	bool Encode(Binary& dst, const char* src);
+	bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	static Codec* Create(const char* name, bool delcrFlag, bool addcrFlag);
 	static Codec* CreateDumb(bool delcrFlag, bool addcrFlag) {
 		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);

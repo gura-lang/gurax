@@ -67,6 +67,51 @@ void Codec::Bootup()
 	Dumb.reset(CreateDumb(delcrFlag, addcrFlag));
 }
 
+bool Codec::Decode(String& dst, const void* src, size_t bytes)
+{
+	UInt32 codeUTF32 = 0;
+	for (const UInt8* p = reinterpret_cast<const UInt8*>(src); bytes > 0; p++, bytes--) {
+		Codec::Result rtn = _pDecoder->FeedData(*p, &codeUTF32);
+		if (rtn == Result::Complete) {
+			dst.AppendUTF32(codeUTF32);
+		} else if (rtn == Result::CompleteSingle) {
+			dst += static_cast<char>(codeUTF32 & 0xff);
+		} else if (rtn == Result::Error) {
+			Error::Issue(ErrorType::CodecError, "failed to decode a binary");
+			return false;
+		}
+	}
+	Codec::Result rtn = _pDecoder->Flush(&codeUTF32);
+	if (rtn == Result::Complete) {
+		dst.AppendUTF32(codeUTF32);
+	} else if (rtn == Result::CompleteSingle) {
+		dst += static_cast<char>(codeUTF32 & 0xff);
+	} else if (rtn == Result::Error) {
+		Error::Issue(ErrorType::CodecError, "failed to decode a binary");
+		return false;
+	}
+	return true;
+}
+
+bool Codec::Encode(Binary& dst, const char* src)
+{
+	UInt8 buffRtn[Encoder::BuffSize];
+	size_t cnt = 0;
+	for (const char* p = src; *p != '\0'; p++) {
+		Codec::Result rtn = _pEncoder->FeedChar(*p, buffRtn, &cnt);
+		if (rtn == Result::Complete) {
+			for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
+		} else if (rtn == Result::Error) {
+			Error::Issue(ErrorType::CodecError, "failed to encode a string");
+			return false;
+		}
+	}
+	if (_pEncoder->Flush(buffRtn, &cnt) == Result::Complete) {
+		for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
+	}
+	return true;
+}
+
 UInt16 Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS)
 {
 	int codeH = (codeDBCS >> 8) & 0xff;
@@ -140,57 +185,6 @@ const char* const Codec::BOM::UTF16BE	= "\xfe\xff";
 const char* const Codec::BOM::UTF16LE	= "\xff\xfe";
 const char* const Codec::BOM::UTF32BE	= "\x00\x00\xfe\xff";
 const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
-
-//-----------------------------------------------------------------------------
-// Codec::Decoder
-//-----------------------------------------------------------------------------
-bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
-{
-	UInt32 codeUTF32 = 0;
-	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
-		Codec::Result rtn = FeedData(*p, &codeUTF32);
-		if (rtn == Result::Complete) {
-			dst.AppendUTF32(codeUTF32);
-		} else if (rtn == Result::CompleteSingle) {
-			dst += static_cast<char>(codeUTF32 & 0xff);
-		} else if (rtn == Result::Error) {
-			Error::Issue(ErrorType::CodecError, "failed to decode a binary");
-			return false;
-		}
-	}
-	Codec::Result rtn = Flush(&codeUTF32);
-	if (rtn == Result::Complete) {
-		dst.AppendUTF32(codeUTF32);
-	} else if (rtn == Result::CompleteSingle) {
-		dst += static_cast<char>(codeUTF32 & 0xff);
-	} else if (rtn == Result::Error) {
-		Error::Issue(ErrorType::CodecError, "failed to decode a binary");
-		return false;
-	}
-	return true;
-}
-
-//-----------------------------------------------------------------------------
-// Codec::Encoder
-//-----------------------------------------------------------------------------
-bool Codec::Encoder::Encode(Binary& dst, const char* src)
-{
-	UInt8 buffRtn[BuffSize];
-	size_t cnt = 0;
-	for (const char* p = src; *p != '\0'; p++) {
-		Codec::Result rtn = FeedChar(*p, buffRtn, &cnt);
-		if (rtn == Result::Complete) {
-			for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
-		} else if (rtn == Result::Error) {
-			Error::Issue(ErrorType::CodecError, "failed to encode a string");
-			return false;
-		}
-	}
-	if (Flush(buffRtn, &cnt) == Result::Complete) {
-		for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
-	}
-	return true;
-}
 
 //-----------------------------------------------------------------------------
 // Codec_Dumb
