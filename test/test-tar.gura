@@ -1,0 +1,11 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(tar)
+
+TestCase('Property') {
+	tar.Stat.PrintPropSlots()
+	tar.Reader.PrintPropSlots()
+	tar.Writer.PrintPropSlots()
+	tar.bzip2.PrintPropSlots()
+	tar.gzip.PrintPropSlots()
+}
