@@ -6,6 +6,11 @@
 Gurax_BeginModule(tar)
 
 //------------------------------------------------------------------------------
+// Global variable
+//------------------------------------------------------------------------------
+RefPtr<Codec> g_pCodec;
+
+//------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
 // tar.Directory(stream:Stream) {block?}
@@ -58,6 +63,34 @@ Gurax_ImplementFunction(Test)
 	return Value::nil();
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of module property
+//-----------------------------------------------------------------------------
+// zip.codec
+Gurax_DeclareModuleProperty_RW(codec)
+{
+	Declare(VTYPE_Codec, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementModulePropertyGetter(codec)
+{
+	RefPtr<Codec> pCodec(g_pCodec.Reference());
+	if (pCodec->IsDumb()) return Value::nil();
+	return new Value_Codec(pCodec.release());
+}
+
+Gurax_ImplementModulePropertySetter(codec)
+{
+	if (value.IsValid()) {
+		g_pCodec.reset(Value_Codec::GetCodec(value).Reference());
+	} else {
+		g_pCodec.reset(Codec::CreateDumb());
+	}
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -68,9 +101,6 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	// Initialize Codec
-	Reader::pCodec.reset(Codec::CreateDumb());
-	Writer::pCodec.reset(Codec::CreateDumb());
 	// Assignment of VType
 	Assign(VTYPE_Reader);
 	Assign(VTYPE_StatEx);
@@ -80,6 +110,8 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Directory));
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(codec));
 	// Assignment of path manager
 	PathMgr::Assign(new PathMgrEx());
 	return true;

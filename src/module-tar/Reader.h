@@ -20,8 +20,6 @@ public:
 private:
 	RefPtr<Stream> _pStreamSrc;
 public:
-	static RefPtr<Codec> pCodec;
-public:
 	// Constructor
 	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
 	// Copy constructor/operator

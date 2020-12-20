@@ -13,6 +13,9 @@
 #include "VType_gzip.h"
 
 Gurax_BeginModuleHeader(zip)
+
+extern RefPtr<Codec> g_pCodec;
+
 Gurax_EndModuleHeader(zip)
 
 #endif

@@ -8,8 +8,6 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
-RefPtr<Codec> Writer::pCodec;
-
 Writer::GzipInfo Writer::gzipInfo;
 Writer::Bzip2Info Writer::bzip2Info;
 
@@ -64,7 +62,7 @@ bool Writer::Add(Stream& stream, const Header& hdr)
 	size_t bytesBody = stream.GetBytes();
 	size_t bytesPadding = (bytesBody + Header::BLOCKSIZE - 1) /
 							Header::BLOCKSIZE * Header::BLOCKSIZE - bytesBody;
-	hdr.ComposeHeaderBlock(buffBlock);
+	if (!hdr.ComposeHeaderBlock(buffBlock)) return false;
 	if (!_pStreamDst->Write(buffBlock, Header::BLOCKSIZE)) return false;
 	if (!_pStreamDst->PipeFromStream(stream)) return false;
 	::memset(buffBlock, 0x00, bytesPadding);

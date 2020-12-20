@@ -12,15 +12,12 @@ const char *Header::TMAGIC			= "ustar";	// ustar and a null
 const char *Header::TVERSION		= "00";		// 00 and no null
 
 Header::Header(const Header& hdr) :
-	_offset(hdr._offset), _mode(hdr._mode), _uid(hdr._uid), _gid(hdr._gid), _size(hdr._size),
+	_offset(hdr._offset), _name(hdr._name), _linkname(hdr._linkname), _uname(hdr._uname), _gname(hdr._gname),
+	_mode(hdr._mode), _uid(hdr._uid), _gid(hdr._gid), _size(hdr._size),
 	_pMtime(hdr._pMtime->Reference()), _pAtime(hdr._pAtime->Reference()), _pCtime(hdr._pCtime->Reference()),
 	_chksum(hdr._chksum), _typeflag(hdr._typeflag),
 	_devmajor(hdr._devmajor), _devminor(hdr._devminor)
 {
-	::memcpy(_name, hdr._name, sizeof(_name));
-	::memcpy(_linkname, hdr._linkname, sizeof(_linkname));
-	::memcpy(_uname, hdr._uname, sizeof(_uname));
-	::memcpy(_gname, hdr._gname, sizeof(_gname));
 }
 
 void Header::Initialize()
@@ -44,21 +41,21 @@ void Header::Initialize()
 
 bool Header::SetRawHeader(const star_header& rawHdr)
 {
-	_name[sizeof(_name) - 1] = '\0';
-	_linkname[sizeof(_linkname) - 1] = '\0';
-	_uname[sizeof(_uname) - 1] = '\0';
-	_gname[sizeof(_gname) - 1] = '\0';
 	do {
-		::memcpy(_name, rawHdr.name, sizeof(rawHdr.name));
+		_name.clear();
+		g_pCodec->Decode(_name, rawHdr.name, sizeof(rawHdr.name));
 	} while (0);
 	do {
-		::memcpy(_linkname, rawHdr.linkname, sizeof(rawHdr.linkname));
+		_linkname.clear();
+		g_pCodec->Decode(_linkname, rawHdr.linkname, sizeof(rawHdr.linkname));
 	} while (0);
 	do {
-		::memcpy(_uname, rawHdr.uname, sizeof(rawHdr.uname));
+		_uname.clear();
+		g_pCodec->Decode(_uname, rawHdr.uname, sizeof(rawHdr.uname));
 	} while (0);
 	do {
-		::memcpy(_gname, rawHdr.gname, sizeof(rawHdr.gname));
+		_gname.clear();
+		g_pCodec->Decode(_gname, rawHdr.gname, sizeof(rawHdr.gname));
 	} while (0);
 	_mode = OctetToUInt32(rawHdr.mode, sizeof(rawHdr.mode));
 	if (Error::IsIssued()) return false;
@@ -93,12 +90,18 @@ bool Header::SetRawHeader(const star_header& rawHdr)
 	return true;
 }
 
-void Header::ComposeHeaderBlock(void *memBlock) const
+bool Header::ComposeHeaderBlock(void *memBlock) const
 {
 	star_header& rawHdr = *reinterpret_cast<star_header *>(memBlock);
 	::memset(memBlock, 0x00, BLOCKSIZE);
 	do {
-		::memcpy(rawHdr.name,		_name, sizeof(rawHdr.name));
+		Binary buff;
+		if (!g_pCodec->Encode(buff, _name.c_str())) return false;
+		if (buff.size() > sizeof(rawHdr.name)) {
+			Error::Issue(ErrorType::FormatError, "the length of name is too long");
+			return false;
+		}
+		::memcpy(rawHdr.name, buff.data(), buff.size());
 	} while (0);
 	::sprintf(rawHdr.mode,			"%06o ", _mode);
 	::sprintf(rawHdr.uid,			"%06o ", _uid);
@@ -110,15 +113,33 @@ void Header::ComposeHeaderBlock(void *memBlock) const
 	::memset(rawHdr.chksum,			' ', 8);
 	rawHdr.typeflag = _typeflag;
 	do {
-		::memcpy(rawHdr.linkname,	_linkname, sizeof(rawHdr.linkname));
+		Binary buff;
+		if (!g_pCodec->Encode(buff, _linkname.c_str())) return false;
+		if (buff.size() > sizeof(rawHdr.linkname)) {
+			Error::Issue(ErrorType::FormatError, "the length of link name is too long");
+			return false;
+		}
+		::memcpy(rawHdr.linkname, buff.data(), buff.size());
 	} while (0);
 	::memcpy(rawHdr.magic,			"ustar ", 6);
 	::memcpy(rawHdr.version,		" \x00", 2);
 	do {
-		::memcpy(rawHdr.uname,		_uname, sizeof(rawHdr.uname));
+		Binary buff;
+		if (!g_pCodec->Encode(buff, _uname.c_str())) return false;
+		if (buff.size() > sizeof(rawHdr.uname)) {
+			Error::Issue(ErrorType::FormatError, "the length of user name is too long");
+			return false;
+		}
+		::memcpy(rawHdr.uname, buff.data(), buff.size());
 	} while (0);
 	do {
-		::memcpy(rawHdr.gname,		_gname, sizeof(rawHdr.gname));
+		Binary buff;
+		if (!g_pCodec->Encode(buff, _gname.c_str())) return false;
+		if (buff.size() > sizeof(rawHdr.gname)) {
+			Error::Issue(ErrorType::FormatError, "the length of group name is too long");
+			return false;
+		}
+		::memcpy(rawHdr.gname, buff.data(), buff.size());
 	} while (0);
 	//::sprintf(rawHdr.devmajor,	"%06o ", _devmajor);
 	//::sprintf(rawHdr.devminor,	"%06o ", _devminor);
@@ -131,6 +152,7 @@ void Header::ComposeHeaderBlock(void *memBlock) const
 	UChar *p = reinterpret_cast<UChar *>(&rawHdr);
 	for (int i = 0; i < BLOCKSIZE; i++, p++) chksum += *p;
 	::sprintf(rawHdr.chksum,		"%6o ", chksum);
+	return true;
 }
 
 bool Header::Write(Stream& stream)

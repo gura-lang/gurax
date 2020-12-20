@@ -98,10 +98,10 @@ public:
 	static const UInt32 TOEXEC		= 00001;	// execute/search by other
 private:
 	size_t _offset;
-	char _name[100 + 1];
-	char _linkname[100 + 1];
-	char _uname[32 + 1];
-	char _gname[32 + 1];
+	String _name;
+	String _linkname;
+	String _uname;
+	String _gname;
 	UInt32 _mode;
 	UInt32 _uid;
 	UInt32 _gid;
@@ -118,26 +118,18 @@ public:
 	Header(const Header& hdr);
 	void Initialize();
 	bool SetRawHeader(const star_header& rawHdr);
-	void ComposeHeaderBlock(void* memBlock) const;
+	bool ComposeHeaderBlock(void* memBlock) const;
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
-	void SetName(const char* name) {
-		::memset(_name, 0x00, sizeof(_name)), ::strcpy(_name, name);
-	}
-	const char* GetName() const { return _name; }
-	const char* GetFileName() const { return _name; }
-	void SetLinkName(const char* linkname) {
-		::memset(_linkname, 0x00, sizeof(_linkname)), ::strcpy(_linkname, linkname);
-	}
-	const char* GetLinkName() const { return _linkname; }
-	void SetUName(const char* uname) {
-		::memset(_uname, 0x00, sizeof(_uname)), ::strcpy(_uname, uname);
-	}
-	const char* GetUName() const { return _uname; }
-	void SetGName(const char* gname) {
-		::memset(_gname, 0x00, sizeof(_gname)), ::strcpy(_gname, gname);
-	}
-	const char* GetGName() const { return _gname; }
+	void SetName(const char* name) { _name = name; }
+	const char* GetName() const { return _name.c_str(); }
+	const char* GetFileName() const { return _name.c_str(); }
+	void SetLinkName(const char* linkname) { _linkname = linkname; }
+	const char* GetLinkName() const { return _linkname.c_str(); }
+	void SetUName(const char* uname) { _uname = uname; }
+	const char* GetUName() const { return _uname.c_str(); }
+	void SetGName(const char* gname) { _gname = gname; }
+	const char* GetGName() const { return _gname.c_str(); }
 	void SetMode(UInt32 mode) { _mode = mode; }
 	UInt32 GetMode() const { return _mode; }
 	void SetUid(UInt32 uid) { _uid = uid; }
