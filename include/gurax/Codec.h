@@ -121,7 +121,7 @@ public:
 	Codec* Duplicate() const;
 	bool Decode(String& dst, const void* src, size_t bytes);
 	bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
-	bool Encode(Binary& dst, const char* src);
+	bool Encode(Binary& dst, const char* src, size_t lenMax = -1);
 	bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	static Codec* Create(const char* name, bool delcrFlag, bool addcrFlag);
 	static Codec* CreateDumb(bool delcrFlag = true, bool addcrFlag = false) {

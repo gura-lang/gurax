@@ -93,11 +93,12 @@ bool Codec::Decode(String& dst, const void* src, size_t bytes)
 	return true;
 }
 
-bool Codec::Encode(Binary& dst, const char* src)
+bool Codec::Encode(Binary& dst, const char* src, size_t lenMax)
 {
 	UInt8 buffRtn[Encoder::BuffSize];
 	size_t cnt = 0;
-	for (const char* p = src; *p != '\0'; p++) {
+	size_t i = 0;
+	for (const char* p = src; *p != '\0' && i < lenMax; p++, i++) {
 		Codec::Result rtn = _pEncoder->FeedChar(*p, buffRtn, &cnt);
 		if (rtn == Result::Complete) {
 			for (size_t i = 0; i < cnt; i++) dst.push_back(buffRtn[i]);
