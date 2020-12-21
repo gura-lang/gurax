@@ -539,16 +539,16 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
 				Codec::Result rtn = pCodec->GetDecoder().FeedData(*pByte, &codeUTF32);
 				if (rtn == Codec::Result::Complete) {
+					if (codeUTF32 == 0) break;
 					str.AppendUTF32(codeUTF32);
 				} else if (rtn == Codec::Result::CompleteSingle) {
+					if (codeUTF32 == 0) break;
 					str += static_cast<char>(codeUTF32 & 0xff);
 				} else if (rtn == Codec::Result::Error) {
 					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
 					return Value::nil();
 				}
 			}
-			// flush unprocessed characters
-			//if (pCodec->GetDecoder().Flush(chConv)) while (pCodec->GetDecoder().FollowChar(chConv)) ;
 			pValueOwner->Add(new Value_String(str));
 			nRepeat = 1;
 		} else if (ch == 'p') {

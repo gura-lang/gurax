@@ -71,7 +71,6 @@ public:
 		bool GetDelcrFlag() const { return _delcrFlag; }
 	public:
 		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) = 0;
-		virtual Result Flush(UInt32* pCodeUTF32) { return Result::None; }
 	};
 	class GURAX_DLLDECLARE Encoder {
 	protected:
@@ -84,7 +83,6 @@ public:
 		bool GetAddcrFlag() const { return _addcrFlag; }
 	public:
 		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) = 0;
-		virtual Result Flush(UInt8* buffRtn, size_t* pCnt) { return Result::None; }
 	};
 private:
 	CodecFactory* _pCodecFactory;
