@@ -81,15 +81,6 @@ bool Codec::Decode(String& dst, const void* src, size_t bytes)
 			return false;
 		}
 	}
-	Codec::Result rtn = _pDecoder->Flush(&codeUTF32);
-	if (rtn == Result::Complete) {
-		dst.AppendUTF32(codeUTF32);
-	} else if (rtn == Result::CompleteSingle) {
-		dst += static_cast<char>(codeUTF32 & 0xff);
-	} else if (rtn == Result::Error) {
-		Error::Issue(ErrorType::CodecError, "failed to decode a binary");
-		return false;
-	}
 	return true;
 }
 
