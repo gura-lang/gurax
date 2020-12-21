@@ -1,10 +1,43 @@
 #!/usr/bin/env gurax
-//==============================================================================
-// test-tar.gura
-//==============================================================================
 import(util.tester) {*}
 import(tar)
 
-TestCase('Basic test') {
-	Println(tar.Test('hello', 4))
+TestCase('Property') {
+	tar.Stat.PrintPropSlots()
+	tar.Reader.PrintPropSlots()
+	tar.Writer.PrintPropSlots()
+	tar.bzip2.PrintPropSlots()
+	tar.gzip.PrintPropSlots()
+}
+
+TestCase('archive test') {
+	entries = [
+		b'a' * 38009
+		b'b' * 43643
+		b'c' * 33517
+		b'd' * 26822
+		b'e' * 512
+		b'f' * 28838
+		b'g' * 2048
+		b'h' * 24991
+		b'i' * 38910
+		b'j' * 56954
+	]
+	for (compress in [`gzip, `bzip2]) {
+		Printf('tar compression: %s\n', compress)
+		buff = Binary()
+		tar.Writer(buff, compress) {|w|
+			entries.Each {|entry, i|
+				Printf('%d\n', i)
+				w.Add(entry, 'entry' + (i + 1) + '.bin')
+			}
+		}
+		/*
+		for (entry in entries, stream in tar.reader(buff, compress).entries()) {
+			entryDec = stream.Read()
+			Printf('%-12s %5d %s\n', stream.identifier, stream.stat.size,
+										cond(entry == entryDec, 'OK', '*NG*'))
+		}
+		*/
+	}
 }

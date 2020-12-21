@@ -18,3 +18,6 @@ utf16le              89e9c2dbe0649181a60990e1fc11ab57 All:OK Partial:OK
 utf16be              2d0dca26011015a19df4e51e578b197f All:OK Partial:OK
 utf32le              c98ae49c8c3200f733ab21fc6a4e7483 All:OK Partial:OK
 utf32be              fc52a80fde2919ea776dc57c95832db8 All:OK Partial:OK
+======== Handling of Zero in the input data ========
+41 42 43 44 45 46                                ABCDEF
+41 42 43 44 45 46                                ABCDEF

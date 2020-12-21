@@ -315,47 +315,6 @@ String& String::AppendUTF8(UInt64 codeUTF8)
 	return *this;
 }
 
-#if 0
-String& String::AppendUTF32(UInt32 codeUTF32)
-{
-	int i = 0;
-	char buff[8];
-	if ((codeUTF32 & ~0x7f) == 0) {
-		buff[i++] = static_cast<char>(codeUTF32);
-	} else {
-		buff[i++] = 0x80 | static_cast<char>(codeUTF32 & 0x3f);
-		codeUTF32 >>= 6;
-		if ((codeUTF32 & ~0x1f) == 0) {
-			buff[i++] = 0xc0 | static_cast<char>(codeUTF32);
-		} else {
-			buff[i++] = 0x80 | static_cast<char>(codeUTF32 & 0x3f);
-			codeUTF32 >>= 6;
-			if ((codeUTF32 & ~0x0f) == 0) {
-				buff[i++] = 0xe0 | static_cast<char>(codeUTF32);
-			} else {
-				buff[i++] = 0x80 | static_cast<char>(codeUTF32 & 0x3f);
-				codeUTF32 >>= 6;
-				if ((codeUTF32 & ~0x07) == 0) {
-					buff[i++] = 0xf0 | static_cast<char>(codeUTF32);
-				} else {
-					buff[i++] = 0x80 | static_cast<char>(codeUTF32 & 0x3f);
-					codeUTF32 >>= 6;
-					if ((codeUTF32 & ~0x03) == 0) {
-						buff[i++] = 0xf8 | static_cast<char>(codeUTF32);
-					} else {
-						buff[i++] = 0x80 | static_cast<char>(codeUTF32 & 0x3f);
-						codeUTF32 >>= 6;
-						buff[i++] = 0xfc | static_cast<char>(codeUTF32);
-					}
-				}
-			}
-		}
-	}
-	while (i > 0) push_back(buff[--i]);
-	return *this;
-}
-#endif
-
 String& String::AppendUTF32(UInt32 codeUTF32)
 {
 	char buff[8];

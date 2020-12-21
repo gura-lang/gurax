@@ -61,8 +61,10 @@ Gurax_ImplementConstructor(Writer)
 		compress = Compress::Gzip;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(bz2)) || pSymbol->IsIdentical(Gurax_Symbol(bzip2))) {
 		compress = Compress::Bzip2;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(none))) {
+		compress = Compress::None;
 	} else {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method");
+		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method: %s", pSymbol->GetName());
 		return Value::nil();
 	}
 	if (compress == Compress::Gzip) {

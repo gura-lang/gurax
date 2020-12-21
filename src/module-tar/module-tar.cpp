@@ -66,7 +66,7 @@ Gurax_ImplementFunction(Test)
 //-----------------------------------------------------------------------------
 // Implementation of module property
 //-----------------------------------------------------------------------------
-// zip.codec
+// tar.codec
 Gurax_DeclareModuleProperty_RW(codec)
 {
 	Declare(VTYPE_Codec, Flag::None);

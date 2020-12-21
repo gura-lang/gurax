@@ -28,7 +28,7 @@ TestCase('Japanese') {
 	}
 }
 
-TestCase('') {
+TestCase('Handling of Zero in the input data') {
 	b'ABCDEF\x00\x00\x00\x00'.Reader('sjis').ReadText().ToBinary().Dump()
 	b'ABCDEF\x00\x00\x00\x00'.p.Unpack('10s')[0].ToBinary().Dump()
 }
