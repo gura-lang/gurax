@@ -27,3 +27,8 @@ TestCase('Japanese') {
 			cond(buffSrcP == buffRevP, 'OK', '*NG*'))
 	}
 }
+
+TestCase('') {
+	b'ABCDEF\x00\x00\x00\x00'.Reader('sjis').ReadText().ToBinary().Dump()
+	b'ABCDEF\x00\x00\x00\x00'.p.Unpack('10s')[0].ToBinary().Dump()
+}
