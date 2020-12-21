@@ -101,6 +101,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialize Codec
+	g_pCodec.reset(Codec::CreateDumb());
 	// Assignment of VType
 	Assign(VTYPE_Reader);
 	Assign(VTYPE_StatEx);
