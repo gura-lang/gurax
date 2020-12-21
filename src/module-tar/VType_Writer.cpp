@@ -41,11 +41,12 @@ Gurax_DeclareConstructor(Writer)
 
 Gurax_ImplementConstructor(Writer)
 {
-	enum class Compress { None, Gzip, Bzip2 };
 	// Arguments
 	ArgPicker args(argument);
 	RefPtr<Stream> pStream(args.PickStream().Reference());
 	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	Compress compress = DetermineCompress(pStream->GetIdentifier(), pSymbol);
+#if 0
 	Compress compress = Compress::None;
 	if (!pSymbol || pSymbol->IsIdentical(Gurax_Symbol(auto_))) {
 		const char* identifier = pStream->GetIdentifier();
@@ -67,7 +68,10 @@ Gurax_ImplementConstructor(Writer)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method: %s", pSymbol->GetName());
 		return Value::nil();
 	}
-	if (compress == Compress::Gzip) {
+#endif
+	if (compress == Compress::Invalid) {
+		return Value::nil();
+	} else if (compress == Compress::Gzip) {
 		const Writer::GzipInfo& v = Writer::gzipInfo;
 		RefPtr<ZLib::Stream_Writer> pStreamGZ(new ZLib::Stream_Writer(pStream.Reference()));
 		if (!pStreamGZ->Initialize(v.level, v.windowBits, v.memLevel, v.strategy)) return Value::nil();

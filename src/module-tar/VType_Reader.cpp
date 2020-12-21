@@ -27,11 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// tar.Reader(stream:Stream) {block?}
+// tar.Reader(stream:Stream, compression?:Symbol) {block?}
 Gurax_DeclareConstructor(Reader)
 {
 	Declare(VTYPE_Reader, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,9 +43,25 @@ Gurax_ImplementConstructor(Reader)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamSrc = args.PickStream();
+	RefPtr<Stream> pStream(args.PickStream().Reference());
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	Compress compress = DetermineCompress(pStream->GetIdentifier(), pSymbol);
 	// Function body
-	RefPtr<Reader> pReader(new Reader(streamSrc.Reference()));
+	if (compress == Compress::Invalid) {
+		return Value::nil();
+	} else if (compress == Compress::Gzip) {
+		ZLib::GZHeader hdr;
+		if (!hdr.Read(*pStream)) return Value::nil();
+		RefPtr<ZLib::Stream_Reader> pStreamGZ(new ZLib::Stream_Reader(pStream.Reference()));
+		if (!pStreamGZ->Initialize(-MAX_WBITS)) return Value::nil();
+		pStream.reset(pStreamGZ.release());
+	} else if (compress == Compress::Bzip2) {
+		int verbosity = 0, small = 0;
+		RefPtr<BZLib::Stream_Reader> pStreamBZ2(new BZLib::Stream_Reader(pStream.Reference()));
+		if (!pStreamBZ2->Initialize(verbosity, small)) return Value::nil();
+		pStream.reset(pStreamBZ2.release());
+	}
+	RefPtr<Reader> pReader(new Reader(pStream.release()));
 	return argument.ReturnValue(processor, new Value_Reader(pReader.release()));
 }
 

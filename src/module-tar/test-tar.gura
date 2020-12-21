@@ -23,21 +23,15 @@ TestCase('archive test') {
 		b'i' * 38910
 		b'j' * 56954
 	]
-	for (compress in [`gzip, `bzip2]) {
+	//for (compress in [`gzip, `bzip2]) {
+	for (compress in [`none]) {
 		Printf('tar compression: %s\n', compress)
 		buff = Binary()
-		tar.Writer(buff, compress) {|w|
-			entries.Each {|entry, i|
-				Printf('%d\n', i)
-				w.Add(entry, 'entry' + (i + 1) + '.bin')
-			}
-		}
-		/*
-		for (entry in entries, stream in tar.reader(buff, compress).entries()) {
+		tar.Writer(buff).Add(entries, 'entry' + (0.. + 1) + '.bin')
+		for (entry in entries, stream in tar.Reader(buff, compress).EachEntry()) {
 			entryDec = stream.Read()
 			Printf('%-12s %5d %s\n', stream.identifier, stream.stat.size,
 										cond(entry == entryDec, 'OK', '*NG*'))
 		}
-		*/
 	}
 }

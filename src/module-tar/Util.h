@@ -7,6 +7,9 @@
 
 Gurax_BeginModuleScope(tar)
 
+enum class Compress { Invalid, None, Gzip, Bzip2 };
+
+Compress DetermineCompress(const char* fileName, const Symbol* pSymbol);
 Stream* CreateUncompressingStream(Stream& stream);
 
 Gurax_EndModuleScope(tar)

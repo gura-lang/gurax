@@ -5,6 +5,31 @@
 
 Gurax_BeginModuleScope(tar)
 
+Compress DetermineCompress(const char* fileName, const Symbol* pSymbol)
+{
+	Compress compress = Compress::None;
+	if (!pSymbol || pSymbol->IsIdentical(Gurax_Symbol(auto_))) {
+		if (String::EndsWith<CharICase>(fileName, ".tar.gz") ||
+			String::EndsWith<CharICase>(fileName, ".tgz")) {
+			compress = Compress::Gzip;
+		} else if (String::EndsWith<CharICase>(fileName, ".tar.bz2") ||
+			String::EndsWith<CharICase>(fileName, ".tb2") ||
+			String::EndsWith<CharICase>(fileName, ".tbz2")) {
+			compress = Compress::Bzip2;
+		}
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(gz)) || pSymbol->IsIdentical(Gurax_Symbol(gzip))) {
+		compress = Compress::Gzip;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(bz2)) || pSymbol->IsIdentical(Gurax_Symbol(bzip2))) {
+		compress = Compress::Bzip2;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(none))) {
+		compress = Compress::None;
+	} else {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol to specify compression method: %s", pSymbol->GetName());
+		return Compress::Invalid;
+	}
+	return compress;
+}
+
 Stream* CreateUncompressingStream(Stream& stream)
 {
 	RefPtr<Stream> pStream(stream.Reference());
