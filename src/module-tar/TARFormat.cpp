@@ -8,8 +8,8 @@ Gurax_BeginModuleScope(tar)
 //-----------------------------------------------------------------------------
 // Header
 //-----------------------------------------------------------------------------
-const char *Header::TMAGIC			= "ustar";	// ustar and a null
-const char *Header::TVERSION		= "00";		// 00 and no null
+const char *Header::TMAGIC		= "ustar";	// ustar and a null
+const char *Header::TVERSION	= "00";		// 00 and no null
 
 Header::Header(const Header& hdr) :
 	_offset(hdr._offset), _name(hdr._name), _linkname(hdr._linkname), _uname(hdr._uname), _gname(hdr._gname),

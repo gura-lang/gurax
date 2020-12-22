@@ -46,7 +46,7 @@ public:
 	Value_Writer& operator=(Value_Writer&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Writer() = default;
+	~Value_Writer();
 public:
 	Writer& GetWriter() { return *_pWriter; }
 	const Writer& GetWriter() const { return *_pWriter; }

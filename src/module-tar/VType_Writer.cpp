@@ -167,6 +167,11 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Writer::vtype = VTYPE_Writer;
 
+Value_Writer::~Value_Writer()
+{
+	GetWriter().Close();
+}
+
 String Value_Writer::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetWriter().ToString(ss));

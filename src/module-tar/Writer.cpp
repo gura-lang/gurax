@@ -58,6 +58,7 @@ bool Writer::Add(Stream& stream, const char* fileName, RefPtr<DateTime> pDateTim
 
 bool Writer::Add(Stream& stream, const Header& hdr)
 {
+	if (!_pStreamDst) return true;
 	char buffBlock[Header::BLOCKSIZE];
 	size_t bytesBody = stream.GetBytes();
 	size_t bytesPadding = (bytesBody + Header::BLOCKSIZE - 1) /
@@ -71,10 +72,12 @@ bool Writer::Add(Stream& stream, const Header& hdr)
 
 void Writer::Close()
 {
+	if (!_pStreamDst) return;
 	char buffBlock[Header::BLOCKSIZE * 2];
 	::memset(buffBlock, 0x00, Header::BLOCKSIZE * 2);
 	_pStreamDst->Write(buffBlock, Header::BLOCKSIZE * 2);
 	_pStreamDst->Close();
+	_pStreamDst.reset(nullptr);
 }
 
 String Writer::ToString(const StringStyle& ss) const
