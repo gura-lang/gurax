@@ -68,10 +68,6 @@ StatEx* StatEx::ReadDirectory(Stream& streamSrc)
 		size_t bytesRead = streamSrc.Read(buffBlock, Header::BLOCKSIZE);
 		if (Error::IsIssued()) return nullptr;
 		if (bytesRead < Header::BLOCKSIZE) return nullptr;
-		//if (bytesRead < Header::BLOCKSIZE) {
-		//	Error::Issue(ErrorType::FormatError, "failed to read a block");
-		//	return nullptr;
-		//}
 		bool zeroBlockFlag = true;
 		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock);
 		for (int i = 0; i < Header::BLOCKSIZE / sizeof(UInt32); i++, p++) {
