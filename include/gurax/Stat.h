@@ -79,6 +79,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// StatDummy
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE StatDummy : public Stat {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(StatDummy);
+public:
+	StatDummy(String pathName);
+};
+
+//------------------------------------------------------------------------------
 // StatList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE StatList : public ListBase<Stat*> {

@@ -29,6 +29,7 @@
 #include "gurax/DeclBlock.h"
 #include "gurax/DeclCallable.h"
 #include "gurax/Directory.h"
+#include "gurax/DirectoryDummy.h"
 #include "gurax/DottedSymbol.h"
 #include "gurax/DumpStyle.h"
 #include "gurax/Error.h"

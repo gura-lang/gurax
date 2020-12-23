@@ -51,6 +51,7 @@ target_sources(guraxcore PRIVATE
 	DeclBlock.cpp
 	DeclCallable.cpp
 	Directory.cpp
+	DirectoryDummy.cpp
 	DottedSymbol.cpp
 	DumpStyle.cpp
 	Error.cpp

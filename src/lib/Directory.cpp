@@ -151,7 +151,7 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 		const String& field = *pField;
 		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
 		if (!pCore) {
-			Core* pCoreNew = new Core(Type::Folder, field, GetSep(), GetCaseFlag(), new CoreOwner());
+			Core* pCoreNew = new DirectoryDummy::CoreEx(field, GetSep(), GetCaseFlag());
 			pCoreParent->GetCoreOwner().push_back(pCoreNew);
 			pCoreParent = pCoreNew;
 		} else {
@@ -160,10 +160,10 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 	}
 	const String& field = *pField;
 	pCoreChild->SetName(field);
-	CoreOwner& factoryOwner = pCoreParent->GetCoreOwner();
-	auto ppCoreFound = factoryOwner.FindIteratorByName(field.c_str());
-	if (ppCoreFound == factoryOwner.end()) {
-		factoryOwner.push_back(pCoreChild.release());
+	CoreOwner& coreOwner = pCoreParent->GetCoreOwner();
+	auto ppCoreFound = coreOwner.FindIteratorByName(field.c_str());
+	if (ppCoreFound == coreOwner.end()) {
+		coreOwner.push_back(pCoreChild.release());
 	} else {
 		pCoreChild->SetCoreOwner((*ppCoreFound)->GetCoreOwner().Reference());
 		Core::Delete(*ppCoreFound);
