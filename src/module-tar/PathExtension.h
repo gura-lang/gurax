@@ -67,9 +67,8 @@ public:
 		RefPtr<Stream> _pStreamSrc;
 		RefPtr<StatEx> _pStatEx;	// may be nullptr
 	public:
-		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) :
-			Core(type, PathName::SepPlatform, PathName::CaseFlagPlatform, new CoreOwner()),
-			_pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
+		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) : 
+			Core(type, '/', true, new CoreOwner()), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
 		Stream& GetStreamSrc() { return *_pStreamSrc; }
 		StatEx* GetStatEx() { return _pStatEx.get(); }
 	public:
