@@ -22,6 +22,13 @@ const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagPlatform	= false;
 #endif
 
+char PathName::FindSep(char sepDefault) const
+{
+	const char* p = _pathName;
+	for ( ; *p; p++) if (IsSep(*p)) return *p;
+	return sepDefault;
+}
+
 String PathName::ReplaceSep(const char* sep) const
 {
 	String pathNameRtn;

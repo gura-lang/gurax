@@ -19,9 +19,9 @@ public:
 	private:
 		RefPtr<StatDummy> _pStatDummy;
 	public:
-		CoreEx(String name, char sep, bool caseFlag) :
+		CoreEx(String pathName, String name, char sep, bool caseFlag) :
 			Core(Type::Folder, name, sep, caseFlag, new CoreOwner()),
-			_pStatDummy(new StatDummy(name)) {}
+			_pStatDummy(new StatDummy(pathName)) {}
 		StatDummy* GetStatDummy() { return _pStatDummy.get(); }
 	public:
 		virtual Directory* GenerateDirectory() override { return new DirectoryDummy(Reference()); }

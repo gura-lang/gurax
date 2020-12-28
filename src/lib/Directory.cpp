@@ -147,11 +147,14 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 		Error::Issue(ErrorType::PathError, "invalid path name");
 		return false;
 	}
+	String fieldAccum;
 	for ( ; pField + 1 != fields.end() && !(pField + 1)->empty(); pField++) {
 		const String& field = *pField;
+		if (!fieldAccum.empty()) fieldAccum += pCoreChild->GetSep();
+		fieldAccum += field;
 		Core* pCore = pCoreParent->GetCoreOwner().FindByName(field.c_str());
 		if (!pCore) {
-			Core* pCoreNew = new DirectoryDummy::CoreEx(field, GetSep(), GetCaseFlag());
+			Core* pCoreNew = new DirectoryDummy::CoreEx(fieldAccum, field, GetSep(), GetCaseFlag());
 			pCoreParent->GetCoreOwner().push_back(pCoreNew);
 			pCoreParent = pCoreNew;
 		} else {
