@@ -256,6 +256,7 @@ public:
 			if (buffp) {
 				::memcpy(buffp + bytesRead, _buffOut + _offsetOut, bytesToCopy);
 			}
+			_offset += bytesToCopy;
 			_offsetOut += bytesToCopy;
 			bytesRest -= bytesToCopy;
 			bytesRead += bytesToCopy;
@@ -319,10 +320,10 @@ public:
 	virtual const char* GetIdentifier() const override {
 		return _pStreamDst? _pStreamDst->GetIdentifier() : "";
 	}
-	virtual bool DoWrite(const void* buff, size_t len) override {
+	virtual bool DoWrite(const void* buff, size_t bytes) override {
 		if (!_pStreamDst) return false;
 		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void*>(buff));
-		_zstrm.avail_in = static_cast<uInt>(len);
+		_zstrm.avail_in = static_cast<uInt>(bytes);
 		while (_zstrm.avail_in > 0) {
 			if (_zstrm.avail_out == 0) {
 				_pStreamDst->Write(_buffOut, _bytesBuff);
@@ -335,6 +336,7 @@ public:
 				return false;
 			}
 		}
+		_offset += bytes;
 		return true;
 	}
 	virtual bool DoFlush() override { return true; }
