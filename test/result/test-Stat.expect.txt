@@ -1,0 +1,16 @@
+======== Property ========
+Stat
+  #atime            DateTime     R
+  #ctime            DateTime     R
+  #gid              Number       R
+  #isblk            Bool         R
+  #ischr            Bool         R
+  #isdir            Bool         R
+  #isfifo           Bool         R
+  #islnk            Bool         R
+  #isreg            Bool         R
+  #issock           Bool         R
+  #mtime            DateTime     R
+  #name             String       R
+  #size             Number       R
+  #uid              Number       R
