@@ -10,37 +10,23 @@ TestCase('Property') {
 	tar.gzip.PrintPropSlots()
 }
 
-TestCase('archive test') {
-	entries = [
-		b'a' * 38009
-		b'b' * 43643
-		b'c' * 33517
-		b'd' * 26822
-		b'e' * 512
-		b'f' * 28838
-		b'g' * 2048
-		b'h' * 24991
-		b'i' * 38910
-		b'j' * 56954
-	]
-	//for (compress in [`gzip, `bzip2]) {
-	/*
-	tar.Writer('test.tar.bz2') {|w|
-		w.Add(entries, 'entry' + ((0..) + 1) + '.bin')
+TestCase('Archive test') {
+	Entry = struct { fileName:String, buff:Binary }
+	r = Random(0)
+	entries = repeat (100):list {|i|
+		buff = Binary()
+		buff.p.Put(`uint8, r.IntSeq(256, r.Int(50000) + 1))
+		Entry(Format('entry%d.bin', i + 1), buff)
 	}
-	for (entry in entries, stream in tar.Reader('test.tar.bz2').EachEntry()) {
-		entryDec = stream.Read()
-		Printf('%-12s %5d %5d\n', stream.identifier, stream.stat.size, entryDec.bytes)
-	}
-	*/
 	for (compress in [`none, `gzip, `bzip2]) {
 		Printf('tar compression: %s\n', compress)
 		buff = Binary()
-		tar.Writer(buff, compress).Add(entries, 'entry' + ((0..) + 1) + '.bin')
+		tar.Writer(buff, compress).Add(entries:*buff, entries:*fileName)
 		for (entry in entries, stream in tar.Reader(buff, compress).EachEntry()) {
-			entryDec = stream.Read()
-			Printf('%-12s %5d %s\n', stream.identifier, stream.stat.size,
-										cond(entry == entryDec, 'OK', '*NG*'))
+			buffRead = stream.Read()
+			Printf('%-12s %5dbytes Verify:%s\n', stream.identifier, stream.stat.size,
+										cond(entry.buff == buffRead, 'OK', '*NG*'))
 		}
 	}
 }
+
