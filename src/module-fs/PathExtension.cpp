@@ -88,32 +88,34 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 
-StatEx::StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData) :
+StatEx::StatEx(String name, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
 		OAL::CreateDateTime(attrData.ftLastAccessTime),
-		pathName, MakeFlags(attrData.dwFileAttributes),
+		name, MakeFlags(attrData.dwFileAttributes),
 		MakeMode(attrData.dwFileAttributes), attrData.nFileSizeLow, 0, 0)
 {
 }
 
-StatEx::StatEx(String pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData) :
+#if 0
+StatEx::StatEx(String name, const BY_HANDLE_FILE_INFORMATION& attrData) :
 	Stat(OAL::CreateDateTime(attrData.ftCreationTime),
 		OAL::CreateDateTime(attrData.ftLastWriteTime),
 		OAL::CreateDateTime(attrData.ftLastAccessTime),
-		pathName, MakeFlags(attrData.dwFileAttributes),
+		name, MakeFlags(attrData.dwFileAttributes),
 		MakeMode(attrData.dwFileAttributes), attrData.nFileSizeLow, 0, 0)
 {
 }
 
-StatEx::StatEx(String pathName, const WIN32_FIND_DATA& findData) :
+StatEx::StatEx(String name, const WIN32_FIND_DATA& findData) :
 	Stat(OAL::CreateDateTime(findData.ftCreationTime),
 		OAL::CreateDateTime(findData.ftLastWriteTime),
 		OAL::CreateDateTime(findData.ftLastAccessTime),
-		pathName, MakeFlags(findData.dwFileAttributes),
+		name, MakeFlags(findData.dwFileAttributes),
 		MakeMode(findData.dwFileAttributes), findData.nFileSizeLow, 0, 0)
 {
 }
+#endif
 
 StatEx* StatEx::Create(const char* fileName)
 {
@@ -122,7 +124,7 @@ StatEx* StatEx::Create(const char* fileName)
 	String pathName = PathName(fileName).MakeAbsName();
 	if (::GetFileAttributesEx(OAL::ToNativeString(pathName.c_str()).c_str(),
 						GetFileExInfoStandard, &attrData) == 0) return nullptr;
-	return new StatEx(pathName.c_str(), attrData);
+	return new StatEx(PathName(fileName).ExtractBottomName(), attrData);
 }
 
 UInt32 StatEx::MakeFlags(DWORD dwFileAttributes)
@@ -149,11 +151,11 @@ UInt16 StatEx::MakeMode(DWORD dwFileAttributes)
 
 #else
 
-StatEx::StatEx(String pathName, struct stat& sb) :
+StatEx::StatEx(String name, struct stat& sb) :
 	Stat(OAL::CreateDateTime(sb.st_ctime),
 		OAL::CreateDateTime(sb.st_mtime),
 		OAL::CreateDateTime(sb.st_atime),
-	pathName, MakeFlags(sb), sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
+	name, MakeFlags(sb), sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid, 99999)
 {
 
 
@@ -162,7 +164,7 @@ StatEx* StatEx::Create(const char* pathName)
 	struct stat sb;
 	String pathName = PathName(pathName).MakeAbsName();
 	if (::stat(OAL::ToNativeString(pathName.c_str()).c_str(), &sb) < 0) return nullptr;
-	return new StatEx(pathName, sb);
+	return new StatEx(PathName(pathName).ExtractBottomName(), sb);
 }
 
 UInt32 StatEx::MakeFlags(struct stat& sb)

@@ -52,7 +52,7 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 // StatEx
 //------------------------------------------------------------------------------
 StatEx::StatEx(Header* pHeader) :
-	Stat(pHeader->GetMTime().Reference(), pHeader->GetName(),
+	Stat(pHeader->GetMTime().Reference(), PathName(pHeader->GetName()).ExtractBottomName(),
 		 pHeader->IsFolder()? Flag::Dir : Flag::Reg,
 		 pHeader->GetMode(), pHeader->GetSize(), pHeader->GetUid(), pHeader->GetGid()),
 	_pHeader(pHeader)

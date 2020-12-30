@@ -11,14 +11,14 @@ namespace Gurax {
 String Stat::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("Stat:%s:%dbytes", GetPathName(), GetBytes());
+	str.Format("Stat:%s:%dbytes", GetName(), GetBytes());
 	return str;
 }
 
 //------------------------------------------------------------------------------
 // StatDummy
 //------------------------------------------------------------------------------
-StatDummy::StatDummy(String pathName) : Stat(new DateTime(), pathName, Flag::Dir, 0777, 0, 0, 0)
+StatDummy::StatDummy(String name) : Stat(new DateTime(), name, Flag::Dir, 0777, 0, 0, 0)
 {
 }
 

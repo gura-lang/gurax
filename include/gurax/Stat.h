@@ -30,7 +30,7 @@ protected:
 	RefPtr<DateTime> _pDateTimeC;
 	RefPtr<DateTime> _pDateTimeM;
 	RefPtr<DateTime> _pDateTimeA;
-	String _pathName;
+	String _name;
 	UInt32 _flags;
 	UInt16 _mode;
 	size_t _bytes;
@@ -39,13 +39,13 @@ protected:
 public:
 	// Constructor
 	Stat(DateTime* pDateTimeC, DateTime* pDateTimeM, DateTime* pDateTimeA,
-		 String pathName, UInt32 flags, UInt16 mode, size_t bytes, long uid, long gid) :
+		 String name, UInt32 flags, UInt16 mode, size_t bytes, long uid, long gid) :
 		_pDateTimeC(pDateTimeC), _pDateTimeM(pDateTimeM), _pDateTimeA(pDateTimeA),
-		_pathName(pathName), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
+		_name(name), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
 	Stat(DateTime* pDateTime,
-		 String pathName, UInt32 flags, UInt32 mode, size_t bytes, long uid, long gid) :
+		 String name, UInt32 flags, UInt32 mode, size_t bytes, long uid, long gid) :
 		_pDateTimeC(pDateTime), _pDateTimeM(pDateTime->Reference()), _pDateTimeA(pDateTime->Reference()),
-		_pathName(pathName), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
+		_name(name), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
 	// Copy constructor/operator
 	Stat(const Stat& src) = delete;
 	Stat& operator=(const Stat& src) = delete;
@@ -58,7 +58,7 @@ public:
 	const DateTime& GetDateTimeC() const { return *_pDateTimeC; }
 	const DateTime& GetDateTimeM() const { return *_pDateTimeM; }
 	const DateTime& GetDateTimeA() const { return *_pDateTimeA; }
-	const char* GetPathName() const { return _pathName.c_str(); }
+	const char* GetName() const { return _name.c_str(); }
 	size_t GetBytes() const { return _bytes; }
 	bool IsDir() const { return (_flags & Flag::Dir) != 0; }
 	bool IsChr() const { return (_flags & Flag::Chr) != 0; }
@@ -86,7 +86,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(StatDummy);
 public:
-	StatDummy(String pathName);
+	StatDummy(String name);
 };
 
 //------------------------------------------------------------------------------

@@ -104,8 +104,8 @@ public:
 public:
 	static Stream* Create(Stream& streamSrc, const StatEx& statEx);
 public:
-	virtual const char* GetName() const override { return _pStatEx->GetPathName(); }
-	virtual const char* GetIdentifier() const override { return _pStatEx->GetPathName(); }
+	virtual const char* GetName() const override { return _pStatEx->GetName(); }
+	virtual const char* GetIdentifier() const override { return _pStatEx->GetName(); }
 	virtual size_t DoRead(void* buff, size_t bytes) override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 	virtual bool DoWrite(const void* buff, size_t len) override { return false; }

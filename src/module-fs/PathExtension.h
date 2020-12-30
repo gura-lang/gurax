@@ -26,13 +26,13 @@ public:
 	using Stat::Stat;
 public:
 #if defined(GURAX_ON_MSWIN)
-	StatEx(String pathName, const BY_HANDLE_FILE_INFORMATION& attrData);
-	StatEx(String pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData);
-	StatEx(String pathName, const WIN32_FIND_DATA& findData);
+	StatEx(String name, const WIN32_FILE_ATTRIBUTE_DATA& attrData);
+	//StatEx(String name, const BY_HANDLE_FILE_INFORMATION& attrData);
+	//StatEx(String name, const WIN32_FIND_DATA& findData);
 	static UInt32 MakeFlags(DWORD dwFileAttributes);
 	static UInt16 MakeMode(DWORD dwFileAttributes);
 #else
-	StatEx(String pathName, struct stat& sb);
+	StatEx(String name, struct stat& sb);
 	static UInt32 MakeFlags(struct stat& sb);
 #endif
 	static StatEx* Create(const char* pathName);

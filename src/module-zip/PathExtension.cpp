@@ -46,9 +46,10 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 // StatEx
 //------------------------------------------------------------------------------
 StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
-	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->GetFileName(),
-		 pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
-		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
+	Stat(pCentralFileHeader->MakeLastModDateTime(),
+		PathName(pCentralFileHeader->GetFileName()).ExtractBottomName(),
+		pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
+		0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
 	_pCentralFileHeader(pCentralFileHeader)
 {
 }
