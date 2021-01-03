@@ -205,22 +205,17 @@ Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCn
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
 {
 	Codec::Result rtn = Result::None;
-	UChar chCasted = static_cast<UChar>(ch);
+	UInt8 chCasted = static_cast<UInt8>(ch);
 	if ((chCasted & 0x80) == 0x00) {
 		rtn = FeedUTF32(chCasted, buffRtn, pCnt);
-		_nFollowers = 0;
-	} else if ((chCasted & 0xc0) == 0x80) {
-		if (_nFollowers == 1) {
+	} else if (_nFollowers > 0) {
+		if ((chCasted & 0xc0) == 0x80) {
 			_codeUTF32 = (_codeUTF32 << 6) | (chCasted & 0x3f);
-			rtn = FeedUTF32(_codeUTF32, buffRtn, pCnt);
-			_codeUTF32 = 0x00000000;
-			_nFollowers = 0;
-		} else if (_nFollowers > 0) {
-			_codeUTF32 = (_codeUTF32 << 6) | (chCasted & 0x3f);
-			_nFollowers--;
 		} else {
-			_codeUTF32 = 0x00000000;
+			_codeUTF32 <<= 6;
 		}
+		_nFollowers--;
+		if (_nFollowers == 0) rtn = FeedUTF32(_codeUTF32, buffRtn, pCnt);
 	} else if ((chCasted & 0xe0) == 0xc0) {
 		_codeUTF32 = chCasted & 0x1f;
 		_nFollowers = 1;

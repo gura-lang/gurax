@@ -176,11 +176,11 @@ UInt64 String::NextUTF8(const char** pp)
 	UInt64 codeUTF8 = 0x000000000000;
 	if (*p != '\0') {
 		char ch = *p;
-		codeUTF8 = static_cast<UChar>(ch);
+		codeUTF8 = static_cast<UInt8>(ch);
 		p++;
 		if (IsUTF8First(ch)) {
 			while (*p != '\0' && IsUTF8Follower(*p)) {
-				codeUTF8 = (codeUTF8 << 8) | static_cast<UChar>(*p);
+				codeUTF8 = (codeUTF8 << 8) | static_cast<UInt8>(*p);
 				p++;
 			}
 		}
@@ -194,11 +194,11 @@ UInt64 String::NextUTF8(const_iterator* pp) const
 	UInt64 codeUTF8 = 0x000000000000;
 	if (p != end()) {
 		char ch = *p;
-		codeUTF8 = static_cast<UChar>(ch);
+		codeUTF8 = static_cast<UInt8>(ch);
 		p++;
 		if (IsUTF8First(ch)) {
 			while (p != end() && IsUTF8Follower(*p)) {
-				codeUTF8 = (codeUTF8 << 8) | static_cast<UChar>(*p);
+				codeUTF8 = (codeUTF8 << 8) | static_cast<UInt8>(*p);
 				p++;
 			}
 		}
@@ -212,30 +212,30 @@ UInt32 String::NextUTF32(const char** pp)
 	UInt32 codeUTF32 = 0x00000000;
 	if (*p == '\0') return codeUTF32;
 	if ((*p & 0x80) == 0x00) {
-		codeUTF32 = static_cast<UChar>(*p);
+		codeUTF32 = static_cast<UInt8>(*p);
 		p++;
 	} else {
 		int nFollowers = 0;
 		if ((*p & 0xe0) == 0xc0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x1f;
 			nFollowers = 1;
 		} else if ((*p & 0xf0) == 0xe0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x0f;
 			nFollowers = 2;
 		} else if ((*p & 0xf8) == 0xf0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x07;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x07;
 			nFollowers = 3;
 		} else if ((*p & 0xfc) == 0xf8) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x03;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x03;
 			nFollowers = 4;
 		} else {
-			codeUTF32 = static_cast<UChar>(*p) & 0x01;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x01;
 			nFollowers = 5;
 		}
 		p++;
 		for (int i = 0; *p != '\0' && i < nFollowers; ++i, ++p) {
-			if ((static_cast<UChar>(*p) & 0xc0) == 0x80) {
-				codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+			if ((static_cast<UInt8>(*p) & 0xc0) == 0x80) {
+				codeUTF32 = (codeUTF32 << 6) | (static_cast<UInt8>(*p) & 0x3f);
 			} else {
 				codeUTF32 <<= 6;
 			}
@@ -250,30 +250,30 @@ UInt32 String::NextUTF32(const_iterator* pp) const
 	UInt32 codeUTF32 = 0x00000000;
 	if (p == end()) return codeUTF32;
 	if ((*p & 0x80) == 0x00) {
-		codeUTF32 = static_cast<UChar>(*p);
+		codeUTF32 = static_cast<UInt8>(*p);
 		p++;
 	} else {
 		int nFollowers = 0;
 		if ((*p & 0xe0) == 0xc0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x1f;
 			nFollowers = 1;
 		} else if ((*p & 0xf0) == 0xe0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x0f;
 			nFollowers = 2;
 		} else if ((*p & 0xf8) == 0xf0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x07;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x07;
 			nFollowers = 3;
 		} else if ((*p & 0xfc) == 0xf8) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x03;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x03;
 			nFollowers = 4;
 		} else {
-			codeUTF32 = static_cast<UChar>(*p) & 0x01;
+			codeUTF32 = static_cast<UInt8>(*p) & 0x01;
 			nFollowers = 5;
 		}
 		p++;
 		for (int i = 0; p != end() && i < nFollowers; ++i, ++p) {
-			if ((static_cast<UChar>(*p) & 0xc0) == 0x80) {
-				codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+			if ((static_cast<UInt8>(*p) & 0xc0) == 0x80) {
+				codeUTF32 = (codeUTF32 << 6) | (static_cast<UInt8>(*p) & 0x3f);
 			} else {
 				codeUTF32 <<= 6;
 			}
@@ -291,7 +291,7 @@ String& String::AppendNTimes(const char* str, size_t n)
 String& String::AppendNChars(const char* str, size_t len)
 {
 	for ( ; *str != '\0' && len > 0; len--) {
-		int ch = static_cast<UChar>(*str);
+		int ch = static_cast<UInt8>(*str);
 		push_back(*str);
 		str++;
 		if (IsUTF8First(ch)) {
@@ -432,7 +432,7 @@ String String::Enquote(const char* str, char chQuote)
 			strRtn += ch;
 		} else if (ch < 0x20 || ch >= 0x7f) {
 			char tmp[16];
-			::sprintf(tmp, "\\x%02x", static_cast<UChar>(ch));
+			::sprintf(tmp, "\\x%02x", static_cast<UInt8>(ch));
 			strRtn += tmp;
 		} else {
 			strRtn += ch;
@@ -451,7 +451,7 @@ String String::EncodeURI(const char* str)
 			strRtn += ch;
 		} else {
 			char buff[8];
-			::sprintf(buff, "%%%02X", static_cast<UChar>(ch));
+			::sprintf(buff, "%%%02X", static_cast<UInt8>(ch));
 			strRtn += buff;
 		}
 	}
@@ -463,7 +463,7 @@ String String::DecodeURI(const char* str)
 	String strRtn;
 	enum class Stat { Normal, Percent, } stat = Stat::Normal;
 	int nNibbles = 0;
-	UChar data = 0x00;
+	UInt8 data = 0x00;
 	for (const char *p = str; *p; p++) {
 		char ch = *p;
 		switch (stat) {
