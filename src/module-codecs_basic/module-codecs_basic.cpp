@@ -13,8 +13,12 @@ public:
 	using Codec::Codec;
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
+	private:
+		UInt32 _codeUTF32;
+		size_t _nFollowers;
 	public:
-		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		explicit Decoder(bool delcrFlag) :
+				Codec::Decoder(delcrFlag), _codeUTF32(0), _nFollowers(0) {}
 		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
@@ -27,14 +31,38 @@ public:
 Codec::Result Codec_UTF8::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Result::None;
-	
-
-
-	*pCodeUTF32 = data;
-
-
-
-	return Result::CompleteSingle;
+	Codec::Result rtn = Result::None;
+	if ((data & 0x80) == 0x00) {
+		*pCodeUTF32 = data;
+		rtn = Result::Complete;
+	} else if (_nFollowers > 0) {
+		if ((data & 0xc0) == 0x80) {
+			_codeUTF32 = (_codeUTF32 << 6) | (data & 0x3f);
+		} else {
+			_codeUTF32 <<= 6;
+		}
+		_nFollowers--;
+		if (_nFollowers == 0) {
+			*pCodeUTF32 = _codeUTF32;
+			rtn = Result::Complete;
+		}
+	} else if ((data & 0xe0) == 0xc0) {
+		_codeUTF32 = data & 0x1f;
+		_nFollowers = 1;
+	} else if ((data & 0xf0) == 0xe0) {
+		_codeUTF32 = data & 0x0f;
+		_nFollowers = 2;
+	} else if ((data & 0xf8) == 0xf0) {
+		_codeUTF32 = data & 0x07;
+		_nFollowers = 3;
+	} else if ((data & 0xfc) == 0xf8) {
+		_codeUTF32 = data & 0x03;
+		_nFollowers = 4;
+	} else {
+		_codeUTF32 = data & 0x01;
+		_nFollowers = 5;
+	}
+	return rtn;
 }
 
 Codec::Result Codec_UTF8::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
