@@ -205,37 +205,37 @@ Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCn
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
 {
 	Codec::Result rtn = Result::None;
-	UChar _ch = static_cast<UChar>(ch);
-	if ((_ch & 0x80) == 0x00) {
-		rtn = FeedUTF32(_ch, buffRtn, pCnt);
-		_cntChars = 0;
-	} else if ((_ch & 0xc0) == 0x80) {
-		if (_cntChars == 1) {
-			_codeUTF32 = (_codeUTF32 << 6) | (_ch & 0x3f);
+	UChar chCasted = static_cast<UChar>(ch);
+	if ((chCasted & 0x80) == 0x00) {
+		rtn = FeedUTF32(chCasted, buffRtn, pCnt);
+		_nFollowers = 0;
+	} else if ((chCasted & 0xc0) == 0x80) {
+		if (_nFollowers == 1) {
+			_codeUTF32 = (_codeUTF32 << 6) | (chCasted & 0x3f);
 			rtn = FeedUTF32(_codeUTF32, buffRtn, pCnt);
 			_codeUTF32 = 0x00000000;
-			_cntChars = 0;
-		} else if (_cntChars > 0) {
-			_codeUTF32 = (_codeUTF32 << 6) | (_ch & 0x3f);
-			_cntChars--;
+			_nFollowers = 0;
+		} else if (_nFollowers > 0) {
+			_codeUTF32 = (_codeUTF32 << 6) | (chCasted & 0x3f);
+			_nFollowers--;
 		} else {
 			_codeUTF32 = 0x00000000;
 		}
-	} else if ((_ch & 0xe0) == 0xc0) {
-		_codeUTF32 = _ch & 0x1f;
-		_cntChars = 1;
-	} else if ((_ch & 0xf0) == 0xe0) {
-		_codeUTF32 = _ch & 0x0f;
-		_cntChars = 2;
-	} else if ((_ch & 0xf8) == 0xf0) {
-		_codeUTF32 = _ch & 0x07;
-		_cntChars = 3;
-	} else if ((_ch & 0xfc) == 0xf8) {
-		_codeUTF32 = _ch & 0x03;
-		_cntChars = 4;
+	} else if ((chCasted & 0xe0) == 0xc0) {
+		_codeUTF32 = chCasted & 0x1f;
+		_nFollowers = 1;
+	} else if ((chCasted & 0xf0) == 0xe0) {
+		_codeUTF32 = chCasted & 0x0f;
+		_nFollowers = 2;
+	} else if ((chCasted & 0xf8) == 0xf0) {
+		_codeUTF32 = chCasted & 0x07;
+		_nFollowers = 3;
+	} else if ((chCasted & 0xfc) == 0xf8) {
+		_codeUTF32 = chCasted & 0x03;
+		_nFollowers = 4;
 	} else {
-		_codeUTF32 = _ch & 0x01;
-		_cntChars = 5;
+		_codeUTF32 = chCasted & 0x01;
+		_nFollowers = 5;
 	}
 	return rtn;
 }
@@ -284,7 +284,6 @@ Codec* CodecFactory_SBCS::CreateCodec(bool delcrFlag, bool addcrFlag)
 Codec::Result Codec_DBCS::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
 {
 	if (GetDelcrFlag() && data == '\r') return Result::None;
-	//UChar _ch = data;
 	UInt32 codeUTF32 = 0x00000000;
 	if (_codeDBCS == 0x0000) {
 		if (IsLeadByte(data)) {

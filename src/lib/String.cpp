@@ -210,33 +210,35 @@ UInt32 String::NextUTF32(const char** pp)
 {
 	const char*& p = *pp;
 	UInt32 codeUTF32 = 0x00000000;
-	if (*p == '\0') {
-		// nothing to do
-	} else if ((*p & 0x80) == 0x00) {
+	if (*p == '\0') return codeUTF32;
+	if ((*p & 0x80) == 0x00) {
 		codeUTF32 = static_cast<UChar>(*p);
 		p++;
 	} else {
-		int cntChars = 0;
+		int nFollowers = 0;
 		if ((*p & 0xe0) == 0xc0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
-			cntChars = 1;
+			nFollowers = 1;
 		} else if ((*p & 0xf0) == 0xe0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
-			cntChars = 2;
+			nFollowers = 2;
 		} else if ((*p & 0xf8) == 0xf0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x07;
-			cntChars = 3;
+			nFollowers = 3;
 		} else if ((*p & 0xfc) == 0xf8) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x03;
-			cntChars = 4;
+			nFollowers = 4;
 		} else {
 			codeUTF32 = static_cast<UChar>(*p) & 0x01;
-			cntChars = 5;
+			nFollowers = 5;
 		}
 		p++;
-		for (int i = 0; *p != '\0' && i < cntChars &&
-				 		(static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
-			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+		for (int i = 0; *p != '\0' && i < nFollowers; ++i, ++p) {
+			if ((static_cast<UChar>(*p) & 0xc0) == 0x80) {
+				codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+			} else {
+				codeUTF32 <<= 6;
+			}
 		}
 	}
 	return codeUTF32;
@@ -246,33 +248,35 @@ UInt32 String::NextUTF32(const_iterator* pp) const
 {
 	const_iterator& p = *pp;
 	UInt32 codeUTF32 = 0x00000000;
-	if (p == end()) {
-		// nothing to do
-	} else if ((*p & 0x80) == 0x00) {
+	if (p == end()) return codeUTF32;
+	if ((*p & 0x80) == 0x00) {
 		codeUTF32 = static_cast<UChar>(*p);
 		p++;
 	} else {
-		int cntChars = 0;
+		int nFollowers = 0;
 		if ((*p & 0xe0) == 0xc0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
-			cntChars = 1;
+			nFollowers = 1;
 		} else if ((*p & 0xf0) == 0xe0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
-			cntChars = 2;
+			nFollowers = 2;
 		} else if ((*p & 0xf8) == 0xf0) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x07;
-			cntChars = 3;
+			nFollowers = 3;
 		} else if ((*p & 0xfc) == 0xf8) {
 			codeUTF32 = static_cast<UChar>(*p) & 0x03;
-			cntChars = 4;
+			nFollowers = 4;
 		} else {
 			codeUTF32 = static_cast<UChar>(*p) & 0x01;
-			cntChars = 5;
+			nFollowers = 5;
 		}
 		p++;
-		for (int i = 0; p != end() && i < cntChars &&
-				 (static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
-			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+		for (int i = 0; p != end() && i < nFollowers; ++i, ++p) {
+			if ((static_cast<UChar>(*p) & 0xc0) == 0x80) {
+				codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+			} else {
+				codeUTF32 <<= 6;
+			}
 		}
 	}
 	return codeUTF32;

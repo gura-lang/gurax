@@ -6,6 +6,50 @@
 Gurax_BeginModule(codecs_basic)
 
 //-----------------------------------------------------------------------------
+// Codec_UTF8
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Codec_UTF8 : public Codec {
+public:
+	using Codec::Codec;
+public:
+	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
+	public:
+		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		virtual Result FeedData(UInt8 data, UInt32* pCodeUTF32) override;
+	};
+	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
+	public:
+		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
+		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) override;
+	};
+};
+
+Codec::Result Codec_UTF8::Decoder::FeedData(UInt8 data, UInt32* pCodeUTF32)
+{
+	if (GetDelcrFlag() && data == '\r') return Result::None;
+	
+
+
+	*pCodeUTF32 = data;
+
+
+
+	return Result::CompleteSingle;
+}
+
+Codec::Result Codec_UTF8::Encoder::FeedChar(char ch, UInt8* buffRtn, size_t* pCnt)
+{
+	if (GetAddcrFlag() && ch == '\n') {
+		buffRtn[0] = '\r', buffRtn[1] = '\n';
+		*pCnt = 2;
+	} else {
+		buffRtn[0] = static_cast<UInt8>(ch);
+		*pCnt = 1;
+	}
+	return Result::Complete;
+}
+
+//-----------------------------------------------------------------------------
 // Codec_UTF16
 //-----------------------------------------------------------------------------
 template<Endian endian>
@@ -197,9 +241,9 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Registration of CodecFactory
-	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf8"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf-8"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf_8"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF8>("utf8"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF8>("utf-8"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF8>("utf_8"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf16"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf16be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf-16be"));

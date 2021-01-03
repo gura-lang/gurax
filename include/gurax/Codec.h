@@ -184,11 +184,11 @@ public:
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	protected:
-		int _cntChars;
+		int _nFollowers;
 		UInt32 _codeUTF32;
 	public:
 		explicit Encoder(bool addcrFlag) :
-			Codec::Encoder(addcrFlag), _cntChars(0), _codeUTF32(0x00000000) {}
+			Codec::Encoder(addcrFlag), _nFollowers(0), _codeUTF32(0x00000000) {}
 		UInt32 GetUTF32() const { return _codeUTF32; }
 		virtual Result FeedChar(char ch, UInt8* buffRtn, size_t* pCnt) override;
 		virtual Result FeedUTF32(UInt32 codeUTF32, UInt8* buffRtn, size_t* pCnt) = 0;
