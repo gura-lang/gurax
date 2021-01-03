@@ -31,6 +31,7 @@ public:
 protected:
 	~Reader() = default;
 public:
+	void Close() {}
 	Stream& GetStreamSrc() { return *_pStreamSrc; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

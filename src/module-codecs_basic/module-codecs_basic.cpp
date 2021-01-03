@@ -43,8 +43,7 @@ Codec::Result Codec_UTF16<endian>::Decoder::FeedData(UInt8 data, UInt32* pCodeUT
 	if (codeUTF16 == 0xfeff || (GetDelcrFlag() && codeUTF16 == '\r')) {
 		return Codec::Result::None;
 	} else if (_codeUTF16Pair) {
-		*pCodeUTF32 = ((_codeUTF16Pair & 0x03c0) << 3) +
-				((_codeUTF16Pair & 0x003f) << 10) + 0x10000 + (codeUTF16 & 0x03ff);
+		*pCodeUTF32 = ((_codeUTF16Pair & 0x03ff) << 10) + (codeUTF16 & 0x03ff) + 0x10000;
 		_codeUTF16Pair = 0;
 		return Result::Complete;
 	} else if ((codeUTF16 & 0xf800) == 0xd800) {
@@ -74,7 +73,7 @@ Codec::Result Codec_UTF16<endian>::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* b
 			*pCnt = 4;
 		}
 	} else if (0x00010000 <= codeUTF32 && codeUTF32 <= 0x0010ffff) {
-		UInt32 codePair1 = 0xd800 + ((codeUTF32 - 0x10000) >> 16) + (codeUTF32 >> 10);
+		UInt32 codePair1 = 0xd800 + ((codeUTF32 - 0x10000) >> 10);
 		UInt32 codePair2 = 0xdc00 + (codeUTF32 & 0x03ff);
 		if constexpr (endian == Endian::Little) {
 			buffRtn[0] = static_cast<UInt8>(codePair1 >> 0);
@@ -201,18 +200,20 @@ Gurax_ModulePrepare()
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf8"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf-8"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_Dumb>("utf_8"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf16le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf-16le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf_16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf16"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf16be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf-16be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Big> >("utf_16be"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf32le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf-32le"));
-	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf_32le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf-16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF16<Endian::Little> >("utf_16le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf32"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf32be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf-32be"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Big> >("utf_32be"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf32le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf-32le"));
+	CodecFactory::Register(new CodecFactory_Generic<Codec_UTF32<Endian::Little> >("utf_32le"));
 	return true;
 }
 

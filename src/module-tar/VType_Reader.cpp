@@ -68,6 +68,24 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// tar.Reader#Close():reduce
+Gurax_DeclareMethod(Reader, Close)
+{
+	Declare(VTYPE_Reader, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Close the tar.Reader instance.\n");
+}
+
+Gurax_ImplementMethod(Reader, Close)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Reader& reader = valueThis.GetReader();
+	reader.Close();
+	return valueThis.Reference();
+}
+
 // tar.Reader#EachEntry():[all] {block?}
 Gurax_DeclareMethod(Reader, EachEntry)
 {
@@ -103,6 +121,7 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Reader, Close));
 	Assign(Gurax_CreateMethod(Reader, EachEntry));
 }
 

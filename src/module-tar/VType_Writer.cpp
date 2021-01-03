@@ -160,6 +160,7 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Writer));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Writer, Add));
+	Assign(Gurax_CreateMethod(Writer, Close));
 }
 
 //------------------------------------------------------------------------------

@@ -32,3 +32,10 @@ TestCase('Handling of Zero in the input data') {
 	b'ABCDEF\x00\x00\x00\x00'.Reader('sjis').ReadText().ToBinary().Dump()
 	b'ABCDEF\x00\x00\x00\x00'.p.Unpack('10s')[0].ToBinary().Dump()
 }
+
+TestCase('UTF-16 Surrogate Pair') {
+	str = '\xf0\xa9\xb9\x89'	// tobiuo
+	str += '\xf0\xa0\xae\xb7'	// tsuchi-yoshi
+	str.Encode('utf16be').Dump()
+	str.Encode('utf16le').Dump()
+}
