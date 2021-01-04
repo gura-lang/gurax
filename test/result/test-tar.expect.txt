@@ -1,0 +1,1196 @@
+======== Property ========
+tar.Stat
+  #chksum           Number       R
+  #devmajor         Number       R
+  #devminor         Number       R
+  #gname            String       R
+  #linkName         String       R
+  #mode             Number       R
+  #name@tar         String       R
+  #uname            String       R
+tar.Reader
+tar.Writer
+tar.bzip2
+  .blockSize100k    Number       R/W
+  .verbosity        Number       R/W
+  .workFactor       Number       R/W
+tar.gzip
+  .level            Number       R/W
+  .memLevel         Number       R/W
+  .strategy         Number       R/W
+  .windowBits       Number       R/W
+======== Archive test ========
+tar compression: none
+entry1.bin   29643bytes Verify:OK
+entry2.bin   12317bytes Verify:OK
+entry3.bin    4634bytes Verify:OK
+entry4.bin   21282bytes Verify:OK
+entry5.bin   19599bytes Verify:OK
+entry6.bin   24692bytes Verify:OK
+entry7.bin   45379bytes Verify:OK
+entry8.bin   21794bytes Verify:OK
+entry9.bin   32461bytes Verify:OK
+entry10.bin  31081bytes Verify:OK
+entry11.bin  15034bytes Verify:OK
+entry12.bin  28748bytes Verify:OK
+entry13.bin   7526bytes Verify:OK
+entry14.bin  37457bytes Verify:OK
+entry15.bin  13029bytes Verify:OK
+entry16.bin  23282bytes Verify:OK
+entry17.bin  10913bytes Verify:OK
+entry18.bin   7614bytes Verify:OK
+entry19.bin  29811bytes Verify:OK
+entry20.bin   4931bytes Verify:OK
+entry21.bin  41949bytes Verify:OK
+entry22.bin  49953bytes Verify:OK
+entry23.bin  34303bytes Verify:OK
+entry24.bin  47793bytes Verify:OK
+entry25.bin  21543bytes Verify:OK
+entry26.bin  35934bytes Verify:OK
+entry27.bin  21367bytes Verify:OK
+entry28.bin  16417bytes Verify:OK
+entry29.bin      5bytes Verify:OK
+entry30.bin  20859bytes Verify:OK
+entry31.bin  15047bytes Verify:OK
+entry32.bin    153bytes Verify:OK
+entry33.bin  28016bytes Verify:OK
+entry34.bin  41453bytes Verify:OK
+entry35.bin  17494bytes Verify:OK
+entry36.bin  16148bytes Verify:OK
+entry37.bin  21176bytes Verify:OK
+entry38.bin   4964bytes Verify:OK
+entry39.bin    182bytes Verify:OK
+entry40.bin  42870bytes Verify:OK
+entry41.bin  44396bytes Verify:OK
+entry42.bin  24272bytes Verify:OK
+entry43.bin  33883bytes Verify:OK
+entry44.bin  48684bytes Verify:OK
+entry45.bin   6621bytes Verify:OK
+entry46.bin  30008bytes Verify:OK
+entry47.bin  20319bytes Verify:OK
+entry48.bin  14747bytes Verify:OK
+entry49.bin  18616bytes Verify:OK
+entry50.bin   8096bytes Verify:OK
+entry51.bin  44562bytes Verify:OK
+entry52.bin  39231bytes Verify:OK
+entry53.bin  35998bytes Verify:OK
+entry54.bin   5283bytes Verify:OK
+entry55.bin  34747bytes Verify:OK
+entry56.bin  12617bytes Verify:OK
+entry57.bin  13835bytes Verify:OK
+entry58.bin  15068bytes Verify:OK
+entry59.bin  15508bytes Verify:OK
+entry60.bin   7641bytes Verify:OK
+entry61.bin   4856bytes Verify:OK
+entry62.bin  27842bytes Verify:OK
+entry63.bin  42840bytes Verify:OK
+entry64.bin  16187bytes Verify:OK
+entry65.bin  26870bytes Verify:OK
+entry66.bin   1513bytes Verify:OK
+entry67.bin  23155bytes Verify:OK
+entry68.bin  23160bytes Verify:OK
+entry69.bin  34903bytes Verify:OK
+entry70.bin   7255bytes Verify:OK
+entry71.bin  15640bytes Verify:OK
+entry72.bin   1264bytes Verify:OK
+entry73.bin  29739bytes Verify:OK
+entry74.bin  33387bytes Verify:OK
+entry75.bin  26982bytes Verify:OK
+entry76.bin  35317bytes Verify:OK
+entry77.bin  48343bytes Verify:OK
+entry78.bin  42574bytes Verify:OK
+entry79.bin  46941bytes Verify:OK
+entry80.bin   1638bytes Verify:OK
+entry81.bin  27327bytes Verify:OK
+entry82.bin  37579bytes Verify:OK
+entry83.bin  14575bytes Verify:OK
+entry84.bin  26112bytes Verify:OK
+entry85.bin  28682bytes Verify:OK
+entry86.bin  18425bytes Verify:OK
+entry87.bin  36995bytes Verify:OK
+entry88.bin  35231bytes Verify:OK
+entry89.bin  37773bytes Verify:OK
+entry90.bin  32097bytes Verify:OK
+entry91.bin   8212bytes Verify:OK
+entry92.bin  40651bytes Verify:OK
+entry93.bin   3969bytes Verify:OK
+entry94.bin  22417bytes Verify:OK
+entry95.bin  29475bytes Verify:OK
+entry96.bin  35405bytes Verify:OK
+entry97.bin  43506bytes Verify:OK
+entry98.bin   4986bytes Verify:OK
+entry99.bin  49152bytes Verify:OK
+entry100.bin 10066bytes Verify:OK
+tar compression: gzip
+entry1.bin   29643bytes Verify:OK
+entry2.bin   12317bytes Verify:OK
+entry3.bin    4634bytes Verify:OK
+entry4.bin   21282bytes Verify:OK
+entry5.bin   19599bytes Verify:OK
+entry6.bin   24692bytes Verify:OK
+entry7.bin   45379bytes Verify:OK
+entry8.bin   21794bytes Verify:OK
+entry9.bin   32461bytes Verify:OK
+entry10.bin  31081bytes Verify:OK
+entry11.bin  15034bytes Verify:OK
+entry12.bin  28748bytes Verify:OK
+entry13.bin   7526bytes Verify:OK
+entry14.bin  37457bytes Verify:OK
+entry15.bin  13029bytes Verify:OK
+entry16.bin  23282bytes Verify:OK
+entry17.bin  10913bytes Verify:OK
+entry18.bin   7614bytes Verify:OK
+entry19.bin  29811bytes Verify:OK
+entry20.bin   4931bytes Verify:OK
+entry21.bin  41949bytes Verify:OK
+entry22.bin  49953bytes Verify:OK
+entry23.bin  34303bytes Verify:OK
+entry24.bin  47793bytes Verify:OK
+entry25.bin  21543bytes Verify:OK
+entry26.bin  35934bytes Verify:OK
+entry27.bin  21367bytes Verify:OK
+entry28.bin  16417bytes Verify:OK
+entry29.bin      5bytes Verify:OK
+entry30.bin  20859bytes Verify:OK
+entry31.bin  15047bytes Verify:OK
+entry32.bin    153bytes Verify:OK
+entry33.bin  28016bytes Verify:OK
+entry34.bin  41453bytes Verify:OK
+entry35.bin  17494bytes Verify:OK
+entry36.bin  16148bytes Verify:OK
+entry37.bin  21176bytes Verify:OK
+entry38.bin   4964bytes Verify:OK
+entry39.bin    182bytes Verify:OK
+entry40.bin  42870bytes Verify:OK
+entry41.bin  44396bytes Verify:OK
+entry42.bin  24272bytes Verify:OK
+entry43.bin  33883bytes Verify:OK
+entry44.bin  48684bytes Verify:OK
+entry45.bin   6621bytes Verify:OK
+entry46.bin  30008bytes Verify:OK
+entry47.bin  20319bytes Verify:OK
+entry48.bin  14747bytes Verify:OK
+entry49.bin  18616bytes Verify:OK
+entry50.bin   8096bytes Verify:OK
+entry51.bin  44562bytes Verify:OK
+entry52.bin  39231bytes Verify:OK
+entry53.bin  35998bytes Verify:OK
+entry54.bin   5283bytes Verify:OK
+entry55.bin  34747bytes Verify:OK
+entry56.bin  12617bytes Verify:OK
+entry57.bin  13835bytes Verify:OK
+entry58.bin  15068bytes Verify:OK
+entry59.bin  15508bytes Verify:OK
+entry60.bin   7641bytes Verify:OK
+entry61.bin   4856bytes Verify:OK
+entry62.bin  27842bytes Verify:OK
+entry63.bin  42840bytes Verify:OK
+entry64.bin  16187bytes Verify:OK
+entry65.bin  26870bytes Verify:OK
+entry66.bin   1513bytes Verify:OK
+entry67.bin  23155bytes Verify:OK
+entry68.bin  23160bytes Verify:OK
+entry69.bin  34903bytes Verify:OK
+entry70.bin   7255bytes Verify:OK
+entry71.bin  15640bytes Verify:OK
+entry72.bin   1264bytes Verify:OK
+entry73.bin  29739bytes Verify:OK
+entry74.bin  33387bytes Verify:OK
+entry75.bin  26982bytes Verify:OK
+entry76.bin  35317bytes Verify:OK
+entry77.bin  48343bytes Verify:OK
+entry78.bin  42574bytes Verify:OK
+entry79.bin  46941bytes Verify:OK
+entry80.bin   1638bytes Verify:OK
+entry81.bin  27327bytes Verify:OK
+entry82.bin  37579bytes Verify:OK
+entry83.bin  14575bytes Verify:OK
+entry84.bin  26112bytes Verify:OK
+entry85.bin  28682bytes Verify:OK
+entry86.bin  18425bytes Verify:OK
+entry87.bin  36995bytes Verify:OK
+entry88.bin  35231bytes Verify:OK
+entry89.bin  37773bytes Verify:OK
+entry90.bin  32097bytes Verify:OK
+entry91.bin   8212bytes Verify:OK
+entry92.bin  40651bytes Verify:OK
+entry93.bin   3969bytes Verify:OK
+entry94.bin  22417bytes Verify:OK
+entry95.bin  29475bytes Verify:OK
+entry96.bin  35405bytes Verify:OK
+entry97.bin  43506bytes Verify:OK
+entry98.bin   4986bytes Verify:OK
+entry99.bin  49152bytes Verify:OK
+entry100.bin 10066bytes Verify:OK
+tar compression: bzip2
+entry1.bin   29643bytes Verify:OK
+entry2.bin   12317bytes Verify:OK
+entry3.bin    4634bytes Verify:OK
+entry4.bin   21282bytes Verify:OK
+entry5.bin   19599bytes Verify:OK
+entry6.bin   24692bytes Verify:OK
+entry7.bin   45379bytes Verify:OK
+entry8.bin   21794bytes Verify:OK
+entry9.bin   32461bytes Verify:OK
+entry10.bin  31081bytes Verify:OK
+entry11.bin  15034bytes Verify:OK
+entry12.bin  28748bytes Verify:OK
+entry13.bin   7526bytes Verify:OK
+entry14.bin  37457bytes Verify:OK
+entry15.bin  13029bytes Verify:OK
+entry16.bin  23282bytes Verify:OK
+entry17.bin  10913bytes Verify:OK
+entry18.bin   7614bytes Verify:OK
+entry19.bin  29811bytes Verify:OK
+entry20.bin   4931bytes Verify:OK
+entry21.bin  41949bytes Verify:OK
+entry22.bin  49953bytes Verify:OK
+entry23.bin  34303bytes Verify:OK
+entry24.bin  47793bytes Verify:OK
+entry25.bin  21543bytes Verify:OK
+entry26.bin  35934bytes Verify:OK
+entry27.bin  21367bytes Verify:OK
+entry28.bin  16417bytes Verify:OK
+entry29.bin      5bytes Verify:OK
+entry30.bin  20859bytes Verify:OK
+entry31.bin  15047bytes Verify:OK
+entry32.bin    153bytes Verify:OK
+entry33.bin  28016bytes Verify:OK
+entry34.bin  41453bytes Verify:OK
+entry35.bin  17494bytes Verify:OK
+entry36.bin  16148bytes Verify:OK
+entry37.bin  21176bytes Verify:OK
+entry38.bin   4964bytes Verify:OK
+entry39.bin    182bytes Verify:OK
+entry40.bin  42870bytes Verify:OK
+entry41.bin  44396bytes Verify:OK
+entry42.bin  24272bytes Verify:OK
+entry43.bin  33883bytes Verify:OK
+entry44.bin  48684bytes Verify:OK
+entry45.bin   6621bytes Verify:OK
+entry46.bin  30008bytes Verify:OK
+entry47.bin  20319bytes Verify:OK
+entry48.bin  14747bytes Verify:OK
+entry49.bin  18616bytes Verify:OK
+entry50.bin   8096bytes Verify:OK
+entry51.bin  44562bytes Verify:OK
+entry52.bin  39231bytes Verify:OK
+entry53.bin  35998bytes Verify:OK
+entry54.bin   5283bytes Verify:OK
+entry55.bin  34747bytes Verify:OK
+entry56.bin  12617bytes Verify:OK
+entry57.bin  13835bytes Verify:OK
+entry58.bin  15068bytes Verify:OK
+entry59.bin  15508bytes Verify:OK
+entry60.bin   7641bytes Verify:OK
+entry61.bin   4856bytes Verify:OK
+entry62.bin  27842bytes Verify:OK
+entry63.bin  42840bytes Verify:OK
+entry64.bin  16187bytes Verify:OK
+entry65.bin  26870bytes Verify:OK
+entry66.bin   1513bytes Verify:OK
+entry67.bin  23155bytes Verify:OK
+entry68.bin  23160bytes Verify:OK
+entry69.bin  34903bytes Verify:OK
+entry70.bin   7255bytes Verify:OK
+entry71.bin  15640bytes Verify:OK
+entry72.bin   1264bytes Verify:OK
+entry73.bin  29739bytes Verify:OK
+entry74.bin  33387bytes Verify:OK
+entry75.bin  26982bytes Verify:OK
+entry76.bin  35317bytes Verify:OK
+entry77.bin  48343bytes Verify:OK
+entry78.bin  42574bytes Verify:OK
+entry79.bin  46941bytes Verify:OK
+entry80.bin   1638bytes Verify:OK
+entry81.bin  27327bytes Verify:OK
+entry82.bin  37579bytes Verify:OK
+entry83.bin  14575bytes Verify:OK
+entry84.bin  26112bytes Verify:OK
+entry85.bin  28682bytes Verify:OK
+entry86.bin  18425bytes Verify:OK
+entry87.bin  36995bytes Verify:OK
+entry88.bin  35231bytes Verify:OK
+entry89.bin  37773bytes Verify:OK
+entry90.bin  32097bytes Verify:OK
+entry91.bin   8212bytes Verify:OK
+entry92.bin  40651bytes Verify:OK
+entry93.bin   3969bytes Verify:OK
+entry94.bin  22417bytes Verify:OK
+entry95.bin  29475bytes Verify:OK
+entry96.bin  35405bytes Verify:OK
+entry97.bin  43506bytes Verify:OK
+entry98.bin   4986bytes Verify:OK
+entry99.bin  49152bytes Verify:OK
+entry100.bin 10066bytes Verify:OK
+======== Codec ========
+Codec:nil
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:sjis
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:utf8
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:utf16le
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:utf16be
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:utf32le
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+Codec:utf32be
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+  仕様書.doc
+  取り扱い説明書.doc
+  2020上半期営業報告書.xls
+  2020下半期営業報告書.xls
+  イラスト案１.png
+  イラスト案２.png
+  イラスト案３.png
+======== path.Walk() in tar file ========
+test-tar\zerofiles.tar\zerofiles/
+test-tar\zerofiles.tar\zerofiles/build.bat
+test-tar\zerofiles.tar\zerofiles/configure
+test-tar\zerofiles.tar\zerofiles/inc/
+test-tar\zerofiles.tar\zerofiles/README.md
+test-tar\zerofiles.tar\zerofiles/ref/
+test-tar\zerofiles.tar\zerofiles/sample/
+test-tar\zerofiles.tar\zerofiles/script/
+test-tar\zerofiles.tar\zerofiles/src/
+test-tar\zerofiles.tar\zerofiles/test/
+test-tar\zerofiles.tar\zerofiles/inc/bios.inc
+test-tar\zerofiles.tar\zerofiles/inc/jbranch.inc
+test-tar\zerofiles.tar\zerofiles/inc/oputil.inc
+test-tar\zerofiles.tar\zerofiles/inc/xrnd.inc
+test-tar\zerofiles.tar\zerofiles/ref/binary100.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary2.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary256.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary300.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary512.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary600.cjr
+test-tar\zerofiles.tar\zerofiles/ref/binary8000.cjr
+test-tar\zerofiles.tar\zerofiles/ref/CjrFormat.cpp
+test-tar\zerofiles.tar\zerofiles/ref/CjrFormat.h
+test-tar\zerofiles.tar\zerofiles/ref/NumFormat.txt
+test-tar\zerofiles.tar\zerofiles/ref/USR1000.cjr
+test-tar\zerofiles.tar\zerofiles/ref/USR1234.cjr
+test-tar\zerofiles.tar\zerofiles/ref/USR2000.cjr
+test-tar\zerofiles.tar\zerofiles/ref/USR5000.cjr
+test-tar\zerofiles.tar\zerofiles/sample/bios/
+test-tar\zerofiles.tar\zerofiles/sample/boundballs/
+test-tar\zerofiles.tar\zerofiles/sample/guest/
+test-tar\zerofiles.tar\zerofiles/sample/helloworld/
+test-tar\zerofiles.tar\zerofiles/sample/jbranch/
+test-tar\zerofiles.tar\zerofiles/sample/mml/
+test-tar\zerofiles.tar\zerofiles/sample/oputil/
+test-tar\zerofiles.tar\zerofiles/sample/pcglong/
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/
+test-tar\zerofiles.tar\zerofiles/sample/pcgsimple/
+test-tar\zerofiles.tar\zerofiles/sample/README.md
+test-tar\zerofiles.tar\zerofiles/sample/skigame/
+test-tar\zerofiles.tar\zerofiles/sample/vram/
+test-tar\zerofiles.tar\zerofiles/sample/xrnd/
+test-tar\zerofiles.tar\zerofiles/script/md2html.gura
+test-tar\zerofiles.tar\zerofiles/src/CMakeLists.txt
+test-tar\zerofiles.tar\zerofiles/src/guest/
+test-tar\zerofiles.tar\zerofiles/src/jrasm/
+test-tar\zerofiles.tar\zerofiles/src/jrasm.sln
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/
+test-tar\zerofiles.tar\zerofiles/test/result/
+test-tar\zerofiles.tar\zerofiles/test/test-addressing.asm
+test-tar\zerofiles.tar\zerofiles/test/test-all-instruction.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary100.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary2.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary256.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary300.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary512.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary600.asm
+test-tar\zerofiles.tar\zerofiles/test/test-binary8000.asm
+test-tar\zerofiles.tar\zerofiles/test/test-comment.asm
+test-tar\zerofiles.tar\zerofiles/test/test-data.asm
+test-tar\zerofiles.tar\zerofiles/test/test-ds.asm
+test-tar\zerofiles.tar\zerofiles/test/test-dseg-follow.asm
+test-tar\zerofiles.tar\zerofiles/test/test-equ.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/
+test-tar\zerofiles.tar\zerofiles/test/test-include.asm
+test-tar\zerofiles.tar\zerofiles/test/test-inline-data.asm
+test-tar\zerofiles.tar\zerofiles/test/test-label.asm
+test-tar\zerofiles.tar\zerofiles/test/test-literal.asm
+test-tar\zerofiles.tar\zerofiles/test/test-macro.asm
+test-tar\zerofiles.tar\zerofiles/test/test-mml.asm
+test-tar\zerofiles.tar\zerofiles/test/test-operand.asm
+test-tar\zerofiles.tar\zerofiles/test/test-operator.asm
+test-tar\zerofiles.tar\zerofiles/test/test-org.asm
+test-tar\zerofiles.tar\zerofiles/test/test-pcg-complex.asm
+test-tar\zerofiles.tar\zerofiles/test/test-pcg-cramfull.asm
+test-tar\zerofiles.tar\zerofiles/test/test-pcg-multipage.asm
+test-tar\zerofiles.tar\zerofiles/test/test-pcg-userfull.asm
+test-tar\zerofiles.tar\zerofiles/test/test-pcg.asm
+test-tar\zerofiles.tar\zerofiles/test/test-rel.asm
+test-tar\zerofiles.tar\zerofiles/test/test-save.asm
+test-tar\zerofiles.tar\zerofiles/test/test-scope.asm
+test-tar\zerofiles.tar\zerofiles/test/test-segment.asm
+test-tar\zerofiles.tar\zerofiles/test/test-struct.asm
+test-tar\zerofiles.tar\zerofiles/test/tester
+test-tar\zerofiles.tar\zerofiles/test/tester.gura
+test-tar\zerofiles.tar\zerofiles/sample/bios/bios-pick.asm
+test-tar\zerofiles.tar\zerofiles/sample/bios/bios-printnum.asm
+test-tar\zerofiles.tar\zerofiles/sample/bios/bios-putc.asm
+test-tar\zerofiles.tar\zerofiles/sample/bios/bios-puthex.asm
+test-tar\zerofiles.tar\zerofiles/sample/bios/bios-scroll.asm
+test-tar\zerofiles.tar\zerofiles/sample/boundballs/boundballs.asm
+test-tar\zerofiles.tar\zerofiles/sample/boundballs/utils.inc
+test-tar\zerofiles.tar\zerofiles/sample/guest/kemusiro-sample.asm
+test-tar\zerofiles.tar\zerofiles/sample/guest/okachan-line.asm
+test-tar\zerofiles.tar\zerofiles/sample/helloworld/helloworld.asm
+test-tar\zerofiles.tar\zerofiles/sample/jbranch/jbranch-test.asm
+test-tar\zerofiles.tar\zerofiles/sample/mml/mml-sakura.asm
+test-tar\zerofiles.tar\zerofiles/sample/mml/mml-sakura.cjr
+test-tar\zerofiles.tar\zerofiles/sample/oputil/oputil-test.asm
+test-tar\zerofiles.tar\zerofiles/sample/pcglong/pcglong.asm
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/demo.txt
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/makeasm.gura
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/two-kittens-jr.png
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/two-kittens.asm
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/two-kittens.cjr
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/two-kittens.jpg
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/woman-in-rain-jr.png
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/woman-in-rain.asm
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/woman-in-rain.cjr
+test-tar\zerofiles.tar\zerofiles/sample/pcgraphic/woman-in-rain.jpg
+test-tar\zerofiles.tar\zerofiles/sample/pcgsimple/pcgsimple.asm
+test-tar\zerofiles.tar\zerofiles/sample/skigame/skigame.asm
+test-tar\zerofiles.tar\zerofiles/sample/vram/boundballs.asm
+test-tar\zerofiles.tar\zerofiles/sample/vram/test-fromxy.asm
+test-tar\zerofiles.tar\zerofiles/sample/vram/test.asm
+test-tar\zerofiles.tar\zerofiles/sample/vram/test2.asm
+test-tar\zerofiles.tar\zerofiles/sample/vram/vram32x24x2.inc
+test-tar\zerofiles.tar\zerofiles/sample/vram/vram32x24x3.inc
+test-tar\zerofiles.tar\zerofiles/sample/vram/vram36x24x2.inc
+test-tar\zerofiles.tar\zerofiles/sample/vram/vram36x24x3.inc
+test-tar\zerofiles.tar\zerofiles/sample/vram/vramcmn.inc
+test-tar\zerofiles.tar\zerofiles/sample/xrnd/xrnd-test.asm
+test-tar\zerofiles.tar\zerofiles/src/guest/.gitignore
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/
+test-tar\zerofiles.tar\zerofiles/src/guest/prepare-for-darwin
+test-tar\zerofiles.tar\zerofiles/src/guest/prepare-for-mswin.bat
+test-tar\zerofiles.tar\zerofiles/src/guest/VC_redist/
+test-tar\zerofiles.tar\zerofiles/src/jrasm/CMakeLists.txt
+test-tar\zerofiles.tar\zerofiles/src/jrasm/jrasm.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasm/jrasm.vcxproj
+test-tar\zerofiles.tar\zerofiles/src/jrasm/stdafx.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasm/stdafx.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/CMakeLists.txt
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/CommandLine.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/CommandLine.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Common.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Common.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Context.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Context.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Directive.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Directive.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/DisasmDumper.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/DisasmDumper.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/ErrorLog.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/ErrorLog.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Expr.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Expr.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/FormatCJR.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/FormatCJR.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/FormatDump.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/FormatDump.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Generator.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Generator.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Generator_M6800.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Generator_M6800.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/InlineData.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/InlineData.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/jrasmcore.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/jrasmcore.vcxproj
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Macro.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Macro.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/MMLParser.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/MMLParser.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Operator.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Operator.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Parser.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Parser.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGChar.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGChar.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGColor.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGColor.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGData.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGData.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGPage.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGPage.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGRange.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/PCGRange.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Region.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Region.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Segment.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Segment.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/stdafx.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/stdafx.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Token.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Token.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Tokenizer.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Tokenizer.h
+test-tar\zerofiles.tar\zerofiles/src/jrasmcore/Version.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/CMakeLists.txt
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/Config.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/Config.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/Document.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/Document.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/ErrorDialog.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/ErrorDialog.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/FrameMain.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/FrameMain.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/jrpcgedit.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/jrpcgedit.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/jrpcgedit.ico
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/jrpcgedit.rc
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/jrpcgedit.vcxproj
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PanelMain.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PanelMain.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGBrowser.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGBrowser.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGDataInfo.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGDataInfo.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGEditor.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGEditor.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGPageInfo.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/PCGPageInfo.h
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/pcgsimple.asm
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/stdafx.cpp
+test-tar\zerofiles.tar\zerofiles/src/jrpcgedit/stdafx.h
+test-tar\zerofiles.tar\zerofiles/test/result/test-addressing.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-all-instruction.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary2.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary256.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary300.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary512.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary600.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-binary8000.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-comment.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-data.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-dseg-follow.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-equ.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-include.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-inline-data.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-label.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-literal.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-macro.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-mml.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-operand.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-operator.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-org.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-pcg-complex.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-pcg-cramfull.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-pcg-multipage.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-pcg-userfull.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-rel.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-save.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-scope.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-segment.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/result/test-struct.expect.txt
+test-tar\zerofiles.tar\zerofiles/test/test-include/include1.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/include2.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/include3.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/include4.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/include5.asm
+test-tar\zerofiles.tar\zerofiles/test/test-include/subdir/
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920/
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920.zip
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/curl_737_1.zip
+test-tar\zerofiles.tar\zerofiles/src/guest/VC_redist/concrt140.dll
+test-tar\zerofiles.tar\zerofiles/src/guest/VC_redist/msvcp140.dll
+test-tar\zerofiles.tar\zerofiles/src/guest/VC_redist/vccorlib140.dll
+test-tar\zerofiles.tar\zerofiles/src/guest/VC_redist/vcruntime140.dll
+test-tar\zerofiles.tar\zerofiles/test/test-include/subdir/include6.asm
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920/7-zip.chm
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920/7za.exe
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920/license.txt
+test-tar\zerofiles.tar\zerofiles/src/guest/buildtool/7za920/readme.txt
+======== path.Walk() with tar.Directory ========
+zerofiles/
+zerofiles/build.bat
+zerofiles/configure
+zerofiles/inc/
+zerofiles/README.md
+zerofiles/ref/
+zerofiles/sample/
+zerofiles/script/
+zerofiles/src/
+zerofiles/test/
+zerofiles/inc/bios.inc
+zerofiles/inc/jbranch.inc
+zerofiles/inc/oputil.inc
+zerofiles/inc/xrnd.inc
+zerofiles/ref/binary100.cjr
+zerofiles/ref/binary2.cjr
+zerofiles/ref/binary256.cjr
+zerofiles/ref/binary300.cjr
+zerofiles/ref/binary512.cjr
+zerofiles/ref/binary600.cjr
+zerofiles/ref/binary8000.cjr
+zerofiles/ref/CjrFormat.cpp
+zerofiles/ref/CjrFormat.h
+zerofiles/ref/NumFormat.txt
+zerofiles/ref/USR1000.cjr
+zerofiles/ref/USR1234.cjr
+zerofiles/ref/USR2000.cjr
+zerofiles/ref/USR5000.cjr
+zerofiles/sample/bios/
+zerofiles/sample/boundballs/
+zerofiles/sample/guest/
+zerofiles/sample/helloworld/
+zerofiles/sample/jbranch/
+zerofiles/sample/mml/
+zerofiles/sample/oputil/
+zerofiles/sample/pcglong/
+zerofiles/sample/pcgraphic/
+zerofiles/sample/pcgsimple/
+zerofiles/sample/README.md
+zerofiles/sample/skigame/
+zerofiles/sample/vram/
+zerofiles/sample/xrnd/
+zerofiles/script/md2html.gura
+zerofiles/src/CMakeLists.txt
+zerofiles/src/guest/
+zerofiles/src/jrasm/
+zerofiles/src/jrasm.sln
+zerofiles/src/jrasmcore/
+zerofiles/src/jrpcgedit/
+zerofiles/test/result/
+zerofiles/test/test-addressing.asm
+zerofiles/test/test-all-instruction.asm
+zerofiles/test/test-binary100.asm
+zerofiles/test/test-binary2.asm
+zerofiles/test/test-binary256.asm
+zerofiles/test/test-binary300.asm
+zerofiles/test/test-binary512.asm
+zerofiles/test/test-binary600.asm
+zerofiles/test/test-binary8000.asm
+zerofiles/test/test-comment.asm
+zerofiles/test/test-data.asm
+zerofiles/test/test-ds.asm
+zerofiles/test/test-dseg-follow.asm
+zerofiles/test/test-equ.asm
+zerofiles/test/test-include/
+zerofiles/test/test-include.asm
+zerofiles/test/test-inline-data.asm
+zerofiles/test/test-label.asm
+zerofiles/test/test-literal.asm
+zerofiles/test/test-macro.asm
+zerofiles/test/test-mml.asm
+zerofiles/test/test-operand.asm
+zerofiles/test/test-operator.asm
+zerofiles/test/test-org.asm
+zerofiles/test/test-pcg-complex.asm
+zerofiles/test/test-pcg-cramfull.asm
+zerofiles/test/test-pcg-multipage.asm
+zerofiles/test/test-pcg-userfull.asm
+zerofiles/test/test-pcg.asm
+zerofiles/test/test-rel.asm
+zerofiles/test/test-save.asm
+zerofiles/test/test-scope.asm
+zerofiles/test/test-segment.asm
+zerofiles/test/test-struct.asm
+zerofiles/test/tester
+zerofiles/test/tester.gura
+zerofiles/sample/bios/bios-pick.asm
+zerofiles/sample/bios/bios-printnum.asm
+zerofiles/sample/bios/bios-putc.asm
+zerofiles/sample/bios/bios-puthex.asm
+zerofiles/sample/bios/bios-scroll.asm
+zerofiles/sample/boundballs/boundballs.asm
+zerofiles/sample/boundballs/utils.inc
+zerofiles/sample/guest/kemusiro-sample.asm
+zerofiles/sample/guest/okachan-line.asm
+zerofiles/sample/helloworld/helloworld.asm
+zerofiles/sample/jbranch/jbranch-test.asm
+zerofiles/sample/mml/mml-sakura.asm
+zerofiles/sample/mml/mml-sakura.cjr
+zerofiles/sample/oputil/oputil-test.asm
+zerofiles/sample/pcglong/pcglong.asm
+zerofiles/sample/pcgraphic/demo.txt
+zerofiles/sample/pcgraphic/makeasm.gura
+zerofiles/sample/pcgraphic/two-kittens-jr.png
+zerofiles/sample/pcgraphic/two-kittens.asm
+zerofiles/sample/pcgraphic/two-kittens.cjr
+zerofiles/sample/pcgraphic/two-kittens.jpg
+zerofiles/sample/pcgraphic/woman-in-rain-jr.png
+zerofiles/sample/pcgraphic/woman-in-rain.asm
+zerofiles/sample/pcgraphic/woman-in-rain.cjr
+zerofiles/sample/pcgraphic/woman-in-rain.jpg
+zerofiles/sample/pcgsimple/pcgsimple.asm
+zerofiles/sample/skigame/skigame.asm
+zerofiles/sample/vram/boundballs.asm
+zerofiles/sample/vram/test-fromxy.asm
+zerofiles/sample/vram/test.asm
+zerofiles/sample/vram/test2.asm
+zerofiles/sample/vram/vram32x24x2.inc
+zerofiles/sample/vram/vram32x24x3.inc
+zerofiles/sample/vram/vram36x24x2.inc
+zerofiles/sample/vram/vram36x24x3.inc
+zerofiles/sample/vram/vramcmn.inc
+zerofiles/sample/xrnd/xrnd-test.asm
+zerofiles/src/guest/.gitignore
+zerofiles/src/guest/buildtool/
+zerofiles/src/guest/prepare-for-darwin
+zerofiles/src/guest/prepare-for-mswin.bat
+zerofiles/src/guest/VC_redist/
+zerofiles/src/jrasm/CMakeLists.txt
+zerofiles/src/jrasm/jrasm.cpp
+zerofiles/src/jrasm/jrasm.vcxproj
+zerofiles/src/jrasm/stdafx.cpp
+zerofiles/src/jrasm/stdafx.h
+zerofiles/src/jrasmcore/CMakeLists.txt
+zerofiles/src/jrasmcore/CommandLine.cpp
+zerofiles/src/jrasmcore/CommandLine.h
+zerofiles/src/jrasmcore/Common.cpp
+zerofiles/src/jrasmcore/Common.h
+zerofiles/src/jrasmcore/Context.cpp
+zerofiles/src/jrasmcore/Context.h
+zerofiles/src/jrasmcore/Directive.cpp
+zerofiles/src/jrasmcore/Directive.h
+zerofiles/src/jrasmcore/DisasmDumper.cpp
+zerofiles/src/jrasmcore/DisasmDumper.h
+zerofiles/src/jrasmcore/ErrorLog.cpp
+zerofiles/src/jrasmcore/ErrorLog.h
+zerofiles/src/jrasmcore/Expr.cpp
+zerofiles/src/jrasmcore/Expr.h
+zerofiles/src/jrasmcore/FormatCJR.cpp
+zerofiles/src/jrasmcore/FormatCJR.h
+zerofiles/src/jrasmcore/FormatDump.cpp
+zerofiles/src/jrasmcore/FormatDump.h
+zerofiles/src/jrasmcore/Generator.cpp
+zerofiles/src/jrasmcore/Generator.h
+zerofiles/src/jrasmcore/Generator_M6800.cpp
+zerofiles/src/jrasmcore/Generator_M6800.h
+zerofiles/src/jrasmcore/InlineData.cpp
+zerofiles/src/jrasmcore/InlineData.h
+zerofiles/src/jrasmcore/jrasmcore.h
+zerofiles/src/jrasmcore/jrasmcore.vcxproj
+zerofiles/src/jrasmcore/Macro.cpp
+zerofiles/src/jrasmcore/Macro.h
+zerofiles/src/jrasmcore/MMLParser.cpp
+zerofiles/src/jrasmcore/MMLParser.h
+zerofiles/src/jrasmcore/Operator.cpp
+zerofiles/src/jrasmcore/Operator.h
+zerofiles/src/jrasmcore/Parser.cpp
+zerofiles/src/jrasmcore/Parser.h
+zerofiles/src/jrasmcore/PCGChar.cpp
+zerofiles/src/jrasmcore/PCGChar.h
+zerofiles/src/jrasmcore/PCGColor.cpp
+zerofiles/src/jrasmcore/PCGColor.h
+zerofiles/src/jrasmcore/PCGData.cpp
+zerofiles/src/jrasmcore/PCGData.h
+zerofiles/src/jrasmcore/PCGPage.cpp
+zerofiles/src/jrasmcore/PCGPage.h
+zerofiles/src/jrasmcore/PCGRange.cpp
+zerofiles/src/jrasmcore/PCGRange.h
+zerofiles/src/jrasmcore/Region.cpp
+zerofiles/src/jrasmcore/Region.h
+zerofiles/src/jrasmcore/Segment.cpp
+zerofiles/src/jrasmcore/Segment.h
+zerofiles/src/jrasmcore/stdafx.cpp
+zerofiles/src/jrasmcore/stdafx.h
+zerofiles/src/jrasmcore/Token.cpp
+zerofiles/src/jrasmcore/Token.h
+zerofiles/src/jrasmcore/Tokenizer.cpp
+zerofiles/src/jrasmcore/Tokenizer.h
+zerofiles/src/jrasmcore/Version.h
+zerofiles/src/jrpcgedit/CMakeLists.txt
+zerofiles/src/jrpcgedit/Config.cpp
+zerofiles/src/jrpcgedit/Config.h
+zerofiles/src/jrpcgedit/Document.cpp
+zerofiles/src/jrpcgedit/Document.h
+zerofiles/src/jrpcgedit/ErrorDialog.cpp
+zerofiles/src/jrpcgedit/ErrorDialog.h
+zerofiles/src/jrpcgedit/FrameMain.cpp
+zerofiles/src/jrpcgedit/FrameMain.h
+zerofiles/src/jrpcgedit/jrpcgedit.cpp
+zerofiles/src/jrpcgedit/jrpcgedit.h
+zerofiles/src/jrpcgedit/jrpcgedit.ico
+zerofiles/src/jrpcgedit/jrpcgedit.rc
+zerofiles/src/jrpcgedit/jrpcgedit.vcxproj
+zerofiles/src/jrpcgedit/PanelMain.cpp
+zerofiles/src/jrpcgedit/PanelMain.h
+zerofiles/src/jrpcgedit/PCGBrowser.cpp
+zerofiles/src/jrpcgedit/PCGBrowser.h
+zerofiles/src/jrpcgedit/PCGDataInfo.cpp
+zerofiles/src/jrpcgedit/PCGDataInfo.h
+zerofiles/src/jrpcgedit/PCGEditor.cpp
+zerofiles/src/jrpcgedit/PCGEditor.h
+zerofiles/src/jrpcgedit/PCGPageInfo.cpp
+zerofiles/src/jrpcgedit/PCGPageInfo.h
+zerofiles/src/jrpcgedit/pcgsimple.asm
+zerofiles/src/jrpcgedit/stdafx.cpp
+zerofiles/src/jrpcgedit/stdafx.h
+zerofiles/test/result/test-addressing.expect.txt
+zerofiles/test/result/test-all-instruction.expect.txt
+zerofiles/test/result/test-binary2.expect.txt
+zerofiles/test/result/test-binary256.expect.txt
+zerofiles/test/result/test-binary300.expect.txt
+zerofiles/test/result/test-binary512.expect.txt
+zerofiles/test/result/test-binary600.expect.txt
+zerofiles/test/result/test-binary8000.expect.txt
+zerofiles/test/result/test-comment.expect.txt
+zerofiles/test/result/test-data.expect.txt
+zerofiles/test/result/test-dseg-follow.expect.txt
+zerofiles/test/result/test-equ.expect.txt
+zerofiles/test/result/test-include.expect.txt
+zerofiles/test/result/test-inline-data.expect.txt
+zerofiles/test/result/test-label.expect.txt
+zerofiles/test/result/test-literal.expect.txt
+zerofiles/test/result/test-macro.expect.txt
+zerofiles/test/result/test-mml.expect.txt
+zerofiles/test/result/test-operand.expect.txt
+zerofiles/test/result/test-operator.expect.txt
+zerofiles/test/result/test-org.expect.txt
+zerofiles/test/result/test-pcg-complex.expect.txt
+zerofiles/test/result/test-pcg-cramfull.expect.txt
+zerofiles/test/result/test-pcg-multipage.expect.txt
+zerofiles/test/result/test-pcg-userfull.expect.txt
+zerofiles/test/result/test-rel.expect.txt
+zerofiles/test/result/test-save.expect.txt
+zerofiles/test/result/test-scope.expect.txt
+zerofiles/test/result/test-segment.expect.txt
+zerofiles/test/result/test-struct.expect.txt
+zerofiles/test/test-include/include1.asm
+zerofiles/test/test-include/include2.asm
+zerofiles/test/test-include/include3.asm
+zerofiles/test/test-include/include4.asm
+zerofiles/test/test-include/include5.asm
+zerofiles/test/test-include/subdir/
+zerofiles/src/guest/buildtool/7za920/
+zerofiles/src/guest/buildtool/7za920.zip
+zerofiles/src/guest/buildtool/curl_737_1.zip
+zerofiles/src/guest/VC_redist/concrt140.dll
+zerofiles/src/guest/VC_redist/msvcp140.dll
+zerofiles/src/guest/VC_redist/vccorlib140.dll
+zerofiles/src/guest/VC_redist/vcruntime140.dll
+zerofiles/test/test-include/subdir/include6.asm
+zerofiles/src/guest/buildtool/7za920/7-zip.chm
+zerofiles/src/guest/buildtool/7za920/7za.exe
+zerofiles/src/guest/buildtool/7za920/license.txt
+zerofiles/src/guest/buildtool/7za920/readme.txt
+======== tar.Reader#EachEntry() ========
+zerofiles/build.bat
+zerofiles/configure
+zerofiles/README.md
+zerofiles/test/test-addressing.asm
+zerofiles/test/test-all-instruction.asm
+zerofiles/test/test-binary100.asm
+zerofiles/test/test-binary2.asm
+zerofiles/test/test-binary256.asm
+zerofiles/test/test-binary300.asm
+zerofiles/test/test-binary512.asm
+zerofiles/test/test-binary600.asm
+zerofiles/test/test-binary8000.asm
+zerofiles/test/test-comment.asm
+zerofiles/test/test-data.asm
+zerofiles/test/test-ds.asm
+zerofiles/test/test-dseg-follow.asm
+zerofiles/test/test-equ.asm
+zerofiles/test/test-include.asm
+zerofiles/test/test-inline-data.asm
+zerofiles/test/test-label.asm
+zerofiles/test/test-literal.asm
+zerofiles/test/test-macro.asm
+zerofiles/test/test-mml.asm
+zerofiles/test/test-operand.asm
+zerofiles/test/test-operator.asm
+zerofiles/test/test-org.asm
+zerofiles/test/test-pcg-complex.asm
+zerofiles/test/test-pcg-cramfull.asm
+zerofiles/test/test-pcg-multipage.asm
+zerofiles/test/test-pcg-userfull.asm
+zerofiles/test/test-pcg.asm
+zerofiles/test/test-rel.asm
+zerofiles/test/test-save.asm
+zerofiles/test/test-scope.asm
+zerofiles/test/test-segment.asm
+zerofiles/test/test-struct.asm
+zerofiles/test/tester
+zerofiles/test/tester.gura
+zerofiles/test/test-include/include1.asm
+zerofiles/test/test-include/include2.asm
+zerofiles/test/test-include/include3.asm
+zerofiles/test/test-include/include4.asm
+zerofiles/test/test-include/include5.asm
+zerofiles/test/test-include/subdir/include6.asm
+zerofiles/test/result/test-addressing.expect.txt
+zerofiles/test/result/test-all-instruction.expect.txt
+zerofiles/test/result/test-binary2.expect.txt
+zerofiles/test/result/test-binary256.expect.txt
+zerofiles/test/result/test-binary300.expect.txt
+zerofiles/test/result/test-binary512.expect.txt
+zerofiles/test/result/test-binary600.expect.txt
+zerofiles/test/result/test-binary8000.expect.txt
+zerofiles/test/result/test-comment.expect.txt
+zerofiles/test/result/test-data.expect.txt
+zerofiles/test/result/test-dseg-follow.expect.txt
+zerofiles/test/result/test-equ.expect.txt
+zerofiles/test/result/test-include.expect.txt
+zerofiles/test/result/test-inline-data.expect.txt
+zerofiles/test/result/test-label.expect.txt
+zerofiles/test/result/test-literal.expect.txt
+zerofiles/test/result/test-macro.expect.txt
+zerofiles/test/result/test-mml.expect.txt
+zerofiles/test/result/test-operand.expect.txt
+zerofiles/test/result/test-operator.expect.txt
+zerofiles/test/result/test-org.expect.txt
+zerofiles/test/result/test-pcg-complex.expect.txt
+zerofiles/test/result/test-pcg-cramfull.expect.txt
+zerofiles/test/result/test-pcg-multipage.expect.txt
+zerofiles/test/result/test-pcg-userfull.expect.txt
+zerofiles/test/result/test-rel.expect.txt
+zerofiles/test/result/test-save.expect.txt
+zerofiles/test/result/test-scope.expect.txt
+zerofiles/test/result/test-segment.expect.txt
+zerofiles/test/result/test-struct.expect.txt
+zerofiles/src/CMakeLists.txt
+zerofiles/src/jrasm.sln
+zerofiles/src/jrpcgedit/CMakeLists.txt
+zerofiles/src/jrpcgedit/Config.cpp
+zerofiles/src/jrpcgedit/Config.h
+zerofiles/src/jrpcgedit/Document.cpp
+zerofiles/src/jrpcgedit/Document.h
+zerofiles/src/jrpcgedit/ErrorDialog.cpp
+zerofiles/src/jrpcgedit/ErrorDialog.h
+zerofiles/src/jrpcgedit/FrameMain.cpp
+zerofiles/src/jrpcgedit/FrameMain.h
+zerofiles/src/jrpcgedit/jrpcgedit.cpp
+zerofiles/src/jrpcgedit/jrpcgedit.h
+zerofiles/src/jrpcgedit/jrpcgedit.ico
+zerofiles/src/jrpcgedit/jrpcgedit.rc
+zerofiles/src/jrpcgedit/jrpcgedit.vcxproj
+zerofiles/src/jrpcgedit/PanelMain.cpp
+zerofiles/src/jrpcgedit/PanelMain.h
+zerofiles/src/jrpcgedit/PCGBrowser.cpp
+zerofiles/src/jrpcgedit/PCGBrowser.h
+zerofiles/src/jrpcgedit/PCGDataInfo.cpp
+zerofiles/src/jrpcgedit/PCGDataInfo.h
+zerofiles/src/jrpcgedit/PCGEditor.cpp
+zerofiles/src/jrpcgedit/PCGEditor.h
+zerofiles/src/jrpcgedit/PCGPageInfo.cpp
+zerofiles/src/jrpcgedit/PCGPageInfo.h
+zerofiles/src/jrpcgedit/pcgsimple.asm
+zerofiles/src/jrpcgedit/stdafx.cpp
+zerofiles/src/jrpcgedit/stdafx.h
+zerofiles/src/jrasmcore/CMakeLists.txt
+zerofiles/src/jrasmcore/CommandLine.cpp
+zerofiles/src/jrasmcore/CommandLine.h
+zerofiles/src/jrasmcore/Common.cpp
+zerofiles/src/jrasmcore/Common.h
+zerofiles/src/jrasmcore/Context.cpp
+zerofiles/src/jrasmcore/Context.h
+zerofiles/src/jrasmcore/Directive.cpp
+zerofiles/src/jrasmcore/Directive.h
+zerofiles/src/jrasmcore/DisasmDumper.cpp
+zerofiles/src/jrasmcore/DisasmDumper.h
+zerofiles/src/jrasmcore/ErrorLog.cpp
+zerofiles/src/jrasmcore/ErrorLog.h
+zerofiles/src/jrasmcore/Expr.cpp
+zerofiles/src/jrasmcore/Expr.h
+zerofiles/src/jrasmcore/FormatCJR.cpp
+zerofiles/src/jrasmcore/FormatCJR.h
+zerofiles/src/jrasmcore/FormatDump.cpp
+zerofiles/src/jrasmcore/FormatDump.h
+zerofiles/src/jrasmcore/Generator.cpp
+zerofiles/src/jrasmcore/Generator.h
+zerofiles/src/jrasmcore/Generator_M6800.cpp
+zerofiles/src/jrasmcore/Generator_M6800.h
+zerofiles/src/jrasmcore/InlineData.cpp
+zerofiles/src/jrasmcore/InlineData.h
+zerofiles/src/jrasmcore/jrasmcore.h
+zerofiles/src/jrasmcore/jrasmcore.vcxproj
+zerofiles/src/jrasmcore/Macro.cpp
+zerofiles/src/jrasmcore/Macro.h
+zerofiles/src/jrasmcore/MMLParser.cpp
+zerofiles/src/jrasmcore/MMLParser.h
+zerofiles/src/jrasmcore/Operator.cpp
+zerofiles/src/jrasmcore/Operator.h
+zerofiles/src/jrasmcore/Parser.cpp
+zerofiles/src/jrasmcore/Parser.h
+zerofiles/src/jrasmcore/PCGChar.cpp
+zerofiles/src/jrasmcore/PCGChar.h
+zerofiles/src/jrasmcore/PCGColor.cpp
+zerofiles/src/jrasmcore/PCGColor.h
+zerofiles/src/jrasmcore/PCGData.cpp
+zerofiles/src/jrasmcore/PCGData.h
+zerofiles/src/jrasmcore/PCGPage.cpp
+zerofiles/src/jrasmcore/PCGPage.h
+zerofiles/src/jrasmcore/PCGRange.cpp
+zerofiles/src/jrasmcore/PCGRange.h
+zerofiles/src/jrasmcore/Region.cpp
+zerofiles/src/jrasmcore/Region.h
+zerofiles/src/jrasmcore/Segment.cpp
+zerofiles/src/jrasmcore/Segment.h
+zerofiles/src/jrasmcore/stdafx.cpp
+zerofiles/src/jrasmcore/stdafx.h
+zerofiles/src/jrasmcore/Token.cpp
+zerofiles/src/jrasmcore/Token.h
+zerofiles/src/jrasmcore/Tokenizer.cpp
+zerofiles/src/jrasmcore/Tokenizer.h
+zerofiles/src/jrasmcore/Version.h
+zerofiles/src/jrasm/CMakeLists.txt
+zerofiles/src/jrasm/jrasm.cpp
+zerofiles/src/jrasm/jrasm.vcxproj
+zerofiles/src/jrasm/stdafx.cpp
+zerofiles/src/jrasm/stdafx.h
+zerofiles/src/guest/.gitignore
+zerofiles/src/guest/prepare-for-darwin
+zerofiles/src/guest/prepare-for-mswin.bat
+zerofiles/src/guest/VC_redist/concrt140.dll
+zerofiles/src/guest/VC_redist/msvcp140.dll
+zerofiles/src/guest/VC_redist/vccorlib140.dll
+zerofiles/src/guest/VC_redist/vcruntime140.dll
+zerofiles/src/guest/buildtool/7za920.zip
+zerofiles/src/guest/buildtool/curl_737_1.zip
+zerofiles/src/guest/buildtool/7za920/7-zip.chm
+zerofiles/src/guest/buildtool/7za920/7za.exe
+zerofiles/src/guest/buildtool/7za920/license.txt
+zerofiles/src/guest/buildtool/7za920/readme.txt
+zerofiles/script/md2html.gura
+zerofiles/sample/README.md
+zerofiles/sample/xrnd/xrnd-test.asm
+zerofiles/sample/vram/boundballs.asm
+zerofiles/sample/vram/test-fromxy.asm
+zerofiles/sample/vram/test.asm
+zerofiles/sample/vram/test2.asm
+zerofiles/sample/vram/vram32x24x2.inc
+zerofiles/sample/vram/vram32x24x3.inc
+zerofiles/sample/vram/vram36x24x2.inc
+zerofiles/sample/vram/vram36x24x3.inc
+zerofiles/sample/vram/vramcmn.inc
+zerofiles/sample/skigame/skigame.asm
+zerofiles/sample/pcgsimple/pcgsimple.asm
+zerofiles/sample/pcgraphic/demo.txt
+zerofiles/sample/pcgraphic/makeasm.gura
+zerofiles/sample/pcgraphic/two-kittens-jr.png
+zerofiles/sample/pcgraphic/two-kittens.asm
+zerofiles/sample/pcgraphic/two-kittens.cjr
+zerofiles/sample/pcgraphic/two-kittens.jpg
+zerofiles/sample/pcgraphic/woman-in-rain-jr.png
+zerofiles/sample/pcgraphic/woman-in-rain.asm
+zerofiles/sample/pcgraphic/woman-in-rain.cjr
+zerofiles/sample/pcgraphic/woman-in-rain.jpg
+zerofiles/sample/pcglong/pcglong.asm
+zerofiles/sample/oputil/oputil-test.asm
+zerofiles/sample/mml/mml-sakura.asm
+zerofiles/sample/mml/mml-sakura.cjr
+zerofiles/sample/jbranch/jbranch-test.asm
+zerofiles/sample/helloworld/helloworld.asm
+zerofiles/sample/guest/kemusiro-sample.asm
+zerofiles/sample/guest/okachan-line.asm
+zerofiles/sample/boundballs/boundballs.asm
+zerofiles/sample/boundballs/utils.inc
+zerofiles/sample/bios/bios-pick.asm
+zerofiles/sample/bios/bios-printnum.asm
+zerofiles/sample/bios/bios-putc.asm
+zerofiles/sample/bios/bios-puthex.asm
+zerofiles/sample/bios/bios-scroll.asm
+zerofiles/ref/binary100.cjr
+zerofiles/ref/binary2.cjr
+zerofiles/ref/binary256.cjr
+zerofiles/ref/binary300.cjr
+zerofiles/ref/binary512.cjr
+zerofiles/ref/binary600.cjr
+zerofiles/ref/binary8000.cjr
+zerofiles/ref/CjrFormat.cpp
+zerofiles/ref/CjrFormat.h
+zerofiles/ref/NumFormat.txt
+zerofiles/ref/USR1000.cjr
+zerofiles/ref/USR1234.cjr
+zerofiles/ref/USR2000.cjr
+zerofiles/ref/USR5000.cjr
+zerofiles/inc/bios.inc
+zerofiles/inc/jbranch.inc
+zerofiles/inc/oputil.inc
+zerofiles/inc/xrnd.inc
