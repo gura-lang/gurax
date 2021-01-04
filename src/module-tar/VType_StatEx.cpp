@@ -136,6 +136,21 @@ Gurax_ImplementPropertyGetter(StatEx, linkName)
 	return new Value_String(hdr.GetLinkName());
 }
 
+// tar.StatEx#name@tar
+Gurax_DeclarePropertyAlias_R(StatEx, name_at_tar, "name@tar")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(StatEx, name_at_tar)
+{
+	const Header& hdr = GetValueThis(valueTarget).GetStatEx().GetHeader();
+	return new Value_String(hdr.GetName());
+}
+
 //------------------------------------------------------------------------------
 // VType_StatEx
 //------------------------------------------------------------------------------
@@ -156,6 +171,7 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(StatEx, gname));
 	Assign(Gurax_CreateProperty(StatEx, uname));
 	Assign(Gurax_CreateProperty(StatEx, linkName));
+	Assign(Gurax_CreateProperty(StatEx, name_at_tar));
 }
 
 //------------------------------------------------------------------------------

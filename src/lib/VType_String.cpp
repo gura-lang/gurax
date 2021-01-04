@@ -252,15 +252,15 @@ Gurax_ImplementMethod(String, EachLine)
 	return argument.ReturnIterator(processor, new VType_String::Iterator_EachLine(str.Reference(), chopFlag));
 }
 
-// String#Encode(codec:Codec):String {block?}
+// String#Encode(codec:Codec):Binary {block?}
 Gurax_DeclareMethod(String, Encode)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Encodes the string with the given `codec` and return the result as a `binary`.\n");
+		"Encodes the string with the given `codec` and return the result as a `Binary`.\n");
 }
 
 Gurax_ImplementMethod(String, Encode)

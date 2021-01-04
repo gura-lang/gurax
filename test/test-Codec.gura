@@ -38,4 +38,6 @@ TestCase('UTF-16 Surrogate Pair') {
 	str += '\xf0\xa0\xae\xb7'	// tsuchi-yoshi
 	str.Encode('utf16be').Dump()
 	str.Encode('utf16le').Dump()
+	b'\xd8\x67\xde\x49\xd8\x42\xdf\xb7'.Decode('utf16be').p.Dump()
+	b'\x67\xd8\x49\xde\x42\xd8\xb7\xdf'.Decode('utf16le').p.Dump()
 }

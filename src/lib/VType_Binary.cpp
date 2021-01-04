@@ -69,6 +69,31 @@ Gurax_ImplementMethod(Binary, Clear)
 	return argument.GetValueThis().Reference();
 }
 
+// Binary#Decode(codec:Codec):String {block?}
+Gurax_DeclareMethod(Binary, Decode)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Decodes the binary with the given `codec` and return the result as a `String`.\n");
+}
+
+Gurax_ImplementMethod(Binary, Decode)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Codec& codec = args.Pick<Value_Codec>().GetCodec();
+	// Function body
+	const Binary& buff = valueThis.GetBinary();
+	String dst;
+	if (!codec.Decode(dst, buff)) return Value::nil();
+	return new Value_String(dst);
+}
+
 // Binary#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
 Gurax_DeclareMethod(Binary, Dump)
 {
@@ -286,6 +311,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Binary, Clear));
+	Assign(Gurax_CreateMethod(Binary, Decode));
 	Assign(Gurax_CreateMethod(Binary, Dump));
 	Assign(Gurax_CreateMethod(Binary, Pointer));
 	Assign(Gurax_CreateMethod(Binary, Reader));

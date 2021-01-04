@@ -84,12 +84,6 @@ public:
 	String ToString(const StringStyle& ss) const;
 };
 
-#if 0
-inline String operator+(const String& v1, const String& v2) {
-	return String(static_cast<std::string>(v1) + static_cast<std::string>(v2));
-}
-#endif
-
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------

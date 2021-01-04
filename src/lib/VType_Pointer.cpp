@@ -150,6 +150,31 @@ Gurax_ImplementMethod(Pointer, Append)
 	return valueThis.Reference();
 }
 
+// Pointer#Decode(codec:Codec):String {block?}
+Gurax_DeclareMethod(Pointer, Decode)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Decodes the data pointed by the pointer with the given `codec` and return the result as a `String`.\n");
+}
+
+Gurax_ImplementMethod(Pointer, Decode)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Codec& codec = args.Pick<Value_Codec>().GetCodec();
+	// Function body
+	const Pointer& ptr = valueThis.GetPointer();
+	String dst;
+	if (!codec.Decode(dst, ptr.GetPointerC<void>(), ptr.GetBytesAvailable())) return Value::nil();
+	return new Value_String(dst);
+}
+
 // Pointer#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
 Gurax_DeclareMethod(Pointer, Dump)
 {
@@ -729,6 +754,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassMethod(Pointer, HasSame));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pointer, Append));
+	Assign(Gurax_CreateMethod(Pointer, Decode));
 	Assign(Gurax_CreateMethod(Pointer, Dump));
 	Assign(Gurax_CreateMethod(Pointer, Pack));
 	Assign(Gurax_CreateMethod(Pointer, Put));

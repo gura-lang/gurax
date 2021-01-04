@@ -66,10 +66,10 @@ Gurax_ImplementFunction(Test)
 //-----------------------------------------------------------------------------
 // Implementation of module property
 //-----------------------------------------------------------------------------
-// tar.codec
+// tar.codec:nil
 Gurax_DeclareModuleProperty_RW(codec)
 {
-	Declare(VTYPE_Codec, Flag::None);
+	Declare(VTYPE_Codec, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
