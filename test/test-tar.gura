@@ -54,7 +54,7 @@ TestCase('Codec') {
 }
 
 TestCase('path.Walk() in tar file') {
-	Println(path.Walk('test-tar/zerofiles.tar/'))
+	Println(path.Walk('test-tar/zerofiles.tar/'):*Replace('\\', '/'))
 }
 
 TestCase('path.Walk() with tar.Directory') {
