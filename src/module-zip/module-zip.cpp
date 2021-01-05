@@ -61,10 +61,10 @@ Gurax_ImplementFunction(Inspect)
 //-----------------------------------------------------------------------------
 // Implementation of module property
 //-----------------------------------------------------------------------------
-// zip.codec
+// zip.codec:nil
 Gurax_DeclareModuleProperty_RW(codec)
 {
-	Declare(VTYPE_Codec, Flag::None);
+	Declare(VTYPE_Codec, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

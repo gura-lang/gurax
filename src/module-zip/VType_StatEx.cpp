@@ -41,7 +41,8 @@ Gurax_ImplementMethod(StatEx, PrintCentralFileHeader)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	valueThis.GetStatEx().GetCentralFileHeader().Print(*Stream::COut);
+	const CentralFileHeader& hdr = valueThis.GetStatEx().GetCentralFileHeader();
+	hdr.Print(*Stream::COut);
 	return Value::nil();
 }
 
@@ -60,8 +61,8 @@ Gurax_DeclareProperty_R(StatEx, compressionMethod)
 Gurax_ImplementPropertyGetter(StatEx, compressionMethod)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	UInt16 compressionMethod = valueThis.GetStatEx().GetCentralFileHeader().GetCompressionMethod();
-	return new Value_Symbol(CompressionMethodToSymbol(compressionMethod));
+	const CentralFileHeader& hdr = valueThis.GetStatEx().GetCentralFileHeader();
+	return new Value_Symbol(CompressionMethodToSymbol(hdr.GetCompressionMethod()));
 }
 
 // zip.Stat#fileComment
@@ -76,8 +77,8 @@ Gurax_DeclareProperty_R(StatEx, fileComment)
 Gurax_ImplementPropertyGetter(StatEx, fileComment)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const char* fileComment = valueThis.GetStatEx().GetCentralFileHeader().GetFileComment();
-	return new Value_String(fileComment);
+	const CentralFileHeader& hdr = valueThis.GetStatEx().GetCentralFileHeader();
+	return new Value_String(hdr.GetFileComment());
 }
 
 // zip.Stat#compressedSize
@@ -92,8 +93,24 @@ Gurax_DeclareProperty_R(StatEx, compressedSize)
 Gurax_ImplementPropertyGetter(StatEx, compressedSize)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	size_t compressedSize = valueThis.GetStatEx().GetCentralFileHeader().GetCompressedSize();
-	return new Value_Number(compressedSize);
+	const CentralFileHeader& hdr = valueThis.GetStatEx().GetCentralFileHeader();
+	return new Value_Number(hdr.GetCompressedSize());
+}
+
+// zip.StatEx#name@zip
+Gurax_DeclarePropertyAlias_R(StatEx, name_at_zip, "name@zip")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(StatEx, name_at_zip)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const CentralFileHeader& hdr = valueThis.GetStatEx().GetCentralFileHeader();
+	return new Value_String(hdr.GetFileName());
 }
 
 //------------------------------------------------------------------------------
@@ -113,6 +130,7 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(StatEx, compressedSize));
 	Assign(Gurax_CreateProperty(StatEx, compressionMethod));
 	Assign(Gurax_CreateProperty(StatEx, fileComment));
+	Assign(Gurax_CreateProperty(StatEx, name_at_zip));
 }
 
 //------------------------------------------------------------------------------
