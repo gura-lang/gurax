@@ -13,6 +13,7 @@ Param([switch]$help, [switch] $list, [switch] $download, [switch] $clean, [switc
 $urlGuest = "https://www.gura-lang.org/guest"
 $packages = @()
 $dirName = "${PSScriptRoot}\include"
+$gnuMake = "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe"
 if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 	$Env:INCLUDE += ";" + $dirName
 }
@@ -21,6 +22,8 @@ if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 # main
 #------------------------------------------------------------------------------
 function main([String[]] $packageNames) {
+	#DownloadBuildTools
+	#Exit
 	CheckPackages $packageNames
 	if ($help) {
 		PrintHelp
@@ -49,6 +52,15 @@ function PrintHelp() {
 	Write-Host " -clean [packages*]"
 	Write-Host " -download [packages*]"
 	Write-Host " -build [packages*]"
+}
+
+#------------------------------------------------------------------------------
+# DownloadBuildTools
+#------------------------------------------------------------------------------
+function DownloadBuildTools() {
+	git clone https://github.com/gura-lang/buildtools-mswin.git
+	curl $urlGuest/buildtools-mswin/UnxUpdates.zip -o buildtools-mswin\UnxUpdates.zip
+	7z x -y -obuildtools-mswin\UnxUtils buildtools-mswin\UnxUpdates.zip
 }
 
 #------------------------------------------------------------------------------
@@ -356,6 +368,21 @@ class Package_zlib {
 	}
 }
 $packages += [Package_zlib]::new()
+
+#---------------------------------------------------------------------------------
+# Package: pixman
+#---------------------------------------------------------------------------------
+class Package_pixman {
+	[String] $name = "pixman"
+	[String] $ver = "0.40.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $dirName = $this.baseName
+	Build() {
+		ExecCommand "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe" "-f Makefile.win32 MMX=off pixman"
+	}
+}
+$packages += [Package_pixman]::new()
 
 #---------------------------------------------------------------------------------
 # Package: wx
