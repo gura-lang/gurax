@@ -13,17 +13,19 @@ Param([switch]$help, [switch] $list, [switch] $download, [switch] $clean, [switc
 $urlGuest = "https://www.gura-lang.org/guest"
 $packages = @()
 $dirName = "${PSScriptRoot}\include"
-$gnuMake = "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe"
 if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 	$Env:INCLUDE += ";" + $dirName
+}
+$dirToAdd = "${PSScriptRoot}\buildtools-mswin\7za920;${PSScriptRoot}\buildtools-mswin;"
+if ($Env:Path.Contains($dirToAdd)) {
+	$Env:Path = $dirToAdd + $Env:Path
 }
 
 #------------------------------------------------------------------------------
 # main
 #------------------------------------------------------------------------------
 function main([String[]] $packageNames) {
-	#DownloadBuildTools
-	#Exit
+	DownloadBuildTools
 	CheckPackages $packageNames
 	if ($help) {
 		PrintHelp
@@ -58,9 +60,11 @@ function PrintHelp() {
 # DownloadBuildTools
 #------------------------------------------------------------------------------
 function DownloadBuildTools() {
-	git clone https://github.com/gura-lang/buildtools-mswin.git
-	curl $urlGuest/buildtools-mswin/UnxUpdates.zip -o buildtools-mswin\UnxUpdates.zip
-	7z x -y -obuildtools-mswin\UnxUtils buildtools-mswin\UnxUpdates.zip
+	if (!(Test-Path "buildtools-mswin")) {
+		git clone https://github.com/gura-lang/buildtools-mswin.git
+		curl $urlGuest/buildtools-mswin/UnxUpdates.zip -o buildtools-mswin\UnxUpdates.zip
+		7za x -y -obuildtools-mswin\UnxUtils buildtools-mswin\UnxUpdates.zip
+	}
 }
 
 #------------------------------------------------------------------------------
@@ -145,12 +149,16 @@ function ExpandFiles([String[]] $fileNames) {
 	foreach ($fileName in $fileNames) {
 		if ($fileName -match "(?<baseName>.+).tar.gz$") {
 			tar -xf $fileName
+		} elseif ($fileName -match "(?<baseName>.+).tar.xz$") {
+			$baseName = $Matches['baseName']
+			7za x -y $fileName
+			7za x -y "${baseName}.tar"
 		} elseif (($fileName -match "/(?<baseName>.+).zip$") -or ($fileName -match "/(?<baseName>.+).7z$")) {
 			$baseName = $Matches['baseName']
-			7z x -y -o"${baseName}" $fileName
+			7za x -y -o"${baseName}" $fileName
 		} elseif (($fileName -match "(?<baseName>.+).zip$") -or ($fileName -match "(?<baseName>.+).7z$")) {
 			$baseName = $Matches['baseName']
-			7z x -y $fileName
+			7za x -y $fileName
 		} else {
 			Write-Host "unsupported type of archive file: ${fileName}"
 			Exit
@@ -379,10 +387,25 @@ class Package_pixman {
 	[String[]] $fileNames = @("$($this.baseName).tar.gz")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe" "-f Makefile.win32 MMX=off pixman"
+		UnxUtils\make.exe -f Makefile.win32 MMX=off pixman
 	}
 }
 $packages += [Package_pixman]::new()
+
+#---------------------------------------------------------------------------------
+# Package: cairo
+#---------------------------------------------------------------------------------
+class Package_cairo {
+	[String] $name = "cairo"
+	[String] $ver = "1.16.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.xz")
+	[String] $dirName = $this.baseName
+	Build() {
+		#ExecCommand "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe" "-f Makefile.win32 MMX=off cairo"
+	}
+}
+$packages += [Package_cairo]::new()
 
 #---------------------------------------------------------------------------------
 # Package: wx
