@@ -16,8 +16,8 @@ $dirName = "${PSScriptRoot}\include"
 if ($Env:INCLUDE.Split(";") -notcontains $dirName) {
 	$Env:INCLUDE += ";" + $dirName
 }
-$dirToAdd = "${PSScriptRoot}\buildtools-mswin\7za920;${PSScriptRoot}\buildtools-mswin;"
-if ($Env:Path.Contains($dirToAdd)) {
+$dirToAdd = "${PSScriptRoot}\buildtools-mswin\7za920;${PSScriptRoot}\buildtools-mswin\UnxUtils;"
+if (!$Env:Path.Contains($dirToAdd)) {
 	$Env:Path = $dirToAdd + $Env:Path
 }
 
@@ -153,6 +153,7 @@ function ExpandFiles([String[]] $fileNames) {
 			$baseName = $Matches['baseName']
 			7za x -y $fileName
 			7za x -y "${baseName}.tar"
+			Remove-Item -ErrorAction Ignore -Force "${baseName}.tar"
 		} elseif (($fileName -match "/(?<baseName>.+).zip$") -or ($fileName -match "/(?<baseName>.+).7z$")) {
 			$baseName = $Matches['baseName']
 			7za x -y -o"${baseName}" $fileName
@@ -399,10 +400,10 @@ class Package_cairo {
 	[String] $name = "cairo"
 	[String] $ver = "1.16.0"
 	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.xz")
+	[String[]] $fileNames = @("$($this.baseName).tar.xz", "$($this.baseName)-gurapatch.tar.gz")
 	[String] $dirName = $this.baseName
 	Build() {
-		#ExecCommand "${PSScriptRoot}\buildtools-mswin\UnxUtils\make.exe" "-f Makefile.win32 MMX=off cairo"
+		ExecCommand make '-f .\Makefile.win32 PIXMAN_PATH=../../pixman-0.40.0 ZLIB_PATH=../../zlib-1.2.11 LIBPNG_PATH=../../libpng-1.6.37 CFG=release CFLAGS=/wd4819'
 	}
 }
 $packages += [Package_cairo]::new()
