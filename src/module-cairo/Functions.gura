@@ -79,14 +79,20 @@ r.DeclareType_Number('cairo_pattern_type_t')
 r.DeclareType_Number('cairo_extend_t')
 r.DeclareType_Number('cairo_filter_t')
 r.DeclareType_Number('cairo_region_overlap_t')
+r.DeclareType_Number('cairo_surface_observer_mode_t')
 
 r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
+r.DeclareType_EntityPtr('cairo_device_t_p', 'cairo_device_t*', 'cairo_device_t')
 r.DeclareType_EntityPtr('cairo_font_extents_t_p', 'cairo_font_extents_t*', 'cairo_font_extents_t')
 r.DeclareType_EntityPtr('cairo_font_face_t_p', 'cairo_font_face_t*', 'cairo_font_face_t')
 r.DeclareType_EntityPtr('cairo_font_options_t_p', 'cairo_font_options_t*', 'cairo_font_options_t')
 r.DeclareType_EntityPtr('cairo_glyph_t_p', 'cairo_glyph_t*', 'cairo_glyph_t')
 r.DeclareType_EntityPtr('cairo_matrix_t_p', 'cairo_matrix_t*', 'cairo_matrix_t')
+r.DeclareType_EntityPtr('cairo_path_t_p', 'cairo_path_t*', 'cairo_path_t')
 r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
+r.DeclareType_EntityPtr('cairo_rectangle_t_p', 'cairo_rectangle_t*', 'cairo_rectangle_t')
+r.DeclareType_EntityPtr('cairo_rectangle_int_t_p', 'cairo_rectangle_int_t*', 'cairo_rectangle_int_t')
+r.DeclareType_EntityPtr('cairo_region_t_p', 'cairo_region_t*', 'cairo_region_t')
 r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
 r.DeclareType_EntityPtr('cairo_scaled_font_t_p', 'cairo_scaled_font_t*', 'cairo_scaled_font_t')
 r.DeclareType_EntityPtr('cairo_text_extents_t_p', 'cairo_text_extents_t*', 'cairo_text_extents_t')
@@ -95,6 +101,10 @@ r.DeclareType_EntityPtr('cairo_text_cluster_t_p', 'cairo_text_cluster_t*', 'cair
 r.DeclareType_EntityPtr('const_cairo_font_options_t_p', 'const cairo_font_options_t*', 'cairo_font_options_t')
 r.DeclareType_EntityPtr('const_cairo_glyph_t_p', 'const cairo_glyph_t*', 'cairo_glyph_t')
 r.DeclareType_EntityPtr('const_cairo_matrix_t_p', 'const cairo_matrix_t*', 'cairo_matrix_t')
+r.DeclareType_EntityPtr('const_cairo_path_t_p', 'const cairo_path_t*', 'cairo_path_t')
+r.DeclareType_EntityPtr('const_cairo_rectangle_t_p', 'const cairo_rectangle_t*', 'cairo_rectangle_t')
+r.DeclareType_EntityPtr('const_cairo_rectangle_int_t_p', 'const cairo_rectangle_int_t*', 'cairo_rectangle_int_t')
+r.DeclareType_EntityPtr('const_cairo_region_t_p', 'const cairo_region_t*', 'cairo_region_t')
 r.DeclareType_EntityPtr('const_cairo_scaled_font_t_p', 'const cairo_scaled_font_t*', 'cairo_scaled_font_t')
 r.DeclareType_EntityPtr('const_cairo_text_cluster_t_p', 'const cairo_text_cluster_t*', 'cairo_text_cluster_t')
 
@@ -405,8 +415,6 @@ cairo_user_font_face_create():cairo_font_face_t_p
 
 //cairo_user_font_face_get_unicode_to_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_unicode_to_glyph_func_t
 
-/*
-
 cairo_get_operator(cr:cairo_t_p):cairo_operator_t
 
 cairo_get_source(cr:cairo_t_p):cairo_pattern_t_p
@@ -417,7 +425,7 @@ cairo_get_antialias(cr:cairo_t_p):cairo_antialias_t
 
 cairo_has_current_point(cr:cairo_t_p):cairo_bool_t
 
-cairo_get_current_point(cr:cairo_t_p, x:double_p, y:double_p):void
+//cairo_get_current_point(cr:cairo_t_p, x:double_p, y:double_p):void
 
 cairo_get_fill_rule(cr:cairo_t_p):cairo_fill_rule_t
 
@@ -431,7 +439,7 @@ cairo_get_miter_limit(cr:cairo_t_p):double
 
 cairo_get_dash_count(cr:cairo_t_p):int
 
-cairo_get_dash(cr:cairo_t_p, dashes:double_p, offset:double_p):void
+//cairo_get_dash(cr:cairo_t_p, dashes:double_p, offset:double_p):void
 
 cairo_get_matrix(cr:cairo_t_p, matrix:cairo_matrix_t_p):void
 
@@ -469,9 +477,9 @@ cairo_device_destroy(device:cairo_device_t_p):void
 
 cairo_device_get_reference_count(device:cairo_device_t_p):unsigned_int
 
-cairo_device_get_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p):void_p
+//cairo_device_get_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p):void_p
 
-cairo_device_set_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+//cairo_device_set_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
 cairo_surface_create_similar(other:cairo_surface_t_p, content:cairo_content_t, width:int, height:int):cairo_surface_t_p
 
@@ -485,25 +493,25 @@ cairo_surface_create_for_rectangle(target:cairo_surface_t_p, x:double, y:double,
 
 cairo_surface_create_observer(target:cairo_surface_t_p, mode:cairo_surface_observer_mode_t):cairo_surface_t_p
 
-cairo_surface_observer_add_paint_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_paint_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_mask_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_mask_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_fill_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_fill_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_stroke_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_stroke_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_glyphs_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_glyphs_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_flush_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_flush_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_add_finish_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+//cairo_surface_observer_add_finish_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
 
-cairo_surface_observer_print(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+//cairo_surface_observer_print(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
 
 cairo_surface_observer_elapsed(surface:cairo_surface_t_p):double
 
-cairo_device_observer_print(device:cairo_device_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+//cairo_device_observer_print(device:cairo_device_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
 
 cairo_device_observer_elapsed(device:cairo_device_t_p):double
 
@@ -535,15 +543,15 @@ cairo_surface_get_content(surface:cairo_surface_t_p):cairo_content_t
 
 cairo_surface_write_to_png(surface:cairo_surface_t_p, filename:const_char_p):cairo_status_t
 
-cairo_surface_write_to_png_stream(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+//cairo_surface_write_to_png_stream(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
 
-cairo_surface_get_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p):void_p
+//cairo_surface_get_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p):void_p
 
-cairo_surface_set_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+//cairo_surface_set_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
-cairo_surface_get_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_pp, length:unsigned_long_p):void
+//cairo_surface_get_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_pp, length:unsigned_long_p):void
 
-cairo_surface_set_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_p, length:unsigned_long, destroy:cairo_destroy_func_t, closure:void_p):cairo_status_t
+//cairo_surface_set_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_p, length:unsigned_long, destroy:cairo_destroy_func_t, closure:void_p):cairo_status_t
 
 cairo_surface_supports_mime_type(surface:cairo_surface_t_p, mime_type:const_char_p):cairo_bool_t
 
@@ -557,15 +565,15 @@ cairo_surface_mark_dirty_rectangle(surface:cairo_surface_t_p, x:int, y:int, widt
 
 cairo_surface_set_device_scale(surface:cairo_surface_t_p, x_scale:double, y_scale:double):void
 
-cairo_surface_get_device_scale(surface:cairo_surface_t_p, x_scale:double_p, y_scale:double_p):void
+//cairo_surface_get_device_scale(surface:cairo_surface_t_p, x_scale:double_p, y_scale:double_p):void
 
 cairo_surface_set_device_offset(surface:cairo_surface_t_p, x_offset:double, y_offset:double):void
 
-cairo_surface_get_device_offset(surface:cairo_surface_t_p, x_offset:double_p, y_offset:double_p):void
+//cairo_surface_get_device_offset(surface:cairo_surface_t_p, x_offset:double_p, y_offset:double_p):void
 
 cairo_surface_set_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double, y_pixels_per_inch:double):void
 
-cairo_surface_get_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double_p, y_pixels_per_inch:double_p):void
+//cairo_surface_get_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double_p, y_pixels_per_inch:double_p):void
 
 cairo_surface_copy_page(surface:cairo_surface_t_p):void
 
@@ -577,9 +585,9 @@ cairo_image_surface_create(format:cairo_format_t, width:int, height:int):cairo_s
 
 cairo_format_stride_for_width(format:cairo_format_t, width:int):int
 
-cairo_image_surface_create_for_data(data:unsigned_char_p, format:cairo_format_t, width:int, height:int, stride:int):cairo_surface_t_p
+//cairo_image_surface_create_for_data(data:unsigned_char_p, format:cairo_format_t, width:int, height:int, stride:int):cairo_surface_t_p
 
-cairo_image_surface_get_data(surface:cairo_surface_t_p):unsigned_char_p
+//cairo_image_surface_get_data(surface:cairo_surface_t_p):unsigned_char_p
 
 cairo_image_surface_get_format(surface:cairo_surface_t_p):cairo_format_t
 
@@ -591,11 +599,11 @@ cairo_image_surface_get_stride(surface:cairo_surface_t_p):int
 
 cairo_image_surface_create_from_png(filename:const_char_p):cairo_surface_t_p
 
-cairo_image_surface_create_from_png_stream(read_func:cairo_read_func_t, closure:void_p):cairo_surface_t_p
+//cairo_image_surface_create_from_png_stream(read_func:cairo_read_func_t, closure:void_p):cairo_surface_t_p
 
 cairo_recording_surface_create(content:cairo_content_t, extents:const_cairo_rectangle_t_p):cairo_surface_t_p
 
-cairo_recording_surface_ink_extents(surface:cairo_surface_t_p, x0:double_p, y0:double_p, width:double_p, height:double_p):void
+//cairo_recording_surface_ink_extents(surface:cairo_surface_t_p, x0:double_p, y0:double_p, width:double_p, height:double_p):void
 
 cairo_recording_surface_get_extents(surface:cairo_surface_t_p, extents:cairo_rectangle_t_p):cairo_bool_t
 
@@ -603,23 +611,23 @@ cairo_pattern_create_raster_source(user_data:void_p, content:cairo_content_t, wi
 
 cairo_raster_source_pattern_set_callback_data(pattern:cairo_pattern_t_p, data:void_p):void
 
-cairo_raster_source_pattern_get_callback_data(pattern:cairo_pattern_t_p):void_p
+//cairo_raster_source_pattern_get_callback_data(pattern:cairo_pattern_t_p):void_p
 
-cairo_raster_source_pattern_set_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t, release:cairo_raster_source_release_func_t):void
+//cairo_raster_source_pattern_set_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t, release:cairo_raster_source_release_func_t):void
 
-cairo_raster_source_pattern_get_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t_p, release:cairo_raster_source_release_func_t_p):void
+//cairo_raster_source_pattern_get_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t_p, release:cairo_raster_source_release_func_t_p):void
 
-cairo_raster_source_pattern_set_snapshot(pattern:cairo_pattern_t_p, snapshot:cairo_raster_source_snapshot_func_t):void
+//cairo_raster_source_pattern_set_snapshot(pattern:cairo_pattern_t_p, snapshot:cairo_raster_source_snapshot_func_t):void
 
-cairo_raster_source_pattern_get_snapshot(pattern:cairo_pattern_t_p):cairo_raster_source_snapshot_func_t
+//cairo_raster_source_pattern_get_snapshot(pattern:cairo_pattern_t_p):cairo_raster_source_snapshot_func_t
 
-cairo_raster_source_pattern_set_copy(pattern:cairo_pattern_t_p, copy:cairo_raster_source_copy_func_t):void
+//cairo_raster_source_pattern_set_copy(pattern:cairo_pattern_t_p, copy:cairo_raster_source_copy_func_t):void
 
-cairo_raster_source_pattern_get_copy(pattern:cairo_pattern_t_p):cairo_raster_source_copy_func_t
+//cairo_raster_source_pattern_get_copy(pattern:cairo_pattern_t_p):cairo_raster_source_copy_func_t
 
-cairo_raster_source_pattern_set_finish(pattern:cairo_pattern_t_p, finish:cairo_raster_source_finish_func_t):void
+//cairo_raster_source_pattern_set_finish(pattern:cairo_pattern_t_p, finish:cairo_raster_source_finish_func_t):void
 
-cairo_raster_source_pattern_get_finish(pattern:cairo_pattern_t_p):cairo_raster_source_finish_func_t
+//cairo_raster_source_pattern_get_finish(pattern:cairo_pattern_t_p):cairo_raster_source_finish_func_t
 
 cairo_pattern_create_rgb(red:double, green:double, blue:double):cairo_pattern_t_p
 
@@ -641,9 +649,9 @@ cairo_pattern_get_reference_count(pattern:cairo_pattern_t_p):unsigned_int
 
 cairo_pattern_status(pattern:cairo_pattern_t_p):cairo_status_t
 
-cairo_pattern_get_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p):void_p
+//cairo_pattern_get_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p):void_p
 
-cairo_pattern_set_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+//cairo_pattern_set_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
 cairo_pattern_get_type(pattern:cairo_pattern_t_p):cairo_pattern_type_t
 
@@ -679,25 +687,25 @@ cairo_pattern_set_filter(pattern:cairo_pattern_t_p, filter:cairo_filter_t):void
 
 cairo_pattern_get_filter(pattern:cairo_pattern_t_p):cairo_filter_t
 
-cairo_pattern_get_rgba(pattern:cairo_pattern_t_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+//cairo_pattern_get_rgba(pattern:cairo_pattern_t_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
 
-cairo_pattern_get_surface(pattern:cairo_pattern_t_p, surface:cairo_surface_t_pp):cairo_status_t
+//cairo_pattern_get_surface(pattern:cairo_pattern_t_p, surface:cairo_surface_t_pp):cairo_status_t
 
-cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t_p, index:int, offset:double_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+//cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t_p, index:int, offset:double_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
 
-cairo_pattern_get_color_stop_count(pattern:cairo_pattern_t_p, count:int_p):cairo_status_t
+//cairo_pattern_get_color_stop_count(pattern:cairo_pattern_t_p, count:int_p):cairo_status_t
 
-cairo_pattern_get_linear_points(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, x1:double_p, y1:double_p):cairo_status_t
+//cairo_pattern_get_linear_points(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, x1:double_p, y1:double_p):cairo_status_t
 
-cairo_pattern_get_radial_circles(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, r0:double_p, x1:double_p, y1:double_p, r1:double_p):cairo_status_t
+//cairo_pattern_get_radial_circles(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, r0:double_p, x1:double_p, y1:double_p, r1:double_p):cairo_status_t
 
-cairo_mesh_pattern_get_patch_count(pattern:cairo_pattern_t_p, count:unsigned_int_p):cairo_status_t
+//cairo_mesh_pattern_get_patch_count(pattern:cairo_pattern_t_p, count:unsigned_int_p):cairo_status_t
 
 cairo_mesh_pattern_get_path(pattern:cairo_pattern_t_p, patch_num:unsigned_int):cairo_path_t_p
 
-cairo_mesh_pattern_get_corner_color_rgba(pattern:cairo_pattern_t_p, patch_num:unsigned_int, corner_num:unsigned_int, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+//cairo_mesh_pattern_get_corner_color_rgba(pattern:cairo_pattern_t_p, patch_num:unsigned_int, corner_num:unsigned_int, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
 
-cairo_mesh_pattern_get_control_point(pattern:cairo_pattern_t_p, patch_num:unsigned_int, point_num:unsigned_int, x:double_p, y:double_p):cairo_status_t
+//cairo_mesh_pattern_get_control_point(pattern:cairo_pattern_t_p, patch_num:unsigned_int, point_num:unsigned_int, x:double_p, y:double_p):cairo_status_t
 
 cairo_matrix_init(matrix:cairo_matrix_t_p, xx:double, yx:double, xy:double, yy:double, x0:double, y0:double):void
 
@@ -719,9 +727,9 @@ cairo_matrix_invert(matrix:cairo_matrix_t_p):cairo_status_t
 
 cairo_matrix_multiply(result:cairo_matrix_t_p, a:const_cairo_matrix_t_p, b:const_cairo_matrix_t_p):void
 
-cairo_matrix_transform_distance(matrix:const_cairo_matrix_t_p, dx:double_p, dy:double_p):void
+//cairo_matrix_transform_distance(matrix:const_cairo_matrix_t_p, dx:double_p, dy:double_p):void
 
-cairo_matrix_transform_point(matrix:const_cairo_matrix_t_p, x:double_p, y:double_p):void
+//cairo_matrix_transform_point(matrix:const_cairo_matrix_t_p, x:double_p, y:double_p):void
 
 cairo_region_create():cairo_region_t_p
 
@@ -770,7 +778,6 @@ cairo_region_xor(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_statu
 cairo_region_xor_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
 
 cairo_debug_reset_static_data():void
-*/
 
 }
 

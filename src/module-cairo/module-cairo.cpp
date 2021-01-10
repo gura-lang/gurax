@@ -53,12 +53,17 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_cairo_t);
+	Assign(VTYPE_cairo_device_t);
 	Assign(VTYPE_cairo_font_extents_t);
 	Assign(VTYPE_cairo_font_face_t);
 	Assign(VTYPE_cairo_font_options_t);
 	Assign(VTYPE_cairo_glyph_t);
 	Assign(VTYPE_cairo_matrix_t);
+	Assign(VTYPE_cairo_path_t);
 	Assign(VTYPE_cairo_pattern_t);
+	Assign(VTYPE_cairo_rectangle_t);
+	Assign(VTYPE_cairo_rectangle_int_t);
+	Assign(VTYPE_cairo_region_t);
 	Assign(VTYPE_cairo_scaled_font_t);
 	Assign(VTYPE_cairo_surface_t);
 	Assign(VTYPE_cairo_text_cluster_t);
