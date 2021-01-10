@@ -37,7 +37,10 @@ target_compile_definitions(cairo.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(cairo.gurd PRIVATE
 	module-cairo.cpp
-	Util.cpp)
+	Util.cpp
+	Functions.cpp
+	VType_cairo_t.cpp
+	VType_cairo_surface_t.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

@@ -1,0 +1,72 @@
+#!/usr/bin/env gurax
+import(cbridge)
+
+r = cbridge.Renderer()
+
+//------------------------------------------------------------------------------
+// Type Information
+//------------------------------------------------------------------------------
+cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
+this.DeclareType(decl, cType, vtypeFullName,
+	codePicker = R'''
+	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+	${this.cType}& ${varName} = value_${varName}.GetEntity();
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Value_${this.vtype}(rtn);
+	''')
+
+cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
+this.DeclareType(decl, cType, vtypeFullName,
+	codePicker = R'''
+	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+	${this.cType} ${varName} = value_${varName}.GetEntityPtr();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	if (!rtn) return Value::nil();
+	return new Value_${this.vtype}(rtn);
+	''')
+
+r.DeclareType('Gurax_Image', 'Gurax::Image', 'Image',
+	codePicker = R'''
+	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetImage();
+	''')
+
+r.DeclareType_Number('cairo_status_t')
+
+r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
+
+//------------------------------------------------------------------------------
+// Function Registration
+//------------------------------------------------------------------------------
+r.Register('cairo') {
+
+cairo_version():int
+
+}
+
+tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(cairo)
+
+${r.ComposeImplementation()}
+
+void AssignFunctions(Frame& frame)
+{
+	${r.ComposeAssignment('frame.')}
+}
+
+Gurax_EndModuleScope(cairo)
+'''.Render('Functions.cpp')

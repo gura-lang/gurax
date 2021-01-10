@@ -1,0 +1,411 @@
+#!/usr/bin/env gurax
+import(re)
+import(argopt)
+
+//------------------------------------------------------------------------------
+// Info
+//------------------------------------------------------------------------------
+Info = struct {
+	fileName:String
+	tmpl:Template
+	Render():dynamicScope:void = this.tmpl.Render(Open(this.fileName, 'w'))
+}
+
+info_Header = Info()
+info_Source = Info()
+info_VTypeHeader = Info()
+info_VTypeSource = Info()
+
+//------------------------------------------------------------------------------
+// Template of ${className}.h
+//------------------------------------------------------------------------------
+info_Header.tmpl = tR'''
+//==============================================================================
+// ${className}.h
+//==============================================================================
+${if (ubarModuleName)}
+#ifndef GURAX_MODULE_${ubarModuleName.Upper()}_${className.Upper()}_H
+#define GURAX_MODULE_${ubarModuleName.Upper()}_${className.Upper()}_H
+#include "module-cairo.h"
+
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+#ifndef GURAX_${className.Upper()}_H
+#define GURAX_${className.Upper()}_H
+#include "Referable.h"
+
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// ${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ${className} : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(${className});
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("${dotClassName}");
+public:
+	// Constructor
+	${className}() {}
+	// Copy constructor/operator
+	${className}(const ${className}& src) = delete;
+	${className}& operator=(const ${className}& src) = delete;
+	// Move constructor/operator
+	${className}(${className}&& src) noexcept = delete;
+	${className}& operator=(${className}&& src) noexcept = delete;
+protected:
+	~${className}() = default;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ${className}& other) const { return this == &other; }
+	bool IsEqualTo(const ${className}& other) const { return IsIdentical(other); }
+	bool IsLessThan(const ${className}& other) const { return this < &other; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+
+#endif
+'''
+
+//------------------------------------------------------------------------------
+// Template of ${className}.cpp
+//------------------------------------------------------------------------------
+info_Source.tmpl = tR'''
+//==============================================================================
+// ${className}.cpp
+//==============================================================================
+#include "stdafx.h"
+
+${if (ubarModuleName)}
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// ${className}
+//------------------------------------------------------------------------------
+String ${className}::ToString(const StringStyle& ss) const
+{
+	return String().Format("${dotClassName}");
+}
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+'''
+
+//------------------------------------------------------------------------------
+// Template of VType_${className}.h
+//------------------------------------------------------------------------------
+info_VTypeHeader.tmpl = tR'''
+//==============================================================================
+// VType_${className}.h
+//==============================================================================
+${if (ubarModuleName)}
+#ifndef GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
+#define GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
+#include "module-cairo.h"
+
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+#ifndef GURAX_VTYPE_${className.Upper()}_H
+#define GURAX_VTYPE_${className.Upper()}_H
+#include "VType_Object.h"
+#include "${className}.h"
+
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// VType_${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE VType_${className} : public VType {
+public:
+	using VType::VType;
+	virtual void DoPrepare(Frame& frameOuter) override;
+};
+
+extern GURAX_DLLDECLARE VType_${className} VTYPE_${className};
+
+//------------------------------------------------------------------------------
+// Value_${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Value_${className} : public Value_Object {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Value_${className});
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Value_${className}");
+protected:
+${if (entityPointerFlag)}
+	${entityName}* _entity;
+${else}
+	${entityName} _entity;
+${end}
+public:
+	static VType& vtype;
+public:
+	// Constructor
+	explicit Value_${className}(VType& vtype = VTYPE_${className}) : Value_Object(vtype) {}
+${if (entityPointerFlag)}
+	explicit Value_${className}(${entityName}* entity, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _entity(entity) {}
+${else}
+	explicit Value_${className}(const ${entityName}& entity, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _entity(entity) {}
+${end}
+	// Copy constructor/operator
+	Value_${className}(const Value_${className}& src) = delete;
+	Value_${className}& operator=(const Value_${className}& src) = delete;
+	// Move constructor/operator
+	Value_${className}(Value_${className}&& src) noexcept = delete;
+	Value_${className}& operator=(Value_${className}&& src) noexcept = delete;
+protected:
+	// Destructor
+	~Value_${className}() = default;
+public:
+${if (entityPointerFlag)}
+	${entityName}& GetEntity() { return *_entity; }
+	const ${entityName}& GetEntity() const { return *_entity; }
+	${entityName}* GetEntityPtr() { return _entity; }
+	const ${entityName}* GetEntityPtr() const { return _entity; }
+${else}
+	${entityName}& GetEntity() { return _entity; }
+	const ${entityName}& GetEntity() const { return _entity; }
+	${entityName}* GetEntityPtr() { return &_entity; }
+	const ${entityName}* GetEntityPtr() const { return &_entity; }
+${end}
+public:
+	static ${entityName}& GetEntity(Value& value) {
+		return dynamic_cast<Value_${entityName}&>(value).GetEntity();
+	}
+	static const ${entityName}& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_${entityName}&>(value).GetEntity();
+	}
+	static ${entityName}* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_${entityName}&>(value).GetEntityPtr();
+	}
+	static const ${entityName}* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_${entityName}&>(value).GetEntityPtr();
+	}
+public:
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override {
+		return reinterpret_cast<size_t>(GetEntityPtr());
+	}
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) &&
+			GetEntityPtr() == Value_${className}::GetEntityPtr(value);
+	}
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			GetEntityPtr() < Value_${className}::GetEntityPtr(value) :
+			GetVType().IsLessThan(value.GetVType());
+	}
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+
+#endif
+'''
+
+//------------------------------------------------------------------------------
+// Template of VType_${className}.cpp
+//------------------------------------------------------------------------------
+info_VTypeSource.tmpl = tR'''
+//==============================================================================
+// VType_${className}.cpp
+//==============================================================================
+#include "stdafx.h"
+
+${if (ubarModuleName)}
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// ${dotClassName}#MethodSkeleton(num1:Number, num2:Number)
+Gurax_DeclareMethod(${className}, MethodSkeleton)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(${className}, MethodSkeleton)
+{
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Double num1 = args.PickNumber<Double>();
+	Double num2 = args.PickNumber<Double>();
+	// Function body
+	return new Value_Number(num1 + num2);
+}
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+// ${dotClassName}#propSkeleton
+Gurax_DeclareProperty_R(${className}, propSkeleton)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(${className}, propSkeleton)
+{
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
+}
+
+//------------------------------------------------------------------------------
+// VType_${className}
+//------------------------------------------------------------------------------
+VType_${className} VTYPE_${className}("${className}");
+
+void VType_${className}::DoPrepare(Frame& frameOuter)
+{
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Mutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(${className}, MethodSkeleton));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(${className}, propSkeleton));
+}
+
+//------------------------------------------------------------------------------
+// Value_${className}
+//------------------------------------------------------------------------------
+VType& Value_${className}::vtype = VTYPE_${className};
+
+String Value_${className}::ToString(const StringStyle& ss) const
+{
+	return "${dotModuleName}.${className}";
+}
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+'''
+
+tmplHelp = tR'''
+usage: genclass [options] class-name
+options:
+  ${p.FormatHelp() + '\n'}
+'''
+
+//------------------------------------------------------------------------------
+// main
+//------------------------------------------------------------------------------
+main() = {
+	argopt.Parser {|p|
+		p.AddFlag('help', 'h', 'prints help')
+		p.AddFlag('pointer', 'p', 'entity as a pointer')
+		p.AddFlag('entity', 'e', 'generates entity class')
+		p.AddFlag('vtype', 'v', 'generates VType')
+		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
+		opt = nil
+		try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+		if (!opt || argv.len < 1 || opt['help']) {
+			tmplHelp.Render(sys.cerr)
+			sys.Exit(1)
+		}
+	}
+	entityPointerFlag = opt['pointer']
+	dotClassName = path.FileName(argv[0])
+	fields = dotClassName.Split('.'):list
+	if (fields.len == 1) {
+		pathNames = path.Glob('module-*.h'):list
+		if (pathNames.IsEmpty()) {
+			ubarModuleName = nil
+			dotModuleName = nil
+		} elsif (pathNames.len == 1) {
+			m = pathNames[0].Match(r'module-(.+)\.h$')
+			ubarModuleName = m[1]
+			dotModuleName = ubarModuleName.Replace('_', '.')
+			dotClassName = dotModuleName + '.' + dotClassName
+		} else {
+			sys.cerr.Println('multiple module header files have been found: ', pathNames.Join(', '))
+			sys.Exit(1)
+		}
+	} else {
+		fieldsSub = fields.Head(fields.len - 1):list
+		ubarModuleName = fieldsSub.Join('_')
+		dotModuleName = fieldsSub.Join('.')
+	}
+	className = fields[-1]
+	entityName = className
+	info_Header.fileName = className + '.h'
+	info_Source.fileName = className + '.cpp'
+	info_VTypeHeader.fileName = 'VType_' + className + '.h'
+	info_VTypeSource.fileName = 'VType_' + className + '.cpp'
+	//infoTbl = if (opt['entity'] && !opt['vtype']) {
+	//	[info_Header, info_Source]
+	//} elsif (!opt['entity'] && opt['vtype']) {
+	//	[info_VTypeHeader, info_VTypeSource]
+	//} else {
+	//	[info_Header, info_Source, info_VTypeHeader, info_VTypeSource]
+	//}
+	infoTbl = [info_VTypeHeader, info_VTypeSource]
+	if (!opt['force'] && \
+		fs.Exists(infoTbl:*fileName).Or()) {
+		sys.cerr.Println('file already exists')
+		sys.Exit(1)
+	}
+	infoTbl::Render()
+	tR'''
+	Following files were generated for the ${dotClassName} class.
+	  ${infoTbl:*fileName + '\n'}
+	'''.Render(sys.cout)
+}
+
+main()
