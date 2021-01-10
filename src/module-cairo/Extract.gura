@@ -1,0 +1,113 @@
+#!/usr/bin/env gurax
+import(re)
+
+FileInfo = struct {
+	fileName:String
+	remark:String
+	funcInfoTbl[]:FuncInfo
+}
+
+fileInfoTbl = @(FileInfo) {
+	{ 'cairo.h',			'' }
+}
+
+ExtractFromDecl(decl:String):map = {
+	fields = []
+	decl.SplitReg(r'\s+') {|field|
+		if (m = field.Match(r'^(\*+)(.*)')) {
+			fields.Add(m[1])
+			field = m[2]
+		}
+		field.Scan(r'(\w+)(\**)') {|m|
+			fields.Add(m[1])
+			!m[2].IsEmpty() && fields.Add(m[2])
+		}
+	}
+	fields
+}
+
+RtnInfo = class {
+	typeNameC:String
+	typeNameP:String	// pseudo type name
+	__init__(declRtn:String):map = {
+		declRtn = declRtn.Strip()
+		fields = ExtractFromDecl(declRtn)
+		this.typeNameC = fields.Join(' ').Sub(r' \*', '*').Sub(r'\* ', '*')
+		this.typeNameP = fields.Join('_').Sub(r'\*', 'p')
+	}
+}
+
+ArgInfo = class {
+	typeNameC:String
+	typeNameP:String	// pseudo type name
+	argName:String
+	__init__(declArg:String):map = {
+		declArg = declArg.Strip()
+		fields = ExtractFromDecl(declArg)
+		if (fields.len > 1) {
+			this.argName = fields.last
+			fields.Erase(-1)
+			this.typeNameC = fields.Join(' ').Sub(r' \*', '*').Sub(r'\* ', '*')
+			this.typeNameP = fields.Join('_').Sub(r'\*', 'p')
+		} else {
+			this.typeNameC = this.typeNameP = fields.first
+		}
+	}
+	ToString() = Format('%s:%s', this.argName, this.typeNameP)
+}
+
+FuncInfo = struct {
+	rtnInfo:RtnInfo
+	funcName:String
+	argInfoTbl[]:ArgInfo
+	ToString() = Format('%s(%s):%s', this.funcName,
+			this.argInfoTbl:*ToString().Join(', '), this.rtnInfo.typeNameP)
+}
+
+Extract(stream:Stream):map = {
+	AddFuncInfo(line:String) = {
+		m = line.Match(r'cairo_public\s+(.+)(cairo_\w+)\s*\(([^\)]*)\)')
+		if (!m) {
+			Printf('invalid format: %s\n', line)
+			sys.Exit(1)
+		}
+		declRtn = m[1].Strip()
+		funcName = m[2].Strip()
+		declArgJoined = m[3].Strip()
+		declArgJoined = declArgJoined.Strip()
+		if (declArgJoined == 'void') { declArgJoined = '' }
+		funcInfo = FuncInfo(RtnInfo(declRtn), funcName, ArgInfo(declArgJoined.Split(',')))
+		funcInfoTbl.Add(funcInfo)
+	}
+	funcInfoTbl = []
+	stat = `leader
+	stream.ReadLines {|line|
+		line = line.Strip()
+		if (stat == `leader) {
+			if (m = line.Match(r'^cairo_public')) {
+				if (line.Match(r'\);$')) {
+					AddFuncInfo(line)
+				} else {
+					lineJoin = line
+					stat = `follower
+				}
+			}
+		} elsif (stat == `follower) {
+			lineJoin += ' ' + line
+			if (line.Match(r'\);$')) {
+				AddFuncInfo(lineJoin)
+				stat = `leader
+			}
+		}
+	}
+	funcInfoTbl
+}
+
+dirName = '../../guest/cairo-1.16.0/src'
+
+fileInfoTbl.Each {|fileInfo|
+	fileInfo.funcInfoTbl = Extract(path.Join(dirName, fileInfo.fileName))
+	Printf('//======== %s (%s) ========\n', fileInfo.remark, fileInfo.fileName)
+	Println('\n' + fileInfo.funcInfoTbl:*ToString())
+	Println()
+}
