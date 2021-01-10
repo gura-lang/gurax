@@ -40,9 +40,13 @@ r.DeclareType('Gurax_Image', 'Gurax::Image', 'Image',
 	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetImage();
 	''')
 
+r.DeclareType_Number('cairo_content_t')
 r.DeclareType_Number('cairo_status_t')
+r.DeclareType_Number('cairo_operator_t')
 
 r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
+r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
+r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
 
 //------------------------------------------------------------------------------
 // Function Registration
@@ -50,6 +54,673 @@ r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
 r.Register('cairo') {
 
 cairo_version():int
+
+cairo_version_string():const_char_p
+
+cairo_create(target:cairo_surface_t_p):cairo_t_p
+
+cairo_reference(cr:cairo_t_p):cairo_t_p
+
+cairo_destroy(cr:cairo_t_p):void
+
+cairo_get_reference_count(cr:cairo_t_p):unsigned_int
+
+//cairo_get_user_data(cr:cairo_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+//cairo_set_user_data(cr:cairo_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_save(cr:cairo_t_p):void
+
+cairo_restore(cr:cairo_t_p):void
+
+cairo_push_group(cr:cairo_t_p):void
+
+cairo_push_group_with_content(cr:cairo_t_p, content:cairo_content_t):void
+
+cairo_pop_group(cr:cairo_t_p):cairo_pattern_t_p
+
+cairo_pop_group_to_source(cr:cairo_t_p):void
+
+cairo_set_operator(cr:cairo_t_p, op:cairo_operator_t):void
+
+cairo_set_source(cr:cairo_t_p, source:cairo_pattern_t_p):void
+
+/*
+
+cairo_set_source_rgb(cr:cairo_t_p, red:double, green:double, blue:double):void
+
+cairo_set_source_rgba(cr:cairo_t_p, red:double, green:double, blue:double, alpha:double):void
+
+cairo_set_source_surface(cr:cairo_t_p, surface:cairo_surface_t_p, x:double, y:double):void
+
+cairo_set_tolerance(cr:cairo_t_p, tolerance:double):void
+
+cairo_set_antialias(cr:cairo_t_p, antialias:cairo_antialias_t):void
+
+cairo_set_fill_rule(cr:cairo_t_p, fill_rule:cairo_fill_rule_t):void
+
+cairo_set_line_width(cr:cairo_t_p, width:double):void
+
+cairo_set_line_cap(cr:cairo_t_p, line_cap:cairo_line_cap_t):void
+
+cairo_set_line_join(cr:cairo_t_p, line_join:cairo_line_join_t):void
+
+cairo_set_dash(cr:cairo_t_p, dashes:const_double_p, num_dashes:int, offset:double):void
+
+cairo_set_miter_limit(cr:cairo_t_p, limit:double):void
+
+cairo_translate(cr:cairo_t_p, tx:double, ty:double):void
+
+cairo_scale(cr:cairo_t_p, sx:double, sy:double):void
+
+cairo_rotate(cr:cairo_t_p, angle:double):void
+
+cairo_transform(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
+
+cairo_set_matrix(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
+
+cairo_identity_matrix(cr:cairo_t_p):void
+
+cairo_user_to_device(cr:cairo_t_p, x:double_p, y:double_p):void
+
+cairo_user_to_device_distance(cr:cairo_t_p, dx:double_p, dy:double_p):void
+
+cairo_device_to_user(cr:cairo_t_p, x:double_p, y:double_p):void
+
+cairo_device_to_user_distance(cr:cairo_t_p, dx:double_p, dy:double_p):void
+
+cairo_new_path(cr:cairo_t_p):void
+
+cairo_move_to(cr:cairo_t_p, x:double, y:double):void
+
+cairo_new_sub_path(cr:cairo_t_p):void
+
+cairo_line_to(cr:cairo_t_p, x:double, y:double):void
+
+cairo_curve_to(cr:cairo_t_p, x1:double, y1:double, x2:double, y2:double, x3:double, y3:double):void
+
+cairo_arc(cr:cairo_t_p, xc:double, yc:double, radius:double, angle1:double, angle2:double):void
+
+cairo_arc_negative(cr:cairo_t_p, xc:double, yc:double, radius:double, angle1:double, angle2:double):void
+
+cairo_arc_to(cr:cairo_t_p, x1:double, y1:double, x2:double, y2:double, radius:double):void
+
+cairo_rel_move_to(cr:cairo_t_p, dx:double, dy:double):void
+
+cairo_rel_line_to(cr:cairo_t_p, dx:double, dy:double):void
+
+cairo_rel_curve_to(cr:cairo_t_p, dx1:double, dy1:double, dx2:double, dy2:double, dx3:double, dy3:double):void
+
+cairo_rectangle(cr:cairo_t_p, x:double, y:double, width:double, height:double):void
+
+cairo_stroke_to_path(cr:cairo_t_p):void
+
+cairo_close_path(cr:cairo_t_p):void
+
+cairo_path_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+
+cairo_paint(cr:cairo_t_p):void
+
+cairo_paint_with_alpha(cr:cairo_t_p, alpha:double):void
+
+cairo_mask(cr:cairo_t_p, pattern:cairo_pattern_t_p):void
+
+cairo_mask_surface(cr:cairo_t_p, surface:cairo_surface_t_p, surface_x:double, surface_y:double):void
+
+cairo_stroke(cr:cairo_t_p):void
+
+cairo_stroke_preserve(cr:cairo_t_p):void
+
+cairo_fill(cr:cairo_t_p):void
+
+cairo_fill_preserve(cr:cairo_t_p):void
+
+cairo_copy_page(cr:cairo_t_p):void
+
+cairo_show_page(cr:cairo_t_p):void
+
+cairo_in_stroke(cr:cairo_t_p, x:double, y:double):cairo_bool_t
+
+cairo_in_fill(cr:cairo_t_p, x:double, y:double):cairo_bool_t
+
+cairo_in_clip(cr:cairo_t_p, x:double, y:double):cairo_bool_t
+
+cairo_stroke_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+
+cairo_fill_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+
+cairo_reset_clip(cr:cairo_t_p):void
+
+cairo_clip(cr:cairo_t_p):void
+
+cairo_clip_preserve(cr:cairo_t_p):void
+
+cairo_clip_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+
+cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
+
+cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t_p):void
+
+cairo_tag_begin(cr:cairo_t_p, tag_name:const_char_p, attributes:const_char_p):void
+
+cairo_tag_end(cr:cairo_t_p, tag_name:const_char_p):void
+
+cairo_glyph_allocate(num_glyphs:int):cairo_glyph_t_p
+
+cairo_glyph_free(glyphs:cairo_glyph_t_p):void
+
+cairo_text_cluster_allocate(num_clusters:int):cairo_text_cluster_t_p
+
+cairo_text_cluster_free(clusters:cairo_text_cluster_t_p):void
+
+cairo_font_options_create():cairo_font_options_t_p
+
+cairo_font_options_copy(original:const_cairo_font_options_t_p):cairo_font_options_t_p
+
+cairo_font_options_destroy(options:cairo_font_options_t_p):void
+
+cairo_font_options_status(options:cairo_font_options_t_p):cairo_status_t
+
+cairo_font_options_merge(options:cairo_font_options_t_p, other:const_cairo_font_options_t_p):void
+
+cairo_font_options_equal(options:const_cairo_font_options_t_p, other:const_cairo_font_options_t_p):cairo_bool_t
+
+cairo_font_options_hash(options:const_cairo_font_options_t_p):unsigned_long
+
+cairo_font_options_set_antialias(options:cairo_font_options_t_p, antialias:cairo_antialias_t):void
+
+cairo_font_options_get_antialias(options:const_cairo_font_options_t_p):cairo_antialias_t
+
+cairo_font_options_set_subpixel_order(options:cairo_font_options_t_p, subpixel_order:cairo_subpixel_order_t):void
+
+cairo_font_options_get_subpixel_order(options:const_cairo_font_options_t_p):cairo_subpixel_order_t
+
+cairo_font_options_set_hint_style(options:cairo_font_options_t_p, hint_style:cairo_hint_style_t):void
+
+cairo_font_options_get_hint_style(options:const_cairo_font_options_t_p):cairo_hint_style_t
+
+cairo_font_options_set_hint_metrics(options:cairo_font_options_t_p, hint_metrics:cairo_hint_metrics_t):void
+
+cairo_font_options_get_hint_metrics(options:const_cairo_font_options_t_p):cairo_hint_metrics_t
+
+cairo_font_options_get_variations(options:cairo_font_options_t_p):const_char_p
+
+cairo_font_options_set_variations(options:cairo_font_options_t_p, variations:const_char_p):void
+
+cairo_select_font_face(cr:cairo_t_p, family:const_char_p, slant:cairo_font_slant_t, weight:cairo_font_weight_t):void
+
+cairo_set_font_size(cr:cairo_t_p, size:double):void
+
+cairo_set_font_matrix(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
+
+cairo_get_font_matrix(cr:cairo_t_p, matrix:cairo_matrix_t_p):void
+
+cairo_set_font_options(cr:cairo_t_p, options:const_cairo_font_options_t_p):void
+
+cairo_get_font_options(cr:cairo_t_p, options:cairo_font_options_t_p):void
+
+cairo_set_font_face(cr:cairo_t_p, font_face:cairo_font_face_t_p):void
+
+cairo_get_font_face(cr:cairo_t_p):cairo_font_face_t_p
+
+cairo_set_scaled_font(cr:cairo_t_p, scaled_font:const_cairo_scaled_font_t_p):void
+
+cairo_get_scaled_font(cr:cairo_t_p):cairo_scaled_font_t_p
+
+cairo_show_text(cr:cairo_t_p, utf8:const_char_p):void
+
+cairo_show_glyphs(cr:cairo_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int):void
+
+cairo_show_text_glyphs(cr:cairo_t_p, utf8:const_char_p, utf8_len:int, glyphs:const_cairo_glyph_t_p, num_glyphs:int, clusters:const_cairo_text_cluster_t_p, num_clusters:int, cluster_flags:cairo_text_cluster_flags_t):void
+
+cairo_text_path(cr:cairo_t_p, utf8:const_char_p):void
+
+cairo_glyph_path(cr:cairo_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int):void
+
+cairo_text_extents(cr:cairo_t_p, utf8:const_char_p, extents:cairo_text_extents_t_p):void
+
+cairo_glyph_extents(cr:cairo_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int, extents:cairo_text_extents_t_p):void
+
+cairo_font_extents(cr:cairo_t_p, extents:cairo_font_extents_t_p):void
+
+cairo_font_face_reference(font_face:cairo_font_face_t_p):cairo_font_face_t_p
+
+cairo_font_face_destroy(font_face:cairo_font_face_t_p):void
+
+cairo_font_face_get_reference_count(font_face:cairo_font_face_t_p):unsigned_int
+
+cairo_font_face_status(font_face:cairo_font_face_t_p):cairo_status_t
+
+cairo_font_face_get_type(font_face:cairo_font_face_t_p):cairo_font_type_t
+
+cairo_font_face_get_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+cairo_font_face_set_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_scaled_font_create(font_face:cairo_font_face_t_p, font_matrix:const_cairo_matrix_t_p, ctm:const_cairo_matrix_t_p, options:const_cairo_font_options_t_p):cairo_scaled_font_t_p
+
+cairo_scaled_font_reference(scaled_font:cairo_scaled_font_t_p):cairo_scaled_font_t_p
+
+cairo_scaled_font_destroy(scaled_font:cairo_scaled_font_t_p):void
+
+cairo_scaled_font_get_reference_count(scaled_font:cairo_scaled_font_t_p):unsigned_int
+
+cairo_scaled_font_status(scaled_font:cairo_scaled_font_t_p):cairo_status_t
+
+cairo_scaled_font_get_type(scaled_font:cairo_scaled_font_t_p):cairo_font_type_t
+
+cairo_scaled_font_get_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+cairo_scaled_font_set_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_scaled_font_extents(scaled_font:cairo_scaled_font_t_p, extents:cairo_font_extents_t_p):void
+
+cairo_scaled_font_text_extents(scaled_font:cairo_scaled_font_t_p, utf8:const_char_p, extents:cairo_text_extents_t_p):void
+
+cairo_scaled_font_glyph_extents(scaled_font:cairo_scaled_font_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int, extents:cairo_text_extents_t_p):void
+
+cairo_scaled_font_text_to_glyphs(scaled_font:cairo_scaled_font_t_p, x:double, y:double, utf8:const_char_p, utf8_len:int, glyphs:cairo_glyph_t_pp, num_glyphs:int_p, clusters:cairo_text_cluster_t_pp, num_clusters:int_p, cluster_flags:cairo_text_cluster_flags_t_p):cairo_status_t
+
+cairo_scaled_font_get_font_face(scaled_font:cairo_scaled_font_t_p):cairo_font_face_t_p
+
+cairo_scaled_font_get_font_matrix(scaled_font:cairo_scaled_font_t_p, font_matrix:cairo_matrix_t_p):void
+
+cairo_scaled_font_get_ctm(scaled_font:cairo_scaled_font_t_p, ctm:cairo_matrix_t_p):void
+
+cairo_scaled_font_get_scale_matrix(scaled_font:cairo_scaled_font_t_p, scale_matrix:cairo_matrix_t_p):void
+
+cairo_scaled_font_get_font_options(scaled_font:cairo_scaled_font_t_p, options:cairo_font_options_t_p):void
+
+cairo_toy_font_face_create(family:const_char_p, slant:cairo_font_slant_t, weight:cairo_font_weight_t):cairo_font_face_t_p
+
+cairo_toy_font_face_get_family(font_face:cairo_font_face_t_p):const_char_p
+
+cairo_toy_font_face_get_slant(font_face:cairo_font_face_t_p):cairo_font_slant_t
+
+cairo_toy_font_face_get_weight(font_face:cairo_font_face_t_p):cairo_font_weight_t
+
+cairo_user_font_face_create():cairo_font_face_t_p
+
+cairo_user_font_face_set_init_func(font_face:cairo_font_face_t_p, init_func:cairo_user_scaled_font_init_func_t):void
+
+cairo_user_font_face_set_render_glyph_func(font_face:cairo_font_face_t_p, render_glyph_func:cairo_user_scaled_font_render_glyph_func_t):void
+
+cairo_user_font_face_set_text_to_glyphs_func(font_face:cairo_font_face_t_p, text_to_glyphs_func:cairo_user_scaled_font_text_to_glyphs_func_t):void
+
+cairo_user_font_face_set_unicode_to_glyph_func(font_face:cairo_font_face_t_p, unicode_to_glyph_func:cairo_user_scaled_font_unicode_to_glyph_func_t):void
+
+cairo_user_font_face_get_init_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_init_func_t
+
+cairo_user_font_face_get_render_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_render_glyph_func_t
+
+cairo_user_font_face_get_text_to_glyphs_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_text_to_glyphs_func_t
+
+cairo_user_font_face_get_unicode_to_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_unicode_to_glyph_func_t
+
+cairo_get_operator(cr:cairo_t_p):cairo_operator_t
+
+cairo_get_source(cr:cairo_t_p):cairo_pattern_t_p
+
+cairo_get_tolerance(cr:cairo_t_p):double
+
+cairo_get_antialias(cr:cairo_t_p):cairo_antialias_t
+
+cairo_has_current_point(cr:cairo_t_p):cairo_bool_t
+
+cairo_get_current_point(cr:cairo_t_p, x:double_p, y:double_p):void
+
+cairo_get_fill_rule(cr:cairo_t_p):cairo_fill_rule_t
+
+cairo_get_line_width(cr:cairo_t_p):double
+
+cairo_get_line_cap(cr:cairo_t_p):cairo_line_cap_t
+
+cairo_get_line_join(cr:cairo_t_p):cairo_line_join_t
+
+cairo_get_miter_limit(cr:cairo_t_p):double
+
+cairo_get_dash_count(cr:cairo_t_p):int
+
+cairo_get_dash(cr:cairo_t_p, dashes:double_p, offset:double_p):void
+
+cairo_get_matrix(cr:cairo_t_p, matrix:cairo_matrix_t_p):void
+
+cairo_get_target(cr:cairo_t_p):cairo_surface_t_p
+
+cairo_get_group_target(cr:cairo_t_p):cairo_surface_t_p
+
+cairo_copy_path(cr:cairo_t_p):cairo_path_t_p
+
+cairo_copy_path_flat(cr:cairo_t_p):cairo_path_t_p
+
+cairo_append_path(cr:cairo_t_p, path:const_cairo_path_t_p):void
+
+cairo_path_destroy(path:cairo_path_t_p):void
+
+cairo_status(cr:cairo_t_p):cairo_status_t
+
+cairo_status_to_string(status:cairo_status_t):const_char_p
+
+cairo_device_reference(device:cairo_device_t_p):cairo_device_t_p
+
+cairo_device_get_type(device:cairo_device_t_p):cairo_device_type_t
+
+cairo_device_status(device:cairo_device_t_p):cairo_status_t
+
+cairo_device_acquire(device:cairo_device_t_p):cairo_status_t
+
+cairo_device_release(device:cairo_device_t_p):void
+
+cairo_device_flush(device:cairo_device_t_p):void
+
+cairo_device_finish(device:cairo_device_t_p):void
+
+cairo_device_destroy(device:cairo_device_t_p):void
+
+cairo_device_get_reference_count(device:cairo_device_t_p):unsigned_int
+
+cairo_device_get_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+cairo_device_set_user_data(device:cairo_device_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_surface_create_similar(other:cairo_surface_t_p, content:cairo_content_t, width:int, height:int):cairo_surface_t_p
+
+cairo_surface_create_similar_image(other:cairo_surface_t_p, format:cairo_format_t, width:int, height:int):cairo_surface_t_p
+
+cairo_surface_map_to_image(surface:cairo_surface_t_p, extents:const_cairo_rectangle_int_t_p):cairo_surface_t_p
+
+cairo_surface_unmap_image(surface:cairo_surface_t_p, image:cairo_surface_t_p):void
+
+cairo_surface_create_for_rectangle(target:cairo_surface_t_p, x:double, y:double, width:double, height:double):cairo_surface_t_p
+
+cairo_surface_create_observer(target:cairo_surface_t_p, mode:cairo_surface_observer_mode_t):cairo_surface_t_p
+
+cairo_surface_observer_add_paint_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_mask_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_fill_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_stroke_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_glyphs_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_flush_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_add_finish_callback(abstract_surface:cairo_surface_t_p, func:cairo_surface_observer_callback_t, data:void_p):cairo_status_t
+
+cairo_surface_observer_print(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+
+cairo_surface_observer_elapsed(surface:cairo_surface_t_p):double
+
+cairo_device_observer_print(device:cairo_device_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+
+cairo_device_observer_elapsed(device:cairo_device_t_p):double
+
+cairo_device_observer_paint_elapsed(device:cairo_device_t_p):double
+
+cairo_device_observer_mask_elapsed(device:cairo_device_t_p):double
+
+cairo_device_observer_fill_elapsed(device:cairo_device_t_p):double
+
+cairo_device_observer_stroke_elapsed(device:cairo_device_t_p):double
+
+cairo_device_observer_glyphs_elapsed(device:cairo_device_t_p):double
+
+cairo_surface_reference(surface:cairo_surface_t_p):cairo_surface_t_p
+
+cairo_surface_finish(surface:cairo_surface_t_p):void
+
+cairo_surface_destroy(surface:cairo_surface_t_p):void
+
+cairo_surface_get_device(surface:cairo_surface_t_p):cairo_device_t_p
+
+cairo_surface_get_reference_count(surface:cairo_surface_t_p):unsigned_int
+
+cairo_surface_status(surface:cairo_surface_t_p):cairo_status_t
+
+cairo_surface_get_type(surface:cairo_surface_t_p):cairo_surface_type_t
+
+cairo_surface_get_content(surface:cairo_surface_t_p):cairo_content_t
+
+cairo_surface_write_to_png(surface:cairo_surface_t_p, filename:const_char_p):cairo_status_t
+
+cairo_surface_write_to_png_stream(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+
+cairo_surface_get_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+cairo_surface_set_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_surface_get_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_pp, length:unsigned_long_p):void
+
+cairo_surface_set_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_p, length:unsigned_long, destroy:cairo_destroy_func_t, closure:void_p):cairo_status_t
+
+cairo_surface_supports_mime_type(surface:cairo_surface_t_p, mime_type:const_char_p):cairo_bool_t
+
+cairo_surface_get_font_options(surface:cairo_surface_t_p, options:cairo_font_options_t_p):void
+
+cairo_surface_flush(surface:cairo_surface_t_p):void
+
+cairo_surface_mark_dirty(surface:cairo_surface_t_p):void
+
+cairo_surface_mark_dirty_rectangle(surface:cairo_surface_t_p, x:int, y:int, width:int, height:int):void
+
+cairo_surface_set_device_scale(surface:cairo_surface_t_p, x_scale:double, y_scale:double):void
+
+cairo_surface_get_device_scale(surface:cairo_surface_t_p, x_scale:double_p, y_scale:double_p):void
+
+cairo_surface_set_device_offset(surface:cairo_surface_t_p, x_offset:double, y_offset:double):void
+
+cairo_surface_get_device_offset(surface:cairo_surface_t_p, x_offset:double_p, y_offset:double_p):void
+
+cairo_surface_set_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double, y_pixels_per_inch:double):void
+
+cairo_surface_get_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double_p, y_pixels_per_inch:double_p):void
+
+cairo_surface_copy_page(surface:cairo_surface_t_p):void
+
+cairo_surface_show_page(surface:cairo_surface_t_p):void
+
+cairo_surface_has_show_text_glyphs(surface:cairo_surface_t_p):cairo_bool_t
+
+cairo_image_surface_create(format:cairo_format_t, width:int, height:int):cairo_surface_t_p
+
+cairo_format_stride_for_width(format:cairo_format_t, width:int):int
+
+cairo_image_surface_create_for_data(data:unsigned_char_p, format:cairo_format_t, width:int, height:int, stride:int):cairo_surface_t_p
+
+cairo_image_surface_get_data(surface:cairo_surface_t_p):unsigned_char_p
+
+cairo_image_surface_get_format(surface:cairo_surface_t_p):cairo_format_t
+
+cairo_image_surface_get_width(surface:cairo_surface_t_p):int
+
+cairo_image_surface_get_height(surface:cairo_surface_t_p):int
+
+cairo_image_surface_get_stride(surface:cairo_surface_t_p):int
+
+cairo_image_surface_create_from_png(filename:const_char_p):cairo_surface_t_p
+
+cairo_image_surface_create_from_png_stream(read_func:cairo_read_func_t, closure:void_p):cairo_surface_t_p
+
+cairo_recording_surface_create(content:cairo_content_t, extents:const_cairo_rectangle_t_p):cairo_surface_t_p
+
+cairo_recording_surface_ink_extents(surface:cairo_surface_t_p, x0:double_p, y0:double_p, width:double_p, height:double_p):void
+
+cairo_recording_surface_get_extents(surface:cairo_surface_t_p, extents:cairo_rectangle_t_p):cairo_bool_t
+
+cairo_pattern_create_raster_source(user_data:void_p, content:cairo_content_t, width:int, height:int):cairo_pattern_t_p
+
+cairo_raster_source_pattern_set_callback_data(pattern:cairo_pattern_t_p, data:void_p):void
+
+cairo_raster_source_pattern_get_callback_data(pattern:cairo_pattern_t_p):void_p
+
+cairo_raster_source_pattern_set_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t, release:cairo_raster_source_release_func_t):void
+
+cairo_raster_source_pattern_get_acquire(pattern:cairo_pattern_t_p, acquire:cairo_raster_source_acquire_func_t_p, release:cairo_raster_source_release_func_t_p):void
+
+cairo_raster_source_pattern_set_snapshot(pattern:cairo_pattern_t_p, snapshot:cairo_raster_source_snapshot_func_t):void
+
+cairo_raster_source_pattern_get_snapshot(pattern:cairo_pattern_t_p):cairo_raster_source_snapshot_func_t
+
+cairo_raster_source_pattern_set_copy(pattern:cairo_pattern_t_p, copy:cairo_raster_source_copy_func_t):void
+
+cairo_raster_source_pattern_get_copy(pattern:cairo_pattern_t_p):cairo_raster_source_copy_func_t
+
+cairo_raster_source_pattern_set_finish(pattern:cairo_pattern_t_p, finish:cairo_raster_source_finish_func_t):void
+
+cairo_raster_source_pattern_get_finish(pattern:cairo_pattern_t_p):cairo_raster_source_finish_func_t
+
+cairo_pattern_create_rgb(red:double, green:double, blue:double):cairo_pattern_t_p
+
+cairo_pattern_create_rgba(red:double, green:double, blue:double, alpha:double):cairo_pattern_t_p
+
+cairo_pattern_create_for_surface(surface:cairo_surface_t_p):cairo_pattern_t_p
+
+cairo_pattern_create_linear(x0:double, y0:double, x1:double, y1:double):cairo_pattern_t_p
+
+cairo_pattern_create_radial(cx0:double, cy0:double, radius0:double, cx1:double, cy1:double, radius1:double):cairo_pattern_t_p
+
+cairo_pattern_create_mesh():cairo_pattern_t_p
+
+cairo_pattern_reference(pattern:cairo_pattern_t_p):cairo_pattern_t_p
+
+cairo_pattern_destroy(pattern:cairo_pattern_t_p):void
+
+cairo_pattern_get_reference_count(pattern:cairo_pattern_t_p):unsigned_int
+
+cairo_pattern_status(pattern:cairo_pattern_t_p):cairo_status_t
+
+cairo_pattern_get_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p):void_p
+
+cairo_pattern_set_user_data(pattern:cairo_pattern_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+
+cairo_pattern_get_type(pattern:cairo_pattern_t_p):cairo_pattern_type_t
+
+cairo_pattern_add_color_stop_rgb(pattern:cairo_pattern_t_p, offset:double, red:double, green:double, blue:double):void
+
+cairo_pattern_add_color_stop_rgba(pattern:cairo_pattern_t_p, offset:double, red:double, green:double, blue:double, alpha:double):void
+
+cairo_mesh_pattern_begin_patch(pattern:cairo_pattern_t_p):void
+
+cairo_mesh_pattern_end_patch(pattern:cairo_pattern_t_p):void
+
+cairo_mesh_pattern_curve_to(pattern:cairo_pattern_t_p, x1:double, y1:double, x2:double, y2:double, x3:double, y3:double):void
+
+cairo_mesh_pattern_line_to(pattern:cairo_pattern_t_p, x:double, y:double):void
+
+cairo_mesh_pattern_move_to(pattern:cairo_pattern_t_p, x:double, y:double):void
+
+cairo_mesh_pattern_set_control_point(pattern:cairo_pattern_t_p, point_num:unsigned_int, x:double, y:double):void
+
+cairo_mesh_pattern_set_corner_color_rgb(pattern:cairo_pattern_t_p, corner_num:unsigned_int, red:double, green:double, blue:double):void
+
+cairo_mesh_pattern_set_corner_color_rgba(pattern:cairo_pattern_t_p, corner_num:unsigned_int, red:double, green:double, blue:double, alpha:double):void
+
+cairo_pattern_set_matrix(pattern:cairo_pattern_t_p, matrix:const_cairo_matrix_t_p):void
+
+cairo_pattern_get_matrix(pattern:cairo_pattern_t_p, matrix:cairo_matrix_t_p):void
+
+cairo_pattern_set_extend(pattern:cairo_pattern_t_p, extend:cairo_extend_t):void
+
+cairo_pattern_get_extend(pattern:cairo_pattern_t_p):cairo_extend_t
+
+cairo_pattern_set_filter(pattern:cairo_pattern_t_p, filter:cairo_filter_t):void
+
+cairo_pattern_get_filter(pattern:cairo_pattern_t_p):cairo_filter_t
+
+cairo_pattern_get_rgba(pattern:cairo_pattern_t_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+
+cairo_pattern_get_surface(pattern:cairo_pattern_t_p, surface:cairo_surface_t_pp):cairo_status_t
+
+cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t_p, index:int, offset:double_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+
+cairo_pattern_get_color_stop_count(pattern:cairo_pattern_t_p, count:int_p):cairo_status_t
+
+cairo_pattern_get_linear_points(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, x1:double_p, y1:double_p):cairo_status_t
+
+cairo_pattern_get_radial_circles(pattern:cairo_pattern_t_p, x0:double_p, y0:double_p, r0:double_p, x1:double_p, y1:double_p, r1:double_p):cairo_status_t
+
+cairo_mesh_pattern_get_patch_count(pattern:cairo_pattern_t_p, count:unsigned_int_p):cairo_status_t
+
+cairo_mesh_pattern_get_path(pattern:cairo_pattern_t_p, patch_num:unsigned_int):cairo_path_t_p
+
+cairo_mesh_pattern_get_corner_color_rgba(pattern:cairo_pattern_t_p, patch_num:unsigned_int, corner_num:unsigned_int, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+
+cairo_mesh_pattern_get_control_point(pattern:cairo_pattern_t_p, patch_num:unsigned_int, point_num:unsigned_int, x:double_p, y:double_p):cairo_status_t
+
+cairo_matrix_init(matrix:cairo_matrix_t_p, xx:double, yx:double, xy:double, yy:double, x0:double, y0:double):void
+
+cairo_matrix_init_identity(matrix:cairo_matrix_t_p):void
+
+cairo_matrix_init_translate(matrix:cairo_matrix_t_p, tx:double, ty:double):void
+
+cairo_matrix_init_scale(matrix:cairo_matrix_t_p, sx:double, sy:double):void
+
+cairo_matrix_init_rotate(matrix:cairo_matrix_t_p, radians:double):void
+
+cairo_matrix_translate(matrix:cairo_matrix_t_p, tx:double, ty:double):void
+
+cairo_matrix_scale(matrix:cairo_matrix_t_p, sx:double, sy:double):void
+
+cairo_matrix_rotate(matrix:cairo_matrix_t_p, radians:double):void
+
+cairo_matrix_invert(matrix:cairo_matrix_t_p):cairo_status_t
+
+cairo_matrix_multiply(result:cairo_matrix_t_p, a:const_cairo_matrix_t_p, b:const_cairo_matrix_t_p):void
+
+cairo_matrix_transform_distance(matrix:const_cairo_matrix_t_p, dx:double_p, dy:double_p):void
+
+cairo_matrix_transform_point(matrix:const_cairo_matrix_t_p, x:double_p, y:double_p):void
+
+cairo_region_create():cairo_region_t_p
+
+cairo_region_create_rectangle(rectangle:const_cairo_rectangle_int_t_p):cairo_region_t_p
+
+cairo_region_create_rectangles(rects:const_cairo_rectangle_int_t_p, count:int):cairo_region_t_p
+
+cairo_region_copy(original:const_cairo_region_t_p):cairo_region_t_p
+
+cairo_region_reference(region:cairo_region_t_p):cairo_region_t_p
+
+cairo_region_destroy(region:cairo_region_t_p):void
+
+cairo_region_equal(a:const_cairo_region_t_p, b:const_cairo_region_t_p):cairo_bool_t
+
+cairo_region_status(region:const_cairo_region_t_p):cairo_status_t
+
+cairo_region_get_extents(region:const_cairo_region_t_p, extents:cairo_rectangle_int_t_p):void
+
+cairo_region_num_rectangles(region:const_cairo_region_t_p):int
+
+cairo_region_get_rectangle(region:const_cairo_region_t_p, nth:int, rectangle:cairo_rectangle_int_t_p):void
+
+cairo_region_is_empty(region:const_cairo_region_t_p):cairo_bool_t
+
+cairo_region_contains_rectangle(region:const_cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_region_overlap_t
+
+cairo_region_contains_point(region:const_cairo_region_t_p, x:int, y:int):cairo_bool_t
+
+cairo_region_translate(region:cairo_region_t_p, dx:int, dy:int):void
+
+cairo_region_subtract(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_status_t
+
+cairo_region_subtract_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
+
+cairo_region_intersect(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_status_t
+
+cairo_region_intersect_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
+
+cairo_region_union(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_status_t
+
+cairo_region_union_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
+
+cairo_region_xor(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_status_t
+
+cairo_region_xor_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
+
+cairo_debug_reset_static_data():void
+*/
 
 }
 

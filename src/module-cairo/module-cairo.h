@@ -9,6 +9,7 @@
 #include "Util.h"
 #include "Functions.h"
 #include "VType_cairo_t.h"
+#include "VType_cairo_pattern_t.h"
 #include "VType_cairo_surface_t.h"
 
 Gurax_BeginModuleHeader(cairo)

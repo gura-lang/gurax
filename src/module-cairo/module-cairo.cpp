@@ -53,6 +53,7 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_cairo_t);
+	Assign(VTYPE_cairo_pattern_t);
 	Assign(VTYPE_cairo_surface_t);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
