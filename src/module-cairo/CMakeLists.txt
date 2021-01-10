@@ -40,11 +40,16 @@ target_sources(cairo.gurd PRIVATE
 	Util.cpp
 	Functions.cpp
 	VType_cairo_t.cpp
+	VType_cairo_font_extents_t.cpp
+	VType_cairo_font_face_t.cpp
 	VType_cairo_font_options_t.cpp
 	VType_cairo_glyph_t.cpp
+	VType_cairo_matrix_t.cpp
 	VType_cairo_pattern_t.cpp
+	VType_cairo_scaled_font_t.cpp
 	VType_cairo_surface_t.cpp
 	VType_cairo_text_cluster_t.cpp
+	VType_cairo_text_extents_t.cpp
 	)
 
 #-------------------------------------------------------------------------------

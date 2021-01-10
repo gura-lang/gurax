@@ -81,11 +81,22 @@ r.DeclareType_Number('cairo_filter_t')
 r.DeclareType_Number('cairo_region_overlap_t')
 
 r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
-r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
-r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
-r.DeclareType_EntityPtr('cairo_glyph_t_p', 'cairo_glyph_t*', 'cairo_glyph_t')
-r.DeclareType_EntityPtr('cairo_text_cluster_t_p', 'cairo_text_cluster_t*', 'cairo_text_cluster_t')
+r.DeclareType_EntityPtr('cairo_font_extents_t_p', 'cairo_font_extents_t*', 'cairo_font_extents_t')
+r.DeclareType_EntityPtr('cairo_font_face_t_p', 'cairo_font_face_t*', 'cairo_font_face_t')
 r.DeclareType_EntityPtr('cairo_font_options_t_p', 'cairo_font_options_t*', 'cairo_font_options_t')
+r.DeclareType_EntityPtr('cairo_glyph_t_p', 'cairo_glyph_t*', 'cairo_glyph_t')
+r.DeclareType_EntityPtr('cairo_matrix_t_p', 'cairo_matrix_t*', 'cairo_matrix_t')
+r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
+r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
+r.DeclareType_EntityPtr('cairo_scaled_font_t_p', 'cairo_scaled_font_t*', 'cairo_scaled_font_t')
+r.DeclareType_EntityPtr('cairo_text_extents_t_p', 'cairo_text_extents_t*', 'cairo_text_extents_t')
+r.DeclareType_EntityPtr('cairo_text_cluster_t_p', 'cairo_text_cluster_t*', 'cairo_text_cluster_t')
+
+r.DeclareType_EntityPtr('const_cairo_font_options_t_p', 'const cairo_font_options_t*', 'cairo_font_options_t')
+r.DeclareType_EntityPtr('const_cairo_glyph_t_p', 'const cairo_glyph_t*', 'cairo_glyph_t')
+r.DeclareType_EntityPtr('const_cairo_matrix_t_p', 'const cairo_matrix_t*', 'cairo_matrix_t')
+r.DeclareType_EntityPtr('const_cairo_scaled_font_t_p', 'const cairo_scaled_font_t*', 'cairo_scaled_font_t')
+r.DeclareType_EntityPtr('const_cairo_text_cluster_t_p', 'const cairo_text_cluster_t*', 'cairo_text_cluster_t')
 
 //------------------------------------------------------------------------------
 // Function Registration
@@ -152,9 +163,9 @@ cairo_scale(cr:cairo_t_p, sx:double, sy:double):void
 
 cairo_rotate(cr:cairo_t_p, angle:double):void
 
-//cairo_transform(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
+cairo_transform(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
 
-//cairo_set_matrix(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
+cairo_set_matrix(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
 
 cairo_identity_matrix(cr:cairo_t_p):void
 
@@ -322,8 +333,6 @@ cairo_font_extents(cr:cairo_t_p, extents:cairo_font_extents_t_p):void
 
 cairo_font_face_reference(font_face:cairo_font_face_t_p):cairo_font_face_t_p
 
-/*
-
 cairo_font_face_destroy(font_face:cairo_font_face_t_p):void
 
 cairo_font_face_get_reference_count(font_face:cairo_font_face_t_p):unsigned_int
@@ -332,9 +341,9 @@ cairo_font_face_status(font_face:cairo_font_face_t_p):cairo_status_t
 
 cairo_font_face_get_type(font_face:cairo_font_face_t_p):cairo_font_type_t
 
-cairo_font_face_get_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p):void_p
+//cairo_font_face_get_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p):void_p
 
-cairo_font_face_set_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+//cairo_font_face_set_user_data(font_face:cairo_font_face_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
 cairo_scaled_font_create(font_face:cairo_font_face_t_p, font_matrix:const_cairo_matrix_t_p, ctm:const_cairo_matrix_t_p, options:const_cairo_font_options_t_p):cairo_scaled_font_t_p
 
@@ -348,9 +357,9 @@ cairo_scaled_font_status(scaled_font:cairo_scaled_font_t_p):cairo_status_t
 
 cairo_scaled_font_get_type(scaled_font:cairo_scaled_font_t_p):cairo_font_type_t
 
-cairo_scaled_font_get_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p):void_p
+//cairo_scaled_font_get_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p):void_p
 
-cairo_scaled_font_set_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
+//cairo_scaled_font_set_user_data(scaled_font:cairo_scaled_font_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
 cairo_scaled_font_extents(scaled_font:cairo_scaled_font_t_p, extents:cairo_font_extents_t_p):void
 
@@ -358,7 +367,7 @@ cairo_scaled_font_text_extents(scaled_font:cairo_scaled_font_t_p, utf8:const_cha
 
 cairo_scaled_font_glyph_extents(scaled_font:cairo_scaled_font_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int, extents:cairo_text_extents_t_p):void
 
-cairo_scaled_font_text_to_glyphs(scaled_font:cairo_scaled_font_t_p, x:double, y:double, utf8:const_char_p, utf8_len:int, glyphs:cairo_glyph_t_pp, num_glyphs:int_p, clusters:cairo_text_cluster_t_pp, num_clusters:int_p, cluster_flags:cairo_text_cluster_flags_t_p):cairo_status_t
+//cairo_scaled_font_text_to_glyphs(scaled_font:cairo_scaled_font_t_p, x:double, y:double, utf8:const_char_p, utf8_len:int, glyphs:cairo_glyph_t_pp, num_glyphs:int_p, clusters:cairo_text_cluster_t_pp, num_clusters:int_p, cluster_flags:cairo_text_cluster_flags_t_p):cairo_status_t
 
 cairo_scaled_font_get_font_face(scaled_font:cairo_scaled_font_t_p):cairo_font_face_t_p
 
@@ -380,21 +389,23 @@ cairo_toy_font_face_get_weight(font_face:cairo_font_face_t_p):cairo_font_weight_
 
 cairo_user_font_face_create():cairo_font_face_t_p
 
-cairo_user_font_face_set_init_func(font_face:cairo_font_face_t_p, init_func:cairo_user_scaled_font_init_func_t):void
+//cairo_user_font_face_set_init_func(font_face:cairo_font_face_t_p, init_func:cairo_user_scaled_font_init_func_t):void
 
-cairo_user_font_face_set_render_glyph_func(font_face:cairo_font_face_t_p, render_glyph_func:cairo_user_scaled_font_render_glyph_func_t):void
+//cairo_user_font_face_set_render_glyph_func(font_face:cairo_font_face_t_p, render_glyph_func:cairo_user_scaled_font_render_glyph_func_t):void
 
-cairo_user_font_face_set_text_to_glyphs_func(font_face:cairo_font_face_t_p, text_to_glyphs_func:cairo_user_scaled_font_text_to_glyphs_func_t):void
+//cairo_user_font_face_set_text_to_glyphs_func(font_face:cairo_font_face_t_p, text_to_glyphs_func:cairo_user_scaled_font_text_to_glyphs_func_t):void
 
-cairo_user_font_face_set_unicode_to_glyph_func(font_face:cairo_font_face_t_p, unicode_to_glyph_func:cairo_user_scaled_font_unicode_to_glyph_func_t):void
+//cairo_user_font_face_set_unicode_to_glyph_func(font_face:cairo_font_face_t_p, unicode_to_glyph_func:cairo_user_scaled_font_unicode_to_glyph_func_t):void
 
-cairo_user_font_face_get_init_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_init_func_t
+//cairo_user_font_face_get_init_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_init_func_t
 
-cairo_user_font_face_get_render_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_render_glyph_func_t
+//cairo_user_font_face_get_render_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_render_glyph_func_t
 
-cairo_user_font_face_get_text_to_glyphs_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_text_to_glyphs_func_t
+//cairo_user_font_face_get_text_to_glyphs_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_text_to_glyphs_func_t
 
-cairo_user_font_face_get_unicode_to_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_unicode_to_glyph_func_t
+//cairo_user_font_face_get_unicode_to_glyph_func(font_face:cairo_font_face_t_p):cairo_user_scaled_font_unicode_to_glyph_func_t
+
+/*
 
 cairo_get_operator(cr:cairo_t_p):cairo_operator_t
 
