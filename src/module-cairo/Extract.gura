@@ -8,7 +8,32 @@ FileInfo = struct {
 }
 
 fileInfoTbl = @(FileInfo) {
-	{ 'cairo.h',			'' }
+/*
+	{ 'cairo-beos.h',			'' }
+	{ 'cairo-cogl.h',			'' }
+	{ 'cairo-directfb.h',		'' }
+	{ 'cairo-drm.h',			'' }
+	{ 'cairo-error-inline.h',	'' }
+	{ 'cairo-ft.h',				'' }
+	{ 'cairo-gl.h',				'' }
+	{ 'cairo-os2.h',			'' }
+	{ 'cairo-pdf.h',			'' }
+	{ 'cairo-ps.h',				'' }
+	{ 'cairo-qt.h',				'' }
+	{ 'cairo-quartz-image.h',	'' }
+	{ 'cairo-quartz.h',			'' }
+	{ 'cairo-script.h',			'' }
+	{ 'cairo-svg.h',			'' }
+	{ 'cairo-tee.h',			'' }
+	{ 'cairo-vg.h',				'' }
+	{ 'cairo-win32.h',			'' }
+	{ 'cairo-xcb.h',			'' }
+	{ 'cairo-xlib-xrender.h',	'' }
+	{ 'cairo-xlib.h',			'' }
+	{ 'cairo-xml.h',			'' }
+	{ 'cairoint.h',				'' }
+*/
+	{ 'cairo.h',				'' }
 }
 
 ExtractFromDecl(decl:String):map = {
