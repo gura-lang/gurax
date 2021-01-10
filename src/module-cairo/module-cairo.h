@@ -9,8 +9,11 @@
 #include "Util.h"
 #include "Functions.h"
 #include "VType_cairo_t.h"
+#include "VType_cairo_font_options_t.h"
+#include "VType_cairo_glyph_t.h"
 #include "VType_cairo_pattern_t.h"
 #include "VType_cairo_surface_t.h"
+#include "VType_cairo_text_cluster_t.h"
 
 Gurax_BeginModuleHeader(cairo)
 Gurax_EndModuleHeader(cairo)

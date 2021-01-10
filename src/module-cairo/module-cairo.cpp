@@ -53,8 +53,11 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_cairo_t);
+	Assign(VTYPE_cairo_font_options_t);
+	Assign(VTYPE_cairo_glyph_t);
 	Assign(VTYPE_cairo_pattern_t);
 	Assign(VTYPE_cairo_surface_t);
+	Assign(VTYPE_cairo_text_cluster_t);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	AssignFunctions(GetFrame());

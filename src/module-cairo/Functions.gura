@@ -35,6 +35,23 @@ this.DeclareType(decl, cType, vtypeFullName,
 	return new Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType('cairo_bool_t', 'cairo_bool_t', 'Bool',
+	codePicker = R'''
+	${this.cType} ${varName} = static_cast<cairo_bool_t>(args_gurax.PickBool());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? static_cast<cairo_bool_t>(args_gurax.PickBool()) : 0;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<cairo_bool_t>([](Gurax::Value& value) {
+		return value.GetBool()? 1 : 0;
+	});
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_Bool(!!rtn);
+	''')
+
 r.DeclareType('Gurax_Image', 'Gurax::Image', 'Image',
 	codePicker = R'''
 	${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetImage();
@@ -66,6 +83,9 @@ r.DeclareType_Number('cairo_region_overlap_t')
 r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
 r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
 r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
+r.DeclareType_EntityPtr('cairo_glyph_t_p', 'cairo_glyph_t*', 'cairo_glyph_t')
+r.DeclareType_EntityPtr('cairo_text_cluster_t_p', 'cairo_text_cluster_t*', 'cairo_text_cluster_t')
+r.DeclareType_EntityPtr('cairo_font_options_t_p', 'cairo_font_options_t*', 'cairo_font_options_t')
 
 //------------------------------------------------------------------------------
 // Function Registration
@@ -178,8 +198,6 @@ cairo_close_path(cr:cairo_t_p):void
 
 cairo_paint(cr:cairo_t_p):void
 
-/*
-
 cairo_paint_with_alpha(cr:cairo_t_p, alpha:double):void
 
 cairo_mask(cr:cairo_t_p, pattern:cairo_pattern_t_p):void
@@ -204,9 +222,9 @@ cairo_in_fill(cr:cairo_t_p, x:double, y:double):cairo_bool_t
 
 cairo_in_clip(cr:cairo_t_p, x:double, y:double):cairo_bool_t
 
-cairo_stroke_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+//cairo_stroke_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
 
-cairo_fill_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+//cairo_fill_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
 
 cairo_reset_clip(cr:cairo_t_p):void
 
@@ -214,11 +232,11 @@ cairo_clip(cr:cairo_t_p):void
 
 cairo_clip_preserve(cr:cairo_t_p):void
 
-cairo_clip_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+//cairo_clip_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
 
-cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
+//cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
 
-cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t_p):void
+//cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t_p):void
 
 cairo_tag_begin(cr:cairo_t_p, tag_name:const_char_p, attributes:const_char_p):void
 
@@ -303,6 +321,8 @@ cairo_glyph_extents(cr:cairo_t_p, glyphs:const_cairo_glyph_t_p, num_glyphs:int, 
 cairo_font_extents(cr:cairo_t_p, extents:cairo_font_extents_t_p):void
 
 cairo_font_face_reference(font_face:cairo_font_face_t_p):cairo_font_face_t_p
+
+/*
 
 cairo_font_face_destroy(font_face:cairo_font_face_t_p):void
 

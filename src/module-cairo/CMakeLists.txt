@@ -40,9 +40,13 @@ target_sources(cairo.gurd PRIVATE
 	Util.cpp
 	Functions.cpp
 	VType_cairo_t.cpp
+	VType_cairo_font_options_t.cpp
+	VType_cairo_glyph_t.cpp
 	VType_cairo_pattern_t.cpp
 	VType_cairo_surface_t.cpp
+	VType_cairo_text_cluster_t.cpp
 	)
+
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
