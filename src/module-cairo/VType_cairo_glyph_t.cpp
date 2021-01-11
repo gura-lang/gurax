@@ -53,8 +53,8 @@ Gurax_ImplementMethod(cairo_glyph_t, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_glyph_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_glyph_t, propSkeleton)
+// cairo.cairo_glyph_t#index
+Gurax_DeclareProperty_RW(cairo_glyph_t, index)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,58 @@ Gurax_DeclareProperty_R(cairo_glyph_t, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(cairo_glyph_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_glyph_t, index)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().index);
+}
+
+Gurax_ImplementPropertySetter(cairo_glyph_t, index)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().index = Value_Number::GetNumber<unsigned long>(value);
+}
+
+// cairo.cairo_glyph_t#x
+Gurax_DeclareProperty_RW(cairo_glyph_t, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_glyph_t, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+Gurax_ImplementPropertySetter(cairo_glyph_t, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().x = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_glyph_t#y
+Gurax_DeclareProperty_RW(cairo_glyph_t, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_glyph_t, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+Gurax_ImplementPropertySetter(cairo_glyph_t, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().y = Value_Number::GetNumber<double>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +130,9 @@ void VType_cairo_glyph_t::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_glyph_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_glyph_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_glyph_t, index));
+	Assign(Gurax_CreateProperty(cairo_glyph_t, x));
+	Assign(Gurax_CreateProperty(cairo_glyph_t, y));
 }
 
 //------------------------------------------------------------------------------

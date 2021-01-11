@@ -53,8 +53,8 @@ Gurax_ImplementMethod(cairo_font_extents_t, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_font_extents_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_font_extents_t, propSkeleton)
+// cairo.cairo_font_extents_t#ascent
+Gurax_DeclareProperty_RW(cairo_font_extents_t, ascent)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,100 @@ Gurax_DeclareProperty_R(cairo_font_extents_t, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(cairo_font_extents_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_font_extents_t, ascent)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().ascent);
+}
+
+Gurax_ImplementPropertySetter(cairo_font_extents_t, ascent)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().ascent = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_font_extents_t#descent
+Gurax_DeclareProperty_RW(cairo_font_extents_t, descent)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_font_extents_t, descent)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().descent);
+}
+
+Gurax_ImplementPropertySetter(cairo_font_extents_t, descent)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().descent = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_font_extents_t#height
+Gurax_DeclareProperty_RW(cairo_font_extents_t, height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_font_extents_t, height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().height);
+}
+
+Gurax_ImplementPropertySetter(cairo_font_extents_t, height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().height = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_font_extents_t#max_x_advance
+Gurax_DeclareProperty_RW(cairo_font_extents_t, max_x_advance)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_font_extents_t, max_x_advance)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().max_x_advance);
+}
+
+Gurax_ImplementPropertySetter(cairo_font_extents_t, max_x_advance)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().max_x_advance = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_font_extents_t#max_y_advance
+Gurax_DeclareProperty_RW(cairo_font_extents_t, max_y_advance)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_font_extents_t, max_y_advance)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().max_y_advance);
+}
+
+Gurax_ImplementPropertySetter(cairo_font_extents_t, max_y_advance)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().max_y_advance = Value_Number::GetNumber<double>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +172,11 @@ void VType_cairo_font_extents_t::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_font_extents_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_font_extents_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_font_extents_t, ascent));
+	Assign(Gurax_CreateProperty(cairo_font_extents_t, descent));
+	Assign(Gurax_CreateProperty(cairo_font_extents_t, height));
+	Assign(Gurax_CreateProperty(cairo_font_extents_t, max_x_advance));
+	Assign(Gurax_CreateProperty(cairo_font_extents_t, max_y_advance));
 }
 
 //------------------------------------------------------------------------------
