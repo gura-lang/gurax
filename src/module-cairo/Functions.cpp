@@ -1480,6 +1480,49 @@ Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gu
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
+// cairo.cairo_copy_clip_rectangle_list(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_copy_clip_rectangle_list_gurax, "cairo_copy_clip_rectangle_list")
+{
+	Declare(VTYPE_cairo_rectangle_list_t, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_copy_clip_rectangle_list_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	cairo_rectangle_list_t* rtn = cairo_copy_clip_rectangle_list(cr);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_rectangle_list_t(rtn);
+}
+
+// cairo.cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t)
+Gurax_DeclareFunctionAlias(cairo_rectangle_list_destroy_gurax, "cairo_rectangle_list_destroy")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rectangle_list", VTYPE_cairo_rectangle_list_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_rectangle_list_destroy_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_rectangle_list = args_gurax.Pick<Value_cairo_rectangle_list_t>();
+	cairo_rectangle_list_t* rectangle_list = value_rectangle_list.GetEntityPtr();
+	// Function body
+	cairo_rectangle_list_destroy(rectangle_list);
+	return Gurax::Value::nil();
+}
+
 // cairo.cairo_tag_begin(cr:cairo_t, tag_name:String, attributes:String)
 Gurax_DeclareFunctionAlias(cairo_tag_begin_gurax, "cairo_tag_begin")
 {
@@ -7043,6 +7086,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_clip_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_clip_preserve_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_clip_extents_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_copy_clip_rectangle_list_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_rectangle_list_destroy_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_tag_begin_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_tag_end_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_glyph_allocate_gurax));

@@ -99,6 +99,7 @@ r.DeclareType_EntityPtr('cairo_path_t_p', 'cairo_path_t*', 'cairo_path_t')
 r.DeclareType_EntityPtr('cairo_pattern_t_p', 'cairo_pattern_t*', 'cairo_pattern_t')
 r.DeclareType_EntityPtr('cairo_rectangle_t_p', 'cairo_rectangle_t*', 'cairo_rectangle_t')
 r.DeclareType_EntityPtr('cairo_rectangle_int_t_p', 'cairo_rectangle_int_t*', 'cairo_rectangle_int_t')
+r.DeclareType_EntityPtr('cairo_rectangle_list_t_p', 'cairo_rectangle_list_t*', 'cairo_rectangle_list_t')
 r.DeclareType_EntityPtr('cairo_region_t_p', 'cairo_region_t*', 'cairo_region_t')
 r.DeclareType_EntityPtr('cairo_surface_t_p', 'cairo_surface_t*', 'cairo_surface_t')
 r.DeclareType_EntityPtr('cairo_scaled_font_t_p', 'cairo_scaled_font_t*', 'cairo_scaled_font_t')
@@ -294,9 +295,9 @@ cairo_clip_extents(cr:cairo_t_p) = \
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 	'''
 
-//cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
+cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
 
-//cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t_p):void
+cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t_p):void
 
 cairo_tag_begin(cr:cairo_t_p, tag_name:const_char_p, attributes:const_char_p):void
 
