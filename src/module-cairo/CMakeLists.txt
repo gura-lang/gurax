@@ -51,6 +51,7 @@ target_sources(cairo.gurd PRIVATE
 	VType_cairo_pattern_t.cpp
 	VType_cairo_rectangle_t.cpp
 	VType_cairo_rectangle_int_t.cpp
+	VType_cairo_rectangle_list_t.cpp
 	VType_cairo_region_t.cpp
 	VType_cairo_scaled_font_t.cpp
 	VType_cairo_surface_t.cpp

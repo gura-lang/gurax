@@ -28,13 +28,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_cairo_rectangle_int_t");
 protected:
-	cairo_rectangle_int_t* _entity;
+	cairo_rectangle_int_t _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	explicit Value_cairo_rectangle_int_t(VType& vtype = VTYPE_cairo_rectangle_int_t) : Value_Object(vtype) {}
-	explicit Value_cairo_rectangle_int_t(cairo_rectangle_int_t* entity, VType& vtype = VTYPE_cairo_rectangle_int_t) :
+	explicit Value_cairo_rectangle_int_t(const cairo_rectangle_int_t& entity, VType& vtype = VTYPE_cairo_rectangle_int_t) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_cairo_rectangle_int_t(const Value_cairo_rectangle_int_t& src) = delete;
@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_cairo_rectangle_int_t() = default;
 public:
-	cairo_rectangle_int_t& GetEntity() { return *_entity; }
-	const cairo_rectangle_int_t& GetEntity() const { return *_entity; }
-	cairo_rectangle_int_t* GetEntityPtr() { return _entity; }
-	const cairo_rectangle_int_t* GetEntityPtr() const { return _entity; }
+	cairo_rectangle_int_t& GetEntity() { return _entity; }
+	const cairo_rectangle_int_t& GetEntity() const { return _entity; }
+	cairo_rectangle_int_t* GetEntityPtr() { return &_entity; }
+	const cairo_rectangle_int_t* GetEntityPtr() const { return &_entity; }
 public:
 	static cairo_rectangle_int_t& GetEntity(Value& value) {
 		return dynamic_cast<Value_cairo_rectangle_int_t&>(value).GetEntity();

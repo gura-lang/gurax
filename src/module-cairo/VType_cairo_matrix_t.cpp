@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // cairo_matrix_t(xx?:Number, yx?:Number, xy?:Number, yy?:Number, x0?:Number, y0?:Number) {block?}
 Gurax_DeclareConstructor(cairo_matrix_t)
 {
-	Declare(VTYPE_Color, Flag::None);
+	Declare(VTYPE_cairo_matrix_t, Flag::None);
 	DeclareArg("xx", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yx", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("xy", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);

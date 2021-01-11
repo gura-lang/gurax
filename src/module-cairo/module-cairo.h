@@ -25,6 +25,7 @@
 #include "VType_cairo_pattern_t.h"
 #include "VType_cairo_rectangle_t.h"
 #include "VType_cairo_rectangle_int_t.h"
+#include "VType_cairo_rectangle_list_t.h"
 #include "VType_cairo_region_t.h"
 #include "VType_cairo_scaled_font_t.h"
 #include "VType_cairo_surface_t.h"

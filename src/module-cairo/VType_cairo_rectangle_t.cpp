@@ -24,6 +24,36 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// cairo_rectangle_t(x?:Number, y?:Number, width?:Number, height?:Number) {block?}
+Gurax_DeclareConstructor(cairo_rectangle_t)
+{
+	Declare(VTYPE_cairo_rectangle_t, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `cairo_rectangle_t` instance.\n");
+}
+
+Gurax_ImplementConstructor(cairo_rectangle_t)
+{
+	// Arguments
+	ArgPicker args(argument);
+	cairo_rectangle_t rectangle;
+	rectangle.x = args.IsValid()? args.PickNumber<double>() : 0;
+	rectangle.y = args.IsValid()? args.PickNumber<double>() : 0;
+	rectangle.width = args.IsValid()? args.PickNumber<double>() : 0;
+	rectangle.height = args.IsValid()? args.PickNumber<double>() : 0;
+	// Function body
+	return argument.ReturnValue(processor, new Value_cairo_rectangle_t(rectangle));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -78,7 +108,7 @@ void VType_cairo_rectangle_t::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_rectangle_t));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_rectangle_t, MethodSkeleton));
 	// Assignment of property

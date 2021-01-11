@@ -63,6 +63,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_cairo_pattern_t);
 	Assign(VTYPE_cairo_rectangle_t);
 	Assign(VTYPE_cairo_rectangle_int_t);
+	Assign(VTYPE_cairo_rectangle_list_t);
 	Assign(VTYPE_cairo_region_t);
 	Assign(VTYPE_cairo_scaled_font_t);
 	Assign(VTYPE_cairo_surface_t);

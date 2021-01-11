@@ -53,8 +53,8 @@ Gurax_ImplementMethod(cairo_text_cluster_t, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_text_cluster_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_text_cluster_t, propSkeleton)
+// cairo.cairo_text_cluster_t#num_bytes
+Gurax_DeclareProperty_RW(cairo_text_cluster_t, num_bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,37 @@ Gurax_DeclareProperty_R(cairo_text_cluster_t, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(cairo_text_cluster_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_text_cluster_t, num_bytes)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().num_bytes);
+}
+
+Gurax_ImplementPropertySetter(cairo_text_cluster_t, num_bytes)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().num_bytes = Value_Number::GetNumber<int>(value);
+}
+
+// cairo.cairo_text_cluster_t#num_glyphs
+Gurax_DeclareProperty_RW(cairo_text_cluster_t, num_glyphs)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_text_cluster_t, num_glyphs)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().num_glyphs);
+}
+
+Gurax_ImplementPropertySetter(cairo_text_cluster_t, num_glyphs)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().num_glyphs = Value_Number::GetNumber<int>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +109,8 @@ void VType_cairo_text_cluster_t::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_text_cluster_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_text_cluster_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_text_cluster_t, num_bytes));
+	Assign(Gurax_CreateProperty(cairo_text_cluster_t, num_glyphs));
 }
 
 //------------------------------------------------------------------------------
