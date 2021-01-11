@@ -604,6 +604,13 @@ cairo_surface_write_to_png(surface:cairo_surface_t_p, filename:const_char_p):cai
 //cairo_surface_set_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p, user_data:void_p, destroy:cairo_destroy_func_t):cairo_status_t
 
 //cairo_surface_get_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_pp, length:unsigned_long_p):void
+cairo_surface_get_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p) = \
+	R'''
+	const unsigned char* data;
+	unsigned long length;
+	cairo_surface_get_mime_data(surface, mime_type, &data, &length);
+	return new Value_Binary(Binary(data, length));
+	'''
 
 //cairo_surface_set_mime_data(surface:cairo_surface_t_p, mime_type:const_char_p, data:const_unsigned_char_p, length:unsigned_long, destroy:cairo_destroy_func_t, closure:void_p):cairo_status_t
 

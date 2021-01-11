@@ -4187,6 +4187,31 @@ Gurax_ImplementFunctionEx(cairo_surface_write_to_png_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
+// cairo.cairo_surface_get_mime_data(surface:cairo_surface_t, mime_type:String)
+Gurax_DeclareFunctionAlias(cairo_surface_get_mime_data_gurax, "cairo_surface_get_mime_data")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mime_type", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_get_mime_data_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	const char* mime_type = args_gurax.PickString();
+	// Function body
+	const unsigned char* data;
+	unsigned long length;
+	cairo_surface_get_mime_data(surface, mime_type, &data, &length);
+	return new Value_Binary(Binary(data, length));
+}
+
 // cairo.cairo_surface_supports_mime_type(surface:cairo_surface_t, mime_type:String)
 Gurax_DeclareFunctionAlias(cairo_surface_supports_mime_type_gurax, "cairo_surface_supports_mime_type")
 {
@@ -7206,6 +7231,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_type_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_content_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_write_to_png_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_get_mime_data_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_supports_mime_type_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_font_options_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_flush_gurax));
