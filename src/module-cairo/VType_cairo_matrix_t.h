@@ -28,13 +28,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_cairo_matrix_t");
 protected:
-	cairo_matrix_t* _entity;
+	cairo_matrix_t _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	explicit Value_cairo_matrix_t(VType& vtype = VTYPE_cairo_matrix_t) : Value_Object(vtype) {}
-	explicit Value_cairo_matrix_t(cairo_matrix_t* entity, VType& vtype = VTYPE_cairo_matrix_t) :
+	explicit Value_cairo_matrix_t(const cairo_matrix_t& entity, VType& vtype = VTYPE_cairo_matrix_t) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_cairo_matrix_t(const Value_cairo_matrix_t& src) = delete;
@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_cairo_matrix_t() = default;
 public:
-	cairo_matrix_t& GetEntity() { return *_entity; }
-	const cairo_matrix_t& GetEntity() const { return *_entity; }
-	cairo_matrix_t* GetEntityPtr() { return _entity; }
-	const cairo_matrix_t* GetEntityPtr() const { return _entity; }
+	cairo_matrix_t& GetEntity() { return _entity; }
+	const cairo_matrix_t& GetEntity() const { return _entity; }
+	cairo_matrix_t* GetEntityPtr() { return &_entity; }
+	const cairo_matrix_t* GetEntityPtr() const { return &_entity; }
 public:
 	static cairo_matrix_t& GetEntity(Value& value) {
 		return dynamic_cast<Value_cairo_matrix_t&>(value).GetEntity();
