@@ -6,6 +6,9 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(cairo)
+
+bool IsOK(cairo_status_t status);
+
 Gurax_EndModuleScope(cairo)
 
 #endif

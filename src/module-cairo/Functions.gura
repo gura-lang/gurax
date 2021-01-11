@@ -80,6 +80,13 @@ r.DeclareType_Number('cairo_extend_t')
 r.DeclareType_Number('cairo_filter_t')
 r.DeclareType_Number('cairo_region_overlap_t')
 r.DeclareType_Number('cairo_surface_observer_mode_t')
+r.DeclareType_Number('cairo_pdf_version_t')
+r.DeclareType_Number('cairo_pdf_outline_flags_t')
+r.DeclareType_Number('cairo_pdf_metadata_t')
+r.DeclareType_Number('cairo_ps_level_t')
+r.DeclareType_Number('cairo_script_mode_t')
+r.DeclareType_Number('cairo_svg_version_t')
+r.DeclareType_Number('cairo_svg_unit_t')
 
 r.DeclareType_EntityPtr('cairo_t_p', 'cairo_t*', 'cairo_t')
 r.DeclareType_EntityPtr('cairo_device_t_p', 'cairo_device_t*', 'cairo_device_t')
@@ -112,6 +119,8 @@ r.DeclareType_EntityPtr('const_cairo_text_cluster_t_p', 'const cairo_text_cluste
 // Function Registration
 //------------------------------------------------------------------------------
 r.Register('cairo') {
+
+//======== Cairo (cairo.h) ========
 
 cairo_version():int
 
@@ -688,6 +697,12 @@ cairo_pattern_set_filter(pattern:cairo_pattern_t_p, filter:cairo_filter_t):void
 cairo_pattern_get_filter(pattern:cairo_pattern_t_p):cairo_filter_t
 
 //cairo_pattern_get_rgba(pattern:cairo_pattern_t_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+cairo_pattern_get_rgba(pattern:cairo_pattern_t_p) = \
+	R'''
+	double red, green, blue, alpha;
+	if (!IsOK(cairo_pattern_get_rgba(pattern, &red, &green, &blue, &alpha))) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	'''
 
 //cairo_pattern_get_surface(pattern:cairo_pattern_t_p, surface:cairo_surface_t_pp):cairo_status_t
 
@@ -778,6 +793,114 @@ cairo_region_xor(dst:cairo_region_t_p, other:const_cairo_region_t_p):cairo_statu
 cairo_region_xor_rectangle(dst:cairo_region_t_p, rectangle:const_cairo_rectangle_int_t_p):cairo_status_t
 
 cairo_debug_reset_static_data():void
+
+//======== FreeType backend (cairo-ft.h) ========
+/*
+cairo_ft_font_face_create_for_ft_face(face:FT_Face, load_flags:int):cairo_font_face_t_p
+
+cairo_ft_font_face_set_synthesize(font_face:cairo_font_face_t_p, synth_flags:unsigned_int):void
+
+cairo_ft_font_face_unset_synthesize(font_face:cairo_font_face_t_p, synth_flags:unsigned_int):void
+
+cairo_ft_font_face_get_synthesize(font_face:cairo_font_face_t_p):unsigned_int
+
+cairo_ft_scaled_font_lock_face(scaled_font:cairo_scaled_font_t_p):FT_Face
+
+cairo_ft_scaled_font_unlock_face(scaled_font:cairo_scaled_font_t_p):void
+
+cairo_ft_font_face_create_for_pattern(pattern:FcPattern_p):cairo_font_face_t_p
+
+cairo_ft_font_options_substitute(options:const_cairo_font_options_t_p, pattern:FcPattern_p):void
+*/
+//======== PDF surface (cairo-pdf.h) ========
+
+cairo_pdf_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+//cairo_pdf_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t_p, version:cairo_pdf_version_t):void
+
+//cairo_pdf_get_versions(versions:cairo_pdf_version_t_const_pp, num_versions:int_p):void
+
+cairo_pdf_version_to_string(version:cairo_pdf_version_t):const_char_p
+
+cairo_pdf_surface_set_size(surface:cairo_surface_t_p, width_in_points:double, height_in_points:double):void
+
+cairo_pdf_surface_add_outline(surface:cairo_surface_t_p, parent_id:int, utf8:const_char_p, link_attribs:const_char_p, flags:cairo_pdf_outline_flags_t):int
+
+cairo_pdf_surface_set_metadata(surface:cairo_surface_t_p, metadata:cairo_pdf_metadata_t, utf8:const_char_p):void
+
+cairo_pdf_surface_set_page_label(surface:cairo_surface_t_p, utf8:const_char_p):void
+
+cairo_pdf_surface_set_thumbnail_size(surface:cairo_surface_t_p, width:int, height:int):void
+
+//======== PostScript surface (cairo-ps.h) ========
+
+cairo_ps_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+//cairo_ps_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+cairo_ps_surface_restrict_to_level(surface:cairo_surface_t_p, level:cairo_ps_level_t):void
+
+//cairo_ps_get_levels(levels:cairo_ps_level_t_const_pp, num_levels:int_p):void
+
+cairo_ps_level_to_string(level:cairo_ps_level_t):const_char_p
+
+cairo_ps_surface_set_eps(surface:cairo_surface_t_p, eps:cairo_bool_t):void
+
+cairo_ps_surface_get_eps(surface:cairo_surface_t_p):cairo_bool_t
+
+cairo_ps_surface_set_size(surface:cairo_surface_t_p, width_in_points:double, height_in_points:double):void
+
+cairo_ps_surface_dsc_comment(surface:cairo_surface_t_p, comment:const_char_p):void
+
+cairo_ps_surface_dsc_begin_setup(surface:cairo_surface_t_p):void
+
+cairo_ps_surface_dsc_begin_page_setup(surface:cairo_surface_t_p):void
+
+//======== CairoScript surface (cairo-script.h) ========
+
+cairo_script_create(filename:const_char_p):cairo_device_t_p
+
+//cairo_script_create_for_stream(write_func:cairo_write_func_t, closure:void_p):cairo_device_t_p
+
+cairo_script_write_comment(script:cairo_device_t_p, comment:const_char_p, len:int):void
+
+cairo_script_set_mode(script:cairo_device_t_p, mode:cairo_script_mode_t):void
+
+cairo_script_get_mode(script:cairo_device_t_p):cairo_script_mode_t
+
+cairo_script_surface_create(script:cairo_device_t_p, content:cairo_content_t, width:double, height:double):cairo_surface_t_p
+
+cairo_script_surface_create_for_target(script:cairo_device_t_p, target:cairo_surface_t_p):cairo_surface_t_p
+
+cairo_script_from_recording_surface(script:cairo_device_t_p, recording_surface:cairo_surface_t_p):cairo_status_t
+
+//======== SVG surface (cairo-svg.h) ========
+
+cairo_svg_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+//cairo_svg_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+
+cairo_svg_surface_restrict_to_version(surface:cairo_surface_t_p, version:cairo_svg_version_t):void
+
+//cairo_svg_get_versions(versions:cairo_svg_version_t_const_pp, num_versions:int_p):void
+
+cairo_svg_version_to_string(version:cairo_svg_version_t):const_char_p
+
+cairo_svg_surface_set_document_unit(surface:cairo_surface_t_p, unit:cairo_svg_unit_t):void
+
+cairo_svg_surface_get_document_unit(surface:cairo_surface_t_p):cairo_svg_unit_t
+
+//======== XML surface (cairo-xml.h) ========
+
+//cairo_xml_create(filename:const_char_p):cairo_device_t_p
+
+//cairo_xml_create_for_stream(write_func:cairo_write_func_t, closure:void_p):cairo_device_t_p
+
+//cairo_xml_surface_create(xml:cairo_device_t_p, content:cairo_content_t, width:double, height:double):cairo_surface_t_p
+
+//cairo_xml_for_recording_surface(xml:cairo_device_t_p, surface:cairo_surface_t_p):cairo_status_t
 
 }
 

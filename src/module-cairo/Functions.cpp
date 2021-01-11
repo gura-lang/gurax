@@ -5161,6 +5161,28 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_filter_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
+// cairo.cairo_pattern_get_rgba(pattern:cairo_pattern_t)
+Gurax_DeclareFunctionAlias(cairo_pattern_get_rgba_gurax, "cairo_pattern_get_rgba")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
+	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
+	// Function body
+	double red, green, blue, alpha;
+	if (!IsOK(cairo_pattern_get_rgba(pattern, &red, &green, &blue, &alpha))) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+}
+
 // cairo.cairo_mesh_pattern_get_path(pattern:cairo_pattern_t, patch_num:Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_path_gurax, "cairo_mesh_pattern_get_path")
 {
@@ -5980,6 +6002,682 @@ Gurax_ImplementFunctionEx(cairo_debug_reset_static_data_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
+// cairo.cairo_pdf_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_gurax, "cairo_pdf_surface_create")
+{
+	Declare(VTYPE_cairo_surface_t, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_create_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* rtn = cairo_pdf_surface_create(filename, width_in_points, height_in_points);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_surface_t(rtn);
+}
+
+// cairo.cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_restrict_to_version_gurax, "cairo_pdf_surface_restrict_to_version")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_restrict_to_version_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_pdf_version_t version = args_gurax.PickNumber<cairo_pdf_version_t>();
+	// Function body
+	cairo_pdf_surface_restrict_to_version(surface, version);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_pdf_version_to_string(version:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_version_to_string_gurax, "cairo_pdf_version_to_string")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_version_to_string_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	cairo_pdf_version_t version = args_gurax.PickNumber<cairo_pdf_version_t>();
+	// Function body
+	const char* rtn = cairo_pdf_version_to_string(version);
+	return new Gurax::Value_String(rtn);
+}
+
+// cairo.cairo_pdf_surface_set_size(surface:cairo_surface_t, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_size_gurax, "cairo_pdf_surface_set_size")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_set_size_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_pdf_surface_set_size(surface, width_in_points, height_in_points);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_pdf_surface_add_outline(surface:cairo_surface_t, parent_id:Number, utf8:String, link_attribs:String, flags:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_add_outline_gurax, "cairo_pdf_surface_add_outline")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("link_attribs", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_add_outline_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	int parent_id = args_gurax.PickNumber<int>();
+	const char* utf8 = args_gurax.PickString();
+	const char* link_attribs = args_gurax.PickString();
+	cairo_pdf_outline_flags_t flags = args_gurax.PickNumber<cairo_pdf_outline_flags_t>();
+	// Function body
+	int rtn = cairo_pdf_surface_add_outline(surface, parent_id, utf8, link_attribs, flags);
+	return new Gurax::Value_Number(rtn);
+}
+
+// cairo.cairo_pdf_surface_set_metadata(surface:cairo_surface_t, metadata:Number, utf8:String)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_metadata_gurax, "cairo_pdf_surface_set_metadata")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("metadata", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_set_metadata_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_pdf_metadata_t metadata = args_gurax.PickNumber<cairo_pdf_metadata_t>();
+	const char* utf8 = args_gurax.PickString();
+	// Function body
+	cairo_pdf_surface_set_metadata(surface, metadata, utf8);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_pdf_surface_set_page_label(surface:cairo_surface_t, utf8:String)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_page_label_gurax, "cairo_pdf_surface_set_page_label")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_set_page_label_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	const char* utf8 = args_gurax.PickString();
+	// Function body
+	cairo_pdf_surface_set_page_label(surface, utf8);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_pdf_surface_set_thumbnail_size(surface:cairo_surface_t, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_thumbnail_size_gurax, "cairo_pdf_surface_set_thumbnail_size")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_set_thumbnail_size_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	// Function body
+	cairo_pdf_surface_set_thumbnail_size(surface, width, height);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_create_gurax, "cairo_ps_surface_create")
+{
+	Declare(VTYPE_cairo_surface_t, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_create_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* rtn = cairo_ps_surface_create(filename, width_in_points, height_in_points);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_surface_t(rtn);
+}
+
+// cairo.cairo_ps_surface_restrict_to_level(surface:cairo_surface_t, level:Number)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_restrict_to_level_gurax, "cairo_ps_surface_restrict_to_level")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_restrict_to_level_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_ps_level_t level = args_gurax.PickNumber<cairo_ps_level_t>();
+	// Function body
+	cairo_ps_surface_restrict_to_level(surface, level);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_level_to_string(level:Number)
+Gurax_DeclareFunctionAlias(cairo_ps_level_to_string_gurax, "cairo_ps_level_to_string")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_level_to_string_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	cairo_ps_level_t level = args_gurax.PickNumber<cairo_ps_level_t>();
+	// Function body
+	const char* rtn = cairo_ps_level_to_string(level);
+	return new Gurax::Value_String(rtn);
+}
+
+// cairo.cairo_ps_surface_set_eps(surface:cairo_surface_t, eps:Bool)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_set_eps_gurax, "cairo_ps_surface_set_eps")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("eps", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_set_eps_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_bool_t eps = static_cast<cairo_bool_t>(args_gurax.PickBool());
+	// Function body
+	cairo_ps_surface_set_eps(surface, eps);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_surface_get_eps(surface:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_get_eps_gurax, "cairo_ps_surface_get_eps")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_get_eps_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	// Function body
+	cairo_bool_t rtn = cairo_ps_surface_get_eps(surface);
+	return new Gurax::Value_Bool(!!rtn);
+}
+
+// cairo.cairo_ps_surface_set_size(surface:cairo_surface_t, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_set_size_gurax, "cairo_ps_surface_set_size")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_set_size_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_ps_surface_set_size(surface, width_in_points, height_in_points);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_surface_dsc_comment(surface:cairo_surface_t, comment:String)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_comment_gurax, "cairo_ps_surface_dsc_comment")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("comment", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_comment_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	const char* comment = args_gurax.PickString();
+	// Function body
+	cairo_ps_surface_dsc_comment(surface, comment);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_surface_dsc_begin_setup(surface:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_setup_gurax, "cairo_ps_surface_dsc_begin_setup")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_begin_setup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	// Function body
+	cairo_ps_surface_dsc_begin_setup(surface);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_surface_dsc_begin_page_setup(surface:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_page_setup_gurax, "cairo_ps_surface_dsc_begin_page_setup")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_begin_page_setup_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	// Function body
+	cairo_ps_surface_dsc_begin_page_setup(surface);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_script_create(filename:String)
+Gurax_DeclareFunctionAlias(cairo_script_create_gurax, "cairo_script_create")
+{
+	Declare(VTYPE_cairo_device_t, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_create_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	// Function body
+	cairo_device_t* rtn = cairo_script_create(filename);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_device_t(rtn);
+}
+
+// cairo.cairo_script_write_comment(script:cairo_device_t, comment:String, len:Number)
+Gurax_DeclareFunctionAlias(cairo_script_write_comment_gurax, "cairo_script_write_comment")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("comment", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_write_comment_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	const char* comment = args_gurax.PickString();
+	int len = args_gurax.PickNumber<int>();
+	// Function body
+	cairo_script_write_comment(script, comment, len);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_script_set_mode(script:cairo_device_t, mode:Number)
+Gurax_DeclareFunctionAlias(cairo_script_set_mode_gurax, "cairo_script_set_mode")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_set_mode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	cairo_script_mode_t mode = args_gurax.PickNumber<cairo_script_mode_t>();
+	// Function body
+	cairo_script_set_mode(script, mode);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_script_get_mode(script:cairo_device_t)
+Gurax_DeclareFunctionAlias(cairo_script_get_mode_gurax, "cairo_script_get_mode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_get_mode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	// Function body
+	cairo_script_mode_t rtn = cairo_script_get_mode(script);
+	return new Gurax::Value_Number(rtn);
+}
+
+// cairo.cairo_script_surface_create(script:cairo_device_t, content:Number, width:Number, height:Number)
+Gurax_DeclareFunctionAlias(cairo_script_surface_create_gurax, "cairo_script_surface_create")
+{
+	Declare(VTYPE_cairo_surface_t, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_surface_create_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	cairo_content_t content = args_gurax.PickNumber<cairo_content_t>();
+	double width = args_gurax.PickNumber<double>();
+	double height = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* rtn = cairo_script_surface_create(script, content, width, height);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_surface_t(rtn);
+}
+
+// cairo.cairo_script_surface_create_for_target(script:cairo_device_t, target:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_script_surface_create_for_target_gurax, "cairo_script_surface_create_for_target")
+{
+	Declare(VTYPE_cairo_surface_t, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("target", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_surface_create_for_target_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	auto& value_target = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* target = value_target.GetEntityPtr();
+	// Function body
+	cairo_surface_t* rtn = cairo_script_surface_create_for_target(script, target);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_surface_t(rtn);
+}
+
+// cairo.cairo_script_from_recording_surface(script:cairo_device_t, recording_surface:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_script_from_recording_surface_gurax, "cairo_script_from_recording_surface")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("recording_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_from_recording_surface_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_script = args_gurax.Pick<Value_cairo_device_t>();
+	cairo_device_t* script = value_script.GetEntityPtr();
+	auto& value_recording_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* recording_surface = value_recording_surface.GetEntityPtr();
+	// Function body
+	cairo_status_t rtn = cairo_script_from_recording_surface(script, recording_surface);
+	return new Gurax::Value_Number(rtn);
+}
+
+// cairo.cairo_svg_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_svg_surface_create_gurax, "cairo_svg_surface_create")
+{
+	Declare(VTYPE_cairo_surface_t, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_surface_create_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* rtn = cairo_svg_surface_create(filename, width_in_points, height_in_points);
+	if (!rtn) return Value::nil();
+	return new Value_cairo_surface_t(rtn);
+}
+
+// cairo.cairo_svg_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
+Gurax_DeclareFunctionAlias(cairo_svg_surface_restrict_to_version_gurax, "cairo_svg_surface_restrict_to_version")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_surface_restrict_to_version_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_svg_version_t version = args_gurax.PickNumber<cairo_svg_version_t>();
+	// Function body
+	cairo_svg_surface_restrict_to_version(surface, version);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_svg_version_to_string(version:Number)
+Gurax_DeclareFunctionAlias(cairo_svg_version_to_string_gurax, "cairo_svg_version_to_string")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_version_to_string_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	cairo_svg_version_t version = args_gurax.PickNumber<cairo_svg_version_t>();
+	// Function body
+	const char* rtn = cairo_svg_version_to_string(version);
+	return new Gurax::Value_String(rtn);
+}
+
+// cairo.cairo_svg_surface_set_document_unit(surface:cairo_surface_t, unit:Number)
+Gurax_DeclareFunctionAlias(cairo_svg_surface_set_document_unit_gurax, "cairo_svg_surface_set_document_unit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("unit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_surface_set_document_unit_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	cairo_svg_unit_t unit = args_gurax.PickNumber<cairo_svg_unit_t>();
+	// Function body
+	cairo_svg_surface_set_document_unit(surface, unit);
+	return Gurax::Value::nil();
+}
+
+// cairo.cairo_svg_surface_get_document_unit(surface:cairo_surface_t)
+Gurax_DeclareFunctionAlias(cairo_svg_surface_get_document_unit_gurax, "cairo_svg_surface_get_document_unit")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_surface_get_document_unit_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	// Function body
+	cairo_svg_unit_t rtn = cairo_svg_surface_get_document_unit(surface);
+	return new Gurax::Value_Number(rtn);
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(cairo_version_gurax));
@@ -6205,6 +6903,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_extend_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_set_filter_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_filter_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_rgba_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_path_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_identity_gurax));
@@ -6240,6 +6939,35 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_region_xor_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_region_xor_rectangle_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_debug_reset_static_data_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_restrict_to_version_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_version_to_string_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_size_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_add_outline_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_metadata_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_page_label_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_thumbnail_size_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_restrict_to_level_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_level_to_string_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_set_eps_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_get_eps_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_set_size_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_dsc_comment_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_dsc_begin_setup_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_dsc_begin_page_setup_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_write_comment_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_set_mode_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_get_mode_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_surface_create_for_target_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_from_recording_surface_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_restrict_to_version_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_version_to_string_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_set_document_unit_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_get_document_unit_gurax));
 }
 
 Gurax_EndModuleScope(cairo)

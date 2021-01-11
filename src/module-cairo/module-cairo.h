@@ -6,6 +6,11 @@
 #include <gurax.h>
 #define CAIRO_WIN32_STATIC_BUILD
 #include <cairo.h>
+#include <cairo-pdf.h>
+#include <cairo-ps.h>
+#include <cairo-script.h>
+#include <cairo-svg.h>
+//#include <cairo-xml.h>
 #include "Util.h"
 #include "Functions.h"
 #include "VType_cairo_t.h"
