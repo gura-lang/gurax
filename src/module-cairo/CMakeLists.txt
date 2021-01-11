@@ -63,7 +63,7 @@ target_sources(cairo.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_options(cairo.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -NODEFAULTLIB:MSVCRT -LTCG -INCREMENTAL:NO>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(cairo.gurd PRIVATE guraxcore
