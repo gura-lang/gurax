@@ -54,6 +54,165 @@ void AssignConsts(Frame& frame)
 	AssignConst(CAIRO_STATUS_WIN32_GDI_ERROR);
 	AssignConst(CAIRO_STATUS_TAG_ERROR);
 	AssignConst(CAIRO_STATUS_LAST_STATUS);
+	// cairo_content_t
+	AssignConst(CAIRO_CONTENT_COLOR);
+	AssignConst(CAIRO_CONTENT_ALPHA);
+	AssignConst(CAIRO_CONTENT_COLOR_ALPHA);
+	// cairo_format_t
+	AssignConst(CAIRO_FORMAT_INVALID);
+	AssignConst(CAIRO_FORMAT_ARGB32);
+	AssignConst(CAIRO_FORMAT_RGB24);
+	AssignConst(CAIRO_FORMAT_A8);
+	AssignConst(CAIRO_FORMAT_A1);
+	AssignConst(CAIRO_FORMAT_RGB16_565);
+	AssignConst(CAIRO_FORMAT_RGB30);
+	// cairo_operator_t
+	AssignConst(CAIRO_OPERATOR_CLEAR);
+	AssignConst(CAIRO_OPERATOR_SOURCE);
+	AssignConst(CAIRO_OPERATOR_OVER);
+	AssignConst(CAIRO_OPERATOR_IN);
+	AssignConst(CAIRO_OPERATOR_OUT);
+	AssignConst(CAIRO_OPERATOR_ATOP);
+	AssignConst(CAIRO_OPERATOR_DEST);
+	AssignConst(CAIRO_OPERATOR_DEST_OVER);
+	AssignConst(CAIRO_OPERATOR_DEST_IN);
+	AssignConst(CAIRO_OPERATOR_DEST_OUT);
+	AssignConst(CAIRO_OPERATOR_DEST_ATOP);
+	AssignConst(CAIRO_OPERATOR_XOR);
+	AssignConst(CAIRO_OPERATOR_ADD);
+	AssignConst(CAIRO_OPERATOR_SATURATE);
+	AssignConst(CAIRO_OPERATOR_MULTIPLY);
+	AssignConst(CAIRO_OPERATOR_SCREEN);
+	AssignConst(CAIRO_OPERATOR_OVERLAY);
+	AssignConst(CAIRO_OPERATOR_DARKEN);
+	AssignConst(CAIRO_OPERATOR_LIGHTEN);
+	AssignConst(CAIRO_OPERATOR_COLOR_DODGE);
+	AssignConst(CAIRO_OPERATOR_COLOR_BURN);
+	AssignConst(CAIRO_OPERATOR_HARD_LIGHT);
+	AssignConst(CAIRO_OPERATOR_SOFT_LIGHT);
+	AssignConst(CAIRO_OPERATOR_DIFFERENCE);
+	AssignConst(CAIRO_OPERATOR_EXCLUSION);
+	AssignConst(CAIRO_OPERATOR_HSL_HUE);
+	AssignConst(CAIRO_OPERATOR_HSL_SATURATION);
+	AssignConst(CAIRO_OPERATOR_HSL_COLOR);
+	AssignConst(CAIRO_OPERATOR_HSL_LUMINOSITY);
+	// cairo_antialias_t
+	AssignConst(CAIRO_ANTIALIAS_DEFAULT);
+	AssignConst(CAIRO_ANTIALIAS_NONE);
+	AssignConst(CAIRO_ANTIALIAS_GRAY);
+	AssignConst(CAIRO_ANTIALIAS_SUBPIXEL);
+	AssignConst(CAIRO_ANTIALIAS_FAST);
+	AssignConst(CAIRO_ANTIALIAS_GOOD);
+	AssignConst(CAIRO_ANTIALIAS_BEST);
+	// cairo_fill_rule_t
+	AssignConst(CAIRO_FILL_RULE_WINDING);
+	AssignConst(CAIRO_FILL_RULE_EVEN_ODD);
+	// cairo_line_cap_t
+	AssignConst(CAIRO_LINE_CAP_BUTT);
+	AssignConst(CAIRO_LINE_CAP_ROUND);
+	AssignConst(CAIRO_LINE_CAP_SQUARE);
+	// cairo_line_join_t
+	AssignConst(CAIRO_LINE_JOIN_MITER);
+	AssignConst(CAIRO_LINE_JOIN_ROUND);
+	AssignConst(CAIRO_LINE_JOIN_BEVEL);
+	// cairo_text_cluster_flags
+	AssignConst(CAIRO_TEXT_CLUSTER_FLAG_BACKWARD);
+	// cairo_font_slant_t
+	AssignConst(CAIRO_FONT_SLANT_NORMAL);
+	AssignConst(CAIRO_FONT_SLANT_ITALIC);
+	AssignConst(CAIRO_FONT_SLANT_OBLIQUE);
+	// cairo_font_weight_t
+	AssignConst(CAIRO_FONT_WEIGHT_NORMAL);
+	AssignConst(CAIRO_FONT_WEIGHT_BOLD);
+	// cairo_subpixel_order_t
+	AssignConst(CAIRO_SUBPIXEL_ORDER_DEFAULT);
+	AssignConst(CAIRO_SUBPIXEL_ORDER_RGB);
+	AssignConst(CAIRO_SUBPIXEL_ORDER_BGR);
+	AssignConst(CAIRO_SUBPIXEL_ORDER_VRGB);
+	AssignConst(CAIRO_SUBPIXEL_ORDER_VBGR);
+	// cairo_hint_style_t
+	AssignConst(CAIRO_HINT_STYLE_DEFAULT);
+	AssignConst(CAIRO_HINT_STYLE_NONE);
+	AssignConst(CAIRO_HINT_STYLE_SLIGHT);
+	AssignConst(CAIRO_HINT_STYLE_MEDIUM);
+	AssignConst(CAIRO_HINT_STYLE_FULL);
+	// cairo_hint_metrics_t
+	AssignConst(CAIRO_HINT_METRICS_DEFAULT);
+	AssignConst(CAIRO_HINT_METRICS_OFF);
+	AssignConst(CAIRO_HINT_METRICS_ON);
+	// cairo_font_type_t
+	AssignConst(CAIRO_FONT_TYPE_TOY);
+	AssignConst(CAIRO_FONT_TYPE_FT);
+	AssignConst(CAIRO_FONT_TYPE_WIN32);
+	AssignConst(CAIRO_FONT_TYPE_QUARTZ);
+	AssignConst(CAIRO_FONT_TYPE_USER);
+	// cairo_path_data_type_t
+	AssignConst(CAIRO_PATH_MOVE_TO);
+	AssignConst(CAIRO_PATH_LINE_TO);
+	AssignConst(CAIRO_PATH_CURVE_TO);
+	AssignConst(CAIRO_PATH_CLOSE_PATH);
+	// cairo_device_type_t
+	AssignConst(CAIRO_DEVICE_TYPE_DRM);
+	AssignConst(CAIRO_DEVICE_TYPE_GL);
+	AssignConst(CAIRO_DEVICE_TYPE_SCRIPT);
+	AssignConst(CAIRO_DEVICE_TYPE_XCB);
+	AssignConst(CAIRO_DEVICE_TYPE_XLIB);
+	AssignConst(CAIRO_DEVICE_TYPE_XML);
+	AssignConst(CAIRO_DEVICE_TYPE_COGL);
+	AssignConst(CAIRO_DEVICE_TYPE_WIN32);
+	AssignConst(CAIRO_DEVICE_TYPE_INVALID);
+	// cairo_surface_observer_mode_t
+	AssignConst(CAIRO_SURFACE_OBSERVER_NORMAL);
+	AssignConst(CAIRO_SURFACE_OBSERVER_RECORD_OPERATIONS);
+	// cairo_surface_type_t
+	AssignConst(CAIRO_SURFACE_TYPE_IMAGE);
+	AssignConst(CAIRO_SURFACE_TYPE_PDF);
+	AssignConst(CAIRO_SURFACE_TYPE_PS);
+	AssignConst(CAIRO_SURFACE_TYPE_XLIB);
+	AssignConst(CAIRO_SURFACE_TYPE_XCB);
+	AssignConst(CAIRO_SURFACE_TYPE_GLITZ);
+	AssignConst(CAIRO_SURFACE_TYPE_QUARTZ);
+	AssignConst(CAIRO_SURFACE_TYPE_WIN32);
+	AssignConst(CAIRO_SURFACE_TYPE_BEOS);
+	AssignConst(CAIRO_SURFACE_TYPE_DIRECTFB);
+	AssignConst(CAIRO_SURFACE_TYPE_SVG);
+	AssignConst(CAIRO_SURFACE_TYPE_OS2);
+	AssignConst(CAIRO_SURFACE_TYPE_WIN32_PRINTING);
+	AssignConst(CAIRO_SURFACE_TYPE_QUARTZ_IMAGE);
+	AssignConst(CAIRO_SURFACE_TYPE_SCRIPT);
+	AssignConst(CAIRO_SURFACE_TYPE_QT);
+	AssignConst(CAIRO_SURFACE_TYPE_RECORDING);
+	AssignConst(CAIRO_SURFACE_TYPE_VG);
+	AssignConst(CAIRO_SURFACE_TYPE_GL);
+	AssignConst(CAIRO_SURFACE_TYPE_DRM);
+	AssignConst(CAIRO_SURFACE_TYPE_TEE);
+	AssignConst(CAIRO_SURFACE_TYPE_XML);
+	AssignConst(CAIRO_SURFACE_TYPE_SKIA);
+	AssignConst(CAIRO_SURFACE_TYPE_SUBSURFACE);
+	AssignConst(CAIRO_SURFACE_TYPE_COGL);
+	// cairo_pattern_type_t
+	AssignConst(CAIRO_PATTERN_TYPE_SOLID);
+	AssignConst(CAIRO_PATTERN_TYPE_SURFACE);
+	AssignConst(CAIRO_PATTERN_TYPE_LINEAR);
+	AssignConst(CAIRO_PATTERN_TYPE_RADIAL);
+	AssignConst(CAIRO_PATTERN_TYPE_MESH);
+	AssignConst(CAIRO_PATTERN_TYPE_RASTER_SOURCE);
+	// cairo_extend_t
+	AssignConst(CAIRO_EXTEND_NONE);
+	AssignConst(CAIRO_EXTEND_REPEAT);
+	AssignConst(CAIRO_EXTEND_REFLECT);
+	AssignConst(CAIRO_EXTEND_PAD);
+	// cairo_filter_t
+	AssignConst(CAIRO_FILTER_FAST);
+	AssignConst(CAIRO_FILTER_GOOD);
+	AssignConst(CAIRO_FILTER_BEST);
+	AssignConst(CAIRO_FILTER_NEAREST);
+	AssignConst(CAIRO_FILTER_BILINEAR);
+	AssignConst(CAIRO_FILTER_GAUSSIAN);
+	// cairo_region_overlap_t
+	AssignConst(CAIRO_REGION_OVERLAP_IN);
+	AssignConst(CAIRO_REGION_OVERLAP_OUT);
+	AssignConst(CAIRO_REGION_OVERLAP_PART);
 }
 
 Gurax_EndModuleScope(cairo)
