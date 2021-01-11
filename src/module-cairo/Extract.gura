@@ -8,32 +8,30 @@ FileInfo = struct {
 }
 
 fileInfoTbl = @(FileInfo) {
+	{ 'cairo.h',				'Cairo' }
+	{ 'cairo-ft.h',				'FreeType backend' }
+	{ 'cairo-pdf.h',			'PDF surface' }
+	{ 'cairo-ps.h',				'PostScript surface' }
+	{ 'cairo-script.h',			'CairoScript surface' }
+	{ 'cairo-svg.h',			'SVG surface' }
+	{ 'cairo-xml.h',			'XML surface' }
 /*
-	{ 'cairo-beos.h',			'' }
-	{ 'cairo-cogl.h',			'' }
-	{ 'cairo-directfb.h',		'' }
-	{ 'cairo-drm.h',			'' }
-	{ 'cairo-error-inline.h',	'' }
-	{ 'cairo-ft.h',				'' }
-	{ 'cairo-gl.h',				'' }
-	{ 'cairo-os2.h',			'' }
-	{ 'cairo-pdf.h',			'' }
-	{ 'cairo-ps.h',				'' }
-	{ 'cairo-qt.h',				'' }
-	{ 'cairo-quartz-image.h',	'' }
-	{ 'cairo-quartz.h',			'' }
-	{ 'cairo-script.h',			'' }
-	{ 'cairo-svg.h',			'' }
-	{ 'cairo-tee.h',			'' }
-	{ 'cairo-vg.h',				'' }
-	{ 'cairo-win32.h',			'' }
-	{ 'cairo-xcb.h',			'' }
-	{ 'cairo-xlib-xrender.h',	'' }
-	{ 'cairo-xlib.h',			'' }
-	{ 'cairo-xml.h',			'' }
-	{ 'cairoint.h',				'' }
+	{ 'cairo-beos.h',			'BeOS surrace' }
+	{ 'cairo-cogl.h',			'Cogl surrace'}
+	{ 'cairo-directfb.h',		'DirectFB surrace' }
+	{ 'cairo-drm.h',			'DRM surrace' }
+	{ 'cairo-gl.h',				'OpenGL surface' }
+	{ 'cairo-os2.h',			'OS/2 surface' }
+	{ 'cairo-qt.h',				'Qt surface' }
+	{ 'cairo-quartz-image.h',	'Quartz image surface' }
+	{ 'cairo-quartz.h',			'Quartz surface' }
+	{ 'cairo-tee.h',			'TEE surface' }
+	{ 'cairo-vg.h',				'OpenVG surface' }
+	{ 'cairo-win32.h',			'Win32 surface' }
+	{ 'cairo-xcb.h',			'xcb surface' }
+	{ 'cairo-xlib-xrender.h',	'xlib XRender surface' }
+	{ 'cairo-xlib.h',			'xlib surface' }
 */
-	{ 'cairo.h',				'' }
 }
 
 ExtractFromDecl(decl:String):map = {
