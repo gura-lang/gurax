@@ -485,6 +485,14 @@ cairo_get_miter_limit(cr:cairo_t_p):double
 cairo_get_dash_count(cr:cairo_t_p):int
 
 //cairo_get_dash(cr:cairo_t_p, dashes:double_p, offset:double_p):void
+cairo_get_dash(cr:cairo_t_p) = \
+	R'''
+	double offset;
+	int dash_count = cairo_get_dash_count(cr);
+	std::unique_ptr<double []> dashes(new double [dash_count]);
+	cairo_get_dash(cr, dashes.get(), &offset);
+	return Value_Tuple::Create(Value_List::Create(dashes.get(), dash_count), new Value_Number(offset));
+	'''
 
 cairo_get_matrix(cr:cairo_t_p, matrix:cairo_matrix_t_p):void
 
@@ -611,14 +619,32 @@ cairo_surface_mark_dirty_rectangle(surface:cairo_surface_t_p, x:int, y:int, widt
 cairo_surface_set_device_scale(surface:cairo_surface_t_p, x_scale:double, y_scale:double):void
 
 //cairo_surface_get_device_scale(surface:cairo_surface_t_p, x_scale:double_p, y_scale:double_p):void
+cairo_surface_get_device_scale(surface:cairo_surface_t_p) = \
+	R'''
+	double x_scale, y_scale;
+	cairo_surface_get_device_scale(surface, &x_scale, &y_scale);
+	return Value_Tuple::Create(new Value_Number(x_scale), new Value_Number(y_scale));
+	'''
 
 cairo_surface_set_device_offset(surface:cairo_surface_t_p, x_offset:double, y_offset:double):void
 
 //cairo_surface_get_device_offset(surface:cairo_surface_t_p, x_offset:double_p, y_offset:double_p):void
+cairo_surface_get_device_offset(surface:cairo_surface_t_p) = \
+	R'''
+	double x_offset, y_offset;
+	cairo_surface_get_device_offset(surface, &x_offset, &y_offset);
+	return Value_Tuple::Create(new Value_Number(x_offset), new Value_Number(y_offset));
+	'''
 
 cairo_surface_set_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double, y_pixels_per_inch:double):void
 
 //cairo_surface_get_fallback_resolution(surface:cairo_surface_t_p, x_pixels_per_inch:double_p, y_pixels_per_inch:double_p):void
+cairo_surface_get_fallback_resolution(surface:cairo_surface_t_p) = \
+	R'''
+	double x_pixels_per_inch, y_pixels_per_inch;
+	cairo_surface_get_device_offset(surface, &x_pixels_per_inch, &y_pixels_per_inch);
+	return Value_Tuple::Create(new Value_Number(x_pixels_per_inch), new Value_Number(y_pixels_per_inch));
+	'''
 
 cairo_surface_copy_page(surface:cairo_surface_t_p):void
 
@@ -785,8 +811,18 @@ cairo_matrix_invert(matrix:cairo_matrix_t_p):cairo_status_t
 cairo_matrix_multiply(result:cairo_matrix_t_p, a:const_cairo_matrix_t_p, b:const_cairo_matrix_t_p):void
 
 //cairo_matrix_transform_distance(matrix:const_cairo_matrix_t_p, dx:double_p, dy:double_p):void
+cairo_matrix_transform_distance(matrix:const_cairo_matrix_t_p, dx:double, dy:double) = \
+	R'''
+	cairo_matrix_transform_distance(matrix, &dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	'''
 
 //cairo_matrix_transform_point(matrix:const_cairo_matrix_t_p, x:double_p, y:double_p):void
+cairo_matrix_transform_point(matrix:const_cairo_matrix_t_p, x:double, y:double) = \
+	R'''
+	cairo_matrix_transform_distance(matrix, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	'''
 
 cairo_region_create():cairo_region_t_p
 
