@@ -12,6 +12,7 @@
 #include <cairo-svg.h>
 //#include <cairo-xml.h>
 #include "Util.h"
+#include "Consts.h"
 #include "Functions.h"
 #include "VType_cairo_t.h"
 #include "VType_cairo_device_t.h"

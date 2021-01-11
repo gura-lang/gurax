@@ -1,0 +1,59 @@
+//==============================================================================
+// Consts.cpp
+//==============================================================================
+#include "stdafx.h"
+
+#define AssignConst(name) frame.Assign(#name, new Value_Number(name))
+
+Gurax_BeginModuleScope(cairo)
+
+void AssignConsts(Frame& frame)
+{
+	// cairo_status_t
+	AssignConst(CAIRO_STATUS_SUCCESS);
+	AssignConst(CAIRO_STATUS_NO_MEMORY);
+	AssignConst(CAIRO_STATUS_INVALID_RESTORE);
+	AssignConst(CAIRO_STATUS_INVALID_POP_GROUP);
+	AssignConst(CAIRO_STATUS_NO_CURRENT_POINT);
+	AssignConst(CAIRO_STATUS_INVALID_MATRIX);
+	AssignConst(CAIRO_STATUS_INVALID_STATUS);
+	AssignConst(CAIRO_STATUS_NULL_POINTER);
+	AssignConst(CAIRO_STATUS_INVALID_STRING);
+	AssignConst(CAIRO_STATUS_INVALID_PATH_DATA);
+	AssignConst(CAIRO_STATUS_READ_ERROR);
+	AssignConst(CAIRO_STATUS_WRITE_ERROR);
+	AssignConst(CAIRO_STATUS_SURFACE_FINISHED);
+	AssignConst(CAIRO_STATUS_SURFACE_TYPE_MISMATCH);
+	AssignConst(CAIRO_STATUS_PATTERN_TYPE_MISMATCH);
+	AssignConst(CAIRO_STATUS_INVALID_CONTENT);
+	AssignConst(CAIRO_STATUS_INVALID_FORMAT);
+	AssignConst(CAIRO_STATUS_INVALID_VISUAL);
+	AssignConst(CAIRO_STATUS_FILE_NOT_FOUND);
+	AssignConst(CAIRO_STATUS_INVALID_DASH);
+	AssignConst(CAIRO_STATUS_INVALID_DSC_COMMENT);
+	AssignConst(CAIRO_STATUS_INVALID_INDEX);
+	AssignConst(CAIRO_STATUS_CLIP_NOT_REPRESENTABLE);
+	AssignConst(CAIRO_STATUS_TEMP_FILE_ERROR);
+	AssignConst(CAIRO_STATUS_INVALID_STRIDE);
+	AssignConst(CAIRO_STATUS_FONT_TYPE_MISMATCH);
+	AssignConst(CAIRO_STATUS_USER_FONT_IMMUTABLE);
+	AssignConst(CAIRO_STATUS_USER_FONT_ERROR);
+	AssignConst(CAIRO_STATUS_NEGATIVE_COUNT);
+	AssignConst(CAIRO_STATUS_INVALID_CLUSTERS);
+	AssignConst(CAIRO_STATUS_INVALID_SLANT);
+	AssignConst(CAIRO_STATUS_INVALID_WEIGHT);
+	AssignConst(CAIRO_STATUS_INVALID_SIZE);
+	AssignConst(CAIRO_STATUS_USER_FONT_NOT_IMPLEMENTED);
+	AssignConst(CAIRO_STATUS_DEVICE_TYPE_MISMATCH);
+	AssignConst(CAIRO_STATUS_DEVICE_ERROR);
+	AssignConst(CAIRO_STATUS_INVALID_MESH_CONSTRUCTION);
+	AssignConst(CAIRO_STATUS_DEVICE_FINISHED);
+	AssignConst(CAIRO_STATUS_JBIG2_GLOBAL_MISSING);
+	AssignConst(CAIRO_STATUS_PNG_ERROR);
+	AssignConst(CAIRO_STATUS_FREETYPE_ERROR);
+	AssignConst(CAIRO_STATUS_WIN32_GDI_ERROR);
+	AssignConst(CAIRO_STATUS_TAG_ERROR);
+	AssignConst(CAIRO_STATUS_LAST_STATUS);
+}
+
+Gurax_EndModuleScope(cairo)

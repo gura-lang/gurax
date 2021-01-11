@@ -71,6 +71,8 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	AssignFunctions(GetFrame());
+	// Assignment of value
+	AssignConsts(GetFrame());
 	return true;
 }
 

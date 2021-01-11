@@ -38,6 +38,7 @@ target_compile_definitions(cairo.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(cairo.gurd PRIVATE
 	module-cairo.cpp
 	Util.cpp
+	Consts.cpp
 	Functions.cpp
 	VType_cairo_t.cpp
 	VType_cairo_device_t.cpp
