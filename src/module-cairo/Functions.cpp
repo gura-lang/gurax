@@ -521,6 +521,32 @@ Gurax_ImplementFunctionEx(cairo_set_line_join_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
+// cairo.cairo_set_dash(cr:cairo_t, dashes[]:Number, offset:Number)
+Gurax_DeclareFunctionAlias(cairo_set_dash_gurax, "cairo_set_dash")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dashes", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_set_dash_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	auto dashes = args_gurax.PickNumList<double>();
+	double offset = args_gurax.PickNumber<double>();
+	// Function body
+	int num_dashes = dashes.sizeT<int>();
+	cairo_set_dash(cr, dashes, num_dashes, offset);
+	return Value::nil();
+}
+
 // cairo.cairo_set_miter_limit(cr:cairo_t, limit:Number)
 Gurax_DeclareFunctionAlias(cairo_set_miter_limit_gurax, "cairo_set_miter_limit")
 {
@@ -1006,6 +1032,28 @@ Gurax_ImplementFunctionEx(cairo_close_path_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
+// cairo.cairo_path_extents(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_path_extents_gurax, "cairo_path_extents")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_path_extents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	double x1, y1, x2, y2;
+	cairo_path_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+}
+
 // cairo.cairo_paint(cr:cairo_t)
 Gurax_DeclareFunctionAlias(cairo_paint_gurax, "cairo_paint")
 {
@@ -1303,6 +1351,50 @@ Gurax_ImplementFunctionEx(cairo_in_clip_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
+// cairo.cairo_stroke_extents(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_stroke_extents_gurax, "cairo_stroke_extents")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_stroke_extents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	double x1, y1, x2, y2;
+	cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+}
+
+// cairo.cairo_fill_extents(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_fill_extents_gurax, "cairo_fill_extents")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_fill_extents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	double x1, y1, x2, y2;
+	cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+}
+
 // cairo.cairo_reset_clip(cr:cairo_t)
 Gurax_DeclareFunctionAlias(cairo_reset_clip_gurax, "cairo_reset_clip")
 {
@@ -1364,6 +1456,28 @@ Gurax_ImplementFunctionEx(cairo_clip_preserve_gurax, processor_gurax, argument_g
 	// Function body
 	cairo_clip_preserve(cr);
 	return Gurax::Value::nil();
+}
+
+// cairo.cairo_clip_extents(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_clip_extents_gurax, "cairo_clip_extents")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	double x1, y1, x2, y2;
+	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
 // cairo.cairo_tag_begin(cr:cairo_t, tag_name:String, attributes:String)
@@ -2969,6 +3083,28 @@ Gurax_ImplementFunctionEx(cairo_has_current_point_gurax, processor_gurax, argume
 	// Function body
 	cairo_bool_t rtn = cairo_has_current_point(cr);
 	return new Gurax::Value_Bool(!!rtn);
+}
+
+// cairo.cairo_get_current_point(cr:cairo_t)
+Gurax_DeclareFunctionAlias(cairo_get_current_point_gurax, "cairo_get_current_point")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_get_current_point_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	// Function body
+	double x, y;
+	cairo_get_current_point(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
 // cairo.cairo_get_fill_rule(cr:cairo_t)
@@ -6727,6 +6863,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_set_line_width_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_set_line_cap_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_set_line_join_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_set_dash_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_set_miter_limit_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_translate_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_scale_gurax));
@@ -6746,6 +6883,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_rel_curve_to_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_rectangle_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_close_path_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_path_extents_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_paint_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_paint_with_alpha_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_mask_gurax));
@@ -6759,9 +6897,12 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_in_stroke_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_in_fill_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_in_clip_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_stroke_extents_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_fill_extents_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_reset_clip_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_clip_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_clip_preserve_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_clip_extents_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_tag_begin_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_tag_end_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_glyph_allocate_gurax));
@@ -6832,6 +6973,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_get_tolerance_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_antialias_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_has_current_point_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_get_current_point_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_fill_rule_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_line_width_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_line_cap_gurax));

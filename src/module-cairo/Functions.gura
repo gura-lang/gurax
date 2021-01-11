@@ -173,6 +173,12 @@ cairo_set_line_cap(cr:cairo_t_p, line_cap:cairo_line_cap_t):void
 cairo_set_line_join(cr:cairo_t_p, line_join:cairo_line_join_t):void
 
 //cairo_set_dash(cr:cairo_t_p, dashes:const_double_p, num_dashes:int, offset:double):void
+cairo_set_dash(cr:cairo_t_p, dashes[]:double, offset:double):void = \
+	R'''
+	int num_dashes = dashes.sizeT<int>();
+	cairo_set_dash(cr, dashes, num_dashes, offset);
+	return Value::nil();
+	'''
 
 cairo_set_miter_limit(cr:cairo_t_p, limit:double):void
 
@@ -225,6 +231,12 @@ cairo_rectangle(cr:cairo_t_p, x:double, y:double, width:double, height:double):v
 cairo_close_path(cr:cairo_t_p):void
 
 //cairo_path_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+cairo_path_extents(cr:cairo_t_p) = \
+	R'''
+	double x1, y1, x2, y2;
+	cairo_path_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	'''
 
 cairo_paint(cr:cairo_t_p):void
 
@@ -253,8 +265,20 @@ cairo_in_fill(cr:cairo_t_p, x:double, y:double):cairo_bool_t
 cairo_in_clip(cr:cairo_t_p, x:double, y:double):cairo_bool_t
 
 //cairo_stroke_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+cairo_stroke_extents(cr:cairo_t_p) = \
+	R'''
+	double x1, y1, x2, y2;
+	cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	'''
 
 //cairo_fill_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+cairo_fill_extents(cr:cairo_t_p) = \
+	R'''
+	double x1, y1, x2, y2;
+	cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	'''
 
 cairo_reset_clip(cr:cairo_t_p):void
 
@@ -263,6 +287,12 @@ cairo_clip(cr:cairo_t_p):void
 cairo_clip_preserve(cr:cairo_t_p):void
 
 //cairo_clip_extents(cr:cairo_t_p, x1:double_p, y1:double_p, x2:double_p, y2:double_p):void
+cairo_clip_extents(cr:cairo_t_p) = \
+	R'''
+	double x1, y1, x2, y2;
+	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	'''
 
 //cairo_copy_clip_rectangle_list(cr:cairo_t_p):cairo_rectangle_list_t_p
 
@@ -435,6 +465,12 @@ cairo_get_antialias(cr:cairo_t_p):cairo_antialias_t
 cairo_has_current_point(cr:cairo_t_p):cairo_bool_t
 
 //cairo_get_current_point(cr:cairo_t_p, x:double_p, y:double_p):void
+cairo_get_current_point(cr:cairo_t_p) = \
+	R'''
+	double x, y;
+	cairo_get_current_point(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	'''
 
 cairo_get_fill_rule(cr:cairo_t_p):cairo_fill_rule_t
 
