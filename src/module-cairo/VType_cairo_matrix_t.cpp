@@ -24,6 +24,40 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// cairo_matrix_t(xx?:Number, yx?:Number, xy?:Number, yy?:Number, x0?:Number, y0?:Number) {block?}
+Gurax_DeclareConstructor(cairo_matrix_t)
+{
+	Declare(VTYPE_Color, Flag::None);
+	DeclareArg("xx", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("yx", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("xy", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("yy", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("x0", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y0", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `cairo_matrix_t` instance.\n");
+}
+
+Gurax_ImplementConstructor(cairo_matrix_t)
+{
+	// Arguments
+	ArgPicker args(argument);
+	cairo_matrix_t matrix;
+	matrix.xx = args.IsValid()? args.PickNumber<double>() : 0;
+	matrix.yx = args.IsValid()? args.PickNumber<double>() : 0;
+	matrix.xy = args.IsValid()? args.PickNumber<double>() : 0;
+	matrix.yy = args.IsValid()? args.PickNumber<double>() : 0;
+	matrix.x0 = args.IsValid()? args.PickNumber<double>() : 0;
+	matrix.y0 = args.IsValid()? args.PickNumber<double>() : 0;
+	// Function body
+	return argument.ReturnValue(processor, new Value_cairo_matrix_t(matrix));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -53,8 +87,8 @@ Gurax_ImplementMethod(cairo_matrix_t, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_matrix_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_matrix_t, propSkeleton)
+// cairo.cairo_matrix_t#xx
+Gurax_DeclareProperty_RW(cairo_matrix_t, xx)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +96,121 @@ Gurax_DeclareProperty_R(cairo_matrix_t, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(cairo_matrix_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_matrix_t, xx)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().xx);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, xx)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().xx = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_matrix_t#yx
+Gurax_DeclareProperty_RW(cairo_matrix_t, yx)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_matrix_t, yx)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().yx);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, yx)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().yx = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_matrix_t#xy
+Gurax_DeclareProperty_RW(cairo_matrix_t, xy)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_matrix_t, xy)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().xy);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, xy)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().xy = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_matrix_t#yy
+Gurax_DeclareProperty_RW(cairo_matrix_t, yy)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_matrix_t, yy)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().yy);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, yy)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().yy = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_matrix_t#x0
+Gurax_DeclareProperty_RW(cairo_matrix_t, x0)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_matrix_t, x0)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x0);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, x0)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().x0 = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_matrix_t#y0
+Gurax_DeclareProperty_RW(cairo_matrix_t, y0)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_matrix_t, y0)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y0);
+}
+
+Gurax_ImplementPropertySetter(cairo_matrix_t, y0)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().y0 = Value_Number::GetNumber<double>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -78,11 +223,16 @@ void VType_cairo_matrix_t::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_matrix_t));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_matrix_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_matrix_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, xx));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, yx));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, xy));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, yy));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, x0));
+	Assign(Gurax_CreateProperty(cairo_matrix_t, y0));
 }
 
 //------------------------------------------------------------------------------
