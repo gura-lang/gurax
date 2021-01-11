@@ -5183,6 +5183,30 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
 }
 
+// cairo.cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t, index:Number)
+Gurax_DeclareFunctionAlias(cairo_pattern_get_color_stop_rgba_gurax, "cairo_pattern_get_color_stop_rgba")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_rgba_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
+	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	double offset, red, green, blue, alpha;
+	if (!IsOK(cairo_pattern_get_color_stop_rgba(pattern, index, &offset, &red, &green, &blue, &alpha))) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+}
+
 // cairo.cairo_mesh_pattern_get_path(pattern:cairo_pattern_t, patch_num:Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_path_gurax, "cairo_mesh_pattern_get_path")
 {
@@ -6904,6 +6928,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_set_filter_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_filter_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_rgba_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_color_stop_rgba_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_path_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_identity_gurax));

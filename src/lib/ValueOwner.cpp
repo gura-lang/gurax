@@ -87,6 +87,31 @@ ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2, Value* pValue3, V
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4, Value* pValue5)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(5);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	pValueOwner->push_back(pValue4);
+	pValueOwner->push_back(pValue5);
+	return pValueOwner.release();
+}
+
+ValueOwner* ValueOwner::Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4, Value* pValue5, Value* pValue6)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(6);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	pValueOwner->push_back(pValue4);
+	pValueOwner->push_back(pValue5);
+	pValueOwner->push_back(pValue6);
+	return pValueOwner.release();
+}
+
 ValueOwner* ValueOwner::CreateFromIterator(Iterator& iterator, bool skipNilFlag)
 {
 	if (!iterator.MustBeFinite()) return nullptr;

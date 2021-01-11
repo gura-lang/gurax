@@ -707,6 +707,12 @@ cairo_pattern_get_rgba(pattern:cairo_pattern_t_p) = \
 //cairo_pattern_get_surface(pattern:cairo_pattern_t_p, surface:cairo_surface_t_pp):cairo_status_t
 
 //cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t_p, index:int, offset:double_p, red:double_p, green:double_p, blue:double_p, alpha:double_p):cairo_status_t
+cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t_p, index:int) = \
+	R'''
+	double offset, red, green, blue, alpha;
+	if (!IsOK(cairo_pattern_get_color_stop_rgba(pattern, index, &offset, &red, &green, &blue, &alpha))) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	'''
 
 //cairo_pattern_get_color_stop_count(pattern:cairo_pattern_t_p, count:int_p):cairo_status_t
 

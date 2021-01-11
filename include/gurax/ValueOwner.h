@@ -38,6 +38,8 @@ public:
 	static ValueOwner* Create(Value* pValue1, Value* pValue2);
 	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3);
 	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
+	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4, Value* pValue5);
+	static ValueOwner* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4, Value* pValue5, Value* pValue6);
 	template<typename T>
 	static ValueOwner* Create(const T* tbl, size_t n) {
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
