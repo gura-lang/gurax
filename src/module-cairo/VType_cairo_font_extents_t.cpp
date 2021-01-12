@@ -24,6 +24,28 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// cairo_font_extents_t() {block?}
+Gurax_DeclareConstructor(cairo_font_extents_t)
+{
+	Declare(VTYPE_cairo_font_extents_t, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `cairo_font_extents_t` instance.\n");
+}
+
+Gurax_ImplementConstructor(cairo_font_extents_t)
+{
+	// Arguments
+	ArgPicker args(argument);
+	cairo_font_extents_t extents {};
+	// Function body
+	return argument.ReturnValue(processor, new Value_cairo_font_extents_t(extents));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -168,7 +190,7 @@ void VType_cairo_font_extents_t::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_font_extents_t));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_font_extents_t, MethodSkeleton));
 	// Assignment of property
