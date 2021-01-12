@@ -28,13 +28,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_cairo_font_extents_t");
 protected:
-	cairo_font_extents_t* _entity;
+	cairo_font_extents_t _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	explicit Value_cairo_font_extents_t(VType& vtype = VTYPE_cairo_font_extents_t) : Value_Object(vtype) {}
-	explicit Value_cairo_font_extents_t(cairo_font_extents_t* entity, VType& vtype = VTYPE_cairo_font_extents_t) :
+	explicit Value_cairo_font_extents_t(const cairo_font_extents_t& entity, VType& vtype = VTYPE_cairo_font_extents_t) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_cairo_font_extents_t(const Value_cairo_font_extents_t& src) = delete;
@@ -46,10 +46,10 @@ protected:
 	// Destructor
 	~Value_cairo_font_extents_t() = default;
 public:
-	cairo_font_extents_t& GetEntity() { return *_entity; }
-	const cairo_font_extents_t& GetEntity() const { return *_entity; }
-	cairo_font_extents_t* GetEntityPtr() { return _entity; }
-	const cairo_font_extents_t* GetEntityPtr() const { return _entity; }
+	cairo_font_extents_t& GetEntity() { return _entity; }
+	const cairo_font_extents_t& GetEntity() const { return _entity; }
+	cairo_font_extents_t* GetEntityPtr() { return &_entity; }
+	const cairo_font_extents_t* GetEntityPtr() const { return &_entity; }
 public:
 	static cairo_font_extents_t& GetEntity(Value& value) {
 		return dynamic_cast<Value_cairo_font_extents_t&>(value).GetEntity();
