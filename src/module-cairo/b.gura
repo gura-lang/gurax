@@ -1,0 +1,280 @@
+#!/usr/bin/env gurax
+import(cairo) {*}
+
+M_PI = math.pi
+
+Sample_arc = class {
+	Draw(cr:cairo_t) = {
+		xc = 128.0;
+		yc = 128.0;
+		radius = 100.0;
+		angle1 = 45.0  * (M_PI/180.0);  /* angles are specified */
+		angle2 = 180.0 * (M_PI/180.0);  /* in radians           */
+
+		cairo_set_line_width (cr, 10.0);
+		cairo_arc (cr, xc, yc, radius, angle1, angle2);
+		cairo_stroke (cr);
+
+		/* draw helping lines */
+		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
+		cairo_set_line_width (cr, 6.0);
+
+		cairo_arc (cr, xc, yc, 10.0, 0, 2*M_PI);
+		cairo_fill (cr);
+
+		cairo_arc (cr, xc, yc, radius, angle1, angle1);
+		cairo_line_to (cr, xc, yc);
+		cairo_arc (cr, xc, yc, radius, angle2, angle2);
+		cairo_line_to (cr, xc, yc);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_arc_negative = class {
+	Draw(cr:cairo_t) = {
+		xc = 128.0;
+		yc = 128.0;
+		radius = 100.0;
+		angle1 = 45.0  * (M_PI/180.0);  /* angles are specified */
+		angle2 = 180.0 * (M_PI/180.0);  /* in radians           */
+
+		cairo_set_line_width (cr, 10.0);
+		cairo_arc_negative (cr, xc, yc, radius, angle1, angle2);
+		cairo_stroke (cr);
+
+		/* draw helping lines */
+		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
+		cairo_set_line_width (cr, 6.0);
+
+		cairo_arc (cr, xc, yc, 10.0, 0, 2*M_PI);
+		cairo_fill (cr);
+
+		cairo_arc (cr, xc, yc, radius, angle1, angle1);
+		cairo_line_to (cr, xc, yc);
+		cairo_arc (cr, xc, yc, radius, angle2, angle2);
+		cairo_line_to (cr, xc, yc);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_clip = class {
+	Draw(cr:cairo_t) = {
+		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * M_PI);
+		cairo_clip (cr);
+
+		cairo_new_path (cr);  /* current path is not
+								consumed by cairo_clip() */
+		cairo_rectangle (cr, 0, 0, 256, 256);
+		cairo_fill (cr);
+		cairo_set_source_rgb (cr, 0, 1, 0);
+		cairo_move_to (cr, 0, 0);
+		cairo_line_to (cr, 256, 256);
+		cairo_move_to (cr, 256, 0);
+		cairo_line_to (cr, 0, 256);
+		cairo_set_line_width (cr, 10.0);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_clip_image = class {
+	Draw(cr:cairo_t) = {
+		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2*M_PI);
+		cairo_clip (cr);
+		cairo_new_path (cr); /* path not consumed by clip()*/
+
+		image = cairo_image_surface_create_from_png ("data/romedalen.png");
+		w = cairo_image_surface_get_width (image);
+		h = cairo_image_surface_get_height (image);
+
+		cairo_scale (cr, 256.0/w, 256.0/h);
+
+		cairo_set_source_surface (cr, image, 0, 0);
+		cairo_paint (cr);
+
+		cairo_surface_destroy (image);
+	}
+}
+
+Sample_curve_rectangle = class {
+	Draw(cr:cairo_t) = {
+		/* a custom shape that could be wrapped in a function */
+		x0      = 25.6,   /* parameters like cairo_rectangle */
+		y0      = 25.6,
+		rect_width  = 204.8,
+		rect_height = 204.8,
+		radius = 102.4;   /* and an approximate curvature radius */
+
+		x1=x0+rect_width;
+		y1=y0+rect_height;
+		(rect_width == 0 || rect_height == 0) && return
+		if (rect_width/2<radius) {
+			if (rect_height/2<radius) {
+				cairo_move_to  (cr, x0, (y0 + y1)/2);
+				cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
+				cairo_curve_to (cr, x1, y0, x1, y0, x1, (y0 + y1)/2);
+				cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
+				cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
+			} else {
+				cairo_move_to  (cr, x0, y0 + radius);
+				cairo_curve_to (cr, x0 ,y0, x0, y0, (x0 + x1)/2, y0);
+				cairo_curve_to (cr, x1, y0, x1, y0, x1, y0 + radius);
+				cairo_line_to (cr, x1 , y1 - radius);
+				cairo_curve_to (cr, x1, y1, x1, y1, (x1 + x0)/2, y1);
+				cairo_curve_to (cr, x0, y1, x0, y1, x0, y1- radius);
+			}
+		} else {
+			if (rect_height/2<radius) {
+				cairo_move_to  (cr, x0, (y0 + y1)/2);
+				cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
+				cairo_line_to (cr, x1 - radius, y0);
+				cairo_curve_to (cr, x1, y0, x1, y0, x1, (y0 + y1)/2);
+				cairo_curve_to (cr, x1, y1, x1, y1, x1 - radius, y1);
+				cairo_line_to (cr, x0 + radius, y1);
+				cairo_curve_to (cr, x0, y1, x0, y1, x0, (y0 + y1)/2);
+			} else {
+				cairo_move_to  (cr, x0, y0 + radius);
+				cairo_curve_to (cr, x0 , y0, x0 , y0, x0 + radius, y0);
+				cairo_line_to (cr, x1 - radius, y0);
+				cairo_curve_to (cr, x1, y0, x1, y0, x1, y0 + radius);
+				cairo_line_to (cr, x1 , y1 - radius);
+				cairo_curve_to (cr, x1, y1, x1, y1, x1 - radius, y1);
+				cairo_line_to (cr, x0 + radius, y1);
+				cairo_curve_to (cr, x0, y1, x0, y1, x0, y1- radius);
+			}
+		}
+		cairo_close_path (cr);
+
+		cairo_set_source_rgb (cr, 0.5, 0.5, 1);
+		cairo_fill_preserve (cr);
+		cairo_set_source_rgba (cr, 0.5, 0, 0, 0.5);
+		cairo_set_line_width (cr, 10.0);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_curve_to = class {
+	Draw(cr:cairo_t) = {
+		x=25.6,  y=128.0;
+		x1=102.4, y1=230.4,
+		x2=153.6, y2=25.6,
+		x3=230.4, y3=128.0;
+
+		cairo_move_to (cr, x, y);
+		cairo_curve_to (cr, x1, y1, x2, y2, x3, y3);
+
+		cairo_set_line_width (cr, 10.0);
+		cairo_stroke (cr);
+
+		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
+		cairo_set_line_width (cr, 6.0);
+		cairo_move_to (cr,x,y);   cairo_line_to (cr,x1,y1);
+		cairo_move_to (cr,x2,y2); cairo_line_to (cr,x3,y3);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_dash = class {
+	Draw(cr:cairo_t) = {
+		dashes = @{
+			50.0,  /* ink */
+			10.0,  /* skip */
+			10.0,  /* ink */
+			10.0   /* skip*/
+		};
+		offset = -50.0;
+
+		cairo_set_dash (cr, dashes, offset);
+		cairo_set_line_width (cr, 10.0);
+
+		cairo_move_to (cr, 128.0, 25.6);
+		cairo_line_to (cr, 230.4, 230.4);
+		cairo_rel_line_to (cr, -102.4, 0.0);
+		cairo_curve_to (cr, 51.2, 230.4, 51.2, 128.0, 128.0, 128.0);
+
+		cairo_stroke (cr);
+	}
+}
+
+Sample_fill_and_stroke2 = class {
+	Draw(cr:cairo_t) = {
+		cairo_move_to (cr, 128.0, 25.6);
+		cairo_line_to (cr, 230.4, 230.4);
+		cairo_rel_line_to (cr, -102.4, 0.0);
+		cairo_curve_to (cr, 51.2, 230.4, 51.2, 128.0, 128.0, 128.0);
+		cairo_close_path (cr);
+
+		cairo_move_to (cr, 64.0, 25.6);
+		cairo_rel_line_to (cr, 51.2, 51.2);
+		cairo_rel_line_to (cr, -51.2, 51.2);
+		cairo_rel_line_to (cr, -51.2, -51.2);
+		cairo_close_path (cr);
+
+		cairo_set_line_width (cr, 10.0);
+		cairo_set_source_rgb (cr, 0, 0, 1);
+		cairo_fill_preserve (cr);
+		cairo_set_source_rgb (cr, 0, 0, 0);
+		cairo_stroke (cr);
+	}
+}
+
+Sample_gradient = class {
+	Draw(cr:cairo_t) = {
+		pat = cairo_pattern_create_linear(0.0, 0.0,  0.0, 256.0);
+		cairo_pattern_add_color_stop_rgba(pat, 1, 0, 0, 0, 1);
+		cairo_pattern_add_color_stop_rgba(pat, 0, 1, 1, 1, 1);
+		cairo_rectangle(cr, 0, 0, 256, 256);
+		cairo_set_source(cr, pat);
+		cairo_fill(cr);
+		cairo_pattern_destroy(pat);
+
+		pat = cairo_pattern_create_radial(115.2, 102.4, 25.6,
+										102.4,  102.4, 128.0);
+		cairo_pattern_add_color_stop_rgba(pat, 0, 1, 1, 1, 1);
+		cairo_pattern_add_color_stop_rgba(pat, 1, 0, 0, 0, 1);
+		cairo_set_source(cr, pat);
+		cairo_arc(cr, 128.0, 128.0, 76.8, 0, 2 * math.pi);
+		cairo_fill(cr);
+		cairo_pattern_destroy(pat);
+	}
+}
+
+Sample_text_extents = class {
+	Draw(cr:cairo_t) = {
+		utf8 = "cairo";
+
+		cairo_select_font_face (cr, "Sans",
+			CAIRO_FONT_SLANT_NORMAL,
+			CAIRO_FONT_WEIGHT_NORMAL);
+
+		extents = cairo_text_extents_t()
+		cairo_set_font_size (cr, 100.0);
+		cairo_text_extents (cr, utf8, extents);
+
+		x = 25.0;
+		y = 150.0;
+
+		cairo_move_to (cr, x,y);
+		cairo_show_text (cr, utf8);
+
+		/* draw helping lines */
+		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
+		cairo_set_line_width (cr, 6.0);
+		cairo_arc (cr, x, y, 10.0, 0, 2 * math.pi);
+		cairo_fill (cr);
+		cairo_move_to (cr, x,y);
+		cairo_rel_line_to (cr, 0, -extents.height);
+		cairo_rel_line_to (cr, extents.width, 0);
+		cairo_rel_line_to (cr, extents.x_bearing, -extents.y_bearing);
+		cairo_stroke (cr);
+	}
+}
+
+surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 256, 256);
+cr = cairo_create(surface);
+
+Sample_fill_and_stroke2().Draw(cr)
+
+cairo_surface_write_to_png(surface, "image.png");
+
+cairo_destroy(cr);
+cairo_surface_destroy(surface);
