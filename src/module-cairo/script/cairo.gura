@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+import(cairo):binary {*}
+
+cairo_t.save() {block?} = {
+	cairo_save(this)
+	if (block) {
+		block()
+		cairo_restore(this)
+	}
+}
