@@ -530,34 +530,37 @@ main() = {
 	nCols = 5, nRows = 5
 	wdFrame = 280, htFrame = 320
 	wdCanvas = 256, htCanvas = 256
-	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, wdFrame * nCols, htFrame * nRows);
 	xOffset = (wdFrame - wdCanvas) / 2, yOffset = (htFrame - htCanvas) / 2
 	i = j = 0
+	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, wdFrame * nCols, htFrame * nRows);
+	cr = cairo_create(surface);
 	samples.Each {|sample|
+		Println(sample.name)
 		x = i * wdFrame, y = j * htFrame
-		cairo_surface_set_device_offset(surface, x + xOffset, y + yOffset)
-		cr = cairo_create(surface);
 		cairo_save(cr)
-		str = Format('%s', sample.name)
-		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-		cairo_set_font_size (cr, 30.0);
-		extents = cairo_font_extents_t()
-		cairo_font_extents(cr, extents);
-		cairo_move_to(cr, 0, -extents.descent);
-		cairo_show_text(cr, str);
-		cairo_set_source_rgba(cr, .9, .9, .9, 1)
-		cairo_rectangle(cr, 0, 0, 256, 256)
-		cairo_fill(cr)
+			cairo_translate(cr, x + xOffset, y + yOffset)
+			cairo_save(cr)
+				str = Format('%s', sample.name)
+				cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+				cairo_set_font_size (cr, 30.0);
+				extents = cairo_font_extents_t()
+				cairo_font_extents(cr, extents);
+				cairo_move_to(cr, 0, -extents.descent);
+				cairo_show_text(cr, str);
+				cairo_set_source_rgba(cr, .9, .9, .9, 1)
+				cairo_rectangle(cr, 0, 0, 256, 256)
+				cairo_fill(cr)
+			cairo_restore(cr)
+			cairo_rectangle(cr, 0, 0, 256, 256)
+			cairo_clip(cr)
+			sample().Draw(cr)
 		cairo_restore(cr)
-		cairo_rectangle(cr, 0, 0, 256, 256)
-		cairo_clip(cr)
-		sample().Draw(cr)
-		cairo_destroy(cr);
 		i += 1
 		if (i == nCols) {
 			i = 0, j += 1
 		}
 	}
+	cairo_destroy(cr);
 	cairo_surface_write_to_png(surface, "image.png");
 	cairo_surface_destroy(surface);
 }
