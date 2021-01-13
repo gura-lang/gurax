@@ -1007,3 +1007,43 @@ void AssignFunctions(Frame& frame)
 
 Gurax_EndModuleScope(cairo)
 '''.Render('Functions.cpp')
+
+/*
+MakeFuncDecl(funcInfo:cbridge.FuncInfo) = {
+	Format('(%s) = %s(this%s)',
+		funcInfo.argInfoTbl.Offset(1):*ToString().Join(', '),
+		funcInfo.name,
+		(', ' + funcInfo.argInfoTbl.Offset(1):*name).Join())
+}
+
+r.funcInfoTbl.Each {|funcInfo|
+	argInfoTbl = funcInfo.argInfoTbl
+	if (argInfoTbl.IsEmpty()) {
+		// nothing to do
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_t') {
+		Println(
+			'cairo_t.', funcInfo.name.Replace('cairo_', ''),
+			MakeFuncDecl(funcInfo))
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_surface_t') {
+		Println(
+			'cairo_surface_t.', funcInfo.name.Replace('cairo_surface_', ''),
+			MakeFuncDecl(funcInfo))
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_device_t') {
+		Println(
+			'cairo_device_t.', funcInfo.name.Replace('cairo_device_', ''),
+			MakeFuncDecl(funcInfo))
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_matrix_t') {
+		Println(
+			'cairo_matrix_t.', funcInfo.name.Replace('cairo_matrix_', ''),
+			MakeFuncDecl(funcInfo))
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_region_t') {
+		Println(
+			'cairo_region_t.', funcInfo.name.Replace('cairo_region_', ''),
+			MakeFuncDecl(funcInfo))
+	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_pattern_t') {
+		Println(
+			'cairo_pattern_t.', funcInfo.name.Replace('cairo_', ''),
+			MakeFuncDecl(funcInfo))
+	}
+}
+*/
