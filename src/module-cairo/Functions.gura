@@ -1,5 +1,6 @@
 #!/usr/bin/env gurax
 import(cbridge)
+import(re)
 
 r = cbridge.Renderer()
 
@@ -1008,42 +1009,36 @@ void AssignFunctions(Frame& frame)
 Gurax_EndModuleScope(cairo)
 '''.Render('Functions.cpp')
 
-/*
-MakeFuncDecl(funcInfo:cbridge.FuncInfo) = {
-	Format('(%s) = %s(this%s)',
+MakeFuncDecl(className:String, methodName:String, funcInfo:cbridge.FuncInfo) = {
+	Format('%s.%s(%s) = %s(this%s)', className, methodName,
 		funcInfo.argInfoTbl.Offset(1):*ToString().Join(', '),
 		funcInfo.name,
 		(', ' + funcInfo.argInfoTbl.Offset(1):*name).Join())
 }
 
-r.funcInfoTbl.Each {|funcInfo|
+funcDecls = r.funcInfoTbl.Each():xiter {|funcInfo|
 	argInfoTbl = funcInfo.argInfoTbl
 	if (argInfoTbl.IsEmpty()) {
-		// nothing to do
+		nil
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_t') {
-		Println(
-			'cairo_t.', funcInfo.name.Replace('cairo_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_t', funcInfo.name.Sub('^cairo_', ''), funcInfo)
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_surface_t') {
-		Println(
-			'cairo_surface_t.', funcInfo.name.Replace('cairo_surface_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_surface_t', funcInfo.name.Sub('^cairo_', '').Sub('^surface_', ''), funcInfo)
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_device_t') {
-		Println(
-			'cairo_device_t.', funcInfo.name.Replace('cairo_device_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_device_t', funcInfo.name.Sub('^cairo_', '').Sub('^device_', ''), funcInfo)
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_matrix_t') {
-		Println(
-			'cairo_matrix_t.', funcInfo.name.Replace('cairo_matrix_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_matrix_t', funcInfo.name.Sub('^cairo_', '').Sub('^matrix_', ''), funcInfo)
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_region_t') {
-		Println(
-			'cairo_region_t.', funcInfo.name.Replace('cairo_region_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_region_t', funcInfo.name.Sub('^cairo_', '').Sub('^region_', ''), funcInfo)
 	} elsif (argInfoTbl[0].typeInfo.vtype == 'cairo_pattern_t') {
-		Println(
-			'cairo_pattern_t.', funcInfo.name.Replace('cairo_', ''),
-			MakeFuncDecl(funcInfo))
+		MakeFuncDecl('cairo_pattern_t', funcInfo.name.Sub('^cairo_', ''), funcInfo)
 	}
 }
+
+/*
+tR'''
+#!/usr/bin/env gurax
+import(cairo):binary {*}
+${'\n' + funcDecls + '\n'}
+'''.Render('cairo.gura')
 */

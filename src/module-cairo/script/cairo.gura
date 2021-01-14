@@ -1,10 +1,468 @@
 #!/usr/bin/env gurax
 import(cairo):binary {*}
 
-cairo_t.save() {block?} = {
-	cairo_save(this)
-	if (block) {
-		block()
-		cairo_restore(this)
-	}
-}
+cairo_surface_t.create() = cairo_create(this)
+
+cairo_t.reference() = cairo_reference(this)
+
+cairo_t.destroy() = cairo_destroy(this)
+
+cairo_t.get_reference_count() = cairo_get_reference_count(this)
+
+cairo_t.save() = cairo_save(this)
+
+cairo_t.restore() = cairo_restore(this)
+
+cairo_t.push_group() = cairo_push_group(this)
+
+cairo_t.push_group_with_content(content:Number) = cairo_push_group_with_content(this, content)
+
+cairo_t.pop_group() = cairo_pop_group(this)
+
+cairo_t.pop_group_to_source() = cairo_pop_group_to_source(this)
+
+cairo_t.set_operator(op:Number) = cairo_set_operator(this, op)
+
+cairo_t.set_source(source:cairo_pattern_t) = cairo_set_source(this, source)
+
+cairo_t.set_source_rgb(red:Number, green:Number, blue:Number) = cairo_set_source_rgb(this, red, green, blue)
+
+cairo_t.set_source_rgba(red:Number, green:Number, blue:Number, alpha:Number) = cairo_set_source_rgba(this, red, green, blue, alpha)
+
+cairo_t.set_source_surface(surface:cairo_surface_t, x:Number, y:Number) = cairo_set_source_surface(this, surface, x, y)
+
+cairo_t.set_tolerance(tolerance:Number) = cairo_set_tolerance(this, tolerance)
+
+cairo_t.set_antialias(antialias:Number) = cairo_set_antialias(this, antialias)
+
+cairo_t.set_fill_rule(fill_rule:Number) = cairo_set_fill_rule(this, fill_rule)
+
+cairo_t.set_line_width(width:Number) = cairo_set_line_width(this, width)
+
+cairo_t.set_line_cap(line_cap:Number) = cairo_set_line_cap(this, line_cap)
+
+cairo_t.set_line_join(line_join:Number) = cairo_set_line_join(this, line_join)
+
+cairo_t.set_dash(dashes[]:Number, offset:Number) = cairo_set_dash(this, dashes, offset)
+
+cairo_t.set_miter_limit(limit:Number) = cairo_set_miter_limit(this, limit)
+
+cairo_t.translate(tx:Number, ty:Number) = cairo_translate(this, tx, ty)
+
+cairo_t.scale(sx:Number, sy:Number) = cairo_scale(this, sx, sy)
+
+cairo_t.rotate(angle:Number) = cairo_rotate(this, angle)
+
+cairo_t.transform(matrix:cairo_matrix_t) = cairo_transform(this, matrix)
+
+cairo_t.set_matrix(matrix:cairo_matrix_t) = cairo_set_matrix(this, matrix)
+
+cairo_t.identity_matrix() = cairo_identity_matrix(this)
+
+cairo_t.new_path() = cairo_new_path(this)
+
+cairo_t.move_to(x:Number, y:Number) = cairo_move_to(this, x, y)
+
+cairo_t.new_sub_path() = cairo_new_sub_path(this)
+
+cairo_t.line_to(x:Number, y:Number) = cairo_line_to(this, x, y)
+
+cairo_t.curve_to(x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number) = cairo_curve_to(this, x1, y1, x2, y2, x3, y3)
+
+cairo_t.arc(xc:Number, yc:Number, radius:Number, angle1:Number, angle2:Number) = cairo_arc(this, xc, yc, radius, angle1, angle2)
+
+cairo_t.arc_negative(xc:Number, yc:Number, radius:Number, angle1:Number, angle2:Number) = cairo_arc_negative(this, xc, yc, radius, angle1, angle2)
+
+cairo_t.rel_move_to(dx:Number, dy:Number) = cairo_rel_move_to(this, dx, dy)
+
+cairo_t.rel_line_to(dx:Number, dy:Number) = cairo_rel_line_to(this, dx, dy)
+
+cairo_t.rel_curve_to(dx1:Number, dy1:Number, dx2:Number, dy2:Number, dx3:Number, dy3:Number) = cairo_rel_curve_to(this, dx1, dy1, dx2, dy2, dx3, dy3)
+
+cairo_t.rectangle(x:Number, y:Number, width:Number, height:Number) = cairo_rectangle(this, x, y, width, height)
+
+cairo_t.close_path() = cairo_close_path(this)
+
+cairo_t.path_extents() = cairo_path_extents(this)
+
+cairo_t.paint() = cairo_paint(this)
+
+cairo_t.paint_with_alpha(alpha:Number) = cairo_paint_with_alpha(this, alpha)
+
+cairo_t.mask(pattern:cairo_pattern_t) = cairo_mask(this, pattern)
+
+cairo_t.mask_surface(surface:cairo_surface_t, surface_x:Number, surface_y:Number) = cairo_mask_surface(this, surface, surface_x, surface_y)
+
+cairo_t.stroke() = cairo_stroke(this)
+
+cairo_t.stroke_preserve() = cairo_stroke_preserve(this)
+
+cairo_t.fill() = cairo_fill(this)
+
+cairo_t.fill_preserve() = cairo_fill_preserve(this)
+
+cairo_t.copy_page() = cairo_copy_page(this)
+
+cairo_t.show_page() = cairo_show_page(this)
+
+cairo_t.in_stroke(x:Number, y:Number) = cairo_in_stroke(this, x, y)
+
+cairo_t.in_fill(x:Number, y:Number) = cairo_in_fill(this, x, y)
+
+cairo_t.in_clip(x:Number, y:Number) = cairo_in_clip(this, x, y)
+
+cairo_t.stroke_extents() = cairo_stroke_extents(this)
+
+cairo_t.fill_extents() = cairo_fill_extents(this)
+
+cairo_t.reset_clip() = cairo_reset_clip(this)
+
+cairo_t.clip() = cairo_clip(this)
+
+cairo_t.clip_preserve() = cairo_clip_preserve(this)
+
+cairo_t.clip_extents() = cairo_clip_extents(this)
+
+cairo_t.copy_clip_rectangle_list() = cairo_copy_clip_rectangle_list(this)
+
+cairo_t.tag_begin(tag_name:String, attributes:String) = cairo_tag_begin(this, tag_name, attributes)
+
+cairo_t.tag_end(tag_name:String) = cairo_tag_end(this, tag_name)
+
+cairo_t.select_font_face(family:String, slant:Number, weight:Number) = cairo_select_font_face(this, family, slant, weight)
+
+cairo_t.set_font_size(size:Number) = cairo_set_font_size(this, size)
+
+cairo_t.set_font_matrix(matrix:cairo_matrix_t) = cairo_set_font_matrix(this, matrix)
+
+cairo_t.get_font_matrix(matrix:cairo_matrix_t) = cairo_get_font_matrix(this, matrix)
+
+cairo_t.set_font_options(options:cairo_font_options_t) = cairo_set_font_options(this, options)
+
+cairo_t.get_font_options(options:cairo_font_options_t) = cairo_get_font_options(this, options)
+
+cairo_t.set_font_face(font_face:cairo_font_face_t) = cairo_set_font_face(this, font_face)
+
+cairo_t.get_font_face() = cairo_get_font_face(this)
+
+cairo_t.set_scaled_font(scaled_font:cairo_scaled_font_t) = cairo_set_scaled_font(this, scaled_font)
+
+cairo_t.get_scaled_font() = cairo_get_scaled_font(this)
+
+cairo_t.show_text(utf8:String) = cairo_show_text(this, utf8)
+
+cairo_t.show_glyphs(glyphs:cairo_glyph_t, num_glyphs:Number) = cairo_show_glyphs(this, glyphs, num_glyphs)
+
+cairo_t.show_text_glyphs(utf8:String, utf8_len:Number, glyphs:cairo_glyph_t, num_glyphs:Number, clusters:cairo_text_cluster_t, num_clusters:Number, cluster_flags:Number) = cairo_show_text_glyphs(this, utf8, utf8_len, glyphs, num_glyphs, clusters, num_clusters, cluster_flags)
+
+cairo_t.text_path(utf8:String) = cairo_text_path(this, utf8)
+
+cairo_t.glyph_path(glyphs:cairo_glyph_t, num_glyphs:Number) = cairo_glyph_path(this, glyphs, num_glyphs)
+
+cairo_t.text_extents(utf8:String, extents:cairo_text_extents_t) = cairo_text_extents(this, utf8, extents)
+
+cairo_t.glyph_extents(glyphs:cairo_glyph_t, num_glyphs:Number, extents:cairo_text_extents_t) = cairo_glyph_extents(this, glyphs, num_glyphs, extents)
+
+cairo_t.font_extents(extents:cairo_font_extents_t) = cairo_font_extents(this, extents)
+
+cairo_t.get_operator() = cairo_get_operator(this)
+
+cairo_t.get_source() = cairo_get_source(this)
+
+cairo_t.get_tolerance() = cairo_get_tolerance(this)
+
+cairo_t.get_antialias() = cairo_get_antialias(this)
+
+cairo_t.has_current_point() = cairo_has_current_point(this)
+
+cairo_t.get_current_point() = cairo_get_current_point(this)
+
+cairo_t.get_fill_rule() = cairo_get_fill_rule(this)
+
+cairo_t.get_line_width() = cairo_get_line_width(this)
+
+cairo_t.get_line_cap() = cairo_get_line_cap(this)
+
+cairo_t.get_line_join() = cairo_get_line_join(this)
+
+cairo_t.get_miter_limit() = cairo_get_miter_limit(this)
+
+cairo_t.get_dash_count() = cairo_get_dash_count(this)
+
+cairo_t.get_dash() = cairo_get_dash(this)
+
+cairo_t.get_matrix(matrix:cairo_matrix_t) = cairo_get_matrix(this, matrix)
+
+cairo_t.get_target() = cairo_get_target(this)
+
+cairo_t.get_group_target() = cairo_get_group_target(this)
+
+cairo_t.copy_path() = cairo_copy_path(this)
+
+cairo_t.copy_path_flat() = cairo_copy_path_flat(this)
+
+cairo_t.append_path(path:cairo_path_t) = cairo_append_path(this, path)
+
+cairo_t.status() = cairo_status(this)
+
+cairo_device_t.reference() = cairo_device_reference(this)
+
+cairo_device_t.get_type() = cairo_device_get_type(this)
+
+cairo_device_t.status() = cairo_device_status(this)
+
+cairo_device_t.acquire() = cairo_device_acquire(this)
+
+cairo_device_t.release() = cairo_device_release(this)
+
+cairo_device_t.flush() = cairo_device_flush(this)
+
+cairo_device_t.finish() = cairo_device_finish(this)
+
+cairo_device_t.destroy() = cairo_device_destroy(this)
+
+cairo_device_t.get_reference_count() = cairo_device_get_reference_count(this)
+
+cairo_surface_t.create_similar(content:Number, width:Number, height:Number) = cairo_surface_create_similar(this, content, width, height)
+
+cairo_surface_t.create_similar_image(format:Number, width:Number, height:Number) = cairo_surface_create_similar_image(this, format, width, height)
+
+cairo_surface_t.map_to_image(extents:cairo_rectangle_int_t) = cairo_surface_map_to_image(this, extents)
+
+cairo_surface_t.unmap_image(image:cairo_surface_t) = cairo_surface_unmap_image(this, image)
+
+cairo_surface_t.create_for_rectangle(x:Number, y:Number, width:Number, height:Number) = cairo_surface_create_for_rectangle(this, x, y, width, height)
+
+cairo_surface_t.create_observer(mode:Number) = cairo_surface_create_observer(this, mode)
+
+cairo_surface_t.observer_elapsed() = cairo_surface_observer_elapsed(this)
+
+cairo_device_t.observer_elapsed() = cairo_device_observer_elapsed(this)
+
+cairo_device_t.observer_paint_elapsed() = cairo_device_observer_paint_elapsed(this)
+
+cairo_device_t.observer_mask_elapsed() = cairo_device_observer_mask_elapsed(this)
+
+cairo_device_t.observer_fill_elapsed() = cairo_device_observer_fill_elapsed(this)
+
+cairo_device_t.observer_stroke_elapsed() = cairo_device_observer_stroke_elapsed(this)
+
+cairo_device_t.observer_glyphs_elapsed() = cairo_device_observer_glyphs_elapsed(this)
+
+cairo_surface_t.reference() = cairo_surface_reference(this)
+
+cairo_surface_t.finish() = cairo_surface_finish(this)
+
+cairo_surface_t.destroy() = cairo_surface_destroy(this)
+
+cairo_surface_t.get_device() = cairo_surface_get_device(this)
+
+cairo_surface_t.get_reference_count() = cairo_surface_get_reference_count(this)
+
+cairo_surface_t.status() = cairo_surface_status(this)
+
+cairo_surface_t.get_type() = cairo_surface_get_type(this)
+
+cairo_surface_t.get_content() = cairo_surface_get_content(this)
+
+cairo_surface_t.write_to_png(filename:String) = cairo_surface_write_to_png(this, filename)
+
+cairo_surface_t.get_mime_data(mime_type:String) = cairo_surface_get_mime_data(this, mime_type)
+
+cairo_surface_t.supports_mime_type(mime_type:String) = cairo_surface_supports_mime_type(this, mime_type)
+
+cairo_surface_t.get_font_options(options:cairo_font_options_t) = cairo_surface_get_font_options(this, options)
+
+cairo_surface_t.flush() = cairo_surface_flush(this)
+
+cairo_surface_t.mark_dirty() = cairo_surface_mark_dirty(this)
+
+cairo_surface_t.mark_dirty_rectangle(x:Number, y:Number, width:Number, height:Number) = cairo_surface_mark_dirty_rectangle(this, x, y, width, height)
+
+cairo_surface_t.set_device_scale(x_scale:Number, y_scale:Number) = cairo_surface_set_device_scale(this, x_scale, y_scale)
+
+cairo_surface_t.get_device_scale() = cairo_surface_get_device_scale(this)
+
+cairo_surface_t.set_device_offset(x_offset:Number, y_offset:Number) = cairo_surface_set_device_offset(this, x_offset, y_offset)
+
+cairo_surface_t.get_device_offset() = cairo_surface_get_device_offset(this)
+
+cairo_surface_t.set_fallback_resolution(x_pixels_per_inch:Number, y_pixels_per_inch:Number) = cairo_surface_set_fallback_resolution(this, x_pixels_per_inch, y_pixels_per_inch)
+
+cairo_surface_t.get_fallback_resolution() = cairo_surface_get_fallback_resolution(this)
+
+cairo_surface_t.copy_page() = cairo_surface_copy_page(this)
+
+cairo_surface_t.show_page() = cairo_surface_show_page(this)
+
+cairo_surface_t.has_show_text_glyphs() = cairo_surface_has_show_text_glyphs(this)
+
+cairo_surface_t.image_surface_get_format() = cairo_image_surface_get_format(this)
+
+cairo_surface_t.image_surface_get_width() = cairo_image_surface_get_width(this)
+
+cairo_surface_t.image_surface_get_height() = cairo_image_surface_get_height(this)
+
+cairo_surface_t.image_surface_get_stride() = cairo_image_surface_get_stride(this)
+
+cairo_surface_t.recording_surface_get_extents(extents:cairo_rectangle_t) = cairo_recording_surface_get_extents(this, extents)
+
+cairo_pattern_t.raster_source_pattern_set_callback_data(data:Pointer) = cairo_raster_source_pattern_set_callback_data(this, data)
+
+cairo_surface_t.pattern_create_for_surface() = cairo_pattern_create_for_surface(this)
+
+cairo_pattern_t.pattern_reference() = cairo_pattern_reference(this)
+
+cairo_pattern_t.pattern_destroy() = cairo_pattern_destroy(this)
+
+cairo_pattern_t.pattern_get_reference_count() = cairo_pattern_get_reference_count(this)
+
+cairo_pattern_t.pattern_status() = cairo_pattern_status(this)
+
+cairo_pattern_t.pattern_get_type() = cairo_pattern_get_type(this)
+
+cairo_pattern_t.pattern_add_color_stop_rgb(offset:Number, red:Number, green:Number, blue:Number) = cairo_pattern_add_color_stop_rgb(this, offset, red, green, blue)
+
+cairo_pattern_t.pattern_add_color_stop_rgba(offset:Number, red:Number, green:Number, blue:Number, alpha:Number) = cairo_pattern_add_color_stop_rgba(this, offset, red, green, blue, alpha)
+
+cairo_pattern_t.mesh_pattern_begin_patch() = cairo_mesh_pattern_begin_patch(this)
+
+cairo_pattern_t.mesh_pattern_end_patch() = cairo_mesh_pattern_end_patch(this)
+
+cairo_pattern_t.mesh_pattern_curve_to(x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number) = cairo_mesh_pattern_curve_to(this, x1, y1, x2, y2, x3, y3)
+
+cairo_pattern_t.mesh_pattern_line_to(x:Number, y:Number) = cairo_mesh_pattern_line_to(this, x, y)
+
+cairo_pattern_t.mesh_pattern_move_to(x:Number, y:Number) = cairo_mesh_pattern_move_to(this, x, y)
+
+cairo_pattern_t.mesh_pattern_set_control_point(point_num:Number, x:Number, y:Number) = cairo_mesh_pattern_set_control_point(this, point_num, x, y)
+
+cairo_pattern_t.mesh_pattern_set_corner_color_rgb(corner_num:Number, red:Number, green:Number, blue:Number) = cairo_mesh_pattern_set_corner_color_rgb(this, corner_num, red, green, blue)
+
+cairo_pattern_t.mesh_pattern_set_corner_color_rgba(corner_num:Number, red:Number, green:Number, blue:Number, alpha:Number) = cairo_mesh_pattern_set_corner_color_rgba(this, corner_num, red, green, blue, alpha)
+
+cairo_pattern_t.pattern_set_matrix(matrix:cairo_matrix_t) = cairo_pattern_set_matrix(this, matrix)
+
+cairo_pattern_t.pattern_get_matrix(matrix:cairo_matrix_t) = cairo_pattern_get_matrix(this, matrix)
+
+cairo_pattern_t.pattern_set_extend(extend:Number) = cairo_pattern_set_extend(this, extend)
+
+cairo_pattern_t.pattern_get_extend() = cairo_pattern_get_extend(this)
+
+cairo_pattern_t.pattern_set_filter(filter:Number) = cairo_pattern_set_filter(this, filter)
+
+cairo_pattern_t.pattern_get_filter() = cairo_pattern_get_filter(this)
+
+cairo_pattern_t.pattern_get_rgba() = cairo_pattern_get_rgba(this)
+
+cairo_pattern_t.pattern_get_color_stop_rgba(index:Number) = cairo_pattern_get_color_stop_rgba(this, index)
+
+cairo_pattern_t.mesh_pattern_get_path(patch_num:Number) = cairo_mesh_pattern_get_path(this, patch_num)
+
+cairo_matrix_t.init(xx:Number, yx:Number, xy:Number, yy:Number, x0:Number, y0:Number) = cairo_matrix_init(this, xx, yx, xy, yy, x0, y0)
+
+cairo_matrix_t.init_identity() = cairo_matrix_init_identity(this)
+
+cairo_matrix_t.init_translate(tx:Number, ty:Number) = cairo_matrix_init_translate(this, tx, ty)
+
+cairo_matrix_t.init_scale(sx:Number, sy:Number) = cairo_matrix_init_scale(this, sx, sy)
+
+cairo_matrix_t.init_rotate(radians:Number) = cairo_matrix_init_rotate(this, radians)
+
+cairo_matrix_t.translate(tx:Number, ty:Number) = cairo_matrix_translate(this, tx, ty)
+
+cairo_matrix_t.scale(sx:Number, sy:Number) = cairo_matrix_scale(this, sx, sy)
+
+cairo_matrix_t.rotate(radians:Number) = cairo_matrix_rotate(this, radians)
+
+cairo_matrix_t.invert() = cairo_matrix_invert(this)
+
+cairo_matrix_t.multiply(a:cairo_matrix_t, b:cairo_matrix_t) = cairo_matrix_multiply(this, a, b)
+
+cairo_matrix_t.transform_distance(dx:Number, dy:Number) = cairo_matrix_transform_distance(this, dx, dy)
+
+cairo_matrix_t.transform_point(x:Number, y:Number) = cairo_matrix_transform_point(this, x, y)
+
+cairo_region_t.copy() = cairo_region_copy(this)
+
+cairo_region_t.reference() = cairo_region_reference(this)
+
+cairo_region_t.destroy() = cairo_region_destroy(this)
+
+cairo_region_t.equal(b:cairo_region_t) = cairo_region_equal(this, b)
+
+cairo_region_t.status() = cairo_region_status(this)
+
+cairo_region_t.get_extents(extents:cairo_rectangle_int_t) = cairo_region_get_extents(this, extents)
+
+cairo_region_t.num_rectangles() = cairo_region_num_rectangles(this)
+
+cairo_region_t.get_rectangle(nth:Number, rectangle:cairo_rectangle_int_t) = cairo_region_get_rectangle(this, nth, rectangle)
+
+cairo_region_t.is_empty() = cairo_region_is_empty(this)
+
+cairo_region_t.contains_rectangle(rectangle:cairo_rectangle_int_t) = cairo_region_contains_rectangle(this, rectangle)
+
+cairo_region_t.contains_point(x:Number, y:Number) = cairo_region_contains_point(this, x, y)
+
+cairo_region_t.translate(dx:Number, dy:Number) = cairo_region_translate(this, dx, dy)
+
+cairo_region_t.subtract(other:cairo_region_t) = cairo_region_subtract(this, other)
+
+cairo_region_t.subtract_rectangle(rectangle:cairo_rectangle_int_t) = cairo_region_subtract_rectangle(this, rectangle)
+
+cairo_region_t.intersect(other:cairo_region_t) = cairo_region_intersect(this, other)
+
+cairo_region_t.intersect_rectangle(rectangle:cairo_rectangle_int_t) = cairo_region_intersect_rectangle(this, rectangle)
+
+cairo_region_t.union(other:cairo_region_t) = cairo_region_union(this, other)
+
+cairo_region_t.union_rectangle(rectangle:cairo_rectangle_int_t) = cairo_region_union_rectangle(this, rectangle)
+
+cairo_region_t.xor(other:cairo_region_t) = cairo_region_xor(this, other)
+
+cairo_region_t.xor_rectangle(rectangle:cairo_rectangle_int_t) = cairo_region_xor_rectangle(this, rectangle)
+
+cairo_surface_t.pdf_surface_restrict_to_version(version:Number) = cairo_pdf_surface_restrict_to_version(this, version)
+
+cairo_surface_t.pdf_surface_set_size(width_in_points:Number, height_in_points:Number) = cairo_pdf_surface_set_size(this, width_in_points, height_in_points)
+
+cairo_surface_t.pdf_surface_add_outline(parent_id:Number, utf8:String, link_attribs:String, flags:Number) = cairo_pdf_surface_add_outline(this, parent_id, utf8, link_attribs, flags)
+
+cairo_surface_t.pdf_surface_set_metadata(metadata:Number, utf8:String) = cairo_pdf_surface_set_metadata(this, metadata, utf8)
+
+cairo_surface_t.pdf_surface_set_page_label(utf8:String) = cairo_pdf_surface_set_page_label(this, utf8)
+
+cairo_surface_t.pdf_surface_set_thumbnail_size(width:Number, height:Number) = cairo_pdf_surface_set_thumbnail_size(this, width, height)
+
+cairo_surface_t.ps_surface_restrict_to_level(level:Number) = cairo_ps_surface_restrict_to_level(this, level)
+
+cairo_surface_t.ps_surface_set_eps(eps:Bool) = cairo_ps_surface_set_eps(this, eps)
+
+cairo_surface_t.ps_surface_get_eps() = cairo_ps_surface_get_eps(this)
+
+cairo_surface_t.ps_surface_set_size(width_in_points:Number, height_in_points:Number) = cairo_ps_surface_set_size(this, width_in_points, height_in_points)
+
+cairo_surface_t.ps_surface_dsc_comment(comment:String) = cairo_ps_surface_dsc_comment(this, comment)
+
+cairo_surface_t.ps_surface_dsc_begin_setup() = cairo_ps_surface_dsc_begin_setup(this)
+
+cairo_surface_t.ps_surface_dsc_begin_page_setup() = cairo_ps_surface_dsc_begin_page_setup(this)
+
+cairo_device_t.script_write_comment(comment:String, len:Number) = cairo_script_write_comment(this, comment, len)
+
+cairo_device_t.script_set_mode(mode:Number) = cairo_script_set_mode(this, mode)
+
+cairo_device_t.script_get_mode() = cairo_script_get_mode(this)
+
+cairo_device_t.script_surface_create(content:Number, width:Number, height:Number) = cairo_script_surface_create(this, content, width, height)
+
+cairo_device_t.script_surface_create_for_target(target:cairo_surface_t) = cairo_script_surface_create_for_target(this, target)
+
+cairo_device_t.script_from_recording_surface(recording_surface:cairo_surface_t) = cairo_script_from_recording_surface(this, recording_surface)
+
+cairo_surface_t.svg_surface_restrict_to_version(version:Number) = cairo_svg_surface_restrict_to_version(this, version)
+
+cairo_surface_t.svg_surface_set_document_unit(unit:Number) = cairo_svg_surface_set_document_unit(this, unit)
+
+cairo_surface_t.svg_surface_get_document_unit() = cairo_svg_surface_get_document_unit(this)
