@@ -188,7 +188,7 @@ protected:
 	// Destructor
 	virtual ~Function() = default;
 public:
-	static Function* CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock);
+	static Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock);
 	static Function* CreateDynamicFunction(
 		const Symbol* pSymbol, const ValueList& valuesExpr, const Expr_Block& exprOfBlock);
 public:

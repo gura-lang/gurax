@@ -38,9 +38,9 @@ Argument::Argument(const Function& function, DeclCallable::Flags flags) :
 {
 }
 
-Function* Argument::CreateBlockFunction(const Symbol* pSymbol) const
+Function* Argument::CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol) const
 {
-	return _pExprOfBlock? Function::CreateBlockFunction(pSymbol, *_pExprOfBlock) : nullptr;
+	return _pExprOfBlock? Function::CreateBlockFunction(frameOuter, pSymbol, *_pExprOfBlock) : nullptr;
 }
 
 bool Argument::CheckArgSlotToFeed() const
@@ -145,7 +145,7 @@ void Argument::AssignToFrame(Frame& frame) const
 		} else if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
 			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
-			frame.Assign(Function::CreateBlockFunction(pSymbol, *GetExprOfBlock()));
+			frame.Assign(Function::CreateBlockFunction(frame, pSymbol, *GetExprOfBlock()));
 		}
 	} while (0);
 }

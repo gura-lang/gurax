@@ -15,14 +15,14 @@ void Function::Bootup()
 	Empty.reset(new Function_Empty());
 }
 
-Function* Function::CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock)
+Function* Function::CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock)
 {
 	//const PUnit* pPUnit = exprOfBlock.GetPUnitFirst();
 	//if (pPUnit->IsSequenceBegin()) pPUnit = pPUnit->GetPUnitCont();
-	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(
-			Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
+	RefPtr<FunctionCustom> pFunction(new FunctionCustom(
+		Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::CutExtraArgs);
+	pFunction->SetFrameOuter(frameOuter);
 	return pFunction.release();
 }
 
