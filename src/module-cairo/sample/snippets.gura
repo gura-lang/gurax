@@ -537,9 +537,9 @@ main() = {
 	samples.Each {|sample|
 		Println(sample.name)
 		x = i * wdFrame, y = j * htFrame
-		cr.save()
+		cr.save {
 			cr.translate(x + xOffset, y + yOffset)
-			cr.save()
+			cr.save {
 				str = Format('%s', sample.name)
 				cr.select_font_face("Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 				cr.set_font_size(30.0);
@@ -550,11 +550,11 @@ main() = {
 				cr.set_source_rgba(.9, .9, .9, 1)
 				cr.rectangle(0, 0, 256, 256)
 				cr.fill()
-			cr.restore()
+			}
 			cr.rectangle(0, 0, 256, 256)
 			cr.clip()
 			sample().Draw(cr)
-		cr.restore()
+		}
 		i += 1
 		if (i == nCols) {
 			i = 0, j += 1
