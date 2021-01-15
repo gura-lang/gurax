@@ -345,3 +345,5 @@ g2 {|str| Format('type = %s', str)} .. can't cast from Function to Expr
 g3() .. block expression must be specified for delegation
 ======== Attribute :void ========
 <Nil>
+======== Scope for block ========
+OK

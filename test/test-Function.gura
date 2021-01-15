@@ -315,3 +315,14 @@ TestCase('Attribute :void') {
 	f():void = 'hello'
 	Println(f().__ToString__():nilVisible)
 }
+
+TestCase('Scope for block') {
+	f() {block} = {
+		block()
+	}
+	g() = {
+		x = 'OK'
+		f { Println(x) }
+	}
+	g()
+}

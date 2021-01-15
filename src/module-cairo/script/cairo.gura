@@ -9,7 +9,13 @@ cairo_t.destroy() = cairo_destroy(this)
 
 cairo_t.get_reference_count() = cairo_get_reference_count(this)
 
-cairo_t.save() = cairo_save(this)
+cairo_t.save() {block?} = {
+	cairo_save(this)
+	if (block) {
+		block()
+		cairo_restore(this)
+	}
+}
 
 cairo_t.restore() = cairo_restore(this)
 
