@@ -49,6 +49,40 @@ Gurax_ImplementConstructor(Frame)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
+// Frame.GetCurrent():void
+Gurax_DeclareClassMethod(Frame, GetCurrent)
+{
+	Declare(VTYPE_Frame, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(Frame, GetCurrent)
+{
+	return new Value_Frame(processor.GetFrameCur().Reference());
+}
+
+// Frame.PrintStack():void
+Gurax_DeclareClassMethod(Frame, PrintStack)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(Frame, PrintStack)
+{
+	Stream& stream = Basement::Inst.GetStreamCOut();
+	const FrameStack& frameStack = processor.GetFrameStack();
+	for (const Frame* pFrame : frameStack) {
+		const Frame& frame = *pFrame;
+		stream.Printf("%s:%s\n", frame.GetTypeName(), frame.MakeId().c_str());
+	}
+	return Value::nil();
+}
+
 // Frame.Where(symbol:Symbol) {block?}
 Gurax_DeclareClassMethod(Frame, Where)
 {
@@ -84,8 +118,8 @@ Gurax_ImplementClassMethod(Frame, Where)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Frame#Print():void
-Gurax_DeclareMethod(Frame, Print)
+// Frame#PrintTree():void
+Gurax_DeclareMethod(Frame, PrintTree)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -93,7 +127,7 @@ Gurax_DeclareMethod(Frame, Print)
 		"Prints the frame's information.");
 }
 
-Gurax_ImplementMethod(Frame, Print)
+Gurax_ImplementMethod(Frame, PrintTree)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -117,7 +151,7 @@ Gurax_DeclareProperty_R(Frame, id)
 Gurax_ImplementPropertyGetter(Frame, id)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(String().Format("#%p", &valueThis.GetFrame()));
+	return new Value_String(valueThis.GetFrame().MakeId());
 }
 
 // Frame#local
@@ -204,9 +238,11 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Frame));
 	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Frame, GetCurrent));
+	Assign(Gurax_CreateClassMethod(Frame, PrintStack));
 	Assign(Gurax_CreateClassMethod(Frame, Where));
-	// Assignment of class method
-	Assign(Gurax_CreateMethod(Frame, Print));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Frame, PrintTree));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Frame, id));
 	Assign(Gurax_CreateProperty(Frame, outer));

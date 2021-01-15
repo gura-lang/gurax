@@ -115,7 +115,7 @@ bool Argument::ReadyToPickValue(Frame& frame)
 	return _pValueThis->ReadyToPickValueWithoutCast();
 }
 
-void Argument::AssignToFrame(Frame& frame) const
+void Argument::AssignToFrame(Frame& frame, Frame& frameOuter) const
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		pArgSlot->AssignToFrame(frame);
@@ -145,7 +145,7 @@ void Argument::AssignToFrame(Frame& frame) const
 		} else if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
 			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
-			frame.Assign(Function::CreateBlockFunction(frame, pSymbol, *GetExprOfBlock()));
+			frame.Assign(Function::CreateBlockFunction(frameOuter, pSymbol, *GetExprOfBlock()));
 		}
 	} while (0);
 }

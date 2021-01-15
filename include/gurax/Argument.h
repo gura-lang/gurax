@@ -99,7 +99,7 @@ public:
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
 	bool ReadyToPickValue(Frame& frame);
-	void AssignToFrame(Frame& frame) const;
+	void AssignToFrame(Frame& frame, Frame& frameOuter) const;
 	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);
 	Value* ReturnValue(Processor& processor, RefPtr<Value> pValueRtn) {

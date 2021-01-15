@@ -19,7 +19,8 @@ FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* p
 void FunctionCustom::DoExec(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
-	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag));
+	Frame& frameOuter = processor.GetFrameCur();
+	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), frameOuter);
 	processor.PushPUnit(processor.GetPUnitCur());
 	processor.SetPUnitCur(GetPUnitBody());
 	// PUnit_Return will do EndFunction().
@@ -28,7 +29,8 @@ void FunctionCustom::DoExec(Processor& processor, Argument& argument) const
 Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
-	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag));
+	Frame& frameOuter = processor.GetFrameCur();
+	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), frameOuter);
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitBody()));
 	processor.EndFunction(true);
 	processor.ClearEvent();

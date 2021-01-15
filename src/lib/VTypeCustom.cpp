@@ -166,7 +166,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		argument.SetValueThis(pValueThis.Reference());
 	}
 	bool dynamicScopeFlag = false;
-	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag));
+	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
 	if (_pConstructorInh) {
 		const Expr& exprBody = GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));

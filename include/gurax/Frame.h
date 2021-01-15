@@ -71,6 +71,8 @@ public:
 	const Frame* GetFrameExtern(const Symbol* pSymbol) const {
 		return const_cast<Frame*>(this)->GetFrameExtern(pSymbol);
 	}
+	size_t GetId() const { return reinterpret_cast<size_t>(this); }
+	String MakeId() const;
 	Value* Retrieve(const DottedSymbol& dottedSymbol, size_t nTail = 0);
 	Value* Retrieve(const Symbol* pSymbol);
 	Value* Retrieve(const char* name) { return Retrieve(Symbol::Add(name)); }

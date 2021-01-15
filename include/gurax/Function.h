@@ -203,7 +203,9 @@ public:
 	String MakeFullName() const;
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
-	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
+	void SetFrameOuter(Frame& frameOuter) {
+		if (!_pwFrameOuter) _pwFrameOuter.reset(frameOuter.GetWeakPtr());
+	}
 	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
 	bool HasFrameOuter() const { return !!_pwFrameOuter; }
 	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }

@@ -114,6 +114,11 @@ void Frame::Assign(Function* pFunction)
 	Assign(pFunction->GetSymbol(), new Value_Function(pFunction));
 }
 
+String Frame::MakeId() const
+{
+	return String().Format("#%08zu", GetId());
+}
+
 String Frame::MakeFullName(const Frame* pFrame, const char* name)
 {
 	String str;
@@ -130,13 +135,13 @@ String Frame::MakeFullName(const Frame* pFrame, const char* name)
 
 void Frame::PrintTree(Stream& stream, int indentLevel) const
 {
-	stream.Printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+	stream.Printf("%*s%s:%s\n", indentLevel * 2, "", GetTypeName(), MakeId().c_str());
 	if (_pFrameOuter) _pFrameOuter->PrintTree(stream, indentLevel + 1);
 }
 
 String Frame::ToString(const StringStyle& ss) const
 {
-	return String().Format("Frame:%s", GetTypeName());
+	return String().Format("Frame:%s:%s", GetTypeName(), MakeId().c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -284,7 +289,7 @@ const char* Frame_Branch::name = "Branch";
 
 void Frame_Branch::PrintTree(Stream& stream, int indentLevel) const
 {
-	stream.Printf("%*s%s(%p)\n", indentLevel * 2, "", GetTypeName(), this);
+	stream.Printf("%*s%s:%s\n", indentLevel * 2, "", GetTypeName(), MakeId().c_str());
 	if (_pFrameOuter) _pFrameOuter->PrintTree(stream, indentLevel + 1);
 	if (_pFrameLocal) _pFrameLocal->PrintTree(stream, indentLevel + 1);
 }
