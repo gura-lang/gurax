@@ -208,7 +208,7 @@ VType& Value_SDL_TouchFingerEvent::vtype = VTYPE_SDL_TouchFingerEvent;
 
 String Value_SDL_TouchFingerEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_TouchFingerEvent";
+	return ToStringGeneric(ss, "sdl.SDL_TouchFingerEvent");
 }
 
 Gurax_EndModuleScope(sdl)

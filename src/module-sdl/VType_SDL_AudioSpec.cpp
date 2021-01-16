@@ -275,7 +275,7 @@ void Value_SDL_AudioSpec::AudioCallback(void* userdata, Uint8* stream, int len)
 
 String Value_SDL_AudioSpec::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_AudioSpec";
+	return ToStringGeneric(ss, "sdl.SDL_AudioSpec");
 }
 
 Gurax_EndModuleScope(sdl)

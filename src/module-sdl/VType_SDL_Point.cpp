@@ -118,7 +118,7 @@ VType& Value_SDL_Point::vtype = VTYPE_SDL_Point;
 
 String Value_SDL_Point::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Point";
+	return ToStringGeneric(ss, "sdl.SDL_Point");
 }
 
 Gurax_EndModuleScope(sdl)

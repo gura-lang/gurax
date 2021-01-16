@@ -96,7 +96,7 @@ VType& Value_SDL_version::vtype = VTYPE_SDL_version;
 
 String Value_SDL_version::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_version";
+	return ToStringGeneric(ss, "sdl.SDL_version");
 }
 
 Gurax_EndModuleScope(sdl)

@@ -44,7 +44,7 @@ VType& Value_SDL_Window::vtype = VTYPE_SDL_Window;
 
 String Value_SDL_Window::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Window";
+	return ToStringGeneric(ss, "sdl.SDL_Window");
 }
 
 Gurax_EndModuleScope(sdl)

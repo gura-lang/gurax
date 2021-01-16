@@ -242,7 +242,9 @@ VType& Value_cairo_matrix_t::vtype = VTYPE_cairo_matrix_t;
 
 String Value_cairo_matrix_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_matrix_t";
+	const cairo_matrix_t& matrix = GetEntity();
+	return ToStringGeneric(ss, String().Format("cairo.cairo_matrix_t:%g,%g,%g,%g,%g,%g",
+			matrix.xx, matrix.yx, matrix.xy, matrix.yy, matrix.x0, matrix.y0));
 }
 
 Gurax_EndModuleScope(cairo)

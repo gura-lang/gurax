@@ -44,7 +44,7 @@ VType& Value_SDL_Sensor::vtype = VTYPE_SDL_Sensor;
 
 String Value_SDL_Sensor::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Sensor";
+	return ToStringGeneric(ss, "sdl.SDL_Sensor");
 }
 
 Gurax_EndModuleScope(sdl)

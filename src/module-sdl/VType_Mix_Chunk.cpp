@@ -92,7 +92,7 @@ VType& Value_Mix_Chunk::vtype = VTYPE_Mix_Chunk;
 
 String Value_Mix_Chunk::ToString(const StringStyle& ss) const
 {
-	return "sdl.Mix_Chunk";
+	return ToStringGeneric(ss, "sdl.Mix_Chunk");
 }
 
 Gurax_EndModuleScope(sdl)

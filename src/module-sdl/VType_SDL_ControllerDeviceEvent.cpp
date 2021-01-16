@@ -96,7 +96,7 @@ VType& Value_SDL_ControllerDeviceEvent::vtype = VTYPE_SDL_ControllerDeviceEvent;
 
 String Value_SDL_ControllerDeviceEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_ControllerDeviceEvent";
+	return ToStringGeneric(ss, "sdl.SDL_ControllerDeviceEvent");
 }
 
 Gurax_EndModuleScope(sdl)

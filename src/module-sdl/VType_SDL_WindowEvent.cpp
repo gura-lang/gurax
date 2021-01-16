@@ -144,7 +144,7 @@ VType& Value_SDL_WindowEvent::vtype = VTYPE_SDL_WindowEvent;
 
 String Value_SDL_WindowEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_WindowEvent";
+	return ToStringGeneric(ss, "sdl.SDL_WindowEvent");
 }
 
 Gurax_EndModuleScope(sdl)

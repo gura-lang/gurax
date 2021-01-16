@@ -112,7 +112,7 @@ VType& Value_SDL_TextInputEvent::vtype = VTYPE_SDL_TextInputEvent;
 
 String Value_SDL_TextInputEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_TextInputEvent";
+	return ToStringGeneric(ss, "sdl.SDL_TextInputEvent");
 }
 
 Gurax_EndModuleScope(sdl)

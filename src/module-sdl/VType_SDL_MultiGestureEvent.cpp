@@ -176,7 +176,7 @@ VType& Value_SDL_MultiGestureEvent::vtype = VTYPE_SDL_MultiGestureEvent;
 
 String Value_SDL_MultiGestureEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_MultiGestureEvent";
+	return ToStringGeneric(ss, "sdl.SDL_MultiGestureEvent");
 }
 
 Gurax_EndModuleScope(sdl)

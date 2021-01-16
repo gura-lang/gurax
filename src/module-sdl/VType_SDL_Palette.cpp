@@ -87,7 +87,7 @@ VType& Value_SDL_Palette::vtype = VTYPE_SDL_Palette;
 
 String Value_SDL_Palette::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Palette";
+	return ToStringGeneric(ss, "sdl.SDL_Palette");
 }
 
 Gurax_EndModuleScope(sdl)

@@ -92,7 +92,7 @@ VType& Value_cairo_font_face_t::vtype = VTYPE_cairo_font_face_t;
 
 String Value_cairo_font_face_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_font_face_t";
+	return ToStringGeneric(ss, "cairo.cairo_font_face_t");
 }
 
 Gurax_EndModuleScope(cairo)

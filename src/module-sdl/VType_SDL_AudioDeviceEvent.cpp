@@ -112,7 +112,7 @@ VType& Value_SDL_AudioDeviceEvent::vtype = VTYPE_SDL_AudioDeviceEvent;
 
 String Value_SDL_AudioDeviceEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_AudioDeviceEvent";
+	return ToStringGeneric(ss, "sdl.SDL_AudioDeviceEvent");
 }
 
 Gurax_EndModuleScope(sdl)

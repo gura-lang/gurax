@@ -160,7 +160,7 @@ VType& Value_SDL_MouseWheelEvent::vtype = VTYPE_SDL_MouseWheelEvent;
 
 String Value_SDL_MouseWheelEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_MouseWheelEvent";
+	return ToStringGeneric(ss, "sdl.SDL_MouseWheelEvent");
 }
 
 Gurax_EndModuleScope(sdl)

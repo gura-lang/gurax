@@ -64,7 +64,7 @@ VType& Value_SDL_HapticEffect::vtype = VTYPE_SDL_HapticEffect;
 
 String Value_SDL_HapticEffect::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_HapticEffect";
+	return ToStringGeneric(ss, "sdl.SDL_HapticEffect");
 }
 
 Gurax_EndModuleScope(sdl)

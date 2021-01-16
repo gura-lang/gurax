@@ -64,7 +64,7 @@ VType& Value_SDL_Cursor::vtype = VTYPE_SDL_Cursor;
 
 String Value_SDL_Cursor::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Cursor";
+	return ToStringGeneric(ss, "sdl.SDL_Cursor");
 }
 
 Gurax_EndModuleScope(sdl)

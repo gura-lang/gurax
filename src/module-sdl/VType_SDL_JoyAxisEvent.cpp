@@ -128,7 +128,7 @@ VType& Value_SDL_JoyAxisEvent::vtype = VTYPE_SDL_JoyAxisEvent;
 
 String Value_SDL_JoyAxisEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_JoyAxisEvent";
+	return ToStringGeneric(ss, "sdl.SDL_JoyAxisEvent");
 }
 
 Gurax_EndModuleScope(sdl)

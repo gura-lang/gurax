@@ -202,7 +202,7 @@ Value_SDL_Surface* Value_SDL_Surface::Create(Image* pImage)
 
 String Value_SDL_Surface::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Surface";
+	return ToStringGeneric(ss, "sdl.SDL_Surface");
 }
 
 Gurax_EndModuleScope(sdl)

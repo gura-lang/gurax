@@ -64,7 +64,7 @@ VType& Value_SDL_GameController::vtype = VTYPE_SDL_GameController;
 
 String Value_SDL_GameController::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_GameController";
+	return ToStringGeneric(ss, "sdl.SDL_GameController");
 }
 
 Gurax_EndModuleScope(sdl)

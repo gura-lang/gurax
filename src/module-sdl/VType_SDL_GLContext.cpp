@@ -44,7 +44,7 @@ VType& Value_SDL_GLContext::vtype = VTYPE_SDL_GLContext;
 
 String Value_SDL_GLContext::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_GLContext";
+	return ToStringGeneric(ss, "sdl.SDL_GLContext");
 }
 
 Gurax_EndModuleScope(sdl)

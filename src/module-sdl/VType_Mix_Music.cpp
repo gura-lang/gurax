@@ -92,7 +92,7 @@ VType& Value_Mix_Music::vtype = VTYPE_Mix_Music;
 
 String Value_Mix_Music::ToString(const StringStyle& ss) const
 {
-	return "sdl.Mix_Music";
+	return ToStringGeneric(ss, "sdl.Mix_Music");
 }
 
 Gurax_EndModuleScope(sdl)

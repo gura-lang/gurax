@@ -146,7 +146,7 @@ VType& Value_SDL_UserEvent::vtype = VTYPE_SDL_UserEvent;
 
 String Value_SDL_UserEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_UserEvent";
+	return ToStringGeneric(ss, "sdl.SDL_UserEvent");
 }
 
 Gurax_EndModuleScope(sdl)

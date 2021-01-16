@@ -92,7 +92,7 @@ VType& Value_TTF_Font::vtype = VTYPE_TTF_Font;
 
 String Value_TTF_Font::ToString(const StringStyle& ss) const
 {
-	return "sdl.TTF_Font";
+	return ToStringGeneric(ss, "sdl.TTF_Font");
 }
 
 Gurax_EndModuleScope(sdl)

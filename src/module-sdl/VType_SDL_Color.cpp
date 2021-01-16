@@ -166,7 +166,7 @@ VType& Value_SDL_Color::vtype = VTYPE_SDL_Color;
 
 String Value_SDL_Color::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Color";
+	return ToStringGeneric(ss, "sdl.SDL_Color");
 }
 
 Gurax_EndModuleScope(sdl)

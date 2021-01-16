@@ -144,7 +144,7 @@ VType& Value_SDL_TextEditingEvent::vtype = VTYPE_SDL_TextEditingEvent;
 
 String Value_SDL_TextEditingEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_TextEditingEvent";
+	return ToStringGeneric(ss, "sdl.SDL_TextEditingEvent");
 }
 
 Gurax_EndModuleScope(sdl)

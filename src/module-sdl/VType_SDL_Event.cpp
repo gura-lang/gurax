@@ -467,7 +467,7 @@ VType& Value_SDL_Event::vtype = VTYPE_SDL_Event;
 
 String Value_SDL_Event::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Event";
+	return ToStringGeneric(ss, "sdl.SDL_Event");
 }
 
 Gurax_EndModuleScope(sdl)

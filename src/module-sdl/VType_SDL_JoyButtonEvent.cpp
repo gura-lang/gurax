@@ -128,7 +128,7 @@ VType& Value_SDL_JoyButtonEvent::vtype = VTYPE_SDL_JoyButtonEvent;
 
 String Value_SDL_JoyButtonEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_JoyButtonEvent";
+	return ToStringGeneric(ss, "sdl.SDL_JoyButtonEvent");
 }
 
 Gurax_EndModuleScope(sdl)

@@ -116,7 +116,7 @@ VType& Value_SDL_DropEvent::vtype = VTYPE_SDL_DropEvent;
 
 String Value_SDL_DropEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_DropEvent";
+	return ToStringGeneric(ss, "sdl.SDL_DropEvent");
 }
 
 Gurax_EndModuleScope(sdl)

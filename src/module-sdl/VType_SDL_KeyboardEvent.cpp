@@ -144,7 +144,7 @@ VType& Value_SDL_KeyboardEvent::vtype = VTYPE_SDL_KeyboardEvent;
 
 String Value_SDL_KeyboardEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_KeyboardEvent";
+	return ToStringGeneric(ss, "sdl.SDL_KeyboardEvent");
 }
 
 Gurax_EndModuleScope(sdl)

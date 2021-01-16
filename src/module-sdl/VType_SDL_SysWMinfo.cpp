@@ -64,7 +64,7 @@ VType& Value_SDL_SysWMinfo::vtype = VTYPE_SDL_SysWMinfo;
 
 String Value_SDL_SysWMinfo::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_SysWMinfo";
+	return ToStringGeneric(ss, "sdl.SDL_SysWMinfo");
 }
 
 Gurax_EndModuleScope(sdl)

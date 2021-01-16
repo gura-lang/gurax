@@ -96,7 +96,7 @@ VType& Value_SDL_Keysym::vtype = VTYPE_SDL_Keysym;
 
 String Value_SDL_Keysym::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Keysym";
+	return ToStringGeneric(ss, "sdl.SDL_Keysym");
 }
 
 Gurax_EndModuleScope(sdl)

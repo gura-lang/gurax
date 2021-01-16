@@ -80,7 +80,7 @@ VType& Value_SDL_QuitEvent::vtype = VTYPE_SDL_QuitEvent;
 
 String Value_SDL_QuitEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_QuitEvent";
+	return ToStringGeneric(ss, "sdl.SDL_QuitEvent");
 }
 
 Gurax_EndModuleScope(sdl)

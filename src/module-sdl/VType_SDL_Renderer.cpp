@@ -44,7 +44,7 @@ VType& Value_SDL_Renderer::vtype = VTYPE_SDL_Renderer;
 
 String Value_SDL_Renderer::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Renderer";
+	return ToStringGeneric(ss, "sdl.SDL_Renderer");
 }
 
 Gurax_EndModuleScope(sdl)

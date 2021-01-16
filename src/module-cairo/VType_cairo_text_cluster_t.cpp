@@ -120,7 +120,7 @@ VType& Value_cairo_text_cluster_t::vtype = VTYPE_cairo_text_cluster_t;
 
 String Value_cairo_text_cluster_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_text_cluster_t";
+	return ToStringGeneric(ss, "cairo.cairo_text_cluster_t");
 }
 
 Gurax_EndModuleScope(cairo)

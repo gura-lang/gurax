@@ -92,7 +92,7 @@ VType& Value_cairo_device_t::vtype = VTYPE_cairo_device_t;
 
 String Value_cairo_device_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_device_t";
+	return ToStringGeneric(ss, "cairo.cairo_device_t");
 }
 
 Gurax_EndModuleScope(cairo)

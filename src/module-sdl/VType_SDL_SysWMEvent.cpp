@@ -80,7 +80,7 @@ VType& Value_SDL_SysWMEvent::vtype = VTYPE_SDL_SysWMEvent;
 
 String Value_SDL_SysWMEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_SysWMEvent";
+	return ToStringGeneric(ss, "sdl.SDL_SysWMEvent");
 }
 
 Gurax_EndModuleScope(sdl)

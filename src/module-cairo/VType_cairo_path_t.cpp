@@ -92,7 +92,7 @@ VType& Value_cairo_path_t::vtype = VTYPE_cairo_path_t;
 
 String Value_cairo_path_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_path_t";
+	return ToStringGeneric(ss, "cairo.cairo_path_t");
 }
 
 Gurax_EndModuleScope(cairo)

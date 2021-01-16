@@ -176,7 +176,7 @@ VType& Value_SDL_DollarGestureEvent::vtype = VTYPE_SDL_DollarGestureEvent;
 
 String Value_SDL_DollarGestureEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_DollarGestureEvent";
+	return ToStringGeneric(ss, "sdl.SDL_DollarGestureEvent");
 }
 
 Gurax_EndModuleScope(sdl)

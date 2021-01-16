@@ -166,7 +166,7 @@ VType& Value_SDL_Rect::vtype = VTYPE_SDL_Rect;
 
 String Value_SDL_Rect::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Rect";
+	return ToStringGeneric(ss, "sdl.SDL_Rect");
 }
 
 Gurax_EndModuleScope(sdl)

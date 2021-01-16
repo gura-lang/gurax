@@ -64,7 +64,7 @@ VType& Value_SDL_AudioStream::vtype = VTYPE_SDL_AudioStream;
 
 String Value_SDL_AudioStream::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_AudioStream";
+	return ToStringGeneric(ss, "sdl.SDL_AudioStream");
 }
 
 Gurax_EndModuleScope(sdl)

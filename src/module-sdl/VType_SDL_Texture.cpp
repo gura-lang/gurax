@@ -44,7 +44,7 @@ VType& Value_SDL_Texture::vtype = VTYPE_SDL_Texture;
 
 String Value_SDL_Texture::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_Texture";
+	return ToStringGeneric(ss, "sdl.SDL_Texture");
 }
 
 Gurax_EndModuleScope(sdl)

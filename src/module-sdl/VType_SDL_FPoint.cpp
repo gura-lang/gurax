@@ -80,7 +80,7 @@ VType& Value_SDL_FPoint::vtype = VTYPE_SDL_FPoint;
 
 String Value_SDL_FPoint::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_FPoint";
+	return ToStringGeneric(ss, "sdl.SDL_FPoint");
 }
 
 Gurax_EndModuleScope(sdl)

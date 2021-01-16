@@ -96,7 +96,7 @@ VType& Value_SDL_JoyDeviceEvent::vtype = VTYPE_SDL_JoyDeviceEvent;
 
 String Value_SDL_JoyDeviceEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_JoyDeviceEvent";
+	return ToStringGeneric(ss, "sdl.SDL_JoyDeviceEvent");
 }
 
 Gurax_EndModuleScope(sdl)

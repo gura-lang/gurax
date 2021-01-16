@@ -230,7 +230,7 @@ VType& Value_cairo_text_extents_t::vtype = VTYPE_cairo_text_extents_t;
 
 String Value_cairo_text_extents_t::ToString(const StringStyle& ss) const
 {
-	return "cairo.cairo_text_extents_t";
+	return ToStringGeneric(ss, "cairo.cairo_text_extents_t");
 }
 
 Gurax_EndModuleScope(cairo)

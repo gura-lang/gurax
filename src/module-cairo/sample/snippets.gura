@@ -543,9 +543,9 @@ main() = {
 				str = Format('%s', sample.name)
 				cr.select_font_face("Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 				cr.set_font_size(30.0);
-				extents = cairo_font_extents_t()
-				cr.font_extents(extents);
-				cr.move_to(0, -extents.descent);
+				cr.font_extents {|extents|
+					cr.move_to(0, -extents.descent);
+				}
 				cr.show_text(str);
 				cr.set_source_rgba(.9, .9, .9, 1)
 				cr.rectangle(0, 0, 256, 256)

@@ -192,7 +192,7 @@ VType& Value_SDL_MouseMotionEvent::vtype = VTYPE_SDL_MouseMotionEvent;
 
 String Value_SDL_MouseMotionEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_MouseMotionEvent";
+	return ToStringGeneric(ss, "sdl.SDL_MouseMotionEvent");
 }
 
 Gurax_EndModuleScope(sdl)

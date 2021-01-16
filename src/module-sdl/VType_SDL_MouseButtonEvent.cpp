@@ -207,7 +207,7 @@ VType& Value_SDL_MouseButtonEvent::vtype = VTYPE_SDL_MouseButtonEvent;
 
 String Value_SDL_MouseButtonEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_MouseButtonEvent";
+	return ToStringGeneric(ss, "sdl.SDL_MouseButtonEvent");
 }
 
 Gurax_EndModuleScope(sdl)

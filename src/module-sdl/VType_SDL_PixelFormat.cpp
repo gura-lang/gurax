@@ -178,7 +178,7 @@ VType& Value_SDL_PixelFormat::vtype = VTYPE_SDL_PixelFormat;
 
 String Value_SDL_PixelFormat::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_PixelFormat";
+	return ToStringGeneric(ss, "sdl.SDL_PixelFormat");
 }
 
 Gurax_EndModuleScope(sdl)

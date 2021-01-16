@@ -80,7 +80,7 @@ VType& Value_SDL_CommonEvent::vtype = VTYPE_SDL_CommonEvent;
 
 String Value_SDL_CommonEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_CommonEvent";
+	return ToStringGeneric(ss, "sdl.SDL_CommonEvent");
 }
 
 Gurax_EndModuleScope(sdl)

@@ -44,7 +44,7 @@ VType& Value_SDL_RWops::vtype = VTYPE_SDL_RWops;
 
 String Value_SDL_RWops::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_RWops";
+	return ToStringGeneric(ss, "sdl.SDL_RWops");
 }
 
 Gurax_EndModuleScope(sdl)

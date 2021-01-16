@@ -64,7 +64,7 @@ VType& Value_SDL_JoystickGUID::vtype = VTYPE_SDL_JoystickGUID;
 
 String Value_SDL_JoystickGUID::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_JoystickGUID";
+	return ToStringGeneric(ss, "sdl.SDL_JoystickGUID");
 }
 
 Gurax_EndModuleScope(sdl)

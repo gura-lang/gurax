@@ -128,7 +128,7 @@ VType& Value_SDL_ControllerButtonEvent::vtype = VTYPE_SDL_ControllerButtonEvent;
 
 String Value_SDL_ControllerButtonEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_ControllerButtonEvent";
+	return ToStringGeneric(ss, "sdl.SDL_ControllerButtonEvent");
 }
 
 Gurax_EndModuleScope(sdl)

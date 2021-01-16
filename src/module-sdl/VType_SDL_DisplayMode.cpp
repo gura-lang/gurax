@@ -112,7 +112,7 @@ VType& Value_SDL_DisplayMode::vtype = VTYPE_SDL_DisplayMode;
 
 String Value_SDL_DisplayMode::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_DisplayMode";
+	return ToStringGeneric(ss, "sdl.SDL_DisplayMode");
 }
 
 Gurax_EndModuleScope(sdl)

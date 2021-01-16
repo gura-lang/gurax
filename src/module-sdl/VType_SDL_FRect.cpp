@@ -136,7 +136,7 @@ VType& Value_SDL_FRect::vtype = VTYPE_SDL_FRect;
 
 String Value_SDL_FRect::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_FRect";
+	return ToStringGeneric(ss, "sdl.SDL_FRect");
 }
 
 Gurax_EndModuleScope(sdl)

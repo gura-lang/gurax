@@ -144,7 +144,7 @@ VType& Value_SDL_RendererInfo::vtype = VTYPE_SDL_RendererInfo;
 
 String Value_SDL_RendererInfo::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_RendererInfo";
+	return ToStringGeneric(ss, "sdl.SDL_RendererInfo");
 }
 
 Gurax_EndModuleScope(sdl)

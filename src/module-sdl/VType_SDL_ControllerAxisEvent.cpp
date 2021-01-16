@@ -128,7 +128,7 @@ VType& Value_SDL_ControllerAxisEvent::vtype = VTYPE_SDL_ControllerAxisEvent;
 
 String Value_SDL_ControllerAxisEvent::ToString(const StringStyle& ss) const
 {
-	return "sdl.SDL_ControllerAxisEvent";
+	return ToStringGeneric(ss, "sdl.SDL_ControllerAxisEvent");
 }
 
 Gurax_EndModuleScope(sdl)
