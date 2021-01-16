@@ -504,6 +504,43 @@ Sample_text_extents = class {
 	}
 }
 
+Sample_text_extents2 = class {
+	name:static = "text extents 2"
+	Draw(cr:cairo_t) = {
+		utf8 = "A y o";
+
+		cairo_select_font_face (cr, "Sans",
+			CAIRO_FONT_SLANT_ITALIC,
+			CAIRO_FONT_WEIGHT_NORMAL);
+
+		extents = cairo_text_extents_t()
+		cairo_set_font_size(cr, 80.0);
+		cairo_text_extents(cr, utf8, extents);
+
+		x = (256 - extents.width) / 2
+		y = (256 - extents.height) / 2 - extents.y_bearing
+		cairo_move_to(cr, x, y);
+		cairo_show_text(cr, utf8);
+
+		/* draw helping lines */
+		cairo_set_source_rgba(cr, 1, 0.2, 0.2, 0.6);
+		cairo_set_line_width(cr, 1.0);
+		cairo_arc(cr, x, y, 10.0, 0, 2*M_PI);
+		cairo_fill(cr);
+		cairo_move_to(cr, x, y);
+		cairo_rel_line_to(cr, extents.width, 0);
+		cairo_move_to(cr, x, y + extents.y_bearing);
+		cairo_rel_line_to(cr, extents.width, 0);
+		cairo_move_to(cr, x, y + extents.height + extents.y_bearing);
+		cairo_rel_line_to(cr, extents.width, 0);
+		cairo_move_to(cr, x + extents.width, y + extents.height + extents.y_bearing);
+		cairo_rel_line_to(cr, 0, -extents.height);
+		cairo_move_to(cr, x + extents.width + extents.x_bearing, y + extents.height + extents.y_bearing);
+		cairo_rel_line_to(cr, 0, -extents.height);
+		cairo_stroke (cr);
+	}
+}
+
 samples = [
 	Sample_arc
 	Sample_arc_negative
@@ -524,6 +561,7 @@ samples = [
 	Sample_text
 	Sample_text_align_center
 	Sample_text_extents
+	Sample_text_extents2
 ]
 
 main() = {
