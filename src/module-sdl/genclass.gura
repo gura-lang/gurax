@@ -327,7 +327,7 @@ VType& Value_${className}::vtype = VTYPE_${className};
 
 String Value_${className}::ToString(const StringStyle& ss) const
 {
-	return "${dotModuleName}.${className}";
+	return ToStringGeneric(ss, "${dotModuleName}.${className}");
 }
 
 ${if (ubarModuleName)}
