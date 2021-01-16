@@ -122,7 +122,9 @@ VType& Value_cairo_rectangle_t::vtype = VTYPE_cairo_rectangle_t;
 
 String Value_cairo_rectangle_t::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "cairo.cairo_rectangle_t");
+	const cairo_rectangle_t& rectangle = GetEntity();
+	return ToStringGeneric(ss, String().Format("cairo.cairo_rectangle_t:x=%g,y=%g,width=%g,height=%g",
+			rectangle.x, rectangle.y, rectangle.width, rectangle.height));
 }
 
 Gurax_EndModuleScope(cairo)

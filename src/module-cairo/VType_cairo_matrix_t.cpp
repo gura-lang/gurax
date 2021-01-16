@@ -243,7 +243,7 @@ VType& Value_cairo_matrix_t::vtype = VTYPE_cairo_matrix_t;
 String Value_cairo_matrix_t::ToString(const StringStyle& ss) const
 {
 	const cairo_matrix_t& matrix = GetEntity();
-	return ToStringGeneric(ss, String().Format("cairo.cairo_matrix_t:%g,%g,%g,%g,%g,%g",
+	return ToStringGeneric(ss, String().Format("cairo.cairo_matrix_t:xx=%g,yx=%g,xy=%g,yy=%g,x0=%g,y0=%g",
 			matrix.xx, matrix.yx, matrix.xy, matrix.yy, matrix.x0, matrix.y0));
 }
 
