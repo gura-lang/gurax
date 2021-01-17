@@ -924,6 +924,13 @@ cairo_pdf_surface_create(filename:const_char_p, width_in_points:double, height_i
 cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t_p, version:cairo_pdf_version_t):void
 
 //cairo_pdf_get_versions(versions:cairo_pdf_version_t_const_pp, num_versions:int_p):void
+cairo_pdf_get_versions() = \
+	R'''
+	const cairo_pdf_version_t* versions;
+	int num_version;
+	cairo_pdf_get_versions(&versions, &num_version);
+	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	'''
 
 cairo_pdf_version_to_string(version:cairo_pdf_version_t):const_char_p
 

@@ -6518,6 +6518,24 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_restrict_to_version_gurax, processor
 	return Gurax::Value::nil();
 }
 
+// cairo.cairo_pdf_get_versions()
+Gurax_DeclareFunctionAlias(cairo_pdf_get_versions_gurax, "cairo_pdf_get_versions")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const cairo_pdf_version_t* versions;
+	int num_version;
+	cairo_pdf_get_versions(&versions, &num_version);
+	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+}
+
 // cairo.cairo_pdf_version_to_string(version:Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_version_to_string_gurax, "cairo_pdf_version_to_string")
 {
@@ -7429,6 +7447,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_debug_reset_static_data_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_create_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_restrict_to_version_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_get_versions_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_version_to_string_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_size_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_add_outline_gurax));

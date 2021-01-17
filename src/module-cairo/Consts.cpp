@@ -213,6 +213,9 @@ void AssignConsts(Frame& frame)
 	AssignConst(CAIRO_REGION_OVERLAP_IN);
 	AssignConst(CAIRO_REGION_OVERLAP_OUT);
 	AssignConst(CAIRO_REGION_OVERLAP_PART);
+	// cairo_pdf_version_t
+    AssignConst(CAIRO_PDF_VERSION_1_4);
+    AssignConst(CAIRO_PDF_VERSION_1_5);
 }
 
 Gurax_EndModuleScope(cairo)
