@@ -196,13 +196,29 @@ cairo_set_matrix(cr:cairo_t_p, matrix:const_cairo_matrix_t_p):void
 
 cairo_identity_matrix(cr:cairo_t_p):void
 
-//cairo_user_to_device(cr:cairo_t_p, x:double_p, y:double_p):void
+cairo_user_to_device(cr:cairo_t_p, x:double, y:double) = \
+	R'''
+	cairo_user_to_device(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	'''
 
-//cairo_user_to_device_distance(cr:cairo_t_p, dx:double_p, dy:double_p):void
+cairo_user_to_device_distance(cr:cairo_t_p, dx:double, dy:double) = \
+	R'''
+	cairo_user_to_device_distance(cr, &dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	'''
 
-//cairo_device_to_user(cr:cairo_t_p, x:double_p, y:double_p):void
+cairo_device_to_user(cr:cairo_t_p, x:double, y:double) = \
+	R'''
+	cairo_device_to_user(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	'''
 
-//cairo_device_to_user_distance(cr:cairo_t_p, dx:double_p, dy:double_p):void
+cairo_device_to_user_distance(cr:cairo_t_p, dx:double, dy:double) = \
+	R'''
+	cairo_device_to_user_distance(cr, &dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	'''
 
 cairo_new_path(cr:cairo_t_p):void
 

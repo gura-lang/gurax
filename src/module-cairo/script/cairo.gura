@@ -65,6 +65,14 @@ cairo_t.set_matrix(matrix:cairo_matrix_t) = cairo_set_matrix(this, matrix)
 
 cairo_t.identity_matrix() = cairo_identity_matrix(this)
 
+cairo_t.user_to_device(x:Number, y:Number) = cairo_user_to_device(this, x, y)
+
+cairo_t.user_to_device_distance(dx:Number, dy:Number) = cairo_user_to_device_distance(this, dx, dy)
+
+cairo_t.device_to_user(x:Number, y:Number) = cairo_device_to_user(this, x, y)
+
+cairo_t.device_to_user_distance(dx:Number, dy:Number) = cairo_device_to_user_distance(this, dx, dy)
+
 cairo_t.new_path() = cairo_new_path(this)
 
 cairo_t.move_to(x:Number, y:Number) = cairo_move_to(this, x, y)

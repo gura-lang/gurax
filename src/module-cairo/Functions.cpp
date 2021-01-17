@@ -712,6 +712,106 @@ Gurax_ImplementFunctionEx(cairo_identity_matrix_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
+// cairo.cairo_user_to_device(cr:cairo_t, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(cairo_user_to_device_gurax, "cairo_user_to_device")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_user_to_device_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	double x = args_gurax.PickNumber<double>();
+	double y = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_user_to_device(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// cairo.cairo_user_to_device_distance(cr:cairo_t, dx:Number, dy:Number)
+Gurax_DeclareFunctionAlias(cairo_user_to_device_distance_gurax, "cairo_user_to_device_distance")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_user_to_device_distance_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	double dx = args_gurax.PickNumber<double>();
+	double dy = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_user_to_device_distance(cr, &dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+}
+
+// cairo.cairo_device_to_user(cr:cairo_t, x:Number, y:Number)
+Gurax_DeclareFunctionAlias(cairo_device_to_user_gurax, "cairo_device_to_user")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_device_to_user_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	double x = args_gurax.PickNumber<double>();
+	double y = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_device_to_user(cr, &x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// cairo.cairo_device_to_user_distance(cr:cairo_t, dx:Number, dy:Number)
+Gurax_DeclareFunctionAlias(cairo_device_to_user_distance_gurax, "cairo_device_to_user_distance")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_device_to_user_distance_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
+	cairo_t* cr = value_cr.GetEntityPtr();
+	double dx = args_gurax.PickNumber<double>();
+	double dy = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_device_to_user_distance(cr, &dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+}
+
 // cairo.cairo_new_path(cr:cairo_t)
 Gurax_DeclareFunctionAlias(cairo_new_path_gurax, "cairo_new_path")
 {
@@ -7079,6 +7179,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_transform_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_set_matrix_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_identity_matrix_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_to_device_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_to_device_distance_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_device_to_user_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_device_to_user_distance_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_new_path_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_move_to_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_new_sub_path_gurax));
