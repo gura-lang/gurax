@@ -56,6 +56,8 @@ ArgInfo = class {
 	listVarFlag:Bool
 	optionFlag:Bool
 	nilFlag:Bool
+	streamWFlag:Bool
+	streamRFlag:Bool
 	typeInfo:TypeInfo
 	tmplDeclaration:Template:static
 	tmplRangeCheck:Template:static
@@ -65,6 +67,8 @@ ArgInfo = class {
 		this.listVarFlag = listVarFlag
 		this.optionFlag = optionFlag
 		this.nilFlag = attr.IsSet(`nil)
+		this.streamWFlag = attr.IsSet(`w)
+		this.streamRFlag = attr.IsSet(`r)
 		this.typeInfo = r.typeInfoMap[this.type]
 	}
 	ComposeDeclaration() = {
@@ -72,6 +76,8 @@ ArgInfo = class {
 		argFlags = []
 		this.listVarFlag && argFlags.Add('ListVar')
 		this.nilFlag && argFlags.Add('Nil')
+		this.streamWFlag && argFlags.Add('StreamW')
+		this.streamRFlag && argFlags.Add('StreamR')
 		argFlags.IsEmpty() && argFlags.Add('None')
 		strArgFlags = ('ArgFlag::' + argFlags).Join(' | ')
 		this.tmplDeclaration.Eval()
@@ -81,9 +87,11 @@ ArgInfo = class {
 		str
 	}
 	ComposeArgRef() = this.typeInfo.ComposeArgRef(this.name)
-	ToString() = Format('%s%s%s:%s%s', this.name, cond(this.listVarFlag, '[]', ''),
+	ToString() = Format('%s%s%s:%s%s%s%s', this.name, cond(this.listVarFlag, '[]', ''),
 			cond(this.optionFlag, '?', ''), this.typeInfo.vtypeFullName,
-			cond(this.nilFlag, ':nil', ''))
+			cond(this.nilFlag, ':nil', ''),
+			cond(this.streamWFlag, ':w', ''),
+			cond(this.streamRFlag, ':r', ''))
 }
 
 ArgInfo.tmplDeclaration = tR'''
@@ -293,6 +301,15 @@ Renderer.__init__() = {
 		'''
 		codePickerValidation = R'''
 		RefPtr<Function> ${varName}(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
+		'''
+		codePickerVec = ''
+		codeFunctionBody = '')
+	this.DeclareType('Stream@gurax', '', 'Stream',
+		codePicker = R'''
+		RefPtr<Stream> ${varName}(args_gurax.PickStream().Reference());
+		'''
+		codePickerValidation = R'''
+		RefPtr<Stream> ${varName}(args_gurax.IsValid()? args_gurax.PickStream().Reference() : nullptr);
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')

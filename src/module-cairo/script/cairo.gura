@@ -293,6 +293,8 @@ cairo_surface_t.get_content() = cairo_surface_get_content(this)
 
 cairo_surface_t.write_to_png(filename:String) = cairo_surface_write_to_png(this, filename)
 
+cairo_surface_t.write_to_png_stream(stream:Stream:w) = cairo_surface_write_to_png_stream(this, stream)
+
 cairo_surface_t.get_mime_data(mime_type:String) = cairo_surface_get_mime_data(this, mime_type)
 
 cairo_surface_t.supports_mime_type(mime_type:String) = cairo_surface_supports_mime_type(this, mime_type)

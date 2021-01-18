@@ -598,7 +598,7 @@ main() = {
 		}
 	}
 	cr.destroy();
-	surface.write_to_png("image.png");
+	surface.write_to_png_stream("image.png");
 	surface.destroy();
 }
 

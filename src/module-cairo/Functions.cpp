@@ -5,6 +5,12 @@
 
 Gurax_BeginModuleScope(cairo)
 
+cairo_status_t write_func(void* closure, const unsigned char* data, unsigned int length)
+{
+	Stream& stream = *reinterpret_cast<Stream*>(closure);
+	return stream.Write(data, length)? CAIRO_STATUS_SUCCESS : CAIRO_STATUS_WRITE_ERROR;
+}
+
 // cairo.cairo_version()
 Gurax_DeclareFunctionAlias(cairo_version_gurax, "cairo_version")
 {
@@ -4287,6 +4293,29 @@ Gurax_ImplementFunctionEx(cairo_surface_write_to_png_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
+// cairo.cairo_surface_write_to_png_stream(surface:cairo_surface_t, stream:Stream:w)
+Gurax_DeclareFunctionAlias(cairo_surface_write_to_png_stream_gurax, "cairo_surface_write_to_png_stream")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_write_to_png_stream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	RefPtr<Stream> stream(args_gurax.PickStream().Reference());
+	// Function body
+	cairo_status_t rtn = cairo_surface_write_to_png_stream(surface, write_func, stream.get());
+	return new Value_Number(rtn);
+}
+
 // cairo.cairo_surface_get_mime_data(surface:cairo_surface_t, mime_type:String)
 Gurax_DeclareFunctionAlias(cairo_surface_get_mime_data_gurax, "cairo_surface_get_mime_data")
 {
@@ -7353,6 +7382,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_type_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_content_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_write_to_png_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_write_to_png_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_mime_data_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_supports_mime_type_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_get_font_options_gurax));

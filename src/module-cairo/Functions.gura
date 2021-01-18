@@ -615,6 +615,11 @@ cairo_surface_get_content(surface:cairo_surface_t_p):cairo_content_t
 cairo_surface_write_to_png(surface:cairo_surface_t_p, filename:const_char_p):cairo_status_t
 
 //cairo_surface_write_to_png_stream(surface:cairo_surface_t_p, write_func:cairo_write_func_t, closure:void_p):cairo_status_t
+cairo_surface_write_to_png_stream(surface:cairo_surface_t_p, stream:Stream@gurax:w) = \
+	R'''
+	cairo_status_t rtn = cairo_surface_write_to_png_stream(surface, write_func, stream.get());
+	return new Value_Number(rtn);
+	'''
 
 //cairo_surface_get_user_data(surface:cairo_surface_t_p, key:const_cairo_user_data_key_t_p):void_p
 
@@ -1021,6 +1026,12 @@ tR'''
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(cairo)
+
+cairo_status_t write_func(void* closure, const unsigned char* data, unsigned int length)
+{
+	Stream& stream = *reinterpret_cast<Stream*>(closure);
+	return stream.Write(data, length)? CAIRO_STATUS_SUCCESS : CAIRO_STATUS_WRITE_ERROR;
+}
 
 ${r.ComposeImplementation()}
 
