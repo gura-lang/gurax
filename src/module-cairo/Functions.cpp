@@ -7174,6 +7174,30 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_create_gurax, processor_gurax, argum
 	return new Value_cairo_surface_t(rtn);
 }
 
+// cairo.cairo_svg_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_svg_surface_create_for_stream_gurax, "cairo_svg_surface_create_for_stream")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_surface_create_for_stream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Stream> stream(args_gurax.PickStream().Reference());
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* surface = cairo_svg_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+}
+
 // cairo.cairo_svg_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_restrict_to_version_gurax, "cairo_svg_surface_restrict_to_version")
 {
@@ -7195,6 +7219,24 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_restrict_to_version_gurax, processor
 	// Function body
 	cairo_svg_surface_restrict_to_version(surface, version);
 	return Gurax::Value::nil();
+}
+
+// cairo.cairo_svg_get_versions()
+Gurax_DeclareFunctionAlias(cairo_svg_get_versions_gurax, "cairo_svg_get_versions")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const cairo_svg_version_t* versions;
+	int num_version;
+	cairo_svg_get_versions(&versions, &num_version);
+	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
 }
 
 // cairo.cairo_svg_version_to_string(version:Number)
@@ -7572,7 +7614,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_script_surface_create_for_target_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_script_from_recording_surface_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_create_for_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_restrict_to_version_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_svg_get_versions_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_svg_version_to_string_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_set_document_unit_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_svg_surface_get_document_unit_gurax));

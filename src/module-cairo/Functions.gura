@@ -1011,10 +1011,22 @@ cairo_script_from_recording_surface(script:cairo_device_t_p, recording_surface:c
 cairo_svg_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
 
 //cairo_svg_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+cairo_svg_surface_create_for_stream(stream:Stream@gurax:w, width_in_points:double, height_in_points:double) = \
+	R'''
+	cairo_surface_t* surface = cairo_svg_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+	'''
 
 cairo_svg_surface_restrict_to_version(surface:cairo_surface_t_p, version:cairo_svg_version_t):void
 
 //cairo_svg_get_versions(versions:cairo_svg_version_t_const_pp, num_versions:int_p):void
+cairo_svg_get_versions() = \
+	R'''
+	const cairo_svg_version_t* versions;
+	int num_version;
+	cairo_svg_get_versions(&versions, &num_version);
+	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	'''
 
 cairo_svg_version_to_string(version:cairo_svg_version_t):const_char_p
 
