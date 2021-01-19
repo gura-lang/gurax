@@ -571,6 +571,7 @@ main() = {
 	xOffset = (wdFrame - wdCanvas) / 2, yOffset = (htFrame - htCanvas) / 2
 	i = j = 0
 	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, wdFrame * nCols, htFrame * nRows);
+	//surface = cairo_pdf_surface_create("hoge.pdf", wdFrame * nCols, htFrame * nRows);
 	cr = surface.create();
 	cr.select_font_face("Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 	cr.set_font_size(30.0);
