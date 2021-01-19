@@ -29,13 +29,14 @@ public:
 	Gurax_MemoryPoolAllocator("Value_cairo_surface_t");
 protected:
 	cairo_surface_t* _entity;
+	RefPtr<Stream> _pStream;	// maybe nullptr
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	explicit Value_cairo_surface_t(VType& vtype = VTYPE_cairo_surface_t) : Value_Object(vtype) {}
-	explicit Value_cairo_surface_t(cairo_surface_t* entity, VType& vtype = VTYPE_cairo_surface_t) :
-		Value_Object(vtype), _entity(entity) {}
+	explicit Value_cairo_surface_t(cairo_surface_t* entity, Stream* pStream = nullptr, VType& vtype = VTYPE_cairo_surface_t) :
+		Value_Object(vtype), _entity(entity), _pStream(pStream) {}
 	// Copy constructor/operator
 	Value_cairo_surface_t(const Value_cairo_surface_t& src) = delete;
 	Value_cairo_surface_t& operator=(const Value_cairo_surface_t& src) = delete;

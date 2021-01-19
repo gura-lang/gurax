@@ -925,6 +925,11 @@ cairo_ft_font_options_substitute(options:const_cairo_font_options_t_p, pattern:F
 cairo_pdf_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
 
 //cairo_pdf_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+cairo_pdf_surface_create_for_stream(stream:Stream@gurax:w, width_in_points:double, height_in_points:double) = \
+	R'''
+	cairo_surface_t* surface = cairo_pdf_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+	'''
 
 cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t_p, version:cairo_pdf_version_t):void
 
@@ -954,6 +959,11 @@ cairo_pdf_surface_set_thumbnail_size(surface:cairo_surface_t_p, width:int, heigh
 cairo_ps_surface_create(filename:const_char_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
 
 //cairo_ps_surface_create_for_stream(write_func:cairo_write_func_t, closure:void_p, width_in_points:double, height_in_points:double):cairo_surface_t_p
+cairo_ps_surface_create_for_stream(stream:Stream@gurax:w, width_in_points:double, height_in_points:double) = \
+	R'''
+	cairo_surface_t* surface = cairo_ps_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+	'''
 
 cairo_ps_surface_restrict_to_level(surface:cairo_surface_t_p, level:cairo_ps_level_t):void
 
@@ -978,6 +988,11 @@ cairo_ps_surface_dsc_begin_page_setup(surface:cairo_surface_t_p):void
 cairo_script_create(filename:const_char_p):cairo_device_t_p
 
 //cairo_script_create_for_stream(write_func:cairo_write_func_t, closure:void_p):cairo_device_t_p
+cairo_script_create_for_stream(stream:Stream@gurax:w) = \
+	R'''
+	cairo_device_t* device = cairo_script_create_for_stream(write_func, stream.get());
+	return new Value_cairo_device_t(device, stream.release());
+	'''
 
 cairo_script_write_comment(script:cairo_device_t_p, comment:const_char_p, len:int):void
 

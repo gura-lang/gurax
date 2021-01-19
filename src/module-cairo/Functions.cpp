@@ -6524,6 +6524,30 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_create_gurax, processor_gurax, argum
 	return new Value_cairo_surface_t(rtn);
 }
 
+// cairo.cairo_pdf_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_for_stream_gurax, "cairo_pdf_surface_create_for_stream")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_pdf_surface_create_for_stream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Stream> stream(args_gurax.PickStream().Reference());
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* surface = cairo_pdf_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+}
+
 // cairo.cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_restrict_to_version_gurax, "cairo_pdf_surface_restrict_to_version")
 {
@@ -6737,6 +6761,30 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_create_gurax, processor_gurax, argume
 	return new Value_cairo_surface_t(rtn);
 }
 
+// cairo.cairo_ps_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+Gurax_DeclareFunctionAlias(cairo_ps_surface_create_for_stream_gurax, "cairo_ps_surface_create_for_stream")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_surface_create_for_stream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Stream> stream(args_gurax.PickStream().Reference());
+	double width_in_points = args_gurax.PickNumber<double>();
+	double height_in_points = args_gurax.PickNumber<double>();
+	// Function body
+	cairo_surface_t* surface = cairo_ps_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
+	return new Value_cairo_surface_t(surface, stream.release());
+}
+
 // cairo.cairo_ps_surface_restrict_to_level(surface:cairo_surface_t, level:Number)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_restrict_to_level_gurax, "cairo_ps_surface_restrict_to_level")
 {
@@ -6933,6 +6981,26 @@ Gurax_ImplementFunctionEx(cairo_script_create_gurax, processor_gurax, argument_g
 	cairo_device_t* rtn = cairo_script_create(filename);
 	if (!rtn) return Value::nil();
 	return new Value_cairo_device_t(rtn);
+}
+
+// cairo.cairo_script_create_for_stream(stream:Stream:w)
+Gurax_DeclareFunctionAlias(cairo_script_create_for_stream_gurax, "cairo_script_create_for_stream")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(cairo_script_create_for_stream_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Stream> stream(args_gurax.PickStream().Reference());
+	// Function body
+	cairo_device_t* device = cairo_script_create_for_stream(write_func, stream.get());
+	return new Value_cairo_device_t(device, stream.release());
 }
 
 // cairo.cairo_script_write_comment(script:cairo_device_t, comment:String, len:Number)
@@ -7476,6 +7544,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_region_xor_rectangle_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_debug_reset_static_data_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_create_for_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_restrict_to_version_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_get_versions_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_version_to_string_gurax));
@@ -7485,6 +7554,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_page_label_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_pdf_surface_set_thumbnail_size_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_create_for_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_restrict_to_level_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_level_to_string_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_set_eps_gurax));
@@ -7494,6 +7564,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_dsc_begin_setup_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_dsc_begin_page_setup_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_script_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_script_create_for_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_script_write_comment_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_script_set_mode_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_script_get_mode_gurax));
