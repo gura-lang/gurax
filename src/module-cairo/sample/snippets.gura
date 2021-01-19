@@ -1,5 +1,7 @@
 #!/usr/bin/env gurax
 import(cairo) {*}
+import(png)
+import(jpeg)
 
 M_PI = math.pi
 sqrt(x) = math.Sqrt(x)
@@ -600,6 +602,7 @@ main() = {
 	}
 	cr.destroy();
 	surface.write_to_png_stream("image.png");
+	//surface.ToImage().Write('a.jpg')
 	surface.destroy();
 }
 

@@ -112,7 +112,7 @@ Image* CreateImageFromSurface(cairo_surface_t* surface, const Image::Format& for
 					*(pDst + Image::offsetB) = static_cast<UInt8>((packed >> 0) & 0x1f);
 					*(pDst + Image::offsetG) = static_cast<UInt8>((packed >> 5) & 0x3f);
 					*(pDst + Image::offsetR) = static_cast<UInt8>((packed >> 11) & 0x1f);
-					*(pDst + Image::offsetA) = 0;
+					*(pDst + Image::offsetA) = 0xff;
 				}
 			}
 			break;
@@ -126,7 +126,7 @@ Image* CreateImageFromSurface(cairo_surface_t* surface, const Image::Format& for
 					*(pDst + Image::offsetB) = static_cast<UInt8>((packed >> 2) & 0xff);
 					*(pDst + Image::offsetG) = static_cast<UInt8>((packed >> 12) & 0xff);
 					*(pDst + Image::offsetR) = static_cast<UInt8>((packed >> 22) & 0xff);
-					*(pDst + Image::offsetA) = 0;
+					*(pDst + Image::offsetA) = 0xff;
 				}
 			}
 			break;

@@ -27,45 +27,30 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// cairo.cairo_surface_t#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(cairo_surface_t, MethodSkeleton)
+// cairo.cairo_surface_t#ToImage()
+Gurax_DeclareMethod(cairo_surface_t, ToImage)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Image, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(cairo_surface_t, MethodSkeleton)
+Gurax_ImplementMethod(cairo_surface_t, ToImage)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// cairo.cairo_surface_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_surface_t, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(cairo_surface_t, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	RefPtr<Image> pImage(CreateImageFromSurface(surface, format));
+	if (!pImage) return Value::nil();
+	return new Value_Image(pImage.release());
 }
 
 //------------------------------------------------------------------------------
@@ -80,9 +65,7 @@ void VType_cairo_surface_t::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(cairo_surface_t, MethodSkeleton));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_surface_t, propSkeleton));
+	Assign(Gurax_CreateMethod(cairo_surface_t, ToImage));
 }
 
 //------------------------------------------------------------------------------
