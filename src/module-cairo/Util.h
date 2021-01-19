@@ -8,8 +8,8 @@
 Gurax_BeginModuleScope(cairo)
 
 bool IsOK(cairo_status_t status);
-cairo_surface_t* CreateSurfaceFromImage(Image& image);
-Image* CreateImageFromSurface(cairo_surface_t* surface);
+cairo_surface_t* CreateSurfaceFromImage(Image& image, cairo_format_t format);
+Image* CreateImageFromSurface(cairo_surface_t* surface, const Image::Format& formatImg);
 
 Gurax_EndModuleScope(cairo)
 
