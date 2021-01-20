@@ -53,6 +53,109 @@ Gurax_ImplementMethod(cairo_surface_t, ToImage)
 	return new Value_Image(pImage.release());
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+// cairo.cairo_surface_t#content
+Gurax_DeclareProperty_R(cairo_surface_t, content)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, content)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	return new Value_Number(cairo_surface_get_content(surface));
+}
+
+// cairo.cairo_surface_t#type
+Gurax_DeclareProperty_R(cairo_surface_t, type)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, type)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	return new Value_Number(cairo_surface_get_type(surface));
+}
+
+// cairo.cairo_surface_t#image_format
+Gurax_DeclareProperty_R(cairo_surface_t, image_format)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, image_format)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	if (cairo_surface_get_type(surface) != CAIRO_SURFACE_TYPE_IMAGE) return Value::nil();
+	return new Value_Number(cairo_image_surface_get_format(surface));
+}
+
+// cairo.cairo_surface_t#image_width
+Gurax_DeclareProperty_R(cairo_surface_t, image_width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, image_width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	if (cairo_surface_get_type(surface) != CAIRO_SURFACE_TYPE_IMAGE) return Value::nil();
+	return new Value_Number(cairo_image_surface_get_width(surface));
+}
+
+// cairo.cairo_surface_t#image_height
+Gurax_DeclareProperty_R(cairo_surface_t, image_height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, image_height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	if (cairo_surface_get_type(surface) != CAIRO_SURFACE_TYPE_IMAGE) return Value::nil();
+	return new Value_Number(cairo_image_surface_get_height(surface));
+}
+
+// cairo.cairo_surface_t#image_stride
+Gurax_DeclareProperty_R(cairo_surface_t, image_stride)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(cairo_surface_t, image_stride)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	cairo_surface_t* surface = valueThis.GetEntityPtr();
+	if (cairo_surface_get_type(surface) != CAIRO_SURFACE_TYPE_IMAGE) return Value::nil();
+	return new Value_Number(cairo_image_surface_get_stride(surface));
+}
+
 //------------------------------------------------------------------------------
 // VType_cairo_surface_t
 //------------------------------------------------------------------------------
@@ -66,6 +169,13 @@ void VType_cairo_surface_t::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(cairo_surface_t, ToImage));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(cairo_surface_t, content));
+	Assign(Gurax_CreateProperty(cairo_surface_t, image_format));
+	Assign(Gurax_CreateProperty(cairo_surface_t, image_width));
+	Assign(Gurax_CreateProperty(cairo_surface_t, image_height));
+	Assign(Gurax_CreateProperty(cairo_surface_t, image_stride));
+	Assign(Gurax_CreateProperty(cairo_surface_t, type));
 }
 
 //------------------------------------------------------------------------------
