@@ -33,7 +33,7 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_mpq(const mpq_class& entity, VType& vtype = VTYPE_mpq) :
+	explicit Value_mpq(mpq_class entity, VType& vtype = VTYPE_mpq) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_mpq(const Value_mpq& src) = delete;

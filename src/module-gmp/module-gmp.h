@@ -11,6 +11,9 @@
 #include "VType_mpz.h"
 
 Gurax_BeginModuleHeader(gmp)
+
+void AssignOperators();
+
 Gurax_EndModuleHeader(gmp)
 
 #endif

@@ -85,6 +85,22 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(mpz, propSkeleton));
 }
 
+Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	mpz_t num;
+	if (value.IsInstanceOf(VTYPE_Number)) {
+		::mpz_set_d(num, Value_Number::GetNumber<Double>(value));
+		return new Value_mpz(mpz_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpq)) {
+		::mpz_set_q(num, Value_mpq::GetEntity(value).get_mpq_t());
+		return new Value_mpz(mpz_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpf)) {
+		::mpz_set_f(num, Value_mpf::GetEntity(value).get_mpf_t());
+		return new Value_mpz(mpz_class(num));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_mpz
 //------------------------------------------------------------------------------
@@ -92,7 +108,10 @@ VType& Value_mpz::vtype = VTYPE_mpz;
 
 String Value_mpz::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "gmp.mpz");
+	String strEntity = GetEntity().get_str();
+	strEntity += "L";
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 Gurax_EndModuleScope(gmp)

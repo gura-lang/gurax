@@ -33,7 +33,7 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_mpf(const mpf_class& entity, VType& vtype = VTYPE_mpf) :
+	explicit Value_mpf(mpf_class entity, VType& vtype = VTYPE_mpf) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_mpf(const Value_mpf& src) = delete;

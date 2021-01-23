@@ -37,6 +37,7 @@ target_compile_definitions(gmp.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(gmp.gurd PRIVATE
 	module-gmp.cpp
 	Util.cpp
+	Operators.cpp
 	VType_mpf.cpp
 	VType_mpq.cpp
 	VType_mpz.cpp)

@@ -27,6 +27,32 @@ Gurax_ImplementFunction(Test)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Eval(Number, L)
+{
+	if (::strchr(str, '.')  || ::strchr(str, 'e') || ::strchr(str, 'E')) {
+		mpf_class num;
+		if (num.set_str(str, 0) == 0) return new Value_mpf(std::move(num));
+		Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpf value");
+	} else {
+		mpz_class num;
+		if (num.set_str(str, 0) == 0) return new Value_mpz(std::move(num));
+		Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpz value");
+	}
+	return Value::nil();
+
+}
+
+Gurax_ImplementSuffixMgr_Eval(Number, Lr)
+{
+	mpq_class num;
+	if (num.set_str(str, 0) == 0) return new Value_mpq(std::move(num));
+	Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpq value");
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -42,6 +68,11 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_mpz);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of operator
+	AssignOperators();
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Number, L);
+	Gurax_AssignSuffixMgr(Number, Lr);
 	return true;
 }
 

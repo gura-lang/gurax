@@ -92,7 +92,9 @@ VType& Value_mpq::vtype = VTYPE_mpq;
 
 String Value_mpq::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "gmp.mpq");
+	String strEntity = GetEntity().get_str();
+	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
+	return strEntity;
 }
 
 Gurax_EndModuleScope(gmp)

@@ -14,6 +14,7 @@ class GURAX_DLLDECLARE VType_mpz : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern GURAX_DLLDECLARE VType_mpz VTYPE_mpz;
@@ -33,7 +34,7 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_mpz(const mpz_class& entity, VType& vtype = VTYPE_mpz) :
+	explicit Value_mpz(mpz_class entity, VType& vtype = VTYPE_mpz) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_mpz(const Value_mpz& src) = delete;
