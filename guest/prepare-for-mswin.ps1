@@ -282,6 +282,21 @@ class Package_libpng {
 }
 $packages += [Package_libpng]::new()
 
+#---------------------------------------------------------------------------------
+# Package: mpir
+#---------------------------------------------------------------------------------
+class Package_mpir {
+	[String] $name = "mpir"
+	[String] $ver = "3.0.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
+	[String] $dirName = $this.baseName
+	Build() {
+		msbuild .\build.vc15\lib_mpir_gc\lib_mpir_gc.vcxproj /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
+	}
+}
+$packages += [Package_mpir]::new()
+
 #------------------------------------------------------------------------------
 # Package: Onigmo
 #------------------------------------------------------------------------------
