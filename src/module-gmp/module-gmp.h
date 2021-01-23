@@ -6,6 +6,8 @@
 #include <gurax.h>
 #include <mpirxx.h>
 #include "Util.h"
+#include "VType_mpf.h"
+#include "VType_mpq.h"
 #include "VType_mpz.h"
 
 Gurax_BeginModuleHeader(gmp)

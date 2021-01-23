@@ -37,6 +37,8 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
+	Assign(VTYPE_mpf);
+	Assign(VTYPE_mpq);
 	Assign(VTYPE_mpz);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
