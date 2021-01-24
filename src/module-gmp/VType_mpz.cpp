@@ -27,34 +27,60 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gmp.mpz#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(mpz, MethodSkeleton)
+// gmp.mpz#get_str(base?:Number)
+Gurax_DeclareMethod(mpz, get_str)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Converts to a string.\n");
 }
 
-Gurax_ImplementMethod(mpz, MethodSkeleton)
+Gurax_ImplementMethod(mpz, get_str)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	int base = args.IsValid()? args.PickNumber<int>() : 10;
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_String(valueThis.GetEntity().get_str(base));
+}
+
+// gmp.mpz#set_str(str:String, base?:Number):reduce
+Gurax_DeclareMethod(mpz, set_str)
+{
+	Declare(VTYPE_Nil, Flag::Reduce);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts to a string.\n");
+}
+
+Gurax_ImplementMethod(mpz, set_str)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.PickString();
+	int base = args.IsValid()? args.PickNumber<int>() : 10;
+	// Function body
+	int rtn = valueThis.GetEntity().set_str(str, base);
+	if (rtn < 0) {
+		Error::Issue(ErrorType::FormatError, "invalid format for mpz value");
+		return Value::nil();
+	}
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gmp.mpz#propSkeleton
-Gurax_DeclareProperty_R(mpz, propSkeleton)
+// gmp.mpz#sgn
+Gurax_DeclareProperty_R(mpz, sgn)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +88,10 @@ Gurax_DeclareProperty_R(mpz, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpz, propSkeleton)
+Gurax_ImplementPropertyGetter(mpz, sgn)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(mpz_sgn(valueThis.GetEntity().get_mpz_t()));
 }
 
 //------------------------------------------------------------------------------
@@ -80,12 +106,13 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(mpz, MethodSkeleton));
+	Assign(Gurax_CreateMethod(mpz, get_str));
+	Assign(Gurax_CreateMethod(mpz, set_str));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(mpz, propSkeleton));
+	Assign(Gurax_CreateProperty(mpz, sgn));
 }
 
-Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags formatterFlags) const
 {
 	mpz_t num;
 	if (value.IsInstanceOf(VTYPE_Number)) {
@@ -113,5 +140,26 @@ String Value_mpz::ToString(const StringStyle& ss) const
 	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
 	return strEntity;
 }
+
+bool Value_mpz::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(10).c_str());
+}
+
+bool Value_mpz::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(2).c_str());
+}
+
+bool Value_mpz::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(8).c_str());
+}
+
+bool Value_mpz::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(16).c_str());
+}
+
 
 Gurax_EndModuleScope(gmp)

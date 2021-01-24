@@ -79,6 +79,15 @@ public:
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	//virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	virtual bool Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	virtual bool Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	//virtual bool Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	//virtual bool Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	//virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	//virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
 
 Gurax_EndModuleScope(gmp)
