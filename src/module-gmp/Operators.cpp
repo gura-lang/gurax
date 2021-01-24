@@ -16,6 +16,16 @@ inline bool IsZero(const mpq_class& num) { return mpq_sgn(num.get_mpq_t()) == 0;
 inline bool IsZero(const mpf_class& num) { return mpf_sgn(num.get_mpf_t()) == 0; }
 inline bool IsZero(Double num) { return num == 0; }
 
+template<typename T_ValueRtn, typename T_Value>
+class OpEntry_Neg_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(-num);
+
+	}
+};
+
 template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
 class OpEntry_Add_T : public OpEntry {
 public:
@@ -329,6 +339,36 @@ public:
 };
 
 template<typename T_ValueRtn, typename T_Value>
+class OpEntry_math_Abs_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(::abs(num));
+
+	}
+};
+
+template<typename T_ValueRtn, typename T_Value>
+class OpEntry_math_Ceil_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(::ceil(num));
+
+	}
+};
+
+template<typename T_ValueRtn, typename T_Value>
+class OpEntry_math_Floor_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(::floor(num));
+
+	}
+};
+
+template<typename T_ValueRtn, typename T_Value>
 class OpEntry_math_Sqrt_T : public OpEntry {
 public:
 	virtual Value* EvalUnary(Processor& processor, Value& value) const {
@@ -340,6 +380,10 @@ public:
 
 void AssignOperators()
 {
+	// Neg: -num
+	AssignOpUnary_T(Neg, mpz, mpz);
+	AssignOpUnary_T(Neg, mpq, mpq);
+	AssignOpUnary_T(Neg, mpf, mpf);
 	// Add: num + num
 	AssignOpBinary_T(Add, mpz, mpz, mpz);
 	AssignOpBinary_T(Add, mpq, mpz, mpq);
@@ -500,6 +544,18 @@ void AssignOperators()
 	AssignOpBinary_T(Ge, Bool, Number, mpz);
 	AssignOpBinary_T(Ge, Bool, Number, mpq);
 	AssignOpBinary_T(Ge, Bool, Number, mpf);
+	// math.Abs
+	AssignOpUnary_T(math_Abs, mpz, mpz);
+	AssignOpUnary_T(math_Abs, mpq, mpq);
+	AssignOpUnary_T(math_Abs, mpf, mpf);
+	// math.Ceil
+	//AssignOpUnary_T(math_Ceil, mpz, mpz);
+	//AssignOpUnary_T(math_Ceil, mpq, mpq);
+	AssignOpUnary_T(math_Ceil, mpf, mpf);
+	// math.Floor
+	//AssignOpUnary_T(math_Floor, mpz, mpz);
+	//AssignOpUnary_T(math_Floor, mpq, mpq);
+	AssignOpUnary_T(math_Floor, mpf, mpf);
 	// math.Sqrt
 	AssignOpUnary_T(math_Sqrt, mpz, mpz);
 	//AssignOpUnary_T(math_Sqrt, mpq, mpq);
