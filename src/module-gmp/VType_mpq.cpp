@@ -53,8 +53,8 @@ Gurax_ImplementMethod(mpq, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gmp.mpq#den
-Gurax_DeclareProperty_R(mpq, den)
+// gmp.mpq#denom
+Gurax_DeclareProperty_R(mpq, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,14 +62,14 @@ Gurax_DeclareProperty_R(mpq, den)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, den)
+Gurax_ImplementPropertyGetter(mpq, denom)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_mpz(valueThis.GetEntity().get_den());
 }
 
-// gmp.mpq#num
-Gurax_DeclareProperty_R(mpq, num)
+// gmp.mpq#numer
+Gurax_DeclareProperty_R(mpq, numer)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -77,14 +77,14 @@ Gurax_DeclareProperty_R(mpq, num)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, num)
+Gurax_ImplementPropertyGetter(mpq, numer)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_mpz(valueThis.GetEntity().get_num());
 }
 
-// gmp.mpq#sgn
-Gurax_DeclareProperty_R(mpq, sgn)
+// gmp.mpq#sign
+Gurax_DeclareProperty_R(mpq, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -92,7 +92,7 @@ Gurax_DeclareProperty_R(mpq, sgn)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, sgn)
+Gurax_ImplementPropertyGetter(mpq, sign)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(mpq_sgn(valueThis.GetEntity().get_mpq_t()));
@@ -112,9 +112,9 @@ void VType_mpq::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(mpq, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(mpq, den));
-	Assign(Gurax_CreateProperty(mpq, num));
-	Assign(Gurax_CreateProperty(mpq, sgn));
+	Assign(Gurax_CreateProperty(mpq, denom));
+	Assign(Gurax_CreateProperty(mpq, numer));
+	Assign(Gurax_CreateProperty(mpq, sign));
 }
 
 //------------------------------------------------------------------------------

@@ -17,11 +17,31 @@ inline bool IsZero(const mpf_class& num) { return mpf_sgn(num.get_mpf_t()) == 0;
 inline bool IsZero(Double num) { return num == 0; }
 
 template<typename T_ValueRtn, typename T_Value>
+class OpEntry_Inv_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(~num);
+
+	}
+};
+
+template<typename T_ValueRtn, typename T_Value>
 class OpEntry_Neg_T : public OpEntry {
 public:
 	virtual Value* EvalUnary(Processor& processor, Value& value) const {
 		auto& num = T_Value::GetEntity(value);
 		return new T_ValueRtn(-num);
+
+	}
+};
+
+template<typename T_ValueRtn, typename T_Value>
+class OpEntry_Not_T : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = T_Value::GetEntity(value);
+		return new T_ValueRtn(IsZero(num));
 
 	}
 };
@@ -338,6 +358,126 @@ public:
 	}
 };
 
+template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
+class OpEntry_Cmp_T : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(::cmp(numL, numR));
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL>
+class OpEntry_Cmp_T<T_ValueRtn, T_ValueL, Value_Number> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		Double numR = Value_Number::GetNumber<Double>(valueR);
+		return new T_ValueRtn(::cmp(numL, numR));
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueR>
+class OpEntry_Cmp_T<T_ValueRtn, Value_Number, T_ValueR> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		Double numL = Value_Number::GetNumber<Double>(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(::cmp(numL, numR));
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
+class OpEntry_And_T : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL & numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL>
+class OpEntry_And_T<T_ValueRtn, T_ValueL, Value_Number> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		Double numR = Value_Number::GetNumber<Double>(valueR);
+		return new T_ValueRtn(numL & numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueR>
+class OpEntry_And_T<T_ValueRtn, Value_Number, T_ValueR> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		Double numL = Value_Number::GetNumber<Double>(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL & numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
+class OpEntry_Or_T : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL | numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL>
+class OpEntry_Or_T<T_ValueRtn, T_ValueL, Value_Number> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		Double numR = Value_Number::GetNumber<Double>(valueR);
+		return new T_ValueRtn(numL | numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueR>
+class OpEntry_Or_T<T_ValueRtn, Value_Number, T_ValueR> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		Double numL = Value_Number::GetNumber<Double>(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL | numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
+class OpEntry_Xor_T : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL ^ numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL>
+class OpEntry_Xor_T<T_ValueRtn, T_ValueL, Value_Number> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		Double numR = Value_Number::GetNumber<Double>(valueR);
+		return new T_ValueRtn(numL ^ numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueR>
+class OpEntry_Xor_T<T_ValueRtn, Value_Number, T_ValueR> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		Double numL = Value_Number::GetNumber<Double>(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		return new T_ValueRtn(numL ^ numR);
+	}
+};
+
 template<typename T_ValueRtn, typename T_Value>
 class OpEntry_math_Abs_T : public OpEntry {
 public:
@@ -380,10 +520,16 @@ public:
 
 void AssignOperators()
 {
+	// Inv: ~num
+	AssignOpUnary_T(Inv, mpz, mpz);
 	// Neg: -num
 	AssignOpUnary_T(Neg, mpz, mpz);
 	AssignOpUnary_T(Neg, mpq, mpq);
 	AssignOpUnary_T(Neg, mpf, mpf);
+	// Not: !num
+	AssignOpUnary_T(Not, Bool, mpz);
+	AssignOpUnary_T(Not, Bool, mpq);
+	AssignOpUnary_T(Not, Bool, mpf);
 	// Add: num + num
 	AssignOpBinary_T(Add, mpz, mpz, mpz);
 	AssignOpBinary_T(Add, mpq, mpz, mpq);
@@ -448,6 +594,18 @@ void AssignOperators()
 	AssignOpBinary_T(Div, mpz, Number, mpz);
 	AssignOpBinary_T(Div, mpq, Number, mpq);
 	AssignOpBinary_T(Div, mpf, Number, mpf);
+	// And: num & num
+	AssignOpBinary_T(And, mpz, mpz, mpz);
+	AssignOpBinary_T(And, mpz, mpz, Number);
+	AssignOpBinary_T(And, mpz, Number, mpz);
+	// Or: num | num
+	AssignOpBinary_T(Or, mpz, mpz, mpz);
+	AssignOpBinary_T(Or, mpz, mpz, Number);
+	AssignOpBinary_T(Or, mpz, Number, mpz);
+	// Xor: num | num
+	AssignOpBinary_T(Xor, mpz, mpz, mpz);
+	AssignOpBinary_T(Xor, mpz, mpz, Number);
+	AssignOpBinary_T(Xor, mpz, Number, mpz);
 	// Eq: num == num
 	AssignOpBinary_T(Eq, Bool, mpz, mpz);
 	AssignOpBinary_T(Eq, Bool, mpz, mpq);
@@ -544,6 +702,22 @@ void AssignOperators()
 	AssignOpBinary_T(Ge, Bool, Number, mpz);
 	AssignOpBinary_T(Ge, Bool, Number, mpq);
 	AssignOpBinary_T(Ge, Bool, Number, mpf);
+	// Cmp: num <=> num
+	AssignOpBinary_T(Cmp, Number, mpz, mpz);
+	AssignOpBinary_T(Cmp, Number, mpz, mpq);
+	AssignOpBinary_T(Cmp, Number, mpz, mpf);
+	AssignOpBinary_T(Cmp, Number, mpz, Number);
+	AssignOpBinary_T(Cmp, Number, mpq, mpz);
+	AssignOpBinary_T(Cmp, Number, mpq, mpq);
+	AssignOpBinary_T(Cmp, Number, mpq, mpf);
+	AssignOpBinary_T(Cmp, Number, mpq, Number);
+	AssignOpBinary_T(Cmp, Number, mpf, mpz);
+	AssignOpBinary_T(Cmp, Number, mpf, mpq);
+	AssignOpBinary_T(Cmp, Number, mpf, mpf);
+	AssignOpBinary_T(Cmp, Number, mpf, Number);
+	AssignOpBinary_T(Cmp, Number, Number, mpz);
+	AssignOpBinary_T(Cmp, Number, Number, mpq);
+	AssignOpBinary_T(Cmp, Number, Number, mpf);
 	// math.Abs
 	AssignOpUnary_T(math_Abs, mpz, mpz);
 	AssignOpUnary_T(math_Abs, mpq, mpq);

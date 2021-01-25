@@ -79,8 +79,8 @@ Gurax_ImplementMethod(mpz, set_str)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gmp.mpz#sgn
-Gurax_DeclareProperty_R(mpz, sgn)
+// gmp.mpz#sign
+Gurax_DeclareProperty_R(mpz, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -88,7 +88,7 @@ Gurax_DeclareProperty_R(mpz, sgn)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpz, sgn)
+Gurax_ImplementPropertyGetter(mpz, sign)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(mpz_sgn(valueThis.GetEntity().get_mpz_t()));
@@ -109,7 +109,7 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(mpz, get_str));
 	Assign(Gurax_CreateMethod(mpz, set_str));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(mpz, sgn));
+	Assign(Gurax_CreateProperty(mpz, sign));
 }
 
 Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags formatterFlags) const

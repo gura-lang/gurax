@@ -103,8 +103,8 @@ Gurax_ImplementPropertySetter(mpf, prec)
 	::mpf_set_prec(valueThis.GetEntity().get_mpf_t(), prec);
 }
 
-// gmp.mpf#sgn
-Gurax_DeclareProperty_R(mpf, sgn)
+// gmp.mpf#sign
+Gurax_DeclareProperty_R(mpf, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -112,7 +112,7 @@ Gurax_DeclareProperty_R(mpf, sgn)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpf, sgn)
+Gurax_ImplementPropertyGetter(mpf, sign)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(mpf_sgn(valueThis.GetEntity().get_mpf_t()));
@@ -133,10 +133,9 @@ void VType_mpf::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(mpf, set_str));
 	// Assignment of class property
 	Assign(Gurax_CreateClassProperty(mpf, default_prec));
-	Assign(Gurax_CreateClassProperty(mpf, sgn));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(mpf, prec));
-	Assign(Gurax_CreateProperty(mpf, sgn));
+	Assign(Gurax_CreateProperty(mpf, sign));
 }
 
 //------------------------------------------------------------------------------
