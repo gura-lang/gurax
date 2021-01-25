@@ -24,6 +24,30 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// gmp.mpf(num:gmp.mpf) {block?}
+Gurax_DeclareConstructor(mpf)
+{
+	Declare(VTYPE_Rational, Flag::None);
+	DeclareArg("num", VTYPE_mpf, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `gmp.mpf` instance.");
+}
+
+Gurax_ImplementConstructor(mpf)
+{
+	// Arguments
+	ArgPicker args(argument);
+	mpf_class num;
+	if (args.IsValid()) num = args.Pick<Value_mpf>().GetEntity();
+	// Function body
+	return argument.ReturnValue(processor, new Value_mpf(std::move(num)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -128,7 +152,7 @@ void VType_mpf::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(mpf));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(mpf, set_str));
 	// Assignment of class property

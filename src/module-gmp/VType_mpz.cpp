@@ -24,6 +24,30 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// gmp.mpz(num:gmp.mpz) {block?}
+Gurax_DeclareConstructor(mpz)
+{
+	Declare(VTYPE_Rational, Flag::None);
+	DeclareArg("num", VTYPE_mpz, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `gmp.mpz` instance.");
+}
+
+Gurax_ImplementConstructor(mpz)
+{
+	// Arguments
+	ArgPicker args(argument);
+	mpz_class num;
+	if (args.IsValid()) num = args.Pick<Value_mpz>().GetEntity();
+	// Function body
+	return argument.ReturnValue(processor, new Value_mpz(std::move(num)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -104,7 +128,7 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(mpz));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(mpz, get_str));
 	Assign(Gurax_CreateMethod(mpz, set_str));

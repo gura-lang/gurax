@@ -24,30 +24,59 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// gmp.mpq(num:gmp.mpq) {block?}
+Gurax_DeclareConstructor(mpq)
+{
+	Declare(VTYPE_Rational, Flag::None);
+	DeclareArg("num", VTYPE_mpq, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `gmp.mpq` instance.");
+}
+
+Gurax_ImplementConstructor(mpq)
+{
+	// Arguments
+	ArgPicker args(argument);
+	mpq_class num;
+	if (args.IsValid()) num = args.Pick<Value_mpq>().GetEntity();
+	// Function body
+	return argument.ReturnValue(processor, new Value_mpq(std::move(num)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gmp.mpq#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(mpq, MethodSkeleton)
+// gmp.mpq#set_str(str:String, base?:Number):reduce
+Gurax_DeclareMethod(mpq, set_str)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::Reduce);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Converts to a string.\n");
 }
 
-Gurax_ImplementMethod(mpq, MethodSkeleton)
+Gurax_ImplementMethod(mpq, set_str)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* str = args.PickString();
+	int base = args.IsValid()? args.PickNumber<int>() : 10;
 	// Function body
-	return new Value_Number(num1 + num2);
+	int rtn = valueThis.GetEntity().set_str(str, base);
+	if (rtn < 0) {
+		Error::Issue(ErrorType::FormatError, "invalid format for mpq value");
+		return Value::nil();
+	}
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -108,9 +137,9 @@ void VType_mpq::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(mpq));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(mpq, MethodSkeleton));
+	Assign(Gurax_CreateMethod(mpq, set_str));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(mpq, denom));
 	Assign(Gurax_CreateProperty(mpq, numer));
