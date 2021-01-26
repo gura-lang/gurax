@@ -75,16 +75,20 @@ class ModuleBuiltInFactory;
 //------------------------------------------------------------------------------
 // ModuleMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ModuleMap :
-		public std::unordered_map<String, Module*, String::Hash, String::EqualTo> {
+class GURAX_DLLDECLARE ModuleMap {
+public:
+	using Map = std::unordered_map<String, Module*, String::Hash, String::EqualTo>;
+private:
+	Map _map;
 public:
 	~ModuleMap() { Clear(); }
 public:
+	Map& GetMap() { return _map; }
 	void Clear();
 	void Assign(Module* pModule);
 	Module* Lookup(const String& pathName) const {
-		auto pPair = find(pathName);
-		return (pPair == end())? nullptr : pPair->second;
+		auto pPair = _map.find(pathName);
+		return (pPair == _map.end())? nullptr : pPair->second;
 	}
 };
 

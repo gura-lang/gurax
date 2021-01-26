@@ -629,7 +629,7 @@ Gurax_ImplementOpUnary(math_Ceil, Number)
 Gurax_ImplementOpUnary(math_Conj, Number)
 {
 	Double num = Value_Number::GetNumber<Double>(value);
-	return new Value_Number(std::conj(num));
+	return new Value_Complex(std::conj(num));
 }
 
 // math.Cos(Number)

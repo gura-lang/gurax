@@ -13,15 +13,15 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void FrameMap::Clear()
 {
-	for (auto& pair : *this) Frame::Delete(pair.second);
-	clear();
+	for (auto& pair : _map) Frame::Delete(pair.second);
+	_map.clear();
 }
 
 void FrameMap::Assign(const Symbol* pSymbol, Frame* pFrame)
 {
-	auto pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pFrame);
+	auto pPair = _map.find(pSymbol);
+	if (pPair == _map.end()) {
+		_map.emplace(pSymbol, pFrame);
 	} else {
 		Frame::Delete(pPair->second);
 		pPair->second = pFrame;

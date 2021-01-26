@@ -10,19 +10,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void ValueDict::Clear()
 {
-	for (auto& pair : *this) {
+	for (auto& pair : _map) {
 		Value::Delete(pair.first);
 		Value::Delete(pair.second);
 	}
-	clear();
+	_map.clear();
 }
 
 ValueDict* ValueDict::Clone() const
 {
 	RefPtr<ValueDict> pValueDict(new ValueDict());
-	pValueDict->reserve(size());
-	for (auto pair : *this) {
-		pValueDict->emplace(pair.first->Reference(), pair.second->Reference());
+	pValueDict->_map.reserve(_map.size());
+	for (auto pair : _map) {
+		pValueDict->_map.emplace(pair.first->Reference(), pair.second->Reference());
 	}
 	return pValueDict.release();
 }
@@ -30,22 +30,22 @@ ValueDict* ValueDict::Clone() const
 ValueDict* ValueDict::CloneDeep() const
 {
 	RefPtr<ValueDict> pValueDict(new ValueDict());
-	pValueDict->reserve(size());
-	for (auto pair : *this) {
+	pValueDict->_map.reserve(_map.size());
+	for (auto pair : _map) {
 		Value* pValueKeyCloned = pair.first->Clone();
 		if (!pValueKeyCloned) return nullptr;
 		Value* pValueCloned = pair.second->Clone();
 		if (!pValueCloned) return nullptr;
-		pValueDict->emplace(pValueKeyCloned, pValueCloned);
+		pValueDict->_map.emplace(pValueKeyCloned, pValueCloned);
 	}
 	return pValueDict.release();
 }
 
 void ValueDict::Assign(Value* pValueKey, Value* pValue)
 {
-	auto pPair = find(pValueKey);
-	if (pPair == end()) {
-		emplace(pValueKey, pValue);
+	auto pPair = _map.find(pValueKey);
+	if (pPair == _map.end()) {
+		_map.emplace(pValueKey, pValue);
 	} else {
 		Value::Delete(pPair->second);
 		pPair->second = pValue;
@@ -54,11 +54,11 @@ void ValueDict::Assign(Value* pValueKey, Value* pValue)
 
 bool ValueDict::Store(const ValueDict& valDict, StoreMode storeMode)
 {
-	for (auto pairSrc : valDict) {
+	for (auto pairSrc : valDict._map) {
 		const Value *pValueKey = pairSrc.first;
-		ValueDict::iterator pPairDst = find(const_cast<Value*>(pValueKey));
-		if (pPairDst == end()) {
-			insert(ValueDict::value_type(pairSrc.first->Reference(), pairSrc.second->Reference()));
+		auto pPairDst = _map.find(const_cast<Value*>(pValueKey));
+		if (pPairDst == _map.end()) {
+			_map.insert(Map::value_type(pairSrc.first->Reference(), pairSrc.second->Reference()));
 		} else if (storeMode == StoreMode::Overwrite) {
 			Value::Delete(pPairDst->second);
 			pPairDst->second = pairSrc.second->Reference();
@@ -78,9 +78,9 @@ bool ValueDict::Store(const Value& valueKey, const Value& value, StoreMode store
 		Error::Issue(ErrorType::TypeError, "invalid value type for key");
 		return false;
 	}
-	ValueDict::iterator pPairDst = find(const_cast<Value*>(&valueKey));
-	if (pPairDst == end()) {
-		insert(ValueDict::value_type(valueKey.Reference(), value.Reference()));
+	auto pPairDst = _map.find(const_cast<Value*>(&valueKey));
+	if (pPairDst == _map.end()) {
+		_map.insert(Map::value_type(valueKey.Reference(), value.Reference()));
 	} else if (storeMode == StoreMode::Overwrite) {
 		Value::Delete(pPairDst->second);
 		pPairDst->second = value.Reference();
@@ -95,11 +95,11 @@ bool ValueDict::Store(const Value& valueKey, const Value& value, StoreMode store
 
 void ValueDict::Erase(const Value& valueKey)
 {
-	auto pPair = find(const_cast<Value*>(&valueKey));
-	if (pPair == end()) return;
+	auto pPair = _map.find(const_cast<Value*>(&valueKey));
+	if (pPair == _map.end()) return;
 	Value::Delete(pPair->first);
 	Value::Delete(pPair->second);
-	erase(pPair);
+	_map.erase(pPair);
 }
 
 String ValueDict::ToString(const StringStyle& ss) const

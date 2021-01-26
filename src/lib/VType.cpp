@@ -184,9 +184,9 @@ bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 //------------------------------------------------------------------------------
 void VTypeMap::Assign(const Symbol* pSymbol, VType* pVType)
 {
-	iterator pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pVType);
+	auto pPair = _map.find(pSymbol);
+	if (pPair == _map.end()) {
+		_map.emplace(pSymbol, pVType);
 	} else {
 		pPair->second = pVType;
 	}

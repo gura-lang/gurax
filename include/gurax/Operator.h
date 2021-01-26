@@ -161,10 +161,14 @@ public:
 //------------------------------------------------------------------------------
 // OpEntryMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE OpEntryMap : public std::unordered_map<UInt64, OpEntry*> {
+class GURAX_DLLDECLARE OpEntryMap {
+public:
+	using Map = std::unordered_map<UInt64, OpEntry*>;
+private:
+	Map _map;
 public:
 	~OpEntryMap() {
-		for (auto pair : *this) delete pair.second;
+		for (auto pair : _map) delete pair.second;
 	}
 public:
 	void Assign(UInt64 key, OpEntry *pOpEntry);
@@ -175,8 +179,8 @@ public:
 		Assign(GenKey(vtypeL, vtypeR), pOpEntry);
 	}
 	OpEntry* Lookup(UInt64 key) const {
-		auto pPair = find(key);
-		return (pPair == end())? nullptr : pPair->second;
+		auto pPair = _map.find(key);
+		return (pPair == _map.end())? nullptr : pPair->second;
 	}
 	OpEntry* Lookup(const VType& vtype) const {
 		return Lookup(GenKey(vtype));
@@ -194,9 +198,14 @@ public:
 //------------------------------------------------------------------------------
 // OperatorMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE OperatorMap :
-		public std::unordered_map<const Symbol*, Operator*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+class GURAX_DLLDECLARE OperatorMap {
 public:
+	using Map = std::unordered_map<const Symbol*, Operator*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+private:
+	Map _map;
+public:
+	Map& GetMap() { return _map; }
+	const Map& GetMap() const { return _map; }
 	Operator* Lookup(const Symbol* pSymbol) const;
 };
 

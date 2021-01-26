@@ -104,13 +104,13 @@ void Operator::Bootup()
 		Operator* pOp = _operatorTbl[i];
 		const Symbol* pSymbol = pOp->GetSymbol();
 		if (pOp->IsUnary()) {
-			_operatorMap_Unary[pSymbol] = pOp;
+			_operatorMap_Unary.GetMap()[pSymbol] = pOp;
 		} else if (pOp->IsUnaryPost()) {
-			_operatorMap_UnaryPost[pSymbol] = pOp;
+			_operatorMap_UnaryPost.GetMap()[pSymbol] = pOp;
 		} else if (pOp->IsBinary()) {
-			_operatorMap_Binary[pSymbol] = pOp;
+			_operatorMap_Binary.GetMap()[pSymbol] = pOp;
 		} else if (pOp->IsMathUnary() || pOp->IsMathBinary()) {
-			_operatorMap_Math[pSymbol] = pOp;
+			_operatorMap_Math.GetMap()[pSymbol] = pOp;
 		}
 	}
 }
@@ -283,8 +283,8 @@ String Operator::ToString(const StringStyle& ss, const VType& vtypeL, const VTyp
 //------------------------------------------------------------------------------
 Operator* OperatorMap::Lookup(const Symbol* pSymbol) const
 {
-	auto iter = find(pSymbol);
-	return (iter == end())? nullptr : iter->second;
+	auto iter = _map.find(pSymbol);
+	return (iter == _map.end())? nullptr : iter->second;
 }
 
 //------------------------------------------------------------------------------
@@ -347,9 +347,9 @@ Value* OpEntry::EvalBinary(Processor& processor, Value& valueL, Value& valueR) c
 //------------------------------------------------------------------------------
 void OpEntryMap::Assign(UInt64 key, OpEntry* pOpEntry)
 {
-	auto pPair = find(key);
-	if (pPair == end()) {
-		(*this)[key] = pOpEntry;
+	auto pPair = _map.find(key);
+	if (pPair == _map.end()) {
+		_map[key] = pOpEntry;
 	} else {
 		delete pPair->second;
 		pPair->second = pOpEntry;

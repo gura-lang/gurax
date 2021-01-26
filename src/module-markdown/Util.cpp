@@ -61,7 +61,7 @@ void InitInlineTagNames()
 	};
 	// initialize constant table
 	for (int i = 0; i < Gurax_ArraySizeOf(inlineTagNames); i++) {
-		g_inlineTagNames.insert(inlineTagNames[i]);
+		g_inlineTagNames.GetSet().insert(inlineTagNames[i]);
 	}
 }
 
@@ -69,7 +69,7 @@ bool IsInlineTagName(const char* tagName)
 {
 	if (tagName == nullptr) return false;
 	String tagNameLower = String::Lower(tagName);
-	return g_inlineTagNames.find(tagNameLower) != g_inlineTagNames.end();
+	return g_inlineTagNames.GetSet().find(tagNameLower) != g_inlineTagNames.GetSet().end();
 }
 
 Gurax_EndModuleScope(markdown)

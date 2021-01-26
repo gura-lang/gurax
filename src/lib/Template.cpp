@@ -143,8 +143,8 @@ const Value* Template::LookupValue(const Symbol* pSymbol) const
 {
 	for (const Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
 		const ValueMap& valueMap = pTmpl->GetValueMap();
-		auto iter = valueMap.find(pSymbol);
-		if (iter != valueMap.end()) return iter->second;
+		auto iter = valueMap.GetMap().find(pSymbol);
+		if (iter != valueMap.GetMap().end()) return iter->second;
 	}
 	return nullptr;
 }

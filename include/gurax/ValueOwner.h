@@ -96,8 +96,8 @@ template<typename T_Map>
 ValueOwner* ValueOwner::CollectKeys(const T_Map& map)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(map.size());
-	for (auto& pair : map) pValueOwner->push_back(pair.first->Reference());
+	pValueOwner->reserve(map.GetMap().size());
+	for (auto& pair : map.GetMap()) pValueOwner->push_back(pair.first->Reference());
 	return pValueOwner.release();
 }
 

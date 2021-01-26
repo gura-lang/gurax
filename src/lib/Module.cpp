@@ -249,16 +249,16 @@ String Module::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void ModuleMap::Clear()
 {
-	for (auto& pair : *this) Module::Delete(pair.second);
-	clear();
+	for (auto& pair : _map) Module::Delete(pair.second);
+	_map.clear();
 }
 
 void ModuleMap::Assign(Module* pModule)
 {
 	const char* pathName = pModule->GetPathName();
-	iterator pPair = find(pathName);
-	if (pPair == end()) {
-		emplace(pathName, pModule);
+	auto pPair = _map.find(pathName);
+	if (pPair == _map.end()) {
+		_map.emplace(pathName, pModule);
 	} else {
 		Module::Delete(pPair->second);
 		pPair->second = pModule;

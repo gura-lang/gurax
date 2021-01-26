@@ -48,7 +48,7 @@ public:
 		}
 	};
 	struct GURAX_DLLDECLARE Hash {
-		bool operator()(const String& str) const {
+		size_t operator()(const String& str) const {
 			return str.CalcHash();
 		}
 	};
@@ -361,10 +361,14 @@ public:
 //------------------------------------------------------------------------------
 // StringSet
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StringSet :
-		public std::unordered_set<String, String::Hash, String::EqualTo> {
+class GURAX_DLLDECLARE StringSet {
+public:
+	using SetType = std::unordered_set<String, String::Hash, String::EqualTo>;
+private:
+	SetType _set;
 public:
 	static const StringSet Empty;
+	SetType& GetSet() { return _set; }
 };
 
 //------------------------------------------------------------------------------

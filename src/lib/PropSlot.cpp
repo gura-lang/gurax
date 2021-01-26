@@ -18,7 +18,7 @@ void PropSlot::DeclareAttrOpt(const Symbol* pSymbol)
 {
 	if (!_pAttributeOpt) _pAttributeOpt.reset(new AttributeOpt());
 	_pAttributeOpt->symbolList.push_back(pSymbol);
-	_pAttributeOpt->symbolSet.insert(pSymbol);
+	_pAttributeOpt->symbolSet.GetSet().insert(pSymbol);
 }
 
 bool PropSlot::CheckValidAttribute(const Attribute& attr) const
@@ -114,16 +114,16 @@ void PropSlotOwner::Clear()
 //------------------------------------------------------------------------------
 void PropSlotMap::Clear()
 {
-	for (auto& pair : *this) PropSlot::Delete(pair.second);
-	clear();
+	for (auto& pair : _map) PropSlot::Delete(pair.second);
+	_map.clear();
 }
 
 void PropSlotMap::Assign(PropSlot* pPropSlot)
 {
-	iterator pPair = find(pPropSlot->GetSymbol());
-	if (pPair == end()) {
-		pPropSlot->SetSeqId(size());
-		emplace(pPropSlot->GetSymbol(), pPropSlot);
+	auto pPair = _map.find(pPropSlot->GetSymbol());
+	if (pPair == _map.end()) {
+		pPropSlot->SetSeqId(_map.size());
+		_map.emplace(pPropSlot->GetSymbol(), pPropSlot);
 	} else {
 		pPropSlot->SetSeqId(pPair->second->GetSeqId());
 		PropSlot::Delete(pPair->second);
@@ -133,7 +133,7 @@ void PropSlotMap::Assign(PropSlot* pPropSlot)
 
 void PropSlotMap::GatherPropSlot(PropSlotOwner& propSlotOwner) const
 {
-	for (auto iter : *this) {
+	for (auto iter : _map) {
 		const PropSlot* pPropSlot = iter.second;
 		propSlotOwner.push_back(pPropSlot->Reference());
 	}
@@ -141,7 +141,7 @@ void PropSlotMap::GatherPropSlot(PropSlotOwner& propSlotOwner) const
 
 void PropSlotMap::GatherPropSlotOfInstance(PropSlotOwner& propSlotOwner) const
 {
-	for (auto iter : *this) {
+	for (auto iter : _map) {
 		const PropSlot* pPropSlot = iter.second;
 		if (!pPropSlot->IsOfClass()) propSlotOwner.push_back(pPropSlot->Reference());
 	}
@@ -149,7 +149,7 @@ void PropSlotMap::GatherPropSlotOfInstance(PropSlotOwner& propSlotOwner) const
 
 void PropSlotMap::GatherSymbol(SymbolList& symbolList) const
 {
-	for (auto iter : *this) symbolList.push_back(iter.first);
+	for (auto iter : _map) symbolList.push_back(iter.first);
 }
 
 String PropSlotMap::ToString(const StringStyle& ss) const

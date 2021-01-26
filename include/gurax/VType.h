@@ -118,21 +118,26 @@ public:
 //------------------------------------------------------------------------------
 // VTypeMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VTypeMap :
-	public std::unordered_map<const Symbol*, VType*,
-			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+class GURAX_DLLDECLARE VTypeMap : public Referable {
+public:
+	using Map = std::unordered_map<const Symbol*, VType*,
+						Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+private:
+	Map _map;
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(VTypeMap);
 protected:
 	~VTypeMap() = default;
 public:
+	Map& GetMap() { return _map; }
+	const Map& GetMap() const { return _map; }
 	void Assign(const Symbol* pSymbol, VType* pVType);
 	VType* Lookup(const Symbol* pSymbol) const {
-		auto pPair = find(pSymbol);
-		return (pPair == end())? nullptr : pPair->second;
+		auto pPair = _map.find(pSymbol);
+		return (pPair == _map.end())? nullptr : pPair->second;
 	}
-	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	bool DoesExist(const Symbol* pSymbol) const { return _map.find(pSymbol) != _map.end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };

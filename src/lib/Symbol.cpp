@@ -45,14 +45,14 @@ const Symbol* Symbol::Add(const char* name)
 	SymbolPool& symbolPool = SymbolPool::GetInstance();
 	do {
 		Symbol symbol(0, const_cast<char *>(name));
-		auto ppSymbol = symbolPool.find(&symbol);
-		if (ppSymbol != symbolPool.end()) return *ppSymbol;
+		auto ppSymbol = symbolPool.GetSet().find(&symbol);
+		if (ppSymbol != symbolPool.GetSet().end()) return *ppSymbol;
 	} while (0);
 	size_t bytes = sizeof(Symbol) + ::strlen(name) + 1;
 	//Symbol* pSymbol = reinterpret_cast<Symbol*>(MemoryPool::Global().Allocate(bytes, "Symbol"));
 	Symbol* pSymbol = reinterpret_cast<Symbol*>(::malloc(bytes));
-	pSymbol->Initialize(symbolPool.size(), name);
-	symbolPool.insert(pSymbol);
+	pSymbol->Initialize(symbolPool.GetSet().size(), name);
+	symbolPool.GetSet().insert(pSymbol);
 	return pSymbol;
 }
 
@@ -60,7 +60,7 @@ SymbolList Symbol::GetAllSymbols()
 {
 	const SymbolPool& symbolPool = SymbolPool::GetInstance();
 	SymbolList symbolList;
-	std::copy(symbolPool.begin(), symbolPool.end(), std::back_inserter(symbolList));
+	std::copy(symbolPool.GetSet().begin(), symbolPool.GetSet().end(), std::back_inserter(symbolList));
 	symbolList.Sort();
 	return symbolList;
 }

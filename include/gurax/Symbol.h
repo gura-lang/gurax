@@ -79,8 +79,8 @@ template<typename T_Map>
 SymbolList SymbolList::CollectKeys(const T_Map& map)
 {
 	SymbolList keys;
-	keys.reserve(map.size());
-	for (auto& pair : map) keys.push_back(pair.first);
+	keys.reserve(map.GetMap().size());
+	for (auto& pair : map.GetMap()) keys.push_back(pair.first);
 	return keys;
 }
 
@@ -182,21 +182,31 @@ public:
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SymbolSet :
-		public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+class GURAX_DLLDECLARE SymbolSet {
 public:
-	void Set(const Symbol* pSymbol) { insert(pSymbol); }
-	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	using SetType = std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+private:
+	SetType _set;
+public:
+	SetType& GetSet() { return _set; }
+	const SetType& GetSet() const { return _set; }
+	void Set(const Symbol* pSymbol) { _set.insert(pSymbol); }
+	bool IsSet(const Symbol* pSymbol) const { return _set.find(pSymbol) != _set.end(); }
 };
 
 //------------------------------------------------------------------------------
 // SymbolPool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SymbolPool :
-		public std::unordered_set<const Symbol*, Symbol::Hash_Name, Symbol::EqualTo_Name> {
+class GURAX_DLLDECLARE SymbolPool {
+public:
+	using SetType = std::unordered_set<const Symbol*, Symbol::Hash_Name, Symbol::EqualTo_Name>;
+private:
+	SetType _set;
 private:
 	static SymbolPool* _pSymbolPool;
 public:
+	SetType& GetSet() { return _set; }
+	const SetType& GetSet() const { return _set; }
 	static SymbolPool& GetInstance() {
 		if (!_pSymbolPool) _pSymbolPool = new SymbolPool();
 		return *_pSymbolPool;

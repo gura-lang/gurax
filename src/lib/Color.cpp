@@ -182,8 +182,8 @@ void Color::Bootup()
 	for (size_t i = 0; i < Gurax_ArraySizeOf(_namedEntries); i++) {
 		const NamedEntry& namedEntry = _namedEntries[i];
 		Color color(namedEntry.packed);
-		ColorStringMap::Instance[namedEntry.name] = color;
-		ColorSymbolMap::Instance[Symbol::Add(namedEntry.name)] = color;
+		ColorStringMap::Instance.GetMap()[namedEntry.name] = color;
+		ColorSymbolMap::Instance.GetMap()[Symbol::Add(namedEntry.name)] = color;
 	}
 }
 
@@ -244,8 +244,8 @@ ColorStringMap ColorStringMap::Instance;
 
 const Color* ColorStringMap::Lookup(const char* str) const
 {
-	auto iter = find(str);
-	return (iter == end())? nullptr : &iter->second;
+	auto iter = _map.find(str);
+	return (iter == _map.end())? nullptr : &iter->second;
 }
 
 //------------------------------------------------------------------------------
@@ -255,8 +255,8 @@ ColorSymbolMap ColorSymbolMap::Instance;
 
 const Color* ColorSymbolMap::Lookup(const Symbol* pSymbol) const
 {
-	auto iter = find(pSymbol);
-	return (iter == end())? nullptr : &iter->second;
+	auto iter = _map.find(pSymbol);
+	return (iter == _map.end())? nullptr : &iter->second;
 }
 
 }

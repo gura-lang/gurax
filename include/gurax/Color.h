@@ -156,21 +156,32 @@ public:
 //------------------------------------------------------------------------------
 // ColorStringMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ColorStringMap : public std::unordered_map<String, Color, String::Hash, String::EqualTo> {
+class GURAX_DLLDECLARE ColorStringMap {
+public:
+	using Map = std::unordered_map<String, Color, String::Hash, String::EqualTo>;
+private:
+	Map _map;
 public:
 	static ColorStringMap Instance;
 public:
+	Map& GetMap() { return _map; }
+	const Map& GetMap() const { return _map; }
 	const Color* Lookup(const char* str) const;
 };
 
 //------------------------------------------------------------------------------
 // ColorSymbolMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ColorSymbolMap :
-		public std::unordered_map<const Symbol*, Color, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+class GURAX_DLLDECLARE ColorSymbolMap {
+public:
+	using Map = std::unordered_map<const Symbol*, Color, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+private:
+	Map _map;
 public:
 	static ColorSymbolMap Instance;
 public:
+	Map& GetMap() { return _map; }
+	const Map& GetMap() const { return _map; }
 	const Color* Lookup(const Symbol* pSymbol) const;
 };
 

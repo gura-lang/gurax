@@ -10,15 +10,15 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void ValueMap::Clear()
 {
-	for (auto& pair : *this) Value::Delete(pair.second);
-	clear();
+	for (auto& pair : _map) Value::Delete(pair.second);
+	_map.clear();
 }
 
 void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 {
-	auto pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pValue);
+	auto pPair = _map.find(pSymbol);
+	if (pPair == _map.end()) {
+		_map.emplace(pSymbol, pValue);
 	} else {
 		Value::Delete(pPair->second);
 		pPair->second = pValue;
@@ -27,7 +27,7 @@ void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 
 bool ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 {
-	for (auto pair : *this) {
+	for (auto pair : _map) {
 		const Symbol* pSymbol = pair.first;
 		const Value* pValue = pair.second;
 		if (pSymbol->StartsWith('_')) {
@@ -45,7 +45,7 @@ bool ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 
 void ValueMap::GatherSymbol(SymbolList& symbolList) const
 {
-	for (auto pair : *this) {
+	for (auto pair : _map) {
 		const Symbol* pSymbol = pair.first;
 		symbolList.push_back(pSymbol);
 	}

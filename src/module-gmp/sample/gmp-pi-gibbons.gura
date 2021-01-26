@@ -1,0 +1,25 @@
+#!/usr/bin/env gurax
+// pi calculation by Gibbons algorithm
+import(gmp)
+
+[q, r, t, i] = [1L, 180L, 60L, 2L]
+
+GeneratePI() = {
+	repeat():iter {
+		u = 3 * (3 * i + 1) * (3 * i + 2)
+		y = gmp.mpz((q * (27 * i - 12) + 5 * r) / (5 * t))
+		[q, r] = [
+			10 * q * i * (2 * i - 1)
+			10 * u * (q * (5 * i - 2) + r - y * t)
+		]
+		t *= u
+		i += 1
+		y
+	}
+}
+blockCols = 5
+blockRows = 20
+digits = 1000000
+Println('3')
+Print(Format('%d', GeneratePI().Offset(1).Head(digits)).\
+	  Fold(10):*Join().Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')

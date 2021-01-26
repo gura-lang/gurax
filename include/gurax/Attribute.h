@@ -51,7 +51,7 @@ public:
 	void AddSymbol(const Symbol* pSymbol);
 	void AddSymbolOpt(const Symbol* pSymbol) {
 		_symbolListOpt.push_back(pSymbol);
-		_symbolSetOpt.insert(pSymbol);
+		_symbolSetOpt.GetSet().insert(pSymbol);
 	}
 	void AddSymbols(const SymbolList& symbolList) {
 		for (const Symbol* pSymbol : symbolList) AddSymbol(pSymbol);

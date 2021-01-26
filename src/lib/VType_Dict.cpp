@@ -309,7 +309,7 @@ Gurax_ImplementMethod(Dict, IsEmpty)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Bool(valueThis.GetValueDict().empty());
+	return new Value_Bool(valueThis.GetValueDict().GetMap().empty());
 }
 
 // Dict#Put(key, value):map:reduce:[overwrite,strict,timid]
@@ -365,7 +365,7 @@ Gurax_DeclareProperty_R(Dict, len)
 Gurax_ImplementPropertyGetter(Dict, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetValueDict().size());
+	return new Value_Number(valueThis.GetValueDict().GetMap().size());
 }
 
 //------------------------------------------------------------------------------
@@ -404,7 +404,7 @@ VType& Value_Dict::vtype = VTYPE_Dict;
 String Value_Dict::ToString(const StringStyle& ss) const
 {
 	if (ss.IsBracket()) {
-		return ToStringGeneric(ss, String().Format("%zuitems", GetValueDict().size()));
+		return ToStringGeneric(ss, String().Format("%zuitems", GetValueDict().GetMap().size()));
 	}
 	return GetValueDict().ToString(ss);
 }
