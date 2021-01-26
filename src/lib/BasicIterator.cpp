@@ -281,8 +281,11 @@ Value* Iterator_for::DoNextValue()
 				pValueResult.reset(pValueRtn.release());
 				break;
 			}
+		} else if (pValueRtn->IsValid()) {
+			pValueResult.reset(pValueRtn.release());
+			break;
 		} else {
-			pValueResult.reset(pValueRtn->IsValid()? pValueRtn.release() : Value::nil());
+			pValueResult.reset(Value::nil());
 			break;
 		}
 	}
@@ -329,8 +332,11 @@ Value* Iterator_while::DoNextValue()
 				pValueResult.reset(pValueRtn.release());
 				break;
 			}
+		} else if (pValueRtn->IsValid()) {
+			pValueResult.reset(pValueRtn.release());
+			break;
 		} else {
-			pValueResult.reset(pValueRtn->IsValid()? pValueRtn.release() : Value::nil());
+			pValueResult.reset(Value::nil());
 			break;
 		}
 	}
@@ -348,6 +354,8 @@ String Iterator_while::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_repeat::DoNextValue()
 {
+	RefPtr<Value> pValueResult;
+	GetProcessor().PushFrame(GetFrame().Reference());
 	while (_contFlag) {
 		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
@@ -366,12 +374,20 @@ Value* Iterator_repeat::DoNextValue()
 			if (pValueRtn->IsUndefined()) break;
 		}
 		if (GetSkipNilFlag()) {
-			if (pValueRtn->IsValid()) return pValueRtn.release();
+			if (pValueRtn->IsValid()) {
+				pValueResult.reset(pValueRtn.release());
+				break;
+			}
+		} else if (pValueRtn->IsValid()) {
+			pValueResult.reset(pValueRtn.release());
+			break;
 		} else {
-			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
+			pValueResult.reset(Value::nil());
+			break;
 		}
 	}
-	return nullptr;
+	GetProcessor().PopFrame();
+	return pValueResult.release();
 }
 
 String Iterator_repeat::ToString(const StringStyle& ss) const
