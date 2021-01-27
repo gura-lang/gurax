@@ -20,6 +20,7 @@ add_subdirectory(module-curl)
 add_subdirectory(module-diff)
 #add_subdirectory(module-fs)				# built-in module
 add_subdirectory(module-glfw)
+add_subdirectory(module-gmp)
 add_subdirectory(module-gzip)
 add_subdirectory(module-hash)
 add_subdirectory(module-jpeg)

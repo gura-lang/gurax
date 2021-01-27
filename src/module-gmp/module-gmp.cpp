@@ -66,6 +66,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_mpf);
 	Assign(VTYPE_mpq);
 	Assign(VTYPE_mpz);
+	Assign(VTYPE_rand);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	// Assignment of operator

@@ -139,6 +139,7 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags formatterFlags) const
 {
 	mpz_t num;
+	mpz_init(num);
 	if (value.IsInstanceOf(VTYPE_Number)) {
 		::mpz_set_d(num, Value_Number::GetNumber<Double>(value));
 		return new Value_mpz(mpz_class(num));

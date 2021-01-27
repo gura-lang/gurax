@@ -179,6 +179,48 @@ public:
 };
 
 template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
+class OpEntry_Mod_T : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		if (IsZero(numR)) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return Value::nil();
+		}
+		return new T_ValueRtn(numL % numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL>
+class OpEntry_Mod_T<T_ValueRtn, T_ValueL, Value_Number> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		auto& numL = T_ValueL::GetEntity(valueL);
+		Int64 numR = Value_Number::GetNumber<Int64>(valueR);
+		if (IsZero(numR)) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return Value::nil();
+		}
+		return new T_ValueRtn(numL % numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueR>
+class OpEntry_Mod_T<T_ValueRtn, Value_Number, T_ValueR> : public OpEntry {
+public:
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
+		Int64 numL = Value_Number::GetNumber<Int64>(valueL);
+		auto& numR = T_ValueR::GetEntity(valueR);
+		if (IsZero(numR)) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return Value::nil();
+		}
+		return new T_ValueRtn(numL % numR);
+	}
+};
+
+template<typename T_ValueRtn, typename T_ValueL, typename T_ValueR>
 class OpEntry_Eq_T : public OpEntry {
 public:
 	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const {
@@ -594,6 +636,10 @@ void AssignOperators()
 	AssignOpBinary_T(Div, mpz, Number, mpz);
 	AssignOpBinary_T(Div, mpq, Number, mpq);
 	AssignOpBinary_T(Div, mpf, Number, mpf);
+	// Mod: num % num
+	AssignOpBinary_T(Mod, mpz, mpz, mpz);
+	AssignOpBinary_T(Mod, mpz, mpz, Number);
+	AssignOpBinary_T(Mod, mpz, Number, mpz);
 	// And: num & num
 	AssignOpBinary_T(And, mpz, mpz, mpz);
 	AssignOpBinary_T(And, mpz, mpz, Number);

@@ -40,7 +40,8 @@ target_sources(gmp.gurd PRIVATE
 	Operators.cpp
 	VType_mpf.cpp
 	VType_mpq.cpp
-	VType_mpz.cpp)
+	VType_mpz.cpp
+	VType_rand.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
