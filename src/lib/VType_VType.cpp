@@ -218,6 +218,11 @@ bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, con
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;
 	}
+	if (!pPropSlot->IsSet(PropSlot::Flag::OfClass)) {
+		Error::Issue(ErrorType::PropertyError,
+			"property '%s' belongs to an instance", pSymbol->GetName());
+		return nullptr;
+	}
 	return pPropSlot->SetValue(*this, *pValue, attr);
 }
 

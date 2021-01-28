@@ -82,7 +82,7 @@ Gurax_ImplementMethod(mpf, set_str)
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
-// gmp.mpf#default_prec
+// gmp.mpf.default_prec
 Gurax_DeclareClassProperty_RW(mpf, default_prec)
 {
 	Declare(VTYPE_Number, Flag::None);
