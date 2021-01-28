@@ -41,7 +41,7 @@ target_sources(gmp.gurd PRIVATE
 	VType_mpf.cpp
 	VType_mpq.cpp
 	VType_mpz.cpp
-	VType_rand.cpp)
+	VType_Random.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
