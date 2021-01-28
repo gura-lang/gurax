@@ -11,6 +11,7 @@
 //------------------------------------------------------------------------------
 // Macros to declare PropSlot for instance
 //------------------------------------------------------------------------------
+// Declaration of readable instance property
 #define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -27,6 +28,24 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 
 #define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
 
+// Declaration of writable instance property
+#define Gurax_DeclarePropertyAlias_W(nameVType, name, strName)	\
+class PropSlot_##nameVType##_##name : public PropSlot { \
+public: \
+	PropSlot_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
+	PropSlot(name_, Flag::OfInstance | Flag::Writable)
+
+#define Gurax_DeclareProperty_W(nameVType, name) Gurax_DeclarePropertyAlias_W(nameVType, name, #name)
+
+// Declaratoin of readable/writable instance property
 #define Gurax_DeclarePropertyAlias_RW(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -43,17 +62,20 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 
 #define Gurax_DeclareProperty_RW(nameVType, name) Gurax_DeclarePropertyAlias_RW(nameVType, name, #name)
 
+// Getter/Setter
 #define Gurax_ImplementPropertyGetter(nameVType, name) \
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementPropertySetter(nameVType, name) \
 void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
+// Creation
 #define Gurax_CreateProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
 
 //------------------------------------------------------------------------------
 // Macros to declare PropSlot for class
 //------------------------------------------------------------------------------
+// Declaration of readable class property
 #define Gurax_DeclareClassPropertyAlias_R(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -66,10 +88,28 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
-PropSlot(name_, Flag::OfClass | Flag::Readable)
+	PropSlot(name_, Flag::OfClass | Flag::Readable)
 
 #define Gurax_DeclareClassProperty_R(nameVType, name) Gurax_DeclareClassPropertyAlias_R(nameVType, name, #name)
 
+// Declaration of writable class property
+#define Gurax_DeclareClassPropertyAlias_W(nameVType, name, strName)	\
+class PropSlot_##nameVType##_##name : public PropSlot { \
+public: \
+	PropSlot_##nameVType##_##name(const char* name_ = strName); \
+	static VType_##nameVType& GetVTypeThis(Value& valueTarget) { \
+		return dynamic_cast<VType_##nameVType&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
+	PropSlot(name_, Flag::OfClass | Flag::Writable)
+
+#define Gurax_DeclareClassProperty_W(nameVType, name) Gurax_DeclareClassPropertyAlias_W(nameVType, name, #name)
+
+// Declaration of readable/writable class property
 #define Gurax_DeclareClassPropertyAlias_RW(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -86,17 +126,20 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 
 #define Gurax_DeclareClassProperty_RW(nameVType, name) Gurax_DeclareClassPropertyAlias_RW(nameVType, name, #name)
 
+// Setter/Getter
 #define Gurax_ImplementClassPropertyGetter(nameVType, name) \
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementClassPropertySetter(nameVType, name) \
 void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
+// Creation
 #define Gurax_CreateClassProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
 
 //------------------------------------------------------------------------------
 // Macros to declare PropSlot for hybrid
 //------------------------------------------------------------------------------
+// Declaration of readable hybrid property
 #define Gurax_DeclareHybridPropertyAlias_R(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -109,10 +152,28 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
-PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable)
+	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable)
 
 #define Gurax_DeclareHybridProperty_R(nameVType, name) Gurax_DeclareHybridPropertyAlias_R(nameVType, name, #name)
 
+// Declaration of writable hybrid property
+#define Gurax_DeclareHybridPropertyAlias_W(nameVType, name, strName)	\
+class PropSlot_##nameVType##_##name : public PropSlot { \
+public: \
+	PropSlot_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
+	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Writable)
+
+#define Gurax_DeclareHybridProperty_W(nameVType, name) Gurax_DeclareHybridPropertyAlias_W(nameVType, name, #name)
+
+// Declaration of readable/writable hybrid property
 #define Gurax_DeclareHybridPropertyAlias_RW(nameVType, name, strName)	\
 class PropSlot_##nameVType##_##name : public PropSlot { \
 public: \
@@ -125,21 +186,24 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
-PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable | Flag::Writable)
+	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable | Flag::Writable)
 
 #define Gurax_DeclareHybridProperty_RW(nameVType, name) Gurax_DeclareHybridPropertyAlias_RW(nameVType, name, #name)
 
+// Getter/Setter
 #define Gurax_ImplementHybridPropertyGetter(nameVType, name) \
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementHybridPropertySetter(nameVType, name) \
 void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
+// Creation
 #define Gurax_CreateHybridProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
 
 //------------------------------------------------------------------------------
 // Macros to declare PropSlot for module
 //------------------------------------------------------------------------------
+// Declaration of readable module property
 #define Gurax_DeclareModulePropertyAlias_R(name, strName)	\
 class PropSlot_##name : public PropSlot { \
 public: \
@@ -153,6 +217,21 @@ PropSlot_##name::PropSlot_##name(const char* name_) : \
 
 #define Gurax_DeclareModuleProperty_R(name) Gurax_DeclareModulePropertyAlias_R(name, #name)
 
+// Declaration of writable module property
+#define Gurax_DeclareModulePropertyAlias_W(name, strName)	\
+class PropSlot_##name : public PropSlot { \
+public: \
+	PropSlot_##name(const char* name_ = strName); \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropSlot_##name::PropSlot_##name(const char* name_) : \
+	PropSlot(name_, Flag::OfInstance | Flag::Writable)
+
+#define Gurax_DeclareModuleProperty_W(name) Gurax_DeclareModulePropertyAlias_W(name, #name)
+
+// Declaration of readable/writable module property
 #define Gurax_DeclareModulePropertyAlias_RW(name, strName)	\
 class PropSlot_##name : public PropSlot { \
 public: \
@@ -166,12 +245,14 @@ PropSlot_##name::PropSlot_##name(const char* name_) : \
 
 #define Gurax_DeclareModuleProperty_RW(name) Gurax_DeclareModulePropertyAlias_RW(name, #name)
 
+// Getter/Setter
 #define Gurax_ImplementModulePropertyGetter(name) \
 Value* PropSlot_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementModulePropertySetter(name) \
 void PropSlot_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
+// Creation
 #define Gurax_CreateModuleProperty(name) (new PropSlot_##name())
 
 namespace Gurax {
