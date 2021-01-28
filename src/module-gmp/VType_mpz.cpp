@@ -136,7 +136,7 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(mpz, sign));
 }
 
-Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags formatterFlags) const
+Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	mpz_t num;
 	mpz_init(num);

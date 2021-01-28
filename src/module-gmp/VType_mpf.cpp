@@ -162,6 +162,23 @@ void VType_mpf::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(mpf, sign));
 }
 
+Value* VType_mpf::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	mpf_t num;
+	mpf_init(num);
+	if (value.IsInstanceOf(VTYPE_Number)) {
+		::mpf_set_d(num, Value_Number::GetNumber<Double>(value));
+		return new Value_mpf(mpf_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpz)) {
+		::mpf_set_z(num, Value_mpz::GetEntity(value).get_mpz_t());
+		return new Value_mpf(mpf_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpq)) {
+		::mpf_set_q(num, Value_mpq::GetEntity(value).get_mpq_t());
+		return new Value_mpf(mpf_class(num));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_mpf
 //------------------------------------------------------------------------------

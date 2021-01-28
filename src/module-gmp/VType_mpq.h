@@ -14,6 +14,7 @@ class GURAX_DLLDECLARE VType_mpq : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern GURAX_DLLDECLARE VType_mpq VTYPE_mpq;

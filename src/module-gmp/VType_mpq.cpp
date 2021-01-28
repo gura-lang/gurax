@@ -146,6 +146,23 @@ void VType_mpq::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(mpq, sign));
 }
 
+Value* VType_mpq::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	mpq_t num;
+	mpq_init(num);
+	if (value.IsInstanceOf(VTYPE_Number)) {
+		::mpq_set_d(num, Value_Number::GetNumber<Double>(value));
+		return new Value_mpq(mpq_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpz)) {
+		::mpq_set_z(num, Value_mpz::GetEntity(value).get_mpz_t());
+		return new Value_mpq(mpq_class(num));
+	} else if (value.IsInstanceOf(VTYPE_mpq)) {
+		::mpq_set_f(num, Value_mpf::GetEntity(value).get_mpf_t());
+		return new Value_mpq(mpq_class(num));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_mpq
 //------------------------------------------------------------------------------
