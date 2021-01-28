@@ -98,7 +98,7 @@ Gurax_ImplementClassPropertyGetter(mpf, default_prec)
 
 Gurax_ImplementClassPropertySetter(mpf, default_prec)
 {
-	int prec = Value_Number::GetNumber<int>(value);
+	mp_bitcnt_t prec = Value_Number::GetNumber<mp_bitcnt_t>(value);
 	::mpf_set_default_prec(prec);
 }
 
@@ -123,7 +123,7 @@ Gurax_ImplementPropertyGetter(mpf, prec)
 Gurax_ImplementPropertySetter(mpf, prec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	int prec = Value_Number::GetNumber<int>(value);
+	mp_bitcnt_t prec = Value_Number::GetNumber<mp_bitcnt_t>(value);
 	::mpf_set_prec(valueThis.GetEntity().get_mpf_t(), prec);
 }
 
