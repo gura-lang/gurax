@@ -522,7 +522,8 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 						 "operator can not be applied in lister assigment");
 		return;
 	}
-	bool externFlag = GetAttr().IsSet(Gurax_Symbol(extern_));
+	bool externFlag = false, castFlag = false;
+	if (!ParseAttr(&externFlag, &castFlag)) return;
 	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 	composer.FlushDiscard();
 }
@@ -530,6 +531,8 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 void Expr_Identifier::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
+	bool externFlag = false, castFlag = false;
+	if (!ParseAttr(&externFlag, &castFlag)) return;
 	if (pOp) {
 		composer.Add_Lookup(GetSymbol(), *this);								// [Any]
 		exprAssigned.ComposeOrNil(composer);									// [Any Right]
@@ -537,7 +540,6 @@ void Expr_Identifier::ComposeWithinAssignment(
 	} else {
 		exprAssigned.ComposeOrNil(composer);									// [Assigned]
 	}
-	bool externFlag = GetAttr().IsSet(Gurax_Symbol(extern_));
 	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 }
 
@@ -593,6 +595,24 @@ bool Expr_Identifier::IsEqualTo(const Expr& expr) const
 	if (!expr.IsType<Expr_Identifier>()) return false;
 	const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
 	return GetSymbol()->IsIdentical(exprEx.GetSymbol());
+}
+
+bool Expr_Identifier::ParseAttr(bool* pExternFlag, bool* pCastFlag) const
+{
+	*pExternFlag = false;
+	*pCastFlag = false;
+	//bool castFlag = GetAttr().HasDottedSymbol() &&
+	//			!GetAttr().GetDottedSymbol().IsEqualTo(Gurax_Symbol(extern_));
+	for (const Symbol* pSymbol : GetAttr().GetSymbols()) {
+		if (pSymbol->IsIdentical(Gurax_Symbol(extern_))) {
+			*pExternFlag = true;
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "invalid attribute for assignment");
+			return false;
+		}
+	}
+	return true;
 }
 
 //------------------------------------------------------------------------------
