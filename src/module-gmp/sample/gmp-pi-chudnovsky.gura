@@ -1,0 +1,42 @@
+#!/usr/bin/env gurax
+// http://d.hatena.ne.jp/itchyny/20120304/1330870932
+import(gmp)
+
+[A, B, C, C3over24] = 0
+
+PQT = struct { P:gmp.mpz, Q:gmp.mpz, T:gmp.mpz }
+
+computePQT(n1:Number, n2:Number) = {
+	if (n1 + 1 == n2) {
+		P = -(2 * n2 - 1)
+		P *= (6 * n2 - 5)
+		P *= (6 * n2 - 1)
+		Q = C3over24 * n2 * n2 * n2
+		T = (A + B * n2) * P
+	} else {
+		m = Int((n1 + n2) / 2);
+		PQT1 = computePQT(n1, m);
+		PQT2 = computePQT(m, n2);
+		P = PQT1.P * PQT2.P;
+		Q = PQT1.Q * PQT2.Q;
+		T = PQT1.T * PQT2.Q + PQT1.P * PQT2.T;
+	}
+	PQT(P, Q, T)
+}
+
+main() = {
+	digits = 1000;
+	gmp.mpq.default_prec = Int(digits * math.Log(10) / math.Log(2))
+	n = Int(digits / 14)
+	A:extern = 13591409L
+	B:extern = 545140134L
+	C:extern = 640320L
+	C3over24:extern = C * C * C / 24;
+	PQT = computePQT(0, n);
+	pi = math.Sqrt(gmp.mpf(C));
+	pi *= C * PQT.Q;
+	pi /= (PQT.T + A * PQT.Q) * 12;
+	Println(Format('%.100f', pi).Mid(2).Fold(10).Fold(5):*Join(' '))
+}
+
+main()
