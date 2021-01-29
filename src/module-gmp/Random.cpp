@@ -23,7 +23,7 @@ void Random::SetSeed(const mpz_class& seed)
 	::gmp_randseed(_state, seed.get_mpz_t());
 }
 
-mpf_class Random::GenerateFloat(mp_bitcnt_t prec)
+mpf_class Random::GenFloat(mp_bitcnt_t prec)
 {
 	mpf_t num;
 	mpf_init(num);
@@ -31,7 +31,7 @@ mpf_class Random::GenerateFloat(mp_bitcnt_t prec)
 	return mpf_class(num);
 }
 
-mpz_class Random::GenerateInt(const mpz_class& range)
+mpz_class Random::GenInt(const mpz_class& range)
 {
 	mpz_t num;
 	mpz_init(num);
@@ -39,7 +39,7 @@ mpz_class Random::GenerateInt(const mpz_class& range)
 	return mpz_class(num);
 }
 
-mpz_class Random::GenerateIntBits(mp_bitcnt_t bits)
+mpz_class Random::GenIntBits(mp_bitcnt_t bits)
 {
 	mpz_t num;
 	mpz_init(num);

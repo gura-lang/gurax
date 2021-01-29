@@ -74,7 +74,7 @@ Gurax_ImplementHybridMethod(Random, Float)
 	ArgPicker args(argument);
 	mp_bitcnt_t prec = args.IsValid()? args.PickNumber<mp_bitcnt_t>() : ::mpf_get_default_prec();
 	// Function body
-	return new Value_mpf(random.GenerateFloat(prec));
+	return new Value_mpf(random.GenFloat(prec));
 }
 
 // gmp.Random##Int(range:gmp.mpz)
@@ -97,7 +97,7 @@ Gurax_ImplementHybridMethod(Random, Int)
 	ArgPicker args(argument);
 	mpz_class& range = args.Pick<Value_mpz>().GetEntity();
 	// Function body
-	return new Value_mpz(random.GenerateInt(range));
+	return new Value_mpz(random.GenInt(range));
 }
 
 // gmp.Random##IntBits(bits:Number)
@@ -120,7 +120,7 @@ Gurax_ImplementHybridMethod(Random, IntBits)
 	ArgPicker args(argument);
 	mp_bitcnt_t bits = args.PickNumber<mp_bitcnt_t>();
 	// Function body
-	return new Value_mpz(random.GenerateIntBits(bits));
+	return new Value_mpz(random.GenIntBits(bits));
 }
 
 //-----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ Value* VType_Random::Iterator_FloatSeq::DoNextValue()
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
-	return new Value_mpf(_pRandom->GenerateFloat(_prec));
+	return new Value_mpf(_pRandom->GenFloat(_prec));
 }
 
 String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
@@ -193,7 +193,7 @@ Value* VType_Random::Iterator_IntSeq::DoNextValue()
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
-	return new Value_mpz(_pRandom->GenerateInt(_range));
+	return new Value_mpz(_pRandom->GenInt(_range));
 }
 
 String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const

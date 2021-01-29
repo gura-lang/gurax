@@ -32,9 +32,9 @@ protected:
 	~Random();
 public:
 	void SetSeed(const mpz_class& seed);
-	mpf_class GenerateFloat(mp_bitcnt_t prec);
-	mpz_class GenerateInt(const mpz_class& range);
-	mpz_class GenerateIntBits(mp_bitcnt_t bits);
+	mpf_class GenFloat(mp_bitcnt_t prec);
+	mpz_class GenInt(const mpz_class& range);
+	mpz_class GenIntBits(mp_bitcnt_t bits);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Random& other) const { return this == &other; }
