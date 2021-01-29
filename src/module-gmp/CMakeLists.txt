@@ -38,6 +38,7 @@ target_sources(gmp.gurd PRIVATE
 	module-gmp.cpp
 	Util.cpp
 	Operators.cpp
+	Random.cpp
 	VType_mpf.cpp
 	VType_mpq.cpp
 	VType_mpz.cpp

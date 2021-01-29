@@ -82,32 +82,6 @@ Gurax_ImplementHybridMethod(Random, Float)
 	return new Value_mpf(mpf_class(num));
 }
 
-// gmp.Random##IntBits(bits:Number)
-Gurax_DeclareHybridMethod(Random, IntBits)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("bits", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Generates a random number as an instance of gmp.mpz.\n");
-}
-
-Gurax_ImplementHybridMethod(Random, IntBits)
-{
-	// Target
-	Value& valueThis = argument.GetValueThis();
-	gmp_randstate_t* pState = valueThis.IsInstanceOf(VTYPE_Random)?
-		&dynamic_cast<Value_Random&>(valueThis).GetEntity() : &VType_Random::GetStateGlobal();
-	// Arguments
-	ArgPicker args(argument);
-	mp_bitcnt_t bits = args.PickNumber<mp_bitcnt_t>();
-	// Function body
-	mpz_t num;
-	mpz_init(num);
-	mpz_urandomb(num, *pState, bits);
-	return new Value_mpz(mpz_class(num));
-}
-
 // gmp.Random##Int(range:gmp.mpz)
 Gurax_DeclareHybridMethod(Random, Int)
 {
@@ -131,6 +105,32 @@ Gurax_ImplementHybridMethod(Random, Int)
 	mpz_t num;
 	mpz_init(num);
 	mpz_urandomm(num, *pState, range.get_mpz_t());
+	return new Value_mpz(mpz_class(num));
+}
+
+// gmp.Random##IntBits(bits:Number)
+Gurax_DeclareHybridMethod(Random, IntBits)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("bits", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Generates a random number as an instance of gmp.mpz.\n");
+}
+
+Gurax_ImplementHybridMethod(Random, IntBits)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	gmp_randstate_t* pState = valueThis.IsInstanceOf(VTYPE_Random)?
+		&dynamic_cast<Value_Random&>(valueThis).GetEntity() : &VType_Random::GetStateGlobal();
+	// Arguments
+	ArgPicker args(argument);
+	mp_bitcnt_t bits = args.PickNumber<mp_bitcnt_t>();
+	// Function body
+	mpz_t num;
+	mpz_init(num);
+	mpz_urandomb(num, *pState, bits);
 	return new Value_mpz(mpz_class(num));
 }
 
@@ -169,8 +169,8 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
 	Assign(Gurax_CreateHybridMethod(Random, Float));
-	Assign(Gurax_CreateHybridMethod(Random, IntBits));
 	Assign(Gurax_CreateHybridMethod(Random, Int));
+	Assign(Gurax_CreateHybridMethod(Random, IntBits));
 	// Assignment of property
 	Assign(Gurax_CreateHybridProperty(Random, seed));
 }

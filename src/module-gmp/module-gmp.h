@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <gmpxx.h>
 #include "Util.h"
+#include "Random.h"
 #include "VType_mpf.h"
 #include "VType_mpq.h"
 #include "VType_mpz.h"
