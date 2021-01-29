@@ -165,6 +165,46 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
+// VType_Random::Iterator_FloatSeq
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_FloatSeq::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_mpf(_pRandom->GenerateFloat(_prec));
+}
+
+String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("gmp.Random.FloatSeq:prec=%zu", _prec);
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// VType_Random::Iterator_IntSeq
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_IntSeq::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_mpz(_pRandom->GenerateInt(_range));
+}
+
+String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("gmp.Random.IntSeq:range=%s", _range.get_str().c_str());
+	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Value_Random
 //------------------------------------------------------------------------------
 VType& Value_Random::vtype = VTYPE_Random;

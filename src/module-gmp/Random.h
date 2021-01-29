@@ -43,6 +43,8 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+
+
 Gurax_EndModuleScope(gmp)
 
 #endif
