@@ -5,6 +5,55 @@
 import(util.tester) {*}
 import(gmp)
 
-TestCase('Basic test') {
-	gmp.Test()
+TestCase('Property') {
+	gmp.mpz.PrintPropSlots()
+	gmp.mpq.PrintPropSlots()
+	gmp.mpf.PrintPropSlots()
+	gmp.Random.PrintPropSlots()
+}
+
+TestCase('gmp.mpz') {
+	Tester(`Format('%d', 0L))
+	Tester(`Format('%d', 1L))
+	Tester(`Format('%d', 1234567890123456789012345678901234567890123456789012345678901234567890L))
+	Tester(`Format('%x', 0x0L))
+	Tester(`Format('%x', 0x1L))
+	Tester(`Format('%x', 0x1234567890123456789012345678901234567890123456789012345678901234567890L))
+}
+
+TestCase('gmp.mpq') {
+	Tester(`Format('%s', 0Lr))
+	Tester(`Format('%s', 1/2Lr))
+}
+
+TestCase('gmp.mpf') {
+	Tester(`Format('%f', 0.L))
+	Tester(`Format('%f', 1.L))
+	Tester(`Format('%f', 1234567890123456789012345678901234567890123456789012345678901234567890.L))
+	gmp.mpf.default_prec = 256
+	Tester(`Format('%f', 1234567890123456789012345678901234567890123456789012345678901234567890.L))
+}
+
+TestCase('!a') {
+}
+
+TestCase('~a') {
+}
+
+TestCase('-a') {
+}
+
+TestCase('a + b') {
+}
+
+TestCase('a - b') {
+}
+
+TestCase('a * b') {
+}
+
+TestCase('a / b') {
+}
+
+TestCase('gmp.Random') {
 }
