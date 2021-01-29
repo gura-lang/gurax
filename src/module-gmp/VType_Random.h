@@ -12,11 +12,11 @@ Gurax_BeginModuleScope(gmp)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Random : public VType {
 private:
-	static gmp_randstate_t _stateGlobal;
+	static RefPtr<Random> _pRandomGlobal;
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
-	static gmp_randstate_t& GetStateGlobal() { return _stateGlobal; }
+	static Random& GetRandomGlobal() { return *_pRandomGlobal; }
 };
 
 extern GURAX_DLLDECLARE VType_Random VTYPE_Random;
@@ -31,12 +31,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Random");
 protected:
-	gmp_randstate_t _entity;
+	RefPtr<Random> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	explicit Value_Random(VType& vtype = VTYPE_Random) : Value_Object(vtype) {}
+	explicit Value_Random(Random* pEntity, VType& vtype = VTYPE_Random) :
+								Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_Random(const Value_Random& src) = delete;
 	Value_Random& operator=(const Value_Random& src) = delete;
@@ -47,21 +48,21 @@ protected:
 	// Destructor
 	~Value_Random() = default;
 public:
-	gmp_randstate_t& GetEntity() { return _entity; }
-	const gmp_randstate_t& GetEntity() const { return _entity; }
-	gmp_randstate_t* GetEntityPtr() { return &_entity; }
-	const gmp_randstate_t* GetEntityPtr() const { return &_entity; }
+	Random& GetEntity() { return *_pEntity; }
+	const Random& GetEntity() const { return *_pEntity; }
+	Random* GetEntityPtr() { return _pEntity.get(); }
+	const Random* GetEntityPtr() const { return _pEntity.get(); }
 public:
-	static gmp_randstate_t& GetEntity(Value& value) {
+	static Random& GetEntity(Value& value) {
 		return dynamic_cast<Value_Random&>(value).GetEntity();
 	}
-	static const gmp_randstate_t& GetEntity(const Value& value) {
+	static const Random& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_Random&>(value).GetEntity();
 	}
-	static gmp_randstate_t* GetEntityPtr(Value& value) {
+	static Random* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_Random&>(value).GetEntityPtr();
 	}
-	static const gmp_randstate_t* GetEntityPtr(const Value& value) {
+	static const Random* GetEntityPtr(const Value& value) {
 		return dynamic_cast<const Value_Random&>(value).GetEntityPtr();
 	}
 public:

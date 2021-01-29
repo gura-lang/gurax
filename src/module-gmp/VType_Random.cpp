@@ -46,11 +46,9 @@ Gurax_ImplementConstructor(Random)
 	mpz_class seed;
 	if (validFlag_seed = args.IsValid()) seed = args.Pick<Value_mpz>().GetEntity();
 	// Function body
-	RefPtr<Value_Random> pValue(new Value_Random());
-	gmp_randstate_t& state = pValue->GetEntity();
-	::gmp_randinit_default(state);
-	if (validFlag_seed) ::gmp_randseed(state, seed.get_mpz_t());
-	return argument.ReturnValue(processor, pValue.release());
+	RefPtr<Random> pRandom(new Random());
+	if (validFlag_seed) pRandom->SetSeed(seed);
+	return argument.ReturnValue(processor, new Value_Random(pRandom.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -70,16 +68,13 @@ Gurax_ImplementHybridMethod(Random, Float)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	gmp_randstate_t* pState = valueThis.IsInstanceOf(VTYPE_Random)?
-		&dynamic_cast<Value_Random&>(valueThis).GetEntity() : &VType_Random::GetStateGlobal();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
 	// Arguments
 	ArgPicker args(argument);
 	mp_bitcnt_t prec = args.IsValid()? args.PickNumber<mp_bitcnt_t>() : ::mpf_get_default_prec();
 	// Function body
-	mpf_t num;
-	mpf_init(num);
-	mpf_urandomb(num, *pState, prec);
-	return new Value_mpf(mpf_class(num));
+	return new Value_mpf(random.GenerateFloat(prec));
 }
 
 // gmp.Random##Int(range:gmp.mpz)
@@ -96,16 +91,13 @@ Gurax_ImplementHybridMethod(Random, Int)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	gmp_randstate_t* pState = valueThis.IsInstanceOf(VTYPE_Random)?
-		&dynamic_cast<Value_Random&>(valueThis).GetEntity() : &VType_Random::GetStateGlobal();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
 	// Arguments
 	ArgPicker args(argument);
 	mpz_class& range = args.Pick<Value_mpz>().GetEntity();
 	// Function body
-	mpz_t num;
-	mpz_init(num);
-	mpz_urandomm(num, *pState, range.get_mpz_t());
-	return new Value_mpz(mpz_class(num));
+	return new Value_mpz(random.GenerateInt(range));
 }
 
 // gmp.Random##IntBits(bits:Number)
@@ -122,16 +114,13 @@ Gurax_ImplementHybridMethod(Random, IntBits)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	gmp_randstate_t* pState = valueThis.IsInstanceOf(VTYPE_Random)?
-		&dynamic_cast<Value_Random&>(valueThis).GetEntity() : &VType_Random::GetStateGlobal();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
 	// Arguments
 	ArgPicker args(argument);
 	mp_bitcnt_t bits = args.PickNumber<mp_bitcnt_t>();
 	// Function body
-	mpz_t num;
-	mpz_init(num);
-	mpz_urandomb(num, *pState, bits);
-	return new Value_mpz(mpz_class(num));
+	return new Value_mpz(random.GenerateIntBits(bits));
 }
 
 //-----------------------------------------------------------------------------
@@ -148,21 +137,21 @@ Gurax_DeclareHybridProperty_W(Random, seed)
 
 Gurax_ImplementHybridPropertySetter(Random, seed)
 {
-	gmp_randstate_t* pState = valueTarget.IsInstanceOf(VTYPE_Random)?
-		&dynamic_cast<Value_Random&>(valueTarget).GetEntity() : &VType_Random::GetStateGlobal();
-	::gmp_randseed(*pState, Value_mpz::GetEntity(value).get_mpz_t());
+	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueTarget).GetEntity() : VType_Random::GetRandomGlobal();
+	random.SetSeed(Value_mpz::GetEntity(value));
 }
 
 //------------------------------------------------------------------------------
 // VType_Random
 //------------------------------------------------------------------------------
 VType_Random VTYPE_Random("Random");
-gmp_randstate_t VType_Random::_stateGlobal;
+RefPtr<Random> VType_Random::_pRandomGlobal;
 
 void VType_Random::DoPrepare(Frame& frameOuter)
 {
 	// Initialize global state
-	::gmp_randinit_default(_stateGlobal);
+	_pRandomGlobal.reset(new Random());
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
