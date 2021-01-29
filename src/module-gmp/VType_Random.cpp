@@ -77,6 +77,39 @@ Gurax_ImplementHybridMethod(Random, Float)
 	return new Value_mpf(random.GenFloat(prec));
 }
 
+// Random##FloatSeq(cnt?:Number, prec?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, FloatSeq)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("prec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that randomly generates real numbers in the range of `[0, 1)`\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
+}
+
+Gurax_ImplementHybridMethod(Random, FloatSeq)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
+	// Arguments
+	ArgPicker args(argument);
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	mp_bitcnt_t prec = args.IsValid()? args.PickNumber<mp_bitcnt_t>() : ::mpf_get_default_prec();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_FloatSeq(random.Reference(), cnt, prec));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // gmp.Random##Int(range:gmp.mpz)
 Gurax_DeclareHybridMethod(Random, Int)
 {
@@ -123,6 +156,39 @@ Gurax_ImplementHybridMethod(Random, IntBits)
 	return new Value_mpz(random.GenIntBits(bits));
 }
 
+// gmp.Random##IntSeq(range:gmp.mpz, cnt?:Number) {block?}
+Gurax_DeclareHybridMethod(Random, IntSeq)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("range", VTYPE_mpz, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that randomly generates integer numbers in the range of `[0, range)`\n"
+		"for the specified times by `cnt`.\n"
+		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
+		"\n"
+		"This method may take either an instance or `Random` class as its target.\n"
+		"If `Random` class is specified, a global instance of `Random` is used.\n");
+}
+
+Gurax_ImplementHybridMethod(Random, IntSeq)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
+	// Arguments
+	ArgPicker args(argument);
+	mpz_class& range = args.Pick<Value_mpz>().GetEntity();
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_IntSeq(random.Reference(), cnt, range));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -158,8 +224,10 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
 	Assign(Gurax_CreateHybridMethod(Random, Float));
+	Assign(Gurax_CreateHybridMethod(Random, FloatSeq));
 	Assign(Gurax_CreateHybridMethod(Random, Int));
 	Assign(Gurax_CreateHybridMethod(Random, IntBits));
+	Assign(Gurax_CreateHybridMethod(Random, IntSeq));
 	// Assignment of property
 	Assign(Gurax_CreateHybridProperty(Random, seed));
 }
