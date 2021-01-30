@@ -2,7 +2,7 @@
 import(gmp)
 
 gmp.mpf.default_prec = 64
-n = 1..10000
+n = [1..10000]
 C_1Lr = 1Lr
 C_4L = 4L
 pi = 4 + 4 * (-C_1Lr / (C_4L * n - 1) + C_1Lr / (C_4L * n + 1)).Sum()
