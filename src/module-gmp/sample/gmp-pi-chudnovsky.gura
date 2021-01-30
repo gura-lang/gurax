@@ -25,6 +25,8 @@ computePQT(n1:Number, n2:Number) = {
 }
 
 main() = {
+	blockCols = 5
+	blockRows = 20
 	digits = 10000;
 	gmp.mpf.default_prec = Int(digits * math.Log(10) / math.Log(2))
 	n = Int(digits / 14)
@@ -36,7 +38,8 @@ main() = {
 	pi = math.Sqrt(gmp.mpf(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
-	Println(Format('%.f', pi).Mid(2).Fold(10).Fold(5):*Join(' '))
+	Print(Format('%.f', pi).Mid(2).\
+		Fold(10).Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
 }
 
 main()

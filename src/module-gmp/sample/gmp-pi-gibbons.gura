@@ -20,7 +20,7 @@ GeneratePI() = {
 main() = {
 	blockCols = 5
 	blockRows = 20
-	digits = 1000000
+	digits = 10000
 	Println('3')
 	Print(Format('%d', GeneratePI().Offset(1).Head(digits)).\
 		Fold(10):*Join().Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
