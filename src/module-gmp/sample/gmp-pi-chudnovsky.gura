@@ -2,7 +2,7 @@
 // http://d.hatena.ne.jp/itchyny/20120304/1330870932
 import(gmp)
 
-[A, B, C, C3over24] = 0
+[A, B, C, C3over24] = 0L
 
 PQT = struct { P:gmp.mpz, Q:gmp.mpz, T:gmp.mpz }
 
@@ -25,8 +25,8 @@ computePQT(n1:Number, n2:Number) = {
 }
 
 main() = {
-	digits = 1000;
-	gmp.mpq.default_prec = Int(digits * math.Log(10) / math.Log(2))
+	digits = 10000;
+	gmp.mpf.default_prec = Int(digits * math.Log(10) / math.Log(2))
 	n = Int(digits / 14)
 	A:extern = 13591409L
 	B:extern = 545140134L
@@ -36,7 +36,7 @@ main() = {
 	pi = math.Sqrt(gmp.mpf(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
-	Println(Format('%.100f', pi).Mid(2).Fold(10).Fold(5):*Join(' '))
+	Println(Format('%.f', pi).Mid(2).Fold(10).Fold(5):*Join(' '))
 }
 
 main()
