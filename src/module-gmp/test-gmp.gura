@@ -24,6 +24,7 @@ TestCase('gmp.mpz') {
 TestCase('gmp.mpq') {
 	Tester(`Format('%s', 0Lr))
 	Tester(`Format('%s', 1/2Lr))
+	
 }
 
 TestCase('gmp.mpf') {

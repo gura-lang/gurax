@@ -156,7 +156,7 @@ Value* VType_mpq::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	} else if (value.IsInstanceOf(VTYPE_mpz)) {
 		::mpq_set_z(num, Value_mpz::GetEntity(value).get_mpz_t());
 		return new Value_mpq(mpq_class(num));
-	} else if (value.IsInstanceOf(VTYPE_mpq)) {
+	} else if (value.IsInstanceOf(VTYPE_mpf)) {
 		::mpq_set_f(num, Value_mpf::GetEntity(value).get_mpf_t());
 		return new Value_mpq(mpq_class(num));
 	}
