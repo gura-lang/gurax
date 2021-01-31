@@ -6,7 +6,7 @@ import(gmp)
 
 PQT = struct { P:gmp.mpz, Q:gmp.mpz, T:gmp.mpz }
 
-computePQT(n1:Number, n2:Number) = {
+ComputePQT(n1:Number, n2:Number) = {
 	if (n1 + 1 == n2) {
 		P = -(2 * n2 - 1)
 		P *= (6 * n2 - 5)
@@ -15,8 +15,8 @@ computePQT(n1:Number, n2:Number) = {
 		T = (A + B * n2) * P
 	} else {
 		m = Int((n1 + n2) / 2);
-		PQT1 = computePQT(n1, m);
-		PQT2 = computePQT(m, n2);
+		PQT1 = ComputePQT(n1, m);
+		PQT2 = ComputePQT(m, n2);
 		P = PQT1.P * PQT2.P;
 		Q = PQT1.Q * PQT2.Q;
 		T = PQT1.T * PQT2.Q + PQT1.P * PQT2.T;
@@ -34,13 +34,17 @@ main() = {
 	B:extern = 545140134L
 	C:extern = 640320L
 	C3over24:extern = C * C * C / 24;
-	PQT = computePQT(0, n);
+	PQT = ComputePQT(0, n);
 	pi = math.Sqrt(gmp.mpf(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
-	Println('3')
-	Print(Format('%.f', pi).Mid(2).\
-		Fold(10).Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
+	fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
+	Open(fileNameOut, 'w') {|f|
+		f.Println('3')
+		f.Print(Format('%.*f', digits, pi).Mid(2).\
+			Fold(10).Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
+	}
+	Println(fileNameOut, ' was created.')
 }
 
 main()
