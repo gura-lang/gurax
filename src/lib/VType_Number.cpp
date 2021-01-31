@@ -259,6 +259,21 @@ Gurax_ImplementPropertyGetter(Number, real)
 	return new Value_Number(valueThis.GetNumber<Double>());
 }
 
+// Number#sign
+Gurax_DeclareProperty_R(Number, sign)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The sign of the number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.");
+}
+
+Gurax_ImplementPropertyGetter(Number, sign)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(Number<Double>::GetSign(valueThis.GetNumber<Double>()));
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -844,6 +859,7 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Number, imag));
 	Assign(Gurax_CreateProperty(Number, norm));
 	Assign(Gurax_CreateProperty(Number, real));
+	Assign(Gurax_CreateProperty(Number, sign));
 	// Assignment of class property
 	Assign(Gurax_CreateClassProperty(Number, formatFloat));
 	Assign(Gurax_CreateClassProperty(Number, formatInt));

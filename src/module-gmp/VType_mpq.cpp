@@ -170,7 +170,13 @@ VType& Value_mpq::vtype = VTYPE_mpq;
 
 String Value_mpq::ToString(const StringStyle& ss) const
 {
-	String strEntity = GetEntity().get_str();
+	String strEntity;
+	strEntity = _entity.get_num().get_str();
+	if (_entity.get_den() != 1) {
+		strEntity += "L/";
+		strEntity += _entity.get_den().get_str();
+	}
+	strEntity += "Lr";
 	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
 	return strEntity;
 }

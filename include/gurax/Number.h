@@ -47,6 +47,7 @@ public:
 	static const T_Num Max;
 	static const T_Num Min;
 public:
+	static int GetSign(T_Num num) { return (num == 0)? 0 : (num > 0)? +1 : -1; }
 	static String ToString(T_Num num);
 };
 

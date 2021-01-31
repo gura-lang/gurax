@@ -47,6 +47,7 @@ public:
 	Int64 GetNumer() const { return _numer; }
 	Int64 GetDenom() const { return _denom; }
 	Double ToDouble() const { return static_cast<Double>(_numer) / _denom; }
+	int GetSign() const { return (_numer == 0)? 0 : (_numer > 0)? +1 : -1; }
 	bool IsInteger() const { return _denom == 1; }
 	bool IsZero() const { return _numer == 0; }
 	bool IsPos() const { return _numer > 0; }

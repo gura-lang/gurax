@@ -256,3 +256,13 @@ TestCase('Rational.format') {
 	Rational.format = format
 	Rational.formatInt = formatInt
 }
+
+TestCase('Rational#sign') {
+	Tester(`(0r).sign)
+	Tester(`(9r).sign)
+	Tester(`(-9r).sign)
+	Tester(`(1/3r).sign)
+	Tester(`(-1/3r).sign)
+	Tester(`(1/(-3r)).sign)
+	Tester(`(-1/(-3r)).sign)
+}

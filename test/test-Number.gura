@@ -77,3 +77,9 @@ TestCase('Suffx f') {
 	Tester(`123456f)
 	Tester(`1.23456f)
 }
+
+TestCase('Number#sign') {
+	Tester(`(0).sign)
+	Tester(`(9).sign)
+	Tester(`(-9).sign)
+}

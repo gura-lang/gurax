@@ -236,6 +236,21 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 	return new Value_Number(valueThis.GetRational().GetNumer());
 }
 
+// Rational#sign
+Gurax_DeclareProperty_R(Rational, sign)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The sign of the rational number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.");
+}
+
+Gurax_ImplementPropertyGetter(Rational, sign)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetRational().GetSign());
+}
+
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
@@ -557,6 +572,7 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));
+	Assign(Gurax_CreateProperty(Rational, sign));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg,	Rational);
 	Gurax_AssignOpUnary(Pos,	Rational);

@@ -22,20 +22,35 @@ TestCase('gmp.mpz') {
 }
 
 TestCase('gmp.mpq') {
-	Tester(`Format('%s', 0Lr))
-	Tester(`Format('%s', 1/2Lr))
-	
+	Tester(`(0Lr))
+	Tester(`(1Lr))
+	Tester(`(3Lr))
+	Tester(`(1 / 2Lr))
+	Tester(`(-1Lr))
+	Tester(`(-1Lr / 3))
 }
 
 TestCase('gmp.mpf') {
+	prec = gmp.mpf.default_prec
 	Tester(`Format('%f', 0.L))
 	Tester(`Format('%f', 1.L))
-	Tester(`Format('%f', 1234567890123456789012345678901234567890123456789012345678901234567890.L))
+	gmp.mpf.default_prec = 64
+	Printf('prec = %d\n', gmp.mpf.default_prec)
+	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
+	gmp.mpf.default_prec = 128
+	Printf('prec = %d\n', gmp.mpf.default_prec)
+	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
 	gmp.mpf.default_prec = 256
-	Tester(`Format('%f', 1234567890123456789012345678901234567890123456789012345678901234567890.L))
+	Printf('prec = %d\n', gmp.mpf.default_prec)
+	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
+	gmp.mpf.default_prec = 512
+	Printf('prec = %d\n', gmp.mpf.default_prec)
+	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
+	gmp.mpf.default_prec = prec
 }
 
 TestCase('!a') {
+	
 }
 
 TestCase('~a') {
@@ -54,6 +69,32 @@ TestCase('a * b') {
 }
 
 TestCase('a / b') {
+}
+
+TestCase('math.Abs()') {
+}
+
+TestCase('math.Ceil()') {
+}
+
+TestCase('math.Floor()') {
+}
+
+TestCase('math.Sqrt()') {
+	Tester(`(math.Sqrt(0L)))
+	Tester(`(math.Sqrt(0Lr)))
+	Tester(`(math.Sqrt(0.L)))
+	Tester(`(math.Sqrt(1L)))
+	Tester(`(math.Sqrt(1Lr)))
+	Tester(`(math.Sqrt(1.L)))
+	Tester(`(math.Sqrt(2L)))
+	Tester(`(math.Sqrt(2.L)))
+	Tester(`(math.Sqrt(3L)))
+	Tester(`(math.Sqrt(3.L)))
+	Tester(`(math.Sqrt(9L)))
+	Tester(`(math.Sqrt(9.L)))
+	Tester(`(math.Sqrt(12345L)))
+	Tester(`(math.Sqrt(12345.L)))
 }
 
 TestCase('gmp.Random') {
