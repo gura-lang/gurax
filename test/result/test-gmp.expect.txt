@@ -1,0 +1,236 @@
+======== Property ========
+gmp.Float
+  .default_prec     Number       R/W
+  #prec             Number       R/W
+  #sign             Number       R
+gmp.Int
+  #sign             Number       R
+gmp.Random
+  .seed             gmp.Int      W
+gmp.Rational
+  #denom            Number       R
+  #numer            Number       R
+  #sign             Number       R
+======== gmp.Int ========
+Format('%d', 0L) .. 0
+Format('%d', 1L) .. 1
+Format('%d', 1234567890123456789012345678901234567890123456789012345678901234567890L) .. 1234567890123456789012345678901234567890123456789012345678901234567890
+Format('%x', 0x0L) .. 0
+Format('%x', 0x1L) .. 1
+Format('%x', 0x1234567890123456789012345678901234567890123456789012345678901234567890L) .. 1234567890123456789012345678901234567890123456789012345678901234567890
+gmp.Int(0) .. 0L
+gmp.Int(0L) .. 0L
+gmp.Int(0Lr) .. 0L
+gmp.Int(0.L) .. 0L
+gmp.Int(1) .. 1L
+gmp.Int(123.456) .. 123L
+gmp.Int(1L) .. 1L
+gmp.Int(1Lr) .. 1L
+gmp.Int(1.L) .. 1L
+gmp.Int(12345) .. 12345L
+gmp.Int(12345L) .. 12345L
+gmp.Int(12345Lr) .. 12345L
+gmp.Int(12345.L) .. 12345L
+gmp.Int(12.5L) .. 12L
+gmp.Int(12.25L) .. 12L
+======== gmp.Rational ========
+0Lr .. 0Lr
+1Lr .. 1Lr
+3Lr .. 3Lr
+1 / 2Lr .. 1L/2Lr
+-1Lr .. -1Lr
+-(1Lr / 3) .. -1L/3Lr
+gmp.Rational(0) .. 0Lr
+gmp.Rational(0L) .. 0Lr
+gmp.Rational(0Lr) .. 0Lr
+gmp.Rational(0.L) .. 0Lr
+gmp.Rational(1) .. 1Lr
+gmp.Rational(1L) .. 1Lr
+gmp.Rational(1Lr) .. 1Lr
+gmp.Rational(1.L) .. 1Lr
+gmp.Rational(12345) .. 12345Lr
+gmp.Rational(12345L) .. 12345Lr
+gmp.Rational(12345Lr) .. 12345Lr
+gmp.Rational(12345.L) .. 12345Lr
+gmp.Rational(12.5L) .. 25L/2Lr
+gmp.Rational(12.25L) .. 49L/4Lr
+======== gmp.Float ========
+Format('%f', 0.L) .. 0.000000
+Format('%f', 1.L) .. 1.000000
+prec = 64
+Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L) .. 1234567890123456789010000000000000000000000000000000000000000000000000
+prec = 128
+Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L) .. 1234567890123456789012345678901234567890000000000000000000000000000000
+prec = 256
+Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L) .. 1234567890123456789012345678901234567890123456789012345678901234567890.123456789
+prec = 512
+Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L) .. 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789
+======== !a ========
+!0L .. true
+!0Lr .. true
+!0.L .. true
+!3L .. false
+!3Lr .. false
+!3.L .. false
+======== ~a ========
+~0L .. -1L
+~0Lr .. unsupported unary operation: ~gmp.Rational
+~0.L .. unsupported unary operation: ~gmp.Float
+~3L .. -4L
+~3Lr .. unsupported unary operation: ~gmp.Rational
+~3.L .. unsupported unary operation: ~gmp.Float
+======== -a ========
+-0L .. 0L
+-0Lr .. 0Lr
+-0.L .. 0.L
+-3L .. -3L
+-3Lr .. -3Lr
+-3.L .. -3.L
+======== a + b ========
+3L + 4 .. 7L
+3L + 4L .. 7L
+3L + 4Lr .. 7Lr
+3L + 4.L .. 7.L
+3Lr + 4 .. 7Lr
+3Lr + 4L .. 7Lr
+3Lr + 4Lr .. 7Lr
+3Lr + 4.L .. 7.L
+3.L + 4 .. 7.L
+3.L + 4L .. 7.L
+3.L + 4Lr .. 7.L
+3.L + 4.L .. 7.L
+======== a - b ========
+3L - 4 .. -1L
+3L - 4L .. -1L
+3L - 4Lr .. -1Lr
+3L - 4.L .. -1.L
+3Lr - 4 .. -1Lr
+3Lr - 4L .. -1Lr
+3Lr - 4Lr .. -1Lr
+3Lr - 4.L .. -1.L
+3.L - 4 .. -1.L
+3.L - 4L .. -1.L
+3.L - 4Lr .. -1.L
+3.L - 4.L .. -1.L
+======== a * b ========
+3L * 4 .. 12L
+3L * 4L .. 12L
+3L * 4Lr .. 12Lr
+3L * 4.L .. 12.L
+3Lr * 4 .. 12Lr
+3Lr * 4L .. 12Lr
+3Lr * 4Lr .. 12Lr
+3Lr * 4.L .. 12.L
+3.L * 4 .. 12.L
+3.L * 4L .. 12.L
+3.L * 4Lr .. 12.L
+3.L * 4.L .. 12.L
+======== a / b ========
+13L / 4 .. 3L
+13L / 4L .. 3L
+13L / 4Lr .. 13L/4Lr
+13L / 4.L .. 3.25L
+13Lr / 4 .. 13L/4Lr
+13Lr / 4L .. 13L/4Lr
+13Lr / 4Lr .. 13L/4Lr
+13Lr / 4.L .. 3.25L
+13.L / 4 .. 3.25L
+13.L / 4L .. 3.25L
+13.L / 4Lr .. 3.25L
+13.L / 4.L .. 3.25L
+======== math.Abs() ========
+math.Abs(0L) .. 0L
+math.Abs(0Lr) .. 0Lr
+math.Abs(0.L) .. 0.L
+math.Abs(3L) .. 3L
+math.Abs(3Lr) .. 3Lr
+math.Abs(2 / 3Lr) .. 2L/3Lr
+math.Abs(3.L) .. 3.L
+math.Abs(3.14L) .. 3.14L
+math.Abs(-3L) .. 3L
+math.Abs(-3Lr) .. 3Lr
+math.Abs(-(2 / 3Lr)) .. 2L/3Lr
+math.Abs(-3.L) .. 3.L
+math.Abs(-3.14L) .. 3.14L
+======== math.Ceil() ========
+math.Ceil(0L) .. 0L
+math.Ceil(0Lr) .. unsupported math operation: math.Ceil(gmp.Rational)
+math.Ceil(0.L) .. 0.L
+math.Ceil(3L) .. 3L
+math.Ceil(3Lr) .. unsupported math operation: math.Ceil(gmp.Rational)
+math.Ceil(2 / 3Lr) .. unsupported math operation: math.Ceil(gmp.Rational)
+math.Ceil(3.L) .. 3.L
+math.Ceil(3.14L) .. 4.L
+math.Ceil(-3L) .. -3L
+math.Ceil(-3Lr) .. unsupported math operation: math.Ceil(gmp.Rational)
+math.Ceil(-(2 / 3Lr)) .. unsupported math operation: math.Ceil(gmp.Rational)
+math.Ceil(-3.L) .. -3.L
+math.Ceil(-3.14L) .. -3.L
+======== math.Floor() ========
+math.Floor(0L) .. 0L
+math.Floor(0Lr) .. unsupported math operation: math.Floor(gmp.Rational)
+math.Floor(0.L) .. 0.L
+math.Floor(3L) .. 3L
+math.Floor(3Lr) .. unsupported math operation: math.Floor(gmp.Rational)
+math.Floor(2 / 3Lr) .. unsupported math operation: math.Floor(gmp.Rational)
+math.Floor(3.L) .. 3.L
+math.Floor(3.14L) .. 3.L
+math.Floor(-3L) .. -3L
+math.Floor(-3Lr) .. unsupported math operation: math.Floor(gmp.Rational)
+math.Floor(-(2 / 3Lr)) .. unsupported math operation: math.Floor(gmp.Rational)
+math.Floor(-3.L) .. -3.L
+math.Floor(-3.14L) .. -4.L
+======== math.Sqrt() ========
+math.Sqrt(0L) .. 0L
+math.Sqrt(0Lr) .. unsupported math operation: math.Sqrt(gmp.Rational)
+math.Sqrt(0.L) .. 0.L
+math.Sqrt(1L) .. 1L
+math.Sqrt(1Lr) .. unsupported math operation: math.Sqrt(gmp.Rational)
+math.Sqrt(1.L) .. 1.L
+math.Sqrt(2L) .. 1L
+math.Sqrt(2.L) .. 1.41421L
+math.Sqrt(3L) .. 1L
+math.Sqrt(3.L) .. 1.73205L
+math.Sqrt(9L) .. 3L
+math.Sqrt(9.L) .. 3.L
+math.Sqrt(12345L) .. 111L
+math.Sqrt(12345.L) .. 111.108L
+======== gmp.Random##Float() ========
+r.Float() .. 0.828561L
+r.Float() .. 0.270837L
+r.Float() .. 0.44155L
+r.Float() .. 0.481266L
+r.Float() .. 0.0844853L
+gmp.Random.Float() .. 0.828561L
+gmp.Random.Float() .. 0.270837L
+gmp.Random.Float() .. 0.44155L
+gmp.Random.Float() .. 0.481266L
+gmp.Random.Float() .. 0.0844853L
+======== gmp.Random##FloatSeq() ========
+[r.FloatSeq(5)*] .. [0.828561L, 0.270837L, 0.44155L, 0.481266L, 0.0844853L]
+======== gmp.Random##Int() ========
+r.Int(10) .. 8L
+r.Int(10) .. 1L
+r.Int(10) .. 3L
+r.Int(10) .. 7L
+r.Int(10) .. 8L
+r.Int(1234567890123456789L) .. 1141345690840442999L
+gmp.Random.Int(10) .. 8L
+gmp.Random.Int(10) .. 1L
+gmp.Random.Int(10) .. 3L
+gmp.Random.Int(10) .. 7L
+gmp.Random.Int(10) .. 8L
+gmp.Random.Int(1234567890123456789L) .. 1141345690840442999L
+======== gmp.Random##IntBits() ========
+r.IntBits(4) .. 11L
+r.IntBits(4) .. 8L
+r.IntBits(4) .. 1L
+r.IntBits(4) .. 3L
+r.IntBits(4) .. 7L
+gmp.Random.IntBits(4) .. 11L
+gmp.Random.IntBits(4) .. 8L
+gmp.Random.IntBits(4) .. 1L
+gmp.Random.IntBits(4) .. 3L
+gmp.Random.IntBits(4) .. 7L
+======== gmp.Random##IntSeq() ========
+[r.IntSeq(10, 5)*] .. [8L, 1L, 3L, 7L, 8L]
