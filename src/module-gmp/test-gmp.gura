@@ -19,6 +19,21 @@ TestCase('gmp.Int') {
 	Tester(`Format('%x', 0x0L))
 	Tester(`Format('%x', 0x1L))
 	Tester(`Format('%x', 0x1234567890123456789012345678901234567890123456789012345678901234567890L))
+	Tester(`gmp.Int(0))
+	Tester(`gmp.Int(0L))
+	Tester(`gmp.Int(0Lr))
+	Tester(`gmp.Int(0.L))
+	Tester(`gmp.Int(1))
+	Tester(`gmp.Int(123.456))
+	Tester(`gmp.Int(1L))
+	Tester(`gmp.Int(1Lr))
+	Tester(`gmp.Int(1.L))
+	Tester(`gmp.Int(12345))
+	Tester(`gmp.Int(12345L))
+	Tester(`gmp.Int(12345Lr))
+	Tester(`gmp.Int(12345.L))
+	Tester(`gmp.Int(12.5L))
+	Tester(`gmp.Int(12.25L))
 }
 
 TestCase('gmp.Rational') {
@@ -28,6 +43,20 @@ TestCase('gmp.Rational') {
 	Tester(`(1 / 2Lr))
 	Tester(`(-1Lr))
 	Tester(`(-1Lr / 3))
+	Tester(`gmp.Rational(0))
+	Tester(`gmp.Rational(0L))
+	Tester(`gmp.Rational(0Lr))
+	Tester(`gmp.Rational(0.L))
+	Tester(`gmp.Rational(1))
+	Tester(`gmp.Rational(1L))
+	Tester(`gmp.Rational(1Lr))
+	Tester(`gmp.Rational(1.L))
+	Tester(`gmp.Rational(12345))
+	Tester(`gmp.Rational(12345L))
+	Tester(`gmp.Rational(12345Lr))
+	Tester(`gmp.Rational(12345.L))
+	Tester(`gmp.Rational(12.5L))
+	Tester(`gmp.Rational(12.25L))
 }
 
 TestCase('gmp.Float') {
@@ -50,25 +79,90 @@ TestCase('gmp.Float') {
 }
 
 TestCase('!a') {
-	
+	Tester(`(!0L))	
+	Tester(`(!0Lr))	
+	Tester(`(!0.L))	
+	Tester(`(!3L))	
+	Tester(`(!3Lr))	
+	Tester(`(!3.L))	
 }
 
 TestCase('~a') {
+	Tester(`(~0L))	
+	Tester(`(~0Lr))	
+	Tester(`(~0.L))	
+	Tester(`(~3L))	
+	Tester(`(~3Lr))	
+	Tester(`(~3.L))	
 }
 
 TestCase('-a') {
+	Tester(`(-0L))	
+	Tester(`(-0Lr))	
+	Tester(`(-0.L))	
+	Tester(`(-3L))	
+	Tester(`(-3Lr))	
+	Tester(`(-3.L))	
 }
 
 TestCase('a + b') {
+	Tester(`(3L + 4))
+	Tester(`(3L + 4L))
+	Tester(`(3L + 4Lr))
+	Tester(`(3L + 4.L))
+	Tester(`(3Lr + 4))
+	Tester(`(3Lr + 4L))
+	Tester(`(3Lr + 4Lr))
+	Tester(`(3Lr + 4.L))
+	Tester(`(3.L + 4))
+	Tester(`(3.L + 4L))
+	Tester(`(3.L + 4Lr))
+	Tester(`(3.L + 4.L))
 }
 
 TestCase('a - b') {
+	Tester(`(3L - 4))
+	Tester(`(3L - 4L))
+	Tester(`(3L - 4Lr))
+	Tester(`(3L - 4.L))
+	Tester(`(3Lr - 4))
+	Tester(`(3Lr - 4L))
+	Tester(`(3Lr - 4Lr))
+	Tester(`(3Lr - 4.L))
+	Tester(`(3.L - 4))
+	Tester(`(3.L - 4L))
+	Tester(`(3.L - 4Lr))
+	Tester(`(3.L - 4.L))
 }
 
 TestCase('a * b') {
+	Tester(`(3L * 4))
+	Tester(`(3L * 4L))
+	Tester(`(3L * 4Lr))
+	Tester(`(3L * 4.L))
+	Tester(`(3Lr * 4))
+	Tester(`(3Lr * 4L))
+	Tester(`(3Lr * 4Lr))
+	Tester(`(3Lr * 4.L))
+	Tester(`(3.L * 4))
+	Tester(`(3.L * 4L))
+	Tester(`(3.L * 4Lr))
+	Tester(`(3.L * 4.L))
 }
 
 TestCase('a / b') {
+	Tester(`(13L / 4))
+	Tester(`(13L / 4L))
+	Tester(`(13L / 4Lr))
+	Tester(`(13L / 4.L))
+	Tester(`(13Lr / 4))
+	Tester(`(13Lr / 4L))
+	Tester(`(13Lr / 4Lr))
+	Tester(`(13Lr / 4.L))
+	Tester(`(13.L / 4))
+	Tester(`(13.L / 4L))
+	Tester(`(13.L / 4Lr))
+	Tester(`(13.L / 4.L))
 }
 
 TestCase('math.Abs()') {
