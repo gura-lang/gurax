@@ -134,6 +134,8 @@ void VType_mpz::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(mpz, set_str));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(mpz, sign));
+	// Assignment of VType with alias name
+	frameOuter.Assign("Int", new Value_VType(VTYPE_mpz));
 }
 
 Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags flags) const

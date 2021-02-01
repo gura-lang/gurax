@@ -68,12 +68,12 @@ public:
 		return _formatterFormat_Int.c_str();
 	}
 public:
-	Rational Regulate() const;
-	Rational RegulateQuick() const;
-	static void Regulate(Int64* pNumer, Int64* pDenom);
-	static void RegulateQuick(Int64* pNumer, Int64* pDenom);
-	static Rational MakeRegulated(Int64 numer, Int64 denom);
-	static Rational MakeRegulatedQuick(Int64 numer, Int64 denom);
+	Rational Canonicalize() const;
+	Rational CanonicalizeQuick() const;
+	static void Canonicalize(Int64* pNumer, Int64* pDenom);
+	static void CanonicalizeQuick(Int64* pNumer, Int64* pDenom);
+	static Rational MakeCanonicalized(Int64 numer, Int64 denom);
+	static Rational MakeCanonicalizedQuick(Int64 numer, Int64 denom);
 	static Rational MakeFromDouble(Double num);
 public:
 	Rational operator+() const;

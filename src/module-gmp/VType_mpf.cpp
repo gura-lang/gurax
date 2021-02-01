@@ -160,6 +160,8 @@ void VType_mpf::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(mpf, prec));
 	Assign(Gurax_CreateProperty(mpf, sign));
+	// Assignment of VType with alias name
+	frameOuter.Assign("Float", new Value_VType(VTYPE_mpf));
 }
 
 Value* VType_mpf::DoCastFrom(const Value& value, DeclArg::Flags flags) const
@@ -191,7 +193,14 @@ String Value_mpf::ToString(const StringStyle& ss) const
 	::gmp_asprintf(&buff, "%Fg", GetEntity().get_mpf_t());
 	strEntity += buff;
 	::free(buff);
-	strEntity += "L";
+	bool digitOnlyFlag = true;
+	for (char ch : strEntity) {
+		if (ch == '.' || ch == 'e') {
+			digitOnlyFlag = false;
+			break;
+		}
+	}
+	strEntity += digitOnlyFlag? ".L" : "L";
 	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
 	return strEntity;
 }

@@ -46,7 +46,7 @@ Gurax_ImplementConstructor(Rational)
 	Int64 numer = args.IsValid()? args.PickNumber<Int64>() : 0;
 	Int64 denom = args.IsValid()? args.PickNumber<Int64>() : 1;
 	// Function body
-	Rational rat = Rational::MakeRegulatedQuick(numer, denom);
+	Rational rat = Rational::MakeCanonicalizedQuick(numer, denom);
 	return argument.ReturnValue(processor, new Value_Rational(rat));
 }
 
@@ -138,21 +138,21 @@ Gurax_ImplementMethod(Rational, IsNonNeg)
 	return new Value_Bool(valueThis.GetRational().IsNonNeg());
 }
 
-// Rational#Regulate()
-Gurax_DeclareMethod(Rational, Regulate)
+// Rational#Canonicalize()
+Gurax_DeclareMethod(Rational, Canonicalize)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns a `Rational` instance that has been regulated from the target.\n");
+		"Returns a `Rational` instance that has been canonicalized from the target.\n");
 }
 
-Gurax_ImplementMethod(Rational, Regulate)
+Gurax_ImplementMethod(Rational, Canonicalize)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Rational(valueThis.GetRational().Regulate());
+	return new Value_Rational(valueThis.GetRational().Canonicalize());
 }
 
 //-----------------------------------------------------------------------------
@@ -565,7 +565,7 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Rational, IsNeg));
 	Assign(Gurax_CreateMethod(Rational, IsNonPos));
 	Assign(Gurax_CreateMethod(Rational, IsNonNeg));
-	Assign(Gurax_CreateMethod(Rational, Regulate));
+	Assign(Gurax_CreateMethod(Rational, Canonicalize));
 	// Assignment of class property
 	Assign(Gurax_CreateProperty(Rational, format));
 	Assign(Gurax_CreateProperty(Rational, formatInt));

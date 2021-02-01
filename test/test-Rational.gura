@@ -81,8 +81,8 @@ TestCase('r-suffix') {
 	Tester(`(-0x0002_0000_0000_0000r / 0x0004_0000_0000_0000))
 }
 
-TestCase('Rational#Regulate()') {
-	Tester(`Rational(36, 96).Regulate())
+TestCase('Rational#Canonicalize()') {
+	Tester(`Rational(36, 96).Canonicalize())
 }
 
 TestCase('Property access') {

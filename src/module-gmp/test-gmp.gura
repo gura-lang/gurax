@@ -6,13 +6,13 @@ import(util.tester) {*}
 import(gmp)
 
 TestCase('Property') {
-	gmp.mpz.PrintPropSlots()
-	gmp.mpq.PrintPropSlots()
-	gmp.mpf.PrintPropSlots()
+	gmp.Int.PrintPropSlots()
+	gmp.Rational.PrintPropSlots()
+	gmp.Float.PrintPropSlots()
 	gmp.Random.PrintPropSlots()
 }
 
-TestCase('gmp.mpz') {
+TestCase('gmp.Int') {
 	Tester(`Format('%d', 0L))
 	Tester(`Format('%d', 1L))
 	Tester(`Format('%d', 1234567890123456789012345678901234567890123456789012345678901234567890L))
@@ -21,7 +21,7 @@ TestCase('gmp.mpz') {
 	Tester(`Format('%x', 0x1234567890123456789012345678901234567890123456789012345678901234567890L))
 }
 
-TestCase('gmp.mpq') {
+TestCase('gmp.Rational') {
 	Tester(`(0Lr))
 	Tester(`(1Lr))
 	Tester(`(3Lr))
@@ -30,23 +30,23 @@ TestCase('gmp.mpq') {
 	Tester(`(-1Lr / 3))
 }
 
-TestCase('gmp.mpf') {
-	prec = gmp.mpf.default_prec
+TestCase('gmp.Float') {
+	prec = gmp.Float.default_prec
 	Tester(`Format('%f', 0.L))
 	Tester(`Format('%f', 1.L))
-	gmp.mpf.default_prec = 64
-	Printf('prec = %d\n', gmp.mpf.default_prec)
+	gmp.Float.default_prec = 64
+	Printf('prec = %d\n', gmp.Float.default_prec)
 	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
-	gmp.mpf.default_prec = 128
-	Printf('prec = %d\n', gmp.mpf.default_prec)
+	gmp.Float.default_prec = 128
+	Printf('prec = %d\n', gmp.Float.default_prec)
 	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
-	gmp.mpf.default_prec = 256
-	Printf('prec = %d\n', gmp.mpf.default_prec)
+	gmp.Float.default_prec = 256
+	Printf('prec = %d\n', gmp.Float.default_prec)
 	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
-	gmp.mpf.default_prec = 512
-	Printf('prec = %d\n', gmp.mpf.default_prec)
+	gmp.Float.default_prec = 512
+	Printf('prec = %d\n', gmp.Float.default_prec)
 	Tester(`Format('%.f', 1234567890123456789012345678901234567890123456789012345678901234567890.123456789012345678901234567890123456789012345678901234567890123456789L))
-	gmp.mpf.default_prec = prec
+	gmp.Float.default_prec = prec
 }
 
 TestCase('!a') {
@@ -72,12 +72,51 @@ TestCase('a / b') {
 }
 
 TestCase('math.Abs()') {
+	Tester(`(math.Abs(0L)))
+	Tester(`(math.Abs(0Lr)))
+	Tester(`(math.Abs(0.L)))
+	Tester(`(math.Abs(3L)))
+	Tester(`(math.Abs(3Lr)))
+	Tester(`(math.Abs(2/3Lr)))
+	Tester(`(math.Abs(3.L)))
+	Tester(`(math.Abs(3.14L)))
+	Tester(`(math.Abs(-3L)))
+	Tester(`(math.Abs(-3Lr)))
+	Tester(`(math.Abs(-2/3Lr)))
+	Tester(`(math.Abs(-3.L)))
+	Tester(`(math.Abs(-3.14L)))
 }
 
 TestCase('math.Ceil()') {
+	Tester(`(math.Ceil(0L)))
+	Tester(`(math.Ceil(0Lr)))
+	Tester(`(math.Ceil(0.L)))
+	Tester(`(math.Ceil(3L)))
+	Tester(`(math.Ceil(3Lr)))
+	Tester(`(math.Ceil(2/3Lr)))
+	Tester(`(math.Ceil(3.L)))
+	Tester(`(math.Ceil(3.14L)))
+	Tester(`(math.Ceil(-3L)))
+	Tester(`(math.Ceil(-3Lr)))
+	Tester(`(math.Ceil(-2/3Lr)))
+	Tester(`(math.Ceil(-3.L)))
+	Tester(`(math.Ceil(-3.14L)))
 }
 
 TestCase('math.Floor()') {
+	Tester(`(math.Floor(0L)))
+	Tester(`(math.Floor(0Lr)))
+	Tester(`(math.Floor(0.L)))
+	Tester(`(math.Floor(3L)))
+	Tester(`(math.Floor(3Lr)))
+	Tester(`(math.Floor(2/3Lr)))
+	Tester(`(math.Floor(3.L)))
+	Tester(`(math.Floor(3.14L)))
+	Tester(`(math.Floor(-3L)))
+	Tester(`(math.Floor(-3Lr)))
+	Tester(`(math.Floor(-2/3Lr)))
+	Tester(`(math.Floor(-3.L)))
+	Tester(`(math.Floor(-3.14L)))
 }
 
 TestCase('math.Sqrt()') {

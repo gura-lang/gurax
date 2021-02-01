@@ -4,7 +4,7 @@ import(gmp)
 
 [A, B, C, C3over24] = 0L
 
-PQT = struct { P:gmp.mpz, Q:gmp.mpz, T:gmp.mpz }
+PQT = struct { P:gmp.Int, Q:gmp.Int, T:gmp.Int }
 
 ComputePQT(n1:Number, n2:Number) = {
 	if (n1 + 1 == n2) {
@@ -28,14 +28,14 @@ main() = {
 	blockCols = 5
 	blockRows = 20
 	digits = 10000;
-	gmp.mpf.default_prec = Int(digits * math.Log(10) / math.Log(2))
+	gmp.Float.default_prec = Int(digits * math.Log(10) / math.Log(2))
 	n = Int(digits / 14)
 	A:extern = 13591409L
 	B:extern = 545140134L
 	C:extern = 640320L
 	C3over24:extern = C * C * C / 24;
 	PQT = ComputePQT(0, n);
-	pi = math.Sqrt(gmp.mpf(C));
+	pi = math.Sqrt(gmp.Float(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
 	fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'

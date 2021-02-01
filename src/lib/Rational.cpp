@@ -12,21 +12,21 @@ const Rational Rational::Zero;
 String Rational::_formatterFormat("%lld/%lldr");
 String Rational::_formatterFormat_Int("%lldr");
 
-Rational Rational::Regulate() const
+Rational Rational::Canonicalize() const
 {
 	Int64 numer = _numer, denom = _denom;
-	Regulate(&numer, &denom);
+	Canonicalize(&numer, &denom);
 	return Rational(numer, denom);
 }
 
-Rational Rational::RegulateQuick() const
+Rational Rational::CanonicalizeQuick() const
 {
 	Int64 numer = _numer, denom = _denom;
-	RegulateQuick(&numer, &denom);
+	CanonicalizeQuick(&numer, &denom);
 	return Rational(numer, denom);
 }
 
-void Rational::Regulate(Int64* pNumer, Int64* pDenom)
+void Rational::Canonicalize(Int64* pNumer, Int64* pDenom)
 {
 	Int64& numer = *pNumer;
 	Int64& denom = *pDenom;
@@ -46,7 +46,7 @@ void Rational::Regulate(Int64* pNumer, Int64* pDenom)
 	}
 }
 
-void Rational::RegulateQuick(Int64* pNumer, Int64* pDenom)
+void Rational::CanonicalizeQuick(Int64* pNumer, Int64* pDenom)
 {
 	Int64& numer = *pNumer;
 	Int64& denom = *pDenom;
@@ -59,15 +59,15 @@ void Rational::RegulateQuick(Int64* pNumer, Int64* pDenom)
 	}
 }
 
-Rational Rational::MakeRegulated(Int64 numer, Int64 denom)
+Rational Rational::MakeCanonicalized(Int64 numer, Int64 denom)
 {
-	Regulate(&numer, &denom);
+	Canonicalize(&numer, &denom);
 	return Rational(numer, denom);
 }
 
-Rational Rational::MakeRegulatedQuick(Int64 numer, Int64 denom)
+Rational Rational::MakeCanonicalizedQuick(Int64 numer, Int64 denom)
 {
-	RegulateQuick(&numer, &denom);
+	CanonicalizeQuick(&numer, &denom);
 	return Rational(numer, denom);
 }
 
@@ -90,12 +90,12 @@ String Rational::ToString(const StringStyle& ss) const
 
 Rational Rational::operator+() const
 {
-	return Regulate();
+	return Canonicalize();
 }
 
 Rational Rational::operator-() const
 {
-	return Rational::MakeRegulated(-_numer, _denom);
+	return Rational::MakeCanonicalized(-_numer, _denom);
 }
 
 Rational& Rational::operator+=(const Rational& rat)
@@ -106,11 +106,11 @@ Rational& Rational::operator+=(const Rational& rat)
 		_numer = 0, _denom = 1;
 	} else if (denomL == denomR) {
 		_numer = numerL + numerR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	} else {
 		_numer = numerL * denomR + numerR * denomL;
 		_denom = denomL * denomR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	}
 	return *this;
 }
@@ -123,11 +123,11 @@ Rational& Rational::operator-=(const Rational& rat)
 		_numer = 0, _denom = 1;
 	} else if (denomL == denomR) {
 		_numer = numerL - numerR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	} else {
 		_numer = numerL * denomR - numerR * denomL;
 		_denom = denomL * denomR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	}
 	return *this;
 }
@@ -141,7 +141,7 @@ Rational& Rational::operator*=(const Rational& rat)
 	} else {
 		_numer = numerL * numerR;
 		_denom = denomL * denomR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	}
 	return *this;
 }
@@ -155,7 +155,7 @@ Rational& Rational::operator/=(const Rational& rat)
 	} else {
 		_numer = numerL * denomR;
 		_denom = denomL * numerR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	}
 	return *this;
 }
@@ -171,7 +171,7 @@ Rational& Rational::operator/=(Double num)
 	} else {
 		_numer = numerL;
 		_denom = denomL * numerR;
-		Regulate(&_numer, &_denom);
+		Canonicalize(&_numer, &_denom);
 	}
 	return *this;
 }
@@ -187,7 +187,7 @@ Rational operator/(Double numL, const Rational& ratR)
 	if (numerR != 0) {
 		numer = numerL * denomR;
 		denom = numerR;
-		Rational::Regulate(&numer, &denom);
+		Rational::Canonicalize(&numer, &denom);
 	}
 	return Rational(numer, denom);
 

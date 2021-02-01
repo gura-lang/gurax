@@ -144,6 +144,8 @@ void VType_mpq::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(mpq, denom));
 	Assign(Gurax_CreateProperty(mpq, numer));
 	Assign(Gurax_CreateProperty(mpq, sign));
+	// Assignment of VType with alias name
+	frameOuter.Assign("Rational", new Value_VType(VTYPE_mpq));
 }
 
 Value* VType_mpq::DoCastFrom(const Value& value, DeclArg::Flags flags) const

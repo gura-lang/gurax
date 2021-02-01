@@ -540,6 +540,15 @@ public:
 	}
 };
 
+template<>
+class OpEntry_math_Ceil_T<Value_mpz, Value_mpz> : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = Value_mpz::GetEntity(value);
+		return new Value_mpz(num);
+	}
+};
+
 template<typename T_ValueRtn, typename T_Value>
 class OpEntry_math_Floor_T : public OpEntry {
 public:
@@ -547,6 +556,15 @@ public:
 		auto& num = T_Value::GetEntity(value);
 		return new T_ValueRtn(::floor(num));
 
+	}
+};
+
+template<>
+class OpEntry_math_Floor_T<Value_mpz, Value_mpz> : public OpEntry {
+public:
+	virtual Value* EvalUnary(Processor& processor, Value& value) const {
+		auto& num = Value_mpz::GetEntity(value);
+		return new Value_mpz(num);
 	}
 };
 
@@ -769,11 +787,11 @@ void AssignOperators()
 	AssignOpUnary_T(math_Abs, mpq, mpq);
 	AssignOpUnary_T(math_Abs, mpf, mpf);
 	// math.Ceil
-	//AssignOpUnary_T(math_Ceil, mpz, mpz);
+	AssignOpUnary_T(math_Ceil, mpz, mpz);
 	//AssignOpUnary_T(math_Ceil, mpq, mpq);
 	AssignOpUnary_T(math_Ceil, mpf, mpf);
 	// math.Floor
-	//AssignOpUnary_T(math_Floor, mpz, mpz);
+	AssignOpUnary_T(math_Floor, mpz, mpz);
 	//AssignOpUnary_T(math_Floor, mpq, mpq);
 	AssignOpUnary_T(math_Floor, mpf, mpf);
 	// math.Sqrt
