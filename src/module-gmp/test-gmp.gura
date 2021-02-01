@@ -136,5 +136,59 @@ TestCase('math.Sqrt()') {
 	Tester(`(math.Sqrt(12345.L)))
 }
 
-TestCase('gmp.Random') {
+TestCase('gmp.Random##Float()') {
+	r = gmp.Random(0)
+	Tester(`(r.Float()))
+	Tester(`(r.Float()))
+	Tester(`(r.Float()))
+	Tester(`(r.Float()))
+	Tester(`(r.Float()))
+	gmp.Random.seed = 0
+	Tester(`(gmp.Random.Float()))
+	Tester(`(gmp.Random.Float()))
+	Tester(`(gmp.Random.Float()))
+	Tester(`(gmp.Random.Float()))
+	Tester(`(gmp.Random.Float()))
+}
+
+TestCase('gmp.Random##FloatSeq()') {
+	r = gmp.Random(0)
+	Tester(`[r.FloatSeq(5)*])
+}
+
+TestCase('gmp.Random##Int()') {
+	r = gmp.Random(0)
+	Tester(`(r.Int(10)))
+	Tester(`(r.Int(10)))
+	Tester(`(r.Int(10)))
+	Tester(`(r.Int(10)))
+	Tester(`(r.Int(10)))
+	Tester(`(r.Int(1234567890123456789L)))
+	gmp.Random.seed = 0
+	Tester(`(gmp.Random.Int(10)))
+	Tester(`(gmp.Random.Int(10)))
+	Tester(`(gmp.Random.Int(10)))
+	Tester(`(gmp.Random.Int(10)))
+	Tester(`(gmp.Random.Int(10)))
+	Tester(`(gmp.Random.Int(1234567890123456789L)))
+}
+
+TestCase('gmp.Random##IntBits()') {
+	r = gmp.Random(0)
+	Tester(`(r.IntBits(4)))
+	Tester(`(r.IntBits(4)))
+	Tester(`(r.IntBits(4)))
+	Tester(`(r.IntBits(4)))
+	Tester(`(r.IntBits(4)))
+	gmp.Random.seed = 0
+	Tester(`(gmp.Random.IntBits(4)))
+	Tester(`(gmp.Random.IntBits(4)))
+	Tester(`(gmp.Random.IntBits(4)))
+	Tester(`(gmp.Random.IntBits(4)))
+	Tester(`(gmp.Random.IntBits(4)))
+}
+
+TestCase('gmp.Random##IntSeq()') {
+	r = gmp.Random(0)
+	Tester(`[r.IntSeq(10, 5)*])
 }
