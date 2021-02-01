@@ -6,10 +6,10 @@ import(util.tester) {*}
 import(gmp)
 
 TestCase('Property') {
-	gmp.Int.PrintPropSlots()
-	gmp.Rational.PrintPropSlots()
 	gmp.Float.PrintPropSlots()
+	gmp.Int.PrintPropSlots()
 	gmp.Random.PrintPropSlots()
+	gmp.Rational.PrintPropSlots()
 }
 
 TestCase('gmp.Int') {

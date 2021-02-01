@@ -33,12 +33,12 @@ Gurax_ImplementSuffixMgr_Eval(Number, L)
 {
 	if (::strchr(str, '.')  || ::strchr(str, 'e') || ::strchr(str, 'E')) {
 		mpf_class num;
-		if (num.set_str(str, 0) == 0) return new Value_mpf(std::move(num));
-		Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpf value");
+		if (num.set_str(str, 0) == 0) return new Value_Float(std::move(num));
+		Error::Issue(ErrorType::ValueError, "invalid format for gmp.Float value");
 	} else {
 		mpz_class num;
-		if (num.set_str(str, 0) == 0) return new Value_mpz(std::move(num));
-		Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpz value");
+		if (num.set_str(str, 0) == 0) return new Value_Int(std::move(num));
+		Error::Issue(ErrorType::ValueError, "invalid format for gmp.Int value");
 	}
 	return Value::nil();
 
@@ -47,8 +47,8 @@ Gurax_ImplementSuffixMgr_Eval(Number, L)
 Gurax_ImplementSuffixMgr_Eval(Number, Lr)
 {
 	mpq_class num;
-	if (num.set_str(str, 0) == 0) return new Value_mpq(std::move(num));
-	Error::Issue(ErrorType::ValueError, "invalid format for gmp.mpq value");
+	if (num.set_str(str, 0) == 0) return new Value_Rational(std::move(num));
+	Error::Issue(ErrorType::ValueError, "invalid format for gmp.Rational value");
 	return Value::nil();
 }
 
@@ -63,9 +63,9 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_mpf);
-	Assign(VTYPE_mpq);
-	Assign(VTYPE_mpz);
+	Assign(VTYPE_Float);
+	Assign(VTYPE_Rational);
+	Assign(VTYPE_Int);
 	Assign(VTYPE_Random);
 	// Assignment of function
 	//Assign(Gurax_CreateFunction(Test));

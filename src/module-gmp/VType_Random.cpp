@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// gmp.Random(seed?:gmp.mpz) {block?}
+// gmp.Random(seed?:gmp.Int) {block?}
 Gurax_DeclareConstructor(Random)
 {
 	Declare(VTYPE_Rational, Flag::None);
-	DeclareArg("seed", VTYPE_mpz, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("seed", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -44,7 +44,7 @@ Gurax_ImplementConstructor(Random)
 	ArgPicker args(argument);
 	bool validFlag_seed = false;
 	mpz_class seed;
-	if (validFlag_seed = args.IsValid()) seed = args.Pick<Value_mpz>().GetEntity();
+	if (validFlag_seed = args.IsValid()) seed = args.Pick<Value_Int>().GetEntity();
 	// Function body
 	RefPtr<Random> pRandom(new Random());
 	if (validFlag_seed) pRandom->SetSeed(seed);
@@ -58,10 +58,10 @@ Gurax_ImplementConstructor(Random)
 Gurax_DeclareHybridMethod(Random, Float)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("prec", VTYPE_mpz, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("prec", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Generates a random number as an instance of gmp.mpf.\n");
+		"Generates a random number as an instance of gmp.Float.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Float)
@@ -74,7 +74,7 @@ Gurax_ImplementHybridMethod(Random, Float)
 	ArgPicker args(argument);
 	mp_bitcnt_t prec = args.IsValid()? args.PickNumber<mp_bitcnt_t>() : ::mpf_get_default_prec();
 	// Function body
-	return new Value_mpf(random.GenFloat(prec));
+	return new Value_Float(random.GenFloat(prec));
 }
 
 // Random##FloatSeq(cnt?:Number, prec?:Number) {block?}
@@ -110,14 +110,14 @@ Gurax_ImplementHybridMethod(Random, FloatSeq)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// gmp.Random##Int(range:gmp.mpz)
+// gmp.Random##Int(range:gmp.Int)
 Gurax_DeclareHybridMethod(Random, Int)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("range", VTYPE_mpz, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("range", VTYPE_Int, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Generates a random number as an instance of gmp.mpz.\n");
+		"Generates a random number as an instance of gmp.Int.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, Int)
@@ -128,9 +128,9 @@ Gurax_ImplementHybridMethod(Random, Int)
 		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
 	// Arguments
 	ArgPicker args(argument);
-	mpz_class& range = args.Pick<Value_mpz>().GetEntity();
+	mpz_class& range = args.Pick<Value_Int>().GetEntity();
 	// Function body
-	return new Value_mpz(random.GenInt(range));
+	return new Value_Int(random.GenInt(range));
 }
 
 // gmp.Random##IntBits(bits:Number)
@@ -140,7 +140,7 @@ Gurax_DeclareHybridMethod(Random, IntBits)
 	DeclareArg("bits", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Generates a random number as an instance of gmp.mpz.\n");
+		"Generates a random number as an instance of gmp.Int.\n");
 }
 
 Gurax_ImplementHybridMethod(Random, IntBits)
@@ -153,14 +153,14 @@ Gurax_ImplementHybridMethod(Random, IntBits)
 	ArgPicker args(argument);
 	mp_bitcnt_t bits = args.PickNumber<mp_bitcnt_t>();
 	// Function body
-	return new Value_mpz(random.GenIntBits(bits));
+	return new Value_Int(random.GenIntBits(bits));
 }
 
-// gmp.Random##IntSeq(range:gmp.mpz, cnt?:Number) {block?}
+// gmp.Random##IntSeq(range:gmp.Int, cnt?:Number) {block?}
 Gurax_DeclareHybridMethod(Random, IntSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("range", VTYPE_mpz, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("range", VTYPE_Int, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -181,7 +181,7 @@ Gurax_ImplementHybridMethod(Random, IntSeq)
 		dynamic_cast<Value_Random&>(valueThis).GetEntity() : VType_Random::GetRandomGlobal();
 	// Arguments
 	ArgPicker args(argument);
-	mpz_class& range = args.Pick<Value_mpz>().GetEntity();
+	mpz_class& range = args.Pick<Value_Int>().GetEntity();
 	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
@@ -195,7 +195,7 @@ Gurax_ImplementHybridMethod(Random, IntSeq)
 // gmp.Random##seed
 Gurax_DeclareHybridProperty_W(Random, seed)
 {
-	Declare(VTYPE_mpz, Flag::None);
+	Declare(VTYPE_Int, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -205,7 +205,7 @@ Gurax_ImplementHybridPropertySetter(Random, seed)
 {
 	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueTarget).GetEntity() : VType_Random::GetRandomGlobal();
-	random.SetSeed(Value_mpz::GetEntity(value));
+	random.SetSeed(Value_Int::GetEntity(value));
 }
 
 //------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ Value* VType_Random::Iterator_FloatSeq::DoNextValue()
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
-	return new Value_mpf(_pRandom->GenFloat(_prec));
+	return new Value_Float(_pRandom->GenFloat(_prec));
 }
 
 String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
@@ -261,7 +261,7 @@ Value* VType_Random::Iterator_IntSeq::DoNextValue()
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
-	return new Value_mpz(_pRandom->GenInt(_range));
+	return new Value_Int(_pRandom->GenInt(_range));
 }
 
 String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const

@@ -7,9 +7,9 @@
 #include <gmpxx.h>
 #include "Util.h"
 #include "Random.h"
-#include "VType_mpf.h"
-#include "VType_mpq.h"
-#include "VType_mpz.h"
+#include "VType_Float.h"
+#include "VType_Rational.h"
+#include "VType_Int.h"
 #include "VType_Random.h"
 
 Gurax_BeginModuleHeader(gmp)

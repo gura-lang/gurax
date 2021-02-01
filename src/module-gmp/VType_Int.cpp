@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_mpz.cpp
+// VType_Int.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,32 +27,32 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// gmp.mpz(num:gmp.mpz) {block?}
-Gurax_DeclareConstructor(mpz)
+// gmp.Int(num:gmp.Int) {block?}
+Gurax_DeclareConstructor(Int)
 {
 	Declare(VTYPE_Rational, Flag::None);
-	DeclareArg("num", VTYPE_mpz, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("num", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `gmp.mpz` instance.");
+		"Creates a `gmp.Int` instance.");
 }
 
-Gurax_ImplementConstructor(mpz)
+Gurax_ImplementConstructor(Int)
 {
 	// Arguments
 	ArgPicker args(argument);
 	mpz_class num;
-	if (args.IsValid()) num = args.Pick<Value_mpz>().GetEntity();
+	if (args.IsValid()) num = args.Pick<Value_Int>().GetEntity();
 	// Function body
-	return argument.ReturnValue(processor, new Value_mpz(std::move(num)));
+	return argument.ReturnValue(processor, new Value_Int(std::move(num)));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gmp.mpz#get_str(base?:Number)
-Gurax_DeclareMethod(mpz, get_str)
+// gmp.Int#get_str(base?:Number)
+Gurax_DeclareMethod(Int, get_str)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -61,7 +61,7 @@ Gurax_DeclareMethod(mpz, get_str)
 		"Converts to a string.\n");
 }
 
-Gurax_ImplementMethod(mpz, get_str)
+Gurax_ImplementMethod(Int, get_str)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -72,8 +72,8 @@ Gurax_ImplementMethod(mpz, get_str)
 	return new Value_String(valueThis.GetEntity().get_str(base));
 }
 
-// gmp.mpz#set_str(str:String, base?:Number):reduce
-Gurax_DeclareMethod(mpz, set_str)
+// gmp.Int#set_str(str:String, base?:Number):reduce
+Gurax_DeclareMethod(Int, set_str)
 {
 	Declare(VTYPE_Nil, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -83,7 +83,7 @@ Gurax_DeclareMethod(mpz, set_str)
 		"Converts to a string.\n");
 }
 
-Gurax_ImplementMethod(mpz, set_str)
+Gurax_ImplementMethod(Int, set_str)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -94,7 +94,7 @@ Gurax_ImplementMethod(mpz, set_str)
 	// Function body
 	int rtn = valueThis.GetEntity().set_str(str, base);
 	if (rtn < 0) {
-		Error::Issue(ErrorType::FormatError, "invalid format for mpz value");
+		Error::Issue(ErrorType::FormatError, "invalid format for Int value");
 		return Value::nil();
 	}
 	return valueThis.Reference();
@@ -103,8 +103,8 @@ Gurax_ImplementMethod(mpz, set_str)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gmp.mpz#sign
-Gurax_DeclareProperty_R(mpz, sign)
+// gmp.Int#sign
+Gurax_DeclareProperty_R(Int, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -112,55 +112,53 @@ Gurax_DeclareProperty_R(mpz, sign)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpz, sign)
+Gurax_ImplementPropertyGetter(Int, sign)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(mpz_sgn(valueThis.GetEntity().get_mpz_t()));
 }
 
 //------------------------------------------------------------------------------
-// VType_mpz
+// VType_Int
 //------------------------------------------------------------------------------
-VType_mpz VTYPE_mpz("mpz");
+VType_Int VTYPE_Int("Int");
 
-void VType_mpz::DoPrepare(Frame& frameOuter)
+void VType_Int::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(mpz));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Int));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(mpz, get_str));
-	Assign(Gurax_CreateMethod(mpz, set_str));
+	Assign(Gurax_CreateMethod(Int, get_str));
+	Assign(Gurax_CreateMethod(Int, set_str));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(mpz, sign));
-	// Assignment of VType with alias name
-	frameOuter.Assign("Int", new Value_VType(VTYPE_mpz));
+	Assign(Gurax_CreateProperty(Int, sign));
 }
 
-Value* VType_mpz::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Int::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	mpz_t num;
 	mpz_init(num);
 	if (value.IsInstanceOf(VTYPE_Number)) {
 		::mpz_set_d(num, Value_Number::GetNumber<Double>(value));
-		return new Value_mpz(mpz_class(num));
-	} else if (value.IsInstanceOf(VTYPE_mpq)) {
-		::mpz_set_q(num, Value_mpq::GetEntity(value).get_mpq_t());
-		return new Value_mpz(mpz_class(num));
-	} else if (value.IsInstanceOf(VTYPE_mpf)) {
-		::mpz_set_f(num, Value_mpf::GetEntity(value).get_mpf_t());
-		return new Value_mpz(mpz_class(num));
+		return new Value_Int(mpz_class(num));
+	} else if (value.IsInstanceOf(VTYPE_Rational)) {
+		::mpz_set_q(num, Value_Rational::GetEntity(value).get_mpq_t());
+		return new Value_Int(mpz_class(num));
+	} else if (value.IsInstanceOf(VTYPE_Float)) {
+		::mpz_set_f(num, Value_Float::GetEntity(value).get_mpf_t());
+		return new Value_Int(mpz_class(num));
 	}
 	return nullptr;
 }
 
 //------------------------------------------------------------------------------
-// Value_mpz
+// Value_Int
 //------------------------------------------------------------------------------
-VType& Value_mpz::vtype = VTYPE_mpz;
+VType& Value_Int::vtype = VTYPE_Int;
 
-String Value_mpz::ToString(const StringStyle& ss) const
+String Value_Int::ToString(const StringStyle& ss) const
 {
 	String strEntity = GetEntity().get_str();
 	strEntity += "L";
@@ -168,22 +166,22 @@ String Value_mpz::ToString(const StringStyle& ss) const
 	return strEntity;
 }
 
-bool Value_mpz::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value_Int::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(10).c_str());
 }
 
-bool Value_mpz::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value_Int::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(2).c_str());
 }
 
-bool Value_mpz::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value_Int::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(8).c_str());
 }
 
-bool Value_mpz::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value_Int::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetEntity().get_str(16).c_str());
 }

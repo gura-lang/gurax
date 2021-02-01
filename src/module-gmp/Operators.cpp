@@ -541,11 +541,11 @@ public:
 };
 
 template<>
-class OpEntry_math_Ceil_T<Value_mpz, Value_mpz> : public OpEntry {
+class OpEntry_math_Ceil_T<Value_Int, Value_Int> : public OpEntry {
 public:
 	virtual Value* EvalUnary(Processor& processor, Value& value) const {
-		auto& num = Value_mpz::GetEntity(value);
-		return new Value_mpz(num);
+		auto& num = Value_Int::GetEntity(value);
+		return new Value_Int(num);
 	}
 };
 
@@ -560,11 +560,11 @@ public:
 };
 
 template<>
-class OpEntry_math_Floor_T<Value_mpz, Value_mpz> : public OpEntry {
+class OpEntry_math_Floor_T<Value_Int, Value_Int> : public OpEntry {
 public:
 	virtual Value* EvalUnary(Processor& processor, Value& value) const {
-		auto& num = Value_mpz::GetEntity(value);
-		return new Value_mpz(num);
+		auto& num = Value_Int::GetEntity(value);
+		return new Value_Int(num);
 	}
 };
 
@@ -581,223 +581,223 @@ public:
 void AssignOperators()
 {
 	// Inv: ~num
-	AssignOpUnary_T(Inv, mpz, mpz);
+	AssignOpUnary_T(Inv, Int, Int);
 	// Neg: -num
-	AssignOpUnary_T(Neg, mpz, mpz);
-	AssignOpUnary_T(Neg, mpq, mpq);
-	AssignOpUnary_T(Neg, mpf, mpf);
+	AssignOpUnary_T(Neg, Int, Int);
+	AssignOpUnary_T(Neg, Rational, Rational);
+	AssignOpUnary_T(Neg, Float, Float);
 	// Not: !num
-	AssignOpUnary_T(Not, Bool, mpz);
-	AssignOpUnary_T(Not, Bool, mpq);
-	AssignOpUnary_T(Not, Bool, mpf);
+	AssignOpUnary_T(Not, Bool, Int);
+	AssignOpUnary_T(Not, Bool, Rational);
+	AssignOpUnary_T(Not, Bool, Float);
 	// Add: num + num
-	AssignOpBinary_T(Add, mpz, mpz, mpz);
-	AssignOpBinary_T(Add, mpq, mpz, mpq);
-	AssignOpBinary_T(Add, mpf, mpz, mpf);
-	AssignOpBinary_T(Add, mpz, mpz, Number);
-	AssignOpBinary_T(Add, mpq, mpq, mpz);
-	AssignOpBinary_T(Add, mpq, mpq, mpq);
-	AssignOpBinary_T(Add, mpf, mpq, mpf);
-	AssignOpBinary_T(Add, mpq, mpq, Number);
-	AssignOpBinary_T(Add, mpf, mpf, mpz);
-	AssignOpBinary_T(Add, mpf, mpf, mpq);
-	AssignOpBinary_T(Add, mpf, mpf, mpf);
-	AssignOpBinary_T(Add, mpf, mpf, Number);
-	AssignOpBinary_T(Add, mpz, Number, mpz);
-	AssignOpBinary_T(Add, mpq, Number, mpq);
-	AssignOpBinary_T(Add, mpf, Number, mpf);
+	AssignOpBinary_T(Add, Int, Int, Int);
+	AssignOpBinary_T(Add, Rational, Int, Rational);
+	AssignOpBinary_T(Add, Float, Int, Float);
+	AssignOpBinary_T(Add, Int, Int, Number);
+	AssignOpBinary_T(Add, Rational, Rational, Int);
+	AssignOpBinary_T(Add, Rational, Rational, Rational);
+	AssignOpBinary_T(Add, Float, Rational, Float);
+	AssignOpBinary_T(Add, Rational, Rational, Number);
+	AssignOpBinary_T(Add, Float, Float, Int);
+	AssignOpBinary_T(Add, Float, Float, Rational);
+	AssignOpBinary_T(Add, Float, Float, Float);
+	AssignOpBinary_T(Add, Float, Float, Number);
+	AssignOpBinary_T(Add, Int, Number, Int);
+	AssignOpBinary_T(Add, Rational, Number, Rational);
+	AssignOpBinary_T(Add, Float, Number, Float);
 	// Sub: num - num
-	AssignOpBinary_T(Sub, mpz, mpz, mpz);
-	AssignOpBinary_T(Sub, mpq, mpz, mpq);
-	AssignOpBinary_T(Sub, mpf, mpz, mpf);
-	AssignOpBinary_T(Sub, mpz, mpz, Number);
-	AssignOpBinary_T(Sub, mpq, mpq, mpz);
-	AssignOpBinary_T(Sub, mpq, mpq, mpq);
-	AssignOpBinary_T(Sub, mpf, mpq, mpf);
-	AssignOpBinary_T(Sub, mpq, mpq, Number);
-	AssignOpBinary_T(Sub, mpf, mpf, mpz);
-	AssignOpBinary_T(Sub, mpf, mpf, mpq);
-	AssignOpBinary_T(Sub, mpf, mpf, mpf);
-	AssignOpBinary_T(Sub, mpf, mpf, Number);
-	AssignOpBinary_T(Sub, mpz, Number, mpz);
-	AssignOpBinary_T(Sub, mpq, Number, mpq);
-	AssignOpBinary_T(Sub, mpf, Number, mpf);
+	AssignOpBinary_T(Sub, Int, Int, Int);
+	AssignOpBinary_T(Sub, Rational, Int, Rational);
+	AssignOpBinary_T(Sub, Float, Int, Float);
+	AssignOpBinary_T(Sub, Int, Int, Number);
+	AssignOpBinary_T(Sub, Rational, Rational, Int);
+	AssignOpBinary_T(Sub, Rational, Rational, Rational);
+	AssignOpBinary_T(Sub, Float, Rational, Float);
+	AssignOpBinary_T(Sub, Rational, Rational, Number);
+	AssignOpBinary_T(Sub, Float, Float, Int);
+	AssignOpBinary_T(Sub, Float, Float, Rational);
+	AssignOpBinary_T(Sub, Float, Float, Float);
+	AssignOpBinary_T(Sub, Float, Float, Number);
+	AssignOpBinary_T(Sub, Int, Number, Int);
+	AssignOpBinary_T(Sub, Rational, Number, Rational);
+	AssignOpBinary_T(Sub, Float, Number, Float);
 	// Mul: num * num
-	AssignOpBinary_T(Mul, mpz, mpz, mpz);
-	AssignOpBinary_T(Mul, mpq, mpz, mpq);
-	AssignOpBinary_T(Mul, mpf, mpz, mpf);
-	AssignOpBinary_T(Mul, mpz, mpz, Number);
-	AssignOpBinary_T(Mul, mpq, mpq, mpz);
-	AssignOpBinary_T(Mul, mpq, mpq, mpq);
-	AssignOpBinary_T(Mul, mpf, mpq, mpf);
-	AssignOpBinary_T(Mul, mpq, mpq, Number);
-	AssignOpBinary_T(Mul, mpf, mpf, mpz);
-	AssignOpBinary_T(Mul, mpf, mpf, mpq);
-	AssignOpBinary_T(Mul, mpf, mpf, mpf);
-	AssignOpBinary_T(Mul, mpf, mpf, Number);
-	AssignOpBinary_T(Mul, mpz, Number, mpz);
-	AssignOpBinary_T(Mul, mpq, Number, mpq);
-	AssignOpBinary_T(Mul, mpf, Number, mpf);
+	AssignOpBinary_T(Mul, Int, Int, Int);
+	AssignOpBinary_T(Mul, Rational, Int, Rational);
+	AssignOpBinary_T(Mul, Float, Int, Float);
+	AssignOpBinary_T(Mul, Int, Int, Number);
+	AssignOpBinary_T(Mul, Rational, Rational, Int);
+	AssignOpBinary_T(Mul, Rational, Rational, Rational);
+	AssignOpBinary_T(Mul, Float, Rational, Float);
+	AssignOpBinary_T(Mul, Rational, Rational, Number);
+	AssignOpBinary_T(Mul, Float, Float, Int);
+	AssignOpBinary_T(Mul, Float, Float, Rational);
+	AssignOpBinary_T(Mul, Float, Float, Float);
+	AssignOpBinary_T(Mul, Float, Float, Number);
+	AssignOpBinary_T(Mul, Int, Number, Int);
+	AssignOpBinary_T(Mul, Rational, Number, Rational);
+	AssignOpBinary_T(Mul, Float, Number, Float);
 	// Div: num / num
-	AssignOpBinary_T(Div, mpz, mpz, mpz);
-	AssignOpBinary_T(Div, mpq, mpz, mpq);
-	AssignOpBinary_T(Div, mpf, mpz, mpf);
-	AssignOpBinary_T(Div, mpz, mpz, Number);
-	AssignOpBinary_T(Div, mpq, mpq, mpz);
-	AssignOpBinary_T(Div, mpq, mpq, mpq);
-	AssignOpBinary_T(Div, mpf, mpq, mpf);
-	AssignOpBinary_T(Div, mpq, mpq, Number);
-	AssignOpBinary_T(Div, mpf, mpf, mpz);
-	AssignOpBinary_T(Div, mpf, mpf, mpq);
-	AssignOpBinary_T(Div, mpf, mpf, mpf);
-	AssignOpBinary_T(Div, mpf, mpf, Number);
-	AssignOpBinary_T(Div, mpz, Number, mpz);
-	AssignOpBinary_T(Div, mpq, Number, mpq);
-	AssignOpBinary_T(Div, mpf, Number, mpf);
+	AssignOpBinary_T(Div, Int, Int, Int);
+	AssignOpBinary_T(Div, Rational, Int, Rational);
+	AssignOpBinary_T(Div, Float, Int, Float);
+	AssignOpBinary_T(Div, Int, Int, Number);
+	AssignOpBinary_T(Div, Rational, Rational, Int);
+	AssignOpBinary_T(Div, Rational, Rational, Rational);
+	AssignOpBinary_T(Div, Float, Rational, Float);
+	AssignOpBinary_T(Div, Rational, Rational, Number);
+	AssignOpBinary_T(Div, Float, Float, Int);
+	AssignOpBinary_T(Div, Float, Float, Rational);
+	AssignOpBinary_T(Div, Float, Float, Float);
+	AssignOpBinary_T(Div, Float, Float, Number);
+	AssignOpBinary_T(Div, Int, Number, Int);
+	AssignOpBinary_T(Div, Rational, Number, Rational);
+	AssignOpBinary_T(Div, Float, Number, Float);
 	// Mod: num % num
-	AssignOpBinary_T(Mod, mpz, mpz, mpz);
-	AssignOpBinary_T(Mod, mpz, mpz, Number);
-	AssignOpBinary_T(Mod, mpz, Number, mpz);
+	AssignOpBinary_T(Mod, Int, Int, Int);
+	AssignOpBinary_T(Mod, Int, Int, Number);
+	AssignOpBinary_T(Mod, Int, Number, Int);
 	// And: num & num
-	AssignOpBinary_T(And, mpz, mpz, mpz);
-	AssignOpBinary_T(And, mpz, mpz, Number);
-	AssignOpBinary_T(And, mpz, Number, mpz);
+	AssignOpBinary_T(And, Int, Int, Int);
+	AssignOpBinary_T(And, Int, Int, Number);
+	AssignOpBinary_T(And, Int, Number, Int);
 	// Or: num | num
-	AssignOpBinary_T(Or, mpz, mpz, mpz);
-	AssignOpBinary_T(Or, mpz, mpz, Number);
-	AssignOpBinary_T(Or, mpz, Number, mpz);
+	AssignOpBinary_T(Or, Int, Int, Int);
+	AssignOpBinary_T(Or, Int, Int, Number);
+	AssignOpBinary_T(Or, Int, Number, Int);
 	// Xor: num | num
-	AssignOpBinary_T(Xor, mpz, mpz, mpz);
-	AssignOpBinary_T(Xor, mpz, mpz, Number);
-	AssignOpBinary_T(Xor, mpz, Number, mpz);
+	AssignOpBinary_T(Xor, Int, Int, Int);
+	AssignOpBinary_T(Xor, Int, Int, Number);
+	AssignOpBinary_T(Xor, Int, Number, Int);
 	// Eq: num == num
-	AssignOpBinary_T(Eq, Bool, mpz, mpz);
-	AssignOpBinary_T(Eq, Bool, mpz, mpq);
-	AssignOpBinary_T(Eq, Bool, mpz, mpf);
-	AssignOpBinary_T(Eq, Bool, mpz, Number);
-	AssignOpBinary_T(Eq, Bool, mpq, mpz);
-	AssignOpBinary_T(Eq, Bool, mpq, mpq);
-	AssignOpBinary_T(Eq, Bool, mpq, mpf);
-	AssignOpBinary_T(Eq, Bool, mpq, Number);
-	AssignOpBinary_T(Eq, Bool, mpf, mpz);
-	AssignOpBinary_T(Eq, Bool, mpf, mpq);
-	AssignOpBinary_T(Eq, Bool, mpf, mpf);
-	AssignOpBinary_T(Eq, Bool, mpf, Number);
-	AssignOpBinary_T(Eq, Bool, Number, mpz);
-	AssignOpBinary_T(Eq, Bool, Number, mpq);
-	AssignOpBinary_T(Eq, Bool, Number, mpf);
+	AssignOpBinary_T(Eq, Bool, Int, Int);
+	AssignOpBinary_T(Eq, Bool, Int, Rational);
+	AssignOpBinary_T(Eq, Bool, Int, Float);
+	AssignOpBinary_T(Eq, Bool, Int, Number);
+	AssignOpBinary_T(Eq, Bool, Rational, Int);
+	AssignOpBinary_T(Eq, Bool, Rational, Rational);
+	AssignOpBinary_T(Eq, Bool, Rational, Float);
+	AssignOpBinary_T(Eq, Bool, Rational, Number);
+	AssignOpBinary_T(Eq, Bool, Float, Int);
+	AssignOpBinary_T(Eq, Bool, Float, Rational);
+	AssignOpBinary_T(Eq, Bool, Float, Float);
+	AssignOpBinary_T(Eq, Bool, Float, Number);
+	AssignOpBinary_T(Eq, Bool, Number, Int);
+	AssignOpBinary_T(Eq, Bool, Number, Rational);
+	AssignOpBinary_T(Eq, Bool, Number, Float);
 	// Ne: num != num
-	AssignOpBinary_T(Ne, Bool, mpz, mpz);
-	AssignOpBinary_T(Ne, Bool, mpz, mpq);
-	AssignOpBinary_T(Ne, Bool, mpz, mpf);
-	AssignOpBinary_T(Ne, Bool, mpz, Number);
-	AssignOpBinary_T(Ne, Bool, mpq, mpz);
-	AssignOpBinary_T(Ne, Bool, mpq, mpq);
-	AssignOpBinary_T(Ne, Bool, mpq, mpf);
-	AssignOpBinary_T(Ne, Bool, mpq, Number);
-	AssignOpBinary_T(Ne, Bool, mpf, mpz);
-	AssignOpBinary_T(Ne, Bool, mpf, mpq);
-	AssignOpBinary_T(Ne, Bool, mpf, mpf);
-	AssignOpBinary_T(Ne, Bool, mpf, Number);
-	AssignOpBinary_T(Ne, Bool, Number, mpz);
-	AssignOpBinary_T(Ne, Bool, Number, mpq);
-	AssignOpBinary_T(Ne, Bool, Number, mpf);
+	AssignOpBinary_T(Ne, Bool, Int, Int);
+	AssignOpBinary_T(Ne, Bool, Int, Rational);
+	AssignOpBinary_T(Ne, Bool, Int, Float);
+	AssignOpBinary_T(Ne, Bool, Int, Number);
+	AssignOpBinary_T(Ne, Bool, Rational, Int);
+	AssignOpBinary_T(Ne, Bool, Rational, Rational);
+	AssignOpBinary_T(Ne, Bool, Rational, Float);
+	AssignOpBinary_T(Ne, Bool, Rational, Number);
+	AssignOpBinary_T(Ne, Bool, Float, Int);
+	AssignOpBinary_T(Ne, Bool, Float, Rational);
+	AssignOpBinary_T(Ne, Bool, Float, Float);
+	AssignOpBinary_T(Ne, Bool, Float, Number);
+	AssignOpBinary_T(Ne, Bool, Number, Int);
+	AssignOpBinary_T(Ne, Bool, Number, Rational);
+	AssignOpBinary_T(Ne, Bool, Number, Float);
 	// Lt: num < num
-	AssignOpBinary_T(Lt, Bool, mpz, mpz);
-	AssignOpBinary_T(Lt, Bool, mpz, mpq);
-	AssignOpBinary_T(Lt, Bool, mpz, mpf);
-	AssignOpBinary_T(Lt, Bool, mpz, Number);
-	AssignOpBinary_T(Lt, Bool, mpq, mpz);
-	AssignOpBinary_T(Lt, Bool, mpq, mpq);
-	AssignOpBinary_T(Lt, Bool, mpq, mpf);
-	AssignOpBinary_T(Lt, Bool, mpq, Number);
-	AssignOpBinary_T(Lt, Bool, mpf, mpz);
-	AssignOpBinary_T(Lt, Bool, mpf, mpq);
-	AssignOpBinary_T(Lt, Bool, mpf, mpf);
-	AssignOpBinary_T(Lt, Bool, mpf, Number);
-	AssignOpBinary_T(Lt, Bool, Number, mpz);
-	AssignOpBinary_T(Lt, Bool, Number, mpq);
-	AssignOpBinary_T(Lt, Bool, Number, mpf);
+	AssignOpBinary_T(Lt, Bool, Int, Int);
+	AssignOpBinary_T(Lt, Bool, Int, Rational);
+	AssignOpBinary_T(Lt, Bool, Int, Float);
+	AssignOpBinary_T(Lt, Bool, Int, Number);
+	AssignOpBinary_T(Lt, Bool, Rational, Int);
+	AssignOpBinary_T(Lt, Bool, Rational, Rational);
+	AssignOpBinary_T(Lt, Bool, Rational, Float);
+	AssignOpBinary_T(Lt, Bool, Rational, Number);
+	AssignOpBinary_T(Lt, Bool, Float, Int);
+	AssignOpBinary_T(Lt, Bool, Float, Rational);
+	AssignOpBinary_T(Lt, Bool, Float, Float);
+	AssignOpBinary_T(Lt, Bool, Float, Number);
+	AssignOpBinary_T(Lt, Bool, Number, Int);
+	AssignOpBinary_T(Lt, Bool, Number, Rational);
+	AssignOpBinary_T(Lt, Bool, Number, Float);
 	// Le: num <= num
-	AssignOpBinary_T(Le, Bool, mpz, mpz);
-	AssignOpBinary_T(Le, Bool, mpz, mpq);
-	AssignOpBinary_T(Le, Bool, mpz, mpf);
-	AssignOpBinary_T(Le, Bool, mpz, Number);
-	AssignOpBinary_T(Le, Bool, mpq, mpz);
-	AssignOpBinary_T(Le, Bool, mpq, mpq);
-	AssignOpBinary_T(Le, Bool, mpq, mpf);
-	AssignOpBinary_T(Le, Bool, mpq, Number);
-	AssignOpBinary_T(Le, Bool, mpf, mpz);
-	AssignOpBinary_T(Le, Bool, mpf, mpq);
-	AssignOpBinary_T(Le, Bool, mpf, mpf);
-	AssignOpBinary_T(Le, Bool, mpf, Number);
-	AssignOpBinary_T(Le, Bool, Number, mpz);
-	AssignOpBinary_T(Le, Bool, Number, mpq);
-	AssignOpBinary_T(Le, Bool, Number, mpf);
+	AssignOpBinary_T(Le, Bool, Int, Int);
+	AssignOpBinary_T(Le, Bool, Int, Rational);
+	AssignOpBinary_T(Le, Bool, Int, Float);
+	AssignOpBinary_T(Le, Bool, Int, Number);
+	AssignOpBinary_T(Le, Bool, Rational, Int);
+	AssignOpBinary_T(Le, Bool, Rational, Rational);
+	AssignOpBinary_T(Le, Bool, Rational, Float);
+	AssignOpBinary_T(Le, Bool, Rational, Number);
+	AssignOpBinary_T(Le, Bool, Float, Int);
+	AssignOpBinary_T(Le, Bool, Float, Rational);
+	AssignOpBinary_T(Le, Bool, Float, Float);
+	AssignOpBinary_T(Le, Bool, Float, Number);
+	AssignOpBinary_T(Le, Bool, Number, Int);
+	AssignOpBinary_T(Le, Bool, Number, Rational);
+	AssignOpBinary_T(Le, Bool, Number, Float);
 	// Gt: num > num
-	AssignOpBinary_T(Gt, Bool, mpz, mpz);
-	AssignOpBinary_T(Gt, Bool, mpz, mpq);
-	AssignOpBinary_T(Gt, Bool, mpz, mpf);
-	AssignOpBinary_T(Gt, Bool, mpz, Number);
-	AssignOpBinary_T(Gt, Bool, mpq, mpz);
-	AssignOpBinary_T(Gt, Bool, mpq, mpq);
-	AssignOpBinary_T(Gt, Bool, mpq, mpf);
-	AssignOpBinary_T(Gt, Bool, mpq, Number);
-	AssignOpBinary_T(Gt, Bool, mpf, mpz);
-	AssignOpBinary_T(Gt, Bool, mpf, mpq);
-	AssignOpBinary_T(Gt, Bool, mpf, mpf);
-	AssignOpBinary_T(Gt, Bool, mpf, Number);
-	AssignOpBinary_T(Gt, Bool, Number, mpz);
-	AssignOpBinary_T(Gt, Bool, Number, mpq);
-	AssignOpBinary_T(Gt, Bool, Number, mpf);
+	AssignOpBinary_T(Gt, Bool, Int, Int);
+	AssignOpBinary_T(Gt, Bool, Int, Rational);
+	AssignOpBinary_T(Gt, Bool, Int, Float);
+	AssignOpBinary_T(Gt, Bool, Int, Number);
+	AssignOpBinary_T(Gt, Bool, Rational, Int);
+	AssignOpBinary_T(Gt, Bool, Rational, Rational);
+	AssignOpBinary_T(Gt, Bool, Rational, Float);
+	AssignOpBinary_T(Gt, Bool, Rational, Number);
+	AssignOpBinary_T(Gt, Bool, Float, Int);
+	AssignOpBinary_T(Gt, Bool, Float, Rational);
+	AssignOpBinary_T(Gt, Bool, Float, Float);
+	AssignOpBinary_T(Gt, Bool, Float, Number);
+	AssignOpBinary_T(Gt, Bool, Number, Int);
+	AssignOpBinary_T(Gt, Bool, Number, Rational);
+	AssignOpBinary_T(Gt, Bool, Number, Float);
 	// Ge: num >= num
-	AssignOpBinary_T(Ge, Bool, mpz, mpz);
-	AssignOpBinary_T(Ge, Bool, mpz, mpq);
-	AssignOpBinary_T(Ge, Bool, mpz, mpf);
-	AssignOpBinary_T(Ge, Bool, mpz, Number);
-	AssignOpBinary_T(Ge, Bool, mpq, mpz);
-	AssignOpBinary_T(Ge, Bool, mpq, mpq);
-	AssignOpBinary_T(Ge, Bool, mpq, mpf);
-	AssignOpBinary_T(Ge, Bool, mpq, Number);
-	AssignOpBinary_T(Ge, Bool, mpf, mpz);
-	AssignOpBinary_T(Ge, Bool, mpf, mpq);
-	AssignOpBinary_T(Ge, Bool, mpf, mpf);
-	AssignOpBinary_T(Ge, Bool, mpf, Number);
-	AssignOpBinary_T(Ge, Bool, Number, mpz);
-	AssignOpBinary_T(Ge, Bool, Number, mpq);
-	AssignOpBinary_T(Ge, Bool, Number, mpf);
+	AssignOpBinary_T(Ge, Bool, Int, Int);
+	AssignOpBinary_T(Ge, Bool, Int, Rational);
+	AssignOpBinary_T(Ge, Bool, Int, Float);
+	AssignOpBinary_T(Ge, Bool, Int, Number);
+	AssignOpBinary_T(Ge, Bool, Rational, Int);
+	AssignOpBinary_T(Ge, Bool, Rational, Rational);
+	AssignOpBinary_T(Ge, Bool, Rational, Float);
+	AssignOpBinary_T(Ge, Bool, Rational, Number);
+	AssignOpBinary_T(Ge, Bool, Float, Int);
+	AssignOpBinary_T(Ge, Bool, Float, Rational);
+	AssignOpBinary_T(Ge, Bool, Float, Float);
+	AssignOpBinary_T(Ge, Bool, Float, Number);
+	AssignOpBinary_T(Ge, Bool, Number, Int);
+	AssignOpBinary_T(Ge, Bool, Number, Rational);
+	AssignOpBinary_T(Ge, Bool, Number, Float);
 	// Cmp: num <=> num
-	AssignOpBinary_T(Cmp, Number, mpz, mpz);
-	AssignOpBinary_T(Cmp, Number, mpz, mpq);
-	AssignOpBinary_T(Cmp, Number, mpz, mpf);
-	AssignOpBinary_T(Cmp, Number, mpz, Number);
-	AssignOpBinary_T(Cmp, Number, mpq, mpz);
-	AssignOpBinary_T(Cmp, Number, mpq, mpq);
-	AssignOpBinary_T(Cmp, Number, mpq, mpf);
-	AssignOpBinary_T(Cmp, Number, mpq, Number);
-	AssignOpBinary_T(Cmp, Number, mpf, mpz);
-	AssignOpBinary_T(Cmp, Number, mpf, mpq);
-	AssignOpBinary_T(Cmp, Number, mpf, mpf);
-	AssignOpBinary_T(Cmp, Number, mpf, Number);
-	AssignOpBinary_T(Cmp, Number, Number, mpz);
-	AssignOpBinary_T(Cmp, Number, Number, mpq);
-	AssignOpBinary_T(Cmp, Number, Number, mpf);
+	AssignOpBinary_T(Cmp, Number, Int, Int);
+	AssignOpBinary_T(Cmp, Number, Int, Rational);
+	AssignOpBinary_T(Cmp, Number, Int, Float);
+	AssignOpBinary_T(Cmp, Number, Int, Number);
+	AssignOpBinary_T(Cmp, Number, Rational, Int);
+	AssignOpBinary_T(Cmp, Number, Rational, Rational);
+	AssignOpBinary_T(Cmp, Number, Rational, Float);
+	AssignOpBinary_T(Cmp, Number, Rational, Number);
+	AssignOpBinary_T(Cmp, Number, Float, Int);
+	AssignOpBinary_T(Cmp, Number, Float, Rational);
+	AssignOpBinary_T(Cmp, Number, Float, Float);
+	AssignOpBinary_T(Cmp, Number, Float, Number);
+	AssignOpBinary_T(Cmp, Number, Number, Int);
+	AssignOpBinary_T(Cmp, Number, Number, Rational);
+	AssignOpBinary_T(Cmp, Number, Number, Float);
 	// math.Abs
-	AssignOpUnary_T(math_Abs, mpz, mpz);
-	AssignOpUnary_T(math_Abs, mpq, mpq);
-	AssignOpUnary_T(math_Abs, mpf, mpf);
+	AssignOpUnary_T(math_Abs, Int, Int);
+	AssignOpUnary_T(math_Abs, Rational, Rational);
+	AssignOpUnary_T(math_Abs, Float, Float);
 	// math.Ceil
-	AssignOpUnary_T(math_Ceil, mpz, mpz);
-	//AssignOpUnary_T(math_Ceil, mpq, mpq);
-	AssignOpUnary_T(math_Ceil, mpf, mpf);
+	AssignOpUnary_T(math_Ceil, Int, Int);
+	//AssignOpUnary_T(math_Ceil, Rational, Rational);
+	AssignOpUnary_T(math_Ceil, Float, Float);
 	// math.Floor
-	AssignOpUnary_T(math_Floor, mpz, mpz);
-	//AssignOpUnary_T(math_Floor, mpq, mpq);
-	AssignOpUnary_T(math_Floor, mpf, mpf);
+	AssignOpUnary_T(math_Floor, Int, Int);
+	//AssignOpUnary_T(math_Floor, Rational, Rational);
+	AssignOpUnary_T(math_Floor, Float, Float);
 	// math.Sqrt
-	AssignOpUnary_T(math_Sqrt, mpz, mpz);
-	//AssignOpUnary_T(math_Sqrt, mpq, mpq);
-	AssignOpUnary_T(math_Sqrt, mpf, mpf);
+	AssignOpUnary_T(math_Sqrt, Int, Int);
+	//AssignOpUnary_T(math_Sqrt, Rational, Rational);
+	AssignOpUnary_T(math_Sqrt, Float, Float);
 }
 
 Gurax_EndModuleScope(gmp)

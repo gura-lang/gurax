@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_mpq.cpp
+// VType_Rational.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,32 +27,32 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// gmp.mpq(num:gmp.mpq) {block?}
-Gurax_DeclareConstructor(mpq)
+// gmp.Rational(num:gmp.Rational) {block?}
+Gurax_DeclareConstructor(Rational)
 {
 	Declare(VTYPE_Rational, Flag::None);
-	DeclareArg("num", VTYPE_mpq, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("num", VTYPE_Rational, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `gmp.mpq` instance.");
+		"Creates a `gmp.Rational` instance.");
 }
 
-Gurax_ImplementConstructor(mpq)
+Gurax_ImplementConstructor(Rational)
 {
 	// Arguments
 	ArgPicker args(argument);
 	mpq_class num;
-	if (args.IsValid()) num = args.Pick<Value_mpq>().GetEntity();
+	if (args.IsValid()) num = args.Pick<Value_Rational>().GetEntity();
 	// Function body
-	return argument.ReturnValue(processor, new Value_mpq(std::move(num)));
+	return argument.ReturnValue(processor, new Value_Rational(std::move(num)));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gmp.mpq#set_str(str:String, base?:Number):reduce
-Gurax_DeclareMethod(mpq, set_str)
+// gmp.Rational#set_str(str:String, base?:Number):reduce
+Gurax_DeclareMethod(Rational, set_str)
 {
 	Declare(VTYPE_Nil, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -62,7 +62,7 @@ Gurax_DeclareMethod(mpq, set_str)
 		"Converts to a string.\n");
 }
 
-Gurax_ImplementMethod(mpq, set_str)
+Gurax_ImplementMethod(Rational, set_str)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -73,7 +73,7 @@ Gurax_ImplementMethod(mpq, set_str)
 	// Function body
 	int rtn = valueThis.GetEntity().set_str(str, base);
 	if (rtn < 0) {
-		Error::Issue(ErrorType::FormatError, "invalid format for mpq value");
+		Error::Issue(ErrorType::FormatError, "invalid format for Rational value");
 		return Value::nil();
 	}
 	return valueThis.Reference();
@@ -82,8 +82,8 @@ Gurax_ImplementMethod(mpq, set_str)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gmp.mpq#denom
-Gurax_DeclareProperty_R(mpq, denom)
+// gmp.Rational#denom
+Gurax_DeclareProperty_R(Rational, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -91,14 +91,14 @@ Gurax_DeclareProperty_R(mpq, denom)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, denom)
+Gurax_ImplementPropertyGetter(Rational, denom)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_mpz(valueThis.GetEntity().get_den());
+	return new Value_Int(valueThis.GetEntity().get_den());
 }
 
-// gmp.mpq#numer
-Gurax_DeclareProperty_R(mpq, numer)
+// gmp.Rational#numer
+Gurax_DeclareProperty_R(Rational, numer)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -106,14 +106,14 @@ Gurax_DeclareProperty_R(mpq, numer)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, numer)
+Gurax_ImplementPropertyGetter(Rational, numer)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_mpz(valueThis.GetEntity().get_num());
+	return new Value_Int(valueThis.GetEntity().get_num());
 }
 
-// gmp.mpq#sign
-Gurax_DeclareProperty_R(mpq, sign)
+// gmp.Rational#sign
+Gurax_DeclareProperty_R(Rational, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -121,56 +121,54 @@ Gurax_DeclareProperty_R(mpq, sign)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(mpq, sign)
+Gurax_ImplementPropertyGetter(Rational, sign)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(mpq_sgn(valueThis.GetEntity().get_mpq_t()));
 }
 
 //------------------------------------------------------------------------------
-// VType_mpq
+// VType_Rational
 //------------------------------------------------------------------------------
-VType_mpq VTYPE_mpq("mpq");
+VType_Rational VTYPE_Rational("Rational");
 
-void VType_mpq::DoPrepare(Frame& frameOuter)
+void VType_Rational::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(mpq));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Rational));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(mpq, set_str));
+	Assign(Gurax_CreateMethod(Rational, set_str));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(mpq, denom));
-	Assign(Gurax_CreateProperty(mpq, numer));
-	Assign(Gurax_CreateProperty(mpq, sign));
-	// Assignment of VType with alias name
-	frameOuter.Assign("Rational", new Value_VType(VTYPE_mpq));
+	Assign(Gurax_CreateProperty(Rational, denom));
+	Assign(Gurax_CreateProperty(Rational, numer));
+	Assign(Gurax_CreateProperty(Rational, sign));
 }
 
-Value* VType_mpq::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Rational::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	mpq_t num;
 	mpq_init(num);
 	if (value.IsInstanceOf(VTYPE_Number)) {
 		::mpq_set_d(num, Value_Number::GetNumber<Double>(value));
-		return new Value_mpq(mpq_class(num));
-	} else if (value.IsInstanceOf(VTYPE_mpz)) {
-		::mpq_set_z(num, Value_mpz::GetEntity(value).get_mpz_t());
-		return new Value_mpq(mpq_class(num));
-	} else if (value.IsInstanceOf(VTYPE_mpf)) {
-		::mpq_set_f(num, Value_mpf::GetEntity(value).get_mpf_t());
-		return new Value_mpq(mpq_class(num));
+		return new Value_Rational(mpq_class(num));
+	} else if (value.IsInstanceOf(VTYPE_Int)) {
+		::mpq_set_z(num, Value_Int::GetEntity(value).get_mpz_t());
+		return new Value_Rational(mpq_class(num));
+	} else if (value.IsInstanceOf(VTYPE_Float)) {
+		::mpq_set_f(num, Value_Float::GetEntity(value).get_mpf_t());
+		return new Value_Rational(mpq_class(num));
 	}
 	return nullptr;
 }
 
 //------------------------------------------------------------------------------
-// Value_mpq
+// Value_Rational
 //------------------------------------------------------------------------------
-VType& Value_mpq::vtype = VTYPE_mpq;
+VType& Value_Rational::vtype = VTYPE_Rational;
 
-String Value_mpq::ToString(const StringStyle& ss) const
+String Value_Rational::ToString(const StringStyle& ss) const
 {
 	String strEntity;
 	strEntity = _entity.get_num().get_str();

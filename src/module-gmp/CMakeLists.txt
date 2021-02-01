@@ -39,10 +39,10 @@ target_sources(gmp.gurd PRIVATE
 	Util.cpp
 	Operators.cpp
 	Random.cpp
-	VType_mpf.cpp
-	VType_mpq.cpp
-	VType_mpz.cpp
-	VType_Random.cpp)
+	VType_Float.cpp
+	VType_Int.cpp
+	VType_Random.cpp
+	VType_Rational.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
