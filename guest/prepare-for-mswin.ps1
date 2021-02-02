@@ -379,6 +379,21 @@ class Package_sdl_ttf {
 $packages += [Package_sdl_ttf]::new()
 
 #---------------------------------------------------------------------------------
+# Package: yaml
+#---------------------------------------------------------------------------------
+class Package_yaml {
+	[String] $name = "yaml"
+	[String] $ver = "0.2.5"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $dirName = $this.baseName
+	Build() {
+		#nmake /f win32\Makefile.msc
+	}
+}
+$packages += [Package_yaml]::new()
+
+#---------------------------------------------------------------------------------
 # Package: zlib
 #---------------------------------------------------------------------------------
 class Package_zlib {
