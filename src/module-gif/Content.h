@@ -18,10 +18,10 @@ public:
 	Gurax_MemoryPoolAllocator("gif.Content");
 public:
 public:
-	enum class SEP {
-		ImageDescriptor		= 0x2c,
-		ExtensionIntroducer	= 0x21,
-		Trailer				= 0x3b,
+	struct Sep {
+		static const UInt8 ImageDescriptor		= 0x2c;
+		static const UInt8 ExtensionIntroducer	= 0x21;
+		static const UInt8 Trailer				= 0x3b;
 	};
 	struct Header {
 		char Signature[3];

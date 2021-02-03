@@ -435,20 +435,21 @@ done:
 	delete[] codeStack;
 	return !sig.IsSignalled();
 }
+#endif
 
-bool Content::WriteGraphicControl(Stream& stream,
-								const GraphicControlExtension& graphicControl)
+bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphicControl)
 {
 	const UInt8 buff[] = {
-		SEP_ExtensionIntroducer, GraphicControlExtension::Label
+		Sep::ExtensionIntroducer, GraphicControlExtension::Label
 	};
-	if (!WriteBuff(sig, stream, &buff, 2)) return false;
-	if (!WriteBuff(sig, stream, &graphicControl, 5)) return false;
 	UInt8 blockTerminator = 0x00;
-	if (!WriteBuff(sig, stream, &blockTerminator, 1)) return false;
+	if (!WriteBuff(stream, buff, 2)) return false;
+	if (!WriteBuff(stream, &graphicControl, 5)) return false;
+	if (!WriteBuff(stream, &blockTerminator, 1)) return false;
 	return true;
 }
 
+#if 0
 bool Content::WriteImageDescriptor(Stream& stream, t GraphicControlExtension& graphicControl, Object_image* pObjImage)
 {
 	Image* pImage = pObjImage->GetImage();
