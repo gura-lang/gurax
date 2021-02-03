@@ -17,7 +17,7 @@ Content::~Content()
 }
 
 #if 0
-bool Content::Read(Stream &stream, Image *pImageTgt, Image::Format format)
+bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 {
 	Signal &sig = env.GetSignal();
 	if (!ReadBuff(sig, stream, &_header, 6)) return false;
@@ -47,7 +47,7 @@ bool Content::Read(Stream &stream, Image *pImageTgt, Image::Format format)
 		graphicControl.TransparentColorIndex = 0;
 	} while (0);
 	for (;;) {
-		UChar imageSeparator;
+		UInt8 imageSeparator;
 		size_t bytesRead = stream.Read(sig, &imageSeparator, 1);
 		if (bytesRead < 1) break;
 		//::printf("%02x\n", imageSeparator);
@@ -66,12 +66,12 @@ bool Content::Read(Stream &stream, Image *pImageTgt, Image::Format format)
 				GetList().push_back(Value(pObjImage.release()));
 			}
 		} else if (imageSeparator == SEP_ExtensionIntroducer) {
-			UChar label;
+			UInt8 label;
 			if (!ReadBuff(sig, stream, &label, 1)) break;
 			//::printf("%02x - %02x\n", imageSeparator, label);
 			if (label == GraphicControlExtension::Label) {
 				if (!ReadBuff(sig, stream, &graphicControl, 5)) break;
-				UChar blockTerminator;
+				UInt8 blockTerminator;
 				if (!ReadBuff(sig, stream, &blockTerminator, 1)) break;
 			} else if (label == CommentExtension::Label) {
 				_exts.comment.validFlag = true;
@@ -97,7 +97,7 @@ bool Content::Read(Stream &stream, Image *pImageTgt, Image::Format format)
 	return !sig.IsSignalled();
 }
 
-bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundFlag, UInt16 loopCount)
+bool Content::Write(Stream& stream, olor& colorBackground, bool validBackgroundFlag, UInt16 loopCount)
 {
 	Signal &sig = env.GetSignal();
 	if (GetList().empty()) {
@@ -110,9 +110,9 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 	ValueList &valList = GetList();
 	foreach (ValueList, pValue, valList) {
 		if (!pValue->Is_image()) continue;
-		const Object_image *pObjImage = Object_image::GetObject(*pValue);
-		const Image *pImage = pObjImage->GetImage();
-		const Palette *pPalette = pImage->GetPalette();
+		const Object_image* pObjImage = Object_image::GetObject(*pValue);
+		const Image* pImage = pObjImage->GetImage();
+		const Palette* pPalette = pImage->GetPalette();
 		if (pPalette != nullptr && pPalette->CountEntries() <= 256) {
 			if (_pPaletteGlobal->UpdateByPalette(pPalette, Palette::ShrinkNone)) {
 				// nothing to do
@@ -130,14 +130,14 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 		}
 	}
 	int backgroundColorIndex = -1;
-	UChar transparentColorIndex = 0;
-	UChar transparentColorFlag = 0;
+	UInt8 transparentColorIndex = 0;
+	UInt8 transparentColorFlag = 0;
 	do {
 		size_t idxBlank = _pPaletteGlobal->NextBlankIndex();
 		if (idxBlank < _pPaletteGlobal->CountEntries()) {
 			// add an entry for transparent color
 			_pPaletteGlobal->SetEntry(idxBlank, 128, 128, 128, 0);
-			transparentColorIndex = static_cast<UChar>(idxBlank);
+			transparentColorIndex = static_cast<UInt8>(idxBlank);
 			transparentColorFlag = 1;
 			idxBlank++;
 		}
@@ -149,18 +149,18 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 	}
 	foreach (ValueList, pValue, valList) {
 		if (!pValue->Is_image()) continue;
-		Object_image *pObjImage = Object_image::GetObject(*pValue);
-		Image *pImage = pObjImage->GetImage();
+		Object_image* pObjImage = Object_image::GetObject(*pValue);
+		Image* pImage = pObjImage->GetImage();
 		if (!pImage->CheckValid(sig)) return false;
 		pImage->SetPalette(Palette::Reference(_pPaletteGlobal.get()));
-		ImageDescriptor *pImageDescriptor = GetImageDescriptor(pObjImage);
+		ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
 		size_t width = pImage->GetWidth() +
 						Gura_UnpackUInt16(pImageDescriptor->ImageLeftPosition);
 		size_t height = pImage->GetHeight() +
 						Gura_UnpackUInt16(pImageDescriptor->ImageTopPosition);
 		if (logicalScreenWidth < width) logicalScreenWidth = width;
 		if (logicalScreenHeight < height) logicalScreenHeight = height;
-		GraphicControlExtension *pGraphicControl = GetGraphicControl(pObjImage);
+		GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
 		pGraphicControl->TransparentColorIndex = transparentColorIndex;
 		pGraphicControl->PackedFields |= transparentColorFlag;
 		if (backgroundColorIndex < 0) {
@@ -170,10 +170,10 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 	}
 	if (backgroundColorIndex < 0) backgroundColorIndex = 0;
 	do {
-		UChar globalColorTableFlag = 1;
-		UChar colorResolution = 7;
-		UChar sortFlag = 0;
-		UChar sizeOfGlobalColorTable = 0;
+		UInt8 globalColorTableFlag = 1;
+		UInt8 colorResolution = 7;
+		UInt8 sortFlag = 0;
+		UInt8 sizeOfGlobalColorTable = 0;
 		int nEntries = static_cast<int>(_pPaletteGlobal->CountEntries());
 		for ( ; nEntries > (1 << sizeOfGlobalColorTable); sizeOfGlobalColorTable++) ;
 		sizeOfGlobalColorTable--;
@@ -185,7 +185,7 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 				(globalColorTableFlag << 7) | (colorResolution << 4) |
 				(sortFlag << 3) | (sizeOfGlobalColorTable << 0);
 		_logicalScreenDescriptor.BackgroundColorIndex =
-						static_cast<UChar>(backgroundColorIndex);
+						static_cast<UInt8>(backgroundColorIndex);
 		_logicalScreenDescriptor.PixelAspectRatio = 0;
 	} while (0);
 	do {
@@ -193,12 +193,12 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 		_exts.application.BlockSize = 11;
 		::memcpy(_exts.application.ApplicationIdentifier, "NETSCAPE", 8);
 		::memcpy(_exts.application.AuthenticationCode, "2.0", 3);
-		UChar applicationData[3];
+		UInt8 applicationData[3];
 		applicationData[0] = 0x01;
-		applicationData[1] = static_cast<UChar>(loopCount & 0xff);
-		applicationData[2] = static_cast<UChar>((loopCount >> 8) & 0xff);
+		applicationData[1] = static_cast<UInt8>(loopCount & 0xff);
+		applicationData[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
 		_exts.application.ApplicationData =
-						Binary(reinterpret_cast<char *>(applicationData), 3);
+						Binary(reinterpret_cast<char* >(applicationData), 3);
 	} while (0);
 	// Header
 	if (!WriteBuff(sig, stream, &_header, 6)) return false;
@@ -210,7 +210,7 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 	}
 	if (_exts.application.validFlag) {
 		// Application
-		const UChar buff[] = {
+		const UInt8 buff[] = {
 			SEP_ExtensionIntroducer, ApplicationExtension::Label
 		};
 		if (!WriteBuff(sig, stream, &buff, 2)) return false;
@@ -219,25 +219,25 @@ bool Content::Write(Stream &stream, olor &colorBackground, bool validBackgroundF
 	}
 	foreach (ValueList, pValue, GetList()) {
 		if (!pValue->Is_image()) continue;
-		Object_image *pObjImage = Object_image::GetObject(*pValue);
-		Image *pImage = pObjImage->GetImage();
-		GraphicControlExtension *pGraphicControl = GetGraphicControl(pObjImage);
+		Object_image* pObjImage = Object_image::GetObject(*pValue);
+		Image* pImage = pObjImage->GetImage();
+		GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
 		if (pGraphicControl == nullptr) continue;
 		if (!WriteGraphicControl(sig, stream, *pGraphicControl)) return false;
 		if (!WriteImageDescriptor(env, sig, stream, *pGraphicControl, pObjImage)) return false;
 	}
 	do {
 		// Trailer
-		const UChar buff[] = { SEP_Trailer };
+		const UInt8 buff[] = { SEP_Trailer };
 		if (!WriteBuff(sig, stream, buff, 1)) return false;
 	} while (0);
 	return false;
 }
 
-bool Content::ReadDataBlocks(Signal &sig, Stream &stream, Binary &binary)
+bool Content::ReadDataBlocks(Stream& stream, Binary& binary)
 {
 	for (;;) {
-		UChar blockSize;
+		UInt8 blockSize;
 		if (!ReadBuff(sig, stream, &blockSize, 1)) return false;
 		if (blockSize == 0) break;
 		char buff[256];
@@ -247,24 +247,24 @@ bool Content::ReadDataBlocks(Signal &sig, Stream &stream, Binary &binary)
 	return true;
 }
 
-bool Content::WriteDataBlocks(Signal &sig, Stream &stream, const Binary &binary)
+bool Content::WriteDataBlocks(Stream& stream, const Binary& binary)
 {
 	size_t size = binary.size();
 	for (size_t offset = 0; offset < size; ) {
-		UChar blockSize =
-			static_cast<UChar>((size - offset <= 255)? size - offset : 255);
+		UInt8 blockSize =
+			static_cast<UInt8>((size - offset <= 255)? size - offset : 255);
 		if (!WriteBuff(sig, stream, &blockSize, 1)) return false;
 		if (!WriteBuff(sig, stream, binary.data() + offset, blockSize)) return false;
 		offset += blockSize;
 	}
 	do {
-		UChar blockSize = 0x00;
+		UInt8 blockSize = 0x00;
 		if (!WriteBuff(sig, stream, &blockSize, 1)) return false;
 	} while (0);
 	return true;
 }
 
-bool Content::SkipImageDescriptor(Signal &sig, Stream &stream)
+bool Content::SkipImageDescriptor(Stream& stream)
 {
 	ImageDescriptor imageDescriptor;
 	if (!ReadBuff(sig, stream, &imageDescriptor, 9)) return false;
@@ -272,10 +272,10 @@ bool Content::SkipImageDescriptor(Signal &sig, Stream &stream)
 		int nEntries = 1 << (imageDescriptor.SizeOfLocalColorTable() + 1);
 		stream.Seek(sig, nEntries * 3, Stream::SeekCur);
 	}
-	UChar mininumBitsOfCode;
+	UInt8 mininumBitsOfCode;
 	if (!ReadBuff(sig, stream, &mininumBitsOfCode, 1)) return false;
 	for (;;) {
-		UChar blockSize;
+		UInt8 blockSize;
 		if (!ReadBuff(sig, stream, &blockSize, 1)) return false;
 		if (blockSize == 0) break;
 		if (!stream.Seek(sig, blockSize, Stream::SeekCur)) return false;
@@ -283,14 +283,14 @@ bool Content::SkipImageDescriptor(Signal &sig, Stream &stream)
 	return true;
 }
 
-bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExtension &graphicControl, Image *pImage, Value *pValueGIF)
+bool Content::ReadImageDescriptor(Stream& stream, raphicControlExtension& graphicControl, Image* pImage, Value* pValueGIF)
 {
 	ImageDescriptor imageDescriptor;
 	if (!ReadBuff(sig, stream, &imageDescriptor, 9)) return false;
 	size_t imageWidth = Gura_UnpackUInt16(imageDescriptor.ImageWidth);
 	size_t imageHeight = Gura_UnpackUInt16(imageDescriptor.ImageHeight);
 	if (!pImage->AllocBuffer(sig, imageWidth, imageHeight, 0xff)) return false;
-	Palette *pPalette = nullptr;
+	Palette* pPalette = nullptr;
 	if (imageDescriptor.LocalColorTableFlag()) {
 		size_t nEntries = 1 << (imageDescriptor.SizeOfLocalColorTable() + 1);
 		pPalette = pImage->CreateEmptyPalette(env, nEntries);
@@ -312,7 +312,7 @@ bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExte
 		transparentColorIndex = -1;
 	}
 	const int maximumBitsOfCode = 12;
-	UChar mininumBitsOfCode;
+	UInt8 mininumBitsOfCode;
 	if (!ReadBuff(sig, stream, &mininumBitsOfCode, 1)) return false;
 	int bitsOfCode = mininumBitsOfCode + 1;
 	if (bitsOfCode > maximumBitsOfCode) {
@@ -329,9 +329,9 @@ bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExte
 	UInt16 codeFirst = codeInvalid, codeOld = codeInvalid;
 	const size_t bytesCodeTable = codeMaxCeiling * 2;
 	const size_t bytesCodeStack = codeMaxCeiling * 2;
-	UInt16 *codeTable = new UInt16 [bytesCodeTable];
-	UInt16 *codeStack = new UInt16 [bytesCodeStack];
-	UInt16 *pCodeStack = codeStack;
+	UInt16* codeTable = new UInt16 [bytesCodeTable];
+	UInt16* codeStack = new UInt16 [bytesCodeStack];
+	UInt16* pCodeStack = codeStack;
 	do {
 		::memset(codeTable, 0x00, bytesCodeTable);
 		for (UInt16 code = 0; code < codeBoundary; code++) {
@@ -341,12 +341,12 @@ bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExte
 	ImageDataBlock imageDataBlock;
 	size_t x = 0, y = 0;
 	int iPass = 0;
-	UChar *dstp = pImage->GetPointer(0);
+	UInt8* dstp = pImage->GetPointer(0);
 	for (;;) {
 		UInt16 code = 0;
 		if (pCodeStack > codeStack) {
 			pCodeStack--;
-			code = *pCodeStack;
+			code =* pCodeStack;
 		} else {
 			if (!imageDataBlock.ReadCode(sig, stream, code, bitsOfCode)) break;
 			// LZW (Lempel-Ziv-Welch) decompression algorithm
@@ -365,7 +365,7 @@ bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExte
 			} else if (code == codeEnd) {
 				// skip trailing blocks
 				for (;;) {
-					UChar blockSize;
+					UInt8 blockSize;
 					if (!ReadBuff(sig, stream, &blockSize, 1)) break;
 					if (blockSize == 0) break;
 					if (!stream.Seek(sig, blockSize, Stream::SeekCur)) break;
@@ -405,7 +405,7 @@ bool Content::ReadImageDescriptor(Signal &sig, Stream &stream, raphicControlExte
 				}
 			}
 		}
-		const UChar *srcp = pPalette->GetEntry(code);
+		const UInt8* srcp = pPalette->GetEntry(code);
 		if (x >= imageWidth) {
 			x = 0;
 			if (interlaceFlag) {
@@ -436,28 +436,28 @@ done:
 	return !sig.IsSignalled();
 }
 
-bool Content::WriteGraphicControl(Signal &sig, Stream &stream,
-								const GraphicControlExtension &graphicControl)
+bool Content::WriteGraphicControl(Stream& stream,
+								const GraphicControlExtension& graphicControl)
 {
-	const UChar buff[] = {
+	const UInt8 buff[] = {
 		SEP_ExtensionIntroducer, GraphicControlExtension::Label
 	};
 	if (!WriteBuff(sig, stream, &buff, 2)) return false;
 	if (!WriteBuff(sig, stream, &graphicControl, 5)) return false;
-	UChar blockTerminator = 0x00;
+	UInt8 blockTerminator = 0x00;
 	if (!WriteBuff(sig, stream, &blockTerminator, 1)) return false;
 	return true;
 }
 
-bool Content::WriteImageDescriptor(Signal &sig, Stream &stream, t GraphicControlExtension &graphicControl, Object_image *pObjImage)
+bool Content::WriteImageDescriptor(Stream& stream, t GraphicControlExtension& graphicControl, Object_image* pObjImage)
 {
-	Image *pImage = pObjImage->GetImage();
+	Image* pImage = pObjImage->GetImage();
 	do {
-		const UChar buff[] = { SEP_ImageDescriptor };
+		const UInt8 buff[] = { SEP_ImageDescriptor };
 		if (!WriteBuff(sig, stream, buff, 1)) return false;
 	} while (0);
-	const Palette *pPalette = _pPaletteGlobal.get();
-	ImageDescriptor *pImageDescriptor = GetImageDescriptor(pObjImage);
+	const Palette* pPalette = _pPaletteGlobal.get();
+	ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
 	if (pImageDescriptor == nullptr) {
 		return false;
 	}
@@ -465,11 +465,11 @@ bool Content::WriteImageDescriptor(Signal &sig, Stream &stream, t GraphicControl
 	if (pImageDescriptor->LocalColorTableFlag()) {
 		if (!WriteColorTable(sig, stream, pPalette)) return false;
 	}
-	UChar transparentColorIndex = graphicControl.TransparentColorIndex;
+	UInt8 transparentColorIndex = graphicControl.TransparentColorIndex;
 	bool transparentColorFlag = (pImage->GetFormat() == Image::FORMAT_RGBA) &&
 					(graphicControl.TransparentColorFlag() != 0);
 	const int maximumBitsOfCode = 12;
-	UChar minimumBitsOfCode = 8;
+	UInt8 minimumBitsOfCode = 8;
 	if (!WriteBuff(sig, stream, &minimumBitsOfCode, 1)) return false;
 	Binary word;
 	int bitsOfCode = minimumBitsOfCode + 1;
@@ -483,15 +483,15 @@ bool Content::WriteImageDescriptor(Signal &sig, Stream &stream, t GraphicControl
 	ImageDataBlock imageDataBlock;
 	if (!imageDataBlock.WriteCode(sig, stream, codeClear, bitsOfCode)) return false;
 	for (size_t y = 0; y < pImage->GetHeight(); y++) {
-		const UChar *pPixel = pImage->GetPointer(y);
+		const UInt8* pPixel = pImage->GetPointer(y);
 		for (size_t x = 0; x < pImage->GetWidth();
 							x++, pPixel += pImage->GetBytesPerPixel()) {
 			// LZW (Lempel-Ziv-Welch) compression algorithm
-			UChar k;
+			UInt8 k;
 			if (transparentColorFlag && Image::GetPixelA(pPixel) < 128) {
 				k = transparentColorIndex;
 			} else {
-				k = static_cast<UChar>(pPalette->LookupNearest(pPixel));
+				k = static_cast<UInt8>(pPalette->LookupNearest(pPixel));
 			}
 			//::printf("- %3d,%3d code = %03x\n", x, y, k);
 			if (word.empty()) {
@@ -531,42 +531,43 @@ bool Content::WriteImageDescriptor(Signal &sig, Stream &stream, t GraphicControl
 	if (!imageDataBlock.Flush(sig, stream)) return false;
 	return true;
 }
+#endif
 
-bool Content::ReadBuff(Signal &sig, Stream &stream, void *buff, size_t bytes)
+bool Content::ReadBuff(Stream& stream, void* buff, size_t bytes)
 {
-	size_t bytesRead = stream.Read(sig, buff, bytes);
-	if (sig.IsSignalled()) return false;
+	size_t bytesRead = stream.Read(buff, bytes);
+	if (Error::IsIssued()) return false;
 	if (bytesRead < bytes) {
-		sig.SetError(ERR_FormatError, "invalid GIF format");
+		Error::Issue(ErrorType::FormatError, "invalid GIF format");
 		return false;
 	}
 	return true;
 }
 
-bool Content::WriteBuff(Signal &sig, Stream &stream, const void *buff, size_t bytes)
+bool Content::WriteBuff(Stream& stream, const void* buff, size_t bytes)
 {
-	size_t bytesWritten = stream.Write(sig, buff, bytes);
-	return !sig.IsSignalled();
+	return stream.Write(buff, bytes);
 }
 
-bool Content::ReadColorTable(Signal &sig, Stream &stream, Palette *pPalette)
+bool Content::ReadColorTable(Stream& stream, Palette& palette)
 {
-	UChar buff[3];
-	size_t nEntries = pPalette->CountEntries();
+	UInt8 buff[3];
+	size_t nEntries = palette.GetSize();
 	for (size_t idx = 0; idx < nEntries; idx++) {
-		if (!Content::ReadBuff(sig, stream, buff, 3)) return false;
-		pPalette->SetEntry(idx, buff[0], buff[1], buff[2]);
+		if (!Content::ReadBuff(stream, buff, 3)) return false;
+		palette.SetRGB(idx, buff[0], buff[1], buff[2]);
 	}
 	return true;
 }
 
-bool Content::WriteColorTable(Signal &sig, Stream &stream, const Palette *pPalette)
+#if 0
+bool Content::WriteColorTable(Stream& stream, const Palette* pPalette)
 {
-	UChar buff[3];
+	UInt8 buff[3];
 	int nEntries = static_cast<int>(pPalette->CountEntries());
 	int idx = 0;
 	for ( ; idx < nEntries; idx++) {
-		const UChar *pEntry = pPalette->GetEntry(idx);
+		const UInt8 *pEntry = pPalette->GetEntry(idx);
 		buff[0] = *(pEntry + Image::OffsetR);
 		buff[1] = *(pEntry + Image::OffsetG);
 		buff[2] = *(pEntry + Image::OffsetB);
@@ -581,18 +582,18 @@ bool Content::WriteColorTable(Signal &sig, Stream &stream, const Palette *pPalet
 	return true;
 }
 
-void Content::AddImage(const Value &value, UInt16 delayTime,
+void Content::AddImage(const Value& value, UInt16 delayTime,
 		UInt16 imageLeftPosition, UInt16 imageTopPosition,
-		UChar disposalMethod)
+		UInt8 disposalMethod)
 {
-	Object_image *pObjImage = Object_image::GetObject(value);
-	Image *pImage = pObjImage->GetImage();
+	Object_image* pObjImage = Object_image::GetObject(value);
+	Image* pImage = pObjImage->GetImage();
 	AutoPtr<Object_GraphicControl> pObjGraphicControl;
 	AutoPtr<Object_ImageDescriptor> pObjImageDescriptor;
 	do {
 		Content::GraphicControlExtension graphicControl;
 		Content::GraphicControlExtension graphicControlOrg;
-		Content::GraphicControlExtension *pGraphicControl = GetGraphicControl(pObjImage);
+		Content::GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
 		if (pGraphicControl != nullptr) {
 			graphicControlOrg = *pGraphicControl;
 		}
@@ -607,7 +608,7 @@ void Content::AddImage(const Value &value, UInt16 delayTime,
 	do {
 		Content::ImageDescriptor imageDescriptor;
 		Content::ImageDescriptor imageDescriptorOrg;
-		Content::ImageDescriptor *pImageDescriptor = GetImageDescriptor(pObjImage);
+		Content::ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
 		if (pImageDescriptor != nullptr) {
 			imageDescriptorOrg = *pImageDescriptor;
 		}
@@ -629,7 +630,7 @@ void Content::AddImage(const Value &value, UInt16 delayTime,
 	GetList().push_back(value);
 }
 
-void Content::Dump(UChar *data, int bytes)
+void Content::Dump(UInt8* data, int bytes)
 {
 	for (int i = 0; i < bytes; i++) {
 		int iCol = i % 16;
@@ -639,7 +640,7 @@ void Content::Dump(UChar *data, int bytes)
 	if (bytes % 16 != 0) ::printf("\n");
 }
 
-const Symbol *Content::DisposalMethodToSymbol(UChar disposalMethod)
+const Symbol* Content::DisposalMethodToSymbol(UInt8 disposalMethod)
 {
 	if (disposalMethod == 0) {
 		return Gura_UserSymbol(none);
@@ -654,9 +655,9 @@ const Symbol *Content::DisposalMethodToSymbol(UChar disposalMethod)
 	}
 }
 
-UChar Content::DisposalMethodFromSymbol(Signal &sig, const Symbol *pSymbol)
+UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 {
-	UChar disposalMethod;
+	UInt8 disposalMethod;
 	if (pSymbol->IsIdentical(Gura_UserSymbol(none))) {
 		disposalMethod = 0;
 	} else if (pSymbol->IsIdentical(Gura_UserSymbol(keep))) {
@@ -673,21 +674,21 @@ UChar Content::DisposalMethodFromSymbol(Signal &sig, const Symbol *pSymbol)
 	return disposalMethod;
 }
 
-Content::GraphicControlExtension *Content::GetGraphicControl(const Object_image *pObjImage)
+Content::GraphicControlExtension* Content::GetGraphicControl(const Object_image* pObjImage)
 {
-	const Value *pValue = pObjImage->LookupValue(Gura_UserSymbol(gif), ENVREF_NoEscalate);
+	const Value* pValue = pObjImage->LookupValue(Gura_UserSymbol(gif), ENVREF_NoEscalate);
 	if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
 	return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
 }
 
-Content::ImageDescriptor *Content::GetImageDescriptor(const Object_image *pObjImage)
+Content::ImageDescriptor* Content::GetImageDescriptor(const Object_image* pObjImage)
 {
-	const Value *pValue = pObjImage->LookupValue(Gura_UserSymbol(gif), ENVREF_NoEscalate);
+	const Value* pValue = pObjImage->LookupValue(Gura_UserSymbol(gif), ENVREF_NoEscalate);
 	if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
 	return Object_imgprop::GetObject(*pValue)->GetImageDescriptor();
 }
 
-int Content::GetPlausibleBackgroundIndex(Palette *pPalette, Image *pImage)
+int Content::GetPlausibleBackgroundIndex(Palette* pPalette, Image* pImage)
 {
 	int histTbl[256];
 	::memset(histTbl, 0x00, sizeof(histTbl));
@@ -737,13 +738,13 @@ Content::ImageDataBlock::ImageDataBlock() : _bitOffset(0), _bitsRead(0)
 	::memset(_blockData, 0x00, 256);
 }
 
-bool Content::ImageDataBlock::ReadCode(Signal &sig, Stream &stream,
-										UInt16 &code, int bitsOfCode)
+bool Content::ImageDataBlock::ReadCode(Stream& stream,
+										UInt16& code, int bitsOfCode)
 {
 	for (int bitsAccum = 0; bitsAccum < bitsOfCode; ) {
 		int bitsRest = bitsOfCode - bitsAccum;
 		if (_bitOffset >= _bitsRead) {
-			UChar blockSize;
+			UInt8 blockSize;
 			if (!ReadBuff(sig, stream, &blockSize, 1)) return false;
 			if (blockSize == 0) return false;
 			if (!ReadBuff(sig, stream, _blockData, blockSize)) return false;
@@ -766,14 +767,14 @@ bool Content::ImageDataBlock::ReadCode(Signal &sig, Stream &stream,
 	return true;
 }
 
-bool Content::ImageDataBlock::WriteCode(Signal &sig, Stream &stream,
+bool Content::ImageDataBlock::WriteCode(Stream& stream,
 										UInt16 code, int bitsOfCode)
 {
 	const int bitsFull = 8 * 255;
 	for (int bitsAccum = 0; bitsAccum < bitsOfCode; ) {
 		int bitsRest = bitsOfCode - bitsAccum;
 		if (_bitOffset >= bitsFull) {
-			UChar blockSize = 255;
+			UInt8 blockSize = 255;
 			if (!Content::WriteBuff(sig, stream, &blockSize, 1)) return false;
 			if (!Content::WriteBuff(sig, stream, _blockData, blockSize)) return false;
 			::memset(_blockData, 0x00, 256);
@@ -781,7 +782,7 @@ bool Content::ImageDataBlock::WriteCode(Signal &sig, Stream &stream,
 		}
 		int bitsRight = _bitOffset & 7;
 		int bitsLeft = 8 - bitsRight;
-		_blockData[_bitOffset >> 3] |= static_cast<UChar>(code << bitsRight);
+		_blockData[_bitOffset >> 3] |= static_cast<UInt8>(code << bitsRight);
 		if (bitsRest < bitsLeft) {
 			_bitOffset += bitsRest;
 			break;
@@ -794,15 +795,15 @@ bool Content::ImageDataBlock::WriteCode(Signal &sig, Stream &stream,
 	return true;
 }
 
-bool Content::ImageDataBlock::Flush(Signal &sig, Stream &stream)
+bool Content::ImageDataBlock::Flush(Stream& stream)
 {
 	if (_bitOffset > 0) {
-		UChar blockSize = static_cast<UChar>((_bitOffset + 7) / 8);
+		UInt8 blockSize = static_cast<UInt8>((_bitOffset + 7) / 8);
 		if (!Content::WriteBuff(sig, stream, &blockSize, 1)) return false;
 		if (!Content::WriteBuff(sig, stream, _blockData, blockSize)) return false;
 	}
 	do {
-		UChar blockSize = 0x00;
+		UInt8 blockSize = 0x00;
 		if (!WriteBuff(sig, stream, &blockSize, 1)) return false;
 	} while (0);
 	return true;

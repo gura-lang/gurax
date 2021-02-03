@@ -161,8 +161,8 @@ protected:
 public:
 	bool Read(Stream& stream, Image* pImageTgt, Image::Format format);
 	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount);
-	bool ReadColorTable(Stream& stream, Palette* pPalette);
-	bool WriteColorTable(Stream& stream, const Palette* pPalette);
+	bool ReadColorTable(Stream& stream, Palette& palette);
+	bool WriteColorTable(Stream& stream, const Palette& palette);
 	bool ReadDataBlocks(Stream& stream, Binary& binary);
 	bool WriteDataBlocks(Stream& stream, const Binary& binary);
 	bool SkipImageDescriptor(Stream& stream);
