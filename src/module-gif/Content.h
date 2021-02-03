@@ -136,9 +136,9 @@ public:
 		UInt8 _blockData[256];
 	public:
 		ImageDataBlock();
-		bool ReadCode(Stream &stream, UInt16 &code, int bitsOfCode);
-		bool WriteCode(Stream &stream, UInt16 code, int bitsOfCode);
-		bool Flush(Stream &stream);
+		bool ReadCode(Stream& stream, UInt16& code, int bitsOfCode);
+		bool WriteCode(Stream& stream, UInt16 code, int bitsOfCode);
+		bool Flush(Stream& stream);
 	};
 	typedef std::map<Binary, UInt16> TransMap;
 private:
@@ -149,7 +149,7 @@ private:
 	ValueList _valList;
 public:
 	// Constructor
-	Content() {}
+	Content();
 	// Copy constructor/operator
 	Content(const Content& src) = delete;
 	Content& operator=(const Content& src) = delete;
@@ -157,40 +157,40 @@ public:
 	Content(Content&& src) noexcept = delete;
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
-	~Content() = default;
+	~Content();
 public:
-	bool Read(Stream &stream, Image *pImageTgt, Image::Format format);
-	bool Write(Stream &stream, const Color &colorBackground, bool validBackgroundFlag, UInt16 loopCount);
-	bool ReadColorTable(Stream &stream, Palette *pPalette);
-	bool WriteColorTable(Stream &stream, const Palette *pPalette);
-	bool ReadDataBlocks(Stream &stream, Binary &binary);
-	bool WriteDataBlocks(Stream &stream, const Binary &binary);
-	bool SkipImageDescriptor(Stream &stream);
-	bool ReadImageDescriptor(Stream &stream,
-								const GraphicControlExtension &graphicControl,
-								Image *pImage, Value *pValueGIF);
-	bool WriteGraphicControl(Stream &stream,
-								const GraphicControlExtension &graphiControl);
-	bool WriteImageDescriptor(Stream &stream,
-		const GraphicControlExtension &graphicControl, Image& image);
-	Header &GetHeader() { return _header; }
-	LogicalScreenDescriptor &GetLogicalScreenDescriptor() {
+	bool Read(Stream& stream, Image* pImageTgt, Image::Format format);
+	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount);
+	bool ReadColorTable(Stream& stream, Palette* pPalette);
+	bool WriteColorTable(Stream& stream, const Palette* pPalette);
+	bool ReadDataBlocks(Stream& stream, Binary& binary);
+	bool WriteDataBlocks(Stream& stream, const Binary& binary);
+	bool SkipImageDescriptor(Stream& stream);
+	bool ReadImageDescriptor(Stream& stream,
+								const GraphicControlExtension& graphicControl,
+								Image* pImage, Value* pValueGIF);
+	bool WriteGraphicControl(Stream& stream,
+								const GraphicControlExtension& graphiControl);
+	bool WriteImageDescriptor(Stream& stream,
+		const GraphicControlExtension& graphicControl, Image& image);
+	Header& GetHeader() { return _header; }
+	LogicalScreenDescriptor& GetLogicalScreenDescriptor() {
 		return _logicalScreenDescriptor;
 	}
-	Palette *GetGlobalPalette() { return _pPaletteGlobal.get(); }
-	Extensions &GetExtensions() { return _exts; }
-	ValueList &GetList() { return _valList; }
-	void AddImage(const Value &value,
+	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
+	Extensions& GetExtensions() { return _exts; }
+	ValueList& GetList() { return _valList; }
+	void AddImage(const Value& value,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
 			UInt16 delayTime, UChar disposalMethod);
-	static bool ReadBuff(Stream &stream, void *buff, size_t bytes);
-	static bool WriteBuff(Stream &stream, const void *buff, size_t bytes);
-	static void Dump(UChar *data, int bytes);
-	static const Symbol *DisposalMethodToSymbol(UChar disposalMethod);
-	static UChar DisposalMethodFromSymbol(const Symbol *pSymbol);
-	static ImageDescriptor *GetImageDescriptor(const Image& image);
-	static GraphicControlExtension *GetGraphicControl(const Image& image);
-	static int GetPlausibleBackgroundIndex(Palette *pPalette, Image *pImage);
+	static bool ReadBuff(Stream& stream, void* buff, size_t bytes);
+	static bool WriteBuff(Stream& stream, const void* buff, size_t bytes);
+	static void Dump(UChar* data, int bytes);
+	static const Symbol* DisposalMethodToSymbol(UChar disposalMethod);
+	static UChar DisposalMethodFromSymbol(const Symbol* pSymbol);
+	static ImageDescriptor* GetImageDescriptor(const Image& image);
+	static GraphicControlExtension* GetGraphicControl(const Image& image);
+	static int GetPlausibleBackgroundIndex(Palette* pPalette, Image* pImage);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }

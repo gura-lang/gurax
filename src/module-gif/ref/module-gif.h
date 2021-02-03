@@ -328,16 +328,16 @@ Gura_DeclareUserClass(GraphicControl);
 
 class Object_GraphicControl : public Object {
 private:
-	GIF::GraphicControlExtension _gctl;
+	Content::GraphicControlExtension _gctl;
 public:
 	Gura_DeclareObjectAccessor(GraphicControl)
 public:
-	inline Object_GraphicControl(const GIF::GraphicControlExtension &gctl) :
+	inline Object_GraphicControl(const Content::GraphicControlExtension &gctl) :
 					Object(Gura_UserClass(GraphicControl)), _gctl(gctl) {}
 	virtual ~Object_GraphicControl();
 	virtual Object *Clone() const;
 	virtual String ToString(bool exprFlag);
-	inline GIF::GraphicControlExtension *GetGraphicControl() { return &_gctl; }
+	inline Content::GraphicControlExtension *GetGraphicControl() { return &_gctl; }
 };
 
 //-----------------------------------------------------------------------------
@@ -347,16 +347,16 @@ Gura_DeclareUserClass(ImageDescriptor);
 
 class Object_ImageDescriptor : public Object {
 private:
-	GIF::ImageDescriptor _desc;
+	Content::ImageDescriptor _desc;
 public:
 	Gura_DeclareObjectAccessor(ImageDescriptor)
 public:
-	inline Object_ImageDescriptor(const GIF::ImageDescriptor &desc) :
+	inline Object_ImageDescriptor(const Content::ImageDescriptor &desc) :
 					Object(Gura_UserClass(ImageDescriptor)), _desc(desc) {}
 	virtual ~Object_ImageDescriptor();
 	virtual Object *Clone() const;
 	virtual String ToString(bool exprFlag);
-	inline GIF::ImageDescriptor *GetImageDescriptor() { return &_desc; }
+	inline Content::ImageDescriptor *GetImageDescriptor() { return &_desc; }
 };
 
 //-----------------------------------------------------------------------------
@@ -384,10 +384,10 @@ public:
 	inline Object_ImageDescriptor *GetObjImageDescriptor() {
 		return _pObjImageDescriptor.get();
 	}
-	inline GIF::GraphicControlExtension *GetGraphicControl() {
+	inline Content::GraphicControlExtension *GetGraphicControl() {
 		return _pObjGraphicControl->GetGraphicControl();
 	}
-	inline GIF::ImageDescriptor *GetImageDescriptor() {
+	inline Content::ImageDescriptor *GetImageDescriptor() {
 		return _pObjImageDescriptor->GetImageDescriptor();
 	}
 };
