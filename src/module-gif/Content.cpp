@@ -44,26 +44,25 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 		graphicControl.TransparentColorIndex = 0;
 	} while (0);
 	for (;;) {
-#if 0
 		UInt8 imageSeparator;
 		size_t bytesRead = stream.Read(&imageSeparator, 1);
 		if (bytesRead < 1) break;
 		//::printf("%02x\n", imageSeparator);
-		if (imageSeparator == SEP::ImageDescriptor) {
+		if (imageSeparator == Sep::ImageDescriptor) {
 			if (pImageTgt != nullptr) {
-				ReadImageDescriptor(env, stream, graphicControl, pImageTgt, nullptr);
+				ReadImageDescriptor(stream, graphicControl, pImageTgt, nullptr);
 				break;
-			} else if (format == Image::FORMAT_None) {
+			} else if (format.IsIdentical(Image::Format::None)) {
 				if (!SkipImageDescriptor(stream)) break;
 			} else {
-				AutoPtr<Object_image> pObjImage(new Object_image(env, new Image(format)));
-				Value valueGIF;
-				if (!ReadImageDescriptor(env, stream,
-						graphicControl, pObjImage->GetImage(), &valueGIF)) break;
-				pObjImage->AssignValue(Gurax_UserSymbol(gif), valueGIF, EXTRA_Public);
-				GetList().push_back(Value(pObjImage.release()));
+				RefPtr<Image> pImage(new Image(format));
+				//Value valueGIF;
+				//if (!ReadImageDescriptor(stream,
+				//		graphicControl, pImage.get(), &valueGIF)) break;
+				//pObjImage->AssignValue(Gurax_UserSymbol(gif), valueGIF, EXTRA_Public);
+				//GetList().push_back(Value(pObjImage.release()));
 			}
-		} else if (imageSeparator == SEP::ExtensionIntroducer) {
+		} else if (imageSeparator == Sep::ExtensionIntroducer) {
 			UInt8 label;
 			if (!ReadBuff(stream, &label, 1)) break;
 			//::printf("%02x - %02x\n", imageSeparator, label);
@@ -83,15 +82,14 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 				if (!ReadBuff(stream, &_exts.application, 12)) break;
 				if (!ReadDataBlocks(stream, _exts.application.ApplicationData)) break;
 			}
-			if (sig.IsSignalled()) break;
-		} else if (imageSeparator == SEP::Trailer) {
+			if (Error::IsIssued()) break;
+		} else if (imageSeparator == Sep::Trailer) {
 			//::printf("%02x\n", imageSeparator);
 			break;
 		} else {
 			Error::Issue(ErrorType::FormatError, "unknown separator %02x", imageSeparator);
 			break;
 		}
-#endif
 	}
 	return !Error::IsIssued();
 }
@@ -211,7 +209,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_exts.application.validFlag) {
 		// Application
 		const UInt8 buff[] = {
-			SEP::ExtensionIntroducer, ApplicationExtension::Label
+			Sep::ExtensionIntroducer, ApplicationExtension::Label
 		};
 		if (!WriteBuff(stream, &buff, 2)) return false;
 		if (!WriteBuff(stream, &_exts.application, 12)) return false;
@@ -228,7 +226,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	}
 	do {
 		// Trailer
-		const UInt8 buff[] = { SEP::Trailer };
+		const UInt8 buff[] = { Sep::Trailer };
 		if (!WriteBuff(stream, buff, 1)) return false;
 	} while (0);
 #endif
@@ -463,7 +461,7 @@ bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension
 #if 0
 	Image* pImage = pObjImage->GetImage();
 	do {
-		const UInt8 buff[] = { SEP::ImageDescriptor };
+		const UInt8 buff[] = { Sep::ImageDescriptor };
 		if (!WriteBuff(stream, buff, 1)) return false;
 	} while (0);
 	const Palette* pPalette = _pPaletteGlobal.get();
