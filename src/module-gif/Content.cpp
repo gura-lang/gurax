@@ -50,15 +50,14 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 		//::printf("%02x\n", imageSeparator);
 		if (imageSeparator == Sep::ImageDescriptor) {
 			if (pImageTgt != nullptr) {
-				ReadImageDescriptor(stream, graphicControl, pImageTgt, nullptr);
+				//ReadImageDescriptor(stream, graphicControl, pImageTgt, nullptr);
 				break;
 			} else if (format.IsIdentical(Image::Format::None)) {
 				if (!SkipImageDescriptor(stream)) break;
 			} else {
 				RefPtr<Image> pImage(new Image(format));
-				//Value valueGIF;
-				//if (!ReadImageDescriptor(stream,
-				//		graphicControl, pImage.get(), &valueGIF)) break;
+				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControl));
+				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
 				//pObjImage->AssignValue(Gurax_UserSymbol(gif), valueGIF, EXTRA_Public);
 				//GetList().push_back(Value(pObjImage.release()));
 			}
@@ -288,7 +287,7 @@ bool Content::SkipImageDescriptor(Stream& stream)
 	return true;
 }
 
-bool Content::ReadImageDescriptor(Stream& stream, const GraphicControlExtension& graphicControl, Image* pImage, Value* pValueGIF)
+bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp)
 {
 #if 0
 	ImageDescriptor imageDescriptor;

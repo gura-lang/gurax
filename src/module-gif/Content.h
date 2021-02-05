@@ -17,7 +17,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("gif.Content");
 public:
-public:
 	struct Sep {
 		static const UInt8 ImageDescriptor		= 0x2c;
 		static const UInt8 ExtensionIntroducer	= 0x21;
@@ -140,6 +139,22 @@ public:
 		bool WriteCode(Stream& stream, UInt16 code, int bitsOfCode);
 		bool Flush(Stream& stream);
 	};
+	class ImageProp : public Referable {
+	public:
+		// Referable declaration
+		Gurax_DeclareReferable(ImageProp);
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("gif.ImageProp");
+	private:
+		GraphicControlExtension _graphicControl;
+		ImageDescriptor _imageDescriptor;
+	public:
+		ImageProp(GraphicControlExtension graphicControl) : _graphicControl(graphicControl) {}
+	private:
+		~ImageProp() = default;
+		GraphicControlExtension& GetGraphicControl() { return _graphicControl; }
+		ImageDescriptor& GetImageDescriptor() { return _imageDescriptor; }
+	};
 	typedef std::map<Binary, UInt16> TransMap;
 private:
 	Header _header;
@@ -166,9 +181,7 @@ public:
 	bool ReadDataBlocks(Stream& stream, Binary& binary);
 	bool WriteDataBlocks(Stream& stream, const Binary& binary);
 	bool SkipImageDescriptor(Stream& stream);
-	bool ReadImageDescriptor(Stream& stream,
-								const GraphicControlExtension& graphicControl,
-								Image* pImage, Value* pValueGIF);
+	bool ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp);
 	bool WriteGraphicControl(Stream& stream,
 								const GraphicControlExtension& graphiControl);
 	bool WriteImageDescriptor(Stream& stream,
