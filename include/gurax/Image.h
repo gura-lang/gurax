@@ -403,13 +403,16 @@ protected:
 	RefPtr<Memory> _pMemory;	// may be nullptr
 	RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
+	RefPtr<Value> _pValueExtra;
 public:
 	static void Bootup();
 public:
 	// Constructor
 	Image(const Format& format, Memory* pMemory, size_t width, size_t height, UInt8 alphaDefault) :
-		_pMemory(pMemory), _metrics(format, width, height, alphaDefault) {}
-	Image(const Format& format, UInt8 alphaDefault = 0xff) : _metrics(format, 0, 0, alphaDefault) {}
+		_pMemory(pMemory), _metrics(format, width, height, alphaDefault),
+		_pValueExtra(Value::nil()) {}
+	Image(const Format& format, UInt8 alphaDefault = 0xff) : _metrics(format, 0, 0, alphaDefault),
+		_pValueExtra(Value::nil()) {}
 	// Copy constructor/operator
 	Image(const Image& src) = delete;
 	Image& operator=(const Image& src) = delete;
@@ -443,6 +446,8 @@ public:
 	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
 		return _metrics.AdjustCoord(pRect, x, y, width, height);
 	}
+	void SetValueExtra(Value* pValue) { _pValueExtra.reset(pValue); }
+	const Value& GetValueExtra() const { return *_pValueExtra; }
 	UInt8* GetPointerC() const { return _pMemory->GetPointerC<UInt8>(); }
 	UInt8* GetPointerC(size_t x, size_t y) const {
 		return GetPointerC() + x * GetBytesPerPixel() + y * GetBytesPerLine();
