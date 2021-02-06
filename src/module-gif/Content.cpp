@@ -695,48 +695,46 @@ Content::ImageDescriptor* Content::GetImageDescriptor(const Image& image)
 	return nullptr;
 }
 
-int Content::GetPlausibleBackgroundIndex(Palette* pPalette, Image* pImage)
+int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 {
-#if 0
 	int histTbl[256];
 	::memset(histTbl, 0x00, sizeof(histTbl));
-	std::unique_ptr<Image::Scanner> pScanner(pImage->CreateScanner());
-	size_t iPixelEnd = pScanner->CountPixels() - 1;
-	size_t iLineEnd = pScanner->CountLines() - 1;
+	Image::Scanner scanner = Image::Scanner::CreateByDir(image, Image::ScanDir::LeftTopHorz);
+	size_t iPixelEnd = scanner.GetColNum() - 1;
+	size_t iLineEnd = scanner.GetRowNum() - 1;
 	for (;;) {
-		int idx = static_cast<int>(pPalette->LookupNearest(pScanner->GetPointer()));
+		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (pScanner->GetPixelIdx() >= iPixelEnd) break;
-		pScanner->FwdPixel();
+		if (scanner.GetColNum() >= iPixelEnd) break;
+		scanner.NextCol();
 	}
 	for (;;) {
-		int idx = static_cast<int>(pPalette->LookupNearest(pScanner->GetPointer()));
+		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (pScanner->GetLineIdx() >= iLineEnd) break;
-		pScanner->FwdLine();
+		if (scanner.GetRowNum() >= iLineEnd) break;
+		scanner.NextRow();
 	}
 	for (;;) {
-		int idx = static_cast<int>(pPalette->LookupNearest(pScanner->GetPointer()));
+		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (pScanner->GetPixelIdx() == 0) break;
-		pScanner->BwdPixel();
+		if (scanner.GetColNum() == 0) break;
+		//scanner.BwdPixel();
 	}
 	for (;;) {
-		int idx = static_cast<int>(pPalette->LookupNearest(pScanner->GetPointer()));
+		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (pScanner->GetLineIdx() == 0) break;
-		pScanner->BwdLine();
+		if (scanner.GetRowNum() == 0) break;
+		//scanner.BwdLine();
 	}
 	int idxMax = 0;
 	int histMax = histTbl[0];
-	for (int idx = 1; idx < ArraySizeOf(histTbl); idx++) {
+	for (int idx = 1; idx < Gurax_ArraySizeOf(histTbl); idx++) {
 		if (histMax < histTbl[idx]) {
 			idxMax = idx;
 			histMax = histTbl[idx];
 		}
 	}
 	return idxMax;
-#endif
 	return 0;
 }
 

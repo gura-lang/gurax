@@ -204,7 +204,7 @@ public:
 	static UChar DisposalMethodFromSymbol(const Symbol* pSymbol);
 	static ImageDescriptor* GetImageDescriptor(const Image& image);
 	static GraphicControlExtension* GetGraphicControl(const Image& image);
-	static int GetPlausibleBackgroundIndex(Palette* pPalette, Image* pImage);
+	static int GetPlausibleBackgroundIndex(Palette& palette, Image& image);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }
