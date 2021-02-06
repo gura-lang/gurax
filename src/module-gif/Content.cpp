@@ -289,31 +289,24 @@ bool Content::SkipImageDescriptor(Stream& stream)
 
 bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp)
 {
-#if 0
-	ImageDescriptor imageDescriptor;
+	GraphicControlExtension& graphicControl = imageProp.GetGraphicControl();
+	ImageDescriptor& imageDescriptor = imageProp.GetImageDescriptor();
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
 	size_t imageWidth = Gurax_UnpackUInt16(imageDescriptor.ImageWidth);
 	size_t imageHeight = Gurax_UnpackUInt16(imageDescriptor.ImageHeight);
-	if (!pImage->AllocBuffer(imageWidth, imageHeight, 0xff)) return false;
-	Palette* pPalette = nullptr;
+	if (!image.Allocate(imageWidth, imageHeight)) return false;
+	image.Fill(0xff);
+	RefPtr<Palette> pPalette;
 	if (imageDescriptor.LocalColorTableFlag()) {
-		size_t nEntries = 1 << (imageDescriptor.SizeOfLocalColorTable() + 1);
-		pPalette = pImage->CreateEmptyPalette(env, nEntries);
-		if (!ReadColorTable(stream, pPalette)) return false;
+		int nEntries = 1 << (static_cast<int>(imageDescriptor.SizeOfLocalColorTable()) + 1);
+		pPalette.reset(new Palette(nEntries));
+		if (!ReadColorTable(stream, *pPalette)) return false;
 	} else {
-		pPalette = Palette::Reference(_pPaletteGlobal.get());
-		pImage->SetPalette(pPalette);
+		pPalette.reset(_pPaletteGlobal.Reference());
 	}
-	if (pValueGIF != nullptr) {
-		AutoPtr<Object_GraphicControl> pObjGraphicControl(
-								new Object_GraphicControl(graphicControl));
-		AutoPtr<Object_ImageDescriptor> pObjImageDescriptor(
-								new Object_ImageDescriptor(imageDescriptor));
-		*pValueGIF = Value(new Object_imgprop(pObjGraphicControl.release(), pObjImageDescriptor.release()));
-	}
+	image.SetPalette(pPalette.Reference());
 	short transparentColorIndex = graphicControl.TransparentColorIndex;
-	if (!graphicControl.TransparentColorFlag() ||
-					pImage->GetFormat() != Image::FORMAT_RGBA) {
+	if (!graphicControl.TransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
 		transparentColorIndex = -1;
 	}
 	const int maximumBitsOfCode = 12;
@@ -334,11 +327,11 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 	UInt16 codeFirst = codeInvalid, codeOld = codeInvalid;
 	const size_t bytesCodeTable = codeMaxCeiling * 2;
 	const size_t bytesCodeStack = codeMaxCeiling * 2;
-	UInt16* codeTable = new UInt16 [bytesCodeTable];
-	UInt16* codeStack = new UInt16 [bytesCodeStack];
-	UInt16* pCodeStack = codeStack;
+	std::unique_ptr<UInt16[]> codeTable(new UInt16 [bytesCodeTable]);
+	std::unique_ptr<UInt16[]> codeStack(new UInt16 [bytesCodeStack]);
+	UInt16* pCodeStack = codeStack.get();
 	do {
-		::memset(codeTable, 0x00, bytesCodeTable);
+		::memset(codeTable.get(), 0x00, bytesCodeTable);
 		for (UInt16 code = 0; code < codeBoundary; code++) {
 			codeTable[code * 2 + 1] = code;
 		}
@@ -346,10 +339,10 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 	ImageDataBlock imageDataBlock;
 	size_t x = 0, y = 0;
 	int iPass = 0;
-	UInt8* dstp = pImage->GetPointer(0);
+	UInt8* dstp = image.GetPointerC();
 	for (;;) {
 		UInt16 code = 0;
-		if (pCodeStack > codeStack) {
+		if (pCodeStack > codeStack.get()) {
 			pCodeStack--;
 			code =* pCodeStack;
 		} else {
@@ -358,11 +351,11 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 			if (code == codeClear) {
 				//::printf("clear\n");
 				UInt16 code = 0;
-				::memset(codeTable, 0x00, bytesCodeTable);
+				::memset(codeTable.get(), 0x00, bytesCodeTable);
 				for (UInt16 code = 0; code < codeBoundary; code++) {
 					codeTable[code * 2 + 1] = code;
 				}
-				pCodeStack = codeStack;
+				pCodeStack = codeStack.get();
 				bitsOfCode = mininumBitsOfCode + 1;
 				codeMax = codeBoundary + 2;
 				codeFirst = codeOld = codeInvalid;
@@ -373,7 +366,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 					UInt8 blockSize;
 					if (!ReadBuff(stream, &blockSize, 1)) break;
 					if (blockSize == 0) break;
-					if (!stream.Seek(blockSize, Stream::SeekCur)) break;
+					if (!stream.Seek(blockSize, Stream::SeekMode::Cur)) break;
 				}
 				break;
 			} else if (codeFirst == codeInvalid) {
@@ -388,7 +381,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 					*pCodeStack++ = codeTable[code * 2 + 1];
 					if (code == codeTable[code * 2 + 0]) {
 						Error::Issue(ErrorType::FormatError, "invalid GIF format");
-						goto done;
+						return false;
 					}
 					code = codeTable[code * 2 + 0];
 				}
@@ -404,13 +397,13 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 					}
 				}
 				codeOld = codeIn;
-				if (pCodeStack > codeStack) {
+				if (pCodeStack > codeStack.get()) {
 					pCodeStack--;
 					code = *pCodeStack;
 				}
 			}
 		}
-		const UInt8* srcp = pPalette->GetEntry(code);
+		const Color& src = pPalette->GetColor(code);
 		if (x >= imageWidth) {
 			x = 0;
 			if (interlaceFlag) {
@@ -425,22 +418,17 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 				y++;
 				if (y >= imageHeight) break;
 			}
-			dstp = pImage->GetPointer(y);
+			dstp = image.GetPointerC(0, y);
 		}
 		//::printf("+ %3d,%3d code = %03x\n", x, y, code);
-		*(dstp + 0) = *srcp++;
-		*(dstp + 1) = *srcp++;
-		*(dstp + 2) = *srcp++;
+		*(dstp + 0) = src.GetB();
+		*(dstp + 1) = src.GetG();
+		*(dstp + 2) = src.GetR();
 		if (code == transparentColorIndex) *(dstp + 3) = 0x00;
-		dstp += pImage->GetBytesPerPixel();
+		dstp += image.GetBytesPerPixel();
 		x++;
 	}
-done:
-	delete[] codeTable;
-	delete[] codeStack;
-	return !sig.IsSignalled();
-#endif
-	return false;
+	return !Error::IsIssued();
 }
 
 bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphicControl)
@@ -569,15 +557,14 @@ bool Content::ReadColorTable(Stream& stream, Palette& palette)
 
 bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 {
-#if 0
 	UInt8 buff[3];
-	int nEntries = static_cast<int>(pPalette->CountEntries());
+	int nEntries = static_cast<int>(palette.GetSize());
 	int idx = 0;
 	for ( ; idx < nEntries; idx++) {
-		const UInt8 *pEntry = pPalette->GetEntry(idx);
-		buff[0] = *(pEntry + Image::OffsetR);
-		buff[1] = *(pEntry + Image::OffsetG);
-		buff[2] = *(pEntry + Image::OffsetB);
+		const Color& color = palette.GetColor(idx);
+		buff[0] = color.GetR();
+		buff[1] = color.GetG();
+		buff[2] = color.GetB();
 		if (!Content::WriteBuff(stream, buff, 3)) return false;
 	}
 	int nBits = 0;
@@ -586,7 +573,6 @@ bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 	for ( ; idx < (1 << nBits); idx++) {
 		if (!Content::WriteBuff(stream, buff, 3)) return false;
 	}
-#endif
 	return true;
 }
 
@@ -762,10 +748,8 @@ Content::ImageDataBlock::ImageDataBlock() : _bitOffset(0), _bitsRead(0)
 	::memset(_blockData, 0x00, 256);
 }
 
-bool Content::ImageDataBlock::ReadCode(Stream& stream,
-										UInt16& code, int bitsOfCode)
+bool Content::ImageDataBlock::ReadCode(Stream& stream, UInt16& code, int bitsOfCode)
 {
-#if 0
 	for (int bitsAccum = 0; bitsAccum < bitsOfCode; ) {
 		int bitsRest = bitsOfCode - bitsAccum;
 		if (_bitOffset >= _bitsRead) {
@@ -789,14 +773,11 @@ bool Content::ImageDataBlock::ReadCode(Stream& stream,
 			_bitOffset += bitsLeft;
 		}
 	}
-#endif
 	return true;
 }
 
-bool Content::ImageDataBlock::WriteCode(Stream& stream,
-										UInt16 code, int bitsOfCode)
+bool Content::ImageDataBlock::WriteCode(Stream& stream, UInt16 code, int bitsOfCode)
 {
-#if 0
 	const int bitsFull = 8 * 255;
 	for (int bitsAccum = 0; bitsAccum < bitsOfCode; ) {
 		int bitsRest = bitsOfCode - bitsAccum;
@@ -819,13 +800,11 @@ bool Content::ImageDataBlock::WriteCode(Stream& stream,
 			_bitOffset += bitsLeft;
 		}
 	}
-#endif
 	return true;
 }
 
 bool Content::ImageDataBlock::Flush(Stream& stream)
 {
-#if 0
 	if (_bitOffset > 0) {
 		UInt8 blockSize = static_cast<UInt8>((_bitOffset + 7) / 8);
 		if (!Content::WriteBuff(stream, &blockSize, 1)) return false;
@@ -835,7 +814,6 @@ bool Content::ImageDataBlock::Flush(Stream& stream)
 		UInt8 blockSize = 0x00;
 		if (!WriteBuff(stream, &blockSize, 1)) return false;
 	} while (0);
-#endif
 	return true;
 }
 

@@ -152,6 +152,7 @@ public:
 		ImageProp(GraphicControlExtension graphicControl) : _graphicControl(graphicControl) {}
 	private:
 		~ImageProp() = default;
+	public:
 		GraphicControlExtension& GetGraphicControl() { return _graphicControl; }
 		ImageDescriptor& GetImageDescriptor() { return _imageDescriptor; }
 	};
