@@ -625,15 +625,14 @@ const Symbol* Content::DisposalMethodToSymbol(UInt8 disposalMethod)
 
 UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 {
-#if 0
-	UInt8 disposalMethod;
-	if (pSymbol->IsIdentical(Gurax_UserSymbol(none))) {
+	UInt8 disposalMethod = 0;
+	if (pSymbol->IsIdentical(Gurax_Symbol(none))) {
 		disposalMethod = 0;
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(keep))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(keep))) {
 		disposalMethod = 1;
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(background))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(background))) {
 		disposalMethod = 2;
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(previous))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(previous))) {
 		disposalMethod = 3;
 	} else {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for disposal method: %s",
@@ -641,27 +640,21 @@ UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 		return 0;
 	}
 	return disposalMethod;
-#endif
-	return 0;
 }
 
 Content::GraphicControlExtension* Content::GetGraphicControl(const Image& image)
 {
-#if 0
-	const Value* pValue = pObjImage->LookupValue(Gurax_UserSymbol(gif), ENVREF_NoEscalate);
-	if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
-	return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
-#endif
+	const Value& value = image.GetValueExtra();
+	//if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
+	//return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
 	return nullptr;
 }
 
 Content::ImageDescriptor* Content::GetImageDescriptor(const Image& image)
 {
-#if 0
-	const Value* pValue = pObjImage->LookupValue(Gurax_UserSymbol(gif), ENVREF_NoEscalate);
-	if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
-	return Object_imgprop::GetObject(*pValue)->GetImageDescriptor();
-#endif
+	const Value& value = image.GetValueExtra();
+	//if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
+	//return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
 	return nullptr;
 }
 
