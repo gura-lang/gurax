@@ -234,26 +234,22 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 
 bool Content::ReadDataBlocks(Stream& stream, Binary& binary)
 {
-#if 0
 	for (;;) {
 		UInt8 blockSize;
 		if (!ReadBuff(stream, &blockSize, 1)) return false;
 		if (blockSize == 0) break;
 		char buff[256];
 		if (!ReadBuff(stream, buff, blockSize)) return false;
-		binary.append(buff, blockSize);
+		binary.Append(buff, blockSize);
 	}
-#endif
 	return true;
 }
 
 bool Content::WriteDataBlocks(Stream& stream, const Binary& binary)
 {
-#if 0
 	size_t size = binary.size();
 	for (size_t offset = 0; offset < size; ) {
-		UInt8 blockSize =
-			static_cast<UInt8>((size - offset <= 255)? size - offset : 255);
+		UInt8 blockSize = static_cast<UInt8>((size - offset <= 255)? size - offset : 255);
 		if (!WriteBuff(stream, &blockSize, 1)) return false;
 		if (!WriteBuff(stream, binary.data() + offset, blockSize)) return false;
 		offset += blockSize;
@@ -262,18 +258,16 @@ bool Content::WriteDataBlocks(Stream& stream, const Binary& binary)
 		UInt8 blockSize = 0x00;
 		if (!WriteBuff(stream, &blockSize, 1)) return false;
 	} while (0);
-#endif
 	return true;
 }
 
 bool Content::SkipImageDescriptor(Stream& stream)
 {
-#if 0
 	ImageDescriptor imageDescriptor;
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
 	if (imageDescriptor.LocalColorTableFlag()) {
 		int nEntries = 1 << (imageDescriptor.SizeOfLocalColorTable() + 1);
-		stream.Seek(nEntries * 3, Stream::SeekCur);
+		stream.Seek(nEntries * 3, Stream::SeekMode::Cur);
 	}
 	UInt8 mininumBitsOfCode;
 	if (!ReadBuff(stream, &mininumBitsOfCode, 1)) return false;
@@ -281,9 +275,8 @@ bool Content::SkipImageDescriptor(Stream& stream)
 		UInt8 blockSize;
 		if (!ReadBuff(stream, &blockSize, 1)) return false;
 		if (blockSize == 0) break;
-		if (!stream.Seek(blockSize, Stream::SeekCur)) return false;
+		if (!stream.Seek(blockSize, Stream::SeekMode::Cur)) return false;
 	}
-#endif
 	return true;
 }
 
