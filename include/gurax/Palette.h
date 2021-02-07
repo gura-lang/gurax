@@ -43,6 +43,7 @@ public:
 	static Palette* WebSafe();
 	static Palette* Win256();
 public:
+	Palette* Clone() const { return new Palette(_packedTbl.get(), _n); }
 	size_t GetSize() const { return _n; }
 	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
 	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }

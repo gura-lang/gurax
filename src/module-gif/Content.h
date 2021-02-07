@@ -162,7 +162,7 @@ private:
 	LogicalScreenDescriptor _logicalScreenDescriptor;
 	RefPtr<Palette> _pPaletteGlobal;
 	Extensions _exts;
-	ValueList _valList;
+	ImageOwner _images;
 public:
 	// Constructor
 	Content();
@@ -193,7 +193,7 @@ public:
 	}
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
 	Extensions& GetExtensions() { return _exts; }
-	ValueList& GetList() { return _valList; }
+	ImageOwner& GetImages() { return _images; }
 	void AddImage(const Value& value,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
 			UInt16 delayTime, UChar disposalMethod);

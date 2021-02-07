@@ -34,7 +34,7 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 		_pPaletteGlobal.reset(new Palette(nEntries));
 		if (!ReadColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-	GetList().clear();
+	_images.Clear();
 	GraphicControlExtension graphicControl;
 	do {
 		// set default values
@@ -59,7 +59,7 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControl));
 				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
 				//pObjImage->AssignValue(Gurax_UserSymbol(gif), valueGIF, EXTRA_Public);
-				//GetList().push_back(Value(pObjImage.release()));
+				_images.push_back(pImage.release());
 			}
 		} else if (imageSeparator == Sep::ExtensionIntroducer) {
 			UInt8 label;
@@ -95,35 +95,28 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 
 bool Content::Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	if (GetList().empty()) {
+	if (_images.empty()) {
 		Error::Issue(ErrorType::ValueError, "no image to write");
 		return false;
 	}
-	_pPaletteGlobal.reset(new Palette());
-	_pPaletteGlobal->AllocBuff(256);
+	_pPaletteGlobal.reset(new Palette(256));
 	size_t logicalScreenWidth = 0, logicalScreenHeight = 0;
-	ValueList &valList = GetList();
-	foreach (ValueList, pValue, valList) {
-		if (!pValue->Is_image()) continue;
-		const Object_image* pObjImage = Object_image::GetObject(*pValue);
-		const Image* pImage = pObjImage->GetImage();
+	for (Image* pImage : _images) {
 		const Palette* pPalette = pImage->GetPalette();
-		if (pPalette != nullptr && pPalette->CountEntries() <= 256) {
-			if (_pPaletteGlobal->UpdateByPalette(pPalette, Palette::ShrinkNone)) {
+		if (pPalette && pPalette->GetSize() <= 256) {
+			if (_pPaletteGlobal->UpdateByPalette(*pPalette, Palette::ShrinkMode::None)) {
 				// nothing to do
-			} else if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
-				break;
 			} else {
-				return false;
+				//if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
+				break;
 			}
-		} else if (_pPaletteGlobal->UpdateByImage(pImage, Palette::ShrinkNone)) {
-			// nothing to do
-		} else if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
-			break;
 		} else {
-			return false;
+			if (_pPaletteGlobal->UpdateByImage(*pImage, Palette::ShrinkMode::None)) {
+				// nothing to do
+			} else {
+				//if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
+				break;
+			}
 		}
 	}
 	int backgroundColorIndex = -1;
@@ -131,9 +124,9 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	UInt8 transparentColorFlag = 0;
 	do {
 		size_t idxBlank = _pPaletteGlobal->NextBlankIndex();
-		if (idxBlank < _pPaletteGlobal->CountEntries()) {
+		if (idxBlank < _pPaletteGlobal->GetSize()) {
 			// add an entry for transparent color
-			_pPaletteGlobal->SetEntry(idxBlank, 128, 128, 128, 0);
+			_pPaletteGlobal->SetRGBA(idxBlank, 128, 128, 128, 0);
 			transparentColorIndex = static_cast<UInt8>(idxBlank);
 			transparentColorFlag = 1;
 			idxBlank++;
@@ -144,25 +137,19 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		backgroundColorIndex = static_cast<int>(
 				_pPaletteGlobal->LookupNearest(colorBackground));
 	}
-	foreach (ValueList, pValue, valList) {
-		if (!pValue->Is_image()) continue;
-		Object_image* pObjImage = Object_image::GetObject(*pValue);
-		Image* pImage = pObjImage->GetImage();
-		if (!pImage->CheckValid(sig)) return false;
+	for (Image* pImage : _images) {
+		//if (!pImage->CheckValid(sig)) return false;
 		pImage->SetPalette(Palette::Reference(_pPaletteGlobal.get()));
-		ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
-		size_t width = pImage->GetWidth() +
-						Gurax_UnpackUInt16(pImageDescriptor->ImageLeftPosition);
-		size_t height = pImage->GetHeight() +
-						Gurax_UnpackUInt16(pImageDescriptor->ImageTopPosition);
+		ImageDescriptor* pImageDescriptor = GetImageDescriptor(*pImage);
+		size_t width = pImage->GetWidth() + Gurax_UnpackUInt16(pImageDescriptor->ImageLeftPosition);
+		size_t height = pImage->GetHeight() + Gurax_UnpackUInt16(pImageDescriptor->ImageTopPosition);
 		if (logicalScreenWidth < width) logicalScreenWidth = width;
 		if (logicalScreenHeight < height) logicalScreenHeight = height;
-		GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
+		GraphicControlExtension* pGraphicControl = GetGraphicControl(*pImage);
 		pGraphicControl->TransparentColorIndex = transparentColorIndex;
 		pGraphicControl->PackedFields |= transparentColorFlag;
 		if (backgroundColorIndex < 0) {
-			backgroundColorIndex = GetPlausibleBackgroundIndex(
-											_pPaletteGlobal.get(), pImage);
+			backgroundColorIndex = GetPlausibleBackgroundIndex(*_pPaletteGlobal, *pImage);
 		}
 	}
 	if (backgroundColorIndex < 0) backgroundColorIndex = 0;
@@ -171,18 +158,15 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		UInt8 colorResolution = 7;
 		UInt8 sortFlag = 0;
 		UInt8 sizeOfGlobalColorTable = 0;
-		int nEntries = static_cast<int>(_pPaletteGlobal->CountEntries());
+		int nEntries = static_cast<int>(_pPaletteGlobal->GetSize());
 		for ( ; nEntries > (1 << sizeOfGlobalColorTable); sizeOfGlobalColorTable++) ;
 		sizeOfGlobalColorTable--;
-		Gurax_PackUInt16(_logicalScreenDescriptor.LogicalScreenWidth,
-						static_cast<UInt16>(logicalScreenWidth));
-		Gurax_PackUInt16(_logicalScreenDescriptor.LogicalScreenHeight,
-						static_cast<UInt16>(logicalScreenHeight));
+		Gurax_PackUInt16(_logicalScreenDescriptor.LogicalScreenWidth, static_cast<UInt16>(logicalScreenWidth));
+		Gurax_PackUInt16(_logicalScreenDescriptor.LogicalScreenHeight, static_cast<UInt16>(logicalScreenHeight));
 		_logicalScreenDescriptor.PackedFields =
-				(globalColorTableFlag << 7) | (colorResolution << 4) |
-				(sortFlag << 3) | (sizeOfGlobalColorTable << 0);
-		_logicalScreenDescriptor.BackgroundColorIndex =
-						static_cast<UInt8>(backgroundColorIndex);
+			(globalColorTableFlag << 7) | (colorResolution << 4) |
+			(sortFlag << 3) | (sizeOfGlobalColorTable << 0);
+		_logicalScreenDescriptor.BackgroundColorIndex = static_cast<UInt8>(backgroundColorIndex);
 		_logicalScreenDescriptor.PixelAspectRatio = 0;
 	} while (0);
 	do {
@@ -203,7 +187,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (!WriteBuff(stream, &_logicalScreenDescriptor, 7)) return false;
 	// Global Color Table
 	if (_logicalScreenDescriptor.GlobalColorTableFlag()) {
-		if (!WriteColorTable(stream, _pPaletteGlobal.get())) return false;
+		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
 	if (_exts.application.validFlag) {
 		// Application
@@ -214,21 +198,17 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		if (!WriteBuff(stream, &_exts.application, 12)) return false;
 		if (!WriteDataBlocks(stream, _exts.application.ApplicationData)) return false;
 	}
-	foreach (ValueList, pValue, GetList()) {
-		if (!pValue->Is_image()) continue;
-		Object_image* pObjImage = Object_image::GetObject(*pValue);
-		Image* pImage = pObjImage->GetImage();
-		GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
+	for (Image* pImage : _images) {
+		GraphicControlExtension* pGraphicControl = GetGraphicControl(*pImage);
 		if (pGraphicControl == nullptr) continue;
 		if (!WriteGraphicControl(stream, *pGraphicControl)) return false;
-		if (!WriteImageDescriptor(env, stream, *pGraphicControl, pObjImage)) return false;
+		if (!WriteImageDescriptor(stream, *pGraphicControl, *pImage)) return false;
 	}
 	do {
 		// Trailer
 		const UInt8 buff[] = { Sep::Trailer };
 		if (!WriteBuff(stream, buff, 1)) return false;
 	} while (0);
-#endif
 	return false;
 }
 
@@ -438,23 +418,21 @@ bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension&
 
 bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension& graphicControl, Image& image)
 {
-#if 0
-	Image* pImage = pObjImage->GetImage();
 	do {
 		const UInt8 buff[] = { Sep::ImageDescriptor };
 		if (!WriteBuff(stream, buff, 1)) return false;
 	} while (0);
 	const Palette* pPalette = _pPaletteGlobal.get();
-	ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
+	ImageDescriptor* pImageDescriptor = GetImageDescriptor(image);
 	if (pImageDescriptor == nullptr) {
 		return false;
 	}
 	if (!WriteBuff(stream, pImageDescriptor, 9)) return false;
 	if (pImageDescriptor->LocalColorTableFlag()) {
-		if (!WriteColorTable(stream, pPalette)) return false;
+		if (!WriteColorTable(stream, *pPalette)) return false;
 	}
 	UInt8 transparentColorIndex = graphicControl.TransparentColorIndex;
-	bool transparentColorFlag = (pImage->GetFormat() == Image::FORMAT_RGBA) &&
+	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) &&
 					(graphicControl.TransparentColorFlag() != 0);
 	const int maximumBitsOfCode = 12;
 	UInt8 minimumBitsOfCode = 8;
@@ -470,16 +448,16 @@ bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension
 	TransMap transMap;
 	ImageDataBlock imageDataBlock;
 	if (!imageDataBlock.WriteCode(stream, codeClear, bitsOfCode)) return false;
-	for (size_t y = 0; y < pImage->GetHeight(); y++) {
-		const UInt8* pPixel = pImage->GetPointer(y);
-		for (size_t x = 0; x < pImage->GetWidth();
-							x++, pPixel += pImage->GetBytesPerPixel()) {
+	for (size_t y = 0; y < image.GetHeight(); y++) {
+		const UInt8* pPixel = image.GetPointerC(0, y);
+		for (size_t x = 0; x < image.GetWidth(); x++, pPixel += image.GetBytesPerPixel()) {
 			// LZW (Lempel-Ziv-Welch) compression algorithm
 			UInt8 k;
-			if (transparentColorFlag && Image::GetPixelA(pPixel) < 128) {
+			if (transparentColorFlag && Image::PixelRGBA::GetA(pPixel) < 128) {
 				k = transparentColorIndex;
 			} else {
-				k = static_cast<UInt8>(pPalette->LookupNearest(pPixel));
+				k = static_cast<UInt8>(pPalette->LookupNearest(
+					Image::PixelRGBA::GetR(pPixel), Image::PixelRGBA::GetG(pPixel), Image::PixelRGBA::GetB(pPixel)));
 			}
 			//::printf("- %3d,%3d code = %03x\n", x, y, k);
 			if (word.empty()) {
@@ -487,7 +465,8 @@ bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension
 				code = k;
 				continue;
 			}
-			Binary wordK = word + static_cast<char>(k);
+			Binary wordK;
+			//Binary wordK = word + static_cast<char>(k);
 			TransMap::iterator iter = transMap.find(wordK);
 			if (iter != transMap.end()) {
 				word = wordK;
@@ -502,8 +481,7 @@ bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension
 				codeMax++;
 				bitsOfCode++;
 			} else {
-				if (!imageDataBlock.WriteCode(stream,
-										codeClear, bitsOfCode)) return false;
+				if (!imageDataBlock.WriteCode(stream, codeClear, bitsOfCode)) return false;
 				//::printf("clear\n");
 				transMap.clear();
 				codeMax = codeBoundary + 2;
@@ -517,7 +495,6 @@ bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension
 	if (!imageDataBlock.WriteCode(stream, code, bitsOfCode)) return false;
 	if (!imageDataBlock.WriteCode(stream, codeEnd, bitsOfCode)) return false;
 	if (!imageDataBlock.Flush(stream)) return false;
-#endif
 	return true;
 }
 
