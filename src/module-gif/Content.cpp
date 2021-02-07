@@ -36,20 +36,13 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 	}
 	_images.Clear();
 	GraphicControlExtension graphicControl;
-	do {
-		// set default values
-		graphicControl.BlockSize = 4;
-		graphicControl.PackedFields = (1 << 2) | (0 << 1) | (0 << 0);
-		Gurax_PackUInt16(graphicControl.DelayTime, 0);
-		graphicControl.TransparentColorIndex = 0;
-	} while (0);
 	for (;;) {
 		UInt8 imageSeparator;
 		size_t bytesRead = stream.Read(&imageSeparator, 1);
 		if (bytesRead < 1) break;
 		//::printf("%02x\n", imageSeparator);
 		if (imageSeparator == Sep::ImageDescriptor) {
-			if (pImageTgt != nullptr) {
+			if (!pImageTgt) {
 				//ReadImageDescriptor(stream, graphicControl, pImageTgt, nullptr);
 				break;
 			} else if (format.IsIdentical(Image::Format::None)) {
@@ -200,7 +193,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	}
 	for (Image* pImage : _images) {
 		GraphicControlExtension* pGraphicControl = GetGraphicControl(*pImage);
-		if (pGraphicControl == nullptr) continue;
+		if (!pGraphicControl) continue;
 		if (!WriteGraphicControl(stream, *pGraphicControl)) return false;
 		if (!WriteImageDescriptor(stream, *pGraphicControl, *pImage)) return false;
 	}
@@ -418,15 +411,10 @@ bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension&
 
 bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension& graphicControl, Image& image)
 {
-	do {
-		const UInt8 buff[] = { Sep::ImageDescriptor };
-		if (!WriteBuff(stream, buff, 1)) return false;
-	} while (0);
+	if (!WriteBuff(stream, &Sep::ImageDescriptor, 1)) return false;
 	const Palette* pPalette = _pPaletteGlobal.get();
 	ImageDescriptor* pImageDescriptor = GetImageDescriptor(image);
-	if (pImageDescriptor == nullptr) {
-		return false;
-	}
+	if (!pImageDescriptor) return false;
 	if (!WriteBuff(stream, pImageDescriptor, 9)) return false;
 	if (pImageDescriptor->LocalColorTableFlag()) {
 		if (!WriteColorTable(stream, *pPalette)) return false;
@@ -546,54 +534,36 @@ bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 	return true;
 }
 
-void Content::AddImage(const Value& value, UInt16 delayTime,
-		UInt16 imageLeftPosition, UInt16 imageTopPosition,
-		UInt8 disposalMethod)
+void Content::AddImage(Image* pImage, UInt16 delayTime,
+		UInt16 imageLeftPosition, UInt16 imageTopPosition, UInt8 disposalMethod)
 {
-#if 0
-	Object_image* pObjImage = Object_image::GetObject(value);
-	Image* pImage = pObjImage->GetImage();
-	AutoPtr<Object_GraphicControl> pObjGraphicControl;
-	AutoPtr<Object_ImageDescriptor> pObjImageDescriptor;
+	RefPtr<ImageProp> pImageProp(new ImageProp());
 	do {
-		Content::GraphicControlExtension graphicControl;
-		Content::GraphicControlExtension graphicControlOrg;
-		Content::GraphicControlExtension* pGraphicControl = GetGraphicControl(pObjImage);
-		if (pGraphicControl != nullptr) {
-			graphicControlOrg = *pGraphicControl;
-		}
-		graphicControl.PackedFields =
-			(disposalMethod << 2) |
-			(graphicControlOrg.UserInputFlag() << 1) |
-			(graphicControlOrg.TransparentColorFlag() << 0);
+		UInt8 userInputFlag = 0;
+		UInt8 transparentColorFlag = 0;
+		GraphicControlExtension& graphicControl = pImageProp->GetGraphicControl();
+		graphicControl.BlockSize = 4;
+		graphicControl.PackedFields = (disposalMethod << 2) | (userInputFlag << 1) | (transparentColorFlag << 0);
 		Gurax_PackUInt16(graphicControl.DelayTime, delayTime);
-		graphicControl.TransparentColorIndex = graphicControlOrg.TransparentColorIndex;
-		pObjGraphicControl.reset(new Object_GraphicControl(graphicControl));
+		graphicControl.TransparentColorIndex = 0;
 	} while (0);
 	do {
-		Content::ImageDescriptor imageDescriptor;
-		Content::ImageDescriptor imageDescriptorOrg;
-		Content::ImageDescriptor* pImageDescriptor = GetImageDescriptor(pObjImage);
-		if (pImageDescriptor != nullptr) {
-			imageDescriptorOrg = *pImageDescriptor;
-		}
+		UInt8 localColorTableFlag = 0;
+		UInt8 interlaceFlag = 0;
+		UInt8 sortFlag = 0;
+		UInt8 sizeOfLocalColorTable = 0;
+		ImageDescriptor& imageDescriptor = pImageProp->GetImageDescriptor();
 		Gurax_PackUInt16(imageDescriptor.ImageLeftPosition, imageLeftPosition);
 		Gurax_PackUInt16(imageDescriptor.ImageTopPosition, imageTopPosition);
-		Gurax_PackUInt16(imageDescriptor.ImageWidth,
-					static_cast<UInt16>(pImage->GetWidth()));
-		Gurax_PackUInt16(imageDescriptor.ImageHeight,
-					static_cast<UInt16>(pImage->GetHeight()));
-		imageDescriptor.PackedFields =
-			(imageDescriptorOrg.LocalColorTableFlag() << 7) |
-			(imageDescriptorOrg.InterlaceFlag() << 6) |
-			(imageDescriptorOrg.SortFlag() << 5) |
-			(imageDescriptorOrg.SizeOfLocalColorTable() << 0);
-		pObjImageDescriptor.reset(new Object_ImageDescriptor(imageDescriptor));
+		UInt16 imageWidth = static_cast<UInt16>(pImage->GetWidth());
+		UInt16 imageHeight = static_cast<UInt16>(pImage->GetHeight());
+		Gurax_PackUInt16(imageDescriptor.ImageWidth, imageWidth);
+		Gurax_PackUInt16(imageDescriptor.ImageHeight, imageHeight);
+		imageDescriptor.PackedFields = (localColorTableFlag << 7) | (interlaceFlag << 6) |
+			(sortFlag << 5) | (sizeOfLocalColorTable << 0);
 	} while (0);
-	pObjImage->AssignValue(Gurax_UserSymbol(gif), Value(new Object_imgprop(
-		pObjGraphicControl.release(), pObjImageDescriptor.release())), EXTRA_Public);
-	GetList().push_back(value);
-#endif
+	pImage->SetValueExtra(new Value_ImageProp(pImageProp.release()));
+	_images.push_back(pImage);
 }
 
 void Content::Dump(UInt8* data, int bytes)
@@ -607,20 +577,17 @@ void Content::Dump(UInt8* data, int bytes)
 
 const Symbol* Content::DisposalMethodToSymbol(UInt8 disposalMethod)
 {
-#if 0
 	if (disposalMethod == 0) {
-		return Gurax_UserSymbol(none);
+		return Gurax_Symbol(none);
 	} else if (disposalMethod == 1) {
-		return Gurax_UserSymbol(keep);
+		return Gurax_Symbol(keep);
 	} else if (disposalMethod == 2) {
-		return Gurax_UserSymbol(background);
+		return Gurax_Symbol(background);
 	} else if (disposalMethod == 3) {
-		return Gurax_UserSymbol(previous);
+		return Gurax_Symbol(previous);
 	} else {
-		return Gurax_UserSymbol(none);
+		return Gurax_Symbol(none);
 	}
-#endif
-	return nullptr;
 }
 
 UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
@@ -635,27 +602,25 @@ UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(previous))) {
 		disposalMethod = 3;
 	} else {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for disposal method: %s",
-															pSymbol->GetName());
+		Error::Issue(ErrorType::ValueError,
+			"invalid symbol for disposal method: %s", pSymbol->GetName());
 		return 0;
 	}
 	return disposalMethod;
 }
 
-Content::GraphicControlExtension* Content::GetGraphicControl(const Image& image)
+Content::GraphicControlExtension* Content::GetGraphicControl(Image& image)
 {
 	const Value& value = image.GetValueExtra();
-	//if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
-	//return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
-	return nullptr;
+	if (value.IsType(VTYPE_ImageProp)) return nullptr;
+	return &Value_ImageProp::GetEntity(value).GetGraphicControl();
 }
 
-Content::ImageDescriptor* Content::GetImageDescriptor(const Image& image)
+Content::ImageDescriptor* Content::GetImageDescriptor(Image& image)
 {
 	const Value& value = image.GetValueExtra();
-	//if (pValue == nullptr || !pValue->IsType(VTYPE_imgprop)) return nullptr;
-	//return Object_imgprop::GetObject(*pValue)->GetGraphicControl();
-	return nullptr;
+	if (value.IsType(VTYPE_ImageProp)) return nullptr;
+	return &Value_ImageProp::GetEntity(value).GetImageDescriptor();
 }
 
 int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)

@@ -48,11 +48,16 @@ public:
 		Gurax_PackedUInt16_LE(ImageHeight);
 		UInt8 PackedFields;
 		ImageDescriptor() {
+			UInt8 localColorTableFlag = 0;
+			UInt8 interlaceFlag = 0;
+			UInt8 sortFlag = 0;
+			UInt8 sizeOfLocalColorTable = 0;
 			Gurax_PackUInt16(ImageLeftPosition, 0);
 			Gurax_PackUInt16(ImageTopPosition, 0);
 			Gurax_PackUInt16(ImageWidth, 0);
 			Gurax_PackUInt16(ImageHeight, 0);
-			PackedFields = 0x00;
+			PackedFields = (localColorTableFlag << 7) | (interlaceFlag << 6) |
+				(sortFlag << 5) | (sizeOfLocalColorTable << 0);
 		}
 		UInt8 LocalColorTableFlag() const { return (PackedFields >> 7) & 1; }
 		UInt8 InterlaceFlag() const { return (PackedFields >> 6) & 1; }
@@ -66,8 +71,11 @@ public:
 		UInt8 TransparentColorIndex;
 		static const UInt8 Label = 0xf9;
 		GraphicControlExtension() {
+			UInt8 disposalMethod = 1;
+			UInt8 userInputFlag = 0;
+			UInt8 transparentColorFlag = 0;
 			BlockSize = 4;
-			PackedFields = 0x00;
+			PackedFields = (disposalMethod << 2) | (userInputFlag << 1) | (transparentColorFlag << 0);
 			Gurax_PackUInt16(DelayTime, 0);
 			TransparentColorIndex = 0;
 		}
@@ -149,12 +157,17 @@ public:
 		GraphicControlExtension _graphicControl;
 		ImageDescriptor _imageDescriptor;
 	public:
+		ImageProp() {}
 		ImageProp(GraphicControlExtension graphicControl) : _graphicControl(graphicControl) {}
 	private:
 		~ImageProp() = default;
 	public:
-		GraphicControlExtension& GetGraphicControl() { return _graphicControl; }
-		ImageDescriptor& GetImageDescriptor() { return _imageDescriptor; }
+		GraphicControlExtension& GetGraphicControl() const {
+			return const_cast<ImageProp*>(this)->_graphicControl;
+		}
+		ImageDescriptor& GetImageDescriptor() const {
+			return const_cast<ImageProp*>(this)->_imageDescriptor;
+		}
 	};
 	typedef std::map<Binary, UInt16> TransMap;
 private:
@@ -194,7 +207,7 @@ public:
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
 	Extensions& GetExtensions() { return _exts; }
 	ImageOwner& GetImages() { return _images; }
-	void AddImage(const Value& value,
+	void AddImage(Image* pImage,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
 			UInt16 delayTime, UChar disposalMethod);
 	static bool ReadBuff(Stream& stream, void* buff, size_t bytes);
@@ -202,8 +215,8 @@ public:
 	static void Dump(UChar* data, int bytes);
 	static const Symbol* DisposalMethodToSymbol(UChar disposalMethod);
 	static UChar DisposalMethodFromSymbol(const Symbol* pSymbol);
-	static ImageDescriptor* GetImageDescriptor(const Image& image);
-	static GraphicControlExtension* GetGraphicControl(const Image& image);
+	static ImageDescriptor* GetImageDescriptor(Image& image);
+	static GraphicControlExtension* GetGraphicControl(Image& image);
 	static int GetPlausibleBackgroundIndex(Palette& palette, Image& image);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
