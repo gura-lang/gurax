@@ -38,7 +38,8 @@ target_sources(gif.gurd PRIVATE
 	module-gif.cpp
 	Util.cpp
 	Content.cpp
-	VType_Content.cpp)
+	VType_Content.cpp
+	VType_ImageProp.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

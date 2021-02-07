@@ -39,6 +39,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_Content);
+	Assign(VTYPE_ImageProp);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

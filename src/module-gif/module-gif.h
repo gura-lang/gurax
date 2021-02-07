@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "Content.h"
 #include "VType_Content.h"
+#include "VType_ImageProp.h"
 
 Gurax_BeginModuleHeader(gif)
 Gurax_EndModuleHeader(gif)
