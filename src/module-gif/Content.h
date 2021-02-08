@@ -182,6 +182,9 @@ public:
 		Entry(Image* pImage, ImageProp* pImageProp) : _pImage(pImage), _pImageProp(pImageProp) {}
 	private:
 		~Entry() = default;
+	public:
+		Image& GetImage() { return *_pImage; }
+		ImageProp& GetImageProp() { return *_pImageProp; }
 	};
 	class EntryList : public ListBase<Entry*> {
 	};
@@ -196,7 +199,7 @@ private:
 	LogicalScreenDescriptor _logicalScreenDescriptor;
 	RefPtr<Palette> _pPaletteGlobal;
 	Extensions _exts;
-	ImageOwner _images;
+	EntryOwner _entries;
 public:
 	// Constructor
 	Content();
@@ -217,18 +220,16 @@ public:
 	bool WriteDataBlocks(Stream& stream, const Binary& binary);
 	bool SkipImageDescriptor(Stream& stream);
 	bool ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp);
-	bool WriteGraphicControl(Stream& stream,
-								const GraphicControlExtension& graphiControl);
-	bool WriteImageDescriptor(Stream& stream,
-		const GraphicControlExtension& graphicControl, Image& image);
+	bool WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphiControl);
+	bool WriteImageDescriptor(Stream& stream, Entry& entry);
 	Header& GetHeader() { return _header; }
 	LogicalScreenDescriptor& GetLogicalScreenDescriptor() {
 		return _logicalScreenDescriptor;
 	}
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
 	Extensions& GetExtensions() { return _exts; }
-	ImageOwner& GetImages() { return _images; }
-	void AddImage(Image* pImage,
+	EntryOwner& GetEntries() { return _entries; }
+	void AddImage(Image& image,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
 			UInt16 delayTime, UChar disposalMethod);
 	static bool ReadBuff(Stream& stream, void* buff, size_t bytes);
@@ -236,8 +237,6 @@ public:
 	static void Dump(UChar* data, int bytes);
 	static const Symbol* DisposalMethodToSymbol(UChar disposalMethod);
 	static UChar DisposalMethodFromSymbol(const Symbol* pSymbol);
-	static ImageDescriptor* GetImageDescriptor(Image& image);
-	static GraphicControlExtension* GetGraphicControl(Image& image);
 	static int GetPlausibleBackgroundIndex(Palette& palette, Image& image);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -34,7 +34,7 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 		_pPaletteGlobal.reset(new Palette(nEntries));
 		if (!ReadColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-	_images.Clear();
+	_entries.Clear();
 	GraphicControlExtension graphicControl;
 	for (;;) {
 		UInt8 imageSeparator;
@@ -51,8 +51,7 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 				RefPtr<Image> pImage(new Image(format));
 				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControl));
 				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
-				//pObjImage->AssignValue(Gurax_UserSymbol(gif), valueGIF, EXTRA_Public);
-				_images.push_back(pImage.release());
+				_entries.push_back(new Entry(pImage.release(), pImageProp.release()));
 			}
 		} else if (imageSeparator == Sep::ExtensionIntroducer) {
 			UInt8 label;
@@ -88,14 +87,15 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 
 bool Content::Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount)
 {
-	if (_images.empty()) {
+	if (_entries.empty()) {
 		Error::Issue(ErrorType::ValueError, "no image to write");
 		return false;
 	}
 	_pPaletteGlobal.reset(new Palette(256));
 	size_t logicalScreenWidth = 0, logicalScreenHeight = 0;
-	for (Image* pImage : _images) {
-		const Palette* pPalette = pImage->GetPalette();
+	for (Entry* pEntry : _entries) {
+		Image& image = pEntry->GetImage();
+		const Palette* pPalette = image.GetPalette();
 		if (pPalette && pPalette->GetSize() <= 256) {
 			if (_pPaletteGlobal->UpdateByPalette(*pPalette, Palette::ShrinkMode::None)) {
 				// nothing to do
@@ -104,7 +104,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 				break;
 			}
 		} else {
-			if (_pPaletteGlobal->UpdateByImage(*pImage, Palette::ShrinkMode::None)) {
+			if (_pPaletteGlobal->UpdateByImage(image, Palette::ShrinkMode::None)) {
 				// nothing to do
 			} else {
 				//if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
@@ -130,19 +130,19 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		backgroundColorIndex = static_cast<int>(
 				_pPaletteGlobal->LookupNearest(colorBackground));
 	}
-	for (Image* pImage : _images) {
-		//if (!pImage->CheckValid(sig)) return false;
-		pImage->SetPalette(Palette::Reference(_pPaletteGlobal.get()));
-		ImageDescriptor* pImageDescriptor = GetImageDescriptor(*pImage);
-		size_t width = pImage->GetWidth() + Gurax_UnpackUInt16(pImageDescriptor->ImageLeftPosition);
-		size_t height = pImage->GetHeight() + Gurax_UnpackUInt16(pImageDescriptor->ImageTopPosition);
+	for (Entry* pEntry : _entries) {
+		Image& image = pEntry->GetImage();
+		image.SetPalette(Palette::Reference(_pPaletteGlobal.get()));
+		ImageDescriptor& imageDescriptor = pEntry->GetImageProp().GetImageDescriptor();
+		GraphicControlExtension& graphicControl = pEntry->GetImageProp().GetGraphicControl();
+		size_t width = image.GetWidth() + Gurax_UnpackUInt16(imageDescriptor.ImageLeftPosition);
+		size_t height = image.GetHeight() + Gurax_UnpackUInt16(imageDescriptor.ImageTopPosition);
 		if (logicalScreenWidth < width) logicalScreenWidth = width;
 		if (logicalScreenHeight < height) logicalScreenHeight = height;
-		GraphicControlExtension* pGraphicControl = GetGraphicControl(*pImage);
-		pGraphicControl->TransparentColorIndex = transparentColorIndex;
-		pGraphicControl->PackedFields |= transparentColorFlag;
+		graphicControl.TransparentColorIndex = transparentColorIndex;
+		graphicControl.PackedFields |= transparentColorFlag;
 		if (backgroundColorIndex < 0) {
-			backgroundColorIndex = GetPlausibleBackgroundIndex(*_pPaletteGlobal, *pImage);
+			backgroundColorIndex = GetPlausibleBackgroundIndex(*_pPaletteGlobal, image);
 		}
 	}
 	if (backgroundColorIndex < 0) backgroundColorIndex = 0;
@@ -191,11 +191,11 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		if (!WriteBuff(stream, &_exts.application, 12)) return false;
 		if (!WriteDataBlocks(stream, _exts.application.ApplicationData)) return false;
 	}
-	for (Image* pImage : _images) {
-		GraphicControlExtension* pGraphicControl = GetGraphicControl(*pImage);
-		if (!pGraphicControl) continue;
-		if (!WriteGraphicControl(stream, *pGraphicControl)) return false;
-		if (!WriteImageDescriptor(stream, *pGraphicControl, *pImage)) return false;
+	for (Entry* pEntry : _entries) {
+		Image& image = pEntry->GetImage();
+		GraphicControlExtension& graphicControl = pEntry->GetImageProp().GetGraphicControl();
+		if (!WriteGraphicControl(stream, graphicControl)) return false;
+		if (!WriteImageDescriptor(stream, *pEntry)) return false;
 	}
 	do {
 		// Trailer
@@ -409,19 +409,19 @@ bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension&
 	return true;
 }
 
-bool Content::WriteImageDescriptor(Stream& stream, const GraphicControlExtension& graphicControl, Image& image)
+bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 {
+	const Image& image = entry.GetImage();
+	const ImageDescriptor& imageDescriptor = entry.GetImageProp().GetImageDescriptor();
+	const GraphicControlExtension& graphicControl = entry.GetImageProp().GetGraphicControl();
 	if (!WriteBuff(stream, &Sep::ImageDescriptor, 1)) return false;
 	const Palette* pPalette = _pPaletteGlobal.get();
-	ImageDescriptor* pImageDescriptor = GetImageDescriptor(image);
-	if (!pImageDescriptor) return false;
-	if (!WriteBuff(stream, pImageDescriptor, 9)) return false;
-	if (pImageDescriptor->LocalColorTableFlag()) {
+	if (!WriteBuff(stream, &imageDescriptor, 9)) return false;
+	if (imageDescriptor.LocalColorTableFlag()) {
 		if (!WriteColorTable(stream, *pPalette)) return false;
 	}
 	UInt8 transparentColorIndex = graphicControl.TransparentColorIndex;
-	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) &&
-					(graphicControl.TransparentColorFlag() != 0);
+	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) && (graphicControl.TransparentColorFlag() != 0);
 	const int maximumBitsOfCode = 12;
 	UInt8 minimumBitsOfCode = 8;
 	if (!WriteBuff(stream, &minimumBitsOfCode, 1)) return false;
@@ -534,7 +534,7 @@ bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 	return true;
 }
 
-void Content::AddImage(Image* pImage, UInt16 delayTime,
+void Content::AddImage(Image& image, UInt16 delayTime,
 		UInt16 imageLeftPosition, UInt16 imageTopPosition, UInt8 disposalMethod)
 {
 	RefPtr<ImageProp> pImageProp(new ImageProp());
@@ -555,15 +555,14 @@ void Content::AddImage(Image* pImage, UInt16 delayTime,
 		ImageDescriptor& imageDescriptor = pImageProp->GetImageDescriptor();
 		Gurax_PackUInt16(imageDescriptor.ImageLeftPosition, imageLeftPosition);
 		Gurax_PackUInt16(imageDescriptor.ImageTopPosition, imageTopPosition);
-		UInt16 imageWidth = static_cast<UInt16>(pImage->GetWidth());
-		UInt16 imageHeight = static_cast<UInt16>(pImage->GetHeight());
+		UInt16 imageWidth = static_cast<UInt16>(image.GetWidth());
+		UInt16 imageHeight = static_cast<UInt16>(image.GetHeight());
 		Gurax_PackUInt16(imageDescriptor.ImageWidth, imageWidth);
 		Gurax_PackUInt16(imageDescriptor.ImageHeight, imageHeight);
 		imageDescriptor.PackedFields = (localColorTableFlag << 7) | (interlaceFlag << 6) |
 			(sortFlag << 5) | (sizeOfLocalColorTable << 0);
 	} while (0);
-	pImage->SetValueExtra(new Value_ImageProp(pImageProp.release()));
-	_images.push_back(pImage);
+	_entries.push_back(new Entry(image.Reference(), pImageProp.release()));
 }
 
 void Content::Dump(UInt8* data, int bytes)
@@ -607,20 +606,6 @@ UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 		return 0;
 	}
 	return disposalMethod;
-}
-
-Content::GraphicControlExtension* Content::GetGraphicControl(Image& image)
-{
-	const Value& value = image.GetValueExtra();
-	if (value.IsType(VTYPE_ImageProp)) return nullptr;
-	return &Value_ImageProp::GetEntity(value).GetGraphicControl();
-}
-
-Content::ImageDescriptor* Content::GetImageDescriptor(Image& image)
-{
-	const Value& value = image.GetValueExtra();
-	if (value.IsType(VTYPE_ImageProp)) return nullptr;
-	return &Value_ImageProp::GetEntity(value).GetImageDescriptor();
 }
 
 int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
