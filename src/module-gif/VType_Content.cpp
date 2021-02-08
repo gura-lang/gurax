@@ -27,11 +27,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// gif.Content(stream:Stream:r) {block?}
+// gif.Content(stream?:Stream:r):[rgb,rgba] {block?}
 Gurax_DeclareConstructor(Content)
 {
 	Declare(VTYPE_Content, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,11 +44,12 @@ Gurax_ImplementConstructor(Content)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
+	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
-	const Image::Format& format = Image::Format::RGBA;
 	RefPtr<Content> pContent(new Content());
-	if (!pContent->Read(stream, format)) return Value::nil();
+	if (pStream && !pContent->Read(*pStream, format)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Content(pContent.release()));
 }
 
