@@ -16,7 +16,7 @@ Content::~Content()
 {
 }
 
-bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
+bool Content::Read(Stream& stream, Image::Format format)
 {
 	if (!ReadBuff(stream, &_header, 6)) return false;
 	if (::memcmp(_header.Signature, "GIF", 3) != 0) {
@@ -42,10 +42,7 @@ bool Content::Read(Stream& stream, Image* pImageTgt, Image::Format format)
 		if (bytesRead < 1) break;
 		//::printf("%02x\n", imageSeparator);
 		if (imageSeparator == Sep::ImageDescriptor) {
-			if (!pImageTgt) {
-				//ReadImageDescriptor(stream, graphicControl, pImageTgt, nullptr);
-				break;
-			} else if (format.IsIdentical(Image::Format::None)) {
+			if (format.IsIdentical(Image::Format::None)) {
 				if (!SkipImageDescriptor(stream)) break;
 			} else {
 				RefPtr<Image> pImage(new Image(format));

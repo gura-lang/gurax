@@ -212,7 +212,7 @@ public:
 protected:
 	~Content();
 public:
-	bool Read(Stream& stream, Image* pImageTgt, Image::Format format);
+	bool Read(Stream& stream, Image::Format format);
 	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount);
 	bool ReadColorTable(Stream& stream, Palette& palette);
 	bool WriteColorTable(Stream& stream, const Palette& palette);
