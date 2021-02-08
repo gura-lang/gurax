@@ -666,6 +666,11 @@ int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 	return 0;
 }
 
+String Content::ToString(const StringStyle& ss) const
+{
+	return String().Format("gif.Content");
+}
+
 //-----------------------------------------------------------------------------
 // Content::ImageDataBlock
 //-----------------------------------------------------------------------------
@@ -743,9 +748,13 @@ bool Content::ImageDataBlock::Flush(Stream& stream)
 	return true;
 }
 
-String Content::ToString(const StringStyle& ss) const
+//-----------------------------------------------------------------------------
+// Content::EntryOwner
+//-----------------------------------------------------------------------------
+void Content::EntryOwner::Clear()
 {
-	return String().Format("gif.Content");
+	for (Entry* pEntry : *this) Entry::Delete(pEntry);
+	clear();
 }
 
 Gurax_EndModuleScope(gif)

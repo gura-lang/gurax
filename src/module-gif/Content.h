@@ -169,6 +169,27 @@ public:
 			return const_cast<ImageProp*>(this)->_imageDescriptor;
 		}
 	};
+	class Entry : public Referable {
+	public:
+		// Referable declaration
+		Gurax_DeclareReferable(Entry);
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("gif.Entry");
+	private:
+		RefPtr<Image> _pImage;
+		RefPtr<ImageProp> _pImageProp;
+	public:
+		Entry(Image* pImage, ImageProp* pImageProp) : _pImage(pImage), _pImageProp(pImageProp) {}
+	private:
+		~Entry() = default;
+	};
+	class EntryList : public ListBase<Entry*> {
+	};
+	class EntryOwner : public EntryList {
+	public:
+		~EntryOwner() { Clear(); }
+		void Clear();
+	};
 	typedef std::map<Binary, UInt16> TransMap;
 private:
 	Header _header;
