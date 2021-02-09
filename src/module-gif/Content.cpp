@@ -47,6 +47,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 				RefPtr<Image> pImage(new Image(format));
 				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControl));
 				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
+				pImage->SetValueExtra(new Value_ImageProp(pImageProp.Reference()));
 				_entries.push_back(new Entry(pImage.release(), pImageProp.release()));
 			}
 		} else if (imageSeparator == Sep::ExtensionIntroducer) {
@@ -58,16 +59,16 @@ bool Content::Read(Stream& stream, Image::Format format)
 				UInt8 blockTerminator;
 				if (!ReadBuff(stream, &blockTerminator, 1)) break;
 			} else if (label == CommentExtension::Label) {
-				_exts.comment.validFlag = true;
-				if (!ReadDataBlocks(stream, _exts.comment.CommentData)) break;
+				_extensions.comment.validFlag = true;
+				if (!ReadDataBlocks(stream, _extensions.comment.CommentData)) break;
 			} else if (label == PlainTextExtension::Label) {
-				_exts.plainText.validFlag = true;
-				if (!ReadBuff(stream, &_exts.plainText, 13)) break;
-				if (!ReadDataBlocks(stream, _exts.plainText.PlainTextData)) break;
+				_extensions.plainText.validFlag = true;
+				if (!ReadBuff(stream, &_extensions.plainText, 13)) break;
+				if (!ReadDataBlocks(stream, _extensions.plainText.PlainTextData)) break;
 			} else if (label == ApplicationExtension::Label) {
-				_exts.application.validFlag = true;
-				if (!ReadBuff(stream, &_exts.application, 12)) break;
-				if (!ReadDataBlocks(stream, _exts.application.ApplicationData)) break;
+				_extensions.application.validFlag = true;
+				if (!ReadBuff(stream, &_extensions.application, 12)) break;
+				if (!ReadDataBlocks(stream, _extensions.application.ApplicationData)) break;
 			}
 			if (Error::IsIssued()) break;
 		} else if (imageSeparator == Sep::Trailer) {
@@ -159,15 +160,15 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		_logicalScreenDescriptor.PixelAspectRatio = 0;
 	} while (0);
 	do {
-		_exts.application.validFlag = true;
-		_exts.application.BlockSize = 11;
-		::memcpy(_exts.application.ApplicationIdentifier, "NETSCAPE", 8);
-		::memcpy(_exts.application.AuthenticationCode, "2.0", 3);
+		_extensions.application.validFlag = true;
+		_extensions.application.BlockSize = 11;
+		::memcpy(_extensions.application.ApplicationIdentifier, "NETSCAPE", 8);
+		::memcpy(_extensions.application.AuthenticationCode, "2.0", 3);
 		UInt8 applicationData[3];
 		applicationData[0] = 0x01;
 		applicationData[1] = static_cast<UInt8>(loopCount & 0xff);
 		applicationData[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
-		_exts.application.ApplicationData =
+		_extensions.application.ApplicationData =
 						Binary(reinterpret_cast<char* >(applicationData), 3);
 	} while (0);
 	// Header
@@ -178,14 +179,14 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-	if (_exts.application.validFlag) {
+	if (_extensions.application.validFlag) {
 		// Application
 		const UInt8 buff[] = {
 			Sep::ExtensionIntroducer, ApplicationExtension::Label
 		};
 		if (!WriteBuff(stream, &buff, 2)) return false;
-		if (!WriteBuff(stream, &_exts.application, 12)) return false;
-		if (!WriteDataBlocks(stream, _exts.application.ApplicationData)) return false;
+		if (!WriteBuff(stream, &_extensions.application, 12)) return false;
+		if (!WriteDataBlocks(stream, _extensions.application.ApplicationData)) return false;
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
@@ -736,6 +737,22 @@ void Content::EntryOwner::Clear()
 {
 	for (Entry* pEntry : *this) Entry::Delete(pEntry);
 	clear();
+}
+
+//------------------------------------------------------------------------------
+// Content::Iterator_EachImage
+//------------------------------------------------------------------------------
+Value* Content::Iterator_EachImage::DoNextValue()
+{
+	EntryOwner& entries = _pContent->GetEntries();
+	if (_idx >= entries.size()) return nullptr;
+	Entry* pEntry = entries[_idx++];
+	return new Value_Image(pEntry->GetImage().Reference());
+}
+
+String Content::Iterator_EachImage::ToString(const StringStyle& ss) const
+{
+	return String().Format("gif.EachImage");
 }
 
 Gurax_EndModuleScope(gif)

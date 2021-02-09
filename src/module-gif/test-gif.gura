@@ -6,5 +6,5 @@ import(util.tester) {*}
 import(gif)
 
 TestCase('Basic test') {
-	gif.Content('ref/kangaroo.gif')
+	Println(gif.Content('ref/kangaroo.gif').EachImage():*extra)
 }

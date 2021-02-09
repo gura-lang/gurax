@@ -117,6 +117,70 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, ImageHeight)
 	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageHeight));
 }
 
+// gif.ImageDescriptor#LocalColorTableFlag
+Gurax_DeclareProperty_R(ImageDescriptor, LocalColorTableFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, LocalColorTableFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Bool(imageDescriptor.GetLocalColorTableFlag());
+}
+
+// gif.ImageDescriptor#InterlaceFlag
+Gurax_DeclareProperty_R(ImageDescriptor, InterlaceFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, InterlaceFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Bool(imageDescriptor.GetInterlaceFlag());
+}
+
+// gif.ImageDescriptor#SortFlag
+Gurax_DeclareProperty_R(ImageDescriptor, SortFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, SortFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Bool(imageDescriptor.GetSortFlag());
+}
+
+// gif.ImageDescriptor#SizeOfLocalColorTable
+Gurax_DeclareProperty_R(ImageDescriptor, SizeOfLocalColorTable)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, SizeOfLocalColorTable)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Number(imageDescriptor.GetSizeOfLocalColorTable());
+}
+
 //------------------------------------------------------------------------------
 // VType_ImageDescriptor
 //------------------------------------------------------------------------------
@@ -135,6 +199,10 @@ void VType_ImageDescriptor::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(ImageDescriptor, ImageTopPosition));
 	Assign(Gurax_CreateProperty(ImageDescriptor, ImageWidth));
 	Assign(Gurax_CreateProperty(ImageDescriptor, ImageHeight));
+	Assign(Gurax_CreateProperty(ImageDescriptor, LocalColorTableFlag));
+	Assign(Gurax_CreateProperty(ImageDescriptor, InterlaceFlag));
+	Assign(Gurax_CreateProperty(ImageDescriptor, SortFlag));
+	Assign(Gurax_CreateProperty(ImageDescriptor, SizeOfLocalColorTable));
 }
 
 //------------------------------------------------------------------------------

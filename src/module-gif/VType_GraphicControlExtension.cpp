@@ -53,8 +53,8 @@ Gurax_ImplementMethod(GraphicControlExtension, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.GraphicControlExtension#propSkeleton
-Gurax_DeclareProperty_R(GraphicControlExtension, propSkeleton)
+// gif.GraphicControlExtension#BlockSize
+Gurax_DeclareProperty_R(GraphicControlExtension, BlockSize)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,91 @@ Gurax_DeclareProperty_R(GraphicControlExtension, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(GraphicControlExtension, propSkeleton)
+Gurax_ImplementPropertyGetter(GraphicControlExtension, BlockSize)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Number(graphicControlExtension.BlockSize);
+}
+
+// gif.GraphicControlExtension#DelayTime
+Gurax_DeclareProperty_R(GraphicControlExtension, DelayTime)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(GraphicControlExtension, DelayTime)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Number(Gurax_UnpackUInt16(graphicControlExtension.DelayTime));
+}
+
+// gif.GraphicControlExtension#TransparentColorIndex
+Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorIndex)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorIndex)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Number(graphicControlExtension.TransparentColorIndex);
+}
+
+// gif.GraphicControlExtension#DisposalMethod
+Gurax_DeclareProperty_R(GraphicControlExtension, DisposalMethod)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(GraphicControlExtension, DisposalMethod)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Number(graphicControlExtension.GetDisposalMethod());
+}
+
+// gif.GraphicControlExtension#UserInputFlag
+Gurax_DeclareProperty_R(GraphicControlExtension, UserInputFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(GraphicControlExtension, UserInputFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Bool(graphicControlExtension.GetUserInputFlag());
+}
+
+// gif.GraphicControlExtension#TransparentColorFlag
+Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	return new Value_Bool(graphicControlExtension.GetTransparentColorFlag());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +163,12 @@ void VType_GraphicControlExtension::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(GraphicControlExtension, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(GraphicControlExtension, propSkeleton));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, BlockSize));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, DelayTime));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, TransparentColorIndex));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, DisposalMethod));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, UserInputFlag));
+	Assign(Gurax_CreateProperty(GraphicControlExtension, TransparentColorFlag));
 }
 
 //------------------------------------------------------------------------------

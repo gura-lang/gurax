@@ -198,12 +198,28 @@ public:
 		~EntryOwner() { Clear(); }
 		void Clear();
 	};
+	class Iterator_EachImage : public Iterator {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("Iterator_EachImage");
+	private:
+		RefPtr<Content> _pContent;
+		size_t _idx;
+	public:
+		Iterator_EachImage(Content* pContent) : _pContent(pContent), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return _pContent->GetEntries().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 	typedef std::map<Binary, UInt16> TransMap;
 private:
 	Header _header;
 	LogicalScreenDescriptor _logicalScreenDescriptor;
 	RefPtr<Palette> _pPaletteGlobal;
-	Extensions _exts;
+	Extensions _extensions;
 	EntryOwner _entries;
 public:
 	// Constructor
@@ -232,7 +248,7 @@ public:
 		return _logicalScreenDescriptor;
 	}
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
-	Extensions& GetExtensions() { return _exts; }
+	Extensions& GetExtensions() { return _extensions; }
 	EntryOwner& GetEntries() { return _entries; }
 	void AddImage(Image& image,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
@@ -250,6 +266,7 @@ public:
 	bool IsLessThan(const Content& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
 
 Gurax_EndModuleScope(gif)
 

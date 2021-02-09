@@ -762,6 +762,21 @@ Gurax_ImplementPropertyGetter(Image, bytesPerPixel)
 	return new Value_Number(valueThis.GetImage().GetBytesPerPixel());
 }
 
+// Image#extra
+Gurax_DeclareProperty_R(Image, extra)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Additional information associated with the image.");
+}
+
+Gurax_ImplementPropertyGetter(Image, extra)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetImage().GetValueExtra().Reference();
+}
+
 // Image#format
 Gurax_DeclareProperty_R(Image, format)
 {
@@ -884,6 +899,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Image, bytes));
 	Assign(Gurax_CreateProperty(Image, bytesPerLine));
 	Assign(Gurax_CreateProperty(Image, bytesPerPixel));
+	Assign(Gurax_CreateProperty(Image, extra));
 	Assign(Gurax_CreateProperty(Image, format));
 	Assign(Gurax_CreateProperty(Image, height));
 	Assign(Gurax_CreateProperty(Image, p));
