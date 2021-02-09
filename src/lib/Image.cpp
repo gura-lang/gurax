@@ -281,6 +281,14 @@ void Image::Bootup()
 {
 }
 
+void Image::CopyRef(const Image& image)
+{
+	_pMemory.reset(image._pMemory.Reference());
+	_pPalette.reset(image._pPalette.Reference());
+	_metrics = image._metrics;
+	_pValueExtra.reset(image._pValueExtra.Reference());
+}
+
 bool Image::Allocate(size_t width, size_t height)
 {
 	size_t bytes = WidthToBytes(width) * height;

@@ -63,22 +63,28 @@ public:
 		}
 	};
 	struct GURAX_DLLDECLARE Metrics {
-		const Format& format;
+		const Format* pFormat;
 		size_t width;
 		size_t height;
 		size_t bytesPerPixel;
 		size_t bytesPerLine;
 		UInt8 alphaDefault;
+		Metrics(const Metrics& src) :
+			pFormat(src.pFormat), width(src.width), height(src.height),
+			bytesPerPixel(src.bytesPerPixel), bytesPerLine(src.bytesPerLine),
+			alphaDefault(src.alphaDefault) {}
 		Metrics(const Format& format, size_t width, size_t height, UInt8 alphaDefault) :
-			format(format), width(width), height(height),
+			pFormat(&format), width(width), height(height),
 			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)),
 			alphaDefault(alphaDefault) {}
-		void Update() { bytesPerLine = format.WidthToBytes(width); }
-		bool IsFormat(const Format& format) const { return this->format.IsIdentical(format); }
+		void Update() { bytesPerLine = pFormat->WidthToBytes(width); }
+		bool IsFormat(const Format& format) const { return this->pFormat->IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
 		bool CheckCoord(int x, int y) const;
 		bool CheckArea(int x, int y, int width, int height) const;
 		size_t CountPixels() const { return width * height; }
+		void operator=(const Metrics& src) {
+		}
 	};
 	class GURAX_DLLDECLARE Accumulator {
 	public:
@@ -159,7 +165,7 @@ public:
 		Pixel& operator=(const Pixel&& src) noexcept = delete;
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
-		size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+		size_t WidthToBytes(size_t width) const { return _metrics.pFormat->WidthToBytes(width); }
 		size_t GetBytesPerPixel() const { return _metrics.bytesPerPixel; }
 		size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 		UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
@@ -422,6 +428,7 @@ public:
 protected:
 	~Image() = default;
 public:
+	void CopyRef(const Image& image);
 	bool Allocate(size_t width, size_t height);
 	void SetMemory(Memory* pMemory) { _pMemory.reset(pMemory); }
 	Memory* GetMemory() { return _pMemory.get(); }
@@ -431,8 +438,9 @@ public:
 	Palette* GetPalette() { return _pPalette.get(); }
 	const Palette* GetPalette() const { return _pPalette.get(); }
 	bool HasPalette() const { return !!_pPalette; }
-	const Format& GetFormat() const { return _metrics.format; }
+	const Format& GetFormat() const { return *_metrics.pFormat; }
 	bool IsFormat(const Format& format) const { return _metrics.IsFormat(format); }
+	void SetMetrics(const Metrics& metrics) { _metrics = metrics; }
 	Metrics& GetMetrics() { return _metrics; }
 	const Metrics& GetMetrics() const { return _metrics; }
 	bool IsAreaZero() const { return _metrics.width == 0 || _metrics.height == 0; }
@@ -442,7 +450,7 @@ public:
 	size_t GetBytesPerLine() const { return _metrics.bytesPerLine; }
 	void SetAlphaDefault(UInt8 alphaDefault) { _metrics.alphaDefault = alphaDefault; }
 	UInt8 GetAlphaDefault() const { return _metrics.alphaDefault; }
-	size_t WidthToBytes(size_t width) const { return _metrics.format.WidthToBytes(width); }
+	size_t WidthToBytes(size_t width) const { return _metrics.pFormat->WidthToBytes(width); }
 	bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const {
 		return _metrics.AdjustCoord(pRect, x, y, width, height);
 	}
