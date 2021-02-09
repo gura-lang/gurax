@@ -283,6 +283,7 @@ void Image::Bootup()
 
 void Image::CopyRef(const Image& image)
 {
+	
 	_pMemory.reset(image._pMemory.Reference());
 	_pPalette.reset(image._pPalette.Reference());
 	_metrics = image._metrics;

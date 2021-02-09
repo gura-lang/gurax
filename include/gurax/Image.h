@@ -84,6 +84,9 @@ public:
 		bool CheckArea(int x, int y, int width, int height) const;
 		size_t CountPixels() const { return width * height; }
 		void operator=(const Metrics& src) {
+			pFormat = src.pFormat, width = src.width, height = src.height;
+			bytesPerPixel = src.bytesPerPixel, bytesPerLine = src.bytesPerLine;
+			alphaDefault = src.alphaDefault;
 		}
 	};
 	class GURAX_DLLDECLARE Accumulator {

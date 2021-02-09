@@ -31,7 +31,15 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 
 bool ImageMgrEx::ReadStream(Stream& stream, Image& image)
 {
-	return false;
+	RefPtr<Content> pContent(new Content());
+	if (!pContent->Read(stream, image.GetFormat())) return false;
+	Content::EntryOwner& entries = pContent->GetEntries();
+	if (entries.empty()) {
+		Error::Issue(ErrorType::FormatError, "no images found in GIF file");
+		return false;
+	}
+	image.CopyRef(entries.front()->GetImage());
+	return true;
 }
 
 bool ImageMgrEx::WriteStream(Stream& stream, const Image& image)

@@ -50,6 +50,8 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_PlainTextExtension);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	// Assignment of ImageMgr
+	ImageMgr::Assign(new ImageMgrEx());
 	return true;
 }
 
