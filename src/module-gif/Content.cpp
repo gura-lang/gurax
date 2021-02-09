@@ -23,8 +23,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 		Error::Issue(ErrorType::FormatError, "Not a GIF file");
 		return false;
 	}
-	if (::memcmp(_header.Version, "87a", 3) != 0 &&
-							::memcmp(_header.Version, "89a", 3) != 0) {
+	if (::memcmp(_header.Version, "87a", 3) != 0 && ::memcmp(_header.Version, "89a", 3) != 0) {
 		Error::Issue(ErrorType::FormatError, "unsupported version of Content file");
 		return false;
 	}

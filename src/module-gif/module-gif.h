@@ -8,6 +8,7 @@
 #include "Content.h"
 #include "VType_Content.h"
 #include "VType_ImageProp.h"
+#include "VType_LogicalScreenDescriptor.h"
 
 Gurax_BeginModuleHeader(gif)
 Gurax_EndModuleHeader(gif)
