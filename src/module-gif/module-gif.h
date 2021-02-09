@@ -9,6 +9,8 @@
 #include "VType_ApplicationExtension.h"
 #include "VType_CommentExtension.h"
 #include "VType_Content.h"
+#include "VType_GraphicControlExtension.h"
+#include "VType_ImageDescriptor.h"
 #include "VType_ImageProp.h"
 #include "VType_LogicalScreenDescriptor.h"
 #include "VType_PlainTextExtension.h"

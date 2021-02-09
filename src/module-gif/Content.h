@@ -168,6 +168,11 @@ public:
 		ImageDescriptor& GetImageDescriptor() const {
 			return const_cast<ImageProp*>(this)->_imageDescriptor;
 		}
+	public:
+		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+		bool IsIdentical(const ImageProp& other) const { return this == &other; }
+		bool IsEqualTo(const ImageProp& other) const { return IsIdentical(other); }
+		bool IsLessThan(const ImageProp& other) const { return this < &other; }
 	};
 	class Entry : public Referable {
 	public:
