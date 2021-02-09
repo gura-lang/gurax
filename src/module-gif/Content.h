@@ -36,10 +36,10 @@ public:
 		UInt8 PackedFields;
 		UInt8 BackgroundColorIndex;
 		UInt8 PixelAspectRatio;
-		UInt8 GlobalColorTableFlag() const { return (PackedFields >> 7) & 1; }
-		UInt8 ColorResolution() const { return (PackedFields >> 4) & 7; }
-		UInt8 SortFlag() const { return (PackedFields >> 3) & 1; }
-		size_t SizeOfGlobalColorTable() const { return (PackedFields >> 0) & 7; }
+		UInt8 GetGlobalColorTableFlag() const { return (PackedFields >> 7) & 1; }
+		UInt8 GetColorResolution() const { return (PackedFields >> 4) & 7; }
+		UInt8 GetSortFlag() const { return (PackedFields >> 3) & 1; }
+		size_t GetSizeOfGlobalColorTable() const { return (PackedFields >> 0) & 7; }
 	};
 	struct ImageDescriptor {
 		Gurax_PackedUInt16_LE(ImageLeftPosition);

@@ -53,8 +53,8 @@ Gurax_ImplementMethod(LogicalScreenDescriptor, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.LogicalScreenDescriptor#propSkeleton
-Gurax_DeclareProperty_R(LogicalScreenDescriptor, propSkeleton)
+// gif.LogicalScreenDescriptor#LogicalScreenWidth
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, LogicalScreenWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,123 @@ Gurax_DeclareProperty_R(LogicalScreenDescriptor, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, propSkeleton)
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenWidth)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(logicalScreenDescriptor.LogicalScreenWidth));
+}
+
+// gif.LogicalScreenDescriptor#LogicalScreenHeight
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, LogicalScreenHeight)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenHeight)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(logicalScreenDescriptor.LogicalScreenHeight));
+}
+
+// gif.LogicalScreenDescriptor#BackgroundColorIndex
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, BackgroundColorIndex)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, BackgroundColorIndex)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(logicalScreenDescriptor.BackgroundColorIndex);
+}
+
+// gif.LogicalScreenDescriptor#PixelAspectRatio
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, PixelAspectRatio)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, PixelAspectRatio)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(logicalScreenDescriptor.PixelAspectRatio);
+}
+
+// gif.LogicalScreenDescriptor#GlobalColorTableFlag
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, GlobalColorTableFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, GlobalColorTableFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Bool(logicalScreenDescriptor.GetGlobalColorTableFlag());
+}
+
+// gif.LogicalScreenDescriptor#ColorResolution
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, ColorResolution)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, ColorResolution)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(logicalScreenDescriptor.GetColorResolution());
+}
+
+// gif.LogicalScreenDescriptor#SortFlag
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, SortFlag)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, SortFlag)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Bool(logicalScreenDescriptor.GetSortFlag());
+}
+
+// gif.LogicalScreenDescriptor#SizeOfGlobalColorTable
+Gurax_DeclareProperty_R(LogicalScreenDescriptor, SizeOfGlobalColorTable)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, SizeOfGlobalColorTable)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& logicalScreenDescriptor = valueThis.GetContent().GetLogicalScreenDescriptor();
+	return new Value_Number(logicalScreenDescriptor.GetSizeOfGlobalColorTable());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +195,14 @@ void VType_LogicalScreenDescriptor::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(LogicalScreenDescriptor, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, propSkeleton));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, LogicalScreenWidth));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, LogicalScreenHeight));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, BackgroundColorIndex));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, PixelAspectRatio));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, GlobalColorTableFlag));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, ColorResolution));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, SortFlag));
+	Assign(Gurax_CreateProperty(LogicalScreenDescriptor, SizeOfGlobalColorTable));
 }
 
 //------------------------------------------------------------------------------

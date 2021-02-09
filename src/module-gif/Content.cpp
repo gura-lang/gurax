@@ -28,8 +28,8 @@ bool Content::Read(Stream& stream, Image::Format format)
 		return false;
 	}
 	if (!ReadBuff(stream, &_logicalScreenDescriptor, 7)) return false;
-	if (_logicalScreenDescriptor.GlobalColorTableFlag()) {
-		int nEntries = 1 << (_logicalScreenDescriptor.SizeOfGlobalColorTable() + 1);
+	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
+		int nEntries = 1 << (_logicalScreenDescriptor.GetSizeOfGlobalColorTable() + 1);
 		_pPaletteGlobal.reset(new Palette(nEntries));
 		if (!ReadColorTable(stream, *_pPaletteGlobal)) return false;
 	}
@@ -175,7 +175,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	// Logical Screen Descriptor
 	if (!WriteBuff(stream, &_logicalScreenDescriptor, 7)) return false;
 	// Global Color Table
-	if (_logicalScreenDescriptor.GlobalColorTableFlag()) {
+	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
 	if (_exts.application.validFlag) {
