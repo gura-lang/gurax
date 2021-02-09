@@ -234,8 +234,8 @@ bool Content::SkipImageDescriptor(Stream& stream)
 {
 	ImageDescriptor imageDescriptor;
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
-	if (imageDescriptor.LocalColorTableFlag()) {
-		int nEntries = 1 << (imageDescriptor.SizeOfLocalColorTable() + 1);
+	if (imageDescriptor.GetLocalColorTableFlag()) {
+		int nEntries = 1 << (imageDescriptor.GetSizeOfLocalColorTable() + 1);
 		stream.Seek(nEntries * 3, Stream::SeekMode::Cur);
 	}
 	UInt8 mininumBitsOfCode;
@@ -259,8 +259,8 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 	if (!image.Allocate(imageWidth, imageHeight)) return false;
 	image.Fill(0xff);
 	RefPtr<Palette> pPalette;
-	if (imageDescriptor.LocalColorTableFlag()) {
-		int nEntries = 1 << (static_cast<int>(imageDescriptor.SizeOfLocalColorTable()) + 1);
+	if (imageDescriptor.GetLocalColorTableFlag()) {
+		int nEntries = 1 << (static_cast<int>(imageDescriptor.GetSizeOfLocalColorTable()) + 1);
 		pPalette.reset(new Palette(nEntries));
 		if (!ReadColorTable(stream, *pPalette)) return false;
 	} else {
@@ -268,7 +268,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 	}
 	image.SetPalette(pPalette.Reference());
 	short transparentColorIndex = graphicControl.TransparentColorIndex;
-	if (!graphicControl.TransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
+	if (!graphicControl.GetTransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
 		transparentColorIndex = -1;
 	}
 	const int maximumBitsOfCode = 12;
@@ -279,7 +279,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 		Error::Issue(ErrorType::FormatError, "illegal code size");
 		return false;
 	}
-	bool interlaceFlag = (imageDescriptor.InterlaceFlag() != 0);
+	bool interlaceFlag = (imageDescriptor.GetInterlaceFlag() != 0);
 	const UInt16 codeInvalid = 0xffff;
 	UInt16 codeMaxCeiling = 1 << maximumBitsOfCode;
 	UInt16 codeBoundary = 1 << mininumBitsOfCode;
@@ -413,11 +413,11 @@ bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 	if (!WriteBuff(stream, &Sep::ImageDescriptor, 1)) return false;
 	const Palette* pPalette = _pPaletteGlobal.get();
 	if (!WriteBuff(stream, &imageDescriptor, 9)) return false;
-	if (imageDescriptor.LocalColorTableFlag()) {
+	if (imageDescriptor.GetLocalColorTableFlag()) {
 		if (!WriteColorTable(stream, *pPalette)) return false;
 	}
 	UInt8 transparentColorIndex = graphicControl.TransparentColorIndex;
-	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) && (graphicControl.TransparentColorFlag() != 0);
+	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) && (graphicControl.GetTransparentColorFlag() != 0);
 	const int maximumBitsOfCode = 12;
 	UInt8 minimumBitsOfCode = 8;
 	if (!WriteBuff(stream, &minimumBitsOfCode, 1)) return false;

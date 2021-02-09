@@ -59,10 +59,10 @@ public:
 			PackedFields = (localColorTableFlag << 7) | (interlaceFlag << 6) |
 				(sortFlag << 5) | (sizeOfLocalColorTable << 0);
 		}
-		UInt8 LocalColorTableFlag() const { return (PackedFields >> 7) & 1; }
-		UInt8 InterlaceFlag() const { return (PackedFields >> 6) & 1; }
-		UInt8 SortFlag() const { return (PackedFields >> 5) & 1; }
-		UInt8 SizeOfLocalColorTable() const { return (PackedFields >> 0) & 7; }
+		UInt8 GetLocalColorTableFlag() const { return (PackedFields >> 7) & 1; }
+		UInt8 GetInterlaceFlag() const { return (PackedFields >> 6) & 1; }
+		UInt8 GetSortFlag() const { return (PackedFields >> 5) & 1; }
+		UInt8 GetSizeOfLocalColorTable() const { return (PackedFields >> 0) & 7; }
 	};
 	struct GraphicControlExtension {
 		UInt8 BlockSize;
@@ -79,9 +79,9 @@ public:
 			Gurax_PackUInt16(DelayTime, 0);
 			TransparentColorIndex = 0;
 		}
-		UInt8 DisposalMethod() const { return (PackedFields >> 2) & 7; }
-		UInt8 UserInputFlag() const { return (PackedFields >> 1) & 1; }
-		UInt8 TransparentColorFlag() const { return (PackedFields >> 0) & 1; }
+		UInt8 GetDisposalMethod() const { return (PackedFields >> 2) & 7; }
+		UInt8 GetUserInputFlag() const { return (PackedFields >> 1) & 1; }
+		UInt8 GetTransparentColorFlag() const { return (PackedFields >> 0) & 1; }
 	};
 	struct CommentExtension {
 		Binary CommentData;

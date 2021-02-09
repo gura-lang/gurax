@@ -53,8 +53,8 @@ Gurax_ImplementMethod(ImageDescriptor, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.ImageDescriptor#propSkeleton
-Gurax_DeclareProperty_R(ImageDescriptor, propSkeleton)
+// gif.ImageDescriptor#ImageLeftPosition
+Gurax_DeclareProperty_R(ImageDescriptor, ImageLeftPosition)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,59 @@ Gurax_DeclareProperty_R(ImageDescriptor, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(ImageDescriptor, propSkeleton)
+Gurax_ImplementPropertyGetter(ImageDescriptor, ImageLeftPosition)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageLeftPosition));
+}
+
+// gif.ImageDescriptor#ImageTopPosition
+Gurax_DeclareProperty_R(ImageDescriptor, ImageTopPosition)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, ImageTopPosition)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageTopPosition));
+}
+
+// gif.ImageDescriptor#ImageWidth
+Gurax_DeclareProperty_R(ImageDescriptor, ImageWidth)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, ImageWidth)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageWidth));
+}
+
+// gif.ImageDescriptor#ImageHeight
+Gurax_DeclareProperty_R(ImageDescriptor, ImageHeight)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageDescriptor, ImageHeight)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageHeight));
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +131,10 @@ void VType_ImageDescriptor::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ImageDescriptor, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageDescriptor, propSkeleton));
+	Assign(Gurax_CreateProperty(ImageDescriptor, ImageLeftPosition));
+	Assign(Gurax_CreateProperty(ImageDescriptor, ImageTopPosition));
+	Assign(Gurax_CreateProperty(ImageDescriptor, ImageWidth));
+	Assign(Gurax_CreateProperty(ImageDescriptor, ImageHeight));
 }
 
 //------------------------------------------------------------------------------
