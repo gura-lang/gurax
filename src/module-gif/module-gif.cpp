@@ -6,30 +6,6 @@
 Gurax_BeginModule(gif)
 
 //------------------------------------------------------------------------------
-// Implementation of function
-//------------------------------------------------------------------------------
-// gif.Test()
-Gurax_DeclareFunction(Test)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
-}
-
-Gurax_ImplementFunction(Test)
-{
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
-}
-
-//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -48,8 +24,6 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_ImageProp);
 	Assign(VTYPE_LogicalScreenDescriptor);
 	Assign(VTYPE_PlainTextExtension);
-	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
 	// Assignment of ImageMgr
 	ImageMgr::Assign(new ImageMgrEx());
 	return true;

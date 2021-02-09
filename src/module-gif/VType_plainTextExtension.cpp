@@ -53,8 +53,8 @@ Gurax_ImplementMethod(PlainTextExtension, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.PlainTextExtension#propSkeleton
-Gurax_DeclareProperty_R(PlainTextExtension, propSkeleton)
+// gif.PlainTextExtension#BlockSize
+Gurax_DeclareProperty_R(PlainTextExtension, BlockSize)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,10 +62,165 @@ Gurax_DeclareProperty_R(PlainTextExtension, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(PlainTextExtension, propSkeleton)
+Gurax_ImplementPropertyGetter(PlainTextExtension, BlockSize)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(plainText.BlockSize);
+}
+
+// gif.PlainTextExtension#TextGridLeftPosition
+Gurax_DeclareProperty_R(PlainTextExtension, TextGridLeftPosition)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridLeftPosition)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridLeftPosition));
+}
+
+// gif.PlainTextExtension#TextGridTopPosition
+Gurax_DeclareProperty_R(PlainTextExtension, TextGridTopPosition)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridTopPosition)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridTopPosition));
+}
+
+// gif.PlainTextExtension#TextGridWidth
+Gurax_DeclareProperty_R(PlainTextExtension, TextGridWidth)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridWidth)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridWidth));
+}
+
+// gif.PlainTextExtension#TextGridHeight
+Gurax_DeclareProperty_R(PlainTextExtension, TextGridHeight)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridHeight)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridHeight));
+}
+
+// gif.PlainTextExtension#CharacterCellWidth
+Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellWidth)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellWidth)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(plainText.CharacterCellWidth);
+}
+
+// gif.PlainTextExtension#CharacterCellHeight
+Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellHeight)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellHeight)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(plainText.CharacterCellHeight);
+}
+
+// gif.PlainTextExtension#TextForegroundColorIndex
+Gurax_DeclareProperty_R(PlainTextExtension, TextForegroundColorIndex)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextForegroundColorIndex)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(plainText.TextForegroundColorIndex);
+}
+
+// gif.PlainTextExtension#TextBackgroundColorIndex
+Gurax_DeclareProperty_R(PlainTextExtension, TextBackgroundColorIndex)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, TextBackgroundColorIndex)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Number(plainText.TextBackgroundColorIndex);
+}
+
+// gif.PlainTextExtension#PlainTextData
+Gurax_DeclareProperty_R(PlainTextExtension, PlainTextData)
+{
+	Declare(VTYPE_Binary, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(PlainTextExtension, PlainTextData)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	if (!plainText.validFlag) return Value::nil();
+	return new Value_Binary(plainText.PlainTextData);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +237,7 @@ void VType_PlainTextExtension::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(PlainTextExtension, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(PlainTextExtension, propSkeleton));
+	Assign(Gurax_CreateProperty(PlainTextExtension, BlockSize));
 }
 
 //------------------------------------------------------------------------------
