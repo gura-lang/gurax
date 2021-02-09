@@ -38,6 +38,7 @@ target_sources(gif.gurd PRIVATE
 	module-gif.cpp
 	Util.cpp
 	Content.cpp
+	ImageExtension.cpp
 	VType_ApplicationExtension.cpp
 	VType_CommentExtension.cpp
 	VType_Content.cpp

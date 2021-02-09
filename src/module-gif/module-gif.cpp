@@ -43,6 +43,8 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_ApplicationExtension);
 	Assign(VTYPE_CommentExtension);
 	Assign(VTYPE_Content);
+	Assign(VTYPE_GraphicControlExtension);
+	Assign(VTYPE_ImageDescriptor);
 	Assign(VTYPE_ImageProp);
 	Assign(VTYPE_LogicalScreenDescriptor);
 	Assign(VTYPE_PlainTextExtension);

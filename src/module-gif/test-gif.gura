@@ -5,6 +5,20 @@
 import(util.tester) {*}
 import(gif)
 
+TestCase('Property') {
+	gif.ApplicationExtension.PrintPropSlots()
+	gif.CommentExtension.PrintPropSlots()
+	gif.Content.PrintPropSlots()
+	gif.GraphicControlExtension.PrintPropSlots()
+	gif.ImageDescriptor.PrintPropSlots()
+	gif.ImageProp.PrintPropSlots()
+	gif.LogicalScreenDescriptor.PrintPropSlots()
+	gif.PlainTextExtension.PrintPropSlots()
+}
+
 TestCase('Basic test') {
-	Println(gif.Content('ref/kangaroo.gif').EachImage():*extra)
+	c = gif.Content('ref/kangaroo.gif')
+	Tester(`c.LogicalScreenDescriptor.LogicalScreenWidth)
+	Tester(`c.LogicalScreenDescriptor.LogicalScreenHeight)
+	Tester(`c.LogicalScreenDescriptor.PixelAspectRatio)
 }

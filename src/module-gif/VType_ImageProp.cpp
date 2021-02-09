@@ -71,7 +71,7 @@ Gurax_ImplementPropertyGetter(ImageProp, GraphicControlExtension)
 // gif.ImageProp#ImageDescriptor
 Gurax_DeclareProperty_R(ImageProp, ImageDescriptor)
 {
-	Declare(VTYPE_GraphicControlExtension, Flag::None);
+	Declare(VTYPE_ImageDescriptor, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

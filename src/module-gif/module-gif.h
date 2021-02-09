@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include "Util.h"
 #include "Content.h"
+#include "ImageExtension.h"
 #include "VType_ApplicationExtension.h"
 #include "VType_CommentExtension.h"
 #include "VType_Content.h"
