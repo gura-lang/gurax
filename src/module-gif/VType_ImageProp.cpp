@@ -53,19 +53,34 @@ Gurax_ImplementMethod(ImageProp, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.ImageProp#propSkeleton
-Gurax_DeclareProperty_R(ImageProp, propSkeleton)
+// gif.ImageProp#GraphicControlExtension
+Gurax_DeclareProperty_R(ImageProp, GraphicControlExtension)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_GraphicControlExtension, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(ImageProp, propSkeleton)
+Gurax_ImplementPropertyGetter(ImageProp, GraphicControlExtension)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_GraphicControlExtension(valueThis.GetImageProp().Reference());
+}
+
+// gif.ImageProp#ImageDescriptor
+Gurax_DeclareProperty_R(ImageProp, ImageDescriptor)
+{
+	Declare(VTYPE_GraphicControlExtension, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(ImageProp, ImageDescriptor)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_ImageDescriptor(valueThis.GetImageProp().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +97,8 @@ void VType_ImageProp::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ImageProp, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageProp, propSkeleton));
+	Assign(Gurax_CreateProperty(ImageProp, GraphicControlExtension));
+	Assign(Gurax_CreateProperty(ImageProp, ImageDescriptor));
 }
 
 //------------------------------------------------------------------------------

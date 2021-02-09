@@ -48,32 +48,32 @@ protected:
 	// Destructor
 	~Value_ImageProp() = default;
 public:
-	Content::ImageProp& GetEntity() { return *_pImageProp; }
-	const Content::ImageProp& GetEntity() const { return *_pImageProp; }
-	Content::ImageProp* GetEntityPtr() { return _pImageProp.get(); }
-	const Content::ImageProp* GetEntityPtr() const { return _pImageProp.get(); }
+	Content::ImageProp& GetImageProp() { return *_pImageProp; }
+	const Content::ImageProp& GetImageProp() const { return *_pImageProp; }
+	Content::ImageProp* GetImagePropPtr() { return _pImageProp.get(); }
+	const Content::ImageProp* GetImagePropPtr() const { return _pImageProp.get(); }
 public:
-	static Content::ImageProp& GetEntity(Value& value) {
-		return dynamic_cast<Value_ImageProp&>(value).GetEntity();
+	static Content::ImageProp& GetImageProp(Value& value) {
+		return dynamic_cast<Value_ImageProp&>(value).GetImageProp();
 	}
-	static const Content::ImageProp& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_ImageProp&>(value).GetEntity();
+	static const Content::ImageProp& GetImageProp(const Value& value) {
+		return dynamic_cast<const Value_ImageProp&>(value).GetImageProp();
 	}
-	static Content::ImageProp* GetEntityPtr(Value& value) { return &GetEntity(value); }
-	static const Content::ImageProp* GetEntityPtr(const Value& value) { return &GetEntity(value); }
+	static Content::ImageProp* GetImagePropPtr(Value& value) { return &GetImageProp(value); }
+	static const Content::ImageProp* GetImagePropPtr(const Value& value) { return &GetImageProp(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntityPtr());
+		return reinterpret_cast<size_t>(GetImagePropPtr());
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
-			GetEntityPtr() == Value_ImageProp::GetEntityPtr(value);
+			GetImagePropPtr() == Value_ImageProp::GetImagePropPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetEntityPtr() < Value_ImageProp::GetEntityPtr(value) :
+			GetImagePropPtr() < Value_ImageProp::GetImagePropPtr(value) :
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
