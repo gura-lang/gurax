@@ -40,9 +40,12 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
+	Assign(VTYPE_ApplicationExtension);
+	Assign(VTYPE_CommentExtension);
 	Assign(VTYPE_Content);
 	Assign(VTYPE_ImageProp);
 	Assign(VTYPE_LogicalScreenDescriptor);
+	Assign(VTYPE_PlainTextExtension);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

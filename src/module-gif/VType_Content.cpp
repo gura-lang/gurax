@@ -82,19 +82,19 @@ Gurax_ImplementMethod(Content, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.Content#propSkeleton
-Gurax_DeclareProperty_R(Content, propSkeleton)
+// gif.Content#LogicalScreenDescriptor
+Gurax_DeclareProperty_R(Content, LogicalScreenDescriptor)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_LogicalScreenDescriptor, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Content, propSkeleton)
+Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_LogicalScreenDescriptor(valueThis.GetContent().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Content, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, propSkeleton));
+	Assign(Gurax_CreateProperty(Content, LogicalScreenDescriptor));
 }
 
 //------------------------------------------------------------------------------

@@ -6,9 +6,12 @@
 #include <gurax.h>
 #include "Util.h"
 #include "Content.h"
+#include "VType_ApplicationExtension.h"
+#include "VType_CommentExtension.h"
 #include "VType_Content.h"
 #include "VType_ImageProp.h"
 #include "VType_LogicalScreenDescriptor.h"
+#include "VType_PlainTextExtension.h"
 
 Gurax_BeginModuleHeader(gif)
 Gurax_EndModuleHeader(gif)
