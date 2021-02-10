@@ -65,7 +65,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, BlockSize)
 Gurax_ImplementPropertyGetter(PlainTextExtension, BlockSize)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(plainText.BlockSize);
 }
@@ -82,7 +82,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextGridLeftPosition)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridLeftPosition)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridLeftPosition));
 }
@@ -99,7 +99,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextGridTopPosition)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridTopPosition)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridTopPosition));
 }
@@ -116,7 +116,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextGridWidth)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridWidth)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridWidth));
 }
@@ -133,7 +133,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextGridHeight)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridHeight)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(Gurax_UnpackUInt16(plainText.TextGridHeight));
 }
@@ -150,7 +150,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellWidth)
 Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellWidth)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(plainText.CharacterCellWidth);
 }
@@ -167,7 +167,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellHeight)
 Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellHeight)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(plainText.CharacterCellHeight);
 }
@@ -184,7 +184,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextForegroundColorIndex)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextForegroundColorIndex)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(plainText.TextForegroundColorIndex);
 }
@@ -201,7 +201,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, TextBackgroundColorIndex)
 Gurax_ImplementPropertyGetter(PlainTextExtension, TextBackgroundColorIndex)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Number(plainText.TextBackgroundColorIndex);
 }
@@ -218,7 +218,7 @@ Gurax_DeclareProperty_R(PlainTextExtension, PlainTextData)
 Gurax_ImplementPropertyGetter(PlainTextExtension, PlainTextData)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& plainText = valueThis.GetContent().GetExtensions().plainText;
+	auto& plainText = valueThis.GetPlainTextExtension();
 	if (!plainText.validFlag) return Value::nil();
 	return new Value_Binary(plainText.PlainTextData);
 }
@@ -247,7 +247,7 @@ VType& Value_PlainTextExtension::vtype = VTYPE_PlainTextExtension;
 
 String Value_PlainTextExtension::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetContent().ToString(ss));
+	return ToStringGeneric(ss, "gif.PlainTextExtension");
 }
 
 Gurax_EndModuleScope(gif)

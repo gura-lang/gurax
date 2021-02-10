@@ -177,7 +177,7 @@ Gurax_ImplementPropertyGetter(Content, PlainTextExtension)
 	auto& valueThis = GetValueThis(valueTarget);
 	auto& content = valueThis.GetContent();
 	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_PlainTextExtension(content.Reference());
+	return new Value_PlainTextExtension(content.Reference(), content.GetExtensions().plainText);
 }
 
 // gif.Content#ApplicationExtension:nil

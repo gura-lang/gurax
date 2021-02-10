@@ -30,16 +30,18 @@ public:
 	Gurax_MemoryPoolAllocator("Value_PlainTextExtension");
 protected:
 	RefPtr<Content> _pContent;
+	Content::PlainTextExtension& _plainTextExtension;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_PlainTextExtension() = delete;
-	explicit Value_PlainTextExtension(Content* pContent, VType& vtype = VTYPE_PlainTextExtension) :
-		Value_Object(vtype), _pContent(pContent) {}
+	Value_PlainTextExtension(Content* pContent, Content::PlainTextExtension& plainTextExtension,
+									VType& vtype = VTYPE_PlainTextExtension) :
+		Value_Object(vtype), _pContent(pContent), _plainTextExtension(plainTextExtension) {}
 	// Copy constructor/operator
 	Value_PlainTextExtension(const Value_PlainTextExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()) {}
+		Value_Object(src), _pContent(src._pContent->Reference()), _plainTextExtension(src._plainTextExtension) {}
 	Value_PlainTextExtension& operator=(const Value_PlainTextExtension& src) = delete;
 	// Move constructor/operator
 	Value_PlainTextExtension(Value_PlainTextExtension&& src) noexcept = delete;
@@ -48,31 +50,29 @@ protected:
 	// Destructor
 	~Value_PlainTextExtension() = default;
 public:
-	Content& GetContent() { return *_pContent; }
-	const Content& GetContent() const { return *_pContent; }
+	Content::PlainTextExtension& GetPlainTextExtension() { return _plainTextExtension; }
+	const Content::PlainTextExtension& GetPlainTextExtension() const { return _plainTextExtension; }
 public:
-	static Content& GetContent(Value& value) {
-		return dynamic_cast<Value_PlainTextExtension&>(value).GetContent();
+	static Content::PlainTextExtension& GetPlainTextExtension(Value& value) {
+		return dynamic_cast<Value_PlainTextExtension&>(value).GetPlainTextExtension();
 	}
-	static const Content& GetContent(const Value& value) {
-		return dynamic_cast<const Value_PlainTextExtension&>(value).GetContent();
+	static const Content::PlainTextExtension& GetPlainTextExtension(const Value& value) {
+		return dynamic_cast<const Value_PlainTextExtension&>(value).GetPlainTextExtension();
 	}
-	static Content* GetEntityPtr(Value& value) { return &GetContent(value); }
-	static const Content* GetEntityPtr(const Value& value) { return &GetContent(value); }
+	static Content::PlainTextExtension* GetEntityPtr(Value& value) { return &GetPlainTextExtension(value); }
+	static const Content::PlainTextExtension* GetEntityPtr(const Value& value) { return &GetPlainTextExtension(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetContent().CalcHash();
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) &&
-			GetContent().IsEqualTo(Value_PlainTextExtension::GetContent(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetContent().IsLessThan(Value_PlainTextExtension::GetContent(value)) :
-			GetVType().IsLessThan(value.GetVType());
+			GetEntityPtr(*this) < GetEntityPtr(value) : GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };
