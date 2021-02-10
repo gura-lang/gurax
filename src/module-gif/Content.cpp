@@ -531,7 +531,7 @@ bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 	return true;
 }
 
-void Content::AddImage(Image& image, UInt16 delayTime,
+void Content::AddImage(const Image& image, UInt16 delayTime,
 		UInt16 imageLeftPosition, UInt16 imageTopPosition, UInt8 disposalMethod)
 {
 	RefPtr<ImageProp> pImageProp(new ImageProp());
@@ -573,13 +573,11 @@ void Content::Dump(UInt8* data, int bytes)
 
 const Symbol* Content::DisposalMethodToSymbol(UInt8 disposalMethod)
 {
-	if (disposalMethod == 0) {
-		return Gurax_Symbol(none);
-	} else if (disposalMethod == 1) {
+	if (disposalMethod == DisposalMethod::Keep) {
 		return Gurax_Symbol(keep);
-	} else if (disposalMethod == 2) {
+	} else if (disposalMethod == DisposalMethod::Background) {
 		return Gurax_Symbol(background);
-	} else if (disposalMethod == 3) {
+	} else if (disposalMethod == DisposalMethod::Previous) {
 		return Gurax_Symbol(previous);
 	} else {
 		return Gurax_Symbol(none);
@@ -590,13 +588,13 @@ UInt8 Content::DisposalMethodFromSymbol(const Symbol* pSymbol)
 {
 	UInt8 disposalMethod = 0;
 	if (pSymbol->IsIdentical(Gurax_Symbol(none))) {
-		disposalMethod = 0;
+		disposalMethod = DisposalMethod::None;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(keep))) {
-		disposalMethod = 1;
+		disposalMethod = DisposalMethod::Keep;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(background))) {
-		disposalMethod = 2;
+		disposalMethod = DisposalMethod::Background;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(previous))) {
-		disposalMethod = 3;
+		disposalMethod = DisposalMethod::Previous;
 	} else {
 		Error::Issue(ErrorType::ValueError,
 			"invalid symbol for disposal method: %s", pSymbol->GetName());

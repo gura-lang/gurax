@@ -56,6 +56,32 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// gif.Content#AddImage(image:Image):reduce
+Gurax_DeclareMethod(Content, AddImage)
+{
+	Declare(VTYPE_Content, Flag::Reduce);
+	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Content, AddImage)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Image& image = args.PickImage();
+	// Function body
+	UInt16 imageLeftPosition = 0;
+	UInt16 imageTopPosition = 0;
+	UInt16 delayTime = 0;
+	UInt8 disposalMethod = Content::DisposalMethod::None;
+	valueThis.GetContent().AddImage(image, imageLeftPosition, imageTopPosition, delayTime, disposalMethod);
+	return valueThis.Reference();
+}
+
 // gif.Content#EachImage() {block?}
 Gurax_DeclareMethod(Content, EachImage)
 {
@@ -72,6 +98,34 @@ Gurax_ImplementMethod(Content, EachImage)
 	// Function body
 	RefPtr<Iterator> pIterator(new Content::Iterator_EachImage(valueThis.GetContent().Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// gif.Content#Write(stream:Stream:w, colorBackground?:Color, loopCount?:Number):reduce
+Gurax_DeclareMethod(Content, Write)
+{
+	Declare(VTYPE_Content, Flag::Reduce);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("colorBackground", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("loopCount", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Content, Write)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	bool validBackgroundFlag = false;
+	const Color& colorBackground = (validBackgroundFlag = args.IsValid())? args.PickColor() : Color::zero;
+	UInt16 loopCount = args.IsValid()? args.PickNumberNonNeg<UInt16>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (!valueThis.GetContent().Write(stream, colorBackground, validBackgroundFlag, loopCount)) return Value::nil();
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -155,7 +209,9 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Content));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Content, AddImage));
 	Assign(Gurax_CreateMethod(Content, EachImage));
+	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Content, LogicalScreenDescriptor));
 	Assign(Gurax_CreateProperty(Content, CommentExtension));

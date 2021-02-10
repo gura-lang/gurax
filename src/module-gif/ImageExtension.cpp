@@ -44,6 +44,20 @@ bool ImageMgrEx::ReadStream(Stream& stream, Image& image)
 
 bool ImageMgrEx::WriteStream(Stream& stream, const Image& image)
 {
+	RefPtr<Content> pContent(new Content());
+	do {
+		UInt16 imageLeftPosition = 0;
+		UInt16 imageTopPosition = 0;
+		UInt16 delayTime = 0;
+		UInt8 disposalMethod = Content::DisposalMethod::None;
+		pContent->AddImage(image, imageLeftPosition, imageTopPosition, delayTime, disposalMethod);
+	} while (0);
+	do {
+		const Color& colorBackground = Color::zero;
+		bool validBackgroundFlag = false;
+		UInt16 loopCount = 0;
+		pContent->Write(stream, colorBackground, validBackgroundFlag, loopCount);
+	} while (0);
 	return true;
 }
 

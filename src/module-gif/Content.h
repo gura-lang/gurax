@@ -22,6 +22,12 @@ public:
 		static const UInt8 ExtensionIntroducer	= 0x21;
 		static const UInt8 Trailer				= 0x3b;
 	};
+	struct DisposalMethod {
+		static const UInt8 None					= 0;
+		static const UInt8 Keep					= 1;
+		static const UInt8 Background			= 2;
+		static const UInt8 Previous				= 3;
+	};
 	struct Header {
 		char Signature[3];
 		char Version[3];
@@ -250,14 +256,14 @@ public:
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
 	Extensions& GetExtensions() { return _extensions; }
 	EntryOwner& GetEntries() { return _entries; }
-	void AddImage(Image& image,
+	void AddImage(const Image& image,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
-			UInt16 delayTime, UChar disposalMethod);
+			UInt16 delayTime, UInt8 disposalMethod);
 	static bool ReadBuff(Stream& stream, void* buff, size_t bytes);
 	static bool WriteBuff(Stream& stream, const void* buff, size_t bytes);
-	static void Dump(UChar* data, int bytes);
-	static const Symbol* DisposalMethodToSymbol(UChar disposalMethod);
-	static UChar DisposalMethodFromSymbol(const Symbol* pSymbol);
+	static void Dump(UInt8* data, int bytes);
+	static const Symbol* DisposalMethodToSymbol(UInt8 disposalMethod);
+	static UInt8 DisposalMethodFromSymbol(const Symbol* pSymbol);
 	static int GetPlausibleBackgroundIndex(Palette& palette, Image& image);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
