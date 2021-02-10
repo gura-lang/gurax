@@ -124,8 +124,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		_pPaletteGlobal->Shrink(idxBlank, true);
 	} while (0);
 	if (validBackgroundFlag) {
-		backgroundColorIndex = static_cast<int>(
-				_pPaletteGlobal->LookupNearest(colorBackground));
+		backgroundColorIndex = static_cast<int>(_pPaletteGlobal->LookupNearest(colorBackground));
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
