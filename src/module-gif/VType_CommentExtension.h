@@ -29,19 +29,19 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_CommentExtension");
 protected:
-	RefPtr<Content> _pContent;
 	Content::CommentExtension& _CommentExtension;
+	RefPtr<Content> _pContent;		// may be nullptr
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_CommentExtension() = delete;
-	Value_CommentExtension(Content* pContent, Content::CommentExtension& CommentExtension,
+	Value_CommentExtension(Content::CommentExtension& CommentExtension, Content* pContent,
 									VType& vtype = VTYPE_CommentExtension) :
-		Value_Object(vtype), _pContent(pContent), _CommentExtension(CommentExtension) {}
+		Value_Object(vtype), _CommentExtension(CommentExtension), _pContent(pContent) {}
 	// Copy constructor/operator
 	Value_CommentExtension(const Value_CommentExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()), _CommentExtension(src._CommentExtension) {}
+		Value_Object(src), _CommentExtension(src._CommentExtension), _pContent(src._pContent->Reference()) {}
 	Value_CommentExtension& operator=(const Value_CommentExtension& src) = delete;
 	// Move constructor/operator
 	Value_CommentExtension(Value_CommentExtension&& src) noexcept = delete;

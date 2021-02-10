@@ -138,9 +138,9 @@ public:
 		}
 	};
 	struct Extensions {
-		CommentExtension comment;
-		PlainTextExtension plainText;
-		ApplicationExtension application;
+		CommentExtension commentExtension;
+		PlainTextExtension plainTextExtension;
+		ApplicationExtension applicationExtension;
 	};
 	class ImageDataBlock {
 	private:
@@ -227,6 +227,8 @@ private:
 	RefPtr<Palette> _pPaletteGlobal;
 	Extensions _extensions;
 	EntryOwner _entries;
+public:
+	static Extensions extensionsCommon;
 public:
 	// Constructor
 	Content();

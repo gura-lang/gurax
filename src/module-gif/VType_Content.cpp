@@ -131,19 +131,21 @@ Gurax_ImplementMethod(Content, Write)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.Content#LogicalScreenDescriptor
-Gurax_DeclareProperty_R(Content, LogicalScreenDescriptor)
+// gif.Content#ApplicationExtension:nil
+Gurax_DeclareProperty_R(Content, ApplicationExtension)
 {
-	Declare(VTYPE_LogicalScreenDescriptor, Flag::None);
+	Declare(VTYPE_ApplicationExtension, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
+Gurax_ImplementPropertyGetter(Content, ApplicationExtension)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_LogicalScreenDescriptor(valueThis.GetContent().Reference());
+	auto& content = valueThis.GetContent();
+	if (!content.GetExtensions().commentExtension.validFlag) return Value::nil();
+	return new Value_ApplicationExtension(content.GetExtensions().applicationExtension, content.Reference());
 }
 
 // gif.Content#CommentExtension:nil
@@ -159,8 +161,23 @@ Gurax_ImplementPropertyGetter(Content, CommentExtension)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	auto& content = valueThis.GetContent();
-	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_CommentExtension(content.Reference(), content.GetExtensions().comment);
+	if (!content.GetExtensions().commentExtension.validFlag) return Value::nil();
+	return new Value_CommentExtension(content.GetExtensions().commentExtension, content.Reference());
+}
+
+// gif.Content#LogicalScreenDescriptor
+Gurax_DeclareProperty_R(Content, LogicalScreenDescriptor)
+{
+	Declare(VTYPE_LogicalScreenDescriptor, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_LogicalScreenDescriptor(valueThis.GetContent().Reference());
 }
 
 // gif.Content#PlainTextExtension:nil
@@ -176,25 +193,8 @@ Gurax_ImplementPropertyGetter(Content, PlainTextExtension)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	auto& content = valueThis.GetContent();
-	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_PlainTextExtension(content.Reference(), content.GetExtensions().plainText);
-}
-
-// gif.Content#ApplicationExtension:nil
-Gurax_DeclareProperty_R(Content, ApplicationExtension)
-{
-	Declare(VTYPE_ApplicationExtension, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Content, ApplicationExtension)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	auto& content = valueThis.GetContent();
-	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_ApplicationExtension(content.Reference(), content.GetExtensions().application);
+	if (!content.GetExtensions().commentExtension.validFlag) return Value::nil();
+	return new Value_PlainTextExtension(content.GetExtensions().plainTextExtension, content.Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -213,10 +213,10 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Content, EachImage));
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, LogicalScreenDescriptor));
-	Assign(Gurax_CreateProperty(Content, CommentExtension));
-	Assign(Gurax_CreateProperty(Content, PlainTextExtension));
 	Assign(Gurax_CreateProperty(Content, ApplicationExtension));
+	Assign(Gurax_CreateProperty(Content, CommentExtension));
+	Assign(Gurax_CreateProperty(Content, LogicalScreenDescriptor));
+	Assign(Gurax_CreateProperty(Content, PlainTextExtension));
 }
 
 //------------------------------------------------------------------------------

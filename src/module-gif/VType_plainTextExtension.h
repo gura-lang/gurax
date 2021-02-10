@@ -29,19 +29,19 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_PlainTextExtension");
 protected:
-	RefPtr<Content> _pContent;
 	Content::PlainTextExtension& _plainTextExtension;
+	RefPtr<Content> _pContent;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_PlainTextExtension() = delete;
-	Value_PlainTextExtension(Content* pContent, Content::PlainTextExtension& plainTextExtension,
+	Value_PlainTextExtension(Content::PlainTextExtension& plainTextExtension, Content* pContent,
 									VType& vtype = VTYPE_PlainTextExtension) :
-		Value_Object(vtype), _pContent(pContent), _plainTextExtension(plainTextExtension) {}
+		Value_Object(vtype), _plainTextExtension(plainTextExtension), _pContent(pContent) {}
 	// Copy constructor/operator
 	Value_PlainTextExtension(const Value_PlainTextExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()), _plainTextExtension(src._plainTextExtension) {}
+		Value_Object(src), _plainTextExtension(src._plainTextExtension), _pContent(src._pContent->Reference()) {}
 	Value_PlainTextExtension& operator=(const Value_PlainTextExtension& src) = delete;
 	// Move constructor/operator
 	Value_PlainTextExtension(Value_PlainTextExtension&& src) noexcept = delete;

@@ -29,19 +29,19 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_ApplicationExtension");
 protected:
-	RefPtr<Content> _pContent;
 	Content::ApplicationExtension& _ApplicationExtension;
+	RefPtr<Content> _pContent;		// may be nullptr
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_ApplicationExtension() = delete;
-	Value_ApplicationExtension(Content* pContent, Content::ApplicationExtension& ApplicationExtension,
+	Value_ApplicationExtension(Content::ApplicationExtension& ApplicationExtension, Content* pContent,
 									VType& vtype = VTYPE_ApplicationExtension) :
-		Value_Object(vtype), _pContent(pContent), _ApplicationExtension(ApplicationExtension) {}
+		Value_Object(vtype), _ApplicationExtension(ApplicationExtension), _pContent(pContent) {}
 	// Copy constructor/operator
 	Value_ApplicationExtension(const Value_ApplicationExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()), _ApplicationExtension(src._ApplicationExtension) {}
+		Value_Object(src), _ApplicationExtension(src._ApplicationExtension), _pContent(src._pContent->Reference()) {}
 	Value_ApplicationExtension& operator=(const Value_ApplicationExtension& src) = delete;
 	// Move constructor/operator
 	Value_ApplicationExtension(Value_ApplicationExtension&& src) noexcept = delete;

@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(gif)
 //------------------------------------------------------------------------------
 // Content
 //------------------------------------------------------------------------------
+Content::Extensions Content::extensionsCommon;
+
 Content::Content()
 {
 }
@@ -59,16 +61,16 @@ bool Content::Read(Stream& stream, Image::Format format)
 				UInt8 blockTerminator;
 				if (!ReadBuff(stream, &blockTerminator, 1)) break;
 			} else if (label == CommentExtension::Label) {
-				_extensions.comment.validFlag = true;
-				if (!ReadDataBlocks(stream, _extensions.comment.CommentData)) break;
+				_extensions.commentExtension.validFlag = true;
+				if (!ReadDataBlocks(stream, _extensions.commentExtension.CommentData)) break;
 			} else if (label == PlainTextExtension::Label) {
-				_extensions.plainText.validFlag = true;
-				if (!ReadBuff(stream, &_extensions.plainText, 13)) break;
-				if (!ReadDataBlocks(stream, _extensions.plainText.PlainTextData)) break;
+				_extensions.plainTextExtension.validFlag = true;
+				if (!ReadBuff(stream, &_extensions.plainTextExtension, 13)) break;
+				if (!ReadDataBlocks(stream, _extensions.plainTextExtension.PlainTextData)) break;
 			} else if (label == ApplicationExtension::Label) {
-				_extensions.application.validFlag = true;
-				if (!ReadBuff(stream, &_extensions.application, 12)) break;
-				if (!ReadDataBlocks(stream, _extensions.application.ApplicationData)) break;
+				_extensions.applicationExtension.validFlag = true;
+				if (!ReadBuff(stream, &_extensions.applicationExtension, 12)) break;
+				if (!ReadDataBlocks(stream, _extensions.applicationExtension.ApplicationData)) break;
 			}
 			if (Error::IsIssued()) break;
 		} else if (imageSeparator == Sep::Trailer) {
@@ -159,15 +161,15 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		_logicalScreenDescriptor.PixelAspectRatio = 0;
 	} while (0);
 	do {
-		_extensions.application.validFlag = true;
-		_extensions.application.BlockSize = 11;
-		::memcpy(_extensions.application.ApplicationIdentifier, "NETSCAPE", 8);
-		::memcpy(_extensions.application.AuthenticationCode, "2.0", 3);
+		_extensions.applicationExtension.validFlag = true;
+		_extensions.applicationExtension.BlockSize = 11;
+		::memcpy(_extensions.applicationExtension.ApplicationIdentifier, "NETSCAPE", 8);
+		::memcpy(_extensions.applicationExtension.AuthenticationCode, "2.0", 3);
 		UInt8 applicationData[3];
 		applicationData[0] = 0x01;
 		applicationData[1] = static_cast<UInt8>(loopCount & 0xff);
 		applicationData[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
-		_extensions.application.ApplicationData =
+		_extensions.applicationExtension.ApplicationData =
 						Binary(reinterpret_cast<char* >(applicationData), 3);
 	} while (0);
 	// Header
@@ -178,14 +180,14 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-	if (_extensions.application.validFlag) {
+	if (_extensions.applicationExtension.validFlag) {
 		// Application
 		const UInt8 buff[] = {
 			Sep::ExtensionIntroducer, ApplicationExtension::Label
 		};
 		if (!WriteBuff(stream, &buff, 2)) return false;
-		if (!WriteBuff(stream, &_extensions.application, 12)) return false;
-		if (!WriteDataBlocks(stream, _extensions.application.ApplicationData)) return false;
+		if (!WriteBuff(stream, &_extensions.applicationExtension, 12)) return false;
+		if (!WriteDataBlocks(stream, _extensions.applicationExtension.ApplicationData)) return false;
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
