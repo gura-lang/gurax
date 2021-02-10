@@ -92,7 +92,7 @@ VType& Value_ApplicationExtension::vtype = VTYPE_ApplicationExtension;
 
 String Value_ApplicationExtension::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetContent().ToString(ss));
+	return ToStringGeneric(ss, "gif.ApplicationExtension");
 }
 
 Gurax_EndModuleScope(gif)

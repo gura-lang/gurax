@@ -160,7 +160,7 @@ Gurax_ImplementPropertyGetter(Content, CommentExtension)
 	auto& valueThis = GetValueThis(valueTarget);
 	auto& content = valueThis.GetContent();
 	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_CommentExtension(content.Reference());
+	return new Value_CommentExtension(content.Reference(), content.GetExtensions().comment);
 }
 
 // gif.Content#PlainTextExtension:nil
@@ -194,7 +194,7 @@ Gurax_ImplementPropertyGetter(Content, ApplicationExtension)
 	auto& valueThis = GetValueThis(valueTarget);
 	auto& content = valueThis.GetContent();
 	if (!content.GetExtensions().comment.validFlag) return Value::nil();
-	return new Value_ApplicationExtension(content.Reference());
+	return new Value_ApplicationExtension(content.Reference(), content.GetExtensions().application);
 }
 
 //------------------------------------------------------------------------------

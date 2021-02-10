@@ -92,7 +92,7 @@ VType& Value_CommentExtension::vtype = VTYPE_CommentExtension;
 
 String Value_CommentExtension::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetContent().ToString(ss));
+	return ToStringGeneric(ss, "gif.CommentExtension");
 }
 
 Gurax_EndModuleScope(gif)

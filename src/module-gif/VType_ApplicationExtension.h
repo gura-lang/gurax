@@ -30,16 +30,18 @@ public:
 	Gurax_MemoryPoolAllocator("Value_ApplicationExtension");
 protected:
 	RefPtr<Content> _pContent;
+	Content::ApplicationExtension& _ApplicationExtension;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_ApplicationExtension() = delete;
-	explicit Value_ApplicationExtension(Content* pContent, VType& vtype = VTYPE_ApplicationExtension) :
-		Value_Object(vtype), _pContent(pContent) {}
+	Value_ApplicationExtension(Content* pContent, Content::ApplicationExtension& ApplicationExtension,
+									VType& vtype = VTYPE_ApplicationExtension) :
+		Value_Object(vtype), _pContent(pContent), _ApplicationExtension(ApplicationExtension) {}
 	// Copy constructor/operator
 	Value_ApplicationExtension(const Value_ApplicationExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()) {}
+		Value_Object(src), _pContent(src._pContent->Reference()), _ApplicationExtension(src._ApplicationExtension) {}
 	Value_ApplicationExtension& operator=(const Value_ApplicationExtension& src) = delete;
 	// Move constructor/operator
 	Value_ApplicationExtension(Value_ApplicationExtension&& src) noexcept = delete;
@@ -48,31 +50,29 @@ protected:
 	// Destructor
 	~Value_ApplicationExtension() = default;
 public:
-	Content& GetContent() { return *_pContent; }
-	const Content& GetContent() const { return *_pContent; }
+	Content::ApplicationExtension& GetApplicationExtension() { return _ApplicationExtension; }
+	const Content::ApplicationExtension& GetApplicationExtension() const { return _ApplicationExtension; }
 public:
-	static Content& GetContent(Value& value) {
-		return dynamic_cast<Value_ApplicationExtension&>(value).GetContent();
+	static Content::ApplicationExtension& GetApplicationExtension(Value& value) {
+		return dynamic_cast<Value_ApplicationExtension&>(value).GetApplicationExtension();
 	}
-	static const Content& GetContent(const Value& value) {
-		return dynamic_cast<const Value_ApplicationExtension&>(value).GetContent();
+	static const Content::ApplicationExtension& GetApplicationExtension(const Value& value) {
+		return dynamic_cast<const Value_ApplicationExtension&>(value).GetApplicationExtension();
 	}
-	static Content* GetEntityPtr(Value& value) { return &GetContent(value); }
-	static const Content* GetEntityPtr(const Value& value) { return &GetContent(value); }
+	static Content::ApplicationExtension* GetEntityPtr(Value& value) { return &GetApplicationExtension(value); }
+	static const Content::ApplicationExtension* GetEntityPtr(const Value& value) { return &GetApplicationExtension(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetContent().CalcHash();
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) &&
-			GetContent().IsEqualTo(Value_ApplicationExtension::GetContent(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetContent().IsLessThan(Value_ApplicationExtension::GetContent(value)) :
-			GetVType().IsLessThan(value.GetVType());
+			GetEntityPtr(*this) < GetEntityPtr(value) : GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -30,16 +30,18 @@ public:
 	Gurax_MemoryPoolAllocator("Value_CommentExtension");
 protected:
 	RefPtr<Content> _pContent;
+	Content::CommentExtension& _CommentExtension;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_CommentExtension() = delete;
-	explicit Value_CommentExtension(Content* pContent, VType& vtype = VTYPE_CommentExtension) :
-		Value_Object(vtype), _pContent(pContent) {}
+	Value_CommentExtension(Content* pContent, Content::CommentExtension& CommentExtension,
+									VType& vtype = VTYPE_CommentExtension) :
+		Value_Object(vtype), _pContent(pContent), _CommentExtension(CommentExtension) {}
 	// Copy constructor/operator
 	Value_CommentExtension(const Value_CommentExtension& src) :
-		Value_Object(src), _pContent(src._pContent->Reference()) {}
+		Value_Object(src), _pContent(src._pContent->Reference()), _CommentExtension(src._CommentExtension) {}
 	Value_CommentExtension& operator=(const Value_CommentExtension& src) = delete;
 	// Move constructor/operator
 	Value_CommentExtension(Value_CommentExtension&& src) noexcept = delete;
@@ -48,31 +50,29 @@ protected:
 	// Destructor
 	~Value_CommentExtension() = default;
 public:
-	Content& GetContent() { return *_pContent; }
-	const Content& GetContent() const { return *_pContent; }
+	Content::CommentExtension& GetCommentExtension() { return _CommentExtension; }
+	const Content::CommentExtension& GetCommentExtension() const { return _CommentExtension; }
 public:
-	static Content& GetContent(Value& value) {
-		return dynamic_cast<Value_CommentExtension&>(value).GetContent();
+	static Content::CommentExtension& GetCommentExtension(Value& value) {
+		return dynamic_cast<Value_CommentExtension&>(value).GetCommentExtension();
 	}
-	static const Content& GetContent(const Value& value) {
-		return dynamic_cast<const Value_CommentExtension&>(value).GetContent();
+	static const Content::CommentExtension& GetCommentExtension(const Value& value) {
+		return dynamic_cast<const Value_CommentExtension&>(value).GetCommentExtension();
 	}
-	static Content* GetEntityPtr(Value& value) { return &GetContent(value); }
-	static const Content* GetEntityPtr(const Value& value) { return &GetContent(value); }
+	static Content::CommentExtension* GetEntityPtr(Value& value) { return &GetCommentExtension(value); }
+	static const Content::CommentExtension* GetEntityPtr(const Value& value) { return &GetCommentExtension(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetContent().CalcHash();
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) &&
-			GetContent().IsEqualTo(Value_CommentExtension::GetContent(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetContent().IsLessThan(Value_CommentExtension::GetContent(value)) :
-			GetVType().IsLessThan(value.GetVType());
+			GetEntityPtr(*this) < GetEntityPtr(value) : GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };
