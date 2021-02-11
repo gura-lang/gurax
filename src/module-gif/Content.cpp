@@ -1,5 +1,16 @@
 //==============================================================================
 // Content.cpp
+// Specification: spec-gif89a.txt
+// <GIF Data Stream> ::=     Header <Logical Screen> <Data>* Trailer
+// <Logical Screen> ::=      Logical Screen Descriptor [Global Color Table]
+// <Data> ::=                <Graphic Block>  |
+//                           <Special-Purpose Block>
+// <Graphic Block> ::=       [Graphic Control Extension] <Graphic-Rendering Block>
+// <Graphic-Rendering Block> ::=  <Table-Based Image>  |
+//                                Plain Text Extension
+// <Table-Based Image> ::=   Image Descriptor [Local Color Table] Image Data
+// <Special-Purpose Block> ::=    Application Extension  |
+//                                Comment Extension
 //==============================================================================
 #include "stdafx.h"
 
@@ -36,7 +47,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 		if (!ReadColorTable(stream, *_pPaletteGlobal)) return false;
 	}
 	_entries.Clear();
-	GraphicControlExtension graphicControl;
+	GraphicControlExtension graphicControlExtension;
 	for (;;) {
 		UInt8 imageSeparator;
 		size_t bytesRead = stream.Read(&imageSeparator, 1);
@@ -47,9 +58,8 @@ bool Content::Read(Stream& stream, Image::Format format)
 				if (!SkipImageDescriptor(stream)) break;
 			} else {
 				RefPtr<Image> pImage(new Image(format));
-				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControl));
+				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControlExtension));
 				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
-				pImage->SetValueExtra(new Value_ImageProp(pImageProp.Reference()));
 				_entries.push_back(new Entry(pImage.release(), pImageProp.release()));
 			}
 		} else if (imageSeparator == Sep::ExtensionIntroducer) {
@@ -57,7 +67,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 			if (!ReadBuff(stream, &label, 1)) break;
 			//::printf("%02x - %02x\n", imageSeparator, label);
 			if (label == GraphicControlExtension::Label) {
-				if (!ReadBuff(stream, &graphicControl, 5)) break;
+				if (!ReadBuff(stream, &graphicControlExtension, 5)) break;
 				UInt8 blockTerminator;
 				if (!ReadBuff(stream, &blockTerminator, 1)) break;
 			} else if (label == CommentExtension::Label) {
@@ -132,13 +142,13 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		Image& image = pEntry->GetImage();
 		image.SetPalette(Palette::Reference(_pPaletteGlobal.get()));
 		ImageDescriptor& imageDescriptor = pEntry->GetImageProp().GetImageDescriptor();
-		GraphicControlExtension& graphicControl = pEntry->GetImageProp().GetGraphicControl();
+		GraphicControlExtension& graphicControlExtension = pEntry->GetImageProp().GetGraphicControl();
 		size_t width = image.GetWidth() + Gurax_UnpackUInt16(imageDescriptor.ImageLeftPosition);
 		size_t height = image.GetHeight() + Gurax_UnpackUInt16(imageDescriptor.ImageTopPosition);
 		if (logicalScreenWidth < width) logicalScreenWidth = width;
 		if (logicalScreenHeight < height) logicalScreenHeight = height;
-		graphicControl.TransparentColorIndex = transparentColorIndex;
-		graphicControl.PackedFields |= transparentColorFlag;
+		graphicControlExtension.TransparentColorIndex = transparentColorIndex;
+		graphicControlExtension.PackedFields |= transparentColorFlag;
 		if (backgroundColorIndex < 0) {
 			backgroundColorIndex = GetPlausibleBackgroundIndex(*_pPaletteGlobal, image);
 		}
@@ -191,8 +201,8 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
-		GraphicControlExtension& graphicControl = pEntry->GetImageProp().GetGraphicControl();
-		if (!WriteGraphicControl(stream, graphicControl)) return false;
+		GraphicControlExtension& graphicControlExtension = pEntry->GetImageProp().GetGraphicControl();
+		if (!WriteGraphicControl(stream, graphicControlExtension)) return false;
 		if (!WriteImageDescriptor(stream, *pEntry)) return false;
 	}
 	do {
@@ -253,7 +263,7 @@ bool Content::SkipImageDescriptor(Stream& stream)
 
 bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp)
 {
-	GraphicControlExtension& graphicControl = imageProp.GetGraphicControl();
+	GraphicControlExtension& graphicControlExtension = imageProp.GetGraphicControl();
 	ImageDescriptor& imageDescriptor = imageProp.GetImageDescriptor();
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
 	size_t imageWidth = Gurax_UnpackUInt16(imageDescriptor.ImageWidth);
@@ -269,8 +279,9 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 		pPalette.reset(_pPaletteGlobal.Reference());
 	}
 	image.SetPalette(pPalette.Reference());
-	short transparentColorIndex = graphicControl.TransparentColorIndex;
-	if (!graphicControl.GetTransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
+	image.SetValueExtra(new Value_ImageProp(imageProp.Reference()));
+	short transparentColorIndex = graphicControlExtension.TransparentColorIndex;
+	if (!graphicControlExtension.GetTransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
 		transparentColorIndex = -1;
 	}
 	const int maximumBitsOfCode = 12;
@@ -395,14 +406,14 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 	return !Error::IsIssued();
 }
 
-bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphicControl)
+bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphicControlExtension)
 {
 	const UInt8 buff[] = {
 		Sep::ExtensionIntroducer, GraphicControlExtension::Label
 	};
 	UInt8 blockTerminator = 0x00;
 	if (!WriteBuff(stream, buff, 2)) return false;
-	if (!WriteBuff(stream, &graphicControl, 5)) return false;
+	if (!WriteBuff(stream, &graphicControlExtension, 5)) return false;
 	if (!WriteBuff(stream, &blockTerminator, 1)) return false;
 	return true;
 }
@@ -411,15 +422,15 @@ bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 {
 	const Image& image = entry.GetImage();
 	const ImageDescriptor& imageDescriptor = entry.GetImageProp().GetImageDescriptor();
-	const GraphicControlExtension& graphicControl = entry.GetImageProp().GetGraphicControl();
+	const GraphicControlExtension& graphicControlExtension = entry.GetImageProp().GetGraphicControl();
 	if (!WriteBuff(stream, &Sep::ImageDescriptor, 1)) return false;
 	const Palette* pPalette = _pPaletteGlobal.get();
 	if (!WriteBuff(stream, &imageDescriptor, 9)) return false;
 	if (imageDescriptor.GetLocalColorTableFlag()) {
 		if (!WriteColorTable(stream, *pPalette)) return false;
 	}
-	UInt8 transparentColorIndex = graphicControl.TransparentColorIndex;
-	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) && (graphicControl.GetTransparentColorFlag() != 0);
+	UInt8 transparentColorIndex = graphicControlExtension.TransparentColorIndex;
+	bool transparentColorFlag = (image.IsFormat(Image::Format::RGBA)) && (graphicControlExtension.GetTransparentColorFlag() != 0);
 	const int maximumBitsOfCode = 12;
 	UInt8 minimumBitsOfCode = 8;
 	if (!WriteBuff(stream, &minimumBitsOfCode, 1)) return false;
@@ -539,11 +550,11 @@ void Content::AddImage(const Image& image, UInt16 delayTime,
 	do {
 		UInt8 userInputFlag = 0;
 		UInt8 transparentColorFlag = 0;
-		GraphicControlExtension& graphicControl = pImageProp->GetGraphicControl();
-		graphicControl.BlockSize = 4;
-		graphicControl.PackedFields = (disposalMethod << 2) | (userInputFlag << 1) | (transparentColorFlag << 0);
-		Gurax_PackUInt16(graphicControl.DelayTime, delayTime);
-		graphicControl.TransparentColorIndex = 0;
+		GraphicControlExtension& graphicControlExtension = pImageProp->GetGraphicControl();
+		graphicControlExtension.BlockSize = 4;
+		graphicControlExtension.PackedFields = (disposalMethod << 2) | (userInputFlag << 1) | (transparentColorFlag << 0);
+		Gurax_PackUInt16(graphicControlExtension.DelayTime, delayTime);
+		graphicControlExtension.TransparentColorIndex = 0;
 	} while (0);
 	do {
 		UInt8 localColorTableFlag = 0;

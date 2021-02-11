@@ -1,5 +1,6 @@
 //==============================================================================
 // Content.h
+// Specification: spec-gif89a.txt
 //==============================================================================
 #ifndef GURAX_MODULE_GIF_CONTENT_H
 #define GURAX_MODULE_GIF_CONTENT_H
@@ -28,6 +29,7 @@ public:
 		static const UInt8 Background			= 2;
 		static const UInt8 Previous				= 3;
 	};
+	// 17. Header (required)
 	struct Header {
 		char Signature[3];
 		char Version[3];
@@ -36,6 +38,7 @@ public:
 			::memcpy(Version, "89a", 3);
 		}
 	};
+	// 18. Logical Screen Descriptor (required)
 	struct LogicalScreenDescriptor {
 		Gurax_PackedUInt16_LE(LogicalScreenWidth);
 		Gurax_PackedUInt16_LE(LogicalScreenHeight);
@@ -47,6 +50,7 @@ public:
 		UInt8 GetSortFlag() const { return (PackedFields >> 3) & 1; }
 		size_t GetSizeOfGlobalColorTable() const { return (PackedFields >> 0) & 7; }
 	};
+	// 20. Image Descriptor (optional)
 	struct ImageDescriptor {
 		Gurax_PackedUInt16_LE(ImageLeftPosition);
 		Gurax_PackedUInt16_LE(ImageTopPosition);
@@ -70,6 +74,7 @@ public:
 		UInt8 GetSortFlag() const { return (PackedFields >> 5) & 1; }
 		UInt8 GetSizeOfLocalColorTable() const { return (PackedFields >> 0) & 7; }
 	};
+	// 23. Graphic Control Extension (optional)
 	struct GraphicControlExtension {
 		UInt8 BlockSize;
 		UInt8 PackedFields;
@@ -89,6 +94,7 @@ public:
 		UInt8 GetUserInputFlag() const { return (PackedFields >> 1) & 1; }
 		UInt8 GetTransparentColorFlag() const { return (PackedFields >> 0) & 1; }
 	};
+	// 24. Comment Extension (optional)
 	struct CommentExtension {
 		Binary CommentData;
 		bool validFlag;
@@ -97,6 +103,7 @@ public:
 			validFlag = false;
 		}
 	};
+	// 25. Plain Text Extension (optional)
 	struct PlainTextExtension {
 		UInt8 BlockSize;
 		Gurax_PackedUInt16_LE(TextGridLeftPosition);
@@ -123,6 +130,7 @@ public:
 			validFlag = false;
 		}
 	};
+	// 26. Application Extension (optional)
 	struct ApplicationExtension {
 		UInt8 BlockSize;
 		char ApplicationIdentifier[8];
