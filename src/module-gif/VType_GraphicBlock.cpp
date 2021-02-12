@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_ImageProp.cpp
+// VType_GraphicBlock.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gif.ImageProp#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(ImageProp, MethodSkeleton)
+// gif.GraphicBlock#MethodSkeleton(num1:Number, num2:Number)
+Gurax_DeclareMethod(GraphicBlock, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Gurax_DeclareMethod(ImageProp, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(ImageProp, MethodSkeleton)
+Gurax_ImplementMethod(GraphicBlock, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -53,8 +53,8 @@ Gurax_ImplementMethod(ImageProp, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.ImageProp#GraphicControlExtension
-Gurax_DeclareProperty_R(ImageProp, GraphicControlExtension)
+// gif.GraphicBlock#GraphicControlExtension
+Gurax_DeclareProperty_R(GraphicBlock, GraphicControlExtension)
 {
 	Declare(VTYPE_GraphicControlExtension, Flag::None);
 	AddHelp(
@@ -62,14 +62,14 @@ Gurax_DeclareProperty_R(ImageProp, GraphicControlExtension)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(ImageProp, GraphicControlExtension)
+Gurax_ImplementPropertyGetter(GraphicBlock, GraphicControlExtension)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_GraphicControlExtension(valueThis.GetImageProp().Reference());
+	return new Value_GraphicControlExtension(valueThis.GetGraphicBlock().Reference());
 }
 
-// gif.ImageProp#ImageDescriptor
-Gurax_DeclareProperty_R(ImageProp, ImageDescriptor)
+// gif.GraphicBlock#ImageDescriptor
+Gurax_DeclareProperty_R(GraphicBlock, ImageDescriptor)
 {
 	Declare(VTYPE_ImageDescriptor, Flag::None);
 	AddHelp(
@@ -77,38 +77,38 @@ Gurax_DeclareProperty_R(ImageProp, ImageDescriptor)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(ImageProp, ImageDescriptor)
+Gurax_ImplementPropertyGetter(GraphicBlock, ImageDescriptor)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_ImageDescriptor(valueThis.GetImageProp().Reference());
+	return new Value_ImageDescriptor(valueThis.GetGraphicBlock().Reference());
 }
 
 //------------------------------------------------------------------------------
-// VType_ImageProp
+// VType_GraphicBlock
 //------------------------------------------------------------------------------
-VType_ImageProp VTYPE_ImageProp("ImageProp");
+VType_GraphicBlock VTYPE_GraphicBlock("GraphicBlock");
 
-void VType_ImageProp::DoPrepare(Frame& frameOuter)
+void VType_GraphicBlock::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(ImageProp, MethodSkeleton));
+	Assign(Gurax_CreateMethod(GraphicBlock, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageProp, GraphicControlExtension));
-	Assign(Gurax_CreateProperty(ImageProp, ImageDescriptor));
+	Assign(Gurax_CreateProperty(GraphicBlock, GraphicControlExtension));
+	Assign(Gurax_CreateProperty(GraphicBlock, ImageDescriptor));
 }
 
 //------------------------------------------------------------------------------
-// Value_ImageProp
+// Value_GraphicBlock
 //------------------------------------------------------------------------------
-VType& Value_ImageProp::vtype = VTYPE_ImageProp;
+VType& Value_GraphicBlock::vtype = VTYPE_GraphicBlock;
 
-String Value_ImageProp::ToString(const StringStyle& ss) const
+String Value_GraphicBlock::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "gif.ImageProp");
+	return ToStringGeneric(ss, "gif.GraphicBlock");
 }
 
 Gurax_EndModuleScope(gif)

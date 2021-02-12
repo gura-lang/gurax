@@ -65,7 +65,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, BlockSize)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, BlockSize)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Number(graphicControlExtension.BlockSize);
 }
 
@@ -81,7 +81,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, DelayTime)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, DelayTime)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Number(Gurax_UnpackUInt16(graphicControlExtension.DelayTime));
 }
 
@@ -97,7 +97,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorIndex)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorIndex)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Number(graphicControlExtension.TransparentColorIndex);
 }
 
@@ -113,7 +113,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, DisposalMethod)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, DisposalMethod)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Number(graphicControlExtension.GetDisposalMethod());
 }
 
@@ -129,7 +129,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, UserInputFlag)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, UserInputFlag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Bool(graphicControlExtension.GetUserInputFlag());
 }
 
@@ -145,7 +145,7 @@ Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorFlag)
 Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorFlag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& graphicControlExtension = valueThis.GetImageProp().GetGraphicControl();
+	auto& graphicControlExtension = valueThis.GetGraphicBlock().GetGraphicControl();
 	return new Value_Bool(graphicControlExtension.GetTransparentColorFlag());
 }
 

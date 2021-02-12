@@ -44,7 +44,7 @@ target_sources(gif.gurd PRIVATE
 	VType_Content.cpp
 	VType_GraphicControlExtension.cpp
 	VType_ImageDescriptor.cpp
-	VType_ImageProp.cpp
+	VType_GraphicBlock.cpp
 	VType_LogicalScreenDescriptor.cpp
 	VType_PlainTextExtension.cpp)
 #-------------------------------------------------------------------------------

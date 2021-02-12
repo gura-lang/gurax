@@ -51,21 +51,20 @@ Gurax_ImplementMethod(CommentExtension, MethodSkeleton)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of property
+// Implementation of class property
 //-----------------------------------------------------------------------------
-// gif.CommentExtension#propSkeleton
-Gurax_DeclareProperty_R(CommentExtension, propSkeleton)
+// gif.CommentExtension#default
+Gurax_DeclareClassPropertyAlias_R(CommentExtension, default_, "default")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_CommentExtension, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(CommentExtension, propSkeleton)
+Gurax_ImplementClassPropertyGetter(CommentExtension, default_)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	return new Value_CommentExtension(Content::extensionsCommon.commentExtension, nullptr);
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +81,7 @@ void VType_CommentExtension::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(CommentExtension, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(CommentExtension, propSkeleton));
+	Assign(Gurax_CreateProperty(CommentExtension, default_));
 }
 
 //------------------------------------------------------------------------------

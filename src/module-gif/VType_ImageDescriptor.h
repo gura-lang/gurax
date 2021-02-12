@@ -29,17 +29,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_ImageDescriptor");
 protected:
-	RefPtr<Content::ImageProp> _pImageProp;
+	RefPtr<Content::GraphicBlock> _pGraphicBlock;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_ImageDescriptor() = delete;
-	explicit Value_ImageDescriptor(Content::ImageProp* pImageProp, VType& vtype = VTYPE_ImageDescriptor) :
-		Value_Object(vtype), _pImageProp(pImageProp) {}
+	explicit Value_ImageDescriptor(Content::GraphicBlock* pGraphicBlock, VType& vtype = VTYPE_ImageDescriptor) :
+		Value_Object(vtype), _pGraphicBlock(pGraphicBlock) {}
 	// Copy constructor/operator
 	Value_ImageDescriptor(const Value_ImageDescriptor& src) :
-		Value_Object(src), _pImageProp(src._pImageProp->Reference()) {}
+		Value_Object(src), _pGraphicBlock(src._pGraphicBlock->Reference()) {}
 	Value_ImageDescriptor& operator=(const Value_ImageDescriptor& src) = delete;
 	// Move constructor/operator
 	Value_ImageDescriptor(Value_ImageDescriptor&& src) noexcept = delete;
@@ -48,30 +48,30 @@ protected:
 	// Destructor
 	~Value_ImageDescriptor() = default;
 public:
-	Content::ImageProp& GetImageProp() { return *_pImageProp; }
-	const Content::ImageProp& GetImageProp() const { return *_pImageProp; }
+	Content::GraphicBlock& GetGraphicBlock() { return *_pGraphicBlock; }
+	const Content::GraphicBlock& GetGraphicBlock() const { return *_pGraphicBlock; }
 public:
-	static Content::ImageProp& GetImageProp(Value& value) {
-		return dynamic_cast<Value_ImageDescriptor&>(value).GetImageProp();
+	static Content::GraphicBlock& GetGraphicBlock(Value& value) {
+		return dynamic_cast<Value_ImageDescriptor&>(value).GetGraphicBlock();
 	}
-	static const Content::ImageProp& GetImageProp(const Value& value) {
-		return dynamic_cast<const Value_ImageDescriptor&>(value).GetImageProp();
+	static const Content::GraphicBlock& GetGraphicBlock(const Value& value) {
+		return dynamic_cast<const Value_ImageDescriptor&>(value).GetGraphicBlock();
 	}
-	static Content::ImageProp* GetEntityPtr(Value& value) { return &GetImageProp(value); }
-	static const Content::ImageProp* GetEntityPtr(const Value& value) { return &GetImageProp(value); }
+	static Content::GraphicBlock* GetEntityPtr(Value& value) { return &GetGraphicBlock(value); }
+	static const Content::GraphicBlock* GetEntityPtr(const Value& value) { return &GetGraphicBlock(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetImageProp().CalcHash();
+		return GetGraphicBlock().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
 		return IsSameType(value) &&
-			GetImageProp().IsEqualTo(Value_ImageDescriptor::GetImageProp(value));
+			GetGraphicBlock().IsEqualTo(Value_ImageDescriptor::GetGraphicBlock(value));
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetImageProp().IsLessThan(Value_ImageDescriptor::GetImageProp(value)) :
+			GetGraphicBlock().IsLessThan(Value_ImageDescriptor::GetGraphicBlock(value)) :
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

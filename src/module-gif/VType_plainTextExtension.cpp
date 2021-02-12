@@ -223,6 +223,23 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, PlainTextData)
 	return new Value_Binary(plainTextExtension.PlainTextData);
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of class property
+//-----------------------------------------------------------------------------
+// gif.PlainTextExtension#default
+Gurax_DeclareClassPropertyAlias_R(PlainTextExtension, default_, "default")
+{
+	Declare(VTYPE_PlainTextExtension, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassPropertyGetter(PlainTextExtension, default_)
+{
+	return new Value_PlainTextExtension(Content::extensionsCommon.plainTextExtension, nullptr);
+}
+
 //------------------------------------------------------------------------------
 // VType_PlainTextExtension
 //------------------------------------------------------------------------------
@@ -238,6 +255,8 @@ void VType_PlainTextExtension::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(PlainTextExtension, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PlainTextExtension, BlockSize));
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(PlainTextExtension, default_));
 }
 
 //------------------------------------------------------------------------------

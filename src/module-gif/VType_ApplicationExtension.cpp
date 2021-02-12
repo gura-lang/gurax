@@ -51,21 +51,20 @@ Gurax_ImplementMethod(ApplicationExtension, MethodSkeleton)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of property
+// Implementation of class property
 //-----------------------------------------------------------------------------
-// gif.ApplicationExtension#propSkeleton
-Gurax_DeclareProperty_R(ApplicationExtension, propSkeleton)
+// gif.ApplicationExtension#default
+Gurax_DeclareClassPropertyAlias_R(ApplicationExtension, default_, "default")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_ApplicationExtension, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(ApplicationExtension, propSkeleton)
+Gurax_ImplementClassPropertyGetter(ApplicationExtension, default_)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	return new Value_ApplicationExtension(Content::extensionsCommon.applicationExtension, nullptr);
 }
 
 //------------------------------------------------------------------------------
@@ -81,8 +80,8 @@ void VType_ApplicationExtension::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ApplicationExtension, MethodSkeleton));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(ApplicationExtension, propSkeleton));
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(ApplicationExtension, default_));
 }
 
 //------------------------------------------------------------------------------

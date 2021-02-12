@@ -65,7 +65,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, ImageLeftPosition)
 Gurax_ImplementPropertyGetter(ImageDescriptor, ImageLeftPosition)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageLeftPosition));
 }
 
@@ -81,7 +81,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, ImageTopPosition)
 Gurax_ImplementPropertyGetter(ImageDescriptor, ImageTopPosition)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageTopPosition));
 }
 
@@ -97,7 +97,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, ImageWidth)
 Gurax_ImplementPropertyGetter(ImageDescriptor, ImageWidth)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageWidth));
 }
 
@@ -113,7 +113,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, ImageHeight)
 Gurax_ImplementPropertyGetter(ImageDescriptor, ImageHeight)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Number(Gurax_UnpackUInt16(imageDescriptor.ImageHeight));
 }
 
@@ -129,7 +129,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, LocalColorTableFlag)
 Gurax_ImplementPropertyGetter(ImageDescriptor, LocalColorTableFlag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Bool(imageDescriptor.GetLocalColorTableFlag());
 }
 
@@ -145,7 +145,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, InterlaceFlag)
 Gurax_ImplementPropertyGetter(ImageDescriptor, InterlaceFlag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Bool(imageDescriptor.GetInterlaceFlag());
 }
 
@@ -161,7 +161,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, SortFlag)
 Gurax_ImplementPropertyGetter(ImageDescriptor, SortFlag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Bool(imageDescriptor.GetSortFlag());
 }
 
@@ -177,7 +177,7 @@ Gurax_DeclareProperty_R(ImageDescriptor, SizeOfLocalColorTable)
 Gurax_ImplementPropertyGetter(ImageDescriptor, SizeOfLocalColorTable)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	auto& imageDescriptor = valueThis.GetImageProp().GetImageDescriptor();
+	auto& imageDescriptor = valueThis.GetGraphicBlock().GetImageDescriptor();
 	return new Value_Number(imageDescriptor.GetSizeOfLocalColorTable());
 }
 

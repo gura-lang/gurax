@@ -52,20 +52,20 @@ bool Content::Read(Stream& stream, Image::Format format)
 		UInt8 imageSeparator;
 		size_t bytesRead = stream.Read(&imageSeparator, 1);
 		if (bytesRead < 1) break;
-		//::printf("%02x\n", imageSeparator);
 		if (imageSeparator == Sep::ImageDescriptor) {
+			//::printf("ImageDescriptor\n");
 			if (format.IsIdentical(Image::Format::None)) {
 				if (!SkipImageDescriptor(stream)) break;
 			} else {
 				RefPtr<Image> pImage(new Image(format));
-				RefPtr<ImageProp> pImageProp(new ImageProp(graphicControlExtension));
-				if (!ReadImageDescriptor(stream, *pImage, *pImageProp)) break;
-				_entries.push_back(new Entry(pImage.release(), pImageProp.release()));
+				RefPtr<GraphicBlock> pGraphicBlock(new GraphicBlock(graphicControlExtension));
+				if (!ReadImageDescriptor(stream, *pImage, *pGraphicBlock)) break;
+				_entries.push_back(new Entry(pGraphicBlock.release(), pImage.release()));
 			}
 		} else if (imageSeparator == Sep::ExtensionIntroducer) {
 			UInt8 label;
 			if (!ReadBuff(stream, &label, 1)) break;
-			//::printf("%02x - %02x\n", imageSeparator, label);
+			//::printf("ExtensionIntroducer - Label:%02x\n", label);
 			if (label == GraphicControlExtension::Label) {
 				if (!ReadBuff(stream, &graphicControlExtension, 5)) break;
 				UInt8 blockTerminator;
@@ -84,7 +84,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 			}
 			if (Error::IsIssued()) break;
 		} else if (imageSeparator == Sep::Trailer) {
-			//::printf("%02x\n", imageSeparator);
+			//::printf("Trailer\n");
 			break;
 		} else {
 			Error::Issue(ErrorType::FormatError, "unknown separator %02x", imageSeparator);
@@ -102,25 +102,23 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	}
 	_pPaletteGlobal.reset(new Palette(256));
 	size_t logicalScreenWidth = 0, logicalScreenHeight = 0;
+	bool successFlag = true;
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
 		const Palette* pPalette = image.GetPalette();
 		if (pPalette && pPalette->GetSize() <= 256) {
-			if (_pPaletteGlobal->UpdateByPalette(*pPalette, Palette::ShrinkMode::None)) {
-				// nothing to do
-			} else {
-				//if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
+			if (!_pPaletteGlobal->UpdateByPalette(*pPalette, Palette::ShrinkMode::None)) {
+				successFlag = false;
 				break;
 			}
 		} else {
-			if (_pPaletteGlobal->UpdateByImage(image, Palette::ShrinkMode::None)) {
-				// nothing to do
-			} else {
-				//if (_pPaletteGlobal->Prepare(Gurax_Symbol(websafe))) {
+			if (!_pPaletteGlobal->UpdateByImage(image, Palette::ShrinkMode::None)) {
+				successFlag = false;
 				break;
 			}
 		}
 	}
+	if (!successFlag) _pPaletteGlobal.reset(Palette::WebSafe());
 	int backgroundColorIndex = -1;
 	UInt8 transparentColorIndex = 0;
 	UInt8 transparentColorFlag = 0;
@@ -141,8 +139,8 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
 		image.SetPalette(Palette::Reference(_pPaletteGlobal.get()));
-		ImageDescriptor& imageDescriptor = pEntry->GetImageProp().GetImageDescriptor();
-		GraphicControlExtension& graphicControlExtension = pEntry->GetImageProp().GetGraphicControl();
+		ImageDescriptor& imageDescriptor = pEntry->GetGraphicBlock().GetImageDescriptor();
+		GraphicControlExtension& graphicControlExtension = pEntry->GetGraphicBlock().GetGraphicControl();
 		size_t width = image.GetWidth() + Gurax_UnpackUInt16(imageDescriptor.ImageLeftPosition);
 		size_t height = image.GetHeight() + Gurax_UnpackUInt16(imageDescriptor.ImageTopPosition);
 		if (logicalScreenWidth < width) logicalScreenWidth = width;
@@ -201,15 +199,12 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
-		GraphicControlExtension& graphicControlExtension = pEntry->GetImageProp().GetGraphicControl();
+		GraphicControlExtension& graphicControlExtension = pEntry->GetGraphicBlock().GetGraphicControl();
 		if (!WriteGraphicControl(stream, graphicControlExtension)) return false;
 		if (!WriteImageDescriptor(stream, *pEntry)) return false;
 	}
-	do {
-		// Trailer
-		const UInt8 buff[] = { Sep::Trailer };
-		if (!WriteBuff(stream, buff, 1)) return false;
-	} while (0);
+	// Trailer
+	if (!WriteBuff(stream, &Sep::Trailer, 1)) return false;
 	return false;
 }
 
@@ -261,10 +256,10 @@ bool Content::SkipImageDescriptor(Stream& stream)
 	return true;
 }
 
-bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp)
+bool Content::ReadImageDescriptor(Stream& stream, Image& image, GraphicBlock& GraphicBlock)
 {
-	GraphicControlExtension& graphicControlExtension = imageProp.GetGraphicControl();
-	ImageDescriptor& imageDescriptor = imageProp.GetImageDescriptor();
+	GraphicControlExtension& graphicControlExtension = GraphicBlock.GetGraphicControl();
+	ImageDescriptor& imageDescriptor = GraphicBlock.GetImageDescriptor();
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
 	size_t imageWidth = Gurax_UnpackUInt16(imageDescriptor.ImageWidth);
 	size_t imageHeight = Gurax_UnpackUInt16(imageDescriptor.ImageHeight);
@@ -279,7 +274,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, ImageProp& image
 		pPalette.reset(_pPaletteGlobal.Reference());
 	}
 	image.SetPalette(pPalette.Reference());
-	image.SetValueExtra(new Value_ImageProp(imageProp.Reference()));
+	image.SetValueExtra(new Value_GraphicBlock(GraphicBlock.Reference()));
 	short transparentColorIndex = graphicControlExtension.TransparentColorIndex;
 	if (!graphicControlExtension.GetTransparentColorFlag() || !image.IsFormat(Image::Format::RGBA)) {
 		transparentColorIndex = -1;
@@ -421,8 +416,8 @@ bool Content::WriteGraphicControl(Stream& stream, const GraphicControlExtension&
 bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 {
 	const Image& image = entry.GetImage();
-	const ImageDescriptor& imageDescriptor = entry.GetImageProp().GetImageDescriptor();
-	const GraphicControlExtension& graphicControlExtension = entry.GetImageProp().GetGraphicControl();
+	const ImageDescriptor& imageDescriptor = entry.GetGraphicBlock().GetImageDescriptor();
+	const GraphicControlExtension& graphicControlExtension = entry.GetGraphicBlock().GetGraphicControl();
 	if (!WriteBuff(stream, &Sep::ImageDescriptor, 1)) return false;
 	const Palette* pPalette = _pPaletteGlobal.get();
 	if (!WriteBuff(stream, &imageDescriptor, 9)) return false;
@@ -546,11 +541,11 @@ bool Content::WriteColorTable(Stream& stream, const Palette& palette)
 void Content::AddImage(const Image& image, UInt16 delayTime,
 		UInt16 imageLeftPosition, UInt16 imageTopPosition, UInt8 disposalMethod)
 {
-	RefPtr<ImageProp> pImageProp(new ImageProp());
+	RefPtr<GraphicBlock> pGraphicBlock(new GraphicBlock());
 	do {
 		UInt8 userInputFlag = 0;
 		UInt8 transparentColorFlag = 0;
-		GraphicControlExtension& graphicControlExtension = pImageProp->GetGraphicControl();
+		GraphicControlExtension& graphicControlExtension = pGraphicBlock->GetGraphicControl();
 		graphicControlExtension.BlockSize = 4;
 		graphicControlExtension.PackedFields = (disposalMethod << 2) | (userInputFlag << 1) | (transparentColorFlag << 0);
 		Gurax_PackUInt16(graphicControlExtension.DelayTime, delayTime);
@@ -561,7 +556,7 @@ void Content::AddImage(const Image& image, UInt16 delayTime,
 		UInt8 interlaceFlag = 0;
 		UInt8 sortFlag = 0;
 		UInt8 sizeOfLocalColorTable = 0;
-		ImageDescriptor& imageDescriptor = pImageProp->GetImageDescriptor();
+		ImageDescriptor& imageDescriptor = pGraphicBlock->GetImageDescriptor();
 		Gurax_PackUInt16(imageDescriptor.ImageLeftPosition, imageLeftPosition);
 		Gurax_PackUInt16(imageDescriptor.ImageTopPosition, imageTopPosition);
 		UInt16 imageWidth = static_cast<UInt16>(image.GetWidth());
@@ -571,7 +566,7 @@ void Content::AddImage(const Image& image, UInt16 delayTime,
 		imageDescriptor.PackedFields = (localColorTableFlag << 7) | (interlaceFlag << 6) |
 			(sortFlag << 5) | (sizeOfLocalColorTable << 0);
 	} while (0);
-	_entries.push_back(new Entry(image.Reference(), pImageProp.release()));
+	_entries.push_back(new Entry(pGraphicBlock.release(), image.Reference()));
 }
 
 void Content::Dump(UInt8* data, int bytes)

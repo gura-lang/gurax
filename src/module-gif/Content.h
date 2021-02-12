@@ -161,32 +161,32 @@ public:
 		bool WriteCode(Stream& stream, UInt16 code, int bitsOfCode);
 		bool Flush(Stream& stream);
 	};
-	class ImageProp : public Referable {
+	class GraphicBlock : public Referable {
 	public:
 		// Referable declaration
-		Gurax_DeclareReferable(ImageProp);
+		Gurax_DeclareReferable(GraphicBlock);
 		// Uses MemoryPool allocator
-		Gurax_MemoryPoolAllocator("gif.ImageProp");
+		Gurax_MemoryPoolAllocator("gif.GraphicBlock");
 	private:
 		GraphicControlExtension _graphicControl;
 		ImageDescriptor _imageDescriptor;
 	public:
-		ImageProp() {}
-		ImageProp(GraphicControlExtension graphicControl) : _graphicControl(graphicControl) {}
+		GraphicBlock() {}
+		GraphicBlock(GraphicControlExtension graphicControl) : _graphicControl(graphicControl) {}
 	private:
-		~ImageProp() = default;
+		~GraphicBlock() = default;
 	public:
 		GraphicControlExtension& GetGraphicControl() const {
-			return const_cast<ImageProp*>(this)->_graphicControl;
+			return const_cast<GraphicBlock*>(this)->_graphicControl;
 		}
 		ImageDescriptor& GetImageDescriptor() const {
-			return const_cast<ImageProp*>(this)->_imageDescriptor;
+			return const_cast<GraphicBlock*>(this)->_imageDescriptor;
 		}
 	public:
 		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-		bool IsIdentical(const ImageProp& other) const { return this == &other; }
-		bool IsEqualTo(const ImageProp& other) const { return IsIdentical(other); }
-		bool IsLessThan(const ImageProp& other) const { return this < &other; }
+		bool IsIdentical(const GraphicBlock& other) const { return this == &other; }
+		bool IsEqualTo(const GraphicBlock& other) const { return IsIdentical(other); }
+		bool IsLessThan(const GraphicBlock& other) const { return this < &other; }
 	};
 	class Entry : public Referable {
 	public:
@@ -195,15 +195,15 @@ public:
 		// Uses MemoryPool allocator
 		Gurax_MemoryPoolAllocator("gif.Entry");
 	private:
+		RefPtr<GraphicBlock> _pGraphicBlock;
 		RefPtr<Image> _pImage;
-		RefPtr<ImageProp> _pImageProp;
 	public:
-		Entry(Image* pImage, ImageProp* pImageProp) : _pImage(pImage), _pImageProp(pImageProp) {}
+		Entry(GraphicBlock* pGraphicBlock, Image* pImage) : _pGraphicBlock(pGraphicBlock), _pImage(pImage) {}
 	private:
 		~Entry() = default;
 	public:
+		GraphicBlock& GetGraphicBlock() { return *_pGraphicBlock; }
 		Image& GetImage() { return *_pImage; }
-		ImageProp& GetImageProp() { return *_pImageProp; }
 	};
 	class EntryList : public ListBase<Entry*> {
 	};
@@ -256,7 +256,7 @@ public:
 	bool ReadDataBlocks(Stream& stream, Binary& binary);
 	bool WriteDataBlocks(Stream& stream, const Binary& binary);
 	bool SkipImageDescriptor(Stream& stream);
-	bool ReadImageDescriptor(Stream& stream, Image& image, ImageProp& imageProp);
+	bool ReadImageDescriptor(Stream& stream, Image& image, GraphicBlock& GraphicBlock);
 	bool WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphiControl);
 	bool WriteImageDescriptor(Stream& stream, Entry& entry);
 	Header& GetHeader() { return _header; }

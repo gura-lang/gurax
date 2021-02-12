@@ -11,13 +11,13 @@ TestCase('Property') {
 	gif.Content.PrintPropSlots()
 	gif.GraphicControlExtension.PrintPropSlots()
 	gif.ImageDescriptor.PrintPropSlots()
-	gif.ImageProp.PrintPropSlots()
+	gif.GraphicBlock.PrintPropSlots()
 	gif.LogicalScreenDescriptor.PrintPropSlots()
 	gif.PlainTextExtension.PrintPropSlots()
 }
 
 TestCase('Basic test') {
-	c = gif.Content('ref/kangaroo.gif')
+	c = gif.Content('ref/chicken-anim.gif')
 	Tester(`c.LogicalScreenDescriptor.LogicalScreenWidth)
 	Tester(`c.LogicalScreenDescriptor.LogicalScreenHeight)
 	Tester(`c.LogicalScreenDescriptor.PixelAspectRatio)
