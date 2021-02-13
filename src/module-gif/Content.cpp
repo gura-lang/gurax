@@ -19,7 +19,7 @@ Gurax_BeginModuleScope(gif)
 //------------------------------------------------------------------------------
 // Content
 //------------------------------------------------------------------------------
-Content::Extensions Content::extensionsCommon;
+Content::Extensions Content::extensionsDefault;
 
 Content::Content()
 {
@@ -168,18 +168,6 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		_logicalScreenDescriptor.BackgroundColorIndex = static_cast<UInt8>(backgroundColorIndex);
 		_logicalScreenDescriptor.PixelAspectRatio = 0;
 	} while (0);
-	do {
-		_extensions.applicationExtension.validFlag = true;
-		_extensions.applicationExtension.BlockSize = 11;
-		::memcpy(_extensions.applicationExtension.ApplicationIdentifier, "NETSCAPE", 8);
-		::memcpy(_extensions.applicationExtension.AuthenticationCode, "2.0", 3);
-		UInt8 applicationData[3];
-		applicationData[0] = 0x01;
-		applicationData[1] = static_cast<UInt8>(loopCount & 0xff);
-		applicationData[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
-		_extensions.applicationExtension.ApplicationData =
-						Binary(reinterpret_cast<char* >(applicationData), 3);
-	} while (0);
 	// Header
 	if (!WriteBuff(stream, &_header, 6)) return false;
 	// Logical Screen Descriptor
@@ -188,15 +176,20 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-	if (_extensions.applicationExtension.validFlag) {
+	do {
 		// Application
-		const UInt8 buff[] = {
-			Sep::ExtensionIntroducer, ApplicationExtension::Label
-		};
-		if (!WriteBuff(stream, &buff, 2)) return false;
-		if (!WriteBuff(stream, &_extensions.applicationExtension, 12)) return false;
-		if (!WriteDataBlocks(stream, _extensions.applicationExtension.ApplicationData)) return false;
-	}
+		UInt8 buff[64];
+		buff[0] = Sep::ExtensionIntroducer;
+		buff[1] = ApplicationExtension::Label;
+		buff[2] = 11;
+		::memcpy(&buff[3], "NETSCAPE", 8);
+		::memcpy(&buff[11], "2.0", 3);
+		if (!WriteBuff(stream, buff, 2 + 12)) return false;
+		buff[0] = 0x01;
+		buff[1] = static_cast<UInt8>(loopCount & 0xff);
+		buff[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
+		if (!WriteDataBlocks(stream, buff, 3)) return false;
+	} while (0);
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
 		GraphicControlExtension& graphicControlExtension = pEntry->GetGraphicBlock().GetGraphicControl();
@@ -221,13 +214,12 @@ bool Content::ReadDataBlocks(Stream& stream, Binary& binary)
 	return true;
 }
 
-bool Content::WriteDataBlocks(Stream& stream, const Binary& binary)
+bool Content::WriteDataBlocks(Stream& stream, const UInt8* buff, size_t bytes)
 {
-	size_t size = binary.size();
-	for (size_t offset = 0; offset < size; ) {
-		UInt8 blockSize = static_cast<UInt8>((size - offset <= 255)? size - offset : 255);
+	for (size_t offset = 0; offset < bytes; ) {
+		UInt8 blockSize = static_cast<UInt8>((bytes - offset <= 255)? bytes - offset : 255);
 		if (!WriteBuff(stream, &blockSize, 1)) return false;
-		if (!WriteBuff(stream, binary.data() + offset, blockSize)) return false;
+		if (!WriteBuff(stream, buff + offset, blockSize)) return false;
 		offset += blockSize;
 	}
 	do {
@@ -629,11 +621,12 @@ int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 		if (scanner.GetRowNum() >= iLineEnd) break;
 		scanner.NextRow();
 	}
+#if 0
 	for (;;) {
 		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
 		if (scanner.GetColNum() == 0) break;
-		//scanner.BwdPixel();
+		//scanner.PrevCol();
 	}
 	for (;;) {
 		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
@@ -641,6 +634,7 @@ int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 		if (scanner.GetRowNum() == 0) break;
 		//scanner.BwdLine();
 	}
+#endif
 	int idxMax = 0;
 	int histMax = histTbl[0];
 	for (int idx = 1; idx < Gurax_ArraySizeOf(histTbl); idx++) {
@@ -650,7 +644,6 @@ int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 		}
 	}
 	return idxMax;
-	return 0;
 }
 
 String Content::ToString(const StringStyle& ss) const

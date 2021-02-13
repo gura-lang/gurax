@@ -64,7 +64,7 @@ Gurax_DeclareClassPropertyAlias_R(ApplicationExtension, default_, "default")
 
 Gurax_ImplementClassPropertyGetter(ApplicationExtension, default_)
 {
-	return new Value_ApplicationExtension(Content::extensionsCommon.applicationExtension, nullptr);
+	return new Value_ApplicationExtension(Content::extensionsDefault.applicationExtension, nullptr);
 }
 
 //------------------------------------------------------------------------------

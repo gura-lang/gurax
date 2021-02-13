@@ -64,7 +64,7 @@ Gurax_DeclareClassPropertyAlias_R(CommentExtension, default_, "default")
 
 Gurax_ImplementClassPropertyGetter(CommentExtension, default_)
 {
-	return new Value_CommentExtension(Content::extensionsCommon.commentExtension, nullptr);
+	return new Value_CommentExtension(Content::extensionsDefault.commentExtension, nullptr);
 }
 
 //------------------------------------------------------------------------------

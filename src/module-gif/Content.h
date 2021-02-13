@@ -236,7 +236,7 @@ private:
 	Extensions _extensions;
 	EntryOwner _entries;
 public:
-	static Extensions extensionsCommon;
+	static Extensions extensionsDefault;
 public:
 	// Constructor
 	Content();
@@ -254,7 +254,7 @@ public:
 	bool ReadColorTable(Stream& stream, Palette& palette);
 	bool WriteColorTable(Stream& stream, const Palette& palette);
 	bool ReadDataBlocks(Stream& stream, Binary& binary);
-	bool WriteDataBlocks(Stream& stream, const Binary& binary);
+	bool WriteDataBlocks(Stream& stream, const UInt8* buff, size_t bytes);
 	bool SkipImageDescriptor(Stream& stream);
 	bool ReadImageDescriptor(Stream& stream, Image& image, GraphicBlock& GraphicBlock);
 	bool WriteGraphicControl(Stream& stream, const GraphicControlExtension& graphiControl);

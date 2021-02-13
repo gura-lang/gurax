@@ -237,7 +237,7 @@ Gurax_DeclareClassPropertyAlias_R(PlainTextExtension, default_, "default")
 
 Gurax_ImplementClassPropertyGetter(PlainTextExtension, default_)
 {
-	return new Value_PlainTextExtension(Content::extensionsCommon.plainTextExtension, nullptr);
+	return new Value_PlainTextExtension(Content::extensionsDefault.plainTextExtension, nullptr);
 }
 
 //------------------------------------------------------------------------------
