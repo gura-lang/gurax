@@ -363,6 +363,10 @@ public:
 		}
 	public:
 		const Metrics& GetMetrics() const { return _metrics; }
+		void PlusCol() { _iCol++, _p += _pitchCol; }
+		void MinusCol() { _iCol--, _p -= _pitchCol; }
+		void PlusRow() { _iRow++, _p += _pitchRow; }
+		void MinusRow() { _iRow--, _p -= _pitchRow; }
 		bool NextCol() {
 			_iCol++;
 			_p += _pitchCol;
