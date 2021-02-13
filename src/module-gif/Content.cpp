@@ -607,34 +607,33 @@ int Content::GetPlausibleBackgroundIndex(Palette& palette, Image& image)
 	int histTbl[256];
 	::memset(histTbl, 0x00, sizeof(histTbl));
 	Image::Scanner scanner = Image::Scanner::CreateByDir(image, Image::ScanDir::LeftTopHorz);
-	size_t iPixelEnd = scanner.GetColNum() - 1;
-	size_t iLineEnd = scanner.GetRowNum() - 1;
+	size_t iColEnd = scanner.GetColNum() - 1;
+	size_t iRowEnd = scanner.GetRowNum() - 1;
+	// *************************************************
 	for (;;) {
 		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (scanner.GetColNum() >= iPixelEnd) break;
-		scanner.NextCol();
+		if (scanner.GetColIndex() >= iColEnd) break;
+		scanner.PlusCol();
 	}
 	for (;;) {
 		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (scanner.GetRowNum() >= iLineEnd) break;
-		scanner.NextRow();
-	}
-#if 0
-	for (;;) {
-		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
-		histTbl[idx]++;
-		if (scanner.GetColNum() == 0) break;
-		//scanner.PrevCol();
+		if (scanner.GetRowIndex() >= iRowEnd) break;
+		scanner.PlusRow();
 	}
 	for (;;) {
 		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
 		histTbl[idx]++;
-		if (scanner.GetRowNum() == 0) break;
-		//scanner.BwdLine();
+		if (scanner.GetColIndex() == 0) break;
+		scanner.MinusCol();
 	}
-#endif
+	for (;;) {
+		int idx = static_cast<int>(palette.LookupNearest(scanner.GetColor()));
+		histTbl[idx]++;
+		if (scanner.GetRowIndex() == 0) break;
+		scanner.MinusRow();
+	}
 	int idxMax = 0;
 	int histMax = histTbl[0];
 	for (int idx = 1; idx < Gurax_ArraySizeOf(histTbl); idx++) {
