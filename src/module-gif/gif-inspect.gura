@@ -1,0 +1,38 @@
+#!/usr/bin/env gurax
+import(gif)
+
+if (sys.argv.len < 2) {
+	sys.cerr.Println('usage: gif-inspect file')
+	sys.Exit()
+}
+c = gif.Content(sys.argv[1])
+lsd = c.LogicalScreenDescriptor
+Printf('LogicalScreenDescriptor\n')
+Printf('  LogicalScreenWidth:     %d\n', lsd.LogicalScreenWidth)
+Printf('  LogicalScreenHeight:    %d\n', lsd.LogicalScreenHeight)
+Printf('  BackgroundColorIndex:   %d\n', lsd.BackgroundColorIndex)
+Printf('  PixelAspectRatio:       %d\n', lsd.PixelAspectRatio)
+Printf('  GlobalColorTableFlag:   %d\n', lsd.GlobalColorTableFlag)
+Printf('  ColorResolution:        %d\n', lsd.ColorResolution)
+Printf('  SortFlag:               %d\n', lsd.SortFlag)
+Printf('  SizeOfGlobalColorTable: %d\n', lsd.SizeOfGlobalColorTable)
+c.EachImage {|img, idx|
+	Printf('[Image#%d]\n', idx)
+	e = img.extra.GraphicControlExtension
+	Printf('GraphicControlExtension\n')
+	Printf('  DelayTime:             %d\n', e.DelayTime)
+	Printf('  TransparentColorIndex: %d\n', e.TransparentColorIndex)
+	Printf('  DisposalMethod:        %d\n', e.DisposalMethod)
+	Printf('  UserInputFlag:         %d\n', e.UserInputFlag)
+	Printf('  TransparentColorFlag:  %d\n', e.TransparentColorFlag)	
+	e = img.extra.ImageDescriptor
+	Printf('ImageDescriptor\n')
+	Printf('  ImageLeftPosition:     %d\n', e.ImageLeftPosition)
+	Printf('  ImageTopPosition:      %d\n', e.ImageTopPosition)
+	Printf('  ImageWidth:            %d\n', e.ImageWidth)
+	Printf('  ImageHeight:           %d\n', e.ImageHeight)
+	Printf('  LocalColorTableFlag:   %d\n', e.LocalColorTableFlag)
+	Printf('  InterlaceFlag:         %d\n', e.InterlaceFlag)
+	Printf('  SortFlag:              %d\n', e.SortFlag)
+	Printf('  SizeOfLocalColorTable: %d\n', e.SizeOfLocalColorTable)
+}

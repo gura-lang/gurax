@@ -86,6 +86,7 @@ Gurax_ImplementMethod(Content, AddImage)
 Gurax_DeclareMethod(Content, EachImage)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that returns images stored in the GIF file.\n");
