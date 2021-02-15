@@ -41,6 +41,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 		return false;
 	}
 	if (!ReadBuff(stream, &_logicalScreenDescriptor, 7)) return false;
+	//_logicalScreenDescriptor.Print();
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		int nEntries = 1 << (_logicalScreenDescriptor.GetSizeOfGlobalColorTable() + 1);
 		_pPaletteGlobal.reset(new Palette(nEntries));
@@ -176,6 +177,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
+#if 0
 	do {
 		// Application
 		UInt8 buff[64];
@@ -190,6 +192,7 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		buff[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
 		if (!WriteDataBlocks(stream, buff, 3)) return false;
 	} while (0);
+#endif
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
 		GraphicControlExtension& graphicControlExtension = pEntry->GetGraphicBlock().GetGraphicControl();
@@ -253,6 +256,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, GraphicBlock& Gr
 	GraphicControlExtension& graphicControlExtension = GraphicBlock.GetGraphicControl();
 	ImageDescriptor& imageDescriptor = GraphicBlock.GetImageDescriptor();
 	if (!ReadBuff(stream, &imageDescriptor, 9)) return false;
+	//imageDescriptor.Print();
 	size_t imageWidth = Gurax_UnpackUInt16(imageDescriptor.ImageWidth);
 	size_t imageHeight = Gurax_UnpackUInt16(imageDescriptor.ImageHeight);
 	if (!image.Allocate(imageWidth, imageHeight)) return false;
@@ -382,7 +386,7 @@ bool Content::ReadImageDescriptor(Stream& stream, Image& image, GraphicBlock& Gr
 			}
 			dstp = image.GetPointerC(0, y);
 		}
-		//::printf("+ %3d,%3d code = %03x\n", x, y, code);
+		//::printf("+ %3zd,%3zd code = %03x\n", x, y, code);
 		*(dstp + 0) = src.GetB();
 		*(dstp + 1) = src.GetG();
 		*(dstp + 2) = src.GetR();
@@ -435,6 +439,8 @@ bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 	for (size_t y = 0; y < image.GetHeight(); y++) {
 		const UInt8* pPixel = image.GetPointerC(0, y);
 		for (size_t x = 0; x < image.GetWidth(); x++, pPixel += image.GetBytesPerPixel()) {
+			//::printf("%02x%02x%02x\n", Image::PixelRGB::GetR(pPixel),
+			//			Image::PixelRGB::GetG(pPixel), Image::PixelRGB::GetB(pPixel));
 			// LZW (Lempel-Ziv-Welch) compression algorithm
 			UInt8 k;
 			if (transparentColorFlag && Image::PixelRGBA::GetA(pPixel) < 128) {
@@ -443,14 +449,14 @@ bool Content::WriteImageDescriptor(Stream& stream, Entry& entry)
 				k = static_cast<UInt8>(pPalette->LookupNearest(
 					Image::PixelRGBA::GetR(pPixel), Image::PixelRGBA::GetG(pPixel), Image::PixelRGBA::GetB(pPixel)));
 			}
-			//::printf("- %3d,%3d code = %03x\n", x, y, k);
+			//::printf("- %3zd,%3zd code = 0x%02x\n", x, y, k);
 			if (word.empty()) {
 				word += k;
 				code = k;
 				continue;
 			}
-			Binary wordK;
-			//Binary wordK = word + static_cast<char>(k);
+			Binary wordK = word;
+			wordK += k;
 			TransMap::iterator iter = transMap.find(wordK);
 			if (iter != transMap.end()) {
 				word = wordK;
@@ -683,11 +689,13 @@ bool Content::ImageDataBlock::ReadCode(Stream& stream, UInt16& code, int bitsOfC
 			_bitOffset += bitsLeft;
 		}
 	}
+	//::printf("ReadCode(0x%04x)\n", code);
 	return true;
 }
 
 bool Content::ImageDataBlock::WriteCode(Stream& stream, UInt16 code, int bitsOfCode)
 {
+	//::printf("WriteCode(0x%04x)\n", code);
 	const int bitsFull = 8 * 255;
 	for (int bitsAccum = 0; bitsAccum < bitsOfCode; ) {
 		int bitsRest = bitsOfCode - bitsAccum;

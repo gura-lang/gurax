@@ -49,6 +49,16 @@ public:
 		UInt8 GetColorResolution() const { return (PackedFields >> 4) & 7; }
 		UInt8 GetSortFlag() const { return (PackedFields >> 3) & 1; }
 		size_t GetSizeOfGlobalColorTable() const { return (PackedFields >> 0) & 7; }
+		void Print() const {
+			::printf("LogicalScreenWidth:     %d\n", Gurax_UnpackUInt16(LogicalScreenWidth));
+			::printf("LogicalScreenHeight:    %d\n", Gurax_UnpackUInt16(LogicalScreenHeight));
+			::printf("GlobalColorTableFlag:   %d\n", GetGlobalColorTableFlag());
+			::printf("ColorResolution:        %d\n", GetColorResolution());
+			::printf("SortFlag:               %d\n", GetSortFlag());
+			::printf("SizeOfGlobalColorTable: %zd\n", GetSizeOfGlobalColorTable());
+			::printf("BackgroundColorIndex:   %d\n", BackgroundColorIndex);
+			::printf("PixelAspectRatio:       %d\n", PixelAspectRatio);
+		}
 	};
 	// 20. Image Descriptor (optional)
 	struct ImageDescriptor {
@@ -73,6 +83,16 @@ public:
 		UInt8 GetInterlaceFlag() const { return (PackedFields >> 6) & 1; }
 		UInt8 GetSortFlag() const { return (PackedFields >> 5) & 1; }
 		UInt8 GetSizeOfLocalColorTable() const { return (PackedFields >> 0) & 7; }
+		void Print() const {
+			::printf("ImageLeftPosition:     %d\n", Gurax_UnpackUInt16(ImageLeftPosition));
+			::printf("ImageTopPosition:      %d\n", Gurax_UnpackUInt16(ImageTopPosition));
+			::printf("ImageWidth:            %d\n", Gurax_UnpackUInt16(ImageWidth));
+			::printf("ImageHeight:           %d\n", Gurax_UnpackUInt16(ImageHeight));
+			::printf("LocalColorTableFlag:   %d\n", GetLocalColorTableFlag());
+			::printf("InterlaceFlag:         %d\n", GetInterlaceFlag());
+			::printf("SortFlag:              %d\n", GetSortFlag());
+			::printf("SizeOfLocalColorTable: %d\n", GetSizeOfLocalColorTable());
+		}
 	};
 	// 23. Graphic Control Extension (optional)
 	struct GraphicControlExtension {
