@@ -16,7 +16,6 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_ApplicationExtension);
 	Assign(VTYPE_CommentExtension);
 	Assign(VTYPE_Content);
 	Assign(VTYPE_GraphicControlExtension);

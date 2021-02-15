@@ -100,13 +100,12 @@ Gurax_ImplementMethod(Content, EachImage)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// gif.Content#Write(stream:Stream:w, colorBackground?:Color, loopCount?:Number):reduce
+// gif.Content#Write(stream:Stream:w, colorBackground?:Color):reduce
 Gurax_DeclareMethod(Content, Write)
 {
 	Declare(VTYPE_Content, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("colorBackground", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("loopCount", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -121,33 +120,15 @@ Gurax_ImplementMethod(Content, Write)
 	Stream& stream = args.PickStream();
 	bool validBackgroundFlag = false;
 	const Color& colorBackground = (validBackgroundFlag = args.IsValid())? args.PickColor() : Color::zero;
-	UInt16 loopCount = args.IsValid()? args.PickNumberNonNeg<UInt16>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	if (!valueThis.GetContent().Write(stream, colorBackground, validBackgroundFlag, loopCount)) return Value::nil();
+	if (!valueThis.GetContent().Write(stream, colorBackground, validBackgroundFlag)) return Value::nil();
 	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// gif.Content#ApplicationExtension:nil
-Gurax_DeclareProperty_R(Content, ApplicationExtension)
-{
-	Declare(VTYPE_ApplicationExtension, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Content, ApplicationExtension)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	auto& content = valueThis.GetContent();
-	if (!content.GetExtensions().commentExtension.validFlag) return Value::nil();
-	return new Value_ApplicationExtension(content.GetExtensions().applicationExtension, content.Reference());
-}
-
 // gif.Content#CommentExtension:nil
 Gurax_DeclareProperty_R(Content, CommentExtension)
 {
@@ -178,6 +159,30 @@ Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_LogicalScreenDescriptor(valueThis.GetContent().Reference());
+}
+
+// gif.Content#LoopCount
+Gurax_DeclareProperty_RW(Content, LoopCount)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Content, LoopCount)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	int loopCount = valueThis.GetContent().GetLoopCount();
+	if (loopCount < 0) return Value::nil();
+	return new Value_Number(loopCount);
+}
+
+Gurax_ImplementPropertySetter(Content, LoopCount)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	int loopCount = value.IsValid()? Value_Number::GetNumber<int>(value) : -1;
+	valueThis.GetContent().SetLoopCount(loopCount);
 }
 
 // gif.Content#PlainTextExtension:nil
@@ -213,9 +218,9 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Content, EachImage));
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Content, ApplicationExtension));
 	Assign(Gurax_CreateProperty(Content, CommentExtension));
 	Assign(Gurax_CreateProperty(Content, LogicalScreenDescriptor));
+	Assign(Gurax_CreateProperty(Content, LoopCount));
 	Assign(Gurax_CreateProperty(Content, PlainTextExtension));
 }
 

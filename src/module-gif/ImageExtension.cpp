@@ -55,8 +55,7 @@ bool ImageMgrEx::WriteStream(Stream& stream, const Image& image)
 	do {
 		const Color& colorBackground = Color::zero;
 		bool validBackgroundFlag = false;
-		UInt16 loopCount = 0;
-		pContent->Write(stream, colorBackground, validBackgroundFlag, loopCount);
+		pContent->Write(stream, colorBackground, validBackgroundFlag);
 	} while (0);
 	return true;
 }

@@ -21,14 +21,6 @@ Gurax_BeginModuleScope(gif)
 //------------------------------------------------------------------------------
 Content::Extensions Content::extensionsDefault;
 
-Content::Content()
-{
-}
-
-Content::~Content()
-{
-}
-
 bool Content::Read(Stream& stream, Image::Format format)
 {
 	if (!ReadBuff(stream, &_header, 6)) return false;
@@ -79,9 +71,15 @@ bool Content::Read(Stream& stream, Image::Format format)
 				if (!ReadBuff(stream, &_extensions.plainTextExtension, 13)) break;
 				if (!ReadDataBlocks(stream, _extensions.plainTextExtension.PlainTextData)) break;
 			} else if (label == ApplicationExtension::Label) {
-				_extensions.applicationExtension.validFlag = true;
-				if (!ReadBuff(stream, &_extensions.applicationExtension, 12)) break;
-				if (!ReadDataBlocks(stream, _extensions.applicationExtension.ApplicationData)) break;
+				ApplicationExtension applicationExtension;
+				if (!ReadBuff(stream, &applicationExtension, 12)) break;
+				Binary data;
+				if (!ReadDataBlocks(stream, data)) break;
+				if (::memcmp(applicationExtension.ApplicationIdentifier, "NETSCAPE", 8) == 0 &&
+					::memcmp(applicationExtension.AuthenticationCode, "2.0", 3) == 0 &&
+					data.size() == 3 && data[0] == 1) {
+					_loopCount = (static_cast<UInt16>(data[2]) << 8) + data[1];
+				}
 			}
 			if (Error::IsIssued()) break;
 		} else if (imageSeparator == Sep::Trailer) {
@@ -95,7 +93,7 @@ bool Content::Read(Stream& stream, Image::Format format)
 	return !Error::IsIssued();
 }
 
-bool Content::Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount)
+bool Content::Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag)
 {
 	if (_entries.empty()) {
 		Error::Issue(ErrorType::ValueError, "no image to write");
@@ -177,22 +175,19 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	if (_logicalScreenDescriptor.GetGlobalColorTableFlag()) {
 		if (!WriteColorTable(stream, *_pPaletteGlobal)) return false;
 	}
-#if 0
-	do {
-		// Application
-		UInt8 buff[64];
+	if (_loopCount >= 0) {
+		// Application Extension
+		UInt8 buff[2];
 		buff[0] = Sep::ExtensionIntroducer;
 		buff[1] = ApplicationExtension::Label;
-		buff[2] = 11;
-		::memcpy(&buff[3], "NETSCAPE", 8);
-		::memcpy(&buff[11], "2.0", 3);
-		if (!WriteBuff(stream, buff, 2 + 12)) return false;
-		buff[0] = 0x01;
-		buff[1] = static_cast<UInt8>(loopCount & 0xff);
-		buff[2] = static_cast<UInt8>((loopCount >> 8) & 0xff);
-		if (!WriteDataBlocks(stream, buff, 3)) return false;
-	} while (0);
-#endif
+		if (!WriteBuff(stream, buff, 2)) return false;
+		ApplicationExtension applicationExtension;
+		if (!WriteBuff(stream, &applicationExtension, 12)) return false;
+		ApplicationExtension::Data data;
+		UInt16 num = static_cast<UInt16>(_loopCount);
+		Gurax_PackUInt16(data.LoopCount, num);
+		if (!WriteBuff(stream, &applicationExtension, 4)) return false;
+	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
 		GraphicControlExtension& graphicControlExtension = pEntry->GetGraphicBlock().GetGraphicControl();

@@ -152,17 +152,24 @@ public:
 	};
 	// 26. Application Extension (optional)
 	struct ApplicationExtension {
+		struct Data {
+			UInt8 BlockSize;
+			UInt8 Id;
+			Gurax_PackedUInt16_LE(LoopCount);
+			Data() {
+				BlockSize = 3;
+				Id = 0x01;
+				Gurax_PackUInt16(LoopCount, 0);
+			};
+		};
 		UInt8 BlockSize;
 		char ApplicationIdentifier[8];
 		char AuthenticationCode[3];
-		Binary ApplicationData;
-		bool validFlag;
 		static const UInt8 Label = 0xff;
 		ApplicationExtension() {
 			BlockSize = 11;
-			::memset(ApplicationIdentifier, 0x00, 8);
-			::memset(AuthenticationCode, 0x00, 3);
-			validFlag = false;
+			::memcpy(ApplicationIdentifier, "NETSCAPE", 8);
+			::memcpy(AuthenticationCode, "2.0", 3);
 		}
 	};
 	struct Extensions {
@@ -255,11 +262,12 @@ private:
 	RefPtr<Palette> _pPaletteGlobal;
 	Extensions _extensions;
 	EntryOwner _entries;
+	int _loopCount;
 public:
 	static Extensions extensionsDefault;
 public:
 	// Constructor
-	Content();
+	Content() : _loopCount(0) {}
 	// Copy constructor/operator
 	Content(const Content& src) = delete;
 	Content& operator=(const Content& src) = delete;
@@ -267,10 +275,10 @@ public:
 	Content(Content&& src) noexcept = delete;
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
-	~Content();
+	~Content() = default;
 public:
 	bool Read(Stream& stream, Image::Format format);
-	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag, UInt16 loopCount);
+	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag);
 	bool ReadColorTable(Stream& stream, Palette& palette);
 	bool WriteColorTable(Stream& stream, const Palette& palette);
 	bool ReadDataBlocks(Stream& stream, Binary& binary);
@@ -285,6 +293,8 @@ public:
 	}
 	Palette* GetGlobalPalette() { return _pPaletteGlobal.get(); }
 	Extensions& GetExtensions() { return _extensions; }
+	int GetLoopCount() const { return _loopCount; }
+	void SetLoopCount(int loopCount) { _loopCount = loopCount; }
 	EntryOwner& GetEntries() { return _entries; }
 	void AddImage(const Image& image,
 			UInt16 imageLeftPosition, UInt16 imageTopPosition,
