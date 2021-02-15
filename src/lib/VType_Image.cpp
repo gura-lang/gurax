@@ -453,6 +453,30 @@ Gurax_ImplementMethod(Image, Read)
 	return valueThis.Reference();
 }
 
+// Image#ReduceColor(palette:Palette)
+Gurax_DeclareMethod(Image, ReduceColor)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("palette", VTYPE_Palette, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Image, ReduceColor)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& image = valueThis.GetImage();
+	// Arguments
+	ArgPicker args(argument);
+	const Palette& palette = args.PickPalette();
+	// Function body
+	RefPtr<Image> pImageRtn(image.ReduceColor(palette));
+	if (!pImageRtn) return Value::nil();
+	return new Value_Image(pImageRtn.release());
+}
+
 // Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number,
 //              wdSrc?:Number, htSrc?:Number):[rgb,rgba]
 Gurax_DeclareMethod(Image, Resize)
@@ -889,6 +913,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Image, PutPixel));
 	Assign(Gurax_CreateMethod(Image, Paste));
 	Assign(Gurax_CreateMethod(Image, Read));
+	Assign(Gurax_CreateMethod(Image, ReduceColor));
 	Assign(Gurax_CreateMethod(Image, Resize));
 	Assign(Gurax_CreateMethod(Image, ResizePaste));
 	Assign(Gurax_CreateMethod(Image, Rotate));

@@ -666,6 +666,30 @@ Image* Image::MapAlphaLevel(const UInt8* mapA) const
 	return pImage.release();
 }
 
+Image* Image::ReduceColor(const Palette& palette) const
+{
+	RefPtr<Image> pImage(new Image(GetFormat()));
+	if (!pImage->Allocate(GetWidth(), GetHeight())) return nullptr;
+	UInt8* pDst = pImage->GetPointerC();
+	const UInt8* pSrc = GetPointerC();
+	size_t nPixels = GetMetrics().CountPixels();
+	if (GetFormat().IsIdentical(Format::RGB)) {
+		for (size_t iPixel = 0; iPixel < nPixels; iPixel++,
+				pSrc += Format::RGB.bytesPerPixel, pDst += Format::RGB.bytesPerPixel) {
+			size_t idx = palette.LookupNearest(PixelRGB::GetR(pSrc), PixelRGB::GetG(pSrc), PixelRGB::GetG(pSrc)); 
+			PixelRGB::SetColor(pDst, palette.GetColor(idx));
+		}
+	} else {
+		for (size_t iPixel = 0; iPixel < nPixels; iPixel++,
+				pSrc += Format::RGBA.bytesPerPixel, pDst += Format::RGBA.bytesPerPixel) {
+			size_t idx = palette.LookupNearest(PixelRGBA::GetR(pSrc), PixelRGBA::GetG(pSrc), PixelRGBA::GetG(pSrc)); 
+			const Color& color = palette.GetColor(idx);
+			PixelRGBA::SetRGBA(pDst, color.GetR(), color.GetG(), color.GetB(), PixelRGBA::GetA(pSrc));
+		}
+	}
+	return pImage.release();
+}
+
 void Image::CalcRotatesSize(size_t* pWdDst, size_t* pHtDst, size_t wdSrc, size_t htSrc, int cos1024, int sin1024)
 {
 	int xCenterSrc = static_cast<int>(wdSrc / 2);

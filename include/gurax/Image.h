@@ -513,6 +513,7 @@ public:
 		return MapColorLevel(GetFormat(), mapR, mapG, mapB);
 	}
 	Image* MapAlphaLevel(const UInt8* mapA) const;
+	Image* ReduceColor(const Palette& palette) const;
 	Color GetPixelColor(size_t x, size_t y) const {
 		return IsFormat(Format::RGB)? MakePixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? MakePixel<PixelRGBA>(x, y).GetColor() : Color::zero;
