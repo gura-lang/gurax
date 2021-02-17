@@ -20,6 +20,7 @@ public:
 	Gurax_DeclareReferable(Palette);
 public:
 	enum class ShrinkMode { None, Align, Minimum };
+	using ColorSet = std::unordered_set<Color, Color::Hash, Color::EqualTo>;
 protected:
 	std::unique_ptr<UInt32[]> _packedTbl;
 	size_t _n;
@@ -51,6 +52,7 @@ public:
 	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { _packedTbl[idx] = PackRGBA(r, g, b, a); }
 	UInt32 GetPacked(size_t idx) const { return _packedTbl[idx]; }
 	Color GetColor(size_t idx) const { return Color(_packedTbl[idx]); }
+	Color GetColor(size_t idx, UInt8 a) const { return Color(_packedTbl[idx], a); }
 public:
 	size_t LookupNearest(UInt8 r, UInt8 g, UInt8 b) const;
 	size_t LookupNearest(const Color& color) const {
@@ -59,8 +61,7 @@ public:
 	bool UpdateByImage(const Image& image, ShrinkMode shrinkMode);
 	bool UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode);
 	void Shrink(size_t nEntries, bool alignFlag);
-	size_t NextBlankIndex() const;
-	//size_t NextBlankIndex(ColorSet &colorSet) const;
+	size_t NextBlankIndex(ColorSet& colorSet) const;
 public:
 	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }
 	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color::PackRGBA(r, g, b, a); }

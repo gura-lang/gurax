@@ -16,6 +16,28 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Color");
 public:
+	// Algorithm operators
+	struct EqualTo {
+		bool operator()(const Color& color1, const Color& color2) const {
+			return color1.IsEqualTo(color2);
+		}
+	};
+	struct LessThan {
+		bool operator()(const Color& color1, const Color& color2) const {
+			return color1.IsLessThan(color2);
+		}
+	};
+	struct GreaterThan {
+		bool operator()(const Color& color1, const Color& color2) const {
+			return color2.IsLessThan(color1);
+		}
+	};
+	struct Hash {
+		size_t operator()(const Color& color) const {
+			return color.CalcHash();
+		}
+	};
+public:
 	struct Elem {
 		UInt8 b, g, r, a;
 		constexpr Elem() : b(0), g(0), r(0), a(0) {}
@@ -146,10 +168,10 @@ public:
 	String MakeHTML() const { return MakeHTML(GetR(), GetG(), GetB()); }
 	static String MakeHTML(UInt8 r, UInt8 g, UInt8 b) { return String().Format("#%02x%02x%02x", r, g, b); }
 public:
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Color& color) const { return this == &color; }
-	bool IsEqualTo(const Color& color) const { return IsIdentical(color); }
-	bool IsLessThan(const Color& color) const { return this < &color; }
+	size_t CalcHash() const { return _packed; }
+	bool IsIdentical(const Color& color) const { return _packed == color._packed; }
+	bool IsEqualTo(const Color& color) const { return _packed == color._packed; }
+	bool IsLessThan(const Color& color) const { return _packed < color._packed; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

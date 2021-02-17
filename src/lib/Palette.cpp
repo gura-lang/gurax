@@ -603,6 +603,24 @@ bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 
 bool Palette::UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode)
 {
+#if 0
+	ColorSet colorSet;
+	size_t idxBlank = NextBlankIndex(colorSet);
+	for (size_t idx = 0; idx < pPalette->CountEntries(); idx++) {
+		const UChar *pEntry = pPalette->GetEntry(idx);
+		Color color(pEntry[Image::OffsetR], pEntry[Image::OffsetG], pEntry[Image::OffsetB]);
+		std::pair<ColorSet::iterator, bool> rtn = colorSet.insert(color);
+		if (!rtn.second) {
+		} else if (idxBlank < _nEntries) {
+			SetEntry(idxBlank, color);
+			idxBlank++;
+		} else {
+			return false;
+		}
+	}
+	if (shrinkMode != ShrinkNone) Shrink(idxBlank, shrinkMode == ShrinkAlign);
+	return true;
+#endif
 	return false;
 }
 
@@ -610,9 +628,15 @@ void Palette::Shrink(size_t nEntries, bool alignFlag)
 {
 }
 
-size_t Palette::NextBlankIndex() const
+size_t Palette::NextBlankIndex(ColorSet& colorSet) const
 {
-	return 0;
+	size_t idxMax = 0;
+	for (size_t idx = 0; idx < _n; idx++) {
+		Color color = GetColor(idx);
+		auto pair = colorSet.insert(color);
+		if (pair.second) idxMax = idx;
+	}
+	return idxMax + 1;
 }
 
 String Palette::ToString(const StringStyle& ss) const
