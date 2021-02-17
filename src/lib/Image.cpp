@@ -38,7 +38,7 @@ bool Image::Metrics::CheckCoord(int x, int y) const
 	if (0 <= x && x < static_cast<int>(width) && 0 <= y && y < static_cast<int>(height)) return true;
 	Error::Issue(ErrorType::RangeError, "out of image size");
 	return false;
-}		
+}
 
 bool Image::Metrics::CheckArea(int x, int y, int width, int height) const
 {
@@ -46,7 +46,7 @@ bool Image::Metrics::CheckArea(int x, int y, int width, int height) const
 		0 <= y && 0 <= height && y + height <= static_cast<int>(this->height)) return true;
 	Error::Issue(ErrorType::RangeError, "out of image size");
 	return false;
-}		
+}
 
 //------------------------------------------------------------------------------
 // Image::Accumulator
@@ -283,7 +283,7 @@ void Image::Bootup()
 
 void Image::CopyRef(const Image& image)
 {
-	
+
 	_pMemory.reset(image._pMemory.Reference());
 	_pPalette.reset(image._pPalette.Reference());
 	_metrics = image._metrics;
@@ -574,7 +574,7 @@ void Image::GrayScaleT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc)
 		T_PixelDst::SetRGBA(pDst, gray, gray, gray, T_PixelSrc::GetA(pSrc, alphaDefault));
 		pDst += T_PixelDst::bytesPerPixel;
 		pSrc += T_PixelSrc::bytesPerPixel;
-	}		
+	}
 }
 
 Image* Image::GrayScale(const Format& format) const
@@ -618,7 +618,7 @@ void Image::MapColorLevelT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc,
 							mapB[Pixel::GetB(pSrc)], T_PixelSrc::GetA(pSrc, alphaDefault));
 		pDst += T_PixelDst::bytesPerPixel;
 		pSrc += T_PixelSrc::bytesPerPixel;
-	}		
+	}
 }
 
 Image* Image::MapColorLevel(const Format& format, const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const
@@ -662,7 +662,7 @@ Image* Image::MapAlphaLevel(const UInt8* mapA) const
 						   PixelRGBA::GetB(pSrc), mapA[PixelRGBA::GetA(pSrc)]);
 		pDst += PixelRGBA::bytesPerPixel;
 		pSrc += PixelRGBA::bytesPerPixel;
-	}		
+	}
 	return pImage.release();
 }
 
@@ -676,13 +676,13 @@ Image* Image::ReduceColor(const Palette& palette) const
 	if (GetFormat().IsIdentical(Format::RGB)) {
 		for (size_t iPixel = 0; iPixel < nPixels; iPixel++,
 				pSrc += Format::RGB.bytesPerPixel, pDst += Format::RGB.bytesPerPixel) {
-			size_t idx = palette.LookupNearest(PixelRGB::GetR(pSrc), PixelRGB::GetG(pSrc), PixelRGB::GetG(pSrc)); 
+			size_t idx = palette.LookupNearest(PixelRGB::GetR(pSrc), PixelRGB::GetG(pSrc), PixelRGB::GetG(pSrc));
 			PixelRGB::SetColor(pDst, palette.GetColor(idx));
 		}
 	} else {
 		for (size_t iPixel = 0; iPixel < nPixels; iPixel++,
 				pSrc += Format::RGBA.bytesPerPixel, pDst += Format::RGBA.bytesPerPixel) {
-			size_t idx = palette.LookupNearest(PixelRGBA::GetR(pSrc), PixelRGBA::GetG(pSrc), PixelRGBA::GetG(pSrc)); 
+			size_t idx = palette.LookupNearest(PixelRGBA::GetR(pSrc), PixelRGBA::GetG(pSrc), PixelRGBA::GetG(pSrc));
 			const Color& color = palette.GetColor(idx);
 			PixelRGBA::SetRGBA(pDst, color.GetR(), color.GetG(), color.GetB(), PixelRGBA::GetA(pSrc));
 		}
