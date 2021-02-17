@@ -85,7 +85,7 @@ TestCase('') {
 
 /*
 testcase {
-	tester(`(0..):*__ToString__():*match('3').skipnil().head(30):*source.join(','))
+	tester(`(0..):*__str__():*match('3').skipnil().head(30):*source.join(','))
 }
 
 testcase {

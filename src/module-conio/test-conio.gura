@@ -89,7 +89,7 @@ scope {
 	for (region in [`left, `right, `line]) {
 		conio.Clear()
 		Range(h) {|y| conio.MoveTo(0, y) { Printf('%s%4d', strFill, y) }}
-		str = ('Clear ' + region.__ToString__()).Center(20)
+		str = ('Clear ' + region.__str__()).Center(20)
 		[x, y] = [Int(w / 2), Int(h / 2)]
 		conio.MoveTo(x - str.width / 2, 0) {
 			conio.SetColor(`black, `white) { Print(str) }

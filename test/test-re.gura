@@ -58,7 +58,7 @@ TestCase('re.Match(), String#Match()') {
 	}
 	Tester(`cond(re.Match(r'hello', 'HELLO WORLD'), 'match', 'not match'))
 	Tester(`cond(re.Match(re.Pattern(r'hello'):icase, 'HELLO WORLD'), 'match', 'not match'))
-	//Tester(`(0..):*__ToString__():*Match('3').skipnil().head(30):*source.Join(','))
+	//Tester(`(0..):*__str__():*Match('3').skipnil().head(30):*source.Join(','))
 	Tester(`'abcdefg hijklmn opqrstu vwxyz'.Match(r'(\w+) (\w+) (\w+) (\w+)')[1, 2, 3, 4].Join())
 	Tester(`'3.14'.Match(r'(\d+)\.(\d*)')) {|m|
 		Tester(`m.source)

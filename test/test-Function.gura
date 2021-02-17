@@ -313,7 +313,7 @@ TestCase('Block delegation') {
 
 TestCase('Attribute :void') {
 	f():void = 'hello'
-	Println(f().__ToString__():nilVisible)
+	Println(f().__str__():nilVisible)
 }
 
 TestCase('Scope for block') {

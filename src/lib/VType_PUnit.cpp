@@ -27,14 +27,14 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// PUnit#__ToString__(seqIdOffset?:number)
-Gurax_DeclareMethod(PUnit, __ToString__)
+// PUnit#__str__(seqIdOffset?:number)
+Gurax_DeclareMethod(PUnit, __str__)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("seqIdOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 }
 
-Gurax_ImplementMethod(PUnit, __ToString__)
+Gurax_ImplementMethod(PUnit, __str__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -74,7 +74,7 @@ void VType_PUnit::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(PUnit, __ToString__));
+	Assign(Gurax_CreateMethod(PUnit, __str__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PUnit, seqId));
 }

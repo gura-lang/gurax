@@ -4,6 +4,7 @@ Image
   #bytes            Number       R
   #bytesPerLine     Number       R
   #bytesPerPixel    Number       R
+  #extra            Symbol       R
   #format           Symbol       R
   #height           Number       R
   #p                Pointer      R

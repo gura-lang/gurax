@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Any#__ToString__()
-Gurax_DeclareClassMethod(Any, __ToString__)
+// Any#__str__()
+Gurax_DeclareClassMethod(Any, __str__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
@@ -37,7 +37,7 @@ Gurax_DeclareClassMethod(Any, __ToString__)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementClassMethod(Any, __ToString__)
+Gurax_ImplementClassMethod(Any, __str__)
 {
 	// Function body
 	return new Value_String("<Any>");
@@ -70,7 +70,7 @@ void VType_Any::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Any, __ToString__));
+	Assign(Gurax_CreateMethod(Any, __str__));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Not, Any);
 	Gurax_AssignOpBinary(Pair, Any, Any);

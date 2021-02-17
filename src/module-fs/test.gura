@@ -5,9 +5,9 @@ ${st.pathName}
   dirName = ${st.dirName}
   fileName = ${st.fileName}
   size = ${st.size}
-  atime = ${st.atime.__ToString__()}
-  mtime = ${st.mtime.__ToString__()}
-  ctime = ${st.ctime.__ToString__()}
+  atime = ${st.atime.__str__()}
+  mtime = ${st.mtime.__str__()}
+  ctime = ${st.ctime.__str__()}
   ${Format('blk:%d chr:%d dir:%d fifo:%d lnk:%d reg:%d sock:%d',
            st.isblk, st.ischr, st.isdir, st.isfifo, st.islnk, st.isreg, st.issock)}
   gid = ${st.gid}, uid = ${st.uid}

@@ -9,30 +9,30 @@ p1=v1-mod p2=44 p3=v3
 [a=2,b=0,c=0,d=0],[a=2,b=1,c=0,d=0],[a=2,b=2,c=0,d=0],[a=2,b=3,c=0,d=0],[a=2,b=4,c=0,d=0],[a=2,b=5,c=0,d=0],[a=2,b=6,c=0,d=0],[a=2,b=7,c=0,d=0],[a=2,b=8,c=0,d=0],[a=2,b=9,c=0,d=0]
 [a=2,b=0,c=7,d=0],[a=2,b=1,c=8,d=0],[a=2,b=2,c=9,d=0],[a=2,b=3,c=0,d=0],[a=2,b=4,c=0,d=0],[a=2,b=5,c=0,d=0],[a=2,b=6,c=0,d=0],[a=2,b=7,c=0,d=0],[a=2,b=8,c=0,d=0],[a=2,b=9,c=0,d=0]
 [a=2,b=0,c=7,d=0],[a=2,b=1,c=8,d=0],[a=2,b=2,c=9,d=0],[a=2,b=3,c=0,d=0],[a=2,b=4,c=0,d=0],[a=2,b=5,c=0,d=0],[a=2,b=6,c=0,d=1],[a=2,b=7,c=0,d=2],[a=2,b=8,c=0,d=3],[a=2,b=9,c=0,d=4]
-======== Object#__ToString__() ========
-math.e.__ToString__() .. 2.71828
-true.__ToString__() .. true
-Printf.__ToString__() .. <Function:Printf(format:String,values*:Any):map>
-% {}.__ToString__() .. %{}
-[].__ToString__() .. []
-[1, 2, 3, 4, `foo, 'bar'].__ToString__() .. [1, 2, 3, 4, `foo, 'bar']
-"say 'hello'".__ToString__() .. say 'hello'
-"say 'hello'".__ToString__():quoteString .. "say 'hello'"
-'say "hello"'.__ToString__():quoteString .. 'say "hello"'
-`hello.__ToString__() .. hello
-`hello.__ToString__():quoteSymbol .. `hello
-nil.__ToString__() .. 
-nil.__ToString__():nilVisible .. <Nil>
-Color.black.__ToString__() .. <Color:#000000,ff>
-Color.black.__ToString__():unbracket .. Color:#000000,ff
-3.14.__ToString__():bracket .. <Number:3.14>
-'hello'.__ToString__():bracket .. <String:'hello'>
-[1, 2, 3, 4].__ToString__():bracket .. <List:4items>
-% {(`a) => 1, (`b) => 2, (`c) => 3}.__ToString__():bracket .. <Dict:3items>
-true.__ToString__():bracket .. <Bool:true>
-nil.__ToString__():bracket .. <Nil>
-2 / 3r.__ToString__():bracket .. <Rational:2/3r>
-2 + 3j.__ToString__():bracket .. <Complex:2+3j>
+======== Object#__str__() ========
+math.e.__str__() .. 2.71828
+true.__str__() .. true
+Printf.__str__() .. <Function:Printf(format:String,values*:Any):map>
+% {}.__str__() .. %{}
+[].__str__() .. []
+[1, 2, 3, 4, `foo, 'bar'].__str__() .. [1, 2, 3, 4, `foo, 'bar']
+"say 'hello'".__str__() .. say 'hello'
+"say 'hello'".__str__():quoteString .. "say 'hello'"
+'say "hello"'.__str__():quoteString .. 'say "hello"'
+`hello.__str__() .. hello
+`hello.__str__():quoteSymbol .. `hello
+nil.__str__() .. 
+nil.__str__():nilVisible .. <Nil>
+Color.black.__str__() .. <Color:#000000,ff>
+Color.black.__str__():unbracket .. #000000,ff
+3.14.__str__():bracket .. <Number:3.14>
+'hello'.__str__():bracket .. <String:'hello'>
+[1, 2, 3, 4].__str__():bracket .. <List:4items>
+% {(`a) => 1, (`b) => 2, (`c) => 3}.__str__():bracket .. <Dict:3items>
+true.__str__():bracket .. <Bool:true>
+nil.__str__():bracket .. <Nil>
+2 / 3r.__str__():bracket .. <Rational:2/3r>
+2 + 3j.__str__():bracket .. <Complex:2+3j>
 ======== Object#IsInstanceOf() ========
 math.e.IsInstanceOf(Number) .. true
 math.e.IsInstanceOf(Bool) .. false
