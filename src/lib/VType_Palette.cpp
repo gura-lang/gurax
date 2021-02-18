@@ -167,14 +167,13 @@ Gurax_ImplementMethod(Palette, Shrink)
 	return Value::nil();
 }
 
-#if 0
 // Palette#UpdateBy(image_or_palette):reduce:[shrink,align]
-Gurax_DeclareMethod(palette, updateby)
+Gurax_DeclareMethod(Palette, UpdateBy)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Reduce, FLAG_None);
-	DeclareArg(env, "image_or_palette", VTYPE_any);
-	DeclareAttr(Gurax_Symbol(shrink));
-	DeclareAttr(Gurax_Symbol(align));
+	Declare(VTYPE_Palette, Flag::Reduce);
+	DeclareArg("image_or_palette", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(shrink));
+	DeclareAttrOpt(Gurax_Symbol(align));
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Updates palette entries according to color data in an image or a palette.\n"
@@ -184,32 +183,34 @@ Gurax_DeclareMethod(palette, updateby)
 		"is enough to contain unique entries.");
 }
 
-Gurax_ImplementMethod(palette, updateby)
+Gurax_ImplementMethod(Palette, UpdateBy)
 {
-	Signal &sig = env.GetSignal();
-	Object_palette *pThis = Object_palette::GetObjectThis(arg);
-	Palette::ShrinkMode shrinkMode = Palette::ShrinkNone;
-	if (arg.IsSet(Gurax_Symbol(shrink))) {
-		shrinkMode = arg.IsSet(Gurax_Symbol(align))?
-					Palette::ShrinkAlign : Palette::ShrinkMinimum;
-	}
-	if (arg.Is_image(0)) {
-		if (!pThis->GetPalette()->UpdateByImage(sig,
-				Object_image::GetObject(arg, 0)->GetImage(), shrinkMode)) {
-			return Value::Nil;
-		}
-	} else if (arg.Is_palette(0)) {
-		if (!pThis->GetPalette()->UpdateByPalette(sig,
-				Object_palette::GetObject(arg, 0)->GetPalette(), shrinkMode)) {
-			return Value::Nil;
-		}
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Palette& palette = valueThis.GetPalette();
+	// Arguments
+	ArgPicker args(argument);
+	Value& value = args.PickValue();
+	Palette::ShrinkMode shrinkMode =
+		argument.IsSet(Gurax_Symbol(shrink))?
+			(argument.IsSet(Gurax_Symbol(align))?
+				Palette::ShrinkMode::Align : Palette::ShrinkMode::Minimum) :
+		Palette::ShrinkMode::None;
+	bool rtn = true;
+	if (value.IsType(VTYPE_Image)) {
+		rtn = palette.UpdateByImage(Value_Image::GetImage(value), shrinkMode);
+	} else if (value.IsType(VTYPE_Palette)) {
+		rtn = palette.UpdateByPalette(Value_Palette::GetPalette(value), shrinkMode);
 	} else {
-		sig.SetError(ERR_ValueError, "image or palette must be specified");
-		return Value::Nil;
+		Error::Issue(ErrorType::ValueError, "Image or Palette must be specified");
+		return Value::nil();
 	}
-	return arg.GetValueThis();
+	if (!rtn) {
+		Error::Issue(ErrorType::RangeError, "failed to update the palette");
+		return Value::nil();
+	}
+	return valueThis.Reference();
 }
-#endif
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -249,6 +250,7 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Palette, Each));
 	Assign(Gurax_CreateMethod(Palette, GetNearest));
 	Assign(Gurax_CreateMethod(Palette, Shrink));
+	Assign(Gurax_CreateMethod(Palette, UpdateBy));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Palette, len));
 }

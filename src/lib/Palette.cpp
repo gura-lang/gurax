@@ -598,43 +598,89 @@ size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 
 bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 {
-	return false;
+	ColorSet colorSet;
+	size_t idxBlank = NextBlankIndex(colorSet);
+	auto scanner(Image::Scanner::LeftTopHorz(image));
+	if (image.IsFormat(Image::Format::RGB)) {
+		do {
+			Color color(scanner.GetColorT<Image::PixelRGB>(0xff));
+			auto pair = colorSet.insert(color);
+			if (!pair.second) {
+				// nothing to do as the color already exists.
+			} else if (idxBlank < _n) {
+				SetColor(idxBlank, color);
+				idxBlank++;
+			} else {
+				return false;
+			}
+		} while (scanner.Next());
+	} else { // Image::Format::RGBA
+		do {
+			Color color(scanner.GetColorT<Image::PixelRGBA>().GetPacked(), 0xff);
+			auto pair = colorSet.insert(color);
+			if (!pair.second) {
+				// nothing to do as the color already exists.
+			} else if (idxBlank < _n) {
+				SetColor(idxBlank, color);
+				idxBlank++;
+			} else {
+				return false;
+			}
+		} while (scanner.Next());
+	}
+	if (shrinkMode != ShrinkMode::None) Shrink(idxBlank, shrinkMode == ShrinkMode::Align);
+	return true;
 }
 
 bool Palette::UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode)
 {
-#if 0
 	ColorSet colorSet;
 	size_t idxBlank = NextBlankIndex(colorSet);
-	for (size_t idx = 0; idx < pPalette->CountEntries(); idx++) {
-		const UChar *pEntry = pPalette->GetEntry(idx);
-		Color color(pEntry[Image::OffsetR], pEntry[Image::OffsetG], pEntry[Image::OffsetB]);
-		std::pair<ColorSet::iterator, bool> rtn = colorSet.insert(color);
-		if (!rtn.second) {
-		} else if (idxBlank < _nEntries) {
-			SetEntry(idxBlank, color);
+	for (size_t idx = 0; idx < palette.GetSize(); idx++) {
+		Color color(palette.GetPacked(idx));
+		auto pair = colorSet.insert(color);
+		if (!pair.second) {
+			// nothing to do as the color already exists.
+		} else if (idxBlank < _n) {
+			SetColor(idxBlank, color);
 			idxBlank++;
 		} else {
 			return false;
 		}
 	}
-	if (shrinkMode != ShrinkNone) Shrink(idxBlank, shrinkMode == ShrinkAlign);
+	if (shrinkMode != ShrinkMode::None) Shrink(idxBlank, shrinkMode == ShrinkMode::Align);
 	return true;
-#endif
-	return false;
+}
+
+void Palette::ResizeBuff(size_t nEntries, size_t nEntriesToCopy)
+{
+	_n = nEntries;
+	std::unique_ptr<UInt32[]> packedTbl(new UInt32[nEntries]);
+	::memcpy(packedTbl.get(), _packedTbl.get(), sizeof(UInt32) * nEntriesToCopy);
+	_packedTbl.reset(packedTbl.release());
+	for (size_t idx = nEntriesToCopy; idx < nEntries; idx++) {
+		_packedTbl[idx] = Color::black.GetPacked();
+	}
 }
 
 void Palette::Shrink(size_t nEntries, bool alignFlag)
 {
+	if (!alignFlag) {
+		ResizeBuff(nEntries, nEntries);
+		return;
+	}
+	size_t nEntriesAligned = 1;
+	for ( ; nEntries > nEntriesAligned; nEntriesAligned <<= 1) ;
+	if (nEntriesAligned < _n) ResizeBuff(nEntriesAligned, nEntries);
 }
 
 size_t Palette::NextBlankIndex(ColorSet& colorSet) const
 {
 	size_t idxMax = 0;
 	for (size_t idx = 0; idx < _n; idx++) {
-		Color color = GetColor(idx);
+		Color color(GetPacked(idx));
 		auto pair = colorSet.insert(color);
-		if (pair.second) idxMax = idx;
+		if (pair.second) idxMax = idx;	// determined as a unique color
 	}
 	return idxMax + 1;
 }

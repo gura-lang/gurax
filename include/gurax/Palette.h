@@ -61,6 +61,7 @@ public:
 	bool UpdateByImage(const Image& image, ShrinkMode shrinkMode);
 	bool UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode);
 	void Shrink(size_t nEntries, bool alignFlag);
+	void ResizeBuff(size_t nEntries, size_t nEntriesToCopy);
 	size_t NextBlankIndex(ColorSet& colorSet) const;
 public:
 	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }

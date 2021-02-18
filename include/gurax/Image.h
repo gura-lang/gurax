@@ -408,6 +408,9 @@ public:
 		template<typename T_Pixel> Color GetColorT() const {
 			return T_Pixel::GetColor(_p, _metrics.alphaDefault);
 		}
+		template<typename T_Pixel> Color GetColorT(UInt8 alphaDefault) const {
+			return T_Pixel::GetColor(_p, alphaDefault);
+		}
 		Color GetColor() const {
 			return IsFormat(Format::RGBA)? GetColorT<PixelRGBA>() : GetColorT<PixelRGB>();
 		}
