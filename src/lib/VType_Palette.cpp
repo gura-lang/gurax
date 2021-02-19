@@ -25,67 +25,44 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
-// Implementation of class method
+// Implementation of constructor
 //------------------------------------------------------------------------------
-// Palette.Basic()
-Gurax_DeclareClassMethod(Palette, Basic)
+// Palette(symbol:Symbol):map {block?}
+Gurax_DeclareConstructor(Palette)
 {
-	Declare(VTYPE_Palette, Flag::None);
+	Declare(VTYPE_Expr, Flag::Map);
+	DeclareArg("symbol", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates a `palette` instance that contains 16 basic colors.");
+		Gurax_Symbol(en),
+		"Creates an `Palette` instance with entries designated by the argument `symbol` that takes following value:\n"
+		"\n"
+		"- `` `basic`` .. 16 basic colors.\n"
+		"- `` `mono`` .. 2 colors that are Black and white.\n"
+		"- `` `websafe`` .. 215 colors that are safe to be used for Web contents.\n"
+		"- `` `win256``.. 256 colors defined by Windows.\n");
 }
 
-Gurax_ImplementClassMethod(Palette, Basic)
+Gurax_ImplementConstructor(Palette)
 {
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	return new Value_Palette(Palette::Basic());
-}
-
-// Palette.Mono()
-Gurax_DeclareClassMethod(Palette, Mono)
-{
-	Declare(VTYPE_Palette, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates a `palette` instance that contains two colors: black and white.\n");
-}
-
-Gurax_ImplementClassMethod(Palette, Mono)
-{
-	// Function body
-	return new Value_Palette(Palette::Mono());
-}
-
-// Palette.WebSafe()
-Gurax_DeclareClassMethod(Palette, WebSafe)
-{
-	Declare(VTYPE_Palette, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates a `palette` instance that contains 215 colors that are assured to be safe in Web content.\n"
-		"It actually has 256 entries including 41 dummys for padding.\n");
-}
-
-Gurax_ImplementClassMethod(Palette, WebSafe)
-{
-	// Function body
-	return new Value_Palette(Palette::WebSafe());
-}
-
-// Palette.Win256()
-Gurax_DeclareClassMethod(Palette, Win256)
-{
-	Declare(VTYPE_Palette, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates a `palette` instance that contains 256 colors defined in Windows.\n");
-}
-
-Gurax_ImplementClassMethod(Palette, Win256)
-{
-	// Function body
-	return new Value_Palette(Palette::Win256());
+	RefPtr<Palette> pPalette;
+	if (pSymbol->IsIdentical(Gurax_Symbol(basic))) {
+		pPalette.reset(Palette::Basic());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(mono))) {
+		pPalette.reset(Palette::Mono());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(websafe))) {
+		pPalette.reset(Palette::WebSafe());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(win256))) {
+		pPalette.reset(Palette::Win256());
+	} else {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for Palette");
+		return Value::nil();
+	}
+	return argument.ReturnValue(processor, new Value_Palette(pPalette.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -240,12 +217,7 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
-	// Assignment of class method
-	Assign(Gurax_CreateClassMethod(Palette, Basic));
-	Assign(Gurax_CreateClassMethod(Palette, Mono));
-	Assign(Gurax_CreateClassMethod(Palette, WebSafe));
-	Assign(Gurax_CreateClassMethod(Palette, Win256));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Palette));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Palette, Each));
 	Assign(Gurax_CreateMethod(Palette, GetNearest));
