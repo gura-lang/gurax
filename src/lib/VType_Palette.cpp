@@ -310,12 +310,46 @@ String Value_Palette::ToString(const StringStyle& ss) const
 
 Value* Value_Palette::DoIndexGet(const Index& index) const
 {
-	return Value::nil();
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		return Clone();
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		Value* pValue = nullptr;
+		if (!GetPalette().IndexGet(valueIndex, &pValue)) return Value::nil();
+		return pValue;
+	} else {
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			Value* pValue = nullptr;
+			if (!GetPalette().IndexGet(*pValueIndex, &pValue)) return Value::nil();
+			pValuesRtn->push_back(pValue);
+		}
+		return new Value_List(pValuesRtn.release());
+	}
 }
 
 void Value_Palette::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
-
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		GetPalette().IndexSet(valueIndex, pValue.release());
+	} else if (pValue->IsIterable()) {
+		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
+		for (const Value* pValueIndexEach : valuesIndex) {
+			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
+			if (!pValueIndexEach) break;
+			if (!GetPalette().IndexSet(*pValueIndexEach, pValueEach.release())) return;
+		}
+	} else {
+		for (const Value* pValueIndex : valuesIndex) {
+			if (!GetPalette().IndexSet(*pValueIndex, pValue->Reference())) return;
+		}
+	}
 }
 
 }

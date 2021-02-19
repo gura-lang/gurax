@@ -65,6 +65,9 @@ public:
 	void ResizeBuff(size_t nEntries, size_t nEntriesToCopy);
 	size_t NextBlankIndex(ColorSet& colorSet) const;
 public:
+	bool IndexSet(const Value& valueIndex, RefPtr<Value> pValue);
+	bool IndexGet(const Value& valueIndex, Value** ppValue) const;
+public:
 	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }
 	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color::PackRGBA(r, g, b, a); }
 public:

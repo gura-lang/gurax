@@ -696,6 +696,16 @@ size_t Palette::NextBlankIndex(ColorSet& colorSet) const
 	return idxMax + 1;
 }
 
+bool Palette::IndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	return false;
+}
+
+bool Palette::IndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	return false;
+}
+
 String Palette::ToString(const StringStyle& ss) const
 {
 	return String().Format("Palette:%dentries", _n);

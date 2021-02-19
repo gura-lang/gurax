@@ -29,7 +29,7 @@ bool ValueTypedOwner::Set(Int pos, Value* pValue)
 	return true;
 }
 
-bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
+bool ValueTypedOwner::IndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	UpdateVTypeOfElems(*pValue);
@@ -38,7 +38,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 		Int pos = valueIndexEx.GetNumber<Int>();
 		if (pos < 0) pos += valueOwner.size();
 		if (0 <= pos && static_cast<size_t>(pos) < valueOwner.size()) {
-			valueOwner.Set(pos, pValue);
+			valueOwner.Set(pos, pValue.release());
 			return true;
 		}
 		valueOwner.IssueError_IndexOutOfRange(pos);
@@ -46,7 +46,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
 		int pos = static_cast<int>(valueIndexEx.GetBool());
 		if (static_cast<size_t>(pos) < valueOwner.size()) {
-			valueOwner.Set(pos, pValue);
+			valueOwner.Set(pos, pValue.release());
 			return true;
 		}
 		valueOwner.IssueError_IndexOutOfRange(valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str());
@@ -95,7 +95,6 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 	} else {
 		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
 	}
-	Value::Delete(pValue);
 	return false;
 }
 
