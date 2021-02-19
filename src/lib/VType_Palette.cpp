@@ -308,4 +308,14 @@ String Value_Palette::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetPalette().ToString(ss));
 }
 
+Value* Value_Palette::DoIndexGet(const Index& index) const
+{
+	return Value::nil();
+}
+
+void Value_Palette::DoIndexSet(const Index& index, RefPtr<Value> pValue)
+{
+
+}
+
 }

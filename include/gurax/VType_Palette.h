@@ -87,6 +87,9 @@ public:
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 };
 
 }
