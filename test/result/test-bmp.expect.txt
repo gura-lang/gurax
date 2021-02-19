@@ -2,12 +2,12 @@
 w3c_home.bmp
 img.palette .. <Nil>
 w3c_home_2.bmp
-img.palette .. Palette:2entries
+img.palette .. <Palette:2entries>
 w3c_home_256.bmp
-img.palette .. Palette:256entries
+img.palette .. <Palette:256entries>
 w3c_home_gray.bmp
-img.palette .. Palette:256entries
-======== bmp#Info() ========
+img.palette .. <Palette:256entries>
+======== bmp.Content() ========
 w3c_home.bmp
 [BitmapFileHeader]
  bfType          0x4d42

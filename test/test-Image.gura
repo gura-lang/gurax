@@ -31,7 +31,7 @@ TestCase('Property') {
 }
 
 TestCase('Property Test') {
-	Tester(`Image.Blank(48, 32)) {|img|
+	Tester(`Image.Create(48, 32)) {|img|
 		Tester(`img.format)
 		Tester(`img.width)
 		Tester(`img.height)
@@ -41,7 +41,7 @@ TestCase('Property Test') {
 		Tester(`img.palette)
 		Tester(`img.p)
 	}
-	Tester(`Image.Blank(48, 32):rgb) {|img|
+	Tester(`Image.Create(48, 32):rgb) {|img|
 		Tester(`img.format)
 		Tester(`img.width)
 		Tester(`img.height)
@@ -69,7 +69,7 @@ TestCase('Image#GetPixel()') {
 }
 
 TestCase('Image#MapAlphaLevel()') {
-	img = Image.Blank(16, 16)
+	img = Image.Create(16, 16)
 	p = img.p
 	repeat (16 * 16) {|i| p.Put(`uint8, [i % 16, (i % 16) + 0x10, (i % 16) + 0x20, i])}
 	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
@@ -82,11 +82,11 @@ TestCase('Image#MapAlphaLevel()') {
 	Println('reverse')
 	img.MapAlphaLevel(mapReverse).p.Dump()
 	Tester(`img.MapAlphaLevel(mapShort))
-	Tester(`(Image.Blank(16, 16):rgb).MapAlphaLevel(mapLinear))
+	Tester(`(Image.Create(16, 16):rgb).MapAlphaLevel(mapLinear))
 }
 
 TestCase('Image#MapColorLevel()') {
-	img = Image.Blank(16, 16)
+	img = Image.Create(16, 16)
 	p = img.p
 	repeat (16 * 16) {|i| p.Put(`uint8, [i, i, i, 0xff])}
 	mapLinear = Binary(), mapLinear.p.Put(`uint8, 0..255)
@@ -131,7 +131,7 @@ TestCase('Image#Rotate()') {
 }
 
 TestCase('Image#Scan()') {
-	img = Image.Blank(5, 3)
+	img = Image.Create(5, 3)
 	f(pixel:Pixel):map = Format('%d-%d', pixel.x, pixel.y)
 	Tester(`f(img.Scan():pixel).Join(' '))
 	Tester(`f(img.Scan(scanDir = `LeftTopHorz):pixel).Join(' '))
@@ -153,46 +153,46 @@ TestCase('Image#Write()') {
 }
 
 TestCase('Image#alphaDefault') {
-	Tester(`Image.Blank(32, 24).alphaDefault)
+	Tester(`Image.Create(32, 24).alphaDefault)
 }
 
 TestCase('Image#bytes') {
-	Tester(`Image.Blank(32, 24).bytes)
-	Tester(`(Image.Blank(32, 24):rgb).bytes)
+	Tester(`Image.Create(32, 24).bytes)
+	Tester(`(Image.Create(32, 24):rgb).bytes)
 }
 
 TestCase('Image#bytesPerLine') {
-	Tester(`Image.Blank(32, 24).bytesPerLine)
-	Tester(`(Image.Blank(32, 24):rgb).bytesPerLine)
+	Tester(`Image.Create(32, 24).bytesPerLine)
+	Tester(`(Image.Create(32, 24):rgb).bytesPerLine)
 }
 
 TestCase('Image#bytesPerPixel') {
-	Tester(`Image.Blank(32, 24).bytesPerPixel)
-	Tester(`(Image.Blank(32, 24):rgb).bytesPerPixel)
+	Tester(`Image.Create(32, 24).bytesPerPixel)
+	Tester(`(Image.Create(32, 24):rgb).bytesPerPixel)
 }
 
 TestCase('Image#format') {
-	Tester(`Image.Blank(32, 24).format)
-	Tester(`(Image.Blank(32, 24):rgb).format)
+	Tester(`Image.Create(32, 24).format)
+	Tester(`(Image.Create(32, 24):rgb).format)
 }
 
 TestCase('Image#height') {
-	Tester(`Image.Blank(32, 24).height)
-	Tester(`(Image.Blank(32, 24):rgb).height)
+	Tester(`Image.Create(32, 24).height)
+	Tester(`(Image.Create(32, 24):rgb).height)
 }
 
 TestCase('Image#p') {
-	Tester(`Image.Blank(32, 24).p)
-	Tester(`(Image.Blank(32, 24):rgb).p)
+	Tester(`Image.Create(32, 24).p)
+	Tester(`(Image.Create(32, 24):rgb).p)
 	Tester(`Image().p)
 }
 
 TestCase('Image#palette') {
-	Tester(`Image.Blank(32, 24).palette)
-	Tester(`(Image.Blank(32, 24):rgb).palette)
+	Tester(`Image.Create(32, 24).palette)
+	Tester(`(Image.Create(32, 24):rgb).palette)
 }
 
 TestCase('Image#width') {
-	Tester(`Image.Blank(32, 24).width)
-	Tester(`(Image.Blank(32, 24):rgb).width)
+	Tester(`Image.Create(32, 24).width)
+	Tester(`(Image.Create(32, 24):rgb).width)
 }

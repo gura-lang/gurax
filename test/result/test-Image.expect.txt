@@ -11,7 +11,7 @@ Image
   #palette          Palette      R/W,nil
   #width            Number       R
 ======== Property Test ========
-Image.Blank(48, 32) .. <Image:rgba:48x32>
+Image.Create(48, 32) .. <Image:rgba:48x32>
 img.format .. `rgba
 img.width .. 48
 img.height .. 32
@@ -20,7 +20,7 @@ img.bytesPerLine .. 192
 img.bytesPerPixel .. 4
 img.palette .. <Nil>
 img.p .. <Pointer:0/6144>
-Image.Blank(48, 32):rgb .. <Image:rgb:48x32>
+Image.Create(48, 32):rgb .. <Image:rgb:48x32>
 img.format .. `rgb
 img.width .. 48
 img.height .. 32
@@ -290,7 +290,7 @@ reverse
 08 18 28 07 09 19 29 06 0a 1a 2a 05 0b 1b 2b 04  ..(...)...*...+.
 0c 1c 2c 03 0d 1d 2d 02 0e 1e 2e 01 0f 1f 2f 00  ..,...-......./.
 img.MapAlphaLevel(mapShort) .. mapA must contain data of at least 256 bytes
-Image.Blank(16, 16):rgb.MapAlphaLevel(mapLinear) .. the image data must be of RGBA format.
+Image.Create(16, 16):rgb.MapAlphaLevel(mapLinear) .. the image data must be of RGBA format.
 ======== Image#MapColorLevel() ========
 original
 00 00 00 ff 01 01 01 ff 02 02 02 ff 03 03 03 ff  ................
@@ -934,29 +934,29 @@ RightBottomVert
    .     *          
 ======== Image#Write() ========
 ======== Image#alphaDefault ========
-Image.Blank(32, 24).alphaDefault .. 255
+Image.Create(32, 24).alphaDefault .. 255
 ======== Image#bytes ========
-Image.Blank(32, 24).bytes .. 3072
-Image.Blank(32, 24):rgb.bytes .. 2304
+Image.Create(32, 24).bytes .. 3072
+Image.Create(32, 24):rgb.bytes .. 2304
 ======== Image#bytesPerLine ========
-Image.Blank(32, 24).bytesPerLine .. 128
-Image.Blank(32, 24):rgb.bytesPerLine .. 96
+Image.Create(32, 24).bytesPerLine .. 128
+Image.Create(32, 24):rgb.bytesPerLine .. 96
 ======== Image#bytesPerPixel ========
-Image.Blank(32, 24).bytesPerPixel .. 4
-Image.Blank(32, 24):rgb.bytesPerPixel .. 3
+Image.Create(32, 24).bytesPerPixel .. 4
+Image.Create(32, 24):rgb.bytesPerPixel .. 3
 ======== Image#format ========
-Image.Blank(32, 24).format .. `rgba
-Image.Blank(32, 24):rgb.format .. `rgb
+Image.Create(32, 24).format .. `rgba
+Image.Create(32, 24):rgb.format .. `rgb
 ======== Image#height ========
-Image.Blank(32, 24).height .. 24
-Image.Blank(32, 24):rgb.height .. 24
+Image.Create(32, 24).height .. 24
+Image.Create(32, 24):rgb.height .. 24
 ======== Image#p ========
-Image.Blank(32, 24).p .. <Pointer:0/3072>
-Image.Blank(32, 24):rgb.p .. <Pointer:0/2304>
+Image.Create(32, 24).p .. <Pointer:0/3072>
+Image.Create(32, 24):rgb.p .. <Pointer:0/2304>
 Image().p .. the image buffer is not allocated
 ======== Image#palette ========
-Image.Blank(32, 24).palette .. <Nil>
-Image.Blank(32, 24):rgb.palette .. <Nil>
+Image.Create(32, 24).palette .. <Nil>
+Image.Create(32, 24):rgb.palette .. <Nil>
 ======== Image#width ========
-Image.Blank(32, 24).width .. 32
-Image.Blank(32, 24):rgb.width .. 32
+Image.Create(32, 24).width .. 32
+Image.Create(32, 24):rgb.width .. 32

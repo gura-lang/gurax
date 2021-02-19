@@ -64,8 +64,8 @@ Gurax_ImplementConstructor(Image)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Image.Blank(width:Number, height:Number, color?:Color):[rgb,rgba] {block?}
-Gurax_DeclareClassMethod(Image, Blank)
+// Image.Create(width:Number, height:Number, color?:Color):[rgb,rgba] {block?}
+Gurax_DeclareClassMethod(Image, Create)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -85,7 +85,7 @@ Gurax_DeclareClassMethod(Image, Blank)
 		"If omitted, the 32-bit format is specified.\n");
 }
 
-Gurax_ImplementClassMethod(Image, Blank)
+Gurax_ImplementClassMethod(Image, Create)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -901,7 +901,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Image));
 	// Assignment of class method
-	Assign(Gurax_CreateClassMethod(Image, Blank));
+	Assign(Gurax_CreateClassMethod(Image, Create));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));

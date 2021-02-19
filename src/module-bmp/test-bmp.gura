@@ -6,7 +6,7 @@ import(util.tester) {*}
 //import(bmp)
 
 TestCase('Basic test') {
-	//img = Image.Blank(300, 300, `white)
+	//img = Image.Create(300, 300, `white)
 	//img.Paste(-20, -10, Image('cat.bmp'))
 	//img.Paste(270, -10, Image('cat.bmp'))
 	//img.Paste(-20, 240, Image('cat.bmp'))
@@ -18,7 +18,7 @@ TestCase('Basic test') {
 	//img.Rotate(-60, `red).Write('t.bmp')
 	//img.FillRect(20, 20, 30, 30, `red)
 	//img.Flip(`both).Write('t.bmp')
-	//img = Image.Blank(8, 8, `white)
+	//img = Image.Create(8, 8, `white)
 	img.palette = Palette.Mono()
 	img.Write('t.bmp')
 }
