@@ -223,11 +223,11 @@ public:
 		static void SetColor(UInt8* p, const Color &color) {
 			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB());
 		}
-		static UInt32 GetPacked(UInt8* p, UInt8 alphaDefault) {
+		static UInt32 GetPacked(const UInt8* p, UInt8 alphaDefault) {
 			return (static_cast<UInt32>(GetR(p)) << 16) + (static_cast<UInt32>(GetG(p)) << 8) +
 				static_cast<UInt32>(GetB(p)) + (static_cast<UInt32>(alphaDefault) << 24);
 		}
-		static Color GetColor(UInt8* p, UInt8 alphaDefault) {
+		static Color GetColor(const UInt8* p, UInt8 alphaDefault) {
 			return Color(GetR(p), GetG(p), GetB(p), alphaDefault);
 		}
 	public:

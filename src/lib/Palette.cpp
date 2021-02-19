@@ -600,10 +600,13 @@ bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 {
 	ColorSet colorSet;
 	size_t idxBlank = NextBlankIndex(colorSet);
-	auto scanner(Image::Scanner::LeftTopHorz(image));
+	const UInt8* pSrc = image.GetPointerC();
+	size_t nPixels = image.GetMetrics().CountPixels();
+	//auto scanner(Image::Scanner::LeftTopHorz(image));
 	if (image.IsFormat(Image::Format::RGB)) {
-		do {
-			Color color(scanner.GetColorT<Image::PixelRGB>(0xff));
+		for (size_t iPixel = 0; iPixel < nPixels; iPixel++, pSrc += Image::Format::RGB.bytesPerPixel) {
+			Color color(Image::PixelRGB::GetR(pSrc),
+					Image::PixelRGB::GetG(pSrc), Image::PixelRGB::GetB(pSrc), 0xff);
 			auto pair = colorSet.insert(color);
 			if (!pair.second) {
 				// nothing to do as the color already exists.
@@ -613,10 +616,11 @@ bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 			} else {
 				return false;
 			}
-		} while (scanner.Next());
+		}
 	} else { // Image::Format::RGBA
-		do {
-			Color color(scanner.GetColorT<Image::PixelRGBA>().GetPacked(), 0xff);
+		for (size_t iPixel = 0; iPixel < nPixels; iPixel++, pSrc += Image::Format::RGBA.bytesPerPixel) {
+			Color color(Image::PixelRGBA::GetR(pSrc),
+					Image::PixelRGBA::GetG(pSrc), Image::PixelRGBA::GetB(pSrc), 0xff);
 			auto pair = colorSet.insert(color);
 			if (!pair.second) {
 				// nothing to do as the color already exists.
@@ -626,7 +630,7 @@ bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 			} else {
 				return false;
 			}
-		} while (scanner.Next());
+		}
 	}
 	if (shrinkMode != ShrinkMode::None) Shrink(idxBlank, shrinkMode == ShrinkMode::Align);
 	return true;
