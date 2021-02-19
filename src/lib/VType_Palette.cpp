@@ -31,11 +31,11 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareConstructor(Palette)
 {
 	Declare(VTYPE_Expr, Flag::Map);
-	DeclareArg("symbol", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an `Palette` instance with entries designated by the argument `symbol` that takes following value:\n"
+		"Creates an `Palette` instance with entries designated by the argument `symbol` that takes following values:\n"
 		"\n"
 		"- `` `basic`` .. 16 basic colors.\n"
 		"- `` `mono`` .. 2 colors that are Black and white.\n"
@@ -65,6 +65,35 @@ Gurax_ImplementConstructor(Palette)
 	return argument.ReturnValue(processor, new Value_Palette(pPalette.release()));
 }
 
+//------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// Palette.Create(n:Number, color?:Color) {block?}
+Gurax_DeclareClassMethod(Palette, Create)
+{
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Palette` instance filled with the specified color.\n"
+		"If the argument `color` is omitted, it will be filled with black.\n");
+}
+
+Gurax_ImplementClassMethod(Palette, Create)
+{
+	// Arguments
+	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	const Color& color = args.IsValid()? args.PickColor() : Color::black;
+	// Function body
+	RefPtr<Palette> pPalette(new Palette(n));
+	pPalette->Fill(color);
+	return argument.ReturnValue(processor, new Value_Palette(pPalette.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -88,6 +117,29 @@ Gurax_ImplementMethod(Palette, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// Palette#Fill(color:Color):reduce
+Gurax_DeclareMethod(Palette, Fill)
+{
+	Declare(VTYPE_Palette, Flag::Reduce);
+	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Fills the palette with the specified color.\n");
+}
+
+Gurax_ImplementMethod(Palette, Fill)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Palette& palette = valueThis.GetPalette();
+	// Arguments
+	ArgPicker args(argument);
+	const Color& color = args.PickColor();
+	// Function body
+	palette.Fill(color);
+	return valueThis.Reference();
+}
+
 // Palette#GetNearest(Color:color):map:[index]
 Gurax_DeclareMethod(Palette, GetNearest)
 {
@@ -109,7 +161,7 @@ Gurax_ImplementMethod(Palette, GetNearest)
 	Palette& palette = valueThis.GetPalette();
 	// Arguments
 	ArgPicker args(argument);
-	const Color& color = Value_Color::GetColor(args.PickValue());
+	const Color& color = args.PickColor();
 	bool indexFlag = argument.IsSet(Gurax_Symbol(index));
 	// Function body
 	size_t idx = palette.LookupNearest(color);
@@ -218,8 +270,11 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Palette));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Palette, Create));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Palette, Each));
+	Assign(Gurax_CreateMethod(Palette, Fill));
 	Assign(Gurax_CreateMethod(Palette, GetNearest));
 	Assign(Gurax_CreateMethod(Palette, Shrink));
 	Assign(Gurax_CreateMethod(Palette, UpdateBy));

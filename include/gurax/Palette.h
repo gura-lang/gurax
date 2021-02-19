@@ -46,6 +46,7 @@ public:
 public:
 	Palette* Clone() const { return new Palette(_packedTbl.get(), _n); }
 	size_t GetSize() const { return _n; }
+	void Fill(const Color& color);
 	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
 	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }
 	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { _packedTbl[idx] = PackRGB(r, g, b); }

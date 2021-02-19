@@ -579,6 +579,13 @@ Palette* Palette::Win256()
 	return new Palette(packedTbl, 256);
 }
 
+void Palette::Fill(const Color& color)
+{
+	UInt32 packed = color.GetPacked();
+	UInt32* p = _packedTbl.get();
+	for (size_t i = 0; i < _n; i++, p++) *p = packed;
+}
+
 size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 {
 	size_t idxMin = 0;

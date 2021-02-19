@@ -1,0 +1,3 @@
+======== Property ========
+Palette
+  #len              Number       R
