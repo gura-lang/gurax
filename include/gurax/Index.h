@@ -37,11 +37,9 @@ public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
-	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
-	void IndexSet(Value* pValue) { GetValueCar().DoIndexSet(*this, pValue); }
-	Value* IndexOpApply(Value& value, Processor& processor, Operator& op) {
-		return GetValueCar().DoIndexOpApply(*this, value, processor, op);
-	}
+	Value* IndexGet() const;
+	void IndexSet(Value* pValue);
+	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }
