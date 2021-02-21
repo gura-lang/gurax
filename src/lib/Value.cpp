@@ -89,6 +89,8 @@ const DeclCallable* Value::GetDeclCallable()
 	return nullptr;
 }
 
+
+
 Value* Value::DoIndexGet(const Index& index) const
 {
 	Error::Issue(ErrorType::ValueError,
@@ -107,6 +109,34 @@ Value* Value::DoIndexOpApply(const Index& index, Value& value, Processor& proces
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 	return Value::undefined();
+}
+
+bool Value::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	return Value::undefined();
+}
+
+bool Value::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	return false;
+}
+
+bool Value::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	return Value::undefined();
+}
+
+bool Value::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	return false;
 }
 
 Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)

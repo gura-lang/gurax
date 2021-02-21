@@ -1707,6 +1707,78 @@ Value* Value_List::DoIndexOpApply(const Index& index, Value& value, Processor& p
 	}
 }
 
+bool Value_List::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_List::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_List::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	const ValueTypedOwner& valueTypedOwner = GetValueTypedOwner();
+	size_t posMax = valueTypedOwner.GetSize();
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int pos = valueIndexEx.GetNumber<Int>();
+		if (pos < 0) pos += posMax;
+		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+			*ppValue = valueTypedOwner.Get(pos).Reference();
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %d exceeds the list's size of %zu", pos, posMax);
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		Int pos = static_cast<Int>(valueIndexEx.GetBool());
+		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+			*ppValue = valueTypedOwner.Get(pos).Reference();
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %s exceeds the list's size of %zu",
+			valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	return false;
+}
+
+bool Value_List::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	ValueTypedOwner& valueTypedOwner = GetValueTypedOwner();
+	size_t posMax = valueTypedOwner.GetSize();
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int pos = valueIndexEx.GetNumber<Int>();
+		if (pos < 0) pos += posMax;
+		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+			valueTypedOwner.Set(pos, pValue.release());
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %d exceeds the list's size of %zu", pos, posMax);
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		Int pos = static_cast<Int>(valueIndexEx.GetBool());
+		if (static_cast<size_t>(pos) < posMax) {
+			valueTypedOwner.Set(pos, pValue.release());
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %s exceeds the list's size of %zu",
+			valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	return false;
+}
+
 Iterator* Value_List::DoGenIterator() const
 {
 	return GetValueTypedOwner().GenerateIterator();

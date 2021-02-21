@@ -71,6 +71,7 @@ public:
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
+	Value& Get(Int pos) const { return *_pValueOwner->at(pos); }
 	bool Set(Int pos, Value* pValue);
 	bool IndexSet(const Value& valueIndex, RefPtr<Value> pValue);
 	bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const {
