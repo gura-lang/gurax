@@ -1622,19 +1622,19 @@ Value* Value_String::DoIndexGet(const Index& index) const
 	}
 }
 
-bool Value_String::DoEmptyIndexGet2(Value** ppValue) const
+bool Value_String::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return Value::undefined();
 }
 
-bool Value_String::DoEmptyIndexSet2(RefPtr<Value> pValue)
+bool Value_String::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return false;
 }
 
-bool Value_String::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+bool Value_String::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const String& str = GetString();
 	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
@@ -1647,7 +1647,7 @@ bool Value_String::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
 	return true;
 }
 
-bool Value_String::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_String::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
 	return false;

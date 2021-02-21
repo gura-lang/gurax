@@ -77,10 +77,10 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
-	virtual bool DoEmptyIndexGet2(Value** ppValue) const override;
-	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue) override;
-	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const override;
-	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
+	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
+	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
+	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
 };
 
 Gurax_EndModuleScope(re)

@@ -3,8 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define NEWFEATURE
-
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -12,34 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Value* Index::IndexGet() const
 {
-#if defined(NEWFEATURE)
-	const ValueList& valuesIndex = GetValueOwner();
-	if (valuesIndex.empty()) {
-		Value* pValue = nullptr;
-		if (!GetValueCar().DoEmptyIndexGet2(&pValue)) return Value::nil();
-		return pValue;
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		Value* pValue = nullptr;
-		if (!EachIndexGet(valueIndex, &pValue)) return Value::nil();
-		return pValue;
-	} else {
-		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
-		pValuesRtn->reserve(valuesIndex.size());
-		for (const Value* pValueIndex : valuesIndex) {
-			Value* pValue = nullptr;
-			if (!EachIndexGet(*pValueIndex, &pValue)) return Value::nil();
-			pValuesRtn->push_back(pValue);
-		}
-		if (GetValueCar().IsTuple()) {
-			return new Value_Tuple(pValuesRtn.release());
-		} else {
-			return new Value_List(pValuesRtn.release());
-		}
-	}
-#else
 	return GetValueCar().DoIndexGet(*this);
-#endif
 }
 
 bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
@@ -76,37 +47,15 @@ bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
 		}
 		return true;
 	}
-	return GetValueCar().DoIndexGet2(valueIndex, ppValue);
+	return GetValueCar().DoSingleIndexGet(valueIndex, ppValue);
 }
 
 void Index::IndexSet(RefPtr<Value> pValue)
 {
-#if defined(NEWFEATURE)
-	const ValueList& valuesIndex = GetValueOwner();
-	if (valuesIndex.empty()) {
-		GetValueCar().DoEmptyIndexSet2(pValue.release());
-		//Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		EachIndexSet(valueIndex, pValue.release());
-	} else if (pValue->IsIterable()) {
-		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
-		for (const Value* pValueIndexEach : valuesIndex) {
-			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
-			if (!pValueIndexEach) break;
-			if (!EachIndexSet(*pValueIndexEach, pValueEach.release())) return;
-		}
-	} else {
-		for (const Value* pValueIndex : valuesIndex) {
-			if (!EachIndexSet(*pValueIndex, pValue->Reference())) return;
-		}
-	}
-#else
 	GetValueCar().DoIndexSet(*this, pValue.release());
-#endif
 }
 
-bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const
 {
 	if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
@@ -152,12 +101,11 @@ bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 		}
 		return true;
 	}
-	return GetValueCar().DoIndexSet2(valueIndex, pValue.release());
+	return GetValueCar().DoSingleIndexSet(valueIndex, pValue.release());
 }
 
 Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 {
-#if defined(NEWFEATURE)
 	const ValueList& valuesIndex = GetValueOwner();
 	if (valuesIndex.empty()) {
 		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
@@ -177,9 +125,6 @@ Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 		Error::Issue_UnimplementedOperation();
 		return Value::nil();
 	}
-#else
-	return GetValueCar().DoIndexOpApply(*this, value, processor, op);
-#endif
 }
 
 String Index::ToString(const StringStyle& ss) const

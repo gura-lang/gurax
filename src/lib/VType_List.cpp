@@ -1684,42 +1684,19 @@ void Value_List::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	}
 }
 
-Value* Value_List::DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op)
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.empty()) {
-		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
-		return nullptr;
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		Value* pValueL = nullptr;
-		if (!GetValueTypedOwner().IndexGet(valueIndex, &pValueL, false)) return Value::nil();
-		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
-		if (pValueRtn->IsUndefined()) return Value::nil();
-		GetValueTypedOwner().IndexSet(valueIndex, pValueRtn.Reference());
-		return pValueRtn.release();
-	} else if (value.IsIterable()) {
-		Error::Issue_UnimplementedOperation();
-		return Value::nil();
-	} else {
-		Error::Issue_UnimplementedOperation();
-		return Value::nil();
-	}
-}
-
-bool Value_List::DoEmptyIndexGet2(Value** ppValue) const
+bool Value_List::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return Value::undefined();
 }
 
-bool Value_List::DoEmptyIndexSet2(RefPtr<Value> pValue)
+bool Value_List::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return false;
 }
 
-bool Value_List::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+bool Value_List::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const ValueTypedOwner& valueTypedOwner = GetValueTypedOwner();
 	size_t posMax = valueTypedOwner.GetSize();
@@ -1749,7 +1726,7 @@ bool Value_List::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
 	return false;
 }
 
-bool Value_List::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_List::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueTypedOwner& valueTypedOwner = GetValueTypedOwner();
 	size_t posMax = valueTypedOwner.GetSize();

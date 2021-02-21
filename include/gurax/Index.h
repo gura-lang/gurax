@@ -31,8 +31,7 @@ protected:
 	~Index() = default;
 public:
 	void Reserve(size_t size) { GetValueOwner().reserve(size); }
-	Value& GetValueCar() { return *_pValueCar; }
-	const Value& GetValueCar() const { return *_pValueCar; }
+	Value& GetValueCar() const { return *_pValueCar; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
@@ -40,9 +39,8 @@ public:
 	Value* IndexGet() const;
 	void IndexSet(RefPtr<Value> pValue);
 	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
-private:
 	bool EachIndexGet(const Value& valueIndex, Value** ppValue) const;
-	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue);
+	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }

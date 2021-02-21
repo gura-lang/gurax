@@ -225,19 +225,19 @@ Value* Value_Tuple::DoIndexGet(const Index& index) const
 	}
 }
 
-bool Value_Tuple::DoEmptyIndexGet2(Value** ppValue) const
+bool Value_Tuple::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return Value::undefined();
 }
 
-bool Value_Tuple::DoEmptyIndexSet2(RefPtr<Value> pValue)
+bool Value_Tuple::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return false;
 }
 
-bool Value_Tuple::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+bool Value_Tuple::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	size_t posMax = valueOwner.size();
@@ -267,7 +267,7 @@ bool Value_Tuple::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
 	return false;
 }
 
-bool Value_Tuple::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Tuple::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueOwner& valueOwner = GetValueOwner();
 	size_t posMax = valueOwner.size();

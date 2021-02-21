@@ -179,9 +179,6 @@ public:
 	Value* Eval(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
 	Value* IndexGet(const Index& index) const { return DoIndexGet(index); }
 	void IndexSet(const Index& index, Value* pValue) { return DoIndexSet(index, pValue); }
-	Value* IndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op) {
-		return DoIndexOpApply(index, value, processor, op);
-	}
 	Value* GetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
 		return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 	}
@@ -231,16 +228,12 @@ public:
 	virtual const DeclCallable* GetDeclCallable();
 	virtual void DoCall(Processor& processor, Argument& argument) {}
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
-	
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue);
-	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op);
-	
-	virtual bool DoEmptyIndexGet2(Value** ppValue) const;
-	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue);
-	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const;
-	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue);
-	
+	virtual bool DoEmptyIndexGet(Value** ppValue) const;
+	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue);
+	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const;
+	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);

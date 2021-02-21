@@ -446,39 +446,19 @@ void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	}
 }
 
-Value* Value_Dict::DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op)
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
-		Value* pValueL = GetValueDict().Lookup(*pValueIndex);
-		if (!pValueL) {
-			ValueDict::IssueError_KeyNotFound(*pValueIndex);
-			return Value::nil();
-		}
-		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
-		if (pValueRtn->IsUndefined()) return Value::nil();
-		GetValueDict().Assign(pValueIndex->Reference(), pValueRtn.Reference());
-		return pValueRtn.release();
-	} else {
-		Error::Issue_UnimplementedOperation();
-		return Value::nil();
-	}
-}
-
-bool Value_Dict::DoEmptyIndexGet2(Value** ppValue) const
+bool Value_Dict::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return Value::undefined();
 }
 
-bool Value_Dict::DoEmptyIndexSet2(RefPtr<Value> pValue)
+bool Value_Dict::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	return false;
 }
 
-bool Value_Dict::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+bool Value_Dict::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	*ppValue = GetValueDict().Lookup(valueIndex);
 	if (*ppValue) return true;
@@ -486,7 +466,7 @@ bool Value_Dict::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
 	return false;
 }
 
-bool Value_Dict::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Dict::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	GetValueDict().Assign(valueIndex.Reference(), pValue.release());
 	return true;

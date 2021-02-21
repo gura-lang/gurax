@@ -89,50 +89,78 @@ const DeclCallable* Value::GetDeclCallable()
 	return nullptr;
 }
 
-
-
 Value* Value::DoIndexGet(const Index& index) const
 {
-	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
-	return Value::undefined();
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		Value* pValue = nullptr;
+		if (!DoEmptyIndexGet(&pValue)) return Value::nil();
+		return pValue;
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		Value* pValue = nullptr;
+		if (!index.EachIndexGet(valueIndex, &pValue)) return Value::nil();
+		return pValue;
+	} else {
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			Value* pValue = nullptr;
+			if (!index.EachIndexGet(*pValueIndex, &pValue)) return Value::nil();
+			pValuesRtn->push_back(pValue);
+		}
+		if (IsTuple()) {
+			return new Value_Tuple(pValuesRtn.release());
+		} else {
+			return new Value_List(pValuesRtn.release());
+		}
+	}
 }
 
 void Value::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
-	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.empty()) {
+		DoEmptyIndexSet(pValue.release());
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		index.EachIndexSet(valueIndex, pValue.release());
+	} else if (pValue->IsIterable()) {
+		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
+		for (const Value* pValueIndexEach : valuesIndex) {
+			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
+			if (!pValueIndexEach) break;
+			if (!index.EachIndexSet(*pValueIndexEach, pValueEach.release())) return;
+		}
+	} else {
+		for (const Value* pValueIndex : valuesIndex) {
+			if (!index.EachIndexSet(*pValueIndex, pValue->Reference())) return;
+		}
+	}
 }
 
-Value* Value::DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op)
-{
-	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
-	return Value::undefined();
-}
-
-bool Value::DoEmptyIndexGet2(Value** ppValue) const
+bool Value::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 	return Value::undefined();
 }
 
-bool Value::DoEmptyIndexSet2(RefPtr<Value> pValue)
+bool Value::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 	return false;
 }
 
-bool Value::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+bool Value::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 	return Value::undefined();
 }
 
-bool Value::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
