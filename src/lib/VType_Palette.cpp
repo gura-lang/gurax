@@ -322,6 +322,7 @@ bool Value_Palette::DoEmptyIndexSet(RefPtr<Value> pValue)
 
 bool Value_Palette::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
+	
 	return false;
 }
 
