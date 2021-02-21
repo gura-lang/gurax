@@ -18,14 +18,14 @@ Value* Index::IndexGet() const
 	} else if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
 		Value* pValue = nullptr;
-		//if (!GetValueTypedOwner().IndexGet(valueIndex, &pValue, false)) return Value::nil();
+		if (!EachIndexGet(valueIndex, &pValue, false)) return Value::nil();
 		return pValue;
 	} else {
 		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
 		pValuesRtn->reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
 			Value* pValue = nullptr;
-			//if (!GetValueTypedOwner().IndexGet(*pValueIndex, &pValue, false)) return Value::nil();
+			if (!EachIndexGet(*pValueIndex, &pValue, false)) return Value::nil();
 			pValuesRtn->push_back(pValue);
 		}
 		return new Value_List(pValuesRtn.release());
@@ -35,31 +35,9 @@ Value* Index::IndexGet() const
 #endif
 }
 
-bool EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag)
+bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const
 {
-	size_t posMax = 0;
-	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
-		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
-		Int pos = valueIndexEx.GetNumber<Int>();
-		if (pos < 0) pos += posMax;
-		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
-			//*ppValue = Get(pos).Reference();
-			return true;
-		}
-		Error::Issue(ErrorType::IndexError,
-			"specified position %d exceeds the list's size of %zu", pos, posMax);
-	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
-		int pos = static_cast<int>(valueIndexEx.GetBool());
-		if (pos < 0) pos += posMax;
-		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
-			//*ppValue = Get(pos).Reference();
-			return true;
-		}
-		Error::Issue(ErrorType::IndexError,
-			"specified position %s exceeds the list's size of %zu",
-			valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
-	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
+	if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		Value* pValue = nullptr;
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
@@ -91,12 +69,35 @@ bool EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag
 		}
 		return true;
 	} else {
-		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+		size_t posMax = 0;
+		if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+			const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+			Int pos = valueIndexEx.GetNumber<Int>();
+			if (pos < 0) pos += posMax;
+			if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+				//*ppValue = Get(pos).Reference();
+				return true;
+			}
+			Error::Issue(ErrorType::IndexError,
+				"specified position %d exceeds the list's size of %zu", pos, posMax);
+		} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+			const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+			Int pos = static_cast<Int>(valueIndexEx.GetBool());
+			if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+				//*ppValue = Get(pos).Reference();
+				return true;
+			}
+			Error::Issue(ErrorType::IndexError,
+				"specified position %s exceeds the list's size of %zu",
+				valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
+		} else {
+			Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+		}
 	}
 	return false;
 }
 
-void Index::IndexSet(Value* pValue)
+void Index::IndexSet(RefPtr<Value> pValue)
 {
 #if 0
 	const ValueList& valuesIndex = GetValueOwner();
@@ -104,48 +105,27 @@ void Index::IndexSet(Value* pValue)
 		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
 	} else if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
-		//GetValueTypedOwner().IndexSet(valueIndex, pValue.release());
+		EachIndexSet(valueIndex, pValue.release());
 	} else if (pValue->IsIterable()) {
 		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
 		for (const Value* pValueIndexEach : valuesIndex) {
 			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 			if (!pValueIndexEach) break;
-			//if (!GetValueTypedOwner().IndexSet(*pValueIndexEach, pValueEach.release())) return;
+			if (!EachIndexSet(*pValueIndexEach, pValueEach.release())) return;
 		}
 	} else {
 		for (const Value* pValueIndex : valuesIndex) {
-			//if (!GetValueTypedOwner().IndexSet(*pValueIndex, pValue->Reference())) return;
+			if (!EachIndexSet(*pValueIndex, pValue->Reference())) return;
 		}
 	}
 #else
-	GetValueCar().DoIndexSet(*this, pValue);
+	GetValueCar().DoIndexSet(*this, pValue.release());
 #endif
 }
 
-bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
-	size_t posMax = 0;
-	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
-		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
-		Int pos = valueIndexEx.GetNumber<Int>();
-		if (pos < 0) pos += posMax;
-		if (0 <= pos && static_cast<size_t>(pos) < posMax) {
-			//valueOwner.Set(pos, pValue.release());
-			return true;
-		}
-		Error::Issue(ErrorType::IndexError,
-			"specified position %d exceeds the list's size of %zu", pos, posMax);
-	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
-		int pos = static_cast<int>(valueIndexEx.GetBool());
-		if (static_cast<size_t>(pos) < posMax) {
-			//valueOwner.Set(pos, pValue.release());
-			return true;
-		}
-		Error::Issue(ErrorType::IndexError,
-			"specified position %s exceeds the list's size of %zu",
-			valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
-	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
+	if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
 		if (pValue->IsIterable()) {
 			RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
@@ -189,14 +169,59 @@ bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 		}
 		return true;
 	} else {
-		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+		size_t posMax = 0;
+		if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+			const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+			Int pos = valueIndexEx.GetNumber<Int>();
+			if (pos < 0) pos += posMax;
+			if (0 <= pos && static_cast<size_t>(pos) < posMax) {
+				//valueOwner.Set(pos, pValue.release());
+				return true;
+			}
+			Error::Issue(ErrorType::IndexError,
+				"specified position %d exceeds the list's size of %zu", pos, posMax);
+		} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+			const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+			Int pos = static_cast<Int>(valueIndexEx.GetBool());
+			if (static_cast<size_t>(pos) < posMax) {
+				//valueOwner.Set(pos, pValue.release());
+				return true;
+			}
+			Error::Issue(ErrorType::IndexError,
+				"specified position %s exceeds the list's size of %zu",
+				valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), posMax);
+		} else {
+			Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+		}
 	}
 	return false;
 }
 
 Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 {
+#if 0
+	const ValueList& valuesIndex = GetValueOwner();
+	if (valuesIndex.empty()) {
+		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+		return nullptr;
+	} else if (valuesIndex.size() == 1) {
+		const Value& valueIndex = *valuesIndex.front();
+		Value* pValueL = nullptr;
+		if (!EachIndexGet(valueIndex, &pValueL, false)) return Value::nil();
+		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
+		if (pValueRtn->IsUndefined()) return Value::nil();
+		EachIndexSet(valueIndex, pValueRtn.Reference());
+		return pValueRtn.release();
+	} else if (value.IsIterable()) {
+		Error::Issue_UnimplementedOperation();
+		return Value::nil();
+	} else {
+		Error::Issue_UnimplementedOperation();
+		return Value::nil();
+	}
+#else
 	return GetValueCar().DoIndexOpApply(*this, value, processor, op);
+#endif
 }
 
 String Index::ToString(const StringStyle& ss) const

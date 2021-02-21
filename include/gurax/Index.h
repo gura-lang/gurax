@@ -38,8 +38,11 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
 	Value* IndexGet() const;
-	void IndexSet(Value* pValue);
+	void IndexSet(RefPtr<Value> pValue);
 	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
+private:
+	bool EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const;
+	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }
