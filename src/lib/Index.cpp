@@ -8,11 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Index
 //------------------------------------------------------------------------------
-Value* Index::IndexGet() const
-{
-	return GetValueCar().DoIndexGet(*this);
-}
-
 bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	if (valueIndex.IsInstanceOf(VTYPE_List)) {
@@ -48,11 +43,6 @@ bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
 		return true;
 	}
 	return GetValueCar().DoSingleIndexGet(valueIndex, ppValue);
-}
-
-void Index::IndexSet(RefPtr<Value> pValue)
-{
-	GetValueCar().DoIndexSet(*this, pValue.release());
 }
 
 bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const

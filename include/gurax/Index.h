@@ -36,8 +36,8 @@ public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
-	Value* IndexGet() const;
-	void IndexSet(RefPtr<Value> pValue);
+	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
+	void IndexSet(RefPtr<Value> pValue) { GetValueCar().DoIndexSet(*this, pValue.release()); }
 	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
 	bool EachIndexGet(const Value& valueIndex, Value** ppValue) const;
 	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const;
