@@ -1730,6 +1730,32 @@ Value* Value_Iterator::DoIndexGet(const Index& index) const
 	}
 }
 
+bool Value_Iterator::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Iterator& iterator = GetIterator();
+	if (!iterator.MustBeFinite()) return false;
+	*ppValue = new Value_List(ValueTypedOwner::CreateFromIterator(iterator, false));
+	return true;
+}
+
+bool Value_Iterator::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "index-access is not supported");
+	return false;
+}
+
+bool Value_Iterator::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "index-access is not supported");
+	return false;
+}
+
+bool Value_Iterator::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "index-access is not supported");
+	return false;
+}
+
 Iterator* Value_Iterator::DoGenIterator() const
 {
 	return GetIterator().Reference();

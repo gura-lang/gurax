@@ -65,6 +65,12 @@ public:
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, Operator& op) override;
+
+	virtual bool DoEmptyIndexGet2(Value** ppValue) const;
+	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue);
+	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const;
+	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue);
+
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };

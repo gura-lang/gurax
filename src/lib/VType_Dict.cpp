@@ -466,4 +466,30 @@ Value* Value_Dict::DoIndexOpApply(const Index& index, Value& value, Processor& p
 	}
 }
 
+bool Value_Dict::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_Dict::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_Dict::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	*ppValue = GetValueDict().Lookup(valueIndex);
+	if (*ppValue) return true;
+	ValueDict::IssueError_KeyNotFound(valueIndex);
+	return false;
+}
+
+bool Value_Dict::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	GetValueDict().Assign(valueIndex.Reference(), pValue.release());
+	return true;
+}
+
 }

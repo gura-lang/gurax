@@ -701,6 +701,7 @@ String Value_Array::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetArray().ToString(ss));
 }
 
+#if 0
 Value* Value_Array::DoIndexGet(const Index& index) const
 {
 	const Array& array = GetArray();
@@ -768,5 +769,7 @@ void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	}
 	array.IndexSetValue(idx, *pValue);
 }
+
+#endif
 
 }
