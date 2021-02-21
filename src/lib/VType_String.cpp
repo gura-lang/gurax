@@ -1622,6 +1622,37 @@ Value* Value_String::DoIndexGet(const Index& index) const
 	}
 }
 
+bool Value_String::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_String::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_String::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	const String& str = GetString();
+	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
+		Error::Issue(ErrorType::IndexError, "number is expected for string indexing");
+		return nullptr;
+	}
+	int pos = Value_Number::GetNumber<int>(valueIndex);
+	if (!str.FixPosition(&pos)) return false;
+	*ppValue = new Value_String(str.PickChar(pos));
+	return true;
+}
+
+bool Value_String::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
+	return false;
+}
+
 Iterator* Value_String::DoGenIterator() const
 {
 	// Arguments

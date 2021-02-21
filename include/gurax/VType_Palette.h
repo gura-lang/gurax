@@ -88,7 +88,10 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:
-	
+	virtual bool DoEmptyIndexGet2(Value** ppValue) const override;
+	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue) override;
+	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const override;
+	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue) override;
 };
 
 }

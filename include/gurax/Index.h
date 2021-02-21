@@ -41,7 +41,7 @@ public:
 	void IndexSet(RefPtr<Value> pValue);
 	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
 private:
-	bool EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const;
+	bool EachIndexGet(const Value& valueIndex, Value** ppValue) const;
 	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

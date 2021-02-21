@@ -193,6 +193,10 @@ public:
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual bool DoEmptyIndexGet2(Value** ppValue) const override;
+	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue) override;
+	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const override;
+	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue) override;
 	virtual Iterator* DoGenIterator() const override;
 };
 

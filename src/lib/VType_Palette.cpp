@@ -308,4 +308,26 @@ String Value_Palette::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetPalette().ToString(ss));
 }
 
+bool Value_Palette::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_Palette::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_Palette::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	return false;
+}
+
+bool Value_Palette::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	return false;
+}
+
 }

@@ -206,6 +206,30 @@ Value* Value_Match::DoIndexGet(const Index& index) const
 	return Value::nil();
 }
 
+bool Value_Match::DoEmptyIndexGet2(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_Match::DoEmptyIndexSet2(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_Match::DoIndexGet2(const Value& valueIndex, Value** ppValue) const
+{
+	*ppValue = GetValueOfGroupString(valueIndex);
+	return *ppValue != nullptr;
+}
+
+bool Value_Match::DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
+	return false;
+}
+
 Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
 {
 	if (valueIndex.IsType(VTYPE_Number)) {

@@ -114,10 +114,10 @@ public:
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual Value* DoIndexGet(const Index& index) const override;
 
-	virtual bool DoEmptyIndexGet2(Value** ppValue) const;
-	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue);
-	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const;
-	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue);
+	virtual bool DoEmptyIndexGet2(Value** ppValue) const override;
+	virtual bool DoEmptyIndexSet2(RefPtr<Value> pValue) override;
+	virtual bool DoIndexGet2(const Value& valueIndex, Value** ppValue) const override;
+	virtual bool DoIndexSet2(const Value& valueIndex, RefPtr<Value> pValue) override;
 
 	virtual Iterator* DoGenIterator() const override;
 };

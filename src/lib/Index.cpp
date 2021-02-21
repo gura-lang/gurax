@@ -3,7 +3,7 @@
 //==============================================================================
 #include "stdafx.h"
 
-//#define NEWFEATURE
+#define NEWFEATURE
 
 namespace Gurax {
 
@@ -21,34 +21,38 @@ Value* Index::IndexGet() const
 	} else if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
 		Value* pValue = nullptr;
-		if (!EachIndexGet(valueIndex, &pValue, false)) return Value::nil();
+		if (!EachIndexGet(valueIndex, &pValue)) return Value::nil();
 		return pValue;
 	} else {
 		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
 		pValuesRtn->reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
 			Value* pValue = nullptr;
-			if (!EachIndexGet(*pValueIndex, &pValue, false)) return Value::nil();
+			if (!EachIndexGet(*pValueIndex, &pValue)) return Value::nil();
 			pValuesRtn->push_back(pValue);
 		}
-		return new Value_List(pValuesRtn.release());
+		if (GetValueCar().IsTuple()) {
+			return new Value_Tuple(pValuesRtn.release());
+		} else {
+			return new Value_List(pValuesRtn.release());
+		}
 	}
 #else
 	return GetValueCar().DoIndexGet(*this);
 #endif
 }
 
-bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const
+bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		Value* pValue = nullptr;
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
 		for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
-			if (!EachIndexGet(*pValueIndexEach, &pValue, tupleResultFlag)) return false;
+			if (!EachIndexGet(*pValueIndexEach, &pValue)) return false;
 			pValueOwner->push_back(pValue->Reference());
 		}
-		if (tupleResultFlag) {
+		if (GetValueCar().IsTuple()) {
 			*ppValue = new Value_Tuple(pValueOwner.release());
 		} else {
 			*ppValue = new Value_List(pValueOwner.release());
@@ -62,10 +66,10 @@ bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue, bool tupleRes
 		for (;;) {
 			RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
 			if (!pValueIndexEach) break;
-			if (!EachIndexGet(*pValueIndexEach, &pValue, tupleResultFlag)) return false;
+			if (!EachIndexGet(*pValueIndexEach, &pValue)) return false;
 			pValueOwner->push_back(pValue->Reference());
 		}
-		if (tupleResultFlag) {
+		if (GetValueCar().IsTuple()) {
 			*ppValue = new Value_Tuple(pValueOwner.release());
 		} else {
 			*ppValue = new Value_List(pValueOwner.release());
@@ -153,7 +157,7 @@ bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 
 Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 {
-#if 0
+#if defined(NEWFEATURE)
 	const ValueList& valuesIndex = GetValueOwner();
 	if (valuesIndex.empty()) {
 		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
@@ -161,7 +165,7 @@ Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 	} else if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
 		Value* pValueL = nullptr;
-		if (!EachIndexGet(valueIndex, &pValueL, false)) return Value::nil();
+		if (!EachIndexGet(valueIndex, &pValueL)) return Value::nil();
 		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
 		if (pValueRtn->IsUndefined()) return Value::nil();
 		EachIndexSet(valueIndex, pValueRtn.Reference());
