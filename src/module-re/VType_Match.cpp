@@ -189,25 +189,6 @@ void VType_Match::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Match::vtype = VTYPE_Match;
 
-#if 0
-Value* Value_Match::DoIndexGet(const Index& index) const
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.size() == 1) {
-		return GetValueOfGroupString(*valuesIndex.front());
-	} else {
-		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-		for (const Value* pValueIndex : valuesIndex) {
-			RefPtr<Value> pValue(GetValueOfGroupString(*pValueIndex));
-			if (Error::IsIssued()) return Value::nil();
-			pValueOwner->push_back(pValue.release());
-		}
-		return new Value_List(pValueOwner.release());
-	}
-	return Value::nil();
-}
-#endif
-
 bool Value_Match::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");

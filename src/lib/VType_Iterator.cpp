@@ -1718,20 +1718,6 @@ Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 	return new Value_Iterator(pIterator.release());
 }
 
-#if 0
-Value* Value_Iterator::DoIndexGet(const Index& index) const
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.empty()) {
-		Iterator& iterator = GetIterator();
-		if (!iterator.MustBeFinite()) return Value::nil();
-		return new Value_List(ValueTypedOwner::CreateFromIterator(iterator, false));
-	} else {
-		return Value::DoIndexGet(index);
-	}
-}
-#endif
-
 bool Value_Iterator::DoEmptyIndexGet(Value** ppValue) const
 {
 	Iterator& iterator = GetIterator();

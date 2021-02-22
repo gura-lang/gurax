@@ -409,45 +409,6 @@ String Value_Dict::ToString(const StringStyle& ss) const
 	return GetValueDict().ToString(ss);
 }
 
-#if 0
-Value* Value_Dict::DoIndexGet(const Index& index) const
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
-		const Value* pValue = GetValueDict().Lookup(*pValueIndex);
-		if (!pValue) {
-			ValueDict::IssueError_KeyNotFound(*pValueIndex);
-			return Value::nil();
-		}
-		return pValue->Reference();
-	} else {
-		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
-		pValuesRtn->reserve(valuesIndex.size());
-		for (const Value* pValueIndex : valuesIndex) {
-			const Value* pValue = GetValueDict().Lookup(*pValueIndex);
-			if (!pValue) {
-				ValueDict::IssueError_KeyNotFound(*pValueIndex);
-				return Value::nil();
-			}
-			pValuesRtn->push_back(pValue->Reference());
-		}
-		return new Value_List(pValuesRtn.release());
-	}
-}
-
-void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
-		GetValueDict().Assign(pValueIndex->Reference(), pValue.release());
-	} else {
-		Error::Issue_UnimplementedOperation();
-	}
-}
-#endif
-
 bool Value_Dict::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");

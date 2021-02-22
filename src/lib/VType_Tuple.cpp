@@ -203,30 +203,6 @@ bool Value_Tuple::FeedExpandToArgument(Frame& frame, Argument& argument)
 	return true;
 }
 
-#if 0
-Value* Value_Tuple::DoIndexGet(const Index& index) const
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.empty()) {
-		return Clone();
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		Value* pValue = nullptr;
-		if (!GetValueOwner().IndexGet(valueIndex, &pValue, true)) return Value::nil();
-		return pValue;
-	} else {
-		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
-		pValuesRtn->reserve(valuesIndex.size());
-		for (const Value* pValueIndex : valuesIndex) {
-			Value* pValue = nullptr;
-			if (!GetValueOwner().IndexGet(*pValueIndex, &pValue, true)) return Value::nil();
-			pValuesRtn->push_back(pValue);
-		}
-		return new Value_Tuple(pValuesRtn.release());
-	}
-}
-#endif
-
 bool Value_Tuple::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");

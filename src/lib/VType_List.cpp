@@ -1640,52 +1640,6 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 	return pValueOwner? new Value_List(new ValueTypedOwner(pValueOwner.release())) : Value::nil();
 }
 
-#if 0
-Value* Value_List::DoIndexGet(const Index& index) const
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.empty()) {
-		return Clone();
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		Value* pValue = nullptr;
-		if (!GetValueTypedOwner().IndexGet(valueIndex, &pValue, false)) return Value::nil();
-		return pValue;
-	} else {
-		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
-		pValuesRtn->reserve(valuesIndex.size());
-		for (const Value* pValueIndex : valuesIndex) {
-			Value* pValue = nullptr;
-			if (!GetValueTypedOwner().IndexGet(*pValueIndex, &pValue, false)) return Value::nil();
-			pValuesRtn->push_back(pValue);
-		}
-		return new Value_List(pValuesRtn.release());
-	}
-}
-
-void Value_List::DoIndexSet(const Index& index, RefPtr<Value> pValue)
-{
-	const ValueList& valuesIndex = index.GetValueOwner();
-	if (valuesIndex.empty()) {
-		Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
-	} else if (valuesIndex.size() == 1) {
-		const Value& valueIndex = *valuesIndex.front();
-		GetValueTypedOwner().IndexSet(valueIndex, pValue.release());
-	} else if (pValue->IsIterable()) {
-		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
-		for (const Value* pValueIndexEach : valuesIndex) {
-			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
-			if (!pValueIndexEach) break;
-			if (!GetValueTypedOwner().IndexSet(*pValueIndexEach, pValueEach.release())) return;
-		}
-	} else {
-		for (const Value* pValueIndex : valuesIndex) {
-			if (!GetValueTypedOwner().IndexSet(*pValueIndex, pValue->Reference())) return;
-		}
-	}
-}
-#endif
-
 bool Value_List::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
