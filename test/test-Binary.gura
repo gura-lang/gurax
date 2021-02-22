@@ -149,3 +149,18 @@ TestCase('Operator') {
 	Tester(`(b'abc\x00defg' != b'abc\x00defg'))
 	Tester(`(b'abc\x00def' != b'abc\x00defg'))
 }
+
+TestCase('Index') {
+	buff = b'abcdefghijklmnopqrstuvwxyz'
+	Tester(`buff)
+	Tester(`buff[0])
+	Tester(`buff[1])
+	Tester(`buff[2])
+	Tester(`buff[0, 1, 2, 3, 4])
+	Tester(`buff[-1])
+	Tester(`buff[25])
+	Tester(`buff[26])
+	Tester(`buff[-25])
+	Tester(`buff[-26])
+	Tester(`buff[-27])
+}

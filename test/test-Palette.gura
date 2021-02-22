@@ -1,0 +1,13 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Palette.PrintPropSlots()
+}
+
+TestCase('Constructor') {
+	[`basic, `mono, `websafe, `win256].Each {|name|
+		Println(name)
+		Printf('#%-3d %s\n', 0.., Palette(name).Each())
+	}
+}

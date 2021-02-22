@@ -222,3 +222,15 @@ b'abc\x00defg' == b'abc\x00defg' .. true
 b'abc\x00def' == b'abc\x00defg' .. false
 b'abc\x00defg' != b'abc\x00defg' .. false
 b'abc\x00def' != b'abc\x00defg' .. true
+======== Index ========
+buff .. b'abcdefghijklmnopqrstuvwxyz'
+buff[0] .. B'a'
+buff[1] .. B'b'
+buff[2] .. B'c'
+buff[0, 1, 2, 3, 4] .. [B'a', B'b', B'c', B'd', B'e']
+buff[-1] .. B'z'
+buff[25] .. B'z'
+buff[26] .. specified position 26 exceeds the size of 26
+buff[-25] .. B'b'
+buff[-26] .. B'a'
+buff[-27] .. specified position -1 exceeds the size of 26

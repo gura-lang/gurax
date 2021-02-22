@@ -332,6 +332,33 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Binary::vtype = VTYPE_Binary;
 
+bool Value_Binary::DoEmptyIndexGet(Value** ppValue) const
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return Value::undefined();
+}
+
+bool Value_Binary::DoEmptyIndexSet(RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
+	return false;
+}
+
+bool Value_Binary::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	const Binary& buff = GetBinary();
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, buff.size(), &idx)) return false;
+	*ppValue = new Value_Binary(Binary(buff.data() + idx, 1));
+	return true;
+}
+
+bool Value_Binary::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
+	return false;
+}
+
 String Value_Binary::ToString(const StringStyle& ss) const
 {
 	const Binary& buff = _pBinary->GetBinary();
