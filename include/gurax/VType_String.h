@@ -192,7 +192,7 @@ public:
 	virtual bool IsAsDictKey() const override { return true; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 public:
-	virtual Value* DoIndexGet(const Index& index) const override;
+	//virtual Value* DoIndexGet(const Index& index) const override;
 	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;

@@ -1718,6 +1718,7 @@ Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 	return new Value_Iterator(pIterator.release());
 }
 
+#if 0
 Value* Value_Iterator::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
@@ -1729,6 +1730,7 @@ Value* Value_Iterator::DoIndexGet(const Index& index) const
 		return Value::DoIndexGet(index);
 	}
 }
+#endif
 
 bool Value_Iterator::DoEmptyIndexGet(Value** ppValue) const
 {

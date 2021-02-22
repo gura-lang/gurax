@@ -117,6 +117,35 @@ Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 	}
 }
 
+bool Index::GetIndexNumber(const Value& valueIndex, size_t size, size_t* pIdx)
+{
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int idx = valueIndexEx.GetNumber<Int>();
+		if (idx < 0) idx += size;
+		if (0 <= idx && static_cast<size_t>(idx) < size) {
+			*pIdx = idx;
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %d exceeds the size of %zu", idx, size);
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		Int idx = static_cast<Int>(valueIndexEx.GetBool());
+		if (static_cast<size_t>(idx) < size) {
+			*pIdx = idx;
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError,
+			"specified position %s exceeds the size of %zu",
+			valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), size);
+	} else {
+		Error::Issue(ErrorType::IndexError,
+			"invalid value for indexing");
+	}
+	return false;
+}
+
 String Index::ToString(const StringStyle& ss) const
 {
 	return String().Format("Index:%s", GetValueCar().ToString(StringStyle(ss).SetQuoteSymbol()).c_str());

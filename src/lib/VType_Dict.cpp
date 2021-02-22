@@ -409,6 +409,7 @@ String Value_Dict::ToString(const StringStyle& ss) const
 	return GetValueDict().ToString(ss);
 }
 
+#if 0
 Value* Value_Dict::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
@@ -445,6 +446,7 @@ void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 		Error::Issue_UnimplementedOperation();
 	}
 }
+#endif
 
 bool Value_Dict::DoEmptyIndexGet(Value** ppValue) const
 {

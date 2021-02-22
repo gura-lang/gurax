@@ -42,6 +42,8 @@ public:
 	bool EachIndexGet(const Value& valueIndex, Value** ppValue) const;
 	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const;
 public:
+	static bool GetIndexNumber(const Value& valueIndex, size_t size, size_t* pIdx);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }
 	bool IsEqualTo(const Index& index) const { return IsIdentical(index); }

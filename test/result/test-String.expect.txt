@@ -569,14 +569,14 @@ str.bytes .. 30
 'abcdef'[3] .. d
 'abcdef'[4] .. e
 'abcdef'[5] .. f
-'abcdef'[6] .. specified position 6 exceeds the string's size of 6
-'abcdef'[7] .. specified position 7 exceeds the string's size of 6
+'abcdef'[6] .. specified position 6 exceeds the size of 6
+'abcdef'[7] .. specified position 7 exceeds the size of 6
 'abcdef'[-1] .. f
 'abcdef'[-2] .. e
 'abcdef'[-3] .. d
 'abcdef'[-4] .. c
 'abcdef'[-5] .. b
 'abcdef'[-6] .. a
-'abcdef'[-7] .. specified position -7 exceeds the string's size of 6
+'abcdef'[-7] .. specified position -1 exceeds the size of 6
 ======== Iteration ========
 for (ch in 'abcdefg'):list {ch} .. ['a', 'b', 'c', 'd', 'e', 'f', 'g']

@@ -323,31 +323,9 @@ bool Value_Palette::DoEmptyIndexSet(RefPtr<Value> pValue)
 bool Value_Palette::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const Palette& palette = GetPalette();
-	size_t size = palette.GetSize();
-	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
-		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
-		Int pos = valueIndexEx.GetNumber<Int>();
-		if (pos < 0) pos += size;
-		if (pos < 0 || static_cast<size_t>(pos) >= size) {
-			Error::Issue(ErrorType::IndexError,
-				"specified position %d exceeds the list's size of %zu", pos, size);
-			return false;
-		}
-		*ppValue = new Value_Color(palette.GetColor(pos));
-	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
-		Int pos = static_cast<Int>(valueIndexEx.GetBool());
-		if (static_cast<size_t>(pos) >= size) {
-			Error::Issue(ErrorType::IndexError,
-				"specified position %s exceeds the list's size of %zu",
-				valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), size);
-			return false;
-		}
-		*ppValue = new Value_Color(palette.GetColor(pos));
-	} else {
-		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
-		return false;
-	}
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, palette.GetSize(), &idx)) return false;
+	*ppValue = new Value_Color(palette.GetColor(idx));
 	return true;
 }
 
@@ -359,31 +337,9 @@ bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pVal
 	}
 	const Color& color = dynamic_cast<Value_Color&>(*pValue).GetColor();
 	Palette& palette = GetPalette();
-	size_t size = palette.GetSize();
-	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
-		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
-		Int pos = valueIndexEx.GetNumber<Int>();
-		if (pos < 0) pos += size;
-		if (pos < 0 || static_cast<size_t>(pos) >= size) {
-			Error::Issue(ErrorType::IndexError,
-				"specified position %d exceeds the list's size of %zu", pos, size);
-			return false;
-		}
-		palette.SetColor(pos, color);
-	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
-		Int pos = static_cast<Int>(valueIndexEx.GetBool());
-		if (static_cast<size_t>(pos) >= size) {
-			Error::Issue(ErrorType::IndexError,
-				"specified position %s exceeds the list's size of %zu",
-				valueIndexEx.ToString(StringStyle::Quote_NilVisible).c_str(), size);
-			return false;
-		}
-		palette.SetColor(pos, color);
-	} else {
-		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
-		return false;
-	}
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, palette.GetSize(), &idx)) return false;
+	palette.SetColor(idx, color);
 	return true;
 }
 

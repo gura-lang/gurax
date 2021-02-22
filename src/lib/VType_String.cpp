@@ -1588,6 +1588,7 @@ bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
 
+#if 0
 Value* Value_String::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
@@ -1621,6 +1622,7 @@ Value* Value_String::DoIndexGet(const Index& index) const
 		return new Value_List(pValuesRtn.release());
 	}
 }
+#endif
 
 bool Value_String::DoEmptyIndexGet(Value** ppValue) const
 {
@@ -1637,13 +1639,9 @@ bool Value_String::DoEmptyIndexSet(RefPtr<Value> pValue)
 bool Value_String::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const String& str = GetString();
-	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
-		Error::Issue(ErrorType::IndexError, "number is expected for string indexing");
-		return nullptr;
-	}
-	int pos = Value_Number::GetNumber<int>(valueIndex);
-	if (!str.FixPosition(&pos)) return false;
-	*ppValue = new Value_String(str.PickChar(pos));
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, str.size(), &idx)) return false;
+	*ppValue = new Value_String(str.PickChar(idx));
 	return true;
 }
 

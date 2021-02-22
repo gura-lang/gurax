@@ -127,6 +127,7 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	return cnt;
 }
 
+#if 0
 bool ValueList::IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const
 {
 	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
@@ -177,6 +178,7 @@ bool ValueList::IndexGet(const Value& valueIndex, Value** ppValue, bool tupleRes
 	}
 	return false;
 }
+#endif
 
 DimSizes ValueList::GetShape() const
 {

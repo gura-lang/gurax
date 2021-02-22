@@ -73,10 +73,10 @@ public:
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
 	Value& Get(Int pos) const { return *_pValueOwner->at(pos); }
 	bool Set(Int pos, Value* pValue);
-	bool IndexSet(const Value& valueIndex, RefPtr<Value> pValue);
-	bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const {
-		return GetValueOwner().IndexGet(valueIndex, ppValue, tupleResultFlag);
-	}
+	//bool IndexSet(const Value& valueIndex, RefPtr<Value> pValue);
+	//bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const {
+	//	return GetValueOwner().IndexGet(valueIndex, ppValue, tupleResultFlag);
+	//}
 	void Add(Value* pValue);
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);

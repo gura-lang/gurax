@@ -29,6 +29,7 @@ bool ValueTypedOwner::Set(Int pos, Value* pValue)
 	return true;
 }
 
+#if 0
 bool ValueTypedOwner::IndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
@@ -97,6 +98,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 	}
 	return false;
 }
+#endif
 
 void ValueTypedOwner::Add(Value* pValue)
 {

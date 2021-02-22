@@ -189,6 +189,7 @@ void VType_Match::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Match::vtype = VTYPE_Match;
 
+#if 0
 Value* Value_Match::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
@@ -205,6 +206,7 @@ Value* Value_Match::DoIndexGet(const Index& index) const
 	}
 	return Value::nil();
 }
+#endif
 
 bool Value_Match::DoEmptyIndexGet(Value** ppValue) const
 {
@@ -232,14 +234,7 @@ bool Value_Match::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue
 
 Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
 {
-	if (valueIndex.IsType(VTYPE_Number)) {
-		int iGroup = Value_Number::GetNumber<int>(valueIndex);
-		if (iGroup < 0 || iGroup >= GetMatch().CountGroups()) {
-			Error::Issue(ErrorType::IndexError, "index is out of range");
-			return nullptr;
-		}
-		return new Value_Group(GetMatch().CreateGroup(iGroup));
-	} else if (valueIndex.IsType(VTYPE_String)) {
+	if (valueIndex.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(valueIndex);
 		int iGroup = GetMatch().LookupGroupNum(name);
 		if (iGroup < 0) {
@@ -247,22 +242,15 @@ Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
 			return nullptr;
 		}
 		return new Value_Group(GetMatch().CreateGroup(iGroup));
-	} else {
-		Error::Issue(ErrorType::ValueError, "string or number value must be specified");
-		return nullptr;
 	}
+	size_t iGroup = 0;
+	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return false;
+	return new Value_Group(GetMatch().CreateGroup(iGroup));
 }
 
 Value* Value_Match::GetValueOfGroupString(const Value& valueIndex) const
 {
-	if (valueIndex.IsType(VTYPE_Number)) {
-		int iGroup = Value_Number::GetNumber<int>(valueIndex);
-		if (iGroup < 0 || iGroup >= GetMatch().CountGroups()) {
-			Error::Issue(ErrorType::IndexError, "index is out of range");
-			return nullptr;
-		}
-		return new Value_String(GetMatch().GetGroupString(iGroup));
-	} else if (valueIndex.IsType(VTYPE_String)) {
+	if (valueIndex.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(valueIndex);
 		int iGroup = GetMatch().LookupGroupNum(name);
 		if (iGroup < 0) {
@@ -270,10 +258,10 @@ Value* Value_Match::GetValueOfGroupString(const Value& valueIndex) const
 			return nullptr;
 		}
 		return new Value_String(GetMatch().GetGroupString(iGroup));
-	} else {
-		Error::Issue(ErrorType::ValueError, "string or number value must be specified");
-		return nullptr;
 	}
+	size_t iGroup = 0;
+	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return false;
+	return new Value_String(GetMatch().GetGroupString(iGroup));
 }
 
 String Value_Match::ToString(const StringStyle& ss) const
