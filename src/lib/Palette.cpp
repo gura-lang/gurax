@@ -604,12 +604,13 @@ void Palette::Fill(const Color& color)
 size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 {
 	size_t idxMin = 0;
-	Color color(r, g, b);
-	int distMin = color.CalcDistSqu(GetColor(idxMin));
-	//::printf("%d %d %d  %d %d %d  %d\n", r, g, b, GetColor(idxMin).GetR(), GetColor(idxMin).GetG(), GetColor(idxMin).GetB(), distMin);
+	const UInt8* p = reinterpret_cast<const UInt8*>(_packedTbl.get());
+	int distMin = Color::CalcDistSqu(r, g, b,
+			Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
 	if (distMin == 0) return idxMin;
-	for (size_t idx = 1; idx < _n; idx++) {
-		int dist = color.CalcDistSqu(GetColor(idx));
+	for (size_t idx = 1; idx < _n; idx++, p += sizeof(UInt32)) {
+		int dist = Color::CalcDistSqu(r, g, b,
+				Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
 		if (distMin > dist) {
 			if (dist == 0) return idx;
 			idxMin = idx, distMin = dist;
@@ -624,7 +625,6 @@ bool Palette::UpdateByImage(const Image& image, ShrinkMode shrinkMode)
 	size_t idxBlank = NextBlankIndex(colorSet);
 	const UInt8* pSrc = image.GetPointerC();
 	size_t nPixels = image.GetMetrics().CountPixels();
-	//auto scanner(Image::Scanner::LeftTopHorz(image));
 	if (image.IsFormat(Image::Format::RGB)) {
 		for (size_t iPixel = 0; iPixel < nPixels; iPixel++, pSrc += Image::Format::RGB.bytesPerPixel) {
 			Color color(Image::PixelRGB::GetR(pSrc),
