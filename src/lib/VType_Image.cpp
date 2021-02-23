@@ -105,6 +105,48 @@ Gurax_ImplementClassMethod(Image, Create)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Image#Crop(x:Number, y:Number, width:Number, height:Number):map:[rgb,rgba]
+Gurax_DeclareMethod(Image, Crop)
+{
+	Declare(VTYPE_Image, Flag::Map);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(rgb));
+	DeclareAttrOpt(Gurax_Symbol(rgba));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Created a cropped image from the target.\n"
+		"\n"
+		"The attributes `rgb` and `rgba` specify the format of the image:\n"
+		"`rgb` for 24-bit format that consists of elements red, green and blue,\n"
+		"and `rgba` for 32-bit format that consits of elements red, green, blue and alpha.\n"
+		"If omitted, the created image inherits the target's format.\n");
+}
+
+Gurax_ImplementMethod(Image, Crop)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Image& imageSrc = valueThis.GetImage();
+	// Argument
+	ArgPicker args(argument);
+	size_t x = args.PickNumberNonNeg<size_t>();
+	size_t y = args.PickNumberNonNeg<size_t>();
+	size_t width = args.PickNumberNonNeg<size_t>();
+	size_t height = args.PickNumberNonNeg<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+		imageSrc.GetFormat();
+	// Function body
+	RefPtr<Image> pImage(imageSrc.Crop(x, y, width, height));
+	if (!pImage) return Value::nil();
+	return new Value_Image(pImage.release());
+}
+
 // Image#Fill(color:Color):reduce
 Gurax_DeclareMethod(Image, Fill)
 {
@@ -903,6 +945,7 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Image, Create));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Image, Crop));
 	Assign(Gurax_CreateMethod(Image, Fill));
 	Assign(Gurax_CreateMethod(Image, FillRect));
 	Assign(Gurax_CreateMethod(Image, Flip));

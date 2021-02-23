@@ -579,6 +579,21 @@ Palette* Palette::Win256()
 	return new Palette(packedTbl, 256);
 }
 
+Palette* Palette::CreateFromSymbol(const Symbol* pSymbol)
+{
+	if (pSymbol->IsIdentical(Gurax_Symbol(basic))) {
+		return Basic();
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(mono))) {
+		return Mono();
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(websafe))) {
+		return WebSafe();
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(win256))) {
+		return Win256();
+	}
+	Error::Issue(ErrorType::SymbolError, "invalid symbol for Palette");
+	return nullptr;
+}
+
 void Palette::Fill(const Color& color)
 {
 	UInt32 packed = color.GetPacked();

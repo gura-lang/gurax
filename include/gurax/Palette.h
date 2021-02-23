@@ -43,6 +43,7 @@ public:
 	static Palette* Basic();
 	static Palette* WebSafe();
 	static Palette* Win256();
+	static Palette* CreateFromSymbol(const Symbol* pSymbol);
 public:
 	Palette* Clone() const { return new Palette(_packedTbl.get(), _n); }
 	size_t GetSize() const { return _n; }

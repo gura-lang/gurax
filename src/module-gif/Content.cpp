@@ -121,8 +121,9 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 	int backgroundColorIndex = -1;
 	UInt8 transparentColorIndex = 0;
 	UInt8 transparentColorFlag = 0;
+	Palette::ColorSet colorSet;
 	do {
-		size_t idxBlank = _pPaletteGlobal->NextBlankIndex();
+		size_t idxBlank = _pPaletteGlobal->NextBlankIndex(colorSet);
 		if (idxBlank < _pPaletteGlobal->GetSize()) {
 			// add an entry for transparent color
 			_pPaletteGlobal->SetRGBA(idxBlank, 128, 128, 128, 0);

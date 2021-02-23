@@ -49,19 +49,8 @@ Gurax_ImplementConstructor(Palette)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	RefPtr<Palette> pPalette;
-	if (pSymbol->IsIdentical(Gurax_Symbol(basic))) {
-		pPalette.reset(Palette::Basic());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(mono))) {
-		pPalette.reset(Palette::Mono());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(websafe))) {
-		pPalette.reset(Palette::WebSafe());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(win256))) {
-		pPalette.reset(Palette::Win256());
-	} else {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol for Palette");
-		return Value::nil();
-	}
+	RefPtr<Palette> pPalette(Palette::CreateFromSymbol(pSymbol));
+	if (!pPalette) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Palette(pPalette.release()));
 }
 
@@ -280,6 +269,18 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Palette, UpdateBy));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Palette, len));
+}
+
+Value* VType_Palette::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Expr)) {
+		const Symbol* pSymbol = Value_Expr::GetExpr(value).GetPureSymbol();
+		if (!pSymbol) return nullptr;
+		RefPtr<Palette> pPalette(Palette::CreateFromSymbol(pSymbol));
+		if (!pPalette) return Value::nil();
+		return new Value_Palette(pPalette.release());
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------
