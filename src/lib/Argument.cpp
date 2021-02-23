@@ -45,7 +45,6 @@ Function* Argument::CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol
 
 bool Argument::CheckArgSlotToFeed() const
 {
-	//ArgSlot* pArgSlot = GetArgSlotToFeed(); // this may be nullptr
 	if (!_pArgSlotToFeed) {
 		if (!IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");

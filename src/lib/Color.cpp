@@ -175,6 +175,7 @@ const Color::NamedEntry Color::_namedEntries[] = {
 	{ "whitesmoke",			PackRGBA(245, 245, 245, 255) },
 	{ "yellow",				PackRGBA(255, 255,   0, 255) },
 	{ "yellowgreen",		PackRGBA(154, 205,  50, 255) },
+	{ "zero",				PackRGBA(  0,   0,   0,   0) },
 };
 
 void Color::Bootup()
@@ -214,8 +215,8 @@ Color* Color::CreateFromString(const char* str, UInt8 alpha)
 		return new Color(r, g, b, alpha);
 	} else {
 		const Color* pColor = Lookup(str);
-	if (!pColor) {
-			Error::Issue(ErrorType::KeyError, "unknown color name");
+		if (!pColor) {
+			Error::Issue(ErrorType::KeyError, "unknown color name: %s", str);
 			return nullptr;
 		}
 		return new Color(pColor->GetPacked(), alpha);

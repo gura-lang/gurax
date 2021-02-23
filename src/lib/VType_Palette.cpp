@@ -331,11 +331,9 @@ bool Value_Palette::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 
 bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
-	if (!pValue->IsInstanceOf(VTYPE_Color)) {
-		Error::Issue(ErrorType::ValueError, "accepts only Color instance");
-		return false;
-	}
-	const Color& color = dynamic_cast<Value_Color&>(*pValue).GetColor();
+	RefPtr<Value_Color> pValueCasted(pValue->Cast<Value_Color>());
+	if (!pValueCasted) return nullptr;
+	const Color& color = pValueCasted->GetColor();
 	Palette& palette = GetPalette();
 	size_t idx = 0;
 	if (!Index::GetIndexNumber(valueIndex, palette.GetSize(), &idx)) return false;

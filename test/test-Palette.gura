@@ -11,3 +11,87 @@ TestCase('Constructor') {
 		Printf('#%-3d %s\n', 0.., Palette(name).Each())
 	}
 }
+
+TestCase('Palette.Create()') {
+	Printf('#%-3d %s\n', 0.., Palette.Create(16).Each())
+	Printf('#%-3d %s\n', 0.., Palette.Create(16, `red).Each())
+}
+
+TestCase('Index access') {
+	Println('Write Color instance')
+	Palette.Create(17) {|p|
+		p[0]  = Color.RGBA(  0,   0,   0,   0)
+		p[1]  = Color.RGBA(  0,   0,   0, 255)
+		p[2]  = Color.RGBA(192, 192, 192, 255)
+		p[3]  = Color.RGBA(128, 128, 128, 255)
+		p[4]  = Color.RGBA(255, 255, 255, 255)
+		p[5]  = Color.RGBA(128,   0,   0, 255)
+		p[6]  = Color.RGBA(255,   0,   0, 255)
+		p[7]  = Color.RGBA(128,   0, 128, 255)
+		p[8]  = Color.RGBA(255,   0, 255, 255)
+		p[9]  = Color.RGBA(  0, 128,   0, 255)
+		p[10] = Color.RGBA(  0, 255,   0, 255)
+		p[11] = Color.RGBA(128, 128,   0, 255)
+		p[12] = Color.RGBA(255, 255,   0, 255)
+		p[13] = Color.RGBA(  0,   0, 128, 255)
+		p[14] = Color.RGBA(  0,   0, 255, 255)
+		p[15] = Color.RGBA(  0, 128, 128, 255)
+		p[16] = Color.RGBA(  0, 255, 255, 255)
+		Printf('#%-3d %s\n', 0.., p.Each())
+	}
+	Println('Write Symbol instance')
+	Palette.Create(17) {|p|
+		p[0]  = `zero
+		p[1]  = `black
+		p[2]  = `silver
+		p[3]  = `gray
+		p[4]  = `white
+		p[5]  = `maroon
+		p[6]  = `red
+		p[7]  = `purple
+		p[8]  = `fuchsia
+		p[9]  = `green
+		p[10] = `lime
+		p[11] = `olive
+		p[12] = `yellow
+		p[13] = `navy
+		p[14] = `blue
+		p[15] = `teal
+		p[16] = `aqua
+		Printf('#%-3d %s\n', 0.., p.Each())
+	}
+	Println('Write String instance')
+	Palette.Create(17) {|p|
+		p[0]  = 'zero'
+		p[1]  = 'black'
+		p[2]  = 'silver'
+		p[3]  = 'gray'
+		p[4]  = 'white'
+		p[5]  = 'maroon'
+		p[6]  = 'red'
+		p[7]  = 'purple'
+		p[8]  = 'fuchsia'
+		p[9]  = 'green'
+		p[10] = 'lime'
+		p[11] = 'olive'
+		p[12] = 'yellow'
+		p[13] = 'navy'
+		p[14] = 'blue'
+		p[15] = 'teal'
+		p[16] = 'aqua'
+		Printf('#%-3d %s\n', 0.., p.Each())
+	}
+	Println('Read')
+	Palette(`basic) {|p|
+		repeat (p.len) {|i|
+			Printf('#%-3d %s\n', i, p[i])
+		}
+	}
+	Println('Error')
+	Palette.Create(8) {|p|
+		Tester(`p[8])
+		Tester(`(p[0] = 123))
+		Tester(`(p[0] = `xxxx))
+		Tester(`(p[0] = 'xxxx'))
+	}
+}

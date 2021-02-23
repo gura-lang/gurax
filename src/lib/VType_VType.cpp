@@ -50,8 +50,8 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__EachPropSlot__() {block?}
-Gurax_DeclareClassMethod(VType, __EachPropSlot__)
+// VType#__propSlots__() {block?}
+Gurax_DeclareClassMethod(VType, __propSlots__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
@@ -60,7 +60,7 @@ Gurax_DeclareClassMethod(VType, __EachPropSlot__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __EachPropSlot__)
+Gurax_ImplementClassMethod(VType, __propSlots__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -72,8 +72,8 @@ Gurax_ImplementClassMethod(VType, __EachPropSlot__)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// VType#__GetPropSlot__(symbol:Symbol):map {block?}
-Gurax_DeclareClassMethod(VType, __GetPropSlot__)
+// VType#__propSlot__(symbol:Symbol):map {block?}
+Gurax_DeclareClassMethod(VType, __propSlot__)
 {
 	Declare(VTYPE_PropSlot, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -83,7 +83,7 @@ Gurax_DeclareClassMethod(VType, __GetPropSlot__)
 		"");
 }
 
-Gurax_ImplementClassMethod(VType, __GetPropSlot__)
+Gurax_ImplementClassMethod(VType, __propSlot__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -129,8 +129,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __EachPropSlot__));
-	Assign(Gurax_CreateMethod(VType, __GetPropSlot__));
+	Assign(Gurax_CreateMethod(VType, __propSlots__));
+	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
 }

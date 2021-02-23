@@ -6,8 +6,8 @@ InspectExpr(x:Expr) = {
 	[`block, `car, `target, `child, `left, `right, `trailer,
 	 `value, `string, `symbol, `mode, `operator, `attr].Each {|prop|
 		Printf('  %-10s %-10s %s\n', prop,
-				Expr.__GetPropSlot__(prop).vtype.__fullName__,
-				x.__GetProp__(prop).__str__():nilVisible:quote)
+				Expr.__propSlot__(prop).vtype.__fullName__,
+				x.__prop__(prop).__str__():nilVisible:quote)
 	}
 	Printf('  %-10s %s\n', 'EachParam', cond(x, x.EachParam():list).__str__())
 	Printf('  %-10s %s\n', 'EachElem', cond(x, x.EachElem():list).__str__())

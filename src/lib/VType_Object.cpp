@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Object#__GetProp__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(Object, __GetProp__)
+// Object#__prop__(symbol:Symbol):map {block?}
+Gurax_DeclareMethod(Object, __prop__)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Gurax_DeclareMethod(Object, __GetProp__)
 		"Returns the value of the specified property.\n");
 }
 
-Gurax_ImplementMethod(Object, __GetProp__)
+Gurax_ImplementMethod(Object, __prop__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -49,6 +49,26 @@ Gurax_ImplementMethod(Object, __GetProp__)
 	RefPtr<Value> pValue(valueThis.DoGetProperty(pSymbol, argument.GetAttr(), false));
 	if (!pValue) return Value::nil();
 	return argument.ReturnValue(processor, pValue.release());
+}
+
+// Object#__str__()
+Gurax_DeclareClassMethod(Object, __str__)
+{
+	Declare(VTYPE_String, Flag::None);
+	StringStyle::DeclareAttrOpt(*this);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Converts the object to a string.\n");
+}
+
+Gurax_ImplementClassMethod(Object, __str__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Argument
+	StringStyle::Flags flags = StringStyle::ToFlags(argument);
+	// Function body
+	return new Value_String(valueThis.ToString(StringStyle(flags)));
 }
 
 // Object#Clone()
@@ -90,26 +110,6 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 	const VType& vtype = args.Pick<Value_VType>().GetVTypeThis();
 	// Function body
 	return new Value_Bool(valueThis.IsInstanceOf(vtype));
-}
-
-// Object#__str__()
-Gurax_DeclareClassMethod(Object, __str__)
-{
-	Declare(VTYPE_String, Flag::None);
-	StringStyle::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Converts the object to a string.\n");
-}
-
-Gurax_ImplementClassMethod(Object, __str__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Argument
-	StringStyle::Flags flags = StringStyle::ToFlags(argument);
-	// Function body
-	return new Value_String(valueThis.ToString(StringStyle(flags)));
 }
 
 //------------------------------------------------------------------------------
@@ -157,10 +157,10 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Object, __GetProp__));
+	Assign(Gurax_CreateMethod(Object, __prop__));
+	Assign(Gurax_CreateMethod(Object, __str__));
 	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
-	Assign(Gurax_CreateMethod(Object, __str__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Object, __id__));
 	Assign(Gurax_CreateProperty(Object, __vtype__));

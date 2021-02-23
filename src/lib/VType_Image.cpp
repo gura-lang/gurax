@@ -211,7 +211,7 @@ Gurax_DeclareMethod(Image, GetPixel)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns a pixel color at the specified position.\n");
 }
 
 Gurax_ImplementMethod(Image, GetPixel)
@@ -356,7 +356,7 @@ Gurax_DeclareMethod(Image, PutPixel)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Puts a pixel color at the specified position.\n");
 }
 
 Gurax_ImplementMethod(Image, PutPixel)

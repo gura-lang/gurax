@@ -17,7 +17,7 @@ Expr.PrintPUnitWithLabel(stream:Stream = sys.cout, strIndent:String = '  '):void
 }
 
 VType.PrintPropSlots(stream:Stream = sys.cout):void:static  = {
-	propSlots = this.__EachPropSlot__():list
+	propSlots = this.__propSlots__():list
 	wdSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
 	wdVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()
 	stream.Printf('%s\n', this.__fullName__)

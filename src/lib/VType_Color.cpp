@@ -307,7 +307,7 @@ Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 		if (!pSymbol) return nullptr;
 		const Color* pColor = Color::Lookup(pSymbol);
 		if (!pColor) {
-			Error::Issue(ErrorType::KeyError, "unknown color symbol");
+			Error::Issue(ErrorType::KeyError, "unknown color symbol: `%s", pSymbol->GetName());
 			return nullptr;
 		}
 		return new Value_Color(*pColor);
