@@ -94,7 +94,7 @@ public:
 public:
 	static Color* CreateFromString(const char* str, UInt8 alpha);
 public:
-	UInt32 GetPacked() const { return _packed; }
+	constexpr UInt32 GetPacked() const { return _packed; }
 	void SetPacked(UInt32 packed) { _packed = packed; }
 	UInt8 GetR() const { return _elem.r; }
 	UInt8 GetG() const { return _elem.g; }
@@ -104,26 +104,6 @@ public:
 	void SetG(UInt8 g) { _elem.g = g; }
 	void SetB(UInt8 b) { _elem.b = b; }
 	void SetA(UInt8 a) { _elem.a = a; }
-	UInt32 GetARGB() const {
-		return
-			(static_cast<UInt32>(GetA()) << 24) + (static_cast<UInt32>(GetR()) << 16) +
-			(static_cast<UInt32>(GetG()) << 8) + (static_cast<UInt32>(GetB()) << 0);
-	}
-	UInt32 GetABGR() const {
-		return
-			(static_cast<UInt32>(GetA()) << 24) + (static_cast<UInt32>(GetB()) << 16) +
-			(static_cast<UInt32>(GetG()) << 8) + (static_cast<UInt32>(GetR()) << 0);
-	}
-	UInt32 GetRGB() const {
-		return
-			(static_cast<UInt32>(GetR()) << 16) + (static_cast<UInt32>(GetG()) << 8) +
-			(static_cast<UInt32>(GetB()) << 0);
-	}
-	UInt32 GetBGR() const {
-		return
-			(static_cast<UInt32>(GetB()) << 16) + (static_cast<UInt32>(GetG()) << 8) +
-			(static_cast<UInt32>(GetR()) << 0);
-	}
 	Color GrayScale() const { return GrayScale(*this); }
 	static Color GrayScale(const Color& color) {
 		return GrayScale(color.GetR(), color.GetG(), color.GetB(), color.GetA());
@@ -145,13 +125,8 @@ public:
 	static const Color* Lookup(const char* name);
 	static const Color* Lookup(const Symbol* pSymbol);
 public:
-	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) {
-		return (static_cast<UInt32>(r) << 16) + (static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
-	}
-	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) {
-		return (static_cast<UInt32>(a) << 24) + (static_cast<UInt32>(r) << 16) +
-			(static_cast<UInt32>(g) << 8) + (static_cast<UInt32>(b) << 0);
-	}
+	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color(r, g, b).GetPacked(); }
+	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color(r, g, b, a).GetPacked(); }
 public:
 	int CalcDistSqu(UInt8 r, UInt8 g, UInt8 b) const { return CalcDistSqu(GetR(), GetG(), GetB(), r, g, b); }
 	int CalcDistSqu(const Color& color) const { return CalcDistSqu(color.GetR(), color.GetG(), color.GetB()); }

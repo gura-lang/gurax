@@ -50,8 +50,8 @@ public:
 	void Fill(const Color& color);
 	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
 	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }
-	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { _packedTbl[idx] = PackRGB(r, g, b); }
-	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { _packedTbl[idx] = PackRGBA(r, g, b, a); }
+	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { SetColor(idx, Color(r, g, b)); }
+	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { SetColor(idx, Color(r, g, b, a)); }
 	UInt32 GetPacked(size_t idx) const { return _packedTbl[idx]; }
 	Color GetColor(size_t idx) const { return Color(_packedTbl[idx]); }
 	Color GetColor(size_t idx, UInt8 a) const { return Color(_packedTbl[idx], a); }
