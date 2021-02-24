@@ -296,9 +296,8 @@ public:
 	int GetLoopCount() const { return _loopCount; }
 	void SetLoopCount(int loopCount) { _loopCount = loopCount; }
 	EntryOwner& GetEntries() { return _entries; }
-	void AddImage(const Image& image,
-			UInt16 imageLeftPosition, UInt16 imageTopPosition,
-			UInt16 delayTime, UInt8 disposalMethod);
+	void AddImage(const Image& image, UInt16 delayTime,
+			UInt16 imageLeftPosition, UInt16 imageTopPosition, UInt8 disposalMethod);
 	static bool ReadBuff(Stream& stream, void* buff, size_t bytes);
 	static bool WriteBuff(Stream& stream, const void* buff, size_t bytes);
 	static void Dump(UInt8* data, int bytes);

@@ -56,11 +56,15 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// gif.Content#AddImage(image:Image):reduce
+// gif.Content#AddImage(image:Image, delayTime?:Number, leftPos?:Number, topPos?:Number, disposalMethod?:Symbol):reduce:map
 Gurax_DeclareMethod(Content, AddImage)
 {
-	Declare(VTYPE_Content, Flag::Reduce);
+	Declare(VTYPE_Content, Flag::Reduce | Flag::Map);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("delayTime", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("leftPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("topPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("disposalMethod", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -73,12 +77,24 @@ Gurax_ImplementMethod(Content, AddImage)
 	// Arguments
 	ArgPicker args(argument);
 	Image& image = args.PickImage();
-	// Function body
-	UInt16 imageLeftPosition = 0;
-	UInt16 imageTopPosition = 0;
-	UInt16 delayTime = 0;
+	UInt16 delayTime = args.IsValid()? args.PickNumberNonNeg<UInt16>() : 0;
+	UInt16 imageLeftPosition = args.IsValid()? args.PickNumberNonNeg<UInt16>() : 0;
+	UInt16 imageTopPosition = args.IsValid()? args.PickNumberNonNeg<UInt16>() : 0;
 	UInt8 disposalMethod = Content::DisposalMethod::None;
-	valueThis.GetContent().AddImage(image, imageLeftPosition, imageTopPosition, delayTime, disposalMethod);
+	if (args.IsValid()) {
+		const Symbol* pSymbol = args.PickSymbol();
+		disposalMethod = 
+			pSymbol->IsIdentical(Gurax_Symbol(keep))? Content::DisposalMethod::Keep :
+			pSymbol->IsIdentical(Gurax_Symbol(background))? Content::DisposalMethod::Background :
+			pSymbol->IsIdentical(Gurax_Symbol(previous))? Content::DisposalMethod::Previous :
+			Content::DisposalMethod::None;
+		if (disposalMethod == Content::DisposalMethod::None) {
+			Error::Issue(ErrorType::SymbolError, "invalid symbol for disposalMethod");
+			return Value::nil();
+		}
+	}
+	// Function body
+	valueThis.GetContent().AddImage(image, delayTime, imageLeftPosition, imageTopPosition, disposalMethod);
 	return valueThis.Reference();
 }
 
