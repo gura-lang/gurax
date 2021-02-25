@@ -187,7 +187,9 @@ bool Content::Write(Stream& stream, const Color& colorBackground, bool validBack
 		ApplicationExtension::Data data;
 		UInt16 num = static_cast<UInt16>(_loopCount);
 		Gurax_PackUInt16(data.LoopCount, num);
-		if (!WriteBuff(stream, &applicationExtension, 4)) return false;
+		if (!WriteBuff(stream, &data, 4)) return false;
+		UInt8 blockSize = 0x00;
+		if (!WriteBuff(stream, &blockSize, 1)) return false;
 	}
 	for (Entry* pEntry : _entries) {
 		Image& image = pEntry->GetImage();
