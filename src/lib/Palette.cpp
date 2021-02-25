@@ -607,13 +607,15 @@ size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 	const UInt8* p = reinterpret_cast<const UInt8*>(_packedTbl.get());
 	int distMin = Color::CalcDistSqu(r, g, b,
 			Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
-	if (distMin == 0) return idxMin;
-	for (size_t idx = 1; idx < _n; idx++, p += sizeof(UInt32)) {
-		int dist = Color::CalcDistSqu(r, g, b,
-				Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
-		if (distMin > dist) {
-			if (dist == 0) return idx;
-			idxMin = idx, distMin = dist;
+	if (distMin > 0) {
+		for (size_t idx = 1; idx < _n; idx++) {
+			p += sizeof(UInt32);
+			int dist = Color::CalcDistSqu(r, g, b,
+					Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
+			if (distMin > dist) {
+				idxMin = idx, distMin = dist;
+				if (dist == 0) break;
+			}
 		}
 	}
 	return idxMin;
