@@ -87,7 +87,7 @@ public:
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
-	Value* Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags flags) const;
+	Value* Cast(const Value& value, const Symbol* pSymbol = nullptr, DeclArg::Flags flags = DeclArg::Flag::None) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrameOfMember().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }
@@ -120,8 +120,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VTypeMap : public Referable {
 public:
-	using Map = std::unordered_map<const Symbol*, VType*,
-						Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	using Map = std::unordered_map<const Symbol*, VType*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 private:
 	Map _map;
 public:

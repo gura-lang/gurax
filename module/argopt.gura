@@ -1,6 +1,25 @@
 #!/usr/bin/env gurax
 //==============================================================================
 // argopt.gura
+// Example:
+//   tmplHelp = tR'''
+//   usage: script [options]
+//   options:
+//     ${p.FormatHelp() + '\n'}
+//   '''
+//   argopt.Parser {|p|
+//       p.AddParam('param1', 'p', 'prints help')
+//       p.AddParam('param2', 'q', 'prints help')
+//       p.AddFlag('flag1', 'f', 'prints help')
+//       p.AddFlag('flag2', 'g', 'prints help')
+//       opt = nil
+//       try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+//       if (!opt) {
+//           tmplHelp.Render(sys.cerr)
+//           sys.Exit(1)
+//       }
+//   }
+//   Println(opt['param1'])
 //==============================================================================
 
 //------------------------------------------------------------------------------
