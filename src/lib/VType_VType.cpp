@@ -118,6 +118,18 @@ Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Any as VType
+Gurax_ImplementOpBinary(As, Any, VType)
+{
+	const VType& vtype = Value_VType::GetVTypeThis(valueR);
+	RefPtr<Value> pValueResult(vtype.Cast(valueL));
+	if (!pValueResult) return Value::undefined();
+	return pValueResult.release();
+}
+
+//------------------------------------------------------------------------------
 // VType_VType
 //------------------------------------------------------------------------------
 VType_VType VTYPE_VType("VType");
@@ -133,6 +145,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
+	// Assignment of operator
+	Gurax_AssignOpBinary(As, Any, VType);
 }
 
 //------------------------------------------------------------------------------
