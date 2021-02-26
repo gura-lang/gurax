@@ -20,6 +20,7 @@ public:
 	OpType opType;
 public:
 	static const TokenType Begin;
+	static const TokenType As;
 	static const TokenType Assign;
 	static const TokenType AssignAdd;
 	static const TokenType AssignSub;

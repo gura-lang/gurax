@@ -50,6 +50,10 @@ a |+| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|+|)
+a as b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(as)
 a in b
   ##0 Lookup(`a)
   ##1 Lookup(`b)

@@ -32,6 +32,7 @@ Operator* Operator::PostSeq			= new Operator(OpStyle::UnaryPost,		"PostSeq",		".
 Operator* Operator::Add				= new Operator(OpStyle::Binary,			"Add",			"+",			OpType::Add);
 Operator* Operator::And				= new Operator(OpStyle::Binary,			"And",			"&",			OpType::And);
 Operator* Operator::AndAnd			= new Operator_AndAnd();
+Operator* Operator::As				= new Operator(OpStyle::Binary,			"As",			"as",			OpType::As);
 Operator* Operator::Cmp				= new Operator(OpStyle::Binary,			"Cmp",			"<=>",			OpType::Cmp);
 Operator* Operator::Concat			= new Operator(OpStyle::Binary,			"Concat",		"|+|",			OpType::Concat, Operator::Flag::NoMap);
 Operator* Operator::Contains		= new Operator(OpStyle::Binary,			"Contains",		"in",			OpType::Contains, Operator::Flag::NoMap);

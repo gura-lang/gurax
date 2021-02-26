@@ -74,6 +74,7 @@ enum class OpType {
 	Add,
 	And,
 	AndAnd,
+	As,
 	Cmp,
 	Concat,
 	Contains,
@@ -253,6 +254,7 @@ public:
 	static Operator* Add;
 	static Operator* And;
 	static Operator* AndAnd;
+	static Operator* As;
 	static Operator* Cmp;
 	static Operator* Concat;
 	static Operator* Contains;

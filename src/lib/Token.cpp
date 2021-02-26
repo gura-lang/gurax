@@ -27,6 +27,7 @@ const TokenType TokenType::Pair				{  2, "Pair",			"=>",		OpType::Pair	};
 const TokenType TokenType::OrOr				{  4, "OrOr",			"||",		OpType::OrOr	};	// ||
 const TokenType TokenType::AndAnd			{  5, "AndAnd",			"&&",		OpType::AndAnd	};	// &&
 const TokenType TokenType::Not				{  6, "Not",			"!",		OpType::Not		};	// !
+const TokenType TokenType::As				{  7, "As",				"as",		OpType::As		};	// as
 const TokenType TokenType::Contains			{  7, "Contains",		"in",		OpType::Contains };	// in
 const TokenType TokenType::Lt				{  8, "Lt",				"<",		OpType::Lt		};	// <
 const TokenType TokenType::Gt				{  8, "Gt",				">",		OpType::Gt		};

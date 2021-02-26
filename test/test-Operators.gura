@@ -18,6 +18,7 @@ TestCase('PUnit') {
 		`(a && b)
 		`(a <=> b)
 		`(a |+| b)
+		`(a as b)
 		`(a in b)
 		`(a |^| b)
 		`(a |-| b)

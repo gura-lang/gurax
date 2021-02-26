@@ -755,11 +755,14 @@ void Tokenizer::FeedChar(char ch)
 				_stat = Stat::Error;
 			}
 		} else {
-			if (_segment == "in" && !GetTokenStack().back()->IsType(TokenType::Quote)) {
-				int lineNo = GetLineNo();
+			int lineNo = GetLineNo();
+			if (GetTokenStack().back()->IsType(TokenType::Quote)) {
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, _lineNoTop, lineNo, _segment));
+			} else if (_segment == "in") {
 				_tokenWatcher.FeedToken(new Token(TokenType::Contains, _lineNoTop, lineNo));
+			} else if (_segment == "as") {
+				_tokenWatcher.FeedToken(new Token(TokenType::As, _lineNoTop, lineNo));
 			} else {
-				int lineNo = GetLineNo();
 				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, _lineNoTop, lineNo, _segment));
 			}
 			Gurax_PushbackEx(ch);

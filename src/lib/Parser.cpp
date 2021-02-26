@@ -474,6 +474,9 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::Cmp)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr <=> Expr\n"));
 			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cmp));
+		} else if (pToken2->IsType(TokenType::As)) {
+			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr as Expr\n"));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::As));
 		} else if (pToken2->IsType(TokenType::Contains)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr in Expr\n"));
 			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Contains));

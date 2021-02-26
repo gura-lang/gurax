@@ -625,6 +625,7 @@ Gurax_RealizeSymbol(zip);
 //------------------------------------------------------------------------------
 // Predefined Symbol Marks
 //------------------------------------------------------------------------------
+Gurax_RealizeSymbolMark(As,					"as");
 Gurax_RealizeSymbolMark(Assign,				"=");
 Gurax_RealizeSymbolMark(AssignAdd,			"+=");
 Gurax_RealizeSymbolMark(AssignSub,			"-=");
