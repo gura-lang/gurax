@@ -348,11 +348,11 @@ options:
 //------------------------------------------------------------------------------
 main() = {
 	argopt.Parser {|p|
-		p.AddFlag('help', 'h', 'prints help')
-		p.AddFlag('pointer', 'p', 'entity as a pointer')
-		p.AddFlag('entity', 'e', 'generates entity class')
-		p.AddFlag('vtype', 'v', 'generates VType')
-		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
+		p.OptBool('help', 'h', 'prints help')
+		p.OptBool('pointer', 'p', 'entity as a pointer')
+		p.OptBool('entity', 'e', 'generates entity class')
+		p.OptBool('vtype', 'v', 'generates VType')
+		p.OptBool('force', 'f', 'forcibly overwrites existing files')
 		opt = nil
 		try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
 		if (!opt || argv.len < 1 || opt['help']) {

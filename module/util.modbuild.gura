@@ -192,13 +192,13 @@ Builder = class {
 	}
 	Run() = {
 		[argv, this.opt] = argopt.Parser {|p|
-			p.AddFlag('help',		'h', 'print this help')
-			p.AddFlag('verbose',	'v', 'verbose mode')
-			p.AddFlag('quiet',		'q', 'quiet mode')
-			p.AddParam('incdir',	'I', 'include directory', 'DIR')
-			p.AddParam('libdir',	'L', 'library directory', 'DIR')
-			p.AddParam('moddir',	'M', 'directory to which module files are installed', 'DIR')
-			p.AddParam('basedir',	'B', 'base directory for output', 'DIR')
+			p.OptBool('help',		'h', 'print this help')
+			p.OptBool('verbose',	'v', 'verbose mode')
+			p.OptBool('quiet',		'q', 'quiet mode')
+			p.OptString('incdir',	'I', 'include directory', 'DIR')
+			p.OptString('libdir',	'L', 'library directory', 'DIR')
+			p.OptString('moddir',	'M', 'directory to which module files are installed', 'DIR')
+			p.OptString('basedir',	'B', 'base directory for output', 'DIR')
 			try {
 				[argv, opt] = p.Parse(sys.argv)
 			} catch {|e|

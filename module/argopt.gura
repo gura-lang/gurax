@@ -8,10 +8,10 @@
 //     ${p.FormatHelp() + '\n'}
 //   '''
 //   argopt.Parser {|p|
-//       p.AddParam('param1', 'p', 'prints help')
-//       p.AddParam('param2', 'q', 'prints help')
-//       p.AddFlag('flag1', 'f', 'prints help')
-//       p.AddFlag('flag2', 'g', 'prints help')
+//       p.OptString('param1', 'p', 'help for param1')
+//       p.OptString('param2', 'q', 'help for param2')
+//       p.OptBool('flag1', 'f', 'help for flag1')
+//       p.OptBool('flag2', 'g', 'help for flag2')
 //       opt = nil
 //       try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
 //       if (!opt) {
@@ -47,7 +47,7 @@ Entry = struct {
 			str += '--'
 			str += this.longName
 		}
-		if (this.type == `flag) {
+		if (this.type == `Bool) {
 			// nothing to do
 		} else {
 			if (longNameFlag && this.longName) {
@@ -85,22 +85,30 @@ Parser = class {
 				[longName, value] = cond(fields.len == 1, [fields[0], nil], fields)
 				entry = dictByLongName.Get(longName)
 				!entry && Error.Raise(Error.CommandError, 'unknown option: --%s', longName)
-				if (entry.type == `param) {
-					!value && Error.Raise(Error.CommandError, 'value must be specified')
-					opt[entry.longName] = value
-				} else { // entry.type == `flag
+				if (entry.type == `Bool) {
 					value && Error.Raise(Error.CommandError, 'value is unnecessary')
 					opt[entry.longName] = true
+				} else {
+					!value && Error.Raise(Error.CommandError, 'value must be specified')
+					if (entry.type == `Int) {
+						opt[entry.longName] = Int(value)
+					} else { // entry.type == `String
+						opt[entry.longName] = value
+					}
 				}
 			} elsif (shortName = arg.StartsWith('-'):rest) {
 				entry = dictByShortName.Get(shortName)
 				!entry && Error.Raise(Error.CommandError, 'unknown option: -%s', shortName)
-				if (entry.type == `param) {
+				if (entry.type == `Bool) {
+					opt[entry.longName] = true
+				} else {
 					value = iter.NextValue()
 					!value && Error.Raise(Error.CommandError, 'value must be specified')
-					opt[entry.longName] = value
-				} else { // entry.type == `flag
-					opt[entry.longName] = true
+					if (entry.type == `Int) {
+						opt[entry.longName] = Int(value)
+					} else { // entry.type == `String
+						opt[entry.longName] = value
+					}
 				}
 			} else {
 				argvRest.Add(arg)
@@ -108,11 +116,14 @@ Parser = class {
 		}
 		[argvRest, opt]
 	}
-	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String) = {
-		this.entries.Add(Entry(`param, longName, shortName, help, helpValue))
+	OptBool(longName:String, shortName?:String, help?:String) = {
+		this.entries.Add(Entry(`Bool, longName, shortName, help, nil))
 	}
-	AddFlag(longName:String, shortName?:String, help?:String) = {
-		this.entries.Add(Entry(`flag, longName, shortName, help, nil))
+	OptInt(longName:String, shortName?:String, help?:String, helpValue?:String) = {
+		this.entries.Add(Entry(`Int, longName, shortName, help, helpValue))
+	}
+	OptString(longName:String, shortName?:String, help?:String, helpValue?:String) = {
+		this.entries.Add(Entry(`String, longName, shortName, help, helpValue))
 	}
 	FormatHelp(longNameFlag:Bool = true, shortNameFlag:Bool = true) = {
 		indices = this.entries::MakeHelpIndex(longNameFlag, shortNameFlag)

@@ -214,9 +214,9 @@ options:
 //------------------------------------------------------------------------------
 main() = {
 	argopt.Parser {|p|
-		p.AddFlag('portable', 'p', 'creates a portable build environment')
-		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
-		p.AddFlag('here', 'h', 'create files in the current directory')
+		p.OptBool('portable', 'p', 'creates a portable build environment')
+		p.OptBool('force', 'f', 'forcibly overwrites existing files')
+		p.OptBool('here', 'h', 'create files in the current directory')
 		[argv, opt] = p.Parse(sys.argv)
 		if (argv.len < 1) {
 			tmplHelp.Render(sys.cerr)

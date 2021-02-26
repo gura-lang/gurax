@@ -20,7 +20,7 @@ PrintEdits(edits[]:diff.Edit) = {
 
 main() = {
 	argopt.Parser {|p|
-		p.AddFlag('detail', 'd')
+		p.OptBool('detail', 'd')
 		errorFlag = false
 		try {
 			[argv, cfg] = p.Parse(sys.argv)

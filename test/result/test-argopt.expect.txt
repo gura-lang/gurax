@@ -1,30 +1,43 @@
--a, --flag-a     help-a
--b, --flag-b     help-b
--c, --flag-c     help-c
--d, --flag-d     help-d
--e, --flag-e     help-e
--A, --param-A=X  help-A
--B, --param-B=X  help-B
--C, --param-C=X  help-C
--D, --param-D=X  help-D
--E, --param-E=X  help-E
-[''] -> [''], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['file1'] -> ['file1'], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['file1', 'file2', 'file3'] -> ['file1', 'file2', 'file3'], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--flag-a'] -> [], %{'flag-a' => true, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-a'] -> [], %{'flag-a' => true, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--flag-a', '--flag-b'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-a', '-b'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--flag-a', '--flag-b', '--flag-c', '--flag-d', '--flag-e'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-a', '-b', '-c', '-d', '-e'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--flag-a', '--flag-a'] -> [], %{'flag-a' => true, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-a', '-a'] -> [], %{'flag-a' => true, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['file1', '--flag-a', 'file2', '--flag-b', '--flag-c', 'file3', '--flag-d', '--flag-e', 'file4'] -> ['file1', 'file2', 'file3', 'file4'], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true, 'param-A' => <Nil>, 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--param-A=value-A'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-A', 'value-A'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => <Nil>, 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--param-A=value-A', '--param-B=vaue-B'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => 'vaue-B', 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['-A', 'value-A', '-B', 'value-B'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => 'value-B', 'param-C' => <Nil>, 'param-D' => <Nil>, 'param-E' => <Nil>}
-['--param-A=value-A', '--param-B=value-B', '--param-C=value-C', '--param-D=value-D', '--param-E=value-E'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => 'value-B', 'param-C' => 'value-C', 'param-D' => 'value-D', 'param-E' => 'value-E'}
-['-A', 'value-A', '-B', 'value-B', '-C', 'value-C', '-D', 'value-D', '-E', 'value-E'] -> [], %{'flag-a' => <Nil>, 'flag-b' => <Nil>, 'flag-c' => <Nil>, 'flag-d' => <Nil>, 'flag-e' => <Nil>, 'param-A' => 'value-A', 'param-B' => 'value-B', 'param-C' => 'value-C', 'param-D' => 'value-D', 'param-E' => 'value-E'}
-['--param-A'] -> ** value must be specified **
-['--flag-a=value'] -> ** value is unnecessary **
+-a, --bool-a      help-a
+-b, --bool-b      help-b
+-c, --bool-c      help-c
+-d, --bool-d      help-d
+-e, --bool-e      help-e
+-A, --string-A=X  help-A
+-B, --string-B=X  help-B
+-C, --string-C=X  help-C
+-D, --string-D=X  help-D
+-E, --string-E=X  help-E
+-F, --int-F=X     help-F
+-G, --int-G=X     help-G
+-H, --int-H=X     help-H
+-I, --int-I=X     help-I
+-J, --int-J=X     help-J
+[''] -> [''], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['file1'] -> ['file1'], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['file1', 'file2', 'file3'] -> ['file1', 'file2', 'file3'], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--bool-a'] -> [], %{'bool-a' => true, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-a'] -> [], %{'bool-a' => true, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--bool-a', '--bool-b'] -> [], %{'bool-a' => true, 'bool-b' => true, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-a', '-b'] -> [], %{'bool-a' => true, 'bool-b' => true, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--bool-a', '--bool-b', '--bool-c', '--bool-d', '--bool-e'] -> [], %{'bool-a' => true, 'bool-b' => true, 'bool-c' => true, 'bool-d' => true, 'bool-e' => true, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-a', '-b', '-c', '-d', '-e'] -> [], %{'bool-a' => true, 'bool-b' => true, 'bool-c' => true, 'bool-d' => true, 'bool-e' => true, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--bool-a', '--bool-a'] -> [], %{'bool-a' => true, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-a', '-a'] -> [], %{'bool-a' => true, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['file1', '--bool-a', 'file2', '--bool-b', '--bool-c', 'file3', '--bool-d', '--bool-e', 'file4'] -> ['file1', 'file2', 'file3', 'file4'], %{'bool-a' => true, 'bool-b' => true, 'bool-c' => true, 'bool-d' => true, 'bool-e' => true, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--string-A=value-A'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-A', 'value-A'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--string-A=value-A', '--string-B=vaue-B'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => 'vaue-B', 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-A', 'value-A', '-B', 'value-B'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => 'value-B', 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--string-A=value-A', '--string-B=value-B', '--string-C=value-C', '--string-D=value-D', '--string-E=value-E'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => 'value-B', 'string-C' => 'value-C', 'string-D' => 'value-D', 'string-E' => 'value-E'}
+['-A', 'value-A', '-B', 'value-B', '-C', 'value-C', '-D', 'value-D', '-E', 'value-E'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => <Nil>, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => 'value-A', 'string-B' => 'value-B', 'string-C' => 'value-C', 'string-D' => 'value-D', 'string-E' => 'value-E'}
+['--string-A'] -> ** value must be specified **
+['--bool-a=value'] -> ** value is unnecessary **
+['--int-F=1111'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--int-F=1111', '--int-G=2222'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => 2222, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--int-F=1111', '--int-G=2222', '--int-H=3333', '--int-I=4444', '--int-J=5555'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => 2222, 'int-H' => 3333, 'int-I' => 4444, 'int-J' => 5555, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-F', '1111'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-F', '1111', '-G', '2222'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => 2222, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['-F', '1111', '-G', '2222', '-H', '3333', '-I', '4444', '-J', '5555'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 1111, 'int-G' => 2222, 'int-H' => 3333, 'int-I' => 4444, 'int-J' => 5555, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
+['--int-F=1a111'] -> ** failed to convert to a number **
+['--int-F=0xffa3'] -> [], %{'bool-a' => <Nil>, 'bool-b' => <Nil>, 'bool-c' => <Nil>, 'bool-d' => <Nil>, 'bool-e' => <Nil>, 'int-F' => 65443, 'int-G' => <Nil>, 'int-H' => <Nil>, 'int-I' => <Nil>, 'int-J' => <Nil>, 'string-A' => <Nil>, 'string-B' => <Nil>, 'string-C' => <Nil>, 'string-D' => <Nil>, 'string-E' => <Nil>}
