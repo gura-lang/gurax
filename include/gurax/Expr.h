@@ -186,13 +186,13 @@ public:
 	virtual DeclCallable* RetrieveDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
-	virtual void ComposeWithinClass(Composer& composer, bool publicFlag);
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag);
 	virtual void ComposeWithinLister(Composer& composer);
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp);
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp);
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag);
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag);
 	virtual void ComposeWithinArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
@@ -298,7 +298,7 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
-	void ComposeWithinClass(Composer& composer, bool publicFlag) const;
+	void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) const;
 	void ComposeWithinArgSlot(Composer& composer) const;
 	Iterator* CreateIterator() const;
 };
@@ -574,12 +574,12 @@ public:
 	virtual const Symbol* GetPureSymbol() const override { return HasAttr()? nullptr : _pSymbol; }
 	virtual DeclCallable* RetrieveDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -706,6 +706,7 @@ public:
 	}
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -732,7 +733,7 @@ public:
 	virtual bool DoPrepare() override;
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const override;
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
@@ -868,9 +869,9 @@ public:
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
-	virtual void ComposeWithinClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -923,11 +924,11 @@ public:
 		return true;
 	}
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeWithinClass(Composer& composer, bool publiclFlag) override;
+	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publiclFlag) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp) override;
 	virtual void ComposeWithinAssignmentInClass(
-		Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag) override;
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 public:

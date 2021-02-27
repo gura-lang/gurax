@@ -142,7 +142,7 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	// [Value]
 }
 
-void Expr::ComposeWithinClass(Composer& composer, bool publicFlag)
+void Expr::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
@@ -165,7 +165,7 @@ void Expr::ComposeWithinAssignment(
 }
 
 void Expr::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -265,10 +265,10 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
-void ExprLink::ComposeWithinClass(Composer& composer, bool publicFlag) const
+void ExprLink::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) const
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeWithinClass(composer, publicFlag);
+		pExpr->ComposeWithinClass(composer, pDottedSymbol.Reference(), publicFlag);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
 	}
@@ -543,7 +543,7 @@ void Expr_Identifier::ComposeWithinAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 }
 
-void Expr_Identifier::ComposeWithinClass(Composer& composer, bool publicFlag)
+void Expr_Identifier::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
 	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), false, *this);
@@ -551,7 +551,7 @@ void Expr_Identifier::ComposeWithinClass(Composer& composer, bool publicFlag)
 }
 	
 void Expr_Identifier::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -777,6 +777,15 @@ void Expr_BinaryOp::ComposeWithinLister(Composer& composer)
 	}
 }
 
+void Expr_BinaryOp::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
+{
+	if (GetOperator()->IsType(OpType::As)) {
+
+	} else {
+		Expr_Binary::ComposeWithinLister(composer);								// [List]
+	}
+}
+
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
 	String str;
@@ -843,9 +852,10 @@ void Expr_Assign::Compose(Composer& composer)
 	GetExprLeft().ComposeWithinAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
-void Expr_Assign::ComposeWithinClass(Composer& composer, bool publicFlag)
+void Expr_Assign::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
-	GetExprLeft().ComposeWithinAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
+	GetExprLeft().ComposeWithinAssignmentInClass(
+		composer, GetExprRight(), GetOperator(), pDottedSymbol.release(), publicFlag); // [Assigned]
 }
 
 void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
@@ -1198,7 +1208,7 @@ void Expr_Indexer::ComposeWithinAssignment(
 	}
 }
 
-void Expr_Indexer::ComposeWithinClass(Composer& composer, bool publicFlag)
+void Expr_Indexer::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1212,7 +1222,7 @@ void Expr_Indexer::ComposeWithinClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Indexer::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1293,7 +1303,7 @@ void Expr_Caller::Compose(Composer& composer)
 	composer.Add_Call(*this);													// [Result]
 }
 
-void Expr_Caller::ComposeWithinClass(Composer& composer, bool publicFlag)
+void Expr_Caller::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	const char* errMsg = "invalid class definition";
 	if (!GetExprCar().IsType<Expr_Identifier>()) {
@@ -1305,7 +1315,7 @@ void Expr_Caller::ComposeWithinClass(Composer& composer, bool publicFlag)
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, true);
+	GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, pDottedSymbol.release(), true);
 }
 
 void Expr_Caller::ComposeWithinAssignment(
@@ -1336,7 +1346,7 @@ void Expr_Caller::ComposeWithinAssignment(
 }
 
 void Expr_Caller::ComposeWithinAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, Operator* pOp, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,

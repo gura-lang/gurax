@@ -48,6 +48,17 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		pExpr = &pExprEx->GetExprLeft();
 		pExprDefault.reset(pExprEx->GetExprRight().Reference());
 	}
+	if (pExpr->IsType<Expr_BinaryOp>()) {
+		const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
+		Operator* pOp = pExprEx->GetOperator();
+		pExpr = &pExprEx->GetExprLeft();
+		if (pOp->IsType(OpType::As)) {
+			pDottedSymbol.reset(DottedSymbol::CreateFromExpr(pExprEx->GetExprRight()));
+		} else {
+			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
+			return nullptr;
+		}
+	}
 	if (pExpr->IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 		Operator* pOp = pExprEx->GetOperator();
@@ -100,22 +111,24 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
 		return nullptr;
 	}
-	pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
-	bool firstFlag = true;
-	for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-		Flags flag = SymbolToFlag(pSymbol);
-		flags |= flag;
-		if (flag) {
-			if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
-				pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+	if (!pDottedSymbol) {
+		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
+		bool firstFlag = true;
+		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
+			Flags flag = SymbolToFlag(pSymbol);
+			flags |= flag;
+			if (flag) {
+				if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
+					pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+				}
+			} else {
+				if (!firstFlag) {
+					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+					return nullptr;
+				}
 			}
-		} else {
-			if (!firstFlag) {
-				Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
-				return nullptr;
-			}
+			firstFlag = false;
 		}
-		firstFlag = false;
 	}
 	return pVType?
 		new DeclArg(pSymbol, *pVType, *pOccur, flags, pExprDefault.release()) :
