@@ -522,8 +522,8 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 						 "operator can not be applied in lister assigment");
 		return;
 	}
-	bool externFlag = false, castFlag = false;
-	if (!ParseAttr(&externFlag, &castFlag)) return;
+	bool externFlag = false;
+	if (!ParseAttr(&externFlag)) return;
 	composer.Add_AssignToSymbol(GetSymbol(), externFlag, *this);				// [Assigned]
 	composer.FlushDiscard();
 }
@@ -531,8 +531,8 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 void Expr_Identifier::ComposeWithinAssignment(
 	Composer& composer, Expr& exprAssigned, Operator* pOp)
 {
-	bool externFlag = false, castFlag = false;
-	if (!ParseAttr(&externFlag, &castFlag)) return;
+	bool externFlag = false;
+	if (!ParseAttr(&externFlag)) return;
 	if (pOp) {
 		composer.Add_Lookup(GetSymbol(), *this);								// [Any]
 		exprAssigned.ComposeOrNil(composer);									// [Any Right]
@@ -597,12 +597,9 @@ bool Expr_Identifier::IsEqualTo(const Expr& expr) const
 	return GetSymbol()->IsIdentical(exprEx.GetSymbol());
 }
 
-bool Expr_Identifier::ParseAttr(bool* pExternFlag, bool* pCastFlag) const
+bool Expr_Identifier::ParseAttr(bool* pExternFlag) const
 {
 	*pExternFlag = false;
-	*pCastFlag = false;
-	//bool castFlag = GetAttr().HasDottedSymbol() &&
-	//			!GetAttr().GetDottedSymbol().IsEqualTo(Gurax_Symbol(extern_));
 	for (const Symbol* pSymbol : GetAttr().GetSymbols()) {
 		if (pSymbol->IsIdentical(Gurax_Symbol(extern_))) {
 			*pExternFlag = true;

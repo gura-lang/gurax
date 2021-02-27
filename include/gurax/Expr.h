@@ -589,7 +589,7 @@ public:
 	virtual const Symbol* InspectSymbol() const override { return _pSymbol; }
 	virtual const Attribute* InspectAttr() const override { return &GetAttr(); }
 private:
-	bool ParseAttr(bool* pExternFlag, bool* pCastFlag) const;
+	bool ParseAttr(bool* pExternFlag) const;
 };
 
 //------------------------------------------------------------------------------
