@@ -173,13 +173,13 @@ a.ds .. %{'apple' => 100, 'grape' => 200, 'orange' => 80}
 A.ds .. %{'apple' => 100, 'grape' => 230, 'orange' => 80}
 a.ds .. %{'apple' => 100, 'grape' => 230, 'orange' => 80}
 ======== Error in Property Declaration ========
-A = class {a:Number = 'hello'} .. a can't cast from String to Number
-A = class {a:Number = nil} .. <VType:A(){block?}>
+A = class {a as Number = 'hello'} .. a can't cast from String to Number
+A = class {a as Number = nil} .. <VType:A(){block?}>
 A = class {a[] = nil} .. <VType:A(){block?}>
 A = class {a[] = 3} .. must be initialized by a list
 A = class {a[] = []} .. <VType:A(){block?}>
-A = class {a[]:Number = []} .. <VType:A(){block?}>
-A = class {a[]:Number = ['h']} .. a can't cast from String to Number
+A = class {a[] as Number = []} .. <VType:A(){block?}>
+A = class {a[] as Number = ['h']} .. a can't cast from String to Number
 ======== Example ========
 <VType:Person(name:String,age:Number){block?}>
 Taro is 10 years old.

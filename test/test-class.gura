@@ -30,7 +30,7 @@ TestCase('Constructor') {
 
 TestCase('Destructor') {
 	A = class {
-		name:String
+		name as String
 		__init__(name:String):map = { this.name = name }
 		__del__() = Printf('%s was destroyed\n', this.name)
 	}
@@ -44,69 +44,69 @@ TestCase('Property Declaration') {
 	A = class {
 		//--------
 		a1
-		a2:Number
-		a3:String
+		a2 as Number
+		a3 as String
 		a4 = 3
 		a5 = 'hello'
-		a6:Number = 3
-		a7:String = 'hello'
-		a8:Number:nil = 3
-		a9:String:nil = 'hello'
+		a6 as Number = 3
+		a7 as String = 'hello'
+		a8:nil as Number = 3
+		a9:nil as String = 'hello'
 		//--------
 		b1[]
-		b2[]:Number
-		b3[]:String
+		b2[] as Number
+		b3[] as String
 		b4[] = [3, 1, 4, 1, 5, 9]
 		b5[] = ['apple', 'orange', 'grape']
 		b6[] = [3, 1, 4, 'apple', 1, 6, 9]
-		b7[]:Any = [3, 1, 4, 1, 6, 9]
-		b8[]:Number = [3, 1, 4, 1, 5, 9]
-		b9[]:String = ['apple', 'orange', 'grape']
-		b10[]:Number:nil = [3, 1, 4, 1, 5, 9]
-		b11[]:String:nil = ['apple', 'orange', 'grape']
+		b7[] as Any = [3, 1, 4, 1, 6, 9]
+		b8[] as Number = [3, 1, 4, 1, 5, 9]
+		b9[] as String = ['apple', 'orange', 'grape']
+		b10[]:nil as Number = [3, 1, 4, 1, 5, 9]
+		b11[]:nil as String = ['apple', 'orange', 'grape']
 		//--------
 		c1:public
-		c2:Number:public
-		c3:String:public
-		c4:Number:public = 3
-		c5:String:public = 'hello'
-		c6:Number:nil:public = 3
-		c7:String:nil:public = 'hello'
+		c2:public as Number
+		c3:public as String
+		c4:public as Number = 3
+		c5:public as String = 'hello'
+		c6:nil:public as Number = 3
+		c7:nil:public as String = 'hello'
 		//--------
 		d1[]:public
-		d2[]:Number:public
-		d3[]:String:public
+		d2[]:public as Number
+		d3[]:public as String
 		d4[]:public = [3, 1, 4, 1, 5, 9]
 		d5[]:public = ['apple', 'orange', 'grape']
 		d6[]:public = [3, 1, 4, 'apple', 1, 6, 9]
-		d7[]:Any = [3, 1, 4, 1, 6, 9]
-		d8[]:Number:public = [3, 1, 4, 1, 5, 9]
-		d9[]:String:public = ['apple', 'orange', 'grape']
-		d10[]:Number:nil:public = [3, 1, 4, 1, 5, 9]
-		d11[]:String:nil:public = ['apple', 'orange', 'grape']
+		d7[] as Any = [3, 1, 4, 1, 6, 9]
+		d8[]:public as Number = [3, 1, 4, 1, 5, 9]
+		d9[]:public as String = ['apple', 'orange', 'grape']
+		d10[]:nil:public as Number = [3, 1, 4, 1, 5, 9]
+		d11[]:nil:public as String = ['apple', 'orange', 'grape']
 		//--------
 		public {
 			e1
-			e2:Number
-			e3:String
-			e4:Number = 3
-			e5:String = 'hello'
-			e6:Number:nil = 3
-			e7:String:nil = 'hello'
+			e2 as Number
+			e3 as String
+			e4 as Number = 3
+			e5 as String = 'hello'
+			e6:nil as Number = 3
+			e7:nil as String = 'hello'
 		}
 		//--------
 		public {
 			f1[]
-			f2[]:Number
-			f3[]:String
+			f2[] as Number
+			f3[] as String
 			f4[] = [3, 1, 4, 1, 5, 9]
 			f5[] = ['apple', 'orange', 'grape']
 			f6[] = [3, 1, 4, 'apple', 1, 6, 9]
-			f7[]:Any = [3, 1, 4, 1, 6, 9]
-			f8[]:Number = [3, 1, 4, 1, 5, 9]
-			f9[]:String = ['apple', 'orange', 'grape']
-			f10[]:Number:nil = [3, 1, 4, 1, 5, 9]
-			f11[]:String:nil = ['apple', 'orange', 'grape']
+			f7[] as Any = [3, 1, 4, 1, 6, 9]
+			f8[] as Number = [3, 1, 4, 1, 5, 9]
+			f9[] as String = ['apple', 'orange', 'grape']
+			f10[]:nil as Number = [3, 1, 4, 1, 5, 9]
+			f11[]:nil as String = ['apple', 'orange', 'grape']
 		}
 	}
 	Println('--------')
@@ -178,12 +178,12 @@ TestCase('Property Access') {
 			a1
 			n1 = 3
 			n2:nil = 3
-			n3:Number
-			n4:Number = 3
+			n3 as Number
+			n4 as Number = 3
 			s1 = 'hello'
 			s2:nil = 'hello'
-			s3:String
-			s4:String = 'hello'
+			s3 as String
+			s4 as String = 'hello'
 		}
 	}
 	a = A()
@@ -232,12 +232,12 @@ TestCase('Constant Property') {
 			a1:const
 			n1:const = 3
 			n2:nil:const = 3
-			n3:Number:const
-			n4:Number:const = 3
+			n3:const as Number
+			n4:const as Number = 3
 			s1:const = 'hello'
 			s2:nil:const = 'hello'
-			s3:String:const
-			s4:String:const = 'hello'
+			s3:const as String
+			s4:const as String = 'hello'
 		}
 	}
 	Tester(`A.__propSlot__(`a1))
@@ -332,13 +332,13 @@ TestCase('Dict as Property') {
 }
 
 TestCase('Error in Property Declaration') {
-	Tester(`(A = class { a:Number = 'hello' }))
-	Tester(`(A = class { a:Number = nil }))
+	Tester(`(A = class { a as Number = 'hello' }))
+	Tester(`(A = class { a as Number = nil }))
 	Tester(`(A = class { a[] = nil }))
 	Tester(`(A = class { a[] = 3 }))
 	Tester(`(A = class { a[] = [] }))
-	Tester(`(A = class { a[]:Number = [] }))
-	Tester(`(A = class { a[]:Number = ['h'] }))
+	Tester(`(A = class { a[] as Number = [] }))
+	Tester(`(A = class { a[] as Number = ['h'] }))
 }
 
 TestCase('Example') {

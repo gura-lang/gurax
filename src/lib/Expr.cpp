@@ -796,7 +796,13 @@ void Expr_BinaryOp::ComposeWithinArgSlot(Composer& composer)
 void Expr_BinaryOp::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
-	Expr_Binary::ComposeWithinAssignmentInClass(composer, exprAssigned, pOp, pDottedSymbol.release(), publicFlag);
+	if (GetOperator()->IsType(OpType::As)) {
+		pDottedSymbol.reset(DottedSymbol::CreateFromExpr(GetExprRight()));
+		if (!pDottedSymbol) return;
+		GetExprLeft().ComposeWithinAssignmentInClass(composer, exprAssigned, pOp, pDottedSymbol.release(), publicFlag);
+	} else {
+		Expr_Binary::ComposeWithinAssignmentInClass(composer, exprAssigned, pOp, pDottedSymbol.release(), publicFlag);
+	}
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const

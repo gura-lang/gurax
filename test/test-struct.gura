@@ -14,9 +14,9 @@ TestCase('Empty') {
 TestCase('Constructor') {
 	A = struct {
 		p1
-		p2:Number
-		p3:String
-		p4:DateTime
+		p2 as Number
+		p3 as String
+		p4 as DateTime
 		p5 = nil
 		p6 = 3
 		p7 = 'P7'
@@ -33,9 +33,9 @@ TestCase('Constructor') {
 TestCase('Default Value for Property') {
 	A = struct {
 		p1 = 'P1'
-		p2:String
+		p2 as String
 		p3 = 'P3'
-		p4:String
+		p4 as String
 		Format() = [this.p1, this.p2, this.p3, this.p4].Join(', '):nilVisible
 	}
 	Println(A)
