@@ -31,7 +31,7 @@ TestCase('Constructor') {
 TestCase('Destructor') {
 	A = class {
 		name as String
-		__init__(name:String):map = { this.name = name }
+		__init__(name as String):map = { this.name = name }
 		__del__() = Printf('%s was destroyed\n', this.name)
 	}
 	Tester(`A)
@@ -345,7 +345,7 @@ TestCase('Example') {
 	Person = class {
 		name = ''
 		age = 0
-		__init__(name:String, age:Number) = {
+		__init__(name as String, age as Number) = {
 			this.name = name
 			this.age = age
 		}
