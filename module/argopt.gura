@@ -26,12 +26,12 @@
 // Entry
 //------------------------------------------------------------------------------
 Entry = struct {
-	type:Symbol = `none
-	longName:String = ''
-	shortName:String:nil
-	help:String:nil
-	helpValue:String:nil
-	MakeHelpIndex(longNameFlag:Bool, shortNameFlag:Bool) = {
+	type as Symbol = `none
+	longName as String = ''
+	shortName:nil as String
+	help:nil as String
+	helpValue:nil as String
+	MakeHelpIndex(longNameFlag as Bool, shortNameFlag as Bool) = {
 		str = ''
 		if (!shortNameFlag) {
 			strSep = ''
@@ -65,8 +65,8 @@ Entry = struct {
 // Parser
 //------------------------------------------------------------------------------
 Parser = class {
-	entries[]:Entry = []
-	Parse(argv[]:String) = {
+	entries[] as Entry = []
+	Parse(argv[] as String) = {
 		dictByLongName = %{}
 		dictByShortName = %{}
 		dictByLongName.Put(this.entries:*longName, this.entries)
@@ -116,16 +116,16 @@ Parser = class {
 		}
 		[argvRest, opt]
 	}
-	OptBool(longName:String, shortName?:String, help?:String) = {
+	OptBool(longName as String, shortName? as String, help? as String) = {
 		this.entries.Add(Entry(`Bool, longName, shortName, help, nil))
 	}
-	OptInt(longName:String, shortName?:String, help?:String, helpValue?:String) = {
+	OptInt(longName as String, shortName? as String, help? as String, helpValue? as String) = {
 		this.entries.Add(Entry(`Int, longName, shortName, help, helpValue))
 	}
-	OptString(longName:String, shortName?:String, help?:String, helpValue?:String) = {
+	OptString(longName as String, shortName? as String, help? as String, helpValue? as String) = {
 		this.entries.Add(Entry(`String, longName, shortName, help, helpValue))
 	}
-	FormatHelp(longNameFlag:Bool = true, shortNameFlag:Bool = true) = {
+	FormatHelp(longNameFlag as Bool = true, shortNameFlag as Bool = true) = {
 		indices = this.entries::MakeHelpIndex(longNameFlag, shortNameFlag)
 		Format('%-*s  %s', indices::len.Max(), indices, this.entries:*help)
 	}

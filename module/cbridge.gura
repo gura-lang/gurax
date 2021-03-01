@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 // ErrorDone
 //------------------------------------------------------------------------------
-ErrorDone(expr:Expr, msg:String) = {
+ErrorDone(expr as Expr, msg as String) = {
 	sys.cerr.Printf('%s:%d: %s\n', expr.pathNameSrc, expr.lineNoTop, msg)
 	sys.Exit(1)
 }
@@ -12,20 +12,20 @@ ErrorDone(expr:Expr, msg:String) = {
 // TypeInfo
 //------------------------------------------------------------------------------
 TypeInfo = class {
-	decl:String
-	cType:String
-	cTypeElem:String
-	vtypeFullName:String
-	moduleName:String = ''
-	vtype:String = ''
-	tmplPicker:Template
-	tmplPickerValidation:Template
-	tmplPickerListVar:Template
-	tmplFunctionBody:Template
-	tmplArgRef:Template
-	__init__(decl:String, cType:String, vtypeFullName:String,
-			codePicker:String, codePickerValidation:String,
-			codePickerVec:String, codeFunctionBody:String, codeArgRef:String) = {
+	decl as String
+	cType as String
+	cTypeElem as String
+	vtypeFullName as String
+	moduleName as String = ''
+	vtype as String = ''
+	tmplPicker as Template
+	tmplPickerValidation as Template
+	tmplPickerListVar as Template
+	tmplFunctionBody as Template
+	tmplArgRef as Template
+	__init__(decl as String, cType as String, vtypeFullName as String,
+			codePicker as String, codePickerValidation as String,
+			codePickerVec as String, codeFunctionBody as String, codeArgRef as String) = {
 		this.decl = decl, this.cType = cType
 		this.cTypeElem = cType.Sub(r'(const\s+)?(\w+).*', r'\2')
 		this.vtypeFullName = vtypeFullName
@@ -40,28 +40,28 @@ TypeInfo = class {
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.tmplArgRef = Template().Parse(codeArgRef)
 	}
-	ComposePicker(varName:String, listVarFlag:Bool, validationFlag:Bool) = {
+	ComposePicker(varName as String, listVarFlag as Bool, validationFlag as Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
-	ComposeFunctionBody(caller:String) = this.tmplFunctionBody.Eval()
-	ComposeArgRef(varName:String) = this.tmplArgRef.Eval()
+	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
+	ComposeArgRef(varName as String) = this.tmplArgRef.Eval()
 }
 
 //------------------------------------------------------------------------------
 // ArgInfo
 //------------------------------------------------------------------------------
 ArgInfo = class {
-	name:String
-	type:String
-	listVarFlag:Bool
-	optionFlag:Bool
-	nilFlag:Bool
-	streamWFlag:Bool
-	streamRFlag:Bool
-	typeInfo:TypeInfo
-	tmplDeclaration:Template:static
-	tmplRangeCheck:Template:static
-	__init__(r:Renderer, name:String, attr:Attribute, listVarFlag:Bool, optionFlag:Bool) = {
+	name as String
+	type as String
+	listVarFlag as Bool
+	optionFlag as Bool
+	nilFlag as Bool
+	streamWFlag as Bool
+	streamRFlag as Bool
+	typeInfo as TypeInfo
+	tmplDeclaration:static as Template
+	tmplRangeCheck:static as Template
+	__init__(r as Renderer, name as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
 		this.name = name
 		this.type = attr.dottedName
 		this.listVarFlag = listVarFlag
@@ -108,17 +108,17 @@ if (${this.name}.size() != 3) {
 // FuncInfo
 //------------------------------------------------------------------------------
 FuncInfo = class {
-	moduleName:String
-	name:String
-	type:String
-	typeInfo:TypeInfo
-	argInfoTbl[]:ArgInfo = []
-	tmplFunctionBody:Template
-	tmplImplementation:Template:static
-	tmplAssignment:Template:static
+	moduleName as String
+	name as String
+	type as String
+	typeInfo as TypeInfo
+	argInfoTbl[] as ArgInfo = []
+	tmplFunctionBody as Template
+	tmplImplementation:static as Template
+	tmplAssignment:static as Template
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
-	__init__(r:Renderer, moduleName:String, name:String, type:String, codeFunctionBody:String:nil) = {
+	__init__(r as Renderer, moduleName as String, name as String, type as String, codeFunctionBody:nil as String) = {
 		if (type.IsEmpty()) { type = 'any' }
 		this.moduleName = moduleName, this.name = name, this.type = type
 		this.typeInfo = r.typeInfoMap[type]
@@ -165,13 +165,13 @@ FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}_gurax));'
 Renderer = class {
 	funcInfoTbl = []
 	typeInfoMap = %{}
-	DeclareType(decl:String, cType:String, vtypeFullName:String,
-			codePicker:String = '', codePickerValidation:String = '',
-			codePickerVec:String = '', codeFunctionBody:String = '', codeArgRef = '${varName}') = {
+	DeclareType(decl as String, cType as String, vtypeFullName as String,
+			codePicker as String = '', codePickerValidation as String = '',
+			codePickerVec as String = '', codeFunctionBody as String = '', codeArgRef = '${varName}') = {
 		this.typeInfoMap[decl] = TypeInfo(decl, cType, vtypeFullName,
 				codePicker, codePickerValidation, codePickerVec, codeFunctionBody, codeArgRef)
 	}
-	DeclareType_Number(decl:String, cType?:String) = this.DeclareType(decl, cType || decl, 'Number',
+	DeclareType_Number(decl as String, cType? as String) = this.DeclareType(decl, cType || decl, 'Number',
 		codePicker = R'''
 		${this.cType} ${varName} = args_gurax.PickNumber<${this.cType}>();
 		'''
@@ -185,7 +185,7 @@ Renderer = class {
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);
 		''')
-	DeclareType_Pointer(decl:String, cType:String) = this.DeclareType(decl, cType, 'Pointer',
+	DeclareType_Pointer(decl as String, cType as String) = this.DeclareType(decl, cType, 'Pointer',
 		codePicker = R'''
 		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>();
 		'''
@@ -197,7 +197,7 @@ Renderer = class {
 			return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cTypeElem}>();
 		});
 		''')
-	DeclareType_WritablePointer(decl:String, cType:String) =  this.DeclareType(decl, cType, 'Pointer',
+	DeclareType_WritablePointer(decl as String, cType as String) =  this.DeclareType(decl, cType, 'Pointer',
 		codePicker = R'''
 		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>();
 		if (!${varName}) {
@@ -218,20 +218,20 @@ Renderer = class {
 			return p;
 		});
 		''')
-	Register(moduleName:String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
-	RegisterExpr(moduleName:String, expr:Expr):map:void = {
+	Register(moduleName as String) {`block} = this.RegisterExpr(moduleName, block.EachElem())
+	RegisterExpr(moduleName as String, expr as Expr):map:void = {
 		if (expr.IsAssign() && expr.right.IsCaller() && expr.right.car == `class) {
 			this.RegisterClass(moduleName, expr)
 		} else {
 			this.RegisterFunction(moduleName, expr)
 		}
 	}
-	RegisterClass(moduleName:String, expr:Expr):map:void = {
+	RegisterClass(moduleName as String, expr as Expr):map:void = {
 		!expr.left.IsIdentifier() && ErrorDone(expr.left, 'Identifier is expected for class name')
 		className = expr.left.symbolName
 		Println(className)
 	}
-	RegisterFunction(moduleName:String, expr:Expr):map:void = {
+	RegisterFunction(moduleName as String, expr as Expr):map:void = {
 		codeFunctionBody = nil
 		if (expr.IsAssign()) {
 			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
@@ -270,7 +270,7 @@ Renderer = class {
 		}
 	}
 	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
-	ComposeAssignment(codePrefix:String) = (codePrefix + this.funcInfoTbl:*ComposeAssignment()).Join('\n')
+	ComposeAssignment(codePrefix as String) = (codePrefix + this.funcInfoTbl:*ComposeAssignment()).Join('\n')
 }
 
 Renderer.__init__() = {
