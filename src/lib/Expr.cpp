@@ -546,7 +546,7 @@ void Expr_Identifier::ComposeWithinAssignment(
 void Expr_Identifier::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
-	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), false, *this);
+	composer.Add_AssignPropSlot(GetSymbol(), pDottedSymbol.release(), flags, GetAttr(), false, *this);
 	composer.FlushDiscard();													// [VType]
 }
 	
@@ -560,7 +560,7 @@ void Expr_Identifier::ComposeWithinAssignmentInClass(
 	}
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
 	exprAssigned.ComposeOrNil(composer);										// [VType Value]
-	composer.Add_AssignPropSlot(GetSymbol(), flags, GetAttr(), true, *this);
+	composer.Add_AssignPropSlot(GetSymbol(), pDottedSymbol.release(), flags, GetAttr(), true, *this);
 	composer.FlushDiscard();													// [VType]
 }
 
@@ -780,10 +780,23 @@ void Expr_BinaryOp::ComposeWithinLister(Composer& composer)
 void Expr_BinaryOp::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
 	if (GetOperator()->IsType(OpType::As)) {
-
+		pDottedSymbol.reset(DottedSymbol::CreateFromExpr(GetExprRight()));
+		if (!pDottedSymbol) return;
+		GetExprLeft().ComposeWithinClass(composer, pDottedSymbol.release(), publicFlag);
 	} else {
 		Expr_Binary::ComposeWithinLister(composer);								// [List]
 	}
+}
+
+void Expr_BinaryOp::ComposeWithinArgSlot(Composer& composer)
+{
+	Expr_Binary::ComposeWithinArgSlot(composer);
+}
+
+void Expr_BinaryOp::ComposeWithinAssignmentInClass(
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
+{
+	Expr_Binary::ComposeWithinAssignmentInClass(composer, exprAssigned, pOp, pDottedSymbol.release(), publicFlag);
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -1217,7 +1230,7 @@ void Expr_Indexer::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> p
 	}
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
-	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), false, *this);
+	composer.Add_AssignPropSlot(exprCar.GetSymbol(), pDottedSymbol.release(), flags, GetAttr(), false, *this);
 	composer.FlushDiscard();													// [VType]
 }
 
@@ -1237,7 +1250,7 @@ void Expr_Indexer::ComposeWithinAssignmentInClass(
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
 	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
 	exprAssigned.ComposeOrNil(composer);										// [VType Value]
-	composer.Add_AssignPropSlot(exprCar.GetSymbol(), flags, GetAttr(), true, *this);
+	composer.Add_AssignPropSlot(exprCar.GetSymbol(), pDottedSymbol.release(), flags, GetAttr(), true, *this);
 	composer.FlushDiscard();													// [VType]
 }
 

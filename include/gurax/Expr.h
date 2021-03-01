@@ -707,6 +707,9 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
+	virtual void ComposeWithinArgSlot(Composer& composer) override;
+	virtual void ComposeWithinAssignmentInClass(
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting

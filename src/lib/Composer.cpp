@@ -72,13 +72,15 @@ Iterator* Composer::EachPUnit() const
 	return new Iterator_PUnit(GetPUnitFirst(), nullptr);
 }
 
-void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
+void Composer::Add_AssignPropSlot(const Symbol* pSymbol, RefPtr<DottedSymbol> pDottedSymbol, PropSlot::Flags flags,
 									 const Attribute& attr, bool initializerFlag, const Expr& exprSrc)
 {
 	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
-	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
-	if (pDottedSymbol->IsSingleSymbol() && symbolAssoc.DoesExist(pDottedSymbol->GetSymbolFirst())) {
-		pDottedSymbol = &DottedSymbol::Empty;
+	if (!pDottedSymbol) {
+		pDottedSymbol.reset(attr.GetDottedSymbol().Reference());
+		if (pDottedSymbol->IsSingleSymbol() && symbolAssoc.DoesExist(pDottedSymbol->GetSymbolFirst())) {
+			pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+		}
 	}
 	flags |= PropSlot::Flag::Readable | PropSlot::Flag::Writable;
 	const SymbolList& symbols = attr.GetSymbols();
@@ -97,7 +99,7 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, PropSlot::Flags flags,
 		}
 	}
 	SetFactory(new PUnitFactory_AssignPropSlot(
-				   pSymbol, pDottedSymbol->Reference(), flags, initializerFlag, exprSrc.Reference()));
+				   pSymbol, pDottedSymbol.release(), flags, initializerFlag, exprSrc.Reference()));
 }
 
 //------------------------------------------------------------------------------
