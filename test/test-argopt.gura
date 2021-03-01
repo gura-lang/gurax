@@ -21,7 +21,7 @@ p.OptInt('int-J', 'J', 'help-J')
 Println(p.FormatHelp())
 
 
-Tester(argv[]:String) = {
+Tester(argv[] as String) = {
 	try {
 		[argvRest, opt] = p.Parse([''] |+| argv)
 	} catch {|e|

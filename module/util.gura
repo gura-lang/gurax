@@ -2,7 +2,7 @@
 //==============================================================================
 // util.gura
 //==============================================================================
-Expr.PrintPUnit(stream:Stream = sys.cout, strIndent:String = ''):void = {
+Expr.PrintPUnit(stream as Stream = sys.cout, strIndent as String = ''):void = {
 	punits = this.EachPUnit():list
 	punits.IsEmpty() && return
 	seqIdFirst = punits.first.seqId
@@ -11,12 +11,12 @@ Expr.PrintPUnit(stream:Stream = sys.cout, strIndent:String = ''):void = {
 					punits:*seqId - seqIdFirst, punits:*__str__(seqIdFirst))
 }
 
-Expr.PrintPUnitWithLabel(stream:Stream = sys.cout, strIndent:String = '  '):void = {
+Expr.PrintPUnitWithLabel(stream as Stream = sys.cout, strIndent as String = '  '):void = {
 	Printf('%s\n', this)
 	this.PrintPUnit(stream, strIndent)
 }
 
-VType.PrintPropSlots(stream:Stream = sys.cout):void:static  = {
+VType.PrintPropSlots(stream as Stream = sys.cout):void:static  = {
 	propSlots = this.__propSlots__():list
 	wdSymbolName = [propSlots:*symbol:*symbolName:*len*, 16].Max()
 	wdVTypeFullName = [propSlots:*vtype:*__fullName__:*len*, 12].Max()

@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-InspectExpr(x:Expr) = {
+InspectExpr(x as Expr) = {
 	Printf('%s .. %s\n', x.__str__():quoteSymbol, x.type)
 	[`block, `car, `target, `child, `left, `right, `trailer,
 	 `value, `string, `symbol, `mode, `operator, `attr].Each {|prop|

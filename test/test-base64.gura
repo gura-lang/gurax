@@ -6,7 +6,7 @@ import(util.tester) {*}
 
 PrintSep() = Println('----------------------------------------------------------')
 
-PrintBuff(buffSrc:Binary, buffEnc:Binary, buffDec:Binary):void = {
+PrintBuff(buffSrc as Binary, buffEnc as Binary, buffDec as Binary):void = {
 	dumpFlag = (buffSrc.bytes < 80)
 	Printf('Source:  %s\n', cond(dumpFlag, buffSrc, Format('(%dbytes)', buffSrc.bytes)))
 	if (buffSrc == buffDec) {

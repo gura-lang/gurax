@@ -5,10 +5,10 @@
 import(markdown):binary {*}
 import(conio)
 
-TableCol = struct { text:String, align:Symbol }
-TableRow = struct { headerFlag:Bool, cols[]:TableCol }
+TableCol = struct { text as String, align as Symbol }
+TableRow = struct { headerFlag as Bool, cols[] as TableCol }
 
-JoinText(item:Item):map = {
+JoinText(item as Item):map = {
 	if (item.children) {
 		JoinText(item.children).Join()
 	} else {
@@ -17,11 +17,11 @@ JoinText(item:Item):map = {
 }
 
 Renderer = class {
-	firstFlag:Bool
-	wdScreen:Number
-	htScreen:Number
-	indexStack[]:Number
-	__init__(colorFlag:Bool = true) = {
+	firstFlag as Bool
+	wdScreen as Number
+	htScreen as Number
+	indexStack[] as Number
+	__init__(colorFlag as Bool = true) = {
 		[this.wdScreen, this.htScreen] = conio.GetWinSize()
 		if (this.wdScreen == 0) {
 			this.wdScreen = 80
@@ -32,11 +32,11 @@ Renderer = class {
 		}
 		this.indexStack = []
 	}
-	FeedDocument(doc:Document):void = {
+	FeedDocument(doc as Document):void = {
 		this.firstFlag = true
 		this.FeedItem(doc.root)
 	}
-	FeedItem(item:Item):map:void = {
+	FeedItem(item as Item):map:void = {
 		if (item.type == `root) {
 			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
@@ -166,7 +166,7 @@ Renderer = class {
 			Println()
 		}
 	}
-	RenderTable(item:Item) = {
+	RenderTable(item as Item) = {
 		rows = item.children.Each():xlist {|item|
 			(item.type != `tag || item.text.Lower() != 'tr') && continue
 			headerFlag = false
@@ -223,10 +223,10 @@ Renderer = class {
 			row.headerFlag && Println(separator)
 		}
 	}
-	MakeAlign(str:String, width:Number, align:Symbol):map:static = str.Align(width, align)
+	MakeAlign(str as String, width as Number, align as Symbol):map:static = str.Align(width, align)
 }
 
-Render@console(doc:Document, colorFlag:Bool = true) = {
+Render@console(doc as Document, colorFlag as Bool = true) = {
 	Renderer(colorFlag).FeedDocument(doc)
 } %% R'''
 Renders the content of markdown document to the console.

@@ -86,14 +86,14 @@ TestCase('return') {
 }
 
 TestCase('Recursion') {
-	Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
+	Fact(n as Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
 	n = 20
 	Printf('%d! = %d\n', n, Fact(n))
 }
 
 TestCase('nil attribute') {
-	f(a:Number) = a
-	g(a:Number:nil) = a
+	f(a as Number) = a
+	g(a:nil as Number) = a
 	Tester(`f)
 	Tester(`g)
 	Tester(`f(nil))
@@ -135,8 +135,8 @@ TestCase('Named argument') {
 }
 
 TestCase('Cast of List Value') {
-	f(a[]:Number) = Println(a):noMap
-	g(a[]:String) = Println(a):noMap
+	f(a[] as Number) = Println(a):noMap
+	g(a[] as String) = Println(a):noMap
 	f([1, 2, 3])
 	g([1, 2, 3])
 }
@@ -165,7 +165,7 @@ TestCase('block') {
 }
 
 TestCase('Property') {
-	Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
+	Fact(n as Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
 	Tester(`Fact.expr)
 	Tester(`Fact.name)
 	Tester(`Fact.type)
@@ -219,7 +219,7 @@ TestCase('Function Creation by &{}') {
 	Tester(`{f = &{|a|}, f(3, 4)})
 	Tester(`{f = &{|a, b| a + b}, f})
 	Tester(`{f = &{|a, b| a + b}, f(3, 4)})
-	Tester(`{f = &{|a:String, b:Number| a * b}, f('hello', 4)})
+	Tester(`{f = &{|a as String, b as Number| a * b}, f('hello', 4)})
 }
 
 TestCase('Variable Expansion by Asterisk Operator') {
