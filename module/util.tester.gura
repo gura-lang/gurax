@@ -2,12 +2,12 @@
 //==============================================================================
 // util.tester.gura
 //==============================================================================
-TestCase(title:String):void:dynamicScope {`block?} = scope {
+TestCase(title as String):void:dynamicScope {`block?} = scope {
 	Printf('======== %s ========\n', title)
 	block && block.Eval()
 }
 
-Tester(expr:Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
+Tester(expr as Expr, arg%%):void:dynamicScope:map:[quote] {block?} = {
 	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval()
