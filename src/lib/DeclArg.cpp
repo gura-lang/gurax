@@ -111,25 +111,23 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
 		return nullptr;
 	}
-	if (!pDottedSymbol) {
-		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
-		bool firstFlag = true;
-		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-			Flags flag = SymbolToFlag(pSymbol);
-			flags |= flag;
-			if (flag) {
-				if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
-					pDottedSymbol.reset(DottedSymbol::Empty.Reference());
-				}
-			} else {
-				if (!firstFlag) {
-					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
-					return nullptr;
-				}
+	bool firstFlag = true;
+	for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
+		Flags flag = SymbolToFlag(pSymbol);
+		flags |= flag;
+		if (flag) {
+			if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
+				if (!pDottedSymbol) pDottedSymbol.reset(DottedSymbol::Empty.Reference());
 			}
-			firstFlag = false;
+		} else {
+			if (!firstFlag) {
+				Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+				return nullptr;
+			}
 		}
+		firstFlag = false;
 	}
+	if (!pDottedSymbol) pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
 	return pVType?
 		new DeclArg(pSymbol, *pVType, *pOccur, flags, pExprDefault.release()) :
 		new DeclArg(pSymbol, pDottedSymbol.release(), *pOccur, flags, pExprDefault.release());
