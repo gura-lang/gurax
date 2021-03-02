@@ -375,14 +375,15 @@ close() = {
 }
 
 checkCollision(a_s[] as SDL_Rect, b_s[] as SDL_Rect) = {
-	for (a in a_s) { // as.Each() doesn't work with return
+	for (a in a_s) { // a_s.Each() doesn't work with return
+	//a_s.Each {|a|
 		//Calculate the sides of rect A
 		leftA = a.x;
 		rightA = a.x + a.w;
 		topA = a.y;
 		bottomA = a.y + a.h;
 
-		for (b in b_s) { // bs.Each() doesn't work with return
+		for (b in b_s) { // b_s.Each() doesn't work with return
 			//Calculate the sides of rect B
 			leftB = b.x;
 			rightB = b.x + b.w;
