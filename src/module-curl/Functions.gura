@@ -6,7 +6,7 @@ r = cbridge.Renderer()
 //------------------------------------------------------------------------------
 // Type Information
 //------------------------------------------------------------------------------
-cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
+cbridge.Renderer.DeclareType_Entity(decl as String, cType as String, vtypeFullName as String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
@@ -20,7 +20,7 @@ this.DeclareType(decl, cType, vtypeFullName,
 	return new Value_${this.vtype}(rtn);
 	''')
 
-cbridge.Renderer.DeclareType_EntityPtr(decl:String, cType:String, vtypeFullName:String) = \
+cbridge.Renderer.DeclareType_EntityPtr(decl as String, cType as String, vtypeFullName as String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
@@ -35,7 +35,7 @@ this.DeclareType(decl, cType, vtypeFullName,
 	return new Value_${this.vtype}(rtn);
 	''')
 
-cbridge.Renderer.DeclareType_EntityPtrEx(decl:String, cType:String, vtypeFullName:String) = \
+cbridge.Renderer.DeclareType_EntityPtrEx(decl as String, cType as String, vtypeFullName as String) = \
 this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();

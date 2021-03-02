@@ -34,7 +34,7 @@ r.DeclareType('GLFWimage', 'GLFWimage', 'glfw.GLFWimage',
 	return Gurax::Value::nil();
 	''')
 
-cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:String) = \
+cbridge.Renderer.DeclareType_Entity(decl as String, cType as String, vtypeFullName as String) = \
 	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
@@ -53,7 +53,7 @@ cbridge.Renderer.DeclareType_Entity(decl:String, cType:String, vtypeFullName:Str
 	return Gurax::Value::nil();
 	''')
 
-cbridge.Renderer.DeclareType_EntityEx(decl:String, cType:String, vtypeFullName:String) = \
+cbridge.Renderer.DeclareType_EntityEx(decl as String, cType as String, vtypeFullName as String) = \
 	this.DeclareType(decl, cType, vtypeFullName,
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
