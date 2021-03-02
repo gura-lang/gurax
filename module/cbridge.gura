@@ -187,26 +187,26 @@ Renderer = class {
 		''')
 	DeclareType_Pointer(decl as String, cType as String) = this.DeclareType(decl, cType, 'Pointer',
 		codePicker = R'''
-		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>();
+		${this.cType} ${varName} = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>() : nullptr;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>() : nullptr;
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
 			return Gurax::Value_Pointer::GetPointer(value).GetPointerC<${this.cTypeElem}>();
 		});
 		''')
-	DeclareType_WritablePointer(decl as String, cType as String) =  this.DeclareType(decl, cType, 'Pointer',
+	DeclareType_WritablePointer(decl as String, cType as String) = this.DeclareType(decl, cType, 'Pointer',
 		codePicker = R'''
-		${this.cType} ${varName} = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>();
+		${this.cType} ${varName} = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>();
 		if (!${varName}) {
 			Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 			return Value::nil();
 		}
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>() : nullptr;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>() : nullptr;
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) -> ${this.cType} {

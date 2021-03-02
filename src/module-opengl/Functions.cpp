@@ -162,8 +162,8 @@ Gurax_ImplementFunctionEx(glAreTexturesResident_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
-	GLboolean* residences = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
+	const GLuint* textures = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	GLboolean* residences = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
 	// Function body
 	GLboolean rtn = glAreTexturesResident(n, textures, residences);
 	return new Gurax::Value_Bool(!!rtn);
@@ -257,7 +257,7 @@ Gurax_ImplementFunctionEx(glBitmap_gurax, processor_gurax, argument_gurax)
 	GLfloat yorig = args_gurax.PickNumber<GLfloat>();
 	GLfloat xmove = args_gurax.PickNumber<GLfloat>();
 	GLfloat ymove = args_gurax.PickNumber<GLfloat>();
-	const GLubyte* bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
+	const GLubyte* bitmap = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
 	// Function body
 	glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
 	return Gurax::Value::nil();
@@ -323,7 +323,7 @@ Gurax_ImplementFunctionEx(glCallLists_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* lists = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* lists = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCallLists(n, type, lists);
 	return Gurax::Value::nil();
@@ -477,7 +477,7 @@ Gurax_ImplementFunctionEx(glClipPlane_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum plane = args_gurax.PickNumber<GLenum>();
-	const GLdouble* equation = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* equation = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glClipPlane(plane, equation);
 	return Gurax::Value::nil();
@@ -521,7 +521,7 @@ Gurax_ImplementFunctionEx(glColor3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glColor3bv(v);
 	return Gurax::Value::nil();
@@ -565,7 +565,7 @@ Gurax_ImplementFunctionEx(glColor3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glColor3dv(v);
 	return Gurax::Value::nil();
@@ -609,7 +609,7 @@ Gurax_ImplementFunctionEx(glColor3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glColor3fv(v);
 	return Gurax::Value::nil();
@@ -653,7 +653,7 @@ Gurax_ImplementFunctionEx(glColor3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glColor3iv(v);
 	return Gurax::Value::nil();
@@ -697,7 +697,7 @@ Gurax_ImplementFunctionEx(glColor3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glColor3sv(v);
 	return Gurax::Value::nil();
@@ -741,7 +741,7 @@ Gurax_ImplementFunctionEx(glColor3ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glColor3ubv(v);
 	return Gurax::Value::nil();
@@ -785,7 +785,7 @@ Gurax_ImplementFunctionEx(glColor3uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glColor3uiv(v);
 	return Gurax::Value::nil();
@@ -829,7 +829,7 @@ Gurax_ImplementFunctionEx(glColor3usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glColor3usv(v);
 	return Gurax::Value::nil();
@@ -875,7 +875,7 @@ Gurax_ImplementFunctionEx(glColor4bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glColor4bv(v);
 	return Gurax::Value::nil();
@@ -921,7 +921,7 @@ Gurax_ImplementFunctionEx(glColor4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glColor4dv(v);
 	return Gurax::Value::nil();
@@ -967,7 +967,7 @@ Gurax_ImplementFunctionEx(glColor4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glColor4fv(v);
 	return Gurax::Value::nil();
@@ -1013,7 +1013,7 @@ Gurax_ImplementFunctionEx(glColor4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glColor4iv(v);
 	return Gurax::Value::nil();
@@ -1059,7 +1059,7 @@ Gurax_ImplementFunctionEx(glColor4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glColor4sv(v);
 	return Gurax::Value::nil();
@@ -1105,7 +1105,7 @@ Gurax_ImplementFunctionEx(glColor4ubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glColor4ubv(v);
 	return Gurax::Value::nil();
@@ -1151,7 +1151,7 @@ Gurax_ImplementFunctionEx(glColor4uiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glColor4uiv(v);
 	return Gurax::Value::nil();
@@ -1197,7 +1197,7 @@ Gurax_ImplementFunctionEx(glColor4usv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glColor4usv(v);
 	return Gurax::Value::nil();
@@ -1271,7 +1271,7 @@ Gurax_ImplementFunctionEx(glColorPointer_gurax, processor_gurax, argument_gurax)
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glColorPointer(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -1493,7 +1493,7 @@ Gurax_ImplementFunctionEx(glDeleteTextures_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* textures = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteTextures(n, textures);
 	return Gurax::Value::nil();
@@ -1665,7 +1665,7 @@ Gurax_ImplementFunctionEx(glDrawElements_gurax, processor_gurax, argument_gurax)
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glDrawElements(mode, count, type, indices);
 	return Gurax::Value::nil();
@@ -1693,7 +1693,7 @@ Gurax_ImplementFunctionEx(glDrawPixels_gurax, processor_gurax, argument_gurax)
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glDrawPixels(width, height, format, type, pixels);
 	return Gurax::Value::nil();
@@ -1735,7 +1735,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagPointer_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glEdgeFlagPointer(stride, pointer);
 	return Gurax::Value::nil();
@@ -1755,7 +1755,7 @@ Gurax_ImplementFunctionEx(glEdgeFlagv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLboolean* flag = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLboolean>();
+	const GLboolean* flag = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLboolean>();
 	// Function body
 	glEdgeFlagv(flag);
 	return Gurax::Value::nil();
@@ -1867,7 +1867,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* u = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glEvalCoord1dv(u);
 	return Gurax::Value::nil();
@@ -1907,7 +1907,7 @@ Gurax_ImplementFunctionEx(glEvalCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* u = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glEvalCoord1fv(u);
 	return Gurax::Value::nil();
@@ -1949,7 +1949,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* u = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glEvalCoord2dv(u);
 	return Gurax::Value::nil();
@@ -1991,7 +1991,7 @@ Gurax_ImplementFunctionEx(glEvalCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* u = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* u = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glEvalCoord2fv(u);
 	return Gurax::Value::nil();
@@ -2109,7 +2109,7 @@ Gurax_ImplementFunctionEx(glFeedbackBuffer_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei size = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	GLfloat* buffer = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* buffer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glFeedbackBuffer(size, type, buffer);
 	return Gurax::Value::nil();
@@ -2185,7 +2185,7 @@ Gurax_ImplementFunctionEx(glFogfv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glFogfv(pname, params);
 	return Gurax::Value::nil();
@@ -2229,7 +2229,7 @@ Gurax_ImplementFunctionEx(glFogiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glFogiv(pname, params);
 	return Gurax::Value::nil();
@@ -2321,7 +2321,7 @@ Gurax_ImplementFunctionEx(glGenTextures_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenTextures(n, textures);
 	return Gurax::Value::nil();
@@ -2343,7 +2343,7 @@ Gurax_ImplementFunctionEx(glGetBooleanv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLboolean* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
+	GLboolean* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
 	// Function body
 	glGetBooleanv(pname, params);
 	return Gurax::Value::nil();
@@ -2365,7 +2365,7 @@ Gurax_ImplementFunctionEx(glGetClipPlane_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum plane = args_gurax.PickNumber<GLenum>();
-	GLdouble* equation = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* equation = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetClipPlane(plane, equation);
 	return Gurax::Value::nil();
@@ -2387,7 +2387,7 @@ Gurax_ImplementFunctionEx(glGetDoublev_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetDoublev(pname, params);
 	return Gurax::Value::nil();
@@ -2425,7 +2425,7 @@ Gurax_ImplementFunctionEx(glGetFloatv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetFloatv(pname, params);
 	return Gurax::Value::nil();
@@ -2447,7 +2447,7 @@ Gurax_ImplementFunctionEx(glGetIntegerv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetIntegerv(pname, params);
 	return Gurax::Value::nil();
@@ -2471,7 +2471,7 @@ Gurax_ImplementFunctionEx(glGetLightfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetLightfv(light, pname, params);
 	return Gurax::Value::nil();
@@ -2495,7 +2495,7 @@ Gurax_ImplementFunctionEx(glGetLightiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetLightiv(light, pname, params);
 	return Gurax::Value::nil();
@@ -2519,7 +2519,7 @@ Gurax_ImplementFunctionEx(glGetMapdv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
-	GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetMapdv(target, query, v);
 	return Gurax::Value::nil();
@@ -2543,7 +2543,7 @@ Gurax_ImplementFunctionEx(glGetMapfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
-	GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetMapfv(target, query, v);
 	return Gurax::Value::nil();
@@ -2567,7 +2567,7 @@ Gurax_ImplementFunctionEx(glGetMapiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
-	GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetMapiv(target, query, v);
 	return Gurax::Value::nil();
@@ -2591,7 +2591,7 @@ Gurax_ImplementFunctionEx(glGetMaterialfv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetMaterialfv(face, pname, params);
 	return Gurax::Value::nil();
@@ -2615,7 +2615,7 @@ Gurax_ImplementFunctionEx(glGetMaterialiv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetMaterialiv(face, pname, params);
 	return Gurax::Value::nil();
@@ -2637,7 +2637,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapfv_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
-	GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetPixelMapfv(map, values);
 	return Gurax::Value::nil();
@@ -2659,7 +2659,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapuiv_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
-	GLuint* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetPixelMapuiv(map, values);
 	return Gurax::Value::nil();
@@ -2681,7 +2681,7 @@ Gurax_ImplementFunctionEx(glGetPixelMapusv_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
-	GLushort* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
+	GLushort* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
 	// Function body
 	glGetPixelMapusv(map, values);
 	return Gurax::Value::nil();
@@ -2701,7 +2701,7 @@ Gurax_ImplementFunctionEx(glGetPolygonStipple_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	GLubyte* mask = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
+	GLubyte* mask = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
 	// Function body
 	glGetPolygonStipple(mask);
 	return Gurax::Value::nil();
@@ -2745,7 +2745,7 @@ Gurax_ImplementFunctionEx(glGetTexEnvfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTexEnvfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -2769,7 +2769,7 @@ Gurax_ImplementFunctionEx(glGetTexEnviv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTexEnviv(target, pname, params);
 	return Gurax::Value::nil();
@@ -2793,7 +2793,7 @@ Gurax_ImplementFunctionEx(glGetTexGendv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetTexGendv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -2817,7 +2817,7 @@ Gurax_ImplementFunctionEx(glGetTexGenfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTexGenfv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -2841,7 +2841,7 @@ Gurax_ImplementFunctionEx(glGetTexGeniv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTexGeniv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -2869,7 +2869,7 @@ Gurax_ImplementFunctionEx(glGetTexImage_gurax, processor_gurax, argument_gurax)
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetTexImage(target, level, format, type, pixels);
 	return Gurax::Value::nil();
@@ -2895,7 +2895,7 @@ Gurax_ImplementFunctionEx(glGetTexLevelParameterfv_gurax, processor_gurax, argum
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTexLevelParameterfv(target, level, pname, params);
 	return Gurax::Value::nil();
@@ -2921,7 +2921,7 @@ Gurax_ImplementFunctionEx(glGetTexLevelParameteriv_gurax, processor_gurax, argum
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTexLevelParameteriv(target, level, pname, params);
 	return Gurax::Value::nil();
@@ -2945,7 +2945,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterfv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTexParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -2969,7 +2969,7 @@ Gurax_ImplementFunctionEx(glGetTexParameteriv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTexParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -3035,7 +3035,7 @@ Gurax_ImplementFunctionEx(glIndexPointer_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glIndexPointer(type, stride, pointer);
 	return Gurax::Value::nil();
@@ -3075,7 +3075,7 @@ Gurax_ImplementFunctionEx(glIndexdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* c = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glIndexdv(c);
 	return Gurax::Value::nil();
@@ -3115,7 +3115,7 @@ Gurax_ImplementFunctionEx(glIndexfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* c = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glIndexfv(c);
 	return Gurax::Value::nil();
@@ -3155,7 +3155,7 @@ Gurax_ImplementFunctionEx(glIndexiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* c = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glIndexiv(c);
 	return Gurax::Value::nil();
@@ -3195,7 +3195,7 @@ Gurax_ImplementFunctionEx(glIndexsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* c = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glIndexsv(c);
 	return Gurax::Value::nil();
@@ -3235,7 +3235,7 @@ Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLubyte* c = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* c = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glIndexubv(c);
 	return Gurax::Value::nil();
@@ -3275,7 +3275,7 @@ Gurax_ImplementFunctionEx(glInterleavedArrays_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glInterleavedArrays(format, stride, pointer);
 	return Gurax::Value::nil();
@@ -3379,7 +3379,7 @@ Gurax_ImplementFunctionEx(glLightModelfv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLightModelfv(pname, params);
 	return Gurax::Value::nil();
@@ -3423,7 +3423,7 @@ Gurax_ImplementFunctionEx(glLightModeliv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glLightModeliv(pname, params);
 	return Gurax::Value::nil();
@@ -3471,7 +3471,7 @@ Gurax_ImplementFunctionEx(glLightfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLightfv(light, pname, params);
 	return Gurax::Value::nil();
@@ -3519,7 +3519,7 @@ Gurax_ImplementFunctionEx(glLightiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum light = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glLightiv(light, pname, params);
 	return Gurax::Value::nil();
@@ -3617,7 +3617,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glLoadMatrixd(m);
 	return Gurax::Value::nil();
@@ -3637,7 +3637,7 @@ Gurax_ImplementFunctionEx(glLoadMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLoadMatrixf(m);
 	return Gurax::Value::nil();
@@ -3707,7 +3707,7 @@ Gurax_ImplementFunctionEx(glMap1d_gurax, processor_gurax, argument_gurax)
 	GLdouble u2 = args_gurax.PickNumber<GLdouble>();
 	GLint stride = args_gurax.PickNumber<GLint>();
 	GLint order = args_gurax.PickNumber<GLint>();
-	const GLdouble* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* points = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMap1d(target, u1, u2, stride, order, points);
 	return Gurax::Value::nil();
@@ -3737,7 +3737,7 @@ Gurax_ImplementFunctionEx(glMap1f_gurax, processor_gurax, argument_gurax)
 	GLfloat u2 = args_gurax.PickNumber<GLfloat>();
 	GLint stride = args_gurax.PickNumber<GLint>();
 	GLint order = args_gurax.PickNumber<GLint>();
-	const GLfloat* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* points = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMap1f(target, u1, u2, stride, order, points);
 	return Gurax::Value::nil();
@@ -3775,7 +3775,7 @@ Gurax_ImplementFunctionEx(glMap2d_gurax, processor_gurax, argument_gurax)
 	GLdouble v2 = args_gurax.PickNumber<GLdouble>();
 	GLint vstride = args_gurax.PickNumber<GLint>();
 	GLint vorder = args_gurax.PickNumber<GLint>();
-	const GLdouble* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* points = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
 	return Gurax::Value::nil();
@@ -3813,7 +3813,7 @@ Gurax_ImplementFunctionEx(glMap2f_gurax, processor_gurax, argument_gurax)
 	GLfloat v2 = args_gurax.PickNumber<GLfloat>();
 	GLint vstride = args_gurax.PickNumber<GLint>();
 	GLint vorder = args_gurax.PickNumber<GLint>();
-	const GLfloat* points = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* points = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
 	return Gurax::Value::nil();
@@ -3969,7 +3969,7 @@ Gurax_ImplementFunctionEx(glMaterialfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMaterialfv(face, pname, params);
 	return Gurax::Value::nil();
@@ -4017,7 +4017,7 @@ Gurax_ImplementFunctionEx(glMaterialiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum face = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMaterialiv(face, pname, params);
 	return Gurax::Value::nil();
@@ -4057,7 +4057,7 @@ Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultMatrixd(m);
 	return Gurax::Value::nil();
@@ -4077,7 +4077,7 @@ Gurax_ImplementFunctionEx(glMultMatrixf_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultMatrixf(m);
 	return Gurax::Value::nil();
@@ -4143,7 +4143,7 @@ Gurax_ImplementFunctionEx(glNormal3bv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glNormal3bv(v);
 	return Gurax::Value::nil();
@@ -4187,7 +4187,7 @@ Gurax_ImplementFunctionEx(glNormal3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glNormal3dv(v);
 	return Gurax::Value::nil();
@@ -4231,7 +4231,7 @@ Gurax_ImplementFunctionEx(glNormal3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glNormal3fv(v);
 	return Gurax::Value::nil();
@@ -4275,7 +4275,7 @@ Gurax_ImplementFunctionEx(glNormal3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glNormal3iv(v);
 	return Gurax::Value::nil();
@@ -4319,7 +4319,7 @@ Gurax_ImplementFunctionEx(glNormal3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glNormal3sv(v);
 	return Gurax::Value::nil();
@@ -4343,7 +4343,7 @@ Gurax_ImplementFunctionEx(glNormalPointer_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glNormalPointer(type, stride, pointer);
 	return Gurax::Value::nil();
@@ -4417,7 +4417,7 @@ Gurax_ImplementFunctionEx(glPixelMapfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* values = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glPixelMapfv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4441,7 +4441,7 @@ Gurax_ImplementFunctionEx(glPixelMapuiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	const GLuint* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* values = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glPixelMapuiv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4465,7 +4465,7 @@ Gurax_ImplementFunctionEx(glPixelMapusv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei mapsize = args_gurax.PickNumber<GLsizei>();
-	const GLushort* values = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* values = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glPixelMapusv(map, mapsize, values);
 	return Gurax::Value::nil();
@@ -4659,7 +4659,7 @@ Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLubyte* mask = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* mask = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glPolygonStipple(mask);
 	return Gurax::Value::nil();
@@ -4746,8 +4746,8 @@ Gurax_ImplementFunctionEx(glPrioritizeTextures_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* textures = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
-	const GLclampf* priorities = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLclampf>();
+	const GLuint* textures = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLclampf* priorities = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLclampf>();
 	// Function body
 	glPrioritizeTextures(n, textures, priorities);
 	return Gurax::Value::nil();
@@ -4865,7 +4865,7 @@ Gurax_ImplementFunctionEx(glRasterPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos2dv(v);
 	return Gurax::Value::nil();
@@ -4907,7 +4907,7 @@ Gurax_ImplementFunctionEx(glRasterPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos2fv(v);
 	return Gurax::Value::nil();
@@ -4949,7 +4949,7 @@ Gurax_ImplementFunctionEx(glRasterPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos2iv(v);
 	return Gurax::Value::nil();
@@ -4991,7 +4991,7 @@ Gurax_ImplementFunctionEx(glRasterPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos2sv(v);
 	return Gurax::Value::nil();
@@ -5035,7 +5035,7 @@ Gurax_ImplementFunctionEx(glRasterPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos3dv(v);
 	return Gurax::Value::nil();
@@ -5079,7 +5079,7 @@ Gurax_ImplementFunctionEx(glRasterPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos3fv(v);
 	return Gurax::Value::nil();
@@ -5123,7 +5123,7 @@ Gurax_ImplementFunctionEx(glRasterPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos3iv(v);
 	return Gurax::Value::nil();
@@ -5167,7 +5167,7 @@ Gurax_ImplementFunctionEx(glRasterPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos3sv(v);
 	return Gurax::Value::nil();
@@ -5213,7 +5213,7 @@ Gurax_ImplementFunctionEx(glRasterPos4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRasterPos4dv(v);
 	return Gurax::Value::nil();
@@ -5259,7 +5259,7 @@ Gurax_ImplementFunctionEx(glRasterPos4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRasterPos4fv(v);
 	return Gurax::Value::nil();
@@ -5305,7 +5305,7 @@ Gurax_ImplementFunctionEx(glRasterPos4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRasterPos4iv(v);
 	return Gurax::Value::nil();
@@ -5351,7 +5351,7 @@ Gurax_ImplementFunctionEx(glRasterPos4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRasterPos4sv(v);
 	return Gurax::Value::nil();
@@ -5403,7 +5403,7 @@ Gurax_ImplementFunctionEx(glReadPixels_gurax, processor_gurax, argument_gurax)
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glReadPixels(x, y, width, height, format, type, pixels);
 	return Gurax::Value::nil();
@@ -5450,8 +5450,8 @@ Gurax_ImplementFunctionEx(glRectdv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
-	const GLdouble* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v1 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v2 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glRectdv(v1, v2);
 	return Gurax::Value::nil();
@@ -5498,8 +5498,8 @@ Gurax_ImplementFunctionEx(glRectfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
-	const GLfloat* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v1 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v2 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glRectfv(v1, v2);
 	return Gurax::Value::nil();
@@ -5546,8 +5546,8 @@ Gurax_ImplementFunctionEx(glRectiv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
-	const GLint* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v1 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v2 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glRectiv(v1, v2);
 	return Gurax::Value::nil();
@@ -5594,8 +5594,8 @@ Gurax_ImplementFunctionEx(glRectsv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v1 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
-	const GLshort* v2 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v1 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v2 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glRectsv(v1, v2);
 	return Gurax::Value::nil();
@@ -5763,7 +5763,7 @@ Gurax_ImplementFunctionEx(glSelectBuffer_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei size = args_gurax.PickNumber<GLsizei>();
-	GLuint* buffer = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* buffer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glSelectBuffer(size, buffer);
 	return Gurax::Value::nil();
@@ -5891,7 +5891,7 @@ Gurax_ImplementFunctionEx(glTexCoord1dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord1dv(v);
 	return Gurax::Value::nil();
@@ -5931,7 +5931,7 @@ Gurax_ImplementFunctionEx(glTexCoord1fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord1fv(v);
 	return Gurax::Value::nil();
@@ -5971,7 +5971,7 @@ Gurax_ImplementFunctionEx(glTexCoord1iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord1iv(v);
 	return Gurax::Value::nil();
@@ -6011,7 +6011,7 @@ Gurax_ImplementFunctionEx(glTexCoord1sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord1sv(v);
 	return Gurax::Value::nil();
@@ -6053,7 +6053,7 @@ Gurax_ImplementFunctionEx(glTexCoord2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord2dv(v);
 	return Gurax::Value::nil();
@@ -6095,7 +6095,7 @@ Gurax_ImplementFunctionEx(glTexCoord2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord2fv(v);
 	return Gurax::Value::nil();
@@ -6137,7 +6137,7 @@ Gurax_ImplementFunctionEx(glTexCoord2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord2iv(v);
 	return Gurax::Value::nil();
@@ -6179,7 +6179,7 @@ Gurax_ImplementFunctionEx(glTexCoord2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord2sv(v);
 	return Gurax::Value::nil();
@@ -6223,7 +6223,7 @@ Gurax_ImplementFunctionEx(glTexCoord3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord3dv(v);
 	return Gurax::Value::nil();
@@ -6267,7 +6267,7 @@ Gurax_ImplementFunctionEx(glTexCoord3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord3fv(v);
 	return Gurax::Value::nil();
@@ -6311,7 +6311,7 @@ Gurax_ImplementFunctionEx(glTexCoord3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord3iv(v);
 	return Gurax::Value::nil();
@@ -6355,7 +6355,7 @@ Gurax_ImplementFunctionEx(glTexCoord3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord3sv(v);
 	return Gurax::Value::nil();
@@ -6401,7 +6401,7 @@ Gurax_ImplementFunctionEx(glTexCoord4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexCoord4dv(v);
 	return Gurax::Value::nil();
@@ -6447,7 +6447,7 @@ Gurax_ImplementFunctionEx(glTexCoord4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexCoord4fv(v);
 	return Gurax::Value::nil();
@@ -6493,7 +6493,7 @@ Gurax_ImplementFunctionEx(glTexCoord4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexCoord4iv(v);
 	return Gurax::Value::nil();
@@ -6539,7 +6539,7 @@ Gurax_ImplementFunctionEx(glTexCoord4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glTexCoord4sv(v);
 	return Gurax::Value::nil();
@@ -6565,7 +6565,7 @@ Gurax_ImplementFunctionEx(glTexCoordPointer_gurax, processor_gurax, argument_gur
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTexCoordPointer(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -6613,7 +6613,7 @@ Gurax_ImplementFunctionEx(glTexEnvfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexEnvfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6661,7 +6661,7 @@ Gurax_ImplementFunctionEx(glTexEnviv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexEnviv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6709,7 +6709,7 @@ Gurax_ImplementFunctionEx(glTexGendv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLdouble* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glTexGendv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6757,7 +6757,7 @@ Gurax_ImplementFunctionEx(glTexGenfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexGenfv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6805,7 +6805,7 @@ Gurax_ImplementFunctionEx(glTexGeniv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum coord = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexGeniv(coord, pname, params);
 	return Gurax::Value::nil();
@@ -6839,7 +6839,7 @@ Gurax_ImplementFunctionEx(glTexImage1D_gurax, processor_gurax, argument_gurax)
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
 	return Gurax::Value::nil();
@@ -6875,7 +6875,7 @@ Gurax_ImplementFunctionEx(glTexImage2D_gurax, processor_gurax, argument_gurax)
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
 	return Gurax::Value::nil();
@@ -6923,7 +6923,7 @@ Gurax_ImplementFunctionEx(glTexParameterfv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glTexParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -6971,7 +6971,7 @@ Gurax_ImplementFunctionEx(glTexParameteriv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -7003,7 +7003,7 @@ Gurax_ImplementFunctionEx(glTexSubImage1D_gurax, processor_gurax, argument_gurax
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
 	return Gurax::Value::nil();
@@ -7039,7 +7039,7 @@ Gurax_ImplementFunctionEx(glTexSubImage2D_gurax, processor_gurax, argument_gurax
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 	return Gurax::Value::nil();
@@ -7129,7 +7129,7 @@ Gurax_ImplementFunctionEx(glVertex2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex2dv(v);
 	return Gurax::Value::nil();
@@ -7171,7 +7171,7 @@ Gurax_ImplementFunctionEx(glVertex2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex2fv(v);
 	return Gurax::Value::nil();
@@ -7213,7 +7213,7 @@ Gurax_ImplementFunctionEx(glVertex2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex2iv(v);
 	return Gurax::Value::nil();
@@ -7255,7 +7255,7 @@ Gurax_ImplementFunctionEx(glVertex2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex2sv(v);
 	return Gurax::Value::nil();
@@ -7299,7 +7299,7 @@ Gurax_ImplementFunctionEx(glVertex3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex3dv(v);
 	return Gurax::Value::nil();
@@ -7343,7 +7343,7 @@ Gurax_ImplementFunctionEx(glVertex3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex3fv(v);
 	return Gurax::Value::nil();
@@ -7387,7 +7387,7 @@ Gurax_ImplementFunctionEx(glVertex3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex3iv(v);
 	return Gurax::Value::nil();
@@ -7431,7 +7431,7 @@ Gurax_ImplementFunctionEx(glVertex3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex3sv(v);
 	return Gurax::Value::nil();
@@ -7477,7 +7477,7 @@ Gurax_ImplementFunctionEx(glVertex4dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertex4dv(v);
 	return Gurax::Value::nil();
@@ -7523,7 +7523,7 @@ Gurax_ImplementFunctionEx(glVertex4fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertex4fv(v);
 	return Gurax::Value::nil();
@@ -7569,7 +7569,7 @@ Gurax_ImplementFunctionEx(glVertex4iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertex4iv(v);
 	return Gurax::Value::nil();
@@ -7615,7 +7615,7 @@ Gurax_ImplementFunctionEx(glVertex4sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertex4sv(v);
 	return Gurax::Value::nil();
@@ -7641,7 +7641,7 @@ Gurax_ImplementFunctionEx(glVertexPointer_gurax, processor_gurax, argument_gurax
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glVertexPointer(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -7733,7 +7733,7 @@ Gurax_ImplementFunctionEx(glDrawRangeElements_gurax, processor_gurax, argument_g
 	GLuint end = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glDrawRangeElements(mode, start, end, count, type, indices);
 	return Gurax::Value::nil();
@@ -7771,7 +7771,7 @@ Gurax_ImplementFunctionEx(glTexImage3D_gurax, processor_gurax, argument_gurax)
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels);
 	return Gurax::Value::nil();
@@ -7811,7 +7811,7 @@ Gurax_ImplementFunctionEx(glTexSubImage3D_gurax, processor_gurax, argument_gurax
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
 	return Gurax::Value::nil();
@@ -7883,7 +7883,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage1D_gurax, processor_gurax, argumen
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -7917,7 +7917,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage2D_gurax, processor_gurax, argumen
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -7953,7 +7953,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage3D_gurax, processor_gurax, argumen
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -7985,7 +7985,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage1D_gurax, processor_gurax, argu
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -8021,7 +8021,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage2D_gurax, processor_gurax, argu
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -8061,7 +8061,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage3D_gurax, processor_gurax, argu
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -8085,7 +8085,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTexImage_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint lod = args_gurax.PickNumber<GLint>();
-	void* img = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* img = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetCompressedTexImage(target, lod, img);
 	return Gurax::Value::nil();
@@ -8105,7 +8105,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glLoadTransposeMatrixd(m);
 	return Gurax::Value::nil();
@@ -8125,7 +8125,7 @@ Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glLoadTransposeMatrixf(m);
 	return Gurax::Value::nil();
@@ -8145,7 +8145,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultTransposeMatrixd(m);
 	return Gurax::Value::nil();
@@ -8165,7 +8165,7 @@ Gurax_ImplementFunctionEx(glMultTransposeMatrixf_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* m = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* m = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultTransposeMatrixf(m);
 	return Gurax::Value::nil();
@@ -8209,7 +8209,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord1dv(target, v);
 	return Gurax::Value::nil();
@@ -8253,7 +8253,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord1fv(target, v);
 	return Gurax::Value::nil();
@@ -8297,7 +8297,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord1iv(target, v);
 	return Gurax::Value::nil();
@@ -8341,7 +8341,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord1sv(target, v);
 	return Gurax::Value::nil();
@@ -8387,7 +8387,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord2dv(target, v);
 	return Gurax::Value::nil();
@@ -8433,7 +8433,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord2fv(target, v);
 	return Gurax::Value::nil();
@@ -8479,7 +8479,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord2iv(target, v);
 	return Gurax::Value::nil();
@@ -8525,7 +8525,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord2sv(target, v);
 	return Gurax::Value::nil();
@@ -8573,7 +8573,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord3dv(target, v);
 	return Gurax::Value::nil();
@@ -8621,7 +8621,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord3fv(target, v);
 	return Gurax::Value::nil();
@@ -8669,7 +8669,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord3iv(target, v);
 	return Gurax::Value::nil();
@@ -8717,7 +8717,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord3sv(target, v);
 	return Gurax::Value::nil();
@@ -8767,7 +8767,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glMultiTexCoord4dv(target, v);
 	return Gurax::Value::nil();
@@ -8817,7 +8817,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glMultiTexCoord4fv(target, v);
 	return Gurax::Value::nil();
@@ -8867,7 +8867,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glMultiTexCoord4iv(target, v);
 	return Gurax::Value::nil();
@@ -8917,7 +8917,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glMultiTexCoord4sv(target, v);
 	return Gurax::Value::nil();
@@ -9035,7 +9035,7 @@ Gurax_ImplementFunctionEx(glFogCoordPointer_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glFogCoordPointer(type, stride, pointer);
 	return Gurax::Value::nil();
@@ -9075,7 +9075,7 @@ Gurax_ImplementFunctionEx(glFogCoorddv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* coord = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* coord = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glFogCoorddv(coord);
 	return Gurax::Value::nil();
@@ -9115,7 +9115,7 @@ Gurax_ImplementFunctionEx(glFogCoordfv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* coord = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* coord = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glFogCoordfv(coord);
 	return Gurax::Value::nil();
@@ -9139,8 +9139,8 @@ Gurax_ImplementFunctionEx(glMultiDrawArrays_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	const GLint* first = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
-	const GLsizei* count = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizei>();
+	const GLint* first = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLsizei* count = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLsizei>();
 	GLsizei drawcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glMultiDrawArrays(mode, first, count, drawcount);
@@ -9168,7 +9168,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElements_gurax, processor_gurax, argument_g
 	auto count = args_gurax.PickNumList<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	auto indices = args_gurax.PickListT<const void*>([](Gurax::Value& value) {
-		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<const void*>();
+		return Gurax::Value_Pointer::GetPointer(value).GetPointerC<void>();
 	});
 	// Function body
 	GLsizei drawcount = count.sizeT<GLsizei>();
@@ -9218,7 +9218,7 @@ Gurax_ImplementFunctionEx(glPointParameterfv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glPointParameterfv(pname, params);
 	return Gurax::Value::nil();
@@ -9262,7 +9262,7 @@ Gurax_ImplementFunctionEx(glPointParameteriv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glPointParameteriv(pname, params);
 	return Gurax::Value::nil();
@@ -9306,7 +9306,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3bv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glSecondaryColor3bv(v);
 	return Gurax::Value::nil();
@@ -9350,7 +9350,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3dv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glSecondaryColor3dv(v);
 	return Gurax::Value::nil();
@@ -9394,7 +9394,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3fv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glSecondaryColor3fv(v);
 	return Gurax::Value::nil();
@@ -9438,7 +9438,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3iv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glSecondaryColor3iv(v);
 	return Gurax::Value::nil();
@@ -9482,7 +9482,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3sv_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glSecondaryColor3sv(v);
 	return Gurax::Value::nil();
@@ -9526,7 +9526,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3ubv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glSecondaryColor3ubv(v);
 	return Gurax::Value::nil();
@@ -9570,7 +9570,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3uiv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glSecondaryColor3uiv(v);
 	return Gurax::Value::nil();
@@ -9614,7 +9614,7 @@ Gurax_ImplementFunctionEx(glSecondaryColor3usv_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glSecondaryColor3usv(v);
 	return Gurax::Value::nil();
@@ -9640,7 +9640,7 @@ Gurax_ImplementFunctionEx(glSecondaryColorPointer_gurax, processor_gurax, argume
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glSecondaryColorPointer(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -9682,7 +9682,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glWindowPos2dv(p);
 	return Gurax::Value::nil();
@@ -9724,7 +9724,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glWindowPos2fv(p);
 	return Gurax::Value::nil();
@@ -9766,7 +9766,7 @@ Gurax_ImplementFunctionEx(glWindowPos2iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glWindowPos2iv(p);
 	return Gurax::Value::nil();
@@ -9808,7 +9808,7 @@ Gurax_ImplementFunctionEx(glWindowPos2sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glWindowPos2sv(p);
 	return Gurax::Value::nil();
@@ -9852,7 +9852,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glWindowPos3dv(p);
 	return Gurax::Value::nil();
@@ -9896,7 +9896,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glWindowPos3fv(p);
 	return Gurax::Value::nil();
@@ -9940,7 +9940,7 @@ Gurax_ImplementFunctionEx(glWindowPos3iv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glWindowPos3iv(p);
 	return Gurax::Value::nil();
@@ -9984,7 +9984,7 @@ Gurax_ImplementFunctionEx(glWindowPos3sv_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* p = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* p = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glWindowPos3sv(p);
 	return Gurax::Value::nil();
@@ -10053,7 +10053,7 @@ Gurax_ImplementFunctionEx(glBufferData_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLenum usage = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glBufferData(target, size, data, usage);
@@ -10080,7 +10080,7 @@ Gurax_ImplementFunctionEx(glBufferSubData_gurax, processor_gurax, argument_gurax
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLintptr offset = args_gurax.PickNumber<GLintptr>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glBufferSubData(target, offset, size, data);
 	return Gurax::Value::nil();
@@ -10102,7 +10102,7 @@ Gurax_ImplementFunctionEx(glDeleteBuffers_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* buffers = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteBuffers(n, buffers);
 	return Gurax::Value::nil();
@@ -10124,7 +10124,7 @@ Gurax_ImplementFunctionEx(glDeleteQueries_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* ids = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* ids = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteQueries(n, ids);
 	return Gurax::Value::nil();
@@ -10166,7 +10166,7 @@ Gurax_ImplementFunctionEx(glGenBuffers_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenBuffers(n, buffers);
 	return Gurax::Value::nil();
@@ -10188,7 +10188,7 @@ Gurax_ImplementFunctionEx(glGenQueries_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenQueries(n, ids);
 	return Gurax::Value::nil();
@@ -10212,7 +10212,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameteriv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetBufferParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -10238,7 +10238,7 @@ Gurax_ImplementFunctionEx(glGetBufferSubData_gurax, processor_gurax, argument_gu
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLintptr offset = args_gurax.PickNumber<GLintptr>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	void* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetBufferSubData(target, offset, size, data);
 	return Gurax::Value::nil();
@@ -10262,7 +10262,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectiv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetQueryObjectiv(id, pname, params);
 	return Gurax::Value::nil();
@@ -10286,7 +10286,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectuiv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetQueryObjectuiv(id, pname, params);
 	return Gurax::Value::nil();
@@ -10310,7 +10310,7 @@ Gurax_ImplementFunctionEx(glGetQueryiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetQueryiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -10620,7 +10620,7 @@ Gurax_ImplementFunctionEx(glDrawBuffers_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLenum* bufs = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>();
+	const GLenum* bufs = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>();
 	// Function body
 	glDrawBuffers(n, bufs);
 	return Gurax::Value::nil();
@@ -10669,10 +10669,10 @@ Gurax_ImplementFunctionEx(glGetActiveAttrib_gurax, processor_gurax, argument_gur
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei maxLength = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLint* size = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
-	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLint* size = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveAttrib(program, index, maxLength, length, size, type, name);
 	return Gurax::Value::nil();
@@ -10701,10 +10701,10 @@ Gurax_ImplementFunctionEx(glGetActiveUniform_gurax, processor_gurax, argument_gu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei maxLength = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLint* size = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
-	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLint* size = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveUniform(program, index, maxLength, length, size, type, name);
 	return Gurax::Value::nil();
@@ -10729,8 +10729,8 @@ Gurax_ImplementFunctionEx(glGetAttachedShaders_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLsizei maxCount = args_gurax.PickNumber<GLsizei>();
-	GLsizei* count = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLuint* shaders = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLsizei* count = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLuint* shaders = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetAttachedShaders(program, maxCount, count, shaders);
 	return Gurax::Value::nil();
@@ -10777,8 +10777,8 @@ Gurax_ImplementFunctionEx(glGetProgramInfoLog_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetProgramInfoLog(program, bufSize, length, infoLog);
 	return Gurax::Value::nil();
@@ -10802,7 +10802,7 @@ Gurax_ImplementFunctionEx(glGetProgramiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramiv(program, pname, param);
 	return Gurax::Value::nil();
@@ -10827,8 +10827,8 @@ Gurax_ImplementFunctionEx(glGetShaderInfoLog_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetShaderInfoLog(shader, bufSize, length, infoLog);
 	return Gurax::Value::nil();
@@ -10853,8 +10853,8 @@ Gurax_ImplementFunctionEx(glGetShaderSource_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint obj = args_gurax.PickNumber<GLuint>();
 	GLsizei maxLength = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* source = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* source = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetShaderSource(obj, maxLength, length, source);
 	return Gurax::Value::nil();
@@ -10878,7 +10878,7 @@ Gurax_ImplementFunctionEx(glGetShaderiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetShaderiv(shader, pname, param);
 	return Gurax::Value::nil();
@@ -10924,7 +10924,7 @@ Gurax_ImplementFunctionEx(glGetUniformfv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetUniformfv(program, location, params);
 	return Gurax::Value::nil();
@@ -10948,7 +10948,7 @@ Gurax_ImplementFunctionEx(glGetUniformiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetUniformiv(program, location, params);
 	return Gurax::Value::nil();
@@ -10972,7 +10972,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribdv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetVertexAttribdv(index, pname, params);
 	return Gurax::Value::nil();
@@ -10996,7 +10996,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribfv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetVertexAttribfv(index, pname, params);
 	return Gurax::Value::nil();
@@ -11020,7 +11020,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribiv_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetVertexAttribiv(index, pname, params);
 	return Gurax::Value::nil();
@@ -11231,7 +11231,7 @@ Gurax_ImplementFunctionEx(glUniform1fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform1fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11277,7 +11277,7 @@ Gurax_ImplementFunctionEx(glUniform1iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform1iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11325,7 +11325,7 @@ Gurax_ImplementFunctionEx(glUniform2fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform2fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11373,7 +11373,7 @@ Gurax_ImplementFunctionEx(glUniform2iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform2iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11423,7 +11423,7 @@ Gurax_ImplementFunctionEx(glUniform3fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform3fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11473,7 +11473,7 @@ Gurax_ImplementFunctionEx(glUniform3iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform3iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11525,7 +11525,7 @@ Gurax_ImplementFunctionEx(glUniform4fv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniform4fv(location, count, value);
 	return Gurax::Value::nil();
@@ -11577,7 +11577,7 @@ Gurax_ImplementFunctionEx(glUniform4iv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glUniform4iv(location, count, value);
 	return Gurax::Value::nil();
@@ -11603,7 +11603,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11629,7 +11629,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11655,7 +11655,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4fv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -11739,7 +11739,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib1dv(index, v);
 	return Gurax::Value::nil();
@@ -11783,7 +11783,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib1fv(index, v);
 	return Gurax::Value::nil();
@@ -11827,7 +11827,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib1sv(index, v);
 	return Gurax::Value::nil();
@@ -11873,7 +11873,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib2dv(index, v);
 	return Gurax::Value::nil();
@@ -11919,7 +11919,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib2fv(index, v);
 	return Gurax::Value::nil();
@@ -11965,7 +11965,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib2sv(index, v);
 	return Gurax::Value::nil();
@@ -12013,7 +12013,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib3dv(index, v);
 	return Gurax::Value::nil();
@@ -12061,7 +12061,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib3fv(index, v);
 	return Gurax::Value::nil();
@@ -12109,7 +12109,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib3sv(index, v);
 	return Gurax::Value::nil();
@@ -12131,7 +12131,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nbv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttrib4Nbv(index, v);
 	return Gurax::Value::nil();
@@ -12153,7 +12153,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Niv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttrib4Niv(index, v);
 	return Gurax::Value::nil();
@@ -12175,7 +12175,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nsv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib4Nsv(index, v);
 	return Gurax::Value::nil();
@@ -12225,7 +12225,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nubv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttrib4Nubv(index, v);
 	return Gurax::Value::nil();
@@ -12247,7 +12247,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nuiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttrib4Nuiv(index, v);
 	return Gurax::Value::nil();
@@ -12269,7 +12269,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4Nusv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttrib4Nusv(index, v);
 	return Gurax::Value::nil();
@@ -12291,7 +12291,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4bv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLbyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttrib4bv(index, v);
 	return Gurax::Value::nil();
@@ -12341,7 +12341,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
+	const GLdouble* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>();
 	// Function body
 	glVertexAttrib4dv(index, v);
 	return Gurax::Value::nil();
@@ -12391,7 +12391,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glVertexAttrib4fv(index, v);
 	return Gurax::Value::nil();
@@ -12413,7 +12413,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4iv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttrib4iv(index, v);
 	return Gurax::Value::nil();
@@ -12463,7 +12463,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4sv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttrib4sv(index, v);
 	return Gurax::Value::nil();
@@ -12485,7 +12485,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ubv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLubyte* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttrib4ubv(index, v);
 	return Gurax::Value::nil();
@@ -12507,7 +12507,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4uiv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttrib4uiv(index, v);
 	return Gurax::Value::nil();
@@ -12529,7 +12529,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLushort* v = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttrib4usv(index, v);
 	return Gurax::Value::nil();
@@ -12585,7 +12585,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x3fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2x3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12611,7 +12611,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x4fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix2x4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12637,7 +12637,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x2fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3x2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12663,7 +12663,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x4fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix3x4fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12689,7 +12689,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x2fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4x2fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12715,7 +12715,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x3fv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glUniformMatrix4x3fv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -12853,7 +12853,7 @@ Gurax_ImplementFunctionEx(glClearBufferfv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	const GLfloat* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
+	const GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>();
 	// Function body
 	glClearBufferfv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -12877,7 +12877,7 @@ Gurax_ImplementFunctionEx(glClearBufferiv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	const GLint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glClearBufferiv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -12901,7 +12901,7 @@ Gurax_ImplementFunctionEx(glClearBufferuiv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawBuffer = args_gurax.PickNumber<GLint>();
-	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glClearBufferuiv(buffer, drawBuffer, value);
 	return Gurax::Value::nil();
@@ -13029,7 +13029,7 @@ Gurax_ImplementFunctionEx(glGetBooleani_v_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLboolean* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
+	GLboolean* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLboolean>() : nullptr;
 	// Function body
 	glGetBooleani_v(pname, index, data);
 	return Gurax::Value::nil();
@@ -13097,7 +13097,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterIiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTexParameterIiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13121,7 +13121,7 @@ Gurax_ImplementFunctionEx(glGetTexParameterIuiv_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetTexParameterIuiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13150,10 +13150,10 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbackVarying_gurax, processor_gurax, 
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLsizei* size = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLsizei* size = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLenum* type = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetTransformFeedbackVarying(program, index, bufSize, length, size, type, name);
 	return Gurax::Value::nil();
@@ -13177,7 +13177,7 @@ Gurax_ImplementFunctionEx(glGetUniformuiv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetUniformuiv(program, location, params);
 	return Gurax::Value::nil();
@@ -13201,7 +13201,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribIiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetVertexAttribIiv(index, pname, params);
 	return Gurax::Value::nil();
@@ -13225,7 +13225,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribIuiv_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetVertexAttribIuiv(index, pname, params);
 	return Gurax::Value::nil();
@@ -13271,7 +13271,7 @@ Gurax_ImplementFunctionEx(glTexParameterIiv_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glTexParameterIiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13295,7 +13295,7 @@ Gurax_ImplementFunctionEx(glTexParameterIuiv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLuint* params = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* params = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glTexParameterIuiv(target, pname, params);
 	return Gurax::Value::nil();
@@ -13341,7 +13341,7 @@ Gurax_ImplementFunctionEx(glUniform1uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform1uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13389,7 +13389,7 @@ Gurax_ImplementFunctionEx(glUniform2uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform2uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13439,7 +13439,7 @@ Gurax_ImplementFunctionEx(glUniform3uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform3uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13491,7 +13491,7 @@ Gurax_ImplementFunctionEx(glUniform4uiv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glUniform4uiv(location, count, value);
 	return Gurax::Value::nil();
@@ -13535,7 +13535,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI1iv(index, v0);
 	return Gurax::Value::nil();
@@ -13579,7 +13579,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI1uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI1uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13625,7 +13625,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI2iv(index, v0);
 	return Gurax::Value::nil();
@@ -13671,7 +13671,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI2uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI2uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13719,7 +13719,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI3iv(index, v0);
 	return Gurax::Value::nil();
@@ -13767,7 +13767,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI3uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI3uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13789,7 +13789,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4bv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLbyte* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
+	const GLbyte* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>();
 	// Function body
 	glVertexAttribI4bv(index, v0);
 	return Gurax::Value::nil();
@@ -13839,7 +13839,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4iv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>();
+	const GLint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>();
 	// Function body
 	glVertexAttribI4iv(index, v0);
 	return Gurax::Value::nil();
@@ -13861,7 +13861,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4sv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>();
+	const GLshort* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>();
 	// Function body
 	glVertexAttribI4sv(index, v0);
 	return Gurax::Value::nil();
@@ -13883,7 +13883,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4ubv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLubyte* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
+	const GLubyte* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>();
 	// Function body
 	glVertexAttribI4ubv(index, v0);
 	return Gurax::Value::nil();
@@ -13933,7 +13933,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4uiv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glVertexAttribI4uiv(index, v0);
 	return Gurax::Value::nil();
@@ -13955,7 +13955,7 @@ Gurax_ImplementFunctionEx(glVertexAttribI4usv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLushort* v0 = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>();
+	const GLushort* v0 = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>();
 	// Function body
 	glVertexAttribI4usv(index, v0);
 	return Gurax::Value::nil();
@@ -13983,7 +13983,7 @@ Gurax_ImplementFunctionEx(glVertexAttribIPointer_gurax, processor_gurax, argumen
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glVertexAttribIPointer(index, size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -14036,7 +14036,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstanced_gurax, processor_gurax, argume
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDrawElementsInstanced(mode, count, type, indices, primcount);
@@ -14131,7 +14131,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameteri64v_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum value = args_gurax.PickNumber<GLenum>();
-	GLint64* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetBufferParameteri64v(target, value, data);
 	return Gurax::Value::nil();
@@ -14155,7 +14155,7 @@ Gurax_ImplementFunctionEx(glGetInteger64i_v_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLint64* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetInteger64i_v(pname, index, data);
 	return Gurax::Value::nil();
@@ -14337,7 +14337,7 @@ Gurax_ImplementFunctionEx(glGetnCompressedTexImage_gurax, processor_gurax, argum
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint lod = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLvoid* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLvoid>() : nullptr;
+	GLvoid* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLvoid>() : nullptr;
 	// Function body
 	glGetnCompressedTexImage(target, lod, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -14367,7 +14367,7 @@ Gurax_ImplementFunctionEx(glGetnTexImage_gurax, processor_gurax, argument_gurax)
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLvoid* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLvoid>() : nullptr;
+	GLvoid* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLvoid>() : nullptr;
 	// Function body
 	glGetnTexImage(tex, level, format, type, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -14393,7 +14393,7 @@ Gurax_ImplementFunctionEx(glGetnUniformdv_gurax, processor_gurax, argument_gurax
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetnUniformdv(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -14418,7 +14418,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCount_gurax, processor_gurax,
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	const GLvoid* indirect = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
+	const GLvoid* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
 	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
@@ -14448,7 +14448,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCount_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLvoid* indirect = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
+	const GLvoid* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLvoid>() : nullptr;
 	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
@@ -14476,10 +14476,10 @@ Gurax_ImplementFunctionEx(glSpecializeShader_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
-	const GLchar* pEntryPoint = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>();
+	const GLchar* pEntryPoint = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>();
 	GLuint numSpecializationConstants = args_gurax.PickNumber<GLuint>();
-	const GLuint* pConstantIndex = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
-	const GLuint* pConstantValue = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* pConstantIndex = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* pConstantValue = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glSpecializeShader(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
 	return Gurax::Value::nil();
@@ -14546,8 +14546,8 @@ Gurax_ImplementFunctionEx(glGetShaderPrecisionFormat_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLenum precisiontype = args_gurax.PickNumber<GLenum>();
-	GLint* range = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
-	GLint* precision = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* range = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* precision = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetShaderPrecisionFormat(shadertype, precisiontype, range, precision);
 	return Gurax::Value::nil();
@@ -14588,9 +14588,9 @@ Gurax_ImplementFunctionEx(glShaderBinary_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* shaders = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* shaders = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	GLenum binaryformat = args_gurax.PickNumber<GLenum>();
-	const void* binary = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* binary = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei length = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glShaderBinary(count, shaders, binaryformat, binary, length);
@@ -14701,7 +14701,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseInstance_gurax, processor_g
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	GLuint baseinstance = args_gurax.PickNumber<GLuint>();
 	// Function body
@@ -14732,7 +14732,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertexBaseInstance_gurax, p
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	GLint basevertex = args_gurax.PickNumber<GLint>();
 	GLuint baseinstance = args_gurax.PickNumber<GLuint>();
@@ -14977,7 +14977,7 @@ Gurax_ImplementFunctionEx(glProgramUniformHandleui64vARB_gurax, processor_gurax,
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glProgramUniformHandleui64vARB(program, location, count, values);
 	return Gurax::Value::nil();
@@ -15023,7 +15023,7 @@ Gurax_ImplementFunctionEx(glUniformHandleui64vARB_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glUniformHandleui64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -15067,7 +15067,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1ui64vARB_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint64EXT* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64EXT>() : nullptr;
+	const GLuint64EXT* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64EXT>() : nullptr;
 	// Function body
 	glVertexAttribL1ui64vARB(index, v);
 	return Gurax::Value::nil();
@@ -15140,7 +15140,7 @@ Gurax_ImplementFunctionEx(glBufferStorage_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLbitfield flags = args_gurax.PickNumber<GLbitfield>();
 	// Function body
 	glBufferStorage(target, size, data, flags);
@@ -15169,7 +15169,7 @@ Gurax_ImplementFunctionEx(glClearBufferData_gurax, processor_gurax, argument_gur
 	GLenum internalformat = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearBufferData(target, internalformat, format, type, data);
 	return Gurax::Value::nil();
@@ -15201,7 +15201,7 @@ Gurax_ImplementFunctionEx(glClearBufferSubData_gurax, processor_gurax, argument_
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearBufferSubData(target, internalformat, offset, size, format, type, data);
 	return Gurax::Value::nil();
@@ -15229,7 +15229,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferDataEXT_gurax, processor_gurax, argu
 	GLenum internalformat = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearNamedBufferDataEXT(buffer, internalformat, format, type, data);
 	return Gurax::Value::nil();
@@ -15261,7 +15261,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferSubDataEXT_gurax, processor_gurax, a
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearNamedBufferSubDataEXT(buffer, internalformat, offset, size, format, type, data);
 	return Gurax::Value::nil();
@@ -15289,7 +15289,7 @@ Gurax_ImplementFunctionEx(glClearTexImage_gurax, processor_gurax, argument_gurax
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearTexImage(texture, level, format, type, data);
 	return Gurax::Value::nil();
@@ -15329,7 +15329,7 @@ Gurax_ImplementFunctionEx(glClearTexSubImage_gurax, processor_gurax, argument_gu
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, data);
 	return Gurax::Value::nil();
@@ -15552,7 +15552,7 @@ Gurax_ImplementFunctionEx(glDebugMessageControlARB_gurax, processor_gurax, argum
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLenum severity = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	GLboolean enabled = static_cast<GLboolean>(args_gurax.PickBool());
 	// Function body
 	glDebugMessageControlARB(source, type, severity, count, ids, enabled);
@@ -15583,7 +15583,7 @@ Gurax_ImplementFunctionEx(glDebugMessageInsertARB_gurax, processor_gurax, argume
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum severity = args_gurax.PickNumber<GLenum>();
 	GLsizei length = args_gurax.PickNumber<GLsizei>();
-	const GLchar* buf = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
+	const GLchar* buf = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
 	// Function body
 	glDebugMessageInsertARB(source, type, id, severity, length, buf);
 	return Gurax::Value::nil();
@@ -15612,12 +15612,12 @@ Gurax_ImplementFunctionEx(glGetDebugMessageLogARB_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint count = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLenum* sources = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLenum* types = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
-	GLenum* severities = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
-	GLsizei* lengths = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* messageLog = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLenum* sources = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLenum* types = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLenum* severities = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLenum>() : nullptr;
+	GLsizei* lengths = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* messageLog = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	GLuint rtn = glGetDebugMessageLogARB(count, bufSize, sources, types, ids, severities, lengths, messageLog);
 	return new Gurax::Value_Number(rtn);
@@ -15731,7 +15731,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferData_gurax, processor_gurax, argumen
 	GLenum internalformat = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearNamedBufferData(buffer, internalformat, format, type, data);
 	return Gurax::Value::nil();
@@ -15763,7 +15763,7 @@ Gurax_ImplementFunctionEx(glClearNamedBufferSubData_gurax, processor_gurax, argu
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
 	return Gurax::Value::nil();
@@ -15817,7 +15817,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferfv_gurax, processor_gurax, argu
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawbuffer = args_gurax.PickNumber<GLint>();
-	GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glClearNamedFramebufferfv(framebuffer, buffer, drawbuffer, value);
 	return Gurax::Value::nil();
@@ -15843,7 +15843,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferiv_gurax, processor_gurax, argu
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawbuffer = args_gurax.PickNumber<GLint>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glClearNamedFramebufferiv(framebuffer, buffer, drawbuffer, value);
 	return Gurax::Value::nil();
@@ -15869,7 +15869,7 @@ Gurax_ImplementFunctionEx(glClearNamedFramebufferuiv_gurax, processor_gurax, arg
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum buffer = args_gurax.PickNumber<GLenum>();
 	GLint drawbuffer = args_gurax.PickNumber<GLint>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glClearNamedFramebufferuiv(framebuffer, buffer, drawbuffer, value);
 	return Gurax::Value::nil();
@@ -15901,7 +15901,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage1D_gurax, processor_gurax, 
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -15937,7 +15937,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage2D_gurax, processor_gurax, 
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -15977,7 +15977,7 @@ Gurax_ImplementFunctionEx(glCompressedTextureSubImage3D_gurax, processor_gurax, 
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -16127,7 +16127,7 @@ Gurax_ImplementFunctionEx(glCreateBuffers_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateBuffers(n, buffers);
 	return Gurax::Value::nil();
@@ -16149,7 +16149,7 @@ Gurax_ImplementFunctionEx(glCreateFramebuffers_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateFramebuffers(n, framebuffers);
 	return Gurax::Value::nil();
@@ -16171,7 +16171,7 @@ Gurax_ImplementFunctionEx(glCreateProgramPipelines_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateProgramPipelines(n, pipelines);
 	return Gurax::Value::nil();
@@ -16195,7 +16195,7 @@ Gurax_ImplementFunctionEx(glCreateQueries_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateQueries(target, n, ids);
 	return Gurax::Value::nil();
@@ -16217,7 +16217,7 @@ Gurax_ImplementFunctionEx(glCreateRenderbuffers_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateRenderbuffers(n, renderbuffers);
 	return Gurax::Value::nil();
@@ -16239,7 +16239,7 @@ Gurax_ImplementFunctionEx(glCreateSamplers_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateSamplers(n, samplers);
 	return Gurax::Value::nil();
@@ -16263,7 +16263,7 @@ Gurax_ImplementFunctionEx(glCreateTextures_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateTextures(target, n, textures);
 	return Gurax::Value::nil();
@@ -16285,7 +16285,7 @@ Gurax_ImplementFunctionEx(glCreateTransformFeedbacks_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateTransformFeedbacks(n, ids);
 	return Gurax::Value::nil();
@@ -16307,7 +16307,7 @@ Gurax_ImplementFunctionEx(glCreateVertexArrays_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* arrays = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* arrays = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glCreateVertexArrays(n, arrays);
 	return Gurax::Value::nil();
@@ -16421,7 +16421,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTextureImage_gurax, processor_gurax, ar
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetCompressedTextureImage(texture, level, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -16445,7 +16445,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferParameteri64v_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetNamedBufferParameteri64v(buffer, pname, params);
 	return Gurax::Value::nil();
@@ -16469,7 +16469,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferParameteriv_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedBufferParameteriv(buffer, pname, params);
 	return Gurax::Value::nil();
@@ -16495,7 +16495,7 @@ Gurax_ImplementFunctionEx(glGetNamedBufferSubData_gurax, processor_gurax, argume
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLintptr offset = args_gurax.PickNumber<GLintptr>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	void* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetNamedBufferSubData(buffer, offset, size, data);
 	return Gurax::Value::nil();
@@ -16521,7 +16521,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferAttachmentParameteriv_gurax, proc
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum attachment = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, params);
 	return Gurax::Value::nil();
@@ -16545,7 +16545,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferParameteriv_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedFramebufferParameteriv(framebuffer, pname, param);
 	return Gurax::Value::nil();
@@ -16569,7 +16569,7 @@ Gurax_ImplementFunctionEx(glGetNamedRenderbufferParameteriv_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint renderbuffer = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedRenderbufferParameteriv(renderbuffer, pname, params);
 	return Gurax::Value::nil();
@@ -16703,7 +16703,7 @@ Gurax_ImplementFunctionEx(glGetTextureImage_gurax, processor_gurax, argument_gur
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetTextureImage(texture, level, format, type, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -16729,7 +16729,7 @@ Gurax_ImplementFunctionEx(glGetTextureLevelParameterfv_gurax, processor_gurax, a
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTextureLevelParameterfv(texture, level, pname, params);
 	return Gurax::Value::nil();
@@ -16755,7 +16755,7 @@ Gurax_ImplementFunctionEx(glGetTextureLevelParameteriv_gurax, processor_gurax, a
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLint level = args_gurax.PickNumber<GLint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTextureLevelParameteriv(texture, level, pname, params);
 	return Gurax::Value::nil();
@@ -16779,7 +16779,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterIiv_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTextureParameterIiv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -16803,7 +16803,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterIuiv_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetTextureParameterIuiv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -16827,7 +16827,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameterfv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetTextureParameterfv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -16851,7 +16851,7 @@ Gurax_ImplementFunctionEx(glGetTextureParameteriv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTextureParameteriv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -16877,7 +16877,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbacki64_v_gurax, processor_gurax, ar
 	GLuint xfb = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLint64* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetTransformFeedbacki64_v(xfb, pname, index, param);
 	return Gurax::Value::nil();
@@ -16903,7 +16903,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbacki_v_gurax, processor_gurax, argu
 	GLuint xfb = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTransformFeedbacki_v(xfb, pname, index, param);
 	return Gurax::Value::nil();
@@ -16927,7 +16927,7 @@ Gurax_ImplementFunctionEx(glGetTransformFeedbackiv_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint xfb = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetTransformFeedbackiv(xfb, pname, param);
 	return Gurax::Value::nil();
@@ -16953,7 +16953,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayIndexed64iv_gurax, processor_gurax, ar
 	GLuint vaobj = args_gurax.PickNumber<GLuint>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint64* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetVertexArrayIndexed64iv(vaobj, index, pname, param);
 	return Gurax::Value::nil();
@@ -16979,7 +16979,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayIndexediv_gurax, processor_gurax, argu
 	GLuint vaobj = args_gurax.PickNumber<GLuint>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetVertexArrayIndexediv(vaobj, index, pname, param);
 	return Gurax::Value::nil();
@@ -17003,7 +17003,7 @@ Gurax_ImplementFunctionEx(glGetVertexArrayiv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint vaobj = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetVertexArrayiv(vaobj, pname, param);
 	return Gurax::Value::nil();
@@ -17027,7 +17027,7 @@ Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferData_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
-	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	// Function body
 	glInvalidateNamedFramebufferData(framebuffer, numAttachments, attachments);
 	return Gurax::Value::nil();
@@ -17055,7 +17055,7 @@ Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferSubData_gurax, processor_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
-	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	GLint x = args_gurax.PickNumber<GLint>();
 	GLint y = args_gurax.PickNumber<GLint>();
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
@@ -17084,7 +17084,7 @@ Gurax_ImplementFunctionEx(glNamedBufferData_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLenum usage = args_gurax.PickNumber<GLenum>();
 	// Function body
 	glNamedBufferData(buffer, size, data, usage);
@@ -17110,7 +17110,7 @@ Gurax_ImplementFunctionEx(glNamedBufferStorage_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLbitfield flags = args_gurax.PickNumber<GLbitfield>();
 	// Function body
 	glNamedBufferStorage(buffer, size, data, flags);
@@ -17137,7 +17137,7 @@ Gurax_ImplementFunctionEx(glNamedBufferSubData_gurax, processor_gurax, argument_
 	GLuint buffer = args_gurax.PickNumber<GLuint>();
 	GLintptr offset = args_gurax.PickNumber<GLintptr>();
 	GLsizeiptr size = args_gurax.PickNumber<GLsizeiptr>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glNamedBufferSubData(buffer, offset, size, data);
 	return Gurax::Value::nil();
@@ -17183,7 +17183,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffers_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLenum* bufs = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* bufs = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	// Function body
 	glNamedFramebufferDrawBuffers(framebuffer, n, bufs);
 	return Gurax::Value::nil();
@@ -17439,7 +17439,7 @@ Gurax_ImplementFunctionEx(glTextureParameterIiv_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glTextureParameterIiv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -17463,7 +17463,7 @@ Gurax_ImplementFunctionEx(glTextureParameterIuiv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glTextureParameterIuiv(texture, pname, params);
 	return Gurax::Value::nil();
@@ -17511,7 +17511,7 @@ Gurax_ImplementFunctionEx(glTextureParameterfv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glTextureParameterfv(texture, pname, param);
 	return Gurax::Value::nil();
@@ -17559,7 +17559,7 @@ Gurax_ImplementFunctionEx(glTextureParameteriv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint texture = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* param = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* param = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glTextureParameteriv(texture, pname, param);
 	return Gurax::Value::nil();
@@ -17737,7 +17737,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage1D_gurax, processor_gurax, argument_g
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTextureSubImage1D(texture, level, xoffset, width, format, type, pixels);
 	return Gurax::Value::nil();
@@ -17773,7 +17773,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage2D_gurax, processor_gurax, argument_g
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type, pixels);
 	return Gurax::Value::nil();
@@ -17813,7 +17813,7 @@ Gurax_ImplementFunctionEx(glTextureSubImage3D_gurax, processor_gurax, argument_g
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
 	return Gurax::Value::nil();
@@ -18097,9 +18097,9 @@ Gurax_ImplementFunctionEx(glVertexArrayVertexBuffers_gurax, processor_gurax, arg
 	GLuint vaobj = args_gurax.PickNumber<GLuint>();
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
-	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
-	const GLsizei* strides = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizei>() : nullptr;
+	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
+	const GLsizei* strides = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLsizei>() : nullptr;
 	// Function body
 	glVertexArrayVertexBuffers(vaobj, first, count, buffers, offsets, strides);
 	return Gurax::Value::nil();
@@ -18121,7 +18121,7 @@ Gurax_ImplementFunctionEx(glDrawBuffersARB_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLenum* bufs = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* bufs = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	// Function body
 	glDrawBuffersARB(n, bufs);
 	return Gurax::Value::nil();
@@ -18246,7 +18246,7 @@ Gurax_ImplementFunctionEx(glDrawElementsBaseVertex_gurax, processor_gurax, argum
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	GLint basevertex = args_gurax.PickNumber<GLint>();
 	// Function body
 	glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
@@ -18275,7 +18275,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertex_gurax, processor_gur
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	GLint basevertex = args_gurax.PickNumber<GLint>();
 	// Function body
@@ -18308,7 +18308,7 @@ Gurax_ImplementFunctionEx(glDrawRangeElementsBaseVertex_gurax, processor_gurax, 
 	GLuint end = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	GLint basevertex = args_gurax.PickNumber<GLint>();
 	// Function body
 	glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
@@ -18331,7 +18331,7 @@ Gurax_ImplementFunctionEx(glDrawArraysIndirect_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glDrawArraysIndirect(mode, indirect);
 	return Gurax::Value::nil();
@@ -18355,7 +18355,7 @@ Gurax_ImplementFunctionEx(glDrawElementsIndirect_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glDrawElementsIndirect(mode, type, indirect);
 	return Gurax::Value::nil();
@@ -18403,7 +18403,7 @@ Gurax_ImplementFunctionEx(glGetFramebufferParameteriv_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetFramebufferParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -18427,7 +18427,7 @@ Gurax_ImplementFunctionEx(glGetNamedFramebufferParameterivEXT_gurax, processor_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedFramebufferParameterivEXT(framebuffer, pname, params);
 	return Gurax::Value::nil();
@@ -18575,7 +18575,7 @@ Gurax_ImplementFunctionEx(glDeleteFramebuffers_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteFramebuffers(n, framebuffers);
 	return Gurax::Value::nil();
@@ -18597,7 +18597,7 @@ Gurax_ImplementFunctionEx(glDeleteRenderbuffers_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteRenderbuffers(n, renderbuffers);
 	return Gurax::Value::nil();
@@ -18759,7 +18759,7 @@ Gurax_ImplementFunctionEx(glGenFramebuffers_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* framebuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenFramebuffers(n, framebuffers);
 	return Gurax::Value::nil();
@@ -18781,7 +18781,7 @@ Gurax_ImplementFunctionEx(glGenRenderbuffers_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* renderbuffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenRenderbuffers(n, renderbuffers);
 	return Gurax::Value::nil();
@@ -18827,7 +18827,7 @@ Gurax_ImplementFunctionEx(glGetFramebufferAttachmentParameteriv_gurax, processor
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum attachment = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
 	return Gurax::Value::nil();
@@ -18851,7 +18851,7 @@ Gurax_ImplementFunctionEx(glGetRenderbufferParameteriv_gurax, processor_gurax, a
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetRenderbufferParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -19076,7 +19076,7 @@ Gurax_ImplementFunctionEx(glProgramBinary_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum binaryFormat = args_gurax.PickNumber<GLenum>();
-	const void* binary = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* binary = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei length = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glProgramBinary(program, binaryFormat, binary, length);
@@ -19139,7 +19139,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTextureSubImage_gurax, processor_gurax,
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetCompressedTextureSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -19181,7 +19181,7 @@ Gurax_ImplementFunctionEx(glGetTextureSubImage_gurax, processor_gurax, argument_
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pixels = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetTextureSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
 	return Gurax::Value::nil();
@@ -19206,10 +19206,10 @@ Gurax_ImplementFunctionEx(glSpecializeShaderARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint shader = args_gurax.PickNumber<GLuint>();
-	const GLchar* pEntryPoint = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
+	const GLchar* pEntryPoint = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
 	GLuint numSpecializationConstants = args_gurax.PickNumber<GLuint>();
-	const GLuint* pConstantIndex = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
-	const GLuint* pConstantValue = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* pConstantIndex = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* pConstantValue = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glSpecializeShaderARB(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
 	return Gurax::Value::nil();
@@ -19233,7 +19233,7 @@ Gurax_ImplementFunctionEx(glGetUniformdv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetUniformdv(program, location, params);
 	return Gurax::Value::nil();
@@ -19279,7 +19279,7 @@ Gurax_ImplementFunctionEx(glUniform1dv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniform1dv(location, count, value);
 	return Gurax::Value::nil();
@@ -19327,7 +19327,7 @@ Gurax_ImplementFunctionEx(glUniform2dv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniform2dv(location, count, value);
 	return Gurax::Value::nil();
@@ -19377,7 +19377,7 @@ Gurax_ImplementFunctionEx(glUniform3dv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniform3dv(location, count, value);
 	return Gurax::Value::nil();
@@ -19429,7 +19429,7 @@ Gurax_ImplementFunctionEx(glUniform4dv_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniform4dv(location, count, value);
 	return Gurax::Value::nil();
@@ -19455,7 +19455,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2dv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix2dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19481,7 +19481,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x3dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix2x3dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19507,7 +19507,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2x4dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix2x4dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19533,7 +19533,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3dv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix3dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19559,7 +19559,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x2dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix3x2dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19585,7 +19585,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3x4dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix3x4dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19611,7 +19611,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4dv_gurax, processor_gurax, argument_gu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix4dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19637,7 +19637,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x2dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix4x2dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19663,7 +19663,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4x3dv_gurax, processor_gurax, argument_
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glUniformMatrix4x3dv(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -19687,7 +19687,7 @@ Gurax_ImplementFunctionEx(glGetUniformi64vARB_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetUniformi64vARB(program, location, params);
 	return Gurax::Value::nil();
@@ -19711,7 +19711,7 @@ Gurax_ImplementFunctionEx(glGetUniformui64vARB_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
+	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
 	// Function body
 	glGetUniformui64vARB(program, location, params);
 	return Gurax::Value::nil();
@@ -19737,7 +19737,7 @@ Gurax_ImplementFunctionEx(glGetnUniformi64vARB_gurax, processor_gurax, argument_
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetnUniformi64vARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -19763,7 +19763,7 @@ Gurax_ImplementFunctionEx(glGetnUniformui64vARB_gurax, processor_gurax, argument
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
+	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
 	// Function body
 	glGetnUniformui64vARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -19813,7 +19813,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1i64vARB_gurax, processor_gurax, argum
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glProgramUniform1i64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -19863,7 +19863,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1ui64vARB_gurax, processor_gurax, argu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glProgramUniform1ui64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -19915,7 +19915,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2i64vARB_gurax, processor_gurax, argum
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glProgramUniform2i64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -19967,7 +19967,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2ui64vARB_gurax, processor_gurax, argu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glProgramUniform2ui64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -20021,7 +20021,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3i64vARB_gurax, processor_gurax, argum
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glProgramUniform3i64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -20075,7 +20075,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3ui64vARB_gurax, processor_gurax, argu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glProgramUniform3ui64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -20131,7 +20131,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4i64vARB_gurax, processor_gurax, argum
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glProgramUniform4i64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -20187,7 +20187,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4ui64vARB_gurax, processor_gurax, argu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glProgramUniform4ui64vARB(program, location, count, value);
 	return Gurax::Value::nil();
@@ -20233,7 +20233,7 @@ Gurax_ImplementFunctionEx(glUniform1i64vARB_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glUniform1i64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20279,7 +20279,7 @@ Gurax_ImplementFunctionEx(glUniform1ui64vARB_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glUniform1ui64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20327,7 +20327,7 @@ Gurax_ImplementFunctionEx(glUniform2i64vARB_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glUniform2i64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20375,7 +20375,7 @@ Gurax_ImplementFunctionEx(glUniform2ui64vARB_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glUniform2ui64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20425,7 +20425,7 @@ Gurax_ImplementFunctionEx(glUniform3i64vARB_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glUniform3i64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20475,7 +20475,7 @@ Gurax_ImplementFunctionEx(glUniform3ui64vARB_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glUniform3ui64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20527,7 +20527,7 @@ Gurax_ImplementFunctionEx(glUniform4i64vARB_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
+	const GLint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint64>() : nullptr;
 	// Function body
 	glUniform4i64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20579,7 +20579,7 @@ Gurax_ImplementFunctionEx(glUniform4ui64vARB_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
+	const GLuint64* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint64>() : nullptr;
 	// Function body
 	glUniform4ui64vARB(location, count, value);
 	return Gurax::Value::nil();
@@ -20609,7 +20609,7 @@ Gurax_ImplementFunctionEx(glColorSubTable_gurax, processor_gurax, argument_gurax
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glColorSubTable(target, start, count, format, type, data);
 	return Gurax::Value::nil();
@@ -20639,7 +20639,7 @@ Gurax_ImplementFunctionEx(glColorTable_gurax, processor_gurax, argument_gurax)
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* table = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* table = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glColorTable(target, internalformat, width, format, type, table);
 	return Gurax::Value::nil();
@@ -20663,7 +20663,7 @@ Gurax_ImplementFunctionEx(glColorTableParameterfv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glColorTableParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -20687,7 +20687,7 @@ Gurax_ImplementFunctionEx(glColorTableParameteriv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glColorTableParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -20717,7 +20717,7 @@ Gurax_ImplementFunctionEx(glConvolutionFilter1D_gurax, processor_gurax, argument
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glConvolutionFilter1D(target, internalformat, width, format, type, image);
 	return Gurax::Value::nil();
@@ -20749,7 +20749,7 @@ Gurax_ImplementFunctionEx(glConvolutionFilter2D_gurax, processor_gurax, argument
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glConvolutionFilter2D(target, internalformat, width, height, format, type, image);
 	return Gurax::Value::nil();
@@ -20797,7 +20797,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameterfv_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glConvolutionParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -20845,7 +20845,7 @@ Gurax_ImplementFunctionEx(glConvolutionParameteriv_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glConvolutionParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -20985,7 +20985,7 @@ Gurax_ImplementFunctionEx(glGetColorTable_gurax, processor_gurax, argument_gurax
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* table = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* table = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetColorTable(target, format, type, table);
 	return Gurax::Value::nil();
@@ -21009,7 +21009,7 @@ Gurax_ImplementFunctionEx(glGetColorTableParameterfv_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetColorTableParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21033,7 +21033,7 @@ Gurax_ImplementFunctionEx(glGetColorTableParameteriv_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetColorTableParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21059,7 +21059,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionFilter_gurax, processor_gurax, argumen
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* image = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetConvolutionFilter(target, format, type, image);
 	return Gurax::Value::nil();
@@ -21083,7 +21083,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionParameterfv_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetConvolutionParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21107,7 +21107,7 @@ Gurax_ImplementFunctionEx(glGetConvolutionParameteriv_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetConvolutionParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21135,7 +21135,7 @@ Gurax_ImplementFunctionEx(glGetHistogram_gurax, processor_gurax, argument_gurax)
 	GLboolean reset = static_cast<GLboolean>(args_gurax.PickBool());
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetHistogram(target, reset, format, type, values);
 	return Gurax::Value::nil();
@@ -21159,7 +21159,7 @@ Gurax_ImplementFunctionEx(glGetHistogramParameterfv_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetHistogramParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21183,7 +21183,7 @@ Gurax_ImplementFunctionEx(glGetHistogramParameteriv_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetHistogramParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21211,7 +21211,7 @@ Gurax_ImplementFunctionEx(glGetMinmax_gurax, processor_gurax, argument_gurax)
 	GLboolean reset = static_cast<GLboolean>(args_gurax.PickBool());
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum types = args_gurax.PickNumber<GLenum>();
-	void* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetMinmax(target, reset, format, types, values);
 	return Gurax::Value::nil();
@@ -21235,7 +21235,7 @@ Gurax_ImplementFunctionEx(glGetMinmaxParameterfv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetMinmaxParameterfv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21259,7 +21259,7 @@ Gurax_ImplementFunctionEx(glGetMinmaxParameteriv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetMinmaxParameteriv(target, pname, params);
 	return Gurax::Value::nil();
@@ -21287,9 +21287,9 @@ Gurax_ImplementFunctionEx(glGetSeparableFilter_gurax, processor_gurax, argument_
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	void* row = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
-	void* column = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
-	void* span = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* row = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* column = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* span = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetSeparableFilter(target, format, type, row, column, span);
 	return Gurax::Value::nil();
@@ -21412,8 +21412,8 @@ Gurax_ImplementFunctionEx(glSeparableFilter2D_gurax, processor_gurax, argument_g
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* row = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
-	const void* column = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* row = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
+	const void* column = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glSeparableFilter2D(target, internalformat, width, height, format, type, row, column);
 	return Gurax::Value::nil();
@@ -21438,7 +21438,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCountARB_gurax, processor_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
@@ -21468,7 +21468,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCountARB_gurax, processor_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLintptr drawcount = args_gurax.PickNumber<GLintptr>();
 	GLsizei maxdrawcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
@@ -21524,7 +21524,7 @@ Gurax_ImplementFunctionEx(glDrawElementsInstancedARB_gurax, processor_gurax, arg
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	// Function body
 	glDrawElementsInstancedARB(mode, count, type, indices, primcount);
@@ -21575,7 +21575,7 @@ Gurax_ImplementFunctionEx(glGetInternalformativ_gurax, processor_gurax, argument
 	GLenum internalformat = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetInternalformativ(target, internalformat, pname, bufSize, params);
 	return Gurax::Value::nil();
@@ -21603,7 +21603,7 @@ Gurax_ImplementFunctionEx(glGetInternalformati64v_gurax, processor_gurax, argume
 	GLenum internalformat = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetInternalformati64v(target, internalformat, pname, bufSize, params);
 	return Gurax::Value::nil();
@@ -21671,7 +21671,7 @@ Gurax_ImplementFunctionEx(glInvalidateFramebuffer_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
-	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	// Function body
 	glInvalidateFramebuffer(target, numAttachments, attachments);
 	return Gurax::Value::nil();
@@ -21699,7 +21699,7 @@ Gurax_ImplementFunctionEx(glInvalidateSubFramebuffer_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLsizei numAttachments = args_gurax.PickNumber<GLsizei>();
-	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* attachments = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	GLint x = args_gurax.PickNumber<GLint>();
 	GLint y = args_gurax.PickNumber<GLint>();
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
@@ -21829,7 +21829,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexPointerARB_gurax, processor_gurax, argume
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	void* pointer = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glMatrixIndexPointerARB(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -21851,7 +21851,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexubvARB_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLubyte* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
+	GLubyte* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
 	// Function body
 	glMatrixIndexubvARB(size, indices);
 	return Gurax::Value::nil();
@@ -21873,7 +21873,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexuivARB_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLuint* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glMatrixIndexuivARB(size, indices);
 	return Gurax::Value::nil();
@@ -21895,7 +21895,7 @@ Gurax_ImplementFunctionEx(glMatrixIndexusvARB_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLushort* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
+	GLushort* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
 	// Function body
 	glMatrixIndexusvARB(size, indices);
 	return Gurax::Value::nil();
@@ -21921,7 +21921,7 @@ Gurax_ImplementFunctionEx(glBindBuffersBase_gurax, processor_gurax, argument_gur
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glBindBuffersBase(target, first, count, buffers);
 	return Gurax::Value::nil();
@@ -21949,9 +21949,9 @@ Gurax_ImplementFunctionEx(glBindBuffersRange_gurax, processor_gurax, argument_gu
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
-	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
-	const GLsizeiptr* sizes = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizeiptr>() : nullptr;
+	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
+	const GLsizeiptr* sizes = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLsizeiptr>() : nullptr;
 	// Function body
 	glBindBuffersRange(target, first, count, buffers, offsets, sizes);
 	return Gurax::Value::nil();
@@ -21975,7 +21975,7 @@ Gurax_ImplementFunctionEx(glBindImageTextures_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glBindImageTextures(first, count, textures);
 	return Gurax::Value::nil();
@@ -21999,7 +21999,7 @@ Gurax_ImplementFunctionEx(glBindSamplers_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glBindSamplers(first, count, samplers);
 	return Gurax::Value::nil();
@@ -22023,7 +22023,7 @@ Gurax_ImplementFunctionEx(glBindTextures_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* textures = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glBindTextures(first, count, textures);
 	return Gurax::Value::nil();
@@ -22049,9 +22049,9 @@ Gurax_ImplementFunctionEx(glBindVertexBuffers_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
-	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
-	const GLsizei* strides = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLsizei>() : nullptr;
+	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLintptr* offsets = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLintptr>() : nullptr;
+	const GLsizei* strides = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLsizei>() : nullptr;
 	// Function body
 	glBindVertexBuffers(first, count, buffers, offsets, strides);
 	return Gurax::Value::nil();
@@ -22075,7 +22075,7 @@ Gurax_ImplementFunctionEx(glMultiDrawArraysIndirect_gurax, processor_gurax, argu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
 	// Function body
@@ -22103,7 +22103,7 @@ Gurax_ImplementFunctionEx(glMultiDrawElementsIndirect_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum mode = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* indirect = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	GLsizei primcount = args_gurax.PickNumber<GLsizei>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
 	// Function body
@@ -22211,7 +22211,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1dvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glMultiTexCoord1dvARB(target, v);
 	return Gurax::Value::nil();
@@ -22255,7 +22255,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1fvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glMultiTexCoord1fvARB(target, v);
 	return Gurax::Value::nil();
@@ -22299,7 +22299,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1ivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glMultiTexCoord1ivARB(target, v);
 	return Gurax::Value::nil();
@@ -22343,7 +22343,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord1svARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glMultiTexCoord1svARB(target, v);
 	return Gurax::Value::nil();
@@ -22389,7 +22389,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2dvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glMultiTexCoord2dvARB(target, v);
 	return Gurax::Value::nil();
@@ -22435,7 +22435,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2fvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glMultiTexCoord2fvARB(target, v);
 	return Gurax::Value::nil();
@@ -22481,7 +22481,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2ivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glMultiTexCoord2ivARB(target, v);
 	return Gurax::Value::nil();
@@ -22527,7 +22527,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord2svARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glMultiTexCoord2svARB(target, v);
 	return Gurax::Value::nil();
@@ -22575,7 +22575,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3dvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glMultiTexCoord3dvARB(target, v);
 	return Gurax::Value::nil();
@@ -22623,7 +22623,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3fvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glMultiTexCoord3fvARB(target, v);
 	return Gurax::Value::nil();
@@ -22671,7 +22671,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3ivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glMultiTexCoord3ivARB(target, v);
 	return Gurax::Value::nil();
@@ -22719,7 +22719,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord3svARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glMultiTexCoord3svARB(target, v);
 	return Gurax::Value::nil();
@@ -22769,7 +22769,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4dvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glMultiTexCoord4dvARB(target, v);
 	return Gurax::Value::nil();
@@ -22819,7 +22819,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4fvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glMultiTexCoord4fvARB(target, v);
 	return Gurax::Value::nil();
@@ -22869,7 +22869,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4ivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glMultiTexCoord4ivARB(target, v);
 	return Gurax::Value::nil();
@@ -22919,7 +22919,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoord4svARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glMultiTexCoord4svARB(target, v);
 	return Gurax::Value::nil();
@@ -22963,7 +22963,7 @@ Gurax_ImplementFunctionEx(glDeleteQueriesARB_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteQueriesARB(n, ids);
 	return Gurax::Value::nil();
@@ -23005,7 +23005,7 @@ Gurax_ImplementFunctionEx(glGenQueriesARB_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenQueriesARB(n, ids);
 	return Gurax::Value::nil();
@@ -23029,7 +23029,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectivARB_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetQueryObjectivARB(id, pname, params);
 	return Gurax::Value::nil();
@@ -23053,7 +23053,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectuivARB_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetQueryObjectuivARB(id, pname, params);
 	return Gurax::Value::nil();
@@ -23077,7 +23077,7 @@ Gurax_ImplementFunctionEx(glGetQueryivARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetQueryivARB(target, pname, params);
 	return Gurax::Value::nil();
@@ -23161,7 +23161,7 @@ Gurax_ImplementFunctionEx(glPointParameterfvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glPointParameterfvARB(pname, params);
 	return Gurax::Value::nil();
@@ -23211,7 +23211,7 @@ Gurax_ImplementFunctionEx(glGetProgramInterfaceiv_gurax, processor_gurax, argume
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum programInterface = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramInterfaceiv(program, programInterface, pname, params);
 	return Gurax::Value::nil();
@@ -23312,8 +23312,8 @@ Gurax_ImplementFunctionEx(glGetProgramResourceName_gurax, processor_gurax, argum
 	GLenum programInterface = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetProgramResourceName(program, programInterface, index, bufSize, length, name);
 	return Gurax::Value::nil();
@@ -23344,10 +23344,10 @@ Gurax_ImplementFunctionEx(glGetProgramResourceiv_gurax, processor_gurax, argumen
 	GLenum programInterface = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei propCount = args_gurax.PickNumber<GLsizei>();
-	const GLenum* props = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
+	const GLenum* props = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLenum>() : nullptr;
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramResourceiv(program, programInterface, index, propCount, props, bufSize, length, params);
 	return Gurax::Value::nil();
@@ -23411,7 +23411,7 @@ Gurax_ImplementFunctionEx(glGetnColorTableARB_gurax, processor_gurax, argument_g
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* table = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* table = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnColorTableARB(target, format, type, bufSize, table);
 	return Gurax::Value::nil();
@@ -23437,7 +23437,7 @@ Gurax_ImplementFunctionEx(glGetnCompressedTexImageARB_gurax, processor_gurax, ar
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint lod = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* img = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* img = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnCompressedTexImageARB(target, lod, bufSize, img);
 	return Gurax::Value::nil();
@@ -23465,7 +23465,7 @@ Gurax_ImplementFunctionEx(glGetnConvolutionFilterARB_gurax, processor_gurax, arg
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* image = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* image = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnConvolutionFilterARB(target, format, type, bufSize, image);
 	return Gurax::Value::nil();
@@ -23495,7 +23495,7 @@ Gurax_ImplementFunctionEx(glGetnHistogramARB_gurax, processor_gurax, argument_gu
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnHistogramARB(target, reset, format, type, bufSize, values);
 	return Gurax::Value::nil();
@@ -23521,7 +23521,7 @@ Gurax_ImplementFunctionEx(glGetnMapdvARB_gurax, processor_gurax, argument_gurax)
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetnMapdvARB(target, query, bufSize, v);
 	return Gurax::Value::nil();
@@ -23547,7 +23547,7 @@ Gurax_ImplementFunctionEx(glGetnMapfvARB_gurax, processor_gurax, argument_gurax)
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetnMapfvARB(target, query, bufSize, v);
 	return Gurax::Value::nil();
@@ -23573,7 +23573,7 @@ Gurax_ImplementFunctionEx(glGetnMapivARB_gurax, processor_gurax, argument_gurax)
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum query = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetnMapivARB(target, query, bufSize, v);
 	return Gurax::Value::nil();
@@ -23603,7 +23603,7 @@ Gurax_ImplementFunctionEx(glGetnMinmaxARB_gurax, processor_gurax, argument_gurax
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnMinmaxARB(target, reset, format, type, bufSize, values);
 	return Gurax::Value::nil();
@@ -23627,7 +23627,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapfvARB_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetnPixelMapfvARB(map, bufSize, values);
 	return Gurax::Value::nil();
@@ -23651,7 +23651,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapuivARB_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLuint* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetnPixelMapuivARB(map, bufSize, values);
 	return Gurax::Value::nil();
@@ -23675,7 +23675,7 @@ Gurax_ImplementFunctionEx(glGetnPixelMapusvARB_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum map = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLushort* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
+	GLushort* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
 	// Function body
 	glGetnPixelMapusvARB(map, bufSize, values);
 	return Gurax::Value::nil();
@@ -23697,7 +23697,7 @@ Gurax_ImplementFunctionEx(glGetnPolygonStippleARB_gurax, processor_gurax, argume
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLubyte* pattern = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
+	GLubyte* pattern = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
 	// Function body
 	glGetnPolygonStippleARB(bufSize, pattern);
 	return Gurax::Value::nil();
@@ -23727,7 +23727,7 @@ Gurax_ImplementFunctionEx(glGetnTexImageARB_gurax, processor_gurax, argument_gur
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* img = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* img = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetnTexImageARB(target, level, format, type, bufSize, img);
 	return Gurax::Value::nil();
@@ -23753,7 +23753,7 @@ Gurax_ImplementFunctionEx(glGetnUniformdvARB_gurax, processor_gurax, argument_gu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetnUniformdvARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -23779,7 +23779,7 @@ Gurax_ImplementFunctionEx(glGetnUniformfvARB_gurax, processor_gurax, argument_gu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetnUniformfvARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -23805,7 +23805,7 @@ Gurax_ImplementFunctionEx(glGetnUniformivARB_gurax, processor_gurax, argument_gu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetnUniformivARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -23831,7 +23831,7 @@ Gurax_ImplementFunctionEx(glGetnUniformuivARB_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetnUniformuivARB(program, location, bufSize, params);
 	return Gurax::Value::nil();
@@ -23865,7 +23865,7 @@ Gurax_ImplementFunctionEx(glReadnPixelsARB_gurax, processor_gurax, argument_gura
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	void* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glReadnPixelsARB(x, y, width, height, format, type, bufSize, data);
 	return Gurax::Value::nil();
@@ -23891,7 +23891,7 @@ Gurax_ImplementFunctionEx(glFramebufferSampleLocationsfvARB_gurax, processor_gur
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint start = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glFramebufferSampleLocationsfvARB(target, start, count, v);
 	return Gurax::Value::nil();
@@ -23917,7 +23917,7 @@ Gurax_ImplementFunctionEx(glNamedFramebufferSampleLocationsfvARB_gurax, processo
 	GLuint framebuffer = args_gurax.PickNumber<GLuint>();
 	GLuint start = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glNamedFramebufferSampleLocationsfvARB(framebuffer, start, count, v);
 	return Gurax::Value::nil();
@@ -23981,7 +23981,7 @@ Gurax_ImplementFunctionEx(glDeleteSamplers_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteSamplers(count, samplers);
 	return Gurax::Value::nil();
@@ -24003,7 +24003,7 @@ Gurax_ImplementFunctionEx(glGenSamplers_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* samplers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenSamplers(count, samplers);
 	return Gurax::Value::nil();
@@ -24027,7 +24027,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterIiv_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetSamplerParameterIiv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24051,7 +24051,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterIuiv_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetSamplerParameterIuiv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24075,7 +24075,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameterfv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetSamplerParameterfv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24099,7 +24099,7 @@ Gurax_ImplementFunctionEx(glGetSamplerParameteriv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetSamplerParameteriv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24143,7 +24143,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterIiv_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glSamplerParameterIiv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24167,7 +24167,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterIuiv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glSamplerParameterIuiv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24215,7 +24215,7 @@ Gurax_ImplementFunctionEx(glSamplerParameterfv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glSamplerParameterfv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24263,7 +24263,7 @@ Gurax_ImplementFunctionEx(glSamplerParameteriv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint sampler = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glSamplerParameteriv(sampler, pname, params);
 	return Gurax::Value::nil();
@@ -24327,7 +24327,7 @@ Gurax_ImplementFunctionEx(glDeleteProgramPipelines_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteProgramPipelines(n, pipelines);
 	return Gurax::Value::nil();
@@ -24349,7 +24349,7 @@ Gurax_ImplementFunctionEx(glGenProgramPipelines_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* pipelines = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenProgramPipelines(n, pipelines);
 	return Gurax::Value::nil();
@@ -24374,8 +24374,8 @@ Gurax_ImplementFunctionEx(glGetProgramPipelineInfoLog_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint pipeline = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* infoLog = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetProgramPipelineInfoLog(pipeline, bufSize, length, infoLog);
 	return Gurax::Value::nil();
@@ -24399,7 +24399,7 @@ Gurax_ImplementFunctionEx(glGetProgramPipelineiv_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint pipeline = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramPipelineiv(pipeline, pname, params);
 	return Gurax::Value::nil();
@@ -24469,7 +24469,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1dv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniform1dv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24519,7 +24519,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1fv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniform1fv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24569,7 +24569,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1iv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glProgramUniform1iv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24619,7 +24619,7 @@ Gurax_ImplementFunctionEx(glProgramUniform1uiv_gurax, processor_gurax, argument_
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glProgramUniform1uiv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24671,7 +24671,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2dv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniform2dv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24723,7 +24723,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2fv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniform2fv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24775,7 +24775,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2iv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glProgramUniform2iv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24827,7 +24827,7 @@ Gurax_ImplementFunctionEx(glProgramUniform2uiv_gurax, processor_gurax, argument_
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glProgramUniform2uiv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24881,7 +24881,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3dv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniform3dv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24935,7 +24935,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3fv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniform3fv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -24989,7 +24989,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3iv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glProgramUniform3iv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25043,7 +25043,7 @@ Gurax_ImplementFunctionEx(glProgramUniform3uiv_gurax, processor_gurax, argument_
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glProgramUniform3uiv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25099,7 +25099,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4dv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniform4dv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25155,7 +25155,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4fv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniform4fv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25211,7 +25211,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4iv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glProgramUniform4iv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25267,7 +25267,7 @@ Gurax_ImplementFunctionEx(glProgramUniform4uiv_gurax, processor_gurax, argument_
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glProgramUniform4uiv(program, location, count, value);
 	return Gurax::Value::nil();
@@ -25295,7 +25295,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2dv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25323,7 +25323,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2fv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25351,7 +25351,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2x3dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25379,7 +25379,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2x3fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25407,7 +25407,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2x4dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25435,7 +25435,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix2x4fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25463,7 +25463,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3dv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25491,7 +25491,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3fv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25519,7 +25519,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3x2dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25547,7 +25547,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3x2fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25575,7 +25575,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3x4dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25603,7 +25603,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix3x4fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25631,7 +25631,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4dv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25659,7 +25659,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4fv_gurax, processor_gurax, argu
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25687,7 +25687,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4x2dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25715,7 +25715,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4x2fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25743,7 +25743,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3dv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4x3dv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25771,7 +25771,7 @@ Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3fv_gurax, processor_gurax, ar
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramUniformMatrix4x3fv(program, location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -25841,7 +25841,7 @@ Gurax_ImplementFunctionEx(glGetActiveAtomicCounterBufferiv_gurax, processor_gura
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint bufferIndex = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetActiveAtomicCounterBufferiv(program, bufferIndex, pname, params);
 	return Gurax::Value::nil();
@@ -25939,7 +25939,7 @@ Gurax_ImplementFunctionEx(glUniform1fvARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniform1fvARB(location, count, value);
 	return Gurax::Value::nil();
@@ -25985,7 +25985,7 @@ Gurax_ImplementFunctionEx(glUniform1ivARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glUniform1ivARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26033,7 +26033,7 @@ Gurax_ImplementFunctionEx(glUniform2fvARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniform2fvARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26081,7 +26081,7 @@ Gurax_ImplementFunctionEx(glUniform2ivARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glUniform2ivARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26131,7 +26131,7 @@ Gurax_ImplementFunctionEx(glUniform3fvARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniform3fvARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26181,7 +26181,7 @@ Gurax_ImplementFunctionEx(glUniform3ivARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glUniform3ivARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26233,7 +26233,7 @@ Gurax_ImplementFunctionEx(glUniform4fvARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniform4fvARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26285,7 +26285,7 @@ Gurax_ImplementFunctionEx(glUniform4ivARB_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glUniform4ivARB(location, count, value);
 	return Gurax::Value::nil();
@@ -26311,7 +26311,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix2fvARB_gurax, processor_gurax, argument
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniformMatrix2fvARB(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -26337,7 +26337,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix3fvARB_gurax, processor_gurax, argument
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniformMatrix3fvARB(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -26363,7 +26363,7 @@ Gurax_ImplementFunctionEx(glUniformMatrix4fvARB_gurax, processor_gurax, argument
 	GLint location = args_gurax.PickNumber<GLint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
 	GLboolean transpose = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glUniformMatrix4fvARB(location, count, transpose, value);
 	return Gurax::Value::nil();
@@ -26416,8 +26416,8 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineName_gurax, processor_gurax, argu
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei bufsize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveSubroutineName(program, shadertype, index, bufsize, length, name);
 	return Gurax::Value::nil();
@@ -26446,8 +26446,8 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformName_gurax, processor_gura
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLsizei bufsize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveSubroutineUniformName(program, shadertype, index, bufsize, length, name);
 	return Gurax::Value::nil();
@@ -26475,7 +26475,7 @@ Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformiv_gurax, processor_gurax,
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetActiveSubroutineUniformiv(program, shadertype, index, pname, values);
 	return Gurax::Value::nil();
@@ -26501,7 +26501,7 @@ Gurax_ImplementFunctionEx(glGetProgramStageiv_gurax, processor_gurax, argument_g
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramStageiv(program, shadertype, pname, values);
 	return Gurax::Value::nil();
@@ -26525,7 +26525,7 @@ Gurax_ImplementFunctionEx(glGetSubroutineIndex_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
-	const GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
+	const GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
 	// Function body
 	GLuint rtn = glGetSubroutineIndex(program, shadertype, name);
 	return new Gurax::Value_Number(rtn);
@@ -26549,7 +26549,7 @@ Gurax_ImplementFunctionEx(glGetSubroutineUniformLocation_gurax, processor_gurax,
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
-	const GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
+	const GLchar* name = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
 	// Function body
 	GLint rtn = glGetSubroutineUniformLocation(program, shadertype, name);
 	return new Gurax::Value_Number(rtn);
@@ -26573,7 +26573,7 @@ Gurax_ImplementFunctionEx(glGetUniformSubroutineuiv_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLint location = args_gurax.PickNumber<GLint>();
-	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGetUniformSubroutineuiv(shadertype, location, params);
 	return Gurax::Value::nil();
@@ -26597,7 +26597,7 @@ Gurax_ImplementFunctionEx(glUniformSubroutinesuiv_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum shadertype = args_gurax.PickNumber<GLenum>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLuint* indices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* indices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glUniformSubroutinesuiv(shadertype, count, indices);
 	return Gurax::Value::nil();
@@ -26646,8 +26646,8 @@ Gurax_ImplementFunctionEx(glGetNamedStringARB_gurax, processor_gurax, argument_g
 	GLint namelen = args_gurax.PickNumber<GLint>();
 	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLint* stringlen = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
-	GLchar* string = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLint* stringlen = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLchar* string = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetNamedStringARB(namelen, name, bufSize, stringlen, string);
 	return Gurax::Value::nil();
@@ -26673,7 +26673,7 @@ Gurax_ImplementFunctionEx(glGetNamedStringivARB_gurax, processor_gurax, argument
 	GLint namelen = args_gurax.PickNumber<GLint>();
 	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetNamedStringivARB(namelen, name, pname, params);
 	return Gurax::Value::nil();
@@ -26723,7 +26723,7 @@ Gurax_ImplementFunctionEx(glNamedStringARB_gurax, processor_gurax, argument_gura
 	GLint namelen = args_gurax.PickNumber<GLint>();
 	const GLchar* name = reinterpret_cast<const GLchar*>(args_gurax.PickString());
 	GLint stringlen = args_gurax.PickNumber<GLint>();
-	const GLchar* string = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
+	const GLchar* string = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLchar>() : nullptr;
 	// Function body
 	glNamedStringARB(type, namelen, name, stringlen, string);
 	return Gurax::Value::nil();
@@ -26807,7 +26807,7 @@ Gurax_ImplementFunctionEx(glGetInteger64v_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetInteger64v(pname, params);
 	return Gurax::Value::nil();
@@ -26829,7 +26829,7 @@ Gurax_ImplementFunctionEx(glPatchParameterfv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	const GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* values = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glPatchParameterfv(pname, values);
 	return Gurax::Value::nil();
@@ -26981,7 +26981,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage1DARB_gurax, processor_gurax, argu
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -27015,7 +27015,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage2DARB_gurax, processor_gurax, argu
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage2DARB(target, level, internalformat, width, height, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -27051,7 +27051,7 @@ Gurax_ImplementFunctionEx(glCompressedTexImage3DARB_gurax, processor_gurax, argu
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLint border = args_gurax.PickNumber<GLint>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexImage3DARB(target, level, internalformat, width, height, depth, border, imageSize, data);
 	return Gurax::Value::nil();
@@ -27083,7 +27083,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage1DARB_gurax, processor_gurax, a
 	GLsizei width = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -27119,7 +27119,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage2DARB_gurax, processor_gurax, a
 	GLsizei height = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -27159,7 +27159,7 @@ Gurax_ImplementFunctionEx(glCompressedTexSubImage3DARB_gurax, processor_gurax, a
 	GLsizei depth = args_gurax.PickNumber<GLsizei>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei imageSize = args_gurax.PickNumber<GLsizei>();
-	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glCompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
 	return Gurax::Value::nil();
@@ -27183,7 +27183,7 @@ Gurax_ImplementFunctionEx(glGetCompressedTexImageARB_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLint lod = args_gurax.PickNumber<GLint>();
-	void* img = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* img = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetCompressedTexImageARB(target, lod, img);
 	return Gurax::Value::nil();
@@ -27207,7 +27207,7 @@ Gurax_ImplementFunctionEx(glGetMultisamplefv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum pname = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLfloat* val = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* val = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetMultisamplefv(pname, index, val);
 	return Gurax::Value::nil();
@@ -27561,7 +27561,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjecti64v_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
+	GLint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint64>() : nullptr;
 	// Function body
 	glGetQueryObjecti64v(id, pname, params);
 	return Gurax::Value::nil();
@@ -27585,7 +27585,7 @@ Gurax_ImplementFunctionEx(glGetQueryObjectui64v_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint id = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
+	GLuint64* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint64>() : nullptr;
 	// Function body
 	glGetQueryObjectui64v(id, pname, params);
 	return Gurax::Value::nil();
@@ -27651,7 +27651,7 @@ Gurax_ImplementFunctionEx(glDeleteTransformFeedbacks_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteTransformFeedbacks(n, ids);
 	return Gurax::Value::nil();
@@ -27695,7 +27695,7 @@ Gurax_ImplementFunctionEx(glGenTransformFeedbacks_gurax, processor_gurax, argume
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* ids = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenTransformFeedbacks(n, ids);
 	return Gurax::Value::nil();
@@ -27843,7 +27843,7 @@ Gurax_ImplementFunctionEx(glGetQueryIndexediv_gurax, processor_gurax, argument_g
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetQueryIndexediv(target, index, pname, params);
 	return Gurax::Value::nil();
@@ -27972,8 +27972,8 @@ Gurax_ImplementFunctionEx(glGetActiveUniformBlockName_gurax, processor_gurax, ar
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint uniformBlockIndex = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* uniformBlockName = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* uniformBlockName = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName);
 	return Gurax::Value::nil();
@@ -27999,7 +27999,7 @@ Gurax_ImplementFunctionEx(glGetActiveUniformBlockiv_gurax, processor_gurax, argu
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint uniformBlockIndex = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetActiveUniformBlockiv(program, uniformBlockIndex, pname, params);
 	return Gurax::Value::nil();
@@ -28026,8 +28026,8 @@ Gurax_ImplementFunctionEx(glGetActiveUniformName_gurax, processor_gurax, argumen
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLuint uniformIndex = args_gurax.PickNumber<GLuint>();
 	GLsizei bufSize = args_gurax.PickNumber<GLsizei>();
-	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
-	GLchar* uniformName = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
+	GLsizei* length = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLsizei>() : nullptr;
+	GLchar* uniformName = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLchar>() : nullptr;
 	// Function body
 	glGetActiveUniformName(program, uniformIndex, bufSize, length, uniformName);
 	return Gurax::Value::nil();
@@ -28053,9 +28053,9 @@ Gurax_ImplementFunctionEx(glGetActiveUniformsiv_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint program = args_gurax.PickNumber<GLuint>();
 	GLsizei uniformCount = args_gurax.PickNumber<GLsizei>();
-	const GLuint* uniformIndices = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* uniformIndices = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetActiveUniformsiv(program, uniformCount, uniformIndices, pname, params);
 	return Gurax::Value::nil();
@@ -28079,7 +28079,7 @@ Gurax_ImplementFunctionEx(glGetIntegeri_v_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLint* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetIntegeri_v(target, index, data);
 	return Gurax::Value::nil();
@@ -28167,7 +28167,7 @@ Gurax_ImplementFunctionEx(glDeleteVertexArrays_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* arrays = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>();
+	const GLuint* arrays = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>();
 	// Function body
 	glDeleteVertexArrays(n, arrays);
 	return Gurax::Value::nil();
@@ -28189,7 +28189,7 @@ Gurax_ImplementFunctionEx(glGenVertexArrays_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* arrays = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* arrays = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenVertexArrays(n, arrays);
 	return Gurax::Value::nil();
@@ -28233,7 +28233,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribLdv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetVertexAttribLdv(index, pname, params);
 	return Gurax::Value::nil();
@@ -28277,7 +28277,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL1dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttribL1dv(index, v);
 	return Gurax::Value::nil();
@@ -28323,7 +28323,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL2dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttribL2dv(index, v);
 	return Gurax::Value::nil();
@@ -28371,7 +28371,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL3dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttribL3dv(index, v);
 	return Gurax::Value::nil();
@@ -28421,7 +28421,7 @@ Gurax_ImplementFunctionEx(glVertexAttribL4dv_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttribL4dv(index, v);
 	return Gurax::Value::nil();
@@ -28449,7 +28449,7 @@ Gurax_ImplementFunctionEx(glVertexAttribLPointer_gurax, processor_gurax, argumen
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glVertexAttribLPointer(index, size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -28807,7 +28807,7 @@ Gurax_ImplementFunctionEx(glWeightPointerARB_gurax, processor_gurax, argument_gu
 	GLint size = args_gurax.PickNumber<GLint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLsizei stride = args_gurax.PickNumber<GLsizei>();
-	void* pointer = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* pointer = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glWeightPointerARB(size, type, stride, pointer);
 	return Gurax::Value::nil();
@@ -28829,7 +28829,7 @@ Gurax_ImplementFunctionEx(glWeightbvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLbyte* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLbyte>() : nullptr;
+	GLbyte* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLbyte>() : nullptr;
 	// Function body
 	glWeightbvARB(size, weights);
 	return Gurax::Value::nil();
@@ -28851,7 +28851,7 @@ Gurax_ImplementFunctionEx(glWeightdvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLdouble* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glWeightdvARB(size, weights);
 	return Gurax::Value::nil();
@@ -28873,7 +28873,7 @@ Gurax_ImplementFunctionEx(glWeightfvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLfloat* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glWeightfvARB(size, weights);
 	return Gurax::Value::nil();
@@ -28895,7 +28895,7 @@ Gurax_ImplementFunctionEx(glWeightivARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLint* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glWeightivARB(size, weights);
 	return Gurax::Value::nil();
@@ -28917,7 +28917,7 @@ Gurax_ImplementFunctionEx(glWeightsvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLshort* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLshort>() : nullptr;
+	GLshort* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLshort>() : nullptr;
 	// Function body
 	glWeightsvARB(size, weights);
 	return Gurax::Value::nil();
@@ -28939,7 +28939,7 @@ Gurax_ImplementFunctionEx(glWeightubvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLubyte* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
+	GLubyte* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLubyte>() : nullptr;
 	// Function body
 	glWeightubvARB(size, weights);
 	return Gurax::Value::nil();
@@ -28961,7 +28961,7 @@ Gurax_ImplementFunctionEx(glWeightuivARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLuint* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glWeightuivARB(size, weights);
 	return Gurax::Value::nil();
@@ -28983,7 +28983,7 @@ Gurax_ImplementFunctionEx(glWeightusvARB_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLint size = args_gurax.PickNumber<GLint>();
-	GLushort* weights = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
+	GLushort* weights = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLushort>() : nullptr;
 	// Function body
 	glWeightusvARB(size, weights);
 	return Gurax::Value::nil();
@@ -29027,7 +29027,7 @@ Gurax_ImplementFunctionEx(glDeleteBuffersARB_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteBuffersARB(n, buffers);
 	return Gurax::Value::nil();
@@ -29049,7 +29049,7 @@ Gurax_ImplementFunctionEx(glGenBuffersARB_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* buffers = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenBuffersARB(n, buffers);
 	return Gurax::Value::nil();
@@ -29073,7 +29073,7 @@ Gurax_ImplementFunctionEx(glGetBufferParameterivARB_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetBufferParameterivARB(target, pname, params);
 	return Gurax::Value::nil();
@@ -29157,7 +29157,7 @@ Gurax_ImplementFunctionEx(glDeleteProgramsARB_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	const GLuint* programs = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* programs = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glDeleteProgramsARB(n, programs);
 	return Gurax::Value::nil();
@@ -29219,7 +29219,7 @@ Gurax_ImplementFunctionEx(glGenProgramsARB_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLsizei n = args_gurax.PickNumber<GLsizei>();
-	GLuint* programs = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
+	GLuint* programs = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLuint>() : nullptr;
 	// Function body
 	glGenProgramsARB(n, programs);
 	return Gurax::Value::nil();
@@ -29243,7 +29243,7 @@ Gurax_ImplementFunctionEx(glGetProgramEnvParameterdvARB_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetProgramEnvParameterdvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29267,7 +29267,7 @@ Gurax_ImplementFunctionEx(glGetProgramEnvParameterfvARB_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetProgramEnvParameterfvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29291,7 +29291,7 @@ Gurax_ImplementFunctionEx(glGetProgramLocalParameterdvARB_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetProgramLocalParameterdvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29315,7 +29315,7 @@ Gurax_ImplementFunctionEx(glGetProgramLocalParameterfvARB_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetProgramLocalParameterfvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29339,7 +29339,7 @@ Gurax_ImplementFunctionEx(glGetProgramStringARB_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	void* string = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* string = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	glGetProgramStringARB(target, pname, string);
 	return Gurax::Value::nil();
@@ -29363,7 +29363,7 @@ Gurax_ImplementFunctionEx(glGetProgramivARB_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetProgramivARB(target, pname, params);
 	return Gurax::Value::nil();
@@ -29387,7 +29387,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribdvARB_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetVertexAttribdvARB(index, pname, params);
 	return Gurax::Value::nil();
@@ -29411,7 +29411,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribfvARB_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetVertexAttribfvARB(index, pname, params);
 	return Gurax::Value::nil();
@@ -29435,7 +29435,7 @@ Gurax_ImplementFunctionEx(glGetVertexAttribivARB_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum pname = args_gurax.PickNumber<GLenum>();
-	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
+	GLint* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLint>() : nullptr;
 	// Function body
 	glGetVertexAttribivARB(index, pname, params);
 	return Gurax::Value::nil();
@@ -29509,7 +29509,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4dvARB_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramEnvParameter4dvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29563,7 +29563,7 @@ Gurax_ImplementFunctionEx(glProgramEnvParameter4fvARB_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramEnvParameter4fvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29617,7 +29617,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4dvARB_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glProgramLocalParameter4dvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29671,7 +29671,7 @@ Gurax_ImplementFunctionEx(glProgramLocalParameter4fvARB_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* params = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glProgramLocalParameter4fvARB(target, index, params);
 	return Gurax::Value::nil();
@@ -29697,7 +29697,7 @@ Gurax_ImplementFunctionEx(glProgramStringARB_gurax, processor_gurax, argument_gu
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLenum format = args_gurax.PickNumber<GLenum>();
 	GLsizei len = args_gurax.PickNumber<GLsizei>();
-	const void* string = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<const void*>() : nullptr;
+	const void* string = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>() : nullptr;
 	// Function body
 	glProgramStringARB(target, format, len, string);
 	return Gurax::Value::nil();
@@ -29741,7 +29741,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1dvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttrib1dvARB(index, v);
 	return Gurax::Value::nil();
@@ -29785,7 +29785,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1fvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glVertexAttrib1fvARB(index, v);
 	return Gurax::Value::nil();
@@ -29829,7 +29829,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib1svARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glVertexAttrib1svARB(index, v);
 	return Gurax::Value::nil();
@@ -29875,7 +29875,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2dvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttrib2dvARB(index, v);
 	return Gurax::Value::nil();
@@ -29921,7 +29921,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2fvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glVertexAttrib2fvARB(index, v);
 	return Gurax::Value::nil();
@@ -29967,7 +29967,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib2svARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glVertexAttrib2svARB(index, v);
 	return Gurax::Value::nil();
@@ -30015,7 +30015,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3dvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttrib3dvARB(index, v);
 	return Gurax::Value::nil();
@@ -30063,7 +30063,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3fvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glVertexAttrib3fvARB(index, v);
 	return Gurax::Value::nil();
@@ -30111,7 +30111,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib3svARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glVertexAttrib3svARB(index, v);
 	return Gurax::Value::nil();
@@ -30133,7 +30133,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NbvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLbyte* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>() : nullptr;
+	const GLbyte* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>() : nullptr;
 	// Function body
 	glVertexAttrib4NbvARB(index, v);
 	return Gurax::Value::nil();
@@ -30155,7 +30155,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glVertexAttrib4NivARB(index, v);
 	return Gurax::Value::nil();
@@ -30177,7 +30177,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NsvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glVertexAttrib4NsvARB(index, v);
 	return Gurax::Value::nil();
@@ -30227,7 +30227,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NubvARB_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLubyte* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
+	const GLubyte* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
 	// Function body
 	glVertexAttrib4NubvARB(index, v);
 	return Gurax::Value::nil();
@@ -30249,7 +30249,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NuivARB_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttrib4NuivARB(index, v);
 	return Gurax::Value::nil();
@@ -30271,7 +30271,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4NusvARB_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLushort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>() : nullptr;
+	const GLushort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>() : nullptr;
 	// Function body
 	glVertexAttrib4NusvARB(index, v);
 	return Gurax::Value::nil();
@@ -30293,7 +30293,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4bvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLbyte* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLbyte>() : nullptr;
+	const GLbyte* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLbyte>() : nullptr;
 	// Function body
 	glVertexAttrib4bvARB(index, v);
 	return Gurax::Value::nil();
@@ -30343,7 +30343,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4dvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glVertexAttrib4dvARB(index, v);
 	return Gurax::Value::nil();
@@ -30393,7 +30393,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4fvARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glVertexAttrib4fvARB(index, v);
 	return Gurax::Value::nil();
@@ -30415,7 +30415,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ivARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glVertexAttrib4ivARB(index, v);
 	return Gurax::Value::nil();
@@ -30465,7 +30465,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4svARB_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glVertexAttrib4svARB(index, v);
 	return Gurax::Value::nil();
@@ -30487,7 +30487,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4ubvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLubyte* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
+	const GLubyte* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLubyte>() : nullptr;
 	// Function body
 	glVertexAttrib4ubvARB(index, v);
 	return Gurax::Value::nil();
@@ -30509,7 +30509,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4uivARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLuint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttrib4uivARB(index, v);
 	return Gurax::Value::nil();
@@ -30531,7 +30531,7 @@ Gurax_ImplementFunctionEx(glVertexAttrib4usvARB_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLushort* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLushort>() : nullptr;
+	const GLushort* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLushort>() : nullptr;
 	// Function body
 	glVertexAttrib4usvARB(index, v);
 	return Gurax::Value::nil();
@@ -30605,7 +30605,7 @@ Gurax_ImplementFunctionEx(glColorP3uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glColorP3uiv(type, color);
 	return Gurax::Value::nil();
@@ -30649,7 +30649,7 @@ Gurax_ImplementFunctionEx(glColorP4uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glColorP4uiv(type, color);
 	return Gurax::Value::nil();
@@ -30697,7 +30697,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP1uiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum texture = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glMultiTexCoordP1uiv(texture, type, coords);
 	return Gurax::Value::nil();
@@ -30745,7 +30745,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP2uiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum texture = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glMultiTexCoordP2uiv(texture, type, coords);
 	return Gurax::Value::nil();
@@ -30793,7 +30793,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP3uiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum texture = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glMultiTexCoordP3uiv(texture, type, coords);
 	return Gurax::Value::nil();
@@ -30841,7 +30841,7 @@ Gurax_ImplementFunctionEx(glMultiTexCoordP4uiv_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum texture = args_gurax.PickNumber<GLenum>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glMultiTexCoordP4uiv(texture, type, coords);
 	return Gurax::Value::nil();
@@ -30885,7 +30885,7 @@ Gurax_ImplementFunctionEx(glNormalP3uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glNormalP3uiv(type, coords);
 	return Gurax::Value::nil();
@@ -30929,7 +30929,7 @@ Gurax_ImplementFunctionEx(glSecondaryColorP3uiv_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* color = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glSecondaryColorP3uiv(type, color);
 	return Gurax::Value::nil();
@@ -30973,7 +30973,7 @@ Gurax_ImplementFunctionEx(glTexCoordP1uiv_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glTexCoordP1uiv(type, coords);
 	return Gurax::Value::nil();
@@ -31017,7 +31017,7 @@ Gurax_ImplementFunctionEx(glTexCoordP2uiv_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glTexCoordP2uiv(type, coords);
 	return Gurax::Value::nil();
@@ -31061,7 +31061,7 @@ Gurax_ImplementFunctionEx(glTexCoordP3uiv_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glTexCoordP3uiv(type, coords);
 	return Gurax::Value::nil();
@@ -31105,7 +31105,7 @@ Gurax_ImplementFunctionEx(glTexCoordP4uiv_gurax, processor_gurax, argument_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* coords = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glTexCoordP4uiv(type, coords);
 	return Gurax::Value::nil();
@@ -31157,7 +31157,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP1uiv_gurax, processor_gurax, argument_g
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttribP1uiv(index, type, normalized, value);
 	return Gurax::Value::nil();
@@ -31209,7 +31209,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP2uiv_gurax, processor_gurax, argument_g
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttribP2uiv(index, type, normalized, value);
 	return Gurax::Value::nil();
@@ -31261,7 +31261,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP3uiv_gurax, processor_gurax, argument_g
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttribP3uiv(index, type, normalized, value);
 	return Gurax::Value::nil();
@@ -31313,7 +31313,7 @@ Gurax_ImplementFunctionEx(glVertexAttribP4uiv_gurax, processor_gurax, argument_g
 	GLuint index = args_gurax.PickNumber<GLuint>();
 	GLenum type = args_gurax.PickNumber<GLenum>();
 	GLboolean normalized = static_cast<GLboolean>(args_gurax.PickBool());
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexAttribP4uiv(index, type, normalized, value);
 	return Gurax::Value::nil();
@@ -31357,7 +31357,7 @@ Gurax_ImplementFunctionEx(glVertexP2uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexP2uiv(type, value);
 	return Gurax::Value::nil();
@@ -31401,7 +31401,7 @@ Gurax_ImplementFunctionEx(glVertexP3uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexP3uiv(type, value);
 	return Gurax::Value::nil();
@@ -31445,7 +31445,7 @@ Gurax_ImplementFunctionEx(glVertexP4uiv_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum type = args_gurax.PickNumber<GLenum>();
-	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
+	const GLuint* value = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLuint>() : nullptr;
 	// Function body
 	glVertexP4uiv(type, value);
 	return Gurax::Value::nil();
@@ -31469,7 +31469,7 @@ Gurax_ImplementFunctionEx(glDepthRangeArrayv_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLclampd* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLclampd>() : nullptr;
+	const GLclampd* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLclampd>() : nullptr;
 	// Function body
 	glDepthRangeArrayv(first, count, v);
 	return Gurax::Value::nil();
@@ -31517,7 +31517,7 @@ Gurax_ImplementFunctionEx(glGetDoublei_v_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLdouble* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
+	GLdouble* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>() : nullptr;
 	// Function body
 	glGetDoublei_v(target, index, data);
 	return Gurax::Value::nil();
@@ -31541,7 +31541,7 @@ Gurax_ImplementFunctionEx(glGetFloati_v_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLenum target = args_gurax.PickNumber<GLenum>();
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	GLfloat* data = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
+	GLfloat* data = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>() : nullptr;
 	// Function body
 	glGetFloati_v(target, index, data);
 	return Gurax::Value::nil();
@@ -31565,7 +31565,7 @@ Gurax_ImplementFunctionEx(glScissorArrayv_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glScissorArrayv(first, count, v);
 	return Gurax::Value::nil();
@@ -31615,7 +31615,7 @@ Gurax_ImplementFunctionEx(glScissorIndexedv_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glScissorIndexedv(index, v);
 	return Gurax::Value::nil();
@@ -31639,7 +31639,7 @@ Gurax_ImplementFunctionEx(glViewportArrayv_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint first = args_gurax.PickNumber<GLuint>();
 	GLsizei count = args_gurax.PickNumber<GLsizei>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glViewportArrayv(first, count, v);
 	return Gurax::Value::nil();
@@ -31689,7 +31689,7 @@ Gurax_ImplementFunctionEx(glViewportIndexedfv_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	GLuint index = args_gurax.PickNumber<GLuint>();
-	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* v = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glViewportIndexedfv(index, v);
 	return Gurax::Value::nil();
@@ -31731,7 +31731,7 @@ Gurax_ImplementFunctionEx(glWindowPos2dvARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glWindowPos2dvARB(p);
 	return Gurax::Value::nil();
@@ -31773,7 +31773,7 @@ Gurax_ImplementFunctionEx(glWindowPos2fvARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glWindowPos2fvARB(p);
 	return Gurax::Value::nil();
@@ -31815,7 +31815,7 @@ Gurax_ImplementFunctionEx(glWindowPos2ivARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glWindowPos2ivARB(p);
 	return Gurax::Value::nil();
@@ -31857,7 +31857,7 @@ Gurax_ImplementFunctionEx(glWindowPos2svARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glWindowPos2svARB(p);
 	return Gurax::Value::nil();
@@ -31901,7 +31901,7 @@ Gurax_ImplementFunctionEx(glWindowPos3dvARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLdouble* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
+	const GLdouble* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLdouble>() : nullptr;
 	// Function body
 	glWindowPos3dvARB(p);
 	return Gurax::Value::nil();
@@ -31945,7 +31945,7 @@ Gurax_ImplementFunctionEx(glWindowPos3fvARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLfloat* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
+	const GLfloat* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLfloat>() : nullptr;
 	// Function body
 	glWindowPos3fvARB(p);
 	return Gurax::Value::nil();
@@ -31989,7 +31989,7 @@ Gurax_ImplementFunctionEx(glWindowPos3ivARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLint* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
+	const GLint* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLint>() : nullptr;
 	// Function body
 	glWindowPos3ivARB(p);
 	return Gurax::Value::nil();
@@ -32033,7 +32033,7 @@ Gurax_ImplementFunctionEx(glWindowPos3svARB_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const GLshort* p = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
+	const GLshort* p = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<GLshort>() : nullptr;
 	// Function body
 	glWindowPos3svARB(p);
 	return Gurax::Value::nil();

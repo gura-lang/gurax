@@ -2,7 +2,7 @@
 import(jpeg)
 import(argopt)
 
-PrintIFD(ifd as jpeg.IFD, indentLevel as Number = 0) = {
+PrintIFD(ifd:jpeg.IFD, indentLevel:Number = 0) = {
 	ifd.EachTag {|tag|
 		Printf('%*s%s(%04x) [%s]: %s\n',
 			indentLevel * 2, '', tag.name, tag.tagId,
