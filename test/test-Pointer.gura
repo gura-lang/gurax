@@ -6,7 +6,7 @@ TestCase('Property') {
 }
 
 TestCase('Basic test of pack/unpack') {
-	PackTester(buff:Binary, format:String, args*) = {
+	PackTester(buff as Binary, format as String, args*) = {
 		Printf('buff.p.Pack(%s, %s)', format.Enquote(), args.Join(', ')) 
 		try {
 			buff.p.Pack(format, args*)
@@ -15,7 +15,7 @@ TestCase('Basic test of pack/unpack') {
 		}
 		Println()
 	}
-	f(strPre:String) = {
+	f(strPre as String) = {
 		scope {
 			Println('---')
 			buff = B''

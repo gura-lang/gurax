@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 TestCase('Basic test') {
-	test(str:String) = {
+	test(str as String) = {
 		Printf('\'%s\' -> \'%s\'\n', str, str.Template().Eval())
 		Println()
 	}
@@ -393,7 +393,7 @@ TestCase('Rendering HTML') {
 	</table>
 	'''
 	scope {
-		Person = struct { name:string, age:number }
+		Person = struct { name as string, age as number }
 		people = @(Person) {{'Yamada', 23}, {'Honda', 21}, {'Tanaka', 24}}
 		title = 'Member List'
 		tmpl.Render(sys.cout)
@@ -434,8 +434,8 @@ TestCase('Comment') {
 //-----------------------------------------------------------------------------
 TestCase('Macro') {
 	tR'''
-	${=define(`calc_mean, num1:Number, num2:Number)}${(num1 + num2) / 2}${end}
-	${=define(`show_person, name:String, age:Number)}
+	${=define(`calc_mean, num1 as Number, num2 as Number)}${(num1 + num2) / 2}${end}
+	${=define(`show_person, name as String, age as Number)}
 	${name} is ${age} years old.
 	${end}
 
@@ -592,7 +592,7 @@ TestCase('Embedded string') {
 //-----------------------------------------------------------------------------
 TestCase('Inheritance and loop') {
 	// this sample originated from an example in http://jinja.pocoo.org/.
-	Users = struct {username:String, url:String}
+	Users = struct {username as String, url as String}
 	users = @(Users) {
 		{ 'Iwai Michiko',		'iwai_michiko@example.com'		},
 		{ 'Kasai Satoshi',		'kasai_satoshi@example.com'		},

@@ -2,7 +2,7 @@
 import(util.tester) {*}
 import(zip)
 
-PrintStat(st:Stat):map = Printf('%-32s %8d %8d %s\n', st.name@zip, st.size, st.compressedSize, st.compressionMethod)
+PrintStat(st as Stat):map = Printf('%-32s %8d %8d %s\n', st.name@zip, st.size, st.compressedSize, st.compressionMethod)
 
 TestCase('Property') {
 	zip.Stat.PrintPropSlots()

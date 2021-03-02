@@ -6,7 +6,7 @@ TestCase('Property') {
 }
 
 TestCase('Property Access') {
-	test(a:Number) = {
+	test(a as Number) = {
 		Tester(`a)
 		Tester(`a.abs)
 		Tester(`a.arg)

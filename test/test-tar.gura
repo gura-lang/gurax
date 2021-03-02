@@ -11,7 +11,7 @@ TestCase('Property') {
 }
 
 TestCase('Archive test') {
-	Entry = struct { fileName:String, buff:Binary }
+	Entry = struct { fileName as String, buff as Binary }
 	r = Random(0)
 	entries = repeat (100):list {|i|
 		buff = Binary()

@@ -3,7 +3,7 @@ import(util.tester) {*}
 
 TestCase('Member assignment') {
 	A = struct {
-		p1:String, p2:Number, p3:String
+		p1 as String, p2 as Number, p3 as String
 		ToText() = Format('p1=%s p2=%d p3=%s', this.p1, this.p2, this.p3)
 	}
 	a = A('v1', 3, 'v3')

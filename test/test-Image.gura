@@ -19,7 +19,7 @@ hsMvNN22h+UJr1QLC3csPRqSEEY5Znezed1TJaXL/uSQXKVppP7svhLw3NQmLMu/yfN+A8LBMXwK
 9jLTAAAAAElFTkSuQmCC
 '''base64)
 
-PutImageWithAscii(img:Image, scanDir = `LeftTopHorz) = {
+PutImageWithAscii(img as Image, scanDir = `LeftTopHorz) = {
 	charTbl = ['@', '*', '.', ' ']
 	img.Scan(scanDir = scanDir).Fold(img.width) {|colorsRow|
 		Println((charTbl.Get(colorsRow:*grayScale / 64)).Join())
@@ -132,7 +132,7 @@ TestCase('Image#Rotate()') {
 
 TestCase('Image#Scan()') {
 	img = Image.Create(5, 3)
-	f(pixel:Pixel):map = Format('%d-%d', pixel.x, pixel.y)
+	f(pixel as Pixel):map = Format('%d-%d', pixel.x, pixel.y)
 	Tester(`f(img.Scan():pixel).Join(' '))
 	Tester(`f(img.Scan(scanDir = `LeftTopHorz):pixel).Join(' '))
 	Tester(`f(img.Scan(scanDir = `LeftTopVert):pixel).Join(' '))

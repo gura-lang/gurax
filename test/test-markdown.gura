@@ -10,7 +10,7 @@ TestCase('Property') {
   markdown.Item.PrintPropSlots()
 }
 
-TestCase@markdown(title:String, str:String):void = TestCase(title) {
+TestCase@markdown(title as String, str as String):void = TestCase(title) {
 	doc = markdown.Document()
 	doc << str
 	doc.root.Print()

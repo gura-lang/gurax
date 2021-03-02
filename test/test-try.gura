@@ -227,7 +227,7 @@ TestCase('finally statement') {
 		}
 		str
 	}
-	TesterSub(f:Function) = {
+	TesterSub(f as Function) = {
 		Println(f)
 		Println('----')
 		Printf('raise nothing .. result=%s\n', f() {})

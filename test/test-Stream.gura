@@ -6,8 +6,8 @@ TestCase('Property') {
 }
 
 TestCase('Cast') {
-	f(s:Stream) = {s}
-	g(s:Stream:w) = {s}
+	f(s as Stream) = {s}
+	g(s:w as Stream) = {s}
 	Tester(`f(b''))
 	Tester(`g(B''))
 	Tester(`g(b''))

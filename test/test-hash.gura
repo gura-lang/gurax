@@ -14,7 +14,7 @@ TestCase('CRC32') {
 }
 
 TestCase('MD5') {
-	Record = struct {data:Binary, expected:String}
+	Record = struct {data as Binary, expected as String}
 	records = @(Record) {
 		{b'',
 		'd41d8cd98f00b204e9800998ecf8427e'}
@@ -42,7 +42,7 @@ TestCase('MD5') {
 }
 
 TestCase('SHA1') {
-	Record = struct {data:Binary, cnt:Number, expected:String}
+	Record = struct {data as Binary, cnt as Number, expected as String}
 	records = @(Record) {
 		{b'abc', 1,
 		'a9993e364706816aba3e25717850c26c9cd0d89d'}

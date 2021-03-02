@@ -42,7 +42,7 @@ TestCase(':flat attribute') {
 }
 
 TestCase(':void attribute') {
-	f(n:Number):void:map = Println(n)
+	f(n as Number):void:map = Println(n)
 	Println(f)
 	f(1..10)
 }

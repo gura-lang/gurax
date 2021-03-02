@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TesterPerm(expr:Expr) = {
+TesterPerm(expr as Expr) = {
 	try {
 		tbl = expr.Eval()
 		Println('----')
