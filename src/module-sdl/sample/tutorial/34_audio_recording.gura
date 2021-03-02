@@ -48,7 +48,7 @@ LTexture = class {
 	};
 
 	//Loads image at specified path
-	loadFromFile(path:String) = {
+	loadFromFile(path as String) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -83,7 +83,7 @@ LTexture = class {
 	}
 
 	//Creates image from font string
-	loadFromRenderedText(textureText:String, textColor:SDL_Color) = {
+	loadFromRenderedText(textureText as String, textColor as SDL_Color) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -121,25 +121,25 @@ LTexture = class {
 	}
 
 	//Set color modulation
-	setColor(red:Number, green:Number, blue:Number) = {
+	setColor(red as Number, green as Number, blue as Number) = {
 		//Modulate texture
 		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
 	}
 
 	//Set blending
-	setBlendMode(blending:Number) = {
+	setBlendMode(blending as Number) = {
 		//Set blending function
 		SDL_SetTextureBlendMode(this.mTexture, blending);
 	}
 			
 	//Set alpha modulation
-	setAlpha(alpha:Number) = {
+	setAlpha(alpha as Number) = {
 		//Modulate texture alpha
 		SDL_SetTextureAlphaMod(this.mTexture, alpha);
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
+	render(x as Number, y as Number, clip? as SDL_Rect, angle as Number = 0.0, center? as SDL_Point, flip as Number = SDL_FLIP_NONE) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
@@ -158,11 +158,11 @@ LTexture = class {
 	getHeight() = this.mHeight;
 
 	//The actual hardware texture
-	mTexture:SDL_Texture;
+	mTexture as SDL_Texture;
 
 	//Image dimensions
-	mWidth:Number;
-	mHeight:Number;
+	mWidth as Number;
+	mHeight as Number;
 };
 
 //The window we'll be rendering to
@@ -201,7 +201,7 @@ gBufferByteSize = 0;
 gBufferByteMaxPosition = 0;
 
 UserData = struct {
-	bufferBytePosition:Number = 0
+	bufferBytePosition as Number = 0
 }
 
 init() = {
@@ -316,7 +316,7 @@ close() = {
 	SDL_Quit();
 }
 
-audioRecordingCallback(userdata, stream:Pointer) = {
+audioRecordingCallback(userdata, stream as Pointer) = {
 	//Copy audio from stream
 	//memcpy(&gRecordingBuffer[userdata.bufferBytePosition], stream, len);
 	len = stream.bytesAvail
@@ -328,7 +328,7 @@ audioRecordingCallback(userdata, stream:Pointer) = {
 	//Printf('Sub: %s\n', userdata.__id__)
 }
 
-audioPlaybackCallback(userdata, stream:Pointer) = {
+audioPlaybackCallback(userdata, stream as Pointer) = {
 	//Copy audio to stream
 	//memcpy(stream, &gRecordingBuffer[userdata.bufferBytePosition], len);
 	len = stream.bytesAvail

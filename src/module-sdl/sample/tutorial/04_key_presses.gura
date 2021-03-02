@@ -54,7 +54,7 @@ close() = {
 	SDL_Quit();
 }
 
-loadSurface(path:String) = {
+loadSurface(path as String) = {
 	//Load image at specified path
 	SDL_LoadBMP(path);
 }

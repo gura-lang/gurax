@@ -27,7 +27,7 @@ LTexture = class {
 	};
 
 	//Loads image at specified path
-	loadFromFile(path:String) = {
+	loadFromFile(path as String) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -62,7 +62,7 @@ LTexture = class {
 	}
 
 	//Creates image from font string
-	loadFromRenderedText(textureText:String, textColor:SDL_Color) = {
+	loadFromRenderedText(textureText as String, textColor as SDL_Color) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -100,25 +100,25 @@ LTexture = class {
 	}
 
 	//Set color modulation
-	setColor(red:Number, green:Number, blue:Number) = {
+	setColor(red as Number, green as Number, blue as Number) = {
 		//Modulate texture
 		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
 	}
 
 	//Set blending
-	setBlendMode(blending:Number) = {
+	setBlendMode(blending as Number) = {
 		//Set blending function
 		SDL_SetTextureBlendMode(this.mTexture, blending);
 	}
 			
 	//Set alpha modulation
-	setAlpha(alpha:Number) = {
+	setAlpha(alpha as Number) = {
 		//Modulate texture alpha
 		SDL_SetTextureAlphaMod(this.mTexture, alpha);
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
+	render(x as Number, y as Number, clip? as SDL_Rect, angle as Number = 0.0, center? as SDL_Point, flip as Number = SDL_FLIP_NONE) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
@@ -137,11 +137,11 @@ LTexture = class {
 	getHeight() = this.mHeight;
 
 	//The actual hardware texture
-	mTexture:SDL_Texture;
+	mTexture as SDL_Texture;
 
 	//Image dimensions
-	mWidth:Number;
-	mHeight:Number;
+	mWidth as Number;
+	mHeight as Number;
 };
 
 //The dot that will move around on the screen
@@ -154,7 +154,7 @@ Dot = class {
 	DOT_VEL:static = 1;
 
 	//Initializes the variables
-	__init__(x:Number, y:Number) = {
+	__init__(x as Number, y as Number) = {
 		//Initialize the offsets
 		this.mPosX = x;
 		this.mPosY = y;
@@ -205,7 +205,7 @@ Dot = class {
 	}
 
 	//Takes key presses and adjusts the dot's velocity
-	handleEvent(e:SDL_Event):void = {
+	handleEvent(e as SDL_Event):void = {
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
 			//If a key was pressed
 			//Adjust the velocity
@@ -234,7 +234,7 @@ Dot = class {
 	}
 
 	//Moves the dot
-	move(otherColliders[]:SDL_Rect):void = {
+	move(otherColliders[] as SDL_Rect):void = {
 		//Move the dot left or right
 		this.mPosX += this.mVelX;
 		this.shiftColliders();
@@ -284,15 +284,15 @@ Dot = class {
 	getColliders() = { this.mColliders; }
 
 	//The X and Y offsets of the dot
-	mPosX:Number;
-	mPosY:Number;
+	mPosX as Number;
+	mPosY as Number;
 
 	//The velocity of the dot
-	mVelX:Number;
-	mVelY:Number;
+	mVelX as Number;
+	mVelY as Number;
 
 	//Dot's collision box
-	mColliders[]:SDL_Rect;
+	mColliders[] as SDL_Rect;
 };
 
 //The window we'll be rendering to
@@ -374,15 +374,15 @@ close() = {
 	SDL_Quit();
 }
 
-checkCollision(as[]:SDL_Rect, bs[]:SDL_Rect) = {
-	for (a in as) { // as.Each() doesn't work with return
+checkCollision(a_s[] as SDL_Rect, b_s[] as SDL_Rect) = {
+	for (a in a_s) { // as.Each() doesn't work with return
 		//Calculate the sides of rect A
 		leftA = a.x;
 		rightA = a.x + a.w;
 		topA = a.y;
 		bottomA = a.y + a.h;
 
-		for (b in bs) { // bs.Each() doesn't work with return
+		for (b in b_s) { // bs.Each() doesn't work with return
 			//Calculate the sides of rect B
 			leftB = b.x;
 			rightB = b.x + b.w;

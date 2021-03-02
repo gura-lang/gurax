@@ -38,7 +38,7 @@ LTexture = class {
 	};
 
 	//Loads image at specified path
-	loadFromFile(path:String) = {
+	loadFromFile(path as String) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -83,25 +83,25 @@ LTexture = class {
 	}
 
 	//Set color modulation
-	setColor(red:Number, green:Number, blue:Number) = {
+	setColor(red as Number, green as Number, blue as Number) = {
 		//Modulate texture
 		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
 	}
 
 	//Set blending
-	setBlendMode(blending:Number) = {
+	setBlendMode(blending as Number) = {
 		//Set blending function
 		SDL_SetTextureBlendMode(this.mTexture, blending);
 	}
 			
 	//Set alpha modulation
-	setAlpha(alpha:Number) = {
+	setAlpha(alpha as Number) = {
 		//Modulate texture alpha
 		SDL_SetTextureAlphaMod(this.mTexture, alpha);
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number, clip?:SDL_Rect, angle:Number = 0.0, center?:SDL_Point, flip:Number = SDL_FLIP_NONE) = {
+	render(x as Number, y as Number, clip? as SDL_Rect, angle as Number = 0.0, center? as SDL_Point, flip as Number = SDL_FLIP_NONE) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
@@ -120,11 +120,11 @@ LTexture = class {
 	getHeight() = this.mHeight;
 
 	//The actual hardware texture
-	mTexture:SDL_Texture;
+	mTexture as SDL_Texture;
 
 	//Image dimensions
-	mWidth:Number;
-	mHeight:Number;
+	mWidth as Number;
+	mHeight as Number;
 };
 
 //The mouse button
@@ -137,13 +137,13 @@ LButton = class {
 	}
 
 	//Sets top left position
-	setPosition(x:Number, y:Number) = {
+	setPosition(x as Number, y as Number) = {
 		this.mPosition.x = x;
 		this.mPosition.y = y;
 	}
 
 	//Handles mouse event
-	handleEvent(e:SDL_Event) = {
+	handleEvent(e as SDL_Event) = {
 		//If mouse event happened
 		if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP) {
 			//Get mouse position
@@ -190,10 +190,10 @@ LButton = class {
 	}
 
 	//Top left position
-	mPosition:SDL_Point;
+	mPosition as SDL_Point;
 
 	//Currently used global sprite
-	mCurrentSprite:Number;
+	mCurrentSprite as Number;
 };
 
 //The window we'll be rendering to

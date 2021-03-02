@@ -76,7 +76,7 @@ close() = {
 	SDL_Quit();
 }
 
-loadTexture(path:String) = {
+loadTexture(path as String) = {
 	//The final texture
 	newTexture = nil;
 

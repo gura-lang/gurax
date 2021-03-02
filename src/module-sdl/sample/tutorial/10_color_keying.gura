@@ -26,7 +26,7 @@ LTexture = class {
 	};
 
 	//Loads image at specified path
-	loadFromFile(path:String) = {
+	loadFromFile(path as String) = {
 		//Get rid of preexisting texture
 		this.free();
 
@@ -71,7 +71,7 @@ LTexture = class {
 	}
 
 	//Renders texture at given point
-	render(x:Number, y:Number) = {
+	render(x as Number, y as Number) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 		SDL_RenderCopy(gRenderer, this.mTexture, nil, renderQuad);
@@ -82,11 +82,11 @@ LTexture = class {
 	getHeight() = this.mHeight;
 
 	//The actual hardware texture
-	mTexture:SDL_Texture;
+	mTexture as SDL_Texture;
 
 	//Image dimensions
-	mWidth:Number;
-	mHeight:Number;
+	mWidth as Number;
+	mHeight as Number;
 };
 
 //The window we'll be rendering to
