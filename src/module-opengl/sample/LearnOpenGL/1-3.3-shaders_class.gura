@@ -121,7 +121,7 @@ main() = {
 	glfwTerminate();
 }
 
-processInput(window:GLFWwindow) = {
+processInput(window as GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}

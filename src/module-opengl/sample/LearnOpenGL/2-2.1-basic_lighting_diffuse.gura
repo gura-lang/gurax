@@ -117,7 +117,7 @@ main() = {
 		return
 	}
 	glfwMakeContextCurrent(window)
-	glfwSetFramebufferSizeCallback(window, &{|window:GLFWwindow, width:Number, height:Number|
+	glfwSetFramebufferSizeCallback(window, &{|window as GLFWwindow, width as Number, height as Number|
 		glViewport(0, 0, width, height)
 	})
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -274,7 +274,7 @@ main() = {
 	glfwTerminate();
 }
 
-processInput(window:GLFWwindow) = {
+processInput(window as GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
@@ -295,7 +295,7 @@ processInput(window:GLFWwindow) = {
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-mouse_callback(window:GLFWwindow, xpos:Number, ypos:Number) = {
+mouse_callback(window as GLFWwindow, xpos as Number, ypos as Number) = {
 	if (firstMouse:extern) {
 		lastX:extern = xpos;
 		lastY:extern = ypos;
@@ -313,7 +313,7 @@ mouse_callback(window:GLFWwindow, xpos:Number, ypos:Number) = {
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-scroll_callback(window:GLFWwindow, xoffset:Number, yoffset:Number) = {
+scroll_callback(window as GLFWwindow, xoffset as Number, yoffset as Number) = {
 	camera.ProcessMouseScroll(yoffset)
 }
 

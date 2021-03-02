@@ -44,7 +44,7 @@ void main()
 }
 '''
 
-Radians(degree:Number):map = degree * math.pi / 180
+Radians(degree as Number):map = degree * math.pi / 180
 
 main() = {
 	// glfw: initialize and configure
@@ -204,7 +204,7 @@ main() = {
 	glfwTerminate();
 }
 
-processInput(window:GLFWwindow) = {
+processInput(window as GLFWwindow) = {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
