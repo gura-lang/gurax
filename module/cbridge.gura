@@ -52,7 +52,7 @@ TypeInfo = class {
 //------------------------------------------------------------------------------
 ArgInfo = class {
 	name as String
-	type as String
+	typeName as String
 	listVarFlag as Bool
 	optionFlag as Bool
 	nilFlag as Bool
@@ -61,15 +61,15 @@ ArgInfo = class {
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
 		this.name = name
-		this.type = attr.dottedName
+		this.typeName = typeName || attr.dottedName
 		this.listVarFlag = listVarFlag
 		this.optionFlag = optionFlag
 		this.nilFlag = attr.IsSet(`nil)
 		this.streamWFlag = attr.IsSet(`w)
 		this.streamRFlag = attr.IsSet(`r)
-		this.typeInfo = r.typeInfoMap[this.type]
+		this.typeInfo = r.typeInfoMap[this.typeName]
 	}
 	ComposeDeclaration() = {
 		strArgOccur = 'ArgOccur::' + cond(this.optionFlag, 'ZeroOrOnce', 'Once')
@@ -110,7 +110,7 @@ if (${this.name}.size() != 3) {
 FuncInfo = class {
 	moduleName as String
 	name as String
-	type as String
+	typeName as String
 	typeInfo as TypeInfo
 	argInfoTbl[] as ArgInfo = []
 	tmplFunctionBody as Template
@@ -118,10 +118,10 @@ FuncInfo = class {
 	tmplAssignment:static as Template
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
-	__init__(r as Renderer, moduleName as String, name as String, type as String, codeFunctionBody:nil as String) = {
-		if (type.IsEmpty()) { type = 'any' }
-		this.moduleName = moduleName, this.name = name, this.type = type
-		this.typeInfo = r.typeInfoMap[type]
+	__init__(r as Renderer, moduleName as String, name as String, typeName as String, codeFunctionBody:nil as String) = {
+		if (typeName.IsEmpty()) { typeName = 'any' }
+		this.moduleName = moduleName, this.name = name, this.typeName = typeName
+		this.typeInfo = r.typeInfoMap[typeName]
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
@@ -248,6 +248,16 @@ Renderer = class {
 				//Println(exprParam)
 				listVarFlag = false
 				optionFlag = false
+				typeName = nil
+				if (exprParam.IsBinaryOp()) {
+					if (exprParam.operator.symbol == `as) {
+						!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
+						typeName = exprParam.right.symbolName
+					} else {
+						ErrorDone(exprParam, 'invalid format of parameter')
+					}
+					exprParam = exprParam.left
+				}
 				if (exprParam.IsUnaryOp()) {
 					if (exprParam.operator.symbol == `?) {
 						optionFlag = true
@@ -262,7 +272,7 @@ Renderer = class {
 					exprParam = exprParam.car
 				}
 				!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-				argInfo = ArgInfo(this, exprParam.symbolName, attr, listVarFlag, optionFlag)
+				argInfo = ArgInfo(this, exprParam.symbolName, typeName, attr, listVarFlag, optionFlag)
 				funcInfo.argInfoTbl.Add(argInfo)
 			}
 		} catch {|e|

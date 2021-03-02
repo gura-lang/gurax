@@ -174,7 +174,7 @@ r.Register('sdl') {
 
 //======== Initialization and Shutdown (SDL.h) ========
 
-SDL_Init(flags:Uint32):int
+SDL_Init(flags as Uint32):int
 
 SDL_InitSubSystem(flags:Uint32):int
 
@@ -2309,7 +2309,7 @@ TTF_Linked_Version() = \
 	return new Value_SDL_version(*ver);
 	'''
 
-TTF_ByteSwappedUNICODE(swapped:int):void
+TTF_ByteSwappedUNICODE(swapped as int):void
 
 TTF_Init():int
 
