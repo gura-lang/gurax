@@ -351,7 +351,7 @@ Gurax_ImplementFunctionEx(curl_mime_data_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_part = args_gurax.Pick<Value_curl_mimepart>();
 	curl_mimepart* part = value_part.GetEntityPtr();
-	const char* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<char>();
+	const char* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<char>();
 	size_t datasize = args_gurax.PickNumber<size_t>();
 	// Function body
 	CURLcode rtn = curl_mime_data(part, data, datasize);
