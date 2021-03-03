@@ -4880,7 +4880,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_raster_source_gurax, processor_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	void* user_data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* user_data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!user_data) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -4911,7 +4911,7 @@ Gurax_ImplementFunctionEx(cairo_raster_source_pattern_set_callback_data_gurax, p
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
 	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
-	void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!data) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
