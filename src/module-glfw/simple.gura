@@ -9,7 +9,7 @@ main() = {
 	window.SetWindowPosCallback(&{Printf('WindowPos(%d, %d)\n', $xpos, $ypos)})
 	window.SetWindowSizeCallback(&{Printf('WindowSize(%d, %d)\n', $width, $height)})
 	window.SetWindowCloseCallback(&{Printf('WindowClose()\n')})
-	window.SetKeyCallback(Function(key, scancode, action) {
+	window.SetKeyCallback(Function(window, key, scancode, action) {
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 			window.SetWindowShouldClose(GLFW_TRUE)
 		}
