@@ -19,7 +19,7 @@ TestCase('jpeg.Content#segments') {
 	}
 }
 
-PrintIFD(ifd:jpeg.IFD, indentLevel:Number) = {
+PrintIFD(ifd as jpeg.IFD, indentLevel as Number) = {
 	ifd.tags.Each {|tag|
 		if (tag.offset == tag.offsetToValue) {
 			Printf('%*s%04x:%s [%s]: %s\n',

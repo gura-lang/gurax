@@ -4,7 +4,7 @@
 //==============================================================================
 import(jpeg):binary {*}
 
-IFD.Print(indentLevel:Number = 0) = {
+IFD.Print(indentLevel as Number = 0) = {
 	this.EachTag {|tag|
 		Printf('%*s%s(%04x) [%s]: %s\n',
 			indentLevel * 2, '', tag.name, tag.tagId,
