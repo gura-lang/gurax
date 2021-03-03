@@ -84,15 +84,15 @@ r.DeclareType_EntityEx('GLFWwindow_p', 'GLFWwindow*', 'glfw.GLFWwindow')
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwMakeContextCurrent(window:GLFWwindow_p):void
+glfwMakeContextCurrent(window as GLFWwindow_p):void
  
 glfwGetCurrentContext():GLFWwindow_p
  
-glfwSwapInterval(interval:int):void
+glfwSwapInterval(interval as int):void
  
-glfwExtensionSupported(extension:const_char_p):int_Bool
+glfwExtensionSupported(extension as const_char_p):int_Bool
  
-//glfwGetProcAddress(procname:const_char_p):GLFWglproc
+//glfwGetProcAddress(procname as const_char_p):GLFWglproc
  
 }
 
@@ -105,7 +105,7 @@ glfwInit():int_ErrorIfFalse
 
 glfwTerminate():void
 
-glfwInitHint(hint:int, value:int):void
+glfwInitHint(hint as int, value as int):void
 
 glfwGetVersion() = \
 	R'''
@@ -123,7 +123,7 @@ glfwGetError():String@gurax = \
 	return description? new Value_String(description) : Value::nil();
 	'''
 
-glfwSetErrorCallback(callback:Function@gurax:nil):void = \
+glfwSetErrorCallback(callback:nil as Function@gurax):void = \
 	R'''
 	glfwSetErrorCallback(callback? callback_ErrorCallback : nullptr);
 	g_pProcessor_ErrorCallback.reset(callback? processor_gurax.Reference() : nullptr);
@@ -137,38 +137,38 @@ glfwSetErrorCallback(callback:Function@gurax:nil):void = \
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwGetInputMode(window:GLFWwindow_p, mode:int):int
+glfwGetInputMode(window as GLFWwindow_p, mode as int):int
 
-glfwSetInputMode(window:GLFWwindow_p, mode:int, value:int):void
+glfwSetInputMode(window as GLFWwindow_p, mode as int, value as int):void
 
 glfwRawMouseMotionSupported():int_Bool
 
-glfwGetKeyName(key:int, scancode:int):const_char_p_NilIfNull
+glfwGetKeyName(key as int, scancode as int):const_char_p_NilIfNull
 
-glfwGetKeyScancode(key:int):int
+glfwGetKeyScancode(key as int):int
 
-glfwGetKey(window:GLFWwindow_p, key:int):int
+glfwGetKey(window as GLFWwindow_p, key as int):int
 
-glfwGetMouseButton(window:GLFWwindow_p, button:int):int
+glfwGetMouseButton(window as GLFWwindow_p, button as int):int
 
-glfwGetCursorPos(window:GLFWwindow_p):any = \
+glfwGetCursorPos(window as GLFWwindow_p):any = \
 	R'''
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 	'''
 
-glfwSetCursorPos(window:GLFWwindow_p, xpos:double, ypos:double):void
+glfwSetCursorPos(window as GLFWwindow_p, xpos as double, ypos as double):void
 
-glfwCreateCursor(image:const_GLFWimage_p, xhot:int, yhot:int):GLFWcursor_p
+glfwCreateCursor(image as const_GLFWimage_p, xhot as int, yhot as int):GLFWcursor_p
 
-glfwCreateStandardCursor(shape:int):GLFWcursor_p
+glfwCreateStandardCursor(shape as int):GLFWcursor_p
 
-glfwDestroyCursor(cursor:GLFWcursor_p):void
+glfwDestroyCursor(cursor as GLFWcursor_p):void
 
-glfwSetCursor(window:GLFWwindow_p, cursor:GLFWcursor_p):void
+glfwSetCursor(window as GLFWwindow_p, cursor as GLFWcursor_p):void
 
-glfwSetKeyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetKeyCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetKeyCallback(valueThis.GetEntity(),
@@ -177,7 +177,7 @@ glfwSetKeyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCharCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetCharCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharCallback(valueThis.GetEntity(),
@@ -186,7 +186,7 @@ glfwSetCharCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetCharModsCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCharModsCallback(valueThis.GetEntity(),
@@ -195,7 +195,7 @@ glfwSetCharModsCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void =
 	return Value::nil();
 	'''
 
-glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetMouseButtonCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetMouseButtonCallback(valueThis.GetEntity(),
@@ -204,7 +204,7 @@ glfwSetMouseButtonCallback(window:GLFWwindow_p, callback:Function@gurax:nil):voi
 	return Value::nil();
 	'''
 
-glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetCursorPosCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorPosCallback(valueThis.GetEntity(),
@@ -213,7 +213,7 @@ glfwSetCursorPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void 
 	return Value::nil();
 	'''
 
-glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetCursorEnterCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetCursorEnterCallback(valueThis.GetEntity(),
@@ -222,7 +222,7 @@ glfwSetCursorEnterCallback(window:GLFWwindow_p, callback:Function@gurax:nil):voi
 	return Value::nil();
 	'''
 
-glfwSetScrollCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetScrollCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetScrollCallback(valueThis.GetEntity(),
@@ -231,7 +231,7 @@ glfwSetScrollCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
 
-glfwSetDropCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetDropCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetDropCallback(valueThis.GetEntity(),
@@ -240,9 +240,9 @@ glfwSetDropCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
 
-glfwJoystickPresent(jid:int):int
+glfwJoystickPresent(jid as int):int
 
-glfwGetJoystickAxes(jid:int):any = \
+glfwGetJoystickAxes(jid as int):any = \
 	R'''
 	int count;
 	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
@@ -251,7 +251,7 @@ glfwGetJoystickAxes(jid:int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickButtons(jid:int):any = \
+glfwGetJoystickButtons(jid as int):any = \
 	R'''
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
@@ -260,7 +260,7 @@ glfwGetJoystickButtons(jid:int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickHats(jid:int):any = \
+glfwGetJoystickHats(jid as int):any = \
 	R'''
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
@@ -269,17 +269,17 @@ glfwGetJoystickHats(jid:int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickName(jid:int):const_char_p_NilIfNull
+glfwGetJoystickName(jid as int):const_char_p_NilIfNull
 
-glfwGetJoystickGUID(jid:int):const_char_p_NilIfNull
+glfwGetJoystickGUID(jid as int):const_char_p_NilIfNull
 
-//glfwSetJoystickUserPointer(jid:int, pointer:void_p)
+//glfwSetJoystickUserPointer(jid as int, pointer as void_p)
 
-//glfwGetJoystickUserPointer(jid:int):void_p
+//glfwGetJoystickUserPointer(jid as int):void_p
 
-glfwJoystickIsGamepad(jid:int):int_Bool
+glfwJoystickIsGamepad(jid as int):int_Bool
 
-glfwSetJoystickCallback(jid:int, callback:Function@gurax:nil):void = \
+glfwSetJoystickCallback(jid as int, callback:nil as Function@gurax):void = \
 	R'''
 	//glfwSetJoystickCallback(jid,
 	//		callback? Value_GLFWwindow::callback_JoystickCallback : nullptr);
@@ -287,19 +287,19 @@ glfwSetJoystickCallback(jid:int, callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
 
-glfwUpdateGamepadMappings(string:const_char_p):int_ErrorIfFalse
+glfwUpdateGamepadMappings(string as const_char_p):int_ErrorIfFalse
 
-glfwGetGamepadName(jid:int):const_char_p_NilIfNull
+glfwGetGamepadName(jid as int):const_char_p_NilIfNull
 
 //glfwGetGamepadState()
 
-glfwSetClipboardString(window:GLFWwindow_p, string:const_char_p):void
+glfwSetClipboardString(window as GLFWwindow_p, string as const_char_p):void
 
-glfwGetClipboardString(window:GLFWwindow_p):const_char_p_NilIfNull
+glfwGetClipboardString(window as GLFWwindow_p):const_char_p_NilIfNull
 
 glfwGetTime():double
 
-glfwSetTime(time:double):void
+glfwSetTime(time as double):void
 
 glfwGetTimerValue():uint64_t
 
@@ -326,14 +326,14 @@ glfwGetMonitors():any = \
 
 glfwGetPrimaryMonitor():GLFWmonitor_p
  
-glfwGetMonitorPos(monitor:GLFWmonitor_p):any = \
+glfwGetMonitorPos(monitor as GLFWmonitor_p):any = \
 	R'''
 	int xpos, ypos;
 	glfwGetMonitorPos(monitor, &xpos, &ypos);
 	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 	'''
  
-glfwGetMonitorWorkarea(monitor:GLFWmonitor_p):any = \
+glfwGetMonitorWorkarea(monitor as GLFWmonitor_p):any = \
 	R'''
 	int xpos, ypos, width, height;
 	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &width, &height);
@@ -341,27 +341,27 @@ glfwGetMonitorWorkarea(monitor:GLFWmonitor_p):any = \
 						new Value_Number(width), new Value_Number(height));
 	'''
  
-glfwGetMonitorPhysicalSize(monitor:GLFWmonitor_p):any = \
+glfwGetMonitorPhysicalSize(monitor as GLFWmonitor_p):any = \
 	R'''
 	int widthMM, heightMM;
 	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
 	return Value_Tuple::Create(new Value_Number(widthMM), new Value_Number(heightMM));
 	'''
  
-glfwGetMonitorContentScale(monitor:GLFWmonitor_p):any = \
+glfwGetMonitorContentScale(monitor as GLFWmonitor_p):any = \
 	R'''
 	float xscale, yscale;
 	glfwGetMonitorContentScale(monitor, &xscale, &yscale);
 	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 	'''
  
-glfwGetMonitorName(monitor:GLFWmonitor_p):const_char_p
+glfwGetMonitorName(monitor as GLFWmonitor_p):const_char_p
  
-//glfwSetMonitorUserPointer(monitor:GLFWmonitor_p, pointer:void_p)
+//glfwSetMonitorUserPointer(monitor as GLFWmonitor_p, pointer as void_p)
  
-//glfwGetMonitorUserPointer(monitor:GLFWmonitor_p):void_p
+//glfwGetMonitorUserPointer(monitor as GLFWmonitor_p):void_p
  
-glfwSetMonitorCallback(callback:Function@gurax:nil):void = \
+glfwSetMonitorCallback(callback:nil as Function@gurax):void = \
 	R'''
 	glfwSetMonitorCallback(callback? callback_MonitorCallback : nullptr);
 	g_pProcessor_MonitorCallback.reset(callback? processor_gurax.Reference() : nullptr);
@@ -369,7 +369,7 @@ glfwSetMonitorCallback(callback:Function@gurax:nil):void = \
 	return Value::nil();
 	'''
  
-glfwGetVideoModes(monitor:GLFWmonitor_p):any = \
+glfwGetVideoModes(monitor as GLFWmonitor_p):any = \
 	R'''
 	int count;
 	const GLFWvidmode* rtn = glfwGetVideoModes(monitor, &count);
@@ -382,13 +382,13 @@ glfwGetVideoModes(monitor:GLFWmonitor_p):any = \
 	return new Value_List(pValueOwner.release());
 	'''
  
-glfwGetVideoMode(monitor:GLFWmonitor_p):const_GLFWvidmode_p
+glfwGetVideoMode(monitor as GLFWmonitor_p):const_GLFWvidmode_p
  
-glfwSetGamma(monitor:GLFWmonitor_p, gamma:float):void
+glfwSetGamma(monitor as GLFWmonitor_p, gamma as float):void
  
-glfwGetGammaRamp(monitor:GLFWmonitor_p):const_GLFWgammaramp_p
+glfwGetGammaRamp(monitor as GLFWmonitor_p):const_GLFWgammaramp_p
  
-glfwSetGammaRamp(monitor:GLFWmonitor_p, ramp:const_GLFWgammaramp_p):void
+glfwSetGammaRamp(monitor as GLFWmonitor_p, ramp as const_GLFWgammaramp_p):void
 
 }
 
@@ -418,11 +418,11 @@ glfwGetRequiredInstanceExtensions():any = \
 	return new Value_List(pValueOwner.release());
 	'''
  
-//glfwGetInstanceProcAddress(instance:VkInstance, procname:const_char_p):GLFWvkproc
+//glfwGetInstanceProcAddress(instance as VkInstance, procname as const_char_p):GLFWvkproc
  
-//glfwGetPhysicalDevicePresentationSupport(instance:VkInstance, device:VkPhysicalDevice, queuefamily:uint32_t):int_Bool
+//glfwGetPhysicalDevicePresentationSupport(instance as VkInstance, device as VkPhysicalDevice, queuefamily as uint32_t):int_Bool
  
-//glfwCreateWindowSurface(instance:VkInstance, window:GLFWwindow_p, allocator:const_VkAllocationCallbacks_p, surface:VkSurfaceKHR_p):VkResult
+//glfwCreateWindowSurface(instance as VkInstance, window as GLFWwindow_p, allocator as const_VkAllocationCallbacks_p, surface as VkSurfaceKHR_p):VkResult
 
 }
 
@@ -434,56 +434,56 @@ r.Register('glfw') {
 
 glfwDefaultWindowHints():void
 
-glfwWindowHint(hint:int, value:int):void
+glfwWindowHint(hint as int, value as int):void
 
-glfwWindowHintString(hint:int, value:const_char_p):void
+glfwWindowHintString(hint as int, value as const_char_p):void
 
-glfwCreateWindow(width:int, height:int, title:const_char_p, monitor:GLFWmonitor_p:nil, share:GLFWwindow_p:nil):GLFWwindow_p
+glfwCreateWindow(width as int, height as int, title as const_char_p, monitor:nil as GLFWmonitor_p, share:nil as GLFWwindow_p):GLFWwindow_p
 
-glfwDestroyWindow(window:GLFWwindow_p):void
+glfwDestroyWindow(window as GLFWwindow_p):void
 
-glfwWindowShouldClose(window:GLFWwindow_p):bool
+glfwWindowShouldClose(window as GLFWwindow_p):bool
 
-glfwSetWindowShouldClose(window:GLFWwindow_p, value:bool):void
+glfwSetWindowShouldClose(window as GLFWwindow_p, value as bool):void
 
-glfwSetWindowTitle(window:GLFWwindow_p, title:const_char_p):void
+glfwSetWindowTitle(window as GLFWwindow_p, title as const_char_p):void
 
-glfwSetWindowIcon(window:GLFWwindow_p, images[]:GLFWimage):void = \
+glfwSetWindowIcon(window as GLFWwindow_p, images[] as GLFWimage):void = \
 	R'''
 	glfwSetWindowIcon(window, static_cast<int>(images.size()), images.data());
 	return Value::nil();
 	'''
 
-glfwGetWindowPos(window:GLFWwindow_p):any = \
+glfwGetWindowPos(window as GLFWwindow_p):any = \
 	R'''
 	int xpos, ypos;
 	glfwGetWindowPos(window, &xpos, &ypos);
 	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 	'''
 
-glfwSetWindowPos(window:GLFWwindow_p, xpos:int, ypos:int):void
+glfwSetWindowPos(window as GLFWwindow_p, xpos as int, ypos as int):void
 
-glfwGetWindowSize(window:GLFWwindow_p):any = \
+glfwGetWindowSize(window as GLFWwindow_p):any = \
 	R'''
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 	'''
 
-glfwSetWindowSizeLimits(window:GLFWwindow_p, minwidth:int, minheight:int, maxwidth:int, maxheight:int):void
+glfwSetWindowSizeLimits(window as GLFWwindow_p, minwidth as int, minheight as int, maxwidth as int, maxheight as int):void
 
-glfwSetWindowAspectRatio(window:GLFWwindow_p, numer:int, denom:int):void
+glfwSetWindowAspectRatio(window as GLFWwindow_p, numer as int, denom as int):void
 
-glfwSetWindowSize(window:GLFWwindow_p, width:int, height:int):void
+glfwSetWindowSize(window as GLFWwindow_p, width as int, height as int):void
 
-glfwGetFramebufferSize(window:GLFWwindow_p):any = \
+glfwGetFramebufferSize(window as GLFWwindow_p):any = \
 	R'''
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 	'''
 
-glfwGetWindowFrameSize(window:GLFWwindow_p):any = \
+glfwGetWindowFrameSize(window as GLFWwindow_p):any = \
 	R'''
 	int left, top, right, bottom;
 	glfwGetWindowFrameSize(window, &left, &top, &right, &bottom);
@@ -491,44 +491,44 @@ glfwGetWindowFrameSize(window:GLFWwindow_p):any = \
 							new Value_Number(right), new Value_Number(bottom));
 	'''
 
-glfwGetWindowContentScale(window:GLFWwindow_p):any = \
+glfwGetWindowContentScale(window as GLFWwindow_p):any = \
 	R'''
 	float xscale, yscale;
 	glfwGetWindowContentScale(window, &xscale, &yscale);
 	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 	'''
 
-glfwGetWindowOpacity(window:GLFWwindow_p):float
+glfwGetWindowOpacity(window as GLFWwindow_p):float
 
-glfwSetWindowOpacity(window:GLFWwindow_p, opacity:float):void
+glfwSetWindowOpacity(window as GLFWwindow_p, opacity as float):void
 
-glfwIconifyWindow(window:GLFWwindow_p):void
+glfwIconifyWindow(window as GLFWwindow_p):void
 
-glfwRestoreWindow(window:GLFWwindow_p):void
+glfwRestoreWindow(window as GLFWwindow_p):void
  
-glfwMaximizeWindow(window:GLFWwindow_p):void
+glfwMaximizeWindow(window as GLFWwindow_p):void
  
-glfwShowWindow(window:GLFWwindow_p):void
+glfwShowWindow(window as GLFWwindow_p):void
  
-glfwHideWindow(window:GLFWwindow_p):void
+glfwHideWindow(window as GLFWwindow_p):void
  
-glfwFocusWindow(window:GLFWwindow_p):void
+glfwFocusWindow(window as GLFWwindow_p):void
  
-glfwRequestWindowAttention(window:GLFWwindow_p):void
+glfwRequestWindowAttention(window as GLFWwindow_p):void
  
-glfwGetWindowMonitor(window:GLFWwindow_p):GLFWmonitor_p
+glfwGetWindowMonitor(window as GLFWwindow_p):GLFWmonitor_p
  
-glfwSetWindowMonitor(window:GLFWwindow_p, monitor:GLFWmonitor_p, xpos:int, ypos:int, width:int, height:int, refreshRate:int):void
+glfwSetWindowMonitor(window as GLFWwindow_p, monitor as GLFWmonitor_p, xpos as int, ypos as int, width as int, height as int, refreshRate as int):void
  
-glfwGetWindowAttrib(window:GLFWwindow_p, attrib:int):int
+glfwGetWindowAttrib(window as GLFWwindow_p, attrib as int):int
  
-glfwSetWindowAttrib(window:GLFWwindow_p, attrib:int, value:int):void
+glfwSetWindowAttrib(window as GLFWwindow_p, attrib as int, value as int):void
  
-//glfwSetWindowUserPointer(window:GLFWwindow_p, pointer:void_p):void
+//glfwSetWindowUserPointer(window as GLFWwindow_p, pointer as void_p):void
  
-//glfwGetWindowUserPointer(window:GLFWwindow_p):void_p
+//glfwGetWindowUserPointer(window as GLFWwindow_p):void_p
  
-glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowPosCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowPosCallback(valueThis.GetEntity(),
@@ -537,7 +537,7 @@ glfwSetWindowPosCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void 
 	return Value::nil();
 	'''
  
-glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowSizeCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowSizeCallback(valueThis.GetEntity(),
@@ -546,7 +546,7 @@ glfwSetWindowSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void
 	return Value::nil();
 	'''
  
-glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowCloseCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowCloseCallback(valueThis.GetEntity(),
@@ -555,7 +555,7 @@ glfwSetWindowCloseCallback(window:GLFWwindow_p, callback:Function@gurax:nil):voi
 	return Value::nil();
 	'''
  
-glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowRefreshCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowRefreshCallback(valueThis.GetEntity(),
@@ -564,7 +564,7 @@ glfwSetWindowRefreshCallback(window:GLFWwindow_p, callback:Function@gurax:nil):v
 	return Value::nil();
 	'''
  
-glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowFocusCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowFocusCallback(valueThis.GetEntity(),
@@ -573,7 +573,7 @@ glfwSetWindowFocusCallback(window:GLFWwindow_p, callback:Function@gurax:nil):voi
 	return Value::nil();
 	'''
  
-glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowIconifyCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowIconifyCallback(valueThis.GetEntity(),
@@ -582,7 +582,7 @@ glfwSetWindowIconifyCallback(window:GLFWwindow_p, callback:Function@gurax:nil):v
 	return Value::nil();
 	'''
  
-glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowMaximizeCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowMaximizeCallback(valueThis.GetEntity(),
@@ -591,7 +591,7 @@ glfwSetWindowMaximizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):
 	return Value::nil();
 	'''
  
-glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetFramebufferSizeCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetFramebufferSizeCallback(valueThis.GetEntity(),
@@ -600,7 +600,7 @@ glfwSetFramebufferSizeCallback(window:GLFWwindow_p, callback:Function@gurax:nil)
 	return Value::nil();
 	'''
  
-glfwSetWindowContentScaleCallback(window:GLFWwindow_p, callback:Function@gurax:nil):void = \
+glfwSetWindowContentScaleCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void = \
 	R'''
 	Value_GLFWwindow& valueThis = Value_GLFWwindow::GetValue(window);
 	glfwSetWindowContentScaleCallback(valueThis.GetEntity(),
@@ -613,11 +613,11 @@ glfwPollEvents():void
  
 glfwWaitEvents():void
  
-glfwWaitEventsTimeout(timeout:double):void
+glfwWaitEventsTimeout(timeout as double):void
  
 glfwPostEmptyEvent():void
  
-glfwSwapBuffers(window:GLFWwindow_p):void
+glfwSwapBuffers(window as GLFWwindow_p):void
 
 }
 
