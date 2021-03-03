@@ -4,9 +4,9 @@ import(gmp)
 
 [A, B, C, C3over24] = 0L
 
-PQT = struct { P:gmp.Int, Q:gmp.Int, T:gmp.Int }
+PQT = struct { P as gmp.Int, Q as gmp.Int, T as gmp.Int }
 
-ComputePQT(n1:Number, n2:Number) = {
+ComputePQT(n1 as Number, n2 as Number) = {
 	if (n1 + 1 == n2) {
 		P = -(2 * n2 - 1)
 		P *= (6 * n2 - 5)

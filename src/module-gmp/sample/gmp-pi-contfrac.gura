@@ -2,7 +2,7 @@
 // pi calculation by a continued-fraction
 import(gmp)
 
-generate_pi(cntFrac:Number) = {
+generate_pi(cntFrac as Number) = {
 	//              4
 	// pi = -----------------
 	//               1^2
@@ -12,10 +12,10 @@ generate_pi(cntFrac:Number) = {
 	//                   3^2
 	//              5 + -----
 	//                   ...
-	//4L / (cntFrac..1).reduce(2 * cntFrac + 1) {|n:gmp.mpq, accum:gmp.mpq|
+	//4L / (cntFrac..1).reduce(2 * cntFrac + 1) {|n as gmp.Rational, accum as gmp.Rational|
 	//	(2 * n - 1) + n * n / accum
 	//}
-	cntFracQ = gmp.mpq(cntFrac)
+	cntFracQ = gmp.Rational(cntFrac)
 	accum = 2Lr * cntFrac + 1
 	repeat (cntFrac - 1) {|i|
 		n = cntFracQ - i
@@ -26,8 +26,8 @@ generate_pi(cntFrac:Number) = {
 
 blockCols = 5
 blockRows = 20
-gmp.mpf.default_prec = 1000
-pi = gmp.mpf(generate_pi(10000))
+gmp.Float.default_prec = 1000
+pi = gmp.Float(generate_pi(10000))
 Println('3')
 Print(Format('%.f', pi).Split().Offset(2).\
 	Fold(10):*Join().Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
