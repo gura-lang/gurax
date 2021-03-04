@@ -5,15 +5,15 @@
 import(markdown) {*}
 
 Renderer@toc = class {
-	__init__(handler:function) = {
+	__init__(handler as function) = {
 		this.handler = handler
 		this.text = nil
 		this.indices = dim(6) {0}
 	}
-	FeedDocument(doc:Document):void = {
+	FeedDocument(doc as Document):void = {
 		this.FeedItem(doc.root)
 	}
-	FeedItem(item:Item):map:void = {
+	FeedItem(item as Item):map:void = {
 		if (item.type == `root) {
 			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
@@ -101,7 +101,7 @@ Renderer@toc = class {
 			// nothing to do
 		}
 	}
-	MakeAnchorName(indices[]:number) = MakeAnchorNameDef(indices)
+	MakeAnchorName(indices[] as number) = MakeAnchorNameDef(indices)
 }
 
 Document.render@toc() {block} = {

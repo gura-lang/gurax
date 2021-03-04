@@ -19,8 +19,8 @@ Renderer@jekyll = class(markdown.Renderer@html) {
 	tmpl@footer:public = R'''
 	{% endraw %}
 	'''T
-	__init__(dirNameOut:string, layout:string, lang:string,
-			 title:string, author:string, date:string) = {|sys.stdout, true|
+	__init__(dirNameOut as string, layout as string, lang as string,
+			 title as string, author as string, date as string) = {|sys.stdout, true|
 		this.dirNameOut = dirNameOut
 		this.layout = layout
 		this.lang = lang
@@ -30,11 +30,11 @@ Renderer@jekyll = class(markdown.Renderer@html) {
 		this.out = nil
 		this.enableAnchorFlags[0] = false	// suppress anchor for <h1>
 	}
-	RenderEx(doc:markdown.document) = {
+	RenderEx(doc as markdown.document) = {
 		this.nChapters = doc.countitem(`h1)
 		this.Render(doc)
 	}
-	OnRenderItemPre(item:item) = {
+	OnRenderItemPre(item as item) = {
 		if (item.type == `h1) {
 			this.out && tmpl@footer.render(this.out)
 			idxChapter = this.indices[0] + 1
@@ -57,7 +57,7 @@ Renderer@jekyll = class(markdown.Renderer@html) {
 		}
 		true
 	}
-	OnRenderItemPost(item:item):void = {
+	OnRenderItemPost(item as item):void = {
 		if (item.type == `root) {
 			this.out && tmpl@footer.render(this.out)
 			this.out = nil
@@ -71,7 +71,7 @@ Renderer@rtf = class(markdown.Renderer@rtf) {
 	{\pard\ql\f0\sa180\li0\fi0\fs24 ${author}\par}
 	{\pard\ql\f0\sa900\li0\fi0\fs24 ${date}\par}
 	'''T
-	__init__(out:stream:w, captionIndex:boolean, title:string, author:string, date:string) = {|out, captionIndex|
+	__init__(out:w as stream, captionIndex as boolean, title as string, author as string, date as string) = {|out, captionIndex|
 		this.title = title
 		this.author = author
 		this.date = date
@@ -84,9 +84,9 @@ Renderer@rtf = class(markdown.Renderer@rtf) {
 	}
 }
 
-NaviItem = struct(level:number, indices[]:number, anchorName:string, text:string, itemList[] => [])
+NaviItem = struct(level as number, indices[] as number, anchorName as string, text as string, itemList[] => [])
 
-printNaviItems(out:stream:w, itemList[]:NaviItem) = {
+printNaviItems(out:w as stream, itemList[] as NaviItem) = {
 	tmpl@naviItemTop = R'''
 	<span class="list-group-item border-0 py-2 font-weight-bold{% if page.url contains "/${fileNameHTML}" %} active{% endif %}">
 	{% if page.url contains "/${fileNameHTML}" %}
@@ -124,25 +124,25 @@ printNaviItems(out:stream:w, itemList[]:NaviItem) = {
 	}
 }
 
-classref(`markdown.document).compose@html(baseName:string) = {
+classref(`markdown.document).compose@html(baseName as string) = {
 	fileName = baseName + '.html'
 	this.render@html(fileName, true, true)
 	sys.stderr.println(fileName, ' was created.')
 }
 
-classref(`markdown.document).compose@tex(baseName:string, title:string => '', author:string => '', date:string => '') = {
+classref(`markdown.document).compose@tex(baseName as string, title as string => '', author as string => '', date as string => '') = {
 	fileName = baseName + '.tex'
 	this.render@tex(fileName, title, author, date)
 	sys.stderr.println(fileName, ' was created.')
 }
 
-classref(`markdown.document).compose@pdf(baseName:string, title:string => '', author:string => '', date:string => '') = {
+classref(`markdown.document).compose@pdf(baseName as string, title as string => '', author as string => '', date as string => '') = {
 	this.compose@tex(baseName, title, author, date)
 	repeat (2) { os.exec('ptex2pdf', '-l', baseName) }
 }
 
-classref(`markdown.document).compose@jekyll(dirNameOut:string, layout:string, lang:string,
-			  title:string => '', author:string => '', date:string => '') = {
+classref(`markdown.document).compose@jekyll(dirNameOut as string, layout as string, lang as string,
+			  title as string => '', author as string => '', date as string => '') = {
 	println('Output directory: ', dirNameOut)
 	!path.exists(dirNameOut) && fs.mkdir(dirNameOut):tree
 	this.compose@jekyll_index(dirNameOut, layout, lang, title, author, date)
@@ -150,8 +150,8 @@ classref(`markdown.document).compose@jekyll(dirNameOut:string, layout:string, la
 	Renderer@jekyll(dirNameOut, layout, lang, title, author, date).RenderEx(doc)
 }
 
-classref(`markdown.document).compose@jekyll_index(dirNameOut:string, layout:string, lang:string,
-					title:string, author:string, date:string) = {
+classref(`markdown.document).compose@jekyll_index(dirNameOut as string, layout as string, lang as string,
+					title as string, author as string, date as string) = {
 	tmpl@content:public = R'''
 	---
 	layout: ${layout}
@@ -171,11 +171,11 @@ classref(`markdown.document).compose@jekyll_index(dirNameOut:string, layout:stri
 	}
 }
 
-classref(`markdown.document).compose@jekyll_navi(dirNameOut:string, title:string) = {
+classref(`markdown.document).compose@jekyll_navi(dirNameOut as string, title as string) = {
 	itemListRoot = []
 	itemStack = []
 	itemList = itemListRoot
-	this.render@toc {|level:number, indices[]:number, anchorName:string, text:string|
+	this.render@toc {|level as number, indices[] as number, anchorName as string, text as string|
 		item = NaviItem(level, indices.clone(), anchorName, text)
 		if (!itemStack.isempty()) {
 			itemPrev = itemStack[-1]
@@ -207,8 +207,8 @@ classref(`markdown.document).compose@jekyll_navi(dirNameOut:string, title:string
 	}
 }
 
-classref(`markdown.document).compose@rtf(baseName:string, captionIndex:boolean => true,
-										 title:string => '', author:string => '', date:string => '') = {
+classref(`markdown.document).compose@rtf(baseName as string, captionIndex as boolean => true,
+										 title as string => '', author as string => '', date as string => '') = {
 	fileName = baseName + '.rtf'
 	Renderer@rtf(fileName, captionIndex, title, author, date).Render(this)
 	sys.stderr.println(fileName, ' was created.')
@@ -217,8 +217,8 @@ classref(`markdown.document).compose@rtf(baseName:string, captionIndex:boolean =
 availableCommands:public = ['tex', 'pdf', 'jekyll', 'rtf']
 
 Composer = class {
-	__init__(baseName:string, dirNameOut@jekyll:string, layout@jekyll:string,
-			 lang:string, title:string, author:string, date:string) = {
+	__init__(baseName as string, dirNameOut@jekyll as string, layout@jekyll as string,
+			 lang as string, title as string, author as string, date as string) = {
 		this.baseName:public = baseName
 		this.dirNameOut@jekyll:public = dirNameOut@jekyll
 		this.layout@jekyll:public = layout@jekyll
@@ -227,7 +227,7 @@ Composer = class {
 		this.author:public = author
 		this.date:public = date
 	}
-	compose(doc:markdown.document) = {
+	compose(doc as markdown.document) = {
 		sys.argv[1..].each {|cmd|
 			if (cmd == 'tex') {
 				doc.compose@tex(this.baseName, this.title, this.author, this.date)

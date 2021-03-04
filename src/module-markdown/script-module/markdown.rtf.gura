@@ -14,7 +14,7 @@ Renderer@rtf = class {
 	footer = R'''
 	}
 	'''
-	__init__(out:stream:w, captionIndex:Bool) = {
+	__init__(out:w as stream, captionIndex as Bool) = {
 		this.out = out
 		this.captionIndex = captionIndex
 		this.indentLeft = 0
@@ -23,10 +23,10 @@ Renderer@rtf = class {
 		this.indentPerQuote = 360
 		this.indices = dim(6) {0}
 	}
-	FeedDocument(doc:Document):void = {
+	FeedDocument(doc as Document):void = {
 		this.FeedItem(doc.root)
 	}
-	FeedItem(item:Item):map:void = {
+	FeedItem(item as Item):map:void = {
 		if (item.type == `root) {
 			this.out.Print(header)
 			this.RenderCoverPage()
@@ -185,10 +185,10 @@ Renderer@rtf = class {
 			this.out.Println(r'\line')
 		}
 	}
-	EscapeText(text:string):static = {
+	EscapeText(text as string):static = {
 		text.replace('\\', '\\\\').replace('{', r'\{').replace('}', r'\}')
 	}
-	RenderListItem(item:Item) = {
+	RenderListItem(item as Item) = {
 		parRenderFlag = false
 		this.listLevel += 1
 		item.children.each {|itemChild, i|
@@ -213,7 +213,7 @@ Renderer@rtf = class {
 		!parRenderFlag && this.out.Println(r'\sa180\par}')
 		this.listLevel -= 1
 	}
-	RenderTable(item:Item) = {
+	RenderTable(item as Item) = {
 		rows = item.children.each():xlist {|item|
 			(item.type != `tag || item.text.lower() != 'tr') && continue
 			headerFlag = false
@@ -272,7 +272,7 @@ Renderer@rtf = class {
 	RenderCoverPage() = {}
 }
 
-Document.render@rtf(out?:stream:w, captionIndex:Bool = false) = {
+Document.render@rtf(out:w? as stream, captionIndex as Bool = false) = {
 	out = out || sys.stdout
 	Renderer@rtf(out, captionIndex).FeedDocument(this)
 }

@@ -9,10 +9,10 @@ import(markdown):binary {*}
 import(markdown.html)
 import(markdown.console)
 
-MakeAnchorNameDef(indices[]:Number) = 'anchor-' + Format('%d', indices).Join('-')
+MakeAnchorNameDef(indices[] as Number) = 'anchor-' + Format('%d', indices).Join('-')
 
 /*
-_funcentry(lang:symbol, func:function, fmt:string):map = {
+_funcentry(lang as symbol, func as function, fmt as string):map = {
 	str = format('<@gura.funcentry format="%s"', fmt.escapehtml())
 	if (help = help@function(func, lang)) {
 		str += '>\n'
@@ -25,7 +25,7 @@ _funcentry(lang:symbol, func:function, fmt:string):map = {
 	str
 }
 
-_propentry(lang:symbol, propdecl:propdeclaration):map = {
+_propentry(lang as symbol, propdecl as propdeclaration):map = {
 	accessMode = if (propdecl.readable && !propdecl.writable) {
 		'read-only'
 	} elsif (!propdecl.readable && propdecl.writable) {
@@ -49,7 +49,7 @@ _propentry(lang:symbol, propdecl:propdeclaration):map = {
 	str
 }
 
-makedoc@module(lang:symbol, moduleName:string, headeroff?:number) = {
+makedoc@module(lang as symbol, moduleName as string, headeroff?:number) = {
 	moduleName += '.doc'
 	mod = import(&moduleName)
 	if (headeroff) {
@@ -61,7 +61,7 @@ makedoc@module(lang:symbol, moduleName:string, headeroff?:number) = {
 	}
 }
 
-makedoc@class(lang:symbol, cls:class, headeroff?:number):dynamicScope = {
+makedoc@class(lang as symbol, cls as class, headeroff?:number):dynamicScope = {
 	// The attribute :dynamicScope is necessary when the help document contains template in it
 	// that is expected to be evaluated with the outer environment.
 	if (headeroff) {
@@ -73,21 +73,21 @@ makedoc@class(lang:symbol, cls:class, headeroff?:number):dynamicScope = {
 	}
 }
 
-makedoc@function(lang:symbol, funcs*:function) = {
+makedoc@function(lang as symbol, funcs*:function) = {
 	funcs = funcs.each()
 	_funcentry(lang, funcs, function.getformat(funcs))
 }
 
-makedoc@function$(lang:symbol, match:string, sub:string, funcs*:function) = {
+makedoc@function$(lang as symbol, match as string, sub as string, funcs*:function) = {
 	funcs = funcs.each()
 	_funcentry(lang, funcs, function.getformat(funcs):*replace(match, sub))
 }
 
-makedoc@property(lang:symbol, obj) = {
+makedoc@property(lang as symbol, obj) = {
 	_propentry(lang, obj.__propdecls__())
 }
 
-main(mod:environment) = {
+main(mod as environment) = {
 	import(argopt)
 	argopt.Parser {|p|
 		p.addParam('lang', 'l', 'the language of the document', 'value', 'en')
@@ -114,8 +114,8 @@ main(mod:environment) = {
 	}
 }
 
-document_server(mod:environment, d:dict) = {
-	mod.__doc@markdown__(lang:symbol) = {
+document_server(mod as environment, d as dict) = {
+	mod.__doc@markdown__(lang as symbol) = {
 		d.get(lang, d[d.keys().next()])
 	}
 	if (mod.__name__ == '__main__') {
@@ -142,7 +142,7 @@ Below is an example to call this function:
 
 It creates a module function that has the following format:
 
-    write(doc:markdown.Document, lang:symbol)
+    write(doc as markdown.Document, lang as symbol)
 
 The argument `doc` is a `markdown.document` instance into which the document is poured.
 

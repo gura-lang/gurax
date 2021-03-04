@@ -235,4 +235,4 @@ In default, it uses colors to highlight items.
 Specify the argument `colorFlag` with `false` to disable the coloring process.
 '''
 
-sys.Presenter {|str:String| Render@console(Document() << str) }
+sys.Presenter {|str as String| Render@console(Document() << str) }

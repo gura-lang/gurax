@@ -45,7 +45,7 @@ Renderer = class {
 	tmpl@footer = tR'''
 	\end{document}
 	'''
-	__init__(out:stream:w, title:string, author:string, date:string) = {
+	__init__(out:w as stream, title as string, author as string, date as string) = {
 		this.out = out
 		this.title = title
 		this.author = author
@@ -56,10 +56,10 @@ Renderer = class {
 		this.idxItem = 0
 		this.listType = nil
 	}
-	FeedDocument(doc:Document):void = {
+	FeedDocument(doc as Document):void = {
 		this.FeedItem(doc.root)
 	}
-	FeedItem(item:Item):map:void = {
+	FeedItem(item as Item):map:void = {
 		!this.OnFeedItemPre(item) && return
 		if (item.type == `root) {
 			_this = this
@@ -248,8 +248,8 @@ Renderer = class {
 		'^', r'$\wedge$',
 		'*', r'$\ast$'
 	]
-	EscapeText(text:string):static = text.replaces(replaceTbl)
-	RenderTable(item:Item) = {
+	EscapeText(text as string):static = text.replaces(replaceTbl)
+	RenderTable(item as Item) = {
 		rows = item.children.each():xlist {|item|
 			(item.type != `tag || item.text.lower() != 'tr') && continue
 			headerFlag = false
@@ -303,11 +303,11 @@ Renderer = class {
 		\medskip
 		''')
 	}
-	OnFeedItemPre(item:Item) = true
-	OnFeedItemPost(item:Item):void = nil
+	OnFeedItemPre(item as Item) = true
+	OnFeedItemPost(item as Item):void = nil
 }
 
-Document.Render@tex(out:stream:w, title:string = '', author:string = '', date:string = '') = {
+Document.Render@tex(out:w as stream, title as string = '', author as string = '', date as string = '') = {
 	Renderer(out, title, author, date).FeedDocument(this)
 }
 /*

@@ -5,20 +5,20 @@
 import(markdown):binary {*}
 
 Renderer = class {
-	out:Stream
-	indices[]:Number
-	enableAnchorFlags[]:Bool
-	captionIndex:Bool
-	__init__(out:Stream:w, captionIndex:Bool) = {
+	out as Stream
+	indices[] as Number
+	enableAnchorFlags[] as Bool
+	captionIndex as Bool
+	__init__(out:w as Stream, captionIndex as Bool) = {
 		this.out = out
 		this.indices = Dim(6) {0}
 		this.enableAnchorFlags = Dim(6) {true}
 		this.captionIndex = captionIndex
 	}
-	FeedDocument(doc:Document):void = {
+	FeedDocument(doc as Document):void = {
 		this.FeedItem(doc.root)
 	}
-	FeedItem(item:Item):map:void = {
+	FeedItem(item as Item):map:void = {
 		!this.OnFeedItemPre(item) && return
 		if (item.type == `root) {
 			this.FeedItem(item.children)
@@ -212,12 +212,12 @@ Renderer = class {
 		}
 		this.OnFeedItemPost(item)
 	}
-	MakeAnchorName(indices[]:Number) = MakeAnchorNameDef(indices)
-	OnFeedItemPre(item:Item) = true
-	OnFeedItemPost(item:Item):void = nil
+	MakeAnchorName(indices[] as Number) = MakeAnchorNameDef(indices)
+	OnFeedItemPre(item as Item) = true
+	OnFeedItemPost(item as Item):void = nil
 }
 
-Document.Render@html(out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
+Document.Render@html(out:w as Stream, easyFormatFlag as Bool = true, captionIndex as Bool = false) = {
 	easyFormatFlag && R'''
 	<html>
 	<head>
