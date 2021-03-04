@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 
-Array.Rotation(elemType:Symbol, angle:Number, ax:Number, ay:Number, az:Number):static = {
+Array.Rotation(elemType as Symbol, angle as Number, ax as Number, ay as Number, az as Number):static = {
 	axis = [ax, ay, az]
 	[nx, ny, nz] = axis / math.Sqrt((axis * axis).Sum())
 	cos = math.Cos(angle), sin = math.Sin(angle)
@@ -11,7 +11,7 @@ Array.Rotation(elemType:Symbol, angle:Number, ax:Number, ay:Number, az:Number):s
 		 [0, 0, 0, 1]])
 }
 
-Array.Translation(elemType:Symbol, tx:Number, ty:Number, tz:Number):static = {
+Array.Translation(elemType as Symbol, tx as Number, ty as Number, tz as Number):static = {
 	Array(elemType,
 		[[1, 0, 0, tx]
 		 [0, 1, 0, ty]
@@ -19,7 +19,7 @@ Array.Translation(elemType:Symbol, tx:Number, ty:Number, tz:Number):static = {
 		 [0, 0, 0, 1]])
 }
 
-Array.Scale(elemType:Symbol, sx:Number, sy:Number, sz:Number):static = {
+Array.Scale(elemType as Symbol, sx as Number, sy as Number, sz as Number):static = {
 	Array(elemType,
 		[[sx, 0, 0, 0]
 		 [0, sy, 0, 0]
@@ -27,7 +27,7 @@ Array.Scale(elemType:Symbol, sx:Number, sy:Number, sz:Number):static = {
 		 [0, 0, 0, 1]])
 }
 
-Array.Ortho(elemType:Symbol, left:Number, right:Number, bottom:Number, top:Number, near:Number, far:Number):static = {
+Array.Ortho(elemType as Symbol, left as Number, right as Number, bottom as Number, top as Number, near as Number, far as Number):static = {
 	Array(elemType,
 		[[2 / (right - left), 0, 0, -(right + left) / (right - left)]
 		 [0, 2 / (top - bottom), 0, -(top + bottom) / (top - bottom)]
@@ -35,7 +35,7 @@ Array.Ortho(elemType:Symbol, left:Number, right:Number, bottom:Number, top:Numbe
 		 [0, 0, 0, 1]])
 }
 
-Array.Perspective(elemType:Symbol, fieldOfView:Number, aspect:Number, near:Number, far:Number):static = {
+Array.Perspective(elemType as Symbol, fieldOfView as Number, aspect as Number, near as Number, far as Number):static = {
 	top = near * math.Tan(fieldOfView / 2)
 	right = top * aspect
 	Array(elemType,
@@ -45,8 +45,8 @@ Array.Perspective(elemType:Symbol, fieldOfView:Number, aspect:Number, near:Numbe
 		 [0, 0, -1, 0]])
 }
 
-Array.LookAt(elemType:Symbol, px:Number, py:Number, pz:Number,
-			tx:Number, ty:Number, tz:Number, ux:Number, uy:Number, uz:Number):static = {
+Array.LookAt(elemType as Symbol, px as Number, py as Number, pz as Number,
+			tx as Number, ty as Number, tz as Number, ux as Number, uy as Number, uz as Number):static = {
 	dVec = [px, py, pz] - [tx, ty, tz]
 	[dx, dy, dz] = dVec / math.Sqrt((dVec * dVec).Sum())
 	rVec = [uy * dz - uz * dy, uz * dx - ux * dz, ux * dy - uy * dx]

@@ -13,19 +13,19 @@ ZOOM        =  45.0f;
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 Camera = class {
 	// camera Attributes
-	Position[]:Number;
-	Front[]:Number;
-	Up[]:Number;
-	Right[]:Number;
-	WorldUp[]:Number;
+	Position[] as Number;
+	Front[] as Number;
+	Up[] as Number;
+	Right[] as Number;
+	WorldUp[] as Number;
 	// euler Angles
-	Yaw:Number;
-	Pitch:Number;
+	Yaw as Number;
+	Pitch as Number;
 	// camera options
-	MovementSpeed:Number;
-	MouseSensitivity:Number;
-	Zoom:Number;
-	__init__(position[]:Number = [0.0f, 0.0f, 0.0f], up[]:Number = [0.0f, 1.0f, 0.0f], yaw:Number = YAW, pitch:Number = PITCH) = {
+	MovementSpeed as Number;
+	MouseSensitivity as Number;
+	Zoom as Number;
+	__init__(position[] as Number = [0.0f, 0.0f, 0.0f], up[] as Number = [0.0f, 1.0f, 0.0f], yaw as Number = YAW, pitch as Number = PITCH) = {
 		this.Front = [0.0f, 0.0f, -1.0f]
 		this.MovementSpeed = SPEED
 		this.MouseSensitivity = SENSITIVITY
@@ -39,7 +39,7 @@ Camera = class {
 	// returns the view matrix calculated using Euler Angles and the LookAt Matrix
 	GetViewMatrix() = Array.LookAt(`float, this.Position*, (this.Position + this.Front)*, this.Up*)
 	// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-	ProcessKeyboard(direction:Symbol, deltaTime:Number) = {
+	ProcessKeyboard(direction as Symbol, deltaTime as Number) = {
 		velocity = this.MovementSpeed * deltaTime;
 		if (direction == `FORWARD) {
 			this.Position += this.Front * velocity;
@@ -53,7 +53,7 @@ Camera = class {
 		this.Position[1] = 0.0f;
 	}
 	// processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-	ProcessMouseMovement(xoffset:Number, yoffset:Number, constrainPitch:Bool = true) = {
+	ProcessMouseMovement(xoffset as Number, yoffset as Number, constrainPitch as Bool = true) = {
 		xoffset *= this.MouseSensitivity;
 		yoffset *= this.MouseSensitivity;
 
@@ -74,7 +74,7 @@ Camera = class {
 		this.updateCameraVectors();
 	}
 	// processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-	ProcessMouseScroll(yoffset:Number) = {
+	ProcessMouseScroll(yoffset as Number) = {
 		this.Zoom -= yoffset;
 		if (this.Zoom < 1.0f) {
 			this.Zoom = 1.0f;

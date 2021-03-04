@@ -6,8 +6,8 @@ import(argopt)
 // Info
 //------------------------------------------------------------------------------
 Info = struct {
-	fileName:String
-	tmpl:Template
+	fileName as String
+	tmpl as Template
 	Render():dynamicScope:void = this.tmpl.Render(Open(this.fileName, 'w'))
 }
 
@@ -262,7 +262,7 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ${dotClassName}#MethodSkeleton(num1:Number, num2:Number)
+// ${dotClassName}#MethodSkeleton(num1 as Number, num2 as Number)
 Gurax_DeclareMethod(${className}, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);

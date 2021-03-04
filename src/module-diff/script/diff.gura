@@ -37,4 +37,4 @@ Edit.Print():void = {
 	Println(this.mark, this.source)
 }
 
-File(src1:Stream, src2:Stream) = Diff(src1, src2).Present()
+File(src1 as Stream, src2 as Stream) = Diff(src1, src2).Present()

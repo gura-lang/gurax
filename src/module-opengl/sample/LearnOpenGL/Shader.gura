@@ -2,10 +2,10 @@
 import(opengl) {*}
 
 Shader = class {
-	ID:Number
+	ID as Number
 	// constructor generates the shader on the fly
 	// ------------------------------------------------------------------------
-	__init__(vertexStream:Stream, fragmentStream:Stream) = {
+	__init__(vertexStream as Stream, fragmentStream as Stream) = {
 		// convert stream into string
 		vertexCode = vertexStream.ReadText();
 		fragmentCode = fragmentStream.ReadText();
@@ -39,34 +39,34 @@ Shader = class {
 	}
 	// utility uniform functions
 	// ------------------------------------------------------------------------
-	setBool(name:String, value:Bool) = {         
+	setBool(name as String, value as Bool) = {         
 		glUniform1i(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
-	setInt(name:String, value:Number) = {
+	setInt(name as String, value as Number) = {
 		glUniform1i(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
-	setFloat(name:String, value:Number) = {
+	setFloat(name as String, value as Number) = {
 		glUniform1f(glGetUniformLocation(this.ID, name), value) 
 	}
 	// ------------------------------------------------------------------------
-	setVec2(name:String, x:Number, y:Number) = {
+	setVec2(name as String, x as Number, y as Number) = {
 		uniformLoc = glGetUniformLocation(this.ID, name)
 		glUniform2f(uniformLoc, x, y)
 	}
 	// ------------------------------------------------------------------------
-	setVec3(name:String, x:Number, y:Number, z:Number) = {
+	setVec3(name as String, x as Number, y as Number, z as Number) = {
 		uniformLoc = glGetUniformLocation(this.ID, name)
 		glUniform3f(uniformLoc, x, y, z)
 	}
 	// ------------------------------------------------------------------------
-	setVec4(name:String, x:Number, y:Number, z:Number, w:Number) = {
+	setVec4(name as String, x as Number, y as Number, z as Number, w as Number) = {
 		uniformLoc = glGetUniformLocation(this.ID, name)
 		glUniform4f(uniformLoc, x, y, z, w)
 	}
 	// ------------------------------------------------------------------------
-	setArray(name:String, array:Array) = {
+	setArray(name as String, array as Array) = {
 		uniformLoc = glGetUniformLocation(this.ID, name)
 		if (array.elemType == `float) {
 			if (array.VerifyShape(2)) {
@@ -84,7 +84,7 @@ Shader = class {
 			}
 		}
 	}
-	CompileShader(shader:Number, shaderCode:String, typeName:String) = {
+	CompileShader(shader as Number, shaderCode as String, typeName as String) = {
 		glShaderSource(shader, [shaderCode], []);
 		glCompileShader(shader);
 		success = @int {|v| glGetShaderiv(shader, GL_COMPILE_STATUS, v), v[0]}

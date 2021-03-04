@@ -6,7 +6,7 @@ import(diff)
 import(conio)
 import(argopt)
 
-PrintEdits(edits[]:diff.Edit) = {
+PrintEdits(edits[] as diff.Edit) = {
 	edits.Each {|edit|
 		if (edit.type == `common) {
 			Println(' ', edit.source)

@@ -13,7 +13,7 @@ TestCase('Property') {
 }
 
 TestCase('re.Match() / re.Pattern#Match() / String#Match()') {
-	f(m:re.Match) = {
+	f(m as re.Match) = {
 		Tester(`m)
 		Tester(`m[0])
 		Tester(`m.Group(0))

@@ -1,7 +1,7 @@
 #!/usr/bin/env gura
 import(re)
 
-Entry = struct(pattern:re.pattern, func:function)
+Entry = struct(pattern as re.pattern, func as function)
 
 Tokenizer = class {
 	public {
@@ -14,10 +14,10 @@ Tokenizer = class {
 	SetRule() {`block} = {
 		this.entriesDict[`start] = this.ParseBlock(block)
 	}
-	SetMode(mode:symbol) = {
+	SetMode(mode as symbol) = {
 		this.mode = mode
 	}
-	Tokenize(stream:stream) = {
+	Tokenize(stream as stream) = {
 		raw = 0
 		readlines(stream) {|lineBuff|
 			col = 0
@@ -39,7 +39,7 @@ Tokenizer = class {
 			raw += 1
 		}
 	}
-	ParseBlock(block:expr) = {
+	ParseBlock(block as expr) = {
 		block.children.each():xlist {|expr|
 			if (!(expr.isbinaryop() && expr.operator.symbol == `=>)) {
 				raise(error.SyntaxError, 'invalid element')

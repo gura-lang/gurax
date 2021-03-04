@@ -2,19 +2,19 @@
 import(re)
 
 FuncInfo = struct {
-	funcName:String
-	args[]:String
-	typeNameRtn:String
+	funcName as String
+	args[] as String
+	typeNameRtn as String
 	Print() = Printf('%s(%s):%s\n', this.funcName, this.args.Join(', '), this.typeNameRtn)
 }
 
 DefineInfo = struct {
-	varName:String
+	varName as String
 	Print() = Printf('AssignConst(%s);\n', this.varName)
 }
 
 SepInfo = struct {
-	name:String
+	name as String
 	Print() = Printf('//======== %s ========\n', this.name)
 }
 

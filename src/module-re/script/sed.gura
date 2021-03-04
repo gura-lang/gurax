@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(re)
 
-Exec(pathName:String, silentFlag:Bool) {block} = {
+Exec(pathName as String, silentFlag as Bool) {block} = {
 	linesSub = []
 	cntReplaced = 0
 	ReadLines(pathName) {|line, iLine|
@@ -18,14 +18,14 @@ Exec(pathName:String, silentFlag:Bool) {block} = {
 	(cntReplaced > 0) && Open(pathName, 'w').Addcr(false).Print(linesSub)
 }
 
-Glob(pattern:String, arg%%):[silent] {`block} = {
+Glob(pattern as String, arg%%):[silent] {`block} = {
 	silentFlag = arg.IsSet(`silent)
 	path.Glob(pattern):file {|pathName|
 		Exec(pathName, silentFlag) {{block}}
 	}
 }
 
-Walk(directory?:Directory, maxDepth?:Number, pattern*:String, arg%%):[silent] {`block} = {
+Walk(directory? as Directory, maxDepth? as Number, pattern* as String, arg%%):[silent] {`block} = {
 	silentFlag = arg.IsSet(`silent)
 	path.Walk(directory, maxDepth, pattern*):file {|pathName|
 		Exec(pathName, silentFlag) {{block}}

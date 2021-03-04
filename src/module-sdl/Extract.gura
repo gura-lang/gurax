@@ -2,9 +2,9 @@
 import(re)
 
 FileInfo = struct {
-	fileName:String
-	remark:String
-	funcInfoTbl[]:FuncInfo
+	fileName as String
+	remark as String
+	funcInfoTbl[] as FuncInfo
 }
 
 fileInfoTbl = @(FileInfo) {
@@ -60,7 +60,7 @@ fileInfoTbl = @(FileInfo) {
 }
 */
 
-ExtractFromDecl(decl:String):map = {
+ExtractFromDecl(decl as String):map = {
 	fields = []
 	decl.SplitReg(r'\s+') {|field|
 		if (m = field.Match(r'^(\*+)(.*)')) {
@@ -76,9 +76,9 @@ ExtractFromDecl(decl:String):map = {
 }
 
 RtnInfo = class {
-	typeNameC:String
-	typeNameP:String	// pseudo type name
-	__init__(declRtn:String):map = {
+	typeNameC as String
+	typeNameP as String	// pseudo type name
+	__init__(declRtn as String):map = {
 		declRtn = declRtn.Strip()
 		fields = ExtractFromDecl(declRtn)
 		this.typeNameC = fields.Join(' ').Sub(r' \*', '*').Sub(r'\* ', '*')
@@ -87,10 +87,10 @@ RtnInfo = class {
 }
 
 ArgInfo = class {
-	typeNameC:String
-	typeNameP:String	// pseudo type name
-	argName:String
-	__init__(declArg:String):map = {
+	typeNameC as String
+	typeNameP as String	// pseudo type name
+	argName as String
+	__init__(declArg as String):map = {
 		declArg = declArg.Strip()
 		fields = ExtractFromDecl(declArg)
 		if (fields.len > 1) {
@@ -106,15 +106,15 @@ ArgInfo = class {
 }
 
 FuncInfo = struct {
-	rtnInfo:RtnInfo
-	funcName:String
-	argInfoTbl[]:ArgInfo
+	rtnInfo as RtnInfo
+	funcName as String
+	argInfoTbl[] as ArgInfo
 	ToString() = Format('%s(%s):%s', this.funcName,
 			this.argInfoTbl:*ToString().Join(', '), this.rtnInfo.typeNameP)
 }
 
-Extract(stream:Stream):map = {
-	AddFuncInfo(declRtn:String, funcName:String, declArgJoined:String) = {
+Extract(stream as Stream):map = {
+	AddFuncInfo(declRtn as String, funcName as String, declArgJoined as String) = {
 		declArgJoined = declArgJoined.Strip()
 		if (declArgJoined == 'void') { declArgJoined = '' }
 		funcInfo = FuncInfo(RtnInfo(declRtn), funcName, ArgInfo(declArgJoined.Split(',')))

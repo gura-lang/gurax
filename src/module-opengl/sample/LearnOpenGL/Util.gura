@@ -1,9 +1,9 @@
 #!/usr/bin/env gurax
 
-Radians(degree:Number):map = degree * math.pi / 180
+Radians(degree as Number):map = degree * math.pi / 180
 
-Cross(a[]:Number, b[]:Number) = {
+Cross(a[] as Number, b[] as Number) = {
 	[a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
 }
 
-Normalize(a[]:Number) = a / math.Sqrt((a * a).Sum())
+Normalize(a[] as Number) = a / math.Sqrt((a * a).Sum())

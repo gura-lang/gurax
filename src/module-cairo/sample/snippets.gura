@@ -8,7 +8,7 @@ sqrt(x) = math.Sqrt(x)
 
 Sample_arc = class {
 	name:static = "arc"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		xc = 128.0;
 		yc = 128.0;
 		radius = 100.0;
@@ -36,7 +36,7 @@ Sample_arc = class {
 
 Sample_arc_negative = class {
 	name:static = "arc negative"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		xc = 128.0;
 		yc = 128.0;
 		radius = 100.0;
@@ -64,7 +64,7 @@ Sample_arc_negative = class {
 
 Sample_clip = class {
 	name:static = "clip"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * M_PI);
 		cairo_clip (cr);
 
@@ -84,7 +84,7 @@ Sample_clip = class {
 
 Sample_clip_image = class {
 	name:static = "clip image"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2*M_PI);
 		cairo_clip (cr);
 		cairo_new_path (cr); /* path not consumed by clip()*/
@@ -104,7 +104,7 @@ Sample_clip_image = class {
 
 Sample_curve_rectangle = class {
 	name:static = "curve rectangle"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		/* a custom shape that could be wrapped in a function */
 		x0      = 25.6,   /* parameters like cairo_rectangle */
 		y0      = 25.6,
@@ -162,7 +162,7 @@ Sample_curve_rectangle = class {
 
 Sample_curve_to = class {
 	name:static = "curve to"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		x=25.6,  y=128.0;
 		x1=102.4, y1=230.4,
 		x2=153.6, y2=25.6,
@@ -184,7 +184,7 @@ Sample_curve_to = class {
 
 Sample_dash = class {
 	name:static = "dash"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		dashes = @{
 			50.0,  /* ink */
 			10.0,  /* skip */
@@ -207,7 +207,7 @@ Sample_dash = class {
 
 Sample_fill_and_stroke2 = class {
 	name:static = "fill and stroke2"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_move_to (cr, 128.0, 25.6);
 		cairo_line_to (cr, 230.4, 230.4);
 		cairo_rel_line_to (cr, -102.4, 0.0);
@@ -230,7 +230,7 @@ Sample_fill_and_stroke2 = class {
 
 Sample_fill_style = class {
 	name:static = "fill style"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_set_line_width (cr, 6);
 
 		cairo_rectangle (cr, 12, 12, 232, 70);
@@ -254,7 +254,7 @@ Sample_fill_style = class {
 
 Sample_gradient = class {
 	name:static = "gradient"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		pat = cairo_pattern_create_linear (0.0, 0.0,  0.0, 256.0);
 		cairo_pattern_add_color_stop_rgba (pat, 1, 0, 0, 0, 1);
 		cairo_pattern_add_color_stop_rgba (pat, 0, 1, 1, 1, 1);
@@ -276,7 +276,7 @@ Sample_gradient = class {
 
 Sample_image = class {
 	name:static = "image"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		image = cairo_image_surface_create_from_png ("data/romedalen.png");
 		w = cairo_image_surface_get_width (image);
 		h = cairo_image_surface_get_height (image);
@@ -294,7 +294,7 @@ Sample_image = class {
 
 Sample_imagepattern = class {
 	name:static = "imagepattern"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		image = cairo_image_surface_create_from_png ("data/romedalen.png");
 		w = cairo_image_surface_get_width (image);
 		h = cairo_image_surface_get_height (image);
@@ -323,7 +323,7 @@ Sample_imagepattern = class {
 
 Sample_multi_segment_caps = class {
 	name:static = "multi segment caps"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_move_to (cr, 50.0, 75.0);
 		cairo_line_to (cr, 200.0, 75.0);
 
@@ -341,7 +341,7 @@ Sample_multi_segment_caps = class {
 
 Sample_rounded_rectangle = class {
 	name:static = "rounded rectangle"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		/* a custom shape that could be wrapped in a function */
 		x         = 25.6,        /* parameters like cairo_rectangle */
 		y         = 25.6,
@@ -370,7 +370,7 @@ Sample_rounded_rectangle = class {
 
 Sample_set_line_cap = class {
 	name:static = "set line cap"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_set_line_width (cr, 30.0);
 		cairo_set_line_cap  (cr, CAIRO_LINE_CAP_BUTT); /* default */
 		cairo_move_to (cr, 64.0, 50.0); cairo_line_to (cr, 64.0, 200.0);
@@ -394,7 +394,7 @@ Sample_set_line_cap = class {
 
 Sample_set_line_join = class {
 	name:static = "set line join"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_set_line_width (cr, 40.96);
 		cairo_move_to (cr, 76.8, 84.48);
 		cairo_rel_line_to (cr, 51.2, -51.2);
@@ -418,7 +418,7 @@ Sample_set_line_join = class {
 
 Sample_text = class {
 	name:static = "text"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL,
 									CAIRO_FONT_WEIGHT_BOLD);
 		cairo_set_font_size (cr, 90.0);
@@ -445,7 +445,7 @@ Sample_text = class {
 
 Sample_text_align_center = class {
 	name:static = "text align center"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		utf8 = "cairo";
 
 		cairo_select_font_face (cr, "Sans",
@@ -476,7 +476,7 @@ Sample_text_align_center = class {
 
 Sample_text_extents = class {
 	name:static = "text extents"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		utf8 = "cairo";
 
 		cairo_select_font_face (cr, "Sans",
@@ -508,7 +508,7 @@ Sample_text_extents = class {
 
 Sample_text_extents2 = class {
 	name:static = "text extents 2"
-	Draw(cr:cairo_t) = {
+	Draw(cr as cairo_t) = {
 		utf8 = "A y o";
 
 		cairo_select_font_face (cr, "Sans",
