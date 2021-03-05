@@ -1513,7 +1513,7 @@ void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)
 Expr_Caller& Expr_Caller::GetExprTrailerLast()
 {
 	Expr_Caller* pExpr = this;
-	for ( ; pExpr->GetExprTrailer() != nullptr; pExpr = pExpr->GetExprTrailer()) ;
+	for ( ; pExpr->GetExprTrailer(); pExpr = pExpr->GetExprTrailer()) ;
 	return *pExpr;
 }
 

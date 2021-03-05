@@ -575,33 +575,6 @@ bool Parser::ReduceThreeTokens()
 				}
 				pAttrDst->AddSymbol(dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol());
 				pExprGen.reset(pExprLeft->Reference());
-#if 0
-			} else if (pExprRight->IsType<Expr_Member>()) {
-				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
-				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
-				if (!pAttrDst) {
-					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "attribute can only be specified for identifier, caller and indexer", __LINE__);
-					return false;
-				}
-				//if (pAttrDst->HasDottedSymbol()) {
-				//	IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-				//			"dotted-symbol must be specified as a first attribute");
-				//	return false;
-				//}
-				do {
-					RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprRight));
-					if (!pDottedSymbol) {
-						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-								   "invalid format of dotted-symbol");
-						return false;
-					}
-					pAttrDst->SetDottedSymbol(pDottedSymbol.release());
-				} while (0);
-				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight.get());
-				pAttrDst->AddAttribute(pExprMember->GetAttr());
-				pExprGen.reset(pExprLeft->Reference());
-#endif
 			} else if (pExprRight->IsType<Expr_Lister>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
 				Attribute* pAttrDst = pExprDst->GetAttrToAppend();

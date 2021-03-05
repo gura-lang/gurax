@@ -76,12 +76,6 @@ void Composer::Add_AssignPropSlot(const Symbol* pSymbol, RefPtr<DottedSymbol> pD
 									 const Attribute& attr, bool initializerFlag, const Expr& exprSrc)
 {
 	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
-	//if (!pDottedSymbol) {
-	//	pDottedSymbol.reset(attr.GetDottedSymbol().Reference());
-	//	if (pDottedSymbol->IsSingleSymbol() && symbolAssoc.DoesExist(pDottedSymbol->GetSymbolFirst())) {
-	//		pDottedSymbol.reset(DottedSymbol::Empty.Reference());
-	//	}
-	//}
 	if (!pDottedSymbol) pDottedSymbol.reset(DottedSymbol::Empty.Reference());
 	flags |= PropSlot::Flag::Readable | PropSlot::Flag::Writable;
 	const SymbolList& symbols = attr.GetSymbols();
