@@ -59,15 +59,12 @@ const TokenType TokenType::Question			{ 15, "Question",		"?",		OpType::None	};
 const TokenType TokenType::Inv				{ 16, "Inv",			"~",		OpType::Inv		};	// ~
 const TokenType TokenType::Pow				{ 17, "Pow",			"**",		OpType::Pow		};	// **
 const TokenType TokenType::Quote			{ 18, "Quote",			"`",		OpType::None	};	// `
-
+const TokenType TokenType::Colon			{ 19, "Colon",			":",		OpType::None	};	// :
+const TokenType TokenType::ColonAfterSuffix	{ 20, "ColonAfterSuffix",":",		OpType::None	};	// *:
 const TokenType TokenType::Period			{ 21, "Period",			".",		OpType::None	};	// .
 const TokenType TokenType::ColonColon		{ 21, "ColonColon",		"::",		OpType::None	};
 const TokenType TokenType::ColonAsterisk	{ 21, "ColonAsterisk",	":*",		OpType::None	};
 const TokenType TokenType::ColonAnd			{ 21, "ColonAnd",		":&",		OpType::None	};
-
-const TokenType TokenType::Colon			{ 19, "Colon",			":",		OpType::None	};	// :
-const TokenType TokenType::ColonAfterSuffix	{ 20, "ColonAfterSuffix",":",		OpType::None	};	// *:
-
 const TokenType TokenType::LParenthesis		{ 22, "LParenthesis",	"(",		OpType::None	};	// (
 const TokenType TokenType::RParenthesis		{ 23, "RParenthesis",	")",		OpType::None	};	// )
 const TokenType TokenType::LBrace			{ 22, "LBrace",			"{",		OpType::None	};
@@ -134,8 +131,8 @@ const Token::Precedence Token::_precMatrix[][31] = {
 	/* ~ */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, LT, LT, LT, LT, LT, GT, LT, GT, GT, GT, LT, LT, GT },
 	/* ***/ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, LT, LT, LT, LT, GT, LT, GT, GT, GT, LT, LT, GT },
 	/* ` */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, LT, LT, LT, GT, LT, GT, GT, GT, LT, LT, GT },
-	/* : */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, GT, GT, LT, GT, GT, GT, LT, LT, GT },
-	/* *:*/ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, GT, GT, LT, GT, GT, GT, LT, LT, GT },
+	/* : */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, GT, GT, GT, LT, LT, GT },
+	/* *:*/ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, GT, GT, GT, LT, LT, GT },
 	/* . */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, LT, GT, GT, GT, GT, GT, GT, GT, GT, LT, LT, GT },
 	/* ( */ { xx, xx, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, EQ, LT, EQ, EQ, EQ, LT, LT, xx },
 	/* ) */ { xx, xx, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT, GT },
