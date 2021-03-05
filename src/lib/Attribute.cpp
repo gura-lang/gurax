@@ -17,9 +17,9 @@ void Attribute::Bootup()
 
 void Attribute::AddAttribute(const Attribute& attr)
 {
-	if (!HasDottedSymbol() && attr.HasDottedSymbol()) {
-		SetDottedSymbol(attr.GetDottedSymbol().Reference());
-	}
+	//if (!HasDottedSymbol() && attr.HasDottedSymbol()) {
+	//	SetDottedSymbol(attr.GetDottedSymbol().Reference());
+	//}
 	AddSymbols(attr.GetSymbols());
 	AddSymbolsOpt(attr.GetSymbolsOpt());
 }
@@ -28,19 +28,19 @@ void Attribute::AddSymbol(const Symbol* pSymbol)
 {
 	_symbolList.push_back(pSymbol);
 	_symbolSet.GetSet().insert(pSymbol);
-	if (!_pDottedSymbol) {
-		_pDottedSymbol.reset(new DottedSymbol());
-		_pDottedSymbol->Append(pSymbol);
-	}
+	//if (!_pDottedSymbol) {
+	//	_pDottedSymbol.reset(new DottedSymbol());
+	//	_pDottedSymbol->Append(pSymbol);
+	//}
 }
 
 String Attribute::ToString(const StringStyle& ss) const
 {
 	String str;
-	if (_pDottedSymbol && _pDottedSymbol->IsDotted()) {
-		str += ':';
-		str += _pDottedSymbol->ToString();
-	}
+	//if (_pDottedSymbol && _pDottedSymbol->IsDotted()) {
+	//	str += ':';
+	//	str += _pDottedSymbol->ToString();
+	//}
 	for (const Symbol* pSymbol : _symbolList) {
 		str += ':';
 		str += pSymbol->GetName();

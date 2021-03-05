@@ -134,6 +134,7 @@ Gurax_ImplementMethod(Attribute, IsSetOpt)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+#if 0
 // Attribute#dottedExpr
 Gurax_DeclareProperty_R(Attribute, dottedExpr)
 {
@@ -167,6 +168,7 @@ Gurax_ImplementPropertyGetter(Attribute, dottedName)
 	if (!attrThis.HasDottedSymbol()) return Value::nil();
 	return new Value_String(attrThis.GetDottedSymbol().ToString());
 }
+#endif
 
 //------------------------------------------------------------------------------
 // VType_Attribute
@@ -186,8 +188,8 @@ void VType_Attribute::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Attribute, IsSet));
 	Assign(Gurax_CreateMethod(Attribute, IsSetOpt));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Attribute, dottedExpr));
-	Assign(Gurax_CreateProperty(Attribute, dottedName));
+	//Assign(Gurax_CreateProperty(Attribute, dottedExpr));
+	//Assign(Gurax_CreateProperty(Attribute, dottedName));
 }
 
 //------------------------------------------------------------------------------

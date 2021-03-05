@@ -6,7 +6,7 @@ TestCase('Property') {
 }
 
 TestCase('Property Access') {
-	test(a:Complex) = {
+	test(a as Complex) = {
 		Tester(`a)
 		Tester(`a.abs)
 		Tester(`a.arg)

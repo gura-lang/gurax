@@ -17,7 +17,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Attribute);
 private:
-	RefPtr<DottedSymbol> _pDottedSymbol;
+	//RefPtr<DottedSymbol> _pDottedSymbol;
 	SymbolList _symbolList;
 	SymbolList _symbolListOpt;
 	SymbolSet _symbolSet;
@@ -38,11 +38,11 @@ public:
 protected:
 	~Attribute() = default;
 public:
-	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
-	const DottedSymbol& GetDottedSymbol() const {
-		return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
-	}
-	bool HasDottedSymbol() const { return _pDottedSymbol.get() != nullptr; }
+	//void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
+	//const DottedSymbol& GetDottedSymbol() const {
+	//	return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
+	//}
+	//bool HasDottedSymbol() const { return _pDottedSymbol.get() != nullptr; }
 	const SymbolList& GetSymbols() const { return _symbolList; }
 	const SymbolList& GetSymbolsOpt() const { return _symbolListOpt; }
 	const SymbolSet& GetSymbolSet() const { return _symbolSet; }
@@ -59,7 +59,8 @@ public:
 	void AddSymbolsOpt(const SymbolList& symbolList) {
 		for (const Symbol* pSymbol : symbolList) AddSymbolOpt(pSymbol);
 	}
-	bool IsEmpty() const { return !HasDottedSymbol() && GetSymbols().empty() && GetSymbolsOpt().empty(); }
+	//bool IsEmpty() const { return !HasDottedSymbol() && GetSymbols().empty() && GetSymbolsOpt().empty(); }
+	bool IsEmpty() const { return GetSymbols().empty() && GetSymbolsOpt().empty(); }
 	bool IsSet(const Symbol* pSymbol) const { return GetSymbolSet().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetSymbolSetOpt().IsSet(pSymbol); }
 public:

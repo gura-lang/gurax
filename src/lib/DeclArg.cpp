@@ -35,7 +35,7 @@ void DeclArg::Bootup()
 
 DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 {
-	RefPtr<DottedSymbol> pDottedSymbol;
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::Empty.Reference());
 	const VType* pVType = nullptr;
 	const Occur* pOccur = &Occur::Once;
 	Flags flags = 0;
@@ -112,22 +112,26 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		return nullptr;
 	}
 	//*****************************************
-	if (!pDottedSymbol) pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
-	bool firstFlag = true;
+	//if (!pDottedSymbol) pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
+	//bool firstFlag = true;
 	for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
 		Flags flag = SymbolToFlag(pSymbol);
-		flags |= flag;
-		if (flag) {
-			if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
-				pDottedSymbol.reset(DottedSymbol::Empty.Reference());
-			}
-		} else {
-			if (!firstFlag) {
-				Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
-				return nullptr;
-			}
+		if (!flag) {
+			Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+			return nullptr;
 		}
-		firstFlag = false;
+		flags |= flag;
+		//if (flag) {
+		//	if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
+		//		pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+		//	}
+		//} else {
+		//	if (!firstFlag) {
+		//		Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+		//		return nullptr;
+		//	}
+		//}
+		//firstFlag = false;
 	}
 	return pVType?
 		new DeclArg(pSymbol, *pVType, *pOccur, flags, pExprDefault.release()) :
