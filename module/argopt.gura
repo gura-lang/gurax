@@ -92,6 +92,8 @@ Parser = class {
 					!value && Error.Raise(Error.CommandError, 'value must be specified')
 					if (entry.type == `Int) {
 						opt[entry.longName] = Int(value)
+					} elsif (entry.type == `Number) {
+						opt[entry.longName] = Number(value)
 					} else { // entry.type == `String
 						opt[entry.longName] = value
 					}
@@ -106,6 +108,8 @@ Parser = class {
 					!value && Error.Raise(Error.CommandError, 'value must be specified')
 					if (entry.type == `Int) {
 						opt[entry.longName] = Int(value)
+					} elsif (entry.type == `Number) {
+						opt[entry.longName] = Number(value)
 					} else { // entry.type == `String
 						opt[entry.longName] = value
 					}
@@ -121,6 +125,9 @@ Parser = class {
 	}
 	OptInt(longName as String, shortName? as String, help? as String, helpValue? as String) = {
 		this.entries.Add(Entry(`Int, longName, shortName, help, helpValue))
+	}
+	OptNumber(longName as String, shortName? as String, help? as String, helpValue? as String) = {
+		this.entries.Add(Entry(`Number, longName, shortName, help, helpValue))
 	}
 	OptString(longName as String, shortName? as String, help? as String, helpValue? as String) = {
 		this.entries.Add(Entry(`String, longName, shortName, help, helpValue))

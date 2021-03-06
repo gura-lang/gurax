@@ -46,7 +46,7 @@ Gurax_ImplementConstructor(DateTime)
 	const char* str = args.IsValid()? args.PickString() : nullptr;
 	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
 	// Function body
-	RefPtr<DateTime> pDt(str? DateTime::ParseString(str) : new DateTime());
+	RefPtr<DateTime> pDt(str? DateTime::CreateFromString(str) : new DateTime());
 	if (!pDt) {
 		Error::Issue(ErrorType::FormatError, "invalid format for DateTime");
 		return Value::nil();
@@ -599,7 +599,7 @@ Value* VType_DateTime::DoCastFrom(const Value& value, DeclArg::Flags flags) cons
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* str = Value_String::GetString(value);
-		RefPtr<DateTime> pDt(DateTime::ParseString(str));
+		RefPtr<DateTime> pDt(DateTime::CreateFromString(str));
 		if (!pDt) {
 			Error::Issue(ErrorType::FormatError, "invalid format for DateTime");
 			return nullptr;

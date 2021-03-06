@@ -106,7 +106,7 @@ public:
 	bool operator>(const DateTime& dt) const  { return Compare(*this, dt) > 0;  }
 	bool operator>=(const DateTime& dt) const { return Compare(*this, dt) >= 0; }
 public:
-	static DateTime* ParseString(const char* str, const char** next = nullptr);
+	static DateTime* CreateFromString(const char* str, const char** next = nullptr);
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	DateTime* ToUTC() const;
 	UInt64 ToUnixTime() const;
@@ -122,6 +122,8 @@ public:
 	static Int16 GetDaysOfYear(Int16 year) {
 		return IsLeapYear(year)? 366 : 365;
 	}
+	static bool IsValidDate(int year, int month, int day);
+	static bool IsValidTime(int hour, int min, int sec);
 	static void DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay);
 	static Int16 GetDayOfYear(Int16 year, Int8 month, Int8 day);
 	static Int8 GetDayOfWeek(Int16 year, Int8 month, Int8 day);

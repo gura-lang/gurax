@@ -120,5 +120,7 @@ TestCase('Operator =>') {
 }
 
 TestCase('Operator as') {
-	
+	Tester(`('red' as Color))
+	Tester(`('#123456' as Color))
+	Tester(`('2010-01-23 12:34:56' as DateTime))
 }

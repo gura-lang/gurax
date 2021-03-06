@@ -49,7 +49,7 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 //           Sat Nov  6 08:49:37 +0000 2010
 // W3C       2010-11-06T08:49:37Z
 // No format 2010-11-06
-DateTime* DateTime::ParseString(const char* str, const char** next)
+DateTime* DateTime::CreateFromString(const char* str, const char** next)
 {
 	enum class Stat {
 		Start, End,
@@ -117,7 +117,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				year = year * 10 + (ch - '0');
-				if (year > 9999 || nCols > 4) return nullptr;
+				if (nCols > 4) return nullptr;
 			} else if (ch == '-') {
 				if (nCols > 4) return nullptr;
 				nCols = 0;
@@ -131,7 +131,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				month = month * 10 + (ch - '0');
-				if (month > 12 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else if (ch == '-') {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
@@ -145,14 +145,14 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				day = day * 10 + (ch - '0');
-				if (day > 31 || nCols > 2) return nullptr;
-			} else if (ch == 'T') {
+				if (nCols > 2) return nullptr;
+			} else if (ch == 'T' || String::IsWhite(ch)) {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
 				statNext = Stat::TimeZone;
 				stat = Stat::Time;
 			} else if (ch == '\0') {
-				break;
+				// nothing to do
 			} else {
 				return nullptr;
 			}
@@ -180,7 +180,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				day = day * 10 + (ch - '0');
-				if (day > 31 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else if (String::IsWhite(ch)) {
 				nCols = 0;
 				statNext = Stat::DateAscTime_YearPre;
@@ -209,7 +209,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				year = year * 10 + (ch - '0');
-				if (year > 9999 || nCols > 4) return nullptr;
+				if (nCols > 4) return nullptr;
 			} else {
 				ch = '\0';
 			}
@@ -219,7 +219,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				day = day * 10 + (ch - '0');
-				if (day > 31 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else if (String::IsWhite(ch) || ch == '-') {
 				nCols = 0;
 				statNext = Stat::DateRFC_Month;
@@ -251,7 +251,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				year = year * 10 + (ch - '0');
-				if (year > 9999 || nCols > 4) return nullptr;
+				if (nCols > 4) return nullptr;
 			} else if (String::IsWhite(ch)) {
 				if (nCols == 2) {
 					year += (year < 70)? 2000 : 1900;
@@ -281,7 +281,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				hour = hour * 10 + (ch - '0');
-				if (hour > 23 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else if (ch == ':') {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
@@ -295,13 +295,17 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				min = min * 10 + (ch - '0');
-				if (min > 59 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else if (ch == ':') {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
 				stat = Stat::Time_Sec;
 			} else {
-				return nullptr;
+				if (nCols > 2) return nullptr;
+				nCols = 0;
+				pushbackFlag = true;
+				stat = statNext;
+				statNext = Stat::End;
 			}
 			break;
 		}
@@ -309,7 +313,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			if (String::IsDigit(ch)) {
 				nCols++;
 				sec = sec * 10 + (ch - '0');
-				if (sec > 59 || nCols > 2) return nullptr;
+				if (nCols > 2) return nullptr;
 			} else {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
@@ -327,7 +331,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				timeZone.clear();
 				timeZone += ch;
 				stat = Stat::TimeZoneDigit;
-			} else if (String::IsWhite(ch)) {
+			} else if (ch == '\0' || String::IsWhite(ch)) {
 				// nothing to do
 			} else {
 				return nullptr;
@@ -382,6 +386,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 		}
 	}
 	if (next) *next = p;
+	if (!IsValidDate(year, month, day) || !IsValidTime(hour, min, sec)) return nullptr;
 	RefPtr<DateTime> pDt(new DateTime(
 		static_cast<Int16>(year), static_cast<Int8>(month), static_cast<Int8>(day),
 		static_cast<Int32>(hour * 3600 + min * 60 + sec), 0));
@@ -446,6 +451,21 @@ Int8 DateTime::GetDaysOfMonth(Int16 year, Int8 month)
 	};
 	if (month < 1 || month > 12) return -1;
 	return (IsLeapYear(year)? daysTbl_Leap : daysTbl_Normal)[static_cast<int>(month)];
+}
+
+bool DateTime::IsValidDate(int year, int month, int day)
+{
+	if (year < 0 || year > 9999) return false;
+	if (month < 1 || month > 12) return false;
+	int days = GetDaysOfMonth(year, month);
+	return 1 <= day && day <= days;
+}
+
+bool DateTime::IsValidTime(int hour, int min, int sec)
+{
+	if (hour < 0 || hour > 23) return false;
+	if (min < 0 || min > 59) return false;
+	return 0 <= sec && sec < 60;
 }
 
 void DateTime::DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay)

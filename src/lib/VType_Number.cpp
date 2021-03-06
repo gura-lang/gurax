@@ -27,6 +27,35 @@ Number.format
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Number(str?:String) {block?}
+Gurax_DeclareConstructor(Number)
+{
+	Declare(VTYPE_Color, Flag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Number` instance.\n");
+}
+
+Gurax_ImplementConstructor(Number)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.IsValid()? args.PickString() : nullptr;
+	// Function body
+	bool successFlag = true;
+	Double num = str? String::ToDouble(str, &successFlag) : 0;
+	if (!successFlag) {
+		Error::Issue(ErrorType::ValueError, "failed to convert to a number");
+		return Value::nil();
+	}
+	return argument.ReturnValue(processor, new Value_Number(num));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of class property
 //------------------------------------------------------------------------------
 // Number.int8
@@ -840,7 +869,7 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Number));
 	// Assignment of class property
 	Assign(Gurax_CreateClassProperty(Number, int8));
 	Assign(Gurax_CreateClassProperty(Number, uint8));

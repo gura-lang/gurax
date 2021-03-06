@@ -258,3 +258,7 @@ nil != 0 .. true
 'hoge' => [3, 4, 5] .. ('hoge', [3, 4, 5])
 ['hoge', 'foo', 'bar'] => 4 .. (['hoge', 'foo', 'bar'], 4)
 ['hoge', 'foo', 'bar'] => [3, 4, 5] .. (['hoge', 'foo', 'bar'], [3, 4, 5])
+======== Operator as ========
+'red' as Color .. <Color:#ff0000,ff>
+'#123456' as Color .. <Color:#123456,ff>
+'2010-01-23 12:34:56' as DateTime .. 2010-01-23 12:34:56.000

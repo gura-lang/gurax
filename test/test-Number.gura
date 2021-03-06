@@ -17,6 +17,20 @@ TestCase('Property Access') {
 	test(3)
 }
 
+TestCase('Constructor') {
+	Tester(`Number())
+	Tester(`Number('0'))
+	Tester(`Number('1234'))
+	Tester(`Number('-1234'))
+	Tester(`Number('1234.56'))
+	Tester(`Number('-1234.56'))
+	Tester(`Number('0b011101011'))
+	Tester(`Number('01234'))
+	Tester(`Number('-01234'))
+	Tester(`Number('0x1234'))
+	Tester(`Number('-0x1234'))
+}
+
 TestCase('Operator') {
 	Tester(`(~3))
 	Tester(`(-3))

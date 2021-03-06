@@ -137,14 +137,14 @@ tbl.last .. ten
 ======== List#vtypeOfELem ========
 [].vtypeOfElem .. <Undefined>
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <CallableMember:VType:String(src?:Any):map{block?}>
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <VType:Number>
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 ['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <Any>
 ======== List#Add() ========
 tbl.vtypeOfElem .. <Undefined>
 tbl.Add(3) .. [3]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Add(6, 7, 8) .. [3, 6, 7, 8]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Add('hello') .. [3, 6, 7, 8, 'hello']
 tbl.vtypeOfElem .. <Any>
 tbl.Add([1, 2, 3]) .. [3, 6, 7, 8, 'hello', [1, 2, 3]]
@@ -154,9 +154,9 @@ tbl.Add('a', 'b', 'c', 'd', 'e', 'f') .. [3, 6, 7, 8, 'hello', [1, 2, 3], <Itera
 ======== List#Append() ========
 tbl.vtypeOfElem .. <Undefined>
 tbl.Append(3) .. [3]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Append(6, 7, 8) .. [3, 6, 7, 8]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Append('hello') .. [3, 6, 7, 8, 'hello']
 tbl.vtypeOfElem .. <Any>
 tbl.Append([1, 2, 3]) .. [3, 6, 7, 8, 'hello', 1, 2, 3]
@@ -176,11 +176,11 @@ tbl.Erase(-1, -2, -3) .. [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 tbl.Erase(0, 2, 4, 6, 8) .. [6, 8, 10, 12, 14, 15, 16, 17]
 ======== List#Get() ========
 ======== List#Insert() ========
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Insert(3, 3) .. [99, 99, 99, 3, 99, 99]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Insert(3, 6, 7, 8) .. [99, 99, 99, 6, 7, 8, 3, 99, 99]
-tbl.vtypeOfElem .. <VType:Number>
+tbl.vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 tbl.Insert(3, 'hello') .. [99, 99, 99, 'hello', 6, 7, 8, 3, 99, 99]
 tbl.vtypeOfElem .. <Any>
 tbl.Insert(3, [1, 2, 3]) .. [99, 99, 99, [1, 2, 3], 'hello', 6, 7, 8, 3, 99, 99]
