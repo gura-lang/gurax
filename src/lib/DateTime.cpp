@@ -48,6 +48,7 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 // asctime() Sat Nov  6 08:49:37 2010
 //           Sat Nov  6 08:49:37 +0000 2010
 // W3C       2010-11-06T08:49:37Z
+// No format 2010-11-06
 DateTime* DateTime::ParseString(const char* str, const char** next)
 {
 	enum class Stat {
@@ -118,7 +119,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				year = year * 10 + (ch - '0');
 				if (year > 9999 || nCols > 4) return nullptr;
 			} else if (ch == '-') {
-				if (nCols != 4) return nullptr;
+				if (nCols > 4) return nullptr;
 				nCols = 0;
 				stat = Stat::W3C_Month;
 			} else {
@@ -132,7 +133,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				month = month * 10 + (ch - '0');
 				if (month > 12 || nCols > 2) return nullptr;
 			} else if (ch == '-') {
-				if (nCols != 2) return nullptr;
+				if (nCols > 2) return nullptr;
 				nCols = 0;
 				stat = Stat::W3C_Day;
 			} else {
@@ -146,10 +147,12 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				day = day * 10 + (ch - '0');
 				if (day > 31 || nCols > 2) return nullptr;
 			} else if (ch == 'T') {
-				if (nCols != 2) return nullptr;
+				if (nCols > 2) return nullptr;
 				nCols = 0;
 				statNext = Stat::TimeZone;
 				stat = Stat::Time;
+			} else if (ch == '\0') {
+				break;
 			} else {
 				return nullptr;
 			}
@@ -252,7 +255,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			} else if (String::IsWhite(ch)) {
 				if (nCols == 2) {
 					year += (year < 70)? 2000 : 1900;
-				} else if (nCols != 4) {
+				} else if (nCols > 4) {
 					return nullptr;
 				}
 				nCols = 0;
@@ -280,7 +283,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				hour = hour * 10 + (ch - '0');
 				if (hour > 23 || nCols > 2) return nullptr;
 			} else if (ch == ':') {
-				if (nCols != 2) return nullptr;
+				if (nCols > 2) return nullptr;
 				nCols = 0;
 				stat = Stat::Time_Min;
 			} else {
@@ -294,7 +297,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				min = min * 10 + (ch - '0');
 				if (min > 59 || nCols > 2) return nullptr;
 			} else if (ch == ':') {
-				if (nCols != 2) return nullptr;
+				if (nCols > 2) return nullptr;
 				nCols = 0;
 				stat = Stat::Time_Sec;
 			} else {
@@ -308,7 +311,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 				sec = sec * 10 + (ch - '0');
 				if (sec > 59 || nCols > 2) return nullptr;
 			} else {
-				if (nCols != 2) return nullptr;
+				if (nCols > 2) return nullptr;
 				nCols = 0;
 				pushbackFlag = true;
 				stat = statNext;
@@ -378,11 +381,12 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 			p++;
 		}
 	}
-	if (next != nullptr) *next = p;
-	RefPtr<DateTime> pDateTime(new DateTime(
+	if (next) *next = p;
+	RefPtr<DateTime> pDt(new DateTime(
 		static_cast<Int16>(year), static_cast<Int8>(month), static_cast<Int8>(day),
 		static_cast<Int32>(hour * 3600 + min * 60 + sec), 0));
 	if (timeZone.empty()) {
+		//pDt->SetSecsOffset(OAL::GetSecsOffsetTZ());
 		// nothing to do
 	} else if (String::IsAlpha(timeZone[0])) {
 		// the list contains timezone names that are described in RFC 822 and JST.
@@ -401,9 +405,7 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 		};
 		for (size_t i = 0; i < Gurax_ArraySizeOf(tbl); i++) {
 			if (::strcasecmp(timeZone.c_str(), tbl[i].name) == 0) {
-				pDateTime->SetMinsOffset(tbl[i].minsOffset);
-				//_tz.validFlag = true;
-				//_tz.secsOffset = tbl[i].minsOffset * 60;
+				pDt->SetMinsOffset(tbl[i].minsOffset);
 				break;
 			}
 		}
@@ -411,16 +413,14 @@ DateTime* DateTime::ParseString(const char* str, const char** next)
 		int signNum = (timeZone[0] == '-')? -1 : +1;
 		int hours = (timeZone[1] - '0') * 10 + (timeZone[2] - '0');
 		int mins = (timeZone[3] - '0') * 10 + (timeZone[4] - '0');
-		//_tz.validFlag = true;
-		//_tz.secsOffset = signNum * (hours * 3600 + mins * 60);
-		pDateTime->SetMinsOffset(hours * 60 + mins);
+		pDt->SetMinsOffset(hours * 60 + mins);
 	}
-	return pDateTime.release();
+	return pDt.release();
 }
 
 DateTime* DateTime::ToUTC() const
 {
-	if (_tz.secsOffset == 0) return Clone();
+	//if (_tz.secsOffset == 0) return Clone();
 	RefPtr<DateTime> pDt(Clone());
 	pDt->AddDelta(0, -GetSecsOffset(), 0);
 	pDt->SetSecsOffset(0);

@@ -27,9 +27,40 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// DateTime(year?:Number, month?:Number, day?:Number,
-//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map {block?}
+// DateTime(str?:String):map:[utc] {block?}
 Gurax_DeclareConstructor(DateTime)
+{
+	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareArg("str", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(utc));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `DateTime` instance.");
+}
+
+Gurax_ImplementConstructor(DateTime)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.IsValid()? args.PickString() : nullptr;
+	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
+	// Function body
+	RefPtr<DateTime> pDt(str? DateTime::ParseString(str) : new DateTime());
+	if (!pDt) {
+		Error::Issue(ErrorType::FormatError, "invalid format for DateTime");
+		return Value::nil();
+	}
+	if (utcFlag) pDt.reset(pDt->ToUTC());
+	return argument.ReturnValue(processor, new Value_DateTime(pDt.release()));
+}
+
+//------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// DateTime.Create(year?:Number, month?:Number, day?:Number,
+//     hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map {block?}
+Gurax_DeclareClassMethod(DateTime, Create)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("year", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -47,7 +78,7 @@ Gurax_DeclareConstructor(DateTime)
 		"Creates a `DateTime` instance.");
 }
 
-Gurax_ImplementConstructor(DateTime)
+Gurax_ImplementClassMethod(DateTime, Create)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -63,18 +94,15 @@ Gurax_ImplementConstructor(DateTime)
 	Int32 minsOff = validOffsetFlag? args.PickNumber<Int32>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<DateTime> pDateTime(
+	RefPtr<DateTime> pDt(
 		new DateTime(year, month, day, DateTime::CalcSecPacked(hour, min, sec),
 					 DateTime::CalcUSecPacked(msec, usec)));
 	if (validOffsetFlag) {
-		pDateTime->SetMinsOffset(minsOff);
+		pDt->SetMinsOffset(minsOff);
 	}
-	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
+	return argument.ReturnValue(processor, new Value_DateTime(pDt.release()));
 }
 
-//------------------------------------------------------------------------------
-// Implementation of class method
-//------------------------------------------------------------------------------
 // DateTime.Now():[utc] {block?}
 Gurax_DeclareClassMethod(DateTime, Now)
 {
@@ -91,8 +119,8 @@ Gurax_ImplementClassMethod(DateTime, Now)
 	// Arguments
 	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
 	// Function body
-	RefPtr<DateTime> pDateTime(OAL::CreateDateTimeCur(utcFlag));
-	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
+	RefPtr<DateTime> pDt(OAL::CreateDateTimeCur(utcFlag));
+	return argument.ReturnValue(processor, new Value_DateTime(pDt.release()));
 }
 
 // DateTime.FromUnixTime(unixTime:Number):[utc] {block?}
@@ -114,8 +142,8 @@ Gurax_ImplementClassMethod(DateTime, FromUnixTime)
 	time_t unixTime = args.PickNumberNonNeg<time_t>();
 	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
 	// Function body
-	RefPtr<DateTime> pDateTime(OAL::CreateDateTime(unixTime, utcFlag));
-	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
+	RefPtr<DateTime> pDt(OAL::CreateDateTime(unixTime, utcFlag));
+	return argument.ReturnValue(processor, new Value_DateTime(pDt.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -534,6 +562,7 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DateTime));
 	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(DateTime, Create));
 	Assign(Gurax_CreateClassMethod(DateTime, Now));
 	Assign(Gurax_CreateClassMethod(DateTime, FromUnixTime));
 	// Assignment of property
@@ -564,6 +593,20 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Le, DateTime, DateTime);
 	Gurax_AssignOpBinary(Gt, DateTime, DateTime);
 	Gurax_AssignOpBinary(Ge, DateTime, DateTime);
+}
+
+Value* VType_DateTime::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_String)) {
+		const char* str = Value_String::GetString(value);
+		RefPtr<DateTime> pDt(DateTime::ParseString(str));
+		if (!pDt) {
+			Error::Issue(ErrorType::FormatError, "invalid format for DateTime");
+			return nullptr;
+		}
+		return new Value_DateTime(pDt.release());
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------

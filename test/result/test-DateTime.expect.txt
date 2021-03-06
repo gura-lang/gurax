@@ -16,130 +16,130 @@ DateTime
   #weekShort        Symbol       R
   #yday             Number       R
   #year             Number       R/W
-======== Constructor ========
-DateTime() .. 1970-01-01 00:00:00.000
-DateTime(2019) .. 2019-01-01 00:00:00.000
-DateTime(2019, 5) .. 2019-05-01 00:00:00.000
-DateTime(2019, 5, 21) .. 2019-05-21 00:00:00.000
-DateTime(2019, 5, 21, 8) .. 2019-05-21 08:00:00.000
-DateTime(2019, 5, 21, 8, 23) .. 2019-05-21 08:23:00.000
-DateTime(2019, 5, 21, 8, 23, 42) .. 2019-05-21 08:23:42.000
-DateTime(2019, 5, 21, 8, 23, 42, 234) .. 2019-05-21 08:23:42.234
-DateTime(2019, 5, 21, 8, 23, 42, 234, 765) .. 2019-05-21 08:23:42.234765
-DateTime(2019, 5, nil, 8, nil, 42) .. 2019-05-01 08:00:42.000
-DateTime(2019, nil, nil, nil, nil, 42) .. 2019-01-01 00:00:42.000
-DateTime(year = 2019) .. 2019-01-01 00:00:00.000
-DateTime(month = 5) .. 1970-05-01 00:00:00.000
-DateTime(day = 21) .. 1970-01-21 00:00:00.000
-DateTime(hour = 8) .. 1970-01-01 08:00:00.000
-DateTime(min = 23) .. 1970-01-01 00:23:00.000
-DateTime(sec = 42) .. 1970-01-01 00:00:42.000
-DateTime(msec = 234) .. 1970-01-01 00:00:00.234
-DateTime(usec = 765) .. 1970-01-01 00:00:00.000765
-======== Constructor Range Check ========
-DateTime(-1) .. the number must be between 0 and 9999
-DateTime(0) .. 0000-01-01 00:00:00.000
-DateTime(9999) .. 9999-01-01 00:00:00.000
-DateTime(10000) .. the number must be between 0 and 9999
-DateTime(nil, 0) .. the number must be between 1 and 12
-DateTime(nil, 1) .. 1970-01-01 00:00:00.000
-DateTime(nil, 12) .. 1970-12-01 00:00:00.000
-DateTime(nil, 13) .. the number must be between 1 and 12
-DateTime(nil, nil, 0) .. the number must be between 1 and 31
-DateTime(nil, nil, 1) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, 31) .. 1970-01-31 00:00:00.000
-DateTime(nil, nil, 32) .. the number must be between 1 and 31
-DateTime(nil, nil, nil, -1) .. the number must be between 0 and 23
-DateTime(nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, 23) .. 1970-01-01 23:00:00.000
-DateTime(nil, nil, nil, 24) .. the number must be between 0 and 23
-DateTime(nil, nil, nil, nil, -1) .. the number must be between 0 and 59
-DateTime(nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, nil, 59) .. 1970-01-01 00:59:00.000
-DateTime(nil, nil, nil, nil, 60) .. the number must be between 0 and 59
-DateTime(nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 59
-DateTime(nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, nil, nil, 59) .. 1970-01-01 00:00:59.000
-DateTime(nil, nil, nil, nil, nil, 60) .. the number must be between 0 and 59
-DateTime(nil, nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 999
-DateTime(nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.999
-DateTime(nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
-DateTime(nil, nil, nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 999
-DateTime(nil, nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.000999
-DateTime(nil, nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
+======== DateTime.Create() ========
+DateTime.Create() .. 1970-01-01 00:00:00.000
+DateTime.Create(2019) .. 2019-01-01 00:00:00.000
+DateTime.Create(2019, 5) .. 2019-05-01 00:00:00.000
+DateTime.Create(2019, 5, 21) .. 2019-05-21 00:00:00.000
+DateTime.Create(2019, 5, 21, 8) .. 2019-05-21 08:00:00.000
+DateTime.Create(2019, 5, 21, 8, 23) .. 2019-05-21 08:23:00.000
+DateTime.Create(2019, 5, 21, 8, 23, 42) .. 2019-05-21 08:23:42.000
+DateTime.Create(2019, 5, 21, 8, 23, 42, 234) .. 2019-05-21 08:23:42.234
+DateTime.Create(2019, 5, 21, 8, 23, 42, 234, 765) .. 2019-05-21 08:23:42.234765
+DateTime.Create(2019, 5, nil, 8, nil, 42) .. 2019-05-01 08:00:42.000
+DateTime.Create(2019, nil, nil, nil, nil, 42) .. 2019-01-01 00:00:42.000
+DateTime.Create(year = 2019) .. 2019-01-01 00:00:00.000
+DateTime.Create(month = 5) .. 1970-05-01 00:00:00.000
+DateTime.Create(day = 21) .. 1970-01-21 00:00:00.000
+DateTime.Create(hour = 8) .. 1970-01-01 08:00:00.000
+DateTime.Create(min = 23) .. 1970-01-01 00:23:00.000
+DateTime.Create(sec = 42) .. 1970-01-01 00:00:42.000
+DateTime.Create(msec = 234) .. 1970-01-01 00:00:00.234
+DateTime.Create(usec = 765) .. 1970-01-01 00:00:00.000765
+======== DateTime.Create() Range Check ========
+DateTime.Create(-1) .. the number must be between 0 and 9999
+DateTime.Create(0) .. 0000-01-01 00:00:00.000
+DateTime.Create(9999) .. 9999-01-01 00:00:00.000
+DateTime.Create(10000) .. the number must be between 0 and 9999
+DateTime.Create(nil, 0) .. the number must be between 1 and 12
+DateTime.Create(nil, 1) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, 12) .. 1970-12-01 00:00:00.000
+DateTime.Create(nil, 13) .. the number must be between 1 and 12
+DateTime.Create(nil, nil, 0) .. the number must be between 1 and 31
+DateTime.Create(nil, nil, 1) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, 31) .. 1970-01-31 00:00:00.000
+DateTime.Create(nil, nil, 32) .. the number must be between 1 and 31
+DateTime.Create(nil, nil, nil, -1) .. the number must be between 0 and 23
+DateTime.Create(nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, nil, 23) .. 1970-01-01 23:00:00.000
+DateTime.Create(nil, nil, nil, 24) .. the number must be between 0 and 23
+DateTime.Create(nil, nil, nil, nil, -1) .. the number must be between 0 and 59
+DateTime.Create(nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, nil, nil, 59) .. 1970-01-01 00:59:00.000
+DateTime.Create(nil, nil, nil, nil, 60) .. the number must be between 0 and 59
+DateTime.Create(nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 59
+DateTime.Create(nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, nil, nil, nil, 59) .. 1970-01-01 00:00:59.000
+DateTime.Create(nil, nil, nil, nil, nil, 60) .. the number must be between 0 and 59
+DateTime.Create(nil, nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 999
+DateTime.Create(nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.999
+DateTime.Create(nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
+DateTime.Create(nil, nil, nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 999
+DateTime.Create(nil, nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
+DateTime.Create(nil, nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.000999
+DateTime.Create(nil, nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
 ======== DateTime - DateTime ========
-DateTime(2000, 12, 31) - DateTime(2000, 1, 1) .. <TimeDelta:365days,00:00:00.000>
-DateTime(2001, 12, 31) - DateTime(2001, 1, 1) .. <TimeDelta:364days,00:00:00.000>
-DateTime(2010, 12, 31) - DateTime(2010, 1, 1) .. <TimeDelta:364days,00:00:00.000>
+DateTime('2000-12-31') - DateTime('2000-1-1') .. <TimeDelta:365days,00:00:00.000>
+DateTime('2001-12-31') - DateTime('2001-1-1') .. <TimeDelta:364days,00:00:00.000>
+DateTime('2010-12-31') - DateTime('2010-1-1') .. <TimeDelta:364days,00:00:00.000>
 ======== DateTime + TimeDelta ========
-DateTime(2000, 1, 1) + TimeDelta(365) .. 2000-12-31 00:00:00.000
-DateTime(2000, 1, 1) + TimeDelta(366) .. 2001-01-01 00:00:00.000
-DateTime(2001, 1, 1) + TimeDelta(364) .. 2001-12-31 00:00:00.000
-DateTime(2001, 1, 1) + TimeDelta(365) .. 2002-01-01 00:00:00.000
-DateTime(2010, 1, 1) + TimeDelta(364) .. 2010-12-31 00:00:00.000
-DateTime(2010, 1, 1) + TimeDelta(365) .. 2011-01-01 00:00:00.000
+DateTime('2000-1-1') + TimeDelta(365) .. 2000-12-31 00:00:00.000
+DateTime('2000-1-1') + TimeDelta(366) .. 2001-01-01 00:00:00.000
+DateTime('2001-1-1') + TimeDelta(364) .. 2001-12-31 00:00:00.000
+DateTime('2001-1-1') + TimeDelta(365) .. 2002-01-01 00:00:00.000
+DateTime('2010-1-1') + TimeDelta(364) .. 2010-12-31 00:00:00.000
+DateTime('2010-1-1') + TimeDelta(365) .. 2011-01-01 00:00:00.000
 ======== DateTime - TimeDelta ========
-DateTime(2000, 12, 31) - TimeDelta(365) .. 2000-01-01 00:00:00.000
-DateTime(2000, 12, 31) - TimeDelta(366) .. 1999-12-31 00:00:00.000
-DateTime(2001, 12, 31) - TimeDelta(364) .. 2001-01-01 00:00:00.000
-DateTime(2001, 12, 31) - TimeDelta(365) .. 2000-12-31 00:00:00.000
-DateTime(2010, 12, 31) - TimeDelta(364) .. 2010-01-01 00:00:00.000
-DateTime(2010, 12, 31) - TimeDelta(365) .. 2009-12-31 00:00:00.000
+DateTime('2000-12-31') - TimeDelta(365) .. 2000-01-01 00:00:00.000
+DateTime('2000-12-31') - TimeDelta(366) .. 1999-12-31 00:00:00.000
+DateTime('2001-12-31') - TimeDelta(364) .. 2001-01-01 00:00:00.000
+DateTime('2001-12-31') - TimeDelta(365) .. 2000-12-31 00:00:00.000
+DateTime('2010-12-31') - TimeDelta(364) .. 2010-01-01 00:00:00.000
+DateTime('2010-12-31') - TimeDelta(365) .. 2009-12-31 00:00:00.000
 ======== Comparison ========
 ----
-DateTime(2010, 6, 20) == DateTime(2010, 6, 20) .. true
-DateTime(2010, 6, 20) != DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 20) < DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 20) <= DateTime(2010, 6, 20) .. true
-DateTime(2010, 6, 20) > DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 20) >= DateTime(2010, 6, 20) .. true
+DateTime('2010-6-20') == DateTime('2010-6-20') .. true
+DateTime('2010-6-20') != DateTime('2010-6-20') .. false
+DateTime('2010-6-20') < DateTime('2010-6-20') .. false
+DateTime('2010-6-20') <= DateTime('2010-6-20') .. true
+DateTime('2010-6-20') > DateTime('2010-6-20') .. false
+DateTime('2010-6-20') >= DateTime('2010-6-20') .. true
 ----
-DateTime(2010, 6, 20) == DateTime(2010, 6, 21) .. false
-DateTime(2010, 6, 20) != DateTime(2010, 6, 21) .. true
-DateTime(2010, 6, 20) < DateTime(2010, 6, 21) .. true
-DateTime(2010, 6, 20) <= DateTime(2010, 6, 21) .. true
-DateTime(2010, 6, 20) > DateTime(2010, 6, 21) .. false
-DateTime(2010, 6, 20) >= DateTime(2010, 6, 21) .. false
+DateTime('2010-6-20') == DateTime('2010-6-21') .. false
+DateTime('2010-6-20') != DateTime('2010-6-21') .. true
+DateTime('2010-6-20') < DateTime('2010-6-21') .. true
+DateTime('2010-6-20') <= DateTime('2010-6-21') .. true
+DateTime('2010-6-20') > DateTime('2010-6-21') .. false
+DateTime('2010-6-20') >= DateTime('2010-6-21') .. false
 ----
-DateTime(2010, 6, 21) == DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 21) != DateTime(2010, 6, 20) .. true
-DateTime(2010, 6, 21) < DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 21) <= DateTime(2010, 6, 20) .. false
-DateTime(2010, 6, 21) > DateTime(2010, 6, 20) .. true
-DateTime(2010, 6, 21) >= DateTime(2010, 6, 20) .. true
+DateTime('2010-6-21') == DateTime('2010-6-20') .. false
+DateTime('2010-6-21') != DateTime('2010-6-20') .. true
+DateTime('2010-6-21') < DateTime('2010-6-20') .. false
+DateTime('2010-6-21') <= DateTime('2010-6-20') .. false
+DateTime('2010-6-21') > DateTime('2010-6-20') .. true
+DateTime('2010-6-21') >= DateTime('2010-6-20') .. true
 ----
-DateTime(2010, 6, 20) == DateTime(2010, 7, 20) .. false
-DateTime(2010, 6, 20) != DateTime(2010, 7, 20) .. true
-DateTime(2010, 6, 20) < DateTime(2010, 7, 20) .. true
-DateTime(2010, 6, 20) <= DateTime(2010, 7, 20) .. true
-DateTime(2010, 6, 20) > DateTime(2010, 7, 20) .. false
-DateTime(2010, 6, 20) >= DateTime(2010, 7, 20) .. false
+DateTime('2010-6-20') == DateTime('2010-7-20') .. false
+DateTime('2010-6-20') != DateTime('2010-7-20') .. true
+DateTime('2010-6-20') < DateTime('2010-7-20') .. true
+DateTime('2010-6-20') <= DateTime('2010-7-20') .. true
+DateTime('2010-6-20') > DateTime('2010-7-20') .. false
+DateTime('2010-6-20') >= DateTime('2010-7-20') .. false
 ----
-DateTime(2010, 7, 20) == DateTime(2010, 6, 20) .. false
-DateTime(2010, 7, 20) != DateTime(2010, 6, 20) .. true
-DateTime(2010, 7, 20) < DateTime(2010, 6, 20) .. false
-DateTime(2010, 7, 20) <= DateTime(2010, 6, 20) .. false
-DateTime(2010, 7, 20) > DateTime(2010, 6, 20) .. true
-DateTime(2010, 7, 20) >= DateTime(2010, 6, 20) .. true
+DateTime('2010-7-20') == DateTime('2010-6-20') .. false
+DateTime('2010-7-20') != DateTime('2010-6-20') .. true
+DateTime('2010-7-20') < DateTime('2010-6-20') .. false
+DateTime('2010-7-20') <= DateTime('2010-6-20') .. false
+DateTime('2010-7-20') > DateTime('2010-6-20') .. true
+DateTime('2010-7-20') >= DateTime('2010-6-20') .. true
 ----
-DateTime(2010, 6, 20) == DateTime(2011, 6, 20) .. false
-DateTime(2010, 6, 20) != DateTime(2011, 6, 20) .. true
-DateTime(2010, 6, 20) < DateTime(2011, 6, 20) .. true
-DateTime(2010, 6, 20) <= DateTime(2011, 6, 20) .. true
-DateTime(2010, 6, 20) > DateTime(2011, 6, 20) .. false
-DateTime(2010, 6, 20) >= DateTime(2011, 6, 20) .. false
+DateTime('2010-6-20') == DateTime('2011-6-20') .. false
+DateTime('2010-6-20') != DateTime('2011-6-20') .. true
+DateTime('2010-6-20') < DateTime('2011-6-20') .. true
+DateTime('2010-6-20') <= DateTime('2011-6-20') .. true
+DateTime('2010-6-20') > DateTime('2011-6-20') .. false
+DateTime('2010-6-20') >= DateTime('2011-6-20') .. false
 ----
-DateTime(2011, 6, 20) == DateTime(2010, 6, 20) .. false
-DateTime(2011, 6, 20) != DateTime(2010, 6, 20) .. true
-DateTime(2011, 6, 20) < DateTime(2010, 6, 20) .. false
-DateTime(2011, 6, 20) <= DateTime(2010, 6, 20) .. false
-DateTime(2011, 6, 20) > DateTime(2010, 6, 20) .. true
-DateTime(2011, 6, 20) >= DateTime(2010, 6, 20) .. true
+DateTime('2011-6-20') == DateTime('2010-6-20') .. false
+DateTime('2011-6-20') != DateTime('2010-6-20') .. true
+DateTime('2011-6-20') < DateTime('2010-6-20') .. false
+DateTime('2011-6-20') <= DateTime('2010-6-20') .. false
+DateTime('2011-6-20') > DateTime('2010-6-20') .. true
+DateTime('2011-6-20') >= DateTime('2010-6-20') .. true
 ======== Property ========
 ----
-DateTime(2019, 5, 21, 8, 23, 42, 234, 765) .. 2019-05-21 08:23:42.234765
+DateTime.Create(2019, 5, 21, 8, 23, 42, 234, 765) .. 2019-05-21 08:23:42.234765
 dt.year .. 2019
 dt.month .. 5
 dt.day .. 21
@@ -153,9 +153,9 @@ dt.wday .. 2
 dt.week .. `Tuesday
 dt.weekShort .. `Tue
 dt.yday .. 140
-dt.utc .. 2019-05-21 08:23:42.234765
+dt.utc .. 2019-05-21 08:23:42.234765Z
 ----
-DateTime(2019, 5, 21, 8, 23, 42, 234, 765, 60 * 9) .. 2019-05-21 08:23:42.234765+09:00
+DateTime.Create(2019, 5, 21, 8, 23, 42, 234, 765, 60 * 9) .. 2019-05-21 08:23:42.234765+09:00
 dt.minsOff .. 540
 dt.utc .. 2019-05-20 23:23:42.234765Z
 dt.utc.year .. 2019
