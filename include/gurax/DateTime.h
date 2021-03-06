@@ -106,6 +106,7 @@ public:
 	bool operator>(const DateTime& dt) const  { return Compare(*this, dt) > 0;  }
 	bool operator>=(const DateTime& dt) const { return Compare(*this, dt) >= 0; }
 public:
+	static DateTime* ParseString(const char* str, const char** next);
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	DateTime* ToUTC() const;
 	UInt64 ToUnixTime() const;

@@ -8,37 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DateTime
 //------------------------------------------------------------------------------
-DateTime& DateTime::operator+=(const TimeDelta& td)
-{
-	AddDelta(td.GetDays(), td.GetSecsPacked(), td.GetUSecsPacked());
-	return *this;
-}
-
-DateTime& DateTime::operator-=(const TimeDelta& td)
-{
-	AddDelta(-td.GetDays(), -td.GetSecsPacked(), -td.GetUSecsPacked());
-	return *this;
-}
-
-TimeDelta* DateTime::operator-(const DateTime& dt) const
-{
-	RefPtr<DateTime> pDt1(ToUTC());
-	RefPtr<DateTime> pDt2(dt.ToUTC());
-	Int32 daysDiff = pDt1->GetDayOfYear() - pDt2->GetDayOfYear();
-	if (pDt1->GetYear() < pDt2->GetYear()) {
-		for (Int16 year = pDt1->GetYear(); year < pDt2->GetYear(); year++) {
-			daysDiff -= GetDaysOfYear(year);
-		}
-	} else if (pDt1->GetYear() > pDt2->GetYear()) {
-		for (Int16 year = pDt1->GetYear() - 1; year >= pDt2->GetYear(); year--) {
-			daysDiff += GetDaysOfYear(year);
-		}
-	}
-	Int32 secsDiff = pDt1->GetSecPacked() - pDt2->GetSecPacked();
-	Int32 usecsDiff = pDt1->GetUSecPacked() - pDt2->GetUSecPacked();
-	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
-}
-
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);
@@ -71,6 +40,382 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 		}
 	}
 	DayOfYearToMonthDay(_year, static_cast<Int16>(dayOfYear), &_month, &_day);
+}
+
+// capable of parsing the following formats
+// RFC1123   Sat, 06 Nov 2010 08:49:37 GMT
+// RFC1036   Saturday, 06-Nov-10 08:49:37 GMT
+// asctime() Sat Nov  6 08:49:37 2010
+//           Sat Nov  6 08:49:37 +0000 2010
+// W3C       2010-11-06T08:49:37Z
+DateTime* DateTime::ParseString(const char* str, const char** next)
+{
+	enum class Stat {
+		Start, End,
+		Weekday, Date,
+		DateAscTime_Month, DateAscTime_Day,
+		DateAscTime_YearPre, DateAscTime_Year,
+		DateRFC_Year, DateRFC_Month, DateRFC_Day,
+		W3C_Year, W3C_Month, W3C_Day,
+		Time, Time_Hour, Time_Min, Time_Sec,
+		TimeZone, TimeZoneName, TimeZoneDigit,
+		SkipWhite,
+	} stat = Stat::Start, statNext = Stat::Start;
+	const char* monthNames[] = {
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+	};
+	int nCols = 0;
+	String token;
+	int year = 0, month = 0, day = 0;
+	int hour = 0, min = 0, sec = 0;
+	String timeZone;
+	const char* p = str;
+	for (;;) {
+		char ch =* p;
+		bool pushbackFlag = false;
+		switch (stat) {
+		case Stat::Start: {
+			if (String::IsAlpha(ch)) {
+				pushbackFlag = true;
+				stat = Stat::Weekday;
+			} else if (String::IsDigit(ch)) {
+				pushbackFlag = true;
+				stat = Stat::W3C_Year;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Weekday: {
+			if (String::IsAlpha(ch)) {
+				token += ch;
+			} else if (String::IsWhite(ch) || ch == ',') {
+				if (token.size() < 3) return nullptr;
+				token.clear();
+				statNext = Stat::Date;
+				stat = Stat::SkipWhite;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Date: {
+			if (String::IsAlpha(ch)) {
+				pushbackFlag = true;
+				stat = Stat::DateAscTime_Month;
+			} else if (String::IsDigit(ch)) {
+				pushbackFlag = true;
+				stat = Stat::DateRFC_Day;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::W3C_Year: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				year = year * 10 + (ch - '0');
+				if (year > 9999 || nCols > 4) return nullptr;
+			} else if (ch == '-') {
+				if (nCols != 4) return nullptr;
+				nCols = 0;
+				stat = Stat::W3C_Month;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::W3C_Month: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				month = month * 10 + (ch - '0');
+				if (month > 12 || nCols > 2) return nullptr;
+			} else if (ch == '-') {
+				if (nCols != 2) return nullptr;
+				nCols = 0;
+				stat = Stat::W3C_Day;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::W3C_Day: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				day = day * 10 + (ch - '0');
+				if (day > 31 || nCols > 2) return nullptr;
+			} else if (ch == 'T') {
+				if (nCols != 2) return nullptr;
+				nCols = 0;
+				statNext = Stat::TimeZone;
+				stat = Stat::Time;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateAscTime_Month: {
+			if (String::IsAlpha(ch)) {
+				token += ch;
+			} else if (String::IsWhite(ch)) {
+				size_t i = 0;
+				for (i = 0; i < Gurax_ArraySizeOf(monthNames); i++) {
+					if (::strcasecmp(token.c_str(), monthNames[i]) == 0) break;
+				}
+				if (i == Gurax_ArraySizeOf(monthNames)) return nullptr;
+				month = i + 1;
+				token.clear();
+				statNext = Stat::DateAscTime_Day;
+				stat = Stat::SkipWhite;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateAscTime_Day: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				day = day * 10 + (ch - '0');
+				if (day > 31 || nCols > 2) return nullptr;
+			} else if (String::IsWhite(ch)) {
+				nCols = 0;
+				statNext = Stat::DateAscTime_YearPre;
+				stat = Stat::Time;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateAscTime_YearPre: {
+			if (String::IsDigit(ch)) {
+				pushbackFlag = true;
+				stat = Stat::DateAscTime_Year;
+			} else if (String::IsAlpha(ch) || ch == '+' || ch == '-') {
+				pushbackFlag = true;
+				statNext = Stat::DateAscTime_YearPre;
+				stat = Stat::TimeZone;
+			} else if (String::IsWhite(ch)) {
+				// nothing to do
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateAscTime_Year: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				year = year * 10 + (ch - '0');
+				if (year > 9999 || nCols > 4) return nullptr;
+			} else {
+				ch = '\0';
+			}
+			break;
+		}
+		case Stat::DateRFC_Day: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				day = day * 10 + (ch - '0');
+				if (day > 31 || nCols > 2) return nullptr;
+			} else if (String::IsWhite(ch) || ch == '-') {
+				nCols = 0;
+				statNext = Stat::DateRFC_Month;
+				stat = Stat::SkipWhite;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateRFC_Month: {
+			if (String::IsAlpha(ch)) {
+				token += ch;
+			} else if (String::IsWhite(ch) || ch == '-') {
+				size_t i = 0;
+				for (i = 0; i < Gurax_ArraySizeOf(monthNames); i++) {
+					if (::strcasecmp(token.c_str(), monthNames[i]) == 0) break;
+				}
+				if (i == Gurax_ArraySizeOf(monthNames)) return nullptr;
+				month = i + 1;
+				token.clear();
+				statNext = Stat::DateRFC_Year;
+				stat = Stat::SkipWhite;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::DateRFC_Year: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				year = year * 10 + (ch - '0');
+				if (year > 9999 || nCols > 4) return nullptr;
+			} else if (String::IsWhite(ch)) {
+				if (nCols == 2) {
+					year += (year < 70)? 2000 : 1900;
+				} else if (nCols != 4) {
+					return nullptr;
+				}
+				nCols = 0;
+				statNext = Stat::TimeZone;
+				stat = Stat::Time;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Time: {
+			if (String::IsWhite(ch)) {
+				// nothing to do
+			} else if (String::IsDigit(ch)) {
+				pushbackFlag = true;
+				stat = Stat::Time_Hour;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Time_Hour: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				hour = hour * 10 + (ch - '0');
+				if (hour > 23 || nCols > 2) return nullptr;
+			} else if (ch == ':') {
+				if (nCols != 2) return nullptr;
+				nCols = 0;
+				stat = Stat::Time_Min;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Time_Min: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				min = min * 10 + (ch - '0');
+				if (min > 59 || nCols > 2) return nullptr;
+			} else if (ch == ':') {
+				if (nCols != 2) return nullptr;
+				nCols = 0;
+				stat = Stat::Time_Sec;
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::Time_Sec: {
+			if (String::IsDigit(ch)) {
+				nCols++;
+				sec = sec * 10 + (ch - '0');
+				if (sec > 59 || nCols > 2) return nullptr;
+			} else {
+				if (nCols != 2) return nullptr;
+				nCols = 0;
+				pushbackFlag = true;
+				stat = statNext;
+				statNext = Stat::End;
+			}
+			break;
+		}
+		case Stat::TimeZone: {
+			if (String::IsAlpha(ch)) {
+				pushbackFlag = true;
+				stat = Stat::TimeZoneName;
+			} else if (ch == '+' || ch == '-') {
+				timeZone.clear();
+				timeZone += ch;
+				stat = Stat::TimeZoneDigit;
+			} else if (String::IsWhite(ch)) {
+				// nothing to do
+			} else {
+				return nullptr;
+			}
+			break;
+		}
+		case Stat::TimeZoneName: {
+			if (String::IsAlpha(ch)) {
+				timeZone += ch;
+			} else {
+				pushbackFlag = true;
+				stat = statNext;
+				statNext = Stat::End;
+			}
+			break;
+		}
+		case Stat::TimeZoneDigit: {
+			if (String::IsDigit(ch)) {
+				timeZone += ch;
+				if (timeZone.size() > 5) return nullptr;
+			} else if (ch == ':' && timeZone.size() == 3) {
+				// accept ':' character between hour and minute fields
+			} else {
+				if (timeZone.size() != 5) return nullptr;
+				pushbackFlag = true;
+				stat = statNext;
+				statNext = Stat::End;
+			}
+			break;
+		}
+		case Stat::SkipWhite: {
+			if (String::IsWhite(ch)) {
+				// nothing to do
+			} else {
+				pushbackFlag = true;
+				stat = statNext;
+				statNext = Stat::End;
+			}
+			break;
+		}
+		case Stat::End: {
+			ch = '\0';
+			break;
+		}
+		}
+		if (pushbackFlag) {
+			// nothing to do
+		} else if (ch == '\0') {
+			break;
+		} else {
+			p++;
+		}
+	}
+	if (next != nullptr) *next = p;
+	RefPtr<DateTime> pDateTime(new DateTime(
+		static_cast<Int16>(year), static_cast<Int8>(month), static_cast<Int8>(day),
+		static_cast<Int32>(hour * 3600 + min * 60 + sec), 0));
+	if (timeZone.empty()) {
+		// nothing to do
+	} else if (String::IsAlpha(timeZone[0])) {
+		// the list contains timezone names that are described in RFC 822 and JST.
+		static const struct {
+			const char* name;
+			Int32 minsOffset;
+		} tbl[] = {
+			{ "GMT",	  0 * 60	},
+			{ "UT",		  0 * 60	},
+			{ "Z",		  0 * 60	},
+			{ "A",		 -1 * 60	},
+			{ "M",		-12 * 60	},
+			{ "N",		  1 * 60	},
+			{ "Y",		 12 * 60	},
+			{ "JST",	  9 * 60	},
+		};
+		for (size_t i = 0; i < Gurax_ArraySizeOf(tbl); i++) {
+			if (::strcasecmp(timeZone.c_str(), tbl[i].name) == 0) {
+				pDateTime->SetMinsOffset(tbl[i].minsOffset);
+				//_tz.validFlag = true;
+				//_tz.secsOffset = tbl[i].minsOffset * 60;
+				break;
+			}
+		}
+	} else if (timeZone[0] == '+' || timeZone[0] == '-') {
+		int signNum = (timeZone[0] == '-')? -1 : +1;
+		int hours = (timeZone[1] - '0') * 10 + (timeZone[2] - '0');
+		int mins = (timeZone[3] - '0') * 10 + (timeZone[4] - '0');
+		//_tz.validFlag = true;
+		//_tz.secsOffset = signNum * (hours * 3600 + mins * 60);
+		pDateTime->SetMinsOffset(hours * 60 + mins);
+	}
+	return pDateTime.release();
 }
 
 DateTime* DateTime::ToUTC() const
@@ -208,6 +553,37 @@ String DateTime::ToString(const StringStyle& ss) const
 	if (Int16 usec = GetUSec()) str.Format("%03d", usec);
 	str += GetTZOffsetStr(true);
 	return str;
+}
+
+DateTime& DateTime::operator+=(const TimeDelta& td)
+{
+	AddDelta(td.GetDays(), td.GetSecsPacked(), td.GetUSecsPacked());
+	return *this;
+}
+
+DateTime& DateTime::operator-=(const TimeDelta& td)
+{
+	AddDelta(-td.GetDays(), -td.GetSecsPacked(), -td.GetUSecsPacked());
+	return *this;
+}
+
+TimeDelta* DateTime::operator-(const DateTime& dt) const
+{
+	RefPtr<DateTime> pDt1(ToUTC());
+	RefPtr<DateTime> pDt2(dt.ToUTC());
+	Int32 daysDiff = pDt1->GetDayOfYear() - pDt2->GetDayOfYear();
+	if (pDt1->GetYear() < pDt2->GetYear()) {
+		for (Int16 year = pDt1->GetYear(); year < pDt2->GetYear(); year++) {
+			daysDiff -= GetDaysOfYear(year);
+		}
+	} else if (pDt1->GetYear() > pDt2->GetYear()) {
+		for (Int16 year = pDt1->GetYear() - 1; year >= pDt2->GetYear(); year--) {
+			daysDiff += GetDaysOfYear(year);
+		}
+	}
+	Int32 secsDiff = pDt1->GetSecPacked() - pDt2->GetSecPacked();
+	Int32 usecsDiff = pDt1->GetUSecPacked() - pDt2->GetUSecPacked();
+	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
 
 }

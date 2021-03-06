@@ -118,3 +118,7 @@ TestCase('Operator =>') {
 	Tester(`(['hoge', 'foo', 'bar'] => 4))
 	Tester(`(['hoge', 'foo', 'bar'] => [3, 4, 5]))
 }
+
+TestCase('Operator as') {
+	
+}
