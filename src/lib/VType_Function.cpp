@@ -142,6 +142,29 @@ Gurax_ImplementPropertyGetter(Function, type)
 		func.IsTypeMethod()? Gurax_Symbol(method) : Symbol::Empty);
 }
 
+// Function#vtypeResult:nil:[name]
+Gurax_DeclareProperty_R(Function, vtypeResult)
+{
+	Declare(VTYPE_Any, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(name));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Function, vtypeResult)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	DeclCallable& declCallable = valueThis.GetFunction().GetDeclCallable();
+	if (attr.IsSet(Gurax_Symbol(name))) {
+		const DottedSymbol& dottedSymbol = declCallable.GetDottedSymbol();
+		if (dottedSymbol.IsEmpty()) return Value::nil();
+		return new Value_String(dottedSymbol.ToString());
+	} else {
+		return new Value_VType(declCallable.GetVTypeResult());
+	}
+}
+
 //------------------------------------------------------------------------------
 // VType_Function
 //------------------------------------------------------------------------------
@@ -159,6 +182,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));
 	Assign(Gurax_CreateProperty(Function, type));
+	Assign(Gurax_CreateProperty(Function, vtypeResult));
 }
 
 //------------------------------------------------------------------------------

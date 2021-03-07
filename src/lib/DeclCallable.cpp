@@ -302,6 +302,10 @@ String DeclCallable::ToString(const StringStyle& ss) const
 	str += ")";
 	str += FlagsToString(_flags);
 	str += GetAttr().ToString(ss);
+	if (!GetDottedSymbol().IsEmpty()) {
+		str += " as ";
+		str += GetDottedSymbol().ToString();
+	}
 	if (!GetDeclBlock().IsOccurZero()) {
 		str += ss.IsCram()? "{" : " {";
 		str += GetDeclBlock().ToString(ss);

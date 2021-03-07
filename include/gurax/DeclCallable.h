@@ -84,7 +84,7 @@ public:
 		}
 	};
 private:
-	const VType* _pVTypeResult;
+	VType* _pVTypeResult;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	Flags _flags;
 	RefPtr<Attribute> _pAttr;
@@ -128,12 +128,13 @@ public:
 	const DeclBlock& GetDeclBlock() const { return _declBlock; }
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-	void SetVTypeResult(const VType& vtype) { _pVTypeResult = &vtype; }
+	void SetVTypeResult(VType& vtype) { _pVTypeResult = &vtype; }
+	VType& GetVTypeResult() { return *_pVTypeResult; }
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
 	void OrFlags(Flags flags) { _flags |= flags; }
-	void Declare(const VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
+	void Declare(VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool HasAttr() const { return GetFlags() != 0 || !GetAttr().IsEmpty(); }
