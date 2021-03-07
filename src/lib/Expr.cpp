@@ -1359,7 +1359,7 @@ void Expr_Caller::ComposeWithinAssignment(
 		return;
 	}
 	if (GetExprCar().IsType<Expr_Member>()) {
-		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned, pDottedSymbol.release()));
 		if (!pFunction) return;
 		if (!pFunction->IsSet(Function::Flag::OfClass)) pFunction->OrFlags(Function::Flag::OfInstance);
 		Expr_Member& exprCarEx = dynamic_cast<Expr_Member&>(GetExprCar());
@@ -1370,7 +1370,7 @@ void Expr_Caller::ComposeWithinAssignment(
 		exprCarEx.GetExprTarget().ComposeOrNil(composer);						// [Target]
 		composer.Add_AssignMethod(pFunction.release(), false, *this);			// [Value]
 	} else {
-		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Function, exprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Function, exprAssigned, pDottedSymbol.release()));
 		if (!pFunction) return;
 		pFunction->SetType(Function::Type::Function);
 		composer.Add_AssignFunction(pFunction.release(), *this);				// [Value]
@@ -1385,13 +1385,14 @@ void Expr_Caller::ComposeWithinAssignmentInClass(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned));
+	RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned, pDottedSymbol.release()));
 	if (!pFunction) return;
 	composer.Add_AssignMethod(pFunction.release(), true, *this);				// [VType]
 	composer.FlushDiscard();													// [VType]
 }
 
-Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type type, Expr& exprAssigned)
+Function* Expr_Caller::GenerateFunction(
+	Composer& composer, DeclCallable::Type type, Expr& exprAssigned, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	const Symbol* pSymbol = nullptr;
 	if (GetExprCar().IsType<Expr_Identifier>()) {
@@ -1461,6 +1462,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, DeclCallable::Type t
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	pExprBody->SetPUnitEnd(composer.PeekPUnitCont());
+	if (pDottedSymbol) _pDeclCallable->SetDottedSymbol(pDottedSymbol.release());
 	return new FunctionCustom(type, pSymbol,
 							  GetDeclCallable().Reference(), pExprBody->Reference(), pHelpHolder.release());
 }

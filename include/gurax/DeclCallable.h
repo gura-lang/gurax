@@ -126,6 +126,8 @@ public:
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 	DeclBlock& GetDeclBlock() { return _declBlock; }
 	const DeclBlock& GetDeclBlock() const { return _declBlock; }
+	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
+	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	void SetVTypeResult(const VType& vtype) { _pVTypeResult = &vtype; }
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }

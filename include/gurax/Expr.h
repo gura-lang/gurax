@@ -915,7 +915,8 @@ public:
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller& GetExprTrailerLast();
-	Function* GenerateFunction(Composer& composer, DeclCallable::Type type, Expr& exprAssigned);
+	Function* GenerateFunction(Composer& composer, DeclCallable::Type type,
+			Expr& exprAssigned, RefPtr<DottedSymbol> pDottedSymbol);
 public:
 	// Virtual functions of Expr
 	virtual bool IsStatement(const Symbol* pSymbol) const override {
