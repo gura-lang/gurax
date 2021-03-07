@@ -1,0 +1,34 @@
+#!/usr/bin/env gura
+import(jpeg)
+import(png)
+import(gif)
+import(argopt)
+
+tmplHelp = tR'''
+usage: gif-anim.gura [options] image
+options:
+  ${p.FormatHelp() + '\n'}
+'''
+argopt.Parser {|p|
+	p.OptInt('nx', 'x', 'number of division in x', 'num')
+	p.OptInt('ny', 'y', 'number of division in y', 'num')
+	p.OptInt('delay', 'd', 'interval time in 1/100 seconds', 'num')
+	opt = nil
+	try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+	if (!opt || argv.len < 1) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	nx = opt['nx'] || 6
+	ny = opt['nx'] || 2
+	delayTime = opt['delay'] || 12
+}
+fileNameSrc = argv[0]
+fileNameDst = path.BaseName(path.FileName(fileNameSrc)) + '.gif'
+img = Image(fileNameSrc).ReduceColor(`win256)
+[w, h] = [img.width / nx, img.height / ny]
+i = Range(nx * ny):list
+xs = (i % nx) * w
+ys = Int(i / nx) * h
+imgFrames = img.Crop(xs, ys, w, h)
+gif.Content().AddImage(imgFrames, delayTime).Write(fileNameDst)
