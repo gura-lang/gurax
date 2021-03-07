@@ -153,13 +153,13 @@ void Expr::ComposeWithinLister(Composer& composer)
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
-void Expr::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
+void Expr::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -357,7 +357,7 @@ void Expr_Member::Compose(Composer& composer)
 	}
 }
 
-void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
+void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -381,7 +381,7 @@ void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp
 }
 
 void Expr_Member::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	GetExprTarget().ComposeOrNil(composer);										// [Target]
 	switch (GetMemberMode()) {
@@ -515,7 +515,7 @@ void Expr_Identifier::Compose(Composer& composer)
 	}
 }
 
-void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
+void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -529,7 +529,7 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 }
 
 void Expr_Identifier::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	bool externFlag = false;
 	if (!ParseAttr(&externFlag)) return;
@@ -793,6 +793,18 @@ void Expr_BinaryOp::ComposeWithinArgSlot(Composer& composer)
 	Expr_Binary::ComposeWithinArgSlot(composer);
 }
 
+void Expr_BinaryOp::ComposeWithinAssignment(
+		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
+{
+	if (GetOperator()->IsType(OpType::As)) {
+		pDottedSymbol.reset(DottedSymbol::CreateFromExpr(GetExprRight()));
+		if (!pDottedSymbol) return;
+		GetExprLeft().ComposeWithinAssignment(composer, exprAssigned, pOp, pDottedSymbol.release());
+	} else {
+		Expr_Binary::ComposeWithinAssignment(composer, exprAssigned, pOp, pDottedSymbol.release());
+	}
+}
+
 void Expr_BinaryOp::ComposeWithinAssignmentInClass(
 	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
 {
@@ -868,7 +880,7 @@ bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
 
 void Expr_Assign::Compose(Composer& composer)
 {
-	GetExprLeft().ComposeWithinAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
+	GetExprLeft().ComposeWithinAssignment(composer, GetExprRight(), GetOperator(), nullptr); // [Assigned]
 }
 
 void Expr_Assign::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag)
@@ -1130,13 +1142,14 @@ void Expr_Lister::Compose(Composer& composer)
 }
 
 void Expr_Lister::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	exprAssigned.ComposeOrNil(composer);										// [Assigned]
 	composer.Add_GenIterator_ForLister(*this);									// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true, *this);								// [Assigned Iterator Value]
-		pExpr->ComposeWithinValueAssignment(composer, pOp);						// [Assigned Iterator]
+		pExpr->ComposeWithinValueAssignment(composer, pOp, pDottedSymbol.release());
+																				// [Assigned Iterator]
 		if (Error::IsIssued()) return;
 	}
 	composer.Add_DiscardValue(*this);											// [Assigned]
@@ -1190,7 +1203,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	composer.Add_IndexGet(*this);												// [Elems]
 }
 
-void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pOp)
+void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Elems Car]
 	size_t nExprs = GetExprLinkParam().CountSequence();
@@ -1210,7 +1223,7 @@ void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pO
 }
 
 void Expr_Indexer::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	GetExprCar().ComposeOrNil(composer);										// [Car]
 	size_t nExprs = GetExprLinkParam().CountSequence();
@@ -1338,7 +1351,7 @@ void Expr_Caller::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pD
 }
 
 void Expr_Caller::ComposeWithinAssignment(
-	Composer& composer, Expr& exprAssigned, Operator* pOp)
+	Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
