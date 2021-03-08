@@ -104,7 +104,7 @@ Gurax_ImplementFunctionEx(glewGetString_gurax, processor_gurax, argument_gurax)
 // opengl.glAccum(op:Number, value:Number)
 Gurax_DeclareFunctionAlias(glAccum_gurax, "glAccum")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("op", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(

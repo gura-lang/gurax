@@ -63,7 +63,7 @@ ArgInfo = class {
 	tmplRangeCheck:static as Template
 	__init__(r as Renderer, name as String, typeName:nil as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
 		this.name = name
-		this.typeName = typeName || attr.dottedName
+		this.typeName = typeName
 		this.listVarFlag = listVarFlag
 		this.optionFlag = optionFlag
 		this.nilFlag = attr.IsSet(`nil)
@@ -238,17 +238,27 @@ Renderer = class {
 			codeFunctionBody = expr.right.string
 			expr = expr.left
 		}
+		typeNameResult = 'void'
+		if (expr.IsBinaryOp()) {
+			if (expr.operator.symbol == `as) {
+				!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
+				typeNameResult = expr.right.symbolName
+			} else {
+				ErrorDone(expr, 'invalid format of parameter')
+			}
+			expr = expr.left
+		}
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		Println(expr.car.symbolName)
 		try {
-			funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, expr.attr.dottedName, codeFunctionBody)
+			funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, typeNameResult, codeFunctionBody)
 			this.funcInfoTbl.Add(funcInfo)
 			expr.EachParam {|exprParam|
 				//Println(exprParam)
 				listVarFlag = false
 				optionFlag = false
-				typeName = nil
+				typeName = 'Any'
 				if (exprParam.IsBinaryOp()) {
 					if (exprParam.operator.symbol == `as) {
 						!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
