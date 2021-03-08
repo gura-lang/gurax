@@ -124,21 +124,21 @@ r.Register('cairo') {
 
 //======== Cairo (cairo.h) ========
 
-cairo_version():int
+cairo_version() as int
 
-cairo_version_string():const_char_p
+cairo_version_string() as const_char_p
 
-cairo_create(target as cairo_surface_t_p):cairo_t_p
+cairo_create(target as cairo_surface_t_p) as cairo_t_p
 
-cairo_reference(cr as cairo_t_p):cairo_t_p
+cairo_reference(cr as cairo_t_p) as cairo_t_p
 
 cairo_destroy(cr as cairo_t_p):void
 
-cairo_get_reference_count(cr as cairo_t_p):unsigned_int
+cairo_get_reference_count(cr as cairo_t_p) as unsigned_int
 
-//cairo_get_user_data(cr as cairo_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_get_user_data(cr as cairo_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_set_user_data(cr as cairo_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_set_user_data(cr as cairo_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
 cairo_save(cr as cairo_t_p):void
 
@@ -148,7 +148,7 @@ cairo_push_group(cr as cairo_t_p):void
 
 cairo_push_group_with_content(cr as cairo_t_p, content as cairo_content_t):void
 
-cairo_pop_group(cr as cairo_t_p):cairo_pattern_t_p
+cairo_pop_group(cr as cairo_t_p) as cairo_pattern_t_p
 
 cairo_pop_group_to_source(cr as cairo_t_p):void
 
@@ -175,7 +175,7 @@ cairo_set_line_cap(cr as cairo_t_p, line_cap as cairo_line_cap_t):void
 cairo_set_line_join(cr as cairo_t_p, line_join as cairo_line_join_t):void
 
 //cairo_set_dash(cr as cairo_t_p, dashes as const_double_p, num_dashes as int, offset as double):void
-cairo_set_dash(cr as cairo_t_p, dashes[] as double, offset as double):void = \
+cairo_set_dash(cr as cairo_t_p, dashes[] as double, offset as double) as void = \
 	R'''
 	int num_dashes = dashes.sizeT<int>();
 	cairo_set_dash(cr, dashes, num_dashes, offset);
@@ -276,11 +276,11 @@ cairo_copy_page(cr as cairo_t_p):void
 
 cairo_show_page(cr as cairo_t_p):void
 
-cairo_in_stroke(cr as cairo_t_p, x as double, y as double):cairo_bool_t
+cairo_in_stroke(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
-cairo_in_fill(cr as cairo_t_p, x as double, y as double):cairo_bool_t
+cairo_in_fill(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
-cairo_in_clip(cr as cairo_t_p, x as double, y as double):cairo_bool_t
+cairo_in_clip(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
 //cairo_stroke_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
 cairo_stroke_extents(cr as cairo_t_p) = \
@@ -312,7 +312,7 @@ cairo_clip_extents(cr as cairo_t_p) = \
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 	'''
 
-cairo_copy_clip_rectangle_list(cr as cairo_t_p):cairo_rectangle_list_t_p
+cairo_copy_clip_rectangle_list(cr as cairo_t_p) as cairo_rectangle_list_t_p
 
 cairo_rectangle_list_destroy(rectangle_list as cairo_rectangle_list_t_p):void
 
@@ -320,45 +320,45 @@ cairo_tag_begin(cr as cairo_t_p, tag_name as const_char_p, attributes as const_c
 
 cairo_tag_end(cr as cairo_t_p, tag_name as const_char_p):void
 
-cairo_glyph_allocate(num_glyphs as int):cairo_glyph_t_p
+cairo_glyph_allocate(num_glyphs as int) as cairo_glyph_t_p
 
 cairo_glyph_free(glyphs as cairo_glyph_t_p):void
 
-cairo_text_cluster_allocate(num_clusters as int):cairo_text_cluster_t_p
+cairo_text_cluster_allocate(num_clusters as int) as cairo_text_cluster_t_p
 
 cairo_text_cluster_free(clusters as cairo_text_cluster_t_p):void
 
-cairo_font_options_create():cairo_font_options_t_p
+cairo_font_options_create() as cairo_font_options_t_p
 
-cairo_font_options_copy(original as const_cairo_font_options_t_p):cairo_font_options_t_p
+cairo_font_options_copy(original as const_cairo_font_options_t_p) as cairo_font_options_t_p
 
 cairo_font_options_destroy(options as cairo_font_options_t_p):void
 
-cairo_font_options_status(options as cairo_font_options_t_p):cairo_status_t
+cairo_font_options_status(options as cairo_font_options_t_p) as cairo_status_t
 
 cairo_font_options_merge(options as cairo_font_options_t_p, other as const_cairo_font_options_t_p):void
 
-cairo_font_options_equal(options as const_cairo_font_options_t_p, other as const_cairo_font_options_t_p):cairo_bool_t
+cairo_font_options_equal(options as const_cairo_font_options_t_p, other as const_cairo_font_options_t_p) as cairo_bool_t
 
-cairo_font_options_hash(options as const_cairo_font_options_t_p):unsigned_long
+cairo_font_options_hash(options as const_cairo_font_options_t_p) as unsigned_long
 
 cairo_font_options_set_antialias(options as cairo_font_options_t_p, antialias as cairo_antialias_t):void
 
-cairo_font_options_get_antialias(options as const_cairo_font_options_t_p):cairo_antialias_t
+cairo_font_options_get_antialias(options as const_cairo_font_options_t_p) as cairo_antialias_t
 
 cairo_font_options_set_subpixel_order(options as cairo_font_options_t_p, subpixel_order as cairo_subpixel_order_t):void
 
-cairo_font_options_get_subpixel_order(options as const_cairo_font_options_t_p):cairo_subpixel_order_t
+cairo_font_options_get_subpixel_order(options as const_cairo_font_options_t_p) as cairo_subpixel_order_t
 
 cairo_font_options_set_hint_style(options as cairo_font_options_t_p, hint_style as cairo_hint_style_t):void
 
-cairo_font_options_get_hint_style(options as const_cairo_font_options_t_p):cairo_hint_style_t
+cairo_font_options_get_hint_style(options as const_cairo_font_options_t_p) as cairo_hint_style_t
 
 cairo_font_options_set_hint_metrics(options as cairo_font_options_t_p, hint_metrics as cairo_hint_metrics_t):void
 
-cairo_font_options_get_hint_metrics(options as const_cairo_font_options_t_p):cairo_hint_metrics_t
+cairo_font_options_get_hint_metrics(options as const_cairo_font_options_t_p) as cairo_hint_metrics_t
 
-cairo_font_options_get_variations(options as cairo_font_options_t_p):const_char_p
+cairo_font_options_get_variations(options as cairo_font_options_t_p) as const_char_p
 
 cairo_font_options_set_variations(options as cairo_font_options_t_p, variations as const_char_p):void
 
@@ -376,11 +376,11 @@ cairo_get_font_options(cr as cairo_t_p, options as cairo_font_options_t_p):void
 
 cairo_set_font_face(cr as cairo_t_p, font_face as cairo_font_face_t_p):void
 
-cairo_get_font_face(cr as cairo_t_p):cairo_font_face_t_p
+cairo_get_font_face(cr as cairo_t_p) as cairo_font_face_t_p
 
 cairo_set_scaled_font(cr as cairo_t_p, scaled_font as const_cairo_scaled_font_t_p):void
 
-cairo_get_scaled_font(cr as cairo_t_p):cairo_scaled_font_t_p
+cairo_get_scaled_font(cr as cairo_t_p) as cairo_scaled_font_t_p
 
 cairo_show_text(cr as cairo_t_p, utf8 as const_char_p):void
 
@@ -398,35 +398,35 @@ cairo_glyph_extents(cr as cairo_t_p, glyphs as const_cairo_glyph_t_p, num_glyphs
 
 cairo_font_extents(cr as cairo_t_p, extents as cairo_font_extents_t_p):void
 
-cairo_font_face_reference(font_face as cairo_font_face_t_p):cairo_font_face_t_p
+cairo_font_face_reference(font_face as cairo_font_face_t_p) as cairo_font_face_t_p
 
 cairo_font_face_destroy(font_face as cairo_font_face_t_p):void
 
-cairo_font_face_get_reference_count(font_face as cairo_font_face_t_p):unsigned_int
+cairo_font_face_get_reference_count(font_face as cairo_font_face_t_p) as unsigned_int
 
-cairo_font_face_status(font_face as cairo_font_face_t_p):cairo_status_t
+cairo_font_face_status(font_face as cairo_font_face_t_p) as cairo_status_t
 
-cairo_font_face_get_type(font_face as cairo_font_face_t_p):cairo_font_type_t
+cairo_font_face_get_type(font_face as cairo_font_face_t_p) as cairo_font_type_t
 
-//cairo_font_face_get_user_data(font_face as cairo_font_face_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_font_face_get_user_data(font_face as cairo_font_face_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_font_face_set_user_data(font_face as cairo_font_face_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_font_face_set_user_data(font_face as cairo_font_face_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
-cairo_scaled_font_create(font_face as cairo_font_face_t_p, font_matrix as const_cairo_matrix_t_p, ctm as const_cairo_matrix_t_p, options as const_cairo_font_options_t_p):cairo_scaled_font_t_p
+cairo_scaled_font_create(font_face as cairo_font_face_t_p, font_matrix as const_cairo_matrix_t_p, ctm as const_cairo_matrix_t_p, options as const_cairo_font_options_t_p) as cairo_scaled_font_t_p
 
-cairo_scaled_font_reference(scaled_font as cairo_scaled_font_t_p):cairo_scaled_font_t_p
+cairo_scaled_font_reference(scaled_font as cairo_scaled_font_t_p) as cairo_scaled_font_t_p
 
 cairo_scaled_font_destroy(scaled_font as cairo_scaled_font_t_p):void
 
-cairo_scaled_font_get_reference_count(scaled_font as cairo_scaled_font_t_p):unsigned_int
+cairo_scaled_font_get_reference_count(scaled_font as cairo_scaled_font_t_p) as unsigned_int
 
-cairo_scaled_font_status(scaled_font as cairo_scaled_font_t_p):cairo_status_t
+cairo_scaled_font_status(scaled_font as cairo_scaled_font_t_p) as cairo_status_t
 
-cairo_scaled_font_get_type(scaled_font as cairo_scaled_font_t_p):cairo_font_type_t
+cairo_scaled_font_get_type(scaled_font as cairo_scaled_font_t_p) as cairo_font_type_t
 
-//cairo_scaled_font_get_user_data(scaled_font as cairo_scaled_font_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_scaled_font_get_user_data(scaled_font as cairo_scaled_font_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_scaled_font_set_user_data(scaled_font as cairo_scaled_font_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_scaled_font_set_user_data(scaled_font as cairo_scaled_font_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
 cairo_scaled_font_extents(scaled_font as cairo_scaled_font_t_p, extents as cairo_font_extents_t_p):void
 
@@ -434,9 +434,9 @@ cairo_scaled_font_text_extents(scaled_font as cairo_scaled_font_t_p, utf8 as con
 
 cairo_scaled_font_glyph_extents(scaled_font as cairo_scaled_font_t_p, glyphs as const_cairo_glyph_t_p, num_glyphs as int, extents as cairo_text_extents_t_p):void
 
-//cairo_scaled_font_text_to_glyphs(scaled_font as cairo_scaled_font_t_p, x as double, y as double, utf8 as const_char_p, utf8_len as int, glyphs as cairo_glyph_t_pp, num_glyphs as int_p, clusters as cairo_text_cluster_t_pp, num_clusters as int_p, cluster_flags as cairo_text_cluster_flags_t_p):cairo_status_t
+//cairo_scaled_font_text_to_glyphs(scaled_font as cairo_scaled_font_t_p, x as double, y as double, utf8 as const_char_p, utf8_len as int, glyphs as cairo_glyph_t_pp, num_glyphs as int_p, clusters as cairo_text_cluster_t_pp, num_clusters as int_p, cluster_flags as cairo_text_cluster_flags_t_p) as cairo_status_t
 
-cairo_scaled_font_get_font_face(scaled_font as cairo_scaled_font_t_p):cairo_font_face_t_p
+cairo_scaled_font_get_font_face(scaled_font as cairo_scaled_font_t_p) as cairo_font_face_t_p
 
 cairo_scaled_font_get_font_matrix(scaled_font as cairo_scaled_font_t_p, font_matrix as cairo_matrix_t_p):void
 
@@ -446,15 +446,15 @@ cairo_scaled_font_get_scale_matrix(scaled_font as cairo_scaled_font_t_p, scale_m
 
 cairo_scaled_font_get_font_options(scaled_font as cairo_scaled_font_t_p, options as cairo_font_options_t_p):void
 
-cairo_toy_font_face_create(family as const_char_p, slant as cairo_font_slant_t, weight as cairo_font_weight_t):cairo_font_face_t_p
+cairo_toy_font_face_create(family as const_char_p, slant as cairo_font_slant_t, weight as cairo_font_weight_t) as cairo_font_face_t_p
 
-cairo_toy_font_face_get_family(font_face as cairo_font_face_t_p):const_char_p
+cairo_toy_font_face_get_family(font_face as cairo_font_face_t_p) as const_char_p
 
-cairo_toy_font_face_get_slant(font_face as cairo_font_face_t_p):cairo_font_slant_t
+cairo_toy_font_face_get_slant(font_face as cairo_font_face_t_p) as cairo_font_slant_t
 
-cairo_toy_font_face_get_weight(font_face as cairo_font_face_t_p):cairo_font_weight_t
+cairo_toy_font_face_get_weight(font_face as cairo_font_face_t_p) as cairo_font_weight_t
 
-cairo_user_font_face_create():cairo_font_face_t_p
+cairo_user_font_face_create() as cairo_font_face_t_p
 
 //cairo_user_font_face_set_init_func(font_face as cairo_font_face_t_p, init_func as cairo_user_scaled_font_init_func_t):void
 
@@ -464,23 +464,23 @@ cairo_user_font_face_create():cairo_font_face_t_p
 
 //cairo_user_font_face_set_unicode_to_glyph_func(font_face as cairo_font_face_t_p, unicode_to_glyph_func as cairo_user_scaled_font_unicode_to_glyph_func_t):void
 
-//cairo_user_font_face_get_init_func(font_face as cairo_font_face_t_p):cairo_user_scaled_font_init_func_t
+//cairo_user_font_face_get_init_func(font_face as cairo_font_face_t_p) as cairo_user_scaled_font_init_func_t
 
-//cairo_user_font_face_get_render_glyph_func(font_face as cairo_font_face_t_p):cairo_user_scaled_font_render_glyph_func_t
+//cairo_user_font_face_get_render_glyph_func(font_face as cairo_font_face_t_p) as cairo_user_scaled_font_render_glyph_func_t
 
-//cairo_user_font_face_get_text_to_glyphs_func(font_face as cairo_font_face_t_p):cairo_user_scaled_font_text_to_glyphs_func_t
+//cairo_user_font_face_get_text_to_glyphs_func(font_face as cairo_font_face_t_p) as cairo_user_scaled_font_text_to_glyphs_func_t
 
-//cairo_user_font_face_get_unicode_to_glyph_func(font_face as cairo_font_face_t_p):cairo_user_scaled_font_unicode_to_glyph_func_t
+//cairo_user_font_face_get_unicode_to_glyph_func(font_face as cairo_font_face_t_p) as cairo_user_scaled_font_unicode_to_glyph_func_t
 
-cairo_get_operator(cr as cairo_t_p):cairo_operator_t
+cairo_get_operator(cr as cairo_t_p) as cairo_operator_t
 
-cairo_get_source(cr as cairo_t_p):cairo_pattern_t_p
+cairo_get_source(cr as cairo_t_p) as cairo_pattern_t_p
 
-cairo_get_tolerance(cr as cairo_t_p):double
+cairo_get_tolerance(cr as cairo_t_p) as double
 
-cairo_get_antialias(cr as cairo_t_p):cairo_antialias_t
+cairo_get_antialias(cr as cairo_t_p) as cairo_antialias_t
 
-cairo_has_current_point(cr as cairo_t_p):cairo_bool_t
+cairo_has_current_point(cr as cairo_t_p) as cairo_bool_t
 
 //cairo_get_current_point(cr as cairo_t_p, x as double_p, y as double_p):void
 cairo_get_current_point(cr as cairo_t_p) = \
@@ -490,17 +490,17 @@ cairo_get_current_point(cr as cairo_t_p) = \
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 	'''
 
-cairo_get_fill_rule(cr as cairo_t_p):cairo_fill_rule_t
+cairo_get_fill_rule(cr as cairo_t_p) as cairo_fill_rule_t
 
-cairo_get_line_width(cr as cairo_t_p):double
+cairo_get_line_width(cr as cairo_t_p) as double
 
-cairo_get_line_cap(cr as cairo_t_p):cairo_line_cap_t
+cairo_get_line_cap(cr as cairo_t_p) as cairo_line_cap_t
 
-cairo_get_line_join(cr as cairo_t_p):cairo_line_join_t
+cairo_get_line_join(cr as cairo_t_p) as cairo_line_join_t
 
-cairo_get_miter_limit(cr as cairo_t_p):double
+cairo_get_miter_limit(cr as cairo_t_p) as double
 
-cairo_get_dash_count(cr as cairo_t_p):int
+cairo_get_dash_count(cr as cairo_t_p) as int
 
 //cairo_get_dash(cr as cairo_t_p, dashes as double_p, offset as double_p):void
 cairo_get_dash(cr as cairo_t_p) = \
@@ -514,29 +514,29 @@ cairo_get_dash(cr as cairo_t_p) = \
 
 cairo_get_matrix(cr as cairo_t_p, matrix as cairo_matrix_t_p):void
 
-cairo_get_target(cr as cairo_t_p):cairo_surface_t_p
+cairo_get_target(cr as cairo_t_p) as cairo_surface_t_p
 
-cairo_get_group_target(cr as cairo_t_p):cairo_surface_t_p
+cairo_get_group_target(cr as cairo_t_p) as cairo_surface_t_p
 
-cairo_copy_path(cr as cairo_t_p):cairo_path_t_p
+cairo_copy_path(cr as cairo_t_p) as cairo_path_t_p
 
-cairo_copy_path_flat(cr as cairo_t_p):cairo_path_t_p
+cairo_copy_path_flat(cr as cairo_t_p) as cairo_path_t_p
 
 cairo_append_path(cr as cairo_t_p, path as const_cairo_path_t_p):void
 
 cairo_path_destroy(path as cairo_path_t_p):void
 
-cairo_status(cr as cairo_t_p):cairo_status_t
+cairo_status(cr as cairo_t_p) as cairo_status_t
 
-cairo_status_to_string(status as cairo_status_t):const_char_p
+cairo_status_to_string(status as cairo_status_t) as const_char_p
 
-cairo_device_reference(device as cairo_device_t_p):cairo_device_t_p
+cairo_device_reference(device as cairo_device_t_p) as cairo_device_t_p
 
-cairo_device_get_type(device as cairo_device_t_p):cairo_device_type_t
+cairo_device_get_type(device as cairo_device_t_p) as cairo_device_type_t
 
-cairo_device_status(device as cairo_device_t_p):cairo_status_t
+cairo_device_status(device as cairo_device_t_p) as cairo_status_t
 
-cairo_device_acquire(device as cairo_device_t_p):cairo_status_t
+cairo_device_acquire(device as cairo_device_t_p) as cairo_status_t
 
 cairo_device_release(device as cairo_device_t_p):void
 
@@ -546,84 +546,84 @@ cairo_device_finish(device as cairo_device_t_p):void
 
 cairo_device_destroy(device as cairo_device_t_p):void
 
-cairo_device_get_reference_count(device as cairo_device_t_p):unsigned_int
+cairo_device_get_reference_count(device as cairo_device_t_p) as unsigned_int
 
-//cairo_device_get_user_data(device as cairo_device_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_device_get_user_data(device as cairo_device_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_device_set_user_data(device as cairo_device_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_device_set_user_data(device as cairo_device_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
-cairo_surface_create_similar(other as cairo_surface_t_p, content as cairo_content_t, width as int, height as int):cairo_surface_t_p
+cairo_surface_create_similar(other as cairo_surface_t_p, content as cairo_content_t, width as int, height as int) as cairo_surface_t_p
 
-cairo_surface_create_similar_image(other as cairo_surface_t_p, format as cairo_format_t, width as int, height as int):cairo_surface_t_p
+cairo_surface_create_similar_image(other as cairo_surface_t_p, format as cairo_format_t, width as int, height as int) as cairo_surface_t_p
 
-cairo_surface_map_to_image(surface as cairo_surface_t_p, extents as const_cairo_rectangle_int_t_p):cairo_surface_t_p
+cairo_surface_map_to_image(surface as cairo_surface_t_p, extents as const_cairo_rectangle_int_t_p) as cairo_surface_t_p
 
 cairo_surface_unmap_image(surface as cairo_surface_t_p, image as cairo_surface_t_p):void
 
-cairo_surface_create_for_rectangle(target as cairo_surface_t_p, x as double, y as double, width as double, height as double):cairo_surface_t_p
+cairo_surface_create_for_rectangle(target as cairo_surface_t_p, x as double, y as double, width as double, height as double) as cairo_surface_t_p
 
-cairo_surface_create_observer(target as cairo_surface_t_p, mode as cairo_surface_observer_mode_t):cairo_surface_t_p
+cairo_surface_create_observer(target as cairo_surface_t_p, mode as cairo_surface_observer_mode_t) as cairo_surface_t_p
 
-//cairo_surface_observer_add_paint_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_paint_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_mask_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_mask_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_fill_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_fill_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_stroke_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_stroke_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_glyphs_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_glyphs_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_flush_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_flush_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_add_finish_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p):cairo_status_t
+//cairo_surface_observer_add_finish_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
 
-//cairo_surface_observer_print(surface as cairo_surface_t_p, write_func as cairo_write_func_t, closure as void_p):cairo_status_t
+//cairo_surface_observer_print(surface as cairo_surface_t_p, write_func as cairo_write_func_t, closure as void_p) as cairo_status_t
 
-cairo_surface_observer_elapsed(surface as cairo_surface_t_p):double
+cairo_surface_observer_elapsed(surface as cairo_surface_t_p) as double
 
-//cairo_device_observer_print(device as cairo_device_t_p, write_func as cairo_write_func_t, closure as void_p):cairo_status_t
+//cairo_device_observer_print(device as cairo_device_t_p, write_func as cairo_write_func_t, closure as void_p) as cairo_status_t
 
-cairo_device_observer_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_elapsed(device as cairo_device_t_p) as double
 
-cairo_device_observer_paint_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_paint_elapsed(device as cairo_device_t_p) as double
 
-cairo_device_observer_mask_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_mask_elapsed(device as cairo_device_t_p) as double
 
-cairo_device_observer_fill_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_fill_elapsed(device as cairo_device_t_p) as double
 
-cairo_device_observer_stroke_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_stroke_elapsed(device as cairo_device_t_p) as double
 
-cairo_device_observer_glyphs_elapsed(device as cairo_device_t_p):double
+cairo_device_observer_glyphs_elapsed(device as cairo_device_t_p) as double
 
-cairo_surface_reference(surface as cairo_surface_t_p):cairo_surface_t_p
+cairo_surface_reference(surface as cairo_surface_t_p) as cairo_surface_t_p
 
 cairo_surface_finish(surface as cairo_surface_t_p):void
 
 cairo_surface_destroy(surface as cairo_surface_t_p):void
 
-cairo_surface_get_device(surface as cairo_surface_t_p):cairo_device_t_p
+cairo_surface_get_device(surface as cairo_surface_t_p) as cairo_device_t_p
 
-cairo_surface_get_reference_count(surface as cairo_surface_t_p):unsigned_int
+cairo_surface_get_reference_count(surface as cairo_surface_t_p) as unsigned_int
 
-cairo_surface_status(surface as cairo_surface_t_p):cairo_status_t
+cairo_surface_status(surface as cairo_surface_t_p) as cairo_status_t
 
-cairo_surface_get_type(surface as cairo_surface_t_p):cairo_surface_type_t
+cairo_surface_get_type(surface as cairo_surface_t_p) as cairo_surface_type_t
 
-cairo_surface_get_content(surface as cairo_surface_t_p):cairo_content_t
+cairo_surface_get_content(surface as cairo_surface_t_p) as cairo_content_t
 
-cairo_surface_write_to_png(surface as cairo_surface_t_p, filename as const_char_p):cairo_status_t
+cairo_surface_write_to_png(surface as cairo_surface_t_p, filename as const_char_p) as cairo_status_t
 
-//cairo_surface_write_to_png_stream(surface as cairo_surface_t_p, write_func as cairo_write_func_t, closure as void_p):cairo_status_t
+//cairo_surface_write_to_png_stream(surface as cairo_surface_t_p, write_func as cairo_write_func_t, closure as void_p) as cairo_status_t
 cairo_surface_write_to_png_stream(surface as cairo_surface_t_p, stream:w as Stream@gurax) = \
 	R'''
 	cairo_status_t rtn = cairo_surface_write_to_png_stream(surface, write_func, stream.get());
 	return new Value_Number(rtn);
 	'''
 
-//cairo_surface_get_user_data(surface as cairo_surface_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_surface_get_user_data(surface as cairo_surface_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_surface_set_user_data(surface as cairo_surface_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_surface_set_user_data(surface as cairo_surface_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
 //cairo_surface_get_mime_data(surface as cairo_surface_t_p, mime_type as const_char_p, data as const_unsigned_char_pp, length as unsigned_long_p):void
 cairo_surface_get_mime_data(surface as cairo_surface_t_p, mime_type as const_char_p) = \
@@ -634,9 +634,9 @@ cairo_surface_get_mime_data(surface as cairo_surface_t_p, mime_type as const_cha
 	return new Value_Binary(Binary(data, length));
 	'''
 
-//cairo_surface_set_mime_data(surface as cairo_surface_t_p, mime_type as const_char_p, data as const_unsigned_char_p, length as unsigned_long, destroy as cairo_destroy_func_t, closure as void_p):cairo_status_t
+//cairo_surface_set_mime_data(surface as cairo_surface_t_p, mime_type as const_char_p, data as const_unsigned_char_p, length as unsigned_long, destroy as cairo_destroy_func_t, closure as void_p) as cairo_status_t
 
-cairo_surface_supports_mime_type(surface as cairo_surface_t_p, mime_type as const_char_p):cairo_bool_t
+cairo_surface_supports_mime_type(surface as cairo_surface_t_p, mime_type as const_char_p) as cairo_bool_t
 
 cairo_surface_get_font_options(surface as cairo_surface_t_p, options as cairo_font_options_t_p):void
 
@@ -680,39 +680,39 @@ cairo_surface_copy_page(surface as cairo_surface_t_p):void
 
 cairo_surface_show_page(surface as cairo_surface_t_p):void
 
-cairo_surface_has_show_text_glyphs(surface as cairo_surface_t_p):cairo_bool_t
+cairo_surface_has_show_text_glyphs(surface as cairo_surface_t_p) as cairo_bool_t
 
-cairo_image_surface_create(format as cairo_format_t, width as int, height as int):cairo_surface_t_p
+cairo_image_surface_create(format as cairo_format_t, width as int, height as int) as cairo_surface_t_p
 
-cairo_format_stride_for_width(format as cairo_format_t, width as int):int
+cairo_format_stride_for_width(format as cairo_format_t, width as int) as int
 
-//cairo_image_surface_create_for_data(data as unsigned_char_p, format as cairo_format_t, width as int, height as int, stride as int):cairo_surface_t_p
+//cairo_image_surface_create_for_data(data as unsigned_char_p, format as cairo_format_t, width as int, height as int, stride as int) as cairo_surface_t_p
 
-//cairo_image_surface_get_data(surface as cairo_surface_t_p):unsigned_char_p
+//cairo_image_surface_get_data(surface as cairo_surface_t_p) as unsigned_char_p
 
-cairo_image_surface_get_format(surface as cairo_surface_t_p):cairo_format_t
+cairo_image_surface_get_format(surface as cairo_surface_t_p) as cairo_format_t
 
-cairo_image_surface_get_width(surface as cairo_surface_t_p):int
+cairo_image_surface_get_width(surface as cairo_surface_t_p) as int
 
-cairo_image_surface_get_height(surface as cairo_surface_t_p):int
+cairo_image_surface_get_height(surface as cairo_surface_t_p) as int
 
-cairo_image_surface_get_stride(surface as cairo_surface_t_p):int
+cairo_image_surface_get_stride(surface as cairo_surface_t_p) as int
 
-cairo_image_surface_create_from_png(filename as const_char_p):cairo_surface_t_p
+cairo_image_surface_create_from_png(filename as const_char_p) as cairo_surface_t_p
 
-//cairo_image_surface_create_from_png_stream(read_func as cairo_read_func_t, closure as void_p):cairo_surface_t_p
+//cairo_image_surface_create_from_png_stream(read_func as cairo_read_func_t, closure as void_p) as cairo_surface_t_p
 
-cairo_recording_surface_create(content as cairo_content_t, extents as const_cairo_rectangle_t_p):cairo_surface_t_p
+cairo_recording_surface_create(content as cairo_content_t, extents as const_cairo_rectangle_t_p) as cairo_surface_t_p
 
 //cairo_recording_surface_ink_extents(surface as cairo_surface_t_p, x0 as double_p, y0 as double_p, width as double_p, height as double_p):void
 
-cairo_recording_surface_get_extents(surface as cairo_surface_t_p, extents as cairo_rectangle_t_p):cairo_bool_t
+cairo_recording_surface_get_extents(surface as cairo_surface_t_p, extents as cairo_rectangle_t_p) as cairo_bool_t
 
-cairo_pattern_create_raster_source(user_data as void_p, content as cairo_content_t, width as int, height as int):cairo_pattern_t_p
+cairo_pattern_create_raster_source(user_data as void_p, content as cairo_content_t, width as int, height as int) as cairo_pattern_t_p
 
 cairo_raster_source_pattern_set_callback_data(pattern as cairo_pattern_t_p, data as void_p):void
 
-//cairo_raster_source_pattern_get_callback_data(pattern as cairo_pattern_t_p):void_p
+//cairo_raster_source_pattern_get_callback_data(pattern as cairo_pattern_t_p) as void_p
 
 //cairo_raster_source_pattern_set_acquire(pattern as cairo_pattern_t_p, acquire as cairo_raster_source_acquire_func_t, release as cairo_raster_source_release_func_t):void
 
@@ -720,41 +720,41 @@ cairo_raster_source_pattern_set_callback_data(pattern as cairo_pattern_t_p, data
 
 //cairo_raster_source_pattern_set_snapshot(pattern as cairo_pattern_t_p, snapshot as cairo_raster_source_snapshot_func_t):void
 
-//cairo_raster_source_pattern_get_snapshot(pattern as cairo_pattern_t_p):cairo_raster_source_snapshot_func_t
+//cairo_raster_source_pattern_get_snapshot(pattern as cairo_pattern_t_p) as cairo_raster_source_snapshot_func_t
 
 //cairo_raster_source_pattern_set_copy(pattern as cairo_pattern_t_p, copy as cairo_raster_source_copy_func_t):void
 
-//cairo_raster_source_pattern_get_copy(pattern as cairo_pattern_t_p):cairo_raster_source_copy_func_t
+//cairo_raster_source_pattern_get_copy(pattern as cairo_pattern_t_p) as cairo_raster_source_copy_func_t
 
 //cairo_raster_source_pattern_set_finish(pattern as cairo_pattern_t_p, finish as cairo_raster_source_finish_func_t):void
 
-//cairo_raster_source_pattern_get_finish(pattern as cairo_pattern_t_p):cairo_raster_source_finish_func_t
+//cairo_raster_source_pattern_get_finish(pattern as cairo_pattern_t_p) as cairo_raster_source_finish_func_t
 
-cairo_pattern_create_rgb(red as double, green as double, blue as double):cairo_pattern_t_p
+cairo_pattern_create_rgb(red as double, green as double, blue as double) as cairo_pattern_t_p
 
-cairo_pattern_create_rgba(red as double, green as double, blue as double, alpha as double):cairo_pattern_t_p
+cairo_pattern_create_rgba(red as double, green as double, blue as double, alpha as double) as cairo_pattern_t_p
 
-cairo_pattern_create_for_surface(surface as cairo_surface_t_p):cairo_pattern_t_p
+cairo_pattern_create_for_surface(surface as cairo_surface_t_p) as cairo_pattern_t_p
 
-cairo_pattern_create_linear(x0 as double, y0 as double, x1 as double, y1 as double):cairo_pattern_t_p
+cairo_pattern_create_linear(x0 as double, y0 as double, x1 as double, y1 as double) as cairo_pattern_t_p
 
-cairo_pattern_create_radial(cx0 as double, cy0 as double, radius0 as double, cx1 as double, cy1 as double, radius1 as double):cairo_pattern_t_p
+cairo_pattern_create_radial(cx0 as double, cy0 as double, radius0 as double, cx1 as double, cy1 as double, radius1 as double) as cairo_pattern_t_p
 
-cairo_pattern_create_mesh():cairo_pattern_t_p
+cairo_pattern_create_mesh() as cairo_pattern_t_p
 
-cairo_pattern_reference(pattern as cairo_pattern_t_p):cairo_pattern_t_p
+cairo_pattern_reference(pattern as cairo_pattern_t_p) as cairo_pattern_t_p
 
 cairo_pattern_destroy(pattern as cairo_pattern_t_p):void
 
-cairo_pattern_get_reference_count(pattern as cairo_pattern_t_p):unsigned_int
+cairo_pattern_get_reference_count(pattern as cairo_pattern_t_p) as unsigned_int
 
-cairo_pattern_status(pattern as cairo_pattern_t_p):cairo_status_t
+cairo_pattern_status(pattern as cairo_pattern_t_p) as cairo_status_t
 
-//cairo_pattern_get_user_data(pattern as cairo_pattern_t_p, key as const_cairo_user_data_key_t_p):void_p
+//cairo_pattern_get_user_data(pattern as cairo_pattern_t_p, key as const_cairo_user_data_key_t_p) as void_p
 
-//cairo_pattern_set_user_data(pattern as cairo_pattern_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t):cairo_status_t
+//cairo_pattern_set_user_data(pattern as cairo_pattern_t_p, key as const_cairo_user_data_key_t_p, user_data as void_p, destroy as cairo_destroy_func_t) as cairo_status_t
 
-cairo_pattern_get_type(pattern as cairo_pattern_t_p):cairo_pattern_type_t
+cairo_pattern_get_type(pattern as cairo_pattern_t_p) as cairo_pattern_type_t
 
 cairo_pattern_add_color_stop_rgb(pattern as cairo_pattern_t_p, offset as double, red as double, green as double, blue as double):void
 
@@ -782,13 +782,13 @@ cairo_pattern_get_matrix(pattern as cairo_pattern_t_p, matrix as cairo_matrix_t_
 
 cairo_pattern_set_extend(pattern as cairo_pattern_t_p, extend as cairo_extend_t):void
 
-cairo_pattern_get_extend(pattern as cairo_pattern_t_p):cairo_extend_t
+cairo_pattern_get_extend(pattern as cairo_pattern_t_p) as cairo_extend_t
 
 cairo_pattern_set_filter(pattern as cairo_pattern_t_p, filter as cairo_filter_t):void
 
-cairo_pattern_get_filter(pattern as cairo_pattern_t_p):cairo_filter_t
+cairo_pattern_get_filter(pattern as cairo_pattern_t_p) as cairo_filter_t
 
-//cairo_pattern_get_rgba(pattern as cairo_pattern_t_p, red as double_p, green as double_p, blue as double_p, alpha as double_p):cairo_status_t
+//cairo_pattern_get_rgba(pattern as cairo_pattern_t_p, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
 cairo_pattern_get_rgba(pattern as cairo_pattern_t_p) = \
 	R'''
 	double red, green, blue, alpha;
@@ -796,9 +796,9 @@ cairo_pattern_get_rgba(pattern as cairo_pattern_t_p) = \
 	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
 	'''
 
-//cairo_pattern_get_surface(pattern as cairo_pattern_t_p, surface as cairo_surface_t_pp):cairo_status_t
+//cairo_pattern_get_surface(pattern as cairo_pattern_t_p, surface as cairo_surface_t_pp) as cairo_status_t
 
-//cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, offset as double_p, red as double_p, green as double_p, blue as double_p, alpha as double_p):cairo_status_t
+//cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, offset as double_p, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
 cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int) = \
 	R'''
 	double offset, red, green, blue, alpha;
@@ -806,19 +806,19 @@ cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int) = 
 	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
 	'''
 
-//cairo_pattern_get_color_stop_count(pattern as cairo_pattern_t_p, count as int_p):cairo_status_t
+//cairo_pattern_get_color_stop_count(pattern as cairo_pattern_t_p, count as int_p) as cairo_status_t
 
-//cairo_pattern_get_linear_points(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, x1 as double_p, y1 as double_p):cairo_status_t
+//cairo_pattern_get_linear_points(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, x1 as double_p, y1 as double_p) as cairo_status_t
 
-//cairo_pattern_get_radial_circles(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, r0 as double_p, x1 as double_p, y1 as double_p, r1 as double_p):cairo_status_t
+//cairo_pattern_get_radial_circles(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, r0 as double_p, x1 as double_p, y1 as double_p, r1 as double_p) as cairo_status_t
 
-//cairo_mesh_pattern_get_patch_count(pattern as cairo_pattern_t_p, count as unsigned_int_p):cairo_status_t
+//cairo_mesh_pattern_get_patch_count(pattern as cairo_pattern_t_p, count as unsigned_int_p) as cairo_status_t
 
-cairo_mesh_pattern_get_path(pattern as cairo_pattern_t_p, patch_num as unsigned_int):cairo_path_t_p
+cairo_mesh_pattern_get_path(pattern as cairo_pattern_t_p, patch_num as unsigned_int) as cairo_path_t_p
 
-//cairo_mesh_pattern_get_corner_color_rgba(pattern as cairo_pattern_t_p, patch_num as unsigned_int, corner_num as unsigned_int, red as double_p, green as double_p, blue as double_p, alpha as double_p):cairo_status_t
+//cairo_mesh_pattern_get_corner_color_rgba(pattern as cairo_pattern_t_p, patch_num as unsigned_int, corner_num as unsigned_int, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
 
-//cairo_mesh_pattern_get_control_point(pattern as cairo_pattern_t_p, patch_num as unsigned_int, point_num as unsigned_int, x as double_p, y as double_p):cairo_status_t
+//cairo_mesh_pattern_get_control_point(pattern as cairo_pattern_t_p, patch_num as unsigned_int, point_num as unsigned_int, x as double_p, y as double_p) as cairo_status_t
 
 cairo_matrix_init(matrix as cairo_matrix_t_p, xx as double, yx as double, xy as double, yy as double, x0 as double, y0 as double):void
 
@@ -836,7 +836,7 @@ cairo_matrix_scale(matrix as cairo_matrix_t_p, sx as double, sy as double):void
 
 cairo_matrix_rotate(matrix as cairo_matrix_t_p, radians as double):void
 
-cairo_matrix_invert(matrix as cairo_matrix_t_p):cairo_status_t
+cairo_matrix_invert(matrix as cairo_matrix_t_p) as cairo_status_t
 
 cairo_matrix_multiply(result as cairo_matrix_t_p, a as const_cairo_matrix_t_p, b as const_cairo_matrix_t_p):void
 
@@ -854,77 +854,77 @@ cairo_matrix_transform_point(matrix as const_cairo_matrix_t_p, x as double, y as
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 	'''
 
-cairo_region_create():cairo_region_t_p
+cairo_region_create() as cairo_region_t_p
 
-cairo_region_create_rectangle(rectangle as const_cairo_rectangle_int_t_p):cairo_region_t_p
+cairo_region_create_rectangle(rectangle as const_cairo_rectangle_int_t_p) as cairo_region_t_p
 
-cairo_region_create_rectangles(rects as const_cairo_rectangle_int_t_p, count as int):cairo_region_t_p
+cairo_region_create_rectangles(rects as const_cairo_rectangle_int_t_p, count as int) as cairo_region_t_p
 
-cairo_region_copy(original as const_cairo_region_t_p):cairo_region_t_p
+cairo_region_copy(original as const_cairo_region_t_p) as cairo_region_t_p
 
-cairo_region_reference(region as cairo_region_t_p):cairo_region_t_p
+cairo_region_reference(region as cairo_region_t_p) as cairo_region_t_p
 
 cairo_region_destroy(region as cairo_region_t_p):void
 
-cairo_region_equal(a as const_cairo_region_t_p, b as const_cairo_region_t_p):cairo_bool_t
+cairo_region_equal(a as const_cairo_region_t_p, b as const_cairo_region_t_p) as cairo_bool_t
 
-cairo_region_status(region as const_cairo_region_t_p):cairo_status_t
+cairo_region_status(region as const_cairo_region_t_p) as cairo_status_t
 
 cairo_region_get_extents(region as const_cairo_region_t_p, extents as cairo_rectangle_int_t_p):void
 
-cairo_region_num_rectangles(region as const_cairo_region_t_p):int
+cairo_region_num_rectangles(region as const_cairo_region_t_p) as int
 
 cairo_region_get_rectangle(region as const_cairo_region_t_p, nth as int, rectangle as cairo_rectangle_int_t_p):void
 
-cairo_region_is_empty(region as const_cairo_region_t_p):cairo_bool_t
+cairo_region_is_empty(region as const_cairo_region_t_p) as cairo_bool_t
 
-cairo_region_contains_rectangle(region as const_cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p):cairo_region_overlap_t
+cairo_region_contains_rectangle(region as const_cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p) as cairo_region_overlap_t
 
-cairo_region_contains_point(region as const_cairo_region_t_p, x as int, y as int):cairo_bool_t
+cairo_region_contains_point(region as const_cairo_region_t_p, x as int, y as int) as cairo_bool_t
 
 cairo_region_translate(region as cairo_region_t_p, dx as int, dy as int):void
 
-cairo_region_subtract(dst as cairo_region_t_p, other as const_cairo_region_t_p):cairo_status_t
+cairo_region_subtract(dst as cairo_region_t_p, other as const_cairo_region_t_p) as cairo_status_t
 
-cairo_region_subtract_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p):cairo_status_t
+cairo_region_subtract_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p) as cairo_status_t
 
-cairo_region_intersect(dst as cairo_region_t_p, other as const_cairo_region_t_p):cairo_status_t
+cairo_region_intersect(dst as cairo_region_t_p, other as const_cairo_region_t_p) as cairo_status_t
 
-cairo_region_intersect_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p):cairo_status_t
+cairo_region_intersect_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p) as cairo_status_t
 
-cairo_region_union(dst as cairo_region_t_p, other as const_cairo_region_t_p):cairo_status_t
+cairo_region_union(dst as cairo_region_t_p, other as const_cairo_region_t_p) as cairo_status_t
 
-cairo_region_union_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p):cairo_status_t
+cairo_region_union_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p) as cairo_status_t
 
-cairo_region_xor(dst as cairo_region_t_p, other as const_cairo_region_t_p):cairo_status_t
+cairo_region_xor(dst as cairo_region_t_p, other as const_cairo_region_t_p) as cairo_status_t
 
-cairo_region_xor_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p):cairo_status_t
+cairo_region_xor_rectangle(dst as cairo_region_t_p, rectangle as const_cairo_rectangle_int_t_p) as cairo_status_t
 
 cairo_debug_reset_static_data():void
 
 //======== FreeType backend (cairo-ft.h) ========
 /*
-cairo_ft_font_face_create_for_ft_face(face as FT_Face, load_flags as int):cairo_font_face_t_p
+cairo_ft_font_face_create_for_ft_face(face as FT_Face, load_flags as int) as cairo_font_face_t_p
 
 cairo_ft_font_face_set_synthesize(font_face as cairo_font_face_t_p, synth_flags as unsigned_int):void
 
 cairo_ft_font_face_unset_synthesize(font_face as cairo_font_face_t_p, synth_flags as unsigned_int):void
 
-cairo_ft_font_face_get_synthesize(font_face as cairo_font_face_t_p):unsigned_int
+cairo_ft_font_face_get_synthesize(font_face as cairo_font_face_t_p) as unsigned_int
 
-cairo_ft_scaled_font_lock_face(scaled_font as cairo_scaled_font_t_p):FT_Face
+cairo_ft_scaled_font_lock_face(scaled_font as cairo_scaled_font_t_p) as FT_Face
 
 cairo_ft_scaled_font_unlock_face(scaled_font as cairo_scaled_font_t_p):void
 
-cairo_ft_font_face_create_for_pattern(pattern as FcPattern_p):cairo_font_face_t_p
+cairo_ft_font_face_create_for_pattern(pattern as FcPattern_p) as cairo_font_face_t_p
 
 cairo_ft_font_options_substitute(options as const_cairo_font_options_t_p, pattern as FcPattern_p):void
 */
 //======== PDF surface (cairo-pdf.h) ========
 
-cairo_pdf_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+cairo_pdf_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 
-//cairo_pdf_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+//cairo_pdf_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 cairo_pdf_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as double, height_in_points as double) = \
 	R'''
 	cairo_surface_t* surface = cairo_pdf_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
@@ -942,11 +942,11 @@ cairo_pdf_get_versions() = \
 	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
 	'''
 
-cairo_pdf_version_to_string(version as cairo_pdf_version_t):const_char_p
+cairo_pdf_version_to_string(version as cairo_pdf_version_t) as const_char_p
 
 cairo_pdf_surface_set_size(surface as cairo_surface_t_p, width_in_points as double, height_in_points as double):void
 
-cairo_pdf_surface_add_outline(surface as cairo_surface_t_p, parent_id as int, utf8 as const_char_p, link_attribs as const_char_p, flags as cairo_pdf_outline_flags_t):int
+cairo_pdf_surface_add_outline(surface as cairo_surface_t_p, parent_id as int, utf8 as const_char_p, link_attribs as const_char_p, flags as cairo_pdf_outline_flags_t) as int
 
 cairo_pdf_surface_set_metadata(surface as cairo_surface_t_p, metadata as cairo_pdf_metadata_t, utf8 as const_char_p):void
 
@@ -956,9 +956,9 @@ cairo_pdf_surface_set_thumbnail_size(surface as cairo_surface_t_p, width as int,
 
 //======== PostScript surface (cairo-ps.h) ========
 
-cairo_ps_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+cairo_ps_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 
-//cairo_ps_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+//cairo_ps_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 cairo_ps_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as double, height_in_points as double) = \
 	R'''
 	cairo_surface_t* surface = cairo_ps_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
@@ -969,11 +969,11 @@ cairo_ps_surface_restrict_to_level(surface as cairo_surface_t_p, level as cairo_
 
 //cairo_ps_get_levels(levels as cairo_ps_level_t_const_pp, num_levels as int_p):void
 
-cairo_ps_level_to_string(level as cairo_ps_level_t):const_char_p
+cairo_ps_level_to_string(level as cairo_ps_level_t) as const_char_p
 
 cairo_ps_surface_set_eps(surface as cairo_surface_t_p, eps as cairo_bool_t):void
 
-cairo_ps_surface_get_eps(surface as cairo_surface_t_p):cairo_bool_t
+cairo_ps_surface_get_eps(surface as cairo_surface_t_p) as cairo_bool_t
 
 cairo_ps_surface_set_size(surface as cairo_surface_t_p, width_in_points as double, height_in_points as double):void
 
@@ -985,9 +985,9 @@ cairo_ps_surface_dsc_begin_page_setup(surface as cairo_surface_t_p):void
 
 //======== CairoScript surface (cairo-script.h) ========
 
-cairo_script_create(filename as const_char_p):cairo_device_t_p
+cairo_script_create(filename as const_char_p) as cairo_device_t_p
 
-//cairo_script_create_for_stream(write_func as cairo_write_func_t, closure as void_p):cairo_device_t_p
+//cairo_script_create_for_stream(write_func as cairo_write_func_t, closure as void_p) as cairo_device_t_p
 cairo_script_create_for_stream(stream:w as Stream@gurax) = \
 	R'''
 	cairo_device_t* device = cairo_script_create_for_stream(write_func, stream.get());
@@ -998,19 +998,19 @@ cairo_script_write_comment(script as cairo_device_t_p, comment as const_char_p, 
 
 cairo_script_set_mode(script as cairo_device_t_p, mode as cairo_script_mode_t):void
 
-cairo_script_get_mode(script as cairo_device_t_p):cairo_script_mode_t
+cairo_script_get_mode(script as cairo_device_t_p) as cairo_script_mode_t
 
-cairo_script_surface_create(script as cairo_device_t_p, content as cairo_content_t, width as double, height as double):cairo_surface_t_p
+cairo_script_surface_create(script as cairo_device_t_p, content as cairo_content_t, width as double, height as double) as cairo_surface_t_p
 
-cairo_script_surface_create_for_target(script as cairo_device_t_p, target as cairo_surface_t_p):cairo_surface_t_p
+cairo_script_surface_create_for_target(script as cairo_device_t_p, target as cairo_surface_t_p) as cairo_surface_t_p
 
-cairo_script_from_recording_surface(script as cairo_device_t_p, recording_surface as cairo_surface_t_p):cairo_status_t
+cairo_script_from_recording_surface(script as cairo_device_t_p, recording_surface as cairo_surface_t_p) as cairo_status_t
 
 //======== SVG surface (cairo-svg.h) ========
 
-cairo_svg_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+cairo_svg_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 
-//cairo_svg_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double):cairo_surface_t_p
+//cairo_svg_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 cairo_svg_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as double, height_in_points as double) = \
 	R'''
 	cairo_surface_t* surface = cairo_svg_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
@@ -1028,21 +1028,21 @@ cairo_svg_get_versions() = \
 	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
 	'''
 
-cairo_svg_version_to_string(version as cairo_svg_version_t):const_char_p
+cairo_svg_version_to_string(version as cairo_svg_version_t) as const_char_p
 
 cairo_svg_surface_set_document_unit(surface as cairo_surface_t_p, unit as cairo_svg_unit_t):void
 
-cairo_svg_surface_get_document_unit(surface as cairo_surface_t_p):cairo_svg_unit_t
+cairo_svg_surface_get_document_unit(surface as cairo_surface_t_p) as cairo_svg_unit_t
 
 //======== XML surface (cairo-xml.h) ========
 
-//cairo_xml_create(filename as const_char_p):cairo_device_t_p
+//cairo_xml_create(filename as const_char_p) as cairo_device_t_p
 
-//cairo_xml_create_for_stream(write_func as cairo_write_func_t, closure as void_p):cairo_device_t_p
+//cairo_xml_create_for_stream(write_func as cairo_write_func_t, closure as void_p) as cairo_device_t_p
 
-//cairo_xml_surface_create(xml as cairo_device_t_p, content as cairo_content_t, width as double, height as double):cairo_surface_t_p
+//cairo_xml_surface_create(xml as cairo_device_t_p, content as cairo_content_t, width as double, height as double) as cairo_surface_t_p
 
-//cairo_xml_for_recording_surface(xml as cairo_device_t_p, surface as cairo_surface_t_p):cairo_status_t
+//cairo_xml_for_recording_surface(xml as cairo_device_t_p, surface as cairo_surface_t_p) as cairo_status_t
 
 }
 
@@ -1099,7 +1099,7 @@ funcDecls = r.funcInfoTbl.Each():xiter {|funcInfo|
 /*
 tR'''
 #!/usr/bin/env gurax
-import(cairo):binary {*}
+import(cairo) as binary {*}
 ${'\n' + funcDecls + '\n'}
 '''.Render('cairo.gura')
 */

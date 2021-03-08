@@ -238,7 +238,7 @@ Renderer = class {
 			codeFunctionBody = expr.right.string
 			expr = expr.left
 		}
-		typeNameResult = 'void'
+		typeNameResult = ''
 		if (expr.IsBinaryOp()) {
 			if (expr.operator.symbol == `as) {
 				!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -250,6 +250,7 @@ Renderer = class {
 		}
 		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		if (expr.attr.IsSet(`void)) { typeNameResult = 'void' }
 		Println(expr.car.symbolName)
 		try {
 			funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, typeNameResult, codeFunctionBody)
