@@ -2433,7 +2433,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
 	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	const void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	int pitch = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_UpdateTexture(texture, rect, pixels, pitch);
@@ -2464,11 +2464,11 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
 	SDL_Texture* texture = value_texture.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
-	const Uint8* Yplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* Yplane = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int Ypitch = args_gurax.PickNumber<int>();
-	const Uint8* Uplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* Uplane = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int Upitch = args_gurax.PickNumber<int>();
-	const Uint8* Vplane = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* Vplane = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int Vpitch = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_UpdateYUVTexture(texture, rect, Yplane, Ypitch, Uplane, Upitch, Vplane, Vpitch);
@@ -3497,7 +3497,7 @@ Gurax_ImplementFunctionEx(SDL_RenderReadPixels_gurax, processor_gurax, argument_
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	Uint32 format = args_gurax.PickNumber<Uint32>();
-	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!pixels) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -4084,7 +4084,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFrom_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!pixels) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -4122,7 +4122,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormatFrom_gurax, processor_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	void* pixels = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* pixels = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!pixels) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -4711,10 +4711,10 @@ Gurax_ImplementFunctionEx(SDL_ConvertPixels_gurax, processor_gurax, argument_gur
 	int width = args_gurax.PickNumber<int>();
 	int height = args_gurax.PickNumber<int>();
 	Uint32 src_format = args_gurax.PickNumber<Uint32>();
-	const void* src = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* src = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	int src_pitch = args_gurax.PickNumber<int>();
 	Uint32 dst_format = args_gurax.PickNumber<Uint32>();
-	void* dst = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* dst = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!dst) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -5851,8 +5851,8 @@ Gurax_ImplementFunctionEx(SDL_CreateCursor_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const Uint8* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
-	const Uint8* mask = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<Uint8>();
+	const Uint8* mask = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<Uint8>();
 	int w = args_gurax.PickNumber<int>();
 	int h = args_gurax.PickNumber<int>();
 	int hot_x = args_gurax.PickNumber<int>();
@@ -8749,7 +8749,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamPut_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
 	SDL_AudioStream* stream = value_stream.GetEntityPtr();
-	const void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* buf = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	int len = args_gurax.PickNumber<int>();
 	// Function body
 	int rtn = SDL_AudioStreamPut(stream, buf, len);
@@ -8774,7 +8774,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamGet_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_stream = args_gurax.Pick<Value_SDL_AudioStream>();
 	SDL_AudioStream* stream = value_stream.GetEntityPtr();
-	void* buf = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* buf = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!buf) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -8885,7 +8885,7 @@ Gurax_ImplementFunctionEx(SDL_QueueAudio_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
-	const void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	Uint32 len = args_gurax.PickNumber<Uint32>();
 	// Function body
 	int rtn = SDL_QueueAudio(dev, data, len);
@@ -8909,7 +8909,7 @@ Gurax_ImplementFunctionEx(SDL_DequeueAudio_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	SDL_AudioDeviceID dev = args_gurax.PickNumber<SDL_AudioDeviceID>();
-	void* data = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!data) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -9194,7 +9194,7 @@ Gurax_ImplementFunctionEx(SDL_RWFromConstMem_gurax, processor_gurax, argument_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const void* mem = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* mem = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	int size = args_gurax.PickNumber<int>();
 	// Function body
 	SDL_RWops* rtn = SDL_RWFromConstMem(mem, size);
@@ -9325,7 +9325,7 @@ Gurax_ImplementFunctionEx(SDL_RWread_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
 	SDL_RWops* context = value_context.GetEntityPtr();
-	void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	void* ptr = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
 	if (!ptr) {
 		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
 		return Value::nil();
@@ -9356,7 +9356,7 @@ Gurax_ImplementFunctionEx(SDL_RWwrite_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_context = args_gurax.Pick<Value_SDL_RWops>();
 	SDL_RWops* context = value_context.GetEntityPtr();
-	const void* ptr = args_gurax.Pick<Value_Pointer>().GetPointer().GetPointerC<void>();
+	const void* ptr = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
 	size_t size = args_gurax.PickNumber<size_t>();
 	size_t num = args_gurax.PickNumber<size_t>();
 	// Function body
@@ -9995,7 +9995,7 @@ Gurax_ImplementFunctionEx(SDL_SIMDFree_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	void* ptr = args_gurax.IsValid()? args_gurax.Pick<Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
+	void* ptr = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>() : nullptr;
 	// Function body
 	SDL_SIMDFree(ptr);
 	return Gurax::Value::nil();

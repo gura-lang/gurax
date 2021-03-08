@@ -174,25 +174,25 @@ r.Register('sdl') {
 
 //======== Initialization and Shutdown (SDL.h) ========
 
-SDL_Init(flags as Uint32):int
+SDL_Init(flags as Uint32) as int
 
-SDL_InitSubSystem(flags as Uint32):int
+SDL_InitSubSystem(flags as Uint32) as int
 
 SDL_QuitSubSystem(flags as Uint32):void
 
-SDL_WasInit(flags as Uint32):Uint32
+SDL_WasInit(flags as Uint32) as Uint32
 
 SDL_Quit():void
 
 //======== Configuration Variables (SDL_hints.h) ========
 
-SDL_SetHintWithPriority(name as const_char_p, value as const_char_p, priority as SDL_HintPriority):SDL_bool
+SDL_SetHintWithPriority(name as const_char_p, value as const_char_p, priority as SDL_HintPriority) as SDL_bool
 
-SDL_SetHint(name as const_char_p, value as const_char_p):SDL_bool
+SDL_SetHint(name as const_char_p, value as const_char_p) as SDL_bool
 
-SDL_GetHint(name as const_char_p):const_char_p
+SDL_GetHint(name as const_char_p) as const_char_p
 
-SDL_GetHintBoolean(name as const_char_p, default_value as SDL_bool):SDL_bool
+SDL_GetHintBoolean(name as const_char_p, default_value as SDL_bool) as SDL_bool
 
 //SDL_AddHintCallback(name as const_char_p, callback as SDL_HintCallback, userdata as void_p):void
 
@@ -202,13 +202,13 @@ SDL_ClearHints():void
 
 //======== Error Handling (SDL_error.h) ========
 
-//SDL_SetError(fmt as SDL_PRINTF_FORMAT_STRING_const_char_p, 1 as SDL_PRINTF_VARARG_FUNC):int
+//SDL_SetError(fmt as SDL_PRINTF_FORMAT_STRING_const_char_p, 1 as SDL_PRINTF_VARARG_FUNC) as int
 
-SDL_GetError():const_char_p
+SDL_GetError() as const_char_p
 
 SDL_ClearError():void
 
-SDL_Error(code as SDL_errorcode):int
+SDL_Error(code as SDL_errorcode) as int
 
 //======== Log Handling (SDL_log.h) ========
 
@@ -216,7 +216,7 @@ SDL_LogSetAllPriority(priority as SDL_LogPriority):void
 
 SDL_LogSetPriority(category as int, priority as SDL_LogPriority):void
 
-SDL_LogGetPriority(category as int):SDL_LogPriority
+SDL_LogGetPriority(category as int) as SDL_LogPriority
 
 SDL_LogResetPriorities():void
 
@@ -244,15 +244,15 @@ SDL_LogResetPriorities():void
 
 //======== Assertions (SDL_assert.h) ========
 
-//SDL_ReportAssertion(*:SDL_AssertData, *:const_char, *:const_char, :int):SDL_AssertState
+//SDL_ReportAssertion(*:SDL_AssertData, *:const_char, *:const_char, :int) as SDL_AssertState
 
 //SDL_SetAssertionHandler(handler as SDL_AssertionHandler, userdata as void_p):void
 
-//SDL_GetDefaultAssertionHandler():SDL_AssertionHandler
+//SDL_GetDefaultAssertionHandler() as SDL_AssertionHandler
 
-//SDL_GetAssertionHandler(puserdata as void_pp):SDL_AssertionHandler
+//SDL_GetAssertionHandler(puserdata as void_pp) as SDL_AssertionHandler
 
-//SDL_GetAssertionReport():const_SDL_AssertData_p
+//SDL_GetAssertionReport() as const_SDL_AssertData_p
 
 SDL_ResetAssertionReport():void
 
@@ -265,105 +265,105 @@ SDL_GetVersion() = \
 	return new Value_SDL_version(ver);
 	'''
 
-SDL_GetRevision():const_char_p
+SDL_GetRevision() as const_char_p
 
-SDL_GetRevisionNumber():int
+SDL_GetRevisionNumber() as int
 
 //======== Display and Window Management (SDL_video.h) ========
 
-SDL_GetNumVideoDrivers():int
+SDL_GetNumVideoDrivers() as int
 
-SDL_GetVideoDriver(index as int):const_char_p
+SDL_GetVideoDriver(index as int) as const_char_p
 
-SDL_VideoInit(driver_name as const_char_p):int
+SDL_VideoInit(driver_name as const_char_p) as int
 
 SDL_VideoQuit():void
 
-SDL_GetCurrentVideoDriver():const_char_p
+SDL_GetCurrentVideoDriver() as const_char_p
 
-SDL_GetNumVideoDisplays():int
+SDL_GetNumVideoDisplays() as int
 
-SDL_GetDisplayName(displayIndex as int):const_char_p
+SDL_GetDisplayName(displayIndex as int) as const_char_p
 
-SDL_GetDisplayBounds(displayIndex as int):any = \
+SDL_GetDisplayBounds(displayIndex as int) as any = \
 	R'''
 	SDL_Rect rect;
 	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) return Value::nil();
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_GetDisplayUsableBounds(displayIndex as int):any = \
+SDL_GetDisplayUsableBounds(displayIndex as int) as any = \
 	R'''
 	SDL_Rect rect;
 	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) return Value::nil();
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_GetDisplayDPI(displayIndex as int):any = \
+SDL_GetDisplayDPI(displayIndex as int) as any = \
 	R'''
 	float ddpi, hdpi, vdpi;
 	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) return Value::nil();
 	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
 	'''
 
-SDL_GetDisplayOrientation(displayIndex as int):SDL_DisplayOrientation
+SDL_GetDisplayOrientation(displayIndex as int) as SDL_DisplayOrientation
 
-SDL_GetNumDisplayModes(displayIndex as int):int
+SDL_GetNumDisplayModes(displayIndex as int) as int
 
-SDL_GetDisplayMode(displayIndex as int, modeIndex as int):any = \
+SDL_GetDisplayMode(displayIndex as int, modeIndex as int) as any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
-SDL_GetDesktopDisplayMode(displayIndex as int):any = \
+SDL_GetDesktopDisplayMode(displayIndex as int) as any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
-SDL_GetCurrentDisplayMode(displayIndex as int):any = \
+SDL_GetCurrentDisplayMode(displayIndex as int) as any = \
 	R'''
 	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) return Value::nil();
 	return new Value_SDL_DisplayMode(mode);
 	'''
 
-//SDL_GetClosestDisplayMode(displayIndex as int, mode as const_SDL_DisplayMode_p, closest as SDL_DisplayMode_p):SDL_DisplayMode_p
+//SDL_GetClosestDisplayMode(displayIndex as int, mode as const_SDL_DisplayMode_p, closest as SDL_DisplayMode_p) as SDL_DisplayMode_p
 
-SDL_GetWindowDisplayIndex(window as SDL_Window_p):int
+SDL_GetWindowDisplayIndex(window as SDL_Window_p) as int
 
-SDL_SetWindowDisplayMode(window as SDL_Window_p, mode as const_SDL_DisplayMode_p):int
+SDL_SetWindowDisplayMode(window as SDL_Window_p, mode as const_SDL_DisplayMode_p) as int
 
-SDL_GetWindowDisplayMode(window as SDL_Window_p, mode as SDL_DisplayMode_p):int
+SDL_GetWindowDisplayMode(window as SDL_Window_p, mode as SDL_DisplayMode_p) as int
 
-SDL_GetWindowPixelFormat(window as SDL_Window_p):Uint32
+SDL_GetWindowPixelFormat(window as SDL_Window_p) as Uint32
 
-SDL_CreateWindow(title as const_char_p, x as int, y as int, w as int, h as int, flags as Uint32):SDL_Window_p
+SDL_CreateWindow(title as const_char_p, x as int, y as int, w as int, h as int, flags as Uint32) as SDL_Window_p
 
-//SDL_CreateWindowFrom(data as const_void_p):SDL_Window_p
+//SDL_CreateWindowFrom(data as const_void_p) as SDL_Window_p
 
-SDL_GetWindowID(window as SDL_Window_p):Uint32
+SDL_GetWindowID(window as SDL_Window_p) as Uint32
 
-SDL_GetWindowFromID(id as Uint32):SDL_Window_p
+SDL_GetWindowFromID(id as Uint32) as SDL_Window_p
 
-SDL_GetWindowFlags(window as SDL_Window_p):Uint32
+SDL_GetWindowFlags(window as SDL_Window_p) as Uint32
 
 SDL_SetWindowTitle(window as SDL_Window_p, title as const_char_p):void
 
-SDL_GetWindowTitle(window as SDL_Window_p):const_char_p
+SDL_GetWindowTitle(window as SDL_Window_p) as const_char_p
 
 SDL_SetWindowIcon(window as SDL_Window_p, icon as SDL_Surface_p):void
 
-//SDL_SetWindowData(window as SDL_Window_p, name as const_char_p, userdata as void_p):void_p
+//SDL_SetWindowData(window as SDL_Window_p, name as const_char_p, userdata as void_p) as void_p
 
-//SDL_GetWindowData(window as SDL_Window_p, name as const_char_p):void_p
+//SDL_GetWindowData(window as SDL_Window_p, name as const_char_p) as void_p
 
 SDL_SetWindowPosition(window as SDL_Window_p, x as int, y as int):void
 
-SDL_GetWindowPosition(window as SDL_Window_p):any = \
+SDL_GetWindowPosition(window as SDL_Window_p) as any = \
 	R'''
 	int x, y;
 	SDL_GetWindowPosition(window, &x, &y);
@@ -372,7 +372,7 @@ SDL_GetWindowPosition(window as SDL_Window_p):any = \
 
 SDL_SetWindowSize(window as SDL_Window_p, w as int, h as int):void
 
-SDL_GetWindowSize(window as SDL_Window_p):any = \
+SDL_GetWindowSize(window as SDL_Window_p) as any = \
 	R'''
 	int w, h;
 	SDL_GetWindowSize(window, &w, &h);
@@ -420,11 +420,11 @@ SDL_MinimizeWindow(window as SDL_Window_p):void
 
 SDL_RestoreWindow(window as SDL_Window_p):void
 
-SDL_SetWindowFullscreen(window as SDL_Window_p, flags as Uint32):int
+SDL_SetWindowFullscreen(window as SDL_Window_p, flags as Uint32) as int
 
-SDL_GetWindowSurface(window as SDL_Window_p):SDL_Surface_p
+SDL_GetWindowSurface(window as SDL_Window_p) as SDL_Surface_p
 
-SDL_UpdateWindowSurface(window as SDL_Window_p):int
+SDL_UpdateWindowSurface(window as SDL_Window_p) as int
 
 SDL_UpdateWindowSurfaceRects(window as SDL_Window_p, rects[] as SDL_Rect) = \
 	R'''
@@ -435,15 +435,15 @@ SDL_UpdateWindowSurfaceRects(window as SDL_Window_p, rects[] as SDL_Rect) = \
 
 SDL_SetWindowGrab(window as SDL_Window_p, grabbed as SDL_bool):void
 
-SDL_GetWindowGrab(window as SDL_Window_p):SDL_bool
+SDL_GetWindowGrab(window as SDL_Window_p) as SDL_bool
 
-SDL_GetGrabbedWindow():SDL_Window_p
+SDL_GetGrabbedWindow() as SDL_Window_p
 
-SDL_SetWindowBrightness(window as SDL_Window_p, brightness as float):int
+SDL_SetWindowBrightness(window as SDL_Window_p, brightness as float) as int
 
-SDL_GetWindowBrightness(window as SDL_Window_p):float
+SDL_GetWindowBrightness(window as SDL_Window_p) as float
 
-SDL_SetWindowOpacity(window as SDL_Window_p, opacity as float):int
+SDL_SetWindowOpacity(window as SDL_Window_p, opacity as float) as int
 
 SDL_GetWindowOpacity(window as SDL_Window_p) = \
 	R'''
@@ -452,35 +452,35 @@ SDL_GetWindowOpacity(window as SDL_Window_p) = \
 	return new Value_Number(out_opacity);
 	'''
 
-SDL_SetWindowModalFor(modal_window as SDL_Window_p, parent_window as SDL_Window_p):int
+SDL_SetWindowModalFor(modal_window as SDL_Window_p, parent_window as SDL_Window_p) as int
 
-SDL_SetWindowInputFocus(window as SDL_Window_p):int
+SDL_SetWindowInputFocus(window as SDL_Window_p) as int
 
-//SDL_SetWindowGammaRamp(window as SDL_Window_p, red as const_Uint16_p, green as const_Uint16_p, blue as const_Uint16_p):int
+//SDL_SetWindowGammaRamp(window as SDL_Window_p, red as const_Uint16_p, green as const_Uint16_p, blue as const_Uint16_p) as int
 
-//SDL_GetWindowGammaRamp(window as SDL_Window_p, red as Uint16_p, green as Uint16_p, blue as Uint16_p):int
+//SDL_GetWindowGammaRamp(window as SDL_Window_p, red as Uint16_p, green as Uint16_p, blue as Uint16_p) as int
 
-//SDL_SetWindowHitTest(window as SDL_Window_p, callback as SDL_HitTest, callback_data as void_p):int
+//SDL_SetWindowHitTest(window as SDL_Window_p, callback as SDL_HitTest, callback_data as void_p) as int
 
 SDL_DestroyWindow(window:nil as SDL_Window_p):void
 
-SDL_IsScreenSaverEnabled():SDL_bool
+SDL_IsScreenSaverEnabled() as SDL_bool
 
 SDL_EnableScreenSaver():void
 
 SDL_DisableScreenSaver():void
 
-SDL_GL_LoadLibrary(path as const_char_p):int
+SDL_GL_LoadLibrary(path as const_char_p) as int
 
-//SDL_GL_GetProcAddress(proc as const_char_p):void_p
+//SDL_GL_GetProcAddress(proc as const_char_p) as void_p
 
 SDL_GL_UnloadLibrary():void
 
-SDL_GL_ExtensionSupported(extension as const_char_p):SDL_bool
+SDL_GL_ExtensionSupported(extension as const_char_p) as SDL_bool
 
 SDL_GL_ResetAttributes():void
 
-SDL_GL_SetAttribute(attr as SDL_GLattr, value as int):int
+SDL_GL_SetAttribute(attr as SDL_GLattr, value as int) as int
 
 SDL_GL_GetAttribute(attr as SDL_GLattr) = \
 	R'''
@@ -489,13 +489,13 @@ SDL_GL_GetAttribute(attr as SDL_GLattr) = \
 	return new Value_Number(value);
 	'''
 
-SDL_GL_CreateContext(window as SDL_Window_p):SDL_GLContext
+SDL_GL_CreateContext(window as SDL_Window_p) as SDL_GLContext
 
-SDL_GL_MakeCurrent(window as SDL_Window_p, context as SDL_GLContext):int
+SDL_GL_MakeCurrent(window as SDL_Window_p, context as SDL_GLContext) as int
 
-SDL_GL_GetCurrentWindow():SDL_Window_p
+SDL_GL_GetCurrentWindow() as SDL_Window_p
 
-SDL_GL_GetCurrentContext():SDL_GLContext
+SDL_GL_GetCurrentContext() as SDL_GLContext
 
 SDL_GL_GetDrawableSize(window as SDL_Window_p) = \
 	R'''
@@ -504,9 +504,9 @@ SDL_GL_GetDrawableSize(window as SDL_Window_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_GL_SetSwapInterval(interval as int):int
+SDL_GL_SetSwapInterval(interval as int) as int
 
-SDL_GL_GetSwapInterval():int
+SDL_GL_GetSwapInterval() as int
 
 SDL_GL_SwapWindow(window as SDL_Window_p):void
 
@@ -514,7 +514,7 @@ SDL_GL_DeleteContext(context as SDL_GLContext):void
 
 //======== 2D Accelerated Rendering (SDL_render.h) ========
 
-SDL_GetNumRenderDrivers():int
+SDL_GetNumRenderDrivers() as int
 
 SDL_GetRenderDriverInfo(index as int) = \
 	R'''
@@ -531,11 +531,11 @@ SDL_CreateWindowAndRenderer(width as int, height as int, window_flags as Uint32)
 	return Value_Tuple::Create(new Value_SDL_Window(window), new Value_SDL_Renderer(renderer));
 	'''
 
-SDL_CreateRenderer(window as SDL_Window_p, index as int, flags as Uint32):SDL_Renderer_p
+SDL_CreateRenderer(window as SDL_Window_p, index as int, flags as Uint32) as SDL_Renderer_p
 
-SDL_CreateSoftwareRenderer(surface as SDL_Surface_p):SDL_Renderer_p
+SDL_CreateSoftwareRenderer(surface as SDL_Surface_p) as SDL_Renderer_p
 
-SDL_GetRenderer(window as SDL_Window_p):SDL_Renderer_p
+SDL_GetRenderer(window as SDL_Window_p) as SDL_Renderer_p
 
 SDL_GetRendererInfo(renderer as SDL_Renderer_p) = \
 	R'''
@@ -551,9 +551,9 @@ SDL_GetRendererOutputSize(renderer as SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_CreateTexture(renderer as SDL_Renderer_p, format as Uint32, access as int, w as int, h as int):SDL_Texture_p
+SDL_CreateTexture(renderer as SDL_Renderer_p, format as Uint32, access as int, w as int, h as int) as SDL_Texture_p
 
-SDL_CreateTextureFromSurface(renderer as SDL_Renderer_p, surface as SDL_Surface_p):SDL_Texture_p
+SDL_CreateTextureFromSurface(renderer as SDL_Renderer_p, surface as SDL_Surface_p) as SDL_Texture_p
 
 SDL_QueryTexture(texture as SDL_Texture_p) = \
 	R'''
@@ -563,7 +563,7 @@ SDL_QueryTexture(texture as SDL_Texture_p) = \
 	return Value_Tuple::Create(new Value_Number(format), new Value_Number(access), new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_SetTextureColorMod(texture as SDL_Texture_p, r as Uint8, g as Uint8, b as Uint8):int
+SDL_SetTextureColorMod(texture as SDL_Texture_p, r as Uint8, g as Uint8, b as Uint8) as int
 
 SDL_GetTextureColorMod(texture as SDL_Texture_p) = \
 	R'''
@@ -572,7 +572,7 @@ SDL_GetTextureColorMod(texture as SDL_Texture_p) = \
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 	'''
 
-SDL_SetTextureAlphaMod(texture as SDL_Texture_p, alpha as Uint8):int
+SDL_SetTextureAlphaMod(texture as SDL_Texture_p, alpha as Uint8) as int
 
 SDL_GetTextureAlphaMod(texture as SDL_Texture_p) = \
 	R'''
@@ -581,7 +581,7 @@ SDL_GetTextureAlphaMod(texture as SDL_Texture_p) = \
 	return new Value_Number(alpha);
 	'''
 
-SDL_SetTextureBlendMode(texture as SDL_Texture_p, blendMode as SDL_BlendMode):int
+SDL_SetTextureBlendMode(texture as SDL_Texture_p, blendMode as SDL_BlendMode) as int
 
 SDL_GetTextureBlendMode(texture as SDL_Texture_p) = \
 	R'''
@@ -590,18 +590,18 @@ SDL_GetTextureBlendMode(texture as SDL_Texture_p) = \
 	return new Value_Number(blendMode);
 	'''
 
-SDL_SetTextureScaleMode(texture as SDL_Texture_p, scaleMode as SDL_ScaleMode):int
+SDL_SetTextureScaleMode(texture as SDL_Texture_p, scaleMode as SDL_ScaleMode) as int
 
-SDL_GetTextureScaleMode(texture as SDL_Texture_p):int = \
+SDL_GetTextureScaleMode(texture as SDL_Texture_p) as int = \
 	R'''
 	SDL_ScaleMode scaleMode;
 	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) return Value::nil();
 	return new Value_Number(scaleMode);
 	'''
 
-SDL_UpdateTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, pixels as const_void_p, pitch as int):int
+SDL_UpdateTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, pixels as const_void_p, pitch as int) as int
 
-SDL_UpdateYUVTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, Yplane as const_Uint8_p, Ypitch as int, Uplane as const_Uint8_p, Upitch as int, Vplane as const_Uint8_p, Vpitch as int):int
+SDL_UpdateYUVTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, Yplane as const_Uint8_p, Ypitch as int, Uplane as const_Uint8_p, Upitch as int, Vplane as const_Uint8_p, Vpitch as int) as int
 
 SDL_LockTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p) = \
 	R'''
@@ -630,13 +630,13 @@ SDL_LockTextureToSurface(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p)
 
 SDL_UnlockTexture(texture as SDL_Texture_p):void
 
-SDL_RenderTargetSupported(renderer as SDL_Renderer_p):SDL_bool
+SDL_RenderTargetSupported(renderer as SDL_Renderer_p) as SDL_bool
 
-SDL_SetRenderTarget(renderer as SDL_Renderer_p, texture as SDL_Texture_p):int
+SDL_SetRenderTarget(renderer as SDL_Renderer_p, texture as SDL_Texture_p) as int
 
-SDL_GetRenderTarget(renderer as SDL_Renderer_p):SDL_Texture_p
+SDL_GetRenderTarget(renderer as SDL_Renderer_p) as SDL_Texture_p
 
-SDL_RenderSetLogicalSize(renderer as SDL_Renderer_p, w as int, h as int):int
+SDL_RenderSetLogicalSize(renderer as SDL_Renderer_p, w as int, h as int) as int
 
 SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p) = \
 	R'''
@@ -645,11 +645,11 @@ SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 	'''
 
-SDL_RenderSetIntegerScale(renderer as SDL_Renderer_p, enable as SDL_bool):int
+SDL_RenderSetIntegerScale(renderer as SDL_Renderer_p, enable as SDL_bool) as int
 
-SDL_RenderGetIntegerScale(renderer as SDL_Renderer_p):SDL_bool
+SDL_RenderGetIntegerScale(renderer as SDL_Renderer_p) as SDL_bool
 
-SDL_RenderSetViewport(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p):int
+SDL_RenderSetViewport(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
 SDL_RenderGetViewport(renderer as SDL_Renderer_p) = \
 	R'''
@@ -658,7 +658,7 @@ SDL_RenderGetViewport(renderer as SDL_Renderer_p) = \
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_RenderSetClipRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p):int
+SDL_RenderSetClipRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
 SDL_RenderGetClipRect(renderer as SDL_Renderer_p) = \
 	R'''
@@ -667,9 +667,9 @@ SDL_RenderGetClipRect(renderer as SDL_Renderer_p) = \
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_RenderIsClipEnabled(renderer as SDL_Renderer_p):SDL_bool
+SDL_RenderIsClipEnabled(renderer as SDL_Renderer_p) as SDL_bool
 
-SDL_RenderSetScale(renderer as SDL_Renderer_p, scaleX as float, scaleY as float):int
+SDL_RenderSetScale(renderer as SDL_Renderer_p, scaleX as float, scaleY as float) as int
 
 SDL_RenderGetScale(renderer as SDL_Renderer_p) = \
 	R'''
@@ -678,7 +678,7 @@ SDL_RenderGetScale(renderer as SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(scaleX), new Value_Number(scaleY));
 	'''
 
-SDL_SetRenderDrawColor(renderer as SDL_Renderer_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8):int
+SDL_SetRenderDrawColor(renderer as SDL_Renderer_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8) as int
 
 SDL_GetRenderDrawColor(renderer as SDL_Renderer_p) = \
 	R'''
@@ -687,7 +687,7 @@ SDL_GetRenderDrawColor(renderer as SDL_Renderer_p) = \
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
 	'''
 
-SDL_SetRenderDrawBlendMode(renderer as SDL_Renderer_p, blendMode as SDL_BlendMode):int
+SDL_SetRenderDrawBlendMode(renderer as SDL_Renderer_p, blendMode as SDL_BlendMode) as int
 
 SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer_p) = \
 	R'''
@@ -696,9 +696,9 @@ SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer_p) = \
 	return new Value_Number(blendMode);
 	'''
 
-SDL_RenderClear(renderer as SDL_Renderer_p):int
+SDL_RenderClear(renderer as SDL_Renderer_p) as int
 
-SDL_RenderDrawPoint(renderer as SDL_Renderer_p, x as int, y as int):int
+SDL_RenderDrawPoint(renderer as SDL_Renderer_p, x as int, y as int) as int
 
 SDL_RenderDrawPoints(renderer as SDL_Renderer_p, points[] as SDL_Point) = \
 	R'''
@@ -707,7 +707,7 @@ SDL_RenderDrawPoints(renderer as SDL_Renderer_p, points[] as SDL_Point) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawLine(renderer as SDL_Renderer_p, x1 as int, y1 as int, x2 as int, y2 as int):int
+SDL_RenderDrawLine(renderer as SDL_Renderer_p, x1 as int, y1 as int, x2 as int, y2 as int) as int
 
 SDL_RenderDrawLines(renderer as SDL_Renderer_p, points[] as SDL_Point) = \
 	R'''
@@ -716,7 +716,7 @@ SDL_RenderDrawLines(renderer as SDL_Renderer_p, points[] as SDL_Point) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p):int
+SDL_RenderDrawRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
 SDL_RenderDrawRects(renderer as SDL_Renderer_p, rects[] as SDL_Rect) = \
 	R'''
@@ -725,7 +725,7 @@ SDL_RenderDrawRects(renderer as SDL_Renderer_p, rects[] as SDL_Rect) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderFillRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p):int
+SDL_RenderFillRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
 SDL_RenderFillRects(renderer as SDL_Renderer_p, rects[] as SDL_Rect) = \
 	R'''
@@ -734,15 +734,15 @@ SDL_RenderFillRects(renderer as SDL_Renderer_p, rects[] as SDL_Rect) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderCopy(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect:nil as const_SDL_Rect_p):int
+SDL_RenderCopy(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect:nil as const_SDL_Rect_p) as int
 
-SDL_RenderCopyEx(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect:nil as const_SDL_Rect_p, angle:double, center:nil as const_SDL_Point_p, flip:SDL_RendererFlip):int
+SDL_RenderCopyEx(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect:nil as const_SDL_Rect_p, angle as double, center:nil as const_SDL_Point_p, flip as SDL_RendererFlip) as int
 
-SDL_RenderDrawPointF(renderer as SDL_Renderer_p, x as float, y as float):int
+SDL_RenderDrawPointF(renderer as SDL_Renderer_p, x as float, y as float) as int
 
-SDL_RenderDrawPointsF(renderer as SDL_Renderer_p, points as const_SDL_FPoint_p, count as int):int
+SDL_RenderDrawPointsF(renderer as SDL_Renderer_p, points as const_SDL_FPoint_p, count as int) as int
 
-SDL_RenderDrawLineF(renderer as SDL_Renderer_p, x1 as float, y1 as float, x2 as float, y2 as float):int
+SDL_RenderDrawLineF(renderer as SDL_Renderer_p, x1 as float, y1 as float, x2 as float, y2 as float) as int
 
 SDL_RenderDrawLinesF(renderer as SDL_Renderer_p, points[] as SDL_FPoint) = \
 	R'''
@@ -751,7 +751,7 @@ SDL_RenderDrawLinesF(renderer as SDL_Renderer_p, points[] as SDL_FPoint) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderDrawRectF(renderer as SDL_Renderer_p, rect as const_SDL_FRect_p):int
+SDL_RenderDrawRectF(renderer as SDL_Renderer_p, rect as const_SDL_FRect_p) as int
 
 SDL_RenderDrawRectsF(renderer as SDL_Renderer_p, rects[] as SDL_FRect) = \
 	R'''
@@ -760,7 +760,7 @@ SDL_RenderDrawRectsF(renderer as SDL_Renderer_p, rects[] as SDL_FRect) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderFillRectF(renderer as SDL_Renderer_p, rect as const_SDL_FRect_p):int
+SDL_RenderFillRectF(renderer as SDL_Renderer_p, rect as const_SDL_FRect_p) as int
 
 SDL_RenderFillRectsF(renderer as SDL_Renderer_p, rects[] as SDL_FRect) = \
 	R'''
@@ -769,11 +769,11 @@ SDL_RenderFillRectsF(renderer as SDL_Renderer_p, rects[] as SDL_FRect) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_RenderCopyF(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect as const_SDL_FRect_p):int
+SDL_RenderCopyF(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect as const_SDL_FRect_p) as int
 
-//SDL_RenderCopyExF(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect as const_SDL_FRect_p, angle as const_double, center as const_SDL_FPoint_p, flip as const_SDL_RendererFlip):int
+//SDL_RenderCopyExF(renderer as SDL_Renderer_p, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect as const_SDL_FRect_p, angle as const_double, center as const_SDL_FPoint_p, flip as const_SDL_RendererFlip) as int
 
-SDL_RenderReadPixels(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p, format as Uint32, pixels as void_p, pitch as int):int
+SDL_RenderReadPixels(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p, format as Uint32, pixels as void_p, pitch as int) as int
 
 SDL_RenderPresent(renderer as SDL_Renderer_p):void
 
@@ -781,32 +781,32 @@ SDL_DestroyTexture(texture:nil as SDL_Texture_p):void
 
 SDL_DestroyRenderer(renderer:nil as SDL_Renderer_p):void
 
-SDL_RenderFlush(renderer as SDL_Renderer_p):int
+SDL_RenderFlush(renderer as SDL_Renderer_p) as int
 
-//SDL_GL_BindTexture(texture as SDL_Texture_p, texw as float_p, texh as float_p):int
+//SDL_GL_BindTexture(texture as SDL_Texture_p, texw as float_p, texh as float_p) as int
 
-SDL_GL_UnbindTexture(texture as SDL_Texture_p):int
+SDL_GL_UnbindTexture(texture as SDL_Texture_p) as int
 
-//SDL_RenderGetMetalLayer(renderer as SDL_Renderer_p):void_p
+//SDL_RenderGetMetalLayer(renderer as SDL_Renderer_p) as void_p
 
-//SDL_RenderGetMetalCommandEncoder(renderer as SDL_Renderer_p):void_p
+//SDL_RenderGetMetalCommandEncoder(renderer as SDL_Renderer_p) as void_p
 
 //======== Pixel Formats and Conversion Routines (SDL_pixels.h) ========
 // int
 
-SDL_GetPixelFormatName(format as Uint32):const_char_p
+SDL_GetPixelFormatName(format as Uint32) as const_char_p
 
-//SDL_PixelFormatEnumToMasks(format as Uint32, bpp as int_p, Rmask as Uint32_p, Gmask as Uint32_p, Bmask as Uint32_p, Amask as Uint32_p):SDL_bool
+//SDL_PixelFormatEnumToMasks(format as Uint32, bpp as int_p, Rmask as Uint32_p, Gmask as Uint32_p, Bmask as Uint32_p, Amask as Uint32_p) as SDL_bool
 
-SDL_MasksToPixelFormatEnum(bpp as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32):Uint32
+SDL_MasksToPixelFormatEnum(bpp as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32) as Uint32
 
-SDL_AllocFormat(pixel_format as Uint32):SDL_PixelFormat_p
+SDL_AllocFormat(pixel_format as Uint32) as SDL_PixelFormat_p
 
 SDL_FreeFormat(format:nil as SDL_PixelFormat_p):void
 
-SDL_AllocPalette(ncolors as int):SDL_Palette_p
+SDL_AllocPalette(ncolors as int) as SDL_Palette_p
 
-SDL_SetPixelFormatPalette(format as SDL_PixelFormat_p, palette as SDL_Palette_p):int
+SDL_SetPixelFormatPalette(format as SDL_PixelFormat_p, palette as SDL_Palette_p) as int
 
 SDL_SetPaletteColors(palette as SDL_Palette_p, colors[] as SDL_Color, firstcolor as int) = \
 	R'''
@@ -817,9 +817,9 @@ SDL_SetPaletteColors(palette as SDL_Palette_p, colors[] as SDL_Color, firstcolor
 
 SDL_FreePalette(palette:nil as SDL_Palette_p):void
 
-SDL_MapRGB(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8):Uint32
+SDL_MapRGB(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8) as Uint32
 
-SDL_MapRGBA(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8):Uint32
+SDL_MapRGBA(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8) as Uint32
 
 SDL_GetRGB(pixel as Uint32, format as const_SDL_PixelFormat_p) = \
 	R'''
@@ -839,7 +839,7 @@ SDL_GetRGBA(pixel as Uint32, format as const_SDL_PixelFormat_p) = \
 
 //======== Rectangle Functions (SDL_rect.h) ========
 
-SDL_HasIntersection(A as const_SDL_Rect_p, B as const_SDL_Rect_p):SDL_bool
+SDL_HasIntersection(A as const_SDL_Rect_p, B as const_SDL_Rect_p) as SDL_bool
 
 SDL_IntersectRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p) = \
 	R'''
@@ -854,7 +854,7 @@ SDL_UnionRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p) = \
 	SDL_UnionRect(A, B, &result);
 	return new Value_SDL_Rect(result);
 	'''
-//SDL_EnclosePoints(points as const_SDL_Point_p, count as int, clip as const_SDL_Rect_p, result as SDL_Rect_p):SDL_bool
+//SDL_EnclosePoints(points as const_SDL_Point_p, count as int, clip as const_SDL_Rect_p, result as SDL_Rect_p) as SDL_bool
 
 SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, X1 as int, Y1 as int, X2 as int, Y2 as int) = \
 	R'''
@@ -864,32 +864,32 @@ SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, X1 as int, Y1 as int, X2 as i
 
 //======== Surface Creation and Simple Drawing (SDL_surface.h) ========
 
-SDL_CreateRGBSurface(flags as Uint32, width as int, height as int, depth as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32):SDL_Surface_p
+SDL_CreateRGBSurface(flags as Uint32, width as int, height as int, depth as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32) as SDL_Surface_p
 
-SDL_CreateRGBSurfaceWithFormat(flags as Uint32, width as int, height as int, depth as int, format as Uint32):SDL_Surface_p
+SDL_CreateRGBSurfaceWithFormat(flags as Uint32, width as int, height as int, depth as int, format as Uint32) as SDL_Surface_p
 
-SDL_CreateRGBSurfaceFrom(pixels as void_p, width as int, height as int, depth as int, pitch as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32):SDL_Surface_p
+SDL_CreateRGBSurfaceFrom(pixels as void_p, width as int, height as int, depth as int, pitch as int, Rmask as Uint32, Gmask as Uint32, Bmask as Uint32, Amask as Uint32) as SDL_Surface_p
 
-SDL_CreateRGBSurfaceWithFormatFrom(pixels as void_p, width as int, height as int, depth as int, pitch as int, format as Uint32):SDL_Surface_p
+SDL_CreateRGBSurfaceWithFormatFrom(pixels as void_p, width as int, height as int, depth as int, pitch as int, format as Uint32) as SDL_Surface_p
 
-SDL_CreateRGBSurfaceFromImage(image as Gurax_Image):SDL_Surface_p = \
+SDL_CreateRGBSurfaceFromImage(image as Gurax_Image) as SDL_Surface_p = \
 	R'''
 	return Value_SDL_Surface::Create(image.Reference());
 	'''
 
 SDL_FreeSurface(surface:nil as SDL_Surface_p):void
 
-SDL_SetSurfacePalette(surface as SDL_Surface_p, palette as SDL_Palette_p):int
+SDL_SetSurfacePalette(surface as SDL_Surface_p, palette as SDL_Palette_p) as int
 
-SDL_LockSurface(surface as SDL_Surface_p):int
+SDL_LockSurface(surface as SDL_Surface_p) as int
 
 SDL_UnlockSurface(surface as SDL_Surface_p):void
 
-SDL_LoadBMP(file as const_char_p):SDL_Surface_p
+SDL_LoadBMP(file as const_char_p) as SDL_Surface_p
 
-SDL_LoadBMP_RW(src as SDL_RWops_p, freesrc as int):SDL_Surface_p
+SDL_LoadBMP_RW(src as SDL_RWops_p, freesrc as int) as SDL_Surface_p
 
-SDL_SaveBMP(surface as SDL_Surface_p, file as const_char_p):int
+SDL_SaveBMP(surface as SDL_Surface_p, file as const_char_p) as int
 
 SDL_SaveBMP_RW(surface as SDL_Surface_p, dst as SDL_RWops_p, freedst as bool) = \
 	R'''
@@ -897,11 +897,11 @@ SDL_SaveBMP_RW(surface as SDL_Surface_p, dst as SDL_RWops_p, freedst as bool) = 
 	return new Gurax::Value_Number(rtn);
 	'''
 
-SDL_SetSurfaceRLE(surface as SDL_Surface_p, flag as bool):int
+SDL_SetSurfaceRLE(surface as SDL_Surface_p, flag as bool) as int
 
-SDL_SetColorKey(surface as SDL_Surface_p, flag as bool, key as Uint32):int
+SDL_SetColorKey(surface as SDL_Surface_p, flag as bool, key as Uint32) as int
 
-SDL_HasColorKey(surface as SDL_Surface_p):SDL_bool
+SDL_HasColorKey(surface as SDL_Surface_p) as SDL_bool
 
 SDL_GetColorKey(surface as SDL_Surface_p) = \
 	R'''
@@ -910,7 +910,7 @@ SDL_GetColorKey(surface as SDL_Surface_p) = \
 	return new Value_Number(key);
 	'''
 
-SDL_SetSurfaceColorMod(surface as SDL_Surface_p, r as Uint8, g as Uint8, b as Uint8):int
+SDL_SetSurfaceColorMod(surface as SDL_Surface_p, r as Uint8, g as Uint8, b as Uint8) as int
 
 SDL_GetSurfaceColorMod(surface as SDL_Surface_p) = \
 	R'''
@@ -919,7 +919,7 @@ SDL_GetSurfaceColorMod(surface as SDL_Surface_p) = \
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 	'''
 
-SDL_SetSurfaceAlphaMod(surface as SDL_Surface_p, alpha as Uint8):int
+SDL_SetSurfaceAlphaMod(surface as SDL_Surface_p, alpha as Uint8) as int
 
 SDL_GetSurfaceAlphaMod(surface as SDL_Surface_p) = \
 	R'''
@@ -928,7 +928,7 @@ SDL_GetSurfaceAlphaMod(surface as SDL_Surface_p) = \
 	return new Value_Number(alpha);
 	'''
 
-SDL_SetSurfaceBlendMode(surface as SDL_Surface_p, blendMode as SDL_BlendMode):int
+SDL_SetSurfaceBlendMode(surface as SDL_Surface_p, blendMode as SDL_BlendMode) as int
 
 SDL_GetSurfaceBlendMode(surface as SDL_Surface_p) = \
 	R'''
@@ -937,7 +937,7 @@ SDL_GetSurfaceBlendMode(surface as SDL_Surface_p) = \
 	return new Value_Number(blendMode);
 	'''
 
-SDL_SetClipRect(surface as SDL_Surface_p, rect:nil as const_SDL_Rect_p):SDL_bool
+SDL_SetClipRect(surface as SDL_Surface_p, rect:nil as const_SDL_Rect_p) as SDL_bool
 
 SDL_GetClipRect(surface as SDL_Surface_p) = \
 	R'''
@@ -946,37 +946,37 @@ SDL_GetClipRect(surface as SDL_Surface_p) = \
 	return new Value_SDL_Rect(rect);
 	'''
 
-SDL_DuplicateSurface(surface as SDL_Surface_p):SDL_Surface_p
+SDL_DuplicateSurface(surface as SDL_Surface_p) as SDL_Surface_p
 
-SDL_ConvertSurface(src as SDL_Surface_p, fmt as const_SDL_PixelFormat_p, flags as Uint32):SDL_Surface_p
+SDL_ConvertSurface(src as SDL_Surface_p, fmt as const_SDL_PixelFormat_p, flags as Uint32) as SDL_Surface_p
 
-SDL_ConvertSurfaceFormat(src as SDL_Surface_p, pixel_format as Uint32, flags as Uint32):SDL_Surface_p
+SDL_ConvertSurfaceFormat(src as SDL_Surface_p, pixel_format as Uint32, flags as Uint32) as SDL_Surface_p
 
-SDL_ConvertPixels(width as int, height as int, src_format as Uint32, src as const_void_p, src_pitch as int, dst_format as Uint32, dst as void_p, dst_pitch as int):int
+SDL_ConvertPixels(width as int, height as int, src_format as Uint32, src as const_void_p, src_pitch as int, dst_format as Uint32, dst as void_p, dst_pitch as int) as int
 
-SDL_FillRect(dst as SDL_Surface_p, rect:nil as const_SDL_Rect_p, color as Uint32):int
+SDL_FillRect(dst as SDL_Surface_p, rect:nil as const_SDL_Rect_p, color as Uint32) as int
 
-SDL_FillRects(dst as SDL_Surface_p, rects:nil as const_SDL_Rect_p, count as int, color as Uint32):int
+SDL_FillRects(dst as SDL_Surface_p, rects:nil as const_SDL_Rect_p, count as int, color as Uint32) as int
 
-SDL_BlitSurface(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_BlitSurface(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
-SDL_UpperBlit(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_UpperBlit(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
-SDL_LowerBlit(src as SDL_Surface_p, srcrect:nil as SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_LowerBlit(src as SDL_Surface_p, srcrect:nil as SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
-SDL_SoftStretch(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as const_SDL_Rect_p):int
+SDL_SoftStretch(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as const_SDL_Rect_p) as int
 
-SDL_BlitScaled(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_BlitScaled(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
-SDL_UpperBlitScaled(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_UpperBlitScaled(src as SDL_Surface_p, srcrect:nil as const_SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
-SDL_LowerBlitScaled(src as SDL_Surface_p, srcrect:nil as SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p):int
+SDL_LowerBlitScaled(src as SDL_Surface_p, srcrect:nil as SDL_Rect_p, dst as SDL_Surface_p, dstrect:nil as SDL_Rect_p) as int
 
 SDL_SetYUVConversionMode(mode as SDL_YUV_CONVERSION_MODE):void
 
-SDL_GetYUVConversionMode():SDL_YUV_CONVERSION_MODE
+SDL_GetYUVConversionMode() as SDL_YUV_CONVERSION_MODE
 
-SDL_GetYUVConversionModeForResolution(width as int, height as int):SDL_YUV_CONVERSION_MODE
+SDL_GetYUVConversionModeForResolution(width as int, height as int) as SDL_YUV_CONVERSION_MODE
 
 //======== Platform-specific Window Management (SDL_syswm.h) ========
 
@@ -989,7 +989,7 @@ SDL_GetWindowWMInfo(window as SDL_Window_p) = \
 
 //======== Clipboard Handling (SDL_clipboard.h) ========
 
-SDL_SetClipboardText(text as const_char_p):int
+SDL_SetClipboardText(text as const_char_p) as int
 
 SDL_GetClipboardText() = \
 	R'''
@@ -999,19 +999,19 @@ SDL_GetClipboardText() = \
 	return pValue.release();
 	'''
 
-SDL_HasClipboardText():SDL_bool
+SDL_HasClipboardText() as SDL_bool
 
 //======== Vulkan Support (SDL_vulkan.h) ========
 
-//SDL_Vulkan_LoadLibrary(path as const_char_p):int
+//SDL_Vulkan_LoadLibrary(path as const_char_p) as int
 
-//SDL_Vulkan_GetVkGetInstanceProcAddr():void_p
+//SDL_Vulkan_GetVkGetInstanceProcAddr() as void_p
 
 //SDL_Vulkan_UnloadLibrary()
 
 //SDL_Vulkan_GetInstanceExtensions(window as SDL_Window_p, pCount as unsigned_int_p, pNames as const_char_pp)
 
-//SDL_Vulkan_CreateSurface(window as SDL_Window_p, instance as VkInstance, surface as VkSurfaceKHR_p):SDL_bool
+//SDL_Vulkan_CreateSurface(window as SDL_Window_p, instance as VkInstance, surface as VkSurfaceKHR_p) as SDL_bool
 
 //SDL_Vulkan_GetDrawableSize(window as SDL_Window_p) = \
 //	R'''
@@ -1024,17 +1024,17 @@ SDL_HasClipboardText():SDL_bool
 
 SDL_PumpEvents():void
 
-SDL_PeepEvents(events as SDL_Event_p, numevents as int, action as SDL_eventaction, minType as Uint32, maxType as Uint32):int
+SDL_PeepEvents(events as SDL_Event_p, numevents as int, action as SDL_eventaction, minType as Uint32, maxType as Uint32) as int
 
-SDL_HasEvent(type as Uint32):SDL_bool
+SDL_HasEvent(type as Uint32) as SDL_bool
 
-SDL_HasEvents(minType as Uint32, maxType as Uint32):SDL_bool
+SDL_HasEvents(minType as Uint32, maxType as Uint32) as SDL_bool
 
 SDL_FlushEvent(type as Uint32):void
 
 SDL_FlushEvents(minType as Uint32, maxType as Uint32):void
 
-SDL_PollEvent(event as SDL_Event_p):int
+SDL_PollEvent(event as SDL_Event_p) as int
 
 SDL_WaitEvent(event as SDL_Event_p) = \
 	R'''
@@ -1048,11 +1048,11 @@ SDL_WaitEventTimeout(event as SDL_Event_p, timeout as int) = \
 	return new Value_Number(rtn);
 	'''
 
-SDL_PushEvent(event as SDL_Event_p):int
+SDL_PushEvent(event as SDL_Event_p) as int
 
 //SDL_SetEventFilter(filter as SDL_EventFilter, userdata as void_p):void
 
-//SDL_GetEventFilter(filter as SDL_EventFilter_p, userdata as void_pp):SDL_bool
+//SDL_GetEventFilter(filter as SDL_EventFilter_p, userdata as void_pp) as SDL_bool
 
 //SDL_AddEventWatch(filter as SDL_EventFilter, userdata as void_p):void
 
@@ -1060,13 +1060,13 @@ SDL_PushEvent(event as SDL_Event_p):int
 
 //SDL_FilterEvents(filter as SDL_EventFilter, userdata as void_p):void
 
-SDL_EventState(type as Uint32, state as int):Uint8
+SDL_EventState(type as Uint32, state as int) as Uint8
 
-SDL_RegisterEvents(numevents as int):Uint32
+SDL_RegisterEvents(numevents as int) as Uint32
 
 //======== Keyboard Support (SDL_keyboard.h) ========
 
-SDL_GetKeyboardFocus():SDL_Window_p
+SDL_GetKeyboardFocus() as SDL_Window_p
 
 SDL_GetKeyboardState() = \
 	R'''
@@ -1077,33 +1077,33 @@ SDL_GetKeyboardState() = \
 	return new Value_Array(pArray.release());
 	'''
 
-SDL_GetModState():SDL_Keymod
+SDL_GetModState() as SDL_Keymod
 
 SDL_SetModState(modstate as SDL_Keymod):void
 
-SDL_GetKeyFromScancode(scancode as SDL_Scancode):SDL_Keycode
+SDL_GetKeyFromScancode(scancode as SDL_Scancode) as SDL_Keycode
 
-SDL_GetScancodeFromKey(key as SDL_Keycode):SDL_Scancode
+SDL_GetScancodeFromKey(key as SDL_Keycode) as SDL_Scancode
 
-SDL_GetScancodeName(scancode as SDL_Scancode):const_char_p
+SDL_GetScancodeName(scancode as SDL_Scancode) as const_char_p
 
-SDL_GetScancodeFromName(name as const_char_p):SDL_Scancode
+SDL_GetScancodeFromName(name as const_char_p) as SDL_Scancode
 
-SDL_GetKeyName(key as SDL_Keycode):const_char_p
+SDL_GetKeyName(key as SDL_Keycode) as const_char_p
 
-SDL_GetKeyFromName(name as const_char_p):SDL_Keycode
+SDL_GetKeyFromName(name as const_char_p) as SDL_Keycode
 
 SDL_StartTextInput():void
 
-SDL_IsTextInputActive():SDL_bool
+SDL_IsTextInputActive() as SDL_bool
 
 SDL_StopTextInput():void
 
-SDL_SetTextInputRect(rect?:SDL_Rect_p):void
+SDL_SetTextInputRect(rect? as SDL_Rect_p):void
 
-SDL_HasScreenKeyboardSupport():SDL_bool
+SDL_HasScreenKeyboardSupport() as SDL_bool
 
-SDL_IsScreenKeyboardShown(window as SDL_Window_p):SDL_bool
+SDL_IsScreenKeyboardShown(window as SDL_Window_p) as SDL_bool
 
 //======== Keyboard Support (SDL_keycode.h) ========
 
@@ -1111,7 +1111,7 @@ SDL_IsScreenKeyboardShown(window as SDL_Window_p):SDL_bool
 
 //======== Mouse Support (SDL_mouse.h) ========
 
-SDL_GetMouseFocus():SDL_Window_p
+SDL_GetMouseFocus() as SDL_Window_p
 
 SDL_GetMouseState() = \
 	R'''
@@ -1136,29 +1136,29 @@ SDL_GetRelativeMouseState() = \
 
 SDL_WarpMouseInWindow(window as SDL_Window_p, x as int, y as int):void
 
-SDL_WarpMouseGlobal(x as int, y as int):int
+SDL_WarpMouseGlobal(x as int, y as int) as int
 
-SDL_SetRelativeMouseMode(enabled as SDL_bool):int
+SDL_SetRelativeMouseMode(enabled as SDL_bool) as int
 
-SDL_CaptureMouse(enabled as SDL_bool):int
+SDL_CaptureMouse(enabled as SDL_bool) as int
 
-SDL_GetRelativeMouseMode():SDL_bool
+SDL_GetRelativeMouseMode() as SDL_bool
 
-SDL_CreateCursor(data as const_Uint8_p, mask as const_Uint8_p, w as int, h as int, hot_x as int, hot_y as int):SDL_Cursor_p
+SDL_CreateCursor(data as const_Uint8_p, mask as const_Uint8_p, w as int, h as int, hot_x as int, hot_y as int) as SDL_Cursor_p
 
-SDL_CreateColorCursor(surface as SDL_Surface_p, hot_x as int, hot_y as int):SDL_Cursor_p
+SDL_CreateColorCursor(surface as SDL_Surface_p, hot_x as int, hot_y as int) as SDL_Cursor_p
 
-SDL_CreateSystemCursor(id as SDL_SystemCursor):SDL_Cursor_p
+SDL_CreateSystemCursor(id as SDL_SystemCursor) as SDL_Cursor_p
 
 SDL_SetCursor(cursor as SDL_Cursor_p):void
 
-SDL_GetCursor():SDL_Cursor_p
+SDL_GetCursor() as SDL_Cursor_p
 
-SDL_GetDefaultCursor():SDL_Cursor_p
+SDL_GetDefaultCursor() as SDL_Cursor_p
 
 SDL_FreeCursor(cursor:nil as SDL_Cursor_p):void
 
-SDL_ShowCursor(toggle as int):int
+SDL_ShowCursor(toggle as int) as int
 
 //======== Joystick Support (SDL_joystick.h) ========
 
@@ -1166,45 +1166,45 @@ SDL_LockJoysticks():void
 
 SDL_UnlockJoysticks():void
 
-SDL_NumJoysticks():int
+SDL_NumJoysticks() as int
 
-SDL_JoystickNameForIndex(device_index as int):const_char_p
+SDL_JoystickNameForIndex(device_index as int) as const_char_p
 
-SDL_JoystickGetDevicePlayerIndex(device_index as int):int
+SDL_JoystickGetDevicePlayerIndex(device_index as int) as int
 
-SDL_JoystickGetDeviceGUID(device_index as int):SDL_JoystickGUID
+SDL_JoystickGetDeviceGUID(device_index as int) as SDL_JoystickGUID
 
-SDL_JoystickGetDeviceVendor(device_index as int):Uint16
+SDL_JoystickGetDeviceVendor(device_index as int) as Uint16
 
-SDL_JoystickGetDeviceProduct(device_index as int):Uint16
+SDL_JoystickGetDeviceProduct(device_index as int) as Uint16
 
-SDL_JoystickGetDeviceProductVersion(device_index as int):Uint16
+SDL_JoystickGetDeviceProductVersion(device_index as int) as Uint16
 
-SDL_JoystickGetDeviceType(device_index as int):SDL_JoystickType
+SDL_JoystickGetDeviceType(device_index as int) as SDL_JoystickType
 
-SDL_JoystickGetDeviceInstanceID(device_index as int):SDL_JoystickID
+SDL_JoystickGetDeviceInstanceID(device_index as int) as SDL_JoystickID
 
-SDL_JoystickOpen(device_index as int):SDL_Joystick_p
+SDL_JoystickOpen(device_index as int) as SDL_Joystick_p
 
-SDL_JoystickFromInstanceID(instance_id as SDL_JoystickID):SDL_Joystick_p
+SDL_JoystickFromInstanceID(instance_id as SDL_JoystickID) as SDL_Joystick_p
 
-SDL_JoystickFromPlayerIndex(player_index as int):SDL_Joystick_p
+SDL_JoystickFromPlayerIndex(player_index as int) as SDL_Joystick_p
 
-SDL_JoystickName(joystick as SDL_Joystick_p):const_char_p
+SDL_JoystickName(joystick as SDL_Joystick_p) as const_char_p
 
-SDL_JoystickGetPlayerIndex(joystick as SDL_Joystick_p):int
+SDL_JoystickGetPlayerIndex(joystick as SDL_Joystick_p) as int
 
 SDL_JoystickSetPlayerIndex(joystick as SDL_Joystick_p, player_index as int):void
 
-SDL_JoystickGetGUID(joystick as SDL_Joystick_p):SDL_JoystickGUID
+SDL_JoystickGetGUID(joystick as SDL_Joystick_p) as SDL_JoystickGUID
 
-SDL_JoystickGetVendor(joystick as SDL_Joystick_p):Uint16
+SDL_JoystickGetVendor(joystick as SDL_Joystick_p) as Uint16
 
-SDL_JoystickGetProduct(joystick as SDL_Joystick_p):Uint16
+SDL_JoystickGetProduct(joystick as SDL_Joystick_p) as Uint16
 
-SDL_JoystickGetProductVersion(joystick as SDL_Joystick_p):Uint16
+SDL_JoystickGetProductVersion(joystick as SDL_Joystick_p) as Uint16
 
-SDL_JoystickGetType(joystick as SDL_Joystick_p):SDL_JoystickType
+SDL_JoystickGetType(joystick as SDL_Joystick_p) as SDL_JoystickType
 
 SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID) = \
 	R'''
@@ -1213,29 +1213,29 @@ SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID) = \
 	return new Value_String(szGUID);
 	'''
 
-SDL_JoystickGetGUIDFromString(pchGUID as const_char_p):SDL_JoystickGUID
+SDL_JoystickGetGUIDFromString(pchGUID as const_char_p) as SDL_JoystickGUID
 
-SDL_JoystickGetAttached(joystick as SDL_Joystick_p):SDL_bool
+SDL_JoystickGetAttached(joystick as SDL_Joystick_p) as SDL_bool
 
-SDL_JoystickInstanceID(joystick as SDL_Joystick_p):SDL_JoystickID
+SDL_JoystickInstanceID(joystick as SDL_Joystick_p) as SDL_JoystickID
 
-SDL_JoystickNumAxes(joystick as SDL_Joystick_p):int
+SDL_JoystickNumAxes(joystick as SDL_Joystick_p) as int
 
-SDL_JoystickNumBalls(joystick as SDL_Joystick_p):int
+SDL_JoystickNumBalls(joystick as SDL_Joystick_p) as int
 
-SDL_JoystickNumHats(joystick as SDL_Joystick_p):int
+SDL_JoystickNumHats(joystick as SDL_Joystick_p) as int
 
-SDL_JoystickNumButtons(joystick as SDL_Joystick_p):int
+SDL_JoystickNumButtons(joystick as SDL_Joystick_p) as int
 
 SDL_JoystickUpdate():void
 
-SDL_JoystickEventState(state as int):int
+SDL_JoystickEventState(state as int) as int
 
-SDL_JoystickGetAxis(joystick as SDL_Joystick_p, axis as int):Sint16
+SDL_JoystickGetAxis(joystick as SDL_Joystick_p, axis as int) as Sint16
 
-//SDL_JoystickGetAxisInitialState(joystick as SDL_Joystick_p, axis as int, state as Sint16_p):SDL_bool
+//SDL_JoystickGetAxisInitialState(joystick as SDL_Joystick_p, axis as int, state as Sint16_p) as SDL_bool
 
-SDL_JoystickGetHat(joystick as SDL_Joystick_p, hat as int):Uint8
+SDL_JoystickGetHat(joystick as SDL_Joystick_p, hat as int) as Uint8
 
 SDL_JoystickGetBall(joystick as SDL_Joystick_p, ball as int) = \
 	R'''
@@ -1244,21 +1244,21 @@ SDL_JoystickGetBall(joystick as SDL_Joystick_p, ball as int) = \
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 	'''
 
-SDL_JoystickGetButton(joystick as SDL_Joystick_p, button as int):Uint8
+SDL_JoystickGetButton(joystick as SDL_Joystick_p, button as int) as Uint8
 
-SDL_JoystickRumble(joystick as SDL_Joystick_p, low_frequency_rumble as Uint16, high_frequency_rumble as Uint16, duration_ms as Uint32):int
+SDL_JoystickRumble(joystick as SDL_Joystick_p, low_frequency_rumble as Uint16, high_frequency_rumble as Uint16, duration_ms as Uint32) as int
 
 SDL_JoystickClose(joystick as SDL_Joystick_p):void
 
-SDL_JoystickCurrentPowerLevel(joystick as SDL_Joystick_p):SDL_JoystickPowerLevel
+SDL_JoystickCurrentPowerLevel(joystick as SDL_Joystick_p) as SDL_JoystickPowerLevel
 
 //======== Game Controller Support (SDL_gamecontroller.h) ========
 
-SDL_GameControllerAddMappingsFromRW(rw as SDL_RWops_p, freerw as int):int
+SDL_GameControllerAddMappingsFromRW(rw as SDL_RWops_p, freerw as int) as int
 
-SDL_GameControllerAddMapping(mappingString as const_char_p):int
+SDL_GameControllerAddMapping(mappingString as const_char_p) as int
 
-SDL_GameControllerNumMappings():int
+SDL_GameControllerNumMappings() as int
 
 SDL_GameControllerMappingForIndex(mapping_index as int) = \
 	R'''
@@ -1287,11 +1287,11 @@ SDL_GameControllerMapping(gamecontroller as SDL_GameController_p) = \
 	return pValue.release();
 	'''
 
-SDL_IsGameController(joystick_index as int):SDL_bool
+SDL_IsGameController(joystick_index as int) as SDL_bool
 
-SDL_GameControllerNameForIndex(joystick_index as int):const_char_p
+SDL_GameControllerNameForIndex(joystick_index as int) as const_char_p
 
-SDL_GameControllerTypeForIndex(joystick_index as int):SDL_GameControllerType
+SDL_GameControllerTypeForIndex(joystick_index as int) as SDL_GameControllerType
 
 SDL_GameControllerMappingForDeviceIndex(joystick_index as int) = \
 	R'''
@@ -1302,79 +1302,79 @@ SDL_GameControllerMappingForDeviceIndex(joystick_index as int) = \
 	return pValue.release();
 	'''
 
-SDL_GameControllerOpen(joystick_index as int):SDL_GameController_p
+SDL_GameControllerOpen(joystick_index as int) as SDL_GameController_p
 
-SDL_GameControllerFromInstanceID(joyid as SDL_JoystickID):SDL_GameController_p
+SDL_GameControllerFromInstanceID(joyid as SDL_JoystickID) as SDL_GameController_p
 
-SDL_GameControllerFromPlayerIndex(player_index as int):SDL_GameController_p
+SDL_GameControllerFromPlayerIndex(player_index as int) as SDL_GameController_p
 
-SDL_GameControllerName(gamecontroller as SDL_GameController_p):const_char_p
+SDL_GameControllerName(gamecontroller as SDL_GameController_p) as const_char_p
 
-SDL_GameControllerGetType(gamecontroller as SDL_GameController_p):SDL_GameControllerType
+SDL_GameControllerGetType(gamecontroller as SDL_GameController_p) as SDL_GameControllerType
 
-SDL_GameControllerGetPlayerIndex(gamecontroller as SDL_GameController_p):int
+SDL_GameControllerGetPlayerIndex(gamecontroller as SDL_GameController_p) as int
 
 SDL_GameControllerSetPlayerIndex(gamecontroller as SDL_GameController_p, player_index as int):void
 
-SDL_GameControllerGetVendor(gamecontroller as SDL_GameController_p):Uint16
+SDL_GameControllerGetVendor(gamecontroller as SDL_GameController_p) as Uint16
 
-SDL_GameControllerGetProduct(gamecontroller as SDL_GameController_p):Uint16
+SDL_GameControllerGetProduct(gamecontroller as SDL_GameController_p) as Uint16
 
-SDL_GameControllerGetProductVersion(gamecontroller as SDL_GameController_p):Uint16
+SDL_GameControllerGetProductVersion(gamecontroller as SDL_GameController_p) as Uint16
 
-SDL_GameControllerGetAttached(gamecontroller as SDL_GameController_p):SDL_bool
+SDL_GameControllerGetAttached(gamecontroller as SDL_GameController_p) as SDL_bool
 
-SDL_GameControllerGetJoystick(gamecontroller as SDL_GameController_p):SDL_Joystick_p
+SDL_GameControllerGetJoystick(gamecontroller as SDL_GameController_p) as SDL_Joystick_p
 
-SDL_GameControllerEventState(state as int):int
+SDL_GameControllerEventState(state as int) as int
 
 SDL_GameControllerUpdate():void
 
-SDL_GameControllerGetAxisFromString(pchString as const_char_p):SDL_GameControllerAxis
+SDL_GameControllerGetAxisFromString(pchString as const_char_p) as SDL_GameControllerAxis
 
-SDL_GameControllerGetStringForAxis(axis as SDL_GameControllerAxis):const_char_p
+SDL_GameControllerGetStringForAxis(axis as SDL_GameControllerAxis) as const_char_p
 
-//SDL_GameControllerGetBindForAxis(gamecontroller as SDL_GameController_p, axis as SDL_GameControllerAxis):SDL_GameControllerButtonBind
+//SDL_GameControllerGetBindForAxis(gamecontroller as SDL_GameController_p, axis as SDL_GameControllerAxis) as SDL_GameControllerButtonBind
 
-SDL_GameControllerGetAxis(gamecontroller as SDL_GameController_p, axis as SDL_GameControllerAxis):Sint16
+SDL_GameControllerGetAxis(gamecontroller as SDL_GameController_p, axis as SDL_GameControllerAxis) as Sint16
 
-SDL_GameControllerGetButtonFromString(pchString as const_char_p):SDL_GameControllerButton
+SDL_GameControllerGetButtonFromString(pchString as const_char_p) as SDL_GameControllerButton
 
-SDL_GameControllerGetStringForButton(button as SDL_GameControllerButton):const_char_p
+SDL_GameControllerGetStringForButton(button as SDL_GameControllerButton) as const_char_p
 
-//SDL_GameControllerGetBindForButton(gamecontroller as SDL_GameController_p, button as SDL_GameControllerButton):SDL_GameControllerButtonBind
+//SDL_GameControllerGetBindForButton(gamecontroller as SDL_GameController_p, button as SDL_GameControllerButton) as SDL_GameControllerButtonBind
 
-SDL_GameControllerGetButton(gamecontroller as SDL_GameController_p, button as SDL_GameControllerButton):Uint8
+SDL_GameControllerGetButton(gamecontroller as SDL_GameController_p, button as SDL_GameControllerButton) as Uint8
 
-SDL_GameControllerRumble(gamecontroller as SDL_GameController_p, low_frequency_rumble as Uint16, high_frequency_rumble as Uint16, duration_ms as Uint32):int
+SDL_GameControllerRumble(gamecontroller as SDL_GameController_p, low_frequency_rumble as Uint16, high_frequency_rumble as Uint16, duration_ms as Uint32) as int
 
 SDL_GameControllerClose(gamecontroller as SDL_GameController_p):void
 
 //======== Sensors (SDL_sensor.h) ========
 
-SDL_NumSensors():int
+SDL_NumSensors() as int
 
-SDL_SensorGetDeviceName(device_index as int):const_char_p
+SDL_SensorGetDeviceName(device_index as int) as const_char_p
 
-SDL_SensorGetDeviceType(device_index as int):SDL_SensorType
+SDL_SensorGetDeviceType(device_index as int) as SDL_SensorType
 
-SDL_SensorGetDeviceNonPortableType(device_index as int):int
+SDL_SensorGetDeviceNonPortableType(device_index as int) as int
 
-SDL_SensorGetDeviceInstanceID(device_index as int):SDL_SensorID
+SDL_SensorGetDeviceInstanceID(device_index as int) as SDL_SensorID
 
-SDL_SensorOpen(device_index as int):SDL_Sensor_p
+SDL_SensorOpen(device_index as int) as SDL_Sensor_p
 
-SDL_SensorFromInstanceID(instance_id as SDL_SensorID):SDL_Sensor_p
+SDL_SensorFromInstanceID(instance_id as SDL_SensorID) as SDL_Sensor_p
 
-SDL_SensorGetName(sensor as SDL_Sensor_p):const_char_p
+SDL_SensorGetName(sensor as SDL_Sensor_p) as const_char_p
 
-SDL_SensorGetType(sensor as SDL_Sensor_p):SDL_SensorType
+SDL_SensorGetType(sensor as SDL_Sensor_p) as SDL_SensorType
 
-SDL_SensorGetNonPortableType(sensor as SDL_Sensor_p):int
+SDL_SensorGetNonPortableType(sensor as SDL_Sensor_p) as int
 
-SDL_SensorGetInstanceID(sensor as SDL_Sensor_p):SDL_SensorID
+SDL_SensorGetInstanceID(sensor as SDL_Sensor_p) as SDL_SensorID
 
-//SDL_SensorGetData(sensor as SDL_Sensor_p, data as float_p, num_values as int):int
+//SDL_SensorGetData(sensor as SDL_Sensor_p, data as float_p, num_values as int) as int
 
 SDL_SensorClose(sensor as SDL_Sensor_p):void
 
@@ -1382,85 +1382,85 @@ SDL_SensorUpdate():void
 
 //======== Force Feedback Support (SDL_haptic.h) ========
 
-SDL_NumHaptics():int
+SDL_NumHaptics() as int
 
-SDL_HapticName(device_index as int):const_char_p
+SDL_HapticName(device_index as int) as const_char_p
 
-SDL_HapticOpen(device_index as int):SDL_Haptic_p
+SDL_HapticOpen(device_index as int) as SDL_Haptic_p
 
-SDL_HapticOpened(device_index as int):int
+SDL_HapticOpened(device_index as int) as int
 
-SDL_HapticIndex(haptic as SDL_Haptic_p):int
+SDL_HapticIndex(haptic as SDL_Haptic_p) as int
 
-SDL_MouseIsHaptic():int
+SDL_MouseIsHaptic() as int
 
-SDL_HapticOpenFromMouse():SDL_Haptic_p
+SDL_HapticOpenFromMouse() as SDL_Haptic_p
 
-SDL_JoystickIsHaptic(joystick as SDL_Joystick_p):int
+SDL_JoystickIsHaptic(joystick as SDL_Joystick_p) as int
 
-SDL_HapticOpenFromJoystick(joystick as SDL_Joystick_p):SDL_Haptic_p
+SDL_HapticOpenFromJoystick(joystick as SDL_Joystick_p) as SDL_Haptic_p
 
 SDL_HapticClose(haptic as SDL_Haptic_p):void
 
-SDL_HapticNumEffects(haptic as SDL_Haptic_p):int
+SDL_HapticNumEffects(haptic as SDL_Haptic_p) as int
 
-SDL_HapticNumEffectsPlaying(haptic as SDL_Haptic_p):int
+SDL_HapticNumEffectsPlaying(haptic as SDL_Haptic_p) as int
 
-SDL_HapticQuery(haptic as SDL_Haptic_p):unsigned_int
+SDL_HapticQuery(haptic as SDL_Haptic_p) as unsigned_int
 
-SDL_HapticNumAxes(haptic as SDL_Haptic_p):int
+SDL_HapticNumAxes(haptic as SDL_Haptic_p) as int
 
-SDL_HapticEffectSupported(haptic as SDL_Haptic_p, effect as SDL_HapticEffect_p):int
+SDL_HapticEffectSupported(haptic as SDL_Haptic_p, effect as SDL_HapticEffect_p) as int
 
-SDL_HapticNewEffect(haptic as SDL_Haptic_p, effect as SDL_HapticEffect_p):int
+SDL_HapticNewEffect(haptic as SDL_Haptic_p, effect as SDL_HapticEffect_p) as int
 
-SDL_HapticUpdateEffect(haptic as SDL_Haptic_p, effect as int, data as SDL_HapticEffect_p):int
+SDL_HapticUpdateEffect(haptic as SDL_Haptic_p, effect as int, data as SDL_HapticEffect_p) as int
 
-SDL_HapticRunEffect(haptic as SDL_Haptic_p, effect as int, iterations as Uint32):int
+SDL_HapticRunEffect(haptic as SDL_Haptic_p, effect as int, iterations as Uint32) as int
 
-SDL_HapticStopEffect(haptic as SDL_Haptic_p, effect as int):int
+SDL_HapticStopEffect(haptic as SDL_Haptic_p, effect as int) as int
 
 SDL_HapticDestroyEffect(haptic as SDL_Haptic_p, effect as int):void
 
-SDL_HapticGetEffectStatus(haptic as SDL_Haptic_p, effect as int):int
+SDL_HapticGetEffectStatus(haptic as SDL_Haptic_p, effect as int) as int
 
-SDL_HapticSetGain(haptic as SDL_Haptic_p, gain as int):int
+SDL_HapticSetGain(haptic as SDL_Haptic_p, gain as int) as int
 
-SDL_HapticSetAutocenter(haptic as SDL_Haptic_p, autocenter as int):int
+SDL_HapticSetAutocenter(haptic as SDL_Haptic_p, autocenter as int) as int
 
-SDL_HapticPause(haptic as SDL_Haptic_p):int
+SDL_HapticPause(haptic as SDL_Haptic_p) as int
 
-SDL_HapticUnpause(haptic as SDL_Haptic_p):int
+SDL_HapticUnpause(haptic as SDL_Haptic_p) as int
 
-SDL_HapticStopAll(haptic as SDL_Haptic_p):int
+SDL_HapticStopAll(haptic as SDL_Haptic_p) as int
 
-SDL_HapticRumbleSupported(haptic as SDL_Haptic_p):int
+SDL_HapticRumbleSupported(haptic as SDL_Haptic_p) as int
 
-SDL_HapticRumbleInit(haptic as SDL_Haptic_p):int
+SDL_HapticRumbleInit(haptic as SDL_Haptic_p) as int
 
-SDL_HapticRumblePlay(haptic as SDL_Haptic_p, strength as float, length as Uint32):int
+SDL_HapticRumblePlay(haptic as SDL_Haptic_p, strength as float, length as Uint32) as int
 
-SDL_HapticRumbleStop(haptic as SDL_Haptic_p):int
+SDL_HapticRumbleStop(haptic as SDL_Haptic_p) as int
 
 //======== Audio Device Management, Playing and Recording (SDL_audio.h) ========
 
-SDL_GetNumAudioDrivers():int
+SDL_GetNumAudioDrivers() as int
 
-SDL_GetAudioDriver(index as int):const_char_p
+SDL_GetAudioDriver(index as int) as const_char_p
 
-SDL_AUDIO_BITSIZE(format as SDL_AudioFormat):int
+SDL_AUDIO_BITSIZE(format as SDL_AudioFormat) as int
 
-SDL_AudioInit(driver_name as const_char_p):int
+SDL_AudioInit(driver_name as const_char_p) as int
 
 SDL_AudioQuit():void
 
-SDL_GetCurrentAudioDriver():const_char_p
+SDL_GetCurrentAudioDriver() as const_char_p
 
-SDL_OpenAudio(desired as SDL_AudioSpec_p, obtained as SDL_AudioSpec_p):int
+SDL_OpenAudio(desired as SDL_AudioSpec_p, obtained as SDL_AudioSpec_p) as int
 
-SDL_GetNumAudioDevices(iscapture as bool):int
+SDL_GetNumAudioDevices(iscapture as bool) as int
 
-SDL_GetAudioDeviceName(index as int, iscapture as bool):const_char_p
+SDL_GetAudioDeviceName(index as int, iscapture as bool) as const_char_p
 
 SDL_OpenAudioDevice(device:nil as const_char_p, iscapture as bool, desired as const_SDL_AudioSpec_p, obtained as SDL_AudioSpec_p, allowed_changes as int) = \
 	R'''
@@ -1470,31 +1470,31 @@ SDL_OpenAudioDevice(device:nil as const_char_p, iscapture as bool, desired as co
 	return new Value_Number(rtn);
 	'''
 
-SDL_GetAudioStatus():SDL_AudioStatus
+SDL_GetAudioStatus() as SDL_AudioStatus
 
-SDL_GetAudioDeviceStatus(dev as SDL_AudioDeviceID):SDL_AudioStatus
+SDL_GetAudioDeviceStatus(dev as SDL_AudioDeviceID) as SDL_AudioStatus
 
 SDL_PauseAudio(pause_on as bool):void
 
 SDL_PauseAudioDevice(dev as SDL_AudioDeviceID, pause_on as bool):void
 
-//SDL_LoadWAV_RW(src as SDL_RWops_p, freesrc as int, spec as SDL_AudioSpec_p, audio_buf as Uint8_pp, audio_len as Uint32_p):SDL_AudioSpec_p
+//SDL_LoadWAV_RW(src as SDL_RWops_p, freesrc as int, spec as SDL_AudioSpec_p, audio_buf as Uint8_pp, audio_len as Uint32_p) as SDL_AudioSpec_p
 
 //SDL_FreeWAV(audio_buf as Uint8_p):void
 
-SDL_BuildAudioCVT(cvt as SDL_AudioCVT_p, src_format as SDL_AudioFormat, src_channels as Uint8, src_rate as int, dst_format as SDL_AudioFormat, dst_channels as Uint8, dst_rate as int):int
+SDL_BuildAudioCVT(cvt as SDL_AudioCVT_p, src_format as SDL_AudioFormat, src_channels as Uint8, src_rate as int, dst_format as SDL_AudioFormat, dst_channels as Uint8, dst_rate as int) as int
 
-SDL_ConvertAudio(cvt as SDL_AudioCVT_p):int
+SDL_ConvertAudio(cvt as SDL_AudioCVT_p) as int
 
-//SDL_NewAudioStream(src_format as SDL_AudioFormat, src_channels as const_Uint8, src_rate as const_int, dst_format as const_SDL_AudioFormat, dst_channels as const_Uint8, dst_rate as const_int):SDL_AudioStream_p
+//SDL_NewAudioStream(src_format as SDL_AudioFormat, src_channels as const_Uint8, src_rate as const_int, dst_format as const_SDL_AudioFormat, dst_channels as const_Uint8, dst_rate as const_int) as SDL_AudioStream_p
 
-SDL_AudioStreamPut(stream as SDL_AudioStream_p, buf as const_void_p, len as int):int
+SDL_AudioStreamPut(stream as SDL_AudioStream_p, buf as const_void_p, len as int) as int
 
-SDL_AudioStreamGet(stream as SDL_AudioStream_p, buf as void_p, len as int):int
+SDL_AudioStreamGet(stream as SDL_AudioStream_p, buf as void_p, len as int) as int
 
-SDL_AudioStreamAvailable(stream as SDL_AudioStream_p):int
+SDL_AudioStreamAvailable(stream as SDL_AudioStream_p) as int
 
-SDL_AudioStreamFlush(stream as SDL_AudioStream_p):int
+SDL_AudioStreamFlush(stream as SDL_AudioStream_p) as int
 
 SDL_AudioStreamClear(stream as SDL_AudioStream_p):void
 
@@ -1504,11 +1504,11 @@ SDL_FreeAudioStream(stream:nil as SDL_AudioStream_p):void
 
 //SDL_MixAudioFormat(dst as Uint8_p, src as const_Uint8_p, format as SDL_AudioFormat, len as Uint32, volume as int):void
 
-SDL_QueueAudio(dev as SDL_AudioDeviceID, data as const_void_p, len as Uint32):int
+SDL_QueueAudio(dev as SDL_AudioDeviceID, data as const_void_p, len as Uint32) as int
 
-SDL_DequeueAudio(dev as SDL_AudioDeviceID, data as void_p, len as Uint32):Uint32
+SDL_DequeueAudio(dev as SDL_AudioDeviceID, data as void_p, len as Uint32) as Uint32
 
-SDL_GetQueuedAudioSize(dev as SDL_AudioDeviceID):Uint32
+SDL_GetQueuedAudioSize(dev as SDL_AudioDeviceID) as Uint32
 
 SDL_ClearQueuedAudio(dev as SDL_AudioDeviceID):void
 
@@ -1526,77 +1526,77 @@ SDL_CloseAudioDevice(dev as SDL_AudioDeviceID):void
 
 //======== Thread Management (SDL_thread.h) ========
 
-//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread) as SDL_Thread_p
 
-//SDL_CreateThreadWithStackSize(*:int_SDLCALL_p_fn_void):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(*:int_SDLCALL_p_fn_void) as SDL_Thread_p
 
-//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread) as SDL_Thread_p
 
-//SDL_CreateThreadWithStackSize(fn as SDL_ThreadFunction, name as const_char_p, stacksize as const_size_t, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(fn as SDL_ThreadFunction, name as const_char_p, stacksize as const_size_t, data as void_p, pfnBeginThread as pfnSDL_CurrentBeginThread, pfnEndThread as pfnSDL_CurrentEndThread) as SDL_Thread_p
 
-//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p):SDL_Thread_p
+//SDL_CreateThread(fn as SDL_ThreadFunction, name as const_char_p, data as void_p) as SDL_Thread_p
 
-//SDL_CreateThreadWithStackSize(fn as SDL_ThreadFunction, name as const_char_p, stacksize as const_size_t, data as void_p):SDL_Thread_p
+//SDL_CreateThreadWithStackSize(fn as SDL_ThreadFunction, name as const_char_p, stacksize as const_size_t, data as void_p) as SDL_Thread_p
 
-//SDL_GetThreadName(thread as SDL_Thread_p):const_char_p
+//SDL_GetThreadName(thread as SDL_Thread_p) as const_char_p
 
-//SDL_ThreadID():SDL_threadID
+//SDL_ThreadID() as SDL_threadID
 
-//SDL_GetThreadID(thread as SDL_Thread_p):SDL_threadID
+//SDL_GetThreadID(thread as SDL_Thread_p) as SDL_threadID
 
-//SDL_SetThreadPriority(priority as SDL_ThreadPriority):int
+//SDL_SetThreadPriority(priority as SDL_ThreadPriority) as int
 
 //SDL_WaitThread(thread as SDL_Thread_p, status as int_p):void
 
 //SDL_DetachThread(thread as SDL_Thread_p):void
 
-//SDL_TLSCreate():SDL_TLSID
+//SDL_TLSCreate() as SDL_TLSID
 
-//SDL_TLSGet(id as SDL_TLSID):void_p
+//SDL_TLSGet(id as SDL_TLSID) as void_p
 
-//SDL_TLSSet(id as SDL_TLSID, value as const_void_p, *:void_SDLCALL_p_destructor_void):int
+//SDL_TLSSet(id as SDL_TLSID, value as const_void_p, *:void_SDLCALL_p_destructor_void) as int
 
 //======== Thread Synchronization Primitives (SDL_mutex.h) ========
 
-//SDL_CreateMutex():SDL_mutex_p
+//SDL_CreateMutex() as SDL_mutex_p
 
-//SDL_LockMutex(mutex as SDL_mutex_p):int
+//SDL_LockMutex(mutex as SDL_mutex_p) as int
 
-//SDL_TryLockMutex(mutex as SDL_mutex_p):int
+//SDL_TryLockMutex(mutex as SDL_mutex_p) as int
 
-//SDL_UnlockMutex(mutex as SDL_mutex_p):int
+//SDL_UnlockMutex(mutex as SDL_mutex_p) as int
 
 //SDL_DestroyMutex(mutex:nil as SDL_mutex_p):void
 
-//SDL_CreateSemaphore(initial_value as Uint32):SDL_sem_p
+//SDL_CreateSemaphore(initial_value as Uint32) as SDL_sem_p
 
 //SDL_DestroySemaphore(sem:nil as SDL_sem_p):void
 
-//SDL_SemWait(sem as SDL_sem_p):int
+//SDL_SemWait(sem as SDL_sem_p) as int
 
-//SDL_SemTryWait(sem as SDL_sem_p):int
+//SDL_SemTryWait(sem as SDL_sem_p) as int
 
-//SDL_SemWaitTimeout(sem as SDL_sem_p, ms as Uint32):int
+//SDL_SemWaitTimeout(sem as SDL_sem_p, ms as Uint32) as int
 
-//SDL_SemPost(sem as SDL_sem_p):int
+//SDL_SemPost(sem as SDL_sem_p) as int
 
-//SDL_SemValue(sem as SDL_sem_p):Uint32
+//SDL_SemValue(sem as SDL_sem_p) as Uint32
 
-//SDL_CreateCond():SDL_cond_p
+//SDL_CreateCond() as SDL_cond_p
 
 //SDL_DestroyCond(cond:nil as SDL_cond_p):void
 
-//SDL_CondSignal(cond as SDL_cond_p):int
+//SDL_CondSignal(cond as SDL_cond_p) as int
 
-//SDL_CondBroadcast(cond as SDL_cond_p):int
+//SDL_CondBroadcast(cond as SDL_cond_p) as int
 
-//SDL_CondWait(cond as SDL_cond_p, mutex as SDL_mutex_p):int
+//SDL_CondWait(cond as SDL_cond_p, mutex as SDL_mutex_p) as int
 
-//SDL_CondWaitTimeout(cond as SDL_cond_p, mutex as SDL_mutex_p, ms as Uint32):int
+//SDL_CondWaitTimeout(cond as SDL_cond_p, mutex as SDL_mutex_p, ms as Uint32) as int
 
 //======== Atomic Operations (SDL_atomic.h) ========
 
-//SDL_AtomicTryLock(lock as SDL_SpinLock_p):SDL_bool
+//SDL_AtomicTryLock(lock as SDL_SpinLock_p) as SDL_bool
 
 //SDL_AtomicLock(lock as SDL_SpinLock_p):void
 
@@ -1606,105 +1606,105 @@ SDL_CloseAudioDevice(dev as SDL_AudioDeviceID):void
 
 //SDL_MemoryBarrierAcquireFunction():void
 
-//SDL_AtomicCAS(a as SDL_atomic_t_p, oldval as int, newval as int):SDL_bool
+//SDL_AtomicCAS(a as SDL_atomic_t_p, oldval as int, newval as int) as SDL_bool
 
-//SDL_AtomicSet(a as SDL_atomic_t_p, v as int):int
+//SDL_AtomicSet(a as SDL_atomic_t_p, v as int) as int
 
-//SDL_AtomicGet(a as SDL_atomic_t_p):int
+//SDL_AtomicGet(a as SDL_atomic_t_p) as int
 
-//SDL_AtomicAdd(a as SDL_atomic_t_p, v as int):int
+//SDL_AtomicAdd(a as SDL_atomic_t_p, v as int) as int
 
-//SDL_AtomicCASPtr(a as void_pp, oldval as void_p, newval as void_p):SDL_bool
+//SDL_AtomicCASPtr(a as void_pp, oldval as void_p, newval as void_p) as SDL_bool
 
-//SDL_AtomicSetPtr(a as void_pp, v as void_p):void_p
+//SDL_AtomicSetPtr(a as void_pp, v as void_p) as void_p
 
-//SDL_AtomicGetPtr(a as void_pp):void_p
+//SDL_AtomicGetPtr(a as void_pp) as void_p
 
 //======== Timer Support (SDL_timer.h) ========
 
-SDL_GetTicks():Uint32
+SDL_GetTicks() as Uint32
 
-SDL_GetPerformanceCounter():Uint64
+SDL_GetPerformanceCounter() as Uint64
 
-SDL_GetPerformanceFrequency():Uint64
+SDL_GetPerformanceFrequency() as Uint64
 
 SDL_Delay(ms as Uint32):void
 
-//SDL_AddTimer(interval as Uint32, callback as SDL_TimerCallback, param as void_p):SDL_TimerID
+//SDL_AddTimer(interval as Uint32, callback as SDL_TimerCallback, param as void_p) as SDL_TimerID
 
-SDL_RemoveTimer(id as SDL_TimerID):SDL_bool
+SDL_RemoveTimer(id as SDL_TimerID) as SDL_bool
 
 //======== Filesystem Paths (SDL_filesystem.h) ========
 
-//SDL_GetBasePath():char_p
+//SDL_GetBasePath() as char_p
 
-//SDL_GetPrefPath(org as const_char_p, app as const_char_p):char_p
+//SDL_GetPrefPath(org as const_char_p, app as const_char_p) as char_p
 
 //======== File I/O Abstraction (SDL_rwops.h) ========
 
-SDL_RWFromFile(file as const_char_p, mode as const_char_p):SDL_RWops_p
+SDL_RWFromFile(file as const_char_p, mode as const_char_p) as SDL_RWops_p
 
-//SDL_RWFromFP(fp as FILE_p, autoclose as SDL_bool):SDL_RWops_p
+//SDL_RWFromFP(fp as FILE_p, autoclose as SDL_bool) as SDL_RWops_p
 
-//SDL_RWFromFP(fp as void_p, autoclose as SDL_bool):SDL_RWops_p
+//SDL_RWFromFP(fp as void_p, autoclose as SDL_bool) as SDL_RWops_p
 
-//SDL_RWFromMem(mem as void_p, size as int):SDL_RWops_p
+//SDL_RWFromMem(mem as void_p, size as int) as SDL_RWops_p
 
-SDL_RWFromConstMem(mem as const_void_p, size as int):SDL_RWops_p
+SDL_RWFromConstMem(mem as const_void_p, size as int) as SDL_RWops_p
 
-SDL_AllocRW():SDL_RWops_p
+SDL_AllocRW() as SDL_RWops_p
 
 SDL_FreeRW(area:nil as SDL_RWops_p):void
 
-SDL_RWsize(context as SDL_RWops_p):Sint64
+SDL_RWsize(context as SDL_RWops_p) as Sint64
 
-SDL_RWseek(context as SDL_RWops_p, offset as Sint64, whence as int):Sint64
+SDL_RWseek(context as SDL_RWops_p, offset as Sint64, whence as int) as Sint64
 
-SDL_RWtell(context as SDL_RWops_p):Sint64
+SDL_RWtell(context as SDL_RWops_p) as Sint64
 
-SDL_RWread(context as SDL_RWops_p, ptr as void_p, size as size_t, maxnum as size_t):size_t
+SDL_RWread(context as SDL_RWops_p, ptr as void_p, size as size_t, maxnum as size_t) as size_t
 
-SDL_RWwrite(context as SDL_RWops_p, ptr as const_void_p, size as size_t, num as size_t):size_t
+SDL_RWwrite(context as SDL_RWops_p, ptr as const_void_p, size as size_t, num as size_t) as size_t
 
-SDL_RWclose(context as SDL_RWops_p):int
+SDL_RWclose(context as SDL_RWops_p) as int
 
-//SDL_LoadFile_RW(src as SDL_RWops_p, datasize as size_t_p, freesrc as int):void_p
+//SDL_LoadFile_RW(src as SDL_RWops_p, datasize as size_t_p, freesrc as int) as void_p
 
-//SDL_LoadFile(file as const_char_p, datasize as size_t_p):void_p
+//SDL_LoadFile(file as const_char_p, datasize as size_t_p) as void_p
 
-SDL_ReadU8(src as SDL_RWops_p):Uint8
+SDL_ReadU8(src as SDL_RWops_p) as Uint8
 
-SDL_ReadLE16(src as SDL_RWops_p):Uint16
+SDL_ReadLE16(src as SDL_RWops_p) as Uint16
 
-SDL_ReadBE16(src as SDL_RWops_p):Uint16
+SDL_ReadBE16(src as SDL_RWops_p) as Uint16
 
-SDL_ReadLE32(src as SDL_RWops_p):Uint32
+SDL_ReadLE32(src as SDL_RWops_p) as Uint32
 
-SDL_ReadBE32(src as SDL_RWops_p):Uint32
+SDL_ReadBE32(src as SDL_RWops_p) as Uint32
 
-SDL_ReadLE64(src as SDL_RWops_p):Uint64
+SDL_ReadLE64(src as SDL_RWops_p) as Uint64
 
-SDL_ReadBE64(src as SDL_RWops_p):Uint64
+SDL_ReadBE64(src as SDL_RWops_p) as Uint64
 
-SDL_WriteU8(dst as SDL_RWops_p, value as Uint8):size_t
+SDL_WriteU8(dst as SDL_RWops_p, value as Uint8) as size_t
 
-SDL_WriteLE16(dst as SDL_RWops_p, value as Uint16):size_t
+SDL_WriteLE16(dst as SDL_RWops_p, value as Uint16) as size_t
 
-SDL_WriteBE16(dst as SDL_RWops_p, value as Uint16):size_t
+SDL_WriteBE16(dst as SDL_RWops_p, value as Uint16) as size_t
 
-SDL_WriteLE32(dst as SDL_RWops_p, value as Uint32):size_t
+SDL_WriteLE32(dst as SDL_RWops_p, value as Uint32) as size_t
 
-SDL_WriteBE32(dst as SDL_RWops_p, value as Uint32):size_t
+SDL_WriteBE32(dst as SDL_RWops_p, value as Uint32) as size_t
 
-SDL_WriteLE64(dst as SDL_RWops_p, value as Uint64):size_t
+SDL_WriteLE64(dst as SDL_RWops_p, value as Uint64) as size_t
 
-SDL_WriteBE64(dst as SDL_RWops_p, value as Uint64):size_t
+SDL_WriteBE64(dst as SDL_RWops_p, value as Uint64) as size_t
 
 //======== Shared Object Loading and Function Lookup (SDL_loadso.h) ========
 
-//SDL_LoadObject(sofile as const_char_p):void_p
+//SDL_LoadObject(sofile as const_char_p) as void_p
 
-//SDL_LoadFunction(handle as void_p, name as const_char_p):void_p
+//SDL_LoadFunction(handle as void_p, name as const_char_p) as void_p
 
 //SDL_UnloadObject(handle as void_p):void
 
@@ -1712,43 +1712,43 @@ SDL_WriteBE64(dst as SDL_RWops_p, value as Uint64):size_t
 
 //======== CPU Feature Detection (SDL_cpuinfo.h) ========
 
-SDL_GetCPUCount():int
+SDL_GetCPUCount() as int
 
-SDL_GetCPUCacheLineSize():int
+SDL_GetCPUCacheLineSize() as int
 
-SDL_HasRDTSC():SDL_bool
+SDL_HasRDTSC() as SDL_bool
 
-SDL_HasAltiVec():SDL_bool
+SDL_HasAltiVec() as SDL_bool
 
-SDL_HasMMX():SDL_bool
+SDL_HasMMX() as SDL_bool
 
-SDL_Has3DNow():SDL_bool
+SDL_Has3DNow() as SDL_bool
 
-SDL_HasSSE():SDL_bool
+SDL_HasSSE() as SDL_bool
 
-SDL_HasSSE2():SDL_bool
+SDL_HasSSE2() as SDL_bool
 
-SDL_HasSSE3():SDL_bool
+SDL_HasSSE3() as SDL_bool
 
-SDL_HasSSE41():SDL_bool
+SDL_HasSSE41() as SDL_bool
 
-SDL_HasSSE42():SDL_bool
+SDL_HasSSE42() as SDL_bool
 
-SDL_HasAVX():SDL_bool
+SDL_HasAVX() as SDL_bool
 
-SDL_HasAVX2():SDL_bool
+SDL_HasAVX2() as SDL_bool
 
-SDL_HasAVX512F():SDL_bool
+SDL_HasAVX512F() as SDL_bool
 
-SDL_HasARMSIMD():SDL_bool
+SDL_HasARMSIMD() as SDL_bool
 
-SDL_HasNEON():SDL_bool
+SDL_HasNEON() as SDL_bool
 
-SDL_GetSystemRAM():int
+SDL_GetSystemRAM() as int
 
-SDL_SIMDGetAlignment():size_t
+SDL_SIMDGetAlignment() as size_t
 
-//SDL_SIMDAlloc(len as size_t):void_p
+//SDL_SIMDAlloc(len as size_t) as void_p
 
 SDL_SIMDFree(ptr:nil as void_p):void
 
@@ -1768,45 +1768,45 @@ SDL_GetPowerInfo() = \
 
 //SDL_SetWindowsMessageHook(callback as SDL_WindowsMessageHook, userdata as void_p):void
 
-//SDL_Direct3D9GetAdapterIndex(displayIndex as int):int
+//SDL_Direct3D9GetAdapterIndex(displayIndex as int) as int
 
-//SDL_RenderGetD3D9Device(renderer as SDL_Renderer_p):IDirect3DDevice9_p
+//SDL_RenderGetD3D9Device(renderer as SDL_Renderer_p) as IDirect3DDevice9_p
 
-//SDL_DXGIGetOutputInfo(displayIndex as int, adapterIndex as int_p, outputIndex as int_p):SDL_bool
+//SDL_DXGIGetOutputInfo(displayIndex as int, adapterIndex as int_p, outputIndex as int_p) as SDL_bool
 
-//SDL_LinuxSetThreadPriority(threadID as Sint64, priority as int):int
+//SDL_LinuxSetThreadPriority(threadID as Sint64, priority as int) as int
 
-//SDL_iPhoneSetAnimationCallback(window as SDL_Window_p, interval as int, *:void_callback_void, callbackParam as void_p):int
+//SDL_iPhoneSetAnimationCallback(window as SDL_Window_p, interval as int, *:void_callback_void, callbackParam as void_p) as int
 
 //SDL_iPhoneSetEventPump(enabled as SDL_bool):void
 
-//SDL_AndroidGetJNIEnv():void_p
+//SDL_AndroidGetJNIEnv() as void_p
 
-//SDL_AndroidGetActivity():void_p
+//SDL_AndroidGetActivity() as void_p
 
-//SDL_GetAndroidSDKVersion():int
+//SDL_GetAndroidSDKVersion() as int
 
-//SDL_IsAndroidTV():SDL_bool
+//SDL_IsAndroidTV() as SDL_bool
 
-//SDL_IsChromebook():SDL_bool
+//SDL_IsChromebook() as SDL_bool
 
-//SDL_IsDeXMode():SDL_bool
+//SDL_IsDeXMode() as SDL_bool
 
 //SDL_AndroidBackButton():void
 
-//SDL_AndroidGetInternalStoragePath():const_char_p
+//SDL_AndroidGetInternalStoragePath() as const_char_p
 
-//SDL_AndroidGetExternalStorageState():int
+//SDL_AndroidGetExternalStorageState() as int
 
-//SDL_AndroidGetExternalStoragePath():const_char_p
+//SDL_AndroidGetExternalStoragePath() as const_char_p
 
-//SDL_WinRTGetFSPathUNICODE(pathType as SDL_WinRT_Path):const_wchar_t_p
+//SDL_WinRTGetFSPathUNICODE(pathType as SDL_WinRT_Path) as const_wchar_t_p
 
-//SDL_WinRTGetFSPathUTF8(pathType as SDL_WinRT_Path):const_char_p
+//SDL_WinRTGetFSPathUTF8(pathType as SDL_WinRT_Path) as const_char_p
 
-//SDL_WinRTGetDeviceFamily():SDL_WinRT_DeviceFamily
+//SDL_WinRTGetDeviceFamily() as SDL_WinRT_DeviceFamily
 
-//SDL_IsTablet():SDL_bool
+//SDL_IsTablet() as SDL_bool
 
 //SDL_OnApplicationWillTerminate():void
 
@@ -1824,209 +1824,209 @@ SDL_GetPowerInfo() = \
 
 //======== Standard Library Functionality (SDL_stdinc.h) ========
 
-//SDL_malloc(size as size_t):void_p
+//SDL_malloc(size as size_t) as void_p
 
-//SDL_calloc(nmemb as size_t, size as size_t):void_p
+//SDL_calloc(nmemb as size_t, size as size_t) as void_p
 
-//SDL_realloc(mem as void_p, size as size_t):void_p
+//SDL_realloc(mem as void_p, size as size_t) as void_p
 
 //SDL_free(mem:nil as void_p):void
 
 //SDL_GetMemoryFunctions(malloc_func as SDL_malloc_func_p, calloc_func as SDL_calloc_func_p, realloc_func as SDL_realloc_func_p, free_func as SDL_free_func_p):void
 
-//SDL_SetMemoryFunctions(malloc_func as SDL_malloc_func, calloc_func as SDL_calloc_func, realloc_func as SDL_realloc_func, free_func as SDL_free_func):int
+//SDL_SetMemoryFunctions(malloc_func as SDL_malloc_func, calloc_func as SDL_calloc_func, realloc_func as SDL_realloc_func, free_func as SDL_free_func) as int
 
-//SDL_GetNumAllocations():int
+//SDL_GetNumAllocations() as int
 
-//SDL_getenv(name as const_char_p):char_p
+//SDL_getenv(name as const_char_p) as char_p
 
-//SDL_setenv(name as const_char_p, value as const_char_p, overwrite as int):int
+//SDL_setenv(name as const_char_p, value as const_char_p, overwrite as int) as int
 
 //SDL_qsort(base as void_p, nmemb as size_t, size as size_t, *:int_compare_const_void, *:const_void):void
 
-//SDL_abs(x as int):int
+//SDL_abs(x as int) as int
 
-//SDL_isdigit(x as int):int
+//SDL_isdigit(x as int) as int
 
-//SDL_isspace(x as int):int
+//SDL_isspace(x as int) as int
 
-//SDL_isupper(x as int):int
+//SDL_isupper(x as int) as int
 
-//SDL_islower(x as int):int
+//SDL_islower(x as int) as int
 
-//SDL_toupper(x as int):int
+//SDL_toupper(x as int) as int
 
-//SDL_tolower(x as int):int
+//SDL_tolower(x as int) as int
 
-//SDL_memset(dst as SDL_OUT_BYTECAP_len_void_p, c as int, len as size_t):void_p
+//SDL_memset(dst as SDL_OUT_BYTECAP_len_void_p, c as int, len as size_t) as void_p
 
-//SDL_memcpy(dst as SDL_OUT_BYTECAP_len_void_p, src as SDL_IN_BYTECAP_len_const_void_p, len as size_t):void_p
+//SDL_memcpy(dst as SDL_OUT_BYTECAP_len_void_p, src as SDL_IN_BYTECAP_len_const_void_p, len as size_t) as void_p
 
-//SDL_memmove(dst as SDL_OUT_BYTECAP_len_void_p, src as SDL_IN_BYTECAP_len_const_void_p, len as size_t):void_p
+//SDL_memmove(dst as SDL_OUT_BYTECAP_len_void_p, src as SDL_IN_BYTECAP_len_const_void_p, len as size_t) as void_p
 
-//SDL_memcmp(s1 as const_void_p, s2 as const_void_p, len as size_t):int
+//SDL_memcmp(s1 as const_void_p, s2 as const_void_p, len as size_t) as int
 
-//SDL_wcslen(wstr as const_wchar_t_p):size_t
+//SDL_wcslen(wstr as const_wchar_t_p) as size_t
 
-//SDL_wcslcpy(dst as SDL_OUT_Z_CAP_maxlen_wchar_t_p, src as const_wchar_t_p, maxlen as size_t):size_t
+//SDL_wcslcpy(dst as SDL_OUT_Z_CAP_maxlen_wchar_t_p, src as const_wchar_t_p, maxlen as size_t) as size_t
 
-//SDL_wcslcat(dst as SDL_INOUT_Z_CAP_maxlen_wchar_t_p, src as const_wchar_t_p, maxlen as size_t):size_t
+//SDL_wcslcat(dst as SDL_INOUT_Z_CAP_maxlen_wchar_t_p, src as const_wchar_t_p, maxlen as size_t) as size_t
 
-//SDL_wcsdup(wstr as const_wchar_t_p):wchar_t_p
+//SDL_wcsdup(wstr as const_wchar_t_p) as wchar_t_p
 
-//SDL_wcsstr(haystack as const_wchar_t_p, needle as const_wchar_t_p):wchar_t_p
+//SDL_wcsstr(haystack as const_wchar_t_p, needle as const_wchar_t_p) as wchar_t_p
 
-//SDL_wcscmp(str1 as const_wchar_t_p, str2 as const_wchar_t_p):int
+//SDL_wcscmp(str1 as const_wchar_t_p, str2 as const_wchar_t_p) as int
 
-//SDL_wcsncmp(str1 as const_wchar_t_p, str2 as const_wchar_t_p, maxlen as size_t):int
+//SDL_wcsncmp(str1 as const_wchar_t_p, str2 as const_wchar_t_p, maxlen as size_t) as int
 
-//SDL_strlen(str as const_char_p):size_t
+//SDL_strlen(str as const_char_p) as size_t
 
-//SDL_strlcpy(dst as SDL_OUT_Z_CAP_maxlen_char_p, src as const_char_p, maxlen as size_t):size_t
+//SDL_strlcpy(dst as SDL_OUT_Z_CAP_maxlen_char_p, src as const_char_p, maxlen as size_t) as size_t
 
-//SDL_utf8strlcpy(dst as SDL_OUT_Z_CAP_dst_bytes_char_p, src as const_char_p, dst_bytes as size_t):size_t
+//SDL_utf8strlcpy(dst as SDL_OUT_Z_CAP_dst_bytes_char_p, src as const_char_p, dst_bytes as size_t) as size_t
 
-//SDL_strlcat(dst as SDL_INOUT_Z_CAP_maxlen_char_p, src as const_char_p, maxlen as size_t):size_t
+//SDL_strlcat(dst as SDL_INOUT_Z_CAP_maxlen_char_p, src as const_char_p, maxlen as size_t) as size_t
 
-//SDL_strdup(str as const_char_p):char_p
+//SDL_strdup(str as const_char_p) as char_p
 
-//SDL_strrev(str as char_p):char_p
+//SDL_strrev(str as char_p) as char_p
 
-//SDL_strupr(str as char_p):char_p
+//SDL_strupr(str as char_p) as char_p
 
-//SDL_strlwr(str as char_p):char_p
+//SDL_strlwr(str as char_p) as char_p
 
-//SDL_strchr(str as const_char_p, c as int):char_p
+//SDL_strchr(str as const_char_p, c as int) as char_p
 
-//SDL_strrchr(str as const_char_p, c as int):char_p
+//SDL_strrchr(str as const_char_p, c as int) as char_p
 
-//SDL_strstr(haystack as const_char_p, needle as const_char_p):char_p
+//SDL_strstr(haystack as const_char_p, needle as const_char_p) as char_p
 
-//SDL_strtokr(s1 as char_p, s2 as const_char_p, saveptr as char_pp):char_p
+//SDL_strtokr(s1 as char_p, s2 as const_char_p, saveptr as char_pp) as char_p
 
-//SDL_utf8strlen(str as const_char_p):size_t
+//SDL_utf8strlen(str as const_char_p) as size_t
 
-//SDL_itoa(value as int, str as char_p, radix as int):char_p
+//SDL_itoa(value as int, str as char_p, radix as int) as char_p
 
-//SDL_uitoa(value as unsigned_int, str as char_p, radix as int):char_p
+//SDL_uitoa(value as unsigned_int, str as char_p, radix as int) as char_p
 
-//SDL_ltoa(value as long, str as char_p, radix as int):char_p
+//SDL_ltoa(value as long, str as char_p, radix as int) as char_p
 
-//SDL_ultoa(value as unsigned_long, str as char_p, radix as int):char_p
+//SDL_ultoa(value as unsigned_long, str as char_p, radix as int) as char_p
 
-//SDL_lltoa(value as Sint64, str as char_p, radix as int):char_p
+//SDL_lltoa(value as Sint64, str as char_p, radix as int) as char_p
 
-//SDL_ulltoa(value as Uint64, str as char_p, radix as int):char_p
+//SDL_ulltoa(value as Uint64, str as char_p, radix as int) as char_p
 
-//SDL_atoi(str as const_char_p):int
+//SDL_atoi(str as const_char_p) as int
 
-//SDL_atof(str as const_char_p):double
+//SDL_atof(str as const_char_p) as double
 
-//SDL_strtol(str as const_char_p, endp as char_pp, base as int):long
+//SDL_strtol(str as const_char_p, endp as char_pp, base as int) as long
 
-//SDL_strtoul(str as const_char_p, endp as char_pp, base as int):unsigned_long
+//SDL_strtoul(str as const_char_p, endp as char_pp, base as int) as unsigned_long
 
-//SDL_strtoll(str as const_char_p, endp as char_pp, base as int):Sint64
+//SDL_strtoll(str as const_char_p, endp as char_pp, base as int) as Sint64
 
-//SDL_strtoull(str as const_char_p, endp as char_pp, base as int):Uint64
+//SDL_strtoull(str as const_char_p, endp as char_pp, base as int) as Uint64
 
-//SDL_strtod(str as const_char_p, endp as char_pp):double
+//SDL_strtod(str as const_char_p, endp as char_pp) as double
 
-//SDL_strcmp(str1 as const_char_p, str2 as const_char_p):int
+//SDL_strcmp(str1 as const_char_p, str2 as const_char_p) as int
 
-//SDL_strncmp(str1 as const_char_p, str2 as const_char_p, maxlen as size_t):int
+//SDL_strncmp(str1 as const_char_p, str2 as const_char_p, maxlen as size_t) as int
 
-//SDL_strcasecmp(str1 as const_char_p, str2 as const_char_p):int
+//SDL_strcasecmp(str1 as const_char_p, str2 as const_char_p) as int
 
-//SDL_strncasecmp(str1 as const_char_p, str2 as const_char_p, len as size_t):int
+//SDL_strncasecmp(str1 as const_char_p, str2 as const_char_p, len as size_t) as int
 
-//SDL_sscanf(text as const_char_p, fmt as SDL_SCANF_FORMAT_STRING_const_char_p, 2 as SDL_SCANF_VARARG_FUNC):int
+//SDL_sscanf(text as const_char_p, fmt as SDL_SCANF_FORMAT_STRING_const_char_p, 2 as SDL_SCANF_VARARG_FUNC) as int
 
-//SDL_vsscanf(text as const_char_p, fmt as const_char_p, ap as va_list):int
+//SDL_vsscanf(text as const_char_p, fmt as const_char_p, ap as va_list) as int
 
-//SDL_snprintf(text as SDL_OUT_Z_CAP_maxlen_char_p, maxlen as size_t, fmt as SDL_PRINTF_FORMAT_STRING_const_char_p, 3 as SDL_PRINTF_VARARG_FUNC):int
+//SDL_snprintf(text as SDL_OUT_Z_CAP_maxlen_char_p, maxlen as size_t, fmt as SDL_PRINTF_FORMAT_STRING_const_char_p, 3 as SDL_PRINTF_VARARG_FUNC) as int
 
-//SDL_vsnprintf(text as SDL_OUT_Z_CAP_maxlen_char_p, maxlen as size_t, fmt as const_char_p, ap as va_list):int
+//SDL_vsnprintf(text as SDL_OUT_Z_CAP_maxlen_char_p, maxlen as size_t, fmt as const_char_p, ap as va_list) as int
 
-//SDL_acos(x as double):double
+//SDL_acos(x as double) as double
 
-//SDL_acosf(x as float):float
+//SDL_acosf(x as float) as float
 
-//SDL_asin(x as double):double
+//SDL_asin(x as double) as double
 
-//SDL_asinf(x as float):float
+//SDL_asinf(x as float) as float
 
-//SDL_atan(x as double):double
+//SDL_atan(x as double) as double
 
-//SDL_atanf(x as float):float
+//SDL_atanf(x as float) as float
 
-//SDL_atan2(x as double, y as double):double
+//SDL_atan2(x as double, y as double) as double
 
-//SDL_atan2f(x as float, y as float):float
+//SDL_atan2f(x as float, y as float) as float
 
-//SDL_ceil(x as double):double
+//SDL_ceil(x as double) as double
 
-//SDL_ceilf(x as float):float
+//SDL_ceilf(x as float) as float
 
-//SDL_copysign(x as double, y as double):double
+//SDL_copysign(x as double, y as double) as double
 
-//SDL_copysignf(x as float, y as float):float
+//SDL_copysignf(x as float, y as float) as float
 
-//SDL_cos(x as double):double
+//SDL_cos(x as double) as double
 
-//SDL_cosf(x as float):float
+//SDL_cosf(x as float) as float
 
-//SDL_exp(x as double):double
+//SDL_exp(x as double) as double
 
-//SDL_expf(x as float):float
+//SDL_expf(x as float) as float
 
-//SDL_fabs(x as double):double
+//SDL_fabs(x as double) as double
 
-//SDL_fabsf(x as float):float
+//SDL_fabsf(x as float) as float
 
-//SDL_floor(x as double):double
+//SDL_floor(x as double) as double
 
-//SDL_floorf(x as float):float
+//SDL_floorf(x as float) as float
 
-//SDL_fmod(x as double, y as double):double
+//SDL_fmod(x as double, y as double) as double
 
-//SDL_fmodf(x as float, y as float):float
+//SDL_fmodf(x as float, y as float) as float
 
-//SDL_log(x as double):double
+//SDL_log(x as double) as double
 
-//SDL_logf(x as float):float
+//SDL_logf(x as float) as float
 
-//SDL_log10(x as double):double
+//SDL_log10(x as double) as double
 
-//SDL_log10f(x as float):float
+//SDL_log10f(x as float) as float
 
-//SDL_pow(x as double, y as double):double
+//SDL_pow(x as double, y as double) as double
 
-//SDL_powf(x as float, y as float):float
+//SDL_powf(x as float, y as float) as float
 
-//SDL_scalbn(x as double, n as int):double
+//SDL_scalbn(x as double, n as int) as double
 
-//SDL_scalbnf(x as float, n as int):float
+//SDL_scalbnf(x as float, n as int) as float
 
-//SDL_sin(x as double):double
+//SDL_sin(x as double) as double
 
-//SDL_sinf(x as float):float
+//SDL_sinf(x as float) as float
 
-//SDL_sqrt(x as double):double
+//SDL_sqrt(x as double) as double
 
-//SDL_sqrtf(x as float):float
+//SDL_sqrtf(x as float) as float
 
-//SDL_tan(x as double):double
+//SDL_tan(x as double) as double
 
-//SDL_tanf(x as float):float
+//SDL_tanf(x as float) as float
 
-//SDL_iconv_open(tocode as const_char_p, fromcode as const_char_p):SDL_iconv_t
+//SDL_iconv_open(tocode as const_char_p, fromcode as const_char_p) as SDL_iconv_t
 
-//SDL_iconv_close(cd as SDL_iconv_t):int
+//SDL_iconv_close(cd as SDL_iconv_t) as int
 
-//SDL_iconv(cd as SDL_iconv_t, inbuf as const_char_pp, inbytesleft as size_t_p, outbuf as char_pp, outbytesleft as size_t_p):size_t
+//SDL_iconv(cd as SDL_iconv_t, inbuf as const_char_pp, inbytesleft as size_t_p, outbuf as char_pp, outbytesleft as size_t_p) as size_t
 
-//SDL_iconv_string(tocode as const_char_p, fromcode as const_char_p, inbuf as const_char_p, inbytesleft as size_t):char_p
+//SDL_iconv_string(tocode as const_char_p, fromcode as const_char_p, inbuf as const_char_p, inbytesleft as size_t) as char_p
 
 }
 
@@ -2041,7 +2041,7 @@ IMG_Linked_Version() = \
 	return new Value_SDL_version(*ver);
 	'''
 
-IMG_Init(flags as int):void = \
+IMG_Init(flags as int) as void = \
 	R'''
 	int rtn = IMG_Init(flags);
 	return new Value_Number(rtn);
@@ -2049,71 +2049,71 @@ IMG_Init(flags as int):void = \
 
 IMG_Quit():void
 
-IMG_GetError():const_char_p
+IMG_GetError() as const_char_p
 
-IMG_Load(file as const_char_p):SDL_Surface_p
+IMG_Load(file as const_char_p) as SDL_Surface_p
 
-IMG_Load_RW(src as SDL_RWops_p, freesrc as int):SDL_Surface_p
+IMG_Load_RW(src as SDL_RWops_p, freesrc as int) as SDL_Surface_p
 
-IMG_LoadTyped_RW(src as SDL_RWops_p, freesrc as int, type as const_char_p):SDL_Surface_p
+IMG_LoadTyped_RW(src as SDL_RWops_p, freesrc as int, type as const_char_p) as SDL_Surface_p
 
-IMG_LoadCUR_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadCUR_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadICO_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadICO_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadBMP_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadBMP_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadPNM_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadPNM_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadXPM_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadXPM_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadXCF_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadXCF_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadPCX_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadPCX_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadGIF_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadGIF_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadJPG_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadJPG_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadTIF_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadTIF_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadPNG_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadPNG_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadTGA_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadTGA_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadLBM_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadLBM_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_LoadXV_RW(src as SDL_RWops_p):SDL_Surface_p
+IMG_LoadXV_RW(src as SDL_RWops_p) as SDL_Surface_p
 
-//IMG_ReadXPMFromArray(src as SDL_RWops_p):SDL_Surface_p
+//IMG_ReadXPMFromArray(src as SDL_RWops_p) as SDL_Surface_p
 
-IMG_isCUR(src as SDL_RWops_p):int
+IMG_isCUR(src as SDL_RWops_p) as int
 
-IMG_isICO(src as SDL_RWops_p):int
+IMG_isICO(src as SDL_RWops_p) as int
 
-IMG_isBMP(src as SDL_RWops_p):int
+IMG_isBMP(src as SDL_RWops_p) as int
 
-IMG_isPNM(src as SDL_RWops_p):int
+IMG_isPNM(src as SDL_RWops_p) as int
 
-IMG_isXPM(src as SDL_RWops_p):int
+IMG_isXPM(src as SDL_RWops_p) as int
 
-IMG_isXCF(src as SDL_RWops_p):int
+IMG_isXCF(src as SDL_RWops_p) as int
 
-IMG_isPCX(src as SDL_RWops_p):int
+IMG_isPCX(src as SDL_RWops_p) as int
 
-IMG_isGIF(src as SDL_RWops_p):int
+IMG_isGIF(src as SDL_RWops_p) as int
 
-IMG_isJPG(src as SDL_RWops_p):int
+IMG_isJPG(src as SDL_RWops_p) as int
 
-IMG_isTIF(src as SDL_RWops_p):int
+IMG_isTIF(src as SDL_RWops_p) as int
 
-IMG_isPNG(src as SDL_RWops_p):int
+IMG_isPNG(src as SDL_RWops_p) as int
 
-//IMG_isTGA(src as SDL_RWops_p):int
+//IMG_isTGA(src as SDL_RWops_p) as int
 
-IMG_isLBM(src as SDL_RWops_p):int
+IMG_isLBM(src as SDL_RWops_p) as int
 
-IMG_isXV(src as SDL_RWops_p):int
+IMG_isXV(src as SDL_RWops_p) as int
 
 }
 
@@ -2128,17 +2128,17 @@ Mix_Linked_Version() = \
 	return new Value_SDL_version(*ver);
 	'''
 
-Mix_Init(flags as int):int
+Mix_Init(flags as int) as int
 
 Mix_Quit():void
 
-Mix_OpenAudio(frequency as int, format as Uint16, channels as int, chunksize as int):int
+Mix_OpenAudio(frequency as int, format as Uint16, channels as int, chunksize as int) as int
 
-Mix_OpenAudioDevice(frequency as int, format as Uint16, channels as int, chunksize as int, device as const_char_p, allowed_changes as int):int
+Mix_OpenAudioDevice(frequency as int, format as Uint16, channels as int, chunksize as int, device as const_char_p, allowed_changes as int) as int
 
-Mix_AllocateChannels(numchans as int):int
+Mix_AllocateChannels(numchans as int) as int
 
-Mix_GetError():const_char_p
+Mix_GetError() as const_char_p
 
 Mix_QuerySpec() = \
 	R'''
@@ -2152,37 +2152,37 @@ Mix_QuerySpec() = \
 					new Value_Number(format), new Value_Number(channels));
 	'''
 
-Mix_LoadWAV(file as const_char_p):Mix_Chunk_p
+Mix_LoadWAV(file as const_char_p) as Mix_Chunk_p
 
-Mix_LoadWAV_RW(src as SDL_RWops_p, freesrc as int):Mix_Chunk_p
+Mix_LoadWAV_RW(src as SDL_RWops_p, freesrc as int) as Mix_Chunk_p
 
-Mix_LoadMUS(file as const_char_p):Mix_Music_p
+Mix_LoadMUS(file as const_char_p) as Mix_Music_p
 
-Mix_LoadMUS_RW(src as SDL_RWops_p, freesrc as int):Mix_Music_p
+Mix_LoadMUS_RW(src as SDL_RWops_p, freesrc as int) as Mix_Music_p
 
-Mix_LoadMUSType_RW(src as SDL_RWops_p, type as Mix_MusicType, freesrc as int):Mix_Music_p
+Mix_LoadMUSType_RW(src as SDL_RWops_p, type as Mix_MusicType, freesrc as int) as Mix_Music_p
 
-//Mix_QuickLoad_WAV(mem as Uint8_p):Mix_Chunk_p
+//Mix_QuickLoad_WAV(mem as Uint8_p) as Mix_Chunk_p
 
-//Mix_QuickLoad_RAW(mem as Uint8_p, len as Uint32):Mix_Chunk_p
+//Mix_QuickLoad_RAW(mem as Uint8_p, len as Uint32) as Mix_Chunk_p
 
 Mix_FreeChunk(chunk:nil as Mix_Chunk_p):void
 
 Mix_FreeMusic(music:nil as Mix_Music_p):void
 
-Mix_GetNumChunkDecoders():int
+Mix_GetNumChunkDecoders() as int
 
-Mix_GetChunkDecoder(index as int):const_char_p
+Mix_GetChunkDecoder(index as int) as const_char_p
 
-Mix_HasChunkDecoder(name as const_char_p):SDL_bool
+Mix_HasChunkDecoder(name as const_char_p) as SDL_bool
 
-Mix_GetNumMusicDecoders():int
+Mix_GetNumMusicDecoders() as int
 
-Mix_GetMusicDecoder(index as int):const_char_p
+Mix_GetMusicDecoder(index as int) as const_char_p
 
-//Mix_HasMusicDecoder(name as const_char_p):SDL_bool
+//Mix_HasMusicDecoder(name as const_char_p) as SDL_bool
 
-Mix_GetMusicType(music as const_Mix_Music_p):Mix_MusicType
+Mix_GetMusicType(music as const_Mix_Music_p) as Mix_MusicType
 
 //Mix_SetPostMix(udata as void_SDLCALL_p_mix_func_void_p, stream as Uint8_p, len as int, arg as void_p):void
 
@@ -2190,79 +2190,79 @@ Mix_GetMusicType(music as const_Mix_Music_p):Mix_MusicType
 
 //Mix_HookMusicFinished(void as void_SDLCALL_p_music_finished):void
 
-//Mix_GetMusicHookData():void_p
+//Mix_GetMusicHookData() as void_p
 
 //Mix_ChannelFinished(channel as void_SDLCALL_p_channel_finished_int):void
 
-//Mix_RegisterEffect(chan as int, f as Mix_EffectFunc_t, d as Mix_EffectDone_t, arg as void_p):int
+//Mix_RegisterEffect(chan as int, f as Mix_EffectFunc_t, d as Mix_EffectDone_t, arg as void_p) as int
 
-//Mix_UnregisterEffect(channel as int, f as Mix_EffectFunc_t):int
+//Mix_UnregisterEffect(channel as int, f as Mix_EffectFunc_t) as int
 
-Mix_UnregisterAllEffects(channel as int):int
+Mix_UnregisterAllEffects(channel as int) as int
 
-Mix_SetPanning(channel as int, left as Uint8, right as Uint8):int
+Mix_SetPanning(channel as int, left as Uint8, right as Uint8) as int
 
-Mix_SetPosition(channel as int, angle as Sint16, distance as Uint8):int
+Mix_SetPosition(channel as int, angle as Sint16, distance as Uint8) as int
 
-Mix_SetDistance(channel as int, distance as Uint8):int
+Mix_SetDistance(channel as int, distance as Uint8) as int
 
-Mix_SetReverseStereo(channel as int, flip as int):int
+Mix_SetReverseStereo(channel as int, flip as int) as int
 
-Mix_ReserveChannels(num as int):int
+Mix_ReserveChannels(num as int) as int
 
-Mix_GroupChannel(which as int, tag as int):int
+Mix_GroupChannel(which as int, tag as int) as int
 
-Mix_GroupChannels(from as int, to as int, tag as int):int
+Mix_GroupChannels(from as int, to as int, tag as int) as int
 
-Mix_GroupAvailable(tag as int):int
+Mix_GroupAvailable(tag as int) as int
 
-Mix_GroupCount(tag as int):int
+Mix_GroupCount(tag as int) as int
 
-Mix_GroupOldest(tag as int):int
+Mix_GroupOldest(tag as int) as int
 
-Mix_GroupNewer(tag as int):int
+Mix_GroupNewer(tag as int) as int
 
-Mix_PlayChannel(channel as int, chunk as Mix_Chunk_p, loops as int):int
+Mix_PlayChannel(channel as int, chunk as Mix_Chunk_p, loops as int) as int
 
-Mix_PlayChannelTimed(channel as int, chunk as Mix_Chunk_p, loops as int, ticks as int):int
+Mix_PlayChannelTimed(channel as int, chunk as Mix_Chunk_p, loops as int, ticks as int) as int
 
-Mix_PlayMusic(music as Mix_Music_p, loops as int):int
+Mix_PlayMusic(music as Mix_Music_p, loops as int) as int
 
-Mix_FadeInMusic(music as Mix_Music_p, loops as int, ms as int):int
+Mix_FadeInMusic(music as Mix_Music_p, loops as int, ms as int) as int
 
-Mix_FadeInMusicPos(music as Mix_Music_p, loops as int, ms as int, position as double):int
+Mix_FadeInMusicPos(music as Mix_Music_p, loops as int, ms as int, position as double) as int
 
-Mix_FadeInChannelTimed(channel as int, chunk as Mix_Chunk_p, loops as int, ms as int, ticks as int):int
+Mix_FadeInChannelTimed(channel as int, chunk as Mix_Chunk_p, loops as int, ms as int, ticks as int) as int
 
-Mix_Volume(channel as int, volume as int):int
+Mix_Volume(channel as int, volume as int) as int
 
-Mix_VolumeChunk(chunk as Mix_Chunk_p, volume as int):int
+Mix_VolumeChunk(chunk as Mix_Chunk_p, volume as int) as int
 
-Mix_VolumeMusic(volume as int):int
+Mix_VolumeMusic(volume as int) as int
 
-Mix_HaltChannel(channel as int):int
+Mix_HaltChannel(channel as int) as int
 
-Mix_HaltGroup(tag as int):int
+Mix_HaltGroup(tag as int) as int
 
-Mix_HaltMusic():int
+Mix_HaltMusic() as int
 
-Mix_ExpireChannel(channel as int, ticks as int):int
+Mix_ExpireChannel(channel as int, ticks as int) as int
 
-Mix_FadeOutChannel(which as int, ms as int):int
+Mix_FadeOutChannel(which as int, ms as int) as int
 
-Mix_FadeOutGroup(tag as int, ms as int):int
+Mix_FadeOutGroup(tag as int, ms as int) as int
 
-Mix_FadeOutMusic(ms as int):int
+Mix_FadeOutMusic(ms as int) as int
 
-Mix_FadingMusic():Mix_Fading
+Mix_FadingMusic() as Mix_Fading
 
-Mix_FadingChannel(which as int):Mix_Fading
+Mix_FadingChannel(which as int) as Mix_Fading
 
 Mix_Pause(channel as int):void
 
 Mix_Resume(channel as int):void
 
-Mix_Paused(channel as int):int
+Mix_Paused(channel as int) as int
 
 Mix_PauseMusic():void
 
@@ -2270,27 +2270,27 @@ Mix_ResumeMusic():void
 
 Mix_RewindMusic():void
 
-Mix_PausedMusic():int
+Mix_PausedMusic() as int
 
-Mix_SetMusicPosition(position as double):int
+Mix_SetMusicPosition(position as double) as int
 
-Mix_Playing(channel as int):int
+Mix_Playing(channel as int) as int
 
-Mix_PlayingMusic():int
+Mix_PlayingMusic() as int
 
-Mix_SetMusicCMD(command as const_char_p):int
+Mix_SetMusicCMD(command as const_char_p) as int
 
-Mix_SetSynchroValue(value as int):int
+Mix_SetSynchroValue(value as int) as int
 
-Mix_GetSynchroValue():int
+Mix_GetSynchroValue() as int
 
-Mix_SetSoundFonts(paths as const_char_p):int
+Mix_SetSoundFonts(paths as const_char_p) as int
 
-Mix_GetSoundFonts():const_char_p
+Mix_GetSoundFonts() as const_char_p
 
-//Mix_EachSoundFont(*:int_SDLCALL_p_function_const_char, *:void, data as void_p):int
+//Mix_EachSoundFont(*:int_SDLCALL_p_function_const_char, *:void, data as void_p) as int
 
-Mix_GetChunk(channel as int):Mix_Chunk_p
+Mix_GetChunk(channel as int) as Mix_Chunk_p
 
 Mix_CloseAudio():void
 
@@ -2311,95 +2311,95 @@ TTF_Linked_Version() = \
 
 TTF_ByteSwappedUNICODE(swapped as int):void
 
-TTF_Init():int
+TTF_Init() as int
 
-TTF_GetError():const_char_p
+TTF_GetError() as const_char_p
 
-TTF_OpenFont(file as const_char_p, ptsize as int):TTF_Font_p
+TTF_OpenFont(file as const_char_p, ptsize as int) as TTF_Font_p
 
-TTF_OpenFontIndex(file as const_char_p, ptsize as int, index as long):TTF_Font_p
+TTF_OpenFontIndex(file as const_char_p, ptsize as int, index as long) as TTF_Font_p
 
-TTF_OpenFontRW(src as SDL_RWops_p, freesrc as int, ptsize as int):TTF_Font_p
+TTF_OpenFontRW(src as SDL_RWops_p, freesrc as int, ptsize as int) as TTF_Font_p
 
-TTF_OpenFontIndexRW(src as SDL_RWops_p, freesrc as int, ptsize as int, index as long):TTF_Font_p
+TTF_OpenFontIndexRW(src as SDL_RWops_p, freesrc as int, ptsize as int, index as long) as TTF_Font_p
 
-TTF_GetFontStyle(font as const_TTF_Font_p):int
+TTF_GetFontStyle(font as const_TTF_Font_p) as int
 
 TTF_SetFontStyle(font as TTF_Font_p, style as int):void
 
-TTF_GetFontOutline(font as const_TTF_Font_p):int
+TTF_GetFontOutline(font as const_TTF_Font_p) as int
 
 TTF_SetFontOutline(font as TTF_Font_p, outline as int):void
 
-TTF_GetFontHinting(font as const_TTF_Font_p):int
+TTF_GetFontHinting(font as const_TTF_Font_p) as int
 
 TTF_SetFontHinting(font as TTF_Font_p, hinting as int):void
 
-TTF_FontHeight(font as const_TTF_Font_p):int
+TTF_FontHeight(font as const_TTF_Font_p) as int
 
-TTF_FontAscent(font as const_TTF_Font_p):int
+TTF_FontAscent(font as const_TTF_Font_p) as int
 
-TTF_FontDescent(font as const_TTF_Font_p):int
+TTF_FontDescent(font as const_TTF_Font_p) as int
 
-TTF_FontLineSkip(font as const_TTF_Font_p):int
+TTF_FontLineSkip(font as const_TTF_Font_p) as int
 
-TTF_GetFontKerning(font as const_TTF_Font_p):int
+TTF_GetFontKerning(font as const_TTF_Font_p) as int
 
 TTF_SetFontKerning(font as TTF_Font_p, allowed as int):void
 
-TTF_FontFaces(font as const_TTF_Font_p):long
+TTF_FontFaces(font as const_TTF_Font_p) as long
 
-TTF_FontFaceIsFixedWidth(font as const_TTF_Font_p):int
+TTF_FontFaceIsFixedWidth(font as const_TTF_Font_p) as int
 
-//TTF_FontFaceFamilyName(font as const_TTF_Font_p):char_p
+//TTF_FontFaceFamilyName(font as const_TTF_Font_p) as char_p
 
-//TTF_FontFaceStyleName(font as const_TTF_Font_p):char_p
+//TTF_FontFaceStyleName(font as const_TTF_Font_p) as char_p
 
-TTF_GlyphIsProvided(font as const_TTF_Font_p, ch as Uint16):int
+TTF_GlyphIsProvided(font as const_TTF_Font_p, ch as Uint16) as int
 
-//TTF_GlyphMetrics(font as TTF_Font_p, ch as Uint16, minx as int_p, maxx as int_p, miny as int_p, maxy as int_p, advance as int_p):int
+//TTF_GlyphMetrics(font as TTF_Font_p, ch as Uint16, minx as int_p, maxx as int_p, miny as int_p, maxy as int_p, advance as int_p) as int
 
-//TTF_SizeText(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p):int
+//TTF_SizeText(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p) as int
 
-//TTF_SizeUTF8(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p):int
+//TTF_SizeUTF8(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p) as int
 
-//TTF_SizeUNICODE(font as TTF_Font_p, text as const_Uint16_p, w as int_p, h as int_p):int
+//TTF_SizeUNICODE(font as TTF_Font_p, text as const_Uint16_p, w as int_p, h as int_p) as int
 
-TTF_RenderText_Solid(font as TTF_Font_p, text as const_char_p, fg as SDL_Color):SDL_Surface_p
+TTF_RenderText_Solid(font as TTF_Font_p, text as const_char_p, fg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderUTF8_Solid(font as TTF_Font_p, text as const_char_p, fg as SDL_Color):SDL_Surface_p
+TTF_RenderUTF8_Solid(font as TTF_Font_p, text as const_char_p, fg as SDL_Color) as SDL_Surface_p
 
-//TTF_RenderUNICODE_Solid(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color):SDL_Surface_p
+//TTF_RenderUNICODE_Solid(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderGlyph_Solid(font as TTF_Font_p, ch as Uint16, fg as SDL_Color):SDL_Surface_p
+TTF_RenderGlyph_Solid(font as TTF_Font_p, ch as Uint16, fg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderText_Shaded(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, bg as SDL_Color):SDL_Surface_p
+TTF_RenderText_Shaded(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderUTF8_Shaded(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, bg as SDL_Color):SDL_Surface_p
+TTF_RenderUTF8_Shaded(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p
 
-//TTF_RenderUNICODE_Shaded(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color, bg as SDL_Color):SDL_Surface_p
+//TTF_RenderUNICODE_Shaded(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderGlyph_Shaded(font as TTF_Font_p, ch as Uint16, fg as SDL_Color, bg as SDL_Color):SDL_Surface_p
+TTF_RenderGlyph_Shaded(font as TTF_Font_p, ch as Uint16, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderText_Blended(font as TTF_Font_p, text as const_char_p, fg as SDL_Color):SDL_Surface_p
+TTF_RenderText_Blended(font as TTF_Font_p, text as const_char_p, fg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderUTF8_Blended(font as TTF_Font_p, text as const_char_p, fg as SDL_Color):SDL_Surface_p
+TTF_RenderUTF8_Blended(font as TTF_Font_p, text as const_char_p, fg as SDL_Color) as SDL_Surface_p
 
-//TTF_RenderUNICODE_Blended(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color):SDL_Surface_p
+//TTF_RenderUNICODE_Blended(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color) as SDL_Surface_p
 
-TTF_RenderText_Blended_Wrapped(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, wrapLength as Uint32):SDL_Surface_p
+TTF_RenderText_Blended_Wrapped(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, wrapLength as Uint32) as SDL_Surface_p
 
-TTF_RenderUTF8_Blended_Wrapped(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, wrapLength as Uint32):SDL_Surface_p
+TTF_RenderUTF8_Blended_Wrapped(font as TTF_Font_p, text as const_char_p, fg as SDL_Color, wrapLength as Uint32) as SDL_Surface_p
 
-//TTF_RenderUNICODE_Blended_Wrapped(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color, wrapLength as Uint32):SDL_Surface_p
+//TTF_RenderUNICODE_Blended_Wrapped(font as TTF_Font_p, text as const_Uint16_p, fg as SDL_Color, wrapLength as Uint32) as SDL_Surface_p
 
-TTF_RenderGlyph_Blended(font as TTF_Font_p, ch as Uint16, fg as SDL_Color):SDL_Surface_p
+TTF_RenderGlyph_Blended(font as TTF_Font_p, ch as Uint16, fg as SDL_Color) as SDL_Surface_p
 
 TTF_CloseFont(font as TTF_Font_p):void
 
 TTF_Quit():void
 
-TTF_WasInit():int
+TTF_WasInit() as int
 
 }
 

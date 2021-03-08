@@ -71,7 +71,7 @@ r.DeclareType_EntityPtr('curl_slist_p', 'curl_slist*', 'curl_slist')
 // easy.h
 r.Register('curl') {
 
-curl_easy_init():CURL_p
+curl_easy_init() as CURL_p
 
 curl_easy_setopt(curl as CURL_p, option as CURLoption, value as any) = \
 	R'''
@@ -80,7 +80,7 @@ curl_easy_setopt(curl as CURL_p, option as CURLoption, value as any) = \
 	return new Value_Number(code);
 	'''
 
-curl_easy_perform(curl as CURL_p):CURLcode
+curl_easy_perform(curl as CURL_p) as CURLcode
 
 curl_easy_cleanup(curl as CURL_p):void
 
@@ -89,7 +89,7 @@ curl_easy_getinfo(curl as CURL_p, info as CURLINFO) = \
 	return value_curl.GetInfo().GetItem(info);
 	'''
 
-curl_easy_duphandle(curl as CURL_p):CURL_p
+curl_easy_duphandle(curl as CURL_p) as CURL_p
 
 curl_easy_reset(curl as CURL_p):void
 
@@ -97,45 +97,45 @@ curl_easy_reset(curl as CURL_p):void
 
 //CURLcode curl_easy_send(curl as CURL_p, const void *buffer, size_t buflen, size_t *n);
 
-curl_easy_upkeep(curl as CURL_p):CURLcode;
+curl_easy_upkeep(curl as CURL_p) as CURLcode;
 
 }
 
 // curl.h
 r.Register('curl') {
 
-//curl_strequal(s1 as const_char_p, s2 as const_char_p):int;
+//curl_strequal(s1 as const_char_p, s2 as const_char_p) as int;
 
-//curl_strnequal(s1 as const_char_p, s2 as const_char_p, size_t n):int;
+//curl_strnequal(s1 as const_char_p, s2 as const_char_p, size_t n) as int;
 
-curl_mime_init(easy as CURL_p):curl_mime_p;
+curl_mime_init(easy as CURL_p) as curl_mime_p;
 
 curl_mime_free(mime as curl_mime_p):void;
 
-curl_mime_addpart(mime as curl_mime_p):curl_mimepart_p;
+curl_mime_addpart(mime as curl_mime_p) as curl_mimepart_p;
 
-curl_mime_name(part as curl_mimepart_p, name as const_char_p):CURLcode
+curl_mime_name(part as curl_mimepart_p, name as const_char_p) as CURLcode
 
-curl_mime_filename(part as curl_mimepart_p, filename as const_char_p):CURLcode
+curl_mime_filename(part as curl_mimepart_p, filename as const_char_p) as CURLcode
 
-curl_mime_type(part as curl_mimepart_p, mimetype as const_char_p):CURLcode
+curl_mime_type(part as curl_mimepart_p, mimetype as const_char_p) as CURLcode
 
-curl_mime_encoder(part as curl_mimepart_p, encoding as const_char_p):CURLcode
+curl_mime_encoder(part as curl_mimepart_p, encoding as const_char_p) as CURLcode
 
-curl_mime_data(part as curl_mimepart_p, data as const_char_p_data, datasize as size_t):CURLcode
+curl_mime_data(part as curl_mimepart_p, data as const_char_p_data, datasize as size_t) as CURLcode
 
-curl_mime_filedata(part as curl_mimepart_p, filename as const_char_p):CURLcode
+curl_mime_filedata(part as curl_mimepart_p, filename as const_char_p) as CURLcode
 
-//curl_mime_data_cb(part as curl_mimepart_p, curl_off_t datasize, curl_read_callback readfunc, curl_seek_callback seekfunc, curl_free_callback freefunc, void *arg):CURLcode
+//curl_mime_data_cb(part as curl_mimepart_p, curl_off_t datasize, curl_read_callback readfunc, curl_seek_callback seekfunc, curl_free_callback freefunc, void *arg) as CURLcode
 
-curl_mime_subparts(part as curl_mimepart_p, subparts as curl_mime_p):CURLcode
+curl_mime_subparts(part as curl_mimepart_p, subparts as curl_mime_p) as CURLcode
 
-curl_mime_headers(part as curl_mimepart_p, headers as curl_slist_p, take_ownership as int):CURLcode
+curl_mime_headers(part as curl_mimepart_p, headers as curl_slist_p, take_ownership as int) as CURLcode
 
 /*
-curl_formadd(struct curl_httppost **httppost, struct curl_httppost **last_post, ...):CURLFORMcode
+curl_formadd(struct curl_httppost **httppost, struct curl_httppost **last_post, ...) as CURLFORMcode
 
-curl_formget(form as curl_httppost_p, void *arg, curl_formget_callback append):int
+curl_formget(form as curl_httppost_p, void *arg, curl_formget_callback append) as int
 
 curl_formfree(form as curl_httppost_p):void
 */
@@ -160,16 +160,16 @@ curl_free(value as any):void = \
 	'''
 
 
-curl_global_init(flags as long):CURLcode
+curl_global_init(flags as long) as CURLcode
 
-//curl_global_init_mem(long flags, curl_malloc_callback m, curl_free_callback f, curl_realloc_callback r, curl_strdup_callback s, curl_calloc_callback c):CURLcode
+//curl_global_init_mem(long flags, curl_malloc_callback m, curl_free_callback f, curl_realloc_callback r, curl_strdup_callback s, curl_calloc_callback c) as CURLcode
 
 curl_global_cleanup():void
 
 //CURLsslset curl_global_sslset(curl_sslbackend id, const char *name, const curl_ssl_backend ***avail);
 
 
-curl_slist_append(slist:nil as curl_slist_p, str as const_char_p):curl_slist_p
+curl_slist_append(slist:nil as curl_slist_p, str as const_char_p) as curl_slist_p
 
 curl_slist_free_all(slist as curl_slist_p):void
 
@@ -185,17 +185,17 @@ CURLSHcode curl_share_cleanup(CURLSH *);
 curl_version_info_data *curl_version_info(CURLversion);
 */
 
-curl_easy_strerror(code as CURLcode):const_char_p
+curl_easy_strerror(code as CURLcode) as const_char_p
 
-curl_share_strerror(code as CURLSHcode):const_char_p
+curl_share_strerror(code as CURLSHcode) as const_char_p
 
-curl_easy_pause(handle as CURL_p, bitmask as int):CURLcode
+curl_easy_pause(handle as CURL_p, bitmask as int) as CURLcode
 
-curl_url():CURLU_p
+curl_url() as CURLU_p
 
 curl_url_cleanup(handle as CURLU_p):void
 
-curl_url_dup(inhandle as CURLU_p):CURLU_p
+curl_url_dup(inhandle as CURLU_p) as CURLU_p
 
 curl_url_get(url as CURLU_p, what as CURLUPart, flags as unsigned_int) = \
 	R'''
@@ -210,7 +210,7 @@ curl_url_get(url as CURLU_p, what as CURLUPart, flags as unsigned_int) = \
 	return pValueRtn.release();
 	'''
 
-curl_url_set(url as CURLU_p, part as CURLUPart, content as const_char_p, flags as unsigned_int):CURLUcode
+curl_url_set(url as CURLU_p, part as CURLUPart, content as const_char_p, flags as unsigned_int) as CURLUcode
 
 }
 

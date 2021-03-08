@@ -259,7 +259,7 @@ Renderer = class {
 				//Println(exprParam)
 				listVarFlag = false
 				optionFlag = false
-				typeName = 'Any'
+				typeName = 'any'
 				if (exprParam.IsBinaryOp()) {
 					if (exprParam.operator.symbol == `as) {
 						!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
