@@ -86,13 +86,13 @@ r.Register('glfw') {
 
 glfwMakeContextCurrent(window as GLFWwindow_p):void
  
-glfwGetCurrentContext():GLFWwindow_p
+glfwGetCurrentContext() as GLFWwindow_p
  
 glfwSwapInterval(interval as int):void
  
-glfwExtensionSupported(extension as const_char_p):int_Bool
+glfwExtensionSupported(extension as const_char_p) as int_Bool
  
-//glfwGetProcAddress(procname as const_char_p):GLFWglproc
+//glfwGetProcAddress(procname as const_char_p) as GLFWglproc
  
 }
 
@@ -101,7 +101,7 @@ glfwExtensionSupported(extension as const_char_p):int_Bool
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwInit():int_ErrorIfFalse
+glfwInit() as int_ErrorIfFalse
 
 glfwTerminate():void
 
@@ -114,9 +114,9 @@ glfwGetVersion() = \
 	return Value_Tuple::Create(new Value_Number(major), new Value_Number(minor), new Value_Number(rev));
 	'''
 
-glfwGetVersionString():const_char_p
+glfwGetVersionString() as const_char_p
 
-glfwGetError():String@gurax = \
+glfwGetError() as String@gurax = \
 	R'''
 	const char* description;
 	glfwGetError(&description);
@@ -137,21 +137,21 @@ glfwSetErrorCallback(callback:nil as Function@gurax):void = \
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwGetInputMode(window as GLFWwindow_p, mode as int):int
+glfwGetInputMode(window as GLFWwindow_p, mode as int) as int
 
 glfwSetInputMode(window as GLFWwindow_p, mode as int, value as int):void
 
-glfwRawMouseMotionSupported():int_Bool
+glfwRawMouseMotionSupported() as int_Bool
 
-glfwGetKeyName(key as int, scancode as int):const_char_p_NilIfNull
+glfwGetKeyName(key as int, scancode as int) as const_char_p_NilIfNull
 
-glfwGetKeyScancode(key as int):int
+glfwGetKeyScancode(key as int) as int
 
-glfwGetKey(window as GLFWwindow_p, key as int):int
+glfwGetKey(window as GLFWwindow_p, key as int) as int
 
-glfwGetMouseButton(window as GLFWwindow_p, button as int):int
+glfwGetMouseButton(window as GLFWwindow_p, button as int) as int
 
-glfwGetCursorPos(window as GLFWwindow_p):any = \
+glfwGetCursorPos(window as GLFWwindow_p) as any = \
 	R'''
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
@@ -160,9 +160,9 @@ glfwGetCursorPos(window as GLFWwindow_p):any = \
 
 glfwSetCursorPos(window as GLFWwindow_p, xpos as double, ypos as double):void
 
-glfwCreateCursor(image as const_GLFWimage_p, xhot as int, yhot as int):GLFWcursor_p
+glfwCreateCursor(image as const_GLFWimage_p, xhot as int, yhot as int) as GLFWcursor_p
 
-glfwCreateStandardCursor(shape as int):GLFWcursor_p
+glfwCreateStandardCursor(shape as int) as GLFWcursor_p
 
 glfwDestroyCursor(cursor as GLFWcursor_p):void
 
@@ -240,9 +240,9 @@ glfwSetDropCallback(window as GLFWwindow_p, callback:nil as Function@gurax):void
 	return Value::nil();
 	'''
 
-glfwJoystickPresent(jid as int):int
+glfwJoystickPresent(jid as int) as int
 
-glfwGetJoystickAxes(jid as int):any = \
+glfwGetJoystickAxes(jid as int) as any = \
 	R'''
 	int count;
 	if (const float* rtn = glfwGetJoystickAxes(jid, &count)) {
@@ -251,7 +251,7 @@ glfwGetJoystickAxes(jid as int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickButtons(jid as int):any = \
+glfwGetJoystickButtons(jid as int) as any = \
 	R'''
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickButtons(jid, &count)) {
@@ -260,7 +260,7 @@ glfwGetJoystickButtons(jid as int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickHats(jid as int):any = \
+glfwGetJoystickHats(jid as int) as any = \
 	R'''
 	int count;
 	if (const unsigned char* rtn = glfwGetJoystickHats(jid, &count)) {
@@ -269,15 +269,15 @@ glfwGetJoystickHats(jid as int):any = \
 	return Value::nil();
 	'''
 
-glfwGetJoystickName(jid as int):const_char_p_NilIfNull
+glfwGetJoystickName(jid as int) as const_char_p_NilIfNull
 
-glfwGetJoystickGUID(jid as int):const_char_p_NilIfNull
+glfwGetJoystickGUID(jid as int) as const_char_p_NilIfNull
 
 //glfwSetJoystickUserPointer(jid as int, pointer as void_p)
 
 //glfwGetJoystickUserPointer(jid as int):void_p
 
-glfwJoystickIsGamepad(jid as int):int_Bool
+glfwJoystickIsGamepad(jid as int) as int_Bool
 
 glfwSetJoystickCallback(jid as int, callback:nil as Function@gurax):void = \
 	R'''
@@ -287,23 +287,23 @@ glfwSetJoystickCallback(jid as int, callback:nil as Function@gurax):void = \
 	return Value::nil();
 	'''
 
-glfwUpdateGamepadMappings(string as const_char_p):int_ErrorIfFalse
+glfwUpdateGamepadMappings(string as const_char_p) as int_ErrorIfFalse
 
-glfwGetGamepadName(jid as int):const_char_p_NilIfNull
+glfwGetGamepadName(jid as int) as const_char_p_NilIfNull
 
 //glfwGetGamepadState()
 
 glfwSetClipboardString(window as GLFWwindow_p, string as const_char_p):void
 
-glfwGetClipboardString(window as GLFWwindow_p):const_char_p_NilIfNull
+glfwGetClipboardString(window as GLFWwindow_p) as const_char_p_NilIfNull
 
-glfwGetTime():double
+glfwGetTime() as double
 
 glfwSetTime(time as double):void
 
-glfwGetTimerValue():uint64_t
+glfwGetTimerValue() as uint64_t
 
-glfwGetTimerFrequency():uint64_t
+glfwGetTimerFrequency() as uint64_t
 
 }
 
@@ -312,7 +312,7 @@ glfwGetTimerFrequency():uint64_t
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwGetMonitors():any = \
+glfwGetMonitors() as any = \
 	R'''
 	int count;
 	GLFWmonitor** rtn = glfwGetMonitors(&count);
@@ -324,16 +324,16 @@ glfwGetMonitors():any = \
 	return new Value_List(pValueOwner.release());
 	'''
 
-glfwGetPrimaryMonitor():GLFWmonitor_p
+glfwGetPrimaryMonitor() as GLFWmonitor_p
  
-glfwGetMonitorPos(monitor as GLFWmonitor_p):any = \
+glfwGetMonitorPos(monitor as GLFWmonitor_p) as any = \
 	R'''
 	int xpos, ypos;
 	glfwGetMonitorPos(monitor, &xpos, &ypos);
 	return Value_Tuple::Create(new Value_Number(xpos), new Value_Number(ypos));
 	'''
  
-glfwGetMonitorWorkarea(monitor as GLFWmonitor_p):any = \
+glfwGetMonitorWorkarea(monitor as GLFWmonitor_p) as any = \
 	R'''
 	int xpos, ypos, width, height;
 	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &width, &height);
@@ -341,21 +341,21 @@ glfwGetMonitorWorkarea(monitor as GLFWmonitor_p):any = \
 						new Value_Number(width), new Value_Number(height));
 	'''
  
-glfwGetMonitorPhysicalSize(monitor as GLFWmonitor_p):any = \
+glfwGetMonitorPhysicalSize(monitor as GLFWmonitor_p) as any = \
 	R'''
 	int widthMM, heightMM;
 	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
 	return Value_Tuple::Create(new Value_Number(widthMM), new Value_Number(heightMM));
 	'''
  
-glfwGetMonitorContentScale(monitor as GLFWmonitor_p):any = \
+glfwGetMonitorContentScale(monitor as GLFWmonitor_p) as any = \
 	R'''
 	float xscale, yscale;
 	glfwGetMonitorContentScale(monitor, &xscale, &yscale);
 	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 	'''
  
-glfwGetMonitorName(monitor as GLFWmonitor_p):const_char_p
+glfwGetMonitorName(monitor as GLFWmonitor_p) as const_char_p
  
 //glfwSetMonitorUserPointer(monitor as GLFWmonitor_p, pointer as void_p)
  
@@ -369,7 +369,7 @@ glfwSetMonitorCallback(callback:nil as Function@gurax):void = \
 	return Value::nil();
 	'''
  
-glfwGetVideoModes(monitor as GLFWmonitor_p):any = \
+glfwGetVideoModes(monitor as GLFWmonitor_p) as any = \
 	R'''
 	int count;
 	const GLFWvidmode* rtn = glfwGetVideoModes(monitor, &count);
@@ -382,11 +382,11 @@ glfwGetVideoModes(monitor as GLFWmonitor_p):any = \
 	return new Value_List(pValueOwner.release());
 	'''
  
-glfwGetVideoMode(monitor as GLFWmonitor_p):const_GLFWvidmode_p
+glfwGetVideoMode(monitor as GLFWmonitor_p) as const_GLFWvidmode_p
  
 glfwSetGamma(monitor as GLFWmonitor_p, gamma as float):void
  
-glfwGetGammaRamp(monitor as GLFWmonitor_p):const_GLFWgammaramp_p
+glfwGetGammaRamp(monitor as GLFWmonitor_p) as const_GLFWgammaramp_p
  
 glfwSetGammaRamp(monitor as GLFWmonitor_p, ramp as const_GLFWgammaramp_p):void
 
@@ -403,9 +403,9 @@ r.Register('glfw') {
 //------------------------------------------------------------------------------
 r.Register('glfw') {
 
-glfwVulkanSupported():int_Bool
+glfwVulkanSupported() as int_Bool
  
-glfwGetRequiredInstanceExtensions():any = \
+glfwGetRequiredInstanceExtensions() as any = \
 	R'''
 	uint32_t count;
 	const char** rtn = glfwGetRequiredInstanceExtensions(&count);
@@ -418,11 +418,11 @@ glfwGetRequiredInstanceExtensions():any = \
 	return new Value_List(pValueOwner.release());
 	'''
  
-//glfwGetInstanceProcAddress(instance as VkInstance, procname as const_char_p):GLFWvkproc
+//glfwGetInstanceProcAddress(instance as VkInstance, procname as const_char_p) as GLFWvkproc
  
-//glfwGetPhysicalDevicePresentationSupport(instance as VkInstance, device as VkPhysicalDevice, queuefamily as uint32_t):int_Bool
+//glfwGetPhysicalDevicePresentationSupport(instance as VkInstance, device as VkPhysicalDevice, queuefamily as uint32_t) as int_Bool
  
-//glfwCreateWindowSurface(instance as VkInstance, window as GLFWwindow_p, allocator as const_VkAllocationCallbacks_p, surface as VkSurfaceKHR_p):VkResult
+//glfwCreateWindowSurface(instance as VkInstance, window as GLFWwindow_p, allocator as const_VkAllocationCallbacks_p, surface as VkSurfaceKHR_p) as VkResult
 
 }
 
@@ -438,11 +438,11 @@ glfwWindowHint(hint as int, value as int):void
 
 glfwWindowHintString(hint as int, value as const_char_p):void
 
-glfwCreateWindow(width as int, height as int, title as const_char_p, monitor:nil as GLFWmonitor_p, share:nil as GLFWwindow_p):GLFWwindow_p
+glfwCreateWindow(width as int, height as int, title as const_char_p, monitor:nil as GLFWmonitor_p, share:nil as GLFWwindow_p) as GLFWwindow_p
 
 glfwDestroyWindow(window as GLFWwindow_p):void
 
-glfwWindowShouldClose(window as GLFWwindow_p):bool
+glfwWindowShouldClose(window as GLFWwindow_p) as bool
 
 glfwSetWindowShouldClose(window as GLFWwindow_p, value as bool):void
 
@@ -454,7 +454,7 @@ glfwSetWindowIcon(window as GLFWwindow_p, images[] as GLFWimage):void = \
 	return Value::nil();
 	'''
 
-glfwGetWindowPos(window as GLFWwindow_p):any = \
+glfwGetWindowPos(window as GLFWwindow_p) as any = \
 	R'''
 	int xpos, ypos;
 	glfwGetWindowPos(window, &xpos, &ypos);
@@ -463,7 +463,7 @@ glfwGetWindowPos(window as GLFWwindow_p):any = \
 
 glfwSetWindowPos(window as GLFWwindow_p, xpos as int, ypos as int):void
 
-glfwGetWindowSize(window as GLFWwindow_p):any = \
+glfwGetWindowSize(window as GLFWwindow_p) as any = \
 	R'''
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
@@ -476,14 +476,14 @@ glfwSetWindowAspectRatio(window as GLFWwindow_p, numer as int, denom as int):voi
 
 glfwSetWindowSize(window as GLFWwindow_p, width as int, height as int):void
 
-glfwGetFramebufferSize(window as GLFWwindow_p):any = \
+glfwGetFramebufferSize(window as GLFWwindow_p) as any = \
 	R'''
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 	'''
 
-glfwGetWindowFrameSize(window as GLFWwindow_p):any = \
+glfwGetWindowFrameSize(window as GLFWwindow_p) as any = \
 	R'''
 	int left, top, right, bottom;
 	glfwGetWindowFrameSize(window, &left, &top, &right, &bottom);
@@ -491,14 +491,14 @@ glfwGetWindowFrameSize(window as GLFWwindow_p):any = \
 							new Value_Number(right), new Value_Number(bottom));
 	'''
 
-glfwGetWindowContentScale(window as GLFWwindow_p):any = \
+glfwGetWindowContentScale(window as GLFWwindow_p) as any = \
 	R'''
 	float xscale, yscale;
 	glfwGetWindowContentScale(window, &xscale, &yscale);
 	return Value_Tuple::Create(new Value_Number(xscale), new Value_Number(yscale));
 	'''
 
-glfwGetWindowOpacity(window as GLFWwindow_p):float
+glfwGetWindowOpacity(window as GLFWwindow_p) as float
 
 glfwSetWindowOpacity(window as GLFWwindow_p, opacity as float):void
 
@@ -516,11 +516,11 @@ glfwFocusWindow(window as GLFWwindow_p):void
  
 glfwRequestWindowAttention(window as GLFWwindow_p):void
  
-glfwGetWindowMonitor(window as GLFWwindow_p):GLFWmonitor_p
+glfwGetWindowMonitor(window as GLFWwindow_p) as GLFWmonitor_p
  
 glfwSetWindowMonitor(window as GLFWwindow_p, monitor as GLFWmonitor_p, xpos as int, ypos as int, width as int, height as int, refreshRate as int):void
  
-glfwGetWindowAttrib(window as GLFWwindow_p, attrib as int):int
+glfwGetWindowAttrib(window as GLFWwindow_p, attrib as int) as int
  
 glfwSetWindowAttrib(window as GLFWwindow_p, attrib as int, value as int):void
  
