@@ -14,7 +14,7 @@ argopt.Parser {|p|
 	p.OptBool('ignore-case',	'i', 'ignore character cases')
 	p.OptBool('line-number',	'n', 'print line number with output lines')
 	p.OptBool('recursive',		'r', 'recursively search sub directories')
-	p.OptString('level',			'l', 'specify depth-level for recursive search', 'NUM')
+	p.OptInt('level',			'l', 'specify depth-level for recursive search', 'NUM')
 	opt = nil
 	try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
 	if (!opt || argv.len < 1) {

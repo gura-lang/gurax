@@ -480,10 +480,10 @@ Gurax_ImplementMethod(List, Contains)
 	return new Value_Bool(valueTypedOwner.GetValueOwner().Contains(value));
 }
 
-// List#Count(value)
+// List#Count(value):map
 Gurax_DeclareMethod(List, Count)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }

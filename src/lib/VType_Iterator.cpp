@@ -319,10 +319,10 @@ Gurax_ImplementMethod(Iterator, Contains)
 	return new Value_Bool(iteratorThis.Contains(value));
 }
 
-// Iterator#Count(value)
+// Iterator#Count(value):map
 Gurax_DeclareMethod(Iterator, Count)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),

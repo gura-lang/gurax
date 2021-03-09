@@ -145,6 +145,7 @@ Function
   #expr             Expr         R
   #name             String       R
   #type             Symbol       R
+  #vtypeResult      Any          R,nil
 ======== Default Value (1) ========
 f .. <Function:f(a='A',b='B',c='C',d='D',e='E')>
 f() .. a=A, b=B, c=C, d=D, e=E

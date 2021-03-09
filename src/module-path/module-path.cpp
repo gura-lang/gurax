@@ -506,7 +506,7 @@ Gurax_ImplementFunction(Stat)
 	return argument.ReturnValue(processor, pValue.release());
 }
 
-// path.Walk(directory?:Directory, depthMax?:number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Walk(directory?:Directory, depthMax?:Number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Walk)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
