@@ -173,19 +173,19 @@ cairo_t.text_path(utf8 as String) = cairo_text_path(this, utf8)
 
 cairo_t.glyph_path(glyphs as cairo_glyph_t, num_glyphs as Number) = cairo_glyph_path(this, glyphs, num_glyphs)
 
-cairo_t.text_extents(utf8 as String, extents?:cairo_text_extents_t) {block?} = {
+cairo_t.text_extents(utf8 as String, extents? as cairo_text_extents_t) {block?} = {
 	extents = extents || cairo_text_extents_t()
 	cairo_text_extents(this, utf8, extents)
 	cond(block, block(extents), extents)
 }
 
-cairo_t.glyph_extents(glyphs as cairo_glyph_t, num_glyphs as Number, extents?:cairo_text_extents_t) {block?} = {
+cairo_t.glyph_extents(glyphs as cairo_glyph_t, num_glyphs as Number, extents? as cairo_text_extents_t) {block?} = {
 	extents = extents || cairo_text_extents_t()
 	cairo_glyph_extents(this, glyphs, num_glyphs, extents)
 	cond(block, block(extents), extents)
 }
 
-cairo_t.font_extents(extents?:cairo_font_extents_t) {block?} = {
+cairo_t.font_extents(extents? as cairo_font_extents_t) {block?} = {
 	extents = extents || cairo_font_extents_t()
 	cairo_font_extents(this, extents)
 	cond(block, block(extents), extents)
