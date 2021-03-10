@@ -110,7 +110,7 @@ scope {
 //------------------------------------------------------------------------------
 scope {
 	[w, h] = conio.GetWinSize()
-	PrintFormatted(str:String) = Println(str.Center(w, '='))
+	PrintFormatted(str as String) = Println(str.Center(w, '='))
 	bg = `white
 	conio.Clear()
 	conio.SetColor(`red, bg) {
@@ -143,18 +143,12 @@ scope {
 scope {
 	conio.Clear()
 	[w, h] = conio.GetWinSize()
-	conio.MoveTo(0, 0) {
-		Print('left-top')
-	}
-	conio.MoveTo(0, h - 1) {
-		Print('left-bottom')
-	}
-	conio.MoveTo(w - 12, h - 1) {
-		Print('right-bottom')
-	}
-	conio.MoveTo(w - 9, 0) {
-		Print('right-top')
-	}
+	str = Format('Size: %dx%d', w, h)
+	conio.MoveTo((w - str.width) / 2, h / 3) { Print(str) }
+	conio.MoveTo(0, 0) { Print('left-top') }
+	conio.MoveTo(0, h - 1) { Print('left-bottom') }
+	conio.MoveTo(w - 12, h - 1) { Print('right-bottom') }
+	conio.MoveTo(w - 9, 0) { Print('right-top') }
 	PushAnyKey()
 }
 
@@ -164,15 +158,9 @@ scope {
 scope {
 	conio.Clear()
 	[w, h] = conio.GetWinSize()
-	conio.MoveTo(0, 0) {
-		Print('*' * w)
-	}
-	conio.MoveTo(0, 1 .. (h - 2)) {
-		Print('*', ' ' * (w - 2), '*')
-	}
-	conio.MoveTo(0, h - 1) {
-		Print('*' * w)
-	}
+	conio.MoveTo(0, 0) { Print('*' * w) }
+	conio.MoveTo(0, 1 .. (h - 2)) { Print('*', ' ' * (w - 2), '*') }
+	conio.MoveTo(0, h - 1) { Print('*' * w) }
 	[x, y] = [Int(w / 2), Int(h / 2)]
 	[xDir, yDir] = [1, 1]
 	repeat(300) {
@@ -207,18 +195,12 @@ scope {
 	]
 	for (fg in colors) {
 		for (bg in colors) {
-			conio.SetColor(fg, bg) {
-				Print('####')
-			}
+			conio.SetColor(fg, bg) { Print('####') }
 		}
 		Println()
 	}
-	conio.MoveTo(3..20, 1..) {
-		Print('hello')
-	}
+	conio.MoveTo(3..20, 1..) { Print('hello') }
 	PushAnyKey()
 }
-
-
 
 conio.Clear()

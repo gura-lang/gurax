@@ -55,7 +55,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		if (pOp->IsType(OpType::As)) {
 			pDottedSymbol.reset(DottedSymbol::CreateFromExpr(pExprEx->GetExprRight()));
 		} else {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid format of declaration");
 			return nullptr;
 		}
 	}
@@ -80,14 +80,14 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 			// x?
 			pOccur = &Occur::ZeroOrOnce;
 		} else {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid format of declaration");
 			return nullptr;
 		}
 	}
 	if (pExpr->IsType<Expr_Indexer>()) {
 		const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(pExpr);
 		if (!pExprEx->GetExprLinkParam().IsEmpty()) {
-			Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr, "bracket must be empty");
 			return nullptr;
 		}
 		// x[]
@@ -96,7 +96,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		flags |= Flag::ListVar;
 	}
 	if (!pExpr->IsType<Expr_Identifier>()) {
-		Error::Issue(ErrorType::SyntaxError, "invalid declaration of argument");
+		Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid declaration of argument");
 		return nullptr;
 	}
 	const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExpr);
@@ -104,17 +104,17 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	if (!pAttrSrc) {
 		pAttrSrc = &pExprIdentifier->GetAttr();
 	} else if (pExprIdentifier->HasAttr()) {
-		Error::Issue(ErrorType::SyntaxError, "invalid attribute");
+		Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid attribute");
 		return nullptr;
 	}
 	if (!pAttrSrc->GetSymbolsOpt().empty()) {
-		Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
+		Error::IssueWith(ErrorType::SyntaxError, *pExpr, "optional attribute can not be declared");
 		return nullptr;
 	}
 	for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
 		Flags flag = SymbolToFlag(pSymbol);
 		if (!flag) {
-			Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+			Error::IssueWith(ErrorType::SyntaxError, *pExpr, "unsupported symbol: %s", pSymbol->GetName());
 			return nullptr;
 		}
 		flags |= flag;
