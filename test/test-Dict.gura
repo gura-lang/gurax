@@ -26,6 +26,9 @@ TestCase('IndexGet') {
 	Tester(`d['key4'])
 	Tester(`d['key9'])
 	Tester(`d['key10'])
+	repeat (100) {
+		Tester(`d['key0'])
+	}
 }
 
 TestCase('IndexSet') {
