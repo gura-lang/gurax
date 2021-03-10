@@ -423,8 +423,11 @@ bool Value_Dict::DoEmptyIndexSet(RefPtr<Value> pValue)
 
 bool Value_Dict::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
-	*ppValue = GetValueDict().Lookup(valueIndex);
-	if (*ppValue) return true;
+	Value* pValue = GetValueDict().Lookup(valueIndex);
+	if (pValue) {
+		*ppValue = pValue->Reference();
+		return true;
+	}
 	ValueDict::IssueError_KeyNotFound(valueIndex);
 	return false;
 }
