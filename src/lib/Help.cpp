@@ -14,7 +14,8 @@ Help::Help(const Symbol* pLangCode, StringReferable* pDoc) :
 }
 
 Help::Help(const Symbol* pLangCode, Template* pTmplDoc) :
-	_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(nullptr), _pTmplDoc(pTmplDoc)
+	_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(StringReferable::Empty.Reference()),
+	_pTmplDoc(pTmplDoc)
 {
 }
 

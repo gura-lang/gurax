@@ -28,7 +28,6 @@ void VType::GatherMemberSymbol(SymbolList& symbolList) const
 {
 	GetFrameOfMember().GatherSymbol(symbolList);
 	if (_pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList);
-	//GetPropSlotMap().GatherSymbol(symbolList);
 }
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const

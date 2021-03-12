@@ -11,7 +11,7 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
+The class `TimeDelta` represents a difference between two instances of `DateTime`.
 
 # Property
 
@@ -40,8 +40,7 @@ Gurax_DeclareConstructor(TimeDelta)
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `TimeDelta` instance from specified time durations.\n"
-		"There's no limit on the range of each value.\n");
+		"Creates a `TimeDelta` instance from specified time factors like numbers of days and hours.\n");
 }
 
 Gurax_ImplementConstructor(TimeDelta)
