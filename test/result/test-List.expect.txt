@@ -82,6 +82,7 @@ List
 [@int([0, 1, 2, 3])*, @int([4, 5, 6, 7])*, @int([8, 9, 10, 11])*] .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 ======== IndexGet ========
 tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+tbl[] .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl[0] .. zero
 tbl[1] .. one
 tbl[2] .. two

@@ -596,8 +596,8 @@ Gurax_ImplementMethod(List, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	RefPtr<Iterator> pIterator(valueThis.GenIterator());
-	if (!argument.HasExprOfBlock()) return new Value_Iterator(pIterator.release());
-	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
+	if (!pIterator) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // List#Filter(criteria?) {block?}
@@ -1642,8 +1642,8 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 
 bool Value_List::DoEmptyIndexGet(Value** ppValue) const
 {
-	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
-	return Value::undefined();
+	*ppValue = Reference();
+	return true;
 }
 
 bool Value_List::DoEmptyIndexSet(RefPtr<Value> pValue)

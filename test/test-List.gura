@@ -73,6 +73,7 @@ TestCase('Element expansion') {
 TestCase('IndexGet') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl)
+	Tester(`tbl[])
 	Tester(`tbl[0])
 	Tester(`tbl[1])
 	Tester(`tbl[2])

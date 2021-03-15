@@ -109,11 +109,7 @@ Value* Value::DoIndexGet(const Index& index) const
 			if (!index.EachIndexGet(*pValueIndex, &pValue)) return Value::nil();
 			pValuesRtn->push_back(pValue);
 		}
-		if (IsTuple()) {
-			return new Value_Tuple(pValuesRtn.release());
-		} else {
-			return new Value_List(pValuesRtn.release());
-		}
+		return new Value_List(pValuesRtn.release());
 	}
 }
 

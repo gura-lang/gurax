@@ -49,6 +49,23 @@ Gurax_ImplementConstructor(Tuple)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Tuple#Each() {`block?}
+Gurax_DeclareMethod(Tuple, Each)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(Tuple, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(valueThis.GenIterator());
+	if (!pIterator) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -165,6 +182,7 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Tuple));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Tuple, Each));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Tuple, first));
 	Assign(Gurax_CreateProperty(Tuple, last));
@@ -205,8 +223,9 @@ bool Value_Tuple::FeedExpandToArgument(Frame& frame, Argument& argument)
 
 bool Value_Tuple::DoEmptyIndexGet(Value** ppValue) const
 {
-	Error::Issue(ErrorType::IndexError, "empty-indexing access is not supported");
-	return Value::undefined();
+	const ValueOwner& valueOwner = GetValueOwner();
+	*ppValue = new Value_List(valueOwner.Reference());
+	return true;
 }
 
 bool Value_Tuple::DoEmptyIndexSet(RefPtr<Value> pValue)

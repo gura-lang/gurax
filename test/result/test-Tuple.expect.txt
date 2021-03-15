@@ -20,13 +20,14 @@ Tuple
   #len              Number       R
 ======== IndexGet ========
 tbl .. ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten')
+tbl[] .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl[0] .. zero
 tbl[1] .. one
 tbl[2] .. two
 tbl[10] .. ten
 tbl[11] .. specified position 11 exceeds the size of 11
-tbl[0, 1] .. ('zero', 'one')
-tbl[0, 1, 4, 10] .. ('zero', 'one', 'four', 'ten')
+tbl[0, 1] .. ['zero', 'one']
+tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
 ======== for statement ========
 hello
 world
