@@ -1573,6 +1573,21 @@ Value* VType_Iterator::Method_While(Processor& processor, Argument& argument, It
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Iterator#tuple
+Gurax_DeclareProperty_R(Iterator, tuple)
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts into a Tuple instance.");
+}
+
+Gurax_ImplementPropertyGetter(Iterator, tuple)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	return new Value_Tuple(pValueOwner.release());
+}
 
 //------------------------------------------------------------------------------
 // VType_Iterator
@@ -1643,6 +1658,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Var));
 	Assign(Gurax_CreateMethod(Iterator, While));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Iterator, tuple));
 }
 
 Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const

@@ -1,6 +1,10 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	Iterator.PrintPropSlots()
+}
+
 TesterPerm(expr as Expr) = {
 	try {
 		tbl = expr.Eval()

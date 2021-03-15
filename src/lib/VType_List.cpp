@@ -1413,6 +1413,21 @@ Gurax_ImplementPropertyGetter(List, len)
 	return new Value_Number(valueThis.GetValueOwner().size());
 }
 
+// List#tuple
+Gurax_DeclareProperty_R(List, tuple)
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts into a Tuple instance.");
+}
+
+Gurax_ImplementPropertyGetter(List, tuple)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Tuple(valueThis.GetValueOwner().Reference());
+}
+
 // List#vtypeOfElem
 Gurax_DeclareProperty_R(List, vtypeOfElem)
 {
@@ -1546,6 +1561,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, first));
 	Assign(Gurax_CreateProperty(List, last));
 	Assign(Gurax_CreateProperty(List, len));
+	Assign(Gurax_CreateProperty(List, tuple));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Contains, Any, List);

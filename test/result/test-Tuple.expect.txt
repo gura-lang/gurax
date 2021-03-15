@@ -18,6 +18,7 @@ Tuple
   #first            Any          R
   #last             Any          R
   #len              Number       R
+  #tuple            Tuple        R
 ======== IndexGet ========
 tbl .. ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten')
 tbl[] .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']

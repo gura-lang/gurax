@@ -119,6 +119,21 @@ Gurax_ImplementPropertyGetter(Tuple, len)
 	return new Value_Number(valueThis.GetValueOwner().size());
 }
 
+// Tuple#tuple
+Gurax_DeclareProperty_R(Tuple, tuple)
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts into a Tuple instance.");
+}
+
+Gurax_ImplementPropertyGetter(Tuple, tuple)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.Reference();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
@@ -187,6 +202,7 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Tuple, first));
 	Assign(Gurax_CreateProperty(Tuple, last));
 	Assign(Gurax_CreateProperty(Tuple, len));
+	Assign(Gurax_CreateProperty(Tuple, tuple));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Eq, Tuple, Tuple);
 	Gurax_AssignOpBinary(Ge, Tuple, Tuple);

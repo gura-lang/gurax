@@ -1,3 +1,6 @@
+======== Property ========
+Iterator
+  #tuple            Tuple        R
 ======== PUnit ========
 ======== Iterator#IsFinite() and Iterator#IsInfinite() ========
 1 .. 10.IsFinite() .. true
