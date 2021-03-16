@@ -2,6 +2,8 @@
 Iterator
   #tuple            Tuple        R
 ======== PUnit ========
+======== Iterator#tuple ========
+Range(10).tuple .. (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 ======== Iterator#IsFinite() and Iterator#IsInfinite() ========
 1 .. 10.IsFinite() .. true
 1 .. 10.IsInfinite() .. false

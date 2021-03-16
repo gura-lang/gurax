@@ -150,11 +150,18 @@ TestCase('List#len, List#first and List#last') {
 	Tester(`tbl.last)
 }
 
-TestCase('List#vtypeOfELem') {
+TestCase('List#vtypeOfElem') {
 	Tester(`[].vtypeOfElem)
 	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem)
 	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
 	Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
+}
+
+TestCase('List#tuple') {
+	Tester(`[].tuple)
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].tuple)
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].tuple)
+	Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].tuple)
 }
 
 TestCase('List#Add()') {

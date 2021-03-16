@@ -136,11 +136,16 @@ tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 
 tbl.len .. 11
 tbl.first .. zero
 tbl.last .. ten
-======== List#vtypeOfELem ========
+======== List#vtypeOfElem ========
 [].vtypeOfElem .. <Undefined>
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <CallableMember:VType:String(src?:Any):map{block?}>
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <CallableMember:VType:Number(str?:String){block?}>
 ['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <Any>
+======== List#tuple ========
+[].tuple .. ()
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].tuple .. ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten')
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].tuple .. (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].tuple .. ('a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 ======== List#Add() ========
 tbl.vtypeOfElem .. <Undefined>
 tbl.Add(3) .. [3]

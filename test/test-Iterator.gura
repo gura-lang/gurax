@@ -21,6 +21,10 @@ TestCase('PUnit') {
 	exprs::PrintPUnitWithLabel()
 }
 
+TestCase('Iterator#tuple') {
+	Tester(`Range(10).tuple)
+}
+
 TestCase('Iterator#IsFinite() and Iterator#IsInfinite()') {
 	Tester(`(1..10).IsFinite())
 	Tester(`(1..10).IsInfinite())
