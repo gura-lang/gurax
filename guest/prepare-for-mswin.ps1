@@ -154,10 +154,12 @@ function ExpandFiles([String[]] $fileNames) {
 			7za x -y $fileName
 			7za x -y "${baseName}.tar"
 			Remove-Item -ErrorAction Ignore -Force "${baseName}.tar"
-		} elseif (($fileName -match "/(?<baseName>.+).zip$") -or ($fileName -match "/(?<baseName>.+).7z$")) {
+		} elseif (($fileName -match "/(?<baseName>.+).(?<extName>zip|7z)$")) {
 			$baseName = $Matches['baseName']
-			7za x -y -o"${baseName}" $fileName
-		} elseif (($fileName -match "(?<baseName>.+).zip$") -or ($fileName -match "(?<baseName>.+).7z$")) {
+			$extName = $Matches['extName']
+			$fileName = "${baseName}.${extName}"
+			7za x -y -o"${baseName}" "${baseName}.${extName}"
+		} elseif (($fileName -match "(?<baseName>.+).(zip|7z)$")) {
 			$baseName = $Matches['baseName']
 			7za x -y $fileName
 		} else {
@@ -443,15 +445,15 @@ $packages += [Package_cairo]::new()
 #---------------------------------------------------------------------------------
 class Package_wx {
 	[String] $name = "wx"
-	[String] $ver = "3.1.3"
+	[String] $ver = "3.1.4"
 	[String] $baseName = "wxWidgets-$($this.ver)"
 	[String[]] $fileNames = @("/$($this.baseName).7z")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration=Release /p:Platofrm=x64'
+		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration=Release /p:Platoform=x64'
 	}
 }
-#$packages += [Package_wx]::new()
+$packages += [Package_wx]::new()
 
 #------------------------------------------------------------------------------
 # call main
