@@ -11,12 +11,12 @@ add_library(wx.gurd SHARED)
 target_include_directories(wx.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.4/include>
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.4/lib/vc_x64_lib/mswu>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.4/lib/vc_x64_dll/mswu>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(wx.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.4/lib/vc_x64_lib>
+	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.4/lib/vc_x64_dll>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
@@ -48,29 +48,29 @@ target_link_options(wx.gurd PRIVATE
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(wx.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:wxbase31u.lib>
-	$<$<PLATFORM_ID:Windows>:wxbase31u_net.lib>
-	$<$<PLATFORM_ID:Windows>:wxbase31u_xml.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_adv.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_aui.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_core.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_gl.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_html.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_media.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_propgrid.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_qa.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_ribbon.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_richtext.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_stc.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_webview.lib>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_xrc.lib>
-	$<$<PLATFORM_ID:Windows>:wxexpat.lib>
-	$<$<PLATFORM_ID:Windows>:wxjpeg.lib>
-	$<$<PLATFORM_ID:Windows>:wxpng.lib>
-	$<$<PLATFORM_ID:Windows>:wxregexu.lib>
-	$<$<PLATFORM_ID:Windows>:wxscintilla.lib>
-	$<$<PLATFORM_ID:Windows>:wxtiff.lib>
-	$<$<PLATFORM_ID:Windows>:wxzlib.lib>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud_net>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud_xml>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_adv>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_aui>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_core>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_gl>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_html>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_media>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_propgrid>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_qa>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_ribbon>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_richtext>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_stc>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_webview>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_xrc>
+	$<$<PLATFORM_ID:Windows>:wxexpatd>
+	$<$<PLATFORM_ID:Windows>:wxjpegd>
+	$<$<PLATFORM_ID:Windows>:wxpngd>
+	$<$<PLATFORM_ID:Windows>:wxregexud>
+	$<$<PLATFORM_ID:Windows>:wxscintillad>
+	$<$<PLATFORM_ID:Windows>:wxtiffd>
+	$<$<PLATFORM_ID:Windows>:wxzlibd>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------
