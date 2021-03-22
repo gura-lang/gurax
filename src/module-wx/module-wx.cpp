@@ -3,11 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define __WXMSW__
-#define WXUSINGDLL
-
-#include <wx/wx.h>
-
 class MyApp: public wxApp
 {
 public:
@@ -32,7 +27,7 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(wxID_EXIT,  MyFrame::OnExit)
     EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
 wxEND_EVENT_TABLE()
-wxIMPLEMENT_APP(MyApp);
+//wxIMPLEMENT_APP(MyApp);
 bool MyApp::OnInit()
 {
     MyFrame *frame = new MyFrame( "Hello World", wxPoint(50, 50), wxSize(450, 340) );
@@ -78,22 +73,19 @@ Gurax_BeginModule(wx)
 // wx.Test()
 Gurax_DeclareFunction(Test)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"");
 }
 
 Gurax_ImplementFunction(Test)
 {
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
+	int argc = 0;
+	char *argv[1] = { nullptr };
+	wxApp::SetInstance(new MyApp());
+	::wxEntry(argc, argv);
+    return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -116,3 +108,14 @@ Gurax_ModuleTerminate()
 }
 
 Gurax_EndModule(wx)
+
+#if defined(__WXMSW__)
+WXDLLIMPEXP_BASE void wxSetInstance(HINSTANCE hInst);
+
+BOOL WINAPI DllMain(HINSTANCE hInst, DWORD dwReason, LPVOID lpvReserved)
+{
+	// This is necessary to load resources correctly.
+	::wxSetInstance(hInst);
+	return TRUE;
+}
+#endif

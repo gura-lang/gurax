@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_WX_H
 #define GURAX_MODULE_WX_H
 #include <gurax.h>
+#include <wx/wx.h>
 #include "Util.h"
 
 Gurax_BeginModuleHeader(wx)

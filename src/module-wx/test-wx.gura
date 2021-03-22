@@ -6,5 +6,5 @@ import(util.tester) {*}
 import(wx)
 
 TestCase('Basic test') {
-	Println(wx.Test('hello', 4))
+	wx.Test()
 }

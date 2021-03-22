@@ -32,7 +32,7 @@ target_compile_options(wx.gurd PRIVATE
 	$<$<PLATFORM_ID:Linux>:-Wall -O2>
 	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
 target_compile_definitions(wx.gurd PRIVATE GURAX_MODULE_SEPARATED
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Windows>:WXUSINGDLL>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(wx.gurd PRIVATE
