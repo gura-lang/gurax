@@ -59,30 +59,27 @@ protected:
 	// Destructor
 	~Value_App() = default;
 public:
-	EntityT& GetEntity() { return *_pEntity; }
-	const EntityT& GetEntity() const { return *_pEntity; }
+	EntityT* GetEntity() { return _pEntity.get(); }
+	const EntityT* GetEntity() const { return _pEntity.get(); }
 public:
-	static EntityT& GetEntity(Value& value) {
+	static EntityT* GetEntity(Value& value) {
 		return dynamic_cast<Value_App&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const EntityT* GetEntity(const Value& value) {
 		return dynamic_cast<const Value_App&>(value).GetEntity();
 	}
-	static EntityT* GetEntityPtr(Value& value) { return &GetEntity(value); }
-	static const EntityT* GetEntityPtr(const Value& value) { return &GetEntity(value); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntityPtr(*this));
+		return reinterpret_cast<size_t>(GetEntity(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) &&
-			GetEntityPtr(*this) == GetEntityPtr(value);
+		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntityPtr(*this) < GetEntityPtr(value)) :
+			(GetEntity(*this) < GetEntity(value)) :
 			GetVType().IsLessThan(value.GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

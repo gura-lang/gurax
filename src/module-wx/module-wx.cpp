@@ -102,9 +102,9 @@ Gurax_ImplementFunction(ImplementApp)
 {
     // Argument
     ArgPicker args(argument);
-    auto& entity = Value_App::GetEntity(args.PickValue());
+    auto pEntity = Value_App::GetEntity(args.PickValue());
     // Function Body
-	wxApp::SetInstance(&entity);
+	wxApp::SetInstance(pEntity);
 	int argc = 0;
 	char *argv[1] = { nullptr };
 	::wxEntry(argc, argv);
