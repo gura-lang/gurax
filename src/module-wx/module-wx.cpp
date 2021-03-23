@@ -88,6 +88,29 @@ Gurax_ImplementFunction(Test)
     return Value::nil();
 }
 
+// wx.ImplementApp(app:wx.App)
+Gurax_DeclareFunction(ImplementApp)
+{
+	Declare(VTYPE_Nil, Flag::None);
+    DeclareArg("app", VTYPE_App, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(ImplementApp)
+{
+    // Argument
+    ArgPicker args(argument);
+    auto& entity = Value_App::GetEntity(args.PickValue());
+    // Function Body
+	wxApp::SetInstance(&entity);
+	int argc = 0;
+	char *argv[1] = { nullptr };
+	::wxEntry(argc, argv);
+    return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -98,8 +121,11 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+    Assign(VTYPE_App);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(ImplementApp));
 	return true;
 }
 

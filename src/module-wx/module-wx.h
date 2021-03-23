@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxApp.h"
+#include "VType_App.h"
 
 Gurax_BeginModuleHeader(wx)
 Gurax_EndModuleHeader(wx)

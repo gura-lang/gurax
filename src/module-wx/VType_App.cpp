@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_wxApp.cpp
+// VType_App.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,30 +27,30 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.wxApp() {block?}
-Gurax_DeclareConstructor(wxApp)
+// wx.App() {block?}
+Gurax_DeclareConstructor(App)
 {
-	Declare(VTYPE_wxApp, Flag::None);
+	Declare(VTYPE_App, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `wx.App` instance.");
 }
 
-Gurax_ImplementConstructor(wxApp)
+Gurax_ImplementConstructor(App)
 {
-	// Arguments
-	//ArgPicker args(argument);
 	// Function body
-	wxApp* pEntity = new wxApp();
-	return argument.ReturnValue(processor, new Value_wxApp(pEntity));
+	auto pEntity = new Value_App::EntityT();
+	RefPtr<Value_App> pValue(new Value_App(pEntity));
+	pEntity->SetValue(*pValue);
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.wxApp#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(wxApp, MethodSkeleton)
+// wx.App#MethodSkeleton(num1 as Number, num2 as Number)
+Gurax_DeclareMethod(App, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -60,7 +60,7 @@ Gurax_DeclareMethod(wxApp, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(wxApp, MethodSkeleton)
+Gurax_ImplementMethod(App, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -75,8 +75,8 @@ Gurax_ImplementMethod(wxApp, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// wx.wxApp#propSkeleton
-Gurax_DeclareProperty_R(wxApp, propSkeleton)
+// wx.App#propSkeleton
+Gurax_DeclareProperty_R(App, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -84,37 +84,55 @@ Gurax_DeclareProperty_R(wxApp, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(wxApp, propSkeleton)
+Gurax_ImplementPropertyGetter(App, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_wxApp
+// VType_App
 //------------------------------------------------------------------------------
-VType_wxApp VTYPE_wxApp("wxApp");
+VType_App VTYPE_App("App");
 
-void VType_wxApp::DoPrepare(Frame& frameOuter)
+void VType_App::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(wxApp));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(App));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxApp, MethodSkeleton));
+	Assign(Gurax_CreateMethod(App, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(wxApp, propSkeleton));
+	Assign(Gurax_CreateProperty(App, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_wxApp
+// Value_App
 //------------------------------------------------------------------------------
-VType& Value_wxApp::vtype = VTYPE_wxApp;
+VType& Value_App::vtype = VTYPE_App;
 
-String Value_wxApp::ToString(const StringStyle& ss) const
+String Value_App::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wxApp");
+	return ToStringGeneric(ss, "wx.App");
+}
+
+//------------------------------------------------------------------------------
+// Value_App::EntityT
+//------------------------------------------------------------------------------
+bool Value_App::EntityT::OnInit()
+{
+	RefPtr<Value_App> pValue(LockValue());
+	if (!pValue) return false;
+
+#if 0
+	Function& func = *_pFunc_OnInit;
+	RefPtr<Argument> pArgument(new Argument(func));
+	RefPtr<Value> pValue(func.Eval(GetProcessor(), *pArgument));
+	if (!pValue->IsValid()) return false;
+	return Value_Bool::GetBool(*pValue);
+#endif
+	return false;
 }
 
 Gurax_EndModuleScope(wx)
