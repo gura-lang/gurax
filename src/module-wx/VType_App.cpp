@@ -39,6 +39,7 @@ Gurax_DeclareConstructor(App)
 
 Gurax_ImplementConstructor(App)
 {
+	::printf("check\n");
 	// Function body
 	auto pEntity = new Value_App::EntityT();
 	RefPtr<Value_App> pValue(new Value_App(pEntity));

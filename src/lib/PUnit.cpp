@@ -964,7 +964,7 @@ template<bool discardValueFlag, bool inheritFlag>
 void PUnit_CreateVType<discardValueFlag, inheritFlag>::Exec(Processor& processor) const
 {
 	VType* pVTypeInh = &VTYPE_Object;
-	if (inheritFlag) {
+	if constexpr (inheritFlag) {
 		RefPtr<Value> pValueVTypeInh(processor.PopValue());
 		pVTypeInh = &Value_VType::GetVTypeThis(*pValueVTypeInh);
 	}
