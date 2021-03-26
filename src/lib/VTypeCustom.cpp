@@ -233,21 +233,21 @@ String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// ValueCustom
+// ValueCustom::CustomPack
 //------------------------------------------------------------------------------
-ValueCustom::~ValueCustom()
+ValueCustom::CustomPack::~CustomPack()
 {
-	const Function& funcDestructor = GetVType().GetDestructor();
+	const Function& funcDestructor = _vtypeCustom.GetDestructor();
 	if (!funcDestructor.IsEmpty()) {
 		RefPtr<Argument> pArgument(new Argument(funcDestructor));
-		pArgument->SetValueThis(Reference());
-		Value::Delete(funcDestructor.Eval(GetProcessor(), *pArgument));
+		pArgument->SetValueThis(_pValueThis->Reference());
+		Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
 	}
 }
 
-bool ValueCustom::InitCustomProp()
+bool ValueCustom::CustomPack::InitCustomProp()
 {
-	const ValueOwner& valuesPropInit = GetVType().GetValuesPropInit();
+	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropInit();
 	_pValuesProp->reserve(valuesPropInit.size());
 	for (const Value* pValue : valuesPropInit) {
 		RefPtr<Value> pValueCloned = pValue->Clone();
@@ -260,7 +260,7 @@ bool ValueCustom::InitCustomProp()
 	return true;
 }
 
-void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
+void ValueCustom::CustomPack::SetCustomProp(size_t iProp, Value* pValue)
 {
 	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
 	Value::Delete(*ppValue);

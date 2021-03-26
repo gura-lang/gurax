@@ -80,13 +80,27 @@ public:
 	Gurax_DeclareReferable(ValueCustom);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueCustom");
+public:
+	class CustomPack {
+	private:
+		VTypeCustom& _vtypeCustom;
+		RefPtr<Processor> _pProcessor;
+		Value* _pValueThis;
+		RefPtr<ValueOwner> _pValuesProp;
+	public:
+		CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis) :
+			_vtypeCustom(vtypeCustom), _pProcessor(pProcessor), _pValueThis(pValueThis), _pValuesProp(new ValueOwner()) {}
+		virtual ~CustomPack();
+		bool InitCustomProp();
+		void SetCustomProp(size_t iProp, Value* pValue);
+		Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
+	};
 protected:
-	RefPtr<Processor> _pProcessor;
-	RefPtr<ValueOwner> _pValuesProp;
+	std::unique_ptr<CustomPack> _pCustomPack;
 public:
 	// Constructor
 	ValueCustom(VTypeCustom& vtypeCustom, Processor* pProcessor) :
-		Value_Object(vtypeCustom), _pProcessor(pProcessor), _pValuesProp(new ValueOwner()) {}
+		Value_Object(vtypeCustom), _pCustomPack(new CustomPack(vtypeCustom, pProcessor, this)) {}
 	// Copy constructor/operator
 	ValueCustom(const ValueCustom& src) = delete;
 	ValueCustom& operator=(const ValueCustom& src) = delete;
@@ -95,14 +109,11 @@ public:
 	ValueCustom& operator=(ValueCustom&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~ValueCustom();
+	~ValueCustom() = default;
 public:
-	Processor& GetProcessor() { return *_pProcessor; }
-	VTypeCustom& GetVType() { return dynamic_cast<VTypeCustom&>(Value_Object::GetVType()); }
-	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
-	bool InitCustomProp();
-	void SetCustomProp(size_t iProp, Value* pValue);
-	Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
+	bool InitCustomProp() { return _pCustomPack->InitCustomProp(); }
+	void SetCustomProp(size_t iProp, Value* pValue) { _pCustomPack->SetCustomProp(iProp, pValue); }
+	Value* GetCustomProp(size_t iProp) { return _pCustomPack->GetCustomProp(iProp); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
