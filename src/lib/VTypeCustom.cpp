@@ -233,40 +233,8 @@ String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// ValueCustom::CustomPack
+// ValueCustom
 //------------------------------------------------------------------------------
-ValueCustom::CustomPack::~CustomPack()
-{
-	const Function& funcDestructor = _vtypeCustom.GetDestructor();
-	if (!funcDestructor.IsEmpty()) {
-		RefPtr<Argument> pArgument(new Argument(funcDestructor));
-		pArgument->SetValueThis(_pValueThis->Reference());
-		Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
-	}
-}
-
-bool ValueCustom::CustomPack::InitCustomProp()
-{
-	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropInit();
-	_pValuesProp->reserve(valuesPropInit.size());
-	for (const Value* pValue : valuesPropInit) {
-		RefPtr<Value> pValueCloned = pValue->Clone();
-		if (!pValueCloned) {
-			Error::Issue(ErrorType::PropertyError, "failed to initialize property");
-			return false;
-		}
-		_pValuesProp->push_back(pValueCloned.release());
-	}
-	return true;
-}
-
-void ValueCustom::CustomPack::SetCustomProp(size_t iProp, Value* pValue)
-{
-	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
-	Value::Delete(*ppValue);
-	*ppValue = pValue;
-}
-
 String ValueCustom::ToString(const StringStyle& ss) const
 {
 	return String().Format("<%s>", GetVType().MakeFullName().c_str());

@@ -81,23 +81,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueCustom");
 public:
-	class CustomPack {
-	private:
-		VTypeCustom& _vtypeCustom;
-		RefPtr<Processor> _pProcessor;
-		Value* _pValueThis;
-		RefPtr<ValueOwner> _pValuesProp;
-	public:
-		CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis) :
-			_vtypeCustom(vtypeCustom), _pProcessor(pProcessor), _pValueThis(pValueThis), _pValuesProp(new ValueOwner()) {}
-		virtual ~CustomPack();
-		bool InitCustomProp();
-		void SetCustomProp(size_t iProp, Value* pValue);
-		Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
-	};
-protected:
-	std::unique_ptr<CustomPack> _pCustomPack;
-public:
 	// Constructor
 	ValueCustom(VType& vtype) : Value_Object(vtype) {}
 	// Copy constructor/operator
@@ -109,18 +92,6 @@ public:
 protected:
 	// Destructor
 	~ValueCustom() = default;
-public:
-	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor) {
-		_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
-		return _pCustomPack->InitCustomProp();
-	}
-	void SetCustomProp(size_t iProp, Value* pValue) {
-		if (_pCustomPack) _pCustomPack->SetCustomProp(iProp, pValue);
-	}
-	Value* GetCustomProp(size_t iProp) {
-		if (_pCustomPack) return _pCustomPack->GetCustomProp(iProp);
-		return Value::nil();
-	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
