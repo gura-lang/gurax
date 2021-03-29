@@ -16,6 +16,7 @@ class Formatter;
 class FormatterFlags;
 class Index;
 class Processor;
+class VTypeCustom;
 
 //------------------------------------------------------------------------------
 // Value
@@ -101,6 +102,21 @@ public:
 			return pValue->CalcHash();
 		}
 	};
+public:
+	class CustomPack {
+	private:
+		VTypeCustom& _vtypeCustom;
+		RefPtr<Processor> _pProcessor;
+		Value* _pValueThis;
+		RefPtr<ValueOwner> _pValuesProp;
+	public:
+		CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis);
+		VTypeCustom& GetVType() const { return _vtypeCustom; }
+		virtual ~CustomPack();
+		bool InitCustomProp();
+		void SetCustomProp(size_t iProp, Value* pValue);
+		Value* GetCustomProp(size_t iProp);
+	};
 private:
 	// These values are initialized by Value::CreateConstant().
 	static const Value* _pValue_undefined;
@@ -111,6 +127,8 @@ private:
 	static const Value* _pValue_EmptyStr;
 protected:
 	VType* _pVType;
+protected:
+	std::unique_ptr<CustomPack> _pCustomPack;
 public:
 	// Constructor
 	Value() = delete;
@@ -129,8 +147,8 @@ public:
 	T_Value* Cast(DeclArg::Flags flags = DeclArg::Flag::None) const {
 		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(*this, nullptr, flags));
 	}
-	VType& GetVType() { return *_pVType; }
 	VType& GetVType() const { return *_pVType; }
+	VType& GetVTypeCustom() const;
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Value* pValue) const { return this == pValue; }
 	static bool IsIdentical(const Value* pValue1, const Value* pValue2) {
@@ -187,6 +205,18 @@ public:
 	}
 	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
 	Iterator* GenIterator() const { return DoGenIterator(); }
+public:
+	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor) {
+		_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
+		return _pCustomPack->InitCustomProp();
+	}
+	void SetCustomProp(size_t iProp, Value* pValue) {
+		if (_pCustomPack) _pCustomPack->SetCustomProp(iProp, pValue);
+	}
+	Value* GetCustomProp(size_t iProp) {
+		if (_pCustomPack) return _pCustomPack->GetCustomProp(iProp);
+		return Value::nil();
+	}
 public:
 	// Virtual functions
 	virtual Value* Clone() const = 0;

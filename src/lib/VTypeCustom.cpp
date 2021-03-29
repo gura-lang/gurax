@@ -160,7 +160,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
 	} else {
-		RefPtr<ValueCustom> pValueThisWk(new ValueCustom(GetVTypeCustom()));
+		RefPtr<Value> pValueThisWk(new ValueCustom(GetVTypeCustom()));
 		if (!pValueThisWk->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 		pValueThis.reset(pValueThisWk.release());
 		argument.SetValueThis(pValueThis.Reference());
@@ -207,7 +207,7 @@ VTypeCustom::ConstructorStruct::ConstructorStruct(
 
 Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
+	RefPtr<Value> pValueThis(new ValueCustom(GetVTypeCustom()));
 	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 	ArgPicker args(argument);
 	for (PropSlot* pPropSlot : GetPropSlotOwner()) {

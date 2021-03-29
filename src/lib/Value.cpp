@@ -15,6 +15,11 @@ const Value *Value::_pValue_true_		= nullptr;
 const Value *Value::_pValue_Zero		= nullptr;
 const Value *Value::_pValue_EmptyStr	= nullptr;
 
+VType& Value::GetVTypeCustom() const
+{
+	return _pCustomPack? _pCustomPack->GetVType() : *_pVType;
+}
+
 void Value::CreateConstant()
 {
 	_pValue_undefined	= new Value_Undefined();
